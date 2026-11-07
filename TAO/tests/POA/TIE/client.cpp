@@ -8,46 +8,48 @@
  *  @author  Irfan Pyarali
  */
 //=============================================================================
-
-
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Profile_Timer.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
+#include <array>
 
-static ACE_TCHAR *IOR[7] = { 0, 0, 0, 0, 0, 0, 0 };
-static int iterations = 1;
+struct Options
+{
+  std::array<ACE_TCHAR const *, 6> iors {};
+  int iterations {1};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:f:i:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:c:d:e:f:i:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        IOR[1] = ACE_OS::strdup (get_opts.opt_arg ());
+        options.iors[0] = get_opts.opt_arg ();
         break;
       case 'b':
-        IOR[2] = ACE_OS::strdup (get_opts.opt_arg ());
+        options.iors[1] = get_opts.opt_arg ();
         break;
       case 'c':
-        IOR[3] = ACE_OS::strdup (get_opts.opt_arg ());
+        options.iors[2] = get_opts.opt_arg ();
         break;
       case 'd':
-        IOR[4] = ACE_OS::strdup (get_opts.opt_arg ());
+        options.iors[3] = get_opts.opt_arg ();
         break;
       case 'e':
-        IOR[5] = ACE_OS::strdup (get_opts.opt_arg ());
+        options.iors[4] = get_opts.opt_arg ();
         break;
       case 'f':
-        IOR[6] = ACE_OS::strdup (get_opts.opt_arg ());
+        options.iors[5] = get_opts.opt_arg ();
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -82,7 +84,7 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
       elapsed_time.user_time /= iterations;
       elapsed_time.system_time /= iterations;
 
-      double tmp = 1000 / elapsed_time.real_time;
+      double const tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\treal_time\t = %0.06f ms,\n"
@@ -104,25 +106,26 @@ class Test
 {
 public:
   static void run (CORBA::ORB_ptr orb,
-                   ACE_TCHAR *IOR)
+                   ACE_TCHAR const *ior,
+                   int iterations)
   {
-    if (IOR != 0)
+    if (ior != nullptr)
       {
         // Get an object reference from the argument string.
-        CORBA::Object_var object = orb->string_to_object (IOR);
+        CORBA::Object_var const object = orb->string_to_object (ior);
 
         // Try to narrow the object reference to a reference.
-        T_var test = T::_narrow (object.in ());
+        T_var const test = T::_narrow (object.in ());
 
         ACE_Profile_Timer timer;
-        ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+        ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time {};
 
         // We start an ACE_Profile_Timer here...
         timer.start ();
 
-        CORBA::Long result = 0;
-        int i = 0;
-        for (i = 0; i < iterations ; i++)
+        CORBA::Long result {};
+        int i {};
+        for (; i < iterations; ++i)
           {
             // Invoke the doit() method on the reference.
             result = test->doit ();
@@ -144,41 +147,29 @@ public:
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-        // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      // Initialize the ORB.
+      Options options;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
         return parse_args_result;
 
-      int i = 1;
-
-      Test<A, A_var>::run (orb.in (),
-                           IOR[i++]);
-
-      Test<Outer::B, Outer::B_var>::run (orb.in (),
-                                         IOR[i++]);
-
-      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
-                                                       IOR[i++]);
-
-      Test<A, A_var>::run (orb.in (),
-                           IOR[i++]);
-
-      Test<Outer::B, Outer::B_var>::run (orb.in (),
-                                         IOR[i++]);
-
-      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
-                                                       IOR[i++]);
+      Test<A, A_var>::run (orb.in (), options.iors[0], options.iterations);
+      Test<Outer::B, Outer::B_var>::run (orb.in (), options.iors[1], options.iterations);
+      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), options.iors[2], options.iterations);
+      Test<A, A_var>::run (orb.in (), options.iors[3], options.iterations);
+      Test<Outer::B, Outer::B_var>::run (orb.in (), options.iors[4], options.iterations);
+      Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (), options.iors[5], options.iterations);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception Caught in main");
       return -1;

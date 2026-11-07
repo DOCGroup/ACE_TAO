@@ -351,7 +351,7 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      n = this->send ((const char*) buf + bytes_transferred,
+      n = this->send (static_cast<char const *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags,
                       timeout);
@@ -404,7 +404,7 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      n = this->recv ((char*) buf + bytes_transferred,
+      n = this->recv (static_cast<char *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags,
                       timeout);
@@ -438,7 +438,7 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      n = this->recv ((char*) buf + bytes_transferred,
+      n = this->recv (static_cast<char *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags);
 
@@ -467,10 +467,10 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
   ssize_t n = 0;
 
   for (bytes_transferred = 0;
-       bytes_transferred < (size_t) len;
+       bytes_transferred < static_cast<size_t> (len);
        bytes_transferred += n)
     {
-      n = this->send ((const char*) buf + bytes_transferred,
+      n = this->send (static_cast<char const *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags);
       if (n < 0)

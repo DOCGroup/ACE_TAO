@@ -30,16 +30,21 @@ class Policy
 {
 public:
   /// Constructor.
-  Policy (CORBA::ULong val);
+  explicit Policy (CORBA::ULong val);
+
+  Policy (Policy const &) = delete;
+  Policy (Policy &&) = delete;
+  Policy &operator= (Policy const &) = delete;
+  Policy &operator= (Policy &&) = delete;
 
   /// Test method defined in test IDL.
-  virtual CORBA::ULong value ();
+  CORBA::ULong value () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   /// Destructor.
@@ -47,7 +52,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~Policy ();
+  ~Policy () override = default;
 
 private:
   /// Pseudo-reference to the ORB.

@@ -8,81 +8,76 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "interceptors.h"
 
-const ACE_TCHAR *output = ACE_TEXT("test.ior");
-const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
+struct Options
+{
+  ACE_TString output { ACE_TEXT ("test.ior") };
+  ACE_TString input { ACE_TEXT ("file://test.ior") };
+  ACE_TString server_proc_mode { ACE_TEXT ("LOCAL_AND_REMOTE") };
+  ACE_TString client_proc_mode { ACE_TEXT ("LOCAL_AND_REMOTE") };
+};
 
-ACE_TString server_proc_mode_str;
-ACE_TString client_proc_mode_str;
-ACE_CString server_orb;
-ACE_CString client_orb;
+ACE_TCHAR const server_orb[] = ACE_TEXT ("server_orb");
+ACE_TCHAR const client_orb[] = ACE_TEXT ("client_orb");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:k:o"));
-  int c;
-
-  server_proc_mode_str.set (ACE_TEXT("LOCAL_AND_REMOTE"));
-  client_proc_mode_str.set (ACE_TEXT("LOCAL_AND_REMOTE"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("s:c:k:o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
-  {
-    switch (c)
+    {
+      switch (c)
       {
       case 's':
-        server_proc_mode_str.set (get_opts.opt_arg ());
+        options.server_proc_mode = get_opts.opt_arg ();
         break;
       case 'c':
-        client_proc_mode_str.set (get_opts.opt_arg ());
+        options.client_proc_mode = get_opts.opt_arg ();
         break;
       case 'o':
-        output = get_opts.opt_arg ();
+        options.output = get_opts.opt_arg ();
         break;
       case 'k':
-        input = get_opts.opt_arg ();
+        options.input = get_opts.opt_arg ();
         break;
       case '?':
       default:
-       return 0;
+        return 0;
       }
-  }
-  // Indicates successful parsing of the command line
+    }
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  Options options;
+  if (parse_args (argc, argv, options) != 0)
     return -1;
-
-  server_orb.set ("server_orb");
-  client_orb.set ("client_orb");
 
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       // Set up our default expectations.
-      CORBA::ULong expected_server_interceptor_check = 10;
-      CORBA::ULong expected_client_interceptor_check = 10;
+      CORBA::ULong expected_server_interceptor_check (10);
+      CORBA::ULong expected_client_interceptor_check (10);
 
-      PortableInterceptor::ProcessingMode client_proc_mode =
-                                   PortableInterceptor::LOCAL_AND_REMOTE;
+      PortableInterceptor::ProcessingMode client_proc_mode (
+        PortableInterceptor::LOCAL_AND_REMOTE);
 
-      if (client_proc_mode_str == ACE_TEXT("LOCAL_ONLY"))
+      if (options.client_proc_mode == ACE_TEXT ("LOCAL_ONLY"))
         {
           client_proc_mode = PortableInterceptor::LOCAL_ONLY;
-          ACE_DEBUG((LM_DEBUG,
-                     "Using LOCAL_ONLY for client-side ProcessingMode.\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Using LOCAL_ONLY for client-side ProcessingMode.\n"));
         }
-      else if (client_proc_mode_str == ACE_TEXT("REMOTE_ONLY"))
+      else if (options.client_proc_mode == ACE_TEXT ("REMOTE_ONLY"))
         {
           client_proc_mode = PortableInterceptor::REMOTE_ONLY;
-          ACE_DEBUG((LM_DEBUG,
-                     "Using REMOTE_ONLY for client-side ProcessingMode.\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Using REMOTE_ONLY for client-side ProcessingMode.\n"));
 
           // Since all of the calls are collocated, setting the client-side
           // ProcessingMode to REMOTE_ONLY will cause the client request
@@ -92,23 +87,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Using LOCAL_AND_REMOTE for client-side ProcessingMode.\n"));
         }
 
-      PortableInterceptor::ProcessingMode server_proc_mode =
-                                   PortableInterceptor::LOCAL_AND_REMOTE;
+      PortableInterceptor::ProcessingMode server_proc_mode (
+        PortableInterceptor::LOCAL_AND_REMOTE);
 
-      if (server_proc_mode_str == ACE_TEXT("LOCAL_ONLY"))
+      if (options.server_proc_mode == ACE_TEXT ("LOCAL_ONLY"))
         {
           server_proc_mode = PortableInterceptor::LOCAL_ONLY;
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Using LOCAL_ONLY for server-side ProcessingMode.\n"));
         }
-      else if (server_proc_mode_str == ACE_TEXT("REMOTE_ONLY"))
+      else if (options.server_proc_mode == ACE_TEXT ("REMOTE_ONLY"))
         {
           server_proc_mode = PortableInterceptor::REMOTE_ONLY;
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Using REMOTE_ONLY for server-side ProcessingMode.\n"));
 
           // Since all of the calls are collocated, setting the server-side
@@ -119,7 +114,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Using LOCAL_AND_REMOTE for server-side ProcessingMode.\n"));
         }
 
@@ -136,10 +131,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
-                         server_orb.c_str ());
+                         server_orb);
 
       ACE_Manual_Event me;
-      Server_Task server_task (output,
+      Server_Task server_task (options.output.c_str (),
                                sorb.in (),
                                me,
                                ACE_Thread_Manager::instance ());
@@ -158,9 +153,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc (),
                          catc.get_TCHAR_argv (),
-                         client_orb.c_str ());
+                         client_orb);
 
-      Client_Task client_task (input,
+      Client_Task client_task (options.input.c_str (),
                                corb.in (),
                                ACE_Thread_Manager::instance ());
 
@@ -175,10 +170,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       sorb->destroy ();
 
-      bool failed_check = false;
+      bool failed_check {};
 
-      CORBA::ULong number_called =
-        Echo_Server_Request_Interceptor::server_interceptor_check_;
+      CORBA::ULong number_called (
+        Echo_Server_Request_Interceptor::server_interceptor_check_);
 
       if (number_called != expected_server_interceptor_check)
         {
@@ -195,9 +190,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (number_called != expected_client_interceptor_check)
         {
           ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) ERROR:Client-Side Interceptors not called "
-                    "properly, called %d times, expected %d.\n",
-                    number_called, expected_client_interceptor_check));
+                      "(%P|%t) ERROR: Client-Side Interceptors not called "
+                      "properly, called %d times, expected %d.\n",
+                      number_called, expected_client_interceptor_check));
           failed_check = true;
         }
 
@@ -208,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       corb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR: Some exception was caught in main().\n"));

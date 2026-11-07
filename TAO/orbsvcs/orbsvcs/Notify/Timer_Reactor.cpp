@@ -7,7 +7,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()
-  :reactor_ (0)
 {
   // Get the ORB
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb ();
@@ -15,9 +14,7 @@ TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()
   this->reactor_ =  orb->orb_core ()->reactor ();
 }
 
-TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor ()
-{
-}
+TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor () = default;
 
 void
 TAO_Notify_Timer_Reactor::release ()

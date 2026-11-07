@@ -12,39 +12,39 @@
 ACEXML_CharStream*
 ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
 {
-  if (uri == 0)
-    return 0;
-  ACEXML_FileCharStream* fstream = 0;
-  ACEXML_HttpCharStream* hstream = 0;
+  if (uri == nullptr)
+    return nullptr;
+  ACEXML_FileCharStream* fstream = nullptr;
+  ACEXML_HttpCharStream* hstream = nullptr;
 
-  if (ACE_OS::strstr (uri, ACE_TEXT("ftp://")) != 0)
+  if (ACE_OS::strstr (uri, ACE_TEXT("ftp://")) != nullptr)
     {
-      return 0;
+      return nullptr;
     }
-  else if (ACE_OS::strstr (uri, ACE_TEXT ("http://")) != 0)
+  else if (ACE_OS::strstr (uri, ACE_TEXT ("http://")) != nullptr)
     {
-      ACE_NEW_RETURN (hstream, ACEXML_HttpCharStream, 0);
+      ACE_NEW_RETURN (hstream, ACEXML_HttpCharStream, nullptr);
       if (hstream->open (uri) != -1)
         return hstream;
     }
   else
     {
-      if (ACE_OS::strstr (uri, ACE_TEXT ("file://")) != 0)
+      if (ACE_OS::strstr (uri, ACE_TEXT ("file://")) != nullptr)
         uri += 7; // Skip over file://
-      ACE_NEW_RETURN (fstream, ACEXML_FileCharStream, 0);
+      ACE_NEW_RETURN (fstream, ACEXML_FileCharStream, nullptr);
       if (fstream->open (uri) != -1)
         return fstream;
 #ifdef USE_ZZIP
       else
         {
-          ACEXML_ZipCharStream* zstream = 0;
-          ACE_NEW_RETURN (zstream, ACEXML_ZipCharStream, 0);
+          ACEXML_ZipCharStream* zstream = nullptr;
+          ACE_NEW_RETURN (zstream, ACEXML_ZipCharStream, nullptr);
           if (zstream->open (uri) != -1)
             return zstream;
         }
 #endif /* USE_ZZIP */
     }
-  return 0;
+  return nullptr;
 }
 
 ACEXML_StreamFactory::~ACEXML_StreamFactory ()

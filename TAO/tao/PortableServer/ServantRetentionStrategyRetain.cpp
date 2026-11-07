@@ -16,6 +16,9 @@
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
+#include <string>
+#include <vector>
+
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS */
@@ -32,7 +35,7 @@ namespace TAO
       poa_ = poa;
 
       // Create the active object map to be used
-      TAO_Active_Object_Map *active_object_map = nullptr;
+      TAO_Active_Object_Map *active_object_map {};
       ACE_NEW_THROW_EX (active_object_map,
                         TAO_Active_Object_Map (!poa->system_id (),
                                                !poa->allow_multiple_activations (),
@@ -44,7 +47,7 @@ namespace TAO
       this->active_object_map_.reset (active_object_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-      ACE_CString name_str ("Active_Object_Map_");
+      std::string name_str ("Active_Object_Map_");
       name_str += poa->orb_core ().orbid ();
       name_str += '_';
       name_str += poa->the_name ();
@@ -63,7 +66,7 @@ namespace TAO
     ServantRetentionStrategyRetain::deactivate_object (
       const PortableServer::ObjectId &id)
     {
-      TAO_Active_Object_Map_Entry *active_object_map_entry = nullptr;
+      TAO_Active_Object_Map_Entry *active_object_map_entry {};
       int const result = this->active_object_map_->
         find_entry_using_user_id (id, active_object_map_entry);
 
@@ -87,7 +90,7 @@ namespace TAO
       // Inform the custom servant dispatching (CSD) strategy that the
       // servant is deactivated. This would be called just once when the
       // servant is deactivated the first time.
-      if (active_object_map_entry->deactivated_ == 0)
+      if (!active_object_map_entry->deactivated_)
         {
           this->poa_->servant_deactivated_hook (
             active_object_map_entry->servant_,
@@ -139,8 +142,8 @@ namespace TAO
       // specified system Object Id value.  If the Object Id value is
       // not active in the POA, an ObjectNotActive exception is
       // raised.
-      TAO_Active_Object_Map_Entry *entry = nullptr;
-      PortableServer::Servant servant = nullptr;
+      TAO_Active_Object_Map_Entry *entry {};
+      PortableServer::Servant servant {};
 
       int const result =
         active_object_map_->
@@ -181,7 +184,7 @@ namespace TAO
       // If the POA has the RETAIN policy and the specified ObjectId is in
       // the Active Object Map, this operation returns the servant
       // associated with that object in the Active Object Map.
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       if (this->active_object_map_->find_servant_using_user_id (id, servant) == -1)
         {
@@ -241,7 +244,7 @@ namespace TAO
           throw ::CORBA::OBJ_ADAPTER ();
         }
 
-      TAO_Active_Object_Map_Entry *entry = nullptr;
+      TAO_Active_Object_Map_Entry *entry {};
       int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id.in(),
@@ -281,8 +284,8 @@ namespace TAO
       // Object Map to find if there is a servant associated with the
       // Object Id value from the request. If such a servant exists, the
       // POA invokes the appropriate method on the servant.
-      PortableServer::Servant servant = nullptr;
-      TAO_Active_Object_Map_Entry *active_object_map_entry = nullptr;
+      PortableServer::Servant servant {};
+      TAO_Active_Object_Map_Entry *active_object_map_entry {};
       int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id,
@@ -320,8 +323,8 @@ namespace TAO
       // Object Map to find if there is a servant associated with the
       // Object Id value from the request. If such a servant exists, the
       // POA invokes the appropriate method on the servant.
-      PortableServer::Servant servant = nullptr;
-      TAO_Active_Object_Map_Entry *active_object_map_entry = nullptr;
+      PortableServer::Servant servant {};
+      TAO_Active_Object_Map_Entry *active_object_map_entry {};
       int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
                                                   user_id,
@@ -446,10 +449,8 @@ namespace TAO
 
       // We must copy the map entries into a separate place since we
       // cannot remove entries while iterating through the map.
-      ACE_Array_Base<TAO_Active_Object_Map_Entry *> map_entries
-        (this->active_object_map_->current_size ());
-
-      size_t counter = 0;
+      std::vector<TAO_Active_Object_Map_Entry *> map_entries;
+      map_entries.reserve (this->active_object_map_->current_size ());
       TAO_Active_Object_Map::user_id_map::iterator end
         = this->active_object_map_->user_id_map_->end ();
 
@@ -463,16 +464,13 @@ namespace TAO
 
           if (!active_object_map_entry->deactivated_)
             {
-              map_entries[counter] = active_object_map_entry;
-              ++counter;
+              map_entries.push_back (active_object_map_entry);
             }
         }
 
-      for (size_t i = 0;
-            i < counter;
-            ++i)
+      for (TAO_Active_Object_Map_Entry * entry : map_entries)
         {
-          this->deactivate_map_entry (map_entries[i]);
+          this->deactivate_map_entry (entry);
         }
     }
 
@@ -859,7 +857,7 @@ namespace TAO
       PortableServer::ObjectId user_id;
 
       if (this->active_object_map_->
-          bind_using_system_id_returning_system_id (0,
+          bind_using_system_id_returning_system_id (nullptr,
                                                     priority,
                                                     system_id.out ()) != 0)
         {
@@ -876,11 +874,11 @@ namespace TAO
 
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
-                                       intf,
-                                       0,
-                                       1,
-                                       priority,
-                                       true);
+                                             intf,
+                                             nullptr,
+                                             1,
+                                             priority,
+                                             true);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
                                                         user_id);
@@ -901,7 +899,7 @@ namespace TAO
       // activated if necessary, or the default servant used, depending on
       // the applicable policies.
 
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
       PortableServer::ObjectId_var system_id;
 
       // @@ We need something that can find the system id using
@@ -937,7 +935,7 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall)
     {
-      TAO_Active_Object_Map_Entry *entry = nullptr;
+      TAO_Active_Object_Map_Entry *entry {};
       int result = this->active_object_map_->
         rebind_using_user_id_and_system_id (servant,
                                             user_id,

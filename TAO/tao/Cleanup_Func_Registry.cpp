@@ -18,13 +18,14 @@ TAO_Cleanup_Func_Registry::register_cleanup_function (ACE_CLEANUP_FUNC func,
     return -1;
 
   this->cleanup_funcs_[slot] = func;
+
   slot_id = slot;
 
   return 0;
 }
 
 void
-TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base <void *> &ts_objects)
+TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
 {
   size_t const len = ts_objects.size ();
 

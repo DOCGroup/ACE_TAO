@@ -53,9 +53,7 @@ namespace ACE
       {
       }
 
-    Request::~Request()
-      {
-      }
+    Request::~Request() = default;
 
     void Request::set_host(const ACE_CString& host, u_short port)
       {

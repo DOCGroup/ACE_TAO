@@ -40,7 +40,12 @@ class Consumer_Input_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Consumer_Input_Handler (Consumer_Handler *consumer_handler);
+  explicit Consumer_Input_Handler (Consumer_Handler *consumer_handler);
+
+  Consumer_Input_Handler (Consumer_Input_Handler const &) = delete;
+  Consumer_Input_Handler &operator= (Consumer_Input_Handler const &) = delete;
+  Consumer_Input_Handler (Consumer_Input_Handler &&) = delete;
+  Consumer_Input_Handler &operator= (Consumer_Input_Handler &&) = delete;
 
   /// Handle the user input.
   int handle_input (ACE_HANDLE) override;
@@ -80,7 +85,7 @@ protected:
 
 private:
   /// The Consumer_Handler object.
-  Consumer_Handler *consumer_handler_;
+  Consumer_Handler *consumer_handler_ {};
 };
 
 #endif /* CONSUMER_INPUT_HANDLER_H */

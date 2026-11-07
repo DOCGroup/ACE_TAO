@@ -6,7 +6,7 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("Messenger.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,29 +38,29 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
     // Initialize the ORB
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
         return 1;
 
     // Get a reference to the POA
-    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var rootPOA = PortableServer::POA::_narrow (obj.in());
+    CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in());
 
     // Active the POA Manager
-    PortableServer::POAManager_var mgr = rootPOA->the_POAManager();
+    PortableServer::POAManager_var const mgr = root_poa->the_POAManager ();
     mgr->activate();
 
     // Create the policies and assign them for the child POA
     CORBA::PolicyList policies(3);
     policies.length(3);
 
-    policies[0] = rootPOA->create_id_assignment_policy(PortableServer::USER_ID);
-    policies[1] = rootPOA->create_request_processing_policy(PortableServer::USE_SERVANT_MANAGER);
-    policies[2] = rootPOA->create_servant_retention_policy(PortableServer::NON_RETAIN);
+    policies[0] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
+    policies[1] = root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
+    policies[2] = root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
     // Create the POA with these policies
-    PortableServer::POA_var childPOA = rootPOA->create_POA("childPOA", mgr.in(), policies);
+    PortableServer::POA_var const child_poa = root_poa->create_POA ("childPOA", mgr.in(), policies);
 
     // Destroy the policy objects
     for (CORBA::ULong i = 0; i != policies.length(); ++i) {
@@ -68,25 +68,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
 
     // Create our Messenger's ServantLocator.
-    PortableServer::ServantLocator_var locator = new Messenger_Locator_i;
+    PortableServer::ServantLocator_var const locator = new Messenger_Locator_i;
 
     // Set the Servant Manager with the childPOA.
-    childPOA->set_servant_manager(locator.in());
+    child_poa->set_servant_manager (locator.in ());
 
     // Get the object id for the user-created ID in the childPOA.
-    PortableServer::ObjectId_var child_oid = PortableServer::string_to_ObjectId("Messenger");
+    PortableServer::ObjectId_var const child_oid =
+      PortableServer::string_to_ObjectId ("Messenger");
 
     // Create the object without creating a servant.
-    CORBA::Object_var messenger_obj =
-      childPOA->create_reference_with_id(child_oid.in(), ::_tc_Messenger->id());
+    CORBA::Object_var const messenger_obj =
+      child_poa->create_reference_with_id (child_oid.in (), ::_tc_Messenger->id ());
 
     // Put the object reference into an IOR string
-    CORBA::String_var str = orb->object_to_string(messenger_obj.in());
+    CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
 
     // Write the IOR string to a file
-    std::ofstream iorFile(ACE_TEXT_ALWAYS_CHAR(ior_output_file)); // Throws exception if there's a problem.
-    iorFile << str.in();
-    iorFile.close();
+    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+    ior_file << str.in ();
 
     std::cout << "IOR written to the file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
 
@@ -94,10 +94,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     orb->run();
 
     // Release resources
-    rootPOA->destroy(true,true);
+    root_poa->destroy (true, true);
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     std::cerr << "Server Caught a CORBA::Exception: " << ex << std::endl;
     return 1;
   }

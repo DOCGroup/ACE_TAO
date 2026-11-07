@@ -7,9 +7,9 @@
 #include "tao/IOPC.h"
 
 // Unreserved (and probably unwanted) ServiceId
-const IOP::ServiceId service_id = 0xdeadbeef;
+constexpr IOP::ServiceId service_id { 0xdeadbeef };
 
-const char magic_cookie[] = "Magic Cookie";
-const CORBA::ULong magic_cookie_len = sizeof(magic_cookie);
+constexpr char magic_cookie[] = "Magic Cookie";
+constexpr CORBA::ULong magic_cookie_len { sizeof (magic_cookie) };
 
 #endif /* Shared_Interceptor__h_ */

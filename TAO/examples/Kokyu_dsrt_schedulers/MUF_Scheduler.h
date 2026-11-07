@@ -10,9 +10,9 @@
 
 struct MUF_Scheduler_Traits
 {
-  typedef RTScheduling::Current::IdType Guid_t;
+  using Guid_t = RTScheduling::Current::IdType;
 
-  typedef TimeBase::TimeT Time_t;
+  using Time_t = TimeBase::TimeT;
   class _Now
   {
   public:
@@ -25,30 +25,30 @@ struct MUF_Scheduler_Traits
 
   struct _QoSDescriptor_t
   {
-    typedef long Criticality_t;
+    using Criticality_t = long;
 
-    typedef TimeBase::TimeT Time_t;
-    typedef _Now Now;
+    using Time_t = TimeBase::TimeT;
+    using Now = _Now;
 
     Criticality_t criticality_;
     Time_t deadline_;
     Time_t exec_time_;
   };
 
-  typedef _QoSDescriptor_t QoSDescriptor_t;
+  using QoSDescriptor_t = _QoSDescriptor_t;
 
-  typedef Kokyu::MUF_Comparator<QoSDescriptor_t> QoSComparator_t;
+  using QoSComparator_t = Kokyu::MUF_Comparator<QoSDescriptor_t>;
 
   class _Guid_Hash
   {
   public:
-    u_long operator () (const Guid_t& id)
+    u_long operator () (Guid_t const &id)
       {
-        return ACE::hash_pjw ((const char *) id.get_buffer (),
+        return ACE::hash_pjw (reinterpret_cast<char const *> (id.get_buffer ()),
                               id.length ());
       }
   };
-  typedef _Guid_Hash Guid_Hash;
+  using Guid_Hash = _Guid_Hash;
 };
 
 class Kokyu_DSRT_Schedulers_Export MUF_Sched_Param_Policy:
@@ -59,15 +59,15 @@ public MUF_Scheduling::SchedulingParameterPolicy,
     MUF_Sched_Param_Policy ();
     MUF_Sched_Param_Policy (const MUF_Sched_Param_Policy &rhs);
 
-    MUF_Scheduling::SchedulingParameter value ();
+    MUF_Scheduling::SchedulingParameter value () override;
 
-    void value (const MUF_Scheduling::SchedulingParameter & value);
+    void value (const MUF_Scheduling::SchedulingParameter & value) override;
 
-     virtual CORBA::Policy_ptr copy ();
+     CORBA::Policy_ptr copy () override;
 
-     virtual CORBA::PolicyType policy_type ();
+     CORBA::PolicyType policy_type () override;
 
-     virtual void destroy ();
+     void destroy () override;
 
  private:
     MUF_Scheduling::SchedulingParameter value_;
@@ -86,71 +86,73 @@ public ::CORBA::LocalObject
   ~MUF_Scheduler ();
 
 
-  virtual MUF_Scheduling::SchedulingParameterPolicy_ptr
-    create_scheduling_parameter (const MUF_Scheduling::SchedulingParameter & value);
+  MUF_Scheduling::SchedulingParameterPolicy_ptr
+    create_scheduling_parameter (
+      const MUF_Scheduling::SchedulingParameter & value) override;
 
   void shutdown ();
 
-  virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                             const char * name,
-                                             CORBA::Policy_ptr sched_param,
-                                             CORBA::Policy_ptr implicit_sched_param);
+  void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
+                                     const char * name,
+                                     CORBA::Policy_ptr sched_param,
+                                     CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                                const char * name,
-                                                CORBA::Policy_ptr sched_param,
-                                                CORBA::Policy_ptr implicit_sched_param);
+  void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+                                        const char * name,
+                                        CORBA::Policy_ptr sched_param,
+                                        CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                          const char * name,
-                                          CORBA::Policy_ptr sched_param,
-                                          CORBA::Policy_ptr implicit_sched_param);
+  void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
+                                  const char * name,
+                                  CORBA::Policy_ptr sched_param,
+                                  CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                       const char * name);
+  void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
+                               const char * name) override;
 
-  virtual void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                              const char * name,
-                                              CORBA::Policy_ptr outer_sched_param);
+  void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+                                      const char * name,
+                                      CORBA::Policy_ptr outer_sched_param) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                RTScheduling::Current::IdType_out guid,
-                                CORBA::String_out name,
-                                CORBA::Policy_out sched_param,
-                                CORBA::Policy_out implicit_sched_param);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
+                        RTScheduling::Current::IdType_out guid,
+                        CORBA::String_out name,
+                        CORBA::Policy_out sched_param,
+                        CORBA::Policy_out implicit_sched_param) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void cancel (const RTScheduling::Current::IdType & guid);
+  void cancel (const RTScheduling::Current::IdType & guid) override;
 
-  virtual CORBA::PolicyList * scheduling_policies ();
+  CORBA::PolicyList * scheduling_policies () override;
 
-  virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
+  void scheduling_policies (const CORBA::PolicyList & scheduling_policies) override;
 
-  virtual CORBA::PolicyList * poa_policies ();
+  CORBA::PolicyList * poa_policies () override;
 
-  virtual char * scheduling_discipline_name ();
+  char * scheduling_discipline_name () override;
 
-  virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
-                                                                     CORBA::Policy_ptr scheduling_parameter);
+  RTScheduling::ResourceManager_ptr create_resource_manager (
+    const char * name,
+    CORBA::Policy_ptr scheduling_parameter) override;
 
-  virtual void set_scheduling_parameter (PortableServer::Servant & resource,
-                                         const char * name,
-                                         CORBA::Policy_ptr scheduling_parameter);
+  void set_scheduling_parameter (PortableServer::Servant & resource,
+                                 const char * name,
+                                 CORBA::Policy_ptr scheduling_parameter) override;
 
  private:
   CORBA::ORB_var orb_;

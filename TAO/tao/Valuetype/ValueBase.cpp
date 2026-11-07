@@ -13,7 +13,7 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/ValueBase.inl"
@@ -388,9 +388,9 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
 
   CORBA::ValueFactory_var factory;
   CORBA::Boolean requires_truncation = false;
-  const size_t num_ids = ids.size ();
+  std::size_t const num_ids = ids.size ();
   const char *id = (num_ids) ? ids[0].c_str () : "{Null}";
-  for (size_t i = 0u; i < num_ids; ++i)
+  for (std::size_t i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
   if (factory.in() != nullptr)
@@ -528,7 +528,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
           return false;
         }
 
-      if (!ACE_OS::strcmp (id.c_str(), repo_id_expected))
+      if (!std::strcmp (id.c_str(), repo_id_expected))
       {  // Repository ids matched as expected
         return true;
       }
@@ -554,7 +554,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
       return false;
     }
 
-  size_t const buffer_size = -(offset) + sizeof (CORBA::Long);
+  std::size_t const buffer_size = -(offset) + sizeof (CORBA::Long);
   // Cribbed from tc_demarshal_indirection in Typecode_CDR_Extraction.cpp
   indirected_strm = TAO_InputCDR (strm.rd_ptr () + offset - sizeof (CORBA::Long),
     buffer_size,
@@ -598,7 +598,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
         }
     }
 
-  void * v = nullptr;
+  void * v {};
   if (strm.get_value_map()->get()->find (pos, v) != 0)
     {
       if (TAO_debug_level > 0)
@@ -716,7 +716,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
     // value indirection
     VERIFY_MAP (TAO_OutputCDR, value_map, Value_Map);
-    char* pos = nullptr;
+    char* pos {};
     if (strm.get_value_map ()->get()->find (const_cast <CORBA::ValueBase *> (value), pos) == 0)
     {
       if (TAO_debug_level)
@@ -888,7 +888,7 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
 
   VERIFY_MAP (TAO_OutputCDR, repo_id_map, Repo_Id_Map);
-  char* pos = nullptr;
+  char* pos {};
   if (strm.get_repo_id_map ()->get()->find (id, pos) == 0)
   {
     if (!strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
@@ -1217,7 +1217,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 {
   CORBA::ULong length = 0;
 
-  size_t buffer_size = strm.length();
+  std::size_t buffer_size = strm.length();
 
   if (!strm.read_ulong (length))
     {
@@ -1264,7 +1264,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
         pos, mapped_id.c_str ()));
     }
 
-    if (ACE_OS::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
+    if (std::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
       {
         if (TAO_debug_level > 0)
           {
@@ -1307,7 +1307,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
 {
   CORBA::ULong length = 0;
 
-  size_t buffer_size = strm.length();
+  std::size_t buffer_size = strm.length();
 
   if (!strm.read_ulong (length))
     {
@@ -1353,7 +1353,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %@=%C\n"),
         pos, mapped_url.c_str ()));
     }
-    if (ACE_OS::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
+    if (std::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
       {
         if (TAO_debug_level > 0)
           {

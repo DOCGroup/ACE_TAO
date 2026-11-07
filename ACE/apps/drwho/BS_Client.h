@@ -33,7 +33,7 @@ public:
    * traditional binary search.
    */
   virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN);
+                                   int max_len = MAXUSERIDNAMELEN) override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -42,7 +42,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry ();
+  virtual Protocol_Record *get_each_entry () override;
 };
 
 #endif /* _BS_CLIENT_H */

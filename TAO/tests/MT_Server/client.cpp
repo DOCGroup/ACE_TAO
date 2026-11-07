@@ -1,90 +1,89 @@
 #include "ace/Get_Opt.h"
-#include "ace/Task.h"
+#include "ace/SString.h"
 #include "testC.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 5;
-int do_shutdown = 0;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  int niterations {5};
+  bool do_shutdown {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:i:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        options.do_shutdown = true;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior> -i <niterations> -x\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Client_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
-      for (int i = 0; i != niterations; ++i)
+      for (int i {}; i != options.niterations; ++i)
         {
-          CORBA::Long r =
+          CORBA::Long const r =
             server->test_method (i);
 
           if (r != i)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) unexpected result = %d for %d",
+                          "(%P|%t) unexpected result = %d for %d\n",
                           r, i));
             }
         }
 
-      if (do_shutdown)
+      if (options.do_shutdown)
         {
           server->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -30,10 +30,14 @@ class Multiple
   //   via the Cos Event Service.
  public:
   /// Constructor.
-  Multiple ();
+  Multiple () = default;
+  Multiple (Multiple const &) = delete;
+  Multiple (Multiple &&) = delete;
+  Multiple &operator= (Multiple const &) = delete;
+  Multiple &operator= (Multiple &&) = delete;
 
   /// Destructor.
-  virtual ~Multiple ();
+  virtual ~Multiple () = default;
 
   /// Calls parse_args, Starts up an ORB, gets hold of the Event Service.
   /// Returns 0 on success, -1 on error.
@@ -50,10 +54,10 @@ class Multiple
   virtual int parse_args (int argc, ACE_TCHAR *argv []) = 0;
 
   /// Reference to a running Event Service.
-  CosEventChannelAdmin::EventChannel_ptr cos_ec_;
+  CosEventChannelAdmin::EventChannel_ptr cos_ec_ {};
 
   /// The name with which to locate the Event Service.
-  const ACE_TCHAR *service_name_;
+  ACE_TCHAR const *service_name_ {ACE_TEXT ("CosEventService")};
 
  private:
   /// initializes the ORB.
@@ -65,7 +69,7 @@ class Multiple
   int init_CosEC ();
 
   /// The ORB that we use.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// An instance of the name client used for resolving the factory
   /// objects.

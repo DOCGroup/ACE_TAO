@@ -32,11 +32,11 @@ template <class TYPE, class FUNCTOR> ACE_INLINE
 ACE_Timer_Queue_Upcall_Base<TYPE, FUNCTOR>::ACE_Timer_Queue_Upcall_Base (FUNCTOR * upcall_functor)
   : ACE_Abstract_Timer_Queue<TYPE>()
   , upcall_functor_(upcall_functor)
-  , delete_upcall_functor_ (upcall_functor == 0)
+  , delete_upcall_functor_ (upcall_functor == nullptr)
 {
   ACE_TRACE ("ACE_Timer_Queue_Upcall_Base::ACE_Timer_Queue_Upcall_Base");
 
-  if (upcall_functor != 0)
+  if (upcall_functor != nullptr)
     {
       return;
     }
@@ -171,15 +171,15 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor,
                                           ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
-                                          TIME_POLICY const & time_policy)
+                                          TIME_POLICY const &time_policy)
   : ACE_Timer_Queue_Upcall_Base<TYPE,FUNCTOR>(upcall_functor),
     time_policy_ (time_policy),
-    delete_free_list_ (freelist == 0),
+    delete_free_list_ (freelist == nullptr),
     timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::ACE_Timer_Queue_T");
 
-  if (!freelist)
+  if (freelist == nullptr)
     ACE_NEW (free_list_,
              (ACE_Locked_Free_List<ACE_Timer_Node_T<TYPE>,ACE_Null_Mutex>));
   else
@@ -215,10 +215,10 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::mutex ()
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> long
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule (const TYPE &type,
-                                                      const void *act,
-                                                      const ACE_Time_Value &future_time,
-                                                      const ACE_Time_Value &interval)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule (TYPE const &type,
+                                                      void const *act,
+                                                      ACE_Time_Value const &future_time,
+                                                      ACE_Time_Value const &interval)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
@@ -255,7 +255,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire ()
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_Value &cur_time)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (ACE_Time_Value const &cur_time)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::expire");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
@@ -276,7 +276,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
       ACE_MT (ACE_Reverse_Lock<ACE_LOCK> rev_lk(this->mutex_));
       ACE_MT (ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_LOCK>, rmon, rev_lk, -1));
 
-      const void *upcall_act = nullptr;
+      void const *upcall_act {};
 
       this->preinvoke (info, cur_time, upcall_act);
 
@@ -294,7 +294,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::recompute_next_abs_interval_time
     (ACE_Timer_Node_T<TYPE> *expired,
-     const ACE_Time_Value &cur_time)
+     ACE_Time_Value const &cur_time)
 {
   if ( expired->get_timer_value () <= cur_time )
     {
@@ -327,7 +327,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::recompute_next_abs_inte
       // Compute the span between the current time and when
       // the timer would have expired in the past (and
       // normalize to microseconds).
-      ACE_Time_Value old_diff = cur_time - expired->get_timer_value ();
+      ACE_Time_Value const old_diff = cur_time - expired->get_timer_value ();
       ACE_UINT64 old_diff_usec;
       old_diff.to_usec (old_diff_usec);
 
@@ -336,12 +336,12 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::recompute_next_abs_inte
       // modulo arithmetic accomodates the likely case that
       // the current time doesn't fall precisely on a timer
       // firing interval.
-      ACE_UINT64 new_timer_usec =
+      ACE_UINT64 const new_timer_usec =
         interval_usec - (old_diff_usec % interval_usec);
 
       // Compute the absolute time in the future when this
       // interval timer should expire.
-      ACE_Time_Value new_timer_value
+      ACE_Time_Value const new_timer_value
         (cur_time.sec ()
          + static_cast<time_t>(new_timer_usec / ACE_ONE_SECOND_IN_USECS),
          cur_time.usec ()
@@ -377,7 +377,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire_single (
   }
   // We do not need the lock anymore, all these operations take place
   // with local variables.
-  const void *upcall_act = nullptr;
+  void const *upcall_act {};
 
   // Preinvoke (handles refcount if needed, etc.)
   this->preinvoke (info, cur_time, upcall_act);
@@ -396,7 +396,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire_single (
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dispatch_info_i (const ACE_Time_Value &cur_time,
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dispatch_info_i (ACE_Time_Value const &cur_time,
                                                              ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::dispatch_info_i");

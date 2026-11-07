@@ -11,11 +11,11 @@
 
 JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency ()
   : number_of_threads_ (5)
-  , shutdown_task_ (0)
-  , error_ (0)
+  , shutdown_task_ (false)
+  , error_ (false)
 {
-  const char *value = JAWS_Options::instance ()->getenv ("JAWS_TPOOL_THREADS");
-  if (value != 0)
+  char const *value = JAWS_Options::instance ()->getenv ("JAWS_TPOOL_THREADS");
+  if (value != nullptr)
     this->number_of_threads_ = ACE_OS::atoi (value);
   else
     this->number_of_threads_ = ACE_OS::atoi (JAWS_DEFAULT_TPOOL_THREADS);
@@ -29,8 +29,8 @@ JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency ()
   if (r < 0)
     {
       // ACE_ERROR
-      this->error_ = 1;
-      this->shutdown_task_ = 1;
+      this->error_ = true;
+      this->shutdown_task_ = true;
     }
 }
 
@@ -47,14 +47,14 @@ JAWS_TPOOL_Concurrency::putq (JAWS_Protocol_Handler *ph)
 int
 JAWS_TPOOL_Concurrency::getq (JAWS_Protocol_Handler *&ph)
 {
-  ph = 0;
+  ph = nullptr;
 
   JAWS_CONCURRENCY_TASK *task = this;
 
   if (this->shutdown_task_ && task->msg_queue ()->message_count () == 0)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   int result = task->getq (mb);
 
@@ -62,10 +62,10 @@ JAWS_TPOOL_Concurrency::getq (JAWS_Protocol_Handler *&ph)
     {
       ph = (JAWS_Protocol_Handler *) mb->base ();
 
-      if (ph == 0)
+      if (ph == nullptr)
         {
           // Shutdown this task;
-          this->shutdown_task_ = 1;
+          this->shutdown_task_ = true;
           if (this->number_of_threads_ && this->number_of_threads_-- > 1)
             {
               task->putq (mb);

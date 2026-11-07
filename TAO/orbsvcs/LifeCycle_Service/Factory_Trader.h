@@ -18,7 +18,7 @@
 class Factory_Trader
 {
 public:
-  Factory_Trader (int debug_level = 1);
+  explicit Factory_Trader (int debug_level = 1);
   Factory_Trader (Factory_Trader const &) = delete;
   Factory_Trader (Factory_Trader &&) = delete;
   Factory_Trader &operator= (Factory_Trader const &) = delete;
@@ -40,9 +40,9 @@ public:
   static char const * GENERIC_FACTORY_INTERFACE_REPOSITORY_ID;
 private:
   TAO_Service_Type_Repository repository_;
-  TAO_Trader_Factory::TAO_TRADER * trader_ptr_;
-  TAO_Trading_Components_i * trading_Components_ptr_;
-  TAO_Support_Attributes_i * support_Attributes_ptr_;
+  TAO_Trader_Factory::TAO_TRADER * trader_ptr_ {};
+  TAO_Trading_Components_i * trading_Components_ptr_ {};
+  TAO_Support_Attributes_i * support_Attributes_ptr_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;

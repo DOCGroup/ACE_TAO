@@ -33,6 +33,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_File_Lock
 {
 public:
+  ACE_File_Lock (ACE_File_Lock const &) = delete;
+  ACE_File_Lock (ACE_File_Lock &&) = delete;
+  ACE_File_Lock &operator= (ACE_File_Lock const &) = delete;
+  ACE_File_Lock &operator= (ACE_File_Lock &&) = delete;
+
   /**
    * Set the <handle_> of the File_Lock to @a handle.  Note that this
    * constructor assumes ownership of the @a handle and will close it
@@ -151,10 +156,6 @@ protected:
   /// Keeps track of whether to unlink the underlying file in the
   /// destructor.
   bool const unlink_in_destructor_;
-
-private:
-  void operator= (const ACE_File_Lock &) = delete;
-  ACE_File_Lock (const ACE_File_Lock &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

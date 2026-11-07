@@ -39,15 +39,14 @@ class TAO_Export TAO_Service_Context_Registry
 
     ~TAO_Service_Context_Registry ();
 
-    /**
-     * Bind a new entry in the registry
-     */
-    int bind (IOP::ServiceId id, TAO_Service_Context_Handler* handler);
+    /// Bind a new entry, taking ownership of the handler.
+    /// The handler is destroyed if the ID is already registered.
+    int bind (IOP::ServiceId id, TAO_Service_Context_Handler *handler);
 
     /**
      * Retrieve the entry related to @a id
      */
-    TAO_Service_Context_Handler* operator[] (IOP::ServiceId id);
+    TAO_Service_Context_Handler *operator[] (IOP::ServiceId id);
 
     int process_service_contexts (
       IOP::ServiceContextList &sc,
@@ -56,7 +55,7 @@ class TAO_Export TAO_Service_Context_Registry
 
     int generate_service_context (
       TAO_Stub *stub,
-      TAO_Transport& transport,
+      TAO_Transport &transport,
       TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg);
@@ -68,11 +67,10 @@ class TAO_Export TAO_Service_Context_Registry
     TAO_Service_Context_Registry &operator= (TAO_Service_Context_Registry &&) = delete;
 
     using Table = ACE_Array_Map<IOP::ServiceId,
-                                TAO_Service_Context_Handler*>;
+                                TAO_Service_Context_Handler *>;
     using key_type = Table::key_type;
     using data_type = Table::data_type;
     using value_type = Table::value_type;
-    using size_type = Table::size_type;
     using iterator = value_type *;
 
     Table registry_;

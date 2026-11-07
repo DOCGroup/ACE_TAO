@@ -41,7 +41,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
+      explicit IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

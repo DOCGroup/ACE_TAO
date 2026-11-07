@@ -10,16 +10,15 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-  if (orb.in () == 0)
+  if (orb.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to create orb\n")), -1);
 
   CORBA::Object_var obj =
     orb->resolve_initial_references ("TAO::Transport::Current");
 
-  if (obj.in () == 0)
+  if (obj.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to get the Transport Current\n")), -1);
-
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testCurrentORBInitializer: OK\n")));
   return 0;
@@ -29,19 +28,19 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 int
 testCurrentLoader (int, char *[])
 {
-  ACE_Service_Object *factory = 0;
+  ACE_Service_Object *factory = nullptr;
 
   factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
     (ACE_TEXT ("TAO_Transport_Current_Loader"));
 
-  int done =
+  bool const done =
 #if defined (TAO_AS_STATIC_LIBS)
     true;
 #else
-  (factory != 0);
+  (factory != nullptr);
 #endif /* TAO_AS_STATIC_LIBS */
 
-  if (factory == 0)
+  if (factory == nullptr)
     {
       if (done)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -51,11 +50,12 @@ testCurrentLoader (int, char *[])
         {
 #if !defined (TAO_AS_STATIC_LIBS)
           int ret = ACE_Service_Config::process_directive
-            (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
-                                           "TAO_Transport_Current",
-                                           TAO_VERSION
-                                           "_make_TAO_Transport_Current_Loader",
-                                           ""));
+            (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+               "TAO_Transport_Current_Loader",
+               "TAO_Transport_Current",
+               TAO_VERSION,
+               "_make_TAO_Transport_Current_Loader",
+               ""));
           ACE_ASSERT (ret == 0);
 
           factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
@@ -65,7 +65,7 @@ testCurrentLoader (int, char *[])
         }
     }
 
-  //  ACE_ASSERT (factory != 0);
+  //  ACE_ASSERT (factory != nullptr);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testCurrentLoader: OK\n")));
   return 0;
 }

@@ -2,7 +2,7 @@
 
 // This function runs the Logging service test.
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Logger_Client logger_client;
 

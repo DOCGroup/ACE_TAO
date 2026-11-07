@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 
 ServerRequestInterceptor::ServerRequestInterceptor (
-  const char * orb_id,
+  char const *orb_id,
   PortableServer::Current_ptr poa_current)
   : orb_id_ (orb_id),
     poa_current_ (PortableServer::Current::_duplicate (poa_current))
@@ -48,7 +48,7 @@ ServerRequestInterceptor::receive_request (
     {
       poa = this->poa_current_->get_POA ();
     }
-  catch (const PortableServer::Current::NoContext& ex)
+    catch (PortableServer::Current::NoContext const &ex)
     {
       ex._tao_print_exception ("ServerRequestInterceptor::receive_request");
 
@@ -71,7 +71,7 @@ ServerRequestInterceptor::receive_request (
               "POA Hierarchy:\n"
               "==============\n"));
 
-  const CORBA::ULong len = name->length ();
+  CORBA::ULong const len = name->length ();
 
   // Make sure there is more than one AdapterName in the AdapterName
   // sequence since the servant should have been registered with a

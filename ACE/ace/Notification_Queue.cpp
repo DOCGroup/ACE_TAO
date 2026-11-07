@@ -11,11 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Notification_Queue_Node)
 
 ACE_Notification_Queue::ACE_Notification_Queue()
-  : alloc_queue_()
-  , notify_queue_()
-  , free_queue_()
-{
-}
+  = default;
 
 ACE_Notification_Queue::~ACE_Notification_Queue()
 {
@@ -130,7 +126,7 @@ ACE_Notification_Queue::purge_pending_notifications(
       // ... this is the more complicated case, we want to remove the
       // node from the notify_queue_ list.  First save the next node
       // on the list:
-      ACE_Notification_Queue_Node * next = node->next();
+      ACE_Notification_Queue_Node * const next = node->next();
 
       // ... then remove it ...
       notify_queue_.unsafe_remove(node);
@@ -156,13 +152,10 @@ ACE_Notification_Queue::push_new_notification(
 {
   ACE_TRACE ("ACE_Notification_Queue::push_new_notification");
 
-  bool notification_required = false;
-
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
   // No pending notifications.
-  if (this->notify_queue_.is_empty ())
-    notification_required = true;
+  bool const notification_required = this->notify_queue_.is_empty ();
 
   if (free_queue_.is_empty())
     {

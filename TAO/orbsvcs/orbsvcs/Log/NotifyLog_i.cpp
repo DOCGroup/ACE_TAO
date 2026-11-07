@@ -17,8 +17,8 @@ TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
 {
   CosNotifyChannelAdmin::ChannelID channel_id;
 
-  CosNotification::QoSProperties initial_qos;
-  CosNotification::AdminProperties initial_admin;
+  CosNotification::QoSProperties const initial_qos;
+  CosNotification::AdminProperties const initial_admin;
 
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
@@ -37,7 +37,7 @@ TAO_NotifyLog_i::~TAO_NotifyLog_i ()
 DsLogAdmin::Log_ptr
 TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
 {
-  DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
+  DsNotifyLogAdmin::NotifyLogFactory_var const notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
 
   CosNotification::QoSProperties* qos = get_qos ();
@@ -45,8 +45,13 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
   CosNotification::AdminProperties* admin = get_admin ();
 
   DsNotifyLogAdmin::NotifyLog_var log =
-    notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
-                               static_cast<const CosNotification::AdminProperties> (*admin), id);
+    notifyLogFactory->create (
+        DsLogAdmin::halt,
+        0,
+        thresholds_,
+        static_cast<CosNotification::QoSProperties const &> (*qos),
+        static_cast<CosNotification::AdminProperties const &> (*admin),
+        id);
 
   this->copy_attributes (log.in ());
 
@@ -56,7 +61,7 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
 DsLogAdmin::Log_ptr
 TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
 {
-  DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
+  DsNotifyLogAdmin::NotifyLogFactory_var const notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
 
   CosNotification::QoSProperties* qos = get_qos ();
@@ -64,8 +69,13 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
   CosNotification::AdminProperties* admin = get_admin ();
 
   DsNotifyLogAdmin::NotifyLog_var log =
-    notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
-                               static_cast<const CosNotification::AdminProperties> (*admin));
+    notifyLogFactory->create_with_id (
+        id,
+        DsLogAdmin::halt,
+        0,
+        thresholds_,
+        static_cast<CosNotification::QoSProperties const &> (*qos),
+        static_cast<CosNotification::AdminProperties const &> (*admin));
 
   this->copy_attributes (log.in ());
 
@@ -82,7 +92,7 @@ TAO_NotifyLog_i::destroy ()
   this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     this->poa_->servant_to_id (this);
 
   this->poa_->deactivate_object (id.in ());
@@ -92,7 +102,7 @@ void
 TAO_NotifyLog_i::activate ()
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
+  CosNotifyChannelAdmin::InterFilterGroupOperator const ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
   this->consumer_admin_ =
@@ -204,7 +214,7 @@ TAO_NotifyLog_i::get_admin ()
 }
 
 void
-TAO_NotifyLog_i::set_admin (const CosNotification::AdminProperties& admin)
+TAO_NotifyLog_i::set_admin (CosNotification::AdminProperties const &admin)
 {
   this->event_channel_->set_admin (admin);
 }
@@ -217,7 +227,7 @@ TAO_NotifyLog_i::get_qos ()
 }
 
 void
-TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& /* qos */)
+TAO_NotifyLog_i::set_qos (CosNotification::QoSProperties const & /* qos */)
 {
   throw CORBA::NO_IMPLEMENT ();
   //TODO: need to add later
@@ -225,7 +235,7 @@ TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& /* qos */)
 
 void
 TAO_NotifyLog_i::validate_qos (
-    const CosNotification::QoSProperties& /* required_qos */,
+    CosNotification::QoSProperties const & /* required_qos */,
     CosNotification::NamedPropertyRangeSeq_out /* available_qos */)
 {
   throw CORBA::NO_IMPLEMENT ();

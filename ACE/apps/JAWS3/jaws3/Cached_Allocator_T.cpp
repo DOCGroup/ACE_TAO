@@ -6,7 +6,7 @@
 template <class T, class ACE_LOCK> char *
 JAWS_Cached_Allocator<T, ACE_LOCK>::get_next_pool (char *pool)
 {
-  char *next = 0;
+  char *next = nullptr;
   char *next_indirect = pool + (this->pool_size_);
   ACE_OS::memcpy (&next, next_indirect, sizeof (char *));
   return next;
@@ -22,17 +22,17 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::set_next_pool (char *pool, char *next_pool)
 template <class T, class ACE_LOCK> void
 JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool ()
 {
-  char *new_pool = 0;
+  char *new_pool = nullptr;
   ACE_NEW (new_pool, char[this->pool_size_ + sizeof (char *)]);
 
   for (size_t c = 0; c < (this->pool_size_ / sizeof (T)); c++)
     {
       void* placement = new_pool + c * sizeof(T);
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
-      this->set_next_pool (new_pool, 0);
+      this->set_next_pool (new_pool, nullptr);
     }
 
-  if (this->pool_head_ == 0)
+  if (this->pool_head_ == nullptr)
     this->pool_head_ = this->pool_tail_ = new_pool;
   else
     this->set_next_pool (this->pool_tail_, new_pool);
@@ -43,8 +43,8 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool ()
 template <class T, class ACE_LOCK>
 JAWS_Cached_Allocator<T, ACE_LOCK>::JAWS_Cached_Allocator (size_t n_chunks)
   : pool_size_ (n_chunks * sizeof (T))
-  , pool_head_ (0)
-  , pool_tail_ (0)
+  , pool_head_ (nullptr)
+  , pool_tail_ (nullptr)
   , free_list_ (ACE_PURE_FREE_LIST)
 {
   this->extend_pool ();
@@ -67,16 +67,16 @@ template <class T, class ACE_LOCK> void *
 JAWS_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
 {
   if (nbytes > sizeof (T))
-    return 0;
+    return nullptr;
 
-  ACE_Cached_Mem_Pool_Node<T> *node = 0;
+  ACE_Cached_Mem_Pool_Node<T> *node = nullptr;
   node = this->free_list_.remove ();
 
-  if (node == 0)
+  if (node == nullptr)
     {
       this->extend_pool ();
       node = this->free_list_.remove ();
-      // ASSERT node != 0
+      // ASSERT node != nullptr
     }
 
   // addr() call is really not absolutely necessary because of the way
@@ -94,17 +94,17 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::free (void *ptr)
 template <class T> JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> *
 JAWS_TSS_Cached_Allocator<T>::ts_allocator ()
 {
-  JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> *ts_obj = 0;
+  JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> *ts_obj = nullptr;
 
   ts_obj = this->ts_allocator_.ts_object ();
 
   // Don't need double-check locking since this value is
   // obtained from a thread specific context.
-  if (ts_obj == 0)
+  if (ts_obj == nullptr)
     {
       ACE_NEW_RETURN (ts_obj,
                       JAWS_CACHED_ALLOCATOR(T) (this->n_chunks_),
-                      0);
+                      nullptr);
       this->ts_allocator_.ts_object (ts_obj);
     }
 

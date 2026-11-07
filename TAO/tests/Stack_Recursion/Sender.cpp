@@ -1,10 +1,10 @@
 #include "Sender.h"
 
 Sender::Sender (CORBA::ORB_ptr orb)
-  :  message_count_ (0)
-  ,  byte_count_ (0)
+  :  message_count_ {}
+  ,  byte_count_ {}
   ,  orb_ (CORBA::ORB::_duplicate (orb))
-  ,  is_done_ (false)
+  ,  is_done_ {}
 {
 }
 
@@ -32,7 +32,7 @@ Sender::get_data (CORBA::ULong size,
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     this->mutex_,
-                    0);
+                    false);
 
   ++this->message_count_;
   payload =
@@ -40,7 +40,7 @@ Sender::get_data (CORBA::ULong size,
   payload->length (size);
   this->byte_count_ += size;
 
-  return 1;
+  return true;
 }
 
 CORBA::Long
@@ -62,13 +62,13 @@ Sender::ping ()
 void
 Sender::shutdown ()
 {
-  if (this->is_done_ == false)
+  if (!this->is_done_)
     {
       ACE_GUARD (TAO_SYNCH_MUTEX,
                  ace_mon,
                  this->mutex_);
 
-      if (this->is_done_ == false)
+      if (!this->is_done_)
         this->is_done_ = true;
     }
 }

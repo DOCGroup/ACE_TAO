@@ -15,7 +15,7 @@ namespace ACE
   namespace Monitor_Control
   {
     int
-    Constraint_Interpreter::build_tree (const char *constraints)
+    Constraint_Interpreter::build_tree (char const* constraints)
     {
       if (ETCL_Interpreter::is_empty_string (constraints))
         {

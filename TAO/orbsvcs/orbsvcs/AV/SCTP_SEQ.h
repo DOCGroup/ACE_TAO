@@ -16,6 +16,7 @@
 
 #if defined (ACE_HAS_SCTP)
 
+#include <list>
 #include <memory>
 #include "ace/Service_Config.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
@@ -29,8 +30,8 @@ extern "C" {
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-using Interface_Seq = ACE_Unbounded_Set<ACE_CString>;
-using Interface_Seq_Itor = ACE_Unbounded_Set_Iterator<ACE_CString>;
+using Interface_Seq = std::list<ACE_CString>;
+using Interface_Seq_Itor = Interface_Seq::iterator;
 
 using Secondary_Addr_Map = ACE_Hash_Map_Manager<ACE_CString, Interface_Seq, ACE_Null_Mutex>;
 using Secondary_Addr_Map_Entry = ACE_Hash_Map_Entry<ACE_CString, Interface_Seq>;
@@ -47,7 +48,7 @@ public:
   TAO_AV_SCTP_SEQ_Factory ();
   ~TAO_AV_SCTP_SEQ_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -65,7 +66,7 @@ class TAO_AV_Export TAO_AV_SCTP_SEQ_Transport
 public:
   TAO_AV_SCTP_SEQ_Transport ();
 
-  TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler);
+  explicit TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler);
 
   ~TAO_AV_SCTP_SEQ_Transport () override;
   int open (ACE_Addr *addr) override;
@@ -109,8 +110,8 @@ public:
   TAO_AV_SCTP_SEQ_Flow_Handler *handler () { return this->handler_; }
 
 protected:
-  TAO_AV_SCTP_SEQ_Flow_Handler *handler_;
-  ACE_Addr *addr_;
+  TAO_AV_SCTP_SEQ_Flow_Handler *handler_ {};
+  ACE_Addr *addr_ {};
   ACE_INET_Addr peer_addr_;
 };
 
@@ -122,7 +123,7 @@ class TAO_AV_SCTP_SEQ_Flow_Handler
    public ACE_Svc_Handler <ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
 {
 public:
-  TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback *callback = nullptr);
+  explicit TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback *callback = nullptr);
   ~TAO_AV_SCTP_SEQ_Flow_Handler () override;
   TAO_AV_Transport *transport ();
   int open (void * = nullptr) override;
@@ -133,7 +134,7 @@ public:
   int change_qos (AVStreams::QoS) override;
 
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
 };
 
 class TAO_AV_SCTP_SEQ_Acceptor;
@@ -146,13 +147,13 @@ class TAO_AV_SCTP_SEQ_Base_Acceptor  :public ACE_Acceptor <TAO_AV_SCTP_SEQ_Flow_
  public:
   virtual int acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor,
                              ACE_Reactor *reactor,
-                             const ACE_INET_Addr &local_addr,
+                             ACE_INET_Addr const &local_addr,
                              TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
  protected:
-  TAO_AV_SCTP_SEQ_Acceptor *acceptor_;
-  ACE_Reactor *reactor_;
-  TAO_FlowSpec_Entry *entry_;
+  TAO_AV_SCTP_SEQ_Acceptor *acceptor_ {};
+  ACE_Reactor *reactor_ {};
+  TAO_FlowSpec_Entry *entry_ {};
 };
 
 /**
@@ -183,11 +184,11 @@ public:
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 
 protected:
-  ACE_INET_Addr *address_;
+  ACE_INET_Addr *address_ {};
   TAO_AV_SCTP_SEQ_Base_Acceptor acceptor_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 class TAO_AV_SCTP_SEQ_Connector;
@@ -202,12 +203,12 @@ public:
   int connector_open (TAO_AV_SCTP_SEQ_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
-                         const ACE_Multihomed_INET_Addr &remote_addr,
-                         const ACE_Multihomed_INET_Addr &local_addr);
+                         ACE_Multihomed_INET_Addr const &remote_addr,
+                         ACE_Multihomed_INET_Addr const &local_addr);
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
 protected:
-  TAO_AV_SCTP_SEQ_Connector *connector_;
-  ACE_Reactor *reactor_;
+  TAO_AV_SCTP_SEQ_Connector *connector_ {};
+  ACE_Reactor *reactor_ {};
 };
 
 /**
@@ -231,11 +232,11 @@ public:
   int close () override;
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
   TAO_AV_SCTP_SEQ_Base_Connector connector_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 /**

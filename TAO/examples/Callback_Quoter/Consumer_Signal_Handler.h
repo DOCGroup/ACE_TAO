@@ -33,12 +33,17 @@ class Consumer_Signal_Handler : public ACE_Event_Handler
 public:
   /// The consumer_handler reference will be used to access the servant
   /// methods.
-  Consumer_Signal_Handler (Consumer_Handler *consumer_handler);
+  explicit Consumer_Signal_Handler (Consumer_Handler *consumer_handler);
+
+  Consumer_Signal_Handler (Consumer_Signal_Handler const &) = delete;
+  Consumer_Signal_Handler &operator= (Consumer_Signal_Handler const &) = delete;
+  Consumer_Signal_Handler (Consumer_Signal_Handler &&) = delete;
+  Consumer_Signal_Handler &operator= (Consumer_Signal_Handler &&) = delete;
 
   /// This method takes action on an signal event.
   int handle_signal (int signum,
-                     siginfo_t*,
-                     ucontext_t*) override;
+                     siginfo_t *,
+                     ucontext_t *) override;
 
   /**
    * For removal of the signal handler from the dispatch tables.  When
@@ -58,7 +63,7 @@ private:
 
   /// Reference to the Consumer_Handler which is used in accessing the
   /// servant methods.
-  Consumer_Handler *consumer_handler_;
+  Consumer_Handler *consumer_handler_ {};
 };
 
 #endif /* CONSUMER_SIGNAL_HANDLER_H */

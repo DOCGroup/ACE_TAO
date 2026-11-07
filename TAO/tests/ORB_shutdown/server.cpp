@@ -1,6 +1,5 @@
 #include "Foo_Bar.h"
 #include "ace/Time_Value.h"
-#include "ace/Get_Opt.h"
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -11,7 +10,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -24,7 +23,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Foo_Bar *foobar_impl;
+      // Keep the servant pointer until ownership transfers to ServantBase_var below.
+      Foo_Bar *foobar_impl = nullptr;
       ACE_NEW_RETURN (foobar_impl,
                       Foo_Bar (orb.in ()),
                       1);
@@ -46,10 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::ServantBase_var owner_transfer (foobar_impl);
       }
 
-      ACE_Time_Value tv (10,
-                         0);
+      ACE_Time_Value tv (10);
 
-      // Just run the ORB for a minute..
+      // Just run the ORB for ten seconds.
       orb->run (tv);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -64,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

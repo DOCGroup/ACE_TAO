@@ -4,10 +4,8 @@
 
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -33,34 +31,37 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-dump_node (BaseNode *bn, int indent)
+dump_node (BaseNode *const bn, int const indent)
 {
-  if (bn == 0) return;
+  if (bn == nullptr)
+    {
+      return;
+    }
 
   // This is ugly I know
   int i = indent;
   for (; i != 0; i--) ACE_DEBUG ((LM_DEBUG, "  "));
 
   StringNode *sn = StringNode::_downcast (bn);
-  if (sn != 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
-               bn,
-               sn->name ()));
-  }
+  if (sn != nullptr)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
+                  bn,
+                  sn->name ()));
+    }
   else
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "%x <BaseNode>\n",
-                bn));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%x <BaseNode>\n",
+                  bn));
+    }
 
   dump_node (bn->left (), indent + 1);
   dump_node (bn->right (), indent + 1);
 }
 
 void
-dump_tree (TreeController *tc)
+dump_tree (TreeController *const tc)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) start tree dump <%x>\n",
@@ -73,23 +74,24 @@ dump_tree (TreeController *tc)
               tc));
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = 0;
+      BaseNode_init *bn_factory {};
       ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
@@ -99,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = 0;
+      TreeController_init *tc_factory {};
       ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
@@ -109,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = 0;
+      StringNode_init *sn_factory {};
       ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);
@@ -122,17 +124,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
-      Test_var test = Test::_narrow(tmp.in ());
+      Test_var test = Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil Test reference <%s>\n",
-                           ior),
-                          1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil Test reference <%s>\n",
+                             ior),
+                            1);
+        }
 
       // Now build simple graph (tree in our case).
 
@@ -147,7 +149,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
-        sn->name ((const char*)("RootNode"));
+        sn->name ("RootNode");
         tc->root (sn);
 
         // Create the left leaf.
@@ -156,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
-          dummy->name ((const char*)("LeftNode"));
+          dummy->name ("LeftNode");
           sn->left (dummy);
         }
 
@@ -166,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
-          dummy->name ((const char*)("RightNode"));
+          dummy->name ("RightNode");
           sn->right (dummy);
 
           // dummy->right (sn); // ;-)
@@ -188,7 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

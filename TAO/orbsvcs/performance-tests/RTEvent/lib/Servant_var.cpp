@@ -17,7 +17,7 @@
 template<class SERVANT>
 Servant_var<SERVANT>::~Servant_var ()
 {
-  if (this->ptr_ == 0)
+  if (this->ptr_ == nullptr)
     return;
 
   try{

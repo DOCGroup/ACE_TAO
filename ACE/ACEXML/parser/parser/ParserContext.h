@@ -24,19 +24,25 @@
 #include "ACEXML/common/LocatorImpl.h"
 #include "ace/Functor.h"
 #include "ace/Containers_T.h"
+#include <memory>
 
 class ACEXML_PARSER_Export ACEXML_Parser_Context
 {
 public:
   /// Default constructor
-  ACEXML_Parser_Context();
+  ACEXML_Parser_Context () = default;
+
+  ACEXML_Parser_Context (ACEXML_Parser_Context const&) = delete;
+  ACEXML_Parser_Context (ACEXML_Parser_Context&&) = delete;
+  ACEXML_Parser_Context& operator= (ACEXML_Parser_Context const&) = delete;
+  ACEXML_Parser_Context& operator= (ACEXML_Parser_Context&&) = delete;
 
   /// Constructor which initializes the context
   ACEXML_Parser_Context (ACEXML_InputSource* instream,
                          ACEXML_LocatorImpl* locator);
 
   /// Comparison operator
-  bool operator!= (const ACEXML_Parser_Context& src);
+  bool operator!= (ACEXML_Parser_Context const& src) const;
 
   /// Destructor
   virtual ~ACEXML_Parser_Context();
@@ -59,17 +65,11 @@ public:
   virtual void setLocator(ACEXML_LocatorImpl* locator);
 
 private:
-  /// Copy constructor
-  ACEXML_Parser_Context (const ACEXML_Parser_Context& src);
-
-  /// Assignment operator
-  ACEXML_Parser_Context& operator= (const ACEXML_Parser_Context& src);
-
   /// Current input char stream.
-  ACEXML_InputSource *instream_;
+  std::unique_ptr<ACEXML_InputSource> instream_ {};
 
   /// Current Locator which provides line no., column no. systemId and publicId
-  ACEXML_LocatorImpl* locator_;
+  std::unique_ptr<ACEXML_LocatorImpl> locator_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

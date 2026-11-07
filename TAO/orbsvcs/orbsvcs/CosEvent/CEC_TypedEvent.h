@@ -44,11 +44,11 @@ public:
   TAO_CEC_TypedEvent ();
 
   TAO_CEC_TypedEvent (CORBA::NVList_ptr list,
-                      const char * operation);
+                      char const *operation);
 
   TAO_CEC_TypedEvent (TAO_CEC_TypedEvent const &) = default;
 
-  TAO_CEC_TypedEvent & operator= (const TAO_CEC_TypedEvent &);
+  TAO_CEC_TypedEvent &operator= (TAO_CEC_TypedEvent const &);
 
 private:
   /// Only the ProxyPushSupplier can read the private fields.

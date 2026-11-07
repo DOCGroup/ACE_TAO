@@ -4,15 +4,13 @@
 // Ensure that the PI library is linked in when building statically
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+#include <cstring>
 
-const ACE_TCHAR *ior = 0;
-
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -34,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  ACE_TCHAR const* ior {};
 
   try
     {
@@ -42,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             argv,
                                             "Client ORB");
 
-      if (::parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return -1;
 
       // Start out with the first IOR.  Interaction with the second
@@ -69,7 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::ULong number = 0;
+      CORBA::ULong number {};
       for (int i = 1; i <= 25; ++i)
         {
           ACE_DEBUG ((LM_INFO,
@@ -96,7 +94,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var marshaled_obj_snapshot2 =
           orb->object_to_string (server.in ());
 
-      if (ACE_OS::strcmp (marshaled_obj_snapshot1.in (), marshaled_obj_snapshot2.in ()) == 0)
+      if (std::strcmp (marshaled_obj_snapshot1.in (),
+                       marshaled_obj_snapshot2.in ()) == 0)
         {
           // Error, before and after the marhaled object references look equal
           ACE_ERROR ((LM_ERROR,
@@ -106,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -115,5 +114,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_INFO,
               "Group_Ref_Manip Test passed.\n"));
 
-  return status;
+  return 0;
 }

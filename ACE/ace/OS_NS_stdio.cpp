@@ -14,6 +14,7 @@
 #include <cctype>
 #include <clocale>
 #include <cmath>
+#include <cstring>
 
 #ifndef ACE_LACKS_WCHAR_H
 # include <cwchar>
@@ -705,7 +706,7 @@ namespace { // helpers for vsnprintf_emulation
       if (n == 0)
         return;
       const size_t m = n > this->avail_ ? this->avail_ : n;
-      ACE_OS::memcpy (this->buf_, s, m);
+      std::memcpy (this->buf_, s, m);
       this->buf_ += m;
       this->avail_ -= m;
       this->written_ += n;
@@ -855,9 +856,9 @@ namespace { // helpers for vsnprintf_emulation
             && val <= (std::numeric_limits<long double>::max)()))
         {
           if (val != val)
-            ACE_OS::strcpy (it, flags.has (SNPRINTF_UCASE) ? "NAN" : "nan");
+            std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "NAN" : "nan");
           else
-            ACE_OS::strcpy (it, flags.has (SNPRINTF_UCASE) ? "INF" : "inf");
+            std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "INF" : "inf");
           this->conv_str (buf, flags, width, -1);
           return;
         }
@@ -1013,7 +1014,7 @@ namespace { // helpers for vsnprintf_emulation
     void conv_str (const char *str, Snprintf_Flags flags,
                    int width, int precision)
     {
-      const size_t len = ACE_OS::strlen (str),
+      const size_t len = std::strlen (str),
         n = (precision >= 0 && precision < int (len)) ? precision : len;
       this->pad (str, n, flags, width);
     }
@@ -1114,7 +1115,7 @@ namespace { // helpers for vsnprintf_emulation
 
     static void conv_storage_needed (const char *fmt, int &storage_needed)
     {
-      while (const char *f = ACE_OS::strpbrk (fmt, "*%"))
+      while (const char *f = std::strpbrk (fmt, "*%"))
         {
           if (!*f || *f == '%')
             break;
@@ -1130,7 +1131,7 @@ namespace { // helpers for vsnprintf_emulation
       int storage_needed = n;
       const char *f = fmt;
       conv_storage_needed (f, storage_needed);
-      while (const char *const pct = ACE_OS::strchr (f, '%'))
+      while (const char *const pct = std::strchr (f, '%'))
         if (pct[1] == '%')
           f = pct + 2;
         else
@@ -1151,11 +1152,11 @@ namespace { // helpers for vsnprintf_emulation
       while (true)
         {
           static const char digits[] = "0123456789";
-          f += ACE_OS::strspn (f, "-+ #0'");
+          f += std::strspn (f, "-+ #0'");
           if (*f == '*')
             (*this)[snprintf_positional (++f)].type_ = Positional_Arg::PA_INT;
           else
-            f += ACE_OS::strspn (f, digits);
+            f += std::strspn (f, digits);
 
           if (f[0] == '.' && f[1] == '*')
             {
@@ -1165,7 +1166,7 @@ namespace { // helpers for vsnprintf_emulation
           else if (*f == '.')
             {
               ++f;
-              f += ACE_OS::strspn (f, digits);
+              f += std::strspn (f, digits);
             }
 
           Snprintf_Flags flags;
@@ -1247,7 +1248,7 @@ namespace { // helpers for vsnprintf_emulation
 
           // Find the next conversion and set n to the positional arg number
           do
-            f = ACE_OS::strchr (f + 1, '%');
+            f = std::strchr (f + 1, '%');
           while (f && f[1] == '%' && ++f);
 
           if (!f)
@@ -1379,7 +1380,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
   Snprintf_Buffer sb (buf, max);
   Snprintf_Positional_Args pos_arg;
 
-  while (const char *const pct = ACE_OS::strchr (fmt, '%'))
+  while (const char *const pct = std::strchr (fmt, '%'))
     {
       // Output up to next % in format string
       const bool escaped = pct[1] == '%';
@@ -1467,7 +1468,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
       ACE_UINT64 val;
       ACE_INT64 sval;
       long double fval;
-      wchar_t tmp_wstr[2] = {};
+      wchar_t tmp_wstr[2] {};
 
       // Parse conversion specifier (diouxXfFeEgGaAcCsSpn) and convert arg
       char spec = *fmt++;
@@ -1597,7 +1598,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
     }
 
   // Output remaining part of format string
-  sb.out (fmt, ACE_OS::strlen (fmt));
+  sb.out (fmt, std::strlen (fmt));
   *sb.buf_ = 0;
   return static_cast<int> (sb.written_);
 }

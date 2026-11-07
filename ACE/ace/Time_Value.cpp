@@ -20,7 +20,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Static constant representing `zero-time'.
 /// Note: this object requires static construction.
-const ACE_Time_Value ACE_Time_Value::zero;
+ACE_Time_Value const ACE_Time_Value::zero;
 
 /// Constant for maximum time representable.  Note that this time
 /// is not intended for use with select () or other calls that may
@@ -28,7 +28,7 @@ const ACE_Time_Value ACE_Time_Value::zero;
 /// Its primary use is in time computations such as those used by the
 /// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 /// Note: this object requires static construction.
-const ACE_Time_Value ACE_Time_Value::max_time (
+ACE_Time_Value const ACE_Time_Value::max_time (
   ACE_Numeric_Limits<time_t>::max (),
   ACE_ONE_SECOND_IN_USECS - 1);
 
@@ -82,17 +82,17 @@ ACE_Time_Value::operator -- ()
 ///
 /// In the beginning (Jan. 1, 1601), there was no time and no computer.
 /// And Bill said: "Let there be time," and there was time....
-const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
+DWORDLONG const ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_INT64_LITERAL (0x19db1ded53e8000);
 
 ///  Initializes the ACE_Time_Value object from a Win32 FILETIME
-ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
+ACE_Time_Value::ACE_Time_Value (FILETIME const &file_time)
 {
   // // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (file_time);
 }
 
-void ACE_Time_Value::set (const FILETIME &file_time)
+void ACE_Time_Value::set (FILETIME const &file_time)
 {
   // Initializes the ACE_Time_Value object from a Win32 FILETIME
   // Don't use a struct initializer, gcc don't like it.
@@ -103,9 +103,9 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   _100ns.QuadPart -= ACE_Time_Value::FILETIME_to_timval_skew;
 
   // Convert 100ns units to seconds;
-  this->tv_.tv_sec = (time_t) (_100ns.QuadPart / (10000 * 1000));
+  this->tv_.tv_sec = static_cast<time_t> (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = (suseconds_t) ((_100ns.QuadPart % (10000 * 1000)) / 10);
+  this->tv_.tv_usec = static_cast<suseconds_t> ((_100ns.QuadPart % (10000 * 1000)) / 10);
 
   this->normalize ();
 }
@@ -117,9 +117,9 @@ ACE_Time_Value::operator FILETIME () const
   // ACE_OS_TRACE ("ACE_Time_Value::operator FILETIME");
 
   ULARGE_INTEGER _100ns;
-  _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
-                     this->tv_.tv_usec * 10) +
-                     ACE_Time_Value::FILETIME_to_timval_skew);
+  _100ns.QuadPart = static_cast<DWORDLONG> (this->tv_.tv_sec) * (10000 * 1000) +
+                    this->tv_.tv_usec * 10 +
+                    ACE_Time_Value::FILETIME_to_timval_skew;
 
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
@@ -152,7 +152,7 @@ ACE_Time_Value::to_absolute_time () const
 ACE_Time_Value *
 ACE_Time_Value::duplicate () const
 {
-  ACE_Time_Value * tmp = nullptr;
+  ACE_Time_Value *tmp {};
   ACE_NEW_RETURN (tmp, ACE_Time_Value (*this), nullptr);
   return tmp;
 }
@@ -169,7 +169,8 @@ ACE_Time_Value::normalize (bool saturate)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS ||
       this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
-      time_t const sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
+      time_t const sec = std::abs (this->tv_.tv_usec) /
+        ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
       suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
@@ -230,9 +231,9 @@ ACE_Time_Value::operator *= (double d)
   sec_total *= d;
 
   // shall we saturate the result?
-  static const float_type max_int =
+  static float_type const max_int =
     ACE_Numeric_Limits<time_t>::max() + 0.999999;
-  static const float_type min_int =
+  static float_type const min_int =
     ACE_Numeric_Limits<time_t>::min() - 0.999999;
 
   if (sec_total > max_int)
@@ -301,11 +302,11 @@ ACE_Time_Value::operator *= (double d)
   return *this;
 }
 
-std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v)
+std::ostream &operator<< (std::ostream &o, ACE_Time_Value const &v)
 {
   char const oldFiller = o.fill ();
   o.fill ('0');
-  const timeval *tv = v;
+  timeval const *tv = v;
   if (tv->tv_sec)
     {
       o << tv->tv_sec;

@@ -11,12 +11,13 @@
 namespace Kokyu
 {
 Default_Dispatcher_Impl::Default_Dispatcher_Impl ()
-  : activated_ (0)
+  : ntasks_ (0),
+    activated_ (false)
 {
 }
 
 int
-Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
+Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 {
   //create and init the dispatcher tasks here
 
@@ -30,7 +31,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
 
   this->ntasks_ = size;
 
-  Dispatcher_Task_Auto_Ptr * tasks_array = 0;
+  Dispatcher_Task_Auto_Ptr *tasks_array = nullptr;
   ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
   //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
@@ -47,7 +48,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
   for (;i<size && iter.next (config);iter.advance ())
     {
       //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
-      Dispatcher_Task* task=0;
+      Dispatcher_Task *task = nullptr;
       ACE_NEW_RETURN (task,
                       Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance()),
@@ -90,7 +91,7 @@ Default_Dispatcher_Impl::activate_i ()
         }
     }
 
-  this->activated_ = 1;
+  this->activated_ = true;
   return 0;
 }
 
@@ -108,12 +109,12 @@ Default_Dispatcher_Impl::find_task_with_preemption_prio (Priority_t prio)
     }
   }
 
-  return 0;
+  return nullptr;
 }
 
 int
-Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
-                  const QoSDescriptor& qos_info)
+Default_Dispatcher_Impl::dispatch_i (Dispatch_Command const *cmd,
+                                     QoSDescriptor const &qos_info)
 {
   //delegate to the appropriate task
   if (qos_info.preemption_priority_ < 0)
@@ -124,7 +125,7 @@ Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
 
   //@@VS - We should insert this into the lowest prio queue.
   //How do we know that the last queue is the lowest prio queue.
-  if (task == 0)
+  if (task == nullptr)
     task = tasks_[ntasks_-1].get ();
 
   return task->enqueue (cmd, qos_info);
@@ -142,9 +143,11 @@ Default_Dispatcher_Impl::shutdown_i ()
   for(i=0; i<ntasks_; ++i)
     {
       QoSDescriptor qos_info;
-      Shutdown_Task_Command* shutdown_cmd = 0;
-      ACE_NEW_RETURN (shutdown_cmd, Shutdown_Task_Command, -1);
-      tasks_[i]->enqueue (shutdown_cmd, qos_info);
+      Shutdown_Task_Command *raw_shutdown_cmd = nullptr;
+      ACE_NEW_RETURN (raw_shutdown_cmd, Shutdown_Task_Command, -1);
+      std::unique_ptr<Shutdown_Task_Command> shutdown_cmd (raw_shutdown_cmd);
+      if (tasks_[i]->enqueue (shutdown_cmd.get (), qos_info) == 0)
+        shutdown_cmd.release ();
     }
 
   //wait for all tasks to exit

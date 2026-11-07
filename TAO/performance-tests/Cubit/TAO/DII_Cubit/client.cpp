@@ -11,6 +11,10 @@
  */
 //=============================================================================
 
+#include <array>
+#include <cstddef>
+#include <memory>
+#include <string>
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/debug.h"
@@ -19,20 +23,21 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
 // Since we don't yet have an interface repository or dynamic-Any, we
 // just get the info from the IDL-generated files, since we're mainly
 // interested in timing comparisons anyway.
 #include "../IDL_Cubit/cubitC.h"
 
-  // Some constants used below.
-const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
-const char *DEFAULT_FACTORY_IOR = "ior00";
-const int SMALL_OCTET_SEQ_LENGTH = 16;
-const int LARGE_OCTET_SEQ_LENGTH = 4096;
-const int SMALL_LONG_SEQ_LENGTH = 4;
-const int LARGE_LONG_SEQ_LENGTH = 1024;
-const int NUMBER_OF_TESTS = 10;
+// Some constants used below.
+constexpr CORBA::ULong DEFAULT_LOOP_COUNT = 250;
+constexpr char DEFAULT_FACTORY_IOR[] = "ior00";
+constexpr int SMALL_OCTET_SEQ_LENGTH = 16;
+constexpr int LARGE_OCTET_SEQ_LENGTH = 4096;
+constexpr int SMALL_LONG_SEQ_LENGTH = 4;
+constexpr int LARGE_LONG_SEQ_LENGTH = 1024;
+constexpr std::size_t NUMBER_OF_TESTS = 10;
 
 /**
  * @class DII_Cubit_Client
@@ -50,10 +55,15 @@ class DII_Cubit_Client
 public:
   // = Constructor and destructor.
   /// Constructor.
-  DII_Cubit_Client ();
+  DII_Cubit_Client () = default;
 
   /// Destructor.
-  ~DII_Cubit_Client ();
+  ~DII_Cubit_Client () = default;
+
+  DII_Cubit_Client (DII_Cubit_Client const &) = delete;
+  DII_Cubit_Client (DII_Cubit_Client &&) = delete;
+  DII_Cubit_Client &operator= (DII_Cubit_Client const &) = delete;
+  DII_Cubit_Client &operator= (DII_Cubit_Client &&) = delete;
 
   /// Initialize the ORB and gets the Cubit objref.
   int init (int argc, ACE_TCHAR **argv);
@@ -62,18 +72,15 @@ public:
   int run ();
 
 private:
-  /// Gets objref through naming service.
-  int init_naming_service ();
-
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
   /// Function to read the cubit factory IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Prints the timing stats.
-  void print_stats (const char *call_name,
-                    ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
+  void print_stats (char const *call_name,
+                    ACE_Profile_Timer::ACE_Elapsed_Time const &elapsed_time);
 
   // = DII versions of Cubit operations:
 
@@ -95,91 +102,64 @@ private:
   void cube_mixin ();
 
   /// Array of pointers to the operation functions.
-  void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])();
+  std::array<void (DII_Cubit_Client::*)(), NUMBER_OF_TESTS> const op_array_
+    {
+      &DII_Cubit_Client::cube_short_dii,
+      &DII_Cubit_Client::cube_octet_dii,
+      &DII_Cubit_Client::cube_long_dii,
+      &DII_Cubit_Client::cube_struct_dii,
+      &DII_Cubit_Client::cube_union_dii,
+      &DII_Cubit_Client::cube_small_long_seq,
+      &DII_Cubit_Client::cube_large_long_seq,
+      &DII_Cubit_Client::cube_small_octet_seq,
+      &DII_Cubit_Client::cube_large_octet_seq,
+      &DII_Cubit_Client::cube_mixin
+    };
 
   /// Array of labels for passing to print_stats.
-  static const char *stats_messages_[];
+  static constexpr std::array<char const *, NUMBER_OF_TESTS> stats_messages_
+    {
+      "DII cube_short",
+      "DII cube_octet",
+      "DII cube_long",
+      "DII cube_struct",
+      "DII cube_union",
+      "DII cube_small_sequence<long>",
+      "DII cube_large_sequence<long>",
+      "DII cube_small_sequence<octet>",
+      "DII cube_large_sequence<octet>",
+      "DII cube mixin (short/octet/long)"
+    };
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// # of calls in test loop.
-  CORBA::ULong loop_count_;
+  CORBA::ULong loop_count_ {DEFAULT_LOOP_COUNT};
 
   /// Flag to tell server to exit.
-  int shutdown_;
+  bool shutdown_ {};
 
   /// Storage of the ORB reference.
-  CORBA::ORB_var orb_var_;
+  CORBA::ORB_var orb_var_ {};
 
   /// Storage of the Cubit_factory objref
-  CORBA::Object_var factory_var_;
+  CORBA::Object_var factory_var_ {CORBA::Object::_nil ()};
 
   /// Storage of the Cubit objref.
-  CORBA::Object_var obj_var_;
+  CORBA::Object_var obj_var_ {CORBA::Object::_nil ()};
 
   /// # of calls made to functions.
-  CORBA::ULong call_count_;
+  CORBA::ULong call_count_ {};
 
   /// # of errors incurred in the lifetime of the application.
-  CORBA::ULong error_count_;
+  CORBA::ULong error_count_ {};
 
   /// IOR of the factory used to make a Cubit object.
-  ACE_CString factory_IOR_;
-
-  /// File from which to obtain the IOR.
-  FILE *cubit_factory_ior_file_;
-
-  /// File handle to read the IOR.
-  ACE_HANDLE f_handle_;
-};
-
-// Constructor
-DII_Cubit_Client::DII_Cubit_Client ()
-  : loop_count_ (DEFAULT_LOOP_COUNT),
-    shutdown_ (0),
-    orb_var_ (0),
-    factory_var_ (CORBA::Object::_nil ()),
-    obj_var_ (CORBA::Object::_nil ()),
-    call_count_ (0),
-    error_count_ (0),
-    factory_IOR_ (DEFAULT_FACTORY_IOR)
-{
-  // Initialize the array of pointers-to-member-functions.
-  this->op_array_[0] = &DII_Cubit_Client::cube_short_dii;
-  this->op_array_[1] = &DII_Cubit_Client::cube_octet_dii;
-  this->op_array_[2] = &DII_Cubit_Client::cube_long_dii;
-  this->op_array_[3] = &DII_Cubit_Client::cube_struct_dii;
-  this->op_array_[4] = &DII_Cubit_Client::cube_union_dii;
-  this->op_array_[5] = &DII_Cubit_Client::cube_small_long_seq;
-  this->op_array_[6] = &DII_Cubit_Client::cube_large_long_seq;
-  this->op_array_[7] = &DII_Cubit_Client::cube_small_octet_seq;
-  this->op_array_[8] = &DII_Cubit_Client::cube_large_octet_seq;
-  this->op_array_[9] = &DII_Cubit_Client::cube_mixin;
-}
-
-// Destructor
-DII_Cubit_Client::~DII_Cubit_Client ()
-{
-}
-
-// An array of messages to pass to print_stats, so we can step through
-// this along with op_array_.
-const char *DII_Cubit_Client::stats_messages_[] =
-{
-  "DII cube_short",
-  "DII cube_octet",
-  "DII cube_long",
-  "DII cube_struct",
-  "DII cube_union",
-  "DII cube_small_sequence<long>",
-  "DII cube_large_sequence<long>",
-  "DII cube_small_sequence<octet>",
-  "DII cube_large_sequence<octet>",
-  "DII cube mixin (short/octet/long)"
+  std::string factory_IOR_ {DEFAULT_FACTORY_IOR};
 };
 
 int
@@ -210,10 +190,9 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
       // Get a Cubit object with a DII request on the Cubit factory.
       CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit"));
 
-
       // make_cubit takes a char* arg that it doesn't use, but we must
       // still include it in the request.
-      const char * dummy = "";
+      char const * const dummy = "";
 
       mc_req->add_in_arg () <<= dummy;
 
@@ -231,7 +210,7 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
                            " could not obtain Cubit object from Cubit factory <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("DII_Cubit_Client::init");
       return -1;
@@ -247,7 +226,7 @@ DII_Cubit_Client::parse_args ()
 {
   ACE_Get_Opt opts (argc_, argv_, ACE_TEXT("dn:i:f:x"));
   int c;
-  int result;
+  int result {};
 
   while ((c = opts ()) != -1)
     switch (c)
@@ -270,7 +249,7 @@ DII_Cubit_Client::parse_args ()
                             -1);
         break;
       case 'x':   // Shut down server after test run.
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
       case '?':
       default:
@@ -290,26 +269,37 @@ DII_Cubit_Client::parse_args ()
 
 // Get the factory IOR from the file created by the server.
 int
-DII_Cubit_Client::read_ior (ACE_TCHAR *filename)
+DII_Cubit_Client::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
-  this->f_handle_ = ACE_OS::open (filename,0);
+  ACE_HANDLE const file_handle = ACE_OS::open (filename, 0);
 
-  if (this->f_handle_ == ACE_INVALID_HANDLE)
+  if (file_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "Unable to open %s for reading: %p\n",
                        filename),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (this->f_handle_);
+  ACE_Read_Buffer ior_buffer (file_handle, true);
+  struct IOR_Buffer_Deleter
+  {
+    ACE_Allocator *allocator;
 
-  this->factory_IOR_ = ior_buffer.read ();
+    void operator() (char *buffer) const
+    {
+      this->allocator->free (buffer);
+    }
+  };
+  std::unique_ptr<char, IOR_Buffer_Deleter> ior_data (
+    ior_buffer.read (), IOR_Buffer_Deleter {ior_buffer.alloc ()});
 
-  if (this->factory_IOR_.length () == 0)
+  if (!ior_data)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to allocate memory to read ior (%p)\n"),
                        ACE_TEXT ("read")),
                       -1);
+
+  this->factory_IOR_ = ior_data.get ();
   return 0;
 }
 
@@ -317,8 +307,8 @@ DII_Cubit_Client::read_ior (ACE_TCHAR *filename)
 // IDL_Cubit, for ease of comparison.
 
 void
-DII_Cubit_Client::print_stats (const char *call_name,
-                               ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
+DII_Cubit_Client::print_stats (char const *call_name,
+                               ACE_Profile_Timer::ACE_Elapsed_Time const &elapsed_time)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s:\n",
@@ -328,7 +318,7 @@ DII_Cubit_Client::print_stats (const char *call_name,
       && this->error_count_ == 0)
     {
       // elapsed_time.real_time is in units of seconds.
-      double calls_per_sec =
+      double const calls_per_sec =
         this->call_count_ / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -363,9 +353,8 @@ DII_Cubit_Client::cube_short_dii ()
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_short"));
 
-
-      CORBA::Short ret_short = 0;
-      CORBA::Short arg_short = -3;
+      CORBA::Short ret_short {};
+      CORBA::Short const arg_short = -3;
 
       // Add the short to the request arg list.
       req->add_in_arg () <<= arg_short;
@@ -386,7 +375,7 @@ DII_Cubit_Client::cube_short_dii ()
           this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_short_dii");
@@ -402,9 +391,8 @@ DII_Cubit_Client::cube_long_dii ()
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_long"));
 
-
-      CORBA::Long ret_long = 0;
-      CORBA::Long arg_long = -7;
+      CORBA::Long ret_long {};
+      CORBA::Long const arg_long = -7;
 
       // Add the long to the request arg list.
       req->add_in_arg () <<= arg_long;
@@ -414,7 +402,6 @@ DII_Cubit_Client::cube_long_dii ()
       this->call_count_++;
 
       req->invoke ();
-
 
       req->return_value () >>= ret_long;
 
@@ -426,7 +413,7 @@ DII_Cubit_Client::cube_long_dii ()
             this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_long_dii");
@@ -442,9 +429,8 @@ DII_Cubit_Client::cube_octet_dii ()
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_octet"));
 
-
-      CORBA::Octet ret_octet = 0;
-      CORBA::Octet arg_octet = 5;
+      CORBA::Octet ret_octet {};
+      CORBA::Octet const arg_octet = 5;
 
       // Add the octet to the request arg list.
       CORBA::Any::from_octet from_arg_octet (arg_octet);
@@ -457,7 +443,6 @@ DII_Cubit_Client::cube_octet_dii ()
 
       req->invoke ();
 
-
       CORBA::Any::to_octet to_ret_octet (ret_octet);
       req->return_value () >>= to_ret_octet;
 
@@ -469,7 +454,7 @@ DII_Cubit_Client::cube_octet_dii ()
           this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_octet_dii");
@@ -485,13 +470,13 @@ DII_Cubit_Client::cube_union_dii ()
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_union"));
 
+      Cubit::Many arg_cm;
+      arg_cm.l = 5;
+      arg_cm.s = -7;
+      arg_cm.o = 3;
 
       Cubit::oneof arg_union;
-
-      arg_union._d(Cubit::e_3rd);
-      arg_union.cm ().l = 5;
-      arg_union.cm ().s = -7;
-      arg_union.cm ().o = 3;
+      arg_union.cm (arg_cm);
 
       // Add the union to the request arg list and set the return type.
       req->add_in_arg () <<= arg_union;
@@ -504,9 +489,8 @@ DII_Cubit_Client::cube_union_dii ()
 
       req->invoke ();
 
-
       // Extract the result and check validity.
-      const Cubit::oneof* ret_ptr = 0;
+      Cubit::oneof const *ret_ptr {};
       req->return_value () >>= ret_ptr;
 
       if (ret_ptr->cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l
@@ -519,7 +503,7 @@ DII_Cubit_Client::cube_union_dii ()
           this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_union_dii");
@@ -536,7 +520,7 @@ DII_Cubit_Client::cube_struct_dii ()
       CORBA::Request_var req (this->obj_var_->_request ("cube_struct"));
 
       Cubit::Many arg_struct;
-      const Cubit::Many*ret_struct_ptr;
+      Cubit::Many const *ret_struct_ptr {};
 
       arg_struct.l = 5;
       arg_struct.s = -7;
@@ -565,7 +549,7 @@ DII_Cubit_Client::cube_struct_dii ()
           this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_struct_dii");
@@ -581,11 +565,10 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_octet_sequence"));
 
-
       // Same length as in IDL_Cubit tests so timings can be compared.
       // Return value holder is set to a different length to test resizing.
       Cubit::octet_seq arg_octet_seq (length);
-      const Cubit::octet_seq *ret_octet_seq_ptr = 0;
+      Cubit::octet_seq const *ret_octet_seq_ptr {};
       arg_octet_seq.length (length);
       arg_octet_seq[0] = 4;
 
@@ -621,7 +604,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
           this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_octet_seq_dii");
@@ -637,11 +620,10 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_long_sequence"));
 
-
       // Same length as in IDL_Cubit tests so timings can be compared.
       // Return value holder is set to a different length to test
       // resizing.
-      const Cubit::long_seq *ret_long_seq_ptr = 0;
+      Cubit::long_seq const *ret_long_seq_ptr {};
       Cubit::long_seq arg_long_seq (length);
       arg_long_seq.length (length);
       arg_long_seq[0] = 4;
@@ -656,7 +638,6 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
       this->call_count_++;
 
       req->invoke ();
-
 
       req->return_value () >>= ret_long_seq_ptr;
 
@@ -678,7 +659,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
           this->error_count_++;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       this->error_count_++;
       ex._tao_print_exception ("cube_long_seq_dii");
@@ -725,9 +706,9 @@ DII_Cubit_Client::cube_mixin ()
 int
 DII_Cubit_Client::run ()
 {
-  // loop counter.
-  CORBA::ULong i;
+  CORBA::ULong total_error_count {};
 
+  // loop counter.
   // Make a timer and an elapsed time holder.
   ACE_Profile_Timer dii_timer;
   ACE_Profile_Timer::ACE_Elapsed_Time dii_elapsed_time;
@@ -735,7 +716,7 @@ DII_Cubit_Client::run ()
   // Order and format of test calls matches that of SII (IDL) tests
   // for easy comparison.
 
-  for (int j = 0; j < NUMBER_OF_TESTS; j++)
+  for (std::size_t j = 0; j < NUMBER_OF_TESTS; j++)
     {
       this->call_count_ = 0;
 
@@ -743,8 +724,8 @@ DII_Cubit_Client::run ()
 
       dii_timer.start ();
 
-      for (i = 0; i < this->loop_count_; i++)
-        (this->*op_array_[j])();
+      for (CORBA::ULong i = 0; i < this->loop_count_; i++)
+        (this->*op_array_[j]) ();
 
       dii_timer.stop ();
 
@@ -752,6 +733,7 @@ DII_Cubit_Client::run ()
 
       this->print_stats (this->stats_messages_[j],
                          dii_elapsed_time);
+      total_error_count += this->error_count_;
     }
 
   try
@@ -761,22 +743,20 @@ DII_Cubit_Client::run ()
         {
           CORBA::Request_var req (this->obj_var_->_request ("shutdown"));
 
-
           // Cubit::shutdown () is a oneway operation.
           req->send_oneway ();
-
 
           ACE_DEBUG ((LM_DEBUG,
                       "\n\t Shutting down IDL_Cubit server \n\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("DII_Cubit_Client: server shutdown");
       return -1;
     }
 
-  return this->error_count_ == 0 ? 0 : 1;
+  return total_error_count == 0 ? 0 : 1;
 }
 
 // Start the test.

@@ -10,6 +10,8 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -120,7 +122,7 @@ CORBA::AbstractBase::_is_a (const char *type_id)
         }
     }
 
-  return (ACE_OS::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
+  return (std::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
 }
 
 const char *
@@ -223,7 +225,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
   abs = nullptr;
   CORBA::Boolean discriminator = false;
   ACE_InputCDR::to_boolean tb (discriminator);
-  TAO_ORB_Core *orb_core = nullptr;
+  TAO_ORB_Core *orb_core {};
 
   if (strm >> tb)
     {
@@ -292,7 +294,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           abs = factory->create_for_unmarshal_abstract ();
 
-          return (abs == 0 ? false : abs->_tao_unmarshal_v (strm));
+          return (abs == nullptr ? false : abs->_tao_unmarshal_v (strm));
         }
       else
         {

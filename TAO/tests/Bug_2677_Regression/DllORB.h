@@ -6,7 +6,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "bug_2677_regression_export.h"
 
-class bug_2677_regression_Export DllORB: public ACE_Service_Object
+class bug_2677_regression_Export DllORB : public ACE_Service_Object
 {
 public:
   DllORB ();

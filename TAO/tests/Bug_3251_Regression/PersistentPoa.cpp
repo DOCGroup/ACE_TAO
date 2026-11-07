@@ -1,6 +1,9 @@
+#include <string>
+
 #include "ace/Arg_Shifter.h"
 #include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 #include "PersistentPoa.h"
 
@@ -9,10 +12,10 @@ PersistentPoa::~PersistentPoa () noexcept = default;
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter as (argc, argv);
-  m_poaName = std::string (ACE_TEXT_ALWAYS_CHAR (as.get_current ()));
+  std::string const poa_name (ACE_TEXT_ALWAYS_CHAR (as.get_current ()));
   as.ignore_arg ();
 
-  std::string orbName (ACE_TEXT_ALWAYS_CHAR (as.get_current ()));
+  std::string const orb_name (ACE_TEXT_ALWAYS_CHAR (as.get_current ()));
   as.ignore_arg ();
 
   while (as.is_anything_left ())
@@ -23,20 +26,21 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
   try
   {
     // left out all safety checks
-    DllOrb *p_orb = ACE_Dynamic_Service<DllOrb>::instance (orbName.c_str ());
-    mv_orb = p_orb->orb ();
-    CORBA::Object_var v_poa = mv_orb->resolve_initial_references ("RootPOA");
-    mv_rootPOA = PortableServer::POA::_narrow (v_poa.in ());
+    // The service configuration owns this dynamically registered DllOrb.
+    DllOrb *const orb_service = ACE_Dynamic_Service<DllOrb>::instance (orb_name.c_str ());
+    mv_orb = orb_service->orb ();
+    CORBA::Object_var const poa_object = mv_orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
 
     // Policies for the new POA
-    CORBA::PolicyList policies (3);
+    TAO::Utils::PolicyList_Destroyer policies (3);
     policies.length (3);
-    policies[0] = mv_rootPOA->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
-    policies[1] = mv_rootPOA->create_lifespan_policy (PortableServer::PERSISTENT);
-    policies[2] = mv_rootPOA->create_id_assignment_policy (PortableServer::USER_ID);
+    policies[0] = root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
+    policies[1] = root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
+    policies[2] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
-    mv_thisPOA = mv_rootPOA->create_POA (
-      m_poaName.c_str (),
+    mv_thisPOA = root_poa->create_POA (
+      poa_name.c_str (),
       PortableServer::POAManager::_nil (),
       policies);
 

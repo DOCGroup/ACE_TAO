@@ -5,6 +5,9 @@
 #include "UpdateableServerInfo.h"
 #include "orbsvcs/Log_Macros.h"
 
+#include <cstdlib>
+#include <cstring>
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -73,7 +76,7 @@ AsyncAccessManager::is_running () const
 bool
 AsyncAccessManager::has_server (const char *s) const
 {
-  return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
+  return std::strcmp (this->info_->ping_id (), s) == 0;
 }
 
 void
@@ -142,7 +145,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
-      AccessLiveListener *l = nullptr;
+      AccessLiveListener *l {};
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                      this,
                                      this->locator_.pinger()));
@@ -519,7 +522,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       this->final_state ();
     }
 
-  AccessLiveListener *l = nullptr;
+  AccessLiveListener *l {};
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
@@ -632,7 +635,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
-            AccessLiveListener *l = nullptr;
+            AccessLiveListener *l {};
             ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                             this,
                                             this->locator_.pinger()));
@@ -875,9 +878,9 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
                           ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server_excep, reason <%C>\n"),
                           this, ca.reason.in ()));
         }
-      if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
+      if (std::strstr (ca.reason.in (), "pid:") == ca.reason.in ())
         {
-          int const pid = ACE_OS::atoi (ca.reason.in()+4);
+          int const pid = std::atoi (ca.reason.in () + 4);
           this->aam_->activator_replied_start_running (true, pid);
         }
       else

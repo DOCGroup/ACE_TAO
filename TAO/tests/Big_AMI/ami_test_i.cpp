@@ -22,8 +22,8 @@ AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
 CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
-                 const char* in_str,
-                 const A::Payload &)
+                 char const *in_str,
+                 A::Payload const &)
 {
   out_l = 931233;
 

@@ -65,8 +65,10 @@ protected:
   TIME_POLICY time_policy_;
 
 private:
-  ACE_Event_T (const ACE_Event_T<TIME_POLICY>& event) = delete;
-  const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs) = delete;
+  ACE_Event_T (ACE_Event_T const &) = delete;
+  ACE_Event_T (ACE_Event_T &&) = delete;
+  ACE_Event_T &operator= (ACE_Event_T const &) = delete;
+  ACE_Event_T &operator= (ACE_Event_T &&) = delete;
 };
 
 using ACE_Event = ACE_Event_T<ACE_System_Time_Policy>;

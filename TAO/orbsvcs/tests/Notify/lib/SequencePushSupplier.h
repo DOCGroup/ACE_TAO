@@ -72,13 +72,13 @@ public:
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
+  void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr) override;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy ();
+  void disconnect_from_proxy () override;
 
   // = SequencePushSupplier method
-  virtual void disconnect_sequence_push_supplier ();
+  void disconnect_sequence_push_supplier () override;
 };
 
 #if defined (__ACE_INLINE__)

@@ -99,19 +99,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // get the IOR of factory
       CORBA::String_var str = orb->object_to_string(event_channel_factory.in());
 
-      if (ACE_OS::strcmp(output.c_str(), ACE_TEXT("")) != 0)
-      {
-        FILE *output_file=
-          ACE_OS::fopen (output.c_str(),
-          ACE_TEXT("w"));
-        if (output_file == nullptr)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-          "Cannot open output file for writing IOR: %s",
-          output.c_str()),
-          1);
-        ACE_OS::fprintf (output_file, "%s", str.in ());
-        ACE_OS::fclose (output_file);
-      }
+      FILE *output_file=
+        ACE_OS::fopen (output.c_str(), ACE_TEXT("w"));
+      if (output_file == nullptr)
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               output.c_str()),
+                              1);
+      ACE_OS::fprintf (output_file, "%s", str.in ());
+      ACE_OS::fclose (output_file);
     }
 
 

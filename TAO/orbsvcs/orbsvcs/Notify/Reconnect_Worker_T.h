@@ -33,7 +33,7 @@ namespace TAO_Notify
     Reconnect_Worker();
 
     /// Override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o);
+    void work (TOPOOBJ* o) override;
   };
 } // namespace TAO_Notify
 

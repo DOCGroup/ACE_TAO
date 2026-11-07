@@ -52,7 +52,7 @@ namespace TAO
     {
     public:
       /// Constructor
-      QOPPolicy (::Security::QOP qop);
+      explicit QOPPolicy (::Security::QOP qop);
 
       /**
        * @name CORBA::Policy Methods
@@ -75,9 +75,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
        */
-      ~QOPPolicy () override;
+      ~QOPPolicy () override = default;
 
     private:
+      QOPPolicy (QOPPolicy const &) = delete;
+      QOPPolicy (QOPPolicy &&) = delete;
+      QOPPolicy &operator= (QOPPolicy const &) = delete;
+      QOPPolicy &operator= (QOPPolicy &&) = delete;
+
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::QOP const qop_;

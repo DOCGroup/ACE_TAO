@@ -15,6 +15,8 @@
 #define _PP_TEST_SERVER_H
 
 #include "ace/Get_Opt.h"
+#include <memory>
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +39,11 @@ class PP_Test_Server
 {
 public:
   /// Default constructor
-  PP_Test_Server ();
+  PP_Test_Server () = default;
+  PP_Test_Server (PP_Test_Server const &) = delete;
+  PP_Test_Server (PP_Test_Server &&) = delete;
+  PP_Test_Server &operator= (PP_Test_Server const &) = delete;
+  PP_Test_Server &operator= (PP_Test_Server &&) = delete;
 
   /// Destructor
   ~PP_Test_Server ();
@@ -51,25 +57,19 @@ public:
 
 private:
   /// Parses the commandline arguments.
-  int parse_args ();
+  int parse_args (int argc, ACE_TCHAR **argv);
 
-  /// File to output the cubit factory IOR.
-  FILE* ior_output_file_;
+  /// Path to the optional file for the factory IOR.
+  std::basic_string<ACE_TCHAR> ior_output_file_name_;
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
   /// Implementation object of the Pluggable Test factory.
-  Pluggable_Test_Factory_i *factory_impl_;
+  std::unique_ptr<Pluggable_Test_Factory_i> factory_impl_;
 
   /// ID of the factory.
   CORBA::String_var factory_id_;
-
-  /// Number of commandline arguments.
-  int argc_;
-
-  /// commandline arguments.
-  ACE_TCHAR **argv_;
 };
 
 #endif /* _PP_TEST_SERVER_H */

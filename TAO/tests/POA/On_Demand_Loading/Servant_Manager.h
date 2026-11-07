@@ -40,23 +40,27 @@ class ServantManager_i
 public:
   /// This typedef is used to typecast the void* obtained when finding
   /// a symbol in the DLL.
-   typedef PortableServer::Servant
-           (*SERVANT_FACTORY) (CORBA::ORB_ptr orb,
-                               PortableServer::POA_ptr poa);
+  using SERVANT_FACTORY = PortableServer::Servant (*) (CORBA::ORB_ptr orb,
+                                                       PortableServer::POA_ptr poa);
 
   /// Initialization.
-  ServantManager_i (CORBA::ORB_ptr orb);
+  explicit ServantManager_i (CORBA::ORB_ptr orb);
+
+  ServantManager_i (ServantManager_i const &) = delete;
+  ServantManager_i &operator= (ServantManager_i const &) = delete;
+  ServantManager_i (ServantManager_i &&) = delete;
+  ServantManager_i &operator= (ServantManager_i &&) = delete;
 
   /// Destruction.
-   ~ServantManager_i ();
+  ~ServantManager_i ();
 
   /**
    * Returns an ObjectId when given an DLL name and the factory method
    * to be invoked in the DLL. The application developer can initialise the
    * ServantActivator object by providing the dllname and the factory function.
    */
-  PortableServer::ObjectId_var create_dll_object_id (const char *libname,
-                                                     const char *factory_function);
+  PortableServer::ObjectId_var create_dll_object_id (char const *libname,
+                                                     char const *factory_function);
 
   // @@ *done*Kirthika, please explain what this function is USED for, i.e.,
   // who calls it and why?
@@ -69,13 +73,13 @@ public:
    * servant-specific argument needed to create the servant for this
    * particular use-case.
    */
-  PortableServer::Servant obtain_servant (const ACE_TCHAR *str,
+  PortableServer::Servant obtain_servant (ACE_TCHAR const *str,
                                           PortableServer::POA_ptr poa);
 
   /// The servant is destroyed and the DLL that was dynamically linked
   /// is closed.
   void destroy_servant (PortableServer::Servant servant,
-                        const PortableServer::ObjectId &oid);
+                        PortableServer::ObjectId const &oid);
 
  private:
   /**
@@ -83,29 +87,22 @@ public:
    * symbol that we will used to dynamically obtain the servant
    * pointer.
    */
-  void parse_string (const ACE_TCHAR *s);
+  bool parse_string (ACE_TCHAR const *s,
+                     ACE_TString &dllname,
+                     ACE_TString &create_symbol) const;
 
   /// A reference to the ORB.
   CORBA::ORB_var orb_;
 
-  /// The name of the dll containing the servant.
-  ACE_TString dllname_;
-
-  /// The symbol which on getting invoked will give us the servant
-  /// pointer.
-  ACE_TString create_symbol_;
-
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                                  ACE_DLL *,
-                                  TAO_ObjectId_Hash,
-                                  ACE_Equal_To<PortableServer::ObjectId>,
-                                  ACE_Null_Mutex>
-          SERVANT_MAP;
+  using SERVANT_MAP = ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                                              ACE_DLL *,
+                                              TAO_ObjectId_Hash,
+                                              ACE_Equal_To<PortableServer::ObjectId>,
+                                              ACE_Null_Mutex>;
 
   /**
-   * This is the hash map object. The hash map is used to provide
-   * an quick access to the dll object associated with every servant
-   * using the unique ObjectId as key.
+   * The map owns each ACE_DLL pointer associated with an active servant.
+   * The DLL must remain loaded until its servant has been destroyed.
    */
   SERVANT_MAP servant_map_;
 };

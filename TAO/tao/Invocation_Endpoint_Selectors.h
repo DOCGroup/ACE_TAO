@@ -87,8 +87,8 @@ public:
   /// Destructor.
   virtual ~TAO_Default_Endpoint_Selector ();
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val);
+  void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                        ACE_Time_Value *val) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

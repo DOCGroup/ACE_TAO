@@ -44,25 +44,29 @@ class IBM1047_ISO8859_Export IBM1047_ISO8859 : public ACE_Char_Codeset_Translato
 public:
   /// A do nothing constructor.
   IBM1047_ISO8859 ();
+  IBM1047_ISO8859 (IBM1047_ISO8859 const &) = delete;
+  IBM1047_ISO8859 (IBM1047_ISO8859 &&) = delete;
+  IBM1047_ISO8859 &operator= (IBM1047_ISO8859 const &) = delete;
+  IBM1047_ISO8859 &operator= (IBM1047_ISO8859 &&) = delete;
 
   /// Virtual destruction
-  virtual ~IBM1047_ISO8859 ();
+  ~IBM1047_ISO8859 () override;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &, ACE_CDR::Char &);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &, ACE_CDR::Char *&);
-  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
-                                            ACE_CDR::Char *,
-                                            ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &, ACE_CDR::Char);
-  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
-                                         ACE_CDR::ULong,
-                                         const ACE_CDR::Char *);
-  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
-                                             const ACE_CDR::Char *,
-                                             ACE_CDR::ULong);
-  virtual ACE_CDR::ULong ncs () {return 0x10020417;}
-  virtual ACE_CDR::ULong tcs () {return 0x00010001;}
+  ACE_CDR::Boolean read_char (ACE_InputCDR &, ACE_CDR::Char &) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &, ACE_CDR::Char *&) override;
+  ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
+                                    ACE_CDR::Char *,
+                                    ACE_CDR::ULong) override;
+  ACE_CDR::Boolean write_char (ACE_OutputCDR &, ACE_CDR::Char) override;
+  ACE_CDR::Boolean write_string (ACE_OutputCDR &,
+                                 ACE_CDR::ULong,
+                                 ACE_CDR::Char const *) override;
+  ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
+                                     ACE_CDR::Char const *,
+                                     ACE_CDR::ULong) override;
+  ACE_CDR::ULong ncs () override {return 0x10020417;}
+  ACE_CDR::ULong tcs () override {return 0x00010001;}
 };
 
 #include /**/ "ace/post.h"

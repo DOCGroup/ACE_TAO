@@ -9,7 +9,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("ab:cd:ef:gh:"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != EOF)
     switch (c)

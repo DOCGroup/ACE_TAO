@@ -5,6 +5,7 @@
 
 #include "ace/FILE_IO.h"
 #include "ace/Mem_Map.h"
+#include <memory>
 
 #include "JAWS/Export.h"
 #include "ace/Synch_Traits.h"
@@ -18,17 +19,21 @@ public:
   JAWS_FILE ();
 
   ~JAWS_FILE ();
+  JAWS_FILE (JAWS_FILE const &) = delete;
+  JAWS_FILE (JAWS_FILE &&) = delete;
+  JAWS_FILE &operator= (JAWS_FILE const &) = delete;
+  JAWS_FILE &operator= (JAWS_FILE &&) = delete;
 
   ACE_Mem_Map *mem_map (int length = -1,
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,
-                        void *addr = 0,
+                        void *addr = nullptr,
                         ACE_OFF_T offset = 0,
                         LPSECURITY_ATTRIBUTES sa = 0);
   ACE_Mem_Map *mem_map (int length = -1,
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,
-                        void *addr = 0,
+                        void *addr = nullptr,
                         ACE_OFF_T offset = 0,
                         LPSECURITY_ATTRIBUTES sa = 0) const;
 
@@ -36,7 +41,7 @@ public:
 
 private:
   ACE_SYNCH_MUTEX lock_;
-  ACE_Mem_Map *map_;
+  std::unique_ptr<ACE_Mem_Map> map_;
 };
 
 #endif /* JAWS_FILE_H */

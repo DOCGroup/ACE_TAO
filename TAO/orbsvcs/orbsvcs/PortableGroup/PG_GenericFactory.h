@@ -50,11 +50,16 @@ class TAO_PortableGroup_Export TAO_PG_GenericFactory
 {
 public:
   /// Constructor.
-  TAO_PG_GenericFactory (TAO_PG_ObjectGroupManager & object_group_map,
-                         TAO_PG_PropertyManager & property_manager);
+  TAO_PG_GenericFactory (TAO_PG_ObjectGroupManager &object_group_map,
+                         TAO_PG_PropertyManager &property_manager);
 
   /// Destructor.
-  ~TAO_PG_GenericFactory ();
+  ~TAO_PG_GenericFactory () override;
+
+  TAO_PG_GenericFactory (TAO_PG_GenericFactory const &) = delete;
+  TAO_PG_GenericFactory (TAO_PG_GenericFactory &&) = delete;
+  TAO_PG_GenericFactory & operator= (TAO_PG_GenericFactory const &) = delete;
+  TAO_PG_GenericFactory & operator= (TAO_PG_GenericFactory &&) = delete;
 
   /**
    * @name TAO_LoadBalancer::GenericFactory methods
@@ -67,8 +72,8 @@ public:
    * method to delete the object.
    */
   CORBA::Object_ptr create_object (
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
+      char const *type_id,
+      PortableGroup::Criteria const &the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
         factory_creation_id) override;
 
@@ -79,8 +84,7 @@ public:
    * Afterward, the ObjectGroup itself will be deleted.
    */
   void delete_object (
-      const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id) override;
+      PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id) override;
 
   //@}
 
@@ -95,8 +99,8 @@ public:
    * order to allow other objects to be deleted via other registered
    * factories.
    */
-  void delete_object_i (TAO_PG_Factory_Set & factory_set,
-                        CORBA::Boolean ignore_exceptions);
+  void delete_object_i (TAO_PG_Factory_Set &factory_set,
+                        CORBA::Boolean const ignore_exceptions);
 
   /// If the member corresponding to the given group ID and location
   /// was created by the infrastructure, call delete_object() on the
@@ -106,7 +110,7 @@ public:
    * when ObjectGroupManager::remove_member() is explicitly called.
    */
   void delete_member (CORBA::ULong group_id,
-                      const PortableGroup::Location & location);
+                      PortableGroup::Location const &location);
 
   /// Verify that the MinimumNumberMembers criterion is satisfied.
   /**
@@ -116,10 +120,9 @@ public:
    * members to the group by invoking any unused application-supplied
    * GenericFactorys.
    */
-  void check_minimum_number_members (
-    PortableGroup::ObjectGroup_ptr object_group,
-    CORBA::ULong group_id,
-    const char * type_id);
+  void check_minimum_number_members (PortableGroup::ObjectGroup_ptr object_group,
+                                    CORBA::ULong group_id,
+                                    char const *type_id);
 
   /// Create a new object group member using the supplied FactoryInfo
   /// and RepositoryId and add it to the given object group.
@@ -128,9 +131,9 @@ public:
    */
   PortableGroup::GenericFactory::FactoryCreationId * create_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::FactoryInfo & factory_info,
-      const char * type_id,
-      const CORBA::Boolean propagate_member_already_present);
+      PortableGroup::FactoryInfo const &factory_info,
+      char const *type_id,
+      CORBA::Boolean const propagate_member_already_present);
 
 private:
   /// Populate the object group being created.  Called when the
@@ -138,10 +141,10 @@ private:
   /// object group being created.
   void populate_object_group (
          PortableGroup::ObjectGroup_ptr object_group,
-         const char * type_id,
-         const PortableGroup::FactoryInfos &factory_infos,
+         char const *type_id,
+         PortableGroup::FactoryInfos const &factory_infos,
          PortableGroup::InitialNumberMembersValue initial_number_members,
-         TAO_PG_Factory_Set & factory_set);
+         TAO_PG_Factory_Set &factory_set);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.
   /**
@@ -149,7 +152,7 @@ private:
    * the scope of a given ReplicationManager.  A value suitable for
    * use in a map association  ext_id  is also returned.
    */
-  void get_ObjectId (CORBA::ULong fcid,
+  void get_ObjectId (CORBA::ULong const fcid,
                      PortableServer::ObjectId_out oid);
 
   /// Process criteria to be applied to the object group being
@@ -165,8 +168,8 @@ private:
    * they are the object group creation time criteria.
    */
   void process_criteria (
-    const char * type_id,
-    const PortableGroup::Criteria & criteria,
+    char const *type_id,
+    PortableGroup::Criteria const &criteria,
     PortableGroup::MembershipStyleValue & membership_style,
     PortableGroup::FactoriesValue & factory_infos,
     PortableGroup::InitialNumberMembersValue & initial_number_members,
@@ -204,7 +207,7 @@ private:
    * addition to another value that makes it unique to a given Load
    * Balancer.
    */
-  CORBA::ULong next_fcid_;
+  CORBA::ULong next_fcid_ {};
 
   /// Lock used to synchronize access to the factory creation id
   /// index (i.e. next_fcid_).

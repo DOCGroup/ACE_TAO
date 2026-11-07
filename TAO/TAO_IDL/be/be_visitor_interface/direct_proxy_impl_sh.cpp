@@ -16,14 +16,8 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl_2
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl
-      << "//                    Direct  Impl. Declaration" << be_nl
-      << "//" << be_nl_2;
-
   // Generate Class Declaration.
-  *os << "class " << be_global->skel_export_macro ()
+  *os << be_nl_2 << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
 
   bool first_concrete = true;
@@ -82,11 +76,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
     }
 
   *os << be_uidt_nl
-      << "};" << be_nl_2
-      << "//" << be_nl
-      << "//                Direct  Proxy Impl. Declaration" << be_nl
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl_2;
+      << "};" << be_nl_2;
 
   return 0;
 }

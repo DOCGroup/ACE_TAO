@@ -6,13 +6,13 @@
 #include <stdexcept>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -42,15 +42,15 @@ class Person_i
   , public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  Person_i(const char* n, CORBA::Long bal)
+  Person_i (char const *name, CORBA::Long balance)
   {
-    name(n);
-    balance(bal);
+    this->name (name);
+    this->balance (balance);
   }
 
-  ::CORBA::ValueBase *_copy_value ()
+  ::CORBA::ValueBase *_copy_value () override
   {
-    ::CORBA::ValueBase *ret_val = 0;
+    ::CORBA::ValueBase *ret_val = nullptr;
     ACE_NEW_THROW_EX (
       ret_val,
       Person_i (
@@ -63,33 +63,40 @@ public:
   }
 
 private:
-  void debit(CORBA::Long)
+  void debit (CORBA::Long) override
   {
-    throw std::runtime_error("Not supported.");
+    throw std::runtime_error ("Not supported.");
   }
+
+public:
+  Person_i (Person_i const &) = delete;
+  Person_i (Person_i &&) = delete;
+  Person_i &operator= (Person_i const &) = delete;
+  Person_i &operator= (Person_i &&) = delete;
 };
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
+{
   try {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    CORBA::Object_var obj = orb->string_to_object(ior);
-    Transaction_var trans = Transaction::_narrow(obj.in());
-    if (CORBA::is_nil(trans.in()))
-      throw std::runtime_error("failed to find a valid Transaction IOR");
+    CORBA::Object_var obj = orb->string_to_object (ior);
+    Transaction_var trans = Transaction::_narrow (obj.in ());
+    if (CORBA::is_nil (trans.in ()))
+      throw std::runtime_error ("failed to find a valid Transaction IOR");
 
-    Person_var p = new Person_i("TAOUser", 1000);
+    Person_var p = new Person_i ("TAOUser", 1000);
 
-    const char* n = p->name();
-    double bal = p->balance() / 100.0;
+    char const *n = p->name ();
+    double const bal = p->balance () / 100.0;
     std::cout << "Client: Sending person:" << n
               << " starting_balance:$" << bal
               << std::endl;
 
-    CORBA::Long b = trans->update(p.in());
+    CORBA::Long const b = trans->update (p.in ());
 
     while (orb->work_pending()) {
       orb->perform_work();
@@ -98,11 +105,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     std::cout << "Client: Ending balance: " << b/100.0 << std::endl;
 
     orb->destroy();
-  } catch(const CORBA::Exception& e) {
+  }
+  catch (CORBA::Exception const &e)
+  {
     std::cerr << e << std::endl;
     return 1;
   }
-  catch (const std::runtime_error &e) {
+  catch (std::runtime_error const &e)
+  {
     std::cerr << e.what() << std::endl;
   }
 

@@ -12,44 +12,43 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (const ACE_TCHAR *data_type,
+  Client_Task (ACE_TCHAR const *data_type,
                int size,
                Test::Roundtrip_ptr roundtrip,
                int niterations);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Add this thread results to the global numbers and print the
   /// per-thread results.
   void accumulate_and_dump (ACE_Basic_Stats &totals,
-                            const ACE_TCHAR *msg,
+                            ACE_TCHAR const *msg,
                             ACE_High_Res_Timer::global_scale_factor_type gsf);
 
   /// The service method
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Make sure that the current thread has a connection available.
   void validate_connection ();
 
-  /// Some performance test methods
-  void test_octet_seq ();
-  void test_long_seq ();
-  void test_short_seq ();
-  void test_char_seq ();
-  void test_longlong_seq ();
-  void test_double_seq ();
+  template <typename Sequence, typename Operation>
+  void test_sequence (Operation const operation);
 
 private:
   /// The data type of the sequence load to be tested
-  const ACE_TCHAR* data_type_;
+  ACE_TCHAR const *data_type_;
 
   /// The size of the sequence data
-  int size_;
+  int const size_;
 
   /// The object reference used for this test
   Test::Roundtrip_var roundtrip_;
 
   /// The number of iterations
-  int niterations_;
+  int const niterations_;
 
   /// Keep track of the latency (minimum, average, maximum and jitter)
   ACE_Basic_Stats latency_;

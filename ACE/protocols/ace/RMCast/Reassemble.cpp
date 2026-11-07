@@ -1,4 +1,5 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
+#include <cstring>
 #include "Reassemble.h"
 #include "ace/OS_NS_stdlib.h"
 
@@ -12,7 +13,7 @@ namespace ACE_RMCast
 
   void Reassemble::recv (Message_ptr m)
   {
-    Map::ENTRY* e = 0;
+    Map::ENTRY* e = nullptr;
     Address from (
       static_cast<From const*> (m->find (From::id))->address ());
 
@@ -53,9 +54,9 @@ namespace ACE_RMCast
 
           Data_ptr& new_data = e->int_id_;
 
-          ACE_OS::memcpy (new_data->buf () + new_data->size (),
-                          data->buf (),
-                          data->size ());
+          std::memcpy (new_data->buf () + new_data->size (),
+                       data->buf (),
+                       data->size ());
 
           //std::cerr << "data->size (): " << data->size () << endl
           //          << "new_data->size (): " << new_data->size () << endl
@@ -111,7 +112,7 @@ namespace ACE_RMCast
         in_->recv (m);
       }
     }
-    else if (m->find (NoData::id) != 0)
+    else if (m->find (NoData::id) != nullptr)
     {
       if (map_.find (from, e) != -1)
       {

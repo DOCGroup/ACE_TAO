@@ -15,12 +15,11 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-
 int
 test_with_bidir_poa (int argc,
-                     ACE_TCHAR **argv,
-                     const char *orb_name,
-                     int destroy_orb)
+                     ACE_TCHAR *argv[],
+                     char const *orb_name,
+                     bool destroy_orb)
 {
   try
     {
@@ -35,7 +34,6 @@ test_with_bidir_poa (int argc,
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-
 
       CORBA::PolicyList policies (1);
       policies.length (1);
@@ -64,7 +62,6 @@ test_with_bidir_poa (int argc,
 
       poa_manager->activate ();
 
-
       root_poa->destroy (true, true);
 
       if (destroy_orb)
@@ -72,7 +69,7 @@ test_with_bidir_poa (int argc,
           orb->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised");
     }
@@ -83,16 +80,16 @@ test_with_bidir_poa (int argc,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
 
-  for (int i=0; i<10; i++)
-  {
-    result = test_with_bidir_poa (argc, argv, "poa_1", 1);
-    ACE_ASSERT (result == 0);
+  for (int i {}; i < 10; ++i)
+    {
+      result = test_with_bidir_poa (argc, argv, "poa_1", true);
+      ACE_ASSERT (result == 0);
 
-    result = test_with_bidir_poa (argc, argv, "poa_2", 1);
-    ACE_ASSERT (result == 0);
-  }
+      result = test_with_bidir_poa (argc, argv, "poa_2", true);
+      ACE_ASSERT (result == 0);
+    }
   ACE_DEBUG ((LM_DEBUG, "Completed OK\n"));
   return result;
 }

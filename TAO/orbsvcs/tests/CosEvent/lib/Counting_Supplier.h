@@ -112,8 +112,8 @@ public:
   void disconnect ();
 
   // The PullSupplier methods.
-  CORBA::Any* pull ();
-  CORBA::Any* try_pull (CORBA::Boolean_out has_event);
+  CORBA::Any* pull () override;
+  CORBA::Any* try_pull (CORBA::Boolean_out has_event) override;
   void disconnect_pull_supplier () override;
 
   /// Count the number of events sent

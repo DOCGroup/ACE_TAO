@@ -1,5 +1,7 @@
 #include "tao/Dynamic_TP/DTP_Task.h"
 
+#include <memory>
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
@@ -178,8 +180,8 @@ TAO_DTP_Task::open (void * /* args */)
     }
   else
     {
-      size_t * stack_sz_arr = new size_t[num];
-      for (int z = 0; z < num; z++)
+      std::unique_ptr<size_t[]> stack_sz_arr (new size_t[num]);
+      for (int z {}; z < num; ++z)
         {
           stack_sz_arr[z] = this->thread_stack_size_;
         }
@@ -192,7 +194,7 @@ TAO_DTP_Task::open (void * /* args */)
                           0,
                           0,
                           0,
-                          stack_sz_arr) != 0)
+                          stack_sz_arr.get ()) != 0)
         {
           TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) DTP_Task::open() failed to activate ")
@@ -200,8 +202,6 @@ TAO_DTP_Task::open (void * /* args */)
                              num),
                             -1);
         }
-
-      delete[] stack_sz_arr;
     }
 
   if (TAO_debug_level > 4)
@@ -339,7 +339,7 @@ TAO_DTP_Task::svc ()
 
               {
                 ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);
-                int wait_state = 0;
+                int wait_state {};
                 while (!(this->shutdown_ || this->check_queue_) && wait_state != -1)
                   {
                     wait_state = this->thread_idle_time_.sec () == 0

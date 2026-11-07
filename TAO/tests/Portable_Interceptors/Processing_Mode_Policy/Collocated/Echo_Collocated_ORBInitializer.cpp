@@ -3,7 +3,8 @@
 #include "interceptors.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 Echo_Collocated_ORBInitializer::Echo_Collocated_ORBInitializer (
     PortableInterceptor::ProcessingMode server_proc_mode,
@@ -45,10 +46,9 @@ Echo_Collocated_ORBInitializer::post_init (
       throw CORBA::INTERNAL ();
     }
 
-  if (!ACE_OS::strcmp (orb_id.in (), "client_orb"))
+  if (std::strcmp (orb_id.in (), "client_orb") == 0)
     {
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
-        PortableInterceptor::ClientRequestInterceptor::_nil ();
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor {};
 
       // Install the Echo client request interceptor
       ACE_NEW_THROW_EX (interceptor,
@@ -58,7 +58,7 @@ Echo_Collocated_ORBInitializer::post_init (
       PortableInterceptor::ClientRequestInterceptor_var
         client_interceptor = interceptor;
 
-      CORBA::Any client_proc_mode_as_any;
+      CORBA::Any client_proc_mode_as_any {};
       client_proc_mode_as_any <<= this->client_processing_mode_;
 
       CORBA::PolicyList policy_list (1);
@@ -75,10 +75,9 @@ Echo_Collocated_ORBInitializer::post_init (
       policy_list[0]->destroy ();
       policy_list[0] = CORBA::Policy::_nil ();
     }
-  else if (!ACE_OS::strcmp (orb_id.in (), "server_orb"))
+  else if (std::strcmp (orb_id.in (), "server_orb") == 0)
     {
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor =
-        PortableInterceptor::ServerRequestInterceptor::_nil ();
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor {};
 
       // Install the Echo server request interceptor
       ACE_NEW_THROW_EX (interceptor,
@@ -88,7 +87,7 @@ Echo_Collocated_ORBInitializer::post_init (
       PortableInterceptor::ServerRequestInterceptor_var
         server_interceptor = interceptor;
 
-      CORBA::Any server_proc_mode_as_any;
+      CORBA::Any server_proc_mode_as_any {};
       server_proc_mode_as_any <<= this->server_processing_mode_;
 
       CORBA::PolicyList policy_list (1);
@@ -105,8 +104,5 @@ Echo_Collocated_ORBInitializer::post_init (
       policy_list[0]->destroy ();
       policy_list[0] = CORBA::Policy::_nil ();
     }
-  else
-  {
-  }
 }
 

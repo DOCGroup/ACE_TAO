@@ -64,8 +64,13 @@ namespace ACE_Task_Flags
 class ACE_Export ACE_Task_Base : public ACE_Service_Object
 {
 public:
+  ACE_Task_Base (ACE_Task_Base const &) = delete;
+  ACE_Task_Base (ACE_Task_Base &&) = delete;
+  ACE_Task_Base &operator= (ACE_Task_Base const &) = delete;
+  ACE_Task_Base &operator= (ACE_Task_Base &&) = delete;
+
   /// Constructor.
-  ACE_Task_Base (ACE_Thread_Manager * = 0);
+  explicit ACE_Task_Base (ACE_Thread_Manager * = nullptr);
 
   /// Destructor.
   ~ACE_Task_Base () override;
@@ -107,7 +112,7 @@ public:
   /// A hook method that can be used to pass a message to a
   /// task, where it can be processed immediately or queued for subsequent
   /// processing in the svc() hook method.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  virtual int put (ACE_Message_Block *, ACE_Time_Value * = nullptr);
 
   /// Run by a daemon thread to handle deferred processing.
   virtual int svc ();
@@ -149,13 +154,13 @@ public:
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * If @a thread_handles != 0 it is assumed to be an array of @a n
+   * If @a thread_handles != nullptr it is assumed to be an array of @a n
    * thread_handles that will be assigned the values of the thread
    * handles being spawned.  Returns -1 on failure (@c errno will
    * explain...), otherwise returns the group id of the threads.
    *
    * Assigning @a task allows you to associate the newly spawned
-   * threads with an instance of ACE_Task_Base.  If @a task == 0, then
+   * threads with an instance of ACE_Task_Base.  If @a task == nullptr, then
    * the new threads are associated automatically with @c this
    * ACE_Task_Base.  Setting the @a task argument to value other than
    * @c this makes the thread manipulating methods, such as wait(),
@@ -163,9 +168,9 @@ public:
    * specified @a task value must therefore be manipulated thru
    * ACE_Thread_Manager directly.
    *
-   * If @a stack != 0 it is assumed to be an array of @a n pointers to
+   * If @a stack != nullptr it is assumed to be an array of @a n pointers to
    * the base of the stacks to use for the threads being spawned.
-   * Likewise, if @a stack_size != 0 it is assumed to be an array of
+   * Likewise, if @a stack_size != nullptr it is assumed to be an array of
    * @a n values indicating how big each of the corresponding @a stacks
    * are.
    *
@@ -177,11 +182,11 @@ public:
                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
                         int grp_id = -1,
                         ACE_Task_Base *task = nullptr,
-                        ACE_hthread_t thread_handles[] = 0,
-                        void *stack[] = 0,
-                        size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0,
-                        const char* thr_name[] = 0);
+                        ACE_hthread_t thread_handles[] = nullptr,
+                        void *stack[] = nullptr,
+                        size_t stack_size[] = nullptr,
+                        ACE_thread_t thread_ids[] = nullptr,
+                        char const *thr_name[] = nullptr);
 
   /**
    * Block until there are no more threads running in this task.
@@ -218,10 +223,10 @@ public:
   void thr_mgr (ACE_Thread_Manager *);
 
   /// True if queue is a reader, else false.
-  int is_reader () const;
+  bool is_reader () const;
 
   /// True if queue is a writer, else false.
-  int is_writer () const;
+  bool is_writer () const;
 
   /**
    * Returns the number of threads currently running within a task.
@@ -262,16 +267,16 @@ protected:
    * of <thr_count_> is the number of active threads at this instant.
    * If the value == 0, then we're a passive object.
    */
-  size_t thr_count_;
+  size_t thr_count_ {};
 
   /// Multi-threading manager.
-  ACE_Thread_Manager *thr_mgr_;
+  ACE_Thread_Manager *thr_mgr_ {};
 
   /// ACE_Task flags.
-  u_long flags_;
+  u_long flags_ {};
 
   /// This maintains the group id of the Task.
-  int grp_id_;
+  int grp_id_ {-1};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Protect the state of a Task during concurrent operations, but
@@ -280,10 +285,7 @@ protected:
 #endif /* ACE_MT_SAFE */
 
   /// Holds the thread ID of the last thread to exit svc() in this object.
-  ACE_thread_t  last_thread_id_;
-private:
-  ACE_Task_Base &operator= (const ACE_Task_Base &) = delete;
-  ACE_Task_Base (const ACE_Task_Base &) = delete;
+  ACE_thread_t last_thread_id_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

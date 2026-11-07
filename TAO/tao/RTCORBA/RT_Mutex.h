@@ -25,7 +25,7 @@
 #include "tao/LocalObject.h"
 
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
-# include "ace/SString.h"
+# include <string>
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined(_MSC_VER)
@@ -92,7 +92,7 @@ public:
 
 protected:
   /// My name.
-  ACE_CString name_;
+  std::string name_;
 };
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 

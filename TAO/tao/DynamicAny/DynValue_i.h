@@ -14,6 +14,8 @@
 
 #include "tao/DynamicAny/DynValueCommon_i.h"
 
+#include "ace/Array_Base.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

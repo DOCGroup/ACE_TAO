@@ -293,7 +293,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   if (desc == nullptr)
     return nullptr;
   TAO_Endpoint *root_ep = desc->endpoint();
-  TAO_Transport *base_transport = nullptr;
+  TAO_Transport *base_transport {};
 
   TAO::Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -488,7 +488,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     {
       // Find a connection in the cache
       // If transport found, reference count is incremented on assignment
-      TAO_Transport *base_transport = nullptr;
+      TAO_Transport *base_transport {};
       size_t busy_count = 0;
       TAO::Transport_Cache_Manager::Find_Result found =
           tcm.find_transport (desc,

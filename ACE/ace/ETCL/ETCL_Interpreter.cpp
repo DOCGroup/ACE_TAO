@@ -1,10 +1,11 @@
 // -*- C++ -*-
 #include "ace/Guard_T.h"
 #include "ace/Truncate.h"
-#include "ace/OS_NS_string.h"
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_Constraint.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,10 +46,10 @@ ETCL_Interpreter::build_tree (const char* constraints)
   return return_value;
 }
 
-int
+bool
 ETCL_Interpreter::is_empty_string (const char* str)
 {
-  int return_value = 0;
+  bool return_value = false;
 
   if (str != nullptr)
     {
@@ -66,7 +67,7 @@ ETCL_Interpreter::is_empty_string (const char* str)
 
       if (str[i] == '\0')
         {
-          return_value = 1;
+          return_value = true;
         }
     }
 
@@ -91,9 +92,9 @@ Lex_String_Input::copy_into (char* buf,
 
   if (n > 0)
     {
-      ACE_OS::memcpy (buf,
-                      Lex_String_Input::current_,
-                      n);
+      std::memcpy (buf,
+                   Lex_String_Input::current_,
+                   n);
       Lex_String_Input::current_ += n;
     }
 
@@ -106,7 +107,7 @@ Lex_String_Input::reset (char* input_string)
   Lex_String_Input::string_ = input_string;
   Lex_String_Input::current_ = input_string;
   Lex_String_Input::end_ =
-    input_string + ACE_OS::strlen (Lex_String_Input::string_);
+    input_string + std::strlen (Lex_String_Input::string_);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

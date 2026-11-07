@@ -126,6 +126,25 @@ run_main (int, ACE_TCHAR *[])
   }
 
   {
+    ACE_Unbounded_Stack<int> stack;
+    ACE_TEST_ASSERT (stack.is_empty ());
+    ACE_TEST_ASSERT (stack.push (23) == 0);
+
+    int item {};
+    ACE_TEST_ASSERT (stack.pop (item) == 0);
+    ACE_TEST_ASSERT (item == 23);
+  }
+
+  {
+    ACE_Fixed_Set<int, 8> original;
+    ACE_TEST_ASSERT (original.insert (42) == 0);
+
+    ACE_Fixed_Set<int, 8> copy (original);
+    ACE_TEST_ASSERT (copy.size () == 1);
+    ACE_TEST_ASSERT (copy.find (42) == 0);
+  }
+
+  {
     ARRAY array1;
     array1.size (2);
     array1[0] = 4;

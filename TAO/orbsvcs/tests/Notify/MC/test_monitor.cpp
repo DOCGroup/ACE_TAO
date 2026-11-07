@@ -1,6 +1,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Monitor_Point_Registry.h"
 
+#include <memory>
+
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
 
@@ -9,55 +11,58 @@
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 #include "MonitorTestInterfaceS.h"
+
 extern "C" int
-sorter (const void* a, const void* b)
+sorter (void const* a, void const* b)
 {
-  const char* left = *(reinterpret_cast<const char* const*> (a));
-  const char* right = *(reinterpret_cast<const char* const*> (b));
+  char const* left = *static_cast<char const* const*> (a);
+  char const* right = *static_cast<char const* const*> (b);
   return ACE_OS::strcmp (left, right);
 }
-
 
 // It's reasonable to assume that there is only one event channel
 // factory and that we know its name.
 class MonitorTestInterface_i: public virtual POA_MonitorTestInterface
 {
 public:
-  MonitorTestInterface_i (
+  explicit MonitorTestInterface_i (
     CosNotification::NotificationServiceMonitorControl_ptr nsm)
     : nsm_ (CosNotification::NotificationServiceMonitorControl::_duplicate (nsm))
   {
   }
 
-  virtual void
-  running (MonitorTestInterface::Which proc);
+  MonitorTestInterface_i (MonitorTestInterface_i const&) = delete;
+  MonitorTestInterface_i (MonitorTestInterface_i&&) = delete;
+  MonitorTestInterface_i& operator= (MonitorTestInterface_i const&) = delete;
+  MonitorTestInterface_i& operator= (MonitorTestInterface_i&&) = delete;
+  ~MonitorTestInterface_i () override = default;
 
-  virtual void
-  finished (MonitorTestInterface::Which proc);
+  void running (MonitorTestInterface::Which proc) override;
+
+  void finished (MonitorTestInterface::Which proc) override;
 
 private:
-  void brain_dump (const char * context);
-  void stat_dump (const char * statName);
+  void brain_dump (char const* context);
+  void stat_dump (char const* stat_name);
   void consumer_stats_check ();
 private:
-  ACE_CString base_;
-  CosNotification::NotificationServiceMonitorControl_var nsm_;
+  ACE_CString base_ {};
+  CosNotification::NotificationServiceMonitorControl_var nsm_ {};
 };
 
 void
 MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
 {
-  ACE_CString str;
-  Monitor::Data_var data;
-  Monitor::NameList list;
-  Monitor::Numeric num;
+  ACE_CString str {};
+  Monitor::Data_var data {};
+  Monitor::NameList list {};
+  Monitor::Numeric num {};
 
   switch (proc)
     {
     case MonitorTestInterface::NotifyService:
       {
-      data =
-        nsm_->get_statistic (NotifyMonitoringExt::EventChannelFactoryNames);
+      data = this->nsm_->get_statistic (NotifyMonitoringExt::EventChannelFactoryNames);
       list = data->data_union.list ();
 
       if (list.length () != 1)
@@ -96,7 +101,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
     case MonitorTestInterface::Consumer:
       {
       str = this->base_ + NotifyMonitoringExt::ActiveEventChannelNames;
-      data = nsm_->get_statistic (str.c_str ());
+      data = this->nsm_->get_statistic (str.c_str ());
       list = data->data_union.list ();
 
       if (list.length () != 1)
@@ -117,14 +122,13 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Consumer\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
-      data = nsm_->get_statistic(str.c_str ());
+      data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
-        ACE_ERROR ((LM_ERROR,
-                        "Monitor: ERROR: There should be only one ConsumerAdmin\n"));
+        ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one ConsumerAdmin\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
-      data = nsm_->get_statistic(str.c_str ());
+      data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
       if (!ACE::is_equal (num.dlist[0].value, 0.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
@@ -136,18 +140,18 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
     case MonitorTestInterface::Supplier:
       {
       str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;
-      data = nsm_->get_statistic(str.c_str ());
+      data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
 
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Supplier\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
-      data = nsm_->get_statistic(str.c_str ());
+      data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR,
-              "Monitor: ERROR: There should be only one SupplierAdmin\n"));
+                    "Monitor: ERROR: There should be only one SupplierAdmin\n"));
       brain_dump ("Running Supplier");
       break;
       }
@@ -158,59 +162,63 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
 }
 
 void
-MonitorTestInterface_i::consumer_stats_check()
+MonitorTestInterface_i::consumer_stats_check ()
 {
-  bool foundConsumerStats = false;
-  Monitor::NameList_var names = nsm_->get_statistic_names ();
-  CORBA::ULong length = names->length ();
-  for(CORBA::ULong i = 0; i < length; i++)
+  bool found_consumer_stats {};
+  Monitor::NameList_var const names = this->nsm_->get_statistic_names ();
+  CORBA::ULong const length = names->length ();
+  for (CORBA::ULong i {}; i < length; ++i)
     {
-      const char * name = names[i].in ();
-      size_t slashcount = 0;
-      bool isConsumerQueueSize = false;
-      for (size_t nCh = 0; name[nCh] != 0 && slashcount < 3; ++nCh)
+      char const* const name = names[i];
+      size_t slash_count {};
+      bool is_consumer_queue_size {};
+      for (size_t character_index {};
+           name[character_index] != 0 && slash_count < 3;
+           ++character_index)
         {
-          if (name[nCh] == '/')
+          if (name[character_index] == '/')
             {
-              slashcount += 1;
-              if(slashcount == 3)
-              {
-                isConsumerQueueSize = 0 == ACE_OS::strcmp(
-                  &name[nCh + 1],
+              ++slash_count;
+              if (slash_count == 3)
+                is_consumer_queue_size = 0 == ACE_OS::strcmp (
+                  &name[character_index + 1],
                   NotifyMonitoringExt::EventChannelQueueSize);
-              }
             }
         }
-      if (isConsumerQueueSize)
-      {
-        foundConsumerStats = true;
-        // We have a consumer queue
-        try
-          {
-            Monitor::Data_var queueSizeData =
-              nsm_->get_statistic(name);
-
-            Monitor::Numeric queueSizeNum = queueSizeData->data_union.num ();
-            ACE_DEBUG ((LM_DEBUG, "Monitor: %s: Average: %f, Maximum: %f, Most recent: %f\n",
-                name,
-                queueSizeNum.average, queueSizeNum.maximum, queueSizeNum.last));
-            if (queueSizeNum.average <= 0.0 || queueSizeNum.average > 2000.0)
-              ACE_ERROR ((LM_ERROR, "Monitor: ERROR: %s average queue size [%f] should be greater than zero and less than 2000.\n",
-                name,
-                queueSizeNum.average));
-            if (queueSizeNum.last > 2000.0)
-              ACE_ERROR ((LM_ERROR, "Monitor: ERROR: %s most recent queue size [%f] should not be greater than 2000.\n",
-                name,
-                queueSizeNum.last));
-          }
-        catch (const CORBA::Exception& ex)
-          {
-            ex._tao_print_exception (name);
-          }
-      }
-
+      if (is_consumer_queue_size)
+        {
+          found_consumer_stats = true;
+          // We have a consumer queue
+          try
+            {
+              Monitor::Data_var const queue_size_data = this->nsm_->get_statistic (name);
+              Monitor::Numeric const queue_size_num = queue_size_data->data_union.num ();
+              ACE_DEBUG ((LM_DEBUG,
+                          "Monitor: %s: Average: %f, Maximum: %f, Most recent: %f\n",
+                          name,
+                          queue_size_num.average,
+                          queue_size_num.maximum,
+                          queue_size_num.last));
+              if (queue_size_num.average <= 0.0 || queue_size_num.average > 2000.0)
+                ACE_ERROR ((LM_ERROR,
+                            "Monitor: ERROR: %s average queue size [%f] should be greater than "
+                            "zero and less than 2000.\n",
+                            name,
+                            queue_size_num.average));
+              if (queue_size_num.last > 2000.0)
+                ACE_ERROR ((LM_ERROR,
+                            "Monitor: ERROR: %s most recent queue size [%f] should not be "
+                            "greater than 2000.\n",
+                            name,
+                            queue_size_num.last));
+            }
+          catch (CORBA::Exception const& ex)
+            {
+              ex._tao_print_exception (name);
+            }
+        }
     }
-  if(! foundConsumerStats)
+  if (!found_consumer_stats)
     {
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: No consumer queue size statistics found.\n"
                 ));
@@ -218,7 +226,7 @@ MonitorTestInterface_i::consumer_stats_check()
 }
 
 void
-MonitorTestInterface_i::brain_dump(const char * /*context*/)
+MonitorTestInterface_i::brain_dump (char const* /*context*/)
 {
 #if 0 // verbose output should be controlled via a command line option
   ACE_DEBUG ((LM_DEBUG, "\nStatistics as of: %s\n", context));
@@ -247,51 +255,46 @@ MonitorTestInterface_i::brain_dump(const char * /*context*/)
 }
 
 void
-MonitorTestInterface_i::stat_dump (const char * statName)
+MonitorTestInterface_i::stat_dump (char const* stat_name)
 {
   try
     {
-      Monitor::Data_var data = nsm_->get_statistic(statName);
-      switch (data->data_union._d())
-      {
+      Monitor::Data_var const data = this->nsm_->get_statistic (stat_name);
+      switch (data->data_union._d ())
+        {
       case Monitor::DATA_NUMERIC:
         {
-        ACE_DEBUG ((LM_DEBUG, "Numeric: %s\n", statName));
-        Monitor::Numeric num = data->data_union.num();
-        ACE_DEBUG ((LM_DEBUG, "   count: %d, average: %f; sumsq: %f, min: %f, max: %f: last %f\n",
-          (unsigned int)num.count, num.average, num.sum_of_squares, num.minimum, num.maximum, num.last));
-        break;
+          ACE_DEBUG ((LM_DEBUG, "Numeric: %s\n", stat_name));
+          Monitor::Numeric const num = data->data_union.num ();
+          ACE_DEBUG ((LM_DEBUG, "   count: %d, average: %f; sumsq: %f, min: %f, max: %f: last %f\n",
+                      static_cast<unsigned int> (num.count), num.average, num.sum_of_squares,
+                      num.minimum, num.maximum, num.last));
+          break;
         }
       default:
         {
-        Monitor::NameList list = data->data_union.list ();
-        size_t len = list.length ();
-        ACE_DEBUG ((LM_DEBUG, "Text[%d]: %s\n", (int)len, statName));
+          Monitor::NameList const list = data->data_union.list ();
+          size_t const len = list.length ();
+          ACE_DEBUG ((LM_DEBUG, "Text[%d]: %s\n", static_cast<int> (len), stat_name));
 
-        for (size_t i = 0; i < len; i++)
-        {
-          ACE_CString str = list[i].in ();
-          ACE_DEBUG ((LM_DEBUG, "   %d: %s\n", (int)i, str.c_str()));
+          for (size_t i {}; i < len; ++i)
+            {
+              ACE_CString const str = list[i].in ();
+              ACE_DEBUG ((LM_DEBUG, "   %d: %s\n", static_cast<int> (i), str.c_str ()));
+            }
+          break;
         }
-        break;
         }
-      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
-      ex._tao_print_exception (statName);
+      ex._tao_print_exception (stat_name);
     }
 }
-
 
 void
 MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
 {
-//  ACE_CString str;
-//  Monitor::Data_var data;
-//  Monitor::NameList list;
-//  Monitor::Numeric num;
-
   switch (proc)
     {
     case MonitorTestInterface::NotifyService:
@@ -304,51 +307,54 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       break;
     case MonitorTestInterface::Supplier:
       {
-      ACE_CString consumerCountName = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
-      Monitor::Data_var consumerCountData =
-        nsm_->get_statistic(consumerCountName.c_str ());
-      Monitor::Numeric consumerCountNum =
-        consumerCountData->data_union.num ();
-      if (!ACE::is_equal (consumerCountNum.last, 1.0))
-      ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
+        ACE_CString const consumer_count_name =
+          this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
+        Monitor::Data_var const consumer_count_data =
+          this->nsm_->get_statistic (consumer_count_name.c_str ());
+        Monitor::Numeric const consumer_count_num = consumer_count_data->data_union.num ();
+        if (!ACE::is_equal (consumer_count_num.last, 1.0))
+          ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
 
-      ACE_CString queueElementName = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
-      Monitor::Data_var queueElementData =
-        nsm_->get_statistic(queueElementName.c_str ());
-      Monitor::Numeric queueElementNum =
-        queueElementData->data_union.num ();
-      if (ACE::is_equal (queueElementNum.last, 0.0))
-      ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be at least one "
-                            "event queued\n"));
+        ACE_CString const queue_element_name =
+          this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
+        Monitor::Data_var const queue_element_data =
+          this->nsm_->get_statistic (queue_element_name.c_str ());
+        Monitor::Numeric const queue_element_num = queue_element_data->data_union.num ();
+        if (ACE::is_equal (queue_element_num.last, 0.0))
+          ACE_ERROR ((LM_ERROR,
+                      "Monitor: ERROR: There should be at least one event queued\n"));
 
-      ACE_CString adminNamesName  = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
-      Monitor::Data_var adminNamesData =
-        nsm_->get_statistic(adminNamesName.c_str ());
-      Monitor::NameList nameList =
-        adminNamesData->data_union.list ();
-      for (CORBA::ULong i = 0; i < nameList.length (); i++)
-        {
-          ACE_CString queueSizeName = nameList[i].in ();
-          queueSizeName += "/";
-          queueSizeName += NotifyMonitoringExt::EventChannelQueueSize;
-          Monitor::Data_var queueSizeData =
-            nsm_->get_statistic(queueSizeName.c_str ());
-          Monitor::Numeric queueSizeNum =
-            queueSizeData->data_union.num ();
-        ACE_DEBUG ((LM_DEBUG, "Monitor: Queue Size: Average: %f, Maximum: %f, Most recent: %f\n",
-            queueSizeNum.average, queueSizeNum.maximum, queueSizeNum.last));
-          if (queueSizeNum.average <= 0.0 || queueSizeNum.average > 2000.0)
-            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: The average queue size [%f] should be greater than zero and less than 2000.\n",
-              queueSizeNum.average));
-          if (queueSizeNum.last > 2000.0)
-            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: The most recent queue size [%f] should not be greater than 2000.\n",
-              queueSizeNum.last));
-      }
+        ACE_CString const admin_names_name =
+          this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
+        Monitor::Data_var const admin_names_data =
+          this->nsm_->get_statistic (admin_names_name.c_str ());
+        Monitor::NameList const name_list = admin_names_data->data_union.list ();
+        for (CORBA::ULong i {}; i < name_list.length (); ++i)
+          {
+            ACE_CString queue_size_name = name_list[i].in ();
+            queue_size_name += "/";
+            queue_size_name += NotifyMonitoringExt::EventChannelQueueSize;
+            Monitor::Data_var const queue_size_data =
+              this->nsm_->get_statistic (queue_size_name.c_str ());
+            Monitor::Numeric const queue_size_num = queue_size_data->data_union.num ();
+            ACE_DEBUG ((LM_DEBUG,
+                        "Monitor: Queue Size: Average: %f, Maximum: %f, Most recent: %f\n",
+                        queue_size_num.average, queue_size_num.maximum, queue_size_num.last));
+            if (queue_size_num.average <= 0.0 || queue_size_num.average > 2000.0)
+              ACE_ERROR ((LM_ERROR,
+                          "Monitor: ERROR: The average queue size [%f] should be greater "
+                          "than zero and less than 2000.\n",
+                          queue_size_num.average));
+            if (queue_size_num.last > 2000.0)
+              ACE_ERROR ((LM_ERROR,
+                          "Monitor: ERROR: The most recent queue size [%f] should not be "
+                          "greater than 2000.\n",
+                          queue_size_num.last));
+          }
 
-      consumer_stats_check();
-
-      brain_dump ("Finished Supplier");
-      break;
+        this->consumer_stats_check ();
+        this->brain_dump ("Finished Supplier");
+        break;
       }
     default:
       ACE_ERROR ((LM_ERROR, "Impossible enum value %d\n", proc));
@@ -356,23 +362,27 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
     }
 }
 
-static const ACE_TCHAR* ior_output_file = ACE_TEXT ("test_monitor.ior");
-static const ACE_TCHAR* monitor_ior = 0;
+struct Monitor_Options
+{
+  ACE_TCHAR const* ior_output_file { ACE_TEXT ("test_monitor.ior") };
+  ACE_TCHAR const* monitor_ior {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR* argv[], Monitor_Options& options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
+    {
+      switch (c)
       {
       case 'k':
-        monitor_ior = get_opts.opt_arg ();
+        options.monitor_ior = get_opts.opt_arg ();
         break;
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -384,6 +394,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+    }
   return 0;
 }
 
@@ -392,21 +403,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  int status = 0;
+  int status {};
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Monitor_Options options {};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
-      CORBA::Object_var obj =
-        orb->string_to_object (monitor_ior);
+      CORBA::Object_var obj = orb->string_to_object (options.monitor_ior);
       CosNotification::NotificationServiceMonitorControl_var nsm =
         CosNotification::NotificationServiceMonitorControl::_narrow (obj.in ());
 
@@ -418,14 +429,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                             1);
         }
 
-      MonitorTestInterface_i* mti = 0;
+      MonitorTestInterface_i* mti {};
       ACE_NEW_RETURN (mti, MonitorTestInterface_i (nsm.in ()), 1);
       PortableServer::ServantBase_var owner_transfer (mti);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::ObjectId_var id = root_poa->activate_object (mti);
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
@@ -438,18 +447,18 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // before we write out our IOR
       mti->running (MonitorTestInterface::NotifyService);
 
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), ACE_TEXT ("w"));
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR\n"),
+                              1);
+          }
 
-      if (output_file == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             ior_output_file),
-                             1);
-        }
-
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -458,7 +467,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       orb->run ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("test_monitor: ");
       status++;

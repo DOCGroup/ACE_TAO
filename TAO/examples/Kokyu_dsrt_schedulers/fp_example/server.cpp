@@ -5,16 +5,18 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "FP_Scheduler.h"
 #include "Task_Stats.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-
-int nthreads = 2;
-int enable_dynamic_scheduling = 0;
-const CORBA::Short max_importance = 100;
-int enable_yield = 1;
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+  int nthreads = 2;
+  bool enable_dynamic_scheduling = false;
+  bool enable_yield = true;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:ds"));
   int c;
@@ -23,19 +25,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        enable_dynamic_scheduling = 1;
+        options.enable_dynamic_scheduling = true;
         break;
 
       case 's':
-        enable_yield = 0;
+        options.enable_yield = false;
         break;
 
       case '?':
@@ -61,25 +63,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
-  // ctor
+  explicit Worker (CORBA::ORB_ptr orb);
+  Worker (Worker const &) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker &&) = delete;
 
-  virtual int svc ();
-  // The thread entry point.
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;
   // The orb
 };
 
-Task_Stats task_stats;
+static Task_Stats task_stats;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Fixed_Priority_Scheduler* scheduler=0;
+  Server_Options options;
+  Fixed_Priority_Scheduler *scheduler {};
   RTScheduling::Current_var current;
-  long flags;
+  long flags {};
   int sched_policy = ACE_SCHED_RR;
   int sched_scope = ACE_SCOPE_THREAD;
 
@@ -97,6 +102,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
@@ -111,10 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      if (enable_dynamic_scheduling)
+      if (options.enable_dynamic_scheduling)
         {
           CORBA::Object_var manager_obj =
             orb->resolve_initial_references ("RTSchedulerManager");
@@ -123,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
-          if (enable_yield)
+          if (options.enable_yield)
             {
               disp_impl_type = Kokyu::DSRT_CV_BASED;
             }
@@ -151,7 +156,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Simple_Server_i server_impl (orb.in (),
                                    current.in (),
                                    task_stats,
-                                   enable_yield);
+                                   options.enable_yield);
 
       Simple_Server_var server =
         server_impl._this ();
@@ -162,23 +167,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();
 
       Worker worker (orb.in ());
       if (worker.activate (flags,
-                           nthreads,
+                           options.nthreads,
                            0,
                            ACE_Sched_Params::priority_max(sched_policy,
                                                           sched_scope)) != 0)
@@ -188,7 +193,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "Trying to activate in non-RT class\n"));
 
           flags = THR_NEW_LWP | THR_JOINABLE | THR_BOUND;
-          if (worker.activate (flags, nthreads) != 0)
+          if (worker.activate (flags, options.nthreads) != 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Cannot activate server threads\n"),
@@ -198,10 +203,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
       ACE_DEBUG ((LM_DEBUG, "shutting down scheduler\n"));
-      scheduler->shutdown ();
+      if (scheduler != nullptr)
+        scheduler->shutdown ();
 
       orb->destroy ();
     }

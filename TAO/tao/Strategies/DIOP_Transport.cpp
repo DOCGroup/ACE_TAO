@@ -17,6 +17,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
@@ -124,9 +126,9 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   char buf [ACE_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
+  (void) std::memset (buf,
+                      '\0',
+                      sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // Create a data block

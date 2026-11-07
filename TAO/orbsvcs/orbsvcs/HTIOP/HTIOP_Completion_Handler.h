@@ -25,6 +25,8 @@
 #include "orbsvcs/HTIOP/HTIOP_Export.h"
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
@@ -77,8 +79,8 @@ namespace TAO
       TAO_ORB_Core *orb_core_;
       ACE::HTBP::Channel *channel_;
 
-      CREATION_STRATEGY2 *creation_strategy_;
-      CONCURRENCY_STRATEGY2 *concurrency_strategy_;
+      std::unique_ptr<CREATION_STRATEGY2> creation_strategy_;
+      std::unique_ptr<CONCURRENCY_STRATEGY2> concurrency_strategy_;
     };
   }
 }

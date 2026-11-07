@@ -40,8 +40,14 @@ namespace ACE
     {
       friend class Windows_Multi_Instance_Monitor;
 
+    public:
+      Windows_Monitor (Windows_Monitor const &) = delete;
+      Windows_Monitor (Windows_Monitor &&) = delete;
+      Windows_Monitor &operator= (Windows_Monitor const &) = delete;
+      Windows_Monitor &operator= (Windows_Monitor &&) = delete;
+
     protected:
-      Windows_Monitor (const ACE_TCHAR *path);
+      explicit Windows_Monitor (ACE_TCHAR const *path);
 
       /// Platform-specific implementation.
       void update_i ();
@@ -50,7 +56,7 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      double value_;
+      double value_ {};
 
     private:
       /// Code common to constructor and clear_impl().
@@ -60,9 +66,9 @@ namespace ACE
     /// created & destroyed with each update.
     private:
       ACE_TString path_;
-      HQUERY query_;
-      HCOUNTER counter_;
-      PDH_STATUS status_;
+      HQUERY query_ {};
+      HCOUNTER counter_ {};
+      PDH_STATUS status_ {ERROR_SUCCESS};
     };
   }
 }

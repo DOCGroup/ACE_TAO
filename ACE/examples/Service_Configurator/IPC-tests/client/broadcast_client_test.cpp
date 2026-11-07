@@ -11,7 +11,7 @@
 #include "ace/Log_Msg.h"
 
 /* Name of the program. */
-static ACE_TCHAR *program_name;
+static ACE_TCHAR *program_name = nullptr;
 
 /* Port number to use. */
 static unsigned short broadcast_port_number = ACE_DEFAULT_BROADCAST_PORT;

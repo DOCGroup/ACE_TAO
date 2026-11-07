@@ -16,6 +16,7 @@
 #include "ace/UPIPE_Addr.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Map_Manager.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/RW_Mutex.h"
@@ -28,14 +29,19 @@ template <class PEER_HANDLER, class KEY>
 class Acceptor_Factory : public ACE_Acceptor<PEER_HANDLER, ACE_UPIPE_ACCEPTOR>
 {
 public:
-  Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
-  Peer_Router<PEER_HANDLER, KEY> *router ();
+  explicit Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
+  Acceptor_Factory (Acceptor_Factory const &) = delete;
+  Acceptor_Factory (Acceptor_Factory &&) = delete;
+  Acceptor_Factory &operator= (Acceptor_Factory const &) = delete;
+  Acceptor_Factory &operator= (Acceptor_Factory &&) = delete;
+  Peer_Router<PEER_HANDLER, KEY> *router () const;
 
-  int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the acceptor when it's linked dynamically.
 
 private:
-  Peer_Router<PEER_HANDLER, KEY> *pr_;
+  Peer_Router<PEER_HANDLER, KEY> *pr_ {};
+  // Non-owning back-reference; the router owns this factory.
 };
 
 // Receive input from a Peer..
@@ -43,24 +49,28 @@ template <class ROUTER, class KEY>
 class Peer_Handler : public ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>
 {
 public:
-  Peer_Handler (ACE_Thread_Manager * = 0);
+  explicit Peer_Handler (ACE_Thread_Manager * = nullptr);
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   // Called by the ACE_Acceptor::handle_input() to activate this object.
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
   // Receive input from the peer..
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value *tv = nullptr) override;
   // Send output to a peer.
 
 protected:
-  ROUTER *router_task_;
-  // Pointer to write task..
+  ROUTER *router_task_ {};
+  // Non-owning pointer to the router task.
 
 private:
   // Don't need this method here...
-  virtual int svc ();
+  int svc () override;
 };
 
 // This abstract base class provides mechanisms for routing messages
@@ -73,8 +83,12 @@ template <class PEER_HANDLER, class PEER_KEY>
 class Peer_Router : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Peer_Router (ACE_Thread_Manager * = 0);
-  ~Peer_Router ();
+  explicit Peer_Router (ACE_Thread_Manager * = nullptr);
+  ~Peer_Router () = default;
+  Peer_Router (Peer_Router const &) = delete;
+  Peer_Router (Peer_Router &&) = delete;
+  Peer_Router &operator= (Peer_Router const &) = delete;
+  Peer_Router &operator= (Peer_Router &&) = delete;
 
   using HANDLER = Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY>;
 
@@ -95,15 +109,11 @@ protected:
   ACE_Map_Manager <PEER_KEY, PEER_HANDLER *, ACE_RW_Mutex> peer_map_;
 
   // Dynamic linking initialization hooks inherited from ACE_Task.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 
   // Factory for accepting new PEER_HANDLERs.
-  Acceptor_Factory<PEER_HANDLER, PEER_KEY> *acceptor_;
-
-private:
-  Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
-  void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
+  std::unique_ptr<Acceptor_Factory<PEER_HANDLER, PEER_KEY>> acceptor_ {};
 };
 
 #if defined (__ACE_INLINE__)

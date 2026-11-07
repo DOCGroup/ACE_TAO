@@ -43,7 +43,7 @@ namespace TAO
                      T * const);
     Any_Dual_Impl_T (_tao_destructor destructor,
                      CORBA::TypeCode_ptr,
-                     const T &);
+                     T const &);
     explicit Any_Dual_Impl_T (CORBA::TypeCode_ptr);
     ~Any_Dual_Impl_T () override = default;
 
@@ -54,30 +54,30 @@ namespace TAO
     static void insert_copy (CORBA::Any &,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
-                             const T &);
-    static CORBA::Boolean extract (const CORBA::Any &,
+                             T const &);
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&);
+                                   T const *&);
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   protected:
-    void value (const T &);
+    void value (T const &);
 
     T *value_ {};
 
   private:
     static CORBA::Boolean replace (TAO_InputCDR &,
-                                   const CORBA::Any &,
+                                   CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&);
+                                   T const *&);
   };
 }
 

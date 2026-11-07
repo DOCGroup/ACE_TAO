@@ -4,15 +4,11 @@
 #include "Blob_Handler.h"
 #include "Options.h"
 
-Options *Options::instance_ = 0;
-
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == 0)
-    Options::instance_ = new Options;
-
-  return Options::instance_;
+  static Options instance;
+  return &instance;
 }
 
 void
@@ -26,7 +22,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
       case 'r':
         this->operation_ = 'r';
@@ -53,7 +49,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG, "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n", argv[0]));
         ACE_OS::exit (1);
       }
-  if (this->hostname_ == 0 || this->filename_ == 0)
+  if (this->hostname_.empty () || this->filename_.empty ())
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n",
@@ -62,15 +58,4 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit (1);
     }
 
-}
-
-Options::Options ()
-  : hostname_ (0),
-    port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
-    filename_ (0),
-    length_ (0),
-    offset_ (0),
-    operation_ ('r'),
-    debug_ (0)
-{
 }

@@ -1,10 +1,5 @@
 #include "Blob.h"
 #include "Blob_Handler.h"
-#include "ace/OS_NS_string.h"
-
-ACE_Blob::ACE_Blob ()
-{
-}
 
 ACE_Blob::~ACE_Blob ()
 {
@@ -14,9 +9,9 @@ ACE_Blob::~ACE_Blob ()
 // initialize address and filename. No network i/o in open
 
 int
-ACE_Blob::open (const ACE_TCHAR *filename, const ACE_TCHAR *hostname , u_short port)
+ACE_Blob::open (ACE_TCHAR const *filename, ACE_TCHAR const *hostname, u_short port)
 {
-  filename_ = ACE_OS::strdup (filename);
+  this->filename_ = filename;
   inet_addr_.set (port, hostname);
   return 0;
 }
@@ -27,7 +22,7 @@ int
 ACE_Blob::read (ACE_Message_Block *mb, size_t length, size_t offset)
 {
   // Create a Blob Reader
-  ACE_Blob_Reader blob_reader (mb, length, offset, filename_);
+  ACE_Blob_Reader blob_reader (mb, length, offset, this->filename_.c_str ());
   ACE_Blob_Handler *brp = &blob_reader;
 
   // Connect to the server
@@ -43,7 +38,7 @@ int
 ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 {
   // Create a Blob Writer
-  ACE_Blob_Writer blob_writer (mb, length, offset, filename_);
+  ACE_Blob_Writer blob_writer (mb, length, offset, this->filename_.c_str ());
   ACE_Blob_Handler *bwp = &blob_writer;
 
   // Connect to the server
@@ -58,11 +53,7 @@ ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 int
 ACE_Blob::close ()
 {
-  if (filename_)
-    {
-      ACE_OS::free ((void *) filename_);
-      filename_ = 0;
-    }
+  this->filename_.clear ();
   return 0;
 }
 

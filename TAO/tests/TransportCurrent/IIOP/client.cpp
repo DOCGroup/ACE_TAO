@@ -19,8 +19,8 @@ test_transport_current (CORBA::ORB_ptr);
 
 using namespace TAO;
 
-const char* CLIENT_ORB_ID = "client orb";
-const ACE_TCHAR* ior = ACE_TEXT("file://server.ior");
+char const *CLIENT_ORB_ID = "client orb";
+ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
 
 int nthreads = 1;
 int niterations = 1;
@@ -31,7 +31,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("yt:n:k:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -69,7 +69,12 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (Test::Transport::CurrentTest_ptr server, int niterations, int use_dii_too);
-  virtual int svc ();
+  int svc () override;
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
 private:
   // The server.
@@ -134,7 +139,7 @@ Worker::svc ()
                         i));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception raised");
     }
@@ -150,14 +155,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      Test::Client_Request_Interceptor* cri = 0;
+      Test::Client_Request_Interceptor *cri = nullptr;
       ACE_NEW_RETURN (cri,
                       Test::Client_Request_Interceptor (CLIENT_ORB_ID,
                                                         test_transport_current),
                       -1);
       PortableInterceptor::ClientRequestInterceptor_var cri_safe (cri);
 
-      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Test::Client_ORBInitializer (cri),
                       -1);
@@ -188,7 +193,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT (" Expected exception was not thrown\n")),
                             -1);
         }
-      catch (const Transport::NoContext& )
+      catch (Transport::NoContext const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client (%P|%t) Expected exception occurred when trying ")
@@ -268,7 +273,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ((result == 0) ? ACE_TEXT ("successfuly") : ACE_TEXT ("with failure"))));
       return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

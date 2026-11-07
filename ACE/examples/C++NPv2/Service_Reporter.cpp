@@ -62,7 +62,7 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
       ACE_Utils::truncate_cast<u_long> (
         ACE_OS::strlen (state) * sizeof (ACE_TCHAR));
 
-    ACE_TCHAR *report = 0;   // Ask info() to allocate buffer
+    ACE_TCHAR *report = nullptr;   // Ask info() to allocate buffer
     int len = st->type ()->info (&report, 0);
     iov[2].iov_base = static_cast<ACE_TCHAR *> (report);
 
@@ -87,7 +87,7 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
     (buf, ACE_TEXT ("%hu"), local_addr.get_port_number ());
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp # lists services in daemon\n"));
-  if (*bufferp == 0)
+  if (*bufferp == nullptr)
     *bufferp = ACE::strnew (buf);
   else
     ACE_OS::strncpy (*bufferp, buf, length);

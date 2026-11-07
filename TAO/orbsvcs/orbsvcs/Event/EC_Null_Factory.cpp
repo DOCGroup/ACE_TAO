@@ -24,10 +24,6 @@ TAO_EC_Null_Factory::TAO_EC_Null_Factory ()
 {
 }
 
-TAO_EC_Null_Factory::~TAO_EC_Null_Factory ()
-{
-}
-
 TAO_EC_Dispatching*
 TAO_EC_Null_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
@@ -116,7 +112,7 @@ TAO_EC_Timeout_Generator*
 TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
   int argc = 0;
-  ACE_TCHAR **argv = nullptr;
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();

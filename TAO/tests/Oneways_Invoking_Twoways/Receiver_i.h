@@ -27,15 +27,20 @@ public:
               CORBA::ULong iter);
 
   ///Destructor
-  virtual ~Receiver_i ();
+  ~Receiver_i () override;
+
+  Receiver_i (Receiver_i const &) = delete;
+  Receiver_i (Receiver_i &&) = delete;
+  Receiver_i &operator= (Receiver_i const &) = delete;
+  Receiver_i &operator= (Receiver_i &&) = delete;
 
   // = The skeleton methods
-  virtual CORBA::Long receive_call ();
+  CORBA::Long receive_call () override;
 
   /// Retun the number of calls that every thread would make...
-  virtual CORBA::Long get_call_count ();
+  CORBA::Long get_call_count () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Number of calls processed so far..
   CORBA::ULong no_calls_;

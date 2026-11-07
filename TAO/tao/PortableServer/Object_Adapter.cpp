@@ -2,6 +2,9 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
+
+#include <cstring>
+#include <utility>
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Regular_POA.h"
 #include "tao/PortableServer/Creation_Time.h"
@@ -215,9 +218,9 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   // Give ownership to the unique pointer.
   std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
 
-  this->hint_strategy_ = new_hint_strategy.release ();
-  this->persistent_poa_name_map_ = new_persistent_poa_name_map.release ();
-  this->transient_poa_map_ = new_transient_poa_map.release ();
+  this->hint_strategy_ = std::move (new_hint_strategy);
+  this->persistent_poa_name_map_ = std::move (new_persistent_poa_name_map);
+  this->transient_poa_map_ = std::move (new_transient_poa_map);
 }
 
 void
@@ -272,12 +275,11 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies)
 
 TAO_Object_Adapter::~TAO_Object_Adapter ()
 {
-  delete this->hint_strategy_;
-  delete this->persistent_poa_name_map_;
-  delete this->transient_poa_map_;
-  delete this->lock_;
-
-  delete this->servant_dispatcher_;
+  this->hint_strategy_.reset ();
+  this->persistent_poa_name_map_.reset ();
+  this->transient_poa_map_.reset ();
+  this->lock_.reset ();
+  this->servant_dispatcher_.reset ();
 
   // This cleanup may have already occurred in the close() method.  If
   // that is the case then this won't cause any harm since root_ and
@@ -522,7 +524,7 @@ TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
                                     PortableServer::Servant &servant)
 {
   PortableServer::ObjectId id;
-  TAO_Root_POA *poa = nullptr;
+  TAO_Root_POA *poa {};
 
   this->locate_poa (key, id, poa);
 
@@ -539,8 +541,10 @@ TAO_Object_Adapter::open ()
   // default one.
   if (!this->servant_dispatcher_)
     {
-      ACE_NEW (this->servant_dispatcher_,
+      TAO_Servant_Dispatcher *dispatcher {};
+      ACE_NEW (dispatcher,
                TAO_Default_Servant_Dispatcher);
+      this->servant_dispatcher_.reset (dispatcher);
     }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -679,7 +683,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                               CORBA::Object_out forward_to)
 {
   if (key.length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
-      || ACE_OS::memcmp (key.get_buffer (),
+      || std::memcmp (key.get_buffer (),
                          &TAO_Root_POA::objectkey_prefix[0],
                          TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
@@ -699,16 +703,16 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
           CORBA::OctetSeq_var ocs;
           sri_adapter->tao_ft_interception_point (request,
-                                                 0,  // args
+                                                 nullptr,  // args
                                                  0,  // nargs
-                                                 0,  // servant_upcall
-                                                 0,  // exceptions
+                                                 nullptr,  // servant_upcall
+                                                 nullptr,  // exceptions
                                                  0, // nexceptions
                                                  ocs.out ());
 
           /// If we have a cached result, just go ahead and send the reply
           /// and let us  return
-          if (ocs.ptr () != 0)
+          if (ocs.ptr () != nullptr)
             {
               // request.result_seq (
               request.send_cached_reply (ocs.inout ());
@@ -730,10 +734,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           // must be invoked before the operation is dispatched to the
           // servant.
           sri_adapter->receive_request_service_contexts (request,
-                                                         0,  // args
+                                                         nullptr,  // args
                                                          0,  // nargs
-                                                         0,  // servant_upcall
-                                                         0,  // exceptions
+                                                         nullptr,  // servant_upcall
+                                                         nullptr,  // exceptions
                                                          0); // nexceptions
 
           // If a PortableInterceptor::ForwardRequest exception was
@@ -759,10 +763,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           if (sri_adapter != nullptr)
             {
               sri_adapter->send_other (request,
-                                       0,  // args
+                                       nullptr,  // args
                                        0,  // nargs
-                                       0,  // servant_upcall
-                                       0,  // exceptions
+                                       nullptr,  // servant_upcall
+                                       nullptr,  // exceptions
                                        0); // nexceptions
             }
         }
@@ -781,10 +785,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           request.caught_exception (&ex);
 
           sri_adapter->send_exception (request,
-                                       0,  // args
+                                       nullptr,  // args
                                        0,  // nargs
-                                       0,  // servant_upcall
-                                       0,  // exceptions
+                                       nullptr,  // servant_upcall
+                                       nullptr,  // exceptions
                                        0);   // nexceptions
 
           status = request.pi_reply_status ();
@@ -889,7 +893,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
       TAO::ObjectKey_var objkey = profile->_key ();
 
       if (objkey->length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
-          || ACE_OS::memcmp (objkey->get_buffer (),
+          || std::memcmp (objkey->get_buffer (),
                              &TAO_Root_POA::objectkey_prefix[0],
                              TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
@@ -1113,7 +1117,7 @@ TAO_Object_Adapter::iteratable_poa_name::begin () const
 TAO_Object_Adapter::iteratable_poa_name::iterator
 TAO_Object_Adapter::iteratable_poa_name::end () const
 {
-  return iterator (0,
+  return iterator (false,
                    this->folded_name_.length (),
                    this->folded_name_.get_buffer ());
 }
@@ -1154,10 +1158,7 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw ()
 void
 TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
 {
-  if (this->servant_dispatcher_)
-    delete this->servant_dispatcher_;
-
-  this->servant_dispatcher_ = dispatcher;
+  this->servant_dispatcher_.reset (dispatcher);
 }
 
 void

@@ -3,6 +3,8 @@
 
 #include "tao/SystemException.h"
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -10,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
@@ -27,7 +29,7 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 void
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
@@ -44,7 +46,7 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 // ===========================================================
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
@@ -58,7 +60,7 @@ TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
 }
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
@@ -75,7 +77,7 @@ TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 void
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
@@ -92,7 +94,7 @@ interceptor_value (CORBA::Any *any) const
 // ==============================================================
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
@@ -108,7 +110,7 @@ TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 void
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
@@ -125,13 +127,13 @@ interceptor_value (CORBA::Any *any) const
 // ============================================================
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr)
 {
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -141,7 +143,7 @@ TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_var,
-         size_t BOUND,
+         std::size_t BOUND,
          template <typename> class Insert_Policy>
 void
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::

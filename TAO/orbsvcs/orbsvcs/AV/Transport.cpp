@@ -10,6 +10,8 @@
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/AV_Core.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 #include "orbsvcs/AV/QoS_UDP.h"
 #endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
@@ -28,18 +30,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
-TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
+TAO_AV_Transport_Item::TAO_AV_Transport_Item (ACE_CString const &name)
   : name_ (name)
-  , factory_ (nullptr)
 {
 }
 
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
-TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (const ACE_CString &name)
+TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (ACE_CString const &name)
   : name_ (name)
-  , factory_ (nullptr)
 {
 }
 
@@ -64,10 +64,10 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
     {
       TAO_FlowSpec_Entry *entry = (*flow_spec);
       ACE_Addr *address = entry->address ();
-      const char *flow_protocol = entry->flow_protocol_str ();
-      const char *transport_protocol = entry->carrier_protocol_str ();
+      char const *flow_protocol = entry->flow_protocol_str ();
+      char const *transport_protocol = entry->carrier_protocol_str ();
 
-      if (ACE_OS::strcmp (flow_protocol,"") == 0)
+      if (std::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
 
       if (address == nullptr)
@@ -106,7 +106,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                        flow_factory) == -1)
                     return -1;
 
-                  TAO_AV_Transport *transport = nullptr;
+                  TAO_AV_Transport *transport {};
                   if (connector->connect (entry,
                                           transport,
                                           TAO_AV_Core::TAO_AV_DATA) == -1)
@@ -139,7 +139,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                    control_flow_factory) == -1)
                         return -1;
 
-                      TAO_AV_Transport *control_transport = nullptr;
+                      TAO_AV_Transport *control_transport {};
                       if (control_connector->connect (entry,
                                                       control_transport,
                                                       TAO_AV_Core::TAO_AV_CONTROL) == -1)
@@ -229,10 +229,10 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
     {
       TAO_FlowSpec_Entry *entry = (*flow_spec);
       ACE_Addr *address = entry->address ();
-      const char *flow_protocol = entry->flow_protocol_str ();
-      const char *transport_protocol = entry->carrier_protocol_str ();
+      char const *flow_protocol = entry->flow_protocol_str ();
+      char const *transport_protocol = entry->carrier_protocol_str ();
 
-      if (ACE_OS::strcmp (flow_protocol,"") == 0)
+      if (std::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
 
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
@@ -326,10 +326,10 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   // No endpoints were specified, we let each protocol pick its own
   // default...
 
-  const char *flow_protocol = entry->flow_protocol_str ();
-  const char *transport_protocol = entry->carrier_protocol_str ();
+  char const *flow_protocol = entry->flow_protocol_str ();
+  char const *transport_protocol = entry->carrier_protocol_str ();
 
-  if (ACE_OS::strcmp (flow_protocol,"") == 0)
+  if (std::strcmp (flow_protocol,"") == 0)
     flow_protocol = transport_protocol;
 
   TAO_AV_Flow_Protocol_Factory *flow_factory =
@@ -380,7 +380,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   this->acceptors_.insert (acceptor);
 
-  const char *control_flow_factory_name = flow_factory->control_flow_factory ();
+  char const *control_flow_factory_name = flow_factory->control_flow_factory ();
 
   if (control_flow_factory_name != nullptr)
     {
@@ -462,14 +462,10 @@ TAO_AV_Acceptor_Registry::close_all ()
 // TAO_AV_Transport
 //----------------------------------------------------------------------
 
-TAO_AV_Transport::TAO_AV_Transport ()
-{
-}
+TAO_AV_Transport::TAO_AV_Transport () = default;
 
 // Virtual destructor.
-TAO_AV_Transport::~TAO_AV_Transport ()
-{
-}
+TAO_AV_Transport::~TAO_AV_Transport () = default;
 
 ACE_Addr*
 TAO_AV_Transport::get_local_addr ()
@@ -482,13 +478,7 @@ TAO_AV_Transport::get_local_addr ()
 //----------------------------------------------------------------------
 
 //TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (TAO_AV_Callback *callback)
-TAO_AV_Flow_Handler::TAO_AV_Flow_Handler ()
-  :transport_ (nullptr),
-   callback_ (nullptr),
-   protocol_object_ (nullptr),
-   timer_id_ (-1)
-{
-}
+TAO_AV_Flow_Handler::TAO_AV_Flow_Handler () = default;
 
 TAO_AV_Flow_Handler::~TAO_AV_Flow_Handler()
 {
@@ -524,7 +514,7 @@ int
 TAO_AV_Flow_Handler::schedule_timer ()
 {
   ACE_Event_Handler *event_handler = this->event_handler ();
-  ACE_Time_Value *tv = nullptr;
+  ACE_Time_Value *tv {};
 
   this->callback_->get_timeout (tv, this->timeout_arg_);
   if (tv == nullptr)
@@ -572,14 +562,14 @@ TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
 }
 
 int
-TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
-                                     const void * /*arg*/)
+TAO_AV_Flow_Handler::handle_timeout (ACE_Time_Value const & /*tv*/,
+                                     void const * /*arg*/)
 {
   int result = this->callback_->handle_timeout (this->timeout_arg_);
   if (result < 0)
     return result;
   ACE_Event_Handler *event_handler = this->event_handler ();
-  ACE_Time_Value *timeout = nullptr;
+  ACE_Time_Value *timeout {};
 
   this->callback_->get_timeout (timeout,  this->timeout_arg_);
   if (timeout == nullptr)
@@ -626,31 +616,18 @@ TAO_AV_Flow_Handler::callback (TAO_AV_Callback *callback)
 }
 
 // TAO_AV_Connector
-TAO_AV_Connector::TAO_AV_Connector ()
-{
-}
+TAO_AV_Connector::TAO_AV_Connector () = default;
 
-TAO_AV_Connector::~TAO_AV_Connector ()
-{
-}
+TAO_AV_Connector::~TAO_AV_Connector () = default;
 
 // TAO_AV_Acceptor
-TAO_AV_Acceptor::TAO_AV_Acceptor ()
-{
-}
+TAO_AV_Acceptor::TAO_AV_Acceptor () = default;
 
-TAO_AV_Acceptor::~TAO_AV_Acceptor ()
-{
-}
+TAO_AV_Acceptor::~TAO_AV_Acceptor () = default;
 
-TAO_AV_Transport_Factory::TAO_AV_Transport_Factory ()
- : ref_count (0)
-{
-}
+TAO_AV_Transport_Factory::TAO_AV_Transport_Factory () = default;
 
-TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory ()
-{
-}
+TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory () = default;
 
 int
 TAO_AV_Transport_Factory::init (int /* argc */,
@@ -660,7 +637,7 @@ TAO_AV_Transport_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_Transport_Factory::match_protocol (const char * /* protocol_string */)
+TAO_AV_Transport_Factory::match_protocol (char const * /* protocol_string */)
 {
   return 0;
 }

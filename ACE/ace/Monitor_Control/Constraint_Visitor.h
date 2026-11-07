@@ -51,7 +51,7 @@ namespace ACE
       : public ETCL_Constraint_Visitor
     {
     public:
-      Constraint_Visitor (const Monitor_Control_Types::Data& data);
+      explicit Constraint_Visitor (Monitor_Control_Types::Data const& data);
       ~Constraint_Visitor () override = default;
 
       ACE_CDR::Boolean evaluate_constraint (ETCL_Constraint *root);
@@ -69,7 +69,7 @@ namespace ACE
                            int op_type);
 
     private:
-      const Monitor_Control_Types::Data& data_;
+      Monitor_Control_Types::Data const& data_;
       ACE_Unbounded_Queue<ETCL_Literal_Constraint> queue_;
     };
   }

@@ -13,7 +13,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ClientInitializer* temp_initializer = new ClientInitializer;
+      // Keep this non-owning pointer to call the derived API after ownership
+      // transfers to ORBInitializer_var.
+      ClientInitializer * const temp_initializer = new ClientInitializer;
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;

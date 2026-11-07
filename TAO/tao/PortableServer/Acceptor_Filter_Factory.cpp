@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Acceptor_Filter*
 TAO_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& )
 {
-  TAO_Acceptor_Filter *filter = nullptr;
+  TAO_Acceptor_Filter *filter {};
 
   ACE_NEW_RETURN (filter,
                   TAO_Default_Acceptor_Filter (),

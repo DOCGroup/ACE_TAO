@@ -153,8 +153,9 @@ ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
 {
   if (g != nullptr)
     {
-      ++g->refcnt_;
-      ACE_ASSERT (g->refcnt_ > 0);
+      long const refcnt = g->refcnt_.fetch_add (1) + 1;
+      ACE_ASSERT (refcnt > 0);
+      ACE_UNUSED_ARG (refcnt);
     }
 }
 
@@ -163,7 +164,7 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
 {
   if (g != nullptr)
     {
-      long tmp = --g->refcnt_;
+      long const tmp = g->refcnt_.fetch_sub (1) - 1;
       if (tmp <= 0)  delete g;
       ACE_ASSERT (tmp >= 0);
     }
@@ -223,7 +224,6 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , repo_ (nullptr)
   , static_svcs_ (nullptr)
   , processed_static_svcs_ (nullptr)
-  , refcnt_ (0)
 {
   (void)this->init_i ();
 

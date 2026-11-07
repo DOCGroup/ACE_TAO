@@ -29,6 +29,8 @@
 
 #include "ace/OS_NS_string.h"
 
+#include <cerrno>
+#include <cstdlib>
 #include <string>
 
 void
@@ -156,6 +158,7 @@ be_util::prep_be_arg (std::string const& s)
   static std::string const dds_impl = "dds_impl=";
   static std::string const stripped_filename = "stripped_filename=";
   static std::string const no_fixed_err = "no_fixed_err";
+  static std::string const max_line_length = "max_line_length=";
 
   std::string remaining (s);
   while (!remaining.empty ())
@@ -320,6 +323,30 @@ be_util::prep_be_arg (std::string const& s)
       else if (argument.substr (0, no_fixed_err.size ()) == no_fixed_err)
         {
           be_global->no_fixed_err (true);
+        }
+      else if (argument.substr (0, max_line_length.size ()) == max_line_length)
+        {
+          std::string const val (argument.substr (max_line_length.size ()));
+          bool valid = !val.empty ();
+          for (char const c : val)
+            {
+              valid = valid && c >= '0' && c <= '9';
+            }
+
+          char *end {};
+          errno = 0;
+          unsigned long const parsed = std::strtoul (val.c_str (), &end, 10);
+          if (!valid || errno == ERANGE || end == val.c_str () || *end != '\0')
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("IDL: invalid max_line_length <%C>\n"),
+                          val.c_str ()));
+              idl_global->parse_args_exit (1);
+            }
+          else
+            {
+              be_global->max_line_length (static_cast<std::size_t> (parsed));
+            }
         }
       else
         {

@@ -4,36 +4,43 @@
 #include "ValueTypes_impl.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
+#include <cstddef>
+#include <vector>
+
 //============= class DynAnyAnalyzer ============
 
 class DynAnyAnalyzer
 {
 private:
-  unsigned int level_;
+  std::size_t level_ {1};
   CORBA::ORB_var orb_;
-  DynamicAny::DynAnyFactory_var dany_fact_;
+  DynamicAny::DynAnyFactory_var dany_fact_ {};
 
 public:
   DynAnyAnalyzer (int argc, ACE_TCHAR *argv[]);
-  ~DynAnyAnalyzer () {orb_->destroy ();}
+  DynAnyAnalyzer (DynAnyAnalyzer const &) = delete;
+  DynAnyAnalyzer (DynAnyAnalyzer &&) = delete;
+  DynAnyAnalyzer &operator= (DynAnyAnalyzer const &) = delete;
+  DynAnyAnalyzer &operator= (DynAnyAnalyzer &&) = delete;
+  ~DynAnyAnalyzer () { orb_->destroy (); }
 
-  DynamicAny::DynAny_ptr DynAny_NoTrunc (const CORBA::Any &);
-  DynamicAny::DynAny_ptr DynAny (const CORBA::Any &);
-  DynamicAny::DynAny_ptr DynAny (const CORBA::TypeCode_ptr &);
+  DynamicAny::DynAny_ptr DynAny_NoTrunc (CORBA::Any const &);
+  DynamicAny::DynAny_ptr DynAny (CORBA::Any const &);
+  DynamicAny::DynAny_ptr DynAny (CORBA::TypeCode_ptr const &);
 
-  void register_factory (CORBA::ValueFactoryBase_var factory);
+  void register_factory (CORBA::ValueFactoryBase_var const &factory);
 
   void analyze (
     DynamicAny::DynAny_ptr da,
-    CORBA::Boolean newline = false);
+    bool newline = false);
 
 private:
   /// List of base types.
-  typedef ACE_Array_Base<CORBA::TypeCode_var> BaseTypesList_t;
+  using BaseTypesList_t = std::vector<CORBA::TypeCode_var>;
 
-  void tab (const char p[])
+  void tab (char const *p)
   {
-    for (unsigned int i = 0u; i < level_ ; ++i)
+    for (std::size_t i = 0; i < level_; ++i)
       ACE_DEBUG ((LM_DEBUG, ".."));
     ACE_DEBUG ((LM_DEBUG, "%C", p));
   }
@@ -45,13 +52,13 @@ private:
   static void get_base_types (
     CORBA::TypeCode_ptr tc,
     BaseTypesList_t &base_types,
-    CORBA::ULong *total_member_count = 0);
+    CORBA::ULong *total_member_count = nullptr);
 
   /// Return the unaliased valuetype typecode that corresponds to
   /// index (0..total_members-1) from the given hierarchical list of
   /// the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_correct_base_type (
-    const BaseTypesList_t &base_types,
+    BaseTypesList_t const &base_types,
     CORBA::ULong &index);
 };
 

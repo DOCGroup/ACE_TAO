@@ -11,11 +11,15 @@ class Foo_Bar
 {
 public:
   /// Constructor
-  Foo_Bar (CORBA::ORB_ptr orb);
+  explicit Foo_Bar (CORBA::ORB_ptr orb);
 
   /// Dtor
-  ~Foo_Bar ();
+  ~Foo_Bar () override;
 
+  Foo_Bar (Foo_Bar const&) = delete;
+  Foo_Bar (Foo_Bar&&) = delete;
+  Foo_Bar& operator= (Foo_Bar const&) = delete;
+  Foo_Bar& operator= (Foo_Bar&&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

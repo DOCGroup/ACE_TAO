@@ -86,7 +86,7 @@ public:
   };
 
   /// Constructor
-  ACE_Token (const ACE_TCHAR *name = nullptr, void * = 0);
+  ACE_Token (const ACE_TCHAR *name = nullptr, void * = nullptr);
 
   /// Destructor
   virtual ~ACE_Token ();
@@ -323,7 +323,7 @@ class ACE_Export ACE_Token
 public:
   int queueing_strategy () { ACE_NOTSUP_RETURN (-1); }
   void queueing_strategy (int /*queueing_strategy*/) { }
-  int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
+  int acquire (ACE_Time_Value * = nullptr) { ACE_NOTSUP_RETURN (-1); }
   int tryacquire () { ACE_NOTSUP_RETURN (-1); }
   int remove () { ACE_NOTSUP_RETURN (-1); }
   int release () { ACE_NOTSUP_RETURN (-1); }
@@ -351,7 +351,7 @@ public:
   /// Set queueing strategy.
   void queueing_strategy (int queueing_strategy);
 
-  int renew (int = 0, ACE_Time_Value * =0);
+  int renew (int = 0, ACE_Time_Value * = nullptr);
 
   /// Dump the state of an object.
   void dump () const;

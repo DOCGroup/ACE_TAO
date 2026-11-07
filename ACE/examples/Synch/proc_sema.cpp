@@ -48,8 +48,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int is_consumer = 1;          // By default, make us a consumer.
-  int delete_sema = 0;
+  bool is_consumer = true;      // By default, make us a consumer.
+  bool delete_sema = false;
   int iteration = 0;
   int exit_delay = 0;
   const ACE_TCHAR *sema_name = ACE_TEXT ("Process_Semaphore_Test");
@@ -63,13 +63,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
         case 'c':               // Make us a consumer.
-          is_consumer = 1;
+          is_consumer = true;
           break;
         case 's':               // Make us a supplier.
-          is_consumer = 0;
+          is_consumer = false;
           break;
         case 'x':               // Remove the semaphore after we're done.
-          delete_sema = 1;
+          delete_sema = true;
           break;
         case 'n':               // Specify the name of the semaphore.
           sema_name = getopt.opt_arg ();
@@ -87,14 +87,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_SYNCH_PROCESS_SEMAPHORE sema (0, sema_name);
 
-  if (is_consumer != 0)
+  if (is_consumer)
     consumer (sema, iteration);
   else
     producer (sema, iteration);
 
   ACE_OS::sleep (exit_delay);
 
-  if (delete_sema != 0)
+  if (delete_sema)
     sema.remove ();
   return 0;
 }

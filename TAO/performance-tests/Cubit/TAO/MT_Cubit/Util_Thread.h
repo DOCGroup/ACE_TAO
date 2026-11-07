@@ -29,7 +29,12 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// The thread entry point function.
-  virtual int svc ();
+  int svc () override;
+
+  Util_Thread (Util_Thread const &) = delete;
+  Util_Thread (Util_Thread &&) = delete;
+  Util_Thread &operator= (Util_Thread const &) = delete;
+  Util_Thread &operator= (Util_Thread &&) = delete;
 
   /// Gets the number of computations the thread was able to perform.
   u_long get_number_of_computations ();
@@ -38,7 +43,7 @@ public:
   void computation ();
 
   /// Indicates whether we're done.
-  int done_;
+  int done_ {};
 
 private:
   /// Run the computations.
@@ -46,11 +51,11 @@ private:
 
   /// This stores the number of computations performed
   /// by the Util_Thread so far
-  u_long number_of_computations_;
+  u_long number_of_computations_ {};
 
   /// Pointer to the Task state. Stores the state
   /// common to the multiple client threads
-  Task_State *ts_;
+  Task_State *ts_ {};
 };
 
 #endif /* !defined (UTIL_THREAD_H) */

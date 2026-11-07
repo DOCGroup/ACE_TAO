@@ -3,13 +3,13 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -31,22 +31,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
+{
   try {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
     // Normally we wouldn't have to register the factory in the client, but
     // in this case the valuetype will be returned as an inout parameter, and
     // we'll need the factory to support this.
-    MessageFactory::register_new_factory(* orb.in());
+    MessageFactory::register_new_factory (*orb.in ());
 
-    CORBA::Object_var obj = orb->string_to_object(ior);
-    Messenger_var tst = Messenger::_narrow(obj.in());
-    ACE_ASSERT(! CORBA::is_nil(tst.in()));
+    CORBA::Object_var obj = orb->string_to_object (ior);
+    Messenger_var tst = Messenger::_narrow (obj.in ());
+    ACE_ASSERT (!CORBA::is_nil (tst.in ()));
 
-    Message_var msg = new MessageImpl("Son", "Mom", "Dinner's Ready.", "Hurry home.");
+    Message_var msg = new MessageImpl ("Son", "Mom", "Dinner's Ready.", "Hurry home.");
 
     if (tst->send_message(msg)) {
       std::cout << "Message sent successfully.\n";
@@ -61,7 +62,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     }
 
     orb->destroy();
-  } catch(const CORBA::Exception& e) {
+  }
+  catch (CORBA::Exception const &e)
+  {
     std::cerr << e << std::endl;
     return 1;
   }

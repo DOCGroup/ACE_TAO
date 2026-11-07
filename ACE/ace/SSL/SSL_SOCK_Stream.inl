@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
-  if (this->ssl_ == 0 || fd == ACE_INVALID_HANDLE)
+  if (this->ssl_ == nullptr || fd == ACE_INVALID_HANDLE)
     {
       this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
       return;
@@ -111,7 +111,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   // Value for current I/O mode (blocking/non-blocking)
   int val = 0;
 
-  if (timeout != 0)
+  if (timeout != nullptr)
     ACE::record_and_set_non_blocking_mode (handle,
                                            val);
 
@@ -158,7 +158,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
-          if (timeout == 0)
+          if (timeout == nullptr)
             {
               errno = EWOULDBLOCK;
               bytes_read = -1;
@@ -212,7 +212,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
         }
     } while (retry);
 
-  if (timeout != 0)
+  if (timeout != nullptr)
     ACE::restore_non_blocking_mode (handle, val);
   return bytes_read;
 }
@@ -222,7 +222,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n,
                            int flags) const
 {
-  return this->recv_i (buf, n, flags, 0);
+  return this->recv_i (buf, n, flags, nullptr);
 }
 
 ACE_INLINE ssize_t
@@ -240,7 +240,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  return this->recv_i (buf, n, 0, 0);
+  return this->recv_i (buf, n, 0, nullptr);
 }
 
 ACE_INLINE ssize_t
@@ -314,7 +314,7 @@ ACE_SSL_SOCK_Stream::close ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
-  if (this->ssl_ == 0 || this->get_handle () == ACE_INVALID_HANDLE)
+  if (this->ssl_ == nullptr || this->get_handle () == ACE_INVALID_HANDLE)
     return 0;  // SSL_SOCK_Stream was never opened.
 
   // SSL_shutdown() returns 1 on successful shutdown of the SSL

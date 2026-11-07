@@ -8,7 +8,8 @@
  *  an <ACE_Timer_Heap_T>. It also demonstrates using a custom handler for
  *  timer events.
  *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu> and Alon Diamant <diamant.alon@gmail.com>
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>, Sergio Flores-Gaitan
+ *          <sergio@cs.wustl.edu>, and Alon Diamant <diamant.alon@gmail.com>
  */
 //=============================================================================
 
@@ -56,8 +57,13 @@ public:
   Custom_Handler_Input_Task (Thread_Timer_Queue *queue,
               Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver);
 
+  Custom_Handler_Input_Task (Custom_Handler_Input_Task const &) = delete;
+  Custom_Handler_Input_Task (Custom_Handler_Input_Task &&) = delete;
+  Custom_Handler_Input_Task &operator= (Custom_Handler_Input_Task const &) = delete;
+  Custom_Handler_Input_Task &operator= (Custom_Handler_Input_Task &&) = delete;
+
   /// This method runs the event loop in the new thread.
-  virtual int svc ();
+  int svc () override;
 
   // = Some helper methods.
 
@@ -78,10 +84,10 @@ public:
 
 private:
   /// The timer queue implementation.
-  Thread_Timer_Queue *queue_;
+  Thread_Timer_Queue *queue_ {};
 
   /// How many micro seconds are in a second.
-  const int usecs_;
+  int const usecs_;
 
   /// The thread timer queue test driver.
   Thread_Timer_Queue_Custom_Handler_Test &driver_;
@@ -98,15 +104,18 @@ private:
  * called from the base class to print a menu specific to the
  * thread implementation of the timer queue.
  */
-class ACE_Svc_Export Thread_Timer_Queue_Custom_Handler_Test : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION>
+class ACE_Svc_Export Thread_Timer_Queue_Custom_Handler_Test
+  : public Timer_Queue_Test_Driver<Thread_Timer_Queue,
+                                   Custom_Handler_Input_Task,
+                                   Custom_Handler_Input_Task::ACTION>
 {
 public:
   Thread_Timer_Queue_Custom_Handler_Test ();
-  ~Thread_Timer_Queue_Custom_Handler_Test ();
+  ~Thread_Timer_Queue_Custom_Handler_Test () override = default;
 
-  virtual int display_menu ();
-  virtual int init ();
-  virtual int run_test ();
+  int display_menu () override;
+  int init () override;
+  int run_test () override;
 
 private:
   /// Subclassed from ACE_Task.

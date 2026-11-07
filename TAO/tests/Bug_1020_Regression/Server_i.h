@@ -11,7 +11,7 @@
 class Server : public POA_Test::Server
 {
 public:
-  Server (CORBA::ORB_ptr orb);
+  explicit Server (CORBA::ORB_ptr orb);
   Server (Server const &) = delete;
   Server &operator= (Server const &) = delete;
   Server (Server &&) = delete;
@@ -20,7 +20,7 @@ public:
   void start_task (Test::Echo_ptr client) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* BUG_1020_REGRESSION_SERVER_I_H*/

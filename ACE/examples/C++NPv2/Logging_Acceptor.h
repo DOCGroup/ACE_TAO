@@ -20,28 +20,33 @@ protected:
   ACE_SOCK_Acceptor acceptor_;
 
 protected:
-  virtual ~Logging_Acceptor () {}; // No-op destructor.
+  ~Logging_Acceptor () override = default;
 
 public:
   using PEER_ADDR = ACE_INET_Addr;
 
   // Simple constructor.
-  Logging_Acceptor (ACE_Reactor *r = ACE_Reactor::instance ())
+  explicit Logging_Acceptor (ACE_Reactor *r = ACE_Reactor::instance ())
     : ACE_Event_Handler (r) {};
+
+  Logging_Acceptor (const Logging_Acceptor &) = delete;
+  Logging_Acceptor (Logging_Acceptor &&) = delete;
+  Logging_Acceptor &operator= (const Logging_Acceptor &) = delete;
+  Logging_Acceptor &operator= (Logging_Acceptor &&) = delete;
 
   // Initialization method.
   virtual int open (const ACE_INET_Addr &local_addr);
 
   // Called by a reactor when there's a new connection to accept.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
   // Called when this object is destroyed, e.g., when it's
   // removed from a reactor.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
   // Return the passive-mode socket's I/O handle.
-  virtual ACE_HANDLE get_handle () const
+  ACE_HANDLE get_handle () const override
     { return acceptor_.get_handle (); };
 
   // Returns a reference to the underlying <acceptor_>.

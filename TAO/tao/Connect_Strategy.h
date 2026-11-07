@@ -54,7 +54,7 @@ class TAO_Export TAO_Connect_Strategy
 {
 public:
   /// Constructor
-  TAO_Connect_Strategy (TAO_ORB_Core *orb);
+  explicit TAO_Connect_Strategy (TAO_ORB_Core *orb);
 
   /// Destructor
   virtual ~TAO_Connect_Strategy () = default;

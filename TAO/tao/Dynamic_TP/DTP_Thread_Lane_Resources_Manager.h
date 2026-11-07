@@ -23,6 +23,7 @@
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +42,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager :
 {
 public:
   /// Constructor.
-  TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_DTP_Thread_Lane_Resources_Manager () override;
@@ -60,7 +61,7 @@ public:
   void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile) override;
+  bool is_collocated (TAO_MProfile const &mprofile) override;
 
   /// @name Accessors
   // @{
@@ -81,11 +82,11 @@ private:
     TAO_DTP_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
-  /// Default lane resources.
-  TAO_Thread_Lane_Resources *default_lane_resources_ {};
-
   /// Thread Pool Manager.
-  TAO_DTP_Thread_Pool_Manager *tp_manager_ {};
+  std::unique_ptr<TAO_DTP_Thread_Pool_Manager> tp_manager_;
+
+  /// Default lane resources.
+  std::unique_ptr<TAO_Thread_Lane_Resources> default_lane_resources_;
 };
 
 /**

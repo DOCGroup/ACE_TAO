@@ -89,8 +89,8 @@ void
 ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entry)
 {
   ACE_TRACE ("ACE_Token::ACE_Token_Queue::remove_entry");
-  ACE_Token_Queue_Entry *curr = nullptr;
-  ACE_Token_Queue_Entry *prev = nullptr;
+  ACE_Token_Queue_Entry *curr {};
+  ACE_Token_Queue_Entry *prev {};
 
   if (this->head_ == nullptr)
     return;
@@ -513,7 +513,7 @@ ACE_Token::wakeup_next_waiter ()
     }
 
   // Wakeup next waiter.
-  ACE_Token_Queue *queue = nullptr;
+  ACE_Token_Queue *queue {};
 
   // Writer threads get priority to run first.
   if (this->writers_.head_ != nullptr)

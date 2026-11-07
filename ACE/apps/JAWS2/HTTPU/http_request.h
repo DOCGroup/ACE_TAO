@@ -21,7 +21,11 @@ class HTTPU_Export HTTP_Request : public HTTP_Base
 {
 public:
   HTTP_Request ();
-  virtual ~HTTP_Request ();
+  ~HTTP_Request () override;
+  HTTP_Request (HTTP_Request const &) = delete;
+  HTTP_Request (HTTP_Request &&) = delete;
+  HTTP_Request &operator= (HTTP_Request const &) = delete;
+  HTTP_Request &operator= (HTTP_Request &&) = delete;
 
   Parse_HTTP_Request *request_line ();
   // Returns the parsed request line.
@@ -35,8 +39,8 @@ public:
   void dump ();
 
 protected:
-  virtual void parse_line ();
-  virtual int espouse_line ();
+  void parse_line () override;
+  int espouse_line () override;
   virtual void set_status (int);
 
 private:

@@ -28,6 +28,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
@@ -67,7 +69,7 @@ namespace TAO
       /// Initialization and termination methods.
       /// Constructor.
       /// {@
-      Connector (ACE::HTBP::Environment *ht_env);
+      explicit Connector (ACE::HTBP::Environment *ht_env);
 
       /// Destructor.
       ~Connector () override;
@@ -91,7 +93,7 @@ namespace TAO
     protected:
       // = The TAO_Connector methods, please check the documentation on
       // Transport_Connector.h
-      int set_validate_endpoint (TAO_Endpoint *ep);
+      int set_validate_endpoint (TAO_Endpoint *ep) override;
 
       TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface &desc,
@@ -112,10 +114,10 @@ namespace TAO
       Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
       /// Our creation strategy
-      CONNECT_CREATION_STRATEGY *connect_creation_strategy_;
+      std::unique_ptr<CONNECT_CREATION_STRATEGY> connect_creation_strategy_;
 
       /// Our activation strategy
-      CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy_;
+      std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 
       /// reference to the configuration parameters
       ACE::HTBP::Environment *ht_env_;

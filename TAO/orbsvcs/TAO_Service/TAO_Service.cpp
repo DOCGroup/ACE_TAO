@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
+      ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (handler), SIGHUP);
 
       for (;;)
         {
@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (argv[0]);
     }

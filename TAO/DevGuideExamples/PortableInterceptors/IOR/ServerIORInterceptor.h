@@ -7,19 +7,25 @@ public virtual PortableInterceptor::IORInterceptor_3_0,
 public virtual ::CORBA::LocalObject
 {
  public:
-  virtual char * name ();
+  ServerIORInterceptor () = default;
+  ServerIORInterceptor (ServerIORInterceptor const &) = delete;
+  ServerIORInterceptor (ServerIORInterceptor &&) = delete;
+  ServerIORInterceptor &operator= (ServerIORInterceptor const &) = delete;
+  ServerIORInterceptor &operator= (ServerIORInterceptor &&) = delete;
 
-  virtual void destroy ();
+  char * name () override;
 
-  virtual void establish_components (PortableInterceptor::IORInfo_ptr info);
+  void destroy () override;
 
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info);
+  void establish_components (PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void adapter_manager_state_changed (
-    const char* id,
-    PortableInterceptor::AdapterState state);
+  void components_established (PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq& templates,
-    PortableInterceptor::AdapterState state);
+  void adapter_manager_state_changed (
+    char const *id,
+    PortableInterceptor::AdapterState state) override;
+
+  void adapter_state_changed (
+    PortableInterceptor::ObjectReferenceTemplateSeq const& templates,
+    PortableInterceptor::AdapterState state) override;
 };

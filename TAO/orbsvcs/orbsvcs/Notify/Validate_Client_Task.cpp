@@ -16,8 +16,7 @@ TAO_Notify_validate_client_Task::
                                 TAO_Notify_EventChannelFactory *ecf)
   : delay_ (delay),
     interval_ (interval),
-    ecf_ (ecf),
-    shutdown_ (false)
+    ecf_ (ecf)
 {
   if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
   {
@@ -27,9 +26,7 @@ TAO_Notify_validate_client_Task::
 }
 
 
-TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task ()
-{
-}
+TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task () = default;
 
 
 int

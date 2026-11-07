@@ -10,12 +10,14 @@
 
 #include "testC.h"
 
+#include <string>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
-const ACE_TCHAR *monitor_output_file = ACE_TEXT("monitor.ior");
+ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *monitor_output_file = ACE_TEXT ("monitor.ior");
 
 /// Runs the ORB in a separate thread so we can listen
 /// for calls on our MC interface without blocking.
@@ -25,11 +27,16 @@ private:
   CORBA::ORB_ptr orb_;
 
 public:
-  ORB_Runner (CORBA::ORB_ptr orb)
+  explicit ORB_Runner (CORBA::ORB_ptr orb)
     : orb_ (orb)
   {}
 
-  int svc ()
+  ORB_Runner (ORB_Runner const &) = delete;
+  ORB_Runner (ORB_Runner &&) = delete;
+  ORB_Runner &operator= (ORB_Runner const &) = delete;
+  ORB_Runner &operator= (ORB_Runner &&) = delete;
+
+  int svc () override
   {
     this->orb_->run ();
     return 0;
@@ -71,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       FILE *output_file = ACE_OS::fopen (monitor_output_file, "w");
 
-      if (output_file == 0)
+      if (output_file == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Can't open output file for writing IOR: %s",
@@ -107,14 +114,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       /// the CDR stream buffer.
       for (int i = 1; i < 4; ++i)
         {
-          char *tmp = new char[1024 * i + 1];
-          ACE_OS::memset (tmp, 'a', 1024 * i);
-          tmp[1024 * i] = '\0';
-          CORBA::String_var result = target->test_op (tmp);
+          std::string tmp (1024 * i, 'a');
+          CORBA::String_var result = target->test_op (tmp.c_str ());
           cout << "reply to client = " << ACE_OS::strlen (result.in ())
                << " bytes" << endl;
-          delete [] tmp;
-
           ACE_OS::sleep (2);
         }
 
@@ -131,7 +134,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception caught:");
       return 1;

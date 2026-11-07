@@ -46,7 +46,7 @@ namespace TAO
   class TAO_Export GUIResource_Factory
   {
   public:
-    GUIResource_Factory ();
+    GUIResource_Factory () = default;
 
     virtual ~GUIResource_Factory ();
 
@@ -83,7 +83,7 @@ namespace TAO
      * default one overrides the get_reactor() method but does not
      * override the reclaim_reactor() method.
      */
-    bool dynamically_allocated_reactor_;
+    bool dynamically_allocated_reactor_ {};
 
     /// for internal locking.
     TAO_SYNCH_MUTEX lock_;

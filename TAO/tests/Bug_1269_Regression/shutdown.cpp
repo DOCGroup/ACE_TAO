@@ -1,7 +1,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -11,16 +10,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Echo_Caller_var server =
+      Test::Echo_Caller_var const server =
         Test::Echo_Caller::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -35,7 +34,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -48,7 +47,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

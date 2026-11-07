@@ -19,14 +19,14 @@ public:
   Timer_Service_1 ();
   // Default constructor.
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *);
+  int handle_timeout (const ACE_Time_Value &,
+                      const void *) override;
   // Timeout hook.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   // Close hook.
 
 protected:
@@ -40,10 +40,10 @@ private:
     MAX_TIMEOUTS = 10 // Don't timeout for more than 10 times.
   };
 
-  int max_timeouts_;
+  int max_timeouts_ = MAX_TIMEOUTS;
   // Maximum number of timeouts before shutting down the test.
 
-  int cur_timeouts_;
+  int cur_timeouts_ = 0;
   // Current number of timeouts.
 };
 

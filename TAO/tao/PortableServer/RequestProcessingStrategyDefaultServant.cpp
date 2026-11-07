@@ -103,7 +103,7 @@ namespace TAO
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/)
     {
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,

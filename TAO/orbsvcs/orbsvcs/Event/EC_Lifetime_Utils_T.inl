@@ -41,7 +41,7 @@ TAO_EC_Auto_Command<T>::set_command (TAO_EC_Auto_Command<T> & auto_command)
 
   this->command_ = auto_command.command_;
   this->allow_command_ = auto_command.allow_command_;
-  auto_command.allow_command_ = 0;
+  auto_command.allow_command_ = false;
 }
 
 template <class T>

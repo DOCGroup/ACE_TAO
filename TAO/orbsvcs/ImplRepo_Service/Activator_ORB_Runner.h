@@ -13,7 +13,7 @@ class ImR_Activator_Loader;
 class ImR_Activator_ORB_Runner : public ACE_Task_Base
 {
 public:
-  ImR_Activator_ORB_Runner (ImR_Activator_Loader& service);
+  explicit ImR_Activator_ORB_Runner (ImR_Activator_Loader& service);
   ~ImR_Activator_ORB_Runner () = default;
 
   int svc () override;

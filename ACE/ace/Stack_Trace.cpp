@@ -25,6 +25,8 @@
 #include "ace/OS_NS_stdio.h"
 #include <algorithm>
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*
@@ -63,7 +65,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
 {
   ACE_UNUSED_ARG (starting_frame_offset);
   ACE_UNUSED_ARG (num_frames);
-  ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+  std::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
 }
 
 #elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H))
@@ -109,7 +111,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
     }
   else
     {
-      ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+      std::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
     }
 }
 #elif defined(VXWORKS) && !defined(__RTP__)
@@ -250,7 +252,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
       if (trcLibFuncs.lvlInfoGet (fp, pc, &osCtx, &prevFp, &prevPc, &prevFn)
           == ERROR)
         {
-          ACE_OS::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
+          std::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
           return;
         }
 
@@ -273,7 +275,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           // VxWorks can return -1 for "numArgs" if there was an error
           if (numArgs == -1) numArgs = 0;
 
-          size_t len = ACE_OS::strlen (this->buf_);
+          size_t len = std::strlen (this->buf_);
           size_t space = SYMBUFSIZ - len - 1;
           char *cursor = this->buf_ + len;
           size_t written = ACE_OS::snprintf (cursor, space, "%p %s",
@@ -315,7 +317,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-  ACE_OS::strcpy (&this->buf_[0], "<stack traces unsupported on Win64 unless "
+      std::strcpy (&this->buf_[0], "<stack traces unsupported on Win64 unless "
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
@@ -460,7 +462,7 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
   dbghelp_functions dbg;
   if (!load_dbghelp_library_if_needed (&dbg))
     {
-      ACE_OS::strcpy (static_cast<char *> (usrarg),
+      std::strcpy (static_cast<char *> (usrarg),
                       "<error loading dbghelp.dll>");
       if (dbg.hMod) FreeLibrary (dbg.hMod);
       return 1;
@@ -588,7 +590,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-  ACE_OS::strcpy (&this->buf_[0], UNSUPPORTED);
+  std::strcpy (&this->buf_[0], UNSUPPORTED);
 }
 #endif
 

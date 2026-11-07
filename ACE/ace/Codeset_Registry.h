@@ -52,8 +52,8 @@ public:
 
   /// Tell if two codesets are compatible. This wraps the
   /// rpc_cs_char_set_compat_check function.
-  static int is_compatible (ACE_CDR::ULong codeset_id,
-                            ACE_CDR::ULong other);
+  static bool is_compatible (ACE_CDR::ULong codeset_id,
+                             ACE_CDR::ULong other);
 
   /// Return the max number of bytes required to represent a single character.
   /// This wraps the rpc_rgy_get_max_bytes function.
@@ -82,8 +82,8 @@ private:
                                    ACE_CString &locale,
                                    ACE_CDR::UShort * = nullptr,
                                    ACE_CDR::UShort ** = nullptr);
-  static int is_compatible_i (ACE_CDR::ULong codeset_id,
-                              ACE_CDR::ULong other);
+  static bool is_compatible_i (ACE_CDR::ULong codeset_id,
+                               ACE_CDR::ULong other);
   static ACE_CDR::Short get_max_bytes_i (ACE_CDR::ULong codeset_id);
 };
 

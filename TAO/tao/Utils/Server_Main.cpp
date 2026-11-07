@@ -25,7 +25,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename SERVANT>
-TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)
+TAO::Utils::Server_Main<SERVANT>::Server_Main (char const * name)
   : name_(name)
 {
 }
@@ -98,7 +98,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       }
     }
   }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
   {
     ex._tao_print_exception (name_);
     result = -1;

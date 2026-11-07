@@ -19,13 +19,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
-  : pass_addresses_ (false),
-    validate_new_connection_ (false)
-{
-}
-
 template <class HANDLER> int
 ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
                                      ACE_Proactor *proactor,
@@ -70,7 +63,7 @@ template <class HANDLER> void
 ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result &result)
 {
   // Variable for error tracking
-  bool error = false;
+  bool error {};
 
   // If the asynchronous connect fails.
   if (!result.success () ||
@@ -112,12 +105,12 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       error = true;
     }
 
-  HANDLER *new_handler = nullptr;
+  HANDLER *new_handler {};
   if (!error)
     {
       // The Template method
       new_handler = this->make_handler ();
-      if (new_handler == 0)
+      if (new_handler == nullptr)
         {
           error = true;
           ACELIB_ERROR ((LM_ERROR,
@@ -227,8 +220,8 @@ template <class HANDLER> HANDLER *
 ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
-  HANDLER *handler = nullptr;
-  ACE_NEW_RETURN (handler, HANDLER, 0);
+  HANDLER *handler {};
+  ACE_NEW_RETURN (handler, HANDLER, nullptr);
   return handler;
 }
 

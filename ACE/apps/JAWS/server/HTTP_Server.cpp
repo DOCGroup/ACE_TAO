@@ -129,7 +129,7 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
 
   //If the IO strategy is synchronous (SYNCH case), then choose a handler
   //factory based on the desired caching scheme
-  HTTP_Handler_Factory *f = 0;
+  HTTP_Handler_Factory *f = nullptr;
 
   if (this->strategy_ != (JAWS::JAWS_POOL | JAWS::JAWS_ASYNCH))
     {
@@ -217,7 +217,7 @@ Synch_Thread_Pool_Task::svc ()
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
                            ACE_TEXT ("HTTP_Acceptor::accept")), -1);
 
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                       -1);
@@ -323,7 +323,7 @@ Thread_Per_Request_Task::open (void *)
 int
 Thread_Per_Request_Task::svc ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                   -1);
   //Synch_HTTP_Handler_Factory factory;

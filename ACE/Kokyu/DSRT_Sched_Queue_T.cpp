@@ -30,7 +30,7 @@ u_long
 Sched_Ready_Queue<DSRT_Scheduler_Traits,
                   More_Eligible_Comparator,
                   ACE_LOCK>::
-Guid_Hash::operator () (const Guid_t& id)
+Guid_Hash::operator () (Guid_t const &id)
 {
   typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
   return guid_hash(id);
@@ -78,7 +78,7 @@ find (Guid_t guid,
       DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& found_item)
 {
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
-  RB_Tree_Dispatch_Item_Node* rb_tree_node = 0;
+  RB_Tree_Dispatch_Item_Node *rb_tree_node = nullptr;
 
   if (dispatch_items_hash_map_.find(guid, rb_tree_node) == -1)
     {
@@ -187,7 +187,7 @@ int Sched_Ready_Queue<DSRT_Scheduler_Traits,
 remove (Guid_t guid)
 {
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
-  RB_Tree_Dispatch_Item_Node* rb_tree_node = 0;
+  RB_Tree_Dispatch_Item_Node *rb_tree_node = nullptr;
 
   if (dispatch_items_hash_map_.find(guid, rb_tree_node) == 0)
     {

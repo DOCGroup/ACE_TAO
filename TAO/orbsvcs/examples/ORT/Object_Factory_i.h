@@ -24,10 +24,14 @@ class Object_Factory_i : public virtual POA_Gateway::Object_Factory
   /// Constructor
   Object_Factory_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr gateway_poa);
+  Object_Factory_i (Object_Factory_i const &) = delete;
+  Object_Factory_i (Object_Factory_i &&) = delete;
+  Object_Factory_i &operator= (Object_Factory_i const &) = delete;
+  Object_Factory_i &operator= (Object_Factory_i &&) = delete;
 
   CORBA::Object_ptr
-    create_object (const char *interface_repository_id,
-                   CORBA::Object_ptr gatewayed_object);
+    create_object (char const *interface_repository_id,
+                   CORBA::Object_ptr gatewayed_object) override;
 
  private:
   CORBA::ORB_ptr orb_;

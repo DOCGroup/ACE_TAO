@@ -46,7 +46,7 @@ Supplier::disconnect ()
 }
 
 void
-Supplier::send_event (const CORBA::Any & data)
+Supplier::send_event (CORBA::Any const &data)
 {
   this->consumer_proxy_->push (data);
 }

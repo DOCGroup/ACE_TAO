@@ -1,13 +1,12 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
-
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -29,22 +28,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-    try
+  try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      BlobServer_var blobServer = BlobServer::_narrow(tmp.in());
-      if(CORBA::is_nil(blobServer.in()))
+      BlobServer_var const blob_server = BlobServer::_narrow (tmp.in ());
+      if (CORBA::is_nil (blob_server.in ()))
       {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
@@ -56,21 +54,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       BlobType1 blob1;
 
-      blob1.length(16384);
-      for(CORBA::ULong i = 0; i <  blob1.length(); i++)
+      blob1.length (16384);
+      for (CORBA::ULong i {}; i < blob1.length (); ++i)
         {
-          blob1[i] = i & 255;
+          blob1[i] = static_cast<CORBA::Octet> (i & 0xff);
         }
 
       BlobType2 blob2;
 
-      blobServer->test(blob1, blob2);
+      blob_server->test (blob1, blob2);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - checking reply for ABCDEFGHIJ\n"));
 
-      for(CORBA::ULong i = 0; i <  blob1.length(); i++)
+      for (CORBA::ULong i {}; i < blob1.length (); ++i)
         {
-          if (blob1[i] != static_cast <CORBA::Octet> ('A' + i))
+          if (blob1[i] != static_cast<CORBA::Octet> ('A' + i))
             {
               ACE_ERROR ((LM_ERROR,
                          "Error invalid value detected on position <%d> in blob1\n",
@@ -78,9 +76,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      for(CORBA::ULong i = 0; i <  blob2.length(); i++)
+      for (CORBA::ULong i {}; i < blob2.length (); ++i)
         {
-         if (blob2[i] != static_cast <CORBA::Octet> ('A' + i))
+         if (blob2[i] != static_cast<CORBA::Octet> ('A' + i))
            {
              ACE_ERROR ((LM_ERROR,
                         "Error invalid value detected on position <%d> in blob2\n",
@@ -90,11 +88,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown\n"));
 
-      blobServer->shutdown ();
+      blob_server->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

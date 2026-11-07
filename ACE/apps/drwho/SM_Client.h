@@ -22,8 +22,8 @@ public:
   SM_Client ();
   virtual ~SM_Client ();
 
-  virtual int mux (char *packet, int &packet_length);
-  virtual int demux (char *packet, int &packet_length);
+  virtual int mux (char *packet, int &packet_length) override;
+  virtual int demux (char *packet, int &packet_length) override;
   virtual void process ();
 
 private:

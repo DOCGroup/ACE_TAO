@@ -6,6 +6,8 @@
 
 #include "orbsvcs/Notify/Routing_Slip.h"
 
+#include <deque>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -40,7 +42,7 @@ namespace TAO_Notify
    */
   class TAO_Notify_Serv_Export Routing_Slip_Queue
   {
-    using Queue = ACE_Unbounded_Queue <Routing_Slip_Ptr>;
+    using Queue = std::deque<Routing_Slip_Ptr>;
 // FUZZ: disable check_for_ACE_Guard
     using Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
 // FUZZ: enable check_for_ACE_Guard
@@ -50,10 +52,15 @@ namespace TAO_Notify
      * \param allowed the number of Routing_Slips that can be handled
      *  simultaneously by the persistent store.
      */
-    Routing_Slip_Queue (size_t allowed = 1);
+    explicit Routing_Slip_Queue (size_t allowed = 1);
 
     /// Destructor.
-    ~Routing_Slip_Queue ();
+    ~Routing_Slip_Queue () = default;
+
+    Routing_Slip_Queue (Routing_Slip_Queue const &) = delete;
+    Routing_Slip_Queue (Routing_Slip_Queue &&) = delete;
+    Routing_Slip_Queue &operator= (Routing_Slip_Queue const &) = delete;
+    Routing_Slip_Queue &operator= (Routing_Slip_Queue &&) = delete;
 
     /**
      * \brief Add a routing slip to the tail of the queue and dispatch if necessary.
@@ -75,14 +82,11 @@ namespace TAO_Notify
     bool dispatch_one (Guard & guard);
 
   private:
-    Routing_Slip_Queue (const Routing_Slip_Queue & rhs);
-    Routing_Slip_Queue & operator = (const Routing_Slip_Queue & rhs);
-  private:
     // configuration setting
     size_t allowed_;
     /// Protection for internal information
     TAO_SYNCH_MUTEX internals_;
-    size_t active_;
+    size_t active_ {};
     Queue queue_;
   };
 } // namespace

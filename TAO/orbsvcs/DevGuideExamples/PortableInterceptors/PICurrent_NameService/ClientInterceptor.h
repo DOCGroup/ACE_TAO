@@ -16,7 +16,7 @@ class ClientInterceptor:
                      PortableInterceptor::Current_ptr thePic,
                      PortableInterceptor::SlotId theSlot);
 
-  ~ClientInterceptor () override;
+  ~ClientInterceptor () override = default;
 
   ClientInterceptor (ClientInterceptor const &) = delete;
   ClientInterceptor (ClientInterceptor &&) = delete;

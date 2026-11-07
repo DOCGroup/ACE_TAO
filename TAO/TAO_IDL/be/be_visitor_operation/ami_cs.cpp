@@ -153,7 +153,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       *os << be_nl_2
           << "TAO::Argument *_the_tao_operation_signature[] =" << be_idt_nl
           << "{" << be_idt_nl
-          << "std::addressof(_tao_retval)";
+          << "std::addressof (_tao_retval)";
 
       AST_Argument *arg {};
       UTL_ScopeActiveIterator arg_list_iter (ami_op,
@@ -167,7 +167,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           arg = dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
           *os << "," << be_nl
-              << "std::addressof(_tao_" << arg->local_name () << ")";
+              << "std::addressof (_tao_" << arg->local_name () << ")";
         }
 
       *os << be_uidt_nl

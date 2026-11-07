@@ -36,7 +36,7 @@ Reordering_Queue_Attributes::Reordering_Queue_Attributes ()
 }
 
 ACE_INLINE
-Dispatch_Command::Dispatch_Command (int dont_delete,
+Dispatch_Command::Dispatch_Command (bool dont_delete,
         ACE_Allocator *allocator)
         :dont_delete_ (dont_delete),
         allocator_ (allocator)
@@ -44,7 +44,7 @@ Dispatch_Command::Dispatch_Command (int dont_delete,
 }
 
 ACE_INLINE
-int Dispatch_Command::can_be_deleted () const
+bool Dispatch_Command::can_be_deleted () const
 {
   return !dont_delete_;
 }
@@ -67,7 +67,7 @@ ConfigInfo::ConfigInfo ()
   :preemption_priority_ (0),
    thread_priority_ (0),
    dispatching_type_ (FIFO_DISPATCHING),
-   allocator_ (0)
+   allocator_ (nullptr)
 {
 }
 
@@ -75,8 +75,8 @@ ConfigInfo::ConfigInfo ()
 
 //to satisfy ACE_Array<ConfigInfo>
 ACE_INLINE
-bool operator != (const Kokyu::ConfigInfo& lhs,
-                  const Kokyu::ConfigInfo& rhs)
+bool operator != (Kokyu::ConfigInfo const &lhs,
+                  Kokyu::ConfigInfo const &rhs)
 {
   return (lhs.preemption_priority_ != rhs.preemption_priority_ ||
           lhs.thread_priority_ != rhs.thread_priority_ ||

@@ -14,11 +14,11 @@
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MonitorManager::TAO_MonitorManager ()
-  : run_ (false)
-  , initialized_ (false)
 {
 }
 
@@ -37,8 +37,8 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
                     ACE_Get_Opt::PERMUTE_ARGS,
                     1);
 
-  static const ACE_TCHAR* orbarg = ACE_TEXT ("ORBArg");
-  static const ACE_TCHAR* nonamesvc = ACE_TEXT ("NoNameSvc");
+  static constexpr ACE_TCHAR const* orbarg = ACE_TEXT ("ORBArg");
+  static constexpr ACE_TCHAR const* nonamesvc = ACE_TEXT ("NoNameSvc");
   opts.long_option (orbarg, ACE_Get_Opt::ARG_REQUIRED);
   opts.long_option (nonamesvc, ACE_Get_Opt::NO_ARG);
 
@@ -164,16 +164,14 @@ TAO_MonitorManager::shutdown ()
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
 
-  if (monitor != 0)
+  if (monitor != nullptr)
     {
       monitor->fini ();
     }
 }
 
 TAO_MonitorManager::ORBTask::ORBTask ()
- : use_name_svc_ (true)
-   , startup_barrier_ (2) // synch the parent with the single child thread
-   , mc_orb_name_ (ACE_TEXT("TAO_MonitorAndControl"))
+  : startup_barrier_ (2) // synch the parent with the single child thread
 {
 }
 
@@ -250,7 +248,7 @@ TAO_MonitorManager::ORBTask::svc ()
           {
             FILE* fp = ACE_OS::fopen (this->ior_output_.c_str (), "w");
 
-            if (fp == 0)
+            if (fp == nullptr)
               {
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "
@@ -260,7 +258,7 @@ TAO_MonitorManager::ORBTask::svc ()
               }
             else
               {
-                ACE_OS::fprintf (fp, "%s", ior.in ());
+                std::fprintf (fp, "%s", ior.in ());
                 ACE_OS::fclose (fp);
               }
           }

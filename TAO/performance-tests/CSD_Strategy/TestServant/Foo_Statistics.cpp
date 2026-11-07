@@ -1,57 +1,40 @@
 #include "Foo_Statistics.h"
 #include "Foo_ClientEngine.h"
 
+Foo_Statistics::Foo_Statistics () = default;
 
-Foo_Statistics::Foo_Statistics()
-  : num_clients_(0),
-    num_loops_(0)
-{
-  for (unsigned i = 0; i < 5; i++)
-    {
-      this->expected_[i] = 0;
-      this->actual_[i] = 0;
-    }
-}
-
-
-Foo_Statistics::~Foo_Statistics()
-{
-}
-
+Foo_Statistics::~Foo_Statistics () = default;
 
 void
-Foo_Statistics::init(unsigned num_clients, unsigned num_loops)
+Foo_Statistics::init (unsigned num_clients, unsigned num_loops)
 {
   this->num_clients_ = num_clients;
   this->num_loops_   = num_loops;
 }
 
-
 void
-Foo_Statistics::expected(unsigned op_num, unsigned count)
+Foo_Statistics::expected (unsigned op_num, unsigned count)
 {
-  this->expected_[op_num-1] = count * this->num_clients_ * this->num_loops_;
+  this->expected_[op_num - 1] = count * this->num_clients_ * this->num_loops_;
 }
 
-
 void
-Foo_Statistics::actual(unsigned op_num, unsigned count)
+Foo_Statistics::actual (unsigned op_num, unsigned count)
 {
-  this->actual_[op_num-1] += count;
+  this->actual_[op_num - 1] += count;
 }
-
 
 bool
-Foo_Statistics::actual_vs_expected()
+Foo_Statistics::actual_vs_expected () const
 {
-  for (unsigned i = 0; i < 5; i++)
+  for (unsigned i = 0; i < this->expected_.size (); i++)
     {
       if (this->expected_[i] != this->actual_[i])
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Actual vs. Expected Results Failure: "
-                     "op%d() expected: %d, got: %d\n",
-                     i, this->expected_[i], this->actual_[i]));
+                     "op%u() expected: %u, got: %u\n",
+                     i + 1, this->expected_[i], this->actual_[i]));
           return false;
         }
     }
@@ -59,16 +42,15 @@ Foo_Statistics::actual_vs_expected()
   return true;
 }
 
-
 unsigned
-Foo_Statistics::total() const
+Foo_Statistics::total () const
 {
-  unsigned t = 0;
+  unsigned total {};
 
-  for (unsigned i = 0 ; i < 5; i++)
+  for (unsigned i = 0; i < this->expected_.size (); i++)
     {
-      t += this->expected_[i];
+      total += this->expected_[i];
     }
 
-  return t;
+  return total;
 }

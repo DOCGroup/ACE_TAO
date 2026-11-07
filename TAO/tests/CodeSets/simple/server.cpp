@@ -19,7 +19,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -53,23 +53,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class SimpleImpl : public POA_simple
 {
 public:
-  SimpleImpl (CORBA::ORB_ptr orb)
+  explicit SimpleImpl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {}
 
+  SimpleImpl (SimpleImpl const &) = delete;
+  SimpleImpl (SimpleImpl &&) = delete;
+  SimpleImpl &operator= (SimpleImpl const &) = delete;
+  SimpleImpl &operator= (SimpleImpl &&) = delete;
+
   // implementation of corba interface
-  char * op1 (const char * name,
-              const CORBA::Any & inany,
-              CORBA::Any_out outany)
+  char * op1 (char const * name,
+              CORBA::Any const & inany,
+              CORBA::Any_out outany) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Server: bare string: %C\n", name));
-    const char *any_str;
+    char const *any_str;
     inany >>= any_str;
     ACE_DEBUG ((LM_DEBUG,
                 "Server: inserted string: %C\n\n", any_str));
 
-    CORBA::Any *out_ptr = 0;
+    CORBA::Any *out_ptr = nullptr;
     ACE_NEW_RETURN (out_ptr,
                     CORBA::Any,
                     0);
@@ -79,13 +84,13 @@ public:
     return CORBA::string_dup (name);
   };
 
-  ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1)
+  ACE_CDR::WChar * op2 (ACE_CDR::WChar const *s1) override
   {
     return CORBA::wstring_dup (s1);
   };
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ()
+  void shutdown () override
   {
     this->orb_->shutdown (false);
   };
@@ -131,7 +136,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Create a C++ implementation of CORBA object
-      SimpleImpl* my_impl = 0;
+      SimpleImpl* my_impl = nullptr;
       ACE_NEW_RETURN (my_impl,
                       SimpleImpl (orb.in ()),
                       -1);
@@ -149,7 +154,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (server.in ());
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: server.ior"),
                            1);
@@ -166,7 +171,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in server:");
       return 1;

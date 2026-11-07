@@ -10,17 +10,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Properties::TAO_Notify_Properties ()
-  : factory_ (0)
-  , builder_ (0)
-  , orb_(0)
-  , dispatching_orb_ (0)
-  , asynch_updates_ (false)
-  , allow_reconnect_ (false)
-  , validate_client_ (false)
-  , separate_dispatching_orb_ (false)
-  , updates_ (1)
-  , defaultConsumerAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
-  , defaultSupplierAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
   NotifyExt::ThreadPoolParams tp_params =
@@ -34,9 +23,7 @@ TAO_Notify_Properties::TAO_Notify_Properties ()
     ORBSVCS_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
 }
 
-TAO_Notify_Properties::~TAO_Notify_Properties ()
-{
-}
+TAO_Notify_Properties::~TAO_Notify_Properties () = default;
 
 TAO_Notify_Properties *
 TAO_Notify_Properties::instance ()

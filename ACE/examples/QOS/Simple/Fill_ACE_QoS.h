@@ -18,6 +18,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_QoS.h"
 
+#include <memory>
+
 /**
  * @class Fill_ACE_QoS
  TITLE
@@ -33,25 +35,29 @@ public:
   //Initialization and termination methods.
   /// constructor.
   Fill_ACE_QoS ();
+  Fill_ACE_QoS (Fill_ACE_QoS const &) = delete;
+  Fill_ACE_QoS (Fill_ACE_QoS &&) = delete;
+  Fill_ACE_QoS &operator= (Fill_ACE_QoS const &) = delete;
+  Fill_ACE_QoS &operator= (Fill_ACE_QoS &&) = delete;
 
   /// destructor.
-  ~Fill_ACE_QoS ();
+  ~Fill_ACE_QoS () = default;
 
   /// To be used by receivers. Fills the receiver qos and sets the
   /// sender qos to NO_TRAFFIC.
   int fill_simplex_receiver_qos (ACE_QoS &ace_qos,
-                                 const ACE_CString &recv_flow_name);
+                                 ACE_CString const &recv_flow_name);
 
   /// To be used by senders. Fills the sender qos and sets the receiver
   /// qos to NO_TRAFFIC.
   int fill_simplex_sender_qos (ACE_QoS &ace_qos,
-                               const ACE_CString &send_flow_name);
+                               ACE_CString const &send_flow_name);
 
   /// To be used by applications that wish to be both receivers and
   /// senders.
   int fill_duplex_qos (ACE_QoS &ace_qos,
-                       const ACE_CString &recv_flow_name,
-                       const ACE_CString &send_flow_name);
+                       ACE_CString const &recv_flow_name,
+                       ACE_CString const &send_flow_name);
 
   /// Returns the hash map of flowspecs indexed by flowspec name.
   FLOW_SPEC_HASH_MAP& map ();
@@ -62,7 +68,7 @@ private:
 
   // A NO_TRAFFIC flow spec. Senders set the receiving qos to this
   // while the receivers set the sending qos to this.
-  ACE_Flow_Spec *default_traffic_;
+  std::unique_ptr<ACE_Flow_Spec> default_traffic_;
 
   // A list of flowspecs indexed by the flowspec name.
   FLOW_SPEC_HASH_MAP flow_spec_map_;

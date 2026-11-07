@@ -21,6 +21,8 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP     SERVICE_AUTO_START
 
@@ -28,6 +30,10 @@ class Process
 {
 public:
   Process ();
+  Process (Process const &) = delete;
+  Process (Process &&) = delete;
+  Process &operator= (Process const &) = delete;
+  Process &operator= (Process &&) = delete;
   ~Process ();
 
   int run(int argc, ACE_TCHAR* argv[]);
@@ -38,14 +44,14 @@ private:
   void print_usage_and_die ();
 
 private:
-  char progname[128];
+  static constexpr char progname[] = "service";
 
-  int opt_install;
-  int opt_remove;
-  int opt_start;
-  int opt_kill;
-  int opt_type;
-  int opt_debug;
+  bool opt_install {};
+  bool opt_remove {};
+  bool opt_start {};
+  bool opt_kill {};
+  bool opt_type {};
+  bool opt_debug {};
 
   int opt_startup;
 };
@@ -53,16 +59,8 @@ private:
 using PROCESS = ACE_Singleton<Process, ACE_Mutex>;
 
 Process::Process ()
-  : opt_install (0),
-    opt_remove (0),
-    opt_start (0),
-    opt_kill (0),
-    opt_type (0),
-    opt_debug (0),
-    opt_startup (0)
+  : opt_startup (0)
 {
-  ACE_OS::strcpy (progname,
-                  "service");
   ACE::init ();
 }
 
@@ -83,8 +81,7 @@ Process::print_usage_and_die ()
               "  -k: Kill the service\n"
               "  -t: Set startup for an existing service\n"
               "  -d: Debug; run as a regular application\n",
-              progname,
-              0));
+              progname));
   ACE_OS::exit(1);
 }
 
@@ -98,35 +95,35 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
     switch (c)
     {
     case 'i':
-      opt_install = 1;
+      opt_install = true;
       opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
       if (opt_startup <= 0)
          print_usage_and_die ();
       break;
     case 'r':
-      opt_remove = 1;
+      opt_remove = true;
       break;
     case 's':
-      opt_start = 1;
+      opt_start = true;
       break;
     case 'k':
-      opt_kill = 1;
+      opt_kill = true;
       break;
     case 't':
-      opt_type = 1;
+      opt_type = true;
       opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
       if (opt_startup <= 0)
          print_usage_and_die ();
       break;
     case 'd':
-      opt_debug = 1;
+      opt_debug = true;
       break;
     default:
       // -i can also be given without a value - if so, it defaults
       // to defined value.
       if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], ACE_TEXT ("-i")) == 0)
       {
-        opt_install = 1;
+        opt_install = true;
         opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
       }
       else
@@ -221,12 +218,15 @@ Process::run (int argc, ACE_TCHAR* argv[])
     }
   else
     {
-      ofstream *output_file = new ofstream("ntsvc.log", ios::out);
+      std::unique_ptr<ofstream> output_file = std::make_unique<ofstream> ("ntsvc.log", ios::out);
       if (output_file && output_file->rdstate() == ios::goodbit)
-        ACE_LOG_MSG->msg_ostream(output_file, 1);
+        {
+          ACE_LOG_MSG->msg_ostream (output_file.get (), true);
+          output_file.release ();
+        }
       ACE_LOG_MSG->open(argv[0],
                         ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM,
-                        0);
+                        nullptr);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Starting service.\n")));
 
       ACE_NT_SERVICE_RUN (Beeper,

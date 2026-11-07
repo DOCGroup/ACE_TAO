@@ -30,7 +30,6 @@
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/Containers_T.h"
-#include "ace/Vector_T.h"
 #include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -205,7 +204,7 @@ private:
 
   /// This is the maximum amount of time in seconds that an idle thread can
   /// stay alive before being taken out of the pool.
-  ACE_Time_Value thread_idle_time_;
+  ACE_Time_Value thread_idle_time_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

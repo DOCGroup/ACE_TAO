@@ -4,6 +4,8 @@
 #include "tao/Var_Array_Argument_T.h"
 #include "tao/Array_Traits_T.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Var_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -52,16 +54,21 @@ TAO::Argument*
 TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
 {
   using ARRAY_TRAITS = TAO::details::array_traits<S_forany>;
-  typename ARRAY_TRAITS::slice_type * tmp_ptr = nullptr;
+  typename ARRAY_TRAITS::slice_type * tmp_ptr {};
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         nullptr);
-  ARRAY_TRAITS::copy(tmp_ptr, this->x_.in ());
+  std::unique_ptr<typename ARRAY_TRAITS::slice_type,
+                  void (*) (typename ARRAY_TRAITS::slice_type *)> tmp_ptr_guard (
+    tmp_ptr, &ARRAY_TRAITS::free);
+  ARRAY_TRAITS::copy (tmp_ptr_guard.get (), this->x_.in ());
 
-  In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>* clone_arg
-    = new In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy> (tmp_ptr);
+  std::unique_ptr<In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>> clone_arg =
+    std::make_unique<In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>> (
+      tmp_ptr_guard.get ());
   clone_arg->is_clone_ = true;
-  return clone_arg;
+  tmp_ptr_guard.release ();
+  return clone_arg.release ();
 }
 
 // ===========================================================
@@ -143,7 +150,7 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
   )
 {
   using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
-  typename S_forany::_slice_type * tmp_ptr = nullptr;
+  typename S_forany::_slice_type * tmp_ptr {};
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         false);

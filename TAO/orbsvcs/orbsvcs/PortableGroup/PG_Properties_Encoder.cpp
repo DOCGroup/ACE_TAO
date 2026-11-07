@@ -16,13 +16,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG::Properties_Encoder::Properties_Encoder ()
-{
-}
-
 void TAO_PG::Properties_Encoder::add (
-  const char * name,
-  const PortableGroup::Value & value)
+  char const * name,
+  PortableGroup::Value const & value)
 {
   NamedValue nv(name, value);
   values_.push_back(nv);
@@ -30,12 +26,12 @@ void TAO_PG::Properties_Encoder::add (
 
 void TAO_PG::Properties_Encoder::encode (PortableGroup::Properties * property_set) const
 {
-  ACE_ASSERT (property_set != 0);
+  ACE_ASSERT (property_set != nullptr);
   CORBA::ULong const count = static_cast<CORBA::ULong> (values_.size());
   property_set->length(count);
   for( CORBA::ULong nItem = 0; nItem < count; ++nItem )
   {
-    const NamedValue & nv = values_[nItem];
+    NamedValue const & nv = values_[nItem];
     PortableGroup::Property & property = (*property_set)[nItem];
     PortableGroup::Name & nsName = property.nam;
     PortableGroup::Value & anyValue = property.val;

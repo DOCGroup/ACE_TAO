@@ -13,10 +13,6 @@ TAO_Notify_StructuredPushConsumer::TAO_Notify_StructuredPushConsumer (TAO_Notify
 {
 }
 
-TAO_Notify_StructuredPushConsumer::~TAO_Notify_StructuredPushConsumer ()
-{
-}
-
 void
 TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer)
 {

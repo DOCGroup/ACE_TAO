@@ -2,19 +2,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
+#include <memory>
 
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Core.h"
 #include "tao/Dynamic_TP/DTP_Thread_Pool.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
-const ACE_TCHAR *upstream_ior = ACE_TEXT ("file://server.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file,
+            ACE_TString &upstream_ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -47,6 +46,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      ACE_TString ior_output_file (ACE_TEXT ("middle.ior"));
+      ACE_TString upstream_ior (ACE_TEXT ("file://server.ior"));
+      if (parse_args (argc, argv, ior_output_file, upstream_ior) != 0)
+        return 1;
+
       CORBA::Object_var obj =
         orb->resolve_initial_references("RootPOA");
 
@@ -61,11 +65,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      obj = orb->string_to_object (upstream_ior);
-      Test::Sleeper_var sleeper = Test::Sleeper::_narrow (obj.in ());
+      obj = orb->string_to_object (upstream_ior.c_str ());
+      Test::Sleeper_var const sleeper = Test::Sleeper::_narrow (obj.in ());
 
       if (CORBA::is_nil (sleeper.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -73,38 +74,41 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
 
 
-      Middle_i *test_impl;
-      ACE_NEW_RETURN (test_impl, Middle_i (orb.in (), sleeper.in()), 1);
-      PortableServer::ServantBase_var owner_transfer(test_impl);
-      PortableServer::ObjectId_var id = root_poa->activate_object (test_impl);
+      std::unique_ptr<Middle_i> test_impl =
+        std::make_unique<Middle_i> (orb.in (), sleeper.in ());
+      PortableServer::ServantBase_var owner_transfer (test_impl.release ());
+      PortableServer::ObjectId_var id = root_poa->activate_object (owner_transfer.in ());
       obj = root_poa->id_to_reference (id.in ());
 
-      Test::Middle_var middle = Test::Middle::_narrow (obj.in ());
-      CORBA::String_var ior = orb->object_to_string (middle.in ());
+      Test::Middle_var const middle = Test::Middle::_narrow (obj.in ());
+      CORBA::String_var const ior = orb->object_to_string (middle.in ());
 
       ACE_DEBUG ((LM_DEBUG,"Middle calling poa_manager::activate()\n"));
       poa_manager->activate ();
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %C",
-                           ior_output_file,
-                           ior.in ()),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file %s for writing IOR: %C",
+                             ior_output_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       TAO_ORB_Core_TSS_Resources &tss =
         *orb->orb_core ()->get_tss_resources ();
 
       // The API calls it a lane but DTP Thread Pools
       // are always a single lane.
-      TAO_DTP_Thread_Pool *pool =
+      // The ORB core owns the lane and its thread pool.
+      TAO_DTP_Thread_Pool * const pool =
         static_cast <TAO_DTP_Thread_Pool *> (tss.lane_);
 
-      if (pool == 0)
+      if (pool == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,"Middle calling orb->run()\n"));
           orb->run ();

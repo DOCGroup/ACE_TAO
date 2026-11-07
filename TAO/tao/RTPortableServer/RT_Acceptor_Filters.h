@@ -48,10 +48,9 @@ public:
   TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
   /// Populate @a mprofile based on what's in <protocols_>.
-  int fill_profile (const TAO::ObjectKey &object_key,
+  int fill_profile (TAO::ObjectKey const& object_key,
                     TAO_MProfile &mprofile,
-                    TAO_Acceptor **acceptors_begin,
-                    TAO_Acceptor **acceptors_end,
+                    TAO_AcceptorSet const& acceptors,
                     CORBA::Short priority) override;
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS

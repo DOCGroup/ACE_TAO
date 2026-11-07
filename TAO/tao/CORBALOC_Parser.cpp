@@ -11,13 +11,12 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
-#include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
 #if !defined(__ACE_INLINE__)
 #include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
@@ -37,9 +36,9 @@ bool
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 {
   // Check if the prefix is 'corbaloc:' and return the result.
-  return (ACE_OS::strncmp (ior_string,
-                           prefix,
-                           prefix_len) == 0);
+  return (std::strncmp (ior_string,
+                        prefix,
+                        prefix_len) == 0);
 }
 
 CORBA::Object_ptr
@@ -111,7 +110,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   ior += std::strlen(prefix);
 
   //  First check for rir
-  if (ACE_OS::strncmp (ior,rir_token,rir_token_len) == 0)
+  if (std::strncmp (ior, rir_token, rir_token_len) == 0)
     return this->parse_string_rir_helper (ior,orb);
 
   // set up space for parsed endpoints. there will be at least 1, and
@@ -135,18 +134,17 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     size_t ndx = endpoints.size();
     endpoints.size(ndx+1);
     bool uiop_compatible = false;
-    TAO_ConnectorSetIterator conn_iter = nullptr;
-    for (conn_iter = conn_reg->begin();
-         conn_iter != conn_reg->end() &&
-           endpoints[ndx].profile_ == nullptr;
-         conn_iter ++)
+    for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)
       {
+        if (endpoints[ndx].profile_ != nullptr)
+          break;
+
         endpoints[ndx].profile_ =
-          (*conn_iter)->corbaloc_scan(ior,len);
+          connector->corbaloc_scan(ior,len);
 
         if (endpoints[ndx].profile_)
           {
-            endpoints[ndx].obj_key_sep_ = (*conn_iter)->object_key_delimiter();
+            endpoints[ndx].obj_key_sep_ = connector->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
             this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
             ior += len;
@@ -239,7 +237,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   const char *separator = std::strchr (ior, ':');
 
   // A special case for handling iiop
-  if (ior[0] != ':' && ACE_OS::strncmp (ior,iiop_token,iiop_token_len) != 0)
+  if (ior[0] != ':' && std::strncmp (ior, iiop_token, iiop_token_len) != 0)
     {
       canonical_endpoint.set (separator+1,
                               prot_addr_len - (separator - ior) - 1,1);

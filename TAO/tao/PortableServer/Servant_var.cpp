@@ -17,7 +17,7 @@ PortableServer::Servant_var<T>::_duplicate (T * p)
 {
   try
     {
-      if (p != 0)
+      if (p != nullptr)
         {
           p->_add_ref ();
         }

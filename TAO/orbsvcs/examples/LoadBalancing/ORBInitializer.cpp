@@ -8,7 +8,7 @@
 
 ORBInitializer::ORBInitializer ()
   : load_alert_ (),
-    interceptor_ (0)
+    interceptor_ (nullptr)
 {
 }
 

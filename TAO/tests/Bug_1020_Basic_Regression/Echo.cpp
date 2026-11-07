@@ -1,11 +1,11 @@
 #include "Echo.h"
 #include "ace/OS_NS_unistd.h"
 
-Echo::Echo(CORBA::ORB_ptr orb,
-           int abort_counter)
-  : orb_(CORBA::ORB::_duplicate(orb))
-    , abort_counter_ (abort_counter),
-    mutex_ ()
+Echo::Echo (CORBA::ORB_ptr orb,
+            int abort_counter)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , abort_counter_ (abort_counter)
+  , mutex_ ()
 {
 }
 
@@ -34,6 +34,6 @@ Echo::echo_payload (Test::Payload &)
                   "(%P|%t) Echo::echo_payload, aborting\n"));
 
       // Kill the app
-      ACE_OS::abort();
+      ACE_OS::abort ();
     }
 }

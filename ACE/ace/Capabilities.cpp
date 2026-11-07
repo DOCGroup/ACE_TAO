@@ -98,7 +98,7 @@ ACE_Capabilities::resetcaps ()
        !iter.done ();
        iter.advance ())
     {
-      CAPABILITIES_MAP::ENTRY *entry = nullptr;
+      CAPABILITIES_MAP::ENTRY *entry {};
       iter.next (entry);
       delete entry->int_id_;
     }
@@ -187,7 +187,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
   return 0;
 }
 
-int
+bool
 ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 {
   for (;;)
@@ -207,7 +207,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 
       // We have found the required entry?
       if (ACE_OS::strcmp (nextname.c_str (), name) == 0)
-        return 1;
+        return true;
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
@@ -219,7 +219,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
           break;
         }
     }
-  return 0;
+  return false;
 }
 
 int
@@ -241,7 +241,7 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 int
 ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 {
-  ACE_CapEntry* cap = nullptr;
+  ACE_CapEntry* cap {};
   if (this->caps_.find (keyname, cap) == -1)
     return -1;
 
@@ -257,7 +257,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 int
 ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 {
-  ACE_CapEntry *cap = nullptr;
+  ACE_CapEntry *cap {};
   if (this->caps_.find (keyname, cap) == -1)
     return -1;
 
@@ -279,7 +279,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
   return 0;
 }
 
-static int
+static bool
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
@@ -288,7 +288,7 @@ is_empty (const ACE_TCHAR *line)
   return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
 
-static int
+static bool
 is_line (const ACE_TCHAR *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
@@ -308,10 +308,10 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
                        fname),
                       -1);
 
-  int done;
+  bool done = false;
   ACE_TString line;
 
-  while (0 == (done = (this->getline (fp, line) == -1))
+  while (!(done = (this->getline (fp, line) == -1))
          && is_empty (line.c_str ()))
     continue;
 
@@ -320,7 +320,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString newline;
       ACE_TString description;
 
-      while (0 == (done = (this->getline (fp, newline) == -1)))
+      while (!(done = (this->getline (fp, newline) == -1)))
         if (is_line (newline.c_str ()))
           description += newline;
         else

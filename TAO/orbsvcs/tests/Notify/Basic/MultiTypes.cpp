@@ -57,9 +57,6 @@ MultiTypes::MultiTypes ()
    any_supplier_ (0),
    structured_supplier_ (0),
    sequence_supplier_ (0),
-   any_event_count_ (0),
-   struct_event_count_ (0),
-   seq_event_count_ (0),
    disconnect_on_last_event_ (0)
 {
 }
@@ -74,7 +71,7 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   ++any_event_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.load ()));
 
 
   if (disconnect_on_last_event_ == 1)
@@ -82,7 +79,6 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
     consumer->disconnect ();
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "PushConsumer has been disconnected.\n"));
-    consumer = 0;
   }
 }
 
@@ -92,7 +88,7 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   ++struct_event_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.load ()));
 
 
   if (disconnect_on_last_event_ == 1)
@@ -100,7 +96,6 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
     consumer->disconnect ();
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer has been disconnected.\n"));
-    consumer = 0;
   }
 }
 
@@ -110,7 +105,7 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
   ++seq_event_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.load ()));
 
 
   if (disconnect_on_last_event_ == 1)
@@ -119,7 +114,6 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
 
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer has been disconnected.\n"));
-    consumer = 0;
   }
 }
 
@@ -296,9 +290,9 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 {
   while (true)
     {
-      if (any_event_count_.value () >= expected_count_per_consumer &&
-          struct_event_count_.value () >= expected_count_per_consumer &&
-          seq_event_count_.value () >= expected_count_per_consumer)
+      if (any_event_count_.load () >= expected_count_per_consumer &&
+          struct_event_count_.load () >= expected_count_per_consumer &&
+          seq_event_count_.load () >= expected_count_per_consumer)
       {
         break;
       }
@@ -344,19 +338,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       client.end_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = client.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

@@ -5,134 +5,77 @@
 
 #include "DllORB.h"
 
-ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+static ACE_TCHAR const* const load_orb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE (
   "testDllOrb",
   "bug3663",
   TAO_VERSION,
   "_make_DllORB",
-  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1"
-);
+  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1");
 
-ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+static ACE_TCHAR const* const unload_orb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllOrb");
 
-ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+static ACE_TCHAR const* const load_notify_service = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE (
   "testNotifyService",
   "TAO_Notify_Service",
   TAO_VERSION,
   "_make_TAO_Notify_Service_Driver_INCORRECT",
-  "-NoNameSvc -RunThreads 0"
-);
+  "-NoNameSvc -RunThreads 0");
 
-ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
+static ACE_TCHAR const* const unload_notify_service = ACE_REMOVE_SERVICE_DIRECTIVE ("testNotifyService");
 
-void loadunloadcycle()
+static void
+load_unload_cycle ()
 {
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")
-  ));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")));
 
-  int result = ACE_Service_Config::process_directive(scpc_loadOrb);
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
-    result
-  ));
+  int result = ACE_Service_Config::process_directive (load_orb);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
+              result));
 
-  DllORB * p_orb =
-    ACE_Dynamic_Service<DllORB>::instance("testDllOrb");
+  DllORB* const orb_service = ACE_Dynamic_Service<DllORB>::instance ("testDllOrb");
+  CORBA::ORB_var const orb = orb_service->orb ();
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - v_orb OK\n")));
 
-  CORBA::ORB_var v_orb = p_orb->orb();
-    ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - v_orb OK\n")
-  ));
+  CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - v_poa OK\n")));
 
-  CORBA::Object_var v_poa =
-    v_orb->resolve_initial_references("RootPOA");
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - v_poa OK\n")
-  ));
+  PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - v_rootPOA OK\n")));
 
-  PortableServer::POA_var v_rootPOA =
-    PortableServer::POA::_narrow(v_poa.in ());
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - v_rootPOA OK\n")
-  ));
+  result = ACE_Service_Config::process_directive (load_notify_service);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done. Result: <%d>\n"),
+              result));
 
-  result = ACE_Service_Config::process_directive(scpc_loadNotifyService);
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done. Result: <%d>\n"),
-    result
-  ));
+  ACE_Dynamic_Service<TAO_Notify_Service_Driver>::instance ("testNotifyService");
 
-  TAO_Notify_Service_Driver * p_notifyService =
-    ACE_Dynamic_Service<TAO_Notify_Service_Driver>::instance("testNotifyService");
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - unloading\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService ...\n")));
+  result = ACE_Service_Config::process_directive (unload_notify_service);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService done. Result: <%d>\n"),
+              result));
 
-  ACE_UNUSED_ARG (p_notifyService);
-
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading\n")
-  ));
-
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService ...\n")
-  ));
-  result = ACE_Service_Config::process_directive(scpc_unloadNotifyService);
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService done. Result: <%d>\n"),
-    result
-  ));
-
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB ...\n")
-  ));
-  result = ACE_Service_Config::process_directive(scpc_unloadOrb);
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),
-    result
-  ));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB ...\n")));
+  result = ACE_Service_Config::process_directive (unload_orb);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),
+              result));
 }
 
-int ACE_TMAIN (int , ACE_TCHAR **)
+int
+ACE_TMAIN (int, ACE_TCHAR**)
 {
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - entered\n")
-  ));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) main - entered\n")));
 
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 1 ...\n")
-  ));
-  loadunloadcycle();
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 1 done\n")
-  ));
+  for (int cycle {}; cycle < 2; ++cycle)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) main - cycle %d ...\n"), cycle + 1));
+      load_unload_cycle ();
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) main - cycle %d done\n"), cycle + 1));
+    }
 
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 2 ...\n")
-  ));
-  loadunloadcycle();
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 2 done\n")
-  ));
-
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - leaving\n")
-  ));
-
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) main - leaving\n")));
   return 0;
 }

@@ -15,18 +15,20 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *udp_mcast_address =
+#include <atomic>
+
+ACE_TCHAR const* udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
 static CORBA::ORB_var orb = CORBA::ORB::_nil ();
-static bool terminate_threads = false;
-static const unsigned pool_size = 2;
-static const int data_items = 60000;
+static std::atomic_bool terminate_threads {false};
+static constexpr unsigned pool_size {2};
+static constexpr int data_items {60000};
 
 void *
 run_orb_within_thread (void *)
 {
-  while (! terminate_threads)
+  while (!terminate_threads.load (std::memory_order_relaxed))
     {
       try
         {
@@ -42,7 +44,7 @@ run_orb_within_thread (void *)
               orb->perform_work (tv);
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("perform work");
 
@@ -157,10 +159,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
-      TAO_ECG_UDP_Out_Endpoint* endpointptr = 0;
+      TAO_ECG_UDP_Out_Endpoint* endpointptr {};
 
-      ACE_NEW_RETURN (endpointptr, TAO_ECG_UDP_Out_Endpoint, 0);
+      ACE_NEW_RETURN (endpointptr, TAO_ECG_UDP_Out_Endpoint, 1);
 
+      // Transfer the endpoint into its reference-counted owner.
       TAO_ECG_Refcounted_Endpoint endpoint (endpointptr);
       if (endpoint->dgram ().open (ACE_Addr::sap_any,
                                    udp_addr.get_type()) == -1)
@@ -262,7 +265,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager the_ace_manager;
       the_ace_manager.open ();
       int thread_pool_id = the_ace_manager.spawn_n (
-        pool_size, ACE_THR_FUNC (run_orb_within_thread), 0, THR_DETACHED | THR_NEW_LWP);
+        pool_size, ACE_THR_FUNC (run_orb_within_thread), nullptr, THR_DETACHED | THR_NEW_LWP);
       if (thread_pool_id == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot spawn thread pool\n"), 1);
       }
@@ -274,7 +277,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       ACE_OS::sleep (2); // simple solution ensures ready receivers
-      terminate_threads = true; // terminate thread pool
+      terminate_threads.store (true, std::memory_order_relaxed); // terminate thread pool
 
       the_ace_manager.wait(); // wait until all threads in the pool are stopped
 
@@ -337,7 +340,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "MCast example finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -350,7 +353,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 int parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("m:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

@@ -60,6 +60,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
 {
 public:
+  ACE_SSL_SOCK_Stream (ACE_SSL_SOCK_Stream const &) = delete;
+  ACE_SSL_SOCK_Stream (ACE_SSL_SOCK_Stream &&) = delete;
+  ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream const &) = delete;
+  ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream &&) = delete;
+
   /// Constructor
   /**
    * @param context Pointer to @c ACE_SSL_Context instance containing
@@ -68,8 +73,8 @@ public:
    *                structure will be copied to make it at least
    *                logically independent of the supplied @a context.
    */
-  ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
-                       ACE_SSL_Context::instance ());
+  explicit ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
+                                ACE_SSL_Context::instance ());
 
   /// Destructor
   ~ACE_SSL_SOCK_Stream ();
@@ -317,11 +322,6 @@ protected:
                   int flags,
                   const ACE_Time_Value *timeout) const;
 
-private:
-  void operator= (const ACE_SSL_SOCK_Stream &) = delete;
-  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &) = delete;
-
-protected:
   /// The SSL session.
   SSL *ssl_;
 

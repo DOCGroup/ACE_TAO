@@ -18,7 +18,7 @@ class DynSched_Test
 {
 public:
   static void setup_rt_info (RtecScheduler::RT_Info &info,
-                             const char *entry_point,
+                             char const* entry_point,
                              u_long period,
                              RtecScheduler::Time execution,
                              RtecScheduler::Criticality_t criticality,
@@ -33,18 +33,18 @@ public:
 
 #if 0 /* not currently used */
   static void setup_conjunction (RtecScheduler::RT_Info &info,
-                                 const char *entry_point);
+                                 char const* entry_point);
   // Sets up a conjunction.
 
   static void setup_disjunction (RtecScheduler::RT_Info &info,
-                                 const char *entry_point);
+                                 char const* entry_point);
   // Sets up a disjunction.
 
 #endif /* not currently used */
 
   static int run_schedule (ACE_Scheduler_Strategy &strategy,
-                           const char *output_filename,
-                           const char *heading);
+                           char const* output_filename,
+                           char const* heading);
   // Creates the schedule, runs timelines.
 };
 
@@ -53,7 +53,7 @@ public:
 
 void
 DynSched_Test::setup_rt_info (RtecScheduler::RT_Info &info,
-                              const char *entry_point,
+                              char const* entry_point,
                               u_long period,
                               RtecScheduler::Time execution,
                               RtecScheduler::Criticality_t criticality,
@@ -105,7 +105,7 @@ DynSched_Test::register_rt_info (ACE_DynScheduler &scheduler,
 
 void
 DynSched_Test::setup_conjunction (RtecScheduler::RT_Info &info,
-                                  const char *entry_point)
+                                  char const* entry_point)
 {
   // copy the passed entry point string into the RT_Info
   info.entry_point = CORBA::string_dup (entry_point);
@@ -132,7 +132,7 @@ DynSched_Test::setup_conjunction (RtecScheduler::RT_Info &info,
 
 void
 DynSched_Test::setup_disjunction (RtecScheduler::RT_Info &info,
-                                  const char *entry_point)
+                                  char const* entry_point)
 {
   // copy the passed entry point string into the RT_Info
   info.entry_point = CORBA::string_dup (entry_point);
@@ -160,11 +160,11 @@ DynSched_Test::setup_disjunction (RtecScheduler::RT_Info &info,
 
 int
 DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
-                             const char *output_filename,
-                             const char *heading)
+                             char const* output_filename,
+                             char const* heading)
 {
-  RtecScheduler::RT_Info low_1, low_5, low_10, low_20;
-  RtecScheduler::RT_Info high_1, high_5, high_10, high_20;
+  RtecScheduler::RT_Info low_1 {}, low_5 {}, low_10 {}, low_20 {};
+  RtecScheduler::RT_Info high_1 {}, high_5 {}, high_10 {}, high_20 {};
 
   ACE_Strategy_Scheduler scheduler (strategy);
 
@@ -252,7 +252,7 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
-  int result = 0;
+  int result {};
 
   // create a bunch of different strategies, indicating the minimum critical
   // priority level (number of priority levels in critical set - 1) for each.

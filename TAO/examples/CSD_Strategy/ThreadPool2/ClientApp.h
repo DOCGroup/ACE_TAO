@@ -9,15 +9,19 @@
 class ClientApp
 {
   public:
-    ClientApp();
-    ~ClientApp();
+    ClientApp () = default;
+    ~ClientApp () = default;
+    ClientApp (ClientApp const &) = delete;
+    ClientApp (ClientApp &&) = delete;
+    ClientApp & operator= (ClientApp const &) = delete;
+    ClientApp & operator= (ClientApp &&) = delete;
 
-    int run(int argc, ACE_TCHAR* argv[]);
+    int run (int argc, ACE_TCHAR *argv[]);
 
 
   private:
-    int parse_args(int argc, ACE_TCHAR* argv[]);
-    void usage_statement();
+    int parse_args (int argc, ACE_TCHAR *argv[]);
+    void usage_statement () const;
 
     ACE_TString ior_;
 

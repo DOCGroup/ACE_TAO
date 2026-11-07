@@ -7,14 +7,14 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/OS_NS_errno.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-
-ACE_hrtime_t throughput_base;
-
-int niterations = 1000;
+struct Client_Options
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+  int iterations = 1000;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:"));
   int c;
@@ -23,22 +23,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-p <period (msecs)> "
-                           "-b <burst size> "
-                           "\n",
+                           ACE_TEXT("usage: %s -k <ior> -i <niterations>\n"),
                            argv [0]),
                           -1);
       }
@@ -74,8 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,60 +82,55 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-
-      Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in ());
+      CORBA::Object_var object = orb->string_to_object (options.ior);
+      Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil Test::Roundtrip reference <%s>\n",
-                           ior),
+                           ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
+                           options.ior),
                           1);
 
-      for (int j = 0; j < 100; ++j)
+      for (int i = 0; i < 100; ++i)
         {
-          ACE_hrtime_t start = 0;
+          ACE_hrtime_t const start {};
           (void) roundtrip->test_method (start);
         }
 
-      Roundtrip_Handler *roundtrip_handler_impl;
+      Roundtrip_Handler *roundtrip_handler_impl {};
       ACE_NEW_RETURN (roundtrip_handler_impl,
-                      Roundtrip_Handler (niterations),
+                      Roundtrip_Handler (options.iterations),
                       1);
-      PortableServer::ServantBase_var owner_transfer(roundtrip_handler_impl);
+      PortableServer::ServantBase_var owner_transfer (roundtrip_handler_impl);
 
       Test::AMI_RoundtripHandler_var roundtrip_handler =
         roundtrip_handler_impl->_this ();
 
       poa_manager->activate ();
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-      for (int i = 0; i != niterations; ++i)
-         {
-           // Invoke asynchronous operation....
-           roundtrip->sendc_test_method (roundtrip_handler.in (),
-                                         ACE_OS::gethrtime ());
-           if (orb->work_pending ())
-              orb->perform_work ();
-         }
+      for (int i = 0; i != options.iterations; ++i)
+        {
+          roundtrip->sendc_test_method (roundtrip_handler.in (),
+                                        ACE_OS::gethrtime ());
+          if (orb->work_pending ())
+            orb->perform_work ();
+        }
 
-       ACE_Time_Value tv (0, 2000);
+      ACE_Time_Value tv (0, 2000);
 
-       while (roundtrip_handler_impl->pending_callbacks ())
-         {
-           orb->perform_work (tv);
-         }
+      while (roundtrip_handler_impl->pending_callbacks ())
+        orb->perform_work (tv);
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
@@ -149,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
-                                             niterations);
+                                             options.iterations);
 
       roundtrip->shutdown ();
 
@@ -157,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught: ");
       return 1;

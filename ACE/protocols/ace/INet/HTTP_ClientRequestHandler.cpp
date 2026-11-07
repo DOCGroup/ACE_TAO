@@ -18,15 +18,13 @@ namespace ACE
       {
       }
 
-    SessionFactoryRegistry::~SessionFactoryRegistry ()
-      {
-      }
+    SessionFactoryRegistry::~SessionFactoryRegistry () = default;
 
     void SessionFactoryRegistry::register_session_factory (
         const ACE_CString& scheme,
         SessionFactory* factory)
       {
-        if (factory == 0)
+        if (factory == nullptr)
           this->factory_map_.unbind (scheme);
         else
           this->factory_map_.rebind (scheme, factory);
@@ -35,7 +33,7 @@ namespace ACE
     SessionFactory*
     SessionFactoryRegistry::find_session_factory (const ACE_CString& scheme)
       {
-        SessionFactory* factory = 0;
+        SessionFactory* factory = nullptr;
         this->factory_map_.find (scheme, factory);
         return factory;
       }
@@ -49,18 +47,14 @@ namespace ACE
       {
       }
 
-    SessionHolder::~SessionHolder()
-      {
-      }
+    SessionHolder::~SessionHolder() = default;
 
     SessionFactory_Impl::SessionHolder_Impl::SessionHolder_Impl ()
       : session_ (true)
       {
       }
 
-    SessionFactory_Impl::SessionHolder_Impl::~SessionHolder_Impl()
-      {
-      }
+    SessionFactory_Impl::SessionHolder_Impl::~SessionHolder_Impl() = default;
 
     SessionBase& SessionFactory_Impl::SessionHolder_Impl::session ()
       {
@@ -79,9 +73,7 @@ namespace ACE
         SessionFactoryRegistry::instance ().register_session_factory (URL::protocol (), this);
       }
 
-    SessionFactory_Impl::~SessionFactory_Impl ()
-      {
-      }
+    SessionFactory_Impl::~SessionFactory_Impl () = default;
 
     ACE::INet::ConnectionHolder*
     SessionFactory_Impl::create_connection (
@@ -92,7 +84,7 @@ namespace ACE
         const ClientRequestHandler::HttpConnectionKey& ikey =
             dynamic_cast<const ClientRequestHandler::HttpConnectionKey&> (key);
 
-        SessionHolder_Impl* session_holder = 0;
+        SessionHolder_Impl* session_holder = nullptr;
         ACE_NEW_RETURN (session_holder,
                         SessionHolder_Impl (),
                         0);
@@ -134,9 +126,7 @@ namespace ACE
       {
       }
 
-    ClientRequestHandler::HttpConnectionKey::~HttpConnectionKey()
-      {
-      }
+    ClientRequestHandler::HttpConnectionKey::~HttpConnectionKey() = default;
 
     u_long ClientRequestHandler::HttpConnectionKey::hash () const
       {
@@ -151,7 +141,7 @@ namespace ACE
 
     ACE::INet::ConnectionKey* ClientRequestHandler::HttpConnectionKey::duplicate () const
       {
-        ACE::INet::ConnectionKey* k = 0;
+        ACE::INet::ConnectionKey* k = nullptr;
         if (this->proxy_connection_)
           {
             ACE_NEW_RETURN (k,
@@ -186,7 +176,7 @@ namespace ACE
 
     ClientRequestHandler::ClientRequestHandler ()
       : request_ (Request::HTTP_1_0),
-        session_ (0)
+        session_ (nullptr)
       {
       }
 
@@ -265,7 +255,7 @@ namespace ACE
         SessionFactory* session_factory =
           SessionFactoryRegistry::instance ().find_session_factory (scheme);
 
-        if (session_factory == 0)
+        if (session_factory == nullptr)
           {
             INET_ERROR (1, (LM_ERROR, DLINFO
                             ACE_TEXT ("ClientRequestHandler::initialize_connection - ")
@@ -274,7 +264,7 @@ namespace ACE
             return false;
           }
 
-        ACE::INet::ConnectionHolder* pch = 0;
+        ACE::INet::ConnectionHolder* pch = nullptr;
         if (proxy_conn)
           {
             if (!this->connection_cache ().claim_connection (HttpConnectionKey (proxy_host,
@@ -330,7 +320,7 @@ namespace ACE
                                        this->session ()->get_port ()),
                     this->session_);
               }
-            this->session_ = 0;
+            this->session_ = nullptr;
           }
       }
 
@@ -354,7 +344,7 @@ namespace ACE
                                        this->session ()->get_port ()),
                     this->session_);
               }
-            this->session_ = 0;
+            this->session_ = nullptr;
           }
       }
 

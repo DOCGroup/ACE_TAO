@@ -17,7 +17,7 @@ ACE_MEM_SAP::dump () const
   ACE_TRACE ("ACE_MEM_SAP::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  if (this->shm_malloc_ != 0)
+  if (this->shm_malloc_ != nullptr)
     this->shm_malloc_->dump ();
   else
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_MEM_SAP uninitialized.\n")));

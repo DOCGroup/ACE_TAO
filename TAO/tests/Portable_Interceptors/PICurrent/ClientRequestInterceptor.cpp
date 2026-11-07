@@ -1,7 +1,8 @@
 #include "ClientRequestInterceptor.h"
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ClientRequestInterceptor::ClientRequestInterceptor (
   PortableInterceptor::SlotId id,
@@ -24,17 +25,17 @@ ClientRequestInterceptor::destroy ()
 
 void
 ClientRequestInterceptor::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
+  if (std::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
   try
     {
       // Retrieve data from the RSC (request scope current).
-      CORBA::Long number = 0;
+      CORBA::Long number {};
 
       CORBA::Any_var data =
         ri->get_slot (this->slot_id_);
@@ -52,7 +53,7 @@ ClientRequestInterceptor::send_request (
                   number,
                   this->slot_id_));
 
-      CORBA::Any new_data;
+      CORBA::Any new_data {};
       CORBA::String_var s = CORBA::string_dup ("Et tu Brute?");
 
       new_data <<= s.in ();
@@ -64,7 +65,7 @@ ClientRequestInterceptor::send_request (
 
       // Now retrieve the data from the RSC again.  It should not have
       // changed!
-      CORBA::Long number2 = -1;
+      CORBA::Long number2 (-1);
 
       CORBA::Any_var data2 =
         ri->get_slot (this->slot_id_);
@@ -80,7 +81,7 @@ ClientRequestInterceptor::send_request (
         }
 
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception ("Exception thrown in ""send_request()\n");
 

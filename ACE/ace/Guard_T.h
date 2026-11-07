@@ -120,8 +120,10 @@ protected:
   int owner_;
 
 private:
-  void operator= (const ACE_Guard<ACE_LOCK> &) = delete;
-  ACE_Guard (const ACE_Guard<ACE_LOCK> &) = delete;
+  ACE_Guard (ACE_Guard const &) = delete;
+  ACE_Guard (ACE_Guard &&) = delete;
+  ACE_Guard &operator= (ACE_Guard const &) = delete;
+  ACE_Guard &operator= (ACE_Guard &&) = delete;
 };
 
 /**
@@ -280,8 +282,10 @@ private:
   using Guard_Type = ACE_Guard<ACE_LOCK>;
   // FUZZ: enable check_for_ACE_Guard
 
-  void operator= (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
-  ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
+  ACE_TSS_Guard (ACE_TSS_Guard const &) = delete;
+  ACE_TSS_Guard (ACE_TSS_Guard &&) = delete;
+  ACE_TSS_Guard &operator= (ACE_TSS_Guard const &) = delete;
+  ACE_TSS_Guard &operator= (ACE_TSS_Guard &&) = delete;
 };
 
 /**

@@ -426,12 +426,11 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "ACE_INLINE" << be_nl;
       *os << this->name () << "::"
           << this->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "TAO_Stub *objref," << be_nl
-          << "::CORBA::Boolean _tao_collocated," << be_nl
-          << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *" << (abstract ? "" : "oc") << ")"
-          << be_uidt_nl
+          << be_idt_nl
+          << "TAO_Stub *objref, ::CORBA::Boolean _tao_collocated, "
+          << "TAO_Abstract_ServantBase *servant, TAO_ORB_Core *"
+          << (abstract ? "" : "oc") << ")"
+          << be_nl
           << ": ";
 
       bool const the_check =
@@ -1790,15 +1789,15 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
     case BE_GlobalData::TAO_PERFECT_HASH:
       process_options.command_line (ACE_TEXT ("%s")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-m -M -J -Q -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -R -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT ("-o -t -p -K")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++17")
+                                    ACE_TEXT ("opname")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-Z TAO_%s_Perfect_Hash_OpTable")
                                     ACE_TEXT (" ")
@@ -1813,15 +1812,15 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-B")
                                     ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -Q -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -R -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT ("-o -t -p -K")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++17")
+                                    ACE_TEXT ("opname")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-Z TAO_%s_Binary_Search_OpTable")
                                     ACE_TEXT (" ")
@@ -1836,15 +1835,15 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-b")
                                     ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -Q -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -R -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT ("-o -t -p -K")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++17")
+                                    ACE_TEXT ("opname")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-Z TAO_%s_Linear_Search_OpTable")
                                     ACE_TEXT (" ")
@@ -2254,7 +2253,7 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
 
       if (has_concrete_parent || i_am_abs)
         {
-          *os << be_uidt << be_uidt_nl;
+          *os << be_uidt << be_uidt;
         }
       else if (! i_am_abs)
         {
@@ -2265,7 +2264,7 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
   if (i_am_abs && nparents == 0)
     {
       *os << "public virtual ::CORBA::AbstractBase"
-          << be_uidt_nl;
+          << be_uidt;
     }
 
   if (! has_concrete_parent && ! i_am_abs)

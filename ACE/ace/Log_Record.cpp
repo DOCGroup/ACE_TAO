@@ -297,7 +297,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR *verbose_msg = nullptr;
+      ACE_TCHAR *verbose_msg {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (verbose_msg, static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * MAXVERBOSELOGMSGLEN)), -1);
 #else
@@ -404,7 +404,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR* verbose_msg = nullptr;
+      ACE_TCHAR* verbose_msg {};
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
       int const result = this->format_msg (host_name, verbose_flag, verbose_msg,

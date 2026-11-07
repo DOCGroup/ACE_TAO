@@ -18,6 +18,8 @@
 
 #include "ace/Encoding_Converter.h"
 
+#include <memory>
+
 #if defined (ACE_USES_WCHAR)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,34 +34,38 @@ public:
   ACE_UTF8_Encoding_Converter ();
 
   /// De-allocate the native converter.
-  virtual ~ACE_UTF8_Encoding_Converter ();
+  ~ACE_UTF8_Encoding_Converter () override;
+  ACE_UTF8_Encoding_Converter (ACE_UTF8_Encoding_Converter const &) = delete;
+  ACE_UTF8_Encoding_Converter (ACE_UTF8_Encoding_Converter &&) = delete;
+  ACE_UTF8_Encoding_Converter &operator= (ACE_UTF8_Encoding_Converter const &) = delete;
+  ACE_UTF8_Encoding_Converter &operator= (ACE_UTF8_Encoding_Converter &&) = delete;
 
   /// Since the source *must be* UTF-8, there is no conversion required.
   /// This method just copies the source to the target given that there
   /// is enough space.
-  virtual Result to_utf8 (const void* source,
-                          size_t source_size,
-                          ACE_Byte* target,
-                          size_t target_size,
-                          bool strict = true);
+  Result to_utf8 (void const *source,
+                  size_t source_size,
+                  ACE_Byte *target,
+                  size_t target_size,
+                  bool strict = true) override;
 
   /// Utilize the native converter to convert the UTF-8 source into an
   /// alternate encoding and store it in the provided target buffer.
-  virtual Result from_utf8 (const ACE_Byte* source,
-                            size_t source_size,
-                            void* target,
-                            size_t target_size,
-                            bool strict = true);
+  Result from_utf8 (ACE_Byte const *source,
+                    size_t source_size,
+                    void *target,
+                    size_t target_size,
+                    bool strict = true) override;
 
 
   /// This factory helper method determines if the source stream is UTF-8
   /// encoded.  If it is, allocate an ACE_UTF8_Encoding_Converter and
   /// return it.  The caller then owns the allocated object.
-  static ACE_UTF8_Encoding_Converter* encoded (const ACE_Byte* source,
+  static ACE_UTF8_Encoding_Converter *encoded (ACE_Byte const *source,
                                                size_t source_size);
 
 private:
-  ACE_Encoding_Converter* native_;
+  std::unique_ptr<ACE_Encoding_Converter> native_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

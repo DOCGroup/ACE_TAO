@@ -9,6 +9,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 
+#include <cstring>
+
 #if defined (ACE_USES_FIFO_SEM)
 #  include "ace/OS_NS_sys_stat.h"
 #  include "ace/OS_NS_sys_select.h"
@@ -106,7 +108,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 
 /*****************************************************************************/
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 {
 #if defined (ACE_HAS_PTHREADS)
@@ -153,7 +155,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
     * require zeroing of mutex/condition objects to function correctly
     * but also of the attribute objects.
     */
-  ACE_OS::memset (&attributes, 0, sizeof (attributes));
+  std::memset (&attributes, 0, sizeof (attributes));
 #       endif
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_init (&attributes), result) == 0
@@ -299,7 +301,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
    *   block of memory so as to avoid spurious EBUSY return code
    *   when calling this routine.
    */
-  ACE_OS::memset (cv, 0, sizeof (*cv));
+  std::memset (cv, 0, sizeof (*cv));
 #     endif
 
   if (ACE_ADAPT_RETVAL (pthread_cond_init (cv, &attributes), result) == 0)
@@ -606,7 +608,7 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
 
 #    if !defined (ACE_NDEBUG)
   if (m->nesting_level_ == 0
-      || ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_) == 0)
+      || !ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_))
     {
       ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
       errno = EINVAL;
@@ -772,7 +774,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
       m->owner_id_ = t_id;
       // If we already own the lock, then increment the nesting level
       // and return.
-    else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+    else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
     {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
@@ -824,7 +826,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
         m->owner_id_ = t_id;
       // If we already own the lock, then increment the nesting level
       // and return.
-      else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+      else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
         {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
@@ -940,7 +942,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   {
 #    if !defined (ACE_NDEBUG)
       if (m->nesting_level_ == 0
-          || ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+          || !ACE_OS::thr_equal (t_id, m->owner_id_))
 {
   errno = EINVAL;
   result = -1;
@@ -1598,7 +1600,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
-      ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
+      std::memset (s->sema_, 0, sizeof (*s->sema_));
       return ::sem_init (s->sema_, type != USYNC_THREAD, count);
 #  endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
     }
@@ -2589,7 +2591,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 //   ACE_OS_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
-    if (ACE_TSS_Emulation::is_key (key) == 0)
+    if (!ACE_TSS_Emulation::is_key (key))
       {
         errno = EINVAL;
         data = 0;
@@ -3007,7 +3009,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
 
   int result;
   struct sched_param param;
-  ACE_OS::memset ((void *) &param, 0, sizeof param);
+  std::memset ((void *) &param, 0, sizeof param);
 
   // If <policy> is -1, we don't want to use it for
   // pthread_setschedparam().  Instead, obtain policy from

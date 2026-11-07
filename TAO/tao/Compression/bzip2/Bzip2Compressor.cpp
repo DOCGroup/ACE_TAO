@@ -14,7 +14,7 @@ Bzip2Compressor::Bzip2Compressor (
 
 void
 Bzip2Compressor::compress (
-    const ::Compression::Buffer & source,
+    ::Compression::Buffer const & source,
     ::Compression::Buffer & target
   )
 {
@@ -46,7 +46,7 @@ Bzip2Compressor::compress (
 
 void
 Bzip2Compressor::decompress (
-  const ::Compression::Buffer & source,
+  ::Compression::Buffer const & source,
   ::Compression::Buffer & target)
 {
   unsigned int max_length = static_cast <unsigned int> (target.maximum ());

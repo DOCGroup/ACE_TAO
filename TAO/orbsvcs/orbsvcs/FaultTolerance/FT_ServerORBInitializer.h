@@ -29,6 +29,8 @@ class TAO_FT_ServerORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_FT_ServerORBInitializer () = default;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
@@ -39,6 +41,11 @@ private:
 
   /// Register the necessary interceptors.
   void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
+
+  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer const&) = delete;
+  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer const&) = delete;
+  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer&&) = delete;
+  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

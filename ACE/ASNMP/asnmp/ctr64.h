@@ -32,7 +32,6 @@
 
 #define CTR64OUTBUF 30  // maximum ascii string for a 64-bit ctr
 
-
 //---------[ 64 bit Counter Class ]--------------------------------
 // Counter64 Class encapsulates two unsigned integers into a
 // a single entity. This type has is available in SNMPv2 but
@@ -48,25 +47,27 @@ class ASNMP_Export Counter64 : public  SnmpSyntax
 {
 public:
   /// default constructor
-  Counter64( ACE_UINT64 llw = 0);
+  explicit Counter64 (ACE_UINT64 llw = 0);
 
   /// constructor with values
-  Counter64( unsigned long hiparm, unsigned long loparm);
+  Counter64 (unsigned long hiparm, unsigned long loparm);
 
   /// copy constructor
-  Counter64( const Counter64 &ctr64);
+  Counter64 (Counter64 const &ctr64);
+  Counter64 (Counter64 &&) = delete;
+  Counter64 &operator= (Counter64 &&) = delete;
 
   /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-  ~Counter64();
+  ~Counter64 () override = default;
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// return a long double representation
-  long double to_long_double() const;
+  long double to_long_double () const;
 
   /// assign a long double to a counter64
-  Counter64& assign( long double ld);
+  Counter64 &assign (long double ld);
 
   /// return the high part
   unsigned long high() const;
@@ -75,34 +76,34 @@ public:
   unsigned long low() const;
 
   /// set the high part
-  void set_high( const unsigned long h);
+  void set_high (unsigned long h);
 
   /// set the low part
-  void set_low( const unsigned long l);
+  void set_low (unsigned long l);
 
   /// overloaded assignment
-  Counter64& operator=( const ACE_UINT64 rhs);
+  Counter64 &operator= (ACE_UINT64 rhs);
 
   /// overloaded assignment
-  Counter64& operator=( const Counter64 &rhs);
+  Counter64 &operator= (Counter64 const &rhs);
 
   /// get a printable ASCII representation
-  const char *to_string();
+  char const *to_string () override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax &operator= (SnmpSyntax &val) override;
 
   /// general validity test, always true
-  int valid() const;
+  int valid() const override;
 
   /// otherwise, behave like an ACE_UINT64
-  operator ACE_UINT64();
+  operator ACE_UINT64() const;
 
 protected:
-  char output_buffer[CTR64OUTBUF];
+  char output_buffer[CTR64OUTBUF] {};
 };
 
 #endif  // CTR64_

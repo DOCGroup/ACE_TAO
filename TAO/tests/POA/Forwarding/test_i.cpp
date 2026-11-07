@@ -30,7 +30,6 @@ test_i::forward ()
   this->poa_->deactivate_object (id.in ());
 }
 
-
 void
 test_i::shutdown ()
 {

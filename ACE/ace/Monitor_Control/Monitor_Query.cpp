@@ -18,13 +18,11 @@ namespace ACE
 
     int
     Monitor_Point_Auto_Query::handle_timeout (
-      const ACE_Time_Value& /* current */,
-      const void* monitor_query)
+      ACE_Time_Value const& /* current */,
+      void const* monitor_query)
     {
-      const Monitor_Query* const_mq =
-        reinterpret_cast<const Monitor_Query*> (monitor_query);
-
-      Monitor_Query* mq = const_cast<Monitor_Query*> (const_mq);
+      Monitor_Query const* const mq =
+        static_cast<Monitor_Query const*> (monitor_query);
 
       mq->query ();
 
@@ -33,8 +31,7 @@ namespace ACE
 
     //=========================================================
 
-    Monitor_Query::Monitor_Query (const char* monitor_name)
-      : monitor_ (nullptr)
+    Monitor_Query::Monitor_Query (char const* monitor_name)
     {
       ACE_CString name_str (monitor_name, nullptr, false);
       this->monitor_ = Monitor_Point_Registry::instance ()->get (name_str);
@@ -46,7 +43,7 @@ namespace ACE
     }
 
     void
-    Monitor_Query::query ()
+    Monitor_Query::query () const
     {
       if (this->monitor_ == nullptr)
         {
@@ -66,7 +63,7 @@ namespace ACE
           Monitor_Control_Types::Data data (this->monitor_->type ());
           this->monitor_->retrieve (data);
           Constraint_Visitor visitor (data);
-          bool satisfied = interpreter.evaluate (visitor);
+          bool const satisfied = interpreter.evaluate (visitor);
 
           if (satisfied && i->second.control_action != nullptr)
             {

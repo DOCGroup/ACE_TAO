@@ -8,6 +8,8 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Sched_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
@@ -15,10 +17,6 @@
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Sched_Filter_Builder::~TAO_EC_Sched_Filter_Builder ()
-{
-}
 
 TAO_EC_Filter*
 TAO_EC_Sched_Filter_Builder::build (
@@ -65,7 +63,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
@@ -83,7 +81,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                            rt_info,
                                            parent_info,
                                            RtecScheduler::CONJUNCTION),
-                      0);
+                      nullptr);
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
       // @@
@@ -104,7 +102,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
@@ -121,7 +119,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                            rt_info,
                                            parent_info,
                                            RtecScheduler::DISJUNCTION),
-                      0);
+                      nullptr);
 
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
@@ -138,7 +136,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       // @@ We need a unique name for each timeout, assigned by the
       //    application?
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%u",
+      std::sprintf (buf, "TIMEOUT:%u",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       ACE_CString name = buf;
 
@@ -194,7 +192,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                        body_info,
                                        parent_info,
                                        RtecScheduler::OPERATION),
-                  0);
+                  nullptr);
 
   TAO_EC_QOS_Info qos_info;
   filter->get_qos_info (qos_info);
@@ -263,7 +261,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
       pos++;
 
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%u",
+      std::sprintf (buf, "TIMEOUT:%u",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 

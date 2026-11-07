@@ -34,6 +34,10 @@ class HTTP_Request
 public:
   /// Default construction.
   HTTP_Request ();
+  HTTP_Request (HTTP_Request const &) = delete;
+  HTTP_Request (HTTP_Request &&) = delete;
+  HTTP_Request &operator= (HTTP_Request const &) = delete;
+  HTTP_Request &operator= (HTTP_Request &&) = delete;
 
   /// Destructor.
   ~HTTP_Request ();
@@ -165,7 +169,7 @@ private:
   int got_request_line () const;
 
 private:
-  int got_request_line_;
+  bool got_request_line_;
   Headers headers_;
 
   char *method_;
@@ -173,7 +177,7 @@ private:
   char *version_;
   char *path_;
 
-  int cgi_;
+  bool cgi_;
   char **cgi_env_;
   char *cgi_args_;
 
@@ -189,7 +193,6 @@ private:
   char *data_;
   int datalen_;
   int content_length_;
-  char *filename_;
   int status_;
   int type_;
 };

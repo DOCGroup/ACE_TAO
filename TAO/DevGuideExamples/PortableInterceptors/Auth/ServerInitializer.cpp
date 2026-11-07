@@ -3,10 +3,6 @@
 
 #include <iostream>
 
-ServerInitializer::ServerInitializer ()
-{
-}
-
 void
 ServerInitializer::pre_init (
                              PortableInterceptor::ORBInitInfo_ptr)
@@ -25,7 +21,7 @@ ServerInitializer::post_init (
     {
       si = new ServerInterceptor ();
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << "Exception occurred trying to create ServerInterceptor." << std::endl;
     }

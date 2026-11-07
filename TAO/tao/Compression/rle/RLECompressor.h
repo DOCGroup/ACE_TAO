@@ -26,25 +26,23 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-    class TAO_RLECOMPRESSOR_Export RLECompressor : public ::TAO::BaseCompressor
-    {
-    public:
-        RLECompressor(::Compression::CompressorFactory_ptr);
+  class TAO_RLECOMPRESSOR_Export RLECompressor : public ::TAO::BaseCompressor
+  {
+  public:
+    explicit RLECompressor (::Compression::CompressorFactory_ptr);
 
-        void compress (
-            ::Compression::Buffer const &source,
-            ::Compression::Buffer &target) override;
+    void compress (::Compression::Buffer const &source,
+                   ::Compression::Buffer &target) override;
 
-        void decompress (
-            ::Compression::Buffer const &source,
-            ::Compression::Buffer &target) override;
+    void decompress (::Compression::Buffer const &source,
+                     ::Compression::Buffer &target) override;
 
-    private:
-        RLECompressor (RLECompressor const &) = delete;
-        RLECompressor &operator= (RLECompressor const &) = delete;
-        RLECompressor (RLECompressor &&) = delete;
-        RLECompressor &operator= (RLECompressor &&) = delete;
-    };
+  private:
+    RLECompressor (RLECompressor const &) = delete;
+    RLECompressor &operator= (RLECompressor const &) = delete;
+    RLECompressor (RLECompressor &&) = delete;
+    RLECompressor &operator= (RLECompressor &&) = delete;
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -34,8 +34,13 @@ public:
   /// Destructor
   ~Echo_Client_i () = default;
 
+  Echo_Client_i (Echo_Client_i const &) = delete;
+  Echo_Client_i &operator= (Echo_Client_i const &) = delete;
+  Echo_Client_i (Echo_Client_i &&) = delete;
+  Echo_Client_i &operator= (Echo_Client_i &&) = delete;
+
   /// Execute the methods
-  int run (const char *, int, ACE_TCHAR **);
+  int run (char const *, int, ACE_TCHAR **);
 
 private:
   /// Instantiate the client object.

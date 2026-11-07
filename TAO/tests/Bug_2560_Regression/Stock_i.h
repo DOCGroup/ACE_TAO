@@ -1,9 +1,8 @@
-
 #ifndef TAO_TUTORIAL_QUOTER_SIMPLE_SERVER_STOCK_I_H
 #define TAO_TUTORIAL_QUOTER_SIMPLE_SERVER_STOCK_I_H
 
-#include "QuoterS.h"
 #include <string>
+#include "QuoterS.h"
 
 class Quoter_Stock_i : public POA_Quoter::Stock {
 public:

@@ -71,7 +71,7 @@ public:
    */
   virtual ssize_t send_n (const void *buf,
                           size_t size,
-                          ACE_Time_Value *tv = 0);
+                          ACE_Time_Value *tv = nullptr);
 
   /**
    * Return the next character in the stream and advance the <get>

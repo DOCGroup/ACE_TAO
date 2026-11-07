@@ -6,9 +6,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  QtResource_Loader::QtResource_Loader (QApplication *qapp)
+  QtResource_Loader::QtResource_Loader (QApplication * const qapp)
   {
-    QtResource_Factory *tmp = nullptr;
+    QtResource_Factory *tmp {};
 
     ACE_NEW (tmp,
              QtResource_Factory (qapp));
@@ -16,9 +16,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
-  QtResource_Loader::~QtResource_Loader ()
-  {
-  }
+  QtResource_Loader::~QtResource_Loader () = default;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,30 +31,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Throughput::ECT_Throughput ()
-  : n_consumers_ (1),
-    n_suppliers_ (1),
-    burst_count_ (10),
-    burst_size_ (100),
-    event_size_ (128),
-    burst_pause_ (100),
-    consumer_type_start_ (ACE_ES_EVENT_UNDEFINED),
-    consumer_type_count_ (1),
-    consumer_type_shift_ (0),
-    supplier_type_start_ (ACE_ES_EVENT_UNDEFINED),
-    supplier_type_count_ (1),
-    supplier_type_shift_ (0),
-    pid_file_name_ (nullptr),
-    active_count_ (0),
-    ec_concurrency_hwm_ (1),
-    thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO)
-{
-}
-
-ECT_Throughput::~ECT_Throughput ()
-{
-}
-
 int
 ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 {
@@ -105,26 +81,28 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
                       "  pid file name = <%s>\n"
                       "  concurrency HWM = <%d>\n",
 
-                      this->n_consumers_,
-                      this->n_suppliers_,
-                      this->burst_count_,
-                      this->burst_size_,
-                      this->event_size_,
-                      this->burst_pause_,
-                      this->consumer_type_start_,
-                      this->consumer_type_count_,
-                      this->consumer_type_shift_,
-                      this->supplier_type_start_,
-                      this->supplier_type_count_,
-                      this->supplier_type_shift_,
+                      this->options_.n_consumers,
+                      this->options_.n_suppliers,
+                      this->options_.burst_count,
+                      this->options_.burst_size,
+                      this->options_.event_size,
+                      this->options_.burst_pause,
+                      this->options_.consumer_type_start,
+                      this->options_.consumer_type_count,
+                      this->options_.consumer_type_shift,
+                      this->options_.supplier_type_start,
+                      this->options_.supplier_type_count,
+                      this->options_.supplier_type_shift,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil"),
-                      this->ec_concurrency_hwm_));
+                      this->options_.pid_file_name != nullptr
+                        ? this->options_.pid_file_name
+                        : ACE_TEXT ("nil"),
+                      this->options_.ec_concurrency_hwm));
         }
 
-      if (this->pid_file_name_ != nullptr)
+      if (this->options_.pid_file_name != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          FILE* pid = ACE_OS::fopen (this->options_.pid_file_name, "w");
           if (pid != nullptr)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -148,7 +126,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "%s: user is not superuser, "
                           "so remain in time-sharing class\n", argv[0]));
-              this->thr_create_flags_ = THR_NEW_LWP;
+              this->options_.thr_create_flags = THR_NEW_LWP;
             }
           else
             ACE_ERROR ((LM_ERROR,
@@ -206,12 +184,10 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());
 
-      TAO_EC_Event_Channel *ec =
-        new TAO_EC_Event_Channel (attr);
+      std::unique_ptr<TAO_EC_Event_Channel> ec_impl =
+        std::make_unique<TAO_EC_Event_Channel> (attr);
 
-      ec->activate ();
-
-      std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl (ec);
+      ec_impl->activate ();
 
       RtecEventChannelAdmin::EventChannel_var channel =
         ec_impl->_this ();
@@ -275,7 +251,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
         ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ECT_Throughput::run");
     }
@@ -288,14 +264,8 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-ECT_Throughput::shutdown_consumer (void*)
+ECT_Throughput::shutdown_consumer ()
 {
-  // int ID =
-  //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
-  //    - this->consumers_);
-  //
-  // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
-
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
   if (this->active_count_ <= 0)
@@ -313,25 +283,24 @@ ECT_Throughput::connect_consumers
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-    this->active_count_ = this->n_consumers_;
+    this->active_count_ = this->options_.n_consumers;
   }
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->options_.n_consumers; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02d", i);
 
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this,
-                              this->consumers_ + i,
-                              this->n_suppliers_));
+      this->consumers_[i] = std::make_unique<Test_Consumer> (
+        *this,
+        this->options_.n_suppliers);
 
-      int start = this->consumer_type_start_
-        + i * this->consumer_type_shift_;
+      int const start = this->options_.consumer_type_start
+        + i * this->options_.consumer_type_shift;
 
       this->consumers_[i]->connect (scheduler,
                                     buf,
                                     start,
-                                    this->consumer_type_count_,
+                                    this->options_.consumer_type_count,
                                     channel);
     }
 }
@@ -341,22 +310,23 @@ ECT_Throughput::connect_suppliers
      (RtecScheduler::Scheduler_ptr scheduler,
       RtecEventChannelAdmin::EventChannel_ptr channel)
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02d", i);
 
-      ACE_NEW (this->suppliers_[i], Test_Supplier (this));
+      this->suppliers_[i] = std::make_unique<Test_Supplier> ();
 
-      int start = this->supplier_type_start_ + i*this->supplier_type_shift_;
+      int const start = this->options_.supplier_type_start
+        + i * this->options_.supplier_type_shift;
       this->suppliers_[i]->connect (scheduler,
                                     buf,
-                                    this->burst_count_,
-                                    this->burst_size_,
-                                    this->event_size_,
-                                    this->burst_pause_,
+                                    this->options_.burst_count,
+                                    this->options_.burst_size,
+                                    this->options_.event_size,
+                                    this->options_.burst_pause,
                                     start,
-                                    this->supplier_type_count_,
+                                    this->options_.supplier_type_count,
                                     channel);
     }
 }
@@ -368,9 +338,9 @@ ECT_Throughput::activate_suppliers ()
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
 
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
-      if (this->suppliers_[i]->activate (this->thr_create_flags_,
+      if (this->suppliers_[i]->activate (this->options_.thr_create_flags,
                                          1, 0, priority) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -383,29 +353,31 @@ ECT_Throughput::activate_suppliers ()
 void
 ECT_Throughput::disconnect_suppliers ()
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       this->suppliers_[i]->disconnect ();
+      this->suppliers_[i].reset ();
     }
 }
 
 void
 ECT_Throughput::disconnect_consumers ()
 {
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->options_.n_consumers; ++i)
     {
       this->consumers_[i]->disconnect ();
+      this->consumers_[i].reset ();
     }
 }
 
 void
 ECT_Throughput::dump_results ()
 {
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats consumers;
-  for (int j = 0; j < this->n_consumers_; ++j)
+  for (int j {}; j < this->options_.n_consumers; ++j)
     {
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::sprintf (buf, ACE_TEXT("consumer_%02d"), j);
@@ -416,7 +388,7 @@ ECT_Throughput::dump_results ()
   consumers.dump_results (ACE_TEXT("ECT_Consumer/totals"), gsf);
 
   ACE_Throughput_Stats suppliers;
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::sprintf (buf, ACE_TEXT("supplier_%02d"), i);
@@ -438,61 +410,63 @@ ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 'c':
-          this->n_consumers_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.n_consumers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 's':
-          this->n_suppliers_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.n_suppliers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'u':
-          this->burst_count_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.burst_count = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'n':
-          this->burst_size_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.burst_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'b':
-          this->event_size_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.event_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 't':
-          this->burst_pause_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.burst_pause = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'h':
           {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (
+              ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()), ",", &aux);
 
-            this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
-            this->consumer_type_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
-            this->consumer_type_shift_ = ACE_OS::atoi (arg);
+            this->options_.consumer_type_start = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            this->options_.consumer_type_count = ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            this->options_.consumer_type_shift = ACE_OS::atoi (arg);
           }
           break;
 
         case 'l':
           {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (
+              ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()), ",", &aux);
 
-            this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
-            this->supplier_type_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
-            this->supplier_type_shift_ = ACE_OS::atoi (arg);
+            this->options_.supplier_type_start = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            this->options_.supplier_type_count = ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            this->options_.supplier_type_shift = ACE_OS::atoi (arg);
           }
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          this->options_.pid_file_name = get_opt.opt_arg ();
           break;
 
         case 'w':
-          this->ec_concurrency_hwm_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.ec_concurrency_hwm = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':
@@ -518,40 +492,40 @@ ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
         }
     }
 
-  if (this->burst_count_ <= 0)
+  if (this->options_.burst_count <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: burst count (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->burst_count_,
+                  argv[0], this->options_.burst_count,
                   100));
-      this->burst_count_ = 100;
+      this->options_.burst_count = 100;
     }
 
-  if (this->burst_size_ <= 0)
+  if (this->options_.burst_size <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: burst size (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->burst_size_,
+                  argv[0], this->options_.burst_size,
                   10));
-      this->burst_size_ = 10;
+      this->options_.burst_size = 10;
     }
 
-  if (this->event_size_ < 0)
+  if (this->options_.event_size < 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: event size (%d) is out of range, "
                   "reseting to default (%d)\n",
-                  argv[0], this->event_size_,
+                  argv[0], this->options_.event_size,
                   128));
-      this->event_size_ = 128;
+      this->options_.event_size = 128;
     }
 
-  if (this->n_consumers_ < 0
-      || this->n_consumers_ >= ECT_Throughput::MAX_CONSUMERS)
+  if (this->options_.n_consumers < 0
+      || this->options_.n_consumers >= ECT_Throughput::MAX_CONSUMERS)
     {
-      this->n_consumers_ = 1;
+      this->options_.n_consumers = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of consumers or "
                          "suppliers out of range, "
@@ -559,29 +533,29 @@ ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
                          argv[0], 1), -1);
     }
 
-  if (this->n_suppliers_ < 0
-      || this->n_suppliers_ >= ECT_Throughput::MAX_SUPPLIERS)
+  if (this->options_.n_suppliers < 0
+      || this->options_.n_suppliers >= ECT_Throughput::MAX_SUPPLIERS)
     {
-      this->n_suppliers_ = 1;
+      this->options_.n_suppliers = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
     }
 
-  if (this->n_suppliers_ == 0 && this->n_consumers_ == 0)
+  if (this->options_.n_suppliers == 0 && this->options_.n_consumers == 0)
     {
-      this->n_suppliers_ = 1;
-      this->n_consumers_ = 1;
+      this->options_.n_suppliers = 1;
+      this->options_.n_consumers = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
                          argv[0], 1), -1);
     }
 
-  if (this->ec_concurrency_hwm_ <= 0)
+  if (this->options_.ec_concurrency_hwm <= 0)
     {
-      this->ec_concurrency_hwm_ = 1;
+      this->options_.ec_concurrency_hwm = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: invalid concurrency HWM, "
                          "reset to default (%d)\n",

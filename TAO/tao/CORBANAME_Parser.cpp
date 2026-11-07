@@ -12,7 +12,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 static const char corbaname_prefix[] = "corbaname:";
 
@@ -21,9 +21,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
 {
-  return (ACE_OS::strncmp (ior_string,
-                           corbaname_prefix,
-                           sizeof corbaname_prefix - 1) == 0);
+  return (std::strncmp (ior_string,
+                        corbaname_prefix,
+                        sizeof corbaname_prefix - 1) == 0);
 }
 
 CORBA::Object_ptr

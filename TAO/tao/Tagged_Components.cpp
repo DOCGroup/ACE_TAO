@@ -5,7 +5,7 @@
 # include "tao/Tagged_Components.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -80,7 +80,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      std::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 

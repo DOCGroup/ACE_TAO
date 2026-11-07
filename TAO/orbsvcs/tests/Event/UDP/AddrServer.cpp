@@ -1,14 +1,13 @@
 #include "AddrServer.h"
 #include "tao/SystemException.h"
 
-
-AddrServer::AddrServer (const ACE_INET_Addr& addr)
+AddrServer::AddrServer (ACE_INET_Addr const& addr)
+  : addr_ (addr)
 {
-  this->addr_ = addr;
 }
 
 void
-AddrServer::get_addr (const RtecEventComm::EventHeader&,
+AddrServer::get_addr (RtecEventComm::EventHeader const&,
                       RtecUDPAdmin::UDP_Addr_out addr)
 {
 #if defined (ACE_HAS_IPV6)
@@ -19,9 +18,8 @@ AddrServer::get_addr (const RtecEventComm::EventHeader&,
   addr.port   = this->addr_.get_port_number ();
 }
 
-
 void
-AddrServer::get_address (const RtecEventComm::EventHeader& ,
+AddrServer::get_address (RtecEventComm::EventHeader const&,
                          RtecUDPAdmin::UDP_Address_out addr)
 {
 #if defined (ACE_HAS_IPV6)

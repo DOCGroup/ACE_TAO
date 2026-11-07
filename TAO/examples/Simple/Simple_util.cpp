@@ -12,12 +12,8 @@
 // Constructor.
 template <class Servant>
 Server<Servant>::Server ()
-  : servant_ (0)
-  , ior_output_file_ (0)
-  , naming_ (0)
-  , ins_ (0)
 {
-  Servant *tmp = 0;
+  Servant *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     Servant (),
                     CORBA::NO_MEMORY ());
@@ -43,7 +39,7 @@ Server<Servant>::parse_args ()
         this->ior_output_file_ = get_opts.opt_arg ();
         break;
       case 'n': //Use naming service
-        this->naming_ = 1;
+        this->naming_ = true;
         break;
       case 'i': // For Testing the InterOperable Naming Service.
         this->ins_ = get_opts.opt_arg ();
@@ -134,7 +130,7 @@ Server<Servant>::init (const char *servant_name,
   // Stash our ORB pointer for later reference.
   this->servant_->orb (orb.in ());
 
-  if (this->naming_ == 1)
+  if (this->naming_)
     {
       // Call naming service
       if (this->register_name (servant_name) == -1)
@@ -243,13 +239,6 @@ Server<Servant>::register_name (const char *name)
 }
 
 // Constructor.
-template <class ServerInterface>
-Client<ServerInterface>::Client ()
-  : ior_ ("")
-  , do_shutdown_ (0)
-{
-}
-
 // Reads the Server ior from a file
 template <class ServerInterface> int
 Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
@@ -301,7 +290,7 @@ Client<ServerInterface>::parse_args ()
         this->ior_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       case 'n': // Use naming service
-        this->naming_ = 1;
+        this->naming_ = true;
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -313,7 +302,7 @@ Client<ServerInterface>::parse_args ()
                             -1);
         break;
       case 'x': // read the flag for shutting down
-        this->do_shutdown_ = 1;
+        this->do_shutdown_ = true;
         break;
       case 'h':  // display help for use of the client.
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -374,7 +363,7 @@ Client<ServerInterface>::init (const char *name,
                                 -1);
             }
         }
-      else if (this->naming_ == 1)
+      else if (this->naming_)
         {
           // No IOR specified. Use the Naming Service
           ACE_DEBUG((LM_DEBUG,
@@ -444,7 +433,7 @@ template <class ServerInterface> void
 Client<ServerInterface>::do_shutdown (int flag)
 {
   // Fills the flag
-  this->do_shutdown_ = flag;
+  this->do_shutdown_ = flag != 0;
 }
 
 #endif /* SIMPLE_UTIL_C */

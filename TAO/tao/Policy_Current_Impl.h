@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Policy_Current_Impl
 {
 public:
-  TAO_Policy_Current_Impl ();
+  TAO_Policy_Current_Impl () = default;
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
@@ -45,13 +45,19 @@ public:
 
   // = The CORBA::PolicyManager operations
 
-  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & ts);
-  void set_policy_overrides (const CORBA::PolicyList & policies,
+  CORBA::PolicyList *get_policy_overrides (CORBA::PolicyTypeSeq const &ts);
+  void set_policy_overrides (CORBA::PolicyList const &policies,
                              CORBA::SetOverrideType set_add);
 
 private:
+  TAO_Policy_Current_Impl (TAO_Policy_Current_Impl const &) = delete;
+  TAO_Policy_Current_Impl &operator= (TAO_Policy_Current_Impl const &) = delete;
+  TAO_Policy_Current_Impl (TAO_Policy_Current_Impl &&) = delete;
+  TAO_Policy_Current_Impl &operator= (TAO_Policy_Current_Impl &&) = delete;
+
+private:
   /// The implementation.
-  TAO_Policy_Set manager_impl_;
+  TAO_Policy_Set manager_impl_ {TAO_POLICY_THREAD_SCOPE};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

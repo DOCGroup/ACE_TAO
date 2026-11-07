@@ -51,6 +51,11 @@ public:
   /// Destructor.
   ~TAO_FT_Invocation_Endpoint_Selector () override;
 
+  TAO_FT_Invocation_Endpoint_Selector (TAO_FT_Invocation_Endpoint_Selector const&) = delete;
+  TAO_FT_Invocation_Endpoint_Selector& operator= (TAO_FT_Invocation_Endpoint_Selector const&) = delete;
+  TAO_FT_Invocation_Endpoint_Selector (TAO_FT_Invocation_Endpoint_Selector&&) = delete;
+  TAO_FT_Invocation_Endpoint_Selector& operator= (TAO_FT_Invocation_Endpoint_Selector&&) = delete;
+
   /// Implementation for FT. Please refer to
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of
   /// documentation.
@@ -60,22 +65,22 @@ public:
 protected:
   /// Select the primary and try connecting to it.
   bool select_primary (TAO::Profile_Transport_Resolver *r,
-                       ACE_Time_Value *val);
+                       ACE_Time_Value *val) const;
 
   /// Select the secondary and try connecting to it. Returns true if
   /// successfull.
   bool select_secondary (TAO::Profile_Transport_Resolver *r,
-                         ACE_Time_Value *val);
+                         ACE_Time_Value *val) const;
 
   /// Helper method that tries to establish connections with all the
   /// endpoints in the profile.
   bool try_connect (TAO::Profile_Transport_Resolver *r,
                     TAO_Profile *profile,
-                    ACE_Time_Value *max_wait_time);
+                    ACE_Time_Value *max_wait_time) const;
 
   /// Helper method that checks whether the profile is a primary or
   /// not.
-  bool check_profile_for_primary (TAO_Profile *);
+  bool check_profile_for_primary (TAO_Profile const *profile) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

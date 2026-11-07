@@ -52,7 +52,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      ORBInitializer (::Security::QOP qop);
+      explicit ORBInitializer (::Security::QOP qop);
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 

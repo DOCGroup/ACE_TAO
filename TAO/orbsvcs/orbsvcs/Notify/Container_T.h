@@ -18,6 +18,8 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -36,6 +38,11 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
 
   /// Destructor
   virtual ~TAO_Notify_Container_T ();
+
+  TAO_Notify_Container_T (TAO_Notify_Container_T const &) = delete;
+  TAO_Notify_Container_T (TAO_Notify_Container_T &&) = delete;
+  TAO_Notify_Container_T &operator= (TAO_Notify_Container_T const &) = delete;
+  TAO_Notify_Container_T &operator= (TAO_Notify_Container_T &&) = delete;
 
   /// Init this object.
   void init ();
@@ -57,13 +64,13 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
 
 protected:
   /// The collection data structure that we add objects to.
-  COLLECTION* collection_;
+  std::unique_ptr<COLLECTION> collection_;
 
 private:
   class Destroyer: public TAO_ESF_Worker<TYPE>
   {
     /// Call destroy on the object
-    virtual void work (TYPE* type);
+    void work (TYPE* type) override;
   };
 };
 

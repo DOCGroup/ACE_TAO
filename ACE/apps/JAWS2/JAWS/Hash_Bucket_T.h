@@ -24,10 +24,10 @@ class JAWS_Hash_Bucket_Item
 {
 public:
   JAWS_Hash_Bucket_Item (const EXT_ID &ext_id, const INT_ID &int_id,
-                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
-                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
-  JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
-                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
+  explicit JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
 
   ~JAWS_Hash_Bucket_Item ();
   // Destructor.
@@ -59,7 +59,7 @@ class JAWS_Hash_Bucket_DLCStack
   friend class JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
 
 public:
-  JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = 0);
+  explicit JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = nullptr);
   ~JAWS_Hash_Bucket_DLCStack ();
 
   int is_empty () const;
@@ -143,8 +143,8 @@ template <class EXT_ID, class INT_ID, class EQ_FUNC>
 class JAWS_Hash_Bucket_Manager
 {
 public:
-  JAWS_Hash_Bucket_Manager (ACE_Allocator *alloc = 0);
-  int open (ACE_Allocator *alloc = 0);
+  explicit JAWS_Hash_Bucket_Manager (ACE_Allocator *alloc = nullptr);
+  int open (ACE_Allocator *alloc = nullptr);
 
   ~JAWS_Hash_Bucket_Manager ();
   int close ();

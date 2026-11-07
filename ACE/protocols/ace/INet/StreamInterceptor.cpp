@@ -15,9 +15,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    StreamInterceptorBase<ACE_CHAR_T, TR>::~StreamInterceptorBase ()
-      {
-      }
+    StreamInterceptorBase<ACE_CHAR_T, TR>::~StreamInterceptorBase () = default;
 
     template <class ACE_CHAR_T, class TR>
     void StreamInterceptorBase<ACE_CHAR_T, TR>::before_write (const char_type* /*buffer*/,

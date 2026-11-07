@@ -2,13 +2,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SSL_Data_File::ACE_SSL_Data_File ()
-  : type_ (-1)
-{
-}
+ACE_SSL_Data_File::ACE_SSL_Data_File () = default;
 
 ACE_INLINE
-ACE_SSL_Data_File::ACE_SSL_Data_File (const char *file_name,
+ACE_SSL_Data_File::ACE_SSL_Data_File (char const *file_name,
                                       int type)
   : file_name_ (file_name),
     type_ (type)

@@ -71,13 +71,13 @@ ACE_Handle_Set::max_set () const
 }
 
 /// Checks whether handle is enabled.
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_Handle_Set::is_set");
 
   fd_set *set = const_cast<fd_set*> (&this->mask_);
-  int ret = FD_ISSET (handle, set);
+  bool ret = FD_ISSET (handle, set);
 
 #if defined (ACE_HAS_BIG_FD_SET)
   ret = ret && this->size_ > 0;

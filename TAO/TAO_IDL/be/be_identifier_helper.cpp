@@ -22,6 +22,10 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
         return "";
       case AST_Decl::NT_pre_defined:
         pdt = dynamic_cast<AST_PredefinedType*> (t);
+        if (pdt == nullptr)
+          {
+            return {};
+          }
 
         switch (pdt->pt ())
           {

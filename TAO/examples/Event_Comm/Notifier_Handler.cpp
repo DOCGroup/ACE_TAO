@@ -4,12 +4,12 @@
 int
 Notifier_Handler::close ()
 {
-  if (this->notifier_ != 0)
+  if (this->notifier_ != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "closing down Notifier_Handler\n"));
       CORBA::release (this->notifier_);
-      this->notifier_ = 0;
+      this->notifier_ = nullptr;
     }
 
   // shutdown the ORB.
@@ -20,9 +20,9 @@ Notifier_Handler::close ()
 void
 Notifier_Handler::shutdown ()
 {
-  ACE_ASSERT (this->shutdowncallback != 0);
+  ACE_ASSERT (this->shutdowncallback_ != nullptr);
 
-  this->shutdowncallback->close ();
+  this->shutdowncallback_->close ();
 }
 
 int
@@ -35,8 +35,8 @@ Notifier_Handler::run ()
   return 0;
 }
 
-ACE_Reactor*
-Notifier_Handler::reactor()
+ACE_Reactor *
+Notifier_Handler::reactor () const
 {
   // @@ Please see if there's a way to get to the Reactor without
   // using the TAO_ORB_Core_instance().
@@ -44,7 +44,7 @@ Notifier_Handler::reactor()
 }
 
 Event_Comm::Notifier *
-Notifier_Handler::notifier ()
+Notifier_Handler::notifier () const
 {
   return this->notifier_;
 }
@@ -63,10 +63,10 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 int
 Notifier_Handler::init (int argc,
                         ACE_TCHAR *argv[],
-                        ShutdownCallback* _shutdowncallback)
+                        ShutdownCallback *shutdown_callback)
 {
   // set the callback
- shutdowncallback = _shutdowncallback;
+ this->shutdowncallback_ = shutdown_callback;
 
  try
     {
@@ -105,7 +105,7 @@ Notifier_Handler::init (int argc,
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in ());
   }
- catch (const CORBA::Exception& ex)
+ catch (CORBA::Exception const &ex)
    {
      ex._tao_print_exception ("Notifier_Handler::init\n");
      return -1;

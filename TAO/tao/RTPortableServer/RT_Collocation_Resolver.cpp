@@ -47,7 +47,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   TAO_Thread_Lane *current_thread_lane =
     static_cast <TAO_Thread_Lane *> (tss.lane_);
 
-  TAO_Thread_Pool *current_thread_pool = nullptr;
+  TAO_Thread_Pool *current_thread_pool {};
 
   // If we don't have a lane, we don't have a pool.
   if (current_thread_lane)

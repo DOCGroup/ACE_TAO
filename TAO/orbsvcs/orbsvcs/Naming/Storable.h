@@ -20,14 +20,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Storable_Base.h"
-#include "ace/SString.h"
+#include <string>
 #include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static const int szInt =  sizeof(int);
-static const int szChar = sizeof(char);
-static const int szBool = sizeof(int);
+constexpr int szInt = sizeof(int);
+constexpr int szChar = sizeof(char);
+constexpr int szBool = sizeof(int);
 
 class TAO_NS_Persistence_Header
 {
@@ -39,8 +39,8 @@ class TAO_NS_Persistence_Header
   int destroyed () const ;
 
   private:
-  unsigned int size_;
-  int destroyed_;
+  unsigned int size_ {};
+  int destroyed_ {};
 };
 
 class TAO_NS_Persistence_Record
@@ -53,20 +53,20 @@ class TAO_NS_Persistence_Record
   Record_Type type () const;
   void type (Record_Type type);
 
-  ACE_CString id () const;
-  void id (const ACE_CString& id);
+  std::string const & id () const;
+  void id (std::string const &id);
 
-  ACE_CString kind () const;
-  void kind (const ACE_CString& kind);
+  std::string const & kind () const;
+  void kind (std::string const &kind);
 
-  ACE_CString ref () const;
-  void ref (const ACE_CString& ior);
+  std::string const & ref () const;
+  void ref (std::string const &ior);
 
  private:
   Record_Type type_;
-  ACE_CString id_;
-  ACE_CString kind_;
-  ACE_CString ref_;
+  std::string id_;
+  std::string kind_;
+  std::string ref_;
 };
 
 class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
@@ -76,7 +76,7 @@ class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
   unsigned int counter () const ;
 
   private:
-  unsigned int counter_;
+  unsigned int counter_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

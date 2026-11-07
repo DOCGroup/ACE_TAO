@@ -6,9 +6,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  XtResource_Loader::XtResource_Loader (XtAppContext context)
+  XtResource_Loader::XtResource_Loader (XtAppContext const context)
   {
-    XtResource_Factory *tmp = nullptr;
+    XtResource_Factory *tmp {};
 
     ACE_NEW (tmp,
              XtResource_Factory (context));

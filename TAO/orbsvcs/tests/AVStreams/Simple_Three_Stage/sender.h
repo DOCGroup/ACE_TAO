@@ -16,6 +16,8 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
+#include <cstdio>
+#include <memory>
 
 /**
  * @class Sender_StreamEndPoint
@@ -85,23 +87,23 @@ private:
   /// The receiver MMDevice that the sender connects to.
   AVStreams::MMDevice_var receiver_mmdevice_;
 
-  /// The sender MMDevice.
+  /// Sender servant pointer, borrowed after ownership transfers to the POA.
   TAO_MMDevice *sender_mmdevice_;
 
-  /// Stream controller
-  AVStreams::StreamCtrl_ptr streamctrl_;
+  /// Stream controller reference retained from the endpoint property.
+  AVStreams::StreamCtrl_var streamctrl_;
 
   /// Number of frames sent.
   int frame_count_;
 
   /// File from which data is read.
-  ACE_CString filename_;
+  ACE_TString filename_;
 
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
 
   /// File handle of the file read from.
-  FILE *input_file_;
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_;
 
   /// Rate at which the data will be sent.
   double frame_rate_;
@@ -109,6 +111,6 @@ private:
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
 
-  /// Protocol object corresponding to the transport protocol selected.
+  /// Protocol object borrowed from the AVStreams endpoint strategy.
   TAO_AV_Protocol_Object *protocol_object_;
 };

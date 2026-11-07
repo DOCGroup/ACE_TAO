@@ -47,7 +47,7 @@ TAO_PI_Init::Initializer ()
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         {

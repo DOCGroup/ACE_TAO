@@ -42,13 +42,13 @@ public:
   ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping ();
+  void ping () override;
 
   /// Shutdown the server.
-  void shutdown ();
+  void shutdown () override;
 
   /// Returns the default POA for this servant.
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   ServerObject_i (ServerObject_i const &) = delete;

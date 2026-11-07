@@ -41,7 +41,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
 {
 public:
   /// Constructor.
-  TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
+  explicit TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
 
   /// Destructor.
   ~TAO_Hash_LogStore () override;

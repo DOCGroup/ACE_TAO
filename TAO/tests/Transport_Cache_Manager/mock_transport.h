@@ -19,7 +19,7 @@ public:
 class mock_transport
 {
 public:
-  mock_transport () : id_(0), is_connected_(false), cache_map_entry_(0), purging_order_ (0), purged_count_ (0) {}
+  mock_transport () = default;
   size_t id () const {return id_;}
   void id (size_t id) { this->id_ = id;}
   unsigned long purging_order () const {return purging_order_;}
@@ -29,24 +29,29 @@ public:
   ACE_Event_Handler::Reference_Count add_reference () {return 0;}
   ACE_Event_Handler::Reference_Count remove_reference () {return 0;}
   void touch_activity () {}
-  bool idle_timeout_expired_i () {return false;}
-  bool is_idle () {return true;}
+  bool idle_timeout_expired_i () const {return false;}
+  bool is_idle () const {return true;}
   void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {this->cache_map_entry_ = entry;}
-  TCM::HASH_MAP_ENTRY *cache_map_entry () {return this->cache_map_entry_;}
-  void close_connection () { purged_count_ = ++global_purged_count;};
+  TCM::HASH_MAP_ENTRY *cache_map_entry () const {return this->cache_map_entry_;}
+  void close_connection () { purged_count_ = ++global_purged_count;}
   TAO::Connection_Role opened_as () const { return TAO::TAO_CLIENT_ROLE; }
   mock_output_cdr &out_stream () { return this->out_stream_; }
   mock_messaging_object *messaging_object () { return &this->messaging_object_; }
-  int purged_count () { return this->purged_count_;}
-  bool can_be_purged () { return true;}
+  int purged_count () const { return this->purged_count_;}
+  bool can_be_purged () const { return true;}
+
+  mock_transport (mock_transport const &) = delete;
+  mock_transport (mock_transport &&) = delete;
+  mock_transport &operator= (mock_transport const &) = delete;
+  mock_transport &operator= (mock_transport &&) = delete;
 private:
   friend TCM;
-  size_t id_;
-  bool is_connected_;
-  TCM::HASH_MAP_ENTRY *cache_map_entry_;
-  unsigned long purging_order_;
+  size_t id_ {};
+  bool is_connected_ {};
+  TCM::HASH_MAP_ENTRY *cache_map_entry_ {};
+  unsigned long purging_order_ {};
   /// When did we got purged
-  int purged_count_;
+  int purged_count_ {};
   mock_output_cdr out_stream_;
   mock_messaging_object messaging_object_;
 };

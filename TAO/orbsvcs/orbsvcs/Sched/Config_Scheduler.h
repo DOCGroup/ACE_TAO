@@ -36,14 +36,14 @@ public:
   ACE_Config_Scheduler ();
   ~ACE_Config_Scheduler () override;
 
-  ACE_Config_Scheduler (const ACE_Config_Scheduler &) = delete;
+  ACE_Config_Scheduler (ACE_Config_Scheduler const &) = delete;
   ACE_Config_Scheduler (ACE_Config_Scheduler &&) = delete;
-  ACE_Config_Scheduler &operator= (const ACE_Config_Scheduler &) = delete;
+  ACE_Config_Scheduler &operator= (ACE_Config_Scheduler const &) = delete;
   ACE_Config_Scheduler &operator= (ACE_Config_Scheduler &&) = delete;
 
-  RtecScheduler::handle_t create (const char * entry_point) override;
+  RtecScheduler::handle_t create (char const * entry_point) override;
 
-  RtecScheduler::handle_t lookup (const char * entry_point) override;
+  RtecScheduler::handle_t lookup (char const * entry_point) override;
 
   RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle) override;
 
@@ -63,7 +63,7 @@ public:
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                          RtecScheduler::Preemption_Priority_t& p_priority) override;
 
-  void entry_point_priority (const char * entry_point,
+  void entry_point_priority (char const * entry_point,
                                      RtecScheduler::OS_Priority& priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority) override;
@@ -109,15 +109,15 @@ public:
                       RtecScheduler::Info_Type_t info_type) override;
   // Reset characteristics of the RT_Info corresponding to the passed handle.
 
-  void set_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void set_seq (RtecScheduler::RT_Info_Set const & infos) override;
   // Set characteristics of the RT_Infos corresponding to the passed handles.
   // Tuples are added in the case of existing and/or multiple definitions.
 
-  void reset_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void reset_seq (RtecScheduler::RT_Info_Set const & infos) override;
   // Reset characteristics of the RT_Infos corresponding to the passed handles.
   // Tuples are replaced in the case of existing and/or multiple definitions.
 
-  void replace_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void replace_seq (RtecScheduler::RT_Info_Set const & infos) override;
   // Replace all RT_Infos, resetting characteristics of the RT_Infos
   // corresponding to the passed handles.  All other RT_Infos are
   // reset to their uninitialized values, i.e., the same they have
@@ -136,14 +136,14 @@ public:
                                             RtecScheduler::Dependency_Enabled_Type_t enabled) override;
   // This method sets the enable state of a dependency between two RT_Infos.
 
-  void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies) override;
+  void set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const & dependencies) override;
   // This method sets the enable state of a sequence of dependencies.
 
   void set_rt_info_enable_state (RtecScheduler::handle_t handle,
                                  RtecScheduler::RT_Info_Enabled_Type_t enabled) override;
   // This method enables or disables an RT_Info.
 
-  void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set) override;
+  void set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const & pair_set) override;
   // This method enables or disables a sequence of RT_Infos.
 
   void recompute_scheduling (CORBA::Long minimum_priority,

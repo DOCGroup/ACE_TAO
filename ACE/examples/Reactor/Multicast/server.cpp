@@ -10,53 +10,56 @@
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
 
 #if defined (ACE_HAS_IP_MULTICAST)
 class Server_Events : public ACE_Event_Handler
 {
 public:
   Server_Events (u_short port,
-                 const char *mcast_addr,
+                 char const *mcast_addr,
                  long time_interval = 0);
-  ~Server_Events ();
+  ~Server_Events () override;
+  Server_Events (Server_Events const &) = delete;
+  Server_Events (Server_Events &&) = delete;
+  Server_Events &operator= (Server_Events const &) = delete;
+  Server_Events &operator= (Server_Events &&) = delete;
 
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   ACE_Time_Value *wait_time ();
 
 private:
-  char *message_;
-  Log_Wrapper::Log_Record *log_record_;
+  char *message_ {};
+  Log_Wrapper::Log_Record *log_record_ {};
   char buf_[4 * BUFSIZ];
   char hostname_[MAXHOSTNAMELEN];
 
-  int initialized_;
-  int count_;
-  long interval_;
+  int initialized_ {};
+  int count_ {1};
+  long interval_ {};
   // time interval to log messages
 
-  ACE_Time_Value *how_long_;
-  ACE_Reactor *reactor_;
+  ACE_Time_Value *how_long_ {};
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
   ACE_INET_Addr remote_addr_;
   ACE_INET_Addr mcast_addr_;
 
   // = statistics on messages received
-  double total_bytes_received_;
-  int total_messages_received_;
-  int last_sequence_number_;
+  double total_bytes_received_ {};
+  int total_messages_received_ {};
+  int last_sequence_number_ {};
 };
 
-static const char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
-static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+static constexpr char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
+static constexpr int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 static constexpr int DURATION = 5;
 
 ACE_HANDLE
@@ -72,13 +75,10 @@ Server_Events::wait_time ()
 }
 
 Server_Events::Server_Events (u_short port,
-                              const char *mcast_addr,
+                              char const *mcast_addr,
                               long time_interval)
-  : initialized_ (0),
-    count_ (1),
-    interval_ (time_interval),
-    mcast_addr_ (port, mcast_addr),
-    total_bytes_received_ (0)
+  : interval_ (time_interval),
+    mcast_addr_ (port, mcast_addr)
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
 
@@ -94,10 +94,10 @@ Server_Events::Server_Events (u_short port,
                 "join"));
   else
     {
-      // Point to NULL so that we block in the beginning.
-      this->how_long_ = 0;
+      // A null wait time blocks in the beginning.
 
-      this->log_record_ = (Log_Wrapper::Log_Record *) &buf_;
+      // The receive buffer starts with a Log_Record followed by its message.
+      this->log_record_ = reinterpret_cast<Log_Wrapper::Log_Record *> (this->buf_);
       this->message_ = &buf_[sizeof (Log_Wrapper::Log_Record)];
     }
 }
@@ -125,13 +125,13 @@ Server_Events::~Server_Events ()
 }
 
 int
-Server_Events::handle_timeout (const ACE_Time_Value &,
-                               const void *arg)
+Server_Events::handle_timeout (ACE_Time_Value const &,
+                               void const *arg)
 {
   ACE_DEBUG ((LM_DEBUG, "\t%d timeout%s occurred for %s.\n",
               this->count_,
               this->count_ == 1 ? "" : "s",
-              (char *) arg));
+              static_cast<char const *> (arg)));
 
   // Don't let the timeouts continue if there's no activity since
   // otherwise we use up a lot of CPU time unnecessarily.
@@ -142,7 +142,7 @@ Server_Events::handle_timeout (const ACE_Time_Value &,
 
       ACE_DEBUG ((LM_DEBUG,
                   "\tcancelled timeout for %s to avoid busy waiting.\n",
-                  (char *) arg));
+                  static_cast<char const *> (arg)));
     }
 
   this->count_++;
@@ -153,13 +153,13 @@ int
 Server_Events::handle_input (ACE_HANDLE)
 {
   // Receive message from multicast group.
-  iovec iovp[2];
+  iovec iovp[2] {};
   iovp[0].iov_base = buf_;
   iovp[0].iov_len  = sizeof (log_record_);
   iovp[1].iov_base = &buf_[sizeof (log_record_)];
   iovp[1].iov_len  = 4 * BUFSIZ - sizeof (log_record_);
 
-  ssize_t retcode =
+  ssize_t const retcode =
     this->mcast_dgram_.recv (iovp,
                              2,
                              this->remote_addr_);
@@ -170,8 +170,8 @@ Server_Events::handle_input (ACE_HANDLE)
       last_sequence_number_ =
         ACE_NTOHL (log_record_->sequence_number);
 
-      for (char *message_end = this->message_ + ACE_OS::strlen (this->message_) - 1;
-           ACE_OS::strchr ("\r\n \t", *message_end) != 0;
+      for (char *message_end = this->message_ + std::strlen (this->message_) - 1;
+           std::strchr ("\r\n \t", *message_end) != nullptr;
            )
         {
           *message_end-- = '\0';
@@ -190,7 +190,7 @@ Server_Events::handle_input (ACE_HANDLE)
         {
           // Restart the timer since we've received events again.
           if (reactor()->schedule_timer (this,
-                                         (void *) this->hostname_,
+                                         this->hostname_,
                                          ACE_Time_Value::zero,
                                          ACE_Time_Value (DURATION)) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,

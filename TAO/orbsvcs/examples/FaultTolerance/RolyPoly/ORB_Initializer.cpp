@@ -29,7 +29,7 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   PortableInterceptor::ServerRequestInterceptor_var interceptor;
 
   {
-    PortableInterceptor::ServerRequestInterceptor *tmp_interceptor = 0;
+    PortableInterceptor::ServerRequestInterceptor *tmp_interceptor {};
 
     ACE_NEW_THROW_EX (tmp_interceptor,
                       ReplicaController (orb.in ()),
@@ -38,7 +38,6 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
                           TAO::VMCID,
                           ENOMEM),
                       CORBA::COMPLETED_NO));
-
 
     interceptor = tmp_interceptor;
   }

@@ -39,7 +39,7 @@ ACE::HTBP::Session::inbound () const
 }
 
 ACE_INLINE
-const ACE::HTBP::Session_Id_t&
+ACE::HTBP::Session_Id_t const&
 ACE::HTBP::Session::session_id() const
 {
   return this->session_id_;
@@ -54,21 +54,21 @@ ACE::HTBP::Session::session_id (ACE_UINT32 id)
 }
 
 ACE_INLINE
-const ACE_INET_Addr *
+ACE_INET_Addr const*
 ACE::HTBP::Session::proxy_addr () const
 {
   return this->proxy_addr_;
 }
 
 ACE_INLINE
-const ACE::HTBP::Addr &
+ACE::HTBP::Addr const&
 ACE::HTBP::Session::peer_addr () const
 {
   return this->session_id_.peer_;
 }
 
 ACE_INLINE
-const ACE::HTBP::Addr &
+ACE::HTBP::Addr const&
 ACE::HTBP::Session::local_addr () const
 {
   return this->session_id_.local_;
@@ -76,7 +76,7 @@ ACE::HTBP::Session::local_addr () const
 
 ACE_INLINE
 void
-ACE::HTBP::Session::proxy_addr (ACE_INET_Addr *pa, int destroy)
+ACE::HTBP::Session::proxy_addr (ACE_INET_Addr *pa, bool destroy)
 {
   if (this->destroy_proxy_addr_)
     delete this->proxy_addr_;
@@ -101,7 +101,7 @@ ACE::HTBP::Session_Id_t::hash () const
 
 ACE_INLINE
 bool
-ACE::HTBP::Session_Id_t::operator ==(const ACE::HTBP::Session_Id_t &other) const
+ACE::HTBP::Session_Id_t::operator == (ACE::HTBP::Session_Id_t const& other) const
 {
   return ((this->id_ == other.id_) &&
           (this->local_ == other.local_) &&

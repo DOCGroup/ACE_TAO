@@ -34,24 +34,24 @@ namespace ACE
 
               Session_T (bool keep_alive = false);
 
-              Session_T (const ACE_Time_Value& timeout,
+              explicit Session_T (const ACE_Time_Value& timeout,
                          bool keep_alive = false,
-                         const ACE_Time_Value* alive_timeout = 0);
+                         const ACE_Time_Value* alive_timeout = nullptr);
 
-              virtual ~Session_T ();
+              ~Session_T () override;
 
-              virtual bool is_connected () const;
+              bool is_connected () const override;
 
               bool attach_connection (connection_type* connection);
 
             protected:
               void close_connection ();
 
-              virtual bool connect_i (const ACE_Synch_Options& sync_opt);
+              bool connect_i (const ACE_Synch_Options& sync_opt) override;
 
-              virtual void close_i ();
+              void close_i () override;
 
-              virtual std::iostream& sock_stream ();
+              std::iostream& sock_stream () override;
 
             private:
               using sock_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;

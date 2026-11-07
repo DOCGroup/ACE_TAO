@@ -98,7 +98,7 @@ namespace TAO
       T const * operator-> () const;
       T* operator-> ();
 
-      operator const T& () const;
+      operator T const& () const;
       operator T& ();
 
       T*  in () const;

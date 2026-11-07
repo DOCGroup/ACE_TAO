@@ -4,21 +4,17 @@
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
 Routing_Slip_Persistence_Manager::Routing_Slip_Persistence_Manager(
   Standard_Event_Persistence_Factory* factory)
-  : removed_(false)
-  , serial_number_(0)
-  , allocator_(factory->allocator())
+  : allocator_(factory->allocator())
   , factory_(factory)
-  , first_event_block_(0)
-  , first_routing_slip_block_(0)
-  , callback_(0)
-  , event_mb_ (0)
-  , routing_slip_mb_(0)
 {
   this->prev_manager_ = this;
   this->next_manager_ = this;
@@ -29,13 +25,9 @@ Routing_Slip_Persistence_Manager::~Routing_Slip_Persistence_Manager()
   ACE_ASSERT(this->prev_manager_ == this);
   ACE_ASSERT(this->next_manager_ == this);
   delete this->first_event_block_;
-  this->first_event_block_ = 0;
+  this->first_event_block_ = nullptr;
   delete this->first_routing_slip_block_;
-  this->first_routing_slip_block_ = 0;
-  delete this->event_mb_;
-  this->event_mb_ = 0;
-  delete this->routing_slip_mb_;
-  this->routing_slip_mb_ = 0;
+  this->first_routing_slip_block_ = nullptr;
 }
 
 void
@@ -91,16 +83,14 @@ Routing_Slip_Persistence_Manager::reload(
   bool result = false;
   if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
-    event = this->event_mb_;
-    this->event_mb_ = 0;
-    routing_slip = this->routing_slip_mb_;
-    this->routing_slip_mb_ = 0;
+    event = this->event_mb_.release ();
+    routing_slip = this->routing_slip_mb_.release ();
     result = true;
   }
   else
   {
-    event = 0;
-    routing_slip = 0;
+    event = nullptr;
+    routing_slip = nullptr;
   }
   return result;
 }
@@ -124,15 +114,16 @@ Routing_Slip_Persistence_Manager::load(
 
   this->serial_number_ = expected_serial_number;
 
-  ACE_NEW_NORETURN(this->routing_slip_mb_, ACE_Message_Block(block_size));
-  ACE_NEW_NORETURN(this->event_mb_, ACE_Message_Block(block_size));
+  this->routing_slip_mb_.reset (
+    new (std::nothrow) ACE_Message_Block (block_size));
+  this->event_mb_.reset (new (std::nothrow) ACE_Message_Block (block_size));
   if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
     if (this->reload_chain(
           this->first_routing_slip_block_,
           this->routing_slip_header_,
           this->allocated_routing_slip_blocks_,
-          this->routing_slip_mb_,
+          this->routing_slip_mb_.get (),
           expected_serial_number))
     {
       if (this->routing_slip_header_.event_block != 0)
@@ -143,7 +134,7 @@ Routing_Slip_Persistence_Manager::load(
           this->first_event_block_,
           this->event_header_,
           this->allocated_event_blocks_,
-          this->event_mb_,
+          this->event_mb_.get (),
           0);
       }
       else if (block_number == ROUTING_SLIP_ROOT_BLOCK_NUMBER)
@@ -162,10 +153,8 @@ Routing_Slip_Persistence_Manager::load(
   }
   if (! result)
   {
-    delete this->routing_slip_mb_;
-    this->routing_slip_mb_ = 0;
-    delete this->event_mb_;
-    this->event_mb_ = 0;
+    this->routing_slip_mb_.reset ();
+    this->event_mb_.reset ();
   }
   return result;
 }
@@ -174,7 +163,7 @@ Routing_Slip_Persistence_Manager *
 Routing_Slip_Persistence_Manager::load_next ()
 {
   Routing_Slip_Persistence_Manager * result;
-  ACE_NEW_RETURN(result, Routing_Slip_Persistence_Manager (this->factory_), 0);
+  ACE_NEW_RETURN(result, Routing_Slip_Persistence_Manager (this->factory_), nullptr);
 
   if (result->load(this->routing_slip_header_.next_routing_slip_block,
     this->routing_slip_header_.next_serial_number))
@@ -186,13 +175,13 @@ Routing_Slip_Persistence_Manager::load_next ()
     // steal the psb for use as the next psb.
     // delete the rspm.  We'll create another one later.
     Persistent_Storage_Block * next_psb = result->first_routing_slip_block_;
-    result->first_routing_slip_block_ = 0;
+    result->first_routing_slip_block_ = nullptr;
 //    next_psb->set_allocator_owns(true);
     this->factory_->done_reloading (
       next_psb,
       result->serial_number_);
     delete result;
-    result = 0;
+    result = nullptr;
   }
   return result;
 }
@@ -245,19 +234,19 @@ Routing_Slip_Persistence_Manager::remove()
   {
     this->allocator_->free(this->first_routing_slip_block_->block_number());
     delete this->first_routing_slip_block_;
-    this->first_routing_slip_block_ = 0;
+    this->first_routing_slip_block_ = nullptr;
   }
   if (this->first_event_block_ != nullptr)
   {
     this->allocator_->free(this->first_event_block_->block_number());
     delete this->first_event_block_;
-    this->first_event_block_ = 0;
+    this->first_event_block_ = nullptr;
   }
-  while (this->allocated_routing_slip_blocks_.pop(block_number) == 0)
+  while (this->allocated_routing_slip_blocks_.pop (block_number) == 0)
   {
     this->allocator_->free(block_number);
   }
-  while (this->allocated_event_blocks_.pop(block_number) == 0)
+  while (this->allocated_event_blocks_.pop (block_number) == 0)
   {
     this->allocator_->free(block_number);
   }
@@ -276,9 +265,7 @@ Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
   , data_size(0)
 {
 }
-Routing_Slip_Persistence_Manager::Block_Header::~Block_Header ()
-{
-}
+Routing_Slip_Persistence_Manager::Block_Header::~Block_Header () = default;
 
 size_t
 Routing_Slip_Persistence_Manager::Block_Header::extract_header(
@@ -544,7 +531,7 @@ Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
     {
       result = 0;
     }
-    ACE_OS::memcpy(psb.data() + offset_into_block, data, size_to_copy);
+    std::memcpy(psb.data() + offset_into_block, data, size_to_copy);
   }
   return result;
 }
@@ -564,9 +551,9 @@ Routing_Slip_Persistence_Manager::build_chain(
 
   // reverse the order so when we pop, we free up things closer to block 0
   // first
-  while (allocated_blocks.pop(block_number) == 0)
+  while (allocated_blocks.pop (block_number) == 0)
   {
-    blocks_to_free.push(block_number);
+    blocks_to_free.push (block_number);
   }
   size_t pos = first_header.put_header(
     *first_block);
@@ -587,11 +574,11 @@ Routing_Slip_Persistence_Manager::build_chain(
 
   while (remainder > 0)
   {
-    Overflow_Header* hdr = nullptr;
+    Overflow_Header* hdr {};
     ACE_NEW_RETURN(hdr, Overflow_Header, result);
 
     Persistent_Storage_Block* curblk = this->allocator_->allocate();
-    allocated_blocks.push(curblk->block_number());
+    allocated_blocks.push (curblk->block_number ());
     // Set the previous block's overflow "pointer" to us.
     prevhdr->next_overflow = ACE_Utils::truncate_cast<Block_Number> (curblk->block_number());
     prevhdr->put_header(*prevblk);
@@ -633,7 +620,7 @@ Routing_Slip_Persistence_Manager::build_chain(
   pos = first_header.put_header(
     *first_block);
   // Free all but the first routing_slip_block
-  while (blocks_to_free.pop(block_number) == 0)
+  while (blocks_to_free.pop (block_number) == 0)
   {
     this->allocator_->free(block_number);
   }
@@ -656,13 +643,13 @@ Routing_Slip_Persistence_Manager::reload_chain(
     size_t pos = 0;
     size_t nextptr = 0;
     ACE_Message_Block* mbptr = amb;
-    ACE_Message_Block* mbnew = nullptr;
+    ACE_Message_Block* mbnew {};
 
     pos = first_header.extract_header(*first_block);
     if (first_header.serial_number == expected_serial_number)
     {
       // We have to copy the first block because we cache it.
-      ACE_OS::memcpy(mbptr->wr_ptr(), first_block->data(),
+      std::memcpy(mbptr->wr_ptr(), first_block->data(),
         block_size);
       mbptr->rd_ptr(pos);
       mbptr->wr_ptr(pos + first_header.data_size);
@@ -678,7 +665,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
         psb->reassign_data(static_cast<unsigned char*> (static_cast<void*> (mbptr->wr_ptr())), true);
         // ...read into the PSB (whose data is inside of the AMB)...
         this->allocator_->read(psb);
-        allocated_blocks.push(psb->block_number());
+        allocated_blocks.push (psb->block_number ());
         // ...extract all headers so we know the data's size...
         pos = overflow_header.extract_header(*psb);
         // ...set up the region that somebody else can look at...

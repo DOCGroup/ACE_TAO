@@ -2,6 +2,7 @@
 
 #include "Group.hpp"
 
+#include <cstring>
 #include <typeinfo>
 
 // OS primitives
@@ -69,7 +70,7 @@ namespace ACE_TMCast
 
           transaction_controller_ (in_data_, out_send_data, out_recv_data)
     {
-      ACE_OS::strncpy (id_, id, Protocol::MEMBER_ID_LENGTH);
+      std::strncpy (id_, id, Protocol::MEMBER_ID_LENGTH);
       id_[Protocol::MEMBER_ID_LENGTH - 1] = '\0';
 
       sock_.set_option (IP_MULTICAST_TTL, 32); // @@ ttl is hardcoded
@@ -86,6 +87,11 @@ namespace ACE_TMCast
                               &thread_) != 0) ACE_OS::abort ();
     }
 
+    Scheduler (Scheduler const&) = delete;
+    Scheduler (Scheduler&&) = delete;
+    Scheduler& operator= (Scheduler const&) = delete;
+    Scheduler& operator= (Scheduler&&) = delete;
+
     virtual ~Scheduler ()
     {
       {
@@ -94,7 +100,7 @@ namespace ACE_TMCast
         in_control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, 0) != 0) ACE_OS::abort ();
+      if (ACE_OS::thr_join (thread_, nullptr) != 0) ACE_OS::abort ();
 
       // cerr << "Scheduler is down." << endl;
     }
@@ -112,7 +118,7 @@ namespace ACE_TMCast
     {
       Scheduler* obj = reinterpret_cast<Scheduler*> (arg);
       obj->execute ();
-      return 0;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
     void
@@ -121,7 +127,8 @@ namespace ACE_TMCast
       try
       {
         sock_.join (addr_);
-        std::unique_ptr<LinkListener> ll (new LinkListener (sock_, in_link_data_));
+        std::unique_ptr<LinkListener> ll =
+          std::make_unique<LinkListener> (sock_, in_link_data_);
 
         {
           AutoLock lock (mutex_);
@@ -185,7 +192,7 @@ namespace ACE_TMCast
 
                   // Filter out loopback.
                   //
-                  if (ACE_OS::strcmp (data->header().member_id.id, id_) != 0)
+                  if (std::strcmp (data->header().member_id.id, id_) != 0)
                   {
                     insync ();
                     transaction_list ();
@@ -255,7 +262,7 @@ namespace ACE_TMCast
       hdr->length = sizeof (Protocol::MessageHeader);
       hdr->check_sum = 0;
 
-      ACE_OS::strcpy (hdr->member_id.id, id_);
+      std::strcpy (hdr->member_id.id, id_);
 
       size_t size (0);
 
@@ -326,9 +333,7 @@ namespace ACE_TMCast
   class Group::GroupImpl
   {
   public:
-    virtual ~GroupImpl ()
-    {
-    }
+    virtual ~GroupImpl () = default;
 
     GroupImpl (ACE_INET_Addr const& addr, char const* id)
         : send_cond_ (mutex_),
@@ -337,11 +342,11 @@ namespace ACE_TMCast
           in_send_data_ (mutex_),
           in_recv_data_ (mutex_),
           in_control_ (mutex_),
-          scheduler_ (new  Scheduler (addr,
-                                      id,
-                                      in_send_data_,
-                                      in_recv_data_,
-                                      in_control_)),
+          scheduler_ (std::make_unique<Scheduler> (addr,
+                                                   id,
+                                                   in_send_data_,
+                                                   in_recv_data_,
+                                                   in_control_)),
           out_data_ (scheduler_->in_data ())
     {
       in_send_data_.subscribe (send_cond_);
@@ -427,7 +432,7 @@ namespace ACE_TMCast
             if (size < data->size ())
               throw Group::InsufficienSpace ();
 
-            ACE_OS::memcpy (msg, data->payload (), data->size ());
+            std::memcpy (msg, data->payload (), data->size ());
 
             return data->size ();
           }
@@ -479,14 +484,12 @@ namespace ACE_TMCast
   //
   Group::
   Group (ACE_INET_Addr const& addr, char const* id)
-      : pimpl_ (new GroupImpl (addr, id))
+      : pimpl_ (std::make_unique<GroupImpl> (addr, id))
   {
   }
 
   Group::
-  ~Group ()
-  {
-  }
+  ~Group () = default;
 
   void
   Group::send (void const* msg, size_t size)

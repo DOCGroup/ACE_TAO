@@ -1,7 +1,7 @@
 
 #include "Hello_Impl.h"
 
-ACE_Atomic_Op< TAO_SYNCH_MUTEX, u_long > Number_of_Problems = 0uL;
+std::atomic<u_long> Number_of_Problems {0};
 
 UIPMC_Object_Impl::UIPMC_Object_Impl (CORBA::ULong payload,
                                       CORBA::ULong clients,

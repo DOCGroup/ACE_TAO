@@ -35,43 +35,43 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Attribute_Builder
 public:
   ACEXML_Debug_Attribute_Builder ();
 
-  ACEXML_Debug_Attribute_Builder (const ACEXML_Debug_Attribute_Builder &rhs);
+  ACEXML_Debug_Attribute_Builder (ACEXML_Debug_Attribute_Builder const &rhs);
 
-  virtual ~ACEXML_Debug_Attribute_Builder ();
+  ~ACEXML_Debug_Attribute_Builder () override;
 
   /**
    * Specify the name of the attribute.
    */
-  virtual int setName (const ACEXML_Char *n);
-  virtual const ACEXML_Char *getName ();
+  int setName (ACEXML_Char const *n) override;
+  ACEXML_Char const *getName () override;
 
   /**
    * Set the attribute type.
    */
-  virtual int setAttType (const ATT_TYPE type);
+  int setAttType (ATT_TYPE type) override;
 
   /**
    * Insert an element for NOTATION or ENUMERATION type attribute.
    */
-  virtual int insertList (const ACEXML_Char *Name);
+  int insertList (ACEXML_Char const *name) override;
 
   /**
    * Set default attribute declaration.
    */
-  virtual int setDefault (const DEFAULT_DECL def, const ACEXML_Char *value);
+  int setDefault (DEFAULT_DECL decl, ACEXML_Char const *value) override;
 
   /**
    * Check validity of the current attribute definition being built.
    *
    * @retval 0 if the attribute is not a valid combo.
    */
-  virtual int validAttr ();
+  int validAttr () override;
 
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump ();
+  void dump () override;
 private:
   /// Attribute name.
   ACEXML_String name_;
@@ -89,26 +89,26 @@ private:
   ACEXML_STRING_QUEUE att_value_queue_;
 };
 
-typedef ACE_Hash_Map_Entry<ACEXML_String,
-                           ACEXML_Debug_Attribute_Builder> ACEXML_ATT_MAP_ENTRY;
+using ACEXML_ATT_MAP_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
+                                                 ACEXML_Debug_Attribute_Builder>;
 
-typedef ACE_Hash_Map_Manager_Ex <ACEXML_String,
-                                 ACEXML_Debug_Attribute_Builder,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_ATT_MAP;
+using ACEXML_ATT_MAP = ACE_Hash_Map_Manager_Ex<ACEXML_String,
+                                               ACEXML_Debug_Attribute_Builder,
+                                               ACE_Hash<ACEXML_String>,
+                                               ACE_Equal_To<ACEXML_String>,
+                                               ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Iterator_Ex<ACEXML_String,
-                                 ACEXML_Debug_Attribute_Builder,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_ATT_MAP_ITER;
+using ACEXML_ATT_MAP_ITER = ACE_Hash_Map_Iterator_Ex<ACEXML_String,
+                                                     ACEXML_Debug_Attribute_Builder,
+                                                     ACE_Hash<ACEXML_String>,
+                                                     ACE_Equal_To<ACEXML_String>,
+                                                     ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
-                                         ACEXML_Debug_Attribute_Builder,
-                                         ACE_Hash<ACEXML_String>,
-                                         ACE_Equal_To<ACEXML_String>,
-                                         ACE_Null_Mutex> ACEXML_ATT_MAP_REVERSE_ITER;
+using ACEXML_ATT_MAP_REVERSE_ITER = ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
+                                                                     ACEXML_Debug_Attribute_Builder,
+                                                                     ACE_Hash<ACEXML_String>,
+                                                                     ACE_Equal_To<ACEXML_String>,
+                                                                     ACE_Null_Mutex>;
 
 /**
  * @class ACEXML_Debug_Attributes_Builder Debug_Attributes_Builder.h "parser/debug_validator/Debug_Attributes_Builder.h"
@@ -121,33 +121,36 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Attributes_Builder
 public:
   ACEXML_Debug_Attributes_Builder ();
 
-  virtual ~ACEXML_Debug_Attributes_Builder ();
+  ~ACEXML_Debug_Attributes_Builder () override;
+  ACEXML_Debug_Attributes_Builder (ACEXML_Debug_Attributes_Builder const &) = delete;
+  ACEXML_Debug_Attributes_Builder (ACEXML_Debug_Attributes_Builder &&) = delete;
+  ACEXML_Debug_Attributes_Builder &operator= (ACEXML_Debug_Attributes_Builder const &) = delete;
+  ACEXML_Debug_Attributes_Builder &operator= (ACEXML_Debug_Attributes_Builder &&) = delete;
 
   /**
    * Set the element name that the attribute builder applies.
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setElement (const ACEXML_Char *namespaceURI,
-                          const ACEXML_Char *localName,
-                          const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-    ;
+  int setElement (ACEXML_Char const *namespaceURI,
+                  ACEXML_Char const *localName,
+                  ACEXML_Char const *qName ACEXML_ENV_ARG_DECL) override;
 
   /**
    * Acquire an Attribute_Builder.
    */
-  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder ();
+  ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder () override;
 
   /**
    * Add a definition for one attribute.
    */
-  virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def ACEXML_ENV_ARG_DECL);
+  int insertAttribute (ACEXML_Attribute_Def_Builder *def ACEXML_ENV_ARG_DECL) override;
 
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump ();
+  void dump () override;
 protected:
   /// The name of the element type these attributes applied.
   ACEXML_String element_name_;

@@ -175,7 +175,7 @@ be_visitor_operation::gen_stub_operation_body (
   *os << be_nl_2
       << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
-      << "std::addressof(_tao_retval)";
+      << "std::addressof (_tao_retval)";
 
   AST_Argument *arg {};
 
@@ -186,7 +186,7 @@ be_visitor_operation::gen_stub_operation_body (
       arg = dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
       *os << "," << be_nl
-          << "std::addressof(_tao_" << arg->local_name () << ")";
+          << "std::addressof (_tao_" << arg->local_name () << ")";
     }
 
   *os << be_uidt_nl
@@ -256,16 +256,12 @@ be_visitor_operation::gen_stub_operation_body (
       *os << "TAO::TAO_ONEWAY_INVOCATION";
     }
 
-  if (node->has_in_arguments ())
-    {
-      *os << be_nl;
-    }
-  else
+  if (!node->has_in_arguments ())
     {
       if (node->flags () != AST_Operation::OP_oneway)
         {
           *os << "," << be_nl;
-          *os << "TAO::TAO_TWOWAY_INVOCATION" << be_nl;
+          *os << "TAO::TAO_TWOWAY_INVOCATION";
         }
 
       *os << "," << be_nl

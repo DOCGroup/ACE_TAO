@@ -32,25 +32,29 @@
 class TAO_NT_Notify_Service : public ACE_NT_Service
 {
 public:
-  typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
+  using MUTEX = TAO_SYNCH_RECURSIVE_MUTEX;
 
   TAO_NT_Notify_Service ();
-  virtual ~TAO_NT_Notify_Service ();
+  TAO_NT_Notify_Service (TAO_NT_Notify_Service const &) = delete;
+  TAO_NT_Notify_Service (TAO_NT_Notify_Service &&) = delete;
+  TAO_NT_Notify_Service &operator= (TAO_NT_Notify_Service const &) = delete;
+  TAO_NT_Notify_Service &operator= (TAO_NT_Notify_Service &&) = delete;
+  ~TAO_NT_Notify_Service () override;
 
   /// We override <handle_control> because it handles stop requests
   /// privately.
-  virtual void handle_control (DWORD control_code);
+  void handle_control (DWORD control_code) override;
 
   /// We override <handle_exception> so a 'stop' control code can pop
   /// the reactor off of its wait.
-  virtual int handle_exception (ACE_HANDLE h);
+  int handle_exception (ACE_HANDLE h) override;
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc ();
+  int svc () override;
 
   /// Initialize the objects argc_ and argv_ attributes values.
-  virtual int init (int argc,
-                    ACE_TCHAR *argv[]);
+  int init (int argc,
+            ACE_TCHAR *argv[]) override;
 
   /// Helper function for setting or reporting command line args
   int set_args (const ACE_TCHAR *args);
@@ -63,17 +67,18 @@ private:
 
   // = Keep track of the "command-line" arguments.
   /// Argument count.
-  int argc_;
-  int argc_save_;
+  int argc_ {};
+  int argc_save_ {};
 
   /// Argument list.
-  ACE_TCHAR **argv_;
-  ACE_TCHAR **argv_save_;
+  ACE_TCHAR **argv_ {};
+  ACE_TCHAR **argv_save_ {};
 
   friend class ACE_Singleton<TAO_NT_Notify_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<TAO_NT_Notify_Service, TAO_NT_Notify_Service::MUTEX> SERVICE;
+using SERVICE = ACE_Singleton<TAO_NT_Notify_Service,
+                              TAO_NT_Notify_Service::MUTEX>;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 #endif /* TAO_NT_NOTIFY_SERVER_H */

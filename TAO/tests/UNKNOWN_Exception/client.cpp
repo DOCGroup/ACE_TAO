@@ -1,14 +1,15 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
+#include <string>
 
-static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
-static int shutdown_server = 1;
+static std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://ior");
+static bool shutdown_server {true};
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -18,7 +19,7 @@ parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'x':
-        shutdown_server = ACE_OS::atoi (get_opts.opt_arg ());
+        shutdown_server = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case '?':
@@ -38,11 +39,11 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       int const result = parse_args (argc, argv);
@@ -50,40 +51,38 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (result != 0)
         return result;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (ior.c_str ());
 
-      test_factory_var test_factory =
+      test_factory_var const test_factory =
         test_factory::_narrow (object.in ());
 
-      test_var test =
+      test_var const test =
         test_factory->create_test ();
 
       test->normal_method ();
 
-      int unknown_exception_raised = 0;
+      bool unknown_exception_raised {};
 
       try
         {
           test->unknown_exception_in_method ();
         }
-      catch (const CORBA::UNKNOWN&)
+      catch (CORBA::UNKNOWN const &)
         {
-          unknown_exception_raised = 1;
+          unknown_exception_raised = true;
 
           ACE_DEBUG ((LM_DEBUG,
                       "\nCORBA::UNKNOWN was thrown by the server during test::unknown_exception_in_method()\n"
                       "\tThis is expected behavior\n\n"));
         }
 
-      if  (unknown_exception_raised != 1)
+      if (!unknown_exception_raised)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Failure: unknown excep not raised\n"),
                             -1);
         }
-
-      unknown_exception_raised = 0;
 
       test->unknown_exception_during_deactivation ();
 

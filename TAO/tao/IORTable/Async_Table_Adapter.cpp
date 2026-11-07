@@ -29,7 +29,7 @@ void
 TAO_Async_Table_Adapter::open ()
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-  TAO_Async_IOR_Table_Impl *impl = nullptr;
+  TAO_Async_IOR_Table_Impl *impl {};
   ACE_NEW_THROW_EX (impl,
                     TAO_Async_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
@@ -100,7 +100,7 @@ TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
 TAO_Adapter*
 TAO_Async_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
-  TAO_Adapter *ptr = nullptr;
+  TAO_Adapter *ptr {};
   ACE_NEW_RETURN (ptr,
                  TAO_Async_Table_Adapter (*oc),
                  0);

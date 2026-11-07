@@ -1,8 +1,8 @@
 #include "ace/OS_NS_sys_utsname.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
+#include <cstring>
 
 #if defined (ACE_VXWORKS) && defined (ACE_LACKS_UNAME) && !defined (__RTP__)
 // for sysBspRev(), sysModel()
@@ -21,7 +21,7 @@ ACE_OS::uname (ACE_utsname *name)
   return ::uname (name);
 #elif defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname, "Win32");
+  std::strcpy (name->sysname, "Win32");
 
 # if defined (ACE_HAS_WIN32_GETVERSION)
   /* Since MS found it necessary to deprecate these. */
@@ -82,75 +82,75 @@ ACE_OS::uname (ACE_utsname *name)
       switch (arch)
         {
         case PROCESSOR_ARCHITECTURE_INTEL:
-          ACE_OS::strcpy (processor, "Intel");
+          std::strcpy (processor, "Intel");
           if (sinfo.wProcessorLevel == 3)
-            ACE_OS::strcpy (subtype, "80386");
+            std::strcpy (subtype, "80386");
           else if (sinfo.wProcessorLevel == 4)
-            ACE_OS::strcpy (subtype, "80486");
+            std::strcpy (subtype, "80486");
           else if (sinfo.wProcessorLevel == 5)
-            ACE_OS::strcpy (subtype, "Pentium");
+            std::strcpy (subtype, "Pentium");
           else if (sinfo.wProcessorLevel == 6)
-            ACE_OS::strcpy (subtype, "Pentium Pro");
+            std::strcpy (subtype, "Pentium Pro");
           else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
-            ACE_OS::strcpy (subtype, "Pentium II");
+            std::strcpy (subtype, "Pentium II");
           else
             ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
         case PROCESSOR_ARCHITECTURE_MIPS:
-          ACE_OS::strcpy (processor, "MIPS");
+          std::strcpy (processor, "MIPS");
           if (sinfo.wProcessorLevel == 3)
-            ACE_OS::strcpy (subtype, "R3000");
+            std::strcpy (subtype, "R3000");
           else if (sinfo.wProcessorLevel == 4)
-            ACE_OS::strcpy (subtype, "R4000");
+            std::strcpy (subtype, "R4000");
           else
             ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
         case PROCESSOR_ARCHITECTURE_ALPHA:
-          ACE_OS::strcpy (processor, "Alpha");
+          std::strcpy (processor, "Alpha");
           ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
         case PROCESSOR_ARCHITECTURE_PPC:
-          ACE_OS::strcpy (processor, "PPC");
+          std::strcpy (processor, "PPC");
           if (sinfo.wProcessorLevel == 1)
-            ACE_OS::strcpy (subtype, "601");
+            std::strcpy (subtype, "601");
           else if (sinfo.wProcessorLevel == 3)
-            ACE_OS::strcpy (subtype, "603");
+            std::strcpy (subtype, "603");
           else if (sinfo.wProcessorLevel == 4)
-            ACE_OS::strcpy (subtype, "604");
+            std::strcpy (subtype, "604");
           else if (sinfo.wProcessorLevel == 6)
-            ACE_OS::strcpy (subtype, "603+");
+            std::strcpy (subtype, "603+");
           else if (sinfo.wProcessorLevel == 9)
-            ACE_OS::strcpy (subtype, "804+");
+            std::strcpy (subtype, "804+");
           else if (sinfo.wProcessorLevel == 20)
-            ACE_OS::strcpy (subtype, "620");
+            std::strcpy (subtype, "620");
           break;
 #     if defined PROCESSOR_ARCHITECTURE_IA64
         case PROCESSOR_ARCHITECTURE_IA64:
-          ACE_OS::strcpy (processor, "Itanium");
+          std::strcpy (processor, "Itanium");
           ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
 #     endif
 #     if defined PROCESSOR_ARCHITECTURE_AMD64
         case PROCESSOR_ARCHITECTURE_AMD64:
-          ACE_OS::strcpy (processor, "x64");
+          std::strcpy (processor, "x64");
           ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
 #     endif
 #     if defined PROCESSOR_ARCHITECTURE_IA32_ON_WIN64
         case PROCESSOR_ARCHITECTURE_IA32_ON_WIN64:
-          ACE_OS::strcpy (processor, "WOW64");
+          std::strcpy (processor, "WOW64");
           ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
 #     endif
 #     if defined PROCESSOR_ARCHITECTURE_ARM
         case PROCESSOR_ARCHITECTURE_ARM:
-          ACE_OS::strcpy (processor, "ARM");
+          std::strcpy (processor, "ARM");
           ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
           break;
 #     endif
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
-          ACE_OS::strcpy (processor, "Unknown");
+          std::strcpy (processor, "Unknown");
           break;
         }
       ACE_OS::snprintf (name->machine, maxnamelen, "%s %s", processor, subtype);
@@ -159,44 +159,44 @@ ACE_OS::uname (ACE_utsname *name)
     {
       if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 0)
         {
-          ACE_OS::strcpy (name->release, "Windows 95");
+          std::strcpy (name->release, "Windows 95");
           if (vinfo.szCSDVersion[1] == ACE_TEXT('C'))
-            ACE_OS::strcat (name->release, " OSR2");
+            std::strcat (name->release, " OSR2");
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 10)
         {
-          ACE_OS::strcpy (name->release, "Windows 98");
+          std::strcpy (name->release, "Windows 98");
           if (vinfo.szCSDVersion[1] == ACE_TEXT('A'))
-            ACE_OS::strcat (name->release, " SE");
+            std::strcat (name->release, " SE");
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 90)
         {
-          ACE_OS::strcpy (name->release, "Windows Me");
+          std::strcpy (name->release, "Windows Me");
         }
       else
         {
-          ACE_OS::strcpy (name->release, unknown);
+          std::strcpy (name->release, unknown);
         }
 
       ACE_OS::snprintf (name->version, maxnamelen, "%d",
                         LOWORD (vinfo.dwBuildNumber));
       if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
-        ACE_OS::strcpy (name->machine, "Intel 80386");
+        std::strcpy (name->machine, "Intel 80386");
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
-        ACE_OS::strcpy (name->machine, "Intel 80486");
+        std::strcpy (name->machine, "Intel 80486");
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
-        ACE_OS::strcpy (name->machine, "Intel Pentium");
+        std::strcpy (name->machine, "Intel Pentium");
       else
-        ACE_OS::strcpy (name->machine, unknown);
+        std::strcpy (name->machine, unknown);
     }
   else
 # endif /* !ACE_HAS_WIN32_GETVERSION */
     {
       // We don't know what this is!
 
-      ACE_OS::strcpy (name->release, unknown);
-      ACE_OS::strcpy (name->version, unknown);
-      ACE_OS::strcpy (name->machine, unknown);
+      std::strcpy (name->release, unknown);
+      std::strcpy (name->version, unknown);
+      std::strcpy (name->machine, unknown);
     }
 
 # if defined (ACE_LACKS_HOSTNAME)
@@ -207,10 +207,10 @@ ACE_OS::uname (ACE_utsname *name)
 
 #elif defined (ACE_VXWORKS) && !defined (__RTP__)
   size_t const maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname, "VxWorks");
-  ACE_OS::strcpy (name->release, kernelVersion());
-  ACE_OS::strcpy (name->version, sysBspRev ());
-  ACE_OS::strcpy (name->machine, sysModel ());
+  std::strcpy (name->sysname, "VxWorks");
+  std::strcpy (name->release, kernelVersion());
+  std::strcpy (name->version, sysBspRev ());
+  std::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #elif defined (ACE_INTEGRITY)
@@ -228,15 +228,15 @@ ACE_OS::uname (ACE_utsname *name)
     return -1;
 
 # if defined (ACE_INTEGRITY178B)
-  ACE_OS::strcpy (name->sysname, "INTEGRITY-178B");
-  ACE_OS::strcpy (name->release, "minor");
-  ACE_OS::strcpy (name->version, "5.0.0");
-  ACE_OS::strcpy (name->machine, "a standard name");
+  std::strcpy (name->sysname, "INTEGRITY-178B");
+  std::strcpy (name->release, "minor");
+  std::strcpy (name->version, "5.0.0");
+  std::strcpy (name->machine, "a standard name");
 # else
-  ACE_OS::strcpy (name->sysname, "INTEGRITY");
-  ACE_OS::strcpy (name->release, "minor");
-  ACE_OS::strcpy (name->version, "11.4.6");
-  ACE_OS::strcpy (name->machine, "a standard name");
+  std::strcpy (name->sysname, "INTEGRITY");
+  std::strcpy (name->release, "minor");
+  std::strcpy (name->version, "11.4.6");
+  std::strcpy (name->machine, "a standard name");
 # endif
   return 0;
 # endif /* ACE_LACKS_GETHOSTNAME */

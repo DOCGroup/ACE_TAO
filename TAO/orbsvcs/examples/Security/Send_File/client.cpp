@@ -3,7 +3,7 @@
 #include "testC.h"
 
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -59,7 +59,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_Read_Buffer buf (stdin, 0);
           char *line = buf.read ('\n');
-          if (line == 0)
+          if (line == nullptr)
             break;
           server->send_line (line);
           buf.alloc ()->free (line);
@@ -69,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

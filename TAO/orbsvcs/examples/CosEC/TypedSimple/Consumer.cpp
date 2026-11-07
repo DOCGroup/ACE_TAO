@@ -4,7 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("Consumer.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("Consumer.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -88,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file),
                                         ACE_TEXT("w"));
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -109,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Destroy the ORB
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("main");
       return 1;

@@ -24,6 +24,8 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Exception.h"
 #include "tao/params.h"
+#include <memory>
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
@@ -41,9 +43,8 @@ class TAO_MProfile;
 class TAO_Protocol_Factory;
 class TAO_Protocol_Item;
 
-using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>;
-
-using TAO_AcceptorSetIterator = TAO_Acceptor**;
+using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set<TAO_Protocol_Item *>::iterator;
+using TAO_AcceptorSet = std::vector<std::unique_ptr<TAO_Acceptor>>;
 
 /**
  * @class TAO_Acceptor_Registry
@@ -59,7 +60,7 @@ class TAO_Export TAO_Acceptor_Registry
 {
 public:
   ///  Default constructor.
-  TAO_Acceptor_Registry () = default;
+  TAO_Acceptor_Registry ();
 
   ///  Default destructor.
   ~TAO_Acceptor_Registry ();
@@ -67,7 +68,7 @@ public:
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
-            const TAO_EndpointSet &endpoint_set,
+            TAO_EndpointSet const &endpoint_set,
             bool ignore_address);
 
   /// Close all open acceptors.
@@ -78,14 +79,12 @@ public:
 
   /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
-  bool is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Return the acceptor bridges
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
 
-  // = Iterator.
-  TAO_AcceptorSetIterator begin ();
-  TAO_AcceptorSetIterator end ();
+  TAO_AcceptorSet const& acceptors () const;
 
 private:
   TAO_Acceptor_Registry (TAO_Acceptor_Registry const &) = delete;
@@ -96,7 +95,7 @@ private:
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
-                    const char *options);
+                    char const *options);
 
   /// Create a default acceptor using the specified protocol factory.
   int open_default (TAO_ORB_Core *orb_core,
@@ -104,7 +103,7 @@ private:
                     int major,
                     int minor,
                     TAO_ProtocolFactorySetItor &factory,
-                    const char *options);
+                    char const *options);
 
   /// Open a default acceptor.
   int open_default_i (TAO_ORB_Core *orb_core,
@@ -112,8 +111,8 @@ private:
                       int major,
                       int minor,
                       TAO_ProtocolFactorySetItor &factory,
-                      TAO_Acceptor* acceptor,
-                      const char *options);
+                      std::unique_ptr<TAO_Acceptor> acceptor,
+                      char const *options);
 
   /// Extract endpoint-specific options from the endpoint string.
   void extract_endpoint_options (ACE_CString &addrs,
@@ -136,10 +135,10 @@ private:
 
 private:
   /// List of acceptors that are currently open.
-  TAO_Acceptor **acceptors_ {};
+  TAO_AcceptorSet acceptors_;
 
-  /// Number of acceptors that are currently open.
-  size_t size_ {};
+  /// Reserve storage for the maximum number of acceptors needed.
+  bool reserve_acceptors (size_t count);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

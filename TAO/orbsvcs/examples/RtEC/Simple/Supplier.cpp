@@ -14,10 +14,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Supplier::Supplier ()
-{
-}
-
 int
 Supplier::run (int argc, ACE_TCHAR* argv[])
 {
@@ -107,7 +103,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // Destroy the POA
       poa->destroy (1, 0);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;

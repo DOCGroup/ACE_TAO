@@ -43,13 +43,13 @@ public:
   // Constructor
   explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = nullptr);
 
-  ACE_Timer_Queue_Upcall_Base (const ACE_Timer_Queue_Upcall_Base &) = delete;
+  ACE_Timer_Queue_Upcall_Base (ACE_Timer_Queue_Upcall_Base const &) = delete;
   ACE_Timer_Queue_Upcall_Base (ACE_Timer_Queue_Upcall_Base &&) = delete;
-  ACE_Timer_Queue_Upcall_Base &operator= (const ACE_Timer_Queue_Upcall_Base &) = delete;
+  ACE_Timer_Queue_Upcall_Base &operator= (ACE_Timer_Queue_Upcall_Base const &) = delete;
   ACE_Timer_Queue_Upcall_Base &operator= (ACE_Timer_Queue_Upcall_Base &&) = delete;
 
   /// Destructor
-  virtual ~ACE_Timer_Queue_Upcall_Base ();
+  ~ACE_Timer_Queue_Upcall_Base () override;
 
   /// Accessor to the upcall functor
   FUNCTOR & upcall_functor ();
@@ -81,35 +81,39 @@ public:
 
   /**
    * Default constructor. @a upcall_functor is the instance of the
-   * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer
+   * FUNCTOR to be used by the queue. If @a upcall_functor is nullptr, Timer
    * Queue will create a default FUNCTOR.  @a freelist the freelist of
-   * timer nodes.  If 0, then a default freelist will be created.
+   * timer nodes.  If nullptr, then a default freelist will be created.
    */
-  ACE_Timer_Queue_T (FUNCTOR *upcall_functor = nullptr,
+  explicit ACE_Timer_Queue_T (FUNCTOR *upcall_functor = nullptr,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const &time_policy = TIME_POLICY());
 
-  /// Destructor - make virtual for proper destruction of inherited
-  /// classes.
-  virtual ~ACE_Timer_Queue_T ();
+  ACE_Timer_Queue_T (ACE_Timer_Queue_T const &) = delete;
+  ACE_Timer_Queue_T (ACE_Timer_Queue_T &&) = delete;
+  ACE_Timer_Queue_T &operator= (ACE_Timer_Queue_T const &) = delete;
+  ACE_Timer_Queue_T &operator= (ACE_Timer_Queue_T &&) = delete;
+
+  /// Destructor.
+  ~ACE_Timer_Queue_T () override;
 
   /**
    * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule () with the right
    * locking strategy.
    */
-  virtual long schedule (const TYPE &type,
-                         const void *act,
-                         const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  long schedule (TYPE const &type,
+                 void const *act,
+                 ACE_Time_Value const &future_time,
+                 ACE_Time_Value const &interval = ACE_Time_Value::zero) override;
 
   //@{
   /**
    * Implement ACE_Abstract_Timer_Queue<TYPE>::expire () with the right
    * locking strategy.
    */
-  virtual int expire (const ACE_Time_Value &current_time);
-  virtual int expire ();
-  virtual int expire_single(ACE_Command_Base & pre_dispatch_command);
+  int expire (ACE_Time_Value const &current_time) override;
+  int expire () override;
+  int expire_single(ACE_Command_Base & pre_dispatch_command) override;
   //@}
 
   /**
@@ -118,13 +122,13 @@ public:
    * there is a node whose value <= @a current_time else returns a 0.
    *
    */
-  virtual int dispatch_info (const ACE_Time_Value &current_time,
+  virtual int dispatch_info (ACE_Time_Value const &current_time,
                              ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
   //@{
   /**
    * Implement the gettimeofday() virtual function
    */
-  virtual ACE_Time_Value gettimeofday ();
+  ACE_Time_Value gettimeofday () override;
   //@}
 
   /**
@@ -135,7 +139,7 @@ public:
    *             is ACE_FPointer_Time_Policy. Other standard ACE time
    *             policies will ignore this.
    */
-  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)());
+  void gettimeofday (ACE_Time_Value (*gettimeofday)()) override;
 
   /// Implement an inlined, non-abstract version of gettimeofday(),
   /// through this  member function the internals of the class can
@@ -144,7 +148,7 @@ public:
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.
-  void set_time_policy(TIME_POLICY const & time_policy);
+  void set_time_policy (TIME_POLICY const &time_policy);
 
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
@@ -153,23 +157,23 @@ public:
   /**
    * Implement calculate_timeout() using the right locking policy
    */
-  virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
-  virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
-                                             ACE_Time_Value *the_timeout);
-  virtual ACE_Time_Value current_time();
+  ACE_Time_Value *calculate_timeout (ACE_Time_Value *max) override;
+  ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
+                                     ACE_Time_Value *the_timeout) override;
+  ACE_Time_Value current_time() override;
   //@}
 
   /// Set the timer skew for the Timer_Queue.
-  void timer_skew (const ACE_Time_Value &skew);
+  void timer_skew (ACE_Time_Value const &skew);
 
   /// Get the timer skew for the Timer_Queue.
-  const ACE_Time_Value &timer_skew () const;
+  ACE_Time_Value const &timer_skew () const;
 
   /// Synchronization variable used by the queue
   ACE_LOCK &mutex ();
 
   /// Dump the state of a object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Method used to return a timer node to the queue's ownership
   /// after it is returned by a method like <remove_first>.
@@ -177,24 +181,24 @@ public:
 
   /// This method will call the preinvoke() on <functor>.
   void preinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
-                  const ACE_Time_Value &cur_time,
-                  const void *&upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *&upcall_act);
 
   /// This method will call the timeout() on <functor>.
   void upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
   /// This method will call the postinvoke() on <functor>.
   void postinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
-                   const ACE_Time_Value &cur_time,
-                   const void *upcall_act);
+                   ACE_Time_Value const &cur_time,
+                   void const *upcall_act);
 
 protected:
   /// Schedule a timer.
-  virtual long schedule_i (const TYPE &type,
-                           const void *act,
-                           const ACE_Time_Value &future_time,
-                           const ACE_Time_Value &interval) = 0;
+  virtual long schedule_i (TYPE const &type,
+                           void const *act,
+                           ACE_Time_Value const &future_time,
+                           ACE_Time_Value const &interval) = 0;
 
   /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
@@ -206,19 +210,19 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
   /// Non-locking version of dispatch_info ()
-  virtual int dispatch_info_i (const ACE_Time_Value &current_time,
+  virtual int dispatch_info_i (ACE_Time_Value const &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
   /// Recompute when the next time is that this interval timer should fire.
-  void recompute_next_abs_interval_time (ACE_Timer_Node_T<TYPE>* expired,
-                                         const ACE_Time_Value &cur_time);
+  void recompute_next_abs_interval_time (ACE_Timer_Node_T<TYPE> *expired,
+                                         ACE_Time_Value const &cur_time);
 
   /// Synchronization variable for ACE_Timer_Queue.
   /// @note The right name would be lock_, but HP/C++ will choke on that!
   ACE_LOCK mutex_;
 
-  /// Class that implements a free list
-  ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_;
+  /// Borrowed when supplied to the constructor; otherwise owned by this queue.
+  ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_ {};
 
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;

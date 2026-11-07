@@ -69,16 +69,16 @@ public:
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
+  void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr) override;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy ();
+  void disconnect_from_proxy () override;
 
   // = PushConsumer methods
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   /// Default does nothing.
-  void push (const CORBA::Any & data);
+  void push (CORBA::Any const &data) override;
 };
 
 #if defined (__ACE_INLINE__)

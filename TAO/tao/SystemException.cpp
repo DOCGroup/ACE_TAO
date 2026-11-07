@@ -8,7 +8,6 @@
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/Dynamic_Service.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -16,6 +15,9 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
+
+#include <cstring>
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/SystemException.inl"
@@ -233,7 +235,7 @@ CORBA::SystemException::_info () const
   if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
-      const char *location = nullptr;
+      const char *location {};
       switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
@@ -300,7 +302,7 @@ CORBA::SystemException::_info () const
           location = "unknown location";
         }
 
-      const char *errno_indication = nullptr;
+      const char *errno_indication {};
       char unknown_errno [255];
       CORBA::ULong minor_code = this->minor () & 0x7FU;
       switch (minor_code)
@@ -371,7 +373,7 @@ CORBA::SystemException::_info () const
         default:
           {
             // 7 bits of some other errno.
-            ACE_OS::sprintf (unknown_errno,
+            std::sprintf (unknown_errno,
                              "low 7 bits of errno: %3u %s",
                              minor_code, ACE_OS::strerror (minor_code));
 
@@ -380,7 +382,7 @@ CORBA::SystemException::_info () const
         }
 
       char buffer[BUFSIZ];
-      ACE_OS::sprintf (buffer,
+      std::sprintf (buffer,
                        "TAO exception, "
                        "minor code = %x (%s; %s), "
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
@@ -402,7 +404,7 @@ CORBA::SystemException::_info () const
     {
       CORBA::ULong const minor_code = this->minor () & 0xFFFU;
 
-      const char *minor_description = nullptr;
+      const char *minor_description {};
 
       if (minor_code > 0)
           minor_description =
@@ -413,7 +415,7 @@ CORBA::SystemException::_info () const
         minor_description = "*unknown description*";
 
       char buffer[BUFSIZ];
-      ACE_OS::sprintf (buffer,
+      std::sprintf (buffer,
                        "OMG minor code (%d), "
                        "described as '%s', "
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
@@ -433,7 +435,7 @@ CORBA::SystemException::_info () const
   else
     {
       char buffer[BUFSIZ];
-      ACE_OS::sprintf (buffer,
+      std::sprintf (buffer,
                        "Unknown vendor minor code id (%x), "
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
                        "minor code = %x, completed = %s; ",
@@ -950,7 +952,7 @@ TAO::create_system_exception (const char *id)
 {
   for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
-      if (ACE_OS::strcmp (id, repo_id_array[i]) == 0)
+      if (std::strcmp (id, repo_id_array[i]) == 0)
         return (*(excp_array[i])) ();
     }
 
@@ -971,7 +973,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::Exception * \
 CORBA::name ::_tao_duplicate () const \
 { \
-  CORBA::Exception * result = nullptr; \
+  CORBA::Exception * result {}; \
   ACE_NEW_RETURN (result, CORBA::name (*this), nullptr); \
   return result; \
 }
@@ -983,7 +985,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create () \
 { \
-  CORBA::name *result = nullptr; \
+  CORBA::name *result {}; \
   ACE_NEW_RETURN (result, CORBA::name (), nullptr); \
   return result; \
 }

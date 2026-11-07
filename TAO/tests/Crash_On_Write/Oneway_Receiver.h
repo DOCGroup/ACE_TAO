@@ -11,10 +11,15 @@ class Oneway_Receiver
 {
 public:
   /// Constructor
-  Oneway_Receiver ();
+  Oneway_Receiver () = default;
+
+  Oneway_Receiver (Oneway_Receiver const &) = delete;
+  Oneway_Receiver (Oneway_Receiver &&) = delete;
+  Oneway_Receiver & operator= (Oneway_Receiver const &) = delete;
+  Oneway_Receiver & operator= (Oneway_Receiver &&) = delete;
 
   // = The skeleton methods
-  virtual void receive_oneway ();
+  void receive_oneway () override;
 };
 
 #include /**/ "ace/post.h"

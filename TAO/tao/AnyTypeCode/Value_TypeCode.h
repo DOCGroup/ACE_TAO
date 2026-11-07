@@ -80,10 +80,10 @@ namespace TAO
       //@}
 
       /// Accessor for concrete_base_
-      const TypeCodeType& concrete_base() const;
+      TypeCodeType const & concrete_base() const;
 
       /// Accessor for fields_
-      const FieldArrayType& fields() const;
+      FieldArrayType const & fields() const;
 
     protected:
       /**

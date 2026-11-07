@@ -32,39 +32,44 @@ class XML_Saver : public Topology_Saver
 public:
   /// Construct an XML_Saver.
   /// Initialization is deferred to "open()"
-  XML_Saver (bool timestamp = true);
+  explicit XML_Saver (bool timestamp = true);
 
-  virtual ~XML_Saver ();
+  ~XML_Saver () override;
+
+  XML_Saver (XML_Saver const &) = delete;
+  XML_Saver (XML_Saver &&) = delete;
+  XML_Saver &operator= (XML_Saver const &) = delete;
+  XML_Saver &operator= (XML_Saver &&) = delete;
 
   /// Open the output file.
   /// \param file_name the fully qualified file name
   /// \return true if successful
-  bool open (const ACE_TString & file_name, size_t backup_count);
+  bool open (ACE_TString const &file_name, size_t backup_count);
 
   //////////////////////////////////
   // Override Topology_Saver methods
   // see Topology_Saver.h for doc
-  virtual bool begin_object (CORBA::Long id,
-    const ACE_CString& type,
-    const NVPList& attrs,
-    bool changed);
+  bool begin_object (CORBA::Long id,
+    ACE_CString const &type,
+    NVPList const &attrs,
+    bool changed) override;
 
-  virtual void end_object (CORBA::Long id,
-    const ACE_CString& type);
+  void end_object (CORBA::Long id,
+    ACE_CString const &type) override;
 
-  virtual void close ();
+  void close () override;
 
 private:
   void backup_file_name (ACE_TCHAR * file_path, size_t nfile);
 
 private:
   /// A stream representing our current output.
-  FILE * output_;
-  bool close_out_;
+  FILE * output_ {};
+  bool close_out_ {};
 
   /// the name of the output file
   ACE_TString base_name_;
-  size_t backup_count_;
+  size_t backup_count_ {1};
 
   /// true to enable timestamping
   bool timestamp_;

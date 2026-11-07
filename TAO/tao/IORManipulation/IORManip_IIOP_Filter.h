@@ -21,7 +21,8 @@
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 #include "tao/IIOP_EndpointsC.h"
-#include "ace/SString.h"
+
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +37,7 @@ class TAO_IORManip_Export TAO_IORManip_IIOP_Filter: public TAO_IORManip_Filter
 public:
   struct Profile_Info
   {
-    ACE_CString host_name_;
+    std::string host_name_;
     TAO_GIOP_Message_Version version_ {};
     CORBA::UShort port_ {};
   };

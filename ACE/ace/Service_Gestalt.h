@@ -15,6 +15,7 @@
 
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +28,6 @@
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Atomic_Op.h"
 #include "ace/Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -451,7 +451,7 @@ protected:
   ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
 
   /// Support for intrusive reference counting
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
+  std::atomic<long> refcnt_ {0};
 
  public:
   static void intrusive_add_ref (ACE_Service_Gestalt*);

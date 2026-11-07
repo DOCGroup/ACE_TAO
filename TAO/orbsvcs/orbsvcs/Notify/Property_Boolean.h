@@ -35,7 +35,7 @@ public:
   TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial);
 
   /// Constructor
-  TAO_Notify_Property_Boolean (const char* name);
+  explicit TAO_Notify_Property_Boolean (const char* name);
 
   /// Assignment from TAO_Notify_Property_Boolean
   TAO_Notify_Property_Boolean& operator= (const TAO_Notify_Property_Boolean& rhs);
@@ -67,10 +67,10 @@ protected:
   const char* name_;
 
   /// The value
-  CORBA::Boolean value_;
+  CORBA::Boolean value_ = false;
 
   /// Is the value valid
-  CORBA::Boolean valid_;
+  CORBA::Boolean valid_ = false;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

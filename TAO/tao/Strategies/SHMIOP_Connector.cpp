@@ -14,13 +14,16 @@
 #include "tao/Blocked_Connect_Strategy.h"
 #include "ace/OS_NS_strings.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector () = default;
 
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector ()
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 
@@ -37,25 +40,33 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our connect creation strategy
-  TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SHMIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_SHMIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
-  TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  std::unique_ptr<TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
 
-  if (this->base_connector_.open (this->orb_core ()->reactor (),
-                                  connect_creation_strategy,
-                                  &this->connect_strategy_,
-                                  concurrency_strategy) == -1)
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 &this->connect_strategy_,
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+
+  if (result == -1)
     return -1;
   // We can take advantage of the multithreaded shared-memory transport
   // if the client will block on read (i.e., will not allow callback.)
@@ -71,8 +82,8 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_SHMIOP_Connector::close ()
 {
-  delete this->base_connector_.concurrency_strategy ();
-  delete this->base_connector_.creation_strategy ();
+  this->concurrency_strategy_.reset ();
+  this->creation_strategy_.reset ();
   return this->base_connector_.close ();
 }
 
@@ -148,7 +159,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  TAO_SHMIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_SHMIOP_Connection_Handler *svc_handler {};
 
   // Connect.
   int result = this->base_connector_.connect (svc_handler,
@@ -256,7 +267,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->orb_core ()),
                   0);
@@ -279,7 +290,7 @@ TAO_SHMIOP_Connector::make_profile ()
   // or:
   //    port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_SHMIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (

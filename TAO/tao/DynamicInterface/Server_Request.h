@@ -30,6 +30,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +56,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ServerRequest (TAO_ServerRequest &orb_server_request);
+    explicit ServerRequest (TAO_ServerRequest &orb_server_request);
 
     /// Destructor.
     ~ServerRequest ();
@@ -140,10 +141,10 @@ namespace CORBA
     CORBA::NVList_ptr params_ {};
 
     /// Return value.
-    CORBA::Any_ptr retval_ {};
+    std::unique_ptr<CORBA::Any> retval_;
 
     /// Any exception which might be raised.
-    CORBA::Any_ptr exception_ {};
+    std::unique_ptr<CORBA::Any> exception_;
 
     /// Reference counting.
     std::atomic<uint32_t> refcount_ { 1 };

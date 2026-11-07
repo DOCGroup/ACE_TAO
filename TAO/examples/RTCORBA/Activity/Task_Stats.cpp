@@ -1,6 +1,10 @@
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+#include <new>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
@@ -15,8 +19,6 @@ Task_Stats::Task_Stats (size_t max_samples)
     end_time_ (0),
     max_samples_ (max_samples),
     samples_count_ (0),
-    time_inv_ (0),
-    time_exec_ (0),
     exec_time_min_ (0),
     exec_time_min_at_ (0),
     exec_time_max_ (0),
@@ -26,17 +28,21 @@ Task_Stats::Task_Stats (size_t max_samples)
 {
 }
 
-Task_Stats::~Task_Stats ()
-{
-  delete[] this->time_inv_;
-  delete[] this->time_exec_;
-}
-
 int
 Task_Stats::init ()
 {
-  ACE_NEW_RETURN (this->time_inv_, ACE_UINT64[this->max_samples_], -1);
-  ACE_NEW_RETURN (this->time_exec_, ACE_UINT64[this->max_samples_], -1);
+  std::unique_ptr<ACE_UINT64[]> time_inv (
+    new (std::nothrow) ACE_UINT64[this->max_samples_]);
+  if (!time_inv)
+    return -1;
+
+  std::unique_ptr<ACE_UINT64[]> time_exec (
+    new (std::nothrow) ACE_UINT64[this->max_samples_]);
+  if (!time_exec)
+    return -1;
+
+  this->time_inv_ = std::move (time_inv);
+  this->time_exec_ = std::move (time_exec);
   return 0;
 }
 
@@ -54,8 +60,8 @@ Task_Stats::end_time (ACE_hrtime_t time)
 
 void
 Task_Stats::dump_samples (
-  const ACE_TCHAR *file_name,
-  const ACE_TCHAR *msg,
+  ACE_TCHAR const *file_name,
+  ACE_TCHAR const *msg,
   ACE_High_Res_Timer::global_scale_factor_type scale_factor)
 {
   FILE* output_file = ACE_OS::fopen (file_name, "w");

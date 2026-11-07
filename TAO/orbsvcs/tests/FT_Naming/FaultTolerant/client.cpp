@@ -42,10 +42,10 @@ public:
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id);
+  void id (CORBA::Short id) override;
   // Sets id.
 
-  CORBA::Short id ();
+  CORBA::Short id () override;
   // Gets id.
 
 private:

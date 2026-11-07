@@ -7,11 +7,13 @@
 #include "ace/Signal.h"
 #include "ace/Truncate.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "Malloc.h"
 #include "Options.h"
+#include <atomic>
+#include <cstdio>
+#include <cstring>
 
 
 static int
@@ -36,7 +38,7 @@ gen_size ()
 static int
 malloc_recurse (int count)
 {
-  static char default_char = 0;
+  static std::atomic<unsigned char> default_char {};
 
   if (count <= 0)
     {
@@ -49,8 +51,9 @@ malloc_recurse (int count)
     }
   else
     {
-      int alloc_size = gen_size ();
-      void *ptr = Malloc::instance ()->malloc (alloc_size);
+      int const alloc_size = gen_size ();
+      // The allocator owns this block until the matching free below.
+      void *const ptr = Malloc::instance ()->malloc (alloc_size);
 
       if (ptr == nullptr)
         ACE_ERROR ((LM_ERROR,
@@ -59,11 +62,12 @@ malloc_recurse (int count)
                     alloc_size));
       else
         {
-          ACE_OS::memset (ptr, default_char++, alloc_size);
+          unsigned char const fill_value = default_char.fetch_add (1);
+          std::memset (ptr, fill_value, alloc_size);
 
           if (Options::instance ()->debug ())
             ACE_DEBUG ((LM_INFO,
-                        "(%P|%t) %u (alloc), size = %d\n",
+                        "(%P|%t) %p (alloc), size = %d\n",
                         ptr,
                         alloc_size));
 
@@ -72,7 +76,7 @@ malloc_recurse (int count)
 
           if (Options::instance ()->debug ())
             ACE_DEBUG ((LM_INFO,
-                        "(%P|%t) %u (free), size = %d\n",
+                        "(%P|%t) %p (free), size = %d\n",
                         ptr,
                         alloc_size));
           Malloc::instance ()->free (ptr);
@@ -83,14 +87,14 @@ malloc_recurse (int count)
 }
 
 #if defined (ACE_HAS_THREADS)
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
-  // Cast the arg to a long, first, because a pointer is the same
-  // size as a long on all current ACE platforms.
-  malloc_recurse (static_cast<int> (reinterpret_cast<intptr_t> (arg)));
+  // The thread argument carries the iteration count through intptr_t.
+  int const iteration_count = static_cast<int> (reinterpret_cast<intptr_t> (arg));
+  malloc_recurse (iteration_count);
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* ACE_HAS_THREADS */
 
@@ -99,55 +103,52 @@ worker (void *arg)
 static void
 spawn ()
 {
-  if (Options::instance ()->spawn_threads ())
+  Options const *const options = Options::instance ();
+  if (options->spawn_threads ())
     {
 #if defined (ACE_HAS_THREADS)
-      if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (worker),
-                                                  (void *) Options::instance ()->iteration_count (),
-                                                  THR_BOUND) == -1)
+      int const iteration_count =
+        ACE_Utils::truncate_cast<int> (options->iteration_count ());
+      if (ACE_Thread_Manager::instance ()->spawn (
+            &worker,
+            reinterpret_cast<void *> (static_cast<intptr_t> (iteration_count)),
+            THR_BOUND) == -1)
         ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 #else
-      if (Options::instance ()->spawn_count () > 1)
+      if (options->spawn_count () > 1)
         ACE_ERROR ((LM_ERROR,
                     "only one thread may be run in a process on this platform\n%a",
                     1));
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
-  else if (ACE_OS::fork (ACE_TEXT_CHAR_TO_TCHAR (Options::instance ()->program_name ())) == 0)
+  else if (ACE_OS::fork (ACE_TEXT_CHAR_TO_TCHAR (options->program_name ().c_str ())) == 0)
     {
-      if (Options::instance ()->exec_slave ())
+      if (options->exec_slave ())
         {
-          char iterations[20];
-          char msg_size[20];
+          char iterations[32] {};
+          char msg_size[32] {};
 
-          ACE_OS::sprintf (iterations, "%lu",
-                           (unsigned long)
-                             Options::instance ()->iteration_count ());
-          ACE_OS::sprintf (msg_size, "%lu",
-                           (unsigned long)
-                             Options::instance ()->max_msg_size ());
-          const char *cp = nullptr;
+          std::snprintf (iterations, sizeof (iterations), "%lu",
+                         static_cast<unsigned long> (options->iteration_count ()));
+          std::snprintf (msg_size, sizeof (msg_size), "%lu",
+                         static_cast<unsigned long> (options->max_msg_size ()));
+          char const *const debug_option = options->debug () ? "-d" : "";
 
-          if (Options::instance ()->debug ())
-            cp = "-d";
-          else
-            cp = "";
-
-          const char *argv[] =
+          char const *const argv[] =
           {
-            Options::instance ()->slave_name (),
+            options->slave_name ().c_str (),
             "-p",
             "-n",
             iterations,
             "-L",
             msg_size,
-            cp,
+            debug_option,
             nullptr
           };
 
-          if (ACE_OS::execv (Options::instance ()->program_name (),
-                             (char *const *) argv) == -1)
+          if (ACE_OS::execv (options->program_name ().c_str (),
+                             const_cast<char *const *> (argv)) == -1)
             ACE_ERROR ((LM_ERROR, "%p\n", "exec failed"));
           ACE_OS::_exit (1);
         }
@@ -155,9 +156,9 @@ spawn ()
         {
           ACE_DEBUG ((LM_INFO,
                       "(%P|%t) about to recurse with iteration count = %d\n",
-                      Options::instance ()->iteration_count ()));
+                      options->iteration_count ()));
 
-          malloc_recurse (Options::instance ()->iteration_count ());
+          malloc_recurse (ACE_Utils::truncate_cast<int> (options->iteration_count ()));
           Malloc::instance ()->remove ();
           ACE_OS::exit (0);
         }
@@ -170,13 +171,14 @@ spawn ()
 static void
 wait_for_children ()
 {
-  if (Options::instance ()->spawn_threads ())
+  Options const *const options = Options::instance ();
+  if (options->spawn_threads ())
     {
 #if defined (ACE_HAS_THREADS)
       // Wait for the threads to terminate.
       ACE_Thread_Manager::instance ()->wait ();
 #else
-      malloc_recurse (Options::instance ()->iteration_count ());
+      malloc_recurse (ACE_Utils::truncate_cast<int> (options->iteration_count ()));
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
@@ -201,27 +203,28 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (&handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  Options::instance ()->parse_args (argc, argv);
+  Options *const options = Options::instance ();
+  options->parse_args (argc, argv);
 
 #if !defined (ACE_WIN32)
-  if (Options::instance ()->child ())
+  if (options->child ())
     {
       ACE_DEBUG ((LM_INFO,
                   "(%P|%t) about to recurse with iteration count = %d, debug = %d\n",
-                  Options::instance ()->iteration_count ()));
+                  options->iteration_count ()));
 
       // We've been forked...
-      malloc_recurse (Options::instance ()->iteration_count ());
+      malloc_recurse (ACE_Utils::truncate_cast<int> (options->iteration_count ()));
       Malloc::instance ()->remove ();
     }
   else
 #endif /* ACE_WIN32 */
     {
       for (size_t i = 0;
-           i < Options::instance ()->spawn_count ();
+           i < options->spawn_count ();
            i++)
         spawn ();
 

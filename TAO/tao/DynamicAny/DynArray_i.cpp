@@ -9,6 +9,8 @@
 
 #include "tao/CDR.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynArray_i::~TAO_DynArray_i () = default;
@@ -77,7 +79,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
   for (CORBA::ULong i = 0; i < numfields; ++i)
     {
       CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *field_unk = nullptr;
+      TAO::Unknown_IDL_Type *field_unk {};
       TAO_InputCDR unk_in (cdr);
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
@@ -189,7 +191,7 @@ TAO_DynArray_i::get_elements ()
 
   CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
-  DynamicAny::AnySeq *elements = nullptr;
+  DynamicAny::AnySeq *elements {};
   ACE_NEW_THROW_EX (elements,
                     DynamicAny::AnySeq (length),
                     CORBA::NO_MEMORY ());
@@ -260,7 +262,7 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  DynamicAny::DynAnySeq *retval = nullptr;
+  DynamicAny::DynAnySeq *retval {};
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
@@ -373,7 +375,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
-          TAO::Unknown_IDL_Type *field_unk = nullptr;
+          TAO::Unknown_IDL_Type *field_unk {};
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
           field_any.replace (field_unk);
@@ -410,9 +412,9 @@ TAO_DynArray_i::to_any ()
 
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
-  size_t length = this->da_members_.size ();
+  std::size_t length = this->da_members_.size ();
 
-  for (size_t i = 0; i < length; ++i)
+  for (std::size_t i = 0; i < length; ++i)
     {
       // Recursive step.
       field_any = this->da_members_[i]->to_any ();
@@ -450,7 +452,7 @@ TAO_DynArray_i::to_any ()
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),

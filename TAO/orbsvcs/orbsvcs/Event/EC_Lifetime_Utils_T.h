@@ -54,7 +54,7 @@ class TAO_EC_Auto_Command
 {
 public:
   TAO_EC_Auto_Command ();
-  TAO_EC_Auto_Command (const T & command);
+  explicit TAO_EC_Auto_Command (const T & command);
   ~TAO_EC_Auto_Command ();
   void set_command (const T & command);
   void set_command (TAO_EC_Auto_Command<T> & auto_command);
@@ -63,8 +63,10 @@ public:
   void disallow_command ();
 
 private:
-  TAO_EC_Auto_Command (const TAO_EC_Auto_Command &);
-  TAO_EC_Auto_Command & operator=  (const TAO_EC_Auto_Command &);
+  TAO_EC_Auto_Command (const TAO_EC_Auto_Command&) = delete;
+  TAO_EC_Auto_Command (TAO_EC_Auto_Command&&) = delete;
+  TAO_EC_Auto_Command& operator= (const TAO_EC_Auto_Command&) = delete;
+  TAO_EC_Auto_Command& operator= (TAO_EC_Auto_Command&&) = delete;
 
   T command_;
   bool allow_command_;
@@ -78,7 +80,7 @@ class TAO_EC_Shutdown_Command
 {
 public:
   TAO_EC_Shutdown_Command ();
-  TAO_EC_Shutdown_Command (T target);
+  explicit TAO_EC_Shutdown_Command (T target);
   void execute ();
 
 private:

@@ -11,6 +11,10 @@
 #include "tao/Strategies/sciop_endpointsC.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+
 static const char prefix_[] = "sciop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -60,7 +64,7 @@ TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -93,7 +97,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   for (int i=endpointSeq.length() - 1; i > 0 ; i--)
     {
-      TAO_SCIOP_Endpoint *endpoint = nullptr;
+      TAO_SCIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
@@ -164,11 +168,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::strncpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
-        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
 
       length_host = cp_pos - ior;
     }
@@ -178,12 +182,12 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), ior, length_host);
+  std::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       ACE_INET_Addr host_addr;
 
@@ -308,23 +312,23 @@ TAO_SCIOP_Profile::to_string () const
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::prefix_) +
+                   std::strlen (::prefix_) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   std::strlen (this->endpoint_.host ()) +
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
@@ -487,7 +491,7 @@ TAO_SCIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SCIOP_Endpoint *endpoint = nullptr;
+          TAO_SCIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_SCIOP_Endpoint (endpoints[i].host,
                                              endpoints[i].port,

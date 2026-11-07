@@ -7,6 +7,7 @@
 
 #include "tao/corba.h"
 #include "ace/ACE.h"
+#include <cstdio>
 #include <memory>
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
@@ -25,12 +26,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 
 #if defined (ACE_HAS_IPV6)
-  int def_type = AF_UNSPEC;
+  int const def_type = AF_UNSPEC;
 #endif /* ACE_HAS_IPV6 */
 
   // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
-  size_t if_cnt = 0;
+  ACE_INET_Addr *if_addrs {};
+  size_t if_cnt {};
 
   if (ACE::get_ip_interfaces (if_cnt,
                               if_addrs) != 0
@@ -50,6 +51,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if_cnt = 1; // Force the network interface count to be one.
       delete [] if_addrs;
+      if_addrs = nullptr;
+      // ACE_NEW_RETURN needs the raw output pointer; ownership transfers below.
       ACE_NEW_RETURN (if_addrs,
                       ACE_INET_Addr[if_cnt],
                       -1);
@@ -57,16 +60,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
+  size_t lo_cnt {};  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
       ++lo_cnt;
 
 #if defined (ACE_HAS_IPV6)
-  size_t ipv4_cnt = 0;
-  size_t ipv4_lo_cnt = 0;
-  size_t ipv6_ll = 0;
-  bool ipv6_non_ll = false;
+  size_t ipv4_cnt {};
+  size_t ipv4_lo_cnt {};
+  bool ipv6_non_ll {};
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
   for (size_t j = 0; j < if_cnt; ++j)
@@ -81,11 +83,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
              !if_addrs[j].is_loopback())
       {
         ipv6_non_ll = true; // we have at least 1 non-local IPv6 if
-      }
-    else if (// !orb_core->orb_params ()->use_ipv6_link_local () &&
-             if_addrs[j].is_linklocal ())
-      {
-        ++ipv6_ll;  // count link local addrs to exclude them afterwards
       }
 #endif /* ACE_HAS_IPV6 */
 
@@ -104,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
-  bool ignore_lo;
+  bool ignore_lo {};
   if (ipv6_only)
     // only exclude loopback if non-local if exists
     ignore_lo = ipv6_non_ll;
@@ -125,7 +122,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       if_ok_cnt = ipv4_cnt;
       lo_cnt = ipv4_lo_cnt;
-      ipv6_ll = 0;
     }
 
   // In case there are no non-local IPv6 ifs in the list only exclude
@@ -138,15 +134,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
-  bool ignore_lo;
-  ignore_lo = if_cnt != lo_cnt;
+  bool const ignore_lo = if_cnt != lo_cnt;
 #endif /* !ACE_HAS_IPV6 */
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
   // count.
-  size_t host_cnt = 0;
-
   for (size_t i = 0; i < if_cnt; ++i)
     {
 #if defined (ACE_HAS_IPV6)
@@ -183,9 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #endif /* !ACE_HAS_IPV6 */
 
       // Print the address as a string.
-      ACE_OS::printf ("%s\n", if_addrs[i].get_host_addr());
-
-      ++host_cnt;
+      std::printf ("%s\n", if_addrs[i].get_host_addr ());
     }
 
   return 0;

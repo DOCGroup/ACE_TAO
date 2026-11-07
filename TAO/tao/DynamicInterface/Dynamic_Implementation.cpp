@@ -10,7 +10,8 @@
 #include "tao/operation_details.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,7 +20,7 @@ TAO_DynamicImplementation::_is_a (char const *logical_type_id)
 {
   CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
-  return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
+  return std::strcmp (logical_type_id, id.in ()) == 0;
 }
 
 CORBA::Object_ptr
@@ -135,14 +136,15 @@ TAO_DynamicImplementation::_dispatch (
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = nullptr;
-  ACE_NEW (dsi_request,
+  CORBA::ServerRequest *dsi_request_ptr {};
+  ACE_NEW (dsi_request_ptr,
            CORBA::ServerRequest (request));
+  CORBA::ServerRequest_var dsi_request (dsi_request_ptr);
 
   try
     {
       // Delegate to user.
-      this->invoke (dsi_request);
+      this->invoke (dsi_request.in ());
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -168,8 +170,6 @@ TAO_DynamicImplementation::_dispatch (
             request.tao_send_reply_exception (ex);
         }
     }
-
-  ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId

@@ -10,12 +10,8 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Windows_Monitor::Windows_Monitor (const ACE_TCHAR *path)
-      : value_ (0.0)
-      , path_ (path)
-      , query_ (0)
-      , counter_ (0)
-      , status_ (ERROR_SUCCESS)
+    Windows_Monitor::Windows_Monitor (ACE_TCHAR const *path)
+      : path_ (path)
     {
       this->init ();
     }
@@ -24,11 +20,11 @@ namespace ACE
     Windows_Monitor::update_i ()
     {
       PdhCollectQueryData (this->query_);
-      PDH_FMT_COUNTERVALUE pdh_value;
+      PDH_FMT_COUNTERVALUE pdh_value {};
 
       PdhGetFormattedCounterValue (this->counter_,
                                    PDH_FMT_DOUBLE,
-                                   0,
+                                   nullptr,
                                    &pdh_value);
 
       this->value_ = pdh_value.doubleValue;
@@ -46,7 +42,7 @@ namespace ACE
       /// Create a query and a counter here so it doesn't have
       /// to be done with each update.
 
-      this->status_ = ACE_TEXT_PdhOpenQuery (0, 0, &this->query_);
+      this->status_ = ACE_TEXT_PdhOpenQuery (nullptr, 0, &this->query_);
 
       if (ERROR_SUCCESS != this->status_)
         {

@@ -7,7 +7,8 @@
  *    threads.
  *    It also uses custom event handlers for timer events.
  *
- *  @author Douglas Schmidt      <d.schmidt@vanderbilt.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>  && Alon Diamant         <diamant.alon@gmail.com>
+ *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu>, Sergio Flores-Gaitan
+ *          <sergio@cs.wustl.edu>, and Alon Diamant <diamant.alon@gmail.com>
  */
 //=============================================================================
 
@@ -16,20 +17,20 @@
 #include "Driver.h"
 #include "Thread_Timer_Queue_Custom_Handler_Test.h"
 #include <memory>
+#include <new>
 
-using THREAD_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Thread_Timer_Queue,
-                                                                Custom_Handler_Input_Task,
-                                                                Custom_Handler_Input_Task::ACTION>;
+using THREAD_TIMER_QUEUE_TEST_DRIVER =
+  Timer_Queue_Test_Driver<Thread_Timer_Queue,
+                          Custom_Handler_Input_Task,
+                          Custom_Handler_Input_Task::ACTION>;
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-    // unique ptr ensures that the driver memory is released
-    // automatically.
-    THREAD_TIMER_QUEUE_TEST_DRIVER *tqtd = nullptr;
-    ACE_NEW_RETURN (tqtd, Thread_Timer_Queue_Custom_Handler_Test, -1);
+  std::unique_ptr<THREAD_TIMER_QUEUE_TEST_DRIVER> driver (
+    new (std::nothrow) Thread_Timer_Queue_Custom_Handler_Test);
+  if (!driver)
+    return -1;
 
-    std::unique_ptr <THREAD_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
-
-    return driver->run_test ();
+  return driver->run_test ();
 }

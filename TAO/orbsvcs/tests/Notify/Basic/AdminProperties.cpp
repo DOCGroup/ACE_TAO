@@ -66,7 +66,7 @@ AdminProperties_Task::svc ()
  ACE_DEBUG ((LM_DEBUG, "\n1 supplier sending %d events...\n", event_count));
 
 
- for (int i = 0 ; i < event_count; ++i)
+ for (int i {}; i < event_count; ++i)
    {
      event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -77,14 +77,14 @@ AdminProperties_Task::svc ()
           ACE_DEBUG((LM_DEBUG, "+"));
           this->supplier_->send_event (event);
         }
-      catch (const CORBA::IMP_LIMIT&)
+      catch (CORBA::IMP_LIMIT const &)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "\nEvent %d was not send due to Impl Limit reached\n", i));
 
           ++ this->client_->rejections_;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (
             "Error: Exception sending event\n");
@@ -98,7 +98,6 @@ return 0;
 
 AdminProperties_StructuredPushConsumer::AdminProperties_StructuredPushConsumer (AdminProperties* client)
   : client_ (client)
-  , events_received_ (0)
 {
   client_->consumer_start(this);
 }
@@ -109,13 +108,13 @@ AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotifica
 {
   ++events_received_;
 
-  if (events_received_ >= client_->max_queue_length_)
+  if (events_received_.load () >= client_->max_queue_length_)
     client_->consumer_done(this);
 
   ACE_DEBUG((LM_DEBUG, "-"));
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "\nConsumer %x received event %d\n", this, events_received_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "\nConsumer %x received event %d\n", this, events_received_.load ()));
 }
 
 /***************************************************************************/
@@ -143,7 +142,7 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
@@ -282,7 +281,7 @@ AdminProperties::test_max_queue_length (bool reject)
   consumer->connect (this->consumer_admin_.in ());
 
   // Create the supplier
-  TAO_Notify_Tests_StructuredPushSupplier *supplier = 0;
+  TAO_Notify_Tests_StructuredPushSupplier *supplier {};
   ACE_NEW (supplier, TAO_Notify_Tests_StructuredPushSupplier ());
   supplier->init (root_poa_.in ());
   supplier->connect (this->supplier_admin_.in ());
@@ -304,7 +303,7 @@ AdminProperties::test_max_queue_length (bool reject)
   this->ORB_run();
 
   // consumer is destroyed by consumer->disconnect()
-  CORBA::Long received_count = consumer->events_received_.value ();
+  CORBA::Long received_count = consumer->events_received_.load ();
 
   // disconnect the participants.
   consumer->disconnect ();
@@ -367,7 +366,7 @@ AdminProperties::create_suppliers ()
   // @@ CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
   // @@   CosNotifyChannelAdmin::OR_OP;
 
-  int index = 0;
+  int index {};
 
   try
     {
@@ -384,12 +383,12 @@ AdminProperties::create_suppliers ()
           this->suppliers_connected_count_++;
         }
     }
-  catch (const CORBA::IMP_LIMIT&)
+  catch (CORBA::IMP_LIMIT const &)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit excpetion when connecting supplier\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\nError: Exception in connecting supplier\n");
     }
@@ -403,7 +402,7 @@ AdminProperties::create_consumers ()
   // @@ CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
   // @@   CosNotifyChannelAdmin::OR_OP;
 
-  int index = 0;
+  int index {};
 
   try
     {
@@ -419,12 +418,12 @@ AdminProperties::create_consumers ()
           this->consumers_connected_count_++;
         }
     }
-  catch (const CORBA::IMP_LIMIT&)
+  catch (CORBA::IMP_LIMIT const &)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit exception when connecting consumer\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
         ex._tao_print_exception (
           "\nError: Exception in connecting consumer\n");
@@ -444,7 +443,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test.run_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

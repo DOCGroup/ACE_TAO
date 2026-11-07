@@ -4,16 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-Bit_Vector::Bit_Vector()
-  : size_(0)
-  , first_set_bit_(0)
-  , first_cleared_bit_(0)
-{
-}
-
-Bit_Vector::~Bit_Vector()
-{
-}
+Bit_Vector::Bit_Vector() = default;
 
 bool
 Bit_Vector::is_set(const size_t location) const

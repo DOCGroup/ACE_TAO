@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -35,8 +34,12 @@ DAMAGES.
 
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
+#include "asnmp/pdu.h"
+#include "asnmp/target.h"
 #include "asnmp/vb.h"
+#include "asnmp/wpdu.h"
 #include "test_config.h"
+#include <cstring>
 
 /*
   Vb();
@@ -103,6 +106,7 @@ static void VbTest()
 
   Vb v3;
   TimeTicks t(0), t1;
+  ACE_ASSERT (std::strcmp (t.to_string (), "0:00:00.00") == 0);
   v3.set_oid(o1);
   v3.set_value(t);
   ACE_ASSERT(v3.valid() == 1);
@@ -169,13 +173,52 @@ static void VbTest()
   v10 = v5;
   ACE_ASSERT(v10 == v5);
 
-
   Vb v11(o1, s1, SNMP_CLASS_SUCCESS);
   ACE_ASSERT(v11.valid() == 1);
   v11.get_oid(o2);
   ACE_ASSERT(o1 == o2);
   v11.get_value(s2);
   ACE_ASSERT(s1 == s2);
+
+  Pdu pdu;
+  pdu += v5;
+  pdu += v10;
+  ACE_ASSERT(pdu.get_vb_count() == 2);
+
+  Pdu copied_pdu (pdu);
+  Vb copied_vb;
+  ACE_ASSERT(copied_pdu.get_vb_count() == 2);
+  ACE_ASSERT(copied_pdu.get_vb (copied_vb, 1) == 1);
+  ACE_ASSERT(copied_vb == v10);
+
+  ACE_ASSERT(copied_pdu.delete_vb (0) == 1);
+  ACE_ASSERT(copied_pdu.get_vb_count() == 1);
+  ACE_ASSERT(copied_pdu.get_vb (copied_vb, 0) == 1);
+  ACE_ASSERT(copied_vb == v10);
+
+  Vb varbinds[] {v5, v10};
+  Pdu list_pdu;
+  ACE_ASSERT(list_pdu.set_vblist (varbinds, 2) == 1);
+  ACE_ASSERT(list_pdu.get_vb_count() == 2);
+  ACE_ASSERT(list_pdu.trim (1) == 1);
+  ACE_ASSERT(list_pdu.get_vb_count() == 1);
+
+  Pdu request;
+  request.set_type (sNMP_PDU_GET);
+  Vb request_vb;
+  request_vb.set_oid (o1);
+  request_vb.set_null ();
+  request += request_vb;
+  UdpTarget target {IpAddress ("127.0.0.1")};
+  wpdu encoded (request, target);
+  ACE_ASSERT(encoded.valid() == 1);
+
+  wpdu copied_wire (encoded.get_buffer());
+  ACE_ASSERT(copied_wire.valid() == 1);
+  ACE_ASSERT(copied_wire.get_buffer().iov_len == encoded.get_buffer().iov_len);
+  ACE_ASSERT(std::memcmp (copied_wire.get_buffer().iov_base,
+                          encoded.get_buffer().iov_base,
+                          encoded.get_buffer().iov_len) == 0);
 #endif /*if ACE_WIN32*/
 }
 

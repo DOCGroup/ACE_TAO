@@ -15,6 +15,7 @@
 #define _PP_TEST_CLIENT_H
 
 #include "ace/Get_Opt.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +39,11 @@ class PP_Test_Client
 public:
   // = Constructor and destructor.
   /// Use <testing_collocation> to control some client's behaviors.
-  PP_Test_Client (int shutdown = 0);
+  explicit PP_Test_Client (bool shutdown = false);
+  PP_Test_Client (PP_Test_Client const &) = delete;
+  PP_Test_Client (PP_Test_Client &&) = delete;
+  PP_Test_Client &operator= (PP_Test_Client const &) = delete;
+  PP_Test_Client &operator= (PP_Test_Client &&) = delete;
 
   ~PP_Test_Client ();
 
@@ -51,10 +56,10 @@ public:
 
 private:
   /// Function to read the cubit factory ior from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args ();
+  int parse_args (int argc, ACE_TCHAR **argv);
 
   /// Oneway operation test.
   void send_oneway ();
@@ -69,25 +74,19 @@ private:
   int run_oneway ();
 
   /// Invoke the method with <do_shutdown> != 0 to shutdown the server.
-  int shutdown_server (int do_shutdown);
-
-  /// # of arguments on the command line.
-  int argc_;
-
-  /// arguments from command line.
-  ACE_TCHAR **argv_;
+  int shutdown_server (bool do_shutdown);
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
 
   /// Key of factory obj ref.
-  ACE_TCHAR *factory_key_;
+  std::basic_string<ACE_TCHAR> factory_key_;
 
   /// Number of times to do the send operations.
   CORBA::ULong loop_count_;
 
   /// Flag to tell server to shutdown.
-  int shutdown_;
+  bool shutdown_;
 
   /// factory pointer for cubit.
   Pluggable_Test_Factory_var factory_;
@@ -95,23 +94,17 @@ private:
   /// Pluggable_Test obj ref.
   Pluggable_Test_var objref_;
 
-  /// # of calls made to functions.
-  CORBA::ULong call_count_;
-
   /// # of errors incurred in the lifetime of the application.
   CORBA::ULong error_count_;
-
-  /// File from which to obtain the IOR.
-  FILE *factory_ior_file_;
 
   /// File handle to read the IOR.
   ACE_HANDLE f_handle_;
 
   /// Run only the cube_void() test.
-  int only_void_;
+  bool only_void_;
 
   /// Run only the cube_oneway() test.
-  int only_oneway_;
+  bool only_oneway_;
 };
 
 #endif /* _PP_TEST_CLIENT_H */

@@ -6,9 +6,10 @@
 #include "ace/Signal.h"
 #include "ace/Truncate.h"
 
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
-#define MAX_ITERATIONS 10000
+constexpr size_t MAX_ITERATIONS = 10000;
 
 class Thread_Handler : public ACE_Event_Handler
 {
@@ -34,6 +35,11 @@ public:
   ~Thread_Handler () override;
   // Destructor.
 
+  Thread_Handler (Thread_Handler const &) = delete;
+  Thread_Handler (Thread_Handler &&) = delete;
+  Thread_Handler &operator= (Thread_Handler const &) = delete;
+  Thread_Handler &operator= (Thread_Handler &&) = delete;
+
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   // Handle signals.
 
@@ -43,8 +49,7 @@ public:
   int handle_output (ACE_HANDLE) override;
   // Print data from main thread.
 
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *) override;
+  int handle_timeout (ACE_Time_Value const &, void const *) override;
   // Handle timeout events in the main thread.
 
   int handle_input (ACE_HANDLE) override;
@@ -60,10 +65,10 @@ private:
   static void *svc_run (void *);
   // Glues C++ to C thread library functions.
 
-  size_t id_;
+  size_t id_ {};
   // ID passed in by Thread_Handler constructor.
 
-  size_t iterations_;
+  size_t iterations_ {};
 
   static sig_atomic_t shutdown_;
   // Shutting down.
@@ -77,13 +82,13 @@ private:
 };
 
 // Shutdown flag.
-sig_atomic_t Thread_Handler::shutdown_ = 0;
+sig_atomic_t Thread_Handler::shutdown_ {};
 
 // Delay factor for timer-driven I/O.
-ACE_Time_Value Thread_Handler::delay_;
+ACE_Time_Value Thread_Handler::delay_ {};
 
 // Interval factor for Event_Handler timer.
-ACE_Time_Value Thread_Handler::interval_;
+ACE_Time_Value Thread_Handler::interval_ {};
 
 Thread_Handler::Thread_Handler (size_t id,
                                 size_t max_iterations)
@@ -94,10 +99,13 @@ Thread_Handler::Thread_Handler (size_t id,
 
 Thread_Handler::~Thread_Handler ()
 {
-  // Cleanup resources so that we don't crash and burn when shutdown.
-  ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
-                                           ACE_Thread_Manager::instance ());
-  ACE_Reactor::instance ()->cancel_timer (this);
+  if (this->id_ == 0)
+    {
+      // Only the main handler registers stdin and a timer.
+      ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
+                                               ACE_Thread_Manager::instance ());
+      ACE_Reactor::instance ()->cancel_timer (this);
+    }
 }
 
 Thread_Handler::Thread_Handler (
@@ -114,8 +122,6 @@ Thread_Handler::Thread_Handler (
 
   delay_.set (delay);
   interval_.set (interval);
-  this->id_ = 0;
-
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
@@ -144,18 +150,21 @@ Thread_Handler::Thread_Handler (
 
   for (size_t i = 0; i < n_threads; i++)
     {
-      Thread_Handler *th;
-
-      ACE_NEW (th,
-               Thread_Handler (i + 1,
-                               this->iterations_));
+      Thread_Handler *thread_handler {};
+      ACE_NEW (thread_handler,
+               Thread_Handler (i + 1, this->iterations_));
+      std::unique_ptr<Thread_Handler> th (thread_handler);
 
       if (ACE_Thread::spawn (reinterpret_cast<ACE_THR_FUNC> (&Thread_Handler::svc_run),
-                             reinterpret_cast<void *> (th),
+                             static_cast<void *> (th.get ()),
                              THR_NEW_LWP | THR_DETACHED) != 0)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE_Thread::spawn"));
+      else
+        {
+          th.release ();
+        }
     }
 
   // The destructor of <guard> unblocks the signal set so that only
@@ -194,7 +203,7 @@ int
 Thread_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[BUFSIZ];
-  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+  ssize_t const n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n > 0)
     {
@@ -284,7 +293,7 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 int
-Thread_Handler::handle_timeout (const ACE_Time_Value &time, const void *)
+Thread_Handler::handle_timeout (ACE_Time_Value const &time, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) received timeout at (%u, %u), iterations = %d\n",
@@ -330,8 +339,8 @@ Thread_Handler::handle_output (ACE_HANDLE)
 void *
 Thread_Handler::svc_run (void *eh)
 {
-  Thread_Handler *this_handler =
-    reinterpret_cast<Thread_Handler *> (eh);
+  std::unique_ptr<Thread_Handler> this_handler (
+    static_cast<Thread_Handler *> (eh));
 
   if (this_handler->svc () == 0)
     return nullptr;

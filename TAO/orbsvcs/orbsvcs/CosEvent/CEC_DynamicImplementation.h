@@ -37,6 +37,11 @@ public:
   /// Destructor
   ~TAO_CEC_DynamicImplementationServer () override = default;
 
+  TAO_CEC_DynamicImplementationServer (TAO_CEC_DynamicImplementationServer const &) = delete;
+  TAO_CEC_DynamicImplementationServer (TAO_CEC_DynamicImplementationServer &&) = delete;
+  TAO_CEC_DynamicImplementationServer &operator= (TAO_CEC_DynamicImplementationServer const &) = delete;
+  TAO_CEC_DynamicImplementationServer &operator= (TAO_CEC_DynamicImplementationServer &&) = delete;
+
   // = The DynamicImplementation methods.
   void invoke (CORBA::ServerRequest_ptr request) override;
 

@@ -67,11 +67,11 @@ namespace CORBA
     using _out_type = Any_out;
 
     Any () = default;
-    Any (const Any &);
+    Any (Any const &);
 
     ~Any ();
 
-    Any &operator= (const Any &);
+    Any &operator= (Any const &);
     TAO::Any_Impl *impl () const;
 
     /// Used in our destruction if we ourselves are stored in an Any.
@@ -156,7 +156,7 @@ namespace CORBA
     CORBA::TypeCode_ptr _tao_get_typecode () const;
 
     /// TAO extension.
-    void _tao_set_typecode (const CORBA::TypeCode_ptr);
+    void _tao_set_typecode (CORBA::TypeCode_ptr const);
 
     int _tao_byte_order () const;
 
@@ -186,7 +186,7 @@ namespace CORBA
   public:
     Any_var ();
     Any_var (Any *a);
-    Any_var (const Any_var &);
+    Any_var (Any_var const &);
     ~Any_var ();
 
     Any_var &operator= (Any *);
@@ -197,19 +197,19 @@ namespace CORBA
      * If the allocation fails, *this is returned
      * unmodified.
      */
-    Any_var &operator= (const Any_var &);
+    Any_var &operator= (Any_var const &);
 
     /// Arrow operator (smart pointer).
     Any *operator-> ();
 
     /// Cast.
-    operator const Any *() const;
+    operator Any const *() const;
 
     /// Cast.
     operator Any *&();
 
     /// For in Any parameter.
-    const Any &in () const;
+    Any const &in () const;
 
     /// For inout Any parameter.
     Any &inout ();
@@ -240,10 +240,10 @@ namespace CORBA
   public:
     Any_out (Any *&);
     Any_out (Any_var &);
-    Any_out (const Any_out &);
+    Any_out (Any_out const &);
 
     /// Assignment from a Any_out.
-    Any_out &operator= (const Any_out &s);
+    Any_out &operator= (Any_out const &s);
 
     /// Assignment from a Any.
     Any_out &operator= (Any *);
@@ -258,7 +258,7 @@ namespace CORBA
 
   private:
     /// Assignment from _var disallowed.
-    void operator= (const Any_var &);
+    void operator= (Any_var const &);
 
   private:
     /// Instance.
@@ -267,7 +267,7 @@ namespace CORBA
 }
 
 TAO_AnyTypeCode_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::Any &);
+operator<< (TAO_OutputCDR &, CORBA::Any const &);
 
 TAO_AnyTypeCode_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::Any &);
@@ -276,7 +276,7 @@ operator>> (TAO_InputCDR &, CORBA::Any &);
 
 // Used in optionally generated ostream operators (for debugging).
 TAO_AnyTypeCode_Export std::ostream &
-operator<< (std::ostream &, const CORBA::Any &);
+operator<< (std::ostream &, CORBA::Any const &);
 
 #endif /* GEN_OSTREAM_OPS */
 
@@ -293,53 +293,53 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::ULongLong);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Float);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Double);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::LongDouble);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Any &);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Any const &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Any *);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const char *);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::WChar *);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, char const *);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::WChar const *);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::TypeCode_ptr);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::TypeCode_ptr *);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Object_ptr);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Object_ptr const);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Object_ptr *);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const std::string &);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::string const &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::string *);
 #if !defined(ACE_LACKS_STD_WSTRING)
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const std::wstring &);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::wstring const &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::wstring *);
 #endif
 
 /// Typesafe extraction.
 
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::Short &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::UShort &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::Long &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::ULong &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::LongLong &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::ULongLong &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::Float &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::Double &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::LongDouble &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CORBA::Any *&);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
+                                       CORBA::Any const *&);
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        CORBA::TypeCode_ptr &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CORBA::Char *&);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CORBA::WChar *&);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
+                                       CORBA::Char const *&);
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
+                                       CORBA::WChar const *&);
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        std::string &);
 #if !defined(ACE_LACKS_STD_WSTRING)
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &,
                                        std::wstring &);
 #endif
 
@@ -366,10 +366,10 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::LongLong);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::ULongLong);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Float);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Double);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, const CORBA::Any *&);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, const char *);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Any const *&);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, char const *);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::TypeCode_ptr);
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, const CORBA::Object_ptr);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Object_ptr const);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, ACE_OutputCDR::from_boolean);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Any::from_char);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Any::from_wchar);
@@ -380,43 +380,43 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any_var &, CORBA::Any::from_wstr
 /// These are not required by the spec, but will make users
 /// of other ORBs that are used to them more comfortable.
 
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Short &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::UShort &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Long &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::ULong &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::LongLong &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::ULongLong &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Float &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Double &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::TypeCode_ptr &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
-                                       const char *&);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
-                                       const CORBA::WChar *&);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
+                                       char const *&);
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
+                                       CORBA::WChar const *&);
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_boolean);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_octet);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_char);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_wchar);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_string);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_wstring);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any_var const &,
                                        CORBA::Any::to_object);
 }
 

@@ -9,7 +9,8 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.inl"
@@ -30,19 +31,24 @@ TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (PortableServer::POA_ptr poa)
   // and lock are only needed if dampening is enabled, i.e. non-zero.
   if (!ACE::is_equal (this->dampening_, 0.0f))
     {
-      ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      this->load_map_.reset (new (std::nothrow) TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      if (!this->load_map_)
+        {
+          errno = ENOMEM;
+          return;
+        }
 
-      ACE_NEW (this->lock_, TAO_SYNCH_MUTEX);
+      this->lock_.reset (new (std::nothrow) TAO_SYNCH_MUTEX);
+      if (!this->lock_)
+        {
+          this->load_map_.reset ();
+          errno = ENOMEM;
+          return;
+        }
     }
 
   // Initialize the random load balancing strategy.
   TAO_LB_Random::init ();
-}
-
-TAO_LB_LeastLoaded::~TAO_LB_LeastLoaded ()
-{
-  delete this->load_map_;
-  delete this->lock_;
 }
 
 char *
@@ -54,7 +60,7 @@ TAO_LB_LeastLoaded::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LeastLoaded::get_properties ()
 {
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -98,7 +104,7 @@ TAO_LB_LeastLoaded::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = nullptr;
+      TAO_LB_LoadMap::ENTRY * entry {};
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -306,8 +312,8 @@ TAO_LB_LeastLoaded::get_location (
                                     // positive value.
 
   CORBA::ULong location_index = 0;
-  CORBA::Boolean found_location = 0;
-  CORBA::Boolean found_load = 0;
+  CORBA::Boolean found_location = false;
+  CORBA::Boolean found_load = false;
 
   CORBA::ULong const len = locations.length ();
 
@@ -324,7 +330,7 @@ TAO_LB_LeastLoaded::get_location (
           CosLoadBalancing::LoadList_var current_loads =
             load_manager->get_loads (loc);
 
-          found_load = 1;
+          found_load = true;
 
           CosLoadBalancing::Load load;
           load.value = 0.0;
@@ -404,7 +410,7 @@ TAO_LB_LeastLoaded::get_location (
                         {
                           min_load = load.value;
                           location_index = i;
-                          found_location = 1;
+                          found_location = true;
 
 //                           ORBSVCS_DEBUG ((LM_DEBUG,
 //                                       "** NEW MIN_LOAD == %f\n",
@@ -420,7 +426,7 @@ TAO_LB_LeastLoaded::get_location (
                     {
                       min_load = load.value;
                       location_index = i;
-                      found_location = 1;
+                      found_location = true;
 
 //                       ORBSVCS_DEBUG ((LM_DEBUG,
 //                                   "***** NEW MIN_LOAD == %f\n",
@@ -431,7 +437,7 @@ TAO_LB_LeastLoaded::get_location (
                 {
                   min_load = load.value;
                   location_index = i;
-                  found_location = 1;
+                  found_location = true;
 
 //                   ORBSVCS_DEBUG ((LM_DEBUG,
 //                               "NEW MIN_LOAD == %f\n",
@@ -483,13 +489,13 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
   CORBA::Float dampening = TAO_LB::LL_DEFAULT_DAMPENING;
   CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD;
 
-  PortableGroup::Property const * ct = nullptr;  // critical threshold property
+  PortableGroup::Property const * ct {};  // critical threshold property
 
   CORBA::ULong const len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      if (ACE_OS::strcmp (property.nam[0].id.in (),
+      if (std::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold") == 0)
         {
           this->extract_float_property (property,
@@ -498,14 +504,14 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
           ct = &property;
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LeastLoaded.RejectThreshold") == 0)
         {
           this->extract_float_property (property,
                                         reject_threshold);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LeastLoaded.Tolerance") == 0)
         {
           this->extract_float_property (property,
@@ -516,7 +522,7 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LeastLoaded.Dampening") == 0)
         {
           this->extract_float_property (property,
@@ -527,7 +533,7 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LeastLoaded.PerBalanceLoad") == 0)
         {
           this->extract_float_property (property,

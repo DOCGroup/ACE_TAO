@@ -31,10 +31,15 @@ class TAO_Notify_ProxySupplier_T : public virtual TAO_Notify_Proxy_T <SERVANT_TY
 {
 public:
   /// Constructor
-  TAO_Notify_ProxySupplier_T ();
+  TAO_Notify_ProxySupplier_T () = default;
+
+  TAO_Notify_ProxySupplier_T (TAO_Notify_ProxySupplier_T const &) = delete;
+  TAO_Notify_ProxySupplier_T (TAO_Notify_ProxySupplier_T &&) = delete;
+  TAO_Notify_ProxySupplier_T &operator= (TAO_Notify_ProxySupplier_T const &) = delete;
+  TAO_Notify_ProxySupplier_T &operator= (TAO_Notify_ProxySupplier_T &&) = delete;
 
   /// Destructor
-  ~TAO_Notify_ProxySupplier_T ();
+  ~TAO_Notify_ProxySupplier_T () override = default;
 
   /// Notification of subscriptions set at the admin.
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
@@ -54,7 +59,7 @@ public:
   virtual void forward_any_no_filtering (const CORBA::Any & event);
 protected:
   //= Data Members
-  CORBA::Boolean is_suspended_;
+  CORBA::Boolean is_suspended_ = false;
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (

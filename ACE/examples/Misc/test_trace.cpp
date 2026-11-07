@@ -47,10 +47,15 @@ public:
 
   int recursive (size_t depth);
 
-  virtual int svc ()
+  int svc () override
   {
     return this->recursive (this->depth_);
   }
+
+  My_Task (My_Task const &) = delete;
+  My_Task (My_Task &&) = delete;
+  My_Task &operator= (My_Task const &) = delete;
+  My_Task &operator= (My_Task &&) = delete;
 
 private:
   /// Depth of the recursion.

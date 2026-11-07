@@ -18,8 +18,9 @@
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Singleton.h"
-#include "ace/Unbounded_Set.h"
 #include "ace/Null_Mutex.h"
+
+#include "ace/Unbounded_Set.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -38,16 +39,15 @@ class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
 class TAO_AV_Flow_Protocol_Factory;
 
-using TAO_AV_FlowSpecSet = ACE_Unbounded_Set<TAO_FlowSpec_Entry*>;
-using TAO_AV_FlowSpecSetItor = ACE_Unbounded_Set_Iterator<TAO_FlowSpec_Entry*>;
+using TAO_AV_FlowSpecSet = ACE_Unbounded_Set<TAO_FlowSpec_Entry *>;
+using TAO_AV_FlowSpecSetItor = TAO_AV_FlowSpecSet::iterator;
 
-using TAO_AV_TransportFactorySet = ACE_Unbounded_Set<TAO_AV_Transport_Item*>;
-using TAO_AV_TransportFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*>;
+using TAO_AV_TransportFactorySet = ACE_Unbounded_Set<TAO_AV_Transport_Item *>;
+using TAO_AV_TransportFactorySetItor = TAO_AV_TransportFactorySet::iterator;
 
-// typedefs for containers containing the list of loaded Flow_Protocol factories.
-using TAO_AV_Flow_ProtocolFactorySet = ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*>;
-using TAO_AV_Flow_ProtocolFactorySetItor =
-  ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*>;
+// Containers containing the list of loaded Flow_Protocol factories.
+using TAO_AV_Flow_ProtocolFactorySet = ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item *>;
+using TAO_AV_Flow_ProtocolFactorySetItor = TAO_AV_Flow_ProtocolFactorySet::iterator;
 
 /**
  * @class TAO_AV_Core
@@ -116,19 +116,19 @@ public:
   int load_default_flow_protocol_factories ();
 
   /// = Get the acceptor registry
-  TAO_AV_Acceptor *get_acceptor (const char *flowname);
-  TAO_AV_Connector *get_connector (const char *flowname);
-  int remove_acceptor (const char *flowname);
-  int remove_connector (const char *flowname);
+  TAO_AV_Acceptor *get_acceptor (char const *flowname);
+  TAO_AV_Connector *get_connector (char const *flowname);
+  int remove_acceptor (char const *flowname);
+  int remove_connector (char const *flowname);
   TAO_AV_Connector_Registry *connector_registry ();
   TAO_FlowSpec_Entry *get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
-                                           const char *flowname);
+                                           char const *flowname);
   TAO_AV_Acceptor_Registry  *acceptor_registry  ();
 
   // = Get the protocol factories
   /// = Set/get the <ACE_Reactor>.
-  TAO_AV_Flow_Protocol_Factory *get_flow_protocol_factory(const char *flow_protocol);
-  TAO_AV_Transport_Factory *get_transport_factory(const char *transport_protocol);
+  TAO_AV_Flow_Protocol_Factory *get_flow_protocol_factory(char const *flow_protocol);
+  TAO_AV_Transport_Factory *get_transport_factory(char const *transport_protocol);
   TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories ();
   TAO_AV_TransportFactorySet *transport_factories ();
   void reactor (ACE_Reactor *r);
@@ -139,8 +139,8 @@ public:
   void poa (PortableServer::POA_ptr poa_);
 
   static int deactivate_servant (PortableServer::Servant servant);
-  static char *get_flowname (const char *flow_spec_entry_str);
-  static ACE_CString get_control_flowname(const char *flowname);
+  static char *get_flowname (char const *flow_spec_entry_str);
+  static ACE_CString get_control_flowname(char const *flowname);
 
 protected:
   /// The connector registry which all active connecters must register
@@ -160,7 +160,7 @@ protected:
   ACE_Reactor *reactor_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
-  CORBA::Boolean stop_run_;
+  bool stop_run_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

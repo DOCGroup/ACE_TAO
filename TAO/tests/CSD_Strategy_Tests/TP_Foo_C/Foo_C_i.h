@@ -10,19 +10,19 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 {
   public:
     Foo_C_i();
-    virtual ~Foo_C_i();
+    ~Foo_C_i() override;
 
-    virtual void op1();
+    void op1() override;
 
-    virtual void op2(CORBA::Long value);
+    void op2(CORBA::Long value) override;
 
-    virtual CORBA::Long op3(CORBA::Long value);
+    CORBA::Long op3(CORBA::Long value) override;
 
-    virtual void op4(CORBA::Long value);
+    void op4(CORBA::Long value) override;
 
-    virtual void op5();
+    void op5() override;
 
-    virtual void done();
+    void done() override;
 
     void cust_op1();
     void cust_op2(long value);
@@ -34,10 +34,15 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 
     void dump();
 
+    Foo_C_i (Foo_C_i const &) = delete;
+    Foo_C_i (Foo_C_i &&) = delete;
+    Foo_C_i & operator= (Foo_C_i const &) = delete;
+    Foo_C_i & operator= (Foo_C_i &&) = delete;
+
 
   private:
     LongVector in_values_ [10];
-    unsigned count_[10];
+    unsigned count_[10] {};
 };
 
 #endif

@@ -8,7 +8,7 @@
 #include "ace/ETCL/ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -173,7 +173,8 @@ ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
   switch (widest_type)
     {
     case ACE_ETCL_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) *this, (const char*) rhs) == 0);
+      return_value = (std::strcmp (static_cast<char const *> (*this),
+                                   static_cast<char const *> (rhs)) == 0);
       break;
     case ACE_ETCL_DOUBLE:
       return_value = ACE::is_equal ((ACE_CDR::Double) *this, (ACE_CDR::Double) rhs);
@@ -204,7 +205,8 @@ ETCL_Literal_Constraint::operator< (const ETCL_Literal_Constraint & rhs)
   switch (widest_type)
     {
     case ACE_ETCL_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) *this, (const char*) rhs) < 0);
+      return_value = (std::strcmp (static_cast<char const *> (*this),
+                                   static_cast<char const *> (rhs)) < 0);
       break;
     case ACE_ETCL_DOUBLE:
       return_value = (ACE_CDR::Double) *this < (ACE_CDR::Double) rhs;
@@ -235,7 +237,8 @@ ETCL_Literal_Constraint::operator> (const ETCL_Literal_Constraint & rhs)
   switch (widest_type)
     {
     case ACE_ETCL_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) *this, (const char*) rhs) > 0);
+      return_value = (std::strcmp (static_cast<char const *> (*this),
+                                   static_cast<char const *> (rhs)) > 0);
       break;
     case ACE_ETCL_DOUBLE:
       return_value = (ACE_CDR::Double) *this > (ACE_CDR::Double) rhs;

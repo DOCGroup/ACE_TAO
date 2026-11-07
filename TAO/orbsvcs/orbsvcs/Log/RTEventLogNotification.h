@@ -48,7 +48,7 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogNotification :
 {
 public:
   /// Constructor.
-  TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr event_channel);
+  explicit TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr event_channel);
 
   /// Destructor.
   ~TAO_RTEventLogNotification () override;

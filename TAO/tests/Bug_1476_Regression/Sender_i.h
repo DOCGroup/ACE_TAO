@@ -12,6 +12,8 @@
 
 #include "TestS.h"
 
+#include <atomic>
+
 /// Implement the Test::Sender interface
 /**
  * Implements the oneway call send_ready_message. This in turn calls
@@ -22,11 +24,10 @@ class Sender_i
   : public virtual POA_Test::Sender
 {
 public:
-  /// Constructor
-  Sender_i (CORBA::ORB_ptr orb);
+  Sender_i () = default;
 
-  ///Destructor
-  ~Sender_i () override;
+  /// Destructor
+  ~Sender_i () override = default;
   Sender_i (Sender_i const &) = delete;
   Sender_i &operator= (Sender_i const &) = delete;
   Sender_i (Sender_i &&) = delete;
@@ -42,14 +43,11 @@ public:
   CORBA::ULong get_active_objects () const;
 
 private:
-  /// Our local ORB ptr
-  CORBA::ORB_var orb_;
-
   /// Number of active objects who are trying to connect
-  CORBA::ULong active_objects_;
+  CORBA::ULong active_objects_ {};
 
   /// Number of invocations received
-  CORBA::ULong number_received_;
+  std::atomic<CORBA::ULong> number_received_ {};
 };
 
 #include /**/ "ace/post.h"

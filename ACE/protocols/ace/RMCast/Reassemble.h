@@ -18,19 +18,16 @@ namespace ACE_RMCast
     Reassemble (Parameters const& );
 
   public:
-    virtual void
-    recv (Message_ptr m);
+    void recv (Message_ptr m) override;
 
   private:
    // Parameters const& params_;
 
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            Data_ptr,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        Data_ptr,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
     Map map_;
   };

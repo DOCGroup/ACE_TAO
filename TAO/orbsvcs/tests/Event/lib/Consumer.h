@@ -77,8 +77,8 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
 
 private:
   /// The main driver for the test.

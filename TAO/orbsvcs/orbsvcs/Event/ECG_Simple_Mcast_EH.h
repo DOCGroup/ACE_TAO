@@ -46,27 +46,27 @@ public:
    * See comments for <receiver_> data member on why raw pointer is
    * used for the <recv> argument.
    */
-  TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
+  explicit TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_Simple_Mcast_EH () override;
+  ~TAO_ECG_Simple_Mcast_EH () override = default;
 
   /// Join the specified multicast group and register itself with the
   /// reactor.
   /// To insure proper resource clean up, if open () is successful,
   /// the user MUST call shutdown () when handler is no longer needed
   /// (and its reactor still exists).
-  int open (const char * mcast_addr,
+  int open (char const *mcast_addr,
             ACE_TCHAR const *net_if = nullptr);
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown () override;
+  int shutdown () override;
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
   /// <dgram_> is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd) override;
+  int handle_input (ACE_HANDLE fd) override;
 
 private:
   // Socket on which we listen for messages.

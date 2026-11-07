@@ -64,10 +64,10 @@ class Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   // Generic initialization method.
 
-  virtual int close (u_long);
+  int close (u_long) override;
   // Close down and delete this.
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -85,7 +85,7 @@ protected:
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 
-  virtual int svc ();
+  int svc () override;
   // Template method entry point into the handler task.
 
   virtual void print_results ();
@@ -110,7 +110,7 @@ public:
   // Constructor.
 
 private:
-  virtual int run ();
+  int run () override;
   // Template Method hook called by <svc>.
 };
 
@@ -122,10 +122,10 @@ public:
   // Constructor.
 
 private:
-  virtual int run ();
+  int run () override;
   // Template Method hook called by <svc>.
 
-  virtual void print_results ();
+  void print_results () override;
   // Print the results.
 };
 
@@ -288,7 +288,7 @@ Twoway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
-  char *request = 0;
+  char *request = nullptr;
 
   for (;;)
     {
@@ -340,7 +340,7 @@ Twoway_Handler::run ()
       this->message_count_++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   delete [] request;
@@ -379,7 +379,7 @@ Oneway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
-  char *request = 0;
+  char *request = nullptr;
 
   for (;;)
     {
@@ -417,7 +417,7 @@ Oneway_Handler::run ()
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   delete [] request;

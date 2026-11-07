@@ -51,8 +51,10 @@ public:
   TYPE &object ();
 
 private:
-  ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &) = delete;
-  void operator= (const ACE_Cleanup_Adapter<TYPE> &) = delete;
+  ACE_Cleanup_Adapter (ACE_Cleanup_Adapter<TYPE> const &) = delete;
+  ACE_Cleanup_Adapter (ACE_Cleanup_Adapter<TYPE> &&) = delete;
+  ACE_Cleanup_Adapter &operator= (ACE_Cleanup_Adapter<TYPE> const &) = delete;
+  ACE_Cleanup_Adapter &operator= (ACE_Cleanup_Adapter<TYPE> &&) = delete;
 
   /// Contained object.
   TYPE object_;
@@ -136,8 +138,10 @@ protected:
   ACE_Managed_Object () = delete;
 
 private:
-  ACE_Managed_Object (const ACE_Managed_Object<TYPE> &) = delete;
-  void operator= (const ACE_Managed_Object<TYPE> &) = delete;
+  ACE_Managed_Object (ACE_Managed_Object<TYPE> const &) = delete;
+  ACE_Managed_Object (ACE_Managed_Object<TYPE> &&) = delete;
+  ACE_Managed_Object &operator= (ACE_Managed_Object<TYPE> const &) = delete;
+  ACE_Managed_Object &operator= (ACE_Managed_Object<TYPE> &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

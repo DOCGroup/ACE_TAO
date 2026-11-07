@@ -7,13 +7,13 @@
 
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("obj.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("obj.ior");
 
-CORBA::Float reject_threshold = 0;
-CORBA::Float critical_threshold = 0;
-CORBA::Float dampening = 0;
-const ACE_TCHAR *strategy = ACE_TEXT("LeastLoaded");
-int number;
+CORBA::Float reject_threshold {};
+CORBA::Float critical_threshold {};
+CORBA::Float dampening {};
+ACE_TCHAR const *strategy = ACE_TEXT("LeastLoaded");
+int number {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -71,7 +71,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 CORBA::Object_ptr
 join_object_group (CORBA::ORB_ptr orb,
                    CosLoadBalancing::LoadManager_ptr lm,
-                   const PortableGroup::Location & location)
+                   PortableGroup::Location const &location)
 {
   CORBA::Object_var ns_object =
     orb->resolve_initial_references ("NameService");
@@ -91,10 +91,10 @@ join_object_group (CORBA::ORB_ptr orb,
     {
       group = nc->resolve (name);
     }
-  catch (const CosNaming::NamingContext::NotFound& )
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Object group not created.  Create one.
-      const char repository_id[] = "IDL:Test/StockFactory:1.0";
+      char const repository_id[] = "IDL:Test/StockFactory:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -142,7 +142,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
               if (!ACE::is_equal (reject_threshold, 0.0f))
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
                   props.length (len++);
 
@@ -154,7 +154,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
               if (!ACE::is_equal (critical_threshold, 0.0f))
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
                   props.length (len++);
 
@@ -166,7 +166,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
               if (!ACE::is_equal (dampening, 0.0f))
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
                   props.length (len++);
 
@@ -182,7 +182,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
           lm->set_default_properties (props);
         }
-      catch (const CosNaming::NamingContext::AlreadyBound& )
+      catch (CosNaming::NamingContext::AlreadyBound const &)
         {
           // Somebody beat us to creating the object group.  Clean up
           // the one we created.
@@ -214,7 +214,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ORBInitializer *initializer = 0;
+      ORBInitializer *initializer = nullptr;
       ACE_NEW_RETURN (initializer,
                       ORBInitializer,
                       -1);  // No exceptions yet!
@@ -281,7 +281,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -303,7 +303,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("lb_server exception");
       return 1;

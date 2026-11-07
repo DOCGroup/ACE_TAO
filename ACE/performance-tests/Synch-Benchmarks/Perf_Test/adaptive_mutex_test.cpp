@@ -8,18 +8,18 @@
 class ACE_Svc_Export Adaptive_Mutex_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  int init (int, ACE_TCHAR *[]) override;
 };
 
 int
 Adaptive_Mutex_Test::init (int, ACE_TCHAR *[])
 {
-  ACE_Lock *lock;
+  ACE_Lock *lock {};
   ACE_NEW_RETURN (lock,
                   ACE_Lock_Adapter<ACE_Thread_Mutex> (),
                   -1);
 
-  return this->set_lock (lock);
+  return this->set_lock (std::unique_ptr<ACE_Lock> {lock});
 }
 
 ACE_SVC_FACTORY_DECLARE (Adaptive_Mutex_Test)

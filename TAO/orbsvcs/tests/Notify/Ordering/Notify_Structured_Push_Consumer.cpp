@@ -9,7 +9,7 @@
 #include "ace/OS_NS_unistd.h"
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-                                            const char* name,
+                                            char const* name,
                                             CORBA::Short policy,
                                             bool use_ordering,
                                             int expected,
@@ -18,13 +18,10 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
    order_policy_ (policy),
    use_ordering_ (use_ordering),
    expected_ (expected),
-   count_ (0),
-   first_(0),
    client_ (client)
 {
   this->client_.consumer_start (this);
 }
-
 
 void
 Notify_Structured_Push_Consumer::_connect (
@@ -42,15 +39,15 @@ Notify_Structured_Push_Consumer::_connect (
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
       proxysupplier.in ());
 
-  if (use_ordering_)
-  {
-    CosNotification::QoSProperties properties (1);
-    properties.length (1);
-    properties[0].name = CORBA::string_dup (CosNotification::OrderPolicy);
-    properties[0].value <<= this->order_policy_;
+  if (this->use_ordering_)
+    {
+      CosNotification::QoSProperties properties (1);
+      properties.length (1);
+      properties[0].name = CORBA::string_dup (CosNotification::OrderPolicy);
+      properties[0].value <<= this->order_policy_;
 
-    this->proxy_->set_qos (properties);
-  }
+      this->proxy_->set_qos (properties);
+    }
 
   this->proxy_->connect_structured_push_consumer (objref.in ());
 
@@ -58,18 +55,17 @@ Notify_Structured_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-                          const CosNotification::StructuredEvent& event)
+                          CosNotification::StructuredEvent const& event)
 {
-  ACE_DEBUG((LM_DEBUG, "-"));
-  if (count_ == 0)
-  {
-    // Sleep long enough to force the channel to back up, otherwise
-    // there will be no ordering.
-    ACE_OS::sleep(2);
-  }
+  ACE_DEBUG ((LM_DEBUG, "-"));
+  if (this->count_ == 0)
+    {
+      // Sleep long enough to force the channel to back up, otherwise
+      // there will be no ordering.
+      ACE_OS::sleep (2);
+    }
 
   ++count_;
 
@@ -83,36 +79,34 @@ Notify_Structured_Push_Consumer::push_structured_event (
     this->client_.consumer_done (this);
   }
 
-  CORBA::Long id = 0;
+  CORBA::Long id {};
 
-  ACE_ASSERT(event.header.variable_header.length() == 3);
-  ACE_ASSERT(ACE_OS::strcmp(event.header.variable_header[0].name.in(), "id") == 0);
+  ACE_ASSERT (event.header.variable_header.length () == 3);
+  ACE_ASSERT (ACE_OS::strcmp (event.header.variable_header[0].name.in (), "id") == 0);
   event.header.variable_header[0].value >>= id;
 
   // The first event won't necessarilly be in order, because we hadn't yet forced
   // the channel to queue events.
-  if (count_ > 1)
-  {
-    if (order_policy_ == CosNotification::PriorityOrder
-      || order_policy_ == CosNotification::DeadlineOrder)
+  if (this->count_ > 1)
     {
-      int eid = expected_ - count_ + 1;
-      if (eid <= first_)
-        --eid;
+      if (this->order_policy_ == CosNotification::PriorityOrder
+          || this->order_policy_ == CosNotification::DeadlineOrder)
+        {
+          int const expected_id = this->expected_ - this->count_ + 1;
+          int const adjusted_expected_id = expected_id <= this->first_ ? expected_id - 1 : expected_id;
 
-      if (id != eid)
-        ACE_ERROR((LM_ERROR, "\nError: "));
-      ACE_DEBUG((LM_DEBUG, "Expected id:%d Received id:%d\n", eid, id));
+          if (id != adjusted_expected_id)
+            ACE_ERROR ((LM_ERROR, "\nError: "));
+          ACE_DEBUG ((LM_DEBUG, "Expected id:%d Received id:%d\n", adjusted_expected_id, id));
+        }
+      else if (id != this->count_ - 1)
+        ACE_ERROR ((LM_ERROR,
+                    "\nError: Expected id:%d Received id:%d\n",
+                    this->count_ - 1, id));
     }
-    else
-    {
-      if (id != count_ - 1)
-        ACE_ERROR((LM_ERROR, "\nError: Expected id:%d Received id:%d\n", count_ - 1, id));
-    }
-  }
   else
-  {
-    ACE_DEBUG((LM_DEBUG, "Ignoring first event. id=%d\n", id));
-    first_ = id;
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "Ignoring first event. id=%d\n", id));
+      this->first_ = id;
+    }
 }

@@ -65,13 +65,13 @@ class ACE_Export ACE_Message_Queue_Vx: public ACE_Message_Queue<ACE_NULL_SYNCH>
 public:
   ACE_Message_Queue_Vx (size_t max_messages,
                         size_t max_message_length,
-                        ACE_Notification_Strategy * = 0);
+                        ACE_Notification_Strategy * = nullptr);
 
   // Create a message queue with all the defaults.
   /// Create a message queue with all the defaults.
   virtual int open (size_t max_messages,
                     size_t max_message_length,
-                    ACE_Notification_Strategy * = 0);
+                    ACE_Notification_Strategy * = nullptr);
 
   /// Close down the message queue and release all resources.
   virtual int close ();

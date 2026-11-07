@@ -32,6 +32,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <memory>
 #include "ace/OS_main.h"
 #include "asnmp/gauge.h"
 #include "test_config.h"
@@ -57,12 +58,13 @@ static void
 TestGuage ()
 {
 #if !defined (ACE_WIN32)
-   long l = LONG_MAX, nl = LONG_MIN;  // limits.h
-   unsigned long ul = ULONG_MAX, def = 0;
-   int i = INT_MAX, ni = INT_MIN;
-   unsigned int ui = UINT_MAX;
-   unsigned short us = 10;
-   short si = static_cast<short> (65535);
+   constexpr long l = LONG_MAX, nl = LONG_MIN;  // limits.h
+   constexpr unsigned long ul = ULONG_MAX;
+   constexpr unsigned long def {};
+   constexpr int i = INT_MAX, ni = INT_MIN;
+   constexpr unsigned int ui = UINT_MAX;
+   constexpr unsigned short us = 10;
+   constexpr short si = static_cast<short> (65535);
 
    // constructors
    Gauge32 g1;
@@ -79,24 +81,25 @@ TestGuage ()
    ACE_ASSERT(g6 == static_cast<unsigned long> (ni));
    Gauge32 g7(ui);
    ACE_ASSERT(g7 == ui);
-   Gauge32 *g8 = new Gauge32(g5);
-   ACE_ASSERT(g8 != 0);
-   delete g8;
+   Gauge32 const &g7_ref = g7;
+   ACE_ASSERT(static_cast<unsigned long> (g7_ref) == ui);
+   std::unique_ptr<Gauge32> g8 = std::make_unique<Gauge32> (g5);
+   ACE_ASSERT(g8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%u]\n",
-    (unsigned long)g1));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%u\") [%u]\n",
-    l, (unsigned long)g2));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%u\") [%u]\n",
-    nl, (unsigned long)g3));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%u\") [%u]\n",
-    ul, (unsigned long)g4));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%u\") [%u]\n",
-    i, (unsigned long)g5));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%u\") [%u]\n",
-    ni, (unsigned long)g6));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g7(\"%u\") [%u]\n",
-    ui, (unsigned long)g7));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%lu]\n",
+    static_cast<unsigned long> (g1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%ld\") [%lu]\n",
+    l, static_cast<unsigned long> (g2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%ld\") [%lu]\n",
+    nl, static_cast<unsigned long> (g3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%lu\") [%lu]\n",
+    ul, static_cast<unsigned long> (g4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%d\") [%lu]\n",
+    i, static_cast<unsigned long> (g5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%d\") [%lu]\n",
+    ni, static_cast<unsigned long> (g6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g7(\"%u\") [%lu]\n",
+    ui, static_cast<unsigned long> (g7)));
 
   // assignent
   g1 = g2;  // obj

@@ -1,5 +1,7 @@
 #include "Server_Info.h"
 
+#include <cstring>
+
 Server_Info::Server_Info ()
 {
   this->clear ();
@@ -139,7 +141,7 @@ Server_Info::is_server (char const *name) const
 {
   for (CORBA::ULong i = 0; i < peers.length(); i++)
     {
-      if (ACE_OS::strcmp (peers[i], name) == 0)
+      if (std::strcmp (peers[i], name) == 0)
         return true;
     }
   return false;

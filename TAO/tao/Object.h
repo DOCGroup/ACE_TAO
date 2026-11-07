@@ -117,11 +117,11 @@ namespace CORBA
     // appropriate.
 
     /// Determine if we are of the type specified by the "logical_type_id"
-    virtual CORBA::Boolean _is_a (const char *logical_type_id);
+    virtual CORBA::Boolean _is_a (char const *logical_type_id);
 
     /// The repository ID for the most derived class, this is an
     /// implementation method and does no remote invocations!
-    virtual const char* _interface_repository_id () const;
+    virtual char const *_interface_repository_id () const;
 
     /**
      * Return a (potentially non-unique) hash value for this object.
@@ -163,14 +163,14 @@ namespace CORBA
     // section 6.2.1.
 
     virtual void _create_request (CORBA::Context_ptr ctx,
-                                  const char *operation,
+                                  char const *operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::Request_ptr &request,
                                   CORBA::Flags req_flags);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
-                                  const char *operation,
+                                  char const *operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::ExceptionList_ptr exclist,
@@ -184,7 +184,7 @@ namespace CORBA
     // implementation.
 
     /// DII operation to create a request.
-    virtual CORBA::Request_ptr _request (const char *operation);
+    virtual CORBA::Request_ptr _request (char const *operation);
 #endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -196,11 +196,11 @@ namespace CORBA
     CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type);
 
     CORBA::Object_ptr _set_policy_overrides (
-      const CORBA::PolicyList & policies,
+      CORBA::PolicyList const &policies,
       CORBA::SetOverrideType set_add);
 
     CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types);
+      CORBA::PolicyTypeSeq const &types);
 
     CORBA::Boolean _validate_connection (
       CORBA::PolicyList_out inconsistent_policies);
@@ -236,7 +236,7 @@ namespace CORBA
   public:
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
-    static CORBA::Boolean marshal (const Object_ptr x,
+    static CORBA::Boolean marshal (Object_ptr x,
                                    TAO_OutputCDR &cdr);
 
     /// Accessor for the cached servant reference held on the stub
@@ -288,7 +288,7 @@ namespace CORBA
     /// Used by optionally generated ostream operators for interface
     /// to output the actual repo id for debugging.
     static std::ostream& _tao_stream (std::ostream &strm,
-                                      const Object_ptr _tao_objref);
+                                      Object_ptr _tao_objref);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
 
 #endif /* GEN_OSTREAM_OPS */
@@ -307,7 +307,7 @@ namespace CORBA
      */
     IOP::IOR *steal_ior ();
 
-    const IOP::IOR &ior () const;
+    IOP::IOR const &ior () const;
 
     //@} End of TAO-specific methods..
 
@@ -318,14 +318,14 @@ namespace CORBA
     /// @note This method is intended to be used by classes that
     /// implement Smart Proxies and no others.
     virtual char* convert_to_ior (bool use_omg_ior_format,
-                                  const char* ior_prefix) const;
+                                  char const *ior_prefix) const;
 
     /// Wrapper for _remove_ref(), naming convention for templatizing.
     void _decr_refcount ();
 
   protected:
     /// Initializing a local object.
-    Object (int dummy = 0);
+    explicit Object (int dummy = 0);
 
     /// Convenience accessor for the object proxy broker of the
     /// underlying stub.
@@ -336,8 +336,10 @@ namespace CORBA
     std::atomic<uint32_t> refcount_;
 
   private:
-    Object (const Object &) = delete;
-    Object &operator = (const Object &) = delete;
+    Object (Object const &) = delete;
+    Object &operator= (Object const &) = delete;
+    Object (Object &&) = delete;
+    Object &operator= (Object &&) = delete;
 
   private:
     /// Specify whether this is a local object or not.
@@ -421,7 +423,7 @@ extern
   (*_TAO_Object_Proxy_Broker_Factory_function_pointer) ();
 
 TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, const CORBA::Object*);
+operator<< (TAO_OutputCDR&, CORBA::Object const *);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::Object *&);

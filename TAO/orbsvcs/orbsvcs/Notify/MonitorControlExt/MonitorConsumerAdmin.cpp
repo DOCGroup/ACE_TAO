@@ -10,6 +10,9 @@
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 
+#include <cstring>
+#include <string>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -18,7 +21,7 @@ class ConsumerAdminControl : public TAO_NS_Control
 {
 public:
   ConsumerAdminControl (TAO_MonitorEventChannel* ec,
-                        const ACE_CString& name,
+                        ACE_CString const &name,
                         CosNotifyChannelAdmin::AdminID id)
     : TAO_NS_Control (name.c_str ()),
       ec_ (ec),
@@ -26,9 +29,9 @@ public:
   {
   }
 
-  virtual bool execute (const char* command)
+  bool execute (char const *command) override
   {
-    if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMERADMIN) == 0)
+    if (std::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMERADMIN) == 0)
       {
         CosNotifyChannelAdmin::ConsumerAdmin_var admin =
           this->ec_->get_consumeradmin (this->id_);
@@ -51,14 +54,6 @@ private:
   CosNotifyChannelAdmin::AdminID id_;
 };
 
-TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin ()
-  : stat_name_ (),
-    control_name_ (),
-    queue_size_ (0),
-    overflows_ (0)
-{
-}
-
 TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin ()
 {
   this->remove ();
@@ -71,7 +66,7 @@ TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin ()
 void
 TAO_MonitorConsumerAdmin::register_stats_controls (
   TAO_MonitorEventChannel* mec,
-  const ACE_CString& base)
+  ACE_CString const &base)
 {
   // Set up the statistic name, create it and register it
   this->stat_name_ = base + "/";
@@ -87,7 +82,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
       // The constructor sets the refcount to 1 so this call will
       // delete the pointer.
       this->queue_size_->remove_ref ();
-      this->queue_size_ = 0;
+      this->queue_size_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 
@@ -100,12 +95,12 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
   if (!mec->register_statistic (this->overflow_stat_name_, this->overflows_))
     {
       delete this->overflows_;
-      this->overflows_ = 0;
+      this->overflows_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 
   this->control_name_ = base;
-  ConsumerAdminControl* control = nullptr;
+  ConsumerAdminControl* control {};
   ACE_NEW_THROW_EX (control,
                     ConsumerAdminControl (mec,
                                           this->control_name_.c_str (),
@@ -126,13 +121,13 @@ CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_MonitorConsumerAdmin::obtain_named_notification_push_supplier (
   CosNotifyChannelAdmin::ClientType ctype,
   CosNotifyChannelAdmin::ProxyID_out proxy_id,
-  const char * name)
+  char const *name)
 {
   // First, make sure we can get down to the real ec type.
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
 
-  if (ec == 0)
+  if (ec == nullptr)
     {
       throw CORBA::INTERNAL ();
     }
@@ -157,7 +152,7 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
 
-  if (ec == 0)
+  if (ec == nullptr)
     {
       throw CORBA::INTERNAL ();
     }
@@ -168,9 +163,8 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
       ctype, proxy_id);
 
   // Next, map the proxy id to the name in the ec.
-  char name[64];
-  ACE_OS::sprintf (name, "%d", proxy_id);
-  ec->map_supplier_proxy (proxy_id, name);
+  const std::string proxy_name = std::to_string (proxy_id);
+  ec->map_supplier_proxy (proxy_id, proxy_name.c_str ());
 
   return proxy._retn ();
 }
@@ -182,7 +176,7 @@ TAO_MonitorConsumerAdmin::update_queue_count (size_t count)
   // constant, and only updated the statistic when the count was non-zero.
   this->queue_size_->receive (count);
 
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     {
       this->child_->update_queue_count (count);
     }
@@ -198,7 +192,7 @@ TAO_MonitorConsumerAdmin::count_queue_overflow (
   // local and global overflows
   this->overflows_->receive ((size_t)1);
 
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     {
       this->child_->count_queue_overflow (local_overflow, global_overflow);
     }
@@ -208,13 +202,13 @@ TAO_MonitorEventChannel *
 TAO_MonitorConsumerAdmin::get_ec () const
 {
   TAO_MonitorEventChannel* ec = dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
+  if (ec == nullptr)
     throw CORBA::INTERNAL ();
   return ec;
 }
 
-const ACE_CString &
-TAO_MonitorConsumerAdmin::stat_name ()const
+ACE_CString const &
+TAO_MonitorConsumerAdmin::stat_name () const
 {
   return stat_name_;
 }
@@ -233,7 +227,7 @@ TAO_MonitorConsumerAdmin::remove ()
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec != 0)
+  if (ec != nullptr)
     {
       ec->unregister_statistic (this->queue_size_stat_name_);
       ec->unregister_statistic (this->overflow_stat_name_);

@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "tao/orbconf.h"        /* For POA_NO_TIMESTAMP definition. */
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +28,7 @@ namespace TAO
     ACE_INLINE void
     Creation_Time::creation_time (void const *creation_time)
     {
-      ACE_OS::memcpy (&this->time_stamp_,
+      std::memcpy (&this->time_stamp_,
                       creation_time,
                       Creation_Time::creation_time_length ());
     }
@@ -45,7 +46,7 @@ namespace TAO
       ACE_UNUSED_ARG (rhs);
       return true;
     #else
-      return ACE_OS::memcmp (&this->time_stamp_,
+      return std::memcmp (&this->time_stamp_,
                              &rhs.time_stamp_,
                              Creation_Time::creation_time_length ()) == 0;
     #endif /* POA_NO_TIMESTAMP */
@@ -58,7 +59,7 @@ namespace TAO
       ACE_UNUSED_ARG (rhs);
       return false;
     #else
-      return ACE_OS::memcmp (&this->time_stamp_,
+      return std::memcmp (&this->time_stamp_,
                              &rhs.time_stamp_,
                              Creation_Time::creation_time_length ()) != 0;
     #endif /* POA_NO_TIMESTAMP */
@@ -71,7 +72,7 @@ namespace TAO
       ACE_UNUSED_ARG (rhs);
       return true;
     #else
-      return ACE_OS::memcmp (this->time_stamp_,
+      return std::memcmp (this->time_stamp_,
                              rhs.creation_time (),
                              Creation_Time::creation_time_length ()) == 0;
     #endif /* POA_NO_TIMESTAMP */
@@ -84,7 +85,7 @@ namespace TAO
       ACE_UNUSED_ARG (rhs);
       return false;
     #else
-      return ACE_OS::memcmp (this->time_stamp_,
+      return std::memcmp (this->time_stamp_,
                              rhs.creation_time (),
                              Creation_Time::creation_time_length ()) != 0;
     #endif /* POA_NO_TIMESTAMP */

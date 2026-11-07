@@ -30,6 +30,8 @@
 #include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/operation_details.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -55,7 +57,7 @@ namespace TAO
     typename TAO::SArg_Traits<T>::in_arg_type
     get_in_arg (TAO_Operation_Details const * details,
                 TAO::Argument * const * skel_args,
-                size_t i)
+                std::size_t i)
     {
       return
         (details != nullptr && details->use_stub_args ())
@@ -70,7 +72,7 @@ namespace TAO
     typename TAO::SArg_Traits<T>::inout_arg_type
     get_inout_arg (TAO_Operation_Details const * details,
                    TAO::Argument * const * skel_args,
-                   size_t i)
+                   std::size_t i)
     {
       return
         (details != nullptr && details->use_stub_args ())
@@ -85,7 +87,7 @@ namespace TAO
     typename TAO::SArg_Traits<T>::out_arg_type
     get_out_arg (TAO_Operation_Details const * details,
                  TAO::Argument * const * skel_args,
-                 size_t i)
+                 std::size_t i)
     {
       return
         (details != nullptr && details->use_stub_args ())

@@ -86,8 +86,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
-          << node->name () << "_ptr const p,"
-          << "TAO_OutputCDR & cdr)" << be_nl
+          << node->name () << "_ptr const p, "
+          << "TAO_OutputCDR &cdr)" << be_nl
           << "{" << be_idt_nl
           << "return ";
 
@@ -281,7 +281,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->full_name () << "::_is_a (char const *value)" << be_nl;
 
   *os << "{" << be_idt_nl
-      << "if (" << be_idt << be_idt;
+      << "if (" << be_idt;
 
   int status = node->gen_is_a_ancestors (os);
 
@@ -294,7 +294,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << ")" << be_uidt_nl
+  *os << be_idt << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -418,11 +418,11 @@ be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
   if (node->is_local ())
     {
       *os << "return " << node->local_name ()
-          << "::_duplicate (" << be_idt << be_idt_nl
+          << "::_duplicate (" << be_idt_nl
           << "dynamic_cast<" << node->local_name ()
           << "_ptr> (_tao_objref));"
           << be_uidt
-          << be_uidt << be_uidt_nl
+          << be_uidt_nl
           << "}" << be_nl_2;
 
       return true;
@@ -430,21 +430,33 @@ be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
-          << node->local_name () << ">::" << pre << " (";
+      std::string narrow_call = node->full_name () + " *proxy = TAO::Narrow_Utils<"
+        + node->local_name () + ">::" + pre + " (_tao_objref, \""
+        + node->repoID () + "\");";
 
-      *os << be_idt << be_idt_nl;
-
-      *os << "_tao_objref";
       if (pre == "narrow")
         {
-          *os << "," << be_nl
-              << "\"" << node->repoID () << "\"";
+          if (narrow_call.length () + 2 <= be_global->max_line_length ())
+            {
+              *os << narrow_call;
+            }
+          else
+            {
+              *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
+                  << node->local_name () << ">::" << pre << " ("
+                  << be_idt_nl
+                  << "_tao_objref," << be_nl
+                  << "\"" << node->repoID () << "\");"
+                  << be_uidt;
+            }
+        }
+      else
+        {
+          *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
+              << node->local_name () << ">::" << pre << " (_tao_objref);";
         }
 
-      *os << ");";
-
-      *os << be_uidt << be_uidt << be_nl
+      *os << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl

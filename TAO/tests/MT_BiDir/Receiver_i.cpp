@@ -1,14 +1,7 @@
 #include "Receiver_i.h"
 
-Receiver_i::Receiver_i ()
-  :  message_count_ (0)
-  ,  byte_count_ (0)
-{
-}
-
-
 void
-Receiver_i::receive_payload (const Receiver::Payload &payload)
+Receiver_i::receive_payload (Receiver::Payload const &payload)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->message_count_++;

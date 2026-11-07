@@ -13,15 +13,13 @@ using FP_RETURN_TYPE = FPRT::Return_Type;
 // File_Parser stuff.
 
 template <class ENTRY>
-File_Parser<ENTRY>::~File_Parser ()
-{
-}
+File_Parser<ENTRY>::~File_Parser () = default;
 
 template <class ENTRY> int
 File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 {
   this->infile_ = ACE_OS::fopen (filename, ACE_TEXT ("r"));
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
   else
     return 0;
@@ -56,7 +54,7 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
       else
         {
           // ptr is used for error checking with ACE_OS::strtol.
-          char *ptr = 0;
+          char *ptr = nullptr;
 
           // try to convert the buf to a decimal number
           value = ACE_OS::strtol (buf, &ptr, 10);

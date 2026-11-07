@@ -10,11 +10,9 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <memory>
+
 #include "Sched_Conf_Runtime.h"
-
-
-
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -45,13 +43,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Scheduler_Factory::server ();
 
       // Some useful variables for retrieving values from the scheduler.
-      RtecScheduler::RT_Info* rt_info = nullptr;
-      RtecScheduler::OS_Priority priority;
-      RtecScheduler::Preemption_Subpriority_t subpriority;
-      RtecScheduler::Preemption_Priority_t p_priority;
-      RtecScheduler::Dispatching_Type_t dispatching_type;
+      RtecScheduler::OS_Priority priority {};
+      RtecScheduler::Preemption_Subpriority_t subpriority {};
+      RtecScheduler::Preemption_Priority_t p_priority {};
+      RtecScheduler::Dispatching_Type_t dispatching_type {};
 
-      for (int i = 0; i < infos_size; ++i)
+      for (int i {}; i < infos_size; ++i)
         {
           // Make sure the correct handle is returned by the
           // run-time scheduler's create and lookup methods.
@@ -62,8 +59,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       runtime_scheduler->lookup (infos [i].entry_point));
 
           // Make sure the values in the RT_Info returned by get are OK.
-          delete rt_info;
-          rt_info = runtime_scheduler->get (infos [i].handle);
+          std::unique_ptr<RtecScheduler::RT_Info> rt_info (
+            runtime_scheduler->get (infos [i].handle));
 
           ACE_ASSERT (rt_info != nullptr);
           ACE_ASSERT (ACE_OS::strcmp (rt_info->entry_point,
@@ -127,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ASSERT (p_priority == infos [i].preemption_priority);
         }
 
-      for (int j = 0; j < configs_size; ++j)
+      for (int j {}; j < configs_size; ++j)
         {
           // Make sure the correct preemption priority is stored.
           ACE_ASSERT (j == configs [j].preemption_priority);
@@ -142,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ASSERT (dispatching_type == configs [j].dispatching_type);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

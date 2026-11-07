@@ -10,7 +10,8 @@
 
 #include "ace/Codeset_Registry.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Codeset_Registry.inl"
@@ -24,9 +25,9 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry const *element = nullptr;
+  registry_entry const *element {};
   for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
-    if (ACE_OS::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
+    if (std::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
       element = &registry_db_[i];
   if (element == nullptr)
     return 0;
@@ -40,8 +41,8 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
 #else
       ACE_NEW_RETURN (*char_sets,ACE_CDR::UShort[element->num_sets_],0);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      ACE_OS::memcpy (*char_sets, element->char_sets_,
-                      element->num_sets_ * sizeof (ACE_CDR::UShort));
+      std::memcpy (*char_sets, element->char_sets_,
+                   element->num_sets_ * sizeof (ACE_CDR::UShort));
     }
   return 1;
 }
@@ -52,7 +53,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry const *element = nullptr;
+  registry_entry const *element {};
   for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
     if (codeset_id == registry_db_[i].codeset_id_)
       element = &registry_db_[i];
@@ -68,18 +69,18 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
 #else
       ACE_NEW_RETURN (*char_sets,ACE_CDR::UShort[element->num_sets_],0);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      ACE_OS::memcpy (*char_sets, element->char_sets_,
-                      element->num_sets_ * sizeof (ACE_CDR::UShort));
+      std::memcpy (*char_sets, element->char_sets_,
+                   element->num_sets_ * sizeof (ACE_CDR::UShort));
     }
   return 1;
 }
 
-int
+bool
 ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
                                        ACE_CDR::ULong other)
 {
-  registry_entry const *lhs = nullptr;
-  registry_entry const *rhs = nullptr;
+  registry_entry const *lhs {};
+  registry_entry const *rhs {};
   for (size_t i = 0; (lhs == nullptr || rhs == nullptr) && i < num_registry_entries_; i++)
     {
       if (codeset_id == registry_db_[i].codeset_id_)
@@ -89,13 +90,13 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
     }
 
   if (lhs == nullptr || rhs == nullptr)
-    return 0;
+    return false;
 
   for (ACE_CDR::UShort l = 0; l < lhs->num_sets_; l++)
     for (ACE_CDR::UShort r = 0; r < rhs->num_sets_; r++)
       if (rhs->char_sets_[r] == lhs->char_sets_[l])
-        return 1;
-  return 0;
+        return true;
+  return false;
 }
 
 ACE_CDR::Short

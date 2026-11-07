@@ -3,6 +3,8 @@
 #include "orbsvcs/AV/RTCP_Packet.h"
 #include "orbsvcs/AV/RTP.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Packet::RTCP_Packet()
@@ -11,7 +13,6 @@ RTCP_Packet::RTCP_Packet()
   this->chd_.count_ = 0;
   this->chd_.pad_ = 0;
   this->chd_.length_ = 0;
-  this->packet_data_ = 0;
 }
 
 RTCP_Packet::RTCP_Packet(char* buffer)
@@ -27,12 +28,9 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.count_ = buffer[0] & 0x1F;
   this->chd_.pt_ = buffer[1];
   this->chd_.length_ = ACE_NTOHS(*(ACE_UINT16*)&buffer[2]);
-  this->packet_data_ = 0;
 }
 
-RTCP_Packet::~RTCP_Packet()
-{
-}
+RTCP_Packet::~RTCP_Packet() = default;
 
 void
 RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)
@@ -74,7 +72,7 @@ RTCP_Packet::is_valid (char is_first)
 
 RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
                                  unsigned char length,
-                                 const char *text)
+                                 char const *text)
 {
   this->chd_.ver_ = 2;
   this->chd_.count_ = length;
@@ -94,11 +92,11 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   // Optional - if there is a reason for leaving, store it.
   // The reason is padded with extra zeros because the packet must
   // end on an even 32-bit boundary.
-  ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
+  std::memset(this->reason_, 0, sizeof(this->reason_));
   if (text)
     {
-      size_t text_length = ACE_OS::strlen(text);
-      ACE_OS::memcpy(this->reason_, text, text_length);
+      size_t text_length = std::strlen(text);
+      std::memcpy(this->reason_, text, text_length);
       this->reason_length_ = static_cast<unsigned char> (text_length);
     }
   else
@@ -108,8 +106,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   this->chd_.length_ = static_cast<ACE_UINT16> (this->chd_.count_ + (this->reason_length_+1)/4);
   if ((this->reason_length_+1)%4)
     this->chd_.length_++;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -135,12 +131,12 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
     }
 
   // Optional - store the reason for leaving
-  ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
+  std::memset(this->reason_, 0, sizeof(this->reason_));
   if (this->chd_.length_ > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
       index++;
-      ACE_OS::memcpy(this->reason_, &buffer[index], this->reason_length_);
+      std::memcpy(this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
     }
   else
@@ -149,8 +145,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   // Decrement the length by the size of this message. This is necessary
   // because multiple RTCP packets may be contained in a single UDP packet.
   *len-=(chd_.length_+1)*4;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -191,10 +185,10 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 
 //==============================================================================
 
-const char *
+char const *
 RTCP_BYE_Packet::reason ()
 {
-  ACE_CString reason = (const char *)this->reason_;
+  ACE_CString reason = reinterpret_cast<char const *> (this->reason_);
 
   return reason.c_str();
 }
@@ -233,7 +227,7 @@ RTCP_BYE_Packet::build_packet()
     {
       this->packet_data_[index] = this->reason_length_;
       index++;
-      ACE_OS::memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
+      std::memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
       index += this->reason_length_;
       while (index < this->packet_size())
         {
@@ -274,7 +268,7 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
         {
-          block_ptr->next_ = 0;
+          block_ptr->next_ = nullptr;
           break;
         }
 
@@ -282,8 +276,6 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
     }
 
   this->chd_.length_ = static_cast<ACE_UINT16> (1+6*(this->chd_.count_)); // + profile specific extensions ??
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -293,9 +285,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   :RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr = nullptr;
-
-  this->rr_ = 0;
+  RR_Block *local_block_ptr {};
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -316,7 +306,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
           local_block_ptr = local_block_ptr->next_;
         }
 
-      local_block_ptr->next_ = 0;
+      local_block_ptr->next_ = nullptr;
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -334,8 +324,6 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
     }
 
   *len-=(this->chd_.length_+1)*4;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -450,9 +438,6 @@ RTCP_SDES_Packet::RTCP_SDES_Packet() :
                    RTCP_Packet ()
 {
   this->chd_.pt_ = RTCP_PT_SDES;
-  this->chunk_ = 0;
-  this->packet_data_ = 0;
-  this->num_chunks_ = 0;
 //  this->num_items_ = 0;
 }
 
@@ -462,8 +447,8 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
                    RTCP_Packet (buffer)
 {
   unsigned int i;
-  sdesChunk_t *cp = nullptr; // pointer to chunk
-  sdesItem_t *ip = nullptr; // pointer to item
+  sdesChunk_t *cp {}; // pointer to chunk
+  sdesItem_t *ip {}; // pointer to item
 
   // The common part of the control packet header is processed
   // in the parent. It is 4 bytes long.
@@ -487,8 +472,8 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
           this->num_chunks_++;
         }
-      cp->next_ = 0;
-      cp->item_ = 0;
+      cp->next_ = nullptr;
+      cp->item_ = nullptr;
       cp->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
 
@@ -510,7 +495,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
 //              this->num_items_++;
             }
-          ip->next_ = 0;
+          ip->next_ = nullptr;
           ip->type_ = buffer[i];
           i++;
           if (ip->type_ != RTCP_SDES_PRIV)
@@ -519,7 +504,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i++;
               ACE_NEW (ip->info_.standard_.data_,
                        char[ip->info_.standard_.length_+1]);
-              ACE_OS::memcpy(ip->info_.standard_.data_,
+              std::memcpy(ip->info_.standard_.data_,
                              &buffer[i],
                              ip->info_.standard_.length_);
               ip->info_.standard_.data_[ip->info_.standard_.length_] = 0;
@@ -533,14 +518,14 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i++;
               ACE_NEW (ip->info_.priv_.name_,
                        char[ip->info_.priv_.name_length_+1]);
-              ACE_OS::memcpy(ip->info_.priv_.name_,
+              std::memcpy(ip->info_.priv_.name_,
                              &buffer[i],
                              ip->info_.priv_.name_length_);
               ip->info_.priv_.name_[ip->info_.priv_.name_length_] = 0;
               i+=ip->info_.priv_.name_length_;
               ACE_NEW (ip->info_.priv_.data_,
                        char[ip->info_.priv_.data_length_+1]);
-              ACE_OS::memcpy(ip->info_.priv_.data_,
+              std::memcpy(ip->info_.priv_.data_,
                              &buffer[i],
                              ip->info_.priv_.data_length_);
               ip->info_.priv_.data_[ip->info_.priv_.data_length_] = 0;
@@ -554,7 +539,6 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
   *len-=(this->chd_.length_+1)*4;
 
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -600,15 +584,15 @@ RTCP_SDES_Packet::~RTCP_SDES_Packet()
 void
 RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
 {
-  sdesChunk_t *cp = nullptr; // pointer to chunk
+  sdesChunk_t *cp {}; // pointer to chunk
 
   // If this is the first chunk.
   if (chd_.count_ == 0)
     {
       ACE_NEW (this->chunk_,
                sdesChunk_t);
-      this->chunk_->next_ = 0;
-      this->chunk_->item_ = 0;
+      this->chunk_->next_ = nullptr;
+      this->chunk_->item_ = nullptr;
       cp = this->chunk_;
     }
   else
@@ -620,8 +604,8 @@ RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
       ACE_NEW (cp->next_,
                sdesChunk_t);
       cp = cp->next_;
-      cp->next_ = 0;
-      cp->item_ = 0;
+      cp->next_ = nullptr;
+      cp->item_ = nullptr;
     }
   cp->ssrc_ = ssrc;    // store the source
   chd_.count_++;       // increment the source count
@@ -633,7 +617,7 @@ void
 RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                             unsigned char type,
                             unsigned char length,
-                            const char *data)
+                            char const *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -670,7 +654,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = cp->item_;
-      ip->next_= 0;
+      ip->next_ = nullptr;
     }
   else
     {
@@ -683,7 +667,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = ip->next_;
-      ip->next_ = 0;
+      ip->next_ = nullptr;
     }
 
   ip->type_ = type;
@@ -693,7 +677,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
   ACE_NEW (ip->info_.standard_.data_,
            char[length]);
 
-  ACE_OS::memcpy(ip->info_.standard_.data_, data, length);
+  std::memcpy(ip->info_.standard_.data_, data, length);
 }
 
 //==============================================================================
@@ -701,9 +685,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
 void
 RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                                  unsigned char nameLength,
-                                 const char* name,
+                                 char const *name,
                                  unsigned char dataLength,
-                                 const char* data)
+                                 char const *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -740,7 +724,7 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = cp->item_;
-      ip->next_ = 0;
+      ip->next_ = nullptr;
     }
   else
     {
@@ -753,7 +737,7 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = ip->next_;
-      ip->next_ = 0;
+      ip->next_ = nullptr;
     }
 
   ip->type_ = RTCP_SDES_PRIV;
@@ -767,8 +751,8 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
   ACE_NEW (ip->info_.priv_.data_,
            char[dataLength]);
 
-  ACE_OS::memcpy(ip->info_.priv_.name_, name, nameLength);
-  ACE_OS::memcpy(ip->info_.priv_.data_, data, dataLength);
+  std::memcpy(ip->info_.priv_.name_, name, nameLength);
+  std::memcpy(ip->info_.priv_.data_, data, dataLength);
 }
 
 //==============================================================================
@@ -985,7 +969,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
                                ACE_UINT32 octets_sent,
                                RR_Block *blocks)
 {
-  RR_Block *block_ptr = nullptr;
+  RR_Block *block_ptr {};
   chd_.count_ = 0;
   chd_.ver_ = 2;
   chd_.pt_ = RTCP_PT_SR;
@@ -1007,7 +991,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
         {
-          block_ptr->next_ = 0;
+          block_ptr->next_ = nullptr;
           break;
         }
 
@@ -1015,8 +999,6 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
     }
 
   this->chd_.length_ = static_cast<ACE_UINT16> (6 + 6*(chd_.count_)); //+profile specific extensions ??
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -1026,9 +1008,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
                 : RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr = nullptr;
-
-  this->rr_ = 0;
+  RR_Block *local_block_ptr {};
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -1059,7 +1039,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
           local_block_ptr = local_block_ptr->next_;
         }
 
-      local_block_ptr->next_ = 0;
+      local_block_ptr->next_ = nullptr;
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -1077,8 +1057,6 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
     }
 
   *len-=(this->chd_.length_+1)*4;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================

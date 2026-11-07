@@ -9,28 +9,29 @@
  *  @author  Irfan Pyarali
  */
 //=============================================================================
-
-
 #include "testS.h"
 #include "tao/PortableServer/ServantLocatorC.h"
-#include "tao/CDR.h"
+#include <cstring>
 
-int postCount = 0;
-int errorCount = 0;
+static int errorCount {};
 
 class test_i :
   public virtual POA_test
 {
 public:
-  test_i (PortableServer::POA_ptr poa);
+  explicit test_i (PortableServer::POA_ptr poa);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  void normal ();
+  void normal () override;
 
-  void exceptional ();
+  void exceptional () override;
 
-  void notexisting ();
+  void notexisting () override;
 
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 };
 
 test_i::test_i (PortableServer::POA_ptr poa)
@@ -60,18 +61,22 @@ class Servant_Locator :
   public PortableServer::ServantLocator
 {
 public:
-  Servant_Locator (PortableServer::POA_ptr poa);
+  explicit Servant_Locator (PortableServer::POA_ptr poa);
+  Servant_Locator (Servant_Locator const &) = delete;
+  Servant_Locator (Servant_Locator &&) = delete;
+  Servant_Locator &operator= (Servant_Locator const &) = delete;
+  Servant_Locator &operator= (Servant_Locator &&) = delete;
 
-  ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,
+  ::PortableServer::Servant preinvoke (PortableServer::ObjectId const &,
                                        PortableServer::POA_ptr,
-                                       const char *,
-                                       PortableServer::ServantLocator::Cookie &);
+                                       char const *,
+                                       PortableServer::ServantLocator::Cookie &) override;
 
-  void postinvoke (const PortableServer::ObjectId &,
+  void postinvoke (PortableServer::ObjectId const &,
                    PortableServer::POA_ptr,
-                   const char *,
+                   char const *,
                    PortableServer::ServantLocator::Cookie,
-                   PortableServer::Servant);
+                   PortableServer::Servant) override;
 
   test_i servant_;
 };
@@ -82,9 +87,9 @@ Servant_Locator::Servant_Locator (PortableServer::POA_ptr poa)
 }
 
 ::PortableServer::Servant
-Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
+Servant_Locator::preinvoke (PortableServer::ObjectId const &oid,
                             PortableServer::POA_ptr,
-                            const char *op,
+                            char const *op,
                             PortableServer::ServantLocator::Cookie &)
 {
   CORBA::String_var name =
@@ -94,31 +99,30 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
               "Servant_Locator::preinvoke for %C.%C ",
               name.in (), op ));
 
-  if (ACE_OS::strcmp (op, "normal") == 0)
+  if (std::strcmp (op, "normal") == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "returning servant\n"));
       return &this->servant_;
     }
-  else if (ACE_OS::strcmp (op, "exceptional") == 0)
+  else if (std::strcmp (op, "exceptional") == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "throwing exception\n"));
-        throw CORBA::INTERNAL();
+      throw CORBA::INTERNAL ();
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "returning NULL\n"));
-      return 0;
+      return nullptr;
     }
 }
 
 void
-Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
+Servant_Locator::postinvoke (PortableServer::ObjectId const &oid,
                              PortableServer::POA_ptr,
-                             const char *op,
+                             char const *op,
                              PortableServer::ServantLocator::Cookie,
                              PortableServer::Servant)
 {
-  ++postCount;
   CORBA::String_var name =
     PortableServer::ObjectId_to_string (oid);
 
@@ -134,26 +138,26 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
       CORBA::PolicyList policies;
-      CORBA::ULong current_length = 0;
+      CORBA::ULong current_length {};
 
       policies.length (current_length + 1);
       policies[current_length++] =
@@ -167,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[current_length++] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies);
@@ -175,24 +179,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Servant_Locator servant_locator (child_poa.in ());
       child_poa->set_servant_manager (&servant_locator);
 
-      PortableServer::ObjectId_var objectID =
+      PortableServer::ObjectId_var const objectID =
         PortableServer::string_to_ObjectId ("object");
 
-      CORBA::Object_var objectREF =
+      CORBA::Object_var const objectREF =
         child_poa->create_reference_with_id (objectID.in (),
                                              "IDL:test:1.0");
 
-      test_var testObject =
+      test_var const testObject =
         test::_narrow (objectREF.in ());
 
       testObject->normal();
 
-      bool caught = false;
+      bool caught {};
       try
         {
           testObject->exceptional();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_DEBUG ((LM_DEBUG, "exceptional() yielded exception\n"));
           caught = true;
@@ -204,7 +208,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           testObject->notexisting();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_DEBUG ((LM_DEBUG, "notexisting() yielded exception\n"));
           caught = true;
@@ -213,7 +217,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       ++errorCount;

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_INVERSION_H
 #define EC_INVERSION_H
 
@@ -26,7 +25,11 @@ class EC_Inversion : public EC_Driver
 {
 public:
   /// Constructor
-  EC_Inversion ();
+  EC_Inversion () = default;
+  EC_Inversion (EC_Inversion const&) = delete;
+  EC_Inversion (EC_Inversion&&) = delete;
+  EC_Inversion& operator= (EC_Inversion const&) = delete;
+  EC_Inversion& operator= (EC_Inversion&&) = delete;
 
   // = The EC_Driver methods
   /**
@@ -34,7 +37,7 @@ public:
    * The options controlling the event types are ignored, and only two
    * consumers are created.
    */
-  int parse_args (int &argc, ACE_TCHAR *argv[]);
+  int parse_args (int& argc, ACE_TCHAR* argv[]) override;
 
   /**
    * In this test there are two consumers, the high priority consumer
@@ -42,16 +45,16 @@ public:
    * other consumer receives events from a set of low priority
    * suppliers.
    */
-  virtual void connect_consumers ();
-  virtual void connect_suppliers ();
+  void connect_consumers () override;
+  void connect_suppliers () override;
 
   /// Activate the suppliers at different priorities
-  virtual void activate_tasks ();
+  void activate_tasks () override;
 
 private:
   /// If set then both low priority and high priority suppliers
   /// generate the same events.
-  int same_events_;
+  bool same_events_ {};
 };
 
 #endif /* EC_INVERSION_H */

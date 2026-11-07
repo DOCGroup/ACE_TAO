@@ -13,9 +13,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::TAO_Notify_Proxy_T ()
 }
 
 template <class SERVANT_TYPE>
-TAO_Notify_Proxy_T<SERVANT_TYPE>::~TAO_Notify_Proxy_T ()
-{
-}
+TAO_Notify_Proxy_T<SERVANT_TYPE>::~TAO_Notify_Proxy_T () = default;
 
 template <class SERVANT_TYPE> PortableServer::Servant
 TAO_Notify_Proxy_T<SERVANT_TYPE>::servant ()

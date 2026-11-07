@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T> ACE_INLINE bool
-ACE_Unbounded_Set_Default_Comparator<T>::operator () (const T  &lhs, const T &rhs) const
+ACE_Unbounded_Set_Default_Comparator<T>::operator () (T const &lhs, T const &rhs) const
 {
   return lhs == rhs;
 }
@@ -17,22 +17,22 @@ ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> 
 }
 
 template<typename T>
-ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (const base_type & s)
-  : base_type  (s)
+ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (base_type const &s)
+  : base_type (s)
 {
 }
 
 template<typename T>
 ACE_Unbounded_Set_Const_Iterator<T>::
-ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
+ACE_Unbounded_Set_Const_Iterator (ACE_Unbounded_Set<T> const &s,
                                   bool end)
   : base_type (s, end)
 {
 }
 
 template<typename T>
-ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const base_type & s)
-  : base_type  (s)
+ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (base_type const &s)
+  : base_type (s)
 {
 }
 

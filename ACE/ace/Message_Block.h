@@ -20,11 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <memory>
-
 #include "ace/Default_Constants.h"
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -254,7 +254,7 @@ public:
   void msg_type (ACE_Message_Type type);
 
   /// Find out what type of message this is.
-  int is_data_msg () const;
+  bool is_data_msg () const;
 
   /// Find out what class of message this is (there are two classes,
   /// @c normal messages and @c high-priority messages).

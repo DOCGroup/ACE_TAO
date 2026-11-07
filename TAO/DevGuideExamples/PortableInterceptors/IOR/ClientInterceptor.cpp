@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-const CORBA::ULong service_ctx_id = 0xdeed;
+constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
 ClientInterceptor::
 ClientInterceptor (IOP::CodecFactory_var cf)
@@ -22,10 +22,6 @@ ClientInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-}
-
-ClientInterceptor::~ClientInterceptor ()
-{
 }
 
 char *
@@ -55,7 +51,7 @@ ClientInterceptor::send_request (
 {
   std::cout << "Calling send_request()." << std::endl;
 
-  const CORBA::ULong tagID = 9654;
+  constexpr CORBA::ULong tagID = 9654;
 
   try
     {
@@ -73,7 +69,7 @@ ClientInterceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = service_ctx_id;
 
-  const CORBA::Long gid = 9007;
+  constexpr CORBA::Long gid = 9007;
 
   std::cout << "GID: " << gid << std::endl;
 

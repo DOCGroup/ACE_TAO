@@ -63,7 +63,7 @@ namespace TAO
                  TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport () override;
+      ~Transport () override = default;
 
       /// Overload of the handle_input () in the TAO_Transport
       /// class. This is required to set up the state guard. The
@@ -85,12 +85,12 @@ namespace TAO
       /// Write the complete Message_Block chain to the connection.
       ssize_t send (iovec *iov, int iovcnt,
                     size_t &bytes_transferred,
-                    const ACE_Time_Value *timeout = nullptr) override;
+                    ACE_Time_Value const *timeout = nullptr) override;
 
       /// Read len bytes from into buf.
       ssize_t recv (char *buf,
                     size_t len,
-                    const ACE_Time_Value *s = nullptr) override;
+                    ACE_Time_Value const *s = nullptr) override;
 
     public:
       /// @todo These methods IMHO should have more meaningful
@@ -115,7 +115,7 @@ namespace TAO
     private:
       /// Set the Bidirectional context info in the service context
       /// list.
-      void set_bidir_context_info (TAO_Operation_Details &opdetails);
+      void set_bidir_context_info (TAO_Operation_Details &opdetails) override;
 
       /// Add the listen points in @a acceptor to the @a
       /// listen_point_list if this connection is in the same

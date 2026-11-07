@@ -41,7 +41,11 @@ class ClientRequestInterceptor2
 {
 public:
   /// Constructor.
-  ClientRequestInterceptor2 (PortableInterceptor::SlotId slot_id);
+  explicit ClientRequestInterceptor2 (PortableInterceptor::SlotId slot_id);
+  ClientRequestInterceptor2 (ClientRequestInterceptor2 const &) = delete;
+  ClientRequestInterceptor2 (ClientRequestInterceptor2 &&) = delete;
+  ClientRequestInterceptor2 &operator= (ClientRequestInterceptor2 const &) = delete;
+  ClientRequestInterceptor2 &operator= (ClientRequestInterceptor2 &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -53,30 +57,30 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
   //@}
 
 private:
   /// The PICurrent slot ID allocated to this application during ORB
   /// initialization.
-  PortableInterceptor::SlotId slot_id_;
+  PortableInterceptor::SlotId const slot_id_;
 };
 
 #if defined(_MSC_VER)

@@ -6,12 +6,11 @@
 #include "tao/PortableServer/PortableServer.h"
 
 Client_Task::Client_Task (ACE_TCHAR const *ior,
-                          CORBA::ORB_ptr corb,
+                          CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , input_ (ior)
-    , corb_ (CORBA::ORB::_duplicate (corb))
-
+  , input_ (ior)
+  , corb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -20,10 +19,10 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var poa_object =
-        this->corb_->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        this->corb_->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -31,35 +30,32 @@ Client_Task::svc ()
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      Hello *hello_impl = 0;
-      ACE_NEW_RETURN (hello_impl,
-                      Hello (this->corb_.in ()),
-                      1);
+      PortableServer::ServantBase_var const hello_impl (
+        new Hello (this->corb_.in ()));
 
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      PortableServer::ObjectId_var const id =
+        root_poa->activate_object (hello_impl.in ());
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (hello_impl);
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
-
-      Test::Hello_var hello_servant = Test::Hello::_narrow (object.in ());
+      Test::Hello_var const hello_servant = Test::Hello::_narrow (object.in ());
       poa_manager->activate ();
 
-      ACE_DEBUG((LM_DEBUG,"Client (%t) optimize_collocation_objects=%d use_global_collocation=%d\n",
-                           corb_->orb_core()->optimize_collocation_objects(),
-                           corb_->orb_core()->use_global_collocation ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Client (%t) optimize_collocation_objects=%d use_global_collocation=%d\n",
+                  this->corb_->orb_core ()->optimize_collocation_objects (),
+                  this->corb_->orb_core ()->use_global_collocation ()));
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->corb_->string_to_object (input_);
 
-      Test::EventNode_var evNode=
-        Test::EventNode::_narrow(tmp.in ());
+      Test::EventNode_var const event_node =
+        Test::EventNode::_narrow (tmp.in ());
 
-      if (CORBA::is_nil (evNode.in ()))
+      if (CORBA::is_nil (event_node.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::EventNode reference <%s>\n",
@@ -69,11 +65,11 @@ Client_Task::svc ()
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client starting\n"));
 
-      evNode->registerHello( hello_servant.in());
+      event_node->registerHello (hello_servant.in ());
 
-      evNode->shutdown ();
+      event_node->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

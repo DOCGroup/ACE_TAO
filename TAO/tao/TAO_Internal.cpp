@@ -312,7 +312,8 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 
   // Perform the open magic (unless SC::open() has been called already)
   int global_svc_config_argc = global_svc_config_argv.argc ();
-  int status = open_private_services_i (theone,
+  int status = open_private_services_i (
+                                        ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {theone},
                                         global_svc_config_argc,
                                         global_svc_config_argv.argv (),
                                         skip_service_config_open,
@@ -896,7 +897,7 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = nullptr;
+        const ACE_TCHAR *current_arg {};
         if (0 == arg_shifter.cur_arg_strncasecmp
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {

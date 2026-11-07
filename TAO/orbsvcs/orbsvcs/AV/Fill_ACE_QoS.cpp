@@ -23,8 +23,7 @@ Fill_ACE_QoS::Fill_ACE_QoS ()
 }
 
 // destructor.
-Fill_ACE_QoS::~Fill_ACE_QoS ()
-{}
+Fill_ACE_QoS::~Fill_ACE_QoS () = default;
 
 int
 Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,

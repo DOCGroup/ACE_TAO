@@ -13,10 +13,6 @@
 
 #include "Collocation_Tester.h"
 
-Collocation_Test::Collocation_Test ()
-{
-}
-
 void
 Collocation_Test::shutdown ()
 {
@@ -30,13 +26,12 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   // Initialize the ORB.
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  int result = this->parse_args (argc, argv);
+  int const result = this->parse_args (argc, argv);
   if (result != 0)
     return result;
 
   // Get an Object reference to RootPOA.
-  CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("RootPOA");
+  CORBA::Object_var const obj {this->orb_->resolve_initial_references ("RootPOA")};
 
   // Narrow the Object reference to a POA reference
   this->root_poa_ =
@@ -47,11 +42,7 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
     this->root_poa_->the_POAManager ();
 
   // Activate the diamond servant and its base classes under RootPOA.
-  PortableServer::ObjectId_var id =
-    this->root_poa_->activate_object (&this->top_servant_);
-
-//    // We only care about the most derived class here.
-//    this->diamond_obj_ = this->diamond_servant_._this ();
+  PortableServer::ObjectId_var id {this->root_poa_->activate_object (&this->top_servant_)};
 
   id =
     this->root_poa_->activate_object (&this->diamond_servant_);
@@ -65,11 +56,11 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   id =
     this->root_poa_->activate_object (&this->right_servant_);
 
-  CORBA::String_var str =
+  CORBA::String_var const str =
     this->orb_->object_to_string (this->diamond_obj_.in ());
 
   ACE_DEBUG ((LM_DEBUG, "Diamond Servant activated:\n %C\n",
-              str.in()));
+              str.in ()));
 
   return 0;
 
@@ -85,29 +76,25 @@ Collocation_Test::parse_args (int /*argc*/,
 int
 Collocation_Test::test_narrow ()
 {
-  Diamond::Top_var top =
-    Diamond::Top::_narrow (this->diamond_obj_.in ());
+  Diamond::Top_var const top {Diamond::Top::_narrow (this->diamond_obj_.in ())};
 
-  Diamond::Left_var left =
-    Diamond::Left::_narrow (this->diamond_obj_.in ());
+  Diamond::Left_var const left {Diamond::Left::_narrow (this->diamond_obj_.in ())};
 
-  Diamond::Right_var right =
-    Diamond::Right::_narrow (this->diamond_obj_.in ());
+  Diamond::Right_var const right {Diamond::Right::_narrow (this->diamond_obj_.in ())};
 
-  Diamond::Buttom_var buttom =
-    Diamond::Buttom::_narrow (this->diamond_obj_.in ());
+  Diamond::Buttom_var const buttom {Diamond::Buttom::_narrow (this->diamond_obj_.in ())};
 
-  CORBA::String_var str = top->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling top->shape: %C\n", str.in ()));
+  CORBA::String_var const top_shape {top->shape ()};
+  ACE_DEBUG ((LM_DEBUG, "Calling top->shape: %C\n", top_shape.in ()));
 
-  str = left->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling left->shape: %C\n", str.in ()));
+  CORBA::String_var const left_shape {left->shape ()};
+  ACE_DEBUG ((LM_DEBUG, "Calling left->shape: %C\n", left_shape.in ()));
 
-  str = right->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling right->shape: %C\n", str.in ()));
+  CORBA::String_var const right_shape {right->shape ()};
+  ACE_DEBUG ((LM_DEBUG, "Calling right->shape: %C\n", right_shape.in ()));
 
-  str = buttom->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling buttom->shape: %C\n", str.in ()));
+  CORBA::String_var const buttom_shape {buttom->shape ()};
+  ACE_DEBUG ((LM_DEBUG, "Calling buttom->shape: %C\n", buttom_shape.in ()));
 
   return 0;
 }

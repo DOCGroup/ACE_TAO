@@ -3,6 +3,7 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
+#include <cstring>
 #include <memory>
 #include "ace/Bound_Ptr.h"
 
@@ -15,7 +16,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
 #include "Bits.h"
@@ -62,9 +62,7 @@ namespace ACE_RMCast
 
   struct Profile;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Profile, Mutex>
-  Profile_ptr;
+  using Profile_ptr = ACE_Strong_Bound_Ptr<Profile, Mutex>;
 
   struct Profile
   {
@@ -235,15 +233,11 @@ namespace ACE_RMCast
   //
   class Message;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Message, Mutex>
-  Message_ptr;
+  using Message_ptr = ACE_Strong_Bound_Ptr<Message, Mutex>;
 
   class Message
   {
-    typedef
-    ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>
-    Profiles;
+    using Profiles = ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>;
 
   public:
     Message ()
@@ -306,16 +300,14 @@ namespace ACE_RMCast
     Profile const*
     find (u16 id) const
     {
-      Profiles::ENTRY* e = 0;
+      Profiles::ENTRY* e = nullptr;
 
-      if (profiles_.find (id, e) == -1) return 0;
+      if (profiles_.find (id, e) == -1) return nullptr;
 
       return e->int_id_.get ();
     }
 
-    typedef
-    Profiles::const_iterator
-    ProfileIterator;
+    using ProfileIterator = Profiles::const_iterator;
 
     ProfileIterator
     begin () const
@@ -368,9 +360,7 @@ namespace ACE_RMCast
   //
   struct From;
 
-  typedef
-  ACE_Strong_Bound_Ptr<From, Mutex>
-  From_ptr;
+  using From_ptr = ACE_Strong_Bound_Ptr<From, Mutex>;
 
   struct From : Profile
   {
@@ -402,8 +392,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new From (*this));
       return p;
@@ -423,8 +412,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       u32 addr (address_.get_ip_address ());
       u16 port (address_.get_port_number ());
@@ -433,8 +421,7 @@ namespace ACE_RMCast
       os << port;
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       u32 addr (0);
       u16 port (0);
@@ -453,9 +440,7 @@ namespace ACE_RMCast
   //
   struct To;
 
-  typedef
-  ACE_Strong_Bound_Ptr<To, Mutex>
-  To_ptr;
+  using To_ptr = ACE_Strong_Bound_Ptr<To, Mutex>;
 
   struct To : Profile
   {
@@ -487,8 +472,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new To (*this));
       return p;
@@ -508,8 +492,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       u32 addr (address_.get_ip_address ());
       u16 port (address_.get_port_number ());
@@ -518,8 +501,7 @@ namespace ACE_RMCast
       os << port;
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       u32 addr (0);
       u16 port (0);
@@ -538,9 +520,7 @@ namespace ACE_RMCast
   //
   struct Data;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Data, Mutex>
-  Data_ptr;
+  using Data_ptr = ACE_Strong_Bound_Ptr<Data, Mutex>;
 
   struct Data : Profile
   {
@@ -556,7 +536,7 @@ namespace ACE_RMCast
 
     Data (Header const& h, istream& is)
         : Profile (h),
-          buf_ (0),
+          buf_ (nullptr),
           size_ (h.size ()),
           capacity_ (size_)
     {
@@ -569,14 +549,14 @@ namespace ACE_RMCast
 
     Data (void const* buf, size_t s, size_t capacity = 0)
         : Profile (id),
-          buf_ (0),
+          buf_ (nullptr),
           size_ (s),
           capacity_ (capacity < size_ ? size_ : capacity)
     {
       if (size_)
       {
         buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        ACE_OS::memcpy (buf_, buf, size_);
+        std::memcpy (buf_, buf, size_);
       }
 
       Profile::size (calculate_size ());
@@ -589,8 +569,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new Data (*this));
       return p;
@@ -598,14 +577,14 @@ namespace ACE_RMCast
 
     Data (Data const& d)
         : Profile (d),
-          buf_ (0),
+          buf_ (nullptr),
           size_ (d.size_),
           capacity_ (d.capacity_)
     {
       if (size_)
       {
         buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        ACE_OS::memcpy (buf_, d.buf_, size_);
+        std::memcpy (buf_, d.buf_, size_);
       }
 
       Profile::size (calculate_size ());
@@ -648,14 +627,12 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       os.write_char_array (buf_, size_);
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       ss.write_char_array (buf_, size_);
     }
@@ -672,9 +649,7 @@ namespace ACE_RMCast
   //
   struct SN;
 
-  typedef
-  ACE_Strong_Bound_Ptr<SN, Mutex>
-  SN_ptr;
+  using SN_ptr = ACE_Strong_Bound_Ptr<SN, Mutex>;
 
   struct SN : Profile
   {
@@ -700,8 +675,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new SN (*this));
       return p;
@@ -721,14 +695,12 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       os << n_;
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       ss << n_;
     }
@@ -743,9 +715,7 @@ namespace ACE_RMCast
   //
   class NAK;
 
-  typedef
-  ACE_Strong_Bound_Ptr<NAK, Mutex>
-  NAK_ptr;
+  using NAK_ptr = ACE_Strong_Bound_Ptr<NAK, Mutex>;
 
   class NAK : public Profile
   {
@@ -803,8 +773,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new NAK (*this));
       return p;
@@ -888,8 +857,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
 
@@ -903,14 +871,13 @@ namespace ACE_RMCast
       //
       for (iterator i (this_.begin ()); !i.done (); i.advance ())
       {
-        u64* psn = 0;
+        u64* psn = nullptr;
         i.next (psn);
         os << *psn;
       }
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
 
@@ -939,9 +906,7 @@ namespace ACE_RMCast
   //
   struct NRTM;
 
-  typedef
-  ACE_Strong_Bound_Ptr<NRTM, Mutex>
-  NRTM_ptr;
+  using NRTM_ptr = ACE_Strong_Bound_Ptr<NRTM, Mutex>;
 
   struct NRTM : Profile
   {
@@ -989,8 +954,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new NRTM (*this));
       return p;
@@ -1065,8 +1029,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       for (Map::const_iterator i (map_), e (map_, 1); i != e; ++i)
       {
@@ -1080,8 +1043,7 @@ namespace ACE_RMCast
       }
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       for (Map::const_iterator i (map_), e (map_, 1); i != e; ++i)
       {
@@ -1096,13 +1058,11 @@ namespace ACE_RMCast
     }
 
   private:
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            u64,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        u64,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
     Map map_;
   };
@@ -1113,9 +1073,7 @@ namespace ACE_RMCast
   //
   struct NoData;
 
-  typedef
-  ACE_Strong_Bound_Ptr<NoData, Mutex>
-  NoData_ptr;
+  using NoData_ptr = ACE_Strong_Bound_Ptr<NoData, Mutex>;
 
   struct NoData : Profile
   {
@@ -1140,8 +1098,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new NoData (*this));
       return p;
@@ -1153,13 +1110,11 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream&) const
+    void serialize_body (ostream&) const override
     {
     }
 
-    virtual void
-    serialize_body (sstream&) const
+    void serialize_body (sstream&) const override
     {
     }
   };
@@ -1170,9 +1125,7 @@ namespace ACE_RMCast
   //
   struct Part;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Part, Mutex>
-  Part_ptr;
+  using Part_ptr = ACE_Strong_Bound_Ptr<Part, Mutex>;
 
   struct Part : Profile
   {
@@ -1203,8 +1156,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
-    clone_ ()
+    Profile_ptr clone_ () override
     {
       Profile_ptr p (new Part (*this));
       return p;
@@ -1238,16 +1190,14 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
-    serialize_body (ostream& os) const
+    void serialize_body (ostream& os) const override
     {
       os << num_;
       os << of_;
       os << total_size_;
     }
 
-    virtual void
-    serialize_body (sstream& ss) const
+    void serialize_body (sstream& ss) const override
     {
       ss << num_;
       ss << of_;

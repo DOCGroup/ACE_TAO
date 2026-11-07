@@ -6,20 +6,20 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Waiter.h"
 #include "JAWS/Reaper.h"
+#include <memory>
 
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
     mb_acquired_ (0),
     mb_ (0),
-    reaper_ (new JAWS_Reaper (this))
+    reaper_ (std::make_unique<JAWS_Reaper> (this))
 {
 }
 
 JAWS_Concurrency_Base::~JAWS_Concurrency_Base ()
 {
   delete this->thr_mgr_;
-  delete this->reaper_;
 }
 
 ACE_Message_Block *

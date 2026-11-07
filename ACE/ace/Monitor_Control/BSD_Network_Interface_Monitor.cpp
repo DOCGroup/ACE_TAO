@@ -4,6 +4,7 @@
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstring>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>
@@ -18,39 +19,37 @@ namespace ACE
   namespace Monitor_Control
   {
     BSD_Network_Interface_Monitor::BSD_Network_Interface_Monitor (
-      const ACE_TCHAR *lookup_str)
-      : value_ (0UL),
-        start_ (0UL),
-        lookup_str_ (lookup_str)
+      ACE_TCHAR const *lookup_str)
+      : lookup_str_ (lookup_str)
     {
-      this->init();
+      this->init ();
     }
 
     void
     BSD_Network_Interface_Monitor::update_i ()
     {
-      this->fetch(this->value_);
+      this->fetch (this->value_);
       this->value_ -= this->start_;
     }
 
     void
     BSD_Network_Interface_Monitor::clear_impl ()
     {
-      this->init();
+      this->init ();
     }
 
     void
     BSD_Network_Interface_Monitor::init ()
     {
-      this->fetch(this->start_);
+      this->fetch (this->start_);
       this->value_ = 0UL;
     }
 
     void
     BSD_Network_Interface_Monitor::fetch (ACE_UINT64& value) const
     {
-      ACE_UINT64 count = 0;
-      int fd = socket (AF_INET, SOCK_DGRAM, 0);
+      ACE_UINT64 count {};
+      int const fd = socket (AF_INET, SOCK_DGRAM, 0);
 
       if (fd == -1)
         {
@@ -58,7 +57,7 @@ namespace ACE
           return;
         }
 
-      struct ifaddrs *ifa, *ifap;
+      struct ifaddrs *ifa {}, *ifap {};
 
       if (getifaddrs (&ifap) < 0)
         {
@@ -67,11 +66,11 @@ namespace ACE
           return;
         }
 
-      char *p = nullptr;
+      char *p {};
 
-      for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next)
+      for (ifa = ifap; ifa != nullptr; ifa = ifa->ifa_next)
         {
-          if (p && strcmp (p, ifa->ifa_name) == 0)
+          if (p != nullptr && std::strcmp (p, ifa->ifa_name) == 0)
             {
               continue;
             }
@@ -79,18 +78,17 @@ namespace ACE
           p = ifa->ifa_name;
 
 #if defined (__OpenBSD__)
-          struct ifreq ifdr;
+          struct ifreq ifdr {};
 #else
-          struct ifdatareq ifdr;
+          struct ifdatareq ifdr {};
 #endif
-          memset (&ifdr, 0, sizeof (ifdr));
 
 #if defined (__OpenBSD__)
-          struct if_data if_data;
+          struct if_data if_data {};
           ifdr.ifr_data = reinterpret_cast<caddr_t> (&if_data);
-          strncpy (ifdr.ifr_name, ifa->ifa_name, IFNAMSIZ-1);
+          std::strncpy (ifdr.ifr_name, ifa->ifa_name, IFNAMSIZ - 1);
 #else
-          strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
+          std::strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
 #endif
           if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
             {
@@ -98,9 +96,9 @@ namespace ACE
             }
 
 #if defined (__OpenBSD__)
-          struct if_data * const ifi = &if_data;
+          struct if_data *const ifi = &if_data;
 #else
-          struct if_data * const ifi = &ifdr.ifdr_data;
+          struct if_data *const ifi = &ifdr.ifdr_data;
 #endif
 
           if (this->lookup_str_ == "ibytes")

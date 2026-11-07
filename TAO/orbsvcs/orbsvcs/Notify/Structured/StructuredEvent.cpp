@@ -5,6 +5,8 @@
 #include "tao/debug.h"
 #include "tao/corba.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent &notification)
@@ -14,9 +16,9 @@ TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (const Co
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+      if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
         this->priority_.set (prop_seq[i].value);
-      else if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Timeout) == 0)
+      else if (std::strcmp (prop_seq[i].name.in (), CosNotification::Timeout) == 0)
         this->timeout_.set (prop_seq[i].value);
     }
 }
@@ -27,14 +29,10 @@ TAO_Notify_StructuredEvent_No_Copy::type () const
   return this->type_;
 }
 
-TAO_Notify_StructuredEvent_No_Copy::~TAO_Notify_StructuredEvent_No_Copy ()
-{
-}
-
 void
 TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  static const ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
+  static constexpr ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
   cdr.write_octet (STRUCTURED_CODE);
   cdr << (*this->notification_);
 }
@@ -43,7 +41,7 @@ TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 TAO_Notify_StructuredEvent *
 TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 {
-  TAO_Notify_StructuredEvent * event = nullptr;
+  TAO_Notify_StructuredEvent * event {};
   CosNotification::StructuredEvent body;
   if (cdr >> body)
   {
@@ -128,10 +126,6 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::S
     , notification_copy (notification)
 {
   this->notification_ = &notification_copy;
-}
-
-TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
-{
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

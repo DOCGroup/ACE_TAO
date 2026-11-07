@@ -14,6 +14,9 @@
 #include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 
+#include <cstring>
+#include <string>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
@@ -39,7 +42,7 @@ public:
   {
   }
 
-  virtual void update () {
+  void update () override {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList list;
@@ -52,9 +55,9 @@ public:
     else
       {
         if (this->is_supplier_)
-          this->receive (this->interf_->get_suppliers (0));
+          this->receive (this->interf_->get_suppliers (nullptr));
         else
-          this->receive (this->interf_->get_consumers (0));
+          this->receive (this->interf_->get_consumers (nullptr));
       }
   }
 
@@ -75,7 +78,7 @@ public:
   {
   }
 
-  virtual void update () {
+  void update () override {
     Monitor_Control_Types::NameList list;
     this->interf_->get_timedout_consumers (&list);
     this->receive (list);
@@ -97,7 +100,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
@@ -118,11 +121,11 @@ public:
       {
         if (this->is_supplier_)
           {
-            this->receive (this->interf_->get_supplieradmins (0));
+            this->receive (this->interf_->get_supplieradmins (nullptr));
           }
         else
           {
-            this->receive (this->interf_->get_consumeradmins (0));
+            this->receive (this->interf_->get_consumeradmins (nullptr));
           }
       }
   }
@@ -146,7 +149,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     this->receive (this->interf_->calculate_queue_size (this->count_));
   }
@@ -168,7 +171,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     this->receive (this->interf_->get_oldest_event ());
   }
@@ -187,7 +190,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     Monitor_Control_Types::NameList list;
     this->interf_->determine_slowest_consumer (&list);
@@ -216,9 +219,9 @@ public:
   {
   }
 
-  virtual bool execute (const char* command)
+  bool execute (const char* command) override
   {
-    if (ACE_OS::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
+    if (std::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
       {
         this->ec_->destroy ();
       }
@@ -248,13 +251,13 @@ public:
   {
   }
 
-  virtual bool execute (const char* command)
+  bool execute (const char* command) override
   {
     bool status = true;
 
     if (this->is_supplier_)
       {
-        if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIER) == 0)
+        if (std::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIER) == 0)
           {
             status = this->ec_->destroy_supplier (this->id_);
           }
@@ -266,7 +269,7 @@ public:
       }
     else
       {
-        if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMER) == 0)
+        if (std::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMER) == 0)
           {
             status = this->ec_->destroy_consumer (this->id_);
           }
@@ -290,7 +293,7 @@ private:
 // TAO_MonitorEventChannel Methods
 // ******************************************************************
 
-TAO_MonitorEventChannel::TAO_MonitorEventChannel (const char* name)
+TAO_MonitorEventChannel::TAO_MonitorEventChannel (char const *name)
   : name_ (name)
 {
   this->add_stats ();
@@ -317,14 +320,14 @@ TAO_MonitorEventChannel::~TAO_MonitorEventChannel ()
     }
 }
 
-const ACE_CString&
+ACE_CString const &
 TAO_MonitorEventChannel::name () const
 {
   return this->name_;
 }
 
 bool
-TAO_MonitorEventChannel::register_statistic (const ACE_CString& name,
+TAO_MonitorEventChannel::register_statistic (ACE_CString const &name,
                                              Monitor_Base* stat)
 {
   // Add the statistic to the registry and
@@ -342,7 +345,7 @@ TAO_MonitorEventChannel::register_statistic (const ACE_CString& name,
 }
 
 bool
-TAO_MonitorEventChannel::unregister_statistic (const ACE_CString& name)
+TAO_MonitorEventChannel::unregister_statistic (ACE_CString const &name)
 {
   // Remove the statistic from the registry and if it's successful
   // remove the name from the statistic names list.
@@ -361,7 +364,7 @@ TAO_MonitorEventChannel::unregister_statistic (const ACE_CString& name)
 void
 TAO_MonitorEventChannel::map_supplier_proxy (
   CosNotifyChannelAdmin::ProxyID id,
-  const ACE_CString& name)
+  ACE_CString const &name)
 {
   if (name.length () == 0)
     {
@@ -385,7 +388,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
   // The view from the outside sees a supplier proxy as a consumer.
   // So, we'll register a RemoveConsumerSupplierControl for each supplier
   // proxy indicating a consumer (false)
-  RemoveConsumerSupplierControl* rcsc = nullptr;
+  RemoveConsumerSupplierControl* rcsc {};
   ACE_NEW_THROW_EX (rcsc,
                     RemoveConsumerSupplierControl (this, full, id, false),
                     CORBA::NO_MEMORY ());
@@ -410,7 +413,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
 void
 TAO_MonitorEventChannel::map_consumer_proxy (
   CosNotifyChannelAdmin::ProxyID id,
-  const ACE_CString& name)
+  ACE_CString const &name)
 {
   if (name.length () == 0)
     {
@@ -434,7 +437,7 @@ TAO_MonitorEventChannel::map_consumer_proxy (
   // The view from the outside sees a consumer proxy as a supplier.
   // So, we'll register a RemoveConsumerSupplierControl for each consumer
   // proxy indicating a supplier (true)
-  RemoveConsumerSupplierControl* rcsc = nullptr;
+  RemoveConsumerSupplierControl* rcsc {};
   ACE_NEW_THROW_EX (rcsc,
                     RemoveConsumerSupplierControl (this, full, id, true),
                     CORBA::NO_MEMORY ());
@@ -524,9 +527,9 @@ TAO_MonitorEventChannel::remove_supplieradmin (
 }
 
 void
-TAO_MonitorEventChannel::add_stats (const char* name)
+TAO_MonitorEventChannel::add_stats (char const *name)
 {
-  if (name != 0 && this->name_.length () == 0)
+  if (name != nullptr && this->name_.length () == 0)
     {
       this->name_ = name;
     }
@@ -536,7 +539,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name = dir_name +
                               NotifyMonitoringExt::EventChannelCreationTime;
-      Monitor_Base* timestamp = nullptr;
+      Monitor_Base* timestamp {};
       ACE_NEW_THROW_EX (timestamp,
                         Timestamp_Monitor (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
@@ -555,7 +558,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerCount;
-      EventChannelConsumersSuppliers* consumers = nullptr;
+      EventChannelConsumersSuppliers* consumers {};
       ACE_NEW_THROW_EX (consumers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -575,7 +578,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerNames;
-      consumers = 0;
+      consumers = nullptr;
       ACE_NEW_THROW_EX (consumers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -595,7 +598,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelTimedoutConsumerNames;
-      EventChannelTimedoutConsumers* tconsumers = nullptr;
+      EventChannelTimedoutConsumers* tconsumers {};
       ACE_NEW_THROW_EX (tconsumers,
                         EventChannelTimedoutConsumers (
                           this,
@@ -615,7 +618,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierCount;
-      EventChannelConsumersSuppliers* suppliers = nullptr;
+      EventChannelConsumersSuppliers* suppliers {};
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -636,7 +639,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierNames;
-      suppliers = 0;
+      suppliers = nullptr;
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -657,7 +660,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerAdminCount;
-      EventChannelConsumerSupplierAdmins* conadmins = nullptr;
+      EventChannelConsumerSupplierAdmins* conadmins {};
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -677,7 +680,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerAdminNames;
-      conadmins = 0;
+      conadmins = nullptr;
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -697,7 +700,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierAdminCount;
-      EventChannelConsumerSupplierAdmins* supadmins = nullptr;
+      EventChannelConsumerSupplierAdmins* supadmins {};
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -718,7 +721,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierAdminNames;
-      supadmins = 0;
+      supadmins = nullptr;
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -738,7 +741,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       supadmins->remove_ref ();
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelQueueSize;
-      QueuedEvents* events = nullptr;
+      QueuedEvents* events {};
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
@@ -758,7 +761,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelQueueElementCount;
-      events = 0;
+      events = nullptr;
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
@@ -770,7 +773,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       events->remove_ref ();
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelOldestEvent;
-      OldestEvent* oldest = nullptr;
+      OldestEvent* oldest {};
       ACE_NEW_THROW_EX (oldest,
                         OldestEvent (this, stat_name.c_str (),
                                      Monitor_Control_Types::MC_TIME),
@@ -788,7 +791,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSlowestConsumers;
-      SlowestConsumers* slowest = nullptr;
+      SlowestConsumers* slowest {};
       ACE_NEW_THROW_EX (slowest,
                         SlowestConsumers (this,
                                           stat_name.c_str (),
@@ -807,7 +810,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name +
                   NotifyMonitoringExt::EventChannelQueueOverflows;
-      QueueOverflows* overflows = nullptr;
+      QueueOverflows* overflows {};
       ACE_NEW_THROW_EX (overflows,
                         QueueOverflows (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
@@ -821,7 +824,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       TAO_Control_Registry* cinstance =
         TAO_Control_Registry::instance ();
 
-      ShutdownControl* sd = nullptr;
+      ShutdownControl* sd {};
       ACE_NEW_THROW_EX (sd,
                         ShutdownControl (this,
                                          this->name_),
@@ -847,16 +850,16 @@ TAO_MonitorEventChannel::new_for_consumers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id)
 {
-  return this->named_new_for_consumers (op, id, 0);
+  return this->named_new_for_consumers (op, id, nullptr);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_MonitorEventChannel::named_new_for_consumers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id,
-  const char* name)
+  char const *name)
 {
-  if (name != 0 && name[0] == 0)
+  if (name != nullptr && name[0] == 0)
     {
       throw NotifyMonitoringExt::NameMapError ();
     }
@@ -868,7 +871,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
   TAO_MonitorConsumerAdmin* low_admin =
     dynamic_cast<TAO_MonitorConsumerAdmin*> (admin->_servant ());
 
-  if (low_admin == 0)
+  if (low_admin == nullptr)
     {
       // This shouldn't happen.
       throw CORBA::INTERNAL ();
@@ -878,11 +881,10 @@ TAO_MonitorEventChannel::named_new_for_consumers (
       // Build up the full name.
       ACE_CString full = this->name_ + "/";
 
-      if (name == 0)
+      if (name == nullptr)
         {
-          char idname[64];
-          ACE_OS::sprintf (idname, "%d", id);
-          full += idname;
+          const std::string id_name = std::to_string (id);
+          full += id_name.c_str ();
         }
       else
         {
@@ -914,16 +916,16 @@ TAO_MonitorEventChannel::new_for_suppliers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id)
 {
-  return this->named_new_for_suppliers (op, id, 0);
+  return this->named_new_for_suppliers (op, id, nullptr);
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_MonitorEventChannel::named_new_for_suppliers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id,
-  const char* name)
+  char const *name)
 {
-  if (name != 0 && name[0] == 0)
+  if (name != nullptr && name[0] == 0)
     {
       throw NotifyMonitoringExt::NameMapError ();
     }
@@ -935,7 +937,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
   TAO_MonitorSupplierAdmin* low_admin =
     dynamic_cast<TAO_MonitorSupplierAdmin*> (admin->_servant ());
 
-  if (low_admin == 0)
+  if (low_admin == nullptr)
     {
       // This shouldn't happen
       throw CORBA::INTERNAL ();
@@ -945,11 +947,10 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
       // Build up the full name
       ACE_CString full = this->name_ + "/";
 
-      if (name == 0)
+      if (name == nullptr)
         {
-          char idname[64];
-          ACE_OS::sprintf (idname, "%d", id);
-          full += idname;
+          const std::string id_name = std::to_string (id);
+          full += id_name.c_str ();
         }
       else
         {
@@ -1005,7 +1006,7 @@ TAO_MonitorEventChannel::get_consumers (
 
               for (CORBA::ULong i = 0; i < plen; ++i)
                 {
-                  if (names == 0)
+                  if (names == nullptr)
                     {
                       if (this->supplier_map_.find (proxys[i]) == 0)
                         {
@@ -1037,7 +1038,7 @@ TAO_MonitorEventChannel::get_timedout_consumers (
   ACE_READ_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->timedout_supplier_mutex_);
 
   Map::const_iterator itr (this->timedout_supplier_map_);
-  Map::value_type* entry = nullptr;
+  Map::value_type* entry {};
   while (itr.next (entry))
     {
       names->push_back (entry->item ());
@@ -1074,7 +1075,7 @@ TAO_MonitorEventChannel::get_suppliers (
 
               for (CORBA::ULong i = 0; i < plen; ++i)
                 {
-                  if (names == 0)
+                  if (names == nullptr)
                     {
                       if (this->consumer_map_.find (proxys[i]) == 0)
                         {
@@ -1136,7 +1137,7 @@ TAO_MonitorEventChannel::get_supplieradmins (
 size_t
 TAO_MonitorEventChannel::get_admins (
   TAO_MonitorEventChannel::Map& map,
-  const CosNotifyChannelAdmin::AdminIDSeq& admin_ids,
+  CosNotifyChannelAdmin::AdminIDSeq const &admin_ids,
   Monitor_Control_Types::NameList* names)
 {
   size_t count = 0;
@@ -1144,7 +1145,7 @@ TAO_MonitorEventChannel::get_admins (
 
   for (CORBA::ULong j = 0; j < length; ++j)
     {
-      if (names == 0)
+      if (names == nullptr)
         {
           if (map.find (admin_ids[j]) == 0)
             {
@@ -1180,7 +1181,7 @@ TAO_MonitorEventChannel::get_threadpool_task (
       TAO_Notify_ConsumerAdmin* low_admin =
         dynamic_cast<TAO_Notify_ConsumerAdmin*> (admin->_servant ());
 
-      if (low_admin != 0)
+      if (low_admin != nullptr)
         {
           return
             dynamic_cast<TAO_Notify_ThreadPool_Task*> (
@@ -1188,7 +1189,7 @@ TAO_MonitorEventChannel::get_threadpool_task (
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 size_t
@@ -1204,7 +1205,7 @@ TAO_MonitorEventChannel::calculate_queue_size (bool count)
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
 
-      if (task != 0)
+      if (task != nullptr)
         {
           TAO_Notify_Message_Queue* queue = task->msg_queue ();
 
@@ -1243,7 +1244,7 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
 
-      if (task != 0)
+      if (task != nullptr)
         {
           TAO_Notify_Message_Queue* queue = task->msg_queue ();
           size_t count = queue->message_count ();
@@ -1309,7 +1310,7 @@ TAO_MonitorEventChannel::get_oldest_event ()
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
 
-      if (task != 0)
+      if (task != nullptr)
         {
           ACE_Time_Value old =
             task->buffering_strategy ()->oldest_event ();
@@ -1334,11 +1335,11 @@ TAO_MonitorEventChannel::get_oldest_event ()
 
 bool
 TAO_MonitorEventChannel::is_duplicate_name (
-  const TAO_MonitorEventChannel::Map& map,
-  const ACE_CString& name) const
+  TAO_MonitorEventChannel::Map const &map,
+  ACE_CString const &name) const
 {
   Map::const_iterator itr (map);
-  Map::value_type* entry = nullptr;
+  Map::value_type* entry {};
 
   while (itr.next (entry))
     {
@@ -1356,7 +1357,7 @@ TAO_MonitorEventChannel::is_duplicate_name (
 void
 TAO_MonitorEventChannel::remove_list_name (
   Monitor_Control_Types::NameList& list,
-  const ACE_CString& name)
+  ACE_CString const &name)
 {
   size_t size = list.size ();
 

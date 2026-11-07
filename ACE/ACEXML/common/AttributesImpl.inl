@@ -4,31 +4,21 @@
 #include "ace/OS_NS_string.h"
 
 ACEXML_INLINE
-ACEXML_Attribute::ACEXML_Attribute ()
-  : uri_ (0),
-    localName_ (0),
-    qName_ (0),
-    type_ (0),
-    value_ (0)
+ACEXML_Attribute::ACEXML_Attribute (ACEXML_Attribute const &attr)
+  : uri_ (ACE::strnew (attr.uri_.get ())),
+    localName_ (ACE::strnew (attr.localName_.get ())),
+    qName_ (ACE::strnew (attr.qName_.get ())),
+    type_ (ACE::strnew (attr.type_.get ())),
+    value_ (ACE::strnew (attr.value_.get ()))
 {
 }
 
 ACEXML_INLINE
-ACEXML_Attribute::ACEXML_Attribute (const ACEXML_Attribute &attr)
-  : uri_ (ACE::strnew (attr.uri_)),
-    localName_ (ACE::strnew (attr.localName_)),
-    qName_ (ACE::strnew (attr.qName_)),
-    type_ (ACE::strnew (attr.type_)),
-    value_ (ACE::strnew (attr.value_))
-{
-}
-
-ACEXML_INLINE
-ACEXML_Attribute::ACEXML_Attribute (const ACEXML_Char *uri,
-                                    const ACEXML_Char *localName,
-                                    const ACEXML_Char *qName,
-                                    const ACEXML_Char *type,
-                                    const ACEXML_Char *value)
+ACEXML_Attribute::ACEXML_Attribute (ACEXML_Char const *uri,
+                                    ACEXML_Char const *localName,
+                                    ACEXML_Char const *qName,
+                                    ACEXML_Char const *type,
+                                    ACEXML_Char const *value)
   : uri_ (ACE::strnew (uri)),
     localName_ (ACE::strnew (localName)),
     qName_ (ACE::strnew (qName)),
@@ -37,87 +27,72 @@ ACEXML_Attribute::ACEXML_Attribute (const ACEXML_Char *uri,
 {
 }
 
-ACEXML_INLINE
-ACEXML_Attribute::~ACEXML_Attribute ()
-{
-  delete[] this->uri_;
-  delete[] this->localName_;
-  delete[] this->qName_;
-  delete[] this->type_;
-  delete[] this->value_;
-}
-
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_Attribute::uri () const
 {
-  return this->uri_;
+  return this->uri_.get ();
 }
 
 ACEXML_INLINE void
-ACEXML_Attribute::uri (const ACEXML_Char *uri)
+ACEXML_Attribute::uri (ACEXML_Char const *uri)
 {
-  delete[] this->uri_;
-  this->uri_ = ACE::strnew (uri);
+  this->uri_.reset (ACE::strnew (uri));
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_Attribute::localName () const
 {
-  return this->localName_;
+  return this->localName_.get ();
 }
 
 ACEXML_INLINE void
-ACEXML_Attribute::localName (const ACEXML_Char *localName)
+ACEXML_Attribute::localName (ACEXML_Char const *localName)
 {
-  delete[] this->localName_;
-  this->localName_ = ACE::strnew (localName);
+  this->localName_.reset (ACE::strnew (localName));
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_Attribute::qName () const
 {
-  return this->qName_;
+  return this->qName_.get ();
 }
 
 ACEXML_INLINE void
-ACEXML_Attribute::qName (const ACEXML_Char *qName)
+ACEXML_Attribute::qName (ACEXML_Char const *qName)
 {
-  delete[] this->qName_;
-  this->qName_ = ACE::strnew (qName);
+  this->qName_.reset (ACE::strnew (qName));
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_Attribute::type () const
 {
-  return this->type_;
+  return this->type_.get ();
 }
 
 ACEXML_INLINE void
-ACEXML_Attribute::type (const ACEXML_Char *type)
+ACEXML_Attribute::type (ACEXML_Char const *type)
 {
-  delete[] this->type_;
-  this->type_ = ACE::strnew (type);
+  this->type_.reset (ACE::strnew (type));
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_Attribute::value () const
 {
-  return this->value_;
+  return this->value_.get ();
 }
 
 ACEXML_INLINE void
-ACEXML_Attribute::value (const ACEXML_Char *value)
+ACEXML_Attribute::value (ACEXML_Char const *value)
 {
-  delete[] this->value_;
-  this->value_ = ACE::strnew (value);
+  this->value_.reset (ACE::strnew (value));
 }
 
 ACEXML_INLINE void
-ACEXML_Attribute::setAttribute (const ACEXML_Char *uri,
-                                const ACEXML_Char *localName,
-                                const ACEXML_Char *qName,
-                                const ACEXML_Char *type,
-                                const ACEXML_Char *value)
+ACEXML_Attribute::setAttribute (ACEXML_Char const *uri,
+                                ACEXML_Char const *localName,
+                                ACEXML_Char const *qName,
+                                ACEXML_Char const *type,
+                                ACEXML_Char const *value)
 {
   this->uri (uri);
   this->qName (qName);
@@ -127,7 +102,7 @@ ACEXML_Attribute::setAttribute (const ACEXML_Char *uri,
 }
 
 ACEXML_INLINE ACEXML_Attribute &
-ACEXML_Attribute::operator= (const ACEXML_Attribute &rhs)
+ACEXML_Attribute::operator= (ACEXML_Attribute const &rhs)
 {
   if (this != &rhs)             // Check for self assignment
     {
@@ -141,12 +116,11 @@ ACEXML_Attribute::operator= (const ACEXML_Attribute &rhs)
 }
 
 ACEXML_INLINE bool
-ACEXML_Attribute::operator!= (const ACEXML_Attribute &rhs) const
+ACEXML_Attribute::operator!= (ACEXML_Attribute const &rhs) const
 {
-  return (ACE_OS::strcmp (this->uri_, rhs.uri ()) == 0 &&
-          ACE_OS::strcmp (this->localName_, rhs.localName ()) == 0 &&
-          ACE_OS::strcmp (this->qName_, rhs .qName ()) == 0 &&
-          ACE_OS::strcmp (this->type_, rhs.type ()) == 0 &&
-          ACE_OS::strcmp (this->value_, rhs.value ()) == 0 ? false : true);
-
+  return (ACE_OS::strcmp (this->uri_.get (), rhs.uri ()) == 0 &&
+          ACE_OS::strcmp (this->localName_.get (), rhs.localName ()) == 0 &&
+          ACE_OS::strcmp (this->qName_.get (), rhs.qName ()) == 0 &&
+          ACE_OS::strcmp (this->type_.get (), rhs.type ()) == 0 &&
+          ACE_OS::strcmp (this->value_.get (), rhs.value ()) == 0 ? false : true);
 }

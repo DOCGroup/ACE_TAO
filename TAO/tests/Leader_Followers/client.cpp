@@ -11,113 +11,106 @@
 
 
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
+#include "ace/Log_Msg.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
-// Name of file contains ior.
-static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
+#include <string>
 
-// Number of client threads.
-static int number_of_client_threads = 3;
-
-// Number of event loop threads.
-static int number_of_event_loop_threads = 1;
-
-// Amount of remote work (in milli seconds).
-static u_long remote_work = 5000;
-
-// Run event loop for this much time (in milli seconds).
-static u_long event_loop_timeout = 7000;
-
-// Flag indicates whether to shutdown remote server or not upon client
-// shutdown.
-static int shutdown_server = 0;
+struct Client_Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://ior")};
+  int client_threads {3};
+  int event_loop_threads {1};
+  u_long remote_work {5000};
+  u_long event_loop_timeout {7000};
+  bool shutdown_server {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options& options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:c:e:w:t:x"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:c:e:w:t:x"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'c':
-        number_of_client_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.client_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'e':
-        number_of_event_loop_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.event_loop_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        event_loop_timeout = ACE_OS::atoi (get_opts.opt_arg ());
+        options.event_loop_timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        remote_work = ACE_OS::atoi (get_opts.opt_arg ());
+        options.remote_work = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k IOR "
-                           "-c number of client threads "
-                           "-e number of event loop threads "
-                           "-t event loop timeout "
-                           "-w remote work "
-                           "-x shutdown server "
-                           "\n",
+                           ACE_TEXT ("usage:  %s "
+                                     "-k IOR "
+                                     "-c number of client threads "
+                                     "-e number of event loop threads "
+                                     "-t event loop timeout "
+                                     "-w remote work "
+                                     "-x shutdown server "
+                                     "\n"),
                            argv [0]),
                           -1);
       }
 
-  if (IOR == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
-
-  // Indicates successful parsing of command line.
   return 0;
 }
 
 class Client_Task : public ACE_Task_Base
 {
 public:
-  Client_Task (test_ptr t)
+  Client_Task (test_ptr t, Client_Options const& options)
     : test_ (test::_duplicate (t)),
-      work_so_far_ (0),
-      sleep_ (0)
+      options_ (options)
     {
     }
 
-  int svc ()
+  Client_Task (Client_Task const&) = delete;
+  Client_Task (Client_Task&&) = delete;
+  Client_Task& operator= (Client_Task const&) = delete;
+  Client_Task& operator= (Client_Task&&) = delete;
+
+  int svc () override
     {
       try
         {
-          u_long work_from_this_thread = 0;
+          u_long work_from_this_thread {};
           ACE_Time_Value sleep_for_this_thread;
 
           {
             ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-            this->work_so_far_ += remote_work / number_of_client_threads;
+            this->work_so_far_ += this->options_.remote_work / this->options_.client_threads;
             work_from_this_thread = this->work_so_far_;
 
             sleep_for_this_thread.msec (this->sleep_);
-            this->sleep_ += 1000 / number_of_client_threads;
+            this->sleep_ += 1000 / this->options_.client_threads;
           }
 
           // Small pause to avoid overrunning the server.
@@ -125,21 +118,21 @@ public:
 
           // Invoke the method.
           ACE_DEBUG ((LM_DEBUG,
-                      "Client: Invoking server from thread %t for time %d @ %T\n",
-                      work_from_this_thread));
+                      ACE_TEXT ("Client: Invoking server from thread %t for time %u @ %T\n"),
+                      static_cast<unsigned int> (work_from_this_thread)));
 
-          CORBA::ULong result = this->test_->method (work_from_this_thread);
+          CORBA::ULong const result = this->test_->method (work_from_this_thread);
 
           if (work_from_this_thread != result)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Client: result is %d\n", result));
+                          ACE_TEXT ("Client: result is %u\n"), result));
               ACE_ASSERT (work_from_this_thread == result);
             }
 
-          ACE_DEBUG ((LM_DEBUG, "Client: client loop finished for thread %t @ %T\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client: client loop finished for thread %t @ %T\n")));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Exception caught in thread:");
           return -1;
@@ -150,53 +143,60 @@ public:
     }
 
 private:
-  // server reference.
-  test_var test_;
+  test_var const test_;
+  Client_Options const options_;
 
   // Work counter.
-  u_long work_so_far_;
+  u_long work_so_far_ {};
 
   // Lock for work counter.
   TAO_SYNCH_MUTEX lock_;
 
   // Small pause to avoid overrunning the server.
-  long sleep_;
+  long sleep_ {};
 };
 
 class Event_Loop_Task : public ACE_Task_Base
 {
 public:
-  Event_Loop_Task (CORBA::ORB_ptr orb)
-    :  orb_ (CORBA::ORB::_duplicate (orb)),
-       event_loop_timeout_so_far_ (0)
+  Event_Loop_Task (CORBA::ORB_ptr orb, Client_Options const& options)
+    : orb_ (CORBA::ORB::_duplicate (orb)),
+      options_ (options)
     {
     }
 
-  int svc ()
+  Event_Loop_Task (Event_Loop_Task const&) = delete;
+  Event_Loop_Task (Event_Loop_Task&&) = delete;
+  Event_Loop_Task& operator= (Event_Loop_Task const&) = delete;
+  Event_Loop_Task& operator= (Event_Loop_Task&&) = delete;
+
+  int svc () override
     {
       try
         {
-          u_long event_loop_timeout_for_this_thread = 0;
+          u_long event_loop_timeout_for_this_thread {};
 
           {
             ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-            this->event_loop_timeout_so_far_ += event_loop_timeout / number_of_event_loop_threads;
+            this->event_loop_timeout_so_far_ +=
+              this->options_.event_loop_timeout / this->options_.event_loop_threads;
             event_loop_timeout_for_this_thread = this->event_loop_timeout_so_far_;
           }
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Client: Event loop thread %t starting event loop for %d milli seconds @ %T\n",
-                      event_loop_timeout_for_this_thread));
+                      ACE_TEXT ("Client: Event loop thread %t starting event loop "
+                                "for %u milli seconds @ %T\n"),
+                      static_cast<unsigned int> (event_loop_timeout_for_this_thread)));
 
           ACE_Time_Value timeout (0,
                                   event_loop_timeout_for_this_thread * 1000);
 
           this->orb_->run (timeout);
 
-          ACE_DEBUG ((LM_DEBUG, "Client: Event loop finished for thread %t @ %T\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client: Event loop finished for thread %t @ %T\n")));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Exception caught in thread:");
           return -1;
@@ -208,10 +208,11 @@ public:
 
 private:
   // ORB reference.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
+  Client_Options const options_;
 
   // Event loop timeout counter.
-  u_long event_loop_timeout_so_far_;
+  u_long event_loop_timeout_so_far_ {};
 
   // Lock for event loop timeout counter.
   TAO_SYNCH_MUTEX lock_;
@@ -223,53 +224,54 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      Client_Options options;
+      int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
         return parse_args_result;
 
       // Get an object reference from the argument string.
-      CORBA::Object_var object =
-        orb->string_to_object (IOR);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior.c_str ());
 
       // Try to narrow the object reference to a <server> reference.
-      test_var server = test::_narrow (object.in ());
+      test_var const server = test::_narrow (object.in ());
 
-      Client_Task client_task (server.in ());
+      Client_Task client_task (server.in (), options);
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
-                                number_of_client_threads) != 0)
+                                options.client_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
+                           ACE_TEXT ("Cannot activate client threads\n")),
                           -1);
 
       // Make sure to give the client threads enough time to become
       // leaders.
       ACE_OS::sleep (4);
 
-      Event_Loop_Task event_loop_task (orb.in ());
+      Event_Loop_Task event_loop_task (orb.in (), options);
 
       if (event_loop_task.activate (THR_NEW_LWP | THR_JOINABLE,
-                                    number_of_event_loop_threads) != 0)
+                                    options.event_loop_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate event_loop threads\n"),
+                           ACE_TEXT ("Cannot activate event_loop threads\n")),
                           -1);
 
       event_loop_task.thr_mgr ()->wait ();
       client_task.thr_mgr ()->wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "Client: All threads finished @ %T\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client: All threads finished @ %T\n")));
 
       // Shutdown server.
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           server->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;

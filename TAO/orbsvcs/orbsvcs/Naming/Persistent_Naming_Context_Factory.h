@@ -45,10 +45,10 @@ public:
   /// Factory method for creating an implementation object for naming contexts
   virtual TAO_Persistent_Naming_Context*
     create_naming_context_impl (PortableServer::POA_ptr poa,
-                                const char *poa_id,
+                                char const *poa_id,
                                 TAO_Persistent_Context_Index *context_index,
-                                HASH_MAP * map = 0,
-                                ACE_UINT32 *counter = 0);
+                                HASH_MAP * map = nullptr,
+                                ACE_UINT32 *counter = nullptr);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

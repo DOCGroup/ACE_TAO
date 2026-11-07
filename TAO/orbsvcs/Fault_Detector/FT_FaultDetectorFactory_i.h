@@ -135,7 +135,7 @@ namespace TAO
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * Remove pointer to individual detector; delete Fault_Detector_i.
@@ -231,12 +231,12 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    ACE_TCHAR const * ior_output_file_;
+    ACE_TCHAR const * ior_output_file_ {};
 
     /**
      * A name to be used to register the factory with the name service.
      */
-    char const * ns_name_;
+    char const * ns_name_ {};
 
     ::CosNaming::NamingContext_var naming_context_;
 
@@ -245,7 +245,7 @@ namespace TAO
     /**
      * Quit on idle flag.
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * the FT::Domain where we're operating
@@ -267,7 +267,7 @@ namespace TAO
      * bool: if true, register with ReplicationManager.
      * default is true.  -x turns it off.
      */
-    int rm_register_;
+    bool rm_register_ {true};
 
     /**
      * the replication manager
@@ -277,7 +277,7 @@ namespace TAO
     /**
      * bool: if true the registration with ReplicationManager was successful.
      */
-    int registered_;
+    bool registered_ {};
 
     /**
      * The factory registry with which to register.
@@ -305,12 +305,12 @@ namespace TAO
      * Used to determine when the factory is idle, and to avoid
      * fruitless searches for empty slots.
      */
-    size_t empty_slots_;
+    size_t empty_slots_ {};
 
     /**
      * boolean: starts false.  Set to true when it's time to quit.
      */
-    int quit_requested_;
+    bool quit_requested_ {};
   };
 }   // namespace TAO
 

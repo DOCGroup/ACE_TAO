@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::PolicyFactory_Registry_Adapter*
 TAO_PolicyFactory_Loader::create ()
 {
-  TAO::PolicyFactory_Registry_Adapter* obj = nullptr;
+  TAO::PolicyFactory_Registry_Adapter* obj {};
   ACE_NEW_RETURN (obj,
                   TAO_PolicyFactory_Registry,
                   nullptr);

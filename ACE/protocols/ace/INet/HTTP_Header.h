@@ -38,7 +38,7 @@ namespace ACE
               Header();
 
               /// Constructor
-              Header(const ACE_CString& version);
+              explicit Header(const ACE_CString& version);
 
               /// Destructor
               virtual ~Header();

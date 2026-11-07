@@ -27,7 +27,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   ACE_TRACE ("TAO_DTP_POA_Loader::init");
 
   // Only allow initialization once.
-  static bool initialized = false;
+  static bool initialized {};
   if (initialized)
     return 0;
   initialized = true;
@@ -62,7 +62,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
   repo->init(0,0);
 
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (TAO_debug_level > 0)
         {
@@ -113,9 +113,9 @@ int
 TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
                                   TAO_CSD_Strategy_Repository *repo)
 {
-  ACE_CString poa_name;
-  ACE_CString config_name;
-  TAO_DTP_POA_Strategy *strategy_container = nullptr;
+  std::string poa_name;
+  std::string config_name;
+  TAO_DTP_POA_Strategy *strategy_container {};
 
   ACE_TCHAR *sep = ACE_OS::strchr (map, ':');
 
@@ -161,8 +161,8 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 }
 
 void
-TAO_DTP_POA_Loader::report_option_value_error (const ACE_TCHAR* name,
-                                               const ACE_TCHAR* value)
+TAO_DTP_POA_Loader::report_option_value_error (ACE_TCHAR const *name,
+                                               ACE_TCHAR const *value)
 {
   if (TAO_debug_level > 0)
     {

@@ -18,14 +18,20 @@
 class Event_Analyzer : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int open (void *a = 0);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
+  Event_Analyzer () = default;
+  Event_Analyzer (Event_Analyzer const &) = delete;
+  Event_Analyzer (Event_Analyzer &&) = delete;
+  Event_Analyzer &operator= (Event_Analyzer const &) = delete;
+  Event_Analyzer &operator= (Event_Analyzer &&) = delete;
+
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
 
   // Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
 
 private:
   virtual int control (ACE_Message_Block *);

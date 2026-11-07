@@ -73,7 +73,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = nullptr;
+  CORBA::ServerRequest *dsi_request {};
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
   try
@@ -137,7 +137,7 @@ ImR_DSI_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   TAO::Portable_Server::POA_Current_Impl* impl = tao_current->implementation ();
   TAO::ObjectKey::encode_sequence_to_string (key_str.out (), impl->object_key ());
 
-  ImR_DSI_ResponseHandler *rh = nullptr;
+  ImR_DSI_ResponseHandler *rh {};
   ACE_NEW (rh, ImR_DSI_ResponseHandler(key_str.in(),
                                     this->locator_.debug() > 0 ?
                                     server_name.in() : "",

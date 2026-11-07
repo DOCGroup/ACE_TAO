@@ -7,15 +7,13 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ORB_Table::ORB_Table ()
-  : lock_ (),
-    first_orb_not_default_ (false),
-    table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
-    first_orb_ (nullptr)
+  : table_ (TAO_DEFAULT_ORB_TABLE_SIZE)
 {
 }
 
@@ -29,7 +27,7 @@ TAO::ORB_Table::bind (char const * orb_id,
     {
       errno = EINVAL;
       return -1;
-    };
+    }
 
   value_type const value =
     std::make_pair (key_type (orb_id), data_type (orb_core));
@@ -67,7 +65,7 @@ TAO::ORB_Table::bind (char const * orb_id,
 TAO_ORB_Core *
 TAO::ORB_Table::find (char const * orb_id)
 {
-  TAO_ORB_Core * orb_core = nullptr;
+  TAO_ORB_Core * orb_core {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -87,7 +85,7 @@ TAO::ORB_Table::find (char const * orb_id)
 }
 
 int
-TAO::ORB_Table::unbind (const char *orb_id)
+TAO::ORB_Table::unbind (char const *orb_id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -147,7 +145,7 @@ TAO::ORB_Table::not_default (char const * orb_id)
   // anything.
   if (this->first_orb_ != nullptr)
     {
-      if (ACE_OS::strcmp (this->first_orb_->orbid (), orb_id) != 0)
+      if (std::strcmp (this->first_orb_->orbid (), orb_id) != 0)
         {
           // There is another default ORB. No need to change anything
           return;

@@ -8,7 +8,7 @@ TAO_CosEC_ConsumerAdmin_i::TAO_CosEC_ConsumerAdmin_i ()
 }
 
 int
-TAO_CosEC_ConsumerAdmin_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
+TAO_CosEC_ConsumerAdmin_i::init (RtecEventChannelAdmin::ConsumerQOS const &consumerqos,
                                  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin)
 {
   this->qos_ = consumerqos;

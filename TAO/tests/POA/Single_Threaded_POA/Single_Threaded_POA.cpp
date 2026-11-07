@@ -18,20 +18,24 @@
 class test_i : public virtual POA_test
 {
 public:
-  test_i (PortableServer::POA_ptr poa);
+  explicit test_i (PortableServer::POA_ptr poa);
 
-  void method ();
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  PortableServer::POA_ptr _default_POA ();
+  void method () override;
+
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   PortableServer::POA_var poa_;
-  int called_self_;
+  bool called_self_ {};
 };
 
 test_i::test_i (PortableServer::POA_ptr poa)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
-    called_self_ (0)
+  : poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
@@ -46,19 +50,19 @@ test_i::method ()
   ACE_DEBUG ((LM_DEBUG,
               "Done resting from %t\n"));
 
-  if (this->called_self_ == 0)
+  if (!this->called_self_)
     {
-      this->called_self_ = 1;
+      this->called_self_ = true;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling self from %t\n"));
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         this->poa_->activate_object (this);
 
-      CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+      CORBA::Object_var const object = this->poa_->id_to_reference (id.in ());
 
-      test_var self = test::_narrow (object.in ());
+      test_var const self = test::_narrow (object.in ());
 
       self->method ();
     }
@@ -73,7 +77,13 @@ test_i::_default_POA ()
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (test_ptr t);
+  explicit Worker (test_ptr t);
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
   int svc () override;
 
 private:
@@ -92,7 +102,7 @@ Worker::svc ()
     {
       this->test_->method ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in thread");
       return -1;
@@ -102,22 +112,22 @@ Worker::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Policies for the new POA.
@@ -131,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL);
 
       // Creation of the child POA.
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies);
@@ -180,7 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

@@ -6,14 +6,9 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-Database_i::~Database_i ()
-{
-  delete[] this->elements_;
-}
-
 void
 Database_i::set (Test::Index i,
-                 const Test::OctetSeq& seq,
+                 Test::OctetSeq const &seq,
                  CORBA::Double verification_token,
                  CORBA::Double_out returned_token)
 {
@@ -23,10 +18,10 @@ Database_i::set (Test::Index i,
   returned_token = verification_token;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-  CORBA::ULong len = seq.length ();
+  CORBA::ULong const len = seq.length ();
   // CORBA::ULong max = seq.maximum ();
   ACE_Message_Block *mb = seq.mb ();
-  if (mb == 0)
+  if (mb == nullptr)
     {
       this->elements_[i] = seq;
     }
@@ -45,7 +40,7 @@ Database_i::get (Test::Index i)
   if (i >= this->max_range_)
     throw Test::OutOfRange (0, this->max_range_);
 
-  Test::OctetSeq* copy = 0;
+  Test::OctetSeq *copy = nullptr;
   ACE_NEW_THROW_EX (copy,
                     Test::OctetSeq (this->elements_[i]),
                     CORBA::NO_MEMORY ());

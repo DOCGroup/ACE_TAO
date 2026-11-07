@@ -3,6 +3,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
@@ -12,8 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ConsumerQOS_Factory::
     ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer,
                              CORBA::ULong qos_max_len)
-  : designator_set_ (0),
-    event_initializer_ (initializer)
+  : event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
 
@@ -25,21 +26,19 @@ ACE_ConsumerQOS_Factory::
   qos_.dependencies.length (0);
 }
 
-ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory ()
-{
-}
+ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory () = default;
 
 int
 ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_CONJUNCTION_DESIGNATOR;
   qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
-  this->designator_set_ = 1;
+  this->designator_set_ = true;
   return 0;
 }
 
@@ -48,12 +47,12 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
-  this->designator_set_ = 1;
+  this->designator_set_ = true;
   return 0;
 }
 
@@ -62,12 +61,12 @@ ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_LOGICAL_AND_DESIGNATOR;
   qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
-  this->designator_set_ = 1;
+  this->designator_set_ = true;
   return 0;
 }
 
@@ -76,11 +75,11 @@ ACE_ConsumerQOS_Factory::start_negation ()
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_NEGATION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
-  this->designator_set_ = 1;
+  this->designator_set_ = true;
   return 0;
 }
 
@@ -90,7 +89,7 @@ ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 2);
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != nullptr)
     {
       (*this->event_initializer_) (qos_.dependencies[l].event);
       (*this->event_initializer_) (qos_.dependencies[l + 1].event);
@@ -102,7 +101,7 @@ ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
   qos_.dependencies[l+1].event.header.type = type_mask;
   qos_.dependencies[l+1].rt_info = 0;
 
-  this->designator_set_ = 1;
+  this->designator_set_ = true;
   return 0;
 }
 
@@ -110,16 +109,16 @@ int
 ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscribe)
 {
   // Make sure that a designator is first.
-  if (designator_set_ == 0)
+  if (!designator_set_)
     {
       int l = qos_.dependencies.length ();
       qos_.dependencies.length (l + 1);
-      if (this->event_initializer_ != 0)
+      if (this->event_initializer_ != nullptr)
         (*this->event_initializer_) (qos_.dependencies[l].event);
       qos_.dependencies[l].rt_info = 0;
       qos_.dependencies[l].event.header.type = ACE_ES_GLOBAL_DESIGNATOR;
 
-      this->designator_set_ = 1;
+      this->designator_set_ = true;
     }
 
   int l = qos_.dependencies.length ();
@@ -131,7 +130,7 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
 void event_debug (const char* p,
                   const RtecEventComm::Event& event)
 {
-  size_t l = ACE_OS::strlen (p);
+  size_t l = std::strlen (p);
   ORBSVCS_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",
@@ -188,7 +187,7 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
   // set
   this->qos_.publications.length (l + 1);
 
-  if (this->event_initializer_ != 0)
+  if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.publications[l].event);
   this->qos_.publications[l].event.header.source = sid;
   this->qos_.publications[l].event.header.type = type;

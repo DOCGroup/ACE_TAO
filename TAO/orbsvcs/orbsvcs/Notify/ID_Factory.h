@@ -36,13 +36,18 @@ public:
   /// Destructor
   ~TAO_Notify_ID_Factory ();
 
+  TAO_Notify_ID_Factory (TAO_Notify_ID_Factory const &) = delete;
+  TAO_Notify_ID_Factory (TAO_Notify_ID_Factory &&) = delete;
+  TAO_Notify_ID_Factory &operator= (TAO_Notify_ID_Factory const &) = delete;
+  TAO_Notify_ID_Factory &operator= (TAO_Notify_ID_Factory &&) = delete;
+
   TAO_Notify_Object::ID id ();
 
   void set_last_used (const TAO_Notify_Object::ID id);
 
 private:
   /// Can't use atomic op, because we added the set_last_used() method.
-  TAO_Notify_Object::ID seed_;
+  TAO_Notify_Object::ID seed_ {};
   TAO_SYNCH_MUTEX mtx_;
 };
 

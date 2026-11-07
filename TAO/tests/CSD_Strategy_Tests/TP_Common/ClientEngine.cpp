@@ -1,11 +1,4 @@
 #include "ClientEngine.h"
 
 
-ClientEngine::ClientEngine()
-{
-}
-
-
-ClientEngine::~ClientEngine()
-{
-}
+ClientEngine::~ClientEngine() = default;

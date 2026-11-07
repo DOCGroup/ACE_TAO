@@ -9,7 +9,7 @@ namespace TAO
   ORT_Adapter *
   ORT_Adapter_Factory_Impl::create ()
   {
-    ORT_Adapter_Impl * new_ort_adapter = nullptr;
+    ORT_Adapter_Impl * new_ort_adapter {};
 
     ACE_NEW_RETURN (new_ort_adapter,
                     TAO::ORT_Adapter_Impl,

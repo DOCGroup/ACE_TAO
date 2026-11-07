@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ARGV.h"
+#include <string>
 
 class Options
 {
@@ -30,36 +31,38 @@ public:
   /// Returns the singleton instance
   static Options *instance ();
 
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
   /// parses commandline arguments
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Hostname to connect to
-  ACE_TCHAR *hostname_;
+  std::basic_string<ACE_TCHAR> hostname_;
 
   /// Port number to use
-  u_short port_;
+  u_short port_ {ACE_DEFAULT_HTTP_SERVER_PORT};
 
   /// Filename to upload/download
-  ACE_TCHAR *filename_;
+  std::basic_string<ACE_TCHAR> filename_;
 
   /// number of bytes to read/write
-  int length_;
+  int length_ {};
 
   /// offset to read/write
-  int offset_;
+  int offset_ {};
 
   /// "r" means download (read), and "w" means upload (write).
-  char operation_;
+  char operation_ {'r'};
 
   /// turns on verbosity
-  int debug_;
+  bool debug_ {};
 
 protected:
-  Options ();
+  Options () = default;
   // protected constructor, singleton
-
-  /// the singleton
-  static Options *instance_;
 };
 
 #endif /* ACE_BLOBBY_OPTIONS_H */

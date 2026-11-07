@@ -31,6 +31,11 @@ class CSD_TP_Foo_B_Export Foo_B_Statistics
 
     bool actual_vs_expected();
 
+    Foo_B_Statistics (Foo_B_Statistics const &) = delete;
+    Foo_B_Statistics (Foo_B_Statistics &&) = delete;
+    Foo_B_Statistics & operator= (Foo_B_Statistics const &) = delete;
+    Foo_B_Statistics & operator= (Foo_B_Statistics &&) = delete;
+
 private:
     unsigned num_clients_;
     unsigned num_collcated_clients_;
@@ -38,14 +43,14 @@ private:
     LongVector actual_in_long_ [16];
     StringVector actual_in_string_ [16];
 
-    unsigned expected_op_count_[16];
-    unsigned actual_op_count_[16];
-    unsigned expected_in_value_type_[16];
+    unsigned expected_op_count_[16] {};
+    unsigned actual_op_count_[16] {};
+    unsigned expected_in_value_type_[16] {};
 
-    unsigned expected_callbacks_;
-    unsigned actual_callbacks_;
+    unsigned expected_callbacks_ {};
+    unsigned actual_callbacks_ {};
 
-    unsigned servant_error_count_;
+    unsigned servant_error_count_ {};
 };
 
 #endif

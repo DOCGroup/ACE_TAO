@@ -4,11 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 UIPMC_Message_Block_Data_Iterator::UIPMC_Message_Block_Data_Iterator (iovec *iov, int iovcnt) :
   iov_ (iov),
-  iovcnt_ (iovcnt),
-  iov_index_ (0),
-  iov_ptr_ (nullptr),
-  iov_len_left_ (0),
-  state_ (State::INTER_BLOCK)
+  iovcnt_ (iovcnt)
 {
 }
 

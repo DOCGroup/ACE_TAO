@@ -8,6 +8,8 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_string.h"
 
+#include <cstring>
+
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
@@ -168,11 +170,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
 #   if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-  int const l = ACE_OS::strlen (symbolname) + 2;
+  int const l = std::strlen (symbolname) + 2;
   char *asm_symbolname {};
   ACE_NEW_RETURN (asm_symbolname, char[l], 0);
-  ACE_OS::strcpy (asm_symbolname, "_") ;
-  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
+  std::strcpy (asm_symbolname, "_");
+  std::strcpy (asm_symbolname + 1, symbolname);
   void *ace_result;
   ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, ace_result);
   delete [] asm_symbolname;
@@ -198,7 +200,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   STATUS status;
 
   SYMBOL_DESC symbolDesc;     /* symFind() descriptor */
-  ACE_OS::memset (&symbolDesc, 0, sizeof (SYMBOL_DESC));
+  std::memset (&symbolDesc, 0, sizeof (SYMBOL_DESC));
   symbolDesc.mask = SYM_FIND_BY_NAME;
   symbolDesc.name = symbolname;
 

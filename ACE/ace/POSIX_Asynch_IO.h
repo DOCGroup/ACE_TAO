@@ -63,7 +63,7 @@ public:
   const void *act () const override;
 
   /// Did the operation succeed?
-  int success () const override;
+  bool success () const override;
 
   /**
    * This is the ACT associated with the handle on which the
@@ -136,7 +136,7 @@ protected:
   size_t bytes_transferred_;
 
   /// Success indicator.
-  int success_;
+  bool success_;
 
   /// ACT associated with handle.
   const void *completion_key_;

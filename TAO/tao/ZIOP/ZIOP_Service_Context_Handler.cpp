@@ -10,6 +10,8 @@
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/Messaging_PolicyValueC.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -56,7 +58,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
             {
             case ::ZIOP::COMPRESSION_ENABLING_POLICY_ID:
               {
-                TAO::CompressionEnablingPolicy *enabled = nullptr;
+                TAO::CompressionEnablingPolicy *enabled {};
                 ACE_NEW_RETURN (enabled, TAO::CompressionEnablingPolicy (), 0);
                 std::unique_ptr<TAO::CompressionEnablingPolicy> guard (enabled);
                 if (enabled->_tao_decode (policy_cdr))
@@ -68,7 +70,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 
             case ::ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID:
               {
-                TAO::CompressorIdLevelListPolicy *id_list = nullptr;
+                TAO::CompressorIdLevelListPolicy *id_list {};
                 ACE_NEW_RETURN (id_list, TAO::CompressorIdLevelListPolicy (), 0);
                 std::unique_ptr<TAO::CompressorIdLevelListPolicy> guard (id_list);
                 if (id_list->_tao_decode (policy_cdr))
@@ -138,7 +140,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
              iterator != nullptr;
              iterator = iterator->cont ())
           {
-            ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+            std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
             buf += iterator->length ();
           }
           ++i;
@@ -166,7 +168,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
              iterator != nullptr;
              iterator = iterator->cont ())
           {
-            ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+            std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
             buf += iterator->length ();
           }
           ++i;

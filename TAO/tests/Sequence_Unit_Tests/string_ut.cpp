@@ -68,12 +68,12 @@ struct helper<CORBA::WChar>
 template<class charT>
 struct Tester
 {
-  typedef string_traits<charT,true> tested_string_traits;
-  typedef charT * string_type;
-  typedef charT const * const_string_type;
-  typedef typename tested_string_traits::string_var string_var;
-  typedef typename tested_string_traits::string_mgr string_mgr;
-  typedef typename tested_string_traits::string_out string_out;
+  using tested_string_traits = string_traits<charT,true>;
+  using string_type = charT *;
+  using const_string_type = charT const *;
+  using string_var = typename tested_string_traits::string_var;
+  using string_mgr = typename tested_string_traits::string_mgr;
+  using string_out = typename tested_string_traits::string_out;
 
   void test_copy_constructor()
   {
@@ -107,7 +107,7 @@ struct Tester
   }
 
 private:
-  Tester() {}
+  Tester () = default;
 
   boost::weak_ptr<Tester> self_;
 };

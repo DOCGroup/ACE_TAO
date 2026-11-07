@@ -12,10 +12,10 @@ class JAWS_Pipeline_Abstract_Handler : public JAWS_Pipeline_Task
 {
 public:
   JAWS_Pipeline_Abstract_Handler ();
-  virtual ~JAWS_Pipeline_Abstract_Handler ();
+  ~JAWS_Pipeline_Abstract_Handler () override;
   // ACE_Task hooks
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
   // inherited from ACE_Task
 
   virtual int handle_put (TYPE *data, ACE_Time_Value *tv) = 0;

@@ -16,7 +16,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception *
-TAO_Operation_Details::corba_exception (const char *id) const
+TAO_Operation_Details::corba_exception (char const *id) const
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {
@@ -42,7 +42,7 @@ TAO_Operation_Details::corba_exception (const char *id) const
 }
 
 bool
-TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
+TAO_Operation_Details::has_exception (::CORBA::Exception &ex) const
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {

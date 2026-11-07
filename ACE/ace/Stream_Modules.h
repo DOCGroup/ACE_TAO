@@ -52,19 +52,24 @@ public:
   /// Construction
   ACE_Stream_Head ();
 
+  ACE_Stream_Head (ACE_Stream_Head const &) = delete;
+  ACE_Stream_Head (ACE_Stream_Head &&) = delete;
+  ACE_Stream_Head &operator= (ACE_Stream_Head const &) = delete;
+  ACE_Stream_Head &operator= (ACE_Stream_Head &&) = delete;
+
   /// Destruction
-  virtual ~ACE_Stream_Head ();
+  ~ACE_Stream_Head () override;
 
   // = ACE_Task hooks
-  virtual int open (void *a = nullptr);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc ();
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
 
   // = Dynamic linking hooks
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -90,19 +95,24 @@ public:
   /// Construction
   ACE_Stream_Tail ();
 
+  ACE_Stream_Tail (ACE_Stream_Tail const &) = delete;
+  ACE_Stream_Tail (ACE_Stream_Tail &&) = delete;
+  ACE_Stream_Tail &operator= (ACE_Stream_Tail const &) = delete;
+  ACE_Stream_Tail &operator= (ACE_Stream_Tail &&) = delete;
+
   /// Destruction
-  virtual ~ACE_Stream_Tail ();
+  ~ACE_Stream_Tail () override;
 
   // = ACE_Task hooks
-  virtual int open (void *a = nullptr);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr);
-  virtual int svc ();
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
 
   // = Dynamic linking hooks
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -129,19 +139,24 @@ public:
   /// Construction
   ACE_Thru_Task ();
 
+  ACE_Thru_Task (ACE_Thru_Task const &) = delete;
+  ACE_Thru_Task (ACE_Thru_Task &&) = delete;
+  ACE_Thru_Task &operator= (ACE_Thru_Task const &) = delete;
+  ACE_Thru_Task &operator= (ACE_Thru_Task &&) = delete;
+
   /// Destruction
-  virtual ~ACE_Thru_Task ();
+  ~ACE_Thru_Task () override;
 
   // = ACE_Task hooks
-  virtual int open (void *a = nullptr);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr);
-  virtual int svc ();
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
 
   // = Dynamic linking hooks
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
 
   /// Dump the state of an object.
   void dump () const;

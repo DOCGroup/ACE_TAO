@@ -93,29 +93,27 @@ ACE_Thread_Exit::~ACE_Thread_Exit ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Exit)
 
 ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag)
-  : instance_ (nullptr)
 {
   if (flag)
     {
-      ACE_NEW (instance_, ACE_Thread_Exit);
+      ACE_Thread_Exit *instance {};
+      ACE_NEW (instance, ACE_Thread_Exit);
+      this->instance_.reset (instance);
     }
 }
 
-ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe ()
-{
-  delete this->instance_;
-}
+ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe () = default;
 
 ACE_Thread_Exit *
 ACE_Thread_Exit_Maybe::operator -> () const
 {
-  return this->instance_;
+  return this->instance_.get ();
 }
 
 ACE_Thread_Exit *
 ACE_Thread_Exit_Maybe::instance () const
 {
-  return this->instance_;
+  return this->instance_.get ();
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

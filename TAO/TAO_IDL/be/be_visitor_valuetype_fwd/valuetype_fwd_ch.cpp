@@ -28,8 +28,8 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
       return 0;
     }
 
-  AST_Interface *fd = node->full_definition ();
-  be_valuetype *bfd = dynamic_cast<be_valuetype*> (fd);
+  AST_Interface * const fd = node->full_definition ();
+  be_valuetype * const bfd = dynamic_cast<be_valuetype*> (fd);
 
   // This will be a no-op if it has already been done for this node.
   bfd->gen_var_out_seq_decls ();

@@ -1,9 +1,9 @@
 
 #include "ace/Task.h"
-#include "ace/Atomic_Op_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "HelloC.h"
+#include <atomic>
 
 ACE_TCHAR const* ior = ACE_TEXT ("file://test.ior");
 CORBA::ULong payload_length = 1000;
@@ -126,7 +126,7 @@ private:
   CORBA::ULong payload_;
   CORBA::ULong calls_;
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> id_;
+  std::atomic<CORBA::ULong> id_;
 
   CORBA::ULong sleep_;
 };

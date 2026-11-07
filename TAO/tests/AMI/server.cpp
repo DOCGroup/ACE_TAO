@@ -15,8 +15,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_TCHAR const *ior_output_file = nullptr;
+#include <memory>
+ACE_TCHAR const* ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -87,16 +87,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (ior_output_file)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();
@@ -110,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

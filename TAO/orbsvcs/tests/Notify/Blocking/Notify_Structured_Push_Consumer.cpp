@@ -5,22 +5,20 @@
 #include "common.h"
 #include "tao/debug.h"
 
-static const int CONSUMER_DELAY = 1; // seconds.
+constexpr int CONSUMER_DELAY { 1 }; // seconds.
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-                                            const char* name,
+                                            char const* name,
                                             TimeBase::TimeT block,
                                             unsigned int expected,
                                             Notify_Test_Client& client)
  : name_ (name),
    blocking_timeout_ (block),
    expected_ (expected),
-   count_ (0),
    client_ (client)
 {
   this->client_.consumer_start (this);
 }
-
 
 void
 Notify_Structured_Push_Consumer::_connect (
@@ -58,7 +56,6 @@ Notify_Structured_Push_Consumer::_connect (
   else
     properties[0].value <<= (CORBA::Long) 10;
 
-
   properties[1].name = CORBA::string_dup (TAO_Notify_Extensions::BlockingPolicy);
   properties[1].value <<= this->blocking_timeout_;
 
@@ -69,27 +66,26 @@ Notify_Structured_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event)
+  CosNotification::StructuredEvent const& event)
 {
-  ACE_DEBUG((LM_DEBUG, "-"));
-  ACE_UNUSED_ARG(event);
+  ACE_DEBUG ((LM_DEBUG, "-"));
+  ACE_UNUSED_ARG (event);
 
   this->count_++;
   if (this->count_ > this->expected_)
-  {
-    ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
-      ACE_TEXT ("many events received.\n")));
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+                  ACE_TEXT ("many events received.\n")));
+    }
 
   if (this->count_ >= this->expected_)
-  {
-    ACE_DEBUG((LM_DEBUG, "\nConsumer received %u events.\n", count_));
-    this->client_.consumer_done (this);
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nConsumer received %u events.\n", this->count_));
+      this->client_.consumer_done (this);
+    }
 
   // By pausing here, we force the channel to back up, which will
   // either result in discarding of events, or blocking, depending
@@ -97,7 +93,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   // delay time.
   // A BlockingPolicy > 1 second should allow the first event.
   // A BlockingPolicy < 1 second should discard the first event.
-  if (count_ == 1)
+  if (this->count_ == 1)
     ACE_OS::sleep (CONSUMER_DELAY);
 }
 

@@ -65,7 +65,7 @@ int
 be_visitor_valuebox_field_ch::visit_array (be_array *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -86,7 +86,7 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
 
   std::string fname;
@@ -130,7 +130,7 @@ int
 be_visitor_valuebox_field_ch::visit_enum (be_enum *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -151,7 +151,7 @@ be_visitor_valuebox_field_ch::visit_enum (be_enum *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -165,7 +165,7 @@ int
 be_visitor_valuebox_field_ch::visit_interface (be_interface *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -186,7 +186,7 @@ be_visitor_valuebox_field_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -200,7 +200,7 @@ int
 be_visitor_valuebox_field_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -221,7 +221,7 @@ be_visitor_valuebox_field_ch::visit_interface_fwd (be_interface_fwd *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -249,7 +249,7 @@ int
 be_visitor_valuebox_field_ch::visit_predefined_type (be_predefined_type *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -270,7 +270,7 @@ be_visitor_valuebox_field_ch::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -301,7 +301,7 @@ int
 be_visitor_valuebox_field_ch::visit_sequence (be_sequence *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -322,7 +322,7 @@ be_visitor_valuebox_field_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -338,7 +338,7 @@ int
 be_visitor_valuebox_field_ch::visit_string (be_string *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -359,7 +359,7 @@ be_visitor_valuebox_field_ch::visit_string (be_string *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -388,7 +388,7 @@ int
 be_visitor_valuebox_field_ch::visit_structure (be_structure *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -409,7 +409,7 @@ be_visitor_valuebox_field_ch::visit_structure (be_structure *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -445,7 +445,7 @@ int
 be_visitor_valuebox_field_ch::visit_union (be_union *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -467,7 +467,7 @@ be_visitor_valuebox_field_ch::visit_union (be_union *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
 
   TAO_INSERT_COMMENT (os);
@@ -486,7 +486,7 @@ be_visitor_valuebox_field_ch::emit_member_set (be_decl *field,
                                                std::string const &const_arg,
                                                std::string const &arg_modifier)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "void " << field->local_name () << " (";
   emit_valuebox_type_name (os, const_arg, field_type->name (), arg_modifier);
@@ -501,7 +501,7 @@ be_visitor_valuebox_field_ch::emit_member_get (be_decl *field,
                                                std::string const &type_suffix,
                                                char const *const_method)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   emit_valuebox_type_name (os, const_prefix, field_type->name (), type_suffix);
   *os << " "

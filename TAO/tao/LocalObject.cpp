@@ -83,7 +83,7 @@ CORBA::LocalObject::_repository_id ()
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 void
 CORBA::LocalObject::_create_request (CORBA::Context_ptr,
-                                     const char *,
+                                     char const *,
                                      CORBA::NVList_ptr,
                                      CORBA::NamedValue_ptr,
                                      CORBA::Request_ptr &,
@@ -98,7 +98,7 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
 
 void
 CORBA::LocalObject::_create_request (CORBA::Context_ptr,
-                                     const char *,
+                                     char const *,
                                      CORBA::NVList_ptr,
                                      CORBA::NamedValue_ptr,
                                      CORBA::ExceptionList_ptr,
@@ -114,7 +114,7 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
 }
 
 CORBA::Request_ptr
-CORBA::LocalObject::_request (const char *)
+CORBA::LocalObject::_request (char const *)
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,
@@ -169,7 +169,7 @@ CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type)
 }
 
 CORBA::Object_ptr
-CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
+CORBA::LocalObject::_set_policy_overrides (CORBA::PolicyList const &,
                                            CORBA::SetOverrideType)
 {
   if (TAO_debug_level > 0)
@@ -180,7 +180,7 @@ CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
 }
 
 CORBA::PolicyList *
-CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &)
+CORBA::LocalObject::_get_policy_overrides (CORBA::PolicyTypeSeq const &)
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,

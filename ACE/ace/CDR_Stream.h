@@ -551,10 +551,10 @@ private:
   // that the provide location locates.
   ACE_Message_Block* find (char* loc);
 
-  ACE_OutputCDR (const ACE_OutputCDR&) = delete;
-  ACE_OutputCDR& operator= (const ACE_OutputCDR&) = delete;
-  ACE_OutputCDR (ACE_OutputCDR&&) = delete;
-  ACE_OutputCDR& operator= (ACE_OutputCDR&&) = delete;
+  ACE_OutputCDR (ACE_OutputCDR const &) = delete;
+  ACE_OutputCDR &operator= (ACE_OutputCDR const &) = delete;
+  ACE_OutputCDR (ACE_OutputCDR &&) = delete;
+  ACE_OutputCDR &operator= (ACE_OutputCDR &&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);

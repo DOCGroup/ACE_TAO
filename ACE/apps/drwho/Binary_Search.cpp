@@ -1,7 +1,7 @@
 #include "Options.h"
 #include "Binary_Search.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 // This function is passed to qsort to perform the comparison between
 // login names for two friends.
@@ -9,8 +9,8 @@
 int
 Binary_Search::name_compare (const void *s1, const void *s2)
 {
-  return ACE_OS::strcmp ((*(Protocol_Record **) s1)->key_name1_,
-                         (*(Protocol_Record **) s2)->key_name1_);
+  return std::strcmp ((*(Protocol_Record **) s1)->key_name1_,
+                      (*(Protocol_Record **) s2)->key_name1_);
 }
 
 // Returns the next friend in the sequence of sorted friends.  Note
@@ -22,7 +22,7 @@ Binary_Search::get_next_entry ()
 {
   // Reset the iterator if we are starting from the beginning.
 
-  if (this->current_ptr_ == 0)
+  if (this->current_ptr_ == nullptr)
     this->current_ptr_ = this->sorted_record_;
 
   // Now check to see if we've hit the end, in which case we set
@@ -32,8 +32,8 @@ Binary_Search::get_next_entry ()
     return *this->current_ptr_++;
   else
     {
-      this->current_ptr_ = 0;
-      return 0;
+      this->current_ptr_ = nullptr;
+      return nullptr;
     }
 }
 
@@ -56,11 +56,11 @@ Binary_Search::get_each_entry ()
   for (;
        this->current_index_ < this->count_;
        this->current_index_++)
-    if (this->protocol_record_[this->current_index_].drwho_list_ != 0)
+    if (this->protocol_record_[this->current_index_].drwho_list_ != nullptr)
       return &this->protocol_record_[this->current_index_++];
 
   this->current_index_ = -1;
-  return 0;
+  return nullptr;
 }
 
 Binary_Search::~Binary_Search ()
@@ -73,7 +73,7 @@ Binary_Search::~Binary_Search ()
 // Used to initialize the values for the iterators...
 
 Binary_Search::Binary_Search ()
-  : current_ptr_ (0),
+  : current_ptr_ (nullptr),
     current_index_ (0)
 {
 }

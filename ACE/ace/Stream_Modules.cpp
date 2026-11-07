@@ -135,7 +135,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info");
-  const ACE_TCHAR *name = this->name ();
+  ACE_TCHAR const * const name = this->name ();
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
     return -1;
@@ -279,7 +279,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info");
-  const ACE_TCHAR *name = this->name ();
+  ACE_TCHAR const * const name = this->name ();
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
     return -1;
@@ -358,7 +358,7 @@ ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp,
                                     size_t length) const
 {
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info");
-  const ACE_TCHAR *name = this->name ();
+  ACE_TCHAR const * const name = this->name ();
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
     return -1;

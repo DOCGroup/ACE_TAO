@@ -50,7 +50,7 @@ class TAO_PortableGroup_Export TAO_PG_PropertyManager
 {
 public:
   /// Constructor.
-  TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
+  explicit TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
   /**
    * @name PortableGroup::PropertyManager methods
@@ -61,20 +61,20 @@ public:
   //@{
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
-      const PortableGroup::Properties & props) override;
+      PortableGroup::Properties const & props) override;
 
   /// Get the default properties used by all object groups.
   PortableGroup::Properties * get_default_properties () override;
 
   /// Remove default properties.
   void remove_default_properties (
-      const PortableGroup::Properties & props) override;
+      PortableGroup::Properties const & props) override;
 
   /// Set properties associated with a given Member type.  These
   /// properties override the default properties.
   void set_type_properties (
-      const char * type_id,
-      const PortableGroup::Properties & overrides) override;
+      char const * type_id,
+      PortableGroup::Properties const & overrides) override;
 
   /**
    * Return the properties associated with a give Replica type.  These
@@ -82,12 +82,12 @@ public:
    * addition to the default properties that were not overridden.
    */
   PortableGroup::Properties * get_type_properties (
-      const char * type_id) override;
+      char const * type_id) override;
 
   /// Remove the given properties associated with the Replica type ID.
   void remove_type_properties (
-      const char * type_id,
-      const PortableGroup::Properties & props) override;
+      char const * type_id,
+      PortableGroup::Properties const & props) override;
 
   /**
    * Dynamically set the properties associated with a given object
@@ -97,7 +97,7 @@ public:
    */
   void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides) override;
+      PortableGroup::Properties const & overrides) override;
 
   /**
    * Return the properties currently in use by the given object
@@ -122,8 +122,8 @@ public:
 private:
   /// Remove properties "to_be_removed" from the given list of
   /// properties.
-  void remove_properties (const PortableGroup::Properties & to_be_removed,
-                          PortableGroup::Properties &properties);
+  void remove_properties (PortableGroup::Properties const & to_be_removed,
+                          PortableGroup::Properties & properties);
 
 private:
   /// Table that maps ObjectId to Object Group related information.

@@ -20,12 +20,16 @@
 #include "ace/streams.h"
 
 #include "ace/Signal.h"
+#include <memory>
 
 
 #if defined (ACE_HAS_THREADS)
 
-static ACE_OSTREAM_TYPE *out_stream = 0;
-static sig_atomic_t done = 0;
+static ACE_OSTREAM_TYPE *out_stream {};
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+static std::unique_ptr<ofstream> owned_out_stream;
+#endif
+static sig_atomic_t done {};
 static constexpr size_t NUM_INVOCATIONS = 100;
 static constexpr size_t TASK_COUNT = 130;
 
@@ -33,19 +37,24 @@ class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Test_Task ();
-  ~Test_Task ();
+  ~Test_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *args = 0);
-  virtual int close (u_long flags = 0);
+  int open (void *args = nullptr) override;
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
 
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
-  ACE_Reactor *r_;
-  size_t handled_;
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
+
+  ACE_Reactor *r_ {}; // Non-owning; the reactor outlives its task threads.
+  size_t handled_ {};
   static size_t current_count_;
   static size_t done_cnt_;
 };
@@ -59,7 +68,6 @@ Test_Task::Test_Task ()
 {
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
-  this->handled_ = 0;
   Test_Task::current_count_++;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
@@ -78,7 +86,7 @@ Test_Task::~Test_Task ()
 int
 Test_Task::open (void *args)
 {
-  r_ = reinterpret_cast <ACE_Reactor *> (args);
+  this->r_ = static_cast<ACE_Reactor *> (args);
   return ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP);
 }
 
@@ -141,7 +149,7 @@ Test_Task::handle_input (ACE_HANDLE)
   return -1;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 dispatch (void *arg)
 {
   // every thread must register the same stream to write to file
@@ -152,8 +160,9 @@ dispatch (void *arg)
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) Dispatcher Thread started!\n")));
-  ACE_Reactor *r = reinterpret_cast <ACE_Reactor *> (arg);
-  int result;
+  // The caller-owned reactor remains alive until the process is terminated.
+  ACE_Reactor * const r = static_cast<ACE_Reactor *> (arg);
+  int result {};
 
   r->owner (ACE_OS::thr_self ());
 
@@ -167,7 +176,7 @@ dispatch (void *arg)
                     result));
     }
 
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return ACE_THR_FUNC_RETURN_NULL);
 }
 
 extern "C" void
@@ -183,12 +192,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
     {
       // Send output to file.
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      ACE_NEW_RETURN (out_stream,
-                      ofstream ("test_task_three.out",
-                                ios::trunc|ios::out),
+      ofstream *stream {};
+      ACE_NEW_RETURN (stream,
+                      ofstream ("test_task_three.out", ios::trunc | ios::out),
                       -1);
+      owned_out_stream.reset (stream);
+      out_stream = owned_out_stream.get ();
 #else
-      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == 0)
+      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == nullptr)
         return -1;
 #endif
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
@@ -199,21 +210,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  ACE_Reactor *reactor1 = ACE_Reactor::instance ();
-  ACE_Reactor *reactor2 = new ACE_Reactor ();
+  ACE_Reactor * const reactor1 = ACE_Reactor::instance ();
+  std::unique_ptr<ACE_Reactor> reactor2 = std::make_unique<ACE_Reactor> ();
 
   Test_Task t1[TASK_COUNT];
   Test_Task t2[TASK_COUNT];
 
-  ACE_Thread::spawn (ACE_THR_FUNC (dispatch),
-                     reactor2);
+  ACE_Thread::spawn (dispatch, reactor2.get ());
 
   reactor1->owner (ACE_OS::thr_self ());
 
   for (size_t index = 0; index < TASK_COUNT; index++)
     {
       t1[index].open (reactor1);
-      t2[index].open (reactor2);
+      t2[index].open (reactor2.get ());
     }
 
   ACE_OS::sleep (3);
@@ -241,16 +251,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
     {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       *out_stream << flush;
-      delete out_stream;
+      owned_out_stream.reset ();
+      out_stream = nullptr;
 #else
       ACE_OS::fflush(out_stream);
       ACE_OS::fclose(out_stream);
 #endif
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
-      ACE_LOG_MSG->msg_ostream (0);
+      ACE_LOG_MSG->msg_ostream (nullptr);
     }
 
   // Bail out here so that we don't call the destructors for the tasks..
+  // reactor2 also remains alive for its dispatcher thread until process exit.
   ACE_OS::exit (0);
   /* NOTREACHED */
 

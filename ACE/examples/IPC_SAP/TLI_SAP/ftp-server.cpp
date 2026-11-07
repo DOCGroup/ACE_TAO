@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (server.accept (new_stream) == -1)
         ACE_OS::t_error ("server.accept error");
 
-      else if (thr_mgr.spawn (ACE_THR_FUNC (read_file),
+      else if (thr_mgr.spawn (read_file,
                               (void *) new_stream.get_handle (),
                               THR_DETACHED | THR_BOUND) == -1)
         ACE_OS::perror ("can't create worker thread\n");

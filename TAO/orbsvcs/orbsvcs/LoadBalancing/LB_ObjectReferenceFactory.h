@@ -26,10 +26,11 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
-#include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -79,7 +80,7 @@ class TAO_LB_ObjectReferenceFactory
     ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex>;
 
-  using fcid_list = ACE_Array_Base<
+  using fcid_list = std::vector<
     PortableGroup::GenericFactory::FactoryCreationId_var>;
 
   TAO_LB_ObjectReferenceFactory (TAO_LB_ObjectReferenceFactory const &) = delete;
@@ -159,7 +160,7 @@ private:
    * The values are cached here to avoid querying the LoadManager,
    * which can be costly.
    */
-  CORBA::Boolean * registered_members_ {};
+  std::vector<CORBA::Boolean> registered_members_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

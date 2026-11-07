@@ -993,11 +993,11 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::previous ()
 // node, returns 1 if not. DEPRECATED.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE int
+ACE_INLINE bool
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::is_done ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::is_done");
-  return this->node_ ? 0 : 1;
+  return this->node_ == nullptr;
 }
 
 

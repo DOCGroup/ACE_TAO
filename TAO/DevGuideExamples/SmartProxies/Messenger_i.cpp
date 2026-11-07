@@ -14,15 +14,10 @@ Messenger_i::Messenger_i ()
   {
   }
 
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-  {
-  }
-
 CORBA::Boolean Messenger_i::send_message (
-    const char * user_name,
-    const char * subject,
-    char *& message
+    char const *user_name,
+    char const *subject,
+    char *&message
   )
 {
   //Add your implementation here

@@ -11,9 +11,7 @@ Foo_C_ClientEngine::Foo_C_ClientEngine(Foo_C_ptr obj,
 }
 
 
-Foo_C_ClientEngine::~Foo_C_ClientEngine()
-{
-}
+Foo_C_ClientEngine::~Foo_C_ClientEngine() = default;
 
 
 bool

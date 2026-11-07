@@ -68,15 +68,15 @@ namespace TAO
        * The type of table that maps acquisition method to acquirer
        * factory.
        */
-      using Acquirer_Factory_Table = ACE_Map_Manager<const char *,
+      using Acquirer_Factory_Table = ACE_Map_Manager<char const *,
                                                       TAO::SL3::CredentialsAcquirerFactory *,
                                                       ACE_Null_Mutex>;
       using Factory_Iterator = Acquirer_Factory_Table::iterator;
 
-      using Credentials_Table = ACE_Hash_Map_Manager_Ex<const char *,
+      using Credentials_Table = ACE_Hash_Map_Manager_Ex<char const *,
                                                          SecurityLevel3::OwnCredentials_var,
-                                                         ACE_Hash<const char *>,
-                                                         ACE_Equal_To<const char *>,
+                                                         ACE_Hash<char const *>,
+                                                         ACE_Equal_To<char const *>,
                                                          ACE_Null_Mutex>;
       using Credentials_Iterator = Credentials_Table::iterator;
 

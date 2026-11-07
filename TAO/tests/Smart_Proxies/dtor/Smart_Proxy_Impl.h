@@ -12,5 +12,5 @@ public:
 class  Test_Smart_Factory: public TAO_Test_Default_Proxy_Factory
 {
 public:
-  virtual Test_ptr create_proxy (Test_ptr proxy);
+  Test_ptr create_proxy (Test_ptr proxy) override;
 };

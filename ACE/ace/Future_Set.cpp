@@ -15,15 +15,16 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Set)
 
 template <class T>
 ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
-  : delete_queue_ (false)
 {
   if (new_queue)
     this->future_notification_queue_ = new_queue;
   else
     {
-      ACE_NEW (this->future_notification_queue_,
+      ACE_Message_Queue<ACE_SYNCH> *queue {};
+      ACE_NEW (queue,
                ACE_Message_Queue<ACE_SYNCH>);
-      this->delete_queue_ = true;
+      this->owned_future_notification_queue_.reset (queue);
+      this->future_notification_queue_ = this->owned_future_notification_queue_.get ();
     }
 }
 
@@ -41,19 +42,15 @@ ACE_Future_Set<T>::~ACE_Future_Set ()
        iterator != end;
        ++iterator)
     {
-      FUTURE_HOLDER *future_holder = (*iterator).int_id_;
+      std::unique_ptr<FUTURE_HOLDER> future_holder {(*iterator).int_id_};
       future_holder->item_.detach (this);
-      delete future_holder;
     }
-
-  if (this->delete_queue_)
-    delete this->future_notification_queue_;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Future_Set<T>::is_empty () const
 {
-  return (((ACE_Future_Set<T>*)this)->future_map_.current_size () == 0 );
+  return this->future_map_.current_size () == 0;
 }
 
 template <class T> int
@@ -63,33 +60,35 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
   ACE_NEW_RETURN (future_holder,
                   FUTURE_HOLDER (future),
                   -1);
+  std::unique_ptr<FUTURE_HOLDER> owned_future_holder {future_holder};
 
   FUTURE_REP *future_rep = future.get_rep ();
-  int const result = this->future_map_.bind (future_rep, future_holder);
+  int const result = this->future_map_.bind (future_rep, owned_future_holder.get ());
 
-  // If a new map entry was created, then attach to the future,
-  // otherwise we were already attached to the future or some error
-  // occurred so just delete the future holder.
+  // The map takes ownership on success; otherwise the local unique pointer
+  // destroys the holder.
   if (result == 0)
-    // Attach ourself to the ACE_Futures list of observer
-    future.attach (this);
-  else
-    delete future_holder;
+    {
+      owned_future_holder.release ();
+      // Attach ourself to the ACE_Futures list of observer.
+      future.attach (this);
+    }
 
   return result;
 }
 
 template <class T> void
-ACE_Future_Set<T>::update (const ACE_Future<T> &future)
+ACE_Future_Set<T>::update (ACE_Future<T> const &future)
 {
-  ACE_Message_Block *mb = nullptr;
-  FUTURE &local_future = const_cast<ACE_Future<T> &> (future);
+  ACE_Message_Block *mb {};
 
   ACE_NEW (mb,
-           ACE_Message_Block ((char *) local_future.get_rep (), 0));
+           ACE_Message_Block (reinterpret_cast<char *> (future.get_rep ()), 0));
+  ACE_Message_Block_Unique_Ptr mb_owner (mb);
 
   // Enqueue in priority order.
-  this->future_notification_queue_->enqueue (mb, 0);
+  if (this->future_notification_queue_->enqueue (mb_owner.get (), nullptr) != -1)
+    mb_owner.release ();
 }
 
 template <class T> int
@@ -99,32 +98,28 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
   if (this->is_empty ())
     return 0;
 
-  ACE_Message_Block *mb = nullptr;
-  FUTURE_REP *future_rep = nullptr;
+  ACE_Message_Block *mb {};
+  FUTURE_REP *future_rep {};
 
   // Wait for a "readable future" signal from the message queue.
   if (this->future_notification_queue_->dequeue_head (mb, tv) != -1)
     {
-      // Extract future rep from the message block.
-      future_rep = reinterpret_cast<FUTURE_REP *> (mb->base ());
+      ACE_Message_Block_Unique_Ptr message_block_owner {mb};
 
-      // Delete the message block.
-      mb->release ();
+      // Extract future rep from the message block.
+      future_rep = reinterpret_cast<FUTURE_REP *> (message_block_owner->base ());
     }
   else
     return 0;
 
   // Remove the hash map entry with the specified future rep from our map.
-  FUTURE_HOLDER *future_holder = nullptr;
-  if (this->future_map_.find (future_rep, future_holder) != -1)
-    {
-      future = future_holder->item_;
-      this->future_map_.unbind (future_rep);
-      delete future_holder;
-      return 1;
-    }
+  FUTURE_HOLDER *future_holder {};
+  if (this->future_map_.unbind (future_rep, future_holder) == -1)
+    return 0;
 
-  return 0;
+  std::unique_ptr<FUTURE_HOLDER> owned_future_holder {future_holder};
+  future = owned_future_holder->item_;
+  return 1;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

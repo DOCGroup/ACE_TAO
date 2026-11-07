@@ -15,30 +15,30 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
-  ACE_DEBUG ((LM_DEBUG, "Running the IOGRManipulation Tests.\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("---------------------------------------------\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running the IOGRManipulation Tests.\n")));
 
   try
     {
       // Retrieve the ORB.
-      CORBA::ORB_var orb_ = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       // **********************************************************************
 
       // Get an object reference for the ORBs IORManipulation object!
-      CORBA::Object_var IORM =
-        orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+      CORBA::Object_var iorm_object =
+        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
-               TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
       // **********************************************************************
 
       // Create a few fictitious IORs
       CORBA::Object_var name1 =
-        orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz");
+        orb->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz");
       CORBA::Object_var name2 =
-        orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz");
+        orb->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz");
 
       // **********************************************************************
       // Create IOR list for use with merge_iors.
@@ -52,13 +52,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Check for set and get primaries
       // Make a dummy property set
-      FT::TagFTGroupTaggedComponent ft_tag_component;
+      FT::TagFTGroupTaggedComponent ft_tag_component {};
       TAO_FT_IOGR_Property prop (ft_tag_component);
 
       CORBA::Boolean retval =
         iorm->set_primary (&prop, name2.in (), merged.in ());
 
-      if (retval != 0)
+      if (retval)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\tThe primary has been set\n")));
@@ -110,18 +110,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Property values
 
       // Major and Minor revision numbers
-      ft_tag_component.component_version.major = (CORBA::Octet) 1;
-      ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+      ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+      ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
       // Domain id
-      const char *id = "iogr_regression";
+      char const* id = "iogr_regression";
       ft_tag_component.group_domain_id = id;
 
       // Object group id
-      ft_tag_component.object_group_id = (CORBA::ULongLong) 10;
+      ft_tag_component.object_group_id = static_cast<CORBA::ULongLong> (10);
 
       // Version
-      ft_tag_component.object_group_ref_version = (CORBA::ULong) 5;
+      ft_tag_component.object_group_ref_version = static_cast<CORBA::ULong> (5);
 
       // Set the property
       retval = iorm->set_property (&prop, merged.in ());
@@ -145,37 +145,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\tWe have set the property\n")));
 
-      orb_->destroy ();
+      orb->destroy ();
     }
-  catch (const TAO_IOP::NotFound& userex)
+  catch (TAO_IOP::NotFound const& userex)
     {
       userex._tao_print_exception (
         ACE_TEXT ("Unexpected NotFound Exception!\n"));
       return -1;
     }
-  catch (const TAO_IOP::Duplicate& userex)
+  catch (TAO_IOP::Duplicate const& userex)
     {
       userex._tao_print_exception ("Unexpected Duplicate Exception!\n");
       return -1;
     }
-  catch (const TAO_IOP::Invalid_IOR& userex)
+  catch (TAO_IOP::Invalid_IOR const& userex)
     {
       userex._tao_print_exception ("Unexpected Invalid_IOR Exception!\n");
       return -1;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("Unexpected system Exception!!\n");
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Unexpected CORBA Exception!\n");
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "IORManipulation Tests Successfully Completed!\n"));
-  ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IORManipulation Tests Successfully Completed!\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("---------------------------------------------\n")));
 
   return 0;
 }

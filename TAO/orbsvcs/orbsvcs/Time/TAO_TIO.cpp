@@ -10,10 +10,6 @@ TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
   this->attr_time_interval.upper_bound = upper;
 }
 
-// Destructor.
-TAO_TIO::~TAO_TIO ()
-= default;
-
 // This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
@@ -32,28 +28,28 @@ CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
                 CosTime::TIO_out overlap)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
-      TimeBase::TimeT lb1 =
+      TimeBase::TimeT const lb1 =
         this->time_interval ().lower_bound;
 
-      TimeBase::TimeT up1 =
+      TimeBase::TimeT const up1 =
         this->time_interval ().upper_bound;
 
       TimeBase::TimeT tmp1 = uto->time ();
 
       TimeBase::TimeT tmp2 = uto->inaccuracy ();
 
-      TimeBase::TimeT lb2 = tmp1 - tmp2;
+      TimeBase::TimeT const lb2 = tmp1 - tmp2;
 
 
       tmp1 = uto->time ();
 
       tmp2 = uto->inaccuracy ();
 
-      TimeBase::TimeT up2 = tmp1 + tmp2;
+      TimeBase::TimeT const up2 = tmp1 + tmp2;
 
       if (lb1 == lb2 && up1 == up2)
         {
@@ -125,7 +121,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           overlap = tio->_this ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
     }
@@ -143,18 +139,18 @@ CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap)
 {
-  TAO_TIO * tio_i = nullptr;
+  TAO_TIO * tio_i {};
 
-  TimeBase::TimeT lb1 =
+  TimeBase::TimeT const lb1 =
     this->time_interval ().lower_bound;
 
-  TimeBase::TimeT up1 =
+  TimeBase::TimeT const up1 =
     this->time_interval ().upper_bound;
 
-  TimeBase::TimeT lb2 =
+  TimeBase::TimeT const lb2 =
     tio->time_interval ().lower_bound;
 
-  TimeBase::TimeT up2 =
+  TimeBase::TimeT const up2 =
     tio->time_interval ().upper_bound;
 
   if (lb1 == lb2 && up1 == up2)
@@ -234,7 +230,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 CosTime::UTO_ptr
 TAO_TIO::time ()
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((this->time_interval ().upper_bound -

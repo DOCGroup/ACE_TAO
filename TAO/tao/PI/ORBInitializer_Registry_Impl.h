@@ -25,9 +25,11 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 
-#include "ace/Array_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Array_Base.h"
+
+#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,7 +45,7 @@ namespace TAO
     : public ORBInitializer_Registry_Adapter
   {
   public:
-    ORBInitializer_Registry ();
+    ORBInitializer_Registry () = default;
 
     /// Added to provide registration for the several static service
     /// objects, brought in with this ORBInitializer_Registry
@@ -66,14 +68,14 @@ namespace TAO
 
     /// Begin initialization of all registered ORBInitializers before
     /// the ORB itself is initialized.
-    size_t pre_init (TAO_ORB_Core *orb_core,
+    std::size_t pre_init (TAO_ORB_Core *orb_core,
                      int argc,
                      char *argv[],
                      PortableInterceptor::SlotId &slotid) override;
 
     /// Complete initialization of all registered ORBInitializers after
     /// the ORB has been initialized.
-    void post_init (size_t pre_init_count,
+    void post_init (std::size_t pre_init_count,
                     TAO_ORB_Core *orb_core,
                     int argc,
                     char *argv[],
@@ -82,14 +84,14 @@ namespace TAO
   private:
     // Prevent copying
     ORBInitializer_Registry (ORBInitializer_Registry const &) = delete;
-    void operator= (ORBInitializer_Registry const &) = delete;
+    ORBInitializer_Registry &operator= (ORBInitializer_Registry const &) = delete;
     ORBInitializer_Registry (ORBInitializer_Registry &&) = delete;
-    void operator= (ORBInitializer_Registry &&) = delete;
+    ORBInitializer_Registry &operator= (ORBInitializer_Registry &&) = delete;
 
   private:
     TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
-    /// Dynamic array containing registered ORBInitializers.
+    /// Registered ORBInitializers.
     ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
   };
 }

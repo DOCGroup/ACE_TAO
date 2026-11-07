@@ -29,13 +29,13 @@ public:
 
 private:
   /// Reference to the test interface
-  Test::Sender_var sender_;
+  Test::Sender_var const sender_;
 
   /// Our Orb...
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Number of oneways to send
-  int number_;
+  int const number_;
 };
 
 #include /**/ "ace/post.h"

@@ -13,17 +13,11 @@
 template <class Servant>
 Server<Servant>::Server ()
 {
-  Servant *tmp = nullptr;
+  Servant *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     Servant (),
                     CORBA::NO_MEMORY ());
   this->servant_ = tmp;
-}
-
-// Destructor.
-template <class Servant>
-Server<Servant>::~Server ()
-{
 }
 
 // Parse the command-line arguments and set options.
@@ -33,10 +27,10 @@ Server<Servant>::parse_args ()
   ACE_Get_Opt get_opts (this->argc_, this->argv_,
                         ACE_TEXT ("do:i:"), 1, 0,
                         ACE_Get_Opt::REQUIRE_ORDER);
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'd':  // debug flag.
         TAO_debug_level++;
@@ -59,20 +53,19 @@ Server<Servant>::parse_args ()
 template <class Servant> int
 Server<Servant>::test_for_ins (char const *ior)
 {
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
+  CORBA::ORB_var const orb = this->orb_manager_.orb ();
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Adding (KEY:IOR) %s:%C\n"),
-                this->ins_,
+                this->ins_.c_str (),
                 ior));
 
   try
     {
-      CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable");
+      CORBA::Object_var const table_object = orb->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var adapter =
+      IORTable::Table_var const adapter =
         IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -81,9 +74,9 @@ Server<Servant>::test_for_ins (char const *ior)
                             -1);
         }
 
-      adapter->bind (ACE_TEXT_ALWAYS_CHAR (this->ins_), ior);
+      adapter->bind (ACE_TEXT_ALWAYS_CHAR (this->ins_.c_str ()), ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR: test_for_ins failed\n");
       return -1;
@@ -111,12 +104,12 @@ Server<Servant>::init (char const *servant_name,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  int retval = this->parse_args ();
+  int const retval = this->parse_args ();
 
   if (retval != 0)
     return retval;
 
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
+  CORBA::ORB_var const orb = this->orb_manager_.orb ();
 
   // Stash our ORB pointer for later reference.
   this->servant_->orb (orb.in ());
@@ -126,7 +119,7 @@ Server<Servant>::init (char const *servant_name,
   // Make sure that you check for failures here via the try?!
   try
     {
-      CORBA::String_var str  =
+      CORBA::String_var const str =
         this->orb_manager_.activate_under_child_poa (servant_name,
                                                      this->servant_.in ());
 
@@ -134,25 +127,25 @@ Server<Servant>::init (char const *servant_name,
                   ACE_TEXT ("The IOR is: <%C>\n"),
                   str.in ()));
 
-      if (this->ins_ && this->test_for_ins (str.in ()) != 0)
+      if (!this->ins_.empty () && this->test_for_ins (str.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("test_for_ins (): failed\n")),
                           -1);
 
-      if (this->ior_output_file_)
+      if (!this->ior_output_file_.empty ())
         {
-          FILE *fh = ACE_OS::fopen (this->ior_output_file_, "w");
-          if (fh == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> const file (
+            ACE_OS::fopen (this->ior_output_file_.c_str (), "w"), ACE_OS::fclose);
+          if (!file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Unable to open %s for writing (%p)\n"),
-                               this->ior_output_file_,
+                               this->ior_output_file_.c_str (),
                                ACE_TEXT ("fopen")),
                               -1);
-          ACE_OS::fprintf (fh, "%s", str.in ());
-          ACE_OS::fclose (fh);
+          ACE_OS::fprintf (file.get (), "%s", str.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException in activation of POA");
       return -1;
@@ -173,17 +166,9 @@ Server<Servant>::run ()
   return 0;
 }
 
-// Constructor.
-template <class ServerInterface>
-Client<ServerInterface>::Client ()
-  : ior_ ("")
-{
-  //no-op
-}
-
 // Reads the Server ior from a file
 template <class ServerInterface> int
-Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
+Client<ServerInterface>::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
@@ -196,7 +181,7 @@ Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read ();
+  char * const data = ior_buffer.read ();
 
   if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -219,17 +204,17 @@ Client<ServerInterface>::parse_args ()
   ACE_Get_Opt get_opts (argc_, argv_,
                         ACE_TEXT ("df:nk:x"), 1, 0,
                         ACE_Get_Opt::REQUIRE_ORDER);
-  int c {};
+  int option {};
   int result {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        this->ior_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -241,7 +226,7 @@ Client<ServerInterface>::parse_args ()
                             -1);
         break;
       case 'x': // read the flag for shutting down
-        this->do_shutdown_ = 1;
+        this->do_shutdown_ = true;
         break;
       case 'h':  // display help for use of the client.
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -263,7 +248,8 @@ Client<ServerInterface>::parse_args ()
 template <class ServerInterface>
 Client<ServerInterface>::~Client ()
 {
-  this->orb_->destroy ();
+  if (!CORBA::is_nil (this->orb_.in ()))
+    this->orb_->destroy ();
 }
 
 template <class ServerInterface> int
@@ -283,9 +269,9 @@ Client<ServerInterface>::init (char const *,
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->ior_.length () != 0)
+      if (!this->ior_.empty ())
         {
-          CORBA::Object_var server_object =
+          CORBA::Object_var const server_object =
             this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
@@ -306,7 +292,7 @@ Client<ServerInterface>::init (char const *,
                            ACE_TEXT ("no ior or naming options  specified\n")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_i::init");
       return -1;
@@ -315,18 +301,11 @@ Client<ServerInterface>::init (char const *,
   return 0;
 }
 
-template <class ServerInterface> int
-Client<ServerInterface>::do_shutdown ()
+template <class ServerInterface> bool
+Client<ServerInterface>::do_shutdown () const
 {
   // Returns the shutdwon flag
   return this->do_shutdown_;
-}
-
-template <class ServerInterface> void
-Client<ServerInterface>::do_shutdown (int flag)
-{
-  // Fills the flag
-  this->do_shutdown_ = flag;
 }
 
 #endif /* SIMPLE_UTIL_C */

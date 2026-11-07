@@ -29,14 +29,14 @@ namespace ACE
                       ACE_SSL_Context* ssl_ctx,
                       bool release,
                       ACE::INet::SSL_CallbackManager* ssl_cbmngr)
-      : ssl_ctx_ (0)
+      : ssl_ctx_ (nullptr)
       {
-        if (ssl_ctx == 0)
+        if (ssl_ctx == nullptr)
           {
             ACE_NEW_NORETURN (ssl_ctx, ACE_SSL_Context ());
             release = true;
           }
-        if (ssl_ctx != 0)
+        if (ssl_ctx != nullptr)
           {
             if (release)
               {
@@ -49,7 +49,7 @@ namespace ACE
               this->ssl_ctx_->set_verify_peer (strict ? 1 : 0,
                                               once ? 1 : 0,
                                               depth);
-            if (ssl_cbmngr != 0)
+            if (ssl_cbmngr != nullptr)
               ssl_cbmngr->initialize_callbacks (this->ssl_ctx_);
             // do this to be sure that these settings have been properly set
             // ACE_SSL_Context does not handle this quite correctly
@@ -72,12 +72,12 @@ namespace ACE
                       ACE::INet::SSL_CallbackManager* ssl_cbmngr)
       : ssl_ctx_ (ssl_ctx)
       {
-        if (this->ssl_ctx_ != 0)
+        if (this->ssl_ctx_ != nullptr)
           {
             if (release)
               this->alloc_safe.reset (this->ssl_ctx_);
 
-            if (ssl_cbmngr != 0)
+            if (ssl_cbmngr != nullptr)
               ssl_cbmngr->initialize_callbacks (this->ssl_ctx_);
           }
       }
@@ -87,18 +87,16 @@ namespace ACE
         return *ACE_Unmanaged_Singleton<Context, ACE_SYNCH::MUTEX>::instance ();
       }
 
-    Context::~Context ()
-      {
-      }
+    Context::~Context () = default;
 
     bool Context::load_trusted_ca (const char* ca_location)
       {
         ACE_stat stat;
-        if (ca_location != 0 && ACE_OS::stat (ca_location, &stat) == 0)
+        if (ca_location != nullptr && ACE_OS::stat (ca_location, &stat) == 0)
           {
             bool is_dir = ((stat.st_mode & S_IFMT) == S_IFDIR);
-            if (this->ssl_ctx_->load_trusted_ca (is_dir ? 0 : ca_location,
-                                                 is_dir ? ca_location : 0,
+            if (this->ssl_ctx_->load_trusted_ca (is_dir ? nullptr : ca_location,
+                                                 is_dir ? ca_location : nullptr,
                                                  false) == 0)
               return true;
           }
@@ -107,7 +105,7 @@ namespace ACE
             INET_ERROR (1, (LM_ERROR, DLINFO
                             ACE_TEXT ("Context::load_trusted_ca - ")
                             ACE_TEXT ("invalid ca_location [%C]\n"),
-                            ca_location == 0 ? "(null)" : ca_location));
+                            ca_location == nullptr ? "(null)" : ca_location));
           }
         return false;
       }

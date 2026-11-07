@@ -250,7 +250,7 @@ private:
   allocator_type alloc_;
 
   /// Number of elements in the map.
-  size_type size_;
+  size_type size_ {};
 
   /// Current size of underlying array.
   /**

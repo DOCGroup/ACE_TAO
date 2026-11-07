@@ -32,6 +32,8 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <array>
+#include <cstring>
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
 #include "test_config.h"
@@ -79,11 +81,15 @@ static void OidTest()
   Oid d2("1.2.3");
   ACE_ASSERT(d2.valid() == 1);
   ACE_ASSERT(d2.length() == 3);
-  ACE_ASSERT(d2[0] == (unsigned long) 1);
-  ACE_ASSERT(d2[1] == (unsigned long) 2);
-  ACE_ASSERT(d2[2] == (unsigned long) 3);
+  ACE_ASSERT(d2[0] == 1UL);
+  ACE_ASSERT(d2[1] == 2UL);
+  ACE_ASSERT(d2[2] == 3UL);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d2(\"1.2.3\") [%s]\n",
     d2.to_string()));
+
+  Oid d_prefix ("1.2.3tail", 5);
+  ACE_ASSERT (d_prefix.valid () == 1);
+  ACE_ASSERT (std::strcmp (d_prefix.to_string (), "1.2.3") == 0);
 
   Oid d3(d2);
   ACE_ASSERT(d3.valid() == 1);
@@ -91,13 +97,13 @@ static void OidTest()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d3(\"d2\") [%s]\n",
     d3.to_string()));
 
-  unsigned long t[3] = {2,3,4};
-  Oid d4((unsigned long *)&t, sizeof(t)/sizeof(long));
+  std::array<unsigned long, 3> const t {2, 3, 4};
+  Oid d4 (t.data (), t.size ());
   ACE_ASSERT(d4.valid() == 1);
   ACE_ASSERT(d4.length() == 3);
-  ACE_ASSERT(d4[0] == (unsigned long) 2);
-  ACE_ASSERT(d4[1] == (unsigned long) 3);
-  ACE_ASSERT(d4[2] == (unsigned long) 4);
+  ACE_ASSERT(d4[0] == 2UL);
+  ACE_ASSERT(d4[1] == 3UL);
+  ACE_ASSERT(d4[2] == 4UL);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d4(\"long(2.3.4)\") [%s]\n",
     d4.to_string()));
 
@@ -109,6 +115,11 @@ static void OidTest()
   ACE_ASSERT(d5[0] == 3);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d6::suboid(d5,1,1) [%s]\n",
     d5.to_string()));
+  Oid d6;
+  ACE_ASSERT (d4.suboid (d6, 1, 3) == 0);
+  ACE_ASSERT (d6.length () == 2);
+  ACE_ASSERT (d6[0] == 3UL);
+  ACE_ASSERT (d6[1] == 4UL);
 
   // trim
   Oid d7(d4);
@@ -126,14 +137,14 @@ static void OidTest()
   ACE_ASSERT(d1 == d4);
   d2 = "5.6.7";
   ACE_ASSERT(d2.valid() == 1);
-  ACE_ASSERT(d2[2] == (unsigned long) 7);
+  ACE_ASSERT(d2[2] == 7UL);
   d1 = "8.9.10";
   ACE_ASSERT(d1.valid() == 1);
 
   // concat
-  unsigned long ll = ULONG_MAX;
+  constexpr unsigned long ll = ULONG_MAX;
   d1 = "";
-  d1 += (unsigned long)0;
+  d1 += 0UL;
   d1 += ll;
   d1 += ll;
   d1 += "0";
@@ -141,10 +152,15 @@ static void OidTest()
   ACE_ASSERT(d1.length() == 4);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d1(0,max,max,0) [%s]\n",
     d1.to_string()));
-  ACE_ASSERT(d1[0] == (unsigned long)0);
+  ACE_ASSERT(d1[0] == 0UL);
   ACE_ASSERT(d1[1] == ll);
   ACE_ASSERT(d1[2] == ll);
-  ACE_ASSERT(d1[3] == (unsigned long)0);
+  ACE_ASSERT(d1[3] == 0UL);
+
+  Oid d8 ("1.2");
+  d8 += d8;
+  ACE_ASSERT (d8.valid () == 1);
+  ACE_ASSERT (std::strcmp (d8.to_string (), "1.2.1.2") == 0);
 
   d2 += d1;
   ACE_ASSERT(d2.valid() == 1);

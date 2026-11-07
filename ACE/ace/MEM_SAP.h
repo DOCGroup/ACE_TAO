@@ -43,7 +43,7 @@ public:
   using ACE_MEM_SAP_NODE_PTR = ACE_Based_Pointer<ACE_MEM_SAP_Node>;
 
   /// Initialize the node with its capacity.
-  ACE_MEM_SAP_Node (size_t cap);
+  explicit ACE_MEM_SAP_Node (size_t cap);
 
   /// Get the size of the data we hold.
   size_t size () const;

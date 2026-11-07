@@ -50,10 +50,10 @@ namespace TAO
         public TAO_Connection_Handler
     {
     public:
-      Connection_Handler (ACE_Thread_Manager* t = nullptr);
+      explicit Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
       /// Constructor.
-      Connection_Handler (TAO_ORB_Core *orb_core);
+      explicit Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
       ~Connection_Handler () override;
@@ -79,8 +79,8 @@ namespace TAO
       int handle_input (ACE_HANDLE) override;
       int handle_output (ACE_HANDLE) override;
       int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-      int handle_timeout (const ACE_Time_Value &current_time,
-                          const void *act = nullptr) override;
+      int handle_timeout (ACE_Time_Value const &current_time,
+                          void const *act = nullptr) override;
       int open (void *) override;
       //@}
 
@@ -112,7 +112,7 @@ namespace TAO
        */
       int release_os_resources () override;
       void pos_io_hook (int & return_value) override;
-      int handle_write_ready (const ACE_Time_Value *timeout) override;
+      int handle_write_ready (ACE_Time_Value const *timeout) override;
       //@}
 
     protected:
@@ -172,7 +172,7 @@ namespace TAO
 
       /// Flag that specifies whether or not setup of the SSLIOP::Current
       /// object completed for the current thread and invocation.
-      bool setup_done_;
+      bool setup_done_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

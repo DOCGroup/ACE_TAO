@@ -39,7 +39,7 @@ cause_error ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int counter = 1;
+  int counter {1};
 
   if (argc > 1) // Just give a dummy command-line argument to trigger this path.
     {
@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Exercise many different combinations of STDERR and OSTREAM.
 
       double f = 3.1416 * counter++;
-      int i = 10000;
+      int i {10000};
 
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
@@ -151,11 +151,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
 
-      static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
+      static int const array[] {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 
       // Print out the binary bytes of the array in hex form.
       ACE_LOG_MSG->log_hexdump (LM_DEBUG,
-                                (char *) array,
+                                reinterpret_cast<char const *> (array),
                                 sizeof array);
 
       // Disable the LM_DEBUG and LM_INFO messages at the process level.
@@ -190,11 +190,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "This LM_DEBUG message should not print!\n"));
 
-      char badname[] = "badname";
+      ACE_TCHAR badname[] = ACE_TEXT ("badname");
 
-      char *l_argv[2];
-      l_argv[0] = badname;
-      l_argv[1] = nullptr;
+      ACE_TCHAR *const l_argv[] {badname, nullptr};
 
       if (ACE_OS::execv (badname,
                          l_argv) == -1)

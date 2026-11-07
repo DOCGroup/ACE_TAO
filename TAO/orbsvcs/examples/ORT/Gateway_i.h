@@ -26,12 +26,16 @@ class Gateway_i
 public:
   Gateway_i (CORBA::ORB_ptr orb,
              PortableServer::Current_ptr poa_current);
+  Gateway_i (Gateway_i const &) = delete;
+  Gateway_i (Gateway_i &&) = delete;
+  Gateway_i &operator= (Gateway_i const &) = delete;
+  Gateway_i &operator= (Gateway_i &&) = delete;
 
-  virtual void invoke (CORBA::ServerRequest_ptr request);
+  void invoke (CORBA::ServerRequest_ptr request) override;
 
-  virtual CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+  CORBA::RepositoryId _primary_interface (
+      PortableServer::ObjectId const &oid,
+      PortableServer::POA_ptr poa) override;
 
  private:
   CORBA::ORB_ptr orb_;

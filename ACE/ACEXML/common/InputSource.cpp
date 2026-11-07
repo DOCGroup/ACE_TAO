@@ -5,18 +5,13 @@
 #include "ace/ACE.h"
 
 ACEXML_InputSource::ACEXML_InputSource ()
-  : charStream_ (0),
-    encoding_ (0),
-    publicId_ (0),
-    systemId_ (0)
 {
 }
 
 ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
   : charStream_ (stm),
     encoding_ (ACE::strnew (stm->getEncoding())),
-    publicId_ (0),
-    systemId_ (stm->getSystemId() ? ACE::strnew (stm->getSystemId()): 0)
+    systemId_ (stm->getSystemId () ? ACE::strnew (stm->getSystemId ()) : nullptr)
 {
 }
 
@@ -25,14 +20,11 @@ ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
    *
   */
 
-ACEXML_InputSource::ACEXML_InputSource (const ACEXML_Char *systemId)
-  : charStream_ (0),
-    encoding_ (0),
-    publicId_ (0),
-    systemId_ (ACE::strnew (systemId))
+ACEXML_InputSource::ACEXML_InputSource (ACEXML_Char const *systemId)
+  : systemId_ (ACE::strnew (systemId))
 {
   ACEXML_StreamFactory factory;
-  ACEXML_CharStream* stm = factory.create_stream (this->systemId_);
+  ACEXML_CharStream* stm = factory.create_stream (this->systemId_.get ());
   if (stm)
     {
       this->setCharStream (stm);
@@ -40,66 +32,52 @@ ACEXML_InputSource::ACEXML_InputSource (const ACEXML_Char *systemId)
     }
 }
 
-ACEXML_InputSource::~ACEXML_InputSource ()
-{
-  delete[] this->publicId_;
-  this->publicId_ = 0;
-  delete[] this->systemId_;
-  this->systemId_ = 0;
-  delete this->charStream_;
-  this->charStream_ = 0;
-  delete[] this->encoding_;
-  this->encoding_ = 0;
-}
+ACEXML_InputSource::~ACEXML_InputSource () = default;
 
 ACEXML_CharStream *
 ACEXML_InputSource::getCharStream () const
 {
-  return this->charStream_;
+  return this->charStream_.get ();
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_InputSource::getEncoding () const
 {
-  return this->encoding_;
+  return this->encoding_.get ();
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_InputSource::getPublicId () const
 {
-  return this->publicId_;
+  return this->publicId_.get ();
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_InputSource::getSystemId () const
 {
-  return this->systemId_;
+  return this->systemId_.get ();
 }
 
 void
 ACEXML_InputSource::setCharStream (ACEXML_CharStream *stm)
 {
-  delete this->charStream_;
-  this->charStream_ = stm;
+  this->charStream_.reset (stm);
 }
 
 void
-ACEXML_InputSource::setEncoding (const ACEXML_Char *encoding)
+ACEXML_InputSource::setEncoding (ACEXML_Char const *encoding)
 {
-  delete[] this->encoding_;
-  this->encoding_ = ACE::strnew (encoding);
+  this->encoding_.reset (ACE::strnew (encoding));
 }
 
 void
-ACEXML_InputSource::setPublicId (const ACEXML_Char *publicId)
+ACEXML_InputSource::setPublicId (ACEXML_Char const *publicId)
 {
-  delete[] this->publicId_;
-  this->publicId_ = ACE::strnew (publicId);
+  this->publicId_.reset (ACE::strnew (publicId));
 }
 
 void
-ACEXML_InputSource::setSystemId (const ACEXML_Char *systemId)
+ACEXML_InputSource::setSystemId (ACEXML_Char const *systemId)
 {
-  delete[] this->systemId_;
-  this->systemId_ = ACE::strnew (systemId);
+  this->systemId_.reset (ACE::strnew (systemId));
 }

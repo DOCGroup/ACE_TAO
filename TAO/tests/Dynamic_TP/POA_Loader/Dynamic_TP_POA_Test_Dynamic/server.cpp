@@ -3,15 +3,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
-int sleep_sec = 1;
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file, int &sleep_sec)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -20,7 +18,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 's':
-        sleep_sec = ACE_OS::strtol(get_opts.opt_arg (),NULL,0);
+        sleep_sec = static_cast<int> (ACE_OS::strtol (get_opts.opt_arg (), nullptr, 0));
         break;
       case '?':
       default:
@@ -44,7 +42,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      ACE_TString ior_output_file (ACE_TEXT ("server.ior"));
+      int sleep_sec {1};
+      if (parse_args (argc, argv, ior_output_file, sleep_sec) != 0)
+        return 1;
+
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
@@ -63,36 +66,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var mp2 = root_poa->create_POA ("MyPOA2", poa_manager.in(), policies);
 
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      Hello *hello_impl;
-      ACE_NEW_RETURN (hello_impl,
-                      Hello (orb.in ()),
-                      1);
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      std::unique_ptr<Hello> hello_impl = std::make_unique<Hello> (orb.in ());
+      PortableServer::ServantBase_var owner_transfer (hello_impl.release ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (hello_impl);
+        root_poa->activate_object (owner_transfer.in ());
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         Test::Hello::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %C",
-                           ior_output_file,
-                           ior.in ()),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file %s for writing IOR: %C",
+                             ior_output_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
       poa_manager->activate ();
@@ -100,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,"Server calling hello->sleep_sec()\n"));
       // Set the sleep time for the Hello object
-      hello->sleep_sec(sleep_sec);
+      hello->sleep_sec (sleep_sec);
 
       ACE_DEBUG ((LM_DEBUG,"Server calling orb::run()\n"));
       orb->run ();

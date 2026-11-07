@@ -11,7 +11,7 @@ class AMI_Buffering_Admin
 {
 public:
   /// Constructor
-  AMI_Buffering_Admin (CORBA::ORB_ptr orb);
+  explicit AMI_Buffering_Admin (CORBA::ORB_ptr orb);
   AMI_Buffering_Admin (AMI_Buffering_Admin const &) = delete;
   AMI_Buffering_Admin &operator= (AMI_Buffering_Admin const &) = delete;
   AMI_Buffering_Admin (AMI_Buffering_Admin &&) = delete;
@@ -33,10 +33,10 @@ private:
   CORBA::ORB_var orb_;
 
   /// Keep track of the number of requests received
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
   /// Keep track of the number of requests received
-  CORBA::ULong bytes_received_count_;
+  CORBA::ULong bytes_received_count_ {};
 };
 
 #include /**/ "ace/post.h"

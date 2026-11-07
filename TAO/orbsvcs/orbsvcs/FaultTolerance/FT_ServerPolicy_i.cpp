@@ -20,14 +20,14 @@ TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value ()
 
 
 CORBA::Policy_ptr
-TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val)
+TAO_FT_Heart_Beat_Enabled_Policy::create (CORBA::Any const &val)
 {
   CORBA::Boolean value;
 
-  if ((val >>= CORBA::Any::to_boolean (value)) == 0)
+  if (!(val >>= CORBA::Any::to_boolean (value)))
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_FT_Heart_Beat_Enabled_Policy *tmp = nullptr;
+  TAO_FT_Heart_Beat_Enabled_Policy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_FT_Heart_Beat_Enabled_Policy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -46,7 +46,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::policy_type ()
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::copy ()
 {
-  TAO_FT_Heart_Beat_Enabled_Policy * tmp = nullptr;
+  TAO_FT_Heart_Beat_Enabled_Policy * tmp {};
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Enabled_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -57,10 +57,10 @@ TAO_FT_Heart_Beat_Enabled_Policy::copy ()
 TAO_FT_Heart_Beat_Enabled_Policy *
 TAO_FT_Heart_Beat_Enabled_Policy::clone () const
 {
-  TAO_FT_Heart_Beat_Enabled_Policy *copy = nullptr;
+  TAO_FT_Heart_Beat_Enabled_Policy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_FT_Heart_Beat_Enabled_Policy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 

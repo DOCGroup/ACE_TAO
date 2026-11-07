@@ -23,6 +23,7 @@
 #include "CC_naming_service.h"
 #include "CC_command.h"
 #include "CC_command.tab.h"
+#include <memory>
 
 #ifndef _CC_CLIENT_H_
 #define _CC_CLIENT_H_
@@ -49,10 +50,14 @@ class CC_Client
 {
 public:
   /// Default constructor.
-  CC_Client ();
+  CC_Client () = default;
 
   /// Destructor.
   ~CC_Client ();
+  CC_Client (CC_Client const &) = delete;
+  CC_Client (CC_Client &&) = delete;
+  CC_Client &operator= (CC_Client const &) = delete;
+  CC_Client &operator= (CC_Client &&) = delete;
 
   /// Run the test.
   int run ();
@@ -83,19 +88,16 @@ private:
   int check_extended_test_params(ACE_TCHAR *params);
 
   /// A pointer to the naming service used for this test.
-  CC_naming_service *naming_service_;
-
-  /// File from which to obtain the IOR.
-  FILE *cc_factory_ior_file_;
+  std::unique_ptr<CC_naming_service> naming_service_;
 
   /// The factory key for the lock set factory.
-  char *cc_factory_key_;
+  char *cc_factory_key_ {};
 
   /// File handle to read the IOR.
-  ACE_HANDLE f_handle_;
+  ACE_HANDLE f_handle_ {ACE_INVALID_HANDLE};
 
   /// Flag to tell server to shutdown.
-  int shutdown_;
+  bool shutdown_ {};
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
@@ -105,30 +107,30 @@ private:
   // service is not used (for simple testing)
 
   /// The number of arguments passed on the command line.
-  int argc_;
+  int argc_ {};
 
   /// The arguments from the command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// Flag to tell the client whether to use the naming service or not
   /// to find the concurrency control factory.
-  int use_naming_service_;
+  bool use_naming_service_ {true};
 
   /// flag to tell which test should be run.
-  int run_basic_tests_;
+  bool run_basic_tests_ {};
 
   /// flag to tell which test should be run.
-  int run_extended_tests_;
+  bool run_extended_tests_ {};
 
   /// Parameters to the extended tests. The parameters are of the
   /// following format: <test>:<parm1>:<parm2>...
-  ACE_TCHAR *extended_tests_params_;
+  ACE_TCHAR *extended_tests_params_ {};
 
   /// Flag to tell whethter to use a script file to run the tests.
-  int use_script_file_;
+  bool use_script_file_ {};
 
   /// The script file to run
-  ACE_TCHAR *script_file_;
+  ACE_TCHAR *script_file_ {};
 
   /// Prints out the options to the program.
   void print_usage ();

@@ -10,7 +10,7 @@ class Hello
   : public virtual POA_Test
 {
 public:
-  Hello (PortableServer::POA_ptr poa);
+  explicit Hello (PortableServer::POA_ptr poa);
   Hello (Hello const &) = delete;
   Hello &operator= (Hello const &) = delete;
   Hello (Hello &&) = delete;
@@ -22,7 +22,7 @@ public:
   PortableServer::POA_ptr _default_POA () override;
 
 private:
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var const poa_;
 };
 
 #include /**/ "ace/post.h"

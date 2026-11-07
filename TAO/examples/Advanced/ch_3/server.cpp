@@ -9,25 +9,17 @@
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #include "server.h"
-#include <ace/streams.h>
 #include <ace/OS_NS_time.h>
-
-// The following headers are #included automatically by ACE+TAO.
-// Therefore, they don't need to be included explicitly.
-//#include <time.h>
-//#include <iostream.h>
+#include <iostream>
 
 TimeOfDay
-Time_impl::
-get_gmt ()
+Time_impl::get_gmt ()
 {
-  time_t time_now = ACE_OS::time (0);
-  struct tm *time_p = ACE_OS::gmtime (&time_now);
+  time_t const time_now = ACE_OS::time (nullptr);
+  tm const * const time_p = ACE_OS::gmtime (&time_now);
 
-  TimeOfDay tod;
+  TimeOfDay tod {};
   tod.hour = time_p->tm_hour;
   tod.minute = time_p->tm_min;
   tod.second = time_p->tm_sec;
@@ -58,26 +50,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       mgr->activate ();
 
       // Create an object
-      Time_impl time_servant;
+      Time_impl time_servant {};
 
       // Write its stringified reference to stdout
       Time_var tm = time_servant._this ();
       CORBA::String_var str = orb->object_to_string (tm.in ());
-      cout << str.in () << endl;
+      std::cout << str.in () << std::endl;
 
       // Accept requests
       orb->run ();
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const&)
     {
-      cerr << "Uncaught CORBA exception" << endl;
+      std::cerr << "Uncaught CORBA exception" << std::endl;
       return 1;
     }
   return 0;
 }
-
-
-
-
-
-

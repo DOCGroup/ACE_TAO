@@ -16,7 +16,6 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantLocatorC.h"
-#include "tao/ORB.h"
 
 /**
  * @class Servant_Locator
@@ -27,33 +26,32 @@
 class Servant_Locator : public PortableServer::ServantLocator
 {
 public:
-  Servant_Locator (CORBA::ORB_ptr orb_ptr);
-
-  // constructor
-
-  ~Servant_Locator ();
+  Servant_Locator () = default;
+  Servant_Locator (Servant_Locator const &) = delete;
+  Servant_Locator (Servant_Locator &&) = delete;
+  Servant_Locator &operator= (Servant_Locator const &) = delete;
+  Servant_Locator &operator= (Servant_Locator &&) = delete;
+  ~Servant_Locator () override = default;
 
   /// This method is invoked by a POA whenever it receives a request
   /// for MyFoo object that is not currently active.
-  virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr adapter,
-                                             const char *operation,
-                                             PortableServer::ServantLocator::Cookie &the_cookie);
+  PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
+                                     PortableServer::POA_ptr adapter,
+                                     const char *operation,
+                                     PortableServer::ServantLocator::Cookie &the_cookie) override;
 
   /// This method is invoked whenever a MyFooServant completes a
   /// request.
-  virtual void postinvoke (const PortableServer::ObjectId &oid,
-                           PortableServer::POA_ptr adapter,
-                           const char *operation,
-                           PortableServer::ServantLocator::Cookie the_cookie,
-                           PortableServer::Servant the_servant);
+  void postinvoke (const PortableServer::ObjectId &oid,
+                   PortableServer::POA_ptr adapter,
+                   const char *operation,
+                   PortableServer::ServantLocator::Cookie the_cookie,
+                   PortableServer::Servant the_servant) override;
 
   /// To be removed..
-  void set (CORBA::Object_var obj);
+  void set (CORBA::Object_ptr obj);
 
  private:
-  CORBA::ORB_var orb_var_;
-
   /// To be removed
   CORBA::Object_var objref_;
 };

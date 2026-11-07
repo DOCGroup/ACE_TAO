@@ -9,12 +9,11 @@
 //=============================================================================
 
 
-#include "ace/SOCK_Connector.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
 
@@ -30,24 +29,24 @@
 class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  HTTP_Handler ();
-  HTTP_Handler (const char * path);
+  HTTP_Handler () = default;
+  explicit HTTP_Handler (char const *path);
 
   /// Open hook.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Entry points defined by the abstract Svc_Handler.
-  virtual int svc ();
+  int svc () override;
 
   /// Accessor to the file being fetched.
-  const char *filename () const;
+  char const *filename () const;
 
 private:
   char request_[BUFSIZ];
-  size_t request_size_;
+  size_t request_size_ {};
 
   char filename_[BUFSIZ];
-  size_t response_size_;
+  size_t response_size_ {};
 };
 
 /**
@@ -62,11 +61,11 @@ class HTTP_Connector
 {
 public:
   /// User entry point into the HTTP connector.
-  int connect (const char * url);
+  int connect (char const *url);
 
 private:
   /// Helper function.
-  int parseurl (const char *url,
+  int parseurl (char const *url,
                 char *host,
                 u_short *port,
                 char *path);

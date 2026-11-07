@@ -42,11 +42,11 @@ rsvp_callback (rapi_sid_t /* sid */,
                void *args
                )
 {
-  if (args == 0)
+  if (args == nullptr)
     ACELIB_DEBUG ((LM_DEBUG,
                 "Argument in the call back function is null\n\n"));
 
-  ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
+  ACE_QoS_Session *qos_session = static_cast<ACE_QoS_Session *> (args);
 
   qos_flowspecx_t *csxp = nullptr;
 
@@ -323,7 +323,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 {
   ACE_Flow_Spec *sending_flowspec = ace_qos.sending_flowspec ();
 
-  if (sending_flowspec == 0)
+  if (sending_flowspec == nullptr)
     {
       int result = rapi_sender (this->session_id_,
                                 0,
@@ -346,7 +346,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
     }
 
   rapi_tspec_t *t_spec = this->init_tspec_simplified (*sending_flowspec);
-  if (t_spec == 0)
+  if (t_spec == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) Error in translating from ACE Flow Spec to"
                        " RAPI TSpec\n"),
@@ -424,7 +424,7 @@ int
 ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 {
   ACE_Flow_Spec *receiving_flowspec = ace_qos.receiving_flowspec ();
-  if (receiving_flowspec == 0)
+  if (receiving_flowspec == nullptr)
     {
       if (rapi_reserve(this->session_id_,
                        0,
@@ -457,7 +457,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
 
-  if (flow_spec == 0)
+  if (flow_spec == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) Error in translating from ACE Flow Spec to"
                        " RAPI FlowSpec\n"),

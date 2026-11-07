@@ -27,7 +27,7 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"
@@ -369,7 +369,7 @@ CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id)
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
-  return ACE_OS::strcmp (logical_type_id, id) == 0;
+  return std::strcmp (logical_type_id, id) == 0;
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -414,7 +414,7 @@ TAO_ServantBase::_repository_id ()
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
-                        const size_t length)
+                        std::size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc,
@@ -425,7 +425,7 @@ int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
-                        const size_t length)
+                        std::size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc, st,
@@ -435,13 +435,13 @@ TAO_ServantBase::_find (const char *opname,
 TAO_Stub *
 TAO_ServantBase::_create_stub ()
 {
-  TAO_Stub *stub = nullptr;
+  TAO_Stub *stub {};
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  CORBA::ORB_ptr servant_orb = nullptr;
+  CORBA::ORB_ptr servant_orb {};
 
   if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
@@ -613,7 +613,7 @@ TAO_ServantBase::_collocated_dispatch (::CORBA::Object_ptr obj,
                                        TAO::Argument ** args,
                                        int num_args,
                                        const char * op,
-                                       size_t op_len,
+                                       std::size_t op_len,
                                        TAO::Collocation_Strategy strategy)
 {
   TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;

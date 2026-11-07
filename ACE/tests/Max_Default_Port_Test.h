@@ -30,9 +30,9 @@ public:
 
   int open (ACE_INET_Addr &addr);
 
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
-  int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   /// Returns the port the event handler is listening at.
   u_short port ();

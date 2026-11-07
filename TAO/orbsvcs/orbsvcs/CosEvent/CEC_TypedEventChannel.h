@@ -70,8 +70,8 @@ public:
   // the user should be able to set any values she wants.
 
   /// Can consumers or suppliers invoke connect_push_* multiple times?
-  int consumer_reconnect;
-  int supplier_reconnect;
+  bool consumer_reconnect;
+  bool supplier_reconnect;
 
   /**
    * It not zero the event channel will send disconnect callbacks when
@@ -82,13 +82,13 @@ public:
    * It is a matter of debate what the spec requires for the regular
    * event service.
    */
-  int disconnect_callbacks;
+  bool disconnect_callbacks;
 
   /**
    * If not zero the event channel will deactive its Impl and call
    * orb->shutdown(0), when destroy is invoked.
    */
-  int destroy_on_shutdown;
+  bool destroy_on_shutdown;
 
 private:
   /// Only the EC can read the private fields.
@@ -133,7 +133,7 @@ public:
    */
   TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attributes,
                              TAO_CEC_Factory *factory = nullptr,
-                             int own_factory = 0);
+                             bool own_factory = false);
 
   /// Destructor
   ~TAO_CEC_TypedEventChannel () override;
@@ -204,14 +204,14 @@ public:
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect () const;
+  bool consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect () const;
+  bool supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks () const;
+  bool disconnect_callbacks () const;
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
   using InterfaceDescription = ACE_Hash_Map_Manager_Ex<char const *,
@@ -222,16 +222,16 @@ public:
   using Iterator = InterfaceDescription::iterator;
 
   /// Finds a operation/parameter from the IFR cache
-  TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
+  TAO_CEC_Operation_Params * find_from_ifr_cache (char const *operation);
 
   /// Function allows consumer admin to register the uses interface
-  int consumer_register_uses_interace (const char *uses_interface);
+  int consumer_register_uses_interace (char const *uses_interface);
 
   /// Function allows supplier admin to register the supported interface
-  int supplier_register_supported_interface (const char *supported_interface);
+  int supplier_register_supported_interface (char const *supported_interface);
 
   /// Function to return the supported_interface_
-  const char * supported_interface () const;
+  char const * supported_interface () const;
 
   /// Function to return the base_interfaces_
   CORBA::RepositoryId base_interfaces (CORBA::ULong index) const;
@@ -258,14 +258,14 @@ public:
 
   /// Forwarded to the factory
   CORBA::Policy_ptr
-  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
+  create_roundtrip_timeout_policy (ACE_Time_Value const &timeout);
 
 protected:
   /// Function caches the full interface description from the IFR
-  int cache_interface_description (const char *interface_);
+  int cache_interface_description (char const *interface_);
 
   /// Insert a operation/parameter into the IFR cache
-  int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);
+  int insert_into_ifr_cache (char const *operation, TAO_CEC_Operation_Params *parameters);
 
   /// Function clears the IFR cache
   int clear_ifr_cache ();
@@ -295,38 +295,38 @@ private:
   TAO_CEC_Factory *factory_;
 
   /// Flag that indicates if we own the factory.
-  int own_factory_;
+  bool own_factory_;
 
   /// The dispatching "module"
-  TAO_CEC_Dispatching *dispatching_;
+  TAO_CEC_Dispatching *dispatching_ {};
 
   /// The ConsumerAdmin implementation
-  TAO_CEC_TypedConsumerAdmin *typed_consumer_admin_;
+  TAO_CEC_TypedConsumerAdmin *typed_consumer_admin_ {};
 
   /// The SupplierAdmin implementation
-  TAO_CEC_TypedSupplierAdmin *typed_supplier_admin_;
+  TAO_CEC_TypedSupplierAdmin *typed_supplier_admin_ {};
 
   /// Consumer reconnection flags
-  int consumer_reconnect_;
+  bool consumer_reconnect_;
 
   /// Supplier reconnection flags
-  int supplier_reconnect_;
+  bool supplier_reconnect_;
 
-  /// If not zero we send callbacks when a proxy is disconnected
-  int disconnect_callbacks_;
+  /// If enabled, we send callbacks when a proxy is disconnected.
+  bool disconnect_callbacks_;
 
-  /// If not zero the event channel is destroyed on shutdown
-  int destroy_on_shutdown_;
+  /// If enabled, the event channel is destroyed on shutdown.
+  bool destroy_on_shutdown_;
 
-  /// Set if the event channel has been destroyed
-  int destroyed_;
+  /// Set when the event channel has been destroyed.
+  bool destroyed_ {};
 
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers
-  TAO_CEC_ConsumerControl *consumer_control_;
+  TAO_CEC_ConsumerControl *consumer_control_ {};
   ServantRetryMap retry_map_;
 
-  TAO_CEC_SupplierControl *supplier_control_;
+  TAO_CEC_SupplierControl *supplier_control_ {};
 
   /// The uses_interface_ for the TypedConsumerAdmin.
   ACE_CString uses_interface_;
@@ -364,7 +364,7 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_Operation_Params
 {
   /// constructor
-  TAO_CEC_Operation_Params (CORBA::ULong num_params);
+  explicit TAO_CEC_Operation_Params (CORBA::ULong num_params);
   /// destructor
   ~TAO_CEC_Operation_Params ();
 

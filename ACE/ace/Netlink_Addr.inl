@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #ifdef ACE_HAS_NETLINK
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Netlink_Addr::ACE_Netlink_Addr ()
@@ -17,7 +19,7 @@ ACE_INLINE void ACE_Netlink_Addr::set(int pid, int gid)
 
 ACE_INLINE void ACE_Netlink_Addr::reset ()
 {
-  ACE_OS::memset (&this->nl_, 0, sizeof (this->nl_));
+  std::memset (&this->nl_, 0, sizeof (this->nl_));
   this->nl_.nl_family = AF_NETLINK;
 }
 
@@ -37,7 +39,7 @@ ACE_INLINE int ACE_Netlink_Addr::get_addr_size () const
 }
 
 ACE_INLINE void ACE_Netlink_Addr::set_addr (const void *addr, int len) {
-  ACE_OS::memcpy (&this->nl_, addr, static_cast<size_t> (len));
+  std::memcpy (&this->nl_, addr, static_cast<size_t> (len));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

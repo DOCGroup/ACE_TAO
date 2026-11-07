@@ -4,15 +4,8 @@
 
 RtEC_Based_CosEC::RtEC_Based_CosEC ()
   : service_name (ACE_TEXT("CosEventService")),
-    rt_service_name (ACE_TEXT("EventService")),
-    remote_rtec_ (0)
+    rt_service_name (ACE_TEXT("EventService"))
 {
-  // No-Op.
-}
-
-RtEC_Based_CosEC::~RtEC_Based_CosEC ()
-{
-  // No-Op.
 }
 
 void
@@ -51,7 +44,7 @@ RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv [])
           break;
 
         case 'r':
-          this->remote_rtec_ = 1;
+          this->remote_rtec_ = true;
           break;
 
         case 'e':
@@ -135,17 +128,17 @@ POA_RtecEventChannelAdmin::EventChannel_ptr
 RtEC_Based_CosEC::create_rtec ()
 {
   // see if the user wants a local RtEC..
-  if (this->remote_rtec_ == 0)
+  if (!this->remote_rtec_)
     return CosEC_ServantBase::create_rtec ();
   else
-    return 0;
+    return nullptr;
 }
 
 void
 RtEC_Based_CosEC::activate_rtec ()
 {
   // see if the user wants to use a local RtEC..
-  if (this->remote_rtec_ == 0)
+  if (!this->remote_rtec_)
     {
       CosEC_ServantBase::activate_rtec ();
     }
@@ -165,7 +158,7 @@ void
 RtEC_Based_CosEC::deactivate_rtec ()
 {
   // Check if the local rtec is to be deactivated.
-  if (this->remote_rtec_ == 0)
+  if (!this->remote_rtec_)
     {
       CosEC_ServantBase::deactivate_rtec ();
     }
@@ -208,7 +201,7 @@ RtEC_Based_CosEC::run ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
     }
@@ -254,7 +247,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Failed to start CosEventService");
       return 1;

@@ -16,6 +16,8 @@
 
 #include "orbsvcs/Trader/Trader_Utils.h"
 
+#include <deque>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -44,9 +46,9 @@ class TAO_Offer_Iterator
   //   interface.
   // END SPEC
 public:
-  TAO_Offer_Iterator (const TAO_Property_Filter& property_filter);
+  explicit TAO_Offer_Iterator (TAO_Property_Filter const& property_filter);
 
-  ~TAO_Offer_Iterator () override;
+  ~TAO_Offer_Iterator () override = default;
 
   /**
    * BEGIN SPEC
@@ -62,7 +64,7 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left () = 0;
+  CORBA::ULong max_left () override = 0;
 
   // BEGIN SPEC
   // The max_left operation returns the number of service offers
@@ -86,8 +88,8 @@ public:
    * to be extracted.
    * END SPEC
    */
-  virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers) = 0;
+  CORBA::Boolean next_n (CORBA::ULong n,
+                         CosTrading::OfferSeq_out offers) override = 0;
  protected:
   TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
   TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;
@@ -117,9 +119,9 @@ class TAO_Query_Only_Offer_Iterator
   //
 {
 public:
-  TAO_Query_Only_Offer_Iterator (const TAO_Property_Filter& pfilter);
+  explicit TAO_Query_Only_Offer_Iterator (TAO_Property_Filter const& pfilter);
 
-  ~TAO_Query_Only_Offer_Iterator () override;
+  ~TAO_Query_Only_Offer_Iterator () override = default;
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
@@ -141,7 +143,7 @@ private:
 
   /// Structure that stores pointers to offers
   /// to iterate over.
-  ACE_Unbounded_Queue <CosTrading::Offer *> offers_;
+  std::deque<CosTrading::Offer *> offers_;
 };
 
   // *************************************************************
@@ -168,7 +170,7 @@ class TAO_Offer_Iterator_Collection :
 public:
   // = Constructors.
 
-  TAO_Offer_Iterator_Collection ();
+  TAO_Offer_Iterator_Collection () = default;
 
   ~TAO_Offer_Iterator_Collection () override;
 
@@ -191,7 +193,7 @@ private:
   TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection&&) = delete;
   TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection&&) = delete;
 
-  using Offer_Iters = ACE_Unbounded_Queue<CosTrading::OfferIterator*>;
+  using Offer_Iters = std::deque<CosTrading::OfferIterator*>;
 
   /// The iterator collection.
   Offer_Iters iters_;
@@ -219,9 +221,9 @@ class TAO_Offer_Id_Iterator :
 {
  public:
   /// No op constructor
-  TAO_Offer_Id_Iterator();
+  TAO_Offer_Id_Iterator () = default;
 
-  ~TAO_Offer_Id_Iterator () override;
+  ~TAO_Offer_Id_Iterator () override = default;
 
   /**
    * The max_left operation returns the number of offer identifiers

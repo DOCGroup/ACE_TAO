@@ -58,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 i,
                 args.argv ()[i]));
 
-  int const result = ACE_Service_Config::open (args.argc (),
+  const int result = ACE_Service_Config::open (args.argc (),
                                                args.argv (),
                                                ACE_DEFAULT_LOGGER_KEY,
                                                0);

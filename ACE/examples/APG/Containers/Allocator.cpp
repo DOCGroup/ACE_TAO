@@ -2,6 +2,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h" // Needed for the lock.
 #include "DataElement.h"
+#include <memory>
 
 class StackExample
 {
@@ -20,23 +21,23 @@ int StackExample::run ()
 {
   ACE_TRACE ("StackExample::run");
 
-  ACE_Allocator *allocator = nullptr;
-  size_t block_size = sizeof(ACE_Node<DataElement>);
+  ACE_Allocator *allocator_raw {};
+  size_t const block_size = sizeof (ACE_Node<DataElement>);
   ACE_NEW_RETURN
-    (allocator,
+    (allocator_raw,
      ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>
        (100 + 1, block_size),
      -1);
+  std::unique_ptr<ACE_Allocator> allocator {allocator_raw};
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
 
-  ACE_TEST_ASSERT (this->runUnboundedStack (allocator) != -1);
+  ACE_TEST_ASSERT (this->runUnboundedStack (allocator.get ()) != -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
 
-  delete allocator;
   return 0;
 }
 // Listing 1
@@ -48,10 +49,10 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
   // Pass in an allocator during construction.
   ACE_Unbounded_Stack<DataElement> ustack (allocator);
 
-  for (int m = 0; m < 100; m++)
+  for (int m = 0; m < 100; ++m)
     {
       DataElement elem (m);
-      int result = ustack.push (elem);
+      int const result = ustack.push (elem);
       if (result == -1)
         ACE_ERROR_RETURN
           ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -59,10 +60,8 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
            -1);
     }
 
-  void* furtherMemory = nullptr;
-  furtherMemory = allocator->malloc
-    (sizeof(ACE_Node<DataElement>));
-  ACE_TEST_ASSERT (furtherMemory == nullptr);
+  void *further_memory = allocator->malloc (sizeof (ACE_Node<DataElement>));
+  ACE_TEST_ASSERT (further_memory == nullptr);
 
   // No memory left..
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
@@ -70,14 +69,13 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
 
   // Free up some memory in the allocator.
   DataElement e;
-  for (int n = 0; n < 10; n++)
+  for (int n = 0; n < 10; ++n)
     {
       ustack.pop (e);
     }
 
-  furtherMemory =
-    allocator->malloc (sizeof (ACE_Node<DataElement>));
-  ACE_TEST_ASSERT (furtherMemory != nullptr);
+  further_memory = allocator->malloc (sizeof (ACE_Node<DataElement>));
+  ACE_TEST_ASSERT (further_memory != nullptr);
 
   return 0;
 }

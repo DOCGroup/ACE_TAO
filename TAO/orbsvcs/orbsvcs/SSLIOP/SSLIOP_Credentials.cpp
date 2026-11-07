@@ -31,7 +31,7 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
 
           ACE_CString s =
             ACE_CString ("X509: ")
-            + ACE_CString (const_cast<const char *> (id));
+            + ACE_CString (id);
 
           this->id_ = CORBA::string_dup (s.c_str ());
 
@@ -49,7 +49,7 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
 
       TimeBase::UtcT & t = this->expiry_time_;
 
-      const ASN1_TIME * exp = X509_get_notAfter (x);
+      ASN1_TIME const * exp = X509_get_notAfter (x);
 
       if (exp->length > ACE_SIZEOF_LONG_LONG)
         {
@@ -68,10 +68,6 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
             }
         }
     }
-}
-
-TAO::SSLIOP_Credentials::~SSLIOP_Credentials ()
-{
 }
 
 char *
@@ -95,7 +91,7 @@ TAO::SSLIOP_Credentials::expiry_time ()
 SecurityLevel3::CredentialsState
 TAO::SSLIOP_Credentials::creds_state ()
 {
-  const ::X509 *x = this->x509_.in ();
+  ::X509 const *x = this->x509_.in ();
 
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
@@ -106,7 +102,7 @@ TAO::SSLIOP_Credentials::creds_state ()
     {
       // Make sure the X.509 certificate is still valid.
 
-      const int after_status =
+      int const after_status =
         ::X509_cmp_current_time (X509_get_notAfter (x));
 
       if (after_status == 0)
@@ -121,7 +117,7 @@ TAO::SSLIOP_Credentials::creds_state ()
     {
       // Check if the X.509 certificate has become valid.
 
-      const int before_status =
+      int const before_status =
         ::X509_cmp_current_time (X509_get_notBefore (x));
 
       if (before_status == 0)
@@ -144,13 +140,13 @@ TAO::SSLIOP_Credentials::add_relinquished_listener (
 }
 
 void
-TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */)
+TAO::SSLIOP_Credentials::remove_relinquished_listener (char const * /* id */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 bool
-TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
+TAO::SSLIOP_Credentials::operator== (TAO::SSLIOP_Credentials const &rhs)
 {
   ::X509 * xa = this->x509_.in ();
   ::X509 * xb = rhs.x509_.in ();
@@ -159,10 +155,10 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
 
   // No need for a full blown ACE_TRY/CATCH block.
 
-  const SecurityLevel3::CredentialsType lct =
+  SecurityLevel3::CredentialsType const lct =
     this->creds_type ();
 
-  const SecurityLevel3::CredentialsType rct =
+  SecurityLevel3::CredentialsType const rct =
     const_cast<TAO::SSLIOP_Credentials &> (rhs).creds_type ();
 
   // Don't bother check the creds_id and expiry_time attributes.  They

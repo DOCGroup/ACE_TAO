@@ -37,6 +37,7 @@
 #include "ace/Asynch_Connector.h"
 #include "ace/Mem_Map.h"
 #include "ace/OS_NS_math.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"

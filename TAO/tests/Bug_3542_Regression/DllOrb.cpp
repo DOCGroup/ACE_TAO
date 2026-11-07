@@ -1,36 +1,36 @@
 #include "DllOrb.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
 DllOrb::DllOrb ()
   : ma_barrier_ {},
     mv_orb_ {},
-    mv_rootPOA_ {}
+    mv_rootPOA_ {},
+    mv_poaManager_ {}
 {
 }
 
-DllOrb::~DllOrb ()
-{
-}
+// Keep the out-of-line destructor symbol for the exported service class.
+DllOrb::~DllOrb () = default;
 
 int
 DllOrb::init (int argc, ACE_TCHAR * argv[])
 {
-  int threadCnt = 1;
+  int thread_count {1};
 
   try
   {
     ACE_Arg_Shifter as (argc, argv);
-    ACE_TCHAR const *currentArg = nullptr;
+    ACE_TCHAR const *current_arg {};
     while (as.is_anything_left ())
       {
-        if (nullptr != (currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+        current_arg = as.get_the_parameter (ACE_TEXT ("-NumThreads"));
+        if (current_arg != nullptr)
           {
-            int num = ACE_OS::atoi (currentArg);
-            if (num >= 1)
-              threadCnt = num;
+            int const requested_thread_count { ACE_OS::atoi (current_arg) };
+            if (requested_thread_count >= 1)
+              thread_count = requested_thread_count;
             as.consume_arg ();
           }
         else
@@ -45,7 +45,7 @@ DllOrb::init (int argc, ACE_TCHAR * argv[])
       return -1;
     }
 
-    CORBA::Object_var v_poa =
+    CORBA::Object_var const v_poa =
       mv_orb_->resolve_initial_references ("RootPOA");
 
     mv_rootPOA_ = PortableServer::POA::_narrow (v_poa.in ());
@@ -70,18 +70,17 @@ DllOrb::init (int argc, ACE_TCHAR * argv[])
     return -1;
   }
 
-  ma_barrier_ = std::make_unique<ACE_Thread_Barrier> (threadCnt + 1);
+  ma_barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
 
   this->activate (
     THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-    threadCnt);
+    thread_count);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() ...\n")));
   ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() done\n")));
 
   return 0;
 }
-
 
 int
 DllOrb::fini ()
@@ -122,7 +121,6 @@ DllOrb::fini ()
 
   return 0;
 }
-
 
 int
 DllOrb::svc ()

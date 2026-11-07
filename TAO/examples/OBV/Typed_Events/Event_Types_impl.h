@@ -46,11 +46,16 @@ class Event_impl : public virtual OBV_Event,
                    public virtual CORBA::DefaultValueRefCountBase
 {
  public:
-  Event_impl ();
-  virtual ~Event_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  Event_impl (Event_impl const&) = delete;
+  Event_impl (Event_impl&&) = delete;
+  Event_impl& operator= (Event_impl const&) = delete;
+  Event_impl& operator= (Event_impl&&) = delete;
 
-  virtual void do_print ();
+  Event_impl ();
+  ~Event_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
+
+  void do_print () override;
   // Implementation of the do_print () operation the valuetype should have.
   // All operations in valuetypes are virtual.
 
@@ -111,17 +116,21 @@ class Temperature_impl : public virtual OBV_Temperature,
                          public virtual Event_impl
 {
 public:
-  Temperature_impl ();
+  Temperature_impl () = default;
+  Temperature_impl (Temperature_impl const&) = delete;
+  Temperature_impl (Temperature_impl&&) = delete;
+  Temperature_impl& operator= (Temperature_impl const&) = delete;
+  Temperature_impl& operator= (Temperature_impl&&) = delete;
   // Constructor for the factory
 
-  Temperature_impl (CORBA::Float temp);
+  explicit Temperature_impl (CORBA::Float temp);
   // Constructor, should regularly be a factory create () method.
   // But it is more simple to do so here.
 
-  virtual ~Temperature_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ~Temperature_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  virtual void do_print ();
+  void do_print () override;
   // Overrides Event_impl::do_print (). Note that a new declaration
   // in IDL in a derived class is not allowed.
 };
@@ -131,10 +140,16 @@ class Temperature_factory : public CORBA::ValueFactoryBase
   friend class Temperature;
 
 public:
+  Temperature_factory () = default;
+  Temperature_factory (Temperature_factory const&) = delete;
+  Temperature_factory (Temperature_factory&&) = delete;
+  Temperature_factory& operator= (Temperature_factory const&) = delete;
+  Temperature_factory& operator= (Temperature_factory&&) = delete;
+
   // create (...) would go here
 
 protected:
-  virtual ~Temperature_factory ();
+  ~Temperature_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal ();
@@ -146,20 +161,24 @@ class Position_impl : public virtual OBV_Position,
                       public virtual Event_impl
 {
 public:
-  Position_impl ();
-  Position_impl (Point &p);
-  virtual ~Position_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  Position_impl () = default;
+  Position_impl (Position_impl const&) = delete;
+  Position_impl (Position_impl&&) = delete;
+  Position_impl& operator= (Position_impl const&) = delete;
+  Position_impl& operator= (Position_impl&&) = delete;
+  explicit Position_impl (Point const &p);
+  ~Position_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  virtual CORBA::Float x ();
-  virtual void x (CORBA::Float);
-  virtual CORBA::Float y ();
-  virtual void y (CORBA::Float);
-  virtual CORBA::Float z ();
-  virtual void z (CORBA::Float);
+  CORBA::Float x () override;
+  void x (CORBA::Float) override;
+  CORBA::Float y () override;
+  void y (CORBA::Float) override;
+  CORBA::Float z () override;
+  void z (CORBA::Float) override;
   //These are the attributes
 
-  virtual void do_print ();
+  void do_print () override;
 };
 
 class Position_factory : public CORBA::ValueFactoryBase
@@ -167,10 +186,16 @@ class Position_factory : public CORBA::ValueFactoryBase
   friend class Position;
 
 public:
+  Position_factory () = default;
+  Position_factory (Position_factory const&) = delete;
+  Position_factory (Position_factory&&) = delete;
+  Position_factory& operator= (Position_factory const&) = delete;
+  Position_factory& operator= (Position_factory&&) = delete;
+
   // create (...) would go here
 
 protected:
-  virtual ~Position_factory ();
+  ~Position_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal ();
@@ -182,12 +207,16 @@ class Log_Msg_impl : public virtual OBV_Log_Msg,
                      public virtual Event_impl
 {
 public:
-  Log_Msg_impl ();
-  Log_Msg_impl (CORBA::Short urgency_p, const char *message_p);
-  virtual ~Log_Msg_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  Log_Msg_impl () = default;
+  Log_Msg_impl (Log_Msg_impl const&) = delete;
+  Log_Msg_impl (Log_Msg_impl&&) = delete;
+  Log_Msg_impl& operator= (Log_Msg_impl const&) = delete;
+  Log_Msg_impl& operator= (Log_Msg_impl&&) = delete;
+  Log_Msg_impl (CORBA::Short urgency_p, char const *message_p);
+  ~Log_Msg_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  virtual void do_print ();
+  void do_print () override;
 };
 
 class Log_Msg_factory : public CORBA::ValueFactoryBase
@@ -195,10 +224,16 @@ class Log_Msg_factory : public CORBA::ValueFactoryBase
   friend class Log_Msg;
 
 public:
+  Log_Msg_factory () = default;
+  Log_Msg_factory (Log_Msg_factory const&) = delete;
+  Log_Msg_factory (Log_Msg_factory&&) = delete;
+  Log_Msg_factory& operator= (Log_Msg_factory const&) = delete;
+  Log_Msg_factory& operator= (Log_Msg_factory&&) = delete;
+
   // create (...) would go here
 
 protected:
-  virtual ~Log_Msg_factory ();
+  ~Log_Msg_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal ();
@@ -218,16 +253,20 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
 
  public:
   Event_List_Link_impl ();
-  Event_List_Link_impl (Event *e);
-  virtual ~Event_List_Link_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  Event_List_Link_impl (Event_List_Link_impl const&) = delete;
+  Event_List_Link_impl (Event_List_Link_impl&&) = delete;
+  Event_List_Link_impl& operator= (Event_List_Link_impl const&) = delete;
+  Event_List_Link_impl& operator= (Event_List_Link_impl&&) = delete;
+  explicit Event_List_Link_impl (Event *e);
+  ~Event_List_Link_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  Event *get_event ();
+  Event *get_event () override;
 
  private:
-  Event_List_Link *get_next_link ();
+  Event_List_Link *get_next_link () override;
 
-  void attach_next_link (Event_List_Link * chain);
+  void attach_next_link (Event_List_Link *chain) override;
   // Attach a chain at the end.
 };
 
@@ -235,8 +274,15 @@ class Event_List_Link_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List_Link;
 
+public:
+  Event_List_Link_factory () = default;
+  Event_List_Link_factory (Event_List_Link_factory const&) = delete;
+  Event_List_Link_factory (Event_List_Link_factory&&) = delete;
+  Event_List_Link_factory& operator= (Event_List_Link_factory const&) = delete;
+  Event_List_Link_factory& operator= (Event_List_Link_factory&&) = delete;
+
 protected:
-  virtual ~Event_List_Link_factory ();
+  ~Event_List_Link_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal ();
@@ -250,17 +296,22 @@ class Event_List_impl : public virtual OBV_Event_List,
   friend class Event_List_Iterator;
 
  public:
+  Event_List_impl (Event_List_impl const&) = delete;
+  Event_List_impl (Event_List_impl&&) = delete;
+  Event_List_impl& operator= (Event_List_impl const&) = delete;
+  Event_List_impl& operator= (Event_List_impl&&) = delete;
+
   Event_List_impl ();
-  virtual ~Event_List_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ~Event_List_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  void store_event (Event* e);
+  void store_event (Event *e) override;
 
-  Event_List_Link *get_first_link();
+  Event_List_Link *get_first_link ();
   // The iterator needs it.
 
  private:
-  Event_List_Link *last_link_cache_;
+  Event_List_Link *last_link_cache_ {};
   // For fast attachment. Need not to be a _var cause we hold at least one
   // reference through my_first_event_list_link which is a state member and
   // is mapped to a _var.
@@ -276,8 +327,15 @@ class Event_List_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List;
 
+public:
+  Event_List_factory () = default;
+  Event_List_factory (Event_List_factory const&) = delete;
+  Event_List_factory (Event_List_factory&&) = delete;
+  Event_List_factory& operator= (Event_List_factory const&) = delete;
+  Event_List_factory& operator= (Event_List_factory&&) = delete;
+
 protected:
-  virtual ~Event_List_factory ();
+  ~Event_List_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal ();
@@ -286,11 +344,15 @@ private:
 class Event_List_Iterator
 {
  public:
-  Event_List_Iterator ();
-  Event_List_Iterator (Event_List *list);
+  Event_List_Iterator () = default;
+  Event_List_Iterator (Event_List_Iterator const&) = delete;
+  Event_List_Iterator (Event_List_Iterator&&) = delete;
+  Event_List_Iterator& operator= (Event_List_Iterator const&) = delete;
+  Event_List_Iterator& operator= (Event_List_Iterator&&) = delete;
+  explicit Event_List_Iterator (Event_List *list);
   // Construct it to point to the first list link.
 
-  virtual ~Event_List_Iterator ();
+  virtual ~Event_List_Iterator () = default;
 
   void init (Event_List *list);
 
@@ -324,23 +386,34 @@ class Temperature_Criterion_impl :
                            public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  Temperature_Criterion_impl ();
+  Temperature_Criterion_impl () = default;
+  Temperature_Criterion_impl (Temperature_Criterion_impl const&) = delete;
+  Temperature_Criterion_impl (Temperature_Criterion_impl&&) = delete;
+  Temperature_Criterion_impl& operator= (Temperature_Criterion_impl const&) = delete;
+  Temperature_Criterion_impl& operator= (Temperature_Criterion_impl&&) = delete;
   Temperature_Criterion_impl (CORBA::ULong origin_id, CORBA::Float temp);
 
-  virtual ~Temperature_Criterion_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ~Temperature_Criterion_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  CORBA::Boolean is_critical (Event* e);
+  CORBA::Boolean is_critical (Event *e) override;
 
-  virtual void do_print ();
+  void do_print () override;
 };
 
 class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Temperature;
 
+public:
+  Temperature_Criterion_factory () = default;
+  Temperature_Criterion_factory (Temperature_Criterion_factory const&) = delete;
+  Temperature_Criterion_factory (Temperature_Criterion_factory&&) = delete;
+  Temperature_Criterion_factory& operator= (Temperature_Criterion_factory const&) = delete;
+  Temperature_Criterion_factory& operator= (Temperature_Criterion_factory&&) = delete;
+
 private:
-  virtual ~Temperature_Criterion_factory ();
+  ~Temperature_Criterion_factory () override = default;
   TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal ();
 };
 
@@ -350,24 +423,35 @@ class Position_Criterion_impl :
                             public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  Position_Criterion_impl ();
+  Position_Criterion_impl () = default;
+  Position_Criterion_impl (Position_Criterion_impl const&) = delete;
+  Position_Criterion_impl (Position_Criterion_impl&&) = delete;
+  Position_Criterion_impl& operator= (Position_Criterion_impl const&) = delete;
+  Position_Criterion_impl& operator= (Position_Criterion_impl&&) = delete;
   Position_Criterion_impl (CORBA::ULong origin_id,
                            Position *lb,
                            Position *tr);
-  virtual ~Position_Criterion_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ~Position_Criterion_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  CORBA::Boolean is_critical (Event* e);
+  CORBA::Boolean is_critical (Event *e) override;
 
-  virtual void do_print ();
+  void do_print () override;
 };
 
 class Position_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
 
+public:
+  Position_Criterion_factory () = default;
+  Position_Criterion_factory (Position_Criterion_factory const&) = delete;
+  Position_Criterion_factory (Position_Criterion_factory&&) = delete;
+  Position_Criterion_factory& operator= (Position_Criterion_factory const&) = delete;
+  Position_Criterion_factory& operator= (Position_Criterion_factory&&) = delete;
+
 protected:
-  virtual ~Position_Criterion_factory ();
+  ~Position_Criterion_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal ();
@@ -378,21 +462,32 @@ class Log_Msg_Criterion_impl : public virtual OBV_Log_Msg_Criterion,
                                public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  Log_Msg_Criterion_impl ();
-  virtual ~Log_Msg_Criterion_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  Log_Msg_Criterion_impl () = default;
+  Log_Msg_Criterion_impl (Log_Msg_Criterion_impl const&) = delete;
+  Log_Msg_Criterion_impl (Log_Msg_Criterion_impl&&) = delete;
+  Log_Msg_Criterion_impl& operator= (Log_Msg_Criterion_impl const&) = delete;
+  Log_Msg_Criterion_impl& operator= (Log_Msg_Criterion_impl&&) = delete;
+  ~Log_Msg_Criterion_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  CORBA::Boolean is_critical (Event* e);
+  CORBA::Boolean is_critical (Event *e) override;
 
-  virtual void do_print ();
+  void do_print () override;
 };
 
 class Log_Msg_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
 
+public:
+  Log_Msg_Criterion_factory () = default;
+  Log_Msg_Criterion_factory (Log_Msg_Criterion_factory const&) = delete;
+  Log_Msg_Criterion_factory (Log_Msg_Criterion_factory&&) = delete;
+  Log_Msg_Criterion_factory& operator= (Log_Msg_Criterion_factory const&) = delete;
+  Log_Msg_Criterion_factory& operator= (Log_Msg_Criterion_factory&&) = delete;
+
 protected:
-  virtual ~Log_Msg_Criterion_factory ();
+  ~Log_Msg_Criterion_factory () override = default;
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal ();
@@ -402,12 +497,17 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
                         public virtual CORBA::DefaultValueRefCountBase
 {
  public:
-  Criterion_List_impl ();
-  virtual ~Criterion_List_impl ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  Criterion_List_impl (Criterion_List_impl const&) = delete;
+  Criterion_List_impl (Criterion_List_impl&&) = delete;
+  Criterion_List_impl& operator= (Criterion_List_impl const&) = delete;
+  Criterion_List_impl& operator= (Criterion_List_impl&&) = delete;
 
-  void store_criterion (Criterion *c);
-  CORBA::Boolean is_critical (Event *e);
+  Criterion_List_impl ();
+  ~Criterion_List_impl () override = default;
+  ::CORBA::ValueBase *_copy_value () override;
+
+  void store_criterion (Criterion *c) override;
+  CORBA::Boolean is_critical (Event *e) override;
 };
 
 // This is just a wrapper and it uses the Event_List_Iterator on
@@ -417,10 +517,14 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
 class Criterion_List_Iterator
 {
  public:
-  Criterion_List_Iterator (Criterion_List *list);
+  Criterion_List_Iterator (Criterion_List_Iterator const&) = delete;
+  Criterion_List_Iterator (Criterion_List_Iterator&&) = delete;
+  Criterion_List_Iterator& operator= (Criterion_List_Iterator const&) = delete;
+  Criterion_List_Iterator& operator= (Criterion_List_Iterator&&) = delete;
+  explicit Criterion_List_Iterator (Criterion_List *list);
   // Construct it to point to the first list link.
 
-  virtual ~Criterion_List_Iterator ();
+  virtual ~Criterion_List_Iterator () = default;
 
   void init (Criterion_List *list);
 

@@ -1,8 +1,7 @@
 #include "Counter_i.h"
 
 Counter_Servant::Counter_Servant (Policy_Tester *policy_tester)
-  : count_ (0),
-    policy_tester_ (policy_tester)
+  : policy_tester_ (policy_tester)
 {
 }
 

@@ -4,7 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 
-
 #if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int
 ACE_TMAIN (int, ACE_TCHAR *argv[])

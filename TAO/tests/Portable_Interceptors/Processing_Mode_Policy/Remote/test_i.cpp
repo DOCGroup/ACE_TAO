@@ -4,7 +4,6 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-  // ctor
 
 void
 Visual_i::normal (CORBA::Long)

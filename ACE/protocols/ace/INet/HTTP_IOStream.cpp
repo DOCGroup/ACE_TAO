@@ -87,18 +87,14 @@ namespace ACE
       {
       }
 
-    OStream::~OStream()
-      {
-      }
+    OStream::~OStream() = default;
 
     IStream::IStream(std::iostream& stream, StreamBuffer::policy_type* policy)
       : IOS (stream, policy), std::istream (&streambuf_)
       {
       }
 
-    IStream::~IStream()
-      {
-      }
+    IStream::~IStream() = default;
 
   }
 }

@@ -7,8 +7,8 @@ test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
-   ,poa_ (PortableServer::POA::_duplicate (poa))
-   ,thr_id_ (thrid)
+  , poa_ (PortableServer::POA::_duplicate (poa))
+  , thr_id_ (thrid)
 {
 }
 
@@ -23,10 +23,10 @@ test_i::get_string ()
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
   // Use portable thread IDs
-  ACE_Thread_ID self_ID;
+  ACE_Thread_ID const self_ID;
   // Thread ID from Server
   ACE_Thread_ID this_ID;
-  this_ID.id(this->thr_id_);
+  this_ID.id (this->thr_id_);
 
   // Servant Thread ID same as Thread ID server, so a remote call,
   // in case of a collocation the servant runs in calling thread (Client)

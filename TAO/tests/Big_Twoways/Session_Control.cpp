@@ -2,11 +2,10 @@
 
 Session_Control::Session_Control (CORBA::ULong session_count)
   : session_count_ (session_count)
-  , success_ (1)
 {
 }
 
-int
+bool
 Session_Control::all_sessions_finished () const
 {
   return this->session_count_ == 0;
@@ -45,8 +44,8 @@ Session_Control::session_finished (CORBA::Boolean success)
                   "ERROR: (%P|%t) Session_Control::session_finished, "
                   "unexpected callback\n"));
     }
-  if (success == 0)
-    this->success_ = 0;
+  if (!success)
+    this->success_ = false;
 
   this->session_count_--;
   ACE_DEBUG ((LM_DEBUG,
@@ -55,9 +54,9 @@ Session_Control::session_finished (CORBA::Boolean success)
               this->session_count_));
   if (session_count_ == 0)
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         this->_default_POA ();
-      PortableServer::ObjectId_var oid =
+      PortableServer::ObjectId_var const oid =
         poa->servant_to_id (this);
       poa->deactivate_object (oid.in ());
     }

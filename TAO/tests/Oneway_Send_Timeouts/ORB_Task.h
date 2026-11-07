@@ -11,18 +11,23 @@ private:
   CORBA::ORB_var orb_;
 
 public:
-  ORB_Task (CORBA::ORB_ptr orb)
+  explicit ORB_Task (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
-    if (CORBA::is_nil (orb_.in ()) == 1)
+    if (CORBA::is_nil (orb_.in ()))
     {
       ACE_ERROR ((LM_ERROR, "ORB_Task> Ctr> Orb is NULL\n"));
     }
   };
 
-  virtual int svc ()
+  ORB_Task (ORB_Task const &) = delete;
+  ORB_Task &operator= (ORB_Task const &) = delete;
+  ORB_Task (ORB_Task &&) = delete;
+  ORB_Task &operator= (ORB_Task &&) = delete;
+
+  int svc () override
   {
-    if (CORBA::is_nil (orb_.in ()) == 0)
+    if (!CORBA::is_nil (orb_.in ()))
     {
       orb_->run ();
     }

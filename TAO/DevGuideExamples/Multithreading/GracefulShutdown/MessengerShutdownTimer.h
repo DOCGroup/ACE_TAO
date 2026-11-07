@@ -10,11 +10,16 @@ class MessengerShutdownTimer : public ACE_Event_Handler
 {
 public:
   // Constructor
-  MessengerShutdownTimer (CORBA::ORB_ptr orb);
+  explicit MessengerShutdownTimer (CORBA::ORB_ptr orb);
 
-  virtual int handle_timeout (
-    const ACE_Time_Value & current_time,
-    const void * act);
+  int handle_timeout (
+    ACE_Time_Value const &current_time,
+    void const *act) override;
+
+  MessengerShutdownTimer (MessengerShutdownTimer const &) = delete;
+  MessengerShutdownTimer (MessengerShutdownTimer &&) = delete;
+  MessengerShutdownTimer &operator= (MessengerShutdownTimer const &) = delete;
+  MessengerShutdownTimer &operator= (MessengerShutdownTimer &&) = delete;
 
 private:
   CORBA::ORB_var orb_;

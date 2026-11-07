@@ -16,10 +16,6 @@ TAO_EC_SupplierAdmin::TAO_EC_SupplierAdmin (TAO_EC_Event_Channel_Base *ec)
     this->event_channel_->supplier_poa ();
 }
 
-TAO_EC_SupplierAdmin::~TAO_EC_SupplierAdmin ()
-{
-}
-
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_EC_SupplierAdmin::obtain_push_consumer ()
 {

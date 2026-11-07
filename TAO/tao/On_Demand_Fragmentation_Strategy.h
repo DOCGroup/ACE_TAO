@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_OutputCDR;
 class TAO_Transport;
 
-
 /**
  * @class TAO_On_Demand_Fragmenation_Strategy
  *
@@ -41,22 +40,24 @@ class TAO_On_Demand_Fragmentation_Strategy : public TAO_GIOP_Fragmentation_Strat
 {
 public:
   /// Constructor.
-  TAO_On_Demand_Fragmentation_Strategy (TAO_Transport * transport,
+  TAO_On_Demand_Fragmentation_Strategy (TAO_Transport *transport,
                                         ACE_CDR::ULong max_message_size);
 
   ~TAO_On_Demand_Fragmentation_Strategy () override;
-  int fragment (TAO_OutputCDR & cdr,
+  int fragment (TAO_OutputCDR &cdr,
                 ACE_CDR::ULong pending_alignment,
                 ACE_CDR::ULong pending_length) override;
 
 private:
   TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
-  void operator= (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  TAO_On_Demand_Fragmentation_Strategy &operator= (
+    TAO_On_Demand_Fragmentation_Strategy const &) = delete;
   TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
-  void operator= (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
+  TAO_On_Demand_Fragmentation_Strategy &operator= (
+    TAO_On_Demand_Fragmentation_Strategy &&) = delete;
 
 private:
-  /// Pointer to the underlying transport object.
+  /// Borrowed pointer to the underlying transport, which must outlive this strategy.
   TAO_Transport * const transport_;
 
   /// Size of GIOP message at which fragmentation will occur.

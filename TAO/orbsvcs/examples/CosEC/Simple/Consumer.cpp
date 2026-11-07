@@ -2,7 +2,7 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://ec.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://ec.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,11 +39,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
 
 int
 Consumer::run (int argc, ACE_TCHAR* argv[])
@@ -101,7 +96,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer::run");
       return 1;
@@ -110,7 +105,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (const CORBA::Any &)
+Consumer::push (CORBA::Any const &)
 {
   this->event_count_ ++;
   if (this->event_count_ % 100 == 0)

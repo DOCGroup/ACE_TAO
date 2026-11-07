@@ -38,9 +38,9 @@ FillQoSParams (ACE_QoS_Params &qos_params,
                ACE_QoS* qos)
 {
   qos_params.callee_data (iov);
-  qos_params.caller_data (0);
+  qos_params.caller_data (nullptr);
   qos_params.socket_qos (qos);
-  qos_params.group_socket_qos (0);
+  qos_params.group_socket_qos (nullptr);
   qos_params.flags (ACE_JL_BOTH);
 
   return 0;
@@ -124,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       // through subscribe.
 
       ACE_QoS_Params qos_params;
-      FillQoSParams (qos_params, 0, &ace_qos_sender);
+      FillQoSParams (qos_params, nullptr, &ace_qos_sender);
 
       // Create a QoS Session Factory.
       ACE_QoS_Session_Factory session_factory;

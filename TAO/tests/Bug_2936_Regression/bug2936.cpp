@@ -24,19 +24,17 @@ ACE_TCHAR const *const scpc_unloadPersistentPoa = ACE_REMOVE_SERVICE_DIRECTIVE (
 void
 loadunloadcycle ()
 {
-  int result = 0;
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")));
 
-  result = ACE_Service_Config::process_directive (scpc_loadOrb);
+  ACE_Service_Config::process_directive (scpc_loadOrb);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done\n")));
 
-  result = ACE_Service_Config::process_directive (scpc_loadPersistentPoa);
+  int const load_poa_result = ACE_Service_Config::process_directive (scpc_loadPersistentPoa);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - loading PersistentPoa done. Result: <%d>\n"),
-              result));
+              load_poa_result));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - unloading\n")));
@@ -45,25 +43,23 @@ loadunloadcycle ()
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - unloading PersistentPoa ...\n")));
-  result = ACE_Service_Config::process_directive (scpc_unloadPersistentPoa);
+  int const unload_poa_result = ACE_Service_Config::process_directive (scpc_unloadPersistentPoa);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - unloading PersistentPoa done. Result: <%d>\n"),
-              result));
+              unload_poa_result));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB ...\n")));
-  result = ACE_Service_Config::process_directive (scpc_unloadOrb);
+  int const unload_orb_result = ACE_Service_Config::process_directive (scpc_unloadOrb);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),
-              result));
+              unload_orb_result));
 }
 
 int
 ACE_TMAIN (int, ACE_TCHAR **argv)
 {
-  int result = 0;
-
-  result = ACE_Service_Config::open (
+  int const result = ACE_Service_Config::open (
       argv[0],
       ACE_DEFAULT_LOGGER_KEY,
       1,  // ignore_static_svcs
@@ -76,7 +72,6 @@ ACE_TMAIN (int, ACE_TCHAR **argv)
                   ACE_TEXT ("(%P|%t) main - ACE_Service_Config::open failed\n")));
       return 1;
     }
-
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) main - entered\n")));
 

@@ -775,10 +775,10 @@ public:
 
   /**
    * @deprecated: use the base class <done> method instead.
-   * Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
-   * node, returns 1 if not.
+   * Returns true if the iterator is not positioned over a valid
+   * ACE_RB_Tree node.
    */
-  int is_done ();
+  bool is_done ();
 };
 
 /**

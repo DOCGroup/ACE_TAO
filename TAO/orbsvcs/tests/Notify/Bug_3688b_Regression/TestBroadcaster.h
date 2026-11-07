@@ -13,25 +13,29 @@ class bug3688_Export TestBroadcaster
   public:
     /// Default constructor.
     TestBroadcaster ();
+    TestBroadcaster (TestBroadcaster const&) = delete;
+    TestBroadcaster (TestBroadcaster&&) = delete;
+    TestBroadcaster& operator= (TestBroadcaster const&) = delete;
+    TestBroadcaster& operator= (TestBroadcaster&&) = delete;
 
     /// Destructor.
     ~TestBroadcaster () noexcept;
 
-    bool connect(
-      CORBA::ORB_ptr p_orb,
-      std::string const & rc_channelIor);
+    bool connect (
+      CORBA::ORB_ptr orb,
+      std::string const& channel_ior);
 
-    bool disconnect();
+    bool disconnect ();
 
-    bool isConnected() const;
+    bool is_connected () const;
 
-    bool sendData();
+    bool send_data ();
 
   // protected types and methods
   protected:
   // private methods and instance variables
   private:
-    CosNotifyChannelAdmin::SequenceProxyPushConsumer_var mv_sequenceProxyPushConsumer;
+    CosNotifyChannelAdmin::SequenceProxyPushConsumer_var sequence_proxy_push_consumer {};
 }; /* end of TestBroadcaster */
 
 

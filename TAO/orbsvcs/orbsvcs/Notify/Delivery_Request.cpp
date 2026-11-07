@@ -26,7 +26,6 @@ namespace TAO_Notify
 Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id)
   : routing_slip_ (routing_slip)
   , request_id_ (request_id)
-  , delivery_type_ (0)
 {
   if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Delivery_Request:: constructor\n")

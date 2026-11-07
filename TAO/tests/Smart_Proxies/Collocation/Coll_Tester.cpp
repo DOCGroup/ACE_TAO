@@ -104,6 +104,14 @@ Collocation_Test::test_narrow ()
   str = left->shape ();
   ACE_DEBUG ((LM_DEBUG, "Calling left->shape: %s\n", str.in ()));
 
+  CORBA::Long inout {2};
+  CORBA::Long out {};
+  CORBA::Long const result = left->combine (3, inout, out);
+  if (result != 5 || inout != 5 || out != 5)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "left->combine returned unexpected values\n"), -1);
+    }
+
   str = right->shape ();
   ACE_DEBUG ((LM_DEBUG, "Calling right->shape: %s\n", str.in ()));
 

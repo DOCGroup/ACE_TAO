@@ -28,9 +28,9 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor ()
   // strategies.
   this->close ();
 
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->accept_strategy_.reset ();
 }
 
 // TODO =
@@ -62,7 +62,7 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       && mprofile.grow (count + 1) == -1)
     return -1;
 
-  TAO_SHMIOP_Profile *pfile = nullptr;
+  TAO_SHMIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->host_.c_str (),
                                       this->address_.get_port_number (),
@@ -100,8 +100,8 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             TAO_MProfile &mprofile,
                                             CORBA::Short priority)
 {
-  TAO_Profile *pfile = nullptr;
-  TAO_SHMIOP_Profile *shmiop_profile = nullptr;
+  TAO_Profile *pfile {};
+  TAO_SHMIOP_Profile *shmiop_profile {};
 
   // First see if <mprofile> already contains a SHMIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -124,7 +124,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       // A SHMIOP_Profile already exists - just add our endpoint to it.
 
-      TAO_SHMIOP_Endpoint *endpoint = nullptr;
+      TAO_SHMIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_SHMIOP_Endpoint (this->host_.c_str (),
                                            this->address_.get_port_number (),
@@ -137,7 +137,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     }
 }
 
-int
+bool
 TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SHMIOP_Endpoint *endp =
@@ -145,10 +145,10 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   if (endp->port () != this->address_.get_port_number ())
-    return 0;
+    return false;
 
   return this->address_.same_host (endp->object_addr ());
 }
@@ -222,24 +222,30 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
-  ACE_NEW_RETURN (this->creation_strategy_,
+  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy {};
+  ACE_NEW_RETURN (creation_strategy,
                   TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy {};
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SHMIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy {};
+  ACE_NEW_RETURN (accept_strategy,
                   TAO_SHMIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   // We only accept connection on localhost.
   if (this->base_acceptor_.open (this->address_,
                                  reactor,
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
+                                 this->creation_strategy_.get (),
+                                 this->accept_strategy_.get (),
+                                 this->concurrency_strategy_.get ()) == -1)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,

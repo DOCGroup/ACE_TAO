@@ -10,7 +10,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const& eps)
+TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (
+  EndpointPolicy::EndpointList const &eps)
 : endpoints_(eps)
 {
 }
@@ -18,27 +19,24 @@ TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (EndpointPolicy::Endp
 int
 TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
                                             TAO_MProfile &mprofile,
-                                            TAO_Acceptor **acceptors_begin,
-                                            TAO_Acceptor **acceptors_end,
+                                            TAO_AcceptorSet const& acceptors,
                                             CORBA::Short priority)
 {
   CORBA::ULong const num_endpoints = endpoints_.length ();
 
-  for (TAO_Acceptor** acceptor = acceptors_begin;
-       acceptor != acceptors_end;
-       ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptors)
     {
       bool tagfound = false;
       for (CORBA::ULong epx = 0; !tagfound && epx < num_endpoints; epx++)
         {
-          tagfound = (*acceptor)->tag () == endpoints_[epx]->protocol_tag();
+          tagfound = acceptor->tag () == endpoints_[epx]->protocol_tag();
         }
       if (!tagfound)
         continue;
 
-      if ((*acceptor)->create_profile (object_key,
-                                       mprofile,
-                                       priority) == -1)
+      if (acceptor->create_profile (object_key,
+                                    mprofile,
+                                    priority) == -1)
         return -1;
     }
 

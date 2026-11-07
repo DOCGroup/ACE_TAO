@@ -63,15 +63,15 @@ public:
 
 protected:
   /// Obtain Proxy.
-  virtual Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr);
+  Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr) override;
 
   /// Obtain Proxy with QoS.
-  virtual Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr
-                                         , CosNotification::QoSProperties& qos);
+  Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr,
+                                 CosNotification::QoSProperties &qos) override;
 
   // = NotifyPublish method
-  virtual void offer_change (const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void offer_change (CosNotification::EventTypeSeq const &added,
+                     CosNotification::EventTypeSeq const &removed) override;
 };
 
 #include "Consumer_T.cpp"

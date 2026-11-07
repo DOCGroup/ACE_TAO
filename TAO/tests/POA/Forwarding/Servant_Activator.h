@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H
 
@@ -31,14 +30,19 @@ public:
   ServantActivator (CORBA::ORB_ptr orb,
                     CORBA::Object_ptr forward_to);
 
-  virtual PortableServer::Servant incarnate (const PortableServer::ObjectId & oid,
-                                             PortableServer::POA_ptr adapter);
+  ServantActivator (ServantActivator const &) = delete;
+  ServantActivator &operator= (ServantActivator const &) = delete;
+  ServantActivator (ServantActivator &&) = delete;
+  ServantActivator &operator= (ServantActivator &&) = delete;
 
-  virtual void etherealize (const PortableServer::ObjectId & oid,
-                            PortableServer::POA_ptr adapter,
-                            PortableServer::Servant serv,
-                            CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+  PortableServer::Servant incarnate (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr adapter) override;
+
+  void etherealize (PortableServer::ObjectId const &oid,
+                    PortableServer::POA_ptr adapter,
+                    PortableServer::Servant serv,
+                    CORBA::Boolean cleanup_in_progress,
+                    CORBA::Boolean remaining_activations) override;
 
   /// Object should be forwarded from now on.
   void forward_requests ();

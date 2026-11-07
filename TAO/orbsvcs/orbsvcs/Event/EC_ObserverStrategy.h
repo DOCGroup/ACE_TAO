@@ -58,7 +58,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_ObserverStrategy
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_ObserverStrategy ();
+  virtual ~TAO_EC_ObserverStrategy () = default;
 
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -94,14 +94,14 @@ public:
   TAO_EC_Null_ObserverStrategy ();
 
   // = The TAO_EC_ObserverStrategy methods.
-  virtual RtecEventChannelAdmin::Observer_Handle
+  RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;
-  virtual void remove_observer (
+  void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle) override;
-  virtual void connected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void connected (TAO_EC_ProxyPushSupplier*) override;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*) override;
+  void connected (TAO_EC_ProxyPushConsumer*) override;
+  void disconnected (TAO_EC_ProxyPushConsumer*) override;
+  void connected (TAO_EC_ProxyPushSupplier*) override;
+  void disconnected (TAO_EC_ProxyPushSupplier*) override;
 };
 
 // ****************************************************************
@@ -130,17 +130,17 @@ public:
                                  ACE_Lock* lock);
 
   /// Destructor
-  virtual ~TAO_EC_Basic_ObserverStrategy () override;
+  ~TAO_EC_Basic_ObserverStrategy () override;
 
   // = The TAO_EC_ObserverStrategy methods.
-  virtual RtecEventChannelAdmin::Observer_Handle
+  RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;
-  virtual void remove_observer (
+  void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle) override;
-  virtual void connected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void connected (TAO_EC_ProxyPushSupplier*) override;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*) override;
+  void connected (TAO_EC_ProxyPushConsumer*) override;
+  void disconnected (TAO_EC_ProxyPushConsumer*) override;
+  void connected (TAO_EC_ProxyPushSupplier*) override;
+  void disconnected (TAO_EC_ProxyPushSupplier*) override;
 
   /**
    * @struct Observer_Entry
@@ -244,16 +244,16 @@ public:
                                     ACE_Lock* lock);
 
   /// Destructor
-  virtual ~TAO_EC_Reactive_ObserverStrategy () override;
+  ~TAO_EC_Reactive_ObserverStrategy () override = default;
 
 protected:
   /// Helpers.
   //@{
   /// Recompute EC consumer subscriptions and send them out to all observers.
-  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier) override;
+  void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier) override;
 
   /// Recompute EC supplier publications and send them out to all observers.
-  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer) override;
+  void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer) override;
 
   /**
    * Copies all current observers into a map and passes it
@@ -274,9 +274,10 @@ class TAO_EC_Accumulate_Supplier_Headers :
 {
 public:
   /// Constructor
-  TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  explicit TAO_EC_Accumulate_Supplier_Headers (
+    TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier) override;
+  void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;
@@ -289,9 +290,10 @@ class TAO_EC_Accumulate_Consumer_Headers :
 {
 public:
   /// Constructor
-  TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  explicit TAO_EC_Accumulate_Consumer_Headers (
+    TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer) override;
+  void work (TAO_EC_ProxyPushConsumer *consumer) override;
 
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;

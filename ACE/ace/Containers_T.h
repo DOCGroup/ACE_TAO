@@ -133,17 +133,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to determine if the stack is at capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -258,17 +258,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to see if stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to see if stack is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -429,17 +429,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to see if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Always resturns 0 since the stack is unbounded.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Auxiliary methods (not strictly part of the Stack ADT).
 
@@ -484,10 +484,10 @@ private:
   void copy_all_nodes (const ACE_Unbounded_Stack<T> &s);
 
   /// Head of the linked list of Nodes.
-  ACE_Node<T> *head_;
+  ACE_Node<T> *head_ {};
 
   /// Current size of the stack.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the stack.
   ACE_Allocator *allocator_;
@@ -849,17 +849,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, 0 otherwise.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the list is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// The list is unbounded, so this always returns 0.
+  /// The list is unbounded, so this always returns false.
   /**
-   * Since the list is unbounded, the method simply returns 0.
+   * Since the list is unbounded, the method simply returns false.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic queue operations.
 
@@ -1088,7 +1088,7 @@ public:
    * @code
         ACE_DLList<Item> list;
         ...   // insert dynamically allocated Items...
-        Item *p = nullptr;
+        Item *p {};
         while ((p = list.delete_head()) != nullptr)
           delete p;
       @endcode
@@ -1399,17 +1399,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if a set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to see if the set is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -1452,17 +1452,17 @@ private:
   struct
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   } search_structure_[ACE_SIZE];
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
-  size_t max_size_;
+  size_t max_size_ {ACE_SIZE};
 };
 
 // Forward declaration.
@@ -1599,19 +1599,19 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * A constant time check is performed to determine if the Bounded_Set is
    * empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to determine if the Bounded_Set is at
    * capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -1656,17 +1656,17 @@ private:
   struct Search_Structure
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   };
 
   /// Holds the contents of the set.
-  Search_Structure *search_structure_;
+  Search_Structure *search_structure_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
   size_t max_size_;
@@ -1801,11 +1801,11 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to determine if the set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /// Size of the set.
   /**

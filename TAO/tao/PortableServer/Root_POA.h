@@ -35,6 +35,8 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
+#include <cstddef>
+
 // Object_Key
 #include "tao/Object_KeyC.h"
 
@@ -48,6 +50,8 @@
 #include "tao/OctetSeqC.h"
 
 #include "ace/SString.h"
+
+#include <string>
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Array_Base.h"
 #include "ace/Synch_Traits.h"
@@ -132,61 +136,61 @@ public:
   PortableServer::POA_ptr create_POA (
       const char *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
-      const CORBA::PolicyList &policies);
+      const CORBA::PolicyList &policies) override;
 
   PortableServer::POA_ptr find_POA (const char *adapter_name,
-                                    CORBA::Boolean activate_it);
+                                    CORBA::Boolean activate_it) override;
 #endif
 
   void destroy (CORBA::Boolean etherealize_objects,
-                CORBA::Boolean wait_for_completion);
+                CORBA::Boolean wait_for_completion) override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::ThreadPolicy_ptr create_thread_policy (
-      PortableServer::ThreadPolicyValue value);
+      PortableServer::ThreadPolicyValue value) override;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (CORBA_E_MICRO)
   PortableServer::LifespanPolicy_ptr create_lifespan_policy (
-      PortableServer::LifespanPolicyValue value);
+      PortableServer::LifespanPolicyValue value) override;
 #endif
 
 #if !defined (CORBA_E_MICRO)
   PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (
-      PortableServer::IdUniquenessPolicyValue value);
+      PortableServer::IdUniquenessPolicyValue value) override;
 #endif
 
 #if !defined (CORBA_E_MICRO)
   PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (
-      PortableServer::IdAssignmentPolicyValue value);
+      PortableServer::IdAssignmentPolicyValue value) override;
 #endif
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::ImplicitActivationPolicy_ptr
   create_implicit_activation_policy (
-      PortableServer::ImplicitActivationPolicyValue value);
+      PortableServer::ImplicitActivationPolicyValue value) override;
 
   PortableServer::ServantRetentionPolicy_ptr
   create_servant_retention_policy (
-      PortableServer::ServantRetentionPolicyValue value);
+      PortableServer::ServantRetentionPolicyValue value) override;
 
   PortableServer::RequestProcessingPolicy_ptr
   create_request_processing_policy (
-      PortableServer::RequestProcessingPolicyValue value);
+      PortableServer::RequestProcessingPolicyValue value) override;
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  char * the_name ();
+  char * the_name () override;
 
-  PortableServer::POA_ptr the_parent ();
+  PortableServer::POA_ptr the_parent () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  PortableServer::POAList *the_children ();
+  PortableServer::POAList *the_children () override;
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  PortableServer::POAManager_ptr the_POAManager ();
+  PortableServer::POAManager_ptr the_POAManager () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  PortableServer::POAManagerFactory_ptr the_POAManagerFactory ();
+  PortableServer::POAManagerFactory_ptr the_POAManagerFactory () override;
 #endif
 
   /// This method returns the adapter_name as a sequence of strings of
@@ -205,49 +209,49 @@ public:
     IOP::ProfileId profile_id);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  PortableServer::AdapterActivator_ptr the_activator ();
+  PortableServer::AdapterActivator_ptr the_activator () override;
 
-  void the_activator (PortableServer::AdapterActivator_ptr adapter_activator);
+  void the_activator (PortableServer::AdapterActivator_ptr adapter_activator) override;
 
-  PortableServer::ServantManager_ptr get_servant_manager ();
+  PortableServer::ServantManager_ptr get_servant_manager () override;
 
-  void set_servant_manager (PortableServer::ServantManager_ptr imgr);
+  void set_servant_manager (PortableServer::ServantManager_ptr imgr) override;
 
-  PortableServer::Servant get_servant ();
+  PortableServer::Servant get_servant () override;
 
-  void set_servant (PortableServer::Servant servant);
+  void set_servant (PortableServer::Servant servant) override;
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant);
+  PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant) override;
 
   void activate_object_with_id (const PortableServer::ObjectId &id,
-                                PortableServer::Servant p_servant);
+                                PortableServer::Servant p_servant) override;
 
-  void deactivate_object (const PortableServer::ObjectId &oid);
+  void deactivate_object (const PortableServer::ObjectId &oid) override;
 
-  CORBA::Object_ptr create_reference (const char *intf);
+  CORBA::Object_ptr create_reference (const char *intf) override;
 
 #if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id (
       const PortableServer::ObjectId &oid,
-      const char *intf);
+      const char *intf) override;
 #endif
 
-  PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant);
+  PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant) override;
 
   PortableServer::ObjectId *servant_to_user_id (PortableServer::Servant p_servant);
 
-  CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant);
+  CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant) override;
 
-  PortableServer::Servant reference_to_servant (CORBA::Object_ptr reference);
+  PortableServer::Servant reference_to_servant (CORBA::Object_ptr reference) override;
 
-  PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference);
+  PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference) override;
 
-  PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid);
+  PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid) override;
 
-  CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid);
+  CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid) override;
 
-  CORBA::OctetSeq *id ();
+  CORBA::OctetSeq *id () override;
 
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies ();
@@ -275,7 +279,7 @@ public:
 
   static CORBA::ULong name_separator_length ();
 
-  static constexpr size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
+  static constexpr std::size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
@@ -436,7 +440,7 @@ public:
 
   TAO_SYNCH_CONDITION &servant_deactivation_condition ();
 
-  int is_poa_generated_id (const PortableServer::ObjectId &id);
+  bool is_poa_generated_id (const PortableServer::ObjectId &id);
 
   /// Check the state of this POA
   void check_state ();
@@ -445,7 +449,7 @@ public:
 
   PortableServer::Servant user_id_to_servant_i (const PortableServer::ObjectId &oid);
 
-  virtual CORBA::ORB_ptr _get_orb ();
+  CORBA::ORB_ptr _get_orb () override;
 
   /// These hooks are needed by the CSD strategy to override
   /// and no-ops by default.
@@ -804,7 +808,7 @@ public:
    * objectreferencefactory_adapter_factory_name() will be called to set
    * the value to "Concrete_ObjectReferenceTemplate_Adapter_Factory".
    */
-  ACE_CString ort_adapter_factory_name_;
+  std::string ort_adapter_factory_name_;
 
   /**
    * Name of the service object for functions that make calls on
@@ -812,7 +816,7 @@ public:
    * If TAO_IMR_CLient is linked, imr_client_adapter_name() will be
    * called to set the value to "Concrete_ImR_Client_Adapter".
    */
-  ACE_CString imr_client_adapter_name_;
+  std::string imr_client_adapter_name_;
 private:
   /// Constructor.
   TAO_POA_Static_Resources ();

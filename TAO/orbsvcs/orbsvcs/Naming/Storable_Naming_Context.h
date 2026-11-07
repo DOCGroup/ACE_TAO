@@ -16,6 +16,7 @@
 #include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
 #include <memory>
+#include <string>
 
 #include "orbsvcs/Naming/Storable.h"
 
@@ -40,17 +41,17 @@ public:
   TAO_Storable_IntId ();
 
   /// Constructor.
-  TAO_Storable_IntId (/* in */ const char * ior,
+  TAO_Storable_IntId (/* in */ char const *ior,
                         CosNaming::BindingType type /* = CosNaming::nobject */);
 
   /// Copy constructor.
-  TAO_Storable_IntId (const TAO_Storable_IntId & rhs);
+  TAO_Storable_IntId (TAO_Storable_IntId const &rhs);
 
   /// Destructor.
   ~TAO_Storable_IntId ();
 
   /// Assignment operator.
-  void operator= (const TAO_Storable_IntId & rhs);
+  void operator= (TAO_Storable_IntId const &rhs);
 
   // = Data members.
 
@@ -68,11 +69,11 @@ public:
   TAO_Storable_ExtId ();
 
   /// Constructor.
-  TAO_Storable_ExtId (/* in */ const char *id,
-                        /* in */ const char *kind);
+  TAO_Storable_ExtId (/* in */ char const *id,
+                      /* in */ char const *kind);
 
   /// Copy constructor.
-  TAO_Storable_ExtId (const TAO_Storable_ExtId & rhs);
+  TAO_Storable_ExtId (TAO_Storable_ExtId const &rhs);
 
   /// Destructor.
   ~TAO_Storable_ExtId ();
@@ -80,13 +81,13 @@ public:
   // = Assignment and comparison methods.
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_Storable_ExtId & rhs);
+  void operator= (TAO_Storable_ExtId const &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
-  bool operator== (const TAO_Storable_ExtId &rhs) const;
+  bool operator== (TAO_Storable_ExtId const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TAO_Storable_ExtId &rhs) const;
+  bool operator!= (TAO_Storable_ExtId const &rhs) const;
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
@@ -105,8 +106,8 @@ public:
   // Accessors.
   // follow the mapping rules!
 
-  const char * id ();
-  const char * kind ();
+  char const *id ();
+  char const *kind ();
 };
 
 
@@ -152,8 +153,8 @@ public:
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with <id> and <kind>.
    */
-  int bind (const char *id,
-                    const char *kind,
+  int bind (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr obj,
                     CosNaming::BindingType type) override;
 
@@ -163,8 +164,8 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  int rebind (const char *id,
-                      const char *kind,
+  int rebind (char const *id,
+                      char const *kind,
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type) override;
 
@@ -172,7 +173,7 @@ public:
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  int unbind (const char * id, const char * kind) override;
+  int unbind (char const *id, char const *kind) override;
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -181,15 +182,15 @@ public:
    * reference is assigned to <obj>, so the caller is responsible for
    * its deallocation.
    */
-  int find (const char * id,
-                    const char * kind,
+  int find (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) override;
 
 private:
   /// Helper: factors common code from <bind> and <rebind>.
-  int shared_bind (const char *id,
-                   const char *kind,
+  int shared_bind (char const *id,
+                   char const *kind,
                    CORBA::Object_ptr obj,
                    CosNaming::BindingType type,
                    int rebind);
@@ -222,7 +223,7 @@ public:
   /// Constructor.
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
+                               char const *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *factory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
@@ -241,7 +242,7 @@ public:
   static CosNaming::NamingContext_ptr make_new_context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *context_id,
+                               char const *context_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *pers_factory,
                                TAO_Storable_Naming_Context **new_context);
@@ -251,7 +252,7 @@ public:
   static CosNaming::NamingContext_ptr recreate_all (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char *context_id,
+                              char const *context_id,
                               size_t context_size,
                               int reentering,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
@@ -277,7 +278,7 @@ public:
              CosNaming::BindingIterator_out &bi) override;
 
 
-  void rebind (const CosNaming::Name& n,
+  void rebind (CosNaming::Name const &n,
                CORBA::Object_ptr obj) override;
 
   /**
@@ -289,7 +290,7 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  void bind (const CosNaming::Name &n,
+  void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
 
 
@@ -298,7 +299,7 @@ public:
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  void bind_context (const CosNaming::Name &n,
+  void bind_context (CosNaming::Name const &n,
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
@@ -306,7 +307,7 @@ public:
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  void rebind_context (const CosNaming::Name &n,
+  void rebind_context (CosNaming::Name const &n,
                        CosNaming::NamingContext_ptr nc) override;
 
   /**
@@ -316,14 +317,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
+  CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  void unbind (const CosNaming::Name &n) override;
+  void unbind (CosNaming::Name const &n) override;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -332,7 +333,7 @@ public:
    * bound (the name argument excluding the last component).
    */
   CosNaming::NamingContext_ptr bind_new_context (
-                                const CosNaming::Name &n) override;
+                                CosNaming::Name const &n) override;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -355,7 +356,7 @@ protected:
    * A helper function to validate the name argument and return a final context
    * if the supplied name is nested
    */
-  bool nested_context (const CosNaming::Name &n,
+  bool nested_context (CosNaming::Name const &n,
                        CosNaming::NamingContext_out nc);
 
   /**
@@ -393,7 +394,7 @@ protected:
 
   /// The name of the context used as its object id when registered
   /// with the POA.
-  ACE_CString context_name_;
+  std::string context_name_;
 
   /// The POA that this context was registered with.
   PortableServer::POA_var poa_;
@@ -403,7 +404,7 @@ protected:
   TAO::Storable_Factory *factory_;
 
   /// The directory in which to store the files
-  ACE_CString persistence_directory_;
+  std::string persistence_directory_;
 
   /// Save the hash table initial size
   size_t hash_table_size_;
@@ -415,7 +416,7 @@ protected:
   /// Flag to tell us whether we are redundant or not
   static int redundant_;
 
-  static const char * root_name_;
+  static char const *root_name_;
 
   /// The pointer to the global file used to allocate new contexts
   static std::unique_ptr<TAO::Storable_Base> gfl_;
@@ -440,24 +441,24 @@ protected:
   /// Check if the guarded object is current with the last
   /// update which could have been performed independently of
   /// the owner of this object.
-  virtual bool object_obsolete ();
+  bool object_obsolete () override;
 
   /// Mark the object as current with respect to the
   /// file to which it was persisted.
-  virtual void mark_object_current ();
+  void mark_object_current () override;
 
   /// Mark the time at which the object was modified and
-  virtual void set_object_last_changed (const time_t & time);
+  void set_object_last_changed (time_t const &time) override;
 
   /// Get the time which the object was last written to the
   /// file.
-  virtual time_t get_object_last_changed ();
+  time_t get_object_last_changed () override;
 
-  virtual int load_from_stream ();
+  int load_from_stream () override;
 
-  virtual bool is_loaded_from_stream ();
+  bool is_loaded_from_stream () override;
 
-  virtual TAO::Storable_Base * create_stream (const char * mode);
+  TAO::Storable_Base * create_stream (char const *mode) override;
 
 private:
   /// Default constructor
@@ -474,7 +475,7 @@ private:
   void Write(TAO::Storable_Base& wrtr);
 
   /// Is set by the Write operation.  Used to determine
-  int write_occurred_;
+  bool write_occurred_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

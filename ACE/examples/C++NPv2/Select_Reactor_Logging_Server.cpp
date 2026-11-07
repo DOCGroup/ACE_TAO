@@ -25,17 +25,17 @@ class Quit_Handler : public ACE_Event_Handler {
 public:
   Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
-  virtual int handle_exception (ACE_HANDLE) {
+  int handle_exception (ACE_HANDLE) override {
     reactor ()->end_reactor_event_loop ();
     return -1; // Trigger call to handle_close() method.
   }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   { delete this; return 0; }
 
 protected:
   // Protected destructor ensures dynamic allocation.
-  virtual ~Quit_Handler () = default;
+  ~Quit_Handler () override = default;
 };
 
 
@@ -52,7 +52,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
   Quit_Handler *quit_handler = nullptr;
-  ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
+  ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), ACE_THR_FUNC_RETURN_NULL);
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {

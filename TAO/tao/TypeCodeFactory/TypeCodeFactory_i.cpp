@@ -32,6 +32,10 @@
 #include "ace/Value_Ptr.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i () = default;
@@ -41,8 +45,8 @@ namespace TCF
   namespace Struct
   {
     using field_array_type =
-      ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                  CORBA::TypeCode_var> >;
+      std::vector<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                               CORBA::TypeCode_var> >;
 
     using typecode_type = TAO::TypeCode::Struct<CORBA::String_var,
                                                 CORBA::TypeCode_var,
@@ -59,7 +63,7 @@ namespace TCF
     // Use an ACE::Value_Ptr to provide exception safety and proper
     // copying semantics.
     using elem_type = ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic>;
-    using case_array_type = ACE_Array_Base<elem_type>;
+    using case_array_type = std::vector<elem_type>;
 
     using typecode_type = TAO::TypeCode::Union<CORBA::String_var,
                                                CORBA::TypeCode_var,
@@ -74,8 +78,8 @@ namespace TCF
   namespace Value
   {
     using field_array_type =
-      ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                 CORBA::TypeCode_var> >;
+      std::vector<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                              CORBA::TypeCode_var> >;
 
     using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
                                                CORBA::TypeCode_var,
@@ -142,7 +146,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     }
 
   CORBA::ULong const len = members.length ();
-  CORBA::ULong dups = 0;
+  CORBA::ULong dups {};
   CORBA::ULong raw_default_index = ACE_UINT32_MAX;
   CORBA::Long default_index = -1;
   CORBA::Octet value = ACE_OCTET_MAX;
@@ -160,13 +164,13 @@ TAO_TypeCodeFactory_i::create_union_tc (
       CORBA::UnionMember const & member = members[i];
       char const * const member_name = member.name;
 
-      int trybind_status = 0;
+      int trybind_status {};
 
       if (i > 0)
         {
           // Is this a duplicate case label? If so, we have to adjust
           // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (member_name, members[i - 1].name) == 0)
+          if (std::strcmp (member_name, members[i - 1].name) == 0)
             {
               CORBA::Boolean const equiv =
                 member.type.in ()->equivalent (members[i - 1].type.in ());
@@ -191,7 +195,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               // Only if we do not have a duplicate case label do we
               // check for a duplicate member name.
               ACE_CString ext_id (member_name);
-              int int_id = 0;
+              int int_id {};
 
               trybind_status = map.trybind (ext_id, int_id);
             }
@@ -199,7 +203,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       else
         {
           ACE_CString ext_id (member_name);
-          int int_id = 0;
+          int int_id {};
 
           trybind_status = map.trybind (ext_id, int_id);
         }
@@ -269,9 +273,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
   CORBA::TCKind const kind =
     discriminator_type->kind ();
 
-  CORBA::ULong ci = 0;  // Case array index.
+  CORBA::ULong ci {};  // Case array index.
 
-  bool is_recursive = false;
+  bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
@@ -282,8 +286,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, skip it - a member
           // goes into the TypeCode only once.
-          if (ACE_OS::strcmp (member.name,
-                              members[index - 1].name) == 0)
+          if (std::strcmp (member.name,
+                           members[index - 1].name) == 0)
             {
               continue;
             }
@@ -304,7 +308,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       elem_type & element = cases[ci];
-      TAO::TypeCode::Case_Dynamic *the_case = nullptr;
+      TAO::TypeCode::Case_Dynamic *the_case {};
 
       if (index == raw_default_index)
         {
@@ -608,12 +612,12 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
-  ACE_Array_Base<CORBA::String_var> enumerators (len);
+  std::vector<CORBA::String_var> enumerators (len);
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
       ACE_CString ext_id (members[index]);
-      int int_id = 0;
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -626,7 +630,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   using typecode_type = TAO::TypeCode::Enum<
     CORBA::String_var,
-    ACE_Array_Base<CORBA::String_var>,
+    std::vector<CORBA::String_var>,
     TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,
@@ -854,19 +858,13 @@ TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::ULongLong ulonglong_val;
     CORBA::ULong enum_val;
     // TODO - handle (u)longlong types
-  } dv, u;
+  } dv {}, u {};
 
-  dv.char_val = 0;
-  dv.bool_val = 0;
   dv.short_val = ACE_INT16_MIN;
-  dv.ushort_val = 0;
   dv.long_val = ACE_INT32_MIN;
-  dv.ulong_val = 0;
-  dv.ulonglong_val = 0;
-  dv.enum_val = 0;
 
   CORBA::ULong const len = members.length ();
-  bool success = false;
+  bool success {};
 
   // A collision forces us to start over, because the label
   // values need not be in sorted order.
@@ -1188,7 +1186,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   field_array_type fields (len);
 
-  bool is_recursive = false;
+  bool is_recursive {};
 
   CORBA::TypeCode_var recursive_tc;
 
@@ -1215,7 +1213,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
         }
 
       ACE_CString ext_id (member_name);
-      int int_id = 0;
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -1342,7 +1340,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
-  bool is_recursive = false;
+  bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
@@ -1368,7 +1366,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
         }
 
       ACE_CString ext_id (member_name);
-      int int_id = 0;
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -1735,7 +1733,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     char const * member_tc_id =
                       member_tc->id ();
 
-                    if (ACE_OS::strcmp (id, member_tc_id) == 0)
+                    if (std::strcmp (id, member_tc_id) == 0)
                       {
                         TAO::TypeCode::Indirected_Type * const rtc =
                           dynamic_cast<
@@ -1778,7 +1776,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     char const * member_tc_id = member_tc->id ();
 
                     if (working_id != nullptr
-                        && ACE_OS::strcmp (working_id, member_tc_id) == 0)
+                        && std::strcmp (working_id, member_tc_id) == 0)
                       {
                         // We've found a recursion at a lower level but
                         // not the one we're looking for, so we must end
@@ -1819,7 +1817,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         CORBA::TCKind const content_tc_kind =
           content_tc->kind ();
 
-        char const *content_tc_id = nullptr;
+        char const *content_tc_id {};
 
         if (content_tc_kind == CORBA::tk_struct
             || content_tc_kind == CORBA::tk_union
@@ -1830,7 +1828,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
         if (working_id != nullptr
             && content_tc_id != nullptr
-            && ACE_OS::strcmp (working_id, content_tc_id) == 0)
+            && std::strcmp (working_id, content_tc_id) == 0)
           {
             // We've found a recursion at a lower level but
             // not the one we're looking for, so we must
@@ -1840,7 +1838,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
        if (content_tc_kind == CORBA::TAO_TC_KIND_COUNT)
           {
-            if (ACE_OS::strcmp (id, content_tc_id) == 0)
+            if (std::strcmp (id, content_tc_id) == 0)
               {
                 TAO::TypeCode::Indirected_Type * const rtc =
                   dynamic_cast<TAO::TypeCode::Indirected_Type *>

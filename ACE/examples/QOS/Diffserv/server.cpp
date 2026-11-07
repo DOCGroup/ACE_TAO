@@ -13,24 +13,27 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
-// Port used to receive for dgrams.
-static u_short port1;
+#include <memory>
 
 class Dgram_Endpoint : public ACE_Event_Handler
 {
 public:
-  Dgram_Endpoint (const ACE_INET_Addr &local_addr);
+  explicit Dgram_Endpoint (ACE_INET_Addr const &local_addr);
+  Dgram_Endpoint (Dgram_Endpoint const &) = delete;
+  Dgram_Endpoint (Dgram_Endpoint &&) = delete;
+  Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
+  Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_timeout (const ACE_Time_Value & tv,
-                              const void *arg = 0);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int send (const char *buf, size_t len, const ACE_INET_Addr &);
+  int send (char const *buf, size_t len, ACE_INET_Addr const &);
   // Send the <buf> to the peer.
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -40,14 +43,14 @@ private:
 };
 
 int
-Dgram_Endpoint::send (const char *buf,
+Dgram_Endpoint::send (char const *buf,
                       size_t len,
-                      const ACE_INET_Addr &addr)
+                      ACE_INET_Addr const &addr)
 {
   return this->endpoint_.send (buf, len, addr);
 }
 
-Dgram_Endpoint::Dgram_Endpoint (const ACE_INET_Addr &local_addr)
+Dgram_Endpoint::Dgram_Endpoint (ACE_INET_Addr const &local_addr)
   : endpoint_ (local_addr)
 {
 }
@@ -69,10 +72,10 @@ Dgram_Endpoint::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Dgram_Endpoint::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  char buf[BUFSIZ + 1];
   ACE_INET_Addr from_addr;
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf, from_addr);
+  ssize_t n = this->endpoint_.recv (buf, sizeof buf - 1, from_addr);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -80,7 +83,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
                 "handle_input"));
   else
     {
-      buf[n] = 0;
+      buf[n] = '\0';
       ACE_DEBUG ((LM_DEBUG,
                   "Received buf of size %d = %s\n",
                   n,
@@ -90,8 +93,8 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
 }
 
 int
-Dgram_Endpoint::handle_timeout (const ACE_Time_Value &,
-                                const void *)
+Dgram_Endpoint::handle_timeout (ACE_Time_Value const &,
+                                void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) timed out for endpoint\n"));
@@ -103,37 +106,41 @@ run_test (u_short localport)
 {
   ACE_INET_Addr local_addr (localport);
 
-  Dgram_Endpoint *endpoint;
+  Dgram_Endpoint *raw_endpoint;
 
-  ACE_NEW_RETURN (endpoint,
+  ACE_NEW_RETURN (raw_endpoint,
                   Dgram_Endpoint (local_addr),
                   -1);
+  std::unique_ptr<Dgram_Endpoint> endpoint (raw_endpoint);
 
-  ACE_DEBUG((LM_DEBUG, "Starting server on port %d\n",port1));
+  ACE_DEBUG ((LM_DEBUG, "Starting server on port %d\n", localport));
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (endpoint,
+      (endpoint.get (),
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
                       -1);
+  endpoint.release ();
 
   int ret;
-  while(1){
-    ACE_Time_Value tv(10, 0);
-    ret = ACE_Reactor::instance ()->handle_events (&tv);
-    /* Error occurred while handling event */
-    if (ret < 0)
-      {
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "(%P|%t) %p\n",
-                           "handle_events"),
-                          -1);
-      }
-    /* We have timed out without handling an event, break out of loop */
-    if(ret == 0) break;
-  }
+  while (true)
+    {
+      ACE_Time_Value tv (10, 0);
+      ret = ACE_Reactor::instance ()->handle_events (&tv);
+      /* Error occurred while handling event */
+      if (ret < 0)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) %p\n",
+                             "handle_events"),
+                            -1);
+        }
+      /* We have timed out without handling an event, break out of loop */
+      if (ret == 0)
+        break;
+    }
 
   return 0;
 }
@@ -142,16 +149,18 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Establish call backs and socket names.
-  port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
+  u_short const port = argc > 1 ? ACE_OS::atoi (argv[1])
+                                : ACE_DEFAULT_SERVER_PORT;
 
-  if(argc < 3)
+  if (argc < 3)
     {
-      run_test (port1);
+      run_test (port);
     }
-  else{
-    ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [port number]\n", argv[0]));
-    return -1;
-  }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nUsage:\n  %s [port number]\n", argv[0]));
+      return -1;
+    }
 
   return 0;
 }

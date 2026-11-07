@@ -57,10 +57,15 @@ class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERF
 {
 public:
   /// Constructor
-  TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
+  explicit TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
   /// destructor
-  ~TAO_ESF_Peer_Admin () override;
+  ~TAO_ESF_Peer_Admin () override = default;
+
+  TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin const &) = delete;
+  TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin &&) = delete;
+  TAO_ESF_Peer_Admin &operator= (TAO_ESF_Peer_Admin const &) = delete;
+  TAO_ESF_Peer_Admin &operator= (TAO_ESF_Peer_Admin &&) = delete;
 
   /**
    * A <peer> has connected, this is invoked when the peer's client

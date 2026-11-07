@@ -59,9 +59,14 @@ public:
                             int sched_policy,
                             int sched_scope);
 
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching &&) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
+  void activate () override;
+  void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
@@ -82,7 +87,7 @@ private:
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
 
-  int lanes_setup_;
+  bool lanes_setup_ {};
   int disp_sched_policy_;
   int disp_sched_scope_;
 };
@@ -93,14 +98,14 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Disp
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
+  explicit TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Shutdown_Command () override;
+  ~TAO_EC_Kokyu_Shutdown_Command () override = default;
 };
 
 // ****************************************************************
@@ -115,11 +120,11 @@ public:
                              ACE_Allocator* allocator);
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Push_Command () override;
+  ~TAO_EC_Kokyu_Push_Command () override;
 
 private:
   /// The proxy

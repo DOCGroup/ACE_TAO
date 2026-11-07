@@ -115,7 +115,7 @@ TAO_Linear_Network_Priority_Mapping::to_network (
                 "TAO_Linear_Network_Priority_Mapping::to_network = %x\n",
                 network_priority));
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -127,7 +127,7 @@ TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority network_
                 "TAO_Linear_Network_Priority_Mapping::to_CORBA network_priority %d\n",
                 network_priority));
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

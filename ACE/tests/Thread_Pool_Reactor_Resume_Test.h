@@ -35,12 +35,12 @@ public:
   /// Dtor..
   ~Request_Handler ();
 
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
 
 protected:
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
-  virtual int resume_handler ();
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0) override;
+  int resume_handler () override;
 
 private:
   size_t  nr_msgs_rcvd_;

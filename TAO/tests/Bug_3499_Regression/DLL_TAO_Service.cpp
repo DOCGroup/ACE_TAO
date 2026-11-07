@@ -27,7 +27,7 @@ int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) %T - %M - resolving the RootPOA\n")));
 
-    CORBA::Object_var obj =
+    CORBA::Object_var const obj =
       this->orb_->resolve_initial_references ("RootPOA");
     this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
   }

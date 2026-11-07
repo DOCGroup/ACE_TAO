@@ -31,13 +31,14 @@
   =====================================================================*/
 
 #include "asnmp/address.h"
+#include <charconv>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
+#include <cstdio>
 
 //=================================================================
 //======== Abstract Address Class Implementation ==================
@@ -60,16 +61,14 @@ int Address::valid() const
 // destructive trim white space
 void Address::trim_white_space( char * ptr)
 {
-  char *tmp;
+  char *source = ptr;
+  while (*source == ' ')
+    ++source;
 
-  tmp = ptr;
-  // skip leading white space
-  while (*tmp==' ')tmp++;
-  ACE_OS::strcpy(ptr,tmp);
-
-  // find end of string
-  while ((*tmp!=' ') && (*tmp !=0)) tmp++;
-  if (*tmp!=0) *tmp=0;
+  char *destination = ptr;
+  while (*source != ' ' && *source != '\0')
+    *destination++ = *source++;
+  *destination = '\0';
 }
 
 //TM: this is not used nor needed, remove?
@@ -299,22 +298,22 @@ IpAddress::~IpAddress()
 }
 
 // assumes member data is word aligned to avoid sigbus
-int IpAddress::is_loopback() const
+bool IpAddress::is_loopback() const
 {
  if (valid()) {
    u_long *pl = (u_long *)&address_buffer;
-   return (*pl == INADDR_LOOPBACK);
+   return ACE_NTOHL (*pl) == INADDR_LOOPBACK;
  }
-  return 0;
+  return false;
 }
 
-int IpAddress::is_multicast() const
+bool IpAddress::is_multicast() const
 {
  if (valid()) {
    u_long *pl = (u_long *)&address_buffer;
-   return (IN_MULTICAST(*pl));
+   return IN_MULTICAST (ACE_NTOHL (*pl));
  }
-  return 0;
+  return false;
 }
 
 // Private addressess not are not assignable in the Internet, they are
@@ -325,18 +324,18 @@ int IpAddress::is_multicast() const
 // but don't expect SNMP based networks to handle cross-NAT address spaces.
 // assumes storage in network byte order  mrm@cisco.com 7/28/97
 
-int IpAddress::is_private() const
+bool IpAddress::is_private() const
 {
  if (valid()) {
    if (address_buffer[0] == 10)
-     return 1;
+     return true;
    if (address_buffer[0] == 172 && address_buffer[1] == 16)
-     return 1;
+     return true;
    if (address_buffer[0] == 192 && address_buffer[1] == 168  &&
       address_buffer[2] == 0)
-     return 1;
+     return true;
  }
-  return 0;
+  return false;
 }
 
 
@@ -347,13 +346,13 @@ void IpAddress::to_octet(OctetStr& octet) const
 }
 
 
-int IpAddress::is_broadcast() const
+bool IpAddress::is_broadcast() const
 {
  if (valid()) {
    u_long *pl = (u_long *)&address_buffer;
-   return ( (*pl) & INADDR_BROADCAST);
+   return ACE_NTOHL (*pl) == INADDR_BROADCAST;
  }
-  return 0;
+  return false;
 }
 
 //-----[ IP Address general = operator ]-------------------------------
@@ -422,12 +421,7 @@ const char *IpAddress::resolve_hostname(int &status)
 // parse a dotted string
 int IpAddress::parse_dotted_ipstring( const char *inaddr)
 {
-  char *ip_token;
-  int token_count=0;
-  unsigned int value;
-  int error_status = 0;
   char temp[MAXHOSTNAMELEN +1];  // temp buffer for destruction
-  int z,w;
 
   // check len, an ip can never be bigger than 15
   // 123456789012345
@@ -439,49 +433,34 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
   if ( ACE_OS::strlen( temp) > 15)
     return 0;
 
-  // must only have three dots
-  // strtok will not catch this !
-  char *ptr = temp;
-  int dot_count = 0;
-  while ( *ptr != 0) {
-    if ( *ptr == '.') dot_count++;
-    ptr++;
-  }
-  if ( dot_count != 3)
-    return 0;
+  char const *token = temp;
+  for (std::size_t index = 0; index < IPV4LEN; ++index)
+    {
+      char const *token_end = token;
+      while (*token_end != '.' && *token_end != '\0')
+        ++token_end;
 
-  // look for dot token separator
-  ip_token = ACE_OS::strtok( (char *) temp,".");
-
-  // while more tokens..
-  while ( ip_token != 0) {
-    // verify that the token is all numerics
-    w = ACE_OS::strlen( ip_token);
-    if (w>3)
-      return 0;
-    for (z=0;z<w;z++)
-      if (( ip_token[z] < '0') || ( ip_token[z] > '9'))
+      if (token_end == token || token_end - token > 3)
         return 0;
 
-    value = ( unsigned int) ACE_OS::strtod(ip_token,0);
-    if (( value > 0)&& ( value <=255))
-      address_buffer[token_count] = (unsigned char) value;
-    else
-      if (ACE_OS::strcmp(ip_token,"0")==0)
-        address_buffer[token_count]= (unsigned char) 0;
+      unsigned int value {};
+      std::from_chars_result const result = std::from_chars (token, token_end, value);
+      if (result.ec != std::errc {} || result.ptr != token_end || value > 255)
+        return 0;
+
+      address_buffer[index] = static_cast<unsigned char> (value);
+      if (index + 1 == IPV4LEN)
+        {
+          if (*token_end != '\0')
+            return 0;
+        }
       else
-        error_status = 1;
-    token_count++;
-    ip_token = ACE_OS::strtok( 0, ".");
-  }
-
-  // gota be four in len
-  if ( token_count != 4)
-    return 0;
-
-  // any parsing errors?
-  if ( error_status)
-    return 0;
+        {
+          if (*token_end != '.')
+            return 0;
+          token = token_end + 1;
+        }
+    }
 
   return 1;
 }
@@ -619,8 +598,11 @@ void IpAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d.%d.%d",address_buffer[0],
-             address_buffer[1], address_buffer[2], address_buffer[3]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u.%u",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]),
+                   static_cast<unsigned int> (address_buffer[3]));
   else
     output_buffer[0] = 0;
 }
@@ -650,67 +632,71 @@ void IpAddress::mask( const IpAddress& ipaddr)
 //========== DNS Iterator Implementation ================================
 //=======================================================================
 
-
-Address_Iter::Address_Iter (const char *hostname)
-  : valid_(0),
-    count_(0),
-    entry_(0)
+Address_Iter::Address_Iter (char const *hostname)
 {
   ACE_OS::memset (&buffer_, 0, sizeof (ACE_HOSTENT_DATA));
   ACE_OS::memset (&lookupResult_, 0, sizeof (struct hostent));
 
-  if (ACE_OS::inet_addr (hostname) == (unsigned long) -1)
+  in_addr numeric_address {};
+  if (ACE_OS::inet_aton (hostname, &numeric_address) == 0)
     {
-      valid_ = query_dns (hostname);
+      valid_ = query_dns (hostname) == 0 && lookupResult_.h_addr_list != nullptr;
     }
   else
     {
       ACE_ASSERT (0);             // don't support dot-quad lookup yet
     }
 
-  // count number of hostnames
-  int n;
-  char **pc;
-
-  for (n = 0, pc = lookupResult_.h_addr_list; *pc != 0; ++n, ++pc)
+  if (valid_)
     {
-      // Do nothing.
+      for (char **pc = lookupResult_.h_addr_list; *pc != nullptr; ++pc)
+        {
+          ++count_;
+        }
     }
-
-  count_ = n;          // plus first one
-  entry_ = lookupResult_.h_addr_list;
 }
 
 int Address_Iter::valid() const
 {
-  return (valid_ == 1);
+  return valid_ ? 1 : 0;
 }
 
-int Address_Iter::how_many_addresses()
+int Address_Iter::how_many_addresses() const
 {
   return count_;
 }
 
-// return next entry, rc = 0, if entry is null return 0
-int Address_Iter::next(IpAddress& addr)
+// Return 0 when another address follows; return 1 after the last address or when exhausted.
+int Address_Iter::next (IpAddress &addr)
 {
-  if (!entry_ || *entry_ == 0)
+  if (!valid_ || this->entry_index_ >= this->count_)
     return 1;
 
-  IpAddress tmp(*entry_++); // return data
-  addr = tmp;
-  if (*entry_ == 0)
+  in_addr binary_address {};
+  ACE_OS::memcpy (&binary_address.s_addr,
+                  this->lookupResult_.h_addr_list[this->entry_index_],
+                  sizeof binary_address.s_addr);
+
+  char address_string[MAX_DISPLAY_SZ] {};
+  if (ACE_OS::inet_ntop (AF_INET, &binary_address, address_string, sizeof address_string) == nullptr)
     return 1;
-  return 0;
+
+  IpAddress resolved_address (address_string);
+  if (!resolved_address.valid())
+    return 1;
+
+  addr = resolved_address;
+  ++this->entry_index_;
+  return this->entry_index_ == this->count_ ? 1 : 0;
 }
 
 //  query DNS here
-int Address_Iter::query_dns(const char *hostname)
+int Address_Iter::query_dns (char const *hostname)
 {
   int loc_errno = 0;
   if (ACE_OS::gethostbyname_r( hostname, &lookupResult_, buffer_,
                                 &loc_errno)) {
-    if (lookupResult_.h_length == (int) sizeof(IPV4LEN) &&
+    if (lookupResult_.h_length == static_cast<int> (sizeof (in_addr)) &&
         lookupResult_.h_addrtype == AF_INET) {
       return 0;
     }
@@ -957,9 +943,12 @@ void UdpAddress::format_output()
 
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%s:%d",
-                    IpAddress::to_string(),
-                    get_port() );
+    {
+      char ip_address[16] {};
+      std::snprintf (ip_address, sizeof ip_address, "%s", IpAddress::to_string ());
+      std::snprintf (output_buffer, sizeof output_buffer, "%s:%u", ip_address,
+                     static_cast<unsigned int> (get_port ()));
+    }
   else
     output_buffer[0] = 0;
 }
@@ -1448,13 +1437,18 @@ const char * IpxAddress::to_string()
 void IpxAddress::format_output()
 {
   if ( valid_flag)
-    ACE_OS::sprintf((char *) output_buffer,
-            "%02x%02x%02x%02x%c%02x%02x%02x%02x%02x%02x",
-            address_buffer[0],address_buffer[1],
-            address_buffer[2],address_buffer[3],'-',
-            address_buffer[4],address_buffer[5],
-            address_buffer[6],address_buffer[7],
-            address_buffer[8],address_buffer[9]);
+    std::snprintf (output_buffer, sizeof output_buffer,
+                   "%02x%02x%02x%02x-%02x%02x%02x%02x%02x%02x",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]),
+                   static_cast<unsigned int> (address_buffer[3]),
+                   static_cast<unsigned int> (address_buffer[4]),
+                   static_cast<unsigned int> (address_buffer[5]),
+                   static_cast<unsigned int> (address_buffer[6]),
+                   static_cast<unsigned int> (address_buffer[7]),
+                   static_cast<unsigned int> (address_buffer[8]),
+                   static_cast<unsigned int> (address_buffer[9]));
   else
     output_buffer[0] = 0;
 }
@@ -1466,10 +1460,13 @@ int IpxAddress::get_hostid( MacAddress& mac)
    if ( valid_flag)
    {
        char buffer[18];
-       ACE_OS::sprintf( buffer,"%02x:%02x:%02x:%02x:%02x:%02x",
-                address_buffer[4],
-                address_buffer[5], address_buffer[6], address_buffer[7],
-                address_buffer[8], address_buffer[9]);
+       std::snprintf (buffer, sizeof buffer, "%02x:%02x:%02x:%02x:%02x:%02x",
+                      static_cast<unsigned int> (address_buffer[4]),
+                      static_cast<unsigned int> (address_buffer[5]),
+                      static_cast<unsigned int> (address_buffer[6]),
+                      static_cast<unsigned int> (address_buffer[7]),
+                      static_cast<unsigned int> (address_buffer[8]),
+                      static_cast<unsigned int> (address_buffer[9]));
        MacAddress temp( buffer);
        // mac = (SnmpSyntax&) temp;
        mac = temp;
@@ -1670,8 +1667,12 @@ void IpxSockAddress::format_output()
   IpxAddress::format_output(); // allow ancestors to format their buffers
 
   if ( valid_flag)
-    ACE_OS::sprintf((char *) output_buffer,"%s/%d",
-            IpxAddress::to_string(), get_socket());
+    {
+      char ipx_address[22] {};
+      std::snprintf (ipx_address, sizeof ipx_address, "%s", IpxAddress::to_string ());
+      std::snprintf (output_buffer, sizeof output_buffer, "%s/%u", ipx_address,
+                     static_cast<unsigned int> (get_socket ()));
+    }
   else
     output_buffer[0] = 0;
 }
@@ -1954,9 +1955,13 @@ const char * MacAddress::to_string()
 void MacAddress::format_output()
 {
   if ( valid_flag)
-    ACE_OS::sprintf(output_buffer,"%02x:%02x:%02x:%02x:%02x:%02x",address_buffer[0],
-                    address_buffer[1],address_buffer[2],address_buffer[3],
-                    address_buffer[4],address_buffer[5]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%02x:%02x:%02x:%02x:%02x:%02x",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]),
+                   static_cast<unsigned int> (address_buffer[3]),
+                   static_cast<unsigned int> (address_buffer[4]),
+                   static_cast<unsigned int> (address_buffer[5]));
   else
     output_buffer[0] = 0;
 }
@@ -2523,8 +2528,9 @@ void DecNetAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d",address_buffer[0],
-             address_buffer[1]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]));
   else
     output_buffer[0] = 0;
 }
@@ -2659,8 +2665,10 @@ void AppleTalkAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d.%d", address_buffer[0],
-             address_buffer[1], address_buffer[3]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]));
   else
     output_buffer[0] = 0;
 }

@@ -87,7 +87,7 @@ void Config_Backing_Store::loadActivators ()
 
           const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
 
-          Activator_Info* ai = nullptr;
+          Activator_Info* ai {};
           ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
 
           Activator_Info_Ptr info (ai);
@@ -107,7 +107,7 @@ Config_Backing_Store::loadServers ()
     {
       int index = 0;
       ACE_TString name;
-      Server_Info *si = nullptr;
+      Server_Info *si {};
       u_int tmp_int = 0;
       ACE_CString tmp;
 
@@ -154,7 +154,7 @@ Config_Backing_Store::loadServers ()
               if (tmp.length () > 0 &&
                   this->servers ().find (tmp, si->alt_info_) != 0)
                 {
-                  Server_Info *base_si = nullptr;
+                  Server_Info *base_si {};
                   ACE_NEW (base_si, Server_Info);
                   base_si->key_name_ = tmp;
                   si->alt_info_.reset (base_si);

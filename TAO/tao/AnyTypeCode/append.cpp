@@ -272,7 +272,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   // just need to be able to access such preloaded libraries here as
   // we unmarshal objrefs.
 
-  CORBA::ULong profiles = 0;
+  CORBA::ULong profiles {};
 
   // get the count of profiles that follow. This will tell us the
   // length of the sequence
@@ -283,7 +283,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   // No profiles means a NIL objref.
   while (profiles-- != 0 && continue_append)
     {
-      CORBA::ULong tag = 0;
+      CORBA::ULong tag {};
 
       // get the profile ID tag
       if ((continue_append = (CORBA::Boolean) (src->read_ulong (tag)
@@ -291,7 +291,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                                                : 0))  == 0)
         continue;
 
-      CORBA::ULong length = 0;
+      CORBA::ULong length {};
       if ((continue_append = (CORBA::Boolean) (src->read_ulong (length)
                               ? dest->write_ulong (length)
                               : 0)) == 0)
@@ -299,7 +299,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
       // @@ This can be optimized! Pre-allocating on the destination
       //    and then copying directly into that.
-      CORBA::Octet *body = nullptr;
+      CORBA::Octet *body {};
       ACE_NEW_RETURN (body,
                       CORBA::Octet[length],
                       TAO::TRAVERSE_STOP);
@@ -331,7 +331,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
   for (CORBA::ULong i = 0;
@@ -443,10 +443,10 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       return TAO::TRAVERSE_STOP;
     }
 
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
-  const CORBA::ULong null_member = ~static_cast<CORBA::ULong> (0U);
+  CORBA::ULong const null_member = ~static_cast<CORBA::ULong> (0U);
 
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
@@ -1061,7 +1061,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   continue_append = dest->append_string (*src);
 
   // Number of fields in the struct.
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
   for (CORBA::ULong i = 0;
@@ -1194,7 +1194,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
       if (retval == TAO::TRAVERSE_CONTINUE)
         {
           // Number of fields in the struct.
-          const CORBA::ULong member_count =
+          CORBA::ULong const member_count =
             tc->member_count ();
 
           for (CORBA::ULong i = 0;

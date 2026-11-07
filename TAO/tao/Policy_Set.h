@@ -41,17 +41,17 @@ public:
    * scope is used to determinate whether or not a given policy can
    * be set for the given Policy Manager Implementation.
    */
-  TAO_Policy_Set (TAO_Policy_Scope scope);
+  explicit TAO_Policy_Set (TAO_Policy_Scope scope);
 
   /// Copy constructor.
-  TAO_Policy_Set (const TAO_Policy_Set &rhs);
+  TAO_Policy_Set (TAO_Policy_Set const &rhs);
 
   /// Destructor
   ~TAO_Policy_Set ();
 
   /// Copy the state from @a source, it uses the copy() operator to
   /// obtain independent copies of all the policies.
-  void copy_from (TAO_Policy_Set* source);
+  void copy_from (TAO_Policy_Set const *source);
 
   /**
    * Modify the list of policies to include @a policies.
@@ -60,13 +60,13 @@ public:
    * policies in @a policies.
    * No attempt is made to validate the policies for consistency.
    */
-  void set_policy_overrides (const CORBA::PolicyList & policies,
+  void set_policy_overrides (CORBA::PolicyList const &policies,
                              CORBA::SetOverrideType set_add);
 
   /// Get the values (if any) for the policies in @a types, if @a
   /// types is an empty list the method returns *all* the current
   /// policies.
-  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types);
+  CORBA::PolicyList *get_policy_overrides (CORBA::PolicyTypeSeq const &types);
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
@@ -86,7 +86,7 @@ public:
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   /// Utility method to set a single policy.
-  void set_policy (const CORBA::Policy_ptr policy);
+  void set_policy (CORBA::Policy_ptr const policy);
 
   /// Returns the policy at the specified index.
   /// @c CORBA::Policy::_nil () is returned if the policy doesn't
@@ -95,7 +95,9 @@ public:
   CORBA::ULong num_policies () const;
 
 private:
-  TAO_Policy_Set & operator= (const TAO_Policy_Set&);
+  TAO_Policy_Set &operator= (TAO_Policy_Set const &) = delete;
+  TAO_Policy_Set (TAO_Policy_Set &&) = delete;
+  TAO_Policy_Set &operator= (TAO_Policy_Set &&) = delete;
 
   /// Remove and destroy all the policy objects owned by this policy
   /// manager.
@@ -109,7 +111,7 @@ private:
   CORBA::PolicyList policy_list_;
 
   /// List of caches.
-  CORBA::Policy *cached_policies_[TAO_CACHED_POLICY_MAX_CACHED];
+  CORBA::Policy *cached_policies_[TAO_CACHED_POLICY_MAX_CACHED] {};
 
   /// Scope associated to the Policy Manager Impl
   TAO_Policy_Scope scope_;

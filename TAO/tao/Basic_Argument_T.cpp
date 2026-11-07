@@ -3,6 +3,8 @@
 
 #include "tao/Basic_Argument_T.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -45,11 +47,12 @@ template<typename S,
 TAO::Argument*
 TAO::In_Basic_Clonable_Argument_T<S,Insert_Policy>::clone ()
 {
-  S* clone_x = new S (this->x_);
-  In_Basic_Clonable_Argument_T<S,Insert_Policy>* clone_arg =
-          new In_Basic_Clonable_Argument_T<S,Insert_Policy> (*clone_x);
+  std::unique_ptr<S> clone_x = std::make_unique<S> (this->x_);
+  std::unique_ptr<In_Basic_Clonable_Argument_T<S,Insert_Policy>> clone_arg =
+    std::make_unique<In_Basic_Clonable_Argument_T<S,Insert_Policy>> (*clone_x);
   clone_arg->is_clone_ = true;
-  return clone_arg;
+  clone_x.release ();
+  return clone_arg.release ();
 }
 
 // ===========================================================

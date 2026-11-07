@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Time_Value.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
@@ -52,7 +53,7 @@ public:
    */
   TAO_Asynch_Queued_Message (ACE_Message_Block const *contents,
                              TAO_ORB_Core *oc,
-                             ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
 
@@ -93,7 +94,7 @@ protected:
    *
    * @param alloc Allocator used for creating <this> object.
    */
-  TAO_Asynch_Queued_Message (char *buf,
+  TAO_Asynch_Queued_Message (std::unique_ptr<char[]> buffer,
                              TAO_ORB_Core *oc,
                              size_t size,
                              const ACE_Time_Value &abs_timeout,
@@ -118,7 +119,7 @@ private:
   size_t offset_;
 
   /// The buffer containing the complete message.
-  char *buffer_;
+  std::unique_ptr<char[]> buffer_;
 
   // Expiration time
   ACE_Time_Value abs_timeout_;

@@ -207,8 +207,8 @@ public:
       PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// TAO specific method
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-      PortableGroup::ObjectGroupId group_id);
+  PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+      PortableGroup::ObjectGroupId group_id) override;
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
@@ -410,7 +410,7 @@ private:
   TAO_SYNCH_MUTEX validate_lock_;
   TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
 
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Short timeout for non_exist call. defaults to 1 second
   TimeBase::TimeT ping_timeout_;

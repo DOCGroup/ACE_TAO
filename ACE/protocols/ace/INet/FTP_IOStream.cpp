@@ -21,9 +21,7 @@ namespace ACE
       {
       }
 
-    StreamBuffer::~StreamBuffer ()
-      {
-      }
+    StreamBuffer::~StreamBuffer () = default;
 
     std::iostream* StreamBuffer::set_stream (std::iostream * stream)
       {
@@ -35,21 +33,21 @@ namespace ACE
 
     int StreamBuffer::read_from_stream (char* buffer, std::streamsize length)
       {
-        if (this->stream_ == 0) return -1;
+        if (this->stream_ == nullptr) return -1;
         this->stream_->read (buffer, length);
         return ACE_Utils::truncate_cast<int> (this->stream_->gcount ());
       }
 
     int StreamBuffer::write_to_stream (const char* buffer, std::streamsize length)
       {
-        if (this->stream_ == 0) return -1;
+        if (this->stream_ == nullptr) return -1;
         this->stream_->write (buffer, length);
         return this->stream_->good () ? ACE_Utils::truncate_cast<int> (length) : -1;
       }
 
     int StreamBuffer::sync ()
       {
-        if (this->stream_ == 0) return -1;
+        if (this->stream_ == nullptr) return -1;
         if (ACE::IOS::BufferedStreamBuffer::sync () == -1)
           return -1;
         return this->stream_->sync ();
@@ -84,18 +82,14 @@ namespace ACE
       {
       }
 
-    OStream::~OStream()
-      {
-      }
+    OStream::~OStream() = default;
 
     IStream::IStream(std::iostream * stream)
       : IOS (stream), std::istream (&streambuf_)
       {
       }
 
-    IStream::~IStream()
-      {
-      }
+    IStream::~IStream() = default;
 
   }
 }

@@ -50,7 +50,7 @@ TAO_LB_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr info)
 {
   int argc = 0;
-  ACE_TCHAR **argv = nullptr;
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
                                         this->orb_id_.in ());

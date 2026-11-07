@@ -3,53 +3,38 @@
 #include "ace/High_Res_Timer.h"
 #include "tao/debug.h"
 
-#include "Task_Stats.h"
-
-Periodic_Task::Periodic_Task ()
-  :barrier_ (0),
-   task_priority_ (0),
-   period_ (0),
-   exec_time_ (0),
-   phase_ (0),
-   iter_ (0),
-   load_ (0),
-   task_stats_ (0)
-{
-}
-
-Periodic_Task::~Periodic_Task ()
-{
-  delete task_stats_;
-}
+#include <memory>
+#include <new>
+#include <utility>
 
 int
 Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg = nullptr;
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))) != nullptr)
         {
           name_ = ACE_TEXT_ALWAYS_CHAR(current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))) != nullptr)
         {
           task_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"))) != nullptr)
         {
           period_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"))) != nullptr)
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"))) != nullptr)
         {
           phase_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -60,12 +45,17 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           arg_shifter.consume_arg ();
 
           // create the stat object.
-          ACE_NEW_RETURN (task_stats_, Task_Stats (iter_), -1);
-
-          if (task_stats_->init () == -1)
+          std::unique_ptr<Task_Stats> task_stats (
+            new (std::nothrow) Task_Stats (iter_));
+          if (!task_stats)
             return -1;
+
+          if (task_stats->init () == -1)
+            return -1;
+
+          task_stats_ = std::move (task_stats);
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))) != nullptr)
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -85,8 +75,8 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
   return 0;
 }
 
-const char*
-Periodic_Task::job ()
+char const *
+Periodic_Task::job () const
 {
   return name_.c_str ();
 }
@@ -98,7 +88,7 @@ Periodic_Task::job (Job_ptr job)
 }
 
 void
-Periodic_Task::dump_stats (ACE_TCHAR* msg)
+Periodic_Task::dump_stats (ACE_TCHAR const *msg)
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::sprintf (buf, ACE_TEXT("%s%s"), name_.c_str (), ACE_TEXT(".dat"));

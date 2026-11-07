@@ -13,7 +13,7 @@ Handle_L_Stream::~Handle_L_Stream ()
 ACE_INLINE
 Handle_L_Stream::Handle_L_Stream ()
 {
-  if (Handle_L_Stream::login_name == 0) {
+  if (Handle_L_Stream::login_name == nullptr) {
 #if !defined(ACE_LACKS_CUSERID)
     Handle_L_Stream::login_name = ACE_OS::cuserid (Handle_L_Stream::login);
 #else
@@ -48,7 +48,7 @@ Handle_L_Stream::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local ACE_Stream\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);

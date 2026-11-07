@@ -60,7 +60,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
   // every <interval> seconds.
   if (ACE_Reactor::instance ()->schedule_timer
       (this,
-       0,
+       nullptr,
        ACE_Time_Value (1),
        ACE_Time_Value (interval)) == -1)
     return -1;

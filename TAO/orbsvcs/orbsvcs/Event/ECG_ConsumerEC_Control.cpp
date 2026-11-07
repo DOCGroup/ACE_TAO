@@ -7,10 +7,6 @@ TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control ()
 {
 }
 
-TAO_ECG_ConsumerEC_Control::~TAO_ECG_ConsumerEC_Control ()
-{
-}
-
 int
 TAO_ECG_ConsumerEC_Control::activate ()
 {

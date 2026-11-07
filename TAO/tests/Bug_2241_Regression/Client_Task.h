@@ -27,6 +27,7 @@ public:
   int svc () override;
 
 private:
+  // Borrowed from main; the task finishes before the caller's argument storage expires.
   ACE_TCHAR const *input_;
 
   CORBA::ORB_var corb_;

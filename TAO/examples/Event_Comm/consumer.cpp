@@ -13,7 +13,12 @@ public:
   Consumer () = default;
   // Constructor.
 
-  ~Consumer () = default;
+  ~Consumer () override = default;
+
+  Consumer (Consumer const &) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer &&) = delete;
   // Destructor.
 
   int initialize (int argc, ACE_TCHAR *argv[]);
@@ -23,12 +28,12 @@ public:
   // Execute the consumer;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void close ();
+  void close () override;
   // Shutdown the consumer.
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
   // Signal handler method.
 
   Consumer_Input_Handler ih_;
@@ -48,7 +53,7 @@ Consumer::handle_signal (int signum,
               signum));
 
   // Indicate that the consumer initiated the shutdown.
-  this->ih_.consumer_initiated_shutdown (1);
+  this->ih_.consumer_initiated_shutdown (true);
 
   this->close ();
 
@@ -97,7 +102,7 @@ Consumer::initialize (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the supplier and consumer object references.
   Consumer consumer;

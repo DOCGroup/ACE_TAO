@@ -21,7 +21,7 @@ public:
   /**
    * @param client The client
    */
-  explicit Implicit_Deactivator (PortableServer::Servant servant = 0);
+  explicit Implicit_Deactivator (PortableServer::Servant servant = nullptr);
   Implicit_Deactivator (Implicit_Deactivator& rhs);
   Implicit_Deactivator& operator= (Implicit_Deactivator& rhs);
 

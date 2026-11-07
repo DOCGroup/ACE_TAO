@@ -26,6 +26,7 @@
 // Local Object
 #include "tao/LocalObject.h"
 #include "tao/PI_ForwardC.h"
+
 #include "ace/Unbounded_Set.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -86,6 +87,10 @@ public:
 #endif
 
   ~TAO_POA_Manager ();
+  TAO_POA_Manager (TAO_POA_Manager const &) = delete;
+  TAO_POA_Manager &operator= (TAO_POA_Manager const &) = delete;
+  TAO_POA_Manager (TAO_POA_Manager &&) = delete;
+  TAO_POA_Manager &operator= (TAO_POA_Manager &&) = delete;
 
   /// Check the state of this POA manager
   void check_state ();

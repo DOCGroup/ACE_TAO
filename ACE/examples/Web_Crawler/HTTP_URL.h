@@ -36,21 +36,21 @@ public:
    * print out more meaningful messages.
    */
   HTTP_URL (const ACE_URL_Addr &url_addr,
-            HTTP_URL *containing_page = 0);
+            HTTP_URL *containing_page = nullptr);
 
   /**
    * Accept the visitor, which will then perform a particular
    * visitation strategy on the URL.  This method is part of the
    * Visitor pattern.
    */
-  virtual int accept (URL_Visitor *visitor);
+  int accept (URL_Visitor *visitor) override;
 
   /// Send a <GET> command to fetch the contents in the URI from the
   /// server.
-  virtual ssize_t send_request ();
+  ssize_t send_request () override;
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr () const;
+  const ACE_URL_Addr &url_addr () const override;
 
   /// Commit suicide
   int destroy ();

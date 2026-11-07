@@ -54,16 +54,21 @@ public:
   char object_key_delimiter () const override;
 
   /// Return the char string prefix.
-  static const char *prefix ();
+  static char const *prefix ();
 
   /// Profile constructor, default. Used when the profile contents
   /// are not yet known or when it is being decoded from an IOR.
-  TAO_UIPMC_Profile (TAO_ORB_Core *orb_core);
+  explicit TAO_UIPMC_Profile (TAO_ORB_Core *orb_core);
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
-  TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
+  TAO_UIPMC_Profile (ACE_INET_Addr const &addr,
                      TAO_ORB_Core *orb_core);
+
+  TAO_UIPMC_Profile (TAO_UIPMC_Profile const &) = delete;
+  TAO_UIPMC_Profile (TAO_UIPMC_Profile &&) = delete;
+  TAO_UIPMC_Profile &operator= (TAO_UIPMC_Profile const &) = delete;
+  TAO_UIPMC_Profile &operator= (TAO_UIPMC_Profile &&) = delete;
 
   /// Destructor is to be called only through _decr_refcnt.
   ~TAO_UIPMC_Profile () override = default;
@@ -74,7 +79,7 @@ public:
   /// in UIPMC there is no object key marshalled and we do not implement
   /// a useable decode_endpoints
   int decode (TAO_InputCDR &cdr) override;
-  void parse_string (const char *string) override;
+  void parse_string (char const *string) override;
   char * to_string () const override;
   int encode_endpoints () override;
   virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
@@ -87,22 +92,22 @@ public:
     TAO_Target_Specification::TAO_Target_Address r);
   int supports_multicast () const override;
   void addressing_mode (CORBA::Short addr_mode) override;
-  static int extract_group_component (const IOP::TaggedProfile &profile,
+  static int extract_group_component (IOP::TaggedProfile const &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);
 
   /// Add the mandatory group component to this profile.
   void set_group_info (GIOP::Version const &component_version,
-                       const char *domain_id,
+                       char const *domain_id,
                        PortableGroup::ObjectGroupId group_id,
                        bool has_ref_version,
                        PortableGroup::ObjectGroupRefVersion ref_version);
 protected:
   /// Template methods, please see documentation in tao/Profile.h
-  int decode_profile (TAO_InputCDR& cdr) override;
+  int decode_profile (TAO_InputCDR &cdr) override;
   int decode_endpoints () override;
-  void parse_string_i (const char *) override;
+  void parse_string_i (char const *) override;
   void create_profile_body (TAO_OutputCDR &cdr) const override;
-  CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
+  CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
   virtual void update_cached_group_component ();
 
 protected:
@@ -134,13 +139,13 @@ private:
   ACE_CString group_domain_id_;
 
   /// Our group ID within the group domain.
-  PortableGroup::ObjectGroupId group_id_;
+  PortableGroup::ObjectGroupId group_id_ {};
 
   /// The group reference's version.
-  PortableGroup::ObjectGroupRefVersion ref_version_;
+  PortableGroup::ObjectGroupRefVersion ref_version_ {};
 
   /// A sign whether ref_version is really present
-  bool has_ref_version_;
+  bool has_ref_version_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

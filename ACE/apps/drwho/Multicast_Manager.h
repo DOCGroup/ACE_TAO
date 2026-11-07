@@ -21,7 +21,7 @@ class Host_Elem
 public:
   const char *host_name;
   in_addr host_addr;
-  int checked_off;
+  bool checked_off;
   Host_Elem *next;
 
   Host_Elem (const char *h_name, Host_Elem *n);

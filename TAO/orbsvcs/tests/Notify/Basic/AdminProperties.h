@@ -18,6 +18,8 @@
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
 
+#include <atomic>
+
 class AdminProperties;
 /***************************************************************************/
 
@@ -25,15 +27,15 @@ class AdminProperties_StructuredPushConsumer : public TAO_Notify_Tests_Structure
 {
   friend class AdminProperties;
 public:
-  AdminProperties_StructuredPushConsumer (AdminProperties* client);
+  explicit AdminProperties_StructuredPushConsumer (AdminProperties *client);
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (const CosNotification::StructuredEvent & notification);
+  void push_structured_event (CosNotification::StructuredEvent const &notification) override;
 
 protected:
   AdminProperties* client_;
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> events_received_;
+  std::atomic<CORBA::Long> events_received_ {0};
 };
 
 
@@ -53,10 +55,10 @@ public:
   /// Init this object.
   void init (TAO_Notify_Tests_StructuredPushSupplier *supplier, AdminProperties* client);
 
-  virtual int init (int argc, ACE_TCHAR *argv []);
+  int init (int argc, ACE_TCHAR *argv []) override;
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Supplier
@@ -86,9 +88,9 @@ class AdminProperties : public Notify_Test_Client
 
 public:
   AdminProperties ();
-  ~AdminProperties ();
+  ~AdminProperties () override;
 
-  int parse_args (int argc, ACE_TCHAR *argv[]) ;
+  int parse_args (int argc, ACE_TCHAR *argv[]) override;
 
   // Initialization.
 

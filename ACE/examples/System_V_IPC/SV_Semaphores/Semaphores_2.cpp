@@ -16,8 +16,8 @@
 // ACE_DEFAULT_SEM_KEY).
 static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> my_alloc;
 
-const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
-const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
+static constexpr int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
+static constexpr int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
 
 static int
 parent (char *shm)
@@ -51,7 +51,7 @@ parent (char *shm)
 }
 
 static int
-child (char *shm)
+child (const char *shm)
 {
   // Both semaphores are initially created with a count of 0, i.e.,
   // they are "locked."
@@ -68,7 +68,7 @@ child (char *shm)
     else
       ACE_ERROR_RETURN ((LM_ERROR, "child mutex.tryacquire"), 1);
 
-  for (char *s = (char *) shm; *s != '\0'; s++)
+  for (const char *s = shm; *s != '\0'; s++)
     ACE_DEBUG ((LM_DEBUG, "%c", *s));
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -81,7 +81,7 @@ child (char *shm)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  char *shm = (char *) my_alloc.malloc (27);
+  char *shm = static_cast<char *> (my_alloc.malloc (27));
 
   switch (ACE_OS::fork ())
     {

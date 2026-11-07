@@ -4,6 +4,7 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
+#include <new>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Parser_Registry.inl"
@@ -13,10 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Parser_Registry::TAO_Parser_Registry () = default;
 
-TAO_Parser_Registry::~TAO_Parser_Registry ()
-{
-  delete [] this->parsers_;
-}
+TAO_Parser_Registry::~TAO_Parser_Registry () = default;
 
 int
 TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
@@ -36,44 +34,48 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
       return -1;
     }
 
-  this->size_ = number_of_names;
-  ACE_NEW_RETURN (this->parsers_,
-                  TAO_IOR_Parser*[this->size_],
-                  -1);
-
-  for (size_t i = 0, index = 0; i != this->size_; ++i)
+  int const parser_count = number_of_names;
+  this->parsers_.clear ();
+  try
     {
-      this->parsers_[index] =
-        ACE_Dynamic_Service<TAO_IOR_Parser>::instance (orb_core->configuration (),
-                                                       names [i]);
+      this->parsers_.reserve (static_cast<size_t> (parser_count));
+    }
+  catch (std::bad_alloc const&)
+    {
+      return -1;
+    }
 
-      if (this->parsers_[index] == nullptr)
+  for (int i = 0; i != parser_count; ++i)
+    {
+      TAO_IOR_Parser * const parser =
+        ACE_Dynamic_Service<TAO_IOR_Parser>::instance (
+          orb_core->configuration (), names[i]);
+
+      if (parser == nullptr)
         {
-          --number_of_names;
           if (TAO_debug_level >= 1)
             {
               TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) Failed to find Service Object"
-                          " for %C.\n", names[i]));
+                            " for %C.\n", names[i]));
             }
         }
       else
         {
-          ++index;
+          this->parsers_.push_back (parser);
         }
     }
 
-  this->size_ = number_of_names;
   return 0;
 }
 
 TAO_IOR_Parser *
 TAO_Parser_Registry::match_parser (const char *ior_string)
 {
-  for (Parser_Iterator i = this->begin (); i != this->end (); ++i)
+  for (TAO_IOR_Parser * const parser : this->parsers_)
     {
-      if ((*i)->match_prefix (ior_string))
+      if (parser->match_prefix (ior_string))
         {
-          return *i;
+          return parser;
         }
     }
 

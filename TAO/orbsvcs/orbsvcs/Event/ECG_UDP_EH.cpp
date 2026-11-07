@@ -16,12 +16,8 @@ TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH ()
-{
-}
-
 int
-TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
+TAO_ECG_UDP_EH::open (ACE_INET_Addr const &ipaddr,
                       int reuse_addr)
 {
   // Check that we haven't been closed already.

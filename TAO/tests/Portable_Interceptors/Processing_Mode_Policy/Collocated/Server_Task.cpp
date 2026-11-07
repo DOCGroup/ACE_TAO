@@ -3,23 +3,26 @@
 #include "interceptors.h"
 
 #include "ace/Manual_Event.h"
+#include "ace/OS_NS_stdio.h"
 
-Server_Task::Server_Task (const ACE_TCHAR *output,
+#include <memory>
+
+Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , output_ (output)
-    , me_ (me)
-    , sorb_ (CORBA::ORB::_duplicate (sorb))
+  , output_ (output)
+  , me_ (me)
+  , sorb_ (CORBA::ORB::_duplicate (sorb))
 {
 }
 
 int
 Server_Task::svc ()
 {
- try
-   {
+  try
+    {
       CORBA::Object_var poa_object =
         sorb_->resolve_initial_references ("RootPOA");
 
@@ -36,7 +39,7 @@ Server_Task::svc ()
 
       poa_manager->activate ();
 
-      Visual_i * server_impl = 0;
+      Visual_i *server_impl {};
       ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
 
       PortableServer::ObjectId_var id =
@@ -54,16 +57,16 @@ Server_Task::svc ()
       ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (output_ != 0)
+      if (!this->output_.empty ())
         {
-          FILE *output_file= ACE_OS::fopen (this->output_, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (this->output_.c_str (), "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
-                               this->output_),
+                               this->output_.c_str ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Signal the main thread before we call orb->run ();
@@ -74,12 +77,12 @@ Server_Task::svc ()
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (true, true);
-   }
- catch (const CORBA::Exception& ex)
-   {
-     ex._tao_print_exception ("Exception caught in server task:");
-     return 1;
-   }
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception caught in server task:");
+      return 1;
+    }
 
- return 0;
+  return 0;
 }

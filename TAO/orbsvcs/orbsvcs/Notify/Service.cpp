@@ -3,20 +3,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Service::~TAO_Notify_Service ()
-{
-}
+TAO_Notify_Service::~TAO_Notify_Service () = default;
 
 TAO_Notify_Service*
 TAO_Notify_Service::load_default ()
 {
-  static const char* services[] = { TAO_MC_NOTIFICATION_SERVICE_NAME,
-                                    TAO_NOTIFICATION_SERVICE_NAME,
-                                    TAO_COS_NOTIFICATION_SERVICE_NAME,
-                                    nullptr
-                                  };
+  static constexpr const char* services[] = { TAO_MC_NOTIFICATION_SERVICE_NAME,
+                                              TAO_NOTIFICATION_SERVICE_NAME,
+                                              TAO_COS_NOTIFICATION_SERVICE_NAME,
+                                              nullptr
+                                            };
 
-  TAO_Notify_Service* notify_service = nullptr;
+  TAO_Notify_Service* notify_service {};
   for(size_t i = 0; services[i] != nullptr; i++)
     {
       notify_service =

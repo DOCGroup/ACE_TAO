@@ -2,32 +2,27 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Log_Msg.h"
 #include "HTTPU/parse_url.h"
+#include <cstdlib>
+#include <cstring>
 
 HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
-  : url_ (0),
-    scheme_ (0),
-    user_ (0),
-    passwd_ (0),
-    host_ (0),
+  : url_ (nullptr),
+    scheme_ (nullptr),
+    user_ (nullptr),
+    passwd_ (nullptr),
+    host_ (nullptr),
     port_ (-1),
-    url_path_ (0),
+    url_path_ (nullptr),
     error_ (URL_ERROR_NONE),
-    is_cgi_ (0)
+    is_cgi_ (false)
 {
   this->init (url);
 }
 
 HTTP_Parse_URL::~HTTP_Parse_URL ()
 {
-  if (this->url_)
+  if (this->url_ != nullptr)
     ACE_OS::free (this->url_);
-  this->url_ = 0;
-  this->scheme_ = 0;
-  this->user_ = 0;
-  this->passwd_ = 0;
-  this->host_ = 0;
-  this->port_ = -1;
-  this->url_path_ = 0;
 }
 
 
@@ -36,20 +31,20 @@ HTTP_Parse_URL::init( const char *url )
 {
    // Should really reset completely and cleanly here before
    // doing anything else!
-   if ( url == 0 )
+   if (url == nullptr)
       return;
 
-   if ( url_ )
+   if (url_ != nullptr)
       ACE_OS::free( url_ );
 
    url_ = ACE_OS::strdup( url );
-   if ( url_ == 0 )
+   if (url_ == nullptr)
    {
       error_ = URL_ERROR_STRDUP;
       return;
    }
 
-  if (ACE_OS::strlen (this->url_) > 3 && ACE_OS::strstr ("://", this->url_))
+  if (std::strlen (this->url_) > 3 && std::strstr (this->url_, "://"))
     {
       // Parse it out completely.  Figure out what it is later.
       parse_url();
@@ -68,8 +63,8 @@ HTTP_Parse_URL::parse_url ()
   char *p = this->url_;
 
   char *q;
-  if ((q = ACE_OS::strchr (this->url_, '\r'))
-      || (q = ACE_OS::strchr (this->url_, '\n')))
+  if ((q = std::strchr (this->url_, '\r'))
+      || (q = std::strchr (this->url_, '\n')))
     *q = '\0';
 
   this->parse_scheme (p);
@@ -134,9 +129,9 @@ HTTP_Parse_URL::parse_host (char *&p)
       return;
     }
 
-  char *at = 0;
-  char *colon1 = 0;
-  char *colon2 = 0;
+  char *at = nullptr;
+  char *colon1 = nullptr;
+  char *colon2 = nullptr;
   char *q = p;
   while (*q != '\0')
     {
@@ -148,45 +143,45 @@ HTTP_Parse_URL::parse_host (char *&p)
         }
       if (*q == ':')
         {
-          if (colon1 == 0)
+          if (colon1 == nullptr)
             {
-              if (at != 0 && colon2 == 0)
+              if (at != nullptr && colon2 == nullptr)
                 colon2 = q;
               else
                 colon1 = q;
             }
           else
             {
-              if (at != 0 && colon2 == 0)
+              if (at != nullptr && colon2 == nullptr)
                 colon2 = q;
             }
         }
       if (*q == '@')
         {
-          if (at == 0)
+          if (at == nullptr)
             at = q;
         }
       q++;
     }
 
   // no user, no port
-  if (at == 0 && colon1 == 0)
+  if (at == nullptr && colon1 == nullptr)
     {
       if (*p != '\0' && *p != '/')
         this->host_ = p;
     }
 
   // no user, port
-  else if (at == 0 && colon1 != 0)
+  else if (at == nullptr && colon1 != nullptr)
     {
       if (p != colon1)
         this->host_ = p;
       *colon1++ = '\0';
-      this->port_ = ACE_OS::atoi (colon1);
+      this->port_ = std::atoi (colon1);
     }
 
   // user, no passwd, no port
-  else if (at != 0 && colon1 == 0 && colon2 == 0)
+  else if (at != nullptr && colon1 == nullptr && colon2 == nullptr)
     {
       this->user_ = p;
       *at++ = '\0';
@@ -195,18 +190,18 @@ HTTP_Parse_URL::parse_host (char *&p)
     }
 
   // user, no passwd, port
-  else if (at != 0 && colon1 == 0 && colon2 != 0)
+  else if (at != nullptr && colon1 == nullptr && colon2 != nullptr)
     {
       this->user_ = p;
       *at++ = '\0';
       if (at != colon2)
         this->host_ = at;
       *colon2++ = '\0';
-      this->port_ = ACE_OS::atoi (colon2);
+      this->port_ = std::atoi (colon2);
     }
 
   // user, passwd, no port
-  else if (at != 0 && colon1 != 0 && colon2 == 0)
+  else if (at != nullptr && colon1 != nullptr && colon2 == nullptr)
     {
       this->user_ = p;
       *colon1++ = '\0';
@@ -217,7 +212,7 @@ HTTP_Parse_URL::parse_host (char *&p)
     }
 
   // user, passwd, and port
-  else if (at != 0 && colon1 != 0 && colon2 != 0)
+  else if (at != nullptr && colon1 != nullptr && colon2 != nullptr)
     {
       this->user_ = p;
       *colon1++ = '\0';
@@ -226,7 +221,7 @@ HTTP_Parse_URL::parse_host (char *&p)
       if (at != colon2)
         this->host_ = at;
       *colon2++ = '\0';
-      this->port_ = ACE_OS::atoi (colon2);
+      this->port_ = std::atoi (colon2);
     }
 
   // impossible!
@@ -244,11 +239,11 @@ HTTP_Parse_URL::parse_host (char *&p)
 void
 HTTP_Parse_URL::set_port_from_scheme ()
 {
-  if (ACE_OS::strcmp (this->scheme_, "ftp") == 0)
+  if (std::strcmp (this->scheme_, "ftp") == 0)
     {
       if (this->port_ == -1)
         this->port_ = 21;
-      if (this->user_ == 0)
+      if (this->user_ == nullptr)
         {
           this->user_ = "anonymous";
 
@@ -256,7 +251,7 @@ HTTP_Parse_URL::set_port_from_scheme ()
           this->passwd_ = "a@b.c";
         }
     }
-  else if (ACE_OS::strcmp (this->scheme_, "http") == 0)
+  else if (std::strcmp (this->scheme_, "http") == 0)
     {
       if (this->port_ == -1)
         this->port_ = 80;
@@ -296,24 +291,24 @@ HTTP_Parse_URL::port () const
 const char *
 HTTP_Parse_URL::url_path () const
 {
-  return this->url_path_ ? this->url_path_ : "";
+  return this->url_path_ != nullptr ? this->url_path_ : "";
 }
 
 void
 HTTP_Parse_URL::is_cgi (const char *path)
 {
-  int yes;
+  bool yes;
 
-  yes = (ACE_OS::strchr (path, '?') != 0);
-  if (!yes && (ACE_OS::strlen (path) >= 3))
-    yes = (ACE_OS::strstr (path, "cgi") != 0);
+  yes = (std::strchr (path, '?') != nullptr);
+  if (!yes && (std::strlen (path) >= 3))
+    yes = (std::strstr (path, "cgi") != nullptr);
   if (!yes)
-    yes = (ACE_OS::strstr (path, "asp") != 0);
+    yes = (std::strstr (path, "asp") != nullptr);
 
   this->is_cgi_ = yes;
 }
 
-int
+bool
 HTTP_Parse_URL::is_cgi () const
 {
   return this->is_cgi_;

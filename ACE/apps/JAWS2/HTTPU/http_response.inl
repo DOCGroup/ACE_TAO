@@ -10,9 +10,7 @@ HTTP_Response::HTTP_Response ()
 }
 
 ACE_INLINE
-HTTP_Response::~HTTP_Response ()
-{
-}
+HTTP_Response::~HTTP_Response () = default;
 
 ACE_INLINE Parse_HTTP_Response *
 HTTP_Response::response_line ()

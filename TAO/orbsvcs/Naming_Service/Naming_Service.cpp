@@ -116,6 +116,11 @@ public:
       time_(t)
   {}
 
+  ORB_Runner (ORB_Runner const &) = delete;
+  ORB_Runner (ORB_Runner &&) = delete;
+  ORB_Runner &operator= (ORB_Runner const &) = delete;
+  ORB_Runner &operator= (ORB_Runner &&) = delete;
+
   int svc () override
   {
   if (!CORBA::is_nil (orb_.in ()))

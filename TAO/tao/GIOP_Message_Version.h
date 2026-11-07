@@ -50,7 +50,7 @@ public:
   CORBA::Octet minor_version () const;
 
   /// Copy constructor
-  TAO_GIOP_Message_Version (const TAO_GIOP_Message_Version &) = default;
+  TAO_GIOP_Message_Version (TAO_GIOP_Message_Version const &) = default;
   TAO_GIOP_Message_Version (TAO_GIOP_Message_Version &&) = default;
 
   /// Default constructor.
@@ -61,12 +61,12 @@ public:
   void set_version (CORBA::Octet maj, CORBA::Octet min);
 
   /// Copy operator.
-  TAO_GIOP_Message_Version &operator= (const TAO_GIOP_Message_Version &) = default;
+  TAO_GIOP_Message_Version &operator= (TAO_GIOP_Message_Version const &) = default;
   TAO_GIOP_Message_Version &operator= (TAO_GIOP_Message_Version &&) = default;
 
   /// Equality operator
-  bool operator== (const TAO_GIOP_Message_Version &src) const;
-  bool operator!= (const TAO_GIOP_Message_Version &src) const;
+  bool operator== (TAO_GIOP_Message_Version const &src) const;
+  bool operator!= (TAO_GIOP_Message_Version const &src) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

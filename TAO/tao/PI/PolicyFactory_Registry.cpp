@@ -13,7 +13,7 @@ TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry ()
 
 TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry ()
 {
-  const TABLE::iterator end (this->factories_.end ());
+  TABLE::iterator const end (this->factories_.end ());
 
   for (TABLE::iterator i = this->factories_.begin (); i != end; ++i)
     {
@@ -40,7 +40,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   PortableInterceptor::PolicyFactory_ptr factory =
     PortableInterceptor::PolicyFactory::_duplicate (policy_factory);
 
-  const int result = this->factories_.bind (type, factory);
+  int const result = this->factories_.bind (type, factory);
 
   if (result != 0)
     {
@@ -63,7 +63,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
 
 CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any &value)
+                                           CORBA::Any const &value)
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
@@ -95,7 +95,7 @@ TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type)
 }
 
 bool
-TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType & type) const
+TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType type) const
 {
   return (this->factories_.find (type) == 0);
 }

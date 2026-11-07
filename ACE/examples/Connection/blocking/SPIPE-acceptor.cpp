@@ -1,7 +1,6 @@
 #if !defined (SPIPE_ACCEPTOR_C)
 #define SPIPE_ACCEPTOR_C
 
-#include "ace/OS_NS_string.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Proactor.h"
@@ -15,11 +14,9 @@
 Svc_Handler::Svc_Handler ()
   : mb_ (BUFSIZ + 1)
 {
-  // An extra byte for null termination.
+  // Keep one extra byte for null termination after a full read.
   this->mb_.size (BUFSIZ);
 }
-
-Svc_Handler::~Svc_Handler () = default;
 
 int
 Svc_Handler::open (void *)
@@ -58,15 +55,6 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     ACE_Proactor::end_event_loop ();
 }
 
-IPC_Server::IPC_Server ()
-  : n_threads_ (1),
-    shutdown_ (0)
-{
-  ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
-}
-
-IPC_Server::~IPC_Server () = default;
-
 int
 IPC_Server::handle_signal (int, siginfo_t *, ucontext_t *)
 {
@@ -87,10 +75,12 @@ IPC_Server::init (int argc, ACE_TCHAR *argv[])
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening %s\n"), rendezvous_));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Opening %s\n"),
+              this->rendezvous_.c_str ()));
 
   // Initialize named pipe listener.
-  if (this->open (ACE_SPIPE_Addr (rendezvous_)) == -1)
+  if (this->open (ACE_SPIPE_Addr (this->rendezvous_.c_str ())) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")), 1);
@@ -116,21 +106,20 @@ IPC_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("ut:r:"));
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int c {}; (c = get_opt ()) != -1; )
     {
       switch (c)
         {
         case 'r':
-          ACE_OS::strncpy (rendezvous_,
-                           get_opt.opt_arg (),
-                           sizeof (rendezvous_) / sizeof (ACE_TCHAR));
+          this->rendezvous_ = get_opt.opt_arg ();
           break;
         case 't':
-          n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());
-                                     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s == %d.\n"),
-                                     get_opt.opt_arg (),
-                                     n_threads_));
-          ACE_Proactor::instance (2 * n_threads_);
+          this->n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%s == %d.\n"),
+                      get_opt.opt_arg (),
+                      this->n_threads_));
+          ACE_Proactor::instance (2 * this->n_threads_);
           // This is a lame way to tell the proactor how many threads
           // we'll be using.
           break;
@@ -176,12 +165,12 @@ IPC_Server::svc ()
       else
         {
           // Run single-threaded.
-          if (n_threads_ <= 1)
+          if (this->n_threads_ <= 1)
             run_reactor_event_loop (nullptr);
           else
             {
               if (ACE_Thread_Manager::instance ()->spawn_n
-                   (n_threads_,
+                   (this->n_threads_,
                     run_reactor_event_loop,
                     nullptr,
                     THR_NEW_LWP) == -1)
@@ -196,7 +185,7 @@ IPC_Server::svc ()
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) main thread exiting.\n")));
 
           // Reset the Proactor so another accept will work.
-          ACE_Proactor::reset_event_loop();
+          ACE_Proactor::reset_event_loop ();
 
           // Must use some other method now to terminate this thing
           // instead of the ACE_Signal_Adapter just running

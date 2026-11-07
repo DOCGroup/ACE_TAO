@@ -3,7 +3,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
@@ -12,15 +12,15 @@
 
 #include "Notify_Test_Client.h"
 
-#define TEST_OP 1
-
 // ******************************************************************
 // Data Section
 // ******************************************************************
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
-static unsigned int expect_fail = 0;
-static Notify_Push_Consumer* consumer_1 = 0;
+struct Consumer_Options
+{
+  ACE_TCHAR const* ior { ACE_TEXT ("file://supplier.ior") };
+  unsigned int expect_fail {};
+};
 
 // ******************************************************************
 // Subroutine Section
@@ -29,34 +29,43 @@ static Notify_Push_Consumer* consumer_1 = 0;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
-};
+  Consumer_Client () = default;
+  Consumer_Client (Consumer_Client const&) = delete;
+  Consumer_Client (Consumer_Client&&) = delete;
+  Consumer_Client& operator= (Consumer_Client const&) = delete;
+  Consumer_Client& operator= (Consumer_Client&&) = delete;
 
+  int parse_args (int argc, ACE_TCHAR *argv[]) override;
+  Consumer_Options const& options () const
+  {
+    return this->options_;
+  }
+
+private:
+  Consumer_Options options_;
+};
 
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:h:d:f:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:l:h:d:f:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        this->options_.ior = get_opts.optarg;
         break;
 
       case 'f':
-        expect_fail = ACE_OS::atoi (get_opts.optarg);
+        this->options_.expect_fail = ACE_OS::atoi (get_opts.optarg);
         break;
 
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-f <expect failure> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior> -f <expect failure>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -72,34 +81,35 @@ create_proxyFilter (CosNotifyChannelAdmin::EventChannel_ptr ec)
   CosNotifyFilter::Filter_var filter =
     ffact->create_filter ("EXTENDED_TCL");
 
-  if(!CORBA::is_nil(filter.in()))
+  if (!CORBA::is_nil (filter.in ()))
     {
-    CosNotifyFilter::ConstraintExpSeq constraint_list (1);
-    constraint_list.length(1);
+      CosNotifyFilter::ConstraintExpSeq constraint_list (1);
+      constraint_list.length (1);
 
-    constraint_list[0].event_types.length (0);
+      constraint_list[0].event_types.length (0);
 
-    constraint_list[0].constraint_expr =
-      CORBA::string_dup ("$.domain_name == 'domain1'");
+      constraint_list[0].constraint_expr =
+        CORBA::string_dup ("$.domain_name == 'domain1'");
 
-    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
     }
   return filter._retn();
 }
 
-static void
+static Notify_Push_Consumer*
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
-                  Notify_Test_Client* client,
+                  Notify_Test_Client& client,
                   CosNotifyFilter::Filter_ptr filter)
 {
-  // startup the consumer
-  ACE_NEW_THROW_EX (consumer_1,
-                    Notify_Push_Consumer (*client),
+  Notify_Push_Consumer* consumer {};
+  ACE_NEW_THROW_EX (consumer,
+                    Notify_Push_Consumer (client),
                     CORBA::NO_MEMORY ());
 
-  consumer_1->init (client->root_poa ());
+  consumer->init (client.root_poa ());
 
-  consumer_1->_connect (admin, filter);
+  consumer->_connect (admin, filter);
+  return consumer;
 }
 
 // ******************************************************************
@@ -108,7 +118,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
   try
     {
       Consumer_Client client;
@@ -120,52 +130,56 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CosNotifyChannelAdmin::EventChannel_var ec =
             client.create_event_channel ("MyEventChannel", 1);
 
-          CORBA::ORB_ptr orb = client.orb ();
           CORBA::Object_var object =
-                              orb->string_to_object (ior);
+            client.orb ()->string_to_object (client.options ().ior);
 
           sig_var sig = sig::_narrow (object.in ());
 
           if (CORBA::is_nil (sig.in ()))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Object reference <%s> is nil\n",
-                                 ior),
+                                 ACE_TEXT ("Object reference <%s> is nil\n"),
+                                 client.options ().ior),
                                 1);
             }
 
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-            ec->default_consumer_admin();
+            ec->default_consumer_admin ();
 
           CosNotifyFilter::Filter_var filter =
-            create_proxyFilter (ec.in());
+            create_proxyFilter (ec.in ());
 
           if (!CORBA::is_nil (admin.in ()))
             {
-              create_consumers (admin.in (), &client, filter.in());
+              Notify_Push_Consumer* consumer =
+                create_consumers (admin.in (), client, filter.in ());
 
               // Tell the supplier to go
               sig->go ();
 
-              ACE_Time_Value tv(10, 0);
-              client.ORB_run(tv);
-              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
+              ACE_Time_Value tv (10, 0);
+              client.ORB_run (tv);
+              ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
 
               sig->done ();
 
-              ACE_DEBUG((LM_DEBUG, "Expected %d message(s) and received %d message(s).\n",
-                expect_fail == 1 ? 0 : 1, consumer_1->messages_received()));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Expected %d message(s) and received %d message(s).\n",
+                          client.options ().expect_fail == 1 ? 0 : 1,
+                          consumer->messages_received ()));
 
-              if (1 == expect_fail)
-                status = consumer_1->messages_received() == 0 ? 0 : 1;
+              if (client.options ().expect_fail == 1)
+                status = consumer->messages_received () == 0 ? 0 : 1;
               else
-                status = consumer_1->messages_received() == 1 ? 0 : 1;
+                status = consumer->messages_received () == 1 ? 0 : 1;
 
-              ACE_DEBUG((LM_DEBUG, "Test status is %s.\n", status == 1 ? "fail" : "pass"));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Test status is %s.\n",
+                          status == 1 ? "fail" : "pass"));
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
     {
       e._tao_print_exception ("Error: Consumer exception: ");
       status = 1;

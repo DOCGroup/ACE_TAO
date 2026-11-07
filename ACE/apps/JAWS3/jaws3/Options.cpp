@@ -8,14 +8,14 @@
 
 JAWS_Options::JAWS_Options ()
 {
-  this->cf_ = new JAWS_Config_File ("jaws.conf");
+  this->cf_ = std::make_unique<JAWS_Config_File> ("jaws.conf");
 }
 
 const char *
 JAWS_Options::getenv (const char *key)
 {
-  const char *value = 0;
-  if (this->cf_ == 0 || this->cf_->find (key, value) < 0)
+  char const *value = nullptr;
+  if (this->cf_ == nullptr || this->cf_->find (key, value) < 0)
     value = ACE_OS::getenv (key);
 
   return value;

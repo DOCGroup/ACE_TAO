@@ -28,7 +28,7 @@ ACE_INLINE
 CORBA::ULong
 CORBA::ContextList::count ()
 {
-  return (CORBA::ULong) this->ctx_list_.size ();
+  return static_cast<CORBA::ULong> (this->ctx_list_.size ());
 }
 
 ACE_INLINE

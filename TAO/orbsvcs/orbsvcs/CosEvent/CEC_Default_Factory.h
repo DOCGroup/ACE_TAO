@@ -25,6 +25,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -137,11 +139,11 @@ public:
 
 private:
   /// Parse an argument to set the type of collections used.
-  int parse_collection_arg (ACE_TCHAR* opt);
+  int parse_collection_arg (ACE_TCHAR const *opt);
 
 private:
   /// Several flags to control the kind of object created.
-  int dispatching_;
+  bool dispatching_;
   int pulling_strategy_;
   int consumer_collection_;
   int supplier_collection_;
@@ -153,21 +155,18 @@ private:
   int dispatching_threads_;
   int dispatching_threads_flags_;
   int dispatching_threads_priority_;
-  int dispatching_threads_force_active_;
+  bool dispatching_threads_force_active_;
 
   /// How often (in microseconds) are the pull suppliers polled by the
   /// reactive pulling strategy.
   int reactive_pulling_period_;
 
   /// Use this ORB to locate global resources.
-  char *orbid_;
-
-  /// Indicate ORB ID has been duplicated (memory allocated).
-  int orbid_dupped_;
+  std::string orbid_;
 
   /// The consumer and supplier control policies.
-  int consumer_control_;
-  int supplier_control_;
+  bool consumer_control_;
+  bool supplier_control_;
 
   /// The consumer and supplier control periods in usecs
   int consumer_control_period_;

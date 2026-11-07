@@ -10,6 +10,8 @@
 
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
@@ -41,15 +43,13 @@ TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper ()
 {
 }
 
-TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper ()
-{
-}
+TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper () = default;
 
 int
 TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
                                         TAO_AV_UDP_QoS_Flow_Handler *handler)
 {
-  ACE_QoS* ace_qos = nullptr;
+  ACE_QoS* ace_qos {};
 
   ACE_NEW_RETURN (ace_qos,
                   ACE_QoS,
@@ -105,7 +105,7 @@ TAO_AV_UDP_QoS_Session_Helper::open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *ha
 {
   ACE_QoS_Params qos_params;
 
-  ACE_QoS* ace_qos = nullptr;
+  ACE_QoS* ace_qos {};
 
   FillQoSParams (qos_params,
                  0,
@@ -212,61 +212,61 @@ TAO_AV_UDP_QoS_Flow_Handler::translate (CosPropertyService::Properties &qos_para
        i < qos_params.length ();
        i++)
     {
-      if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
+      if (std::strcmp (qos_params [i].property_name, "Service_Type") == 0)
         {
           CORBA::Short type;
           qos_params [i].property_value >>= type;
           ace_flow_spec->service_type (type);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
         {
           CORBA::ULong tok_rate;
           qos_params [i].property_value >>= tok_rate;
           ace_flow_spec->token_rate (tok_rate);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Size") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Token_Bucket_Size") == 0)
         {
           CORBA::ULong tok_buck_size;
           qos_params [i].property_value >>= tok_buck_size;
           ace_flow_spec->token_bucket_size (tok_buck_size);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)
         {
           CORBA::ULong peak_bw;
           qos_params [i].property_value >>= peak_bw;
           ace_flow_spec->peak_bandwidth (peak_bw);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Latency") == 0)
         {
           CORBA::ULong lat;
           qos_params [i].property_value >>= lat;
           ace_flow_spec->latency (lat);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
         {
           CORBA::ULong delay_var;
           qos_params [i].property_value >>= delay_var;
           ace_flow_spec->delay_variation (delay_var);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Max_SDU_Size") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Max_SDU_Size") == 0)
         {
           CORBA::ULong max_sdu;
           qos_params [i].property_value >>= max_sdu;
           ace_flow_spec->max_sdu_size (max_sdu);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Minimum_Policed_Size") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Minimum_Policed_Size") == 0)
         {
           CORBA::ULong min_pol_size;
           qos_params [i].property_value >>= min_pol_size;
           ace_flow_spec->minimum_policed_size (min_pol_size);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "TTL") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "TTL") == 0)
         {
           CORBA::ULong ttl;
           qos_params [i].property_value >>= ttl;
           ace_flow_spec->ttl (ttl);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Priority") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Priority") == 0)
         {
           CORBA::ULong priority;
           qos_params [i].property_value >>= priority;
@@ -402,7 +402,7 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
                  "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::change_qos\n"));
   }
 
-  ACE_QoS* ace_qos = nullptr;
+  ACE_QoS* ace_qos {};
 
   ACE_NEW_RETURN (ace_qos,
                   ACE_QoS,
@@ -474,8 +474,8 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
 }
 
 int
-TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                               const void *arg)
+TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                               void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -551,23 +551,17 @@ TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
 // TAO_AV_UDP_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport ()
-  :handler_ (0)
-{
-}
+TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport () = default;
 
 TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler *handler)
-  :handler_ (handler),
-   addr_ (0)
+  :handler_ (handler)
 {
 }
 
-TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport ()
-{
-}
+TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport () = default;
 
 int
-TAO_AV_UDP_QoS_Transport::set_remote_address (const ACE_INET_Addr &address)
+TAO_AV_UDP_QoS_Transport::set_remote_address (ACE_INET_Addr const &address)
 {
   this->peer_addr_ = address;
   return 0;
@@ -598,7 +592,7 @@ TAO_AV_UDP_QoS_Transport::get_peer_addr ()
 }
 
 ssize_t
-TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
+TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
                                 ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
@@ -609,7 +603,7 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -687,7 +681,7 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
 }
 
 ssize_t
-TAO_AV_UDP_QoS_Transport::send (const char *buf,
+TAO_AV_UDP_QoS_Transport::send (char const *buf,
                                 size_t len,
                                 ACE_Time_Value *)
 {
@@ -711,7 +705,7 @@ TAO_AV_UDP_QoS_Transport::send (const char *buf,
 }
 
 ssize_t
-TAO_AV_UDP_QoS_Transport::send (const iovec *iov,
+TAO_AV_UDP_QoS_Transport::send (iovec const *iov,
                                 int /*iovcnt*/,
                                 ACE_Time_Value *)
 {
@@ -776,9 +770,7 @@ TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor ()
 {
 }
 
-TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor ()
-{
-}
+TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor () = default;
 
 int
 TAO_AV_UDP_QoS_Acceptor::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler)
@@ -892,7 +884,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   ACE_QoS_Params qos_params;
 
-  ACE_QoS* ace_qos = nullptr;
+  ACE_QoS* ace_qos {};
 
   FillQoSParams (qos_params,
                  0,
@@ -905,7 +897,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                   -1);
 
 
-  TAO_AV_Flow_Handler *flow_handler = nullptr;
+  TAO_AV_Flow_Handler *flow_handler {};
   flow_handler = handler;
 
   handler->endpoint (this->endpoint_);
@@ -976,7 +968,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
       if (qos_available == 0)
         {
-          ACE_Flow_Spec *ace_flow_spec = nullptr;
+          ACE_Flow_Spec *ace_flow_spec {};
           ACE_NEW_RETURN (ace_flow_spec,
                           ACE_Flow_Spec,
                           -1);
@@ -1028,7 +1020,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%N,%l) Negotiator Not Found\n"));
@@ -1072,9 +1064,7 @@ TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector ()
 {
 }
 
-TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector ()
-{
-}
+TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector () = default;
 
 int
 TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
@@ -1156,7 +1146,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   ACE_INET_Addr *local_addr;
 
-  if (entry->get_peer_addr () != 0)
+  if (entry->get_peer_addr () != nullptr)
     {
       local_addr = dynamic_cast<ACE_INET_Addr*> (entry->get_peer_addr ());
     }
@@ -1165,7 +1155,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                     ACE_INET_Addr ("0"),
                     -1);
 
-  TAO_AV_Flow_Handler *flow_handler = nullptr;
+  TAO_AV_Flow_Handler *flow_handler {};
 
   TAO_AV_UDP_QoS_Flow_Handler *handler;
   ACE_NEW_RETURN (handler,
@@ -1182,7 +1172,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   ACE_QoS_Params qos_params;
 
-  ACE_QoS* ace_qos = nullptr;
+  ACE_QoS* ace_qos {};
 
   FillQoSParams (qos_params,
                  0,
@@ -1207,7 +1197,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
   result = handler->get_socket ()->get_local_addr (*local_addr);
 
 
-  ACE_INET_Addr *session_addr = nullptr;
+  ACE_INET_Addr *session_addr {};
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
     {
       ACE_NEW_RETURN (session_addr,
@@ -1310,7 +1300,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "Negotiator not found for flow %s\n",
@@ -1385,12 +1375,10 @@ TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory ()
                 "TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory ()
-{
-}
+TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory () = default;
 
 int
-TAO_AV_UDP_QoS_Factory::match_protocol (const char *protocol_string)
+TAO_AV_UDP_QoS_Factory::match_protocol (char const *protocol_string)
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1408,7 +1396,7 @@ TAO_AV_UDP_QoS_Factory::make_acceptor ()
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::make_acceptor "));
 
-  TAO_AV_Acceptor *acceptor = nullptr;
+  TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_UDP_QoS_Acceptor,
                   0);
@@ -1422,7 +1410,7 @@ TAO_AV_UDP_QoS_Factory::make_connector ()
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::make_connector "));
 
-  TAO_AV_Connector *connector = nullptr;
+  TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_UDP_QoS_Connector,
                   0);
@@ -1447,9 +1435,7 @@ TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory ()
                 "TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory ()
-{
-}
+TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory () = default;
 
 int
 TAO_AV_UDP_QoS_Flow_Factory::init (int /* argc */,
@@ -1459,7 +1445,7 @@ TAO_AV_UDP_QoS_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_UDP_QoS_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_UDP_QoS_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"QoS_UDP") == 0)
     return 1;
@@ -1472,12 +1458,12 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                    TAO_AV_Flow_Handler *handler,
                                                    TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Callback *callback {};
   endpoint->get_callback (entry->flowname (),
                           callback);
 
 
-  TAO_AV_UDP_Object *object = nullptr;
+  TAO_AV_UDP_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_UDP_Object (callback,
                                      transport),

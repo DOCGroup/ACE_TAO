@@ -7,6 +7,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/arpa/os_inet.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default "do nothing" constructor.
@@ -53,15 +55,15 @@ ACE_Name_Request::ACE_Name_Request (
   this->value_  = &this->name_[name_length / sizeof (ACE_WCHAR_T) ];
   this->type_  = (char *)(&this->value_[value_length / sizeof (ACE_WCHAR_T)]); //
 
-  (void) ACE_OS::memcpy (this->name_,
-                         name,
-                         name_length);
-  (void) ACE_OS::memcpy (this->value_,
-                         value,
-                         value_length);
-  (void) ACE_OS::memcpy (this->type_,
-                         type,
-                         type_length);
+  (void) std::memcpy (this->name_,
+                      name,
+                      name_length);
+  (void) std::memcpy (this->value_,
+                      value,
+                      value_length);
+  (void) std::memcpy (this->type_,
+                      type,
+                      type_length);
 
   // Compute size of the fixed portion of the message...
   size_t len = sizeof this->transfer_ - sizeof this->transfer_.data_;
@@ -208,9 +210,9 @@ void
 ACE_Name_Request::name (const ACE_WCHAR_T *t)
 {
   ACE_TRACE ("ACE_Name_Request::name");
-  (void) ACE_OS::memcpy (this->name_,
-                         t,
-                         this->name_len ());
+  (void) std::memcpy (this->name_,
+                      t,
+                      this->name_len ());
 }
 
 // = Set/get the value
@@ -227,9 +229,9 @@ ACE_Name_Request::value (const ACE_WCHAR_T *c)
 {
   ACE_TRACE ("ACE_Name_Request::value");
 
-  (void) ACE_OS::memcpy (this->value_,
-                         c,
-                         this->value_len());
+  (void) std::memcpy (this->value_,
+                      c,
+                      this->value_len());
 }
 
 // = Set/get the type

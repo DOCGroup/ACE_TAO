@@ -7,6 +7,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 double calc_cpu_loading ()
@@ -15,9 +18,9 @@ double calc_cpu_loading ()
   static unsigned long prev_idle = 0;
   static double prev_total = 0.0;
 
-  FILE *file_ptr = nullptr;
-  char *item = nullptr;
-  char *arg = nullptr;
+  FILE *file_ptr {};
+  char *item {};
+  char *arg {};
   unsigned long delta_idle = 0;
   unsigned long user = 0;
   unsigned long nice = 0;
@@ -36,7 +39,7 @@ double calc_cpu_loading ()
 
     if (item == nullptr || arg == nullptr)
             continue;
-    if (item[0] == 'c' && ACE_OS::strlen (item) == 3)
+    if (item[0] == 'c' && std::strlen (item) == 3)
     {
       sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
       break;
@@ -79,7 +82,7 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (char const * loc
           // A 64 byte buffer is more than enough to contain the
           // string representation of a 32 bit unsigned integer.
           char buf[64] = { '\0' };
-          ACE_OS::sprintf (buf, "%u", t);
+          std::sprintf (buf, "%u", t);
 
           this->location_[0].id = CORBA::string_dup (buf);
           this->location_[0].kind = CORBA::string_dup ("Creation Time");
@@ -125,7 +128,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   double load_double = calc_cpu_loading ();
   load = load_double;
 
-  CosLoadBalancing::LoadList * tmp = nullptr;
+  CosLoadBalancing::LoadList * tmp {};
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (

@@ -44,7 +44,7 @@ public:
     TAO_Notify_Message_Queue& msg_queue,
     const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
-  ~TAO_Notify_Buffering_Strategy ();
+  ~TAO_Notify_Buffering_Strategy () = default;
 
   /// Update state with the following QoS Properties:
   /// Order Policy
@@ -124,10 +124,10 @@ private:
   TAO_SYNCH_CONDITION local_not_empty_;
 
   /// Flag to shutdown.
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Optional queue tracker
-  Tracker* tracker_;
+  Tracker* tracker_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

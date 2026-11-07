@@ -59,7 +59,7 @@ TAO_Leader_Follower::allocate_follower ()
   if (!this->follower_free_list_.is_empty ())
     return this->follower_free_list_.pop_front ();
 
-  TAO_LF_Follower* ptr = nullptr;
+  TAO_LF_Follower* ptr {};
   ACE_NEW_RETURN (ptr,
                   TAO_LF_Follower (*this),
                   nullptr);
@@ -212,7 +212,7 @@ TAO_Leader_Follower::defer_event (ACE_Event_Handler* eh)
                 ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::defer_event, ")
                 ACE_TEXT ("deferring event handler[%d]\n"),
                 eh->get_handle ()));
-  Deferred_Event* ptr = nullptr;
+  Deferred_Event* ptr {};
   ACE_NEW_RETURN (ptr,
                   Deferred_Event (eh),
                   -1);

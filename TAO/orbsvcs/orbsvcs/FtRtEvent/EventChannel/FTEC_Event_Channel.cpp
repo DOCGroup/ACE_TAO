@@ -20,14 +20,10 @@ TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                                                PortableServer::POA_var poa)
   : orb_(orb)
   , poa_(poa)
-  , ec_impl_(nullptr)
 {
 }
 
-TAO_FTEC_Event_Channel::~TAO_FTEC_Event_Channel()
-{
-    delete ec_impl_;
-}
+TAO_FTEC_Event_Channel::~TAO_FTEC_Event_Channel() = default;
 
 
 void setup_object_group(TAO_FTEC_Event_Channel* es,
@@ -75,7 +71,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     GroupInfoPublisher::instance()->set_naming_context(naming_context);
 
     if (FTRTEC::Replication_Service::instance()->init(0, nullptr) == -1)
-      return 0;
+      return nullptr;
 
     GroupInfoPublisher::instance()->subscribe(FTRTEC::Replication_Service::instance());
 
@@ -95,12 +91,12 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
       persistent_poa_.in ());
 
 
-    TAO_FTEC_Event_Channel_Impl* ec = nullptr;
+    TAO_FTEC_Event_Channel_Impl* ec {};
     ACE_NEW_THROW_EX (ec,
       TAO_FTEC_Event_Channel_Impl (attr),
       CORBA::NO_MEMORY());
 
-    this->ec_impl_ = ec;
+    this->ec_impl_.reset (ec);
 
     const FtRtecEventComm::ObjectId& object_id
       = FTRTEC::Identification_Service::instance()->object_id();

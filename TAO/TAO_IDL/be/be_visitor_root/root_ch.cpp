@@ -292,7 +292,7 @@ be_visitor_root_ch::gen_template_exports (be_root *node)
 int
 be_visitor_root_ch::gen_any_ops (be_root *node)
 {
-  int status = 0;
+  int status {};
 
   if (be_global->any_support ())
     {
@@ -315,7 +315,7 @@ be_visitor_root_ch::gen_any_ops (be_root *node)
 int
 be_visitor_root_ch::gen_cdr_ops (be_root *node)
 {
-  int status = 0;
+  int status {};
 
   if (be_global->cdr_support ())
     {

@@ -11,16 +11,16 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_time.h"
+#include <array>
 
 Test_i::Test_i (CORBA::ORB_ptr orb,
                 A::AMI_TestHandler_ptr rh,
                 A::RunMode mode)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
-     rh_ (A::AMI_TestHandler::_duplicate (rh)),
-     mode_(mode)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    rh_ (A::AMI_TestHandler::_duplicate (rh)),
+    mode_ (mode),
+    seed_ (static_cast<unsigned int> (ACE_OS::time ()))
 {
-  time_t _tm = ACE_OS::time ();
-  this->seed_ = (unsigned int)_tm;
 }
 
 void
@@ -38,45 +38,44 @@ Test_i::request (
   ++counter;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:(%P:%t):Test_i::request: (%C)  %C - %d\n",
+              "%N:%l:(%P:%t):Test_i::request: (%C)  %C - %u\n",
               (reqmode == A::RQM_SYNCH ? "SYNCH" : "ASYNCH"),
               (this->mode_ == A::RM_MASTER ? "master" : "slave"),
               counter));
 
-  const char* follow_up_str;
+  char const *follow_up_str {};
   switch (ACE_OS::rand_r (&this->seed_) % 2)
-  {
-  case 0:
-    follow_up = (reqmode == A::RQM_SYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
-    follow_up_str = (reqmode == A::RQM_SYNCH ? "TIMER" : "NOTIFICATION");
-    break;
-  case 1:
-  default:
-    follow_up = (reqmode == A::RQM_ASYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
-    follow_up_str = (reqmode == A::RQM_ASYNCH ? "TIMER" : "NOTIFICATION");
-    break;
-  }
+    {
+    case 0:
+      follow_up = (reqmode == A::RQM_SYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
+      follow_up_str = (reqmode == A::RQM_SYNCH ? "TIMER" : "NOTIFICATION");
+      break;
+    case 1:
+    default:
+      follow_up = (reqmode == A::RQM_ASYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
+      follow_up_str = (reqmode == A::RQM_ASYNCH ? "TIMER" : "NOTIFICATION");
+      break;
+    }
 
   if (!CORBA::is_nil(this->opponent_.in ()))
-  {
-    char buf[1024];
-    ACE_OS::snprintf (buf, sizeof(buf), "request #%d followup [%s]", counter, follow_up_str);
+    {
+      std::array<char, 1024> buf {};
+      ACE_OS::snprintf (buf.data (), buf.size (), "request #%u followup [%s]", counter, follow_up_str);
 
-    if (reqmode == A::RQM_SYNCH)
-    {
-      if (!CORBA::is_nil (this->rh_.in ()))
-        this->opponent_->sendc_report(this->rh_.in (), buf);
+      if (reqmode == A::RQM_SYNCH)
+        {
+          if (!CORBA::is_nil (this->rh_.in ()))
+            this->opponent_->sendc_report (this->rh_.in (), buf.data ());
+        }
+      else
+        {
+          this->opponent_->report (buf.data ());
+        }
     }
-    else
-    {
-      this->opponent_->report (buf);
-    }
-  }
 }
 
 void
-Test_i::report (
-  const char * msg)
+Test_i::report (char const *msg)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):Test_i::report: %C - %C\n",
@@ -88,9 +87,7 @@ void
 Test_i::shutdown ()
 {
   if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_.in ()))
-  {
     this->opponent_->shutdown ();
-  }
   this->orb_->shutdown (false);
 }
 
@@ -153,10 +150,8 @@ TestHandler::TestHandler (CORBA::ORB_ptr orb,
   : orb_ (CORBA::ORB::_duplicate (orb)),
     max_count_ (max_count),
     mode_ (mode),
-    counter_ (0)
+    seed_ (static_cast<unsigned int> (ACE_OS::time ()))
 {
-  time_t _tm = ACE_OS::time ();
-  this->seed_ = (unsigned int)_tm;
 }
 
 void
@@ -178,26 +173,26 @@ TestHandler::set_reply_handler (A::AMI_TestHandler_ptr rh)
 }
 
 int
-TestHandler::handle_timeout (const ACE_Time_Value &,
-                            const void *)
+TestHandler::handle_timeout (ACE_Time_Value const &,
+                             void const *)
 {
   this->orb_->orb_core ()->reactor ()->cancel_timer (this);
   if ((ACE_OS::rand_r (&this->seed_) % 2) == 0)
-  {
-    A::FollowUp followup;
-    if (!CORBA::is_nil (this->opponent_.in ()))
     {
-      this->opponent_->request(A::RQM_SYNCH, this->counter_, followup);
-      this->handle_followup (followup, this->counter_);
+      A::FollowUp followup {};
+      if (!CORBA::is_nil (this->opponent_.in ()))
+        {
+          this->opponent_->request (A::RQM_SYNCH, this->counter_, followup);
+          this->handle_followup (followup, this->counter_);
+        }
     }
-  }
   else
-  {
-    if (!CORBA::is_nil (this->opponent_.in ()))
     {
-      this->opponent_->sendc_request(this->rh_.in (), A::RQM_ASYNCH, this->counter_);
+      if (!CORBA::is_nil (this->opponent_.in ()))
+        {
+          this->opponent_->sendc_request (this->rh_.in (), A::RQM_ASYNCH, this->counter_);
+        }
     }
-  }
   return 0;
 }
 
@@ -205,25 +200,26 @@ int
 TestHandler::handle_exception (ACE_HANDLE)
 {
   if ((ACE_OS::rand_r (&this->seed_) % 2) == 0)
-  {
-    A::FollowUp followup;
-    if (!CORBA::is_nil (this->opponent_.in ()))
     {
-      this->opponent_->request(A::RQM_SYNCH, this->counter_, followup);
-      this->handle_followup (followup, this->counter_);
+      A::FollowUp followup {};
+      if (!CORBA::is_nil (this->opponent_.in ()))
+        {
+          this->opponent_->request (A::RQM_SYNCH, this->counter_, followup);
+          this->handle_followup (followup, this->counter_);
+        }
     }
-  }
   else
-  {
-    if (!CORBA::is_nil (this->opponent_.in ()))
     {
-      this->opponent_->sendc_request(this->rh_.in (), A::RQM_ASYNCH, this->counter_);
+      if (!CORBA::is_nil (this->opponent_.in ()))
+        {
+          this->opponent_->sendc_request (this->rh_.in (), A::RQM_ASYNCH, this->counter_);
+        }
     }
-  }
   return 0;
 }
 
-void TestHandler::start ()
+void
+TestHandler::start ()
 {
   this->orb_->orb_core ()->reactor ()->notify (this);
 }
@@ -241,13 +237,13 @@ TestHandler::handle_followup (A::FollowUp fup, CORBA::ULong counter)
   else
   {
     if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_.in ()))
-    {
-      char buf[1024];
-      ACE_OS::snprintf (buf, sizeof(buf), "request #%d followup [%s]",
-                                          counter,
-                                          (fup == A::FU_TIMER ? "TIMER" : "NOTIFICATION"));
-      this->opponent_->report (buf);
-    }
+      {
+        std::array<char, 1024> buf {};
+        ACE_OS::snprintf (buf.data (), buf.size (), "request #%u followup [%s]",
+                          counter,
+                          (fup == A::FU_TIMER ? "TIMER" : "NOTIFICATION"));
+        this->opponent_->report (buf.data ());
+      }
 
     if (TAO_debug_level > 0)
     {

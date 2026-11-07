@@ -57,10 +57,10 @@ public:
 
   void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
 
-  RTCORBA::Mutex_ptr create_named_mutex (const char *name,
+  RTCORBA::Mutex_ptr create_named_mutex (char const *name,
                                          CORBA::Boolean_out created_flag);
 
-  RTCORBA::Mutex_ptr open_named_mutex (const char * name);
+  RTCORBA::Mutex_ptr open_named_mutex (char const * name);
 
 private:
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
@@ -115,11 +115,11 @@ public:
    * mutex already exists, it is returned and the created_flag
    * is set to 0.
    */
-  RTCORBA::Mutex_ptr create_named_mutex (const char *name,
+  RTCORBA::Mutex_ptr create_named_mutex (char const *name,
                                          CORBA::Boolean_out created_flag) override;
 
   /// Retrieve a previously created mutex.
-  RTCORBA::Mutex_ptr open_named_mutex (const char * name) override;
+  RTCORBA::Mutex_ptr open_named_mutex (char const * name) override;
 
   /**
    * Create and return a TCPProtocolProperties instance with the specified
@@ -144,8 +144,8 @@ public:
                                             CORBA::Boolean dont_route,
                                             CORBA::Boolean no_delay,
                                             CORBA::Long preallocate_buffer_size,
-                                            const char *mmap_filename,
-                                            const char *mmap_lockname) override;
+                                            char const *mmap_filename,
+                                            char const *mmap_lockname) override;
 
   RTCORBA::UserDatagramProtocolProperties_ptr
   create_user_datagram_protocol_properties (CORBA::Long send_buffer_size,
@@ -176,7 +176,7 @@ public:
    */
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes (CORBA::ULong stacksize,
-                                const RTCORBA::ThreadpoolLanes & lanes,
+                                RTCORBA::ThreadpoolLanes const & lanes,
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
@@ -199,7 +199,7 @@ public:
    * for use on either the client or server side
    */
   RTCORBA::PriorityBandedConnectionPolicy_ptr
-  create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
+  create_priority_banded_connection_policy (RTCORBA::PriorityBands const &
                                             priority_bands) override;
 
   /**
@@ -215,14 +215,14 @@ public:
    * communication protocols on the server side.
    */
   RTCORBA::ServerProtocolPolicy_ptr
-  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols) override;
+  create_server_protocol_policy (RTCORBA::ProtocolList const & protocols) override;
 
   /**
    * Create a ClientProtocolPolicy instance to select and configure
    * communication protocols on the client side.
    */
   RTCORBA::ClientProtocolPolicy_ptr
-  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols) override;
+  create_client_protocol_policy (RTCORBA::ProtocolList const & protocols) override;
 
   /// Reference to our creating ORB Core.
   TAO_ORB_Core *orb_core () const;

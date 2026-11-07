@@ -2,41 +2,44 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/SString.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int nthreads = 5;
-int niterations = 5;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  int nthreads {5};
+  int niterations {5};
+  bool server_shutdown {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:i:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:n:i:x"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      case 'x':
+        options.server_shutdown = true;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-n <nthreads> "
-                           "-i <niterations> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior> -n <nthreads> -i <niterations> -x\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -49,60 +52,66 @@ class Client : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (int niterations,
-          const char* ior);
+  Client (int niterations, ACE_TString const &ior);
   // ctor
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 
-  virtual int svc ();
+  int svc () override;
   // The thread entry point.
 
 private:
-  int niterations_;
+  int const niterations_;
   // The number of iterations on each client thread.
 
-  const char* ior_;
+  ACE_TString const ior_;
   // The IOR that we should use.
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Client_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
-      Client client (niterations, ior);
+      Client client (options.niterations, options.ior);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
+                           ACE_TEXT ("Cannot activate client threads\n")),
                           1);
 
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      server->shutdown ();
+      if (options.server_shutdown)
+        {
+          server->shutdown ();
+        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -114,9 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 Client::Client (int niterations,
-                const char* ior)
-  :  niterations_ (niterations),
-     ior_ (ior)
+                ACE_TString const &ior)
+  : niterations_ (niterations),
+    ior_ (ior)
 {
 }
 
@@ -125,27 +134,25 @@ Client::svc ()
 {
   try
     {
-      for (int i = 0; i < this->niterations_; ++i)
+      for (int i {}; i < this->niterations_; ++i)
         {
           // If we are using a global ORB this is a nop, otherwise it
           // initializes the ORB resources for this thread.
-          int argc = 0;
-          CORBA::String_var argv0 = CORBA::string_dup ("dummy_argv");
-          char* argv[1] = { argv0.inout () };
-          CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, argv);
+          int argc {1};
+          ACE_TCHAR argv0[] = ACE_TEXT ("dummy_argv");
+          ACE_TCHAR *argv[] {argv0};
+          CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-          CORBA::Object_var object =
-            orb->string_to_object (this->ior_);
+          CORBA::Object_var const object = orb->string_to_object (this->ior_.c_str ());
 
-          Simple_Server_var server =
+          Simple_Server_var const server =
             Simple_Server::_narrow (object.in ());
 
           if (CORBA::is_nil (server.in ()))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%P|%t) Object reference <%s> is nil\n",
-                                 ior),
+                                 ACE_TEXT ("(%P|%t) Object reference <%s> is nil\n"),
+                                 this->ior_.c_str ()),
                                 1);
             }
 
@@ -154,7 +161,7 @@ Client::svc ()
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

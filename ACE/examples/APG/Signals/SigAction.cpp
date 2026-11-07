@@ -14,7 +14,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ::register_actions ();    // Register actions to happen.
 
   // This will be raised immediately.
-  ACE_OS::kill (ACE_OS::getpid(), SIGUSR2);
+  ACE_OS::kill (ACE_OS::getpid (), SIGUSR2);
 
   // This will pend until the first signal is completely
   // handled and returns, because we masked it out

@@ -17,6 +17,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#include <memory>
+#include <string>
 
 /**
  * @class Server
@@ -37,7 +39,7 @@ public:
   Server ();
 
   /// Destructor.
-  ~Server ();
+  ~Server () = default;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
@@ -58,20 +60,17 @@ private:
 
   /// A holder of the servant that does ref counting for him.
   using Servant_var = TAO_Intrusive_Ref_Count_Handle<Servant>;
-  Servant_var servant_;
+  Servant_var servant_ {};
 
   /// The ORB manager - a helper class for accessing the POA and
   /// registering objects.
-  TAO_ORB_Manager orb_manager_;
+  TAO_ORB_Manager orb_manager_ {};
 
   /// File where the IOR of the server object is stored.
-  ACE_TCHAR *ior_output_file_ {};
-
-  /// Flag to indicate whether naming service could be used
-  int naming_ {};
+  std::basic_string<ACE_TCHAR> ior_output_file_ {};
 
   /// Used test the INS.
-  ACE_TCHAR *ins_ {};
+  std::basic_string<ACE_TCHAR> ins_ {};
 
   /// Number of command line arguments.
   int argc_ {};
@@ -98,7 +97,7 @@ class Client
 {
 public:
   /// Constructor.
-  Client ();
+  Client () = default;
 
   /// Destructor.
   ~Client ();
@@ -107,31 +106,28 @@ public:
   int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
-  ServerInterface *operator-> () { return server_.in (); }
+  ServerInterface *operator-> () const { return server_.in (); }
 
   /// Returns the shutdown flag.
-  int do_shutdown ();
-
-  /// Fills in the shutdwon flag.
-  void do_shutdown (int);
+  bool do_shutdown () const;
 
   /// Initialize naming service
   int obtain_initial_references (char const *name);
 
-  CORBA::ORB_ptr orb ()
+  CORBA::ORB_ptr orb () const
     {
       return CORBA::ORB::_duplicate (this->orb_.in ());
     }
 
 private:
   /// Function to read the server IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// # of arguments on the command line.
   int argc_ {};
@@ -140,17 +136,14 @@ private:
   ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  ACE_CString ior_;
+  std::string ior_ {};
 
   /// Server object
   using ServerInterface_var = TAO_Intrusive_Ref_Count_Handle<ServerInterface>;
-  ServerInterface_var server_;
-
-  /// Flag to use the naming service
-  int naming_ {};
+  ServerInterface_var server_ {};
 
   /// Flag for shutting down the server
-  int do_shutdown_ {};
+  bool do_shutdown_ {};
   Client (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;

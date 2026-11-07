@@ -7,8 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   FoxResource_Factory::FoxResource_Factory (FXApp *app)
-    : reactor_impl_ (nullptr)
-    , fxapp_ (app)
+    : fxapp_ (app)
   {
   }
 
@@ -23,7 +22,7 @@ namespace TAO
     {
       ACE_NEW_RETURN (this->reactor_impl_,
                       ACE_FoxReactor (),
-                      0);
+                      nullptr);
 
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,

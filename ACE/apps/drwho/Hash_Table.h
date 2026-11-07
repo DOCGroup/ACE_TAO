@@ -25,9 +25,9 @@ public:
   Hash_Table ();
   virtual ~Hash_Table ();
   virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN) = 0;
-  virtual Protocol_Record *get_next_entry ();
-  virtual Protocol_Record *get_each_entry ();
+                                   int max_len = MAXUSERIDNAMELEN) override = 0;
+  virtual Protocol_Record *get_next_entry () override;
+  virtual Protocol_Record *get_each_entry () override;
 
 protected:
   enum
@@ -35,9 +35,9 @@ protected:
     HASH_TABLE_SIZE = 500
   };
 
-  Protocol_Record **hash_table;
-  Protocol_Record *current_ptr;
-  int current_index;
-  int hash_table_size;
+  Protocol_Record **hash_table {};
+  Protocol_Record *current_ptr {};
+  int current_index {};
+  int hash_table_size {HASH_TABLE_SIZE};
 };
 #endif /* _HASH_TABLE_H */

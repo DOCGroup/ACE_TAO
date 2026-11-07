@@ -4,18 +4,20 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+#include <cstdio>
 
-int niterations = 10000;
-int do_dump_history = 0;
-ACE_High_Res_Timer::global_scale_factor_type gsf;
+struct Create_Reference_Options
+{
+  int iterations {10000};
+  bool dump_history {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Create_Reference_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hi:"));
   int c;
@@ -24,11 +26,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'h':
-        do_dump_history = 1;
+        options.dump_history = true;
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -73,25 +75,27 @@ set_rt_scheduling ()
 
 void
 object_creation_test (PortableServer::POA_ptr poa,
-                      int create_reference_with_id)
+                      bool create_reference_with_id,
+                      Create_Reference_Options const& options,
+                      ACE_High_Res_Timer::global_scale_factor_type const gsf)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nCreating %d object references with %s\n",
-              niterations,
+              options.iterations,
               create_reference_with_id ?
               "create_reference_with_id" :
               "create_reference"));
 
-  ACE_Sample_History creation (niterations);
+  ACE_Sample_History creation (options.iterations);
 
-  for (int i = 0; i != niterations; ++i)
+  for (int i = 0; i != options.iterations; ++i)
     {
-      char buf[16];
-      ACE_OS::sprintf (buf, "Object_%8.8x", i);
+      char buf[16] {};
+      std::snprintf (buf, sizeof (buf), "Object_%8.8x", i);
       PortableServer::ObjectId_var oid
         (PortableServer::string_to_ObjectId (buf));
 
-      ACE_hrtime_t start =
+      ACE_hrtime_t const start =
         ACE_OS::gethrtime ();
 
       CORBA::Object_var object;
@@ -107,11 +111,11 @@ object_creation_test (PortableServer::POA_ptr poa,
             poa->create_reference ("IDL:Test/Simple:1.0");
         }
 
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
+      ACE_hrtime_t const now = ACE_OS::gethrtime ();
       creation.sample (now - start);
     }
 
-  if (do_dump_history)
+  if (options.dump_history)
     {
       creation.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
@@ -125,6 +129,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   set_rt_scheduling ();
+  Create_Reference_Options options;
 
   try
     {
@@ -147,10 +152,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::PolicyList policies(1); policies.length (1);
+      CORBA::PolicyList policies (1);
+      policies.length (1);
 
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID);
@@ -160,15 +166,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-      gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
 
       object_creation_test (root_poa.in (),
-                            0  // POA::create_reference
-                            );
+                            false,
+                            options,
+                            gsf);
 
       object_creation_test (child_poa.in (),
-                            1  // POA::create_reference_with_id
-                            );
+                            true,
+                            options,
+                            gsf);
 
       root_poa->destroy (true, true);
 

@@ -13,6 +13,7 @@
 
 
 #include "ace/Task.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,10 +43,15 @@ class Client_i : public virtual MT_Priority
 {
 public:
   ///constructor.
-  Client_i ();
+  Client_i () = default;
 
   /// destructor.
-  virtual ~Client_i ();
+  ~Client_i () override;
+
+  Client_i (Client_i const &) = delete;
+  Client_i (Client_i &&) = delete;
+  Client_i &operator= (Client_i const &) = delete;
+  Client_i &operator= (Client_i &&) = delete;
 
   /// Initialize the state of <Client_i>.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -103,10 +109,10 @@ private:
   void get_context_switches ();
 
   /// Pointer to the high priority client object.
-  Client *high_priority_client_;
+  std::unique_ptr<Client> high_priority_client_ {};
 
   /// Array to hold pointers to the low priority tasks.
-  Client **low_priority_client_;
+  Client **low_priority_client_ {};
 
   /// Timer for timing the tests.
   ACE_High_Res_Timer timer_;
@@ -115,28 +121,28 @@ private:
   MT_Priority priority_;
 
   /// Utilization thread.
-  Util_Thread *util_thread_;
+  std::unique_ptr<Util_Thread> util_thread_ {};
 
   /// Utilization thread manager.
   ACE_Thread_Manager util_thread_manager_;
 
   /// Time for one computation of utilization thread.
-  ACE_timer_t util_task_duration_;
+  ACE_timer_t util_task_duration_ {};
 
   /// Pointer to task state.
-  Task_State *ts_;
+  std::unique_ptr<Task_State> ts_ {};
 
   /// Priority used for the high priority client.
-  ACE_Sched_Priority high_priority_;
+  ACE_Sched_Priority high_priority_ {};
 
   /// Priority used by the low priority clients.
-  ACE_Sched_Priority low_priority_;
+  ACE_Sched_Priority low_priority_ {};
 
   /// Number of low priority clients
-  u_int num_low_priority_;
+  u_int num_low_priority_ {};
 
   /// Number of priorities used.
-  u_int num_priorities_;
+  u_int num_priorities_ {};
 
   /**
    * Granularity of the assignment of the priorities.  Some OSs have
@@ -144,23 +150,23 @@ private:
    * with this mechanism we assign priorities to groups of threads
    * when there are more threads than priorities.
    */
-  u_int grain_;
+  u_int grain_ {};
 
   /// counter of the number of priorities used within a grain.
-  u_int counter_;
+  u_int counter_ {};
 
   // Set a task_name string starting with "@", so we are able to
   // accurately count the number of context switches.
-  char* task_name_;
+  std::unique_ptr<char[]> task_name_ {};
 
   /// elapsed time for the latency tests.
-  ACE_Time_Value delta_;
+  ACE_Time_Value delta_ {};
 
   /// number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// command line argument array.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /**
    * Create a separate manager for the client.  This allows the use of
@@ -171,7 +177,7 @@ private:
 
   /// Stores the total number of context switches incurred by the
   /// program while making CORBA requests
-  u_int context_switch_;
+  u_int context_switch_ {};
 
   /// Thread manager for the servant used for utilization.
   ACE_Thread_Manager server_thread_manager_;

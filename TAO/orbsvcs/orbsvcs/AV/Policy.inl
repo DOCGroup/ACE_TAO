@@ -52,7 +52,7 @@ TAO_AV_RTCP_Sdes_Policy::value ()
 }
 
 ACE_INLINE void
-TAO_AV_RTCP_Sdes_Policy::value (const TAO_AV_RTCP_Sdes &sdes_val)
+TAO_AV_RTCP_Sdes_Policy::value (TAO_AV_RTCP_Sdes const &sdes_val)
 {
   this->sdes_ = sdes_val;
 }

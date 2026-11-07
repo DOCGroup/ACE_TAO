@@ -14,6 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,7 +58,7 @@ public:
   ~TAO_Thread_Lane_Resources ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  bool is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
   int open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
@@ -146,7 +147,7 @@ public:
 
 private:
   /// Checks if the acceptor registry has been created.
-  int has_acceptor_registry_been_created () const;
+  bool has_acceptor_registry_been_created () const;
 
   /// Helper to get the resource factory in the ORB_Core
   TAO_Resource_Factory *resource_factory ();
@@ -157,11 +158,11 @@ private:
 
   /// The registry which maintains a list of acceptor factories for
   /// each loaded protocol.
-  TAO_Acceptor_Registry *acceptor_registry_;
+  std::unique_ptr<TAO_Acceptor_Registry> acceptor_registry_ {};
 
   /// The connector registry which all active connectors must register
   /// themselves with.
-  TAO_Connector_Registry *connector_registry_;
+  std::unique_ptr<TAO_Connector_Registry> connector_registry_ {};
 
   /// Transport cache.
   TAO::Transport_Cache_Manager *transport_cache_;

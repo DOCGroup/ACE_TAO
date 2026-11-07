@@ -6,6 +6,8 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "tao/Stub.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable
@@ -13,10 +15,10 @@ TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable
  PortableGroup::FactoryRegistry_ptr factory_registry,
  TAO::PG_Object_Group_Manipulator & manipulator,
  CORBA::Object_ptr empty_group,
- const PortableGroup::TagGroupTaggedComponent & tagged_component,
- const char * type_id,
- const PortableGroup::Criteria & the_criteria,
- const TAO::PG_Property_Set_var & type_properties,
+ PortableGroup::TagGroupTaggedComponent const & tagged_component,
+ char const * type_id,
+ PortableGroup::Criteria const & the_criteria,
+ TAO::PG_Property_Set_var const & type_properties,
  TAO::Storable_Factory & storable_factory,
  TAO_FT_Naming_Replication_Manager *repl)
   : PG_Object_Group_Storable(orb,
@@ -119,10 +121,10 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
       return CORBA::Object::_nil ();
     }
 
-  const char* member_type_id = member->_stubobj ()->type_id.in ();
+  char const *member_type_id = member->_stubobj ()->type_id.in ();
 
   if ((this->members_.current_size () == 0) &&
-      (ACE_OS::strcmp (this->type_id_, member_type_id) != 0) )
+      (std::strcmp (this->type_id_, member_type_id) != 0) )
     {
       try {
         this->type_id_ = member_type_id;
@@ -131,7 +133,7 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
            this->tagged_component_.group_domain_id,
            this->tagged_component_.object_group_id);
       }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: Unable to add member ")

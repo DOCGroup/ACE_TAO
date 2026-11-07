@@ -50,7 +50,7 @@ public:
   virtual ACEXML_Exception *duplicate () const = 0;
 
   /// Check whether this is an exception of type specified by <name>.
-  virtual int is_a (const ACEXML_Char *name);
+  virtual bool is_a (ACEXML_Char const *name);
 
   /// Print out exception using ACE_DEBUG.
   virtual void print () const = 0;

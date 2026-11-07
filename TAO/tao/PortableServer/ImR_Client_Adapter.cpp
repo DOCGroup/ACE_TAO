@@ -6,9 +6,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ImR_Client_Adapter::~ImR_Client_Adapter ()
-    {
-    }
+    ImR_Client_Adapter::~ImR_Client_Adapter () = default;
   }
 }
 

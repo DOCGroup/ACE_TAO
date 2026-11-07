@@ -11,19 +11,19 @@ Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb,
 
 
 CORBA::Object_ptr
-Object_Factory_i::create_object (const char *interface_repository_id,
+Object_Factory_i::create_object (char const *interface_repository_id,
                                  CORBA::Object_ptr gatewayed_object)
 {
   CORBA::String_var stringified_object =
     this->orb_->object_to_string (gatewayed_object);
 
-  const PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     PortableServer::string_to_ObjectId (stringified_object.in ());
 
-  const PortableInterceptor::ObjectId *obj_id =
-    reinterpret_cast<const PortableInterceptor::ObjectId *> (&id.in ());
-  ACE_UNUSED_ARG(obj_id);
-  ACE_UNUSED_ARG(interface_repository_id);
+  PortableInterceptor::ObjectId const *obj_id =
+    reinterpret_cast<PortableInterceptor::ObjectId const *> (&id.in ());
+  ACE_UNUSED_ARG (obj_id);
+  ACE_UNUSED_ARG (interface_repository_id);
 /*
   TAO_POA *poa = dynamic_cast <TAO_POA *> (this->gateway_poa_);
 
@@ -38,5 +38,5 @@ Object_Factory_i::create_object (const char *interface_repository_id,
                       *obj_id);
 */
 
-  return CORBA::Object::_nil();
+  return CORBA::Object::_nil ();
 }

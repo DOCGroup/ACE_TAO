@@ -26,7 +26,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Obj_Module {
 public:
-  Obj_Module ( const ACE_CString &, int = 500);
+  explicit Obj_Module (ACE_CString const &, int = 500);
+  Obj_Module (Obj_Module const &) = delete;
+  Obj_Module (Obj_Module &&) = delete;
+  Obj_Module &operator= (Obj_Module const &) = delete;
+  Obj_Module &operator= (Obj_Module &&) = delete;
 
   // Returns the list of exported signatures, ie. those that are defined in
   // this module
@@ -42,7 +46,7 @@ public:
   // build the list of imported and exported signatures.  When replacing GNU
   // nm to use a different tool, this method must be modified.  In the future
   // this could be a virtual to allow for specialization based on toolset.
-  void add_source (const char *, int = 0);
+  void add_source (char const *, bool = false);
 
   // Get the number of external references to this object module. At the end
   // of processing, if the number of external references is 0, the module is
@@ -56,7 +60,7 @@ public:
   void remove_extref();
 
 private:
-  void populate_sig_list (Sig_List &, int ,  ACE_Message_Block *);
+  void populate_sig_list (Sig_List &, int, ACE_Message_Block *);
   int read_line (ACE_HANDLE src, ACE_Message_Block **buf);
 
   ACE_CString name_;

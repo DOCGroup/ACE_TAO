@@ -28,7 +28,7 @@ time_stamp ()
   time_t time_now;
   char *temp;
 
-  time_now = ACE_OS::time (0);
+  time_now = ACE_OS::time (nullptr);
   temp = ACE_OS::asctime (ACE_OS::localtime (&time_now));
   temp[12] = 0;
   return temp;
@@ -48,7 +48,7 @@ exit_server (int sig)
 
 // Returns TRUE if the program was started by INETD.
 
-static int
+static bool
 started_by_inetd ()
 {
   sockaddr_in sin;
@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Options::set_options (argc, argv);
   Options::set_opt (Options::STAND_ALONE_SERVER);
 
-  int inetd_controlled = started_by_inetd ();
+  const bool inetd_controlled = started_by_inetd ();
 
   if (!inetd_controlled && Options::get_opt (Options::BE_A_DAEMON))
     ACE::daemonize ();

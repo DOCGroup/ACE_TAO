@@ -11,7 +11,8 @@
 
 
 #include "Criteria_Evaluator.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 
 Criteria_Evaluator::Criteria_Evaluator (CosLifeCycle::Criteria const & criteria)
@@ -41,8 +42,7 @@ Criteria_Evaluator::getInitialization ()
 char *
 Criteria_Evaluator::getFilter ()
 {
-  char const * string;
-  CORBA::Any value;
+  char const * string {};
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == nullptr)
@@ -55,19 +55,19 @@ Criteria_Evaluator::getFilter ()
 CORBA::Any *
 Criteria_Evaluator::getCriteriaMember (char const * member_name)
 {
-  if (!ACE_OS::strcmp(member_name, "initialization")
-      && !ACE_OS::strcmp(member_name, "filter")
-      && !ACE_OS::strcmp(member_name, "logical location")
-      && !ACE_OS::strcmp(member_name, "preferences"))
+  if (!std::strcmp (member_name, "initialization")
+      && !std::strcmp (member_name, "filter")
+      && !std::strcmp (member_name, "logical location")
+      && !std::strcmp (member_name, "preferences"))
     return nullptr;
 
   for (u_int i = 0;
        i < criteria_.length();
        i++)
-    if (ACE_OS::strcmp (member_name,
-                        criteria_[i].name) == 0)
+    if (std::strcmp (member_name,
+                     criteria_[i].name) == 0)
       {
-        CORBA::Any_ptr value_ptr;
+        CORBA::Any_ptr value_ptr {};
 
         // @@ We should use ACE_NEW_THROW_EX + ACE_CHECK_RETURN here.
         ACE_NEW_RETURN (value_ptr,

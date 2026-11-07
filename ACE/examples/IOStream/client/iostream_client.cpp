@@ -12,8 +12,8 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-  const ACE_TCHAR *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
-  u_short server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
+  ACE_TCHAR const *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  u_short const server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_IOStream<ACE_SOCK_Stream> server;
   ACE_SOCK_Connector connector;
@@ -29,8 +29,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Buffer up some things to send to the server.
   server << "1 2.3 testing" << endl;
 
-  int i;
-  float f;
+  int i {};
+  float f {};
 
   ACE_IOStream_String s1;
   ACE_IOStream_String s2;

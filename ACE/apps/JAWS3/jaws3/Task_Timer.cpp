@@ -6,6 +6,7 @@
 
 #include "jaws3/Task_Timer.h"
 #include "jaws3/Timer_Helpers.h"
+#include <memory>
 
 
 JAWS_Task_Timer::JAWS_Task_Timer ()
@@ -21,13 +22,11 @@ JAWS_Task_Timer::schedule_timer ( long *timer_id
                                 , void *act
                                 )
 {
-  JAWS_Timer_EH *eh = new JAWS_Timer_EH (completer, act);
-  if (eh == 0
-      || (*timer_id =
-            this->timer_queue_.schedule ( eh
-                                        , 0
-                                        , delta + ACE_OS::gettimeofday ()))
-         == -1)
+  std::unique_ptr<JAWS_Timer_EH> eh = std::make_unique<JAWS_Timer_EH> (
+    completer, act);
+  if ((*timer_id =
+         this->timer_queue_.schedule (eh.get (), nullptr,
+                                      delta + ACE_OS::gettimeofday ())) == -1)
     {
       JAWS_Event_Result timer_result ( 0
                                      , JAWS_Event_Result::JE_ERROR
@@ -37,8 +36,9 @@ JAWS_Task_Timer::schedule_timer ( long *timer_id
       if (completer)
         completer->timer_complete (timer_result, act);
 
-      delete eh;
     }
+  else
+    eh.release ();
 }
 
 
@@ -49,9 +49,9 @@ JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
                                          , void *act
                                          )
 {
-  JAWS_Timer_EH *eh = new JAWS_Timer_EH (completer, act);
-  if (eh == 0
-      || (*timer_id = this->timer_queue_.schedule (eh, 0, tv)) == -1)
+  std::unique_ptr<JAWS_Timer_EH> eh = std::make_unique<JAWS_Timer_EH> (
+    completer, act);
+  if ((*timer_id = this->timer_queue_.schedule (eh.get (), nullptr, tv)) == -1)
     {
       JAWS_Event_Result timer_result ( 0
                                      , JAWS_Event_Result::JE_ERROR
@@ -61,8 +61,9 @@ JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
       if (completer)
         completer->timer_complete (timer_result, act);
 
-      delete eh;
     }
+  else
+    eh.release ();
 }
 
 
@@ -73,15 +74,12 @@ JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
                                          , void *act
                                          )
 {
-  JAWS_Timer_EH *eh = new JAWS_Timer_EH (completer, act);
-  if (eh == 0
-      || (*timer_id =
-            this->timer_queue_.schedule ( eh
-                                        , 0
-                                        , interval + ACE_OS::gettimeofday ()
-                                        , interval
-                                        ))
-          == -1)
+  std::unique_ptr<JAWS_Timer_EH> eh = std::make_unique<JAWS_Timer_EH> (
+    completer, act);
+  if ((*timer_id =
+         this->timer_queue_.schedule (eh.get (), nullptr,
+                                      interval + ACE_OS::gettimeofday (),
+                                      interval)) == -1)
     {
       JAWS_Event_Result timer_result ( 0
                                      , JAWS_Event_Result::JE_ERROR
@@ -91,8 +89,9 @@ JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
       if (completer)
         completer->timer_complete (timer_result, act);
 
-      delete eh;
     }
+  else
+    eh.release ();
 }
 
 

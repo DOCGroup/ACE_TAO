@@ -11,7 +11,7 @@
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
-#include "ace/Vector_T.h"
+#include <vector>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -28,15 +28,12 @@ namespace TAO_Notify
   const char REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
 
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
-    : highest_id_(0)
   {
     // not the best technique, here.  Take advantage of "protected"
     Topology_Object::topology_parent_ = &parent;
   }
 
-  Reconnection_Registry::~Reconnection_Registry ()
-  {
-  }
+  Reconnection_Registry::~Reconnection_Registry () = default;
 
   //////////////////////////
   // During normal operation
@@ -89,7 +86,7 @@ namespace TAO_Notify
   CORBA::Boolean
   Reconnection_Registry::is_alive ()
   {
-    return CORBA::Boolean(1);
+    return true;
   }
 
   //////////////////////
@@ -178,7 +175,7 @@ namespace TAO_Notify
   {
     TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
     CORBA::ORB_var orb = properties->orb ();
-    ACE_Vector <NotifyExt::ReconnectionRegistry::ReconnectionID> bad_ids;
+    std::vector<NotifyExt::ReconnectionRegistry::ReconnectionID> bad_ids;
 
     Reconnection_Registry_Type::ENTRY *entry;
     for (Reconnection_Registry_Type::ITERATOR iter (this->reconnection_registry_);
@@ -194,7 +191,7 @@ namespace TAO_Notify
               static_cast<int> (entry->ext_id_)
             ));
         }
-        ACE_CString & ior = entry->int_id_;
+        ACE_CString const& ior = entry->int_id_;
         CORBA::Object_var obj = orb->string_to_object (ior.c_str ());
         NotifyExt::ReconnectionCallback_var callback =
           NotifyExt::ReconnectionCallback::_narrow (obj.in ());
@@ -223,10 +220,9 @@ namespace TAO_Notify
         //@@todo : we might want to check for retryable exceptions, but for now...
       }
     }
-    size_t bad_count = bad_ids.size ();
-    for (size_t nbad = 0; nbad < bad_count; ++nbad)
+    for (NotifyExt::ReconnectionRegistry::ReconnectionID const bad_id : bad_ids)
     {
-      this->reconnection_registry_.unbind (bad_ids[nbad]);
+      this->reconnection_registry_.unbind (bad_id);
     }
   }
 

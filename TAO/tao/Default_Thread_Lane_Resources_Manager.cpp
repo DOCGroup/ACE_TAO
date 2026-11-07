@@ -9,15 +9,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
-    lane_resources_ (new TAO_Thread_Lane_Resources (orb_core))
+    lane_resources_ (std::make_unique<TAO_Thread_Lane_Resources> (orb_core))
 {
 }
 
-TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Manager ()
-{
-  // Delete the default resources.
-  delete this->lane_resources_;
-}
+TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Manager () = default;
 
 int
 TAO_Default_Thread_Lane_Resources_Manager::open_default_resources ()
@@ -68,7 +64,7 @@ TAO_Default_Thread_Lane_Resources_Manager::close_all_transports ()
   this->lane_resources_->close_all_transports ();
 }
 
-int
+bool
 TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofile)
 {
   return this->lane_resources_->is_collocated (mprofile);
@@ -77,14 +73,12 @@ TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mp
 // -------------------------------------------------------
 
 TAO_Default_Thread_Lane_Resources_Manager_Factory::
-~TAO_Default_Thread_Lane_Resources_Manager_Factory ()
-{
-}
+~TAO_Default_Thread_Lane_Resources_Manager_Factory () = default;
 
 TAO_Thread_Lane_Resources_Manager *
 TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (TAO_ORB_Core &core)
 {
-  TAO_Thread_Lane_Resources_Manager *manager = nullptr;
+  TAO_Thread_Lane_Resources_Manager *manager {};
 
   /// Create the Default Thread Lane Resources Manager.
   ACE_NEW_RETURN (manager,

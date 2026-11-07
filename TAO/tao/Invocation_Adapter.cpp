@@ -61,7 +61,7 @@ namespace TAO
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
-    ACE_Time_Value *max_wait_time = nullptr;
+    ACE_Time_Value *max_wait_time {};
     ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
     if (this->get_timeout (stub, tmp_wait_time))
       {
@@ -362,7 +362,7 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = nullptr;
+    TAO_Stub *stubobj {};
 
     bool nil_forward_ref = false;
     if (CORBA::is_nil (effective_target.in ()))

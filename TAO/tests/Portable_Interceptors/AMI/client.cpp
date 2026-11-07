@@ -6,23 +6,28 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include <iostream>
+#include "ace/SString.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-static int exit_status = 0;
-const unsigned long ITERATIONS = 100;
+struct Options
+{
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
+};
+
+static int exit_status {};
+constexpr unsigned long ITERATIONS { 100 };
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
+    {
+      switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -34,6 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -42,6 +48,7 @@ static void test_synchronous (Test::Echo_ptr echo);
 
 static void test_ami (CORBA::ORB_ptr orb,
                       Test::Echo_ptr echo);
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -49,14 +56,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       {
         PortableInterceptor::ORBInitializer_var initializer (
-            new Client_ORBInitializer);
-        PortableInterceptor::register_orb_initializer (initializer.in());
+          new Client_ORBInitializer);
+        PortableInterceptor::register_orb_initializer (initializer.in ());
       }
 
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
@@ -73,11 +80,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var tmp = orb->string_to_object (options.ior.c_str ());
 
-      Test::Echo_var echo =
-        Test::Echo::_narrow (tmp.in ());
+      Test::Echo_var echo = Test::Echo::_narrow (tmp.in ());
 
       poa_manager->activate ();
 
@@ -85,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo reference <%s>\n",
-                             ior),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -98,9 +103,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      unsigned long request_count =
+      unsigned long const request_count =
         Echo_Client_Request_Interceptor::request_count;
-      unsigned long response_count =
+      unsigned long const response_count =
         Echo_Client_Request_Interceptor::reply_count
         + Echo_Client_Request_Interceptor::other_count
         + Echo_Client_Request_Interceptor::exception_count;
@@ -125,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "ERROR: No response handled "));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -137,29 +142,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 static void
 test_synchronous (Test::Echo_ptr echo)
 {
-  unsigned long initial_request_count =
+  unsigned long const initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
-  unsigned long initial_reply_count =
+  unsigned long const initial_reply_count =
     Echo_Client_Request_Interceptor::reply_count;
 
-  for (unsigned long i = 0; i != ITERATIONS; ++i)
+  for (unsigned long i {}; i != ITERATIONS; ++i)
     {
-      CORBA::String_var s =
+      CORBA::String_var const s =
         echo->echo_operation ("dummy message");
     }
 
-  unsigned long total_request_count =
+  unsigned long const total_request_count =
     Echo_Client_Request_Interceptor::request_count - initial_request_count;
-  unsigned long total_reply_count =
+  unsigned long const total_reply_count =
     Echo_Client_Request_Interceptor::reply_count - initial_reply_count;
 
-  if (total_request_count != ITERATIONS
-      || total_reply_count != ITERATIONS)
+  if (total_request_count != ITERATIONS || total_reply_count != ITERATIONS)
     {
-      ACE_ERROR((LM_ERROR,
-                 "ERROR: Invalid or mismatched request/reply "
-                 "count (request = %d, reply = %d)\n",
-                 total_request_count, total_reply_count));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Invalid or mismatched request/reply "
+                  "count (request = %d, reply = %d)\n",
+                  total_request_count, total_reply_count));
       exit_status = 1;
     }
 
@@ -181,21 +185,22 @@ test_ami (CORBA::ORB_ptr orb,
           Test::Echo_ptr echo)
 {
   Test::AMI_EchoHandler_var echo_handler;
-  Echo_Handler * echo_handler_impl = new Echo_Handler;
+  // Keep the servant pointer for _this and replies while the var owns it.
+  Echo_Handler *const echo_handler_impl = new Echo_Handler;
 
   PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
 
   echo_handler =
     echo_handler_impl->_this ();
 
-  unsigned long initial_reply_count =
+  unsigned long const initial_reply_count =
     Echo_Client_Request_Interceptor::reply_count;
-  unsigned long initial_request_count =
+  unsigned long const initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
-  unsigned long initial_other_count =
+  unsigned long const initial_other_count =
     Echo_Client_Request_Interceptor::other_count;
 
-  for (unsigned long i = 0; i != ITERATIONS; ++i)
+  for (unsigned long i {}; i != ITERATIONS; ++i)
     {
       echo->sendc_echo_operation (
         echo_handler.in (),
@@ -207,22 +212,21 @@ test_ami (CORBA::ORB_ptr orb,
   unsigned long total_request_count =
     Echo_Client_Request_Interceptor::request_count -
     (total_reply_count + initial_request_count);
-  unsigned long total_other_count =
+  unsigned long const total_other_count =
     Echo_Client_Request_Interceptor::other_count - initial_other_count;
 
-  if (total_request_count != ITERATIONS
-      || total_other_count != ITERATIONS)
+  if (total_request_count != ITERATIONS || total_other_count != ITERATIONS)
     {
-      ACE_ERROR((LM_ERROR,
-                 "ERROR: In test_ami () unexpected request/other "
-                 "count (request = %d, other = %d)\n",
-                 total_request_count, total_other_count));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: In test_ami () unexpected request/other "
+                  "count (request = %d, other = %d)\n",
+                  total_request_count, total_other_count));
       exit_status = 1;
     }
 
   while (echo_handler_impl->replies () != ITERATIONS)
     {
-      CORBA::Boolean pending =
+      CORBA::Boolean const pending =
         orb->work_pending ();
 
       if (pending)
@@ -239,13 +243,12 @@ test_ami (CORBA::ORB_ptr orb,
 
   // total_request_count is 2*ITERATIONS since it's incremented twice for
   // each call. Once for Echo and once for Echo_Handler.
-  if (total_request_count != 2 * ITERATIONS
-      || total_reply_count != ITERATIONS)
+  if (total_request_count != 2 * ITERATIONS || total_reply_count != ITERATIONS)
     {
-      ACE_ERROR((LM_ERROR,
-                 "ERROR: In test_ami () unexpected request/reply "
-                 "count (request = %d, reply = %d)\n",
-                 total_request_count, total_reply_count));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: In test_ami () unexpected request/reply "
+                  "count (request = %d, reply = %d)\n",
+                  total_request_count, total_reply_count));
       exit_status = 1;
     }
 }

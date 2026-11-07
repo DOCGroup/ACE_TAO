@@ -8,26 +8,21 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Reconnect_ConsumerEC_Control::
-     TAO_ECG_Reconnect_ConsumerEC_Control (const ACE_Time_Value &rate,
-                                           const ACE_Time_Value &timeout,
+     TAO_ECG_Reconnect_ConsumerEC_Control (ACE_Time_Value const &rate,
+                                           ACE_Time_Value const &timeout,
                                            TAO_EC_Gateway_IIOP* gateway,
                                            CORBA::ORB_ptr orb)
   : rate_ (rate),
     timeout_ (timeout),
     adapter_ (this),
     gateway_ (gateway),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    is_consumer_ec_connected_ (1)
+    orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
     , timer_id_ (-1)
 #endif /* TAO_HAS_CORBA_MESSAGING != 0*/
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();
-}
-
-TAO_ECG_Reconnect_ConsumerEC_Control::~TAO_ECG_Reconnect_ConsumerEC_Control ()
-{
 }
 
 void
@@ -43,7 +38,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::try_reconnect ()
           this->reconnect();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -54,11 +49,11 @@ TAO_ECG_Reconnect_ConsumerEC_Control::reconnect ()
 {
   try
     {
-      is_consumer_ec_connected_ = 1;
+      is_consumer_ec_connected_ = true;
 
       gateway_->reconnect_consumer_ec();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -69,7 +64,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::query_eventchannel ()
 {
   try
     {
-      if (is_consumer_ec_connected_ == 1)
+      if (is_consumer_ec_connected_)
         {
           CORBA::Boolean disconnected;
           CORBA::Boolean non_existent =
@@ -84,18 +79,18 @@ TAO_ECG_Reconnect_ConsumerEC_Control::query_eventchannel ()
            this->try_reconnect();
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       this->event_channel_not_exist (gateway_);
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->event_channel_not_exist (gateway_);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -103,7 +98,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::query_eventchannel ()
 
 void
 TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
-      const ACE_Time_Value &,
+      ACE_Time_Value const &,
       const void *)
 {
   // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
@@ -135,7 +130,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -179,7 +174,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate ()
           return -1;
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -210,13 +205,13 @@ TAO_ECG_Reconnect_ConsumerEC_Control::event_channel_not_exist (
       //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists\n"));
-      is_consumer_ec_connected_ = 0;
+      is_consumer_ec_connected_ = false;
 
       gateway->suspend_supplier_ec ();
 
       gateway->cleanup_consumer_proxies ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_EC_Reconnect_ConsumerControl::event_channel_not_exist");
@@ -244,13 +239,13 @@ TAO_ECG_Reconnect_ConsumerEC_Control::system_exception (
       //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists system except\n"));
-      is_consumer_ec_connected_ = 0;
+      is_consumer_ec_connected_ = false;
 
       gateway->suspend_supplier_ec ();
 
       gateway->cleanup_consumer_proxies ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions..
     }
@@ -266,8 +261,8 @@ TAO_ECG_Reconnect_ConsumerEC_Control_Adapter::TAO_ECG_Reconnect_ConsumerEC_Contr
 
 int
 TAO_ECG_Reconnect_ConsumerEC_Control_Adapter::handle_timeout (
-      const ACE_Time_Value &tv,
-      const void *arg)
+      ACE_Time_Value const &tv,
+      void const *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;

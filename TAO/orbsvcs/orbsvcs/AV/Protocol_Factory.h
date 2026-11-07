@@ -47,10 +47,10 @@ public:
 
   /// Called on a control object.
   virtual int handle_control_input (ACE_Message_Block *control_frame,
-                                    const ACE_Addr &peer_address);
+                                    ACE_Addr const &peer_address);
 
   /// set/get policies.
-  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
+  virtual int set_policies (TAO_AV_PolicyList const &policy_list);
   virtual TAO_AV_PolicyList get_policies ();
 
   /// start/stop the flow.
@@ -62,11 +62,11 @@ public:
                           TAO_AV_frame_info *frame_info = nullptr) = 0;
 
   /// send a frame in iovecs.
-  virtual int send_frame (const iovec *iov,
+  virtual int send_frame (iovec const *iov,
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = nullptr) = 0;
 
-  virtual int send_frame (const char *buf,
+  virtual int send_frame (char const *buf,
                           size_t len) = 0;
 
   /// end the stream.
@@ -74,9 +74,9 @@ public:
   virtual int destroy () = 0;
   TAO_AV_Transport *transport ();
 protected:
-  TAO_AV_Transport *transport_;
+  TAO_AV_Transport *transport_ {};
   TAO_AV_PolicyList policy_list_;
-  TAO_AV_Callback *callback_;
+  TAO_AV_Callback *callback_ {};
 };
 
 /**
@@ -94,13 +94,13 @@ public:
   TAO_AV_Flow_Protocol_Factory (TAO_AV_Flow_Protocol_Factory &&) = delete;
   TAO_AV_Flow_Protocol_Factory &operator= (TAO_AV_Flow_Protocol_Factory &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  virtual int match_protocol (const char *flow_string);
+  virtual int match_protocol (char const *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
-  virtual const char *control_flow_factory ();
-  int ref_count;
+  virtual char const *control_flow_factory ();
+  int ref_count {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

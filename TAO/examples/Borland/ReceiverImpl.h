@@ -7,25 +7,30 @@
 class TReceiverImplementation : public POA_Receiver
 {
 public:
+  TReceiverImplementation (TReceiverImplementation const&) = delete;
+  TReceiverImplementation (TReceiverImplementation&&) = delete;
+  TReceiverImplementation& operator= (TReceiverImplementation const&) = delete;
+  TReceiverImplementation& operator= (TReceiverImplementation&&) = delete;
+
   /// Constructor.
-  TReceiverImplementation (;
+  TReceiverImplementation () = default;
 
   /// Destructor.
-  ~TReceiverImplementation ();
+  ~TReceiverImplementation () override = default;
 
-  virtual void message (const char* msg);
+  void message (char const *msg) override;
 
   /// Called when the chat server is going away.  The client
   /// implementation should shutdown the chat client in response to
   /// this.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 //---------------------------------------------------------------------------
 #endif

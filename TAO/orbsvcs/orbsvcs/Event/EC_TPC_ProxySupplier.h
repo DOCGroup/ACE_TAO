@@ -28,17 +28,17 @@ public:
   TAO_EC_TPC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Dtor
-  virtual ~TAO_EC_TPC_ProxyPushSupplier () override;
+  ~TAO_EC_TPC_ProxyPushSupplier () override = default;
 
   /*! These are overridden from the base class in order to maintain the
        map in the dispatcher class. */
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
-                RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  void connect_push_consumer (
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    const RtecEventChannelAdmin::ConsumerQOS &qos) override;
 
-  virtual void disconnect_push_supplier () override;
+  void disconnect_push_supplier () override;
 
 private:
   using BASECLASS = TAO_EC_Default_ProxyPushSupplier;

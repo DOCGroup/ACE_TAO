@@ -5,7 +5,7 @@
 #include /**/ "tao/Version.h"
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/SString.h"
+#include <string>
 
 class Savable_Exception
 {
@@ -25,8 +25,8 @@ class Savable
 
   ~Savable ();
 
-  void string_set (int index, const ACE_CString &s);
-  const ACE_CString & string_get (int index);
+  void string_set (int index, std::string const &s);
+  std::string const & string_get (int index);
 
   void int_set (int index, int i);
   int int_get (int index);
@@ -46,7 +46,7 @@ class Savable
   void read (TAO::Storable_Base & stream);
   void write (TAO::Storable_Base & stream);
 
-  ACE_CString string_[2];
+  std::string string_[2];
   int i_[2];
   unsigned int ui_[2];
 

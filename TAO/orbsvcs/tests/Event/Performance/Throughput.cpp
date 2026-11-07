@@ -13,10 +13,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Throughput::EC_Throughput ()
-{
-}
-
 int
 EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
 {

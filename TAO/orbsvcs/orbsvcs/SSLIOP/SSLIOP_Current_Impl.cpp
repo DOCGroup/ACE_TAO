@@ -13,10 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::Current_Impl::~Current_Impl ()
-{
-}
-
 SecurityLevel3::ClientCredentials_ptr
 TAO::SSLIOP::Current_Impl::client_credentials ()
 {

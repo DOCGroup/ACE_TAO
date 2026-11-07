@@ -3,7 +3,7 @@
 #include "AddrServer.h"
 #include "ace/INET_Addr.h"
 
-AddrServer::AddrServer (const ACE_INET_Addr& addr)
+AddrServer::AddrServer (ACE_INET_Addr const& addr)
 {
 #if defined (ACE_HAS_IPV6)
   if (addr.get_type() == PF_INET6)
@@ -24,7 +24,7 @@ AddrServer::AddrServer (const ACE_INET_Addr& addr)
 }
 
 void
-AddrServer::get_addr (const RtecEventComm::EventHeader&,
+AddrServer::get_addr (RtecEventComm::EventHeader const&,
                       RtecUDPAdmin::UDP_Addr& addr)
 {
   if (this->addr_._d() == RtecUDPAdmin::Rtec_inet6)
@@ -32,9 +32,8 @@ AddrServer::get_addr (const RtecEventComm::EventHeader&,
   addr = this->addr_.v4_addr();
 }
 
-
 void
-AddrServer::get_address (const RtecEventComm::EventHeader&,
+AddrServer::get_address (RtecEventComm::EventHeader const&,
                          RtecUDPAdmin::UDP_Address_out addr)
 {
   addr = this->addr_;

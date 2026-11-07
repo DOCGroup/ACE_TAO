@@ -7,7 +7,7 @@
 #include "tao/TSS_Resources.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -302,14 +302,14 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       //Generate GUID
       size_t temp = ++TAO_RTScheduler_Current::guid_counter;
       this->guid_.length (sizeof(size_t));
-      ACE_OS::memcpy (this->guid_.get_buffer (),
-                      &temp,
-                      sizeof(size_t));
+      std::memcpy (this->guid_.get_buffer (),
+                   &temp,
+                   sizeof(size_t));
 
       size_t guid;
-      ACE_OS::memcpy (&guid,
-                      this->guid_.get_buffer (),
-                      this->guid_.length ());
+      std::memcpy (&guid,
+                   this->guid_.get_buffer (),
+                   this->guid_.length ());
 
 
       // Inform the scheduler of the new scheduling segment.
@@ -355,7 +355,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
-      TAO_RTScheduler_Current_i *new_current = nullptr;
+      TAO_RTScheduler_Current_i *new_current {};
         ACE_NEW_THROW_EX (new_current,
                           TAO_RTScheduler_Current_i (this->orb_,
                                                      this->dt_hash_,
@@ -451,7 +451,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
     }
 
   // Create new task for new DT.
-  DTTask *dttask = nullptr;
+  DTTask *dttask {};
 
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
@@ -459,7 +459,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
     sched_param = this->implicit_sched_param_.in ();
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
-  TAO_RTScheduler_Current_i *new_current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
 
   ACE_NEW_RETURN (new_current,
                   TAO_RTScheduler_Current_i (this->orb_,
@@ -645,9 +645,9 @@ void
 TAO_RTScheduler_Current_i::cancel_thread ()
 {
   size_t guid;
-  ACE_OS::memcpy (&guid,
-                  this->guid_.get_buffer (),
-                  this->guid_.length ());
+  std::memcpy (&guid,
+               this->guid_.get_buffer (),
+               this->guid_.length ());
 
   TAOLIB_DEBUG ((LM_DEBUG,
               "Distributable Thread - %d is cancelled\n",

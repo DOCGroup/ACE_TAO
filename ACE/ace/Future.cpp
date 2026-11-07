@@ -394,7 +394,7 @@ ACE_Future<T>::dump () const
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future<T>::get_rep ()
+ACE_Future<T>::get_rep () const
 {
   return this->future_rep_;
 }

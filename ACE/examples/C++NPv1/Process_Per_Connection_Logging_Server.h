@@ -13,38 +13,49 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Signal.h"
 #include "Logging_Server.h"
+#include <string>
 
 class Logging_Process : public ACE_Process
 {
 public:
-  Logging_Process (const char *prog_name,
-                   const ACE_SOCK_Stream &logging_peer);
+  Logging_Process (char const *prog_name,
+                   ACE_SOCK_Stream const &logging_peer);
+  Logging_Process (Logging_Process const &) = delete;
+  Logging_Process (Logging_Process &&) = delete;
+  Logging_Process &operator= (Logging_Process const &) = delete;
+  Logging_Process &operator= (Logging_Process &&) = delete;
 
-  virtual int prepare (ACE_Process_Options &options);
-  virtual void unmanage ();
+  int prepare (ACE_Process_Options &options) override;
+  void unmanage () override;
 
 private:
-  Logging_Process (); // Force desired constructor to be used.
+  Logging_Process () = delete;
 
-  char prog_name_[MAXPATHLEN + 1];
+  std::string prog_name_;
   ACE_SOCK_Stream logging_peer_;
 };
 
 
 class Process_Per_Connection_Logging_Server : public Logging_Server
 {
-protected:
-  char prog_name_[MAXPATHLEN + 1];
+private:
+  std::string prog_name_;
 
 protected:
-  virtual int handle_connections ();
-  virtual int handle_data (ACE_SOCK_Stream *client = 0);
+  int handle_connections () override;
+  int handle_data (ACE_SOCK_Stream *client = nullptr) override;
 
   int run_master (int argc, char *argv[]);
   int run_worker (int argc, char *argv[]);
 
 public:
-  virtual int run (int argc, char *argv[]);
+  Process_Per_Connection_Logging_Server () = default;
+  Process_Per_Connection_Logging_Server (Process_Per_Connection_Logging_Server const &) = delete;
+  Process_Per_Connection_Logging_Server (Process_Per_Connection_Logging_Server &&) = delete;
+  Process_Per_Connection_Logging_Server &operator= (Process_Per_Connection_Logging_Server const &) = delete;
+  Process_Per_Connection_Logging_Server &operator= (Process_Per_Connection_Logging_Server &&) = delete;
+
+  int run (int argc, char *argv[]) override;
 };
 
 #endif /* _PROCESS_PER_CONNECTION_LOGGING_SERVER_H */

@@ -1,20 +1,12 @@
 #include "Consumer_Handler.h"
 #include "tao/ORB_Core.h"
 
-Consumer_Handler::Consumer_Handler ()
-  : receiver_ (0),
-    notifier_ (0),
-    shutdowncallback (0)
-{
-  // No-Op.
-}
-
 int
 Consumer_Handler::init (int argc,
                         ACE_TCHAR *argv[],
-                        ShutdownCallback *_shutdowncallback)
+                        ShutdownCallback *shutdown_callback)
 {
-  const char *filtering_criteria = "";
+  char const *filtering_criteria = "";
 
    // First see if we have any environment variables.
   filtering_criteria =
@@ -22,7 +14,7 @@ Consumer_Handler::init (int argc,
 
    // Then override these variables with command-line arguments if
    // necessary.
-  filtering_criteria = argc > 1 ? ACE_TEXT_ALWAYS_CHAR(argv[1]) : "";
+  filtering_criteria = argc > 1 ? ACE_TEXT_ALWAYS_CHAR (argv[1]) : "";
 
   try
     {
@@ -41,10 +33,10 @@ Consumer_Handler::init (int argc,
       poa_manager->activate ();
 
       // Save the Shutdown callback.
-      this->shutdowncallback = _shutdowncallback;
+      this->shutdowncallback_ = shutdown_callback;
       // Set the ShutdownCallback callback object
       // in the Consumer object implementation.
-      this->receiver_i_.set (_shutdowncallback);
+      this->receiver_i_.set (shutdown_callback);
 
       // Start the servant.
       this->receiver_ =
@@ -61,7 +53,7 @@ Consumer_Handler::init (int argc,
       this->notifier_->subscribe (this->receiver_.in (),
                                   filtering_criteria);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
    {
      ex._tao_print_exception ("Consumer_Handler::init\n");
      return -1;
@@ -94,7 +86,7 @@ Consumer_Handler::get_notifier ()
       this->notifier_ =
         Event_Comm::Notifier::_narrow (notifier_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer_Handler::get_notifier\n");
       return -1;
@@ -112,9 +104,9 @@ Consumer_Handler::close ()
 void
 Consumer_Handler::shutdown ()
 {
-  ACE_ASSERT (this->shutdowncallback != 0);
+  ACE_ASSERT (this->shutdowncallback_ != nullptr);
 
-  this->shutdowncallback->close ();
+  this->shutdowncallback_->close ();
 }
 
 int
@@ -128,14 +120,14 @@ Consumer_Handler::run ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;
 }
 
-ACE_Reactor*
-Consumer_Handler::reactor()
+ACE_Reactor *
+Consumer_Handler::reactor () const
 {
   // @@ Please see if there's a way to get to the Reactor without
   // using the TAO_ORB_Core_instance().
@@ -143,13 +135,13 @@ Consumer_Handler::reactor()
 }
 
 Event_Comm::Consumer_ptr
-Consumer_Handler::receiver ()
+Consumer_Handler::receiver () const
 {
   return this->receiver_.in ();
 }
 
 Event_Comm::Notifier_ptr
-Consumer_Handler::notifier ()
+Consumer_Handler::notifier () const
 {
   return this->notifier_.in ();
 }

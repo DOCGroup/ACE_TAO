@@ -8,7 +8,8 @@
 #include "tao/TSS_Resources.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -23,8 +24,8 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
                 "Client_Interceptor::send_request\n"));
 
   // Temporary current.
-  TAO_RTScheduler_Current_i *new_current = nullptr;
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -40,14 +41,14 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           guid.length (sizeof(size_t));
 
           size_t temp = ++TAO_RTScheduler_Current::guid_counter;
-          ACE_OS::memcpy (guid.get_buffer (),
-                          &temp,
-                          sizeof(size_t));
+          std::memcpy (guid.get_buffer (),
+                       &temp,
+                       sizeof(size_t));
 
           size_t id;
-          ACE_OS::memcpy (&id,
-                          guid.get_buffer (),
-                          guid.length ());
+          std::memcpy (&id,
+                       guid.get_buffer (),
+                       guid.length ());
 
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -117,7 +118,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
                   "Client_Interceptor::send_poll\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -138,7 +139,7 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -192,7 +193,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
+      if (std::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.
@@ -217,7 +218,7 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -288,11 +289,11 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                 "Request from Distributable Thread\n"));
 
   RTScheduling::Current::IdType_var guid_var;
-  char *name = nullptr;
+  char *name {};
   CORBA::Policy_var sched_param = nullptr;
   CORBA::Policy_var implicit_sched_param = nullptr;
 
-  TAO_RTScheduler_Current_i *new_current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
   ACE_NEW_THROW_EX (new_current,
                     TAO_RTScheduler_Current_i (this->current_->orb (),
                                                this->current_->dt_hash ()),
@@ -321,14 +322,14 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
     }
   RTScheduling::Current::IdType guid;
   guid.length (sizeof (size_t));
-  ACE_OS::memcpy (guid.get_buffer (),
-                  guid_var->get_buffer (),
-                  sizeof (size_t));
+  std::memcpy (guid.get_buffer (),
+               guid_var->get_buffer (),
+               sizeof (size_t));
 
   size_t id;
-  ACE_OS::memcpy (&id,
-                  guid.get_buffer (),
-                  guid.length ());
+  std::memcpy (&id,
+               guid.get_buffer (),
+               guid.length ());
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -371,8 +372,8 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
-  TAO_RTScheduler_Current_i *prev_current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
+  TAO_RTScheduler_Current_i *prev_current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -419,7 +420,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
                   "Server_Interceptor::send_exception\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -444,7 +445,7 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 

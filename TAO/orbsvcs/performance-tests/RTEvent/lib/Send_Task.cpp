@@ -17,8 +17,7 @@ Send_Task::Send_Task ()
   , startup_sleep_ (0)
   , event_type_ (0)
   , event_source_ (0)
-  , barrier_ (0)
-  , stop_ (0)
+  , barrier_ (nullptr)
 {
 }
 
@@ -45,13 +44,13 @@ void
 Send_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->stop_ = 1;
+  this->stop_ = true;
 }
 
 int
 Send_Task::svc ()
 {
-  if (this->barrier_ == 0)
+  if (this->barrier_ == nullptr)
     return -1;
 
   this->barrier_->wait ();
@@ -94,7 +93,7 @@ Send_Task::svc ()
       ACE_OS::sleep (period);
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-        if (this->stop_ != 0)
+        if (this->stop_)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Thread has been stopped\n"));

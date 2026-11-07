@@ -34,6 +34,6 @@ bool TAO_RecursiveDef_OuterScopes::SeenBefore (ACE_TString const &id)
   return false;
 }
 
-TAO_RecursiveDef_OuterScopes const *TAO_RecursiveDef_OuterScopes::pIDsSeenAlready = nullptr;
+TAO_RecursiveDef_OuterScopes const *TAO_RecursiveDef_OuterScopes::pIDsSeenAlready {};
 
 TAO_END_VERSIONED_NAMESPACE_DECL

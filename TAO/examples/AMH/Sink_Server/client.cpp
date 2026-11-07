@@ -1,8 +1,10 @@
 
 #include "Client_Task.h"
 
+#include "ace/OS_NS_stdlib.h"
+
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -17,16 +19,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       task.try_RT_scheduling ();
 
-      if (task.narrow_servant (orb.in()) != 1)
+      if (task.narrow_servant (orb.in ()) != 1)
         {
           ACE_OS::exit (1);
         }
 
-      task.run_test();
+      task.run_test ();
 
       orb->destroy ();
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ERROR : Unexpected CORBA exception caugth :");
     }

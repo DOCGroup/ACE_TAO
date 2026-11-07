@@ -24,28 +24,32 @@ class Simple_Server_i : public POA_Simple_Server
 {
 public:
   /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Long x,
-                           const Structure& the_in_structure,
+                           Structure const &the_in_structure,
                            Structure_out the_out_structure,
-                           char *&name);
+                           char *&name) override;
 
-   CORBA::Long test_val ();
+  CORBA::Long test_val () override;
 
-   void test_val (CORBA::Long test_val);
+  void test_val (CORBA::Long test_val) override;
 
-  void raise_user_exception ();
+  void raise_user_exception () override;
 
-  void raise_system_exception ();
+  void raise_system_exception () override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   // The ORB
-  CORBA::ORB_var orb_;
-  CORBA::Long  vlong_;
+  CORBA::ORB_var orb_ {};
+  CORBA::Long vlong_ {};
 };
 
 #if defined(__ACE_INLINE__)

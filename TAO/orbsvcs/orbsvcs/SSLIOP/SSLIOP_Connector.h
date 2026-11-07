@@ -69,8 +69,8 @@ namespace TAO
                               ACE_Time_Value *timeout) override;
 
       TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
-      int check_prefix (const char *endpoint) override;
-      TAO_Profile * corbaloc_scan (const char *ior, size_t &len) override;
+      int check_prefix (char const *endpoint) override;
+      TAO_Profile * corbaloc_scan (char const *ior, size_t &len) override;
       //@}
 
     protected:
@@ -100,7 +100,7 @@ namespace TAO
       /// SSLIOP-specific connection establishment.
       TAO_Transport* ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
                                      ::Security::QOP qop,
-                                     const ::Security::EstablishTrust &trust,
+                                     ::Security::EstablishTrust const &trust,
                                      TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface *desc,
                                      ACE_Time_Value *timeout);
@@ -127,7 +127,7 @@ namespace TAO
 
       /// if true, do a match between the host name we connected to and what is
       /// in the server's certificate.
-      bool check_host_;
+      bool const check_host_;
 
       /// Our connect strategy
       CONNECT_STRATEGY connect_strategy_;

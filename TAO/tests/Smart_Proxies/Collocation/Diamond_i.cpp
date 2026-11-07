@@ -36,6 +36,16 @@ Left_i::color ()
   return CORBA::string_dup ("black");
 }
 
+CORBA::Long
+Left_i::combine (CORBA::Long first,
+                 CORBA::Long &second,
+                 CORBA::Long_out third)
+{
+  second += first;
+  third = second;
+  return second;
+}
+
 Right_i::Right_i ()
 {
 }
@@ -81,6 +91,16 @@ char *
 Buttom_i::color ()
 {
   return CORBA::string_dup ("translucent");
+}
+
+CORBA::Long
+Buttom_i::combine (CORBA::Long first,
+                   CORBA::Long &second,
+                   CORBA::Long_out third)
+{
+  second += first;
+  third = second;
+  return second;
 }
 
 CORBA::Long

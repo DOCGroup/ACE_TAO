@@ -16,7 +16,7 @@ static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
 static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
 
 // Trigger a remote reconfiguration.
-static int remote_reconfigure = 0;
+static bool remote_reconfigure = false;
 
 static void
 print_usage_and_die ()
@@ -41,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       port_number = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'r':
-      remote_reconfigure = 1;
+      remote_reconfigure = true;
       break;
     default:
       print_usage_and_die ();

@@ -12,18 +12,14 @@ TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
   : TAO_Log_i (orb, logmgr_i, factory, id, nullptr),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
-  // No-Op.
 }
 
-TAO_BasicLog_i::~TAO_BasicLog_i ()
-{
-  // No-Op.
-}
+TAO_BasicLog_i::~TAO_BasicLog_i () = default;
 
 DsLogAdmin::Log_ptr
 TAO_BasicLog_i::copy (DsLogAdmin::LogId_out id)
 {
-  DsLogAdmin::BasicLogFactory_var basicLogFactory =
+  DsLogAdmin::BasicLogFactory_var const basicLogFactory =
     DsLogAdmin::BasicLogFactory::_narrow (factory_.in ());
 
   DsLogAdmin::BasicLog_var log =
@@ -39,7 +35,7 @@ TAO_BasicLog_i::copy (DsLogAdmin::LogId_out id)
 DsLogAdmin::Log_ptr
 TAO_BasicLog_i::copy_with_id (DsLogAdmin::LogId id)
 {
-  DsLogAdmin::BasicLogFactory_var basicLogFactory =
+  DsLogAdmin::BasicLogFactory_var const basicLogFactory =
     DsLogAdmin::BasicLogFactory::_narrow (factory_.in ());
 
   DsLogAdmin::BasicLog_var log =
@@ -58,7 +54,7 @@ TAO_BasicLog_i::destroy ()
   this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     this->poa_->servant_to_id (this);
 
   this->poa_->deactivate_object (id.in ());

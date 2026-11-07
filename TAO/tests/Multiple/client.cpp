@@ -1,45 +1,46 @@
-# include "Collocation_Tester.h"
+#include "Collocation_Tester.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        ior.assign (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // ORB Initialization
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, "TAO");
 
-      if (parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var object = orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (ior.c_str ());
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -50,7 +51,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Collocation_Tester tester (object.in ());
       tester.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CORBA Exception Raised");
       return 1;

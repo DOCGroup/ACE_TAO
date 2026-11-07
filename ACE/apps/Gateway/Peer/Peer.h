@@ -75,29 +75,33 @@ public:
   Peer_Handler ();
 
   /// Shutdown the Peer.
-  ~Peer_Handler ();
+  ~Peer_Handler () override;
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
   /// Initialize the handler when called by
   /// <ACE_Acceptor::handle_input>.
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   /// Receive and process peer events.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Send a event to a gateway (may be queued if necessary due to flow
   /// control).
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value *tv = nullptr) override;
 
   /// Finish sending a event when flow control conditions abate.
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   /// Periodically send events via <ACE_Reactor> timer mechanism.
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &,
+                      const void *arg) override;
 
   /// Perform object termination.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
 protected:
   using inherited = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -139,6 +143,7 @@ protected:
 
   /// Keep track of event fragments that arrive in non-blocking recv's
   /// from the gatewayd.
+  /// This handler owns the fragment until it is released or passed on.
   ACE_Message_Block *msg_frag_;
 
   /// The total number of bytes sent/received to the gatewayd thus far.
@@ -146,7 +151,7 @@ protected:
 
   /// Used to call register_stdin_handle only once.  Otherwise, thread
   /// leak will occur on Win32.
-  int first_time_;
+  bool first_time_;
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
@@ -165,21 +170,25 @@ class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_
 public:
   /// Default initialization.
   Peer_Acceptor ();
+  Peer_Acceptor (Peer_Acceptor const &) = delete;
+  Peer_Acceptor (Peer_Acceptor &&) = delete;
+  Peer_Acceptor &operator= (Peer_Acceptor const &) = delete;
+  Peer_Acceptor &operator= (Peer_Acceptor &&) = delete;
 
   ///  the <Peer_Acceptor>.
   int start (u_short);
 
   /// Terminate the <Peer_Acceptor>.
-  int close ();
+  int close () override;
 
   /// Factory method that creates a <Peer_Handler> just once.
-  virtual int make_svc_handler (Peer_Handler *&);
+  int make_svc_handler (Peer_Handler *&) override;
 
 private:
   /// Factor out common code for initializing the <Peer_Acceptor>.
   int open_acceptor (u_short port);
 
-  /// Pointer to <Peer_Handler> allocated just once.
+  /// Pointer to <Peer_Handler> allocated once and destroyed by ACE_Acceptor.
   Peer_Handler *peer_handler_;
 
   /// Our acceptor addr.
@@ -202,13 +211,19 @@ template class ACE_Svc_Export ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
 class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
+  Peer_Connector () = default;
+
   /**
    * Initialize the <Peer_Connector>.  NOTE:  the arguments are
    * ignored.  They are only provided to avoid a compiler warning
    * about hiding the virtual function ACE_Connector<Peer_Handler,
    * ACE_SOCK_CONNECTOR>::open(ACE_Reactor*, int).
    */
-  int open (ACE_Reactor * = 0, int = 0);
+  int open (ACE_Reactor * = nullptr, int = 0) override;
+  Peer_Connector (Peer_Connector const &) = delete;
+  Peer_Connector (Peer_Connector &&) = delete;
+  Peer_Connector &operator= (Peer_Connector const &) = delete;
+  Peer_Connector &operator= (Peer_Connector &&) = delete;
 
 private:
   /// Factor out common code for initializing the <Peer_Connector>.
@@ -230,19 +245,26 @@ private:
 class ACE_Svc_Export Peer_Factory : public ACE_Service_Object
 {
 public:
+  Peer_Factory () = default;
+
+  Peer_Factory (Peer_Factory const &) = delete;
+  Peer_Factory (Peer_Factory &&) = delete;
+  Peer_Factory &operator= (Peer_Factory const &) = delete;
+  Peer_Factory &operator= (Peer_Factory &&) = delete;
+
   // = Dynamic initialization and termination hooks from <ACE_Service_Object>.
 
   /// Initialize the acceptor and connector.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Perform termination activities.
-  virtual int fini ();
+  int fini () override;
 
   /// Return info about this service.
-  virtual int info (ACE_TCHAR **, size_t) const;
+  int info (ACE_TCHAR **, size_t) const override;
 
   /// Handle various signals (e.g., SIGPIPE, SIGINT, and SIGQUIT).
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
 private:
   /// Pointer to an instance of our <Peer_Acceptor> that's used to

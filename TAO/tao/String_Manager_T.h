@@ -24,6 +24,7 @@
 #include "tao/String_Traits_Base_T.h"
 
 #include <algorithm>
+#include <cstring>
 #include <functional>
 
 /****************************************************************/
@@ -114,14 +115,14 @@ public:
   /// for out parameter.
   inline character_type *&out () {
     s_traits::release (this->ptr_);
-    this->ptr_ = 0;
+    this->ptr_ = nullptr;
     return this->ptr_;
   }
 
   /// For string of return type.
   inline character_type *_retn () {
     character_type *temp = this->ptr_;
-    this->ptr_ = 0;
+    this->ptr_ = nullptr;
     return temp;
   }
 
@@ -136,7 +137,7 @@ private:
 
 inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
 {
-  return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
+  return std::strcmp (lhs.in (), rhs.in ()) < 0;
 }
 
 inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)

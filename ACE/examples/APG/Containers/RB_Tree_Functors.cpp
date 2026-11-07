@@ -1,6 +1,7 @@
 #include "ace/Log_Msg.h"
 #include "DataElement.h"
 #include "RB_Tree_Functors.h"
+#include <memory>
 
 // Listing 0 code/ch05
 #include "ace/RB_Tree.h"
@@ -39,22 +40,25 @@ int Tree_Example::run ()
 {
   ACE_TRACE ("Tree_Example::run");
 
-  DataElement *d  = nullptr;
-  for (int i = 0; i < 100; i++)
+  DataElement *d {};
+  for (int i = 0; i < 100; ++i)
     {
       ACE_NEW_RETURN (d, DataElement (i), -1);
-      int result = tree_.bind(i, d);
+      std::unique_ptr<DataElement> element_owner {d};
+      // The tree stores raw pointers; this example owns each inserted element.
+      int const result = tree_.bind (KeyType (i), element_owner.get ());
       if (result != 0)
         {
           ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Bind"), -1);
         }
+      element_owner.release ();
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using find:\n")));
-  for (int j = 0; j < 100; j++)
+  for (int j = 0; j < 100; ++j)
     {
-      DataElement* d = nullptr;
-      int result = tree_.find (j, d);
+      DataElement *d {};
+      int const result = tree_.find (KeyType (j), d);
       if (result != 0)
         {
           ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Find"), -1);
@@ -83,8 +87,8 @@ void Tree_Example::iterate_forward ()
   ACE_TRACE ("Tree_Example::iterate_forward");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration\n")));
-  for (Tree<KeyType, DataElement*>::iterator iter = tree_.begin ();
-       iter != tree_.end (); iter++)
+  for (Tree<KeyType, DataElement *>::iterator iter = tree_.begin ();
+       iter != tree_.end (); ++iter)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), (*iter).item ()->getData ()));
     }
@@ -96,8 +100,8 @@ void Tree_Example::iterate_reverse ()
   ACE_TRACE ("Tree_Example::iterate_reverse");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration\n")));
-  for (Tree<KeyType, DataElement*>::reverse_iterator iter = tree_.rbegin ();
-       iter != tree_.rend (); iter++)
+  for (Tree<KeyType, DataElement *>::reverse_iterator iter = tree_.rbegin ();
+       iter != tree_.rend (); ++iter)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), (*iter).item ()->getData ()));
     }
@@ -109,16 +113,16 @@ int Tree_Example::remove_all ()
   ACE_TRACE ("Tree_Example::remove_all");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing elements\n")));
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 100; ++i)
     {
-      DataElement * d = nullptr;
-      int result = tree_.unbind (i, d);
+      DataElement *d {};
+      int const result = tree_.unbind (KeyType (i), d);
       if (result != 0)
         {
           ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Unbind"), -1);
         }
       ACE_ASSERT (d != nullptr);
-      delete d;
+      std::unique_ptr<DataElement> element_owner {d};
     }
 
   return 0;

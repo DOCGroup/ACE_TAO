@@ -16,6 +16,7 @@
 #include "tao/Transport_Connector.h"
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
+#include <cstring>
 #include "tao/Profile_Transport_Resolver.h"
 #include <memory>
 #include "ace/os_include/os_netdb.h"
@@ -27,7 +28,7 @@ TAO::SSLIOP::Connector::Connector (::Security::QOP qop, bool check_host)
     qop_ (qop),
     check_host_ (check_host),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 
@@ -46,7 +47,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   // Our connect creation strategy
-  CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY
@@ -55,7 +56,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our activation strategy
-  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -199,7 +200,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 TAO_Profile *
 TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SSLIOP_Profile (this->orb_core ()),
                   nullptr);
@@ -221,7 +222,7 @@ TAO::SSLIOP::Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (this->orb_core (),
                                           nullptr), // SSL component
@@ -243,10 +244,10 @@ TAO::SSLIOP::Connector::make_secure_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (this->orb_core (),
-                                          1), // SSL component
+                                          true), // SSL component
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
@@ -258,12 +259,12 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 
 
 TAO_Profile *
-TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
+TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
 {
-   int ssl_only = 0;
+   bool ssl_only = false;
    if (this->check_prefix (endpoint) == 0)
    {
-       ssl_only = 1;
+       ssl_only = true;
    }
    else
    {
@@ -272,8 +273,8 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
    }
 
    // Determine the (first in a list of possibly > 1) endpoint address
-   const char *comma_pos = ACE_OS::strchr (endpoint,',');
-   const char *slash_pos = ACE_OS::strchr (endpoint,'/');
+   char const *comma_pos = std::strchr (endpoint,',');
+   char const *slash_pos = std::strchr (endpoint,'/');
    if (comma_pos == nullptr && slash_pos == nullptr)
    {
        if (TAO_debug_level)
@@ -283,7 +284,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
                         ACE_TEXT("supplied string contains no comma or slash: %s\n"),
                         endpoint));
        }
-       len = ACE_OS::strlen (endpoint);
+       len = std::strlen (endpoint);
    }
    else if (comma_pos == nullptr || comma_pos > slash_pos)
    {
@@ -296,7 +297,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
    }
 
    //Create the corresponding profile
-   TAO_Profile *ptmp = nullptr;
+   TAO_Profile *ptmp {};
    if (ssl_only)
      {
        ptmp = this->make_secure_profile ();
@@ -311,24 +312,24 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
 
 
 int
-TAO::SSLIOP::Connector::check_prefix (const char *endpoint)
+TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint) return -1;  // Failure
 
-  const char *protocol[] = { "ssliop", "sslioploc" };
+  char const *protocol[] = { "ssliop", "sslioploc" };
 
-  size_t first_slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t first_slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t len0 = std::strlen (protocol[0]);
+  size_t len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
-  if (first_slot == len0 && ACE_OS::strncmp (endpoint, protocol[0], len0) == 0)
+  if (first_slot == len0 && std::strncmp (endpoint, protocol[0], len0) == 0)
     return 0;
 
-  if (first_slot == len1 && ACE_OS::strncmp (endpoint, protocol[1], len1) == 0)
+  if (first_slot == len1 && std::strncmp (endpoint, protocol[1], len1) == 0)
     return 0;
 
   // Failure: not an SSLIOP IOR
@@ -344,7 +345,7 @@ TAO::SSLIOP::Connector::iiop_connect (
   ACE_Time_Value *timeout)
 {
 #if 0
-  const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
+  ::SSLIOP::SSL const &ssl_component = ssl_endpoint->ssl_component ();
 
   // Only allow connection to the insecure IIOP port if the endpoint
   // explicitly allows it, i.e. if the Security::NoProtection security
@@ -383,12 +384,12 @@ TAO_Transport *
 TAO::SSLIOP::Connector::ssliop_connect (
   TAO_SSLIOP_Endpoint *ssl_endpoint,
   ::Security::QOP qop,
-  const ::Security::EstablishTrust &trust,
+  ::Security::EstablishTrust const &trust,
   TAO::Profile_Transport_Resolver *resolver,
   TAO_Transport_Descriptor_Interface *desc,
   ACE_Time_Value *max_wait_time)
 {
-  const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
+  ::SSLIOP::SSL const &ssl_component = ssl_endpoint->ssl_component ();
 
   // @@ The following check for "required insecurity" seems odd, but
   //    I haven't seen anything in the Security spec that says this
@@ -419,7 +420,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       && qop == ::Security::SecQOPIntegrity)
     throw CORBA::INV_POLICY ();
 
-  const ACE_INET_Addr &remote_address = ssl_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = ssl_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when
@@ -443,8 +444,8 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
 
   int result = 0;
-  TAO::SSLIOP::Connection_Handler *svc_handler = nullptr;
-  TAO_Transport *transport = nullptr;
+  TAO::SSLIOP::Connection_Handler *svc_handler {};
+  TAO_Transport *transport {};
 
   // Before we can check the cache to find an existing connection, we
   // need to make sure the ssl_endpoint is fully initialized with the

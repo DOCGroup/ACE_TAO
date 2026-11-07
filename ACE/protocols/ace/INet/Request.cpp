@@ -9,7 +9,7 @@ namespace ACE
   {
     Request::Request () {}
 
-    Request::~Request () {}
+    Request::~Request () = default;
 
   }
 }

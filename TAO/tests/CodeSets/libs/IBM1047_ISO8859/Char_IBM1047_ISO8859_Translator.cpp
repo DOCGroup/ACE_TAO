@@ -18,13 +18,9 @@
 
 // ****************************************************************
 
-IBM1047_ISO8859::IBM1047_ISO8859 ()
-{
-}
+IBM1047_ISO8859::IBM1047_ISO8859 () = default;
 
-IBM1047_ISO8859::~IBM1047_ISO8859 ()
-{
-}
+IBM1047_ISO8859::~IBM1047_ISO8859 () = default;
 
 ACE_CDR::Boolean
 IBM1047_ISO8859::read_char (ACE_InputCDR &in,
@@ -51,7 +47,7 @@ IBM1047_ISO8859::read_string (ACE_InputCDR& in,
       //      ACE_DEBUG ((LM_DEBUG,"read_string: len = %u\n",len));
       ACE_NEW_RETURN (x,
                       ACE_CDR::Char[len],
-                      0);
+                      false);
 
       if (this->read_char_array (in, x, len))
         return 1;
@@ -59,13 +55,13 @@ IBM1047_ISO8859::read_string (ACE_InputCDR& in,
       delete [] x;
     }
 
-  x = 0;
+  x = nullptr;
   return 0;
 }
 
 ACE_CDR::Boolean
-IBM1047_ISO8859::read_char_array (ACE_InputCDR& in,
-                                  ACE_CDR::Char* x,
+IBM1047_ISO8859::read_char_array (ACE_InputCDR &in,
+                                  ACE_CDR::Char *x,
                                   ACE_CDR::ULong len)
 {
   if (this->read_array (in,
@@ -86,17 +82,17 @@ IBM1047_ISO8859::read_char_array (ACE_InputCDR& in,
 }
 
 ACE_CDR::Boolean
-IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
+IBM1047_ISO8859::write_char (ACE_OutputCDR &out,
                              ACE_CDR::Char x)
 {
   return this->write_1 (out,
-                        reinterpret_cast<const ACE_CDR::Octet*> (&from_IBM1047[(int) x]));
+                        reinterpret_cast<ACE_CDR::Octet const *> (&from_IBM1047[(int) x]));
 }
 
 ACE_CDR::Boolean
-IBM1047_ISO8859::write_string (ACE_OutputCDR& out,
+IBM1047_ISO8859::write_string (ACE_OutputCDR &out,
                                ACE_CDR::ULong len,
-                               const ACE_CDR::Char* x)
+                               ACE_CDR::Char const *x)
 {
   if (out.write_ulong (len + 1))
     {
@@ -107,8 +103,8 @@ IBM1047_ISO8859::write_string (ACE_OutputCDR& out,
 }
 
 ACE_CDR::Boolean
-IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
-                                   const ACE_CDR::Char* x,
+IBM1047_ISO8859::write_char_array (ACE_OutputCDR &out,
+                                   ACE_CDR::Char const *x,
                                    ACE_CDR::ULong len)
 {
   char *buf;

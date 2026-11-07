@@ -16,11 +16,10 @@ namespace ACE
     ConnectionKey::ConnectionKey ()
       {}
 
-    ConnectionKey::~ConnectionKey ()
-      {}
+    ConnectionKey::~ConnectionKey () = default;
 
     ConnectionCacheKey::ConnectionCacheKey ()
-      : key_ (0),
+      : key_ (nullptr),
         delete_key_ (false)
       {
       }
@@ -32,7 +31,7 @@ namespace ACE
       }
 
     ConnectionCacheKey::ConnectionCacheKey (const ConnectionCacheKey& cachekey)
-      : key_ (0),
+      : key_ (nullptr),
         delete_key_ (false)
       {
         *this = cachekey;
@@ -40,7 +39,7 @@ namespace ACE
 
     ConnectionCacheKey::~ConnectionCacheKey ()
       {
-        if (this->key_ != 0 && this->delete_key_)
+        if (this->key_ != nullptr && this->delete_key_)
           {
             delete this->key_;
             this->delete_key_ = false;
@@ -51,7 +50,7 @@ namespace ACE
       {
         if (this != &cachekey)
           {
-            if (this->key_ != 0 && this->delete_key_)
+            if (this->key_ != nullptr && this->delete_key_)
               {
                 delete this->key_;
                 this->delete_key_ = false;
@@ -59,7 +58,7 @@ namespace ACE
 
             this->key_ = cachekey.key_->duplicate ();
 
-            if (this->key_ == 0)
+            if (this->key_ == nullptr)
               {
                 this->delete_key_ = false;
               }
@@ -76,15 +75,15 @@ namespace ACE
         return this->key_ ? this->key ().hash () : 0;
       }
 
-    ConnectionHolder::~ConnectionHolder () {}
+    ConnectionHolder::~ConnectionHolder () = default;
     ConnectionHolder::ConnectionHolder () {}
 
-    ConnectionFactory::~ConnectionFactory () {}
+    ConnectionFactory::~ConnectionFactory () = default;
     ConnectionFactory::ConnectionFactory () {}
 
     ConnectionCacheValue::ConnectionCacheValue ()
       : state_ (CST_INIT),
-        connection_ (0)
+        connection_ (nullptr)
       {
       }
 
@@ -302,7 +301,7 @@ namespace ACE
               cacheval.state () == ConnectionCacheValue::CST_BUSY)
           {
             connection_type* conn = cacheval.connection ();
-            cacheval.connection (0);
+            cacheval.connection (nullptr);
             cacheval.state (ConnectionCacheValue::CST_CLOSED);
             if (this->set_connection (key, cacheval))
               {
@@ -352,7 +351,7 @@ namespace ACE
             if ((*iter).int_id_.state () != ConnectionCacheValue::CST_CLOSED)
               {
                 connection_type* conn = (*iter).int_id_.connection ();
-                (*iter).int_id_.connection (0);
+                (*iter).int_id_.connection (nullptr);
                 (*iter).int_id_.state (ConnectionCacheValue::CST_CLOSED);
                 delete conn;
               }

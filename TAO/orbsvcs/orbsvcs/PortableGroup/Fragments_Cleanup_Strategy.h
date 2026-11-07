@@ -41,7 +41,7 @@ namespace TAO_PG
   {
   public:
     /// The constructor
-    Fragments_Cleanup_Strategy (int bound);
+    explicit Fragments_Cleanup_Strategy (int bound);
 
     /// The destructor
     virtual ~Fragments_Cleanup_Strategy () = default;
@@ -64,7 +64,7 @@ namespace TAO_PG
   {
   public:
     /// The constructor
-    Time_Bound_Fragments_Cleanup_Strategy (int bound);
+    explicit Time_Bound_Fragments_Cleanup_Strategy (int bound);
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };
@@ -79,7 +79,7 @@ namespace TAO_PG
   {
   public:
     /// The constructor
-    Number_Bound_Fragments_Cleanup_Strategy (int bound);
+    explicit Number_Bound_Fragments_Cleanup_Strategy (int bound);
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };
@@ -94,7 +94,7 @@ namespace TAO_PG
   {
   public:
     /// The constructor
-    Memory_Bound_Fragments_Cleanup_Strategy (int bound);
+    explicit Memory_Bound_Fragments_Cleanup_Strategy (int bound);
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };

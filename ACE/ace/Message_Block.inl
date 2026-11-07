@@ -195,7 +195,7 @@ ACE_Message_Block::msg_class () const
     return ACE_Message_Block::MB_USER;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Message_Block::is_data_msg () const
 {
   ACE_TRACE ("ACE_Message_Block::is_data_msg");

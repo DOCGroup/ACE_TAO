@@ -9,30 +9,22 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstdio>
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace Monitor_Control
   {
-    const char* CPU_Load_Monitor::default_name_ =
+    char const* CPU_Load_Monitor::default_name_ =
       "OS/Processor/CPULoad";
 
-    CPU_Load_Monitor::CPU_Load_Monitor (const char* name)
+    CPU_Load_Monitor::CPU_Load_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT("\\Processor(_Total)\\% Processor Time"))
-#endif
-#if defined (ACE_LINUX)
-      , user_ (0)
-      , wait_ (0)
-      , kernel_ (0)
-      , idle_ (0)
-      , prev_idle_ (0)
-      , prev_total_ (0.0)
-#endif
-#if defined (ACE_LINUX)
-      , file_ptr_ (nullptr)
 #endif
     {
       this->init ();
@@ -51,10 +43,10 @@ namespace ACE
 #endif
 
 #if defined (ACE_LINUX)
-      double delta_idle = this->idle_ - this->prev_idle_;
-      double total =
+      double const delta_idle = this->idle_ - this->prev_idle_;
+      double const total =
         this->user_ + this->wait_ + this->kernel_ + this->idle_;
-      double delta_total = total - this->prev_total_;
+      double const delta_total = total - this->prev_total_;
 
       if (ACE::is_equal (delta_total, 0.0))
         {
@@ -63,7 +55,7 @@ namespace ACE
           return;
         }
 
-      double percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
+      double const percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
 
       /// Stores value and timestamp with thread-safety.
       this->receive (percent_cpu_load);
@@ -73,7 +65,7 @@ namespace ACE
 #endif
     }
 
-    const char*
+    char const*
     CPU_Load_Monitor::default_name ()
     {
       return CPU_Load_Monitor::default_name_;
@@ -118,32 +110,32 @@ namespace ACE
           return;
         }
 
-      char *item = nullptr;
-      char *arg = nullptr;
+      char const *item {};
+      char const *arg {};
 
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
+      while (std::fgets (buf_, sizeof (buf_), file_ptr_) != nullptr)
         {
-          item = ACE_OS::strtok (this->buf_, " \t\n");
-          arg = ACE_OS::strtok (nullptr, "\n");
+          item = std::strtok (this->buf_, " \t\n");
+          arg = std::strtok (nullptr, "\n");
 
           if (item == nullptr || arg == nullptr)
             {
               continue;
             }
 
-          if (ACE_OS::strcmp (item, "cpu") == 0)
+          if (std::strcmp (item, "cpu") == 0)
             {
-              sscanf (arg,
-                      "%lu %lu %lu %lu",
-                      &this->user_,
-                      &this->wait_,
-                      &this->kernel_,
-                      which_idle);
+              std::sscanf (arg,
+                           "%lu %lu %lu %lu",
+                           &this->user_,
+                           &this->wait_,
+                           &this->kernel_,
+                           which_idle);
               break;
             }
         }
 
-      ACE_OS::fclose (this->file_ptr_);
+      std::fclose (this->file_ptr_);
     }
 #endif
   }

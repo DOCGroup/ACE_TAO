@@ -8,6 +8,8 @@
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
+
+#include <string>
 #include <vector>
 
 #if !defined (__ACE_INLINE__)
@@ -65,8 +67,8 @@ namespace TAO
     ACE_NEW (this->size_monitor_,
              ACE::Monitor_Control::Size_Monitor);
 
-    ACE_CString purge_name ("Connection_Cache_Purge_");
-    ACE_CString size_name ("Connection_Cache_Size_");
+    std::string purge_name ("Connection_Cache_Purge_");
+    std::string size_name ("Connection_Cache_Size_");
 
     purge_name += orbid;
     size_name += orbid;
@@ -290,7 +292,7 @@ namespace TAO
        }
 
     // Get the entry too
-    HASH_MAP_ENTRY *entry = nullptr;
+    HASH_MAP_ENTRY *entry {};
 
     // Update the purging strategy information while we
     // are holding our lock
@@ -448,10 +450,10 @@ namespace TAO
 
     // Make a temporary object. It does not do a copy.
     Cache_ExtId key (prop);
-    HASH_MAP_ENTRY *entry = nullptr;
+    HASH_MAP_ENTRY *entry {};
     busy_count = 0;
     int cache_status = 0;
-    HASH_MAP_ENTRY *found_entry = nullptr;
+    HASH_MAP_ENTRY *found_entry {};
 
     // loop until we find a usable transport, or until we've checked
     // all cached entries for this endpoint
@@ -641,7 +643,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
 
-    if (result && entry.int_id_.transport () != 0)
+    if (result && entry.int_id_.transport () != nullptr)
     {
       // if it's not connected, it's not available
       result = entry.int_id_.is_connected ();
@@ -690,7 +692,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
 
-    if (!result && entry.int_id_.transport () != 0)
+    if (!result && entry.int_id_.transport () != nullptr)
       {
         // if we're not connected, that counts, too.
         // Can this happen?  Not sure <wilsond@ociweb.com>
@@ -743,10 +745,10 @@ namespace TAO
       DESCRIPTOR_SET sorted_set = nullptr;
       int const sorted_size = this->fill_set_i (sorted_set);
 
-      // Only call close_entries () if sorted_set != 0.  It takes
+      // Only call close_entries () if sorted_set != nullptr.  It takes
       // control of sorted_set and cleans up any allocated memory.  If
-      // sorted_set == 0, then there is nothing to de-allocate.
-      if (sorted_set != 0)
+      // sorted_set == nullptr, then there is nothing to de-allocate.
+      if (sorted_set != nullptr)
         {
           // BEGIN FORMER close_entries
           // Calculate the number of entries to purge, when we have
@@ -882,8 +884,8 @@ namespace TAO
     int current_size = 0;
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
-    // set sorted_set to 0.  This signifies nothing to purge.
-    sorted_set = 0;
+    // Set sorted_set to nullptr. This signifies nothing to purge.
+    sorted_set = nullptr;
 
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)

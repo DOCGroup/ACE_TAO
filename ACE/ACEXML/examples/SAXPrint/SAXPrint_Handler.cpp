@@ -1,25 +1,21 @@
 // -*- C++ -*-
 
 #include "SAXPrint_Handler.h"
-#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACEXML_INLINE__)
 # include "SAXPrint_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_SAXPrint_Handler::ACEXML_SAXPrint_Handler (const ACEXML_Char* filename)
-  : indent_ (0),  fileName_(ACE::strnew (filename)), locator_ (0)
+ACEXML_SAXPrint_Handler::ACEXML_SAXPrint_Handler (ACEXML_Char const *filename)
+  : indent_ (0),
+    file_name_ (filename == nullptr ? ACE_TEXT ("") : filename),
+    locator_ (nullptr)
 {
-}
-
-ACEXML_SAXPrint_Handler::~ACEXML_SAXPrint_Handler ()
-{
-  delete [] this->fileName_;
 }
 
 void
-ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
+ACEXML_SAXPrint_Handler::characters (ACEXML_Char const *cdata,
                                      size_t,
                                      size_t)
 {
@@ -35,9 +31,9 @@ ACEXML_SAXPrint_Handler::endDocument ()
 }
 
 void
-ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
-                                     const ACEXML_Char *,
-                                     const ACEXML_Char *qName)
+ACEXML_SAXPrint_Handler::endElement (ACEXML_Char const *,
+                                     ACEXML_Char const *,
+                                     ACEXML_Char const *qName)
 {
   this->dec_indent ();
   this->print_indent ();
@@ -47,7 +43,7 @@ ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *)
+ACEXML_SAXPrint_Handler::endPrefixMapping (ACEXML_Char const *)
 {
 //   ACE_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
@@ -55,7 +51,7 @@ ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *)
 }
 
 void
-ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char * cdata,
+ACEXML_SAXPrint_Handler::ignorableWhitespace (ACEXML_Char const *cdata,
                                               int,
                                               int)
 {
@@ -67,8 +63,8 @@ ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char * cdata,
 }
 
 void
-ACEXML_SAXPrint_Handler::processingInstruction (const ACEXML_Char *target,
-                                                const ACEXML_Char *data)
+ACEXML_SAXPrint_Handler::processingInstruction (ACEXML_Char const *target,
+                                                ACEXML_Char const *data)
 {
   this->print_indent ();
   ACE_DEBUG ((LM_DEBUG,
@@ -84,7 +80,7 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator * locator)
 }
 
 void
-ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name)
+ACEXML_SAXPrint_Handler::skippedEntity (ACEXML_Char const *name)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event skippedEntity (%s) ***************\n"),
@@ -99,16 +95,16 @@ ACEXML_SAXPrint_Handler::startDocument ()
 }
 
 void
-ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
-                                       const ACEXML_Char *,
-                                       const ACEXML_Char *qName,
+ACEXML_SAXPrint_Handler::startElement (ACEXML_Char const *,
+                                       ACEXML_Char const *,
+                                       ACEXML_Char const *qName,
                                        ACEXML_Attributes *alist)
 {
   this->print_indent ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%s"),
               qName));
-  if (alist != 0)
+  if (alist != nullptr)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
         ACE_DEBUG ((LM_DEBUG,
@@ -120,8 +116,8 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
-                                             const ACEXML_Char *)
+ACEXML_SAXPrint_Handler::startPrefixMapping (ACEXML_Char const *,
+                                             ACEXML_Char const *)
 {
 //   ACE_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
@@ -132,18 +128,18 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
 // *** Methods inherited from ACEXML_DTDHandler.
 
 void
-ACEXML_SAXPrint_Handler::notationDecl (const ACEXML_Char *,
-                                       const ACEXML_Char *,
-                                       const ACEXML_Char *)
+ACEXML_SAXPrint_Handler::notationDecl (ACEXML_Char const *,
+                                       ACEXML_Char const *,
+                                       ACEXML_Char const *)
 {
   // No-op.
 }
 
 void
-ACEXML_SAXPrint_Handler::unparsedEntityDecl (const ACEXML_Char *,
-                                             const ACEXML_Char *,
-                                             const ACEXML_Char *,
-                                             const ACEXML_Char *)
+ACEXML_SAXPrint_Handler::unparsedEntityDecl (ACEXML_Char const *,
+                                             ACEXML_Char const *,
+                                             ACEXML_Char const *,
+                                             ACEXML_Char const *)
 {
   // No-op.
 }
@@ -151,11 +147,11 @@ ACEXML_SAXPrint_Handler::unparsedEntityDecl (const ACEXML_Char *,
 // Methods inherited from ACEXML_EnitityResolver.
 
 ACEXML_InputSource *
-ACEXML_SAXPrint_Handler::resolveEntity (const ACEXML_Char *,
-                                        const ACEXML_Char *)
+ACEXML_SAXPrint_Handler::resolveEntity (ACEXML_Char const *,
+                                        ACEXML_Char const *)
 {
   // No-op.
-  return 0;
+  return nullptr;
 }
 
 // Methods inherited from ACEXML_ErrorHandler.
@@ -167,7 +163,9 @@ void
 ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
-              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
+              (this->locator_->getSystemId() == nullptr
+               ? this->file_name_.c_str ()
+               : this->locator_->getSystemId ()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -177,7 +175,9 @@ void
 ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
-              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
+              (this->locator_->getSystemId() == nullptr
+               ? this->file_name_.c_str ()
+               : this->locator_->getSystemId ()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -187,7 +187,9 @@ void
 ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
-              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
+              (this->locator_->getSystemId() == nullptr
+               ? this->file_name_.c_str ()
+               : this->locator_->getSystemId ()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();

@@ -9,6 +9,8 @@
 
 #include "tao/CDR.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynValueBox_i::TAO_DynValueBox_i (CORBA::Boolean allow_truncation)
@@ -276,7 +278,7 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
 
   while (true)
     {
-      TAO_InputCDR indrected_strm ((size_t) 0);
+      TAO_InputCDR indrected_strm (static_cast<std::size_t> (0));
       CORBA::Boolean is_indirected= false;
       CORBA::Boolean is_null_object= false;
 
@@ -306,7 +308,7 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::TypeCode_var boxed_tc (unaliased_tc->content_type ());
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (boxed_tc.in (), in),
                     CORBA::NO_MEMORY ());
@@ -380,7 +382,7 @@ TAO_DynValueBox_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
                     CORBA::NO_MEMORY ());

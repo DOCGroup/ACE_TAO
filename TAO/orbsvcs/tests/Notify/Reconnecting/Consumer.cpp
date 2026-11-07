@@ -7,26 +7,13 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
-static const char NAMING_SERVICE_NAME[] = "NameService";
+static constexpr char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
+static constexpr char NAMING_SERVICE_NAME[] = "NameService";
 
-static const size_t minus_one = static_cast<size_t>(-1);
+static constexpr size_t minus_one = static_cast<size_t> (-1);
 
 ///////////////////////////
 // StructuredPushConsumer_i
-
-StructuredPushConsumer_i::StructuredPushConsumer_i ()
-  : verbose_ (false)
-  , received_ (0)
-  , expect_ (10)
-  , fail_ (0)
-  , may_discard_ (0)
-  , serial_number_ (0)
-  , exceptions_thrown_ (0)
-  , problem_ (false)
-  , connected_ (false)
-{
-}
 
 size_t
 StructuredPushConsumer_i::received () const
@@ -63,8 +50,8 @@ StructuredPushConsumer_i::set_expectations (size_t expected, size_t fail, size_t
 
 void
 StructuredPushConsumer_i::offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed
   )
 {
   ACE_UNUSED_ARG (added);
@@ -128,7 +115,7 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
 
 void
 StructuredPushConsumer_i::push_structured_event (
-        const CosNotification::StructuredEvent & notification)
+        CosNotification::StructuredEvent const& notification)
 {
   this->received_ += 1;
   if (this->received_ == this->expect_ + 1)
@@ -154,9 +141,9 @@ StructuredPushConsumer_i::push_structured_event (
   {
     if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
     {
-      const CORBA::Any & data = notification.filterable_data[0].value;
+      CORBA::Any const& data = notification.filterable_data[0].value;
 
-      CORBA::ULong seq = 0;
+      CORBA::ULong seq {};
       if (data >>= seq)
       {
         check_serial_number (seq);
@@ -174,18 +161,18 @@ StructuredPushConsumer_i::push_structured_event (
       this->problem_ = true;
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Structured Consumer received wrong filterable data name.%s. Expecting serial_number\n"),
-        static_cast<const char *>(notification.filterable_data[0].name)
+        static_cast<char const*> (notification.filterable_data[0].name)
         ));
     }
   }
   else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") &&
            0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
   {
-    const CORBA::Any * any;
+    CORBA::Any const* any;
     if (notification.remainder_of_body >>= any)
     {
       // this is a wrapped "Any"
-      CORBA::ULong seq = 0;
+      CORBA::ULong seq {};
       if ((*any) >>= seq)
       {
         check_serial_number (seq);
@@ -228,19 +215,6 @@ StructuredPushConsumer_i::disconnect_structured_push_consumer (
 ///////////////////////////
 // SequencePushConsumer_i
 
-SequencePushConsumer_i::SequencePushConsumer_i ()
-  : verbose_ (false)
-  , received_ (0)
-  , expect_ (10)
-  , fail_ (0)
-  , may_discard_ (0)
-  , serial_number_ (0)
-  , exceptions_thrown_ (0)
-  , problem_ (false)
-  , connected_ (false)
-{
-}
-
 size_t
 SequencePushConsumer_i::received () const
 {
@@ -276,8 +250,8 @@ SequencePushConsumer_i::set_expectations (size_t expected, size_t fail,size_t se
 
 void
 SequencePushConsumer_i::offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed
   )
 {
   ACE_UNUSED_ARG (added);
@@ -340,7 +314,7 @@ SequencePushConsumer_i::check_serial_number (CORBA::ULong seq)
 
 void
 SequencePushConsumer_i::push_structured_events (
-      const CosNotification::EventBatch & notifications
+      CosNotification::EventBatch const& notifications
     )
 {
   CORBA::ULong batch_size = notifications.length();
@@ -374,14 +348,14 @@ SequencePushConsumer_i::push_structured_events (
         ));
       throw CORBA::UNKNOWN();
     }
-    const CosNotification::StructuredEvent & notification = notifications[nevent];
+    CosNotification::StructuredEvent const& notification = notifications[nevent];
     if (notification.filterable_data.length () > 0)
     {
       if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
       {
-        const CORBA::Any & data = notification.filterable_data[0].value;
+        CORBA::Any const& data = notification.filterable_data[0].value;
 
-        CORBA::ULong seq = 0;
+        CORBA::ULong seq {};
         if (data >>= seq)
         {
           check_serial_number (seq);
@@ -399,14 +373,14 @@ SequencePushConsumer_i::push_structured_events (
         this->problem_ = true;
         ACE_DEBUG ((LM_ERROR,
           ACE_TEXT ("(%P|%t) Sequence Consumer received wrong filterable data name.%s. Expecting serial_number\n"),
-          static_cast<const char *>(notification.filterable_data[0].name)
+          static_cast<char const*> (notification.filterable_data[0].name)
           ));
       }
     }
     else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") &&
              0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
     {
-      CORBA::ULong seq = 0;
+        CORBA::ULong seq {};
       if (notification.remainder_of_body >>= seq)
       {
         check_serial_number (seq);
@@ -440,19 +414,6 @@ SequencePushConsumer_i::disconnect_sequence_push_consumer (
 
 ///////////////////////////
 // AnyPushConsumer_i
-
-AnyPushConsumer_i::AnyPushConsumer_i ()
-  : verbose_ (false)
-  , received_ (0)
-  , expect_ (10)
-  , fail_ (0)
-  , may_discard_ (0)
-  , serial_number_ (0)
-  , exceptions_thrown_ (0)
-  , problem_ (false)
-  , connected_ (false)
-{
-}
 
 size_t
 AnyPushConsumer_i::received () const
@@ -489,8 +450,8 @@ AnyPushConsumer_i::set_expectations (size_t expected, size_t fail, size_t serial
 
 void
 AnyPushConsumer_i::offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed
   )
 {
   ACE_UNUSED_ARG (added);
@@ -553,7 +514,7 @@ AnyPushConsumer_i::check_serial_number (CORBA::ULong seq)
 
 void
 AnyPushConsumer_i::push (
-        const CORBA::Any & data
+        CORBA::Any const& data
       )
 {
   this->received_ += 1;
@@ -576,23 +537,23 @@ AnyPushConsumer_i::push (
       ));
     throw CORBA::UNKNOWN();
   }
-  CORBA::ULong seq = 0;
+      CORBA::ULong seq {};
   if (data >>= seq)
   {
     check_serial_number (seq);
   }
   else
   {
-    const CosNotification::StructuredEvent * notification;
+    CosNotification::StructuredEvent const* notification;
     if (data >>= notification)
     {
       if (notification->filterable_data.length () > 0)
       {
         if (0 == ACE_OS::strcmp (notification->filterable_data[0].name, "serial_number"))
         {
-          const CORBA::Any & data = notification->filterable_data[0].value;
+          CORBA::Any const& data = notification->filterable_data[0].value;
 
-          CORBA::ULong seq = 0;
+          CORBA::ULong seq {};
           if (data >>= seq)
           {
             check_serial_number (seq);
@@ -601,7 +562,8 @@ AnyPushConsumer_i::push (
           {
             this->problem_ = true;
             ACE_DEBUG ((LM_ERROR,
-              ACE_TEXT ("(%P|%t) Any Consumer received structured notification with unexpected data type for serial_number in structured event.\n")
+              ACE_TEXT ("(%P|%t) Any Consumer received structured notification with unexpected data type "
+                        "for serial_number in structured event.\n")
               ));
           }
         }
@@ -609,8 +571,9 @@ AnyPushConsumer_i::push (
         {
           this->problem_ = true;
           ACE_DEBUG ((LM_ERROR,
-            ACE_TEXT ("(%P|%t) Any Consumer received wrong filterable data name in structured event: %s. Expecting serial_number\n"),
-            static_cast<const char *>(notification->filterable_data[0].name)
+            ACE_TEXT ("(%P|%t) Any Consumer received wrong filterable data name in structured event: %s. "
+                      "Expecting serial_number\n"),
+            static_cast<char const*> (notification->filterable_data[0].name)
             ));
         }
       }
@@ -647,8 +610,6 @@ AnyPushConsumer_i::disconnect_push_consumer (
 
 ReconnectionCallback_i::ReconnectionCallback_i (Consumer_Main & consumer_main)
   : consumer_main_ (consumer_main)
-  , id_is_valid_ (false)
-  , reconnect_count_ (0)
 {
 }
 
@@ -732,37 +693,16 @@ ReconnectionCallback_i::init (
 // Consumer_Main
 
 Consumer_Main::Consumer_Main ()
-  : verbose_ (false)
-  , mode_ (MODE_ANY)
-  , expect_ (10)
-  , fail_ (0)
-  , use_naming_service_ (true)
-  , serial_number_ (0)
-  , disconnect_on_exit_ (false)
-  , structured_count_(0)
-  , sequence_count_(0)
-  , any_count_(0)
-  , id_file_ ("consumer.ids")
-  , ec_id_ (0)
-  , sa_id_ (0)
-  , structured_proxy_id_ (0)
-  , sequence_proxy_id_ (0)
-  , any_proxy_id_ (0)
-  , reconnection_callback_ (*this)
-  , reconnecting_ (false)
-{
-}
-
-Consumer_Main::~Consumer_Main ()
+  : reconnection_callback_ (*this)
 {
 }
 
 int
 Consumer_Main::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   int narg = 1;
-  bool corba_arg = false;
+  bool corba_arg {};
   while (narg < argc && result == 0)
   {
     int consumed = parse_single_arg (argc - narg, &argv[narg]);
@@ -797,7 +737,7 @@ Consumer_Main::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Consumer_Main::parse_single_arg (int argc, ACE_TCHAR *argv[])
 {
-  int consumed = 0;
+  int consumed {};
   if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-any")) == 0)
   {
     this->mode_ = MODE_ANY;
@@ -928,7 +868,8 @@ int Consumer_Main::init (int argc, ACE_TCHAR *argv[])
           static_cast<int>(this->fail_)
           ));
       }
-      this->structured_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
+      this->structured_push_consumer_.set_expectations (
+        this->expect_, this->fail_, this->serial_number_, this->verbose_);
       init_structured_proxy_supplier ();
       break;
     }
@@ -1002,13 +943,13 @@ Consumer_Main::save_ids()
 bool
 Consumer_Main::load_ids()
 {
-  bool ok = false;
+  bool ok {};
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "r");
 
   if (idf != 0)
   {
-    int field = 0;
+    int field {};
 
     char buffer[100] = ""; // because ACE fgets doesn't put a null if the file is empty
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
@@ -1157,7 +1098,7 @@ Consumer_Main::resolve_notify_factory ()
 void
 Consumer_Main::init_event_channel ()
 {
-  bool ok = false;
+  bool ok {};
   if (this->reconnecting_)
   {
     try
@@ -1218,7 +1159,7 @@ Consumer_Main::init_event_channel ()
   {
     CosNotification::QoSProperties qosprops (7);
     qosprops.length (7);
-    CORBA::ULong i = 0;
+    CORBA::ULong i {};
     qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
     qosprops[i++].value <<= CosNotification::Persistent;
     qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
@@ -1277,7 +1218,7 @@ CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAd
 void
 Consumer_Main::init_consumer_admin ()
 {
-  bool ok = false;
+  bool ok {};
   if (this->reconnecting_)
   {
     if (this->sa_id_ == default_admin_id)
@@ -1359,7 +1300,7 @@ Consumer_Main::init_consumer_admin ()
       if (ok)
       {
         CosNotification::QoSProperties qosprops(2);
-        CORBA::ULong i = 0;
+        CORBA::ULong i {};
         qosprops.length(2);
 
         qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
@@ -1390,7 +1331,7 @@ Consumer_Main::init_consumer_admin ()
 void
 Consumer_Main::init_structured_proxy_supplier ()
 {
-  bool ok = false;
+  bool ok {};
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
   if (this->reconnecting_)
   {
@@ -1480,7 +1421,7 @@ Consumer_Main::init_structured_proxy_supplier ()
 void
 Consumer_Main::init_sequence_proxy_supplier ()
 {
-  bool ok = false;
+  bool ok {};
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
   if (this->reconnecting_)
   {
@@ -1568,7 +1509,7 @@ Consumer_Main::set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy)
 {
   // temporary: be sure we can set qos properties for proxyw
   CosNotification::QoSProperties qosprops(2);
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   qosprops.length(2);
 
   qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
@@ -1582,7 +1523,7 @@ Consumer_Main::set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy)
 void
 Consumer_Main::init_any_proxy_supplier ()
 {
-  bool ok = false;
+  bool ok {};
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
   if (this->reconnecting_)
   {
@@ -1606,7 +1547,7 @@ Consumer_Main::init_any_proxy_supplier ()
           ));
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const& ex)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d threw exception\n"),
@@ -1713,7 +1654,7 @@ int Consumer_Main::fini ()
 
 int Consumer_Main::run ()
 {
-  int result = 0;
+  int result {};
 
   while (this->structured_push_consumer_.received () < this->expect_
     && this->sequence_push_consumer_.received () < this->expect_
@@ -1752,7 +1693,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       app.fini ();
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Error: Consumer::main\t\n");
     result = -1;

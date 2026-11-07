@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ObjRefTemplate/Default_ORTC.h"
+#include <string>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -54,8 +55,8 @@ namespace TAO
   {
   public:
     /// Constructor
-    ObjectReferenceTemplate (const char *server_id,
-                             const char *orb_id,
+    ObjectReferenceTemplate (std::string const& server_id,
+                             std::string const& orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
                              PortableServer::POA_ptr poa);
     ::CORBA::ValueBase *_copy_value () override;
@@ -100,8 +101,8 @@ namespace TAO
     ObjectReferenceTemplate (ObjectReferenceTemplate &&) = delete;
     ObjectReferenceTemplate &operator= (ObjectReferenceTemplate &&) = delete;
 
-    const char *server_id_;
-    const char *orb_id_;
+    std::string server_id_;
+    std::string orb_id_;
     PortableInterceptor::AdapterName_var adapter_name_;
     PortableServer::POA_var poa_;
   };

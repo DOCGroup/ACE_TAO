@@ -12,6 +12,9 @@
 #include "orbsvcs/Notify/EventChannel.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include "orbsvcs/Notify/Save_Persist_Worker_T.h"
+
+#include <cstring>
+#include <cstdlib>
 #include "orbsvcs/Notify/Reconnect_Worker_T.h"
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Supplier_Map.h"
@@ -28,19 +31,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Admin::TAO_Notify_Admin ()
-  : ec_ (0)
-  , filter_operator_ (CosNotifyChannelAdmin::OR_OP)
-  , is_default_ (false)
 {
   // Initialize all Admin objects to initially be subscribed for all
   // events.  This is a reasonable default and is required to allow
   // Cos Event consumers/suppliers to send/receive events,
-  this->subscribed_types_.insert (TAO_Notify_EventType::special ());
+  this->subscribed_types_.add (TAO_Notify_EventType::special ());
 }
 
-TAO_Notify_Admin::~TAO_Notify_Admin ()
-{
-}
+TAO_Notify_Admin::~TAO_Notify_Admin () = default;
 
 void
 TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
@@ -55,7 +53,7 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
   // this-> on the following line confuses VC6
   initialize (parent);
 
-  TAO_Notify_Proxy_Container* proxy_container = nullptr;
+  TAO_Notify_Proxy_Container* proxy_container {};
   ACE_NEW_THROW_EX (proxy_container,
                     TAO_Notify_Proxy_Container (),
                     CORBA::INTERNAL ());
@@ -161,25 +159,26 @@ TAO_Notify_Admin::save_attrs (TAO_Notify::NVPList& attrs)
 }
 
 void
-TAO_Notify_Admin::load_attrs(const TAO_Notify::NVPList& attrs)
+TAO_Notify_Admin::load_attrs(TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
-  const char* value = nullptr;
+  const char* value {};
   if (attrs.find ("InterFilterGroupOperator", value))
     {
-      this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (ACE_OS::atoi (value));
+      this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (
+        std::atoi (value));
     }
 
   if (attrs.find ("default", value))
     {
-      this->is_default_ = (ACE_OS::strcmp (value, "yes") == 0);
+      this->is_default_ = (std::strcmp (value, "yes") == 0);
     }
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_Admin::load_child (const ACE_CString &type,
+TAO_Notify_Admin::load_child (ACE_CString const &type,
                               CORBA::Long id,
-                              const TAO_Notify::NVPList& attrs)
+                              TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (attrs);
   TAO_Notify::Topology_Object* result = this;
@@ -192,7 +191,7 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
                     ));
       // since we initialized our subscribed types to everything
       // in the constructor. we have to clear it out first.
-      this->subscribed_types_.reset();
+      this->subscribed_types_.clear ();
       result = &this->subscribed_types_;
     }
   else if (type == "filter_admin")

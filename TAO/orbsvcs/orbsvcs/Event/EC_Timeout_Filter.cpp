@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
       TAO_EC_Event_Channel_Base *event_channel,
       TAO_EC_ProxyPushSupplier *supplier,
-      const TAO_EC_QOS_Info& qos_info,
+      TAO_EC_QOS_Info const &qos_info,
       RtecEventComm::EventType type,
       RtecEventComm::Time period)
   : event_channel_ (event_channel),
@@ -62,7 +62,7 @@ TAO_EC_Timeout_Filter::~TAO_EC_Timeout_Filter ()
 }
 
 void
-TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
+TAO_EC_Timeout_Filter::push_to_proxy (RtecEventComm::EventSet const &event,
                                       TAO_EC_QOS_Info& qos_info)
 {
   qos_info.timer_id_ = this->id_;
@@ -73,7 +73,7 @@ TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
 }
 
 int
-TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet &event,
+TAO_EC_Timeout_Filter::filter (RtecEventComm::EventSet const &event,
                                TAO_EC_QOS_Info &qos_info)
 {
   if (qos_info.timer_id_ == this->id_
@@ -99,7 +99,7 @@ TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet &event,
 }
 
 void
-TAO_EC_Timeout_Filter::push (const RtecEventComm::EventSet&,
+TAO_EC_Timeout_Filter::push (RtecEventComm::EventSet const &,
                           TAO_EC_QOS_Info&)
 {
 }
@@ -140,15 +140,15 @@ TAO_EC_Timeout_Filter::max_event_size () const
 
 int
 TAO_EC_Timeout_Filter::can_match (
-      const RtecEventComm::EventHeader&) const
+      RtecEventComm::EventHeader const &) const
 {
   return 0;
 }
 
 int
 TAO_EC_Timeout_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

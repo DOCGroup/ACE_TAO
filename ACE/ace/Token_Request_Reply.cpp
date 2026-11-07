@@ -1,4 +1,5 @@
 #include "ace/Token_Request_Reply.h"
+#include <cstring>
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -23,7 +24,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
   this->requeue_position (0);      // to avoid Purify UMR
   this->notify (0);                // to avoid Purify UMR
   transfer_.arg_ = 0;              // to avoid Purify UMR
-  ACE_OS::memset (transfer_.data_, 0, sizeof transfer_.data_); // to avoid Purify UMR
+  std::memset (transfer_.data_, 0, sizeof transfer_.data_); // to avoid Purify UMR
   this->token_name (token_name, client_id);
   this->options (options);
 }

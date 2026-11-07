@@ -46,6 +46,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Thread_Mutex
 {
 public:
+  ACE_Thread_Mutex (ACE_Thread_Mutex const &) = delete;
+  ACE_Thread_Mutex (ACE_Thread_Mutex &&) = delete;
+  ACE_Thread_Mutex &operator= (ACE_Thread_Mutex const &) = delete;
+  ACE_Thread_Mutex &operator= (ACE_Thread_Mutex &&) = delete;
+
   /// Constructor.
   ACE_Thread_Mutex (const ACE_TCHAR *name = nullptr,
                     ACE_mutexattr_t *attributes = nullptr);
@@ -152,10 +157,6 @@ protected:
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
   bool removed_;
-
-private:
-  void operator= (const ACE_Thread_Mutex &) = delete;
-  ACE_Thread_Mutex (const ACE_Thread_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

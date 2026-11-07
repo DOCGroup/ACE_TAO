@@ -79,7 +79,7 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy
 public:
   /// Constructor. The process_options contain the name and arguments
   /// for the process to be created
-  TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
+  explicit TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
 
   /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy () override;
@@ -132,7 +132,7 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_A
 {
 public:
   /// Constructor
-  TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
+  explicit TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
 
   /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_A () override;
@@ -161,7 +161,7 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_B
 {
 public:
   /// Constructor
-  TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
+  explicit TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
 
   /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_B () override;

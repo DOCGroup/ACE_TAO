@@ -9,14 +9,14 @@ Receiver_Factory::Receiver_Factory (CORBA::ORB_ptr orb)
 Test::Receiver_ptr
 Receiver_Factory::create_receiver ()
 {
-  Receiver *receiver_impl = 0;
+  Receiver *receiver_impl {};
   ACE_NEW_THROW_EX (receiver_impl,
                     Receiver,
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var transfer_ownership(receiver_impl);
+  PortableServer::ServantBase_var transfer_ownership (receiver_impl);
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA");
+    this->orb_->resolve_initial_references ("RootPOA");
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in ());

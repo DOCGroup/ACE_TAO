@@ -26,7 +26,7 @@ TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
 CORBA::Boolean
 TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   if (this->to_value (vb) && vb)
     {
       // Since we ARE a value type, we need to

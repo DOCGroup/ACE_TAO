@@ -39,8 +39,15 @@ class TAO_FT_ServerPolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
+  TAO_FT_ServerPolicyFactory () = default;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const& value) override;
+
+  TAO_FT_ServerPolicyFactory (TAO_FT_ServerPolicyFactory const&) = delete;
+  TAO_FT_ServerPolicyFactory& operator= (TAO_FT_ServerPolicyFactory const&) = delete;
+  TAO_FT_ServerPolicyFactory (TAO_FT_ServerPolicyFactory&&) = delete;
+  TAO_FT_ServerPolicyFactory& operator= (TAO_FT_ServerPolicyFactory&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -55,7 +55,7 @@ public:
 
   CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id) override;
+      char const *repo_id) override;
 
   CORBA::InterfaceDef_ptr get_interface_remote (
       CORBA::Object_ptr target) override;

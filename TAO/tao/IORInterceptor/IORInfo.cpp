@@ -67,7 +67,7 @@ TAO_IORInfo::manager_id ()
 {
   this->check_validity ();
 
-  PortableServer::POAManager_var poa_manager = this->poa_->the_POAManager ();
+  PortableServer::POAManager_var const poa_manager = this->poa_->the_POAManager ();
   return poa_manager->get_id ();
 }
 
@@ -89,7 +89,7 @@ TAO_IORInfo::adapter_template ()
   // policies and the IOR Interceptor calls to add_ior_component and
   // add_ior_component_to_profile.  It's a const value and its value
   // never changes.
-  PortableInterceptor::ObjectReferenceTemplate *adapter_template =
+  PortableInterceptor::ObjectReferenceTemplate *const adapter_template =
     this->poa_->get_adapter_template ();
 
   if (adapter_template == nullptr)
@@ -110,7 +110,7 @@ TAO_IORInfo::current_factory ()
   // same as the adapter_template, unlike adapter_template, its value
   // can be changed.  The value of the current_factory can be changed
   // only during the call to components_established method.
-  PortableInterceptor::ObjectReferenceFactory *adapter_factory =
+  PortableInterceptor::ObjectReferenceFactory *const adapter_factory =
     this->poa_->get_obj_ref_factory ();
 
   if (adapter_factory == nullptr)

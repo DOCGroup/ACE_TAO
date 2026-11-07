@@ -15,14 +15,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 
-Identity_Client::Identity_Client ()
-  : group_factory_ior_ (0),
-    number_of_invocations_ (5),
-    use_random_ (0),
-    iterations_ (0)
-{
-}
-
 int
 Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -47,7 +39,7 @@ Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
       case 'r': // flag signifying to obtain references to <Identity>
                 // objects from the random <Object_Group> rather than
                 // from the round robin one.
-        this->use_random_ = 1;
+        this->use_random_ = true;
         break;
       case '?':
       default:
@@ -99,7 +91,7 @@ Identity_Client::run ()
   CORBA::Object_var obj =
     orb->string_to_object (this->group_factory_ior_);
 
-  if (obj.in () == 0)
+  if (obj.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run]\n")
                        ACE_TEXT ("factory_resolve\n")),
@@ -113,7 +105,7 @@ Identity_Client::run ()
                        "Identity_Client: problems using the factory ior\n"),
                       -1);
 
-  const char *group_name;
+  char const *group_name;
   if (this->use_random_)
     group_name = "Random group";
   else
@@ -210,10 +202,6 @@ Identity_Client::run ()
     }
 
   return 0;
-}
-
-Identity_Client::~Identity_Client ()
-{
 }
 
 int

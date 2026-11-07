@@ -6,23 +6,23 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_string.h"
+
+#include <string>
 
 // Retrieve the data from the server
-int retrieve_data (const char *content_type,
+int retrieve_data (char const *content_type,
                    Web_Server::Content_Iterator_ptr contents);
 
 // Map content type to viewer.
-int external_viewer (const char *content_type,
-                     char *viewer,
-                     size_t length);
+int external_viewer (char const *content_type,
+                     std::string& viewer);
 
 // Spawn an external viewer
-int spawn_viewer (const char *content_type,
-                  const char *filename);
+int spawn_viewer (char const *content_type,
+                  char const *filename);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -75,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Get a Content_Iterator
       Web_Server::Content_Iterator_var contents;
       Web_Server::Metadata_Type_var metadata;
-      factory->get_iterator (ACE_TEXT_ALWAYS_CHAR(argv[1]),
+      factory->get_iterator (ACE_TEXT_ALWAYS_CHAR (argv[1]),
                              contents,
                              metadata);
 
@@ -88,8 +88,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   metadata->modification_date.in (),
                   metadata->content_type.in ()));
 
-      int result = ::retrieve_data (metadata->content_type.in (),
-                                    contents.in ());
+      int const result = ::retrieve_data (metadata->content_type.in (),
+                                          contents.in ());
 
       if (result != 0)
         return -1;
@@ -98,10 +98,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       contents->destroy ();
 
       orb->shutdown (false);
-
-      // orb->destroy ();
     }
-  catch (const Web_Server::Error_Result& exc)
+  catch (Web_Server::Error_Result const& exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Caught Web Server exception ")
@@ -109,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          exc.status),
                         -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
@@ -122,21 +120,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
-int retrieve_data (const char *content_type,
+int retrieve_data (char const *content_type,
                    Web_Server::Content_Iterator_ptr iterator)
 {
   Web_Server::Content_Iterator_var contents =
     Web_Server::Content_Iterator::_duplicate (iterator);
 
   // Create a temporary file where the retrieved data will be stored.
-  ACE_FILE_Addr file_addr (ACE_sap_any_cast (const ACE_FILE_Addr &));
+  ACE_FILE_Addr file_addr (ACE_sap_any_cast (ACE_FILE_Addr const &));
   ACE_FILE_IO file_io;
   ACE_FILE_Connector connector;
 
   if (connector.connect (file_io,
                          file_addr,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
@@ -149,12 +146,11 @@ int retrieve_data (const char *content_type,
 
   // Retrieve and store chunks of data.
   Web_Server::Chunk_Type_var chunk;
-  CORBA::ULong offset = 0;
-  int rc;
+  CORBA::ULong offset {};
 
   for (;;)
     {
-      rc = contents->next_chunk (offset, chunk);
+      CORBA::Boolean const rc = contents->next_chunk (offset, chunk);
 
       if (!rc)
         break;
@@ -180,54 +176,29 @@ int retrieve_data (const char *content_type,
 
   // Now spawn a view to display the retrieved data.
   if (::spawn_viewer (content_type,
-                      ACE_TEXT_ALWAYS_CHAR(file_addr.get_path_name ())) != 0)
+                      ACE_TEXT_ALWAYS_CHAR (file_addr.get_path_name ())) != 0)
     return -1;
 
   return 0;
 }
 
-int external_viewer (const char *content_type,
-                     char *viewer,
-                     size_t length)
+int external_viewer (char const *content_type,
+                     std::string& viewer)
 {
-  if (content_type == 0)
+  if (content_type == nullptr)
     return -1;
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
-    {
-      const char lynx[] = "lynx";
-      if (length <= sizeof (lynx))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, lynx);
-    }
+    viewer = "lynx";
   else if (ACE_OS::strcasecmp (content_type,
                                "text/plain") == 0)
-    {
-      const char more[] = "more";
-      if (length <= sizeof (more))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, more);
-    }
+    viewer = "more";
   else if (ACE_OS::strcasecmp (content_type,
                                "application/postscript") == 0)
-    {
-      const char ghostview[] = "ghostview";
-      if (length <= sizeof (ghostview))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, ghostview);
-    }
+    viewer = "ghostview";
   else if (ACE_OS::strcasecmp (content_type,
                                "application/pdf") == 0)
-    {
-      const char acroread[] = "acroread";
-      if (length <= sizeof (acroread))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, acroread);
-    }
+    viewer = "acroread";
   else if (ACE_OS::strcasecmp (content_type,
                                "image/jpeg") == 0
            || ACE_OS::strcasecmp (content_type,
@@ -236,13 +207,7 @@ int external_viewer (const char *content_type,
                                   "image/tiff") == 0
            || ACE_OS::strcasecmp (content_type,
                                   "image/png") == 0)
-    {
-      const char xv[] = "xv";
-      if (length <= sizeof (xv))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, xv);
-    }
+    viewer = "xv";
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unsupported MIME type: <%s>\n"),
@@ -253,14 +218,13 @@ int external_viewer (const char *content_type,
 }
 
 int
-spawn_viewer (const char *content_type,
-              const char *filename)
+spawn_viewer (char const *content_type,
+              char const *filename)
 {
-  char viewer[BUFSIZ];
+  std::string viewer;
 
   if (::external_viewer (content_type,
-                         viewer,
-                         sizeof (viewer)) != 0)
+                         viewer) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Problem determining which external ")
                        ACE_TEXT ("viewer to use.\n")),
@@ -270,10 +234,10 @@ spawn_viewer (const char *content_type,
   // external viewer.
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s %s"),
-                     viewer,
+                     viewer.c_str (),
                      filename);
 
-  pid_t result = ACE_Process_Manager::instance ()->spawn (opts);
+  pid_t const result = ACE_Process_Manager::instance ()->spawn (opts);
 
   switch (result)
     {
@@ -289,7 +253,7 @@ spawn_viewer (const char *content_type,
       // Parent
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("Spawned viewer <%s> with PID <%d>.\n"),
-                  viewer,
+                  viewer.c_str (),
                   result));
       break;
     }

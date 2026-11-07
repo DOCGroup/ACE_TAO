@@ -29,7 +29,7 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      CORBA::Any* value = nullptr;
+      CORBA::Any* value {};
       // Retrieve the value of the property from the Property_Evaluator
       try
         {
@@ -42,7 +42,7 @@ visit_property (TAO_Property_Constraint* literal)
 
       if (value != nullptr)
         {
-          this->queue_.enqueue_head (TAO_Literal_Constraint (value));
+          this->queue_.push_front (TAO_Literal_Constraint (value));
           return_value = 0;
         }
     }
@@ -70,8 +70,6 @@ TAO_Trader_Constraint_Validator
 }
 
 TAO_Trader_Constraint_Validator::
-~TAO_Trader_Constraint_Validator ()
-{
-}
+~TAO_Trader_Constraint_Validator () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

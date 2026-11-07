@@ -49,28 +49,30 @@ class ASNMP_Export Counter32 : public SnmpUInt32
 {
 public:
   /// constructor with a value
-  Counter32( const unsigned long i = 0);
+  explicit Counter32 (unsigned long i = 0);
 
   /// copy constructor
-  Counter32( const Counter32 &c);
+  Counter32 (Counter32 const &c);
+  Counter32 (Counter32 &&) = delete;
+  Counter32 &operator= (Counter32 &&) = delete;
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax &operator= (SnmpSyntax &val) override;
 
   /// overloaded assignment
-  Counter32& operator=( const Counter32 &uli);
+  Counter32 &operator= (Counter32 const &uli);
 
   /// overloaded assignment
-  Counter32& operator=( const unsigned long i);
+  Counter32 &operator= (unsigned long i);
 
   /// otherwise, behave like an unsigned long int
-  operator unsigned long();
+  operator unsigned long() const;
 };
 
 #endif // COUNTER_

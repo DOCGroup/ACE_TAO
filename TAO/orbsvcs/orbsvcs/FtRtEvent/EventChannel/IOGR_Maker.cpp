@@ -38,7 +38,7 @@ IOGR_Maker::instance()
 }
 
 CORBA::Object_ptr
-IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list)
+IOGR_Maker::merge_iors (TAO_IOP::TAO_IOR_Manipulation::IORList const &list)
 {
   CORBA::Object_var obj;
   if (list.length() != 1)
@@ -50,7 +50,7 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list)
 
 
 CORBA::Object_ptr
-IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
+IOGR_Maker::make_iogr (TAO_IOP::TAO_IOR_Manipulation::IORList const &list,
                       CORBA::ULong object_group_ref_version)
 {
   /// generate a new IOGR if the object group changes.
@@ -65,8 +65,8 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
 }
 
 void replace_key(char* ior, char* end_ior,
-                const TAO::ObjectKey& oldkey,
-                const TAO::ObjectKey& newkey);
+                TAO::ObjectKey const &oldkey,
+                TAO::ObjectKey const &newkey);
 /// the definition of replace_key() is moved
 /// to replace_key.cpp.
 
@@ -123,7 +123,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
 
 CORBA::Object_ptr
 IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
-                            const TAO::ObjectKey& key)
+                            TAO::ObjectKey const &key)
 {
     TAO_OutputCDR out_cdr;
     if (!(out_cdr << obj))
@@ -159,7 +159,7 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
    if (mprofile.profile_count () > 0)
     {
       // Get the Tagged Components
-      const TAO_Tagged_Components &pfile_tagged =
+      TAO_Tagged_Components const &pfile_tagged =
         mprofile.get_profile (0)->tagged_components ();
 
        if (pfile_tagged.get_component (tagged_components) == 1)
@@ -168,16 +168,16 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
           // @@ NOTE: This involves an allocation and a dellocation. This is
           // really bad.
           Safe_InputCDR cdr (
-            reinterpret_cast<const char*> (tagged_components.component_data.get_buffer ()),
+            reinterpret_cast<char const *> (tagged_components.component_data.get_buffer ()),
             tagged_components.component_data.length ());
           CORBA::Boolean byte_order;
 
-          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+          if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
             return false;
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
-          return (cdr >> ft_tag_component_) != 0;
+          return (cdr >> ft_tag_component_);
        }
     }
 
@@ -185,7 +185,7 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
 }
 
 void
-IOGR_Maker::set_ft_domain_id(const char* domain_id)
+IOGR_Maker::set_ft_domain_id (char const *domain_id)
 {
   ft_tag_component_.group_domain_id = domain_id;
 }

@@ -21,7 +21,7 @@ class JAWS_Concurrency_Bridge
 //
 {
 public:
-  JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl = 0);
+  explicit JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl = nullptr);
 
   int putq (JAWS_Protocol_Handler *ph);
   int getq (JAWS_Protocol_Handler *&ph);

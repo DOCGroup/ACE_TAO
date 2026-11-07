@@ -15,17 +15,12 @@ AMH_Messenger_i::AMH_Messenger_i ()
 {
 }
 
-// Implementation skeleton destructor
-AMH_Messenger_i::~AMH_Messenger_i ()
-{
-}
-
 void
 AMH_Messenger_i::send_message (
     DevGuide::AMH_MessengerResponseHandler_ptr _tao_rh,
-    const char * user_name,
-    const char * subject,
-    const char * message
+    char const *user_name,
+    char const *subject,
+    char const *message
   )
 {
   std::cout << "Message from: " << user_name << std::endl;
@@ -33,7 +28,7 @@ AMH_Messenger_i::send_message (
   std::cout << "Message:      " << message << std::endl;
   CORBA::String_var inout_message_arg =
     CORBA::string_dup("Thanks for the message.");
-  CORBA::Boolean result = true;
+  CORBA::Boolean const result = true;
 
   _tao_rh->send_message(result,inout_message_arg.inout ());
 }

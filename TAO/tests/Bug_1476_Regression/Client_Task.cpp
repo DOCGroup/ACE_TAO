@@ -9,7 +9,7 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr,
                           int number_of_oneways)
   : ACE_Task_Base (thr_mgr)
-  , sender_(Test::Sender::_duplicate (reply_gen))
+  , sender_ (Test::Sender::_duplicate (reply_gen))
   , orb_ (CORBA::ORB::_duplicate (orb))
   , number_ (number_of_oneways)
 {
@@ -23,10 +23,10 @@ Client_Task::svc ()
   try
     {
       // Apply sync_none policy
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb_->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -37,10 +37,11 @@ Client_Task::svc ()
       CORBA::Any scope_as_any;
       scope_as_any <<= Messaging::SYNC_NONE;
 
-      CORBA::PolicyList policies (1); policies.length (1);
+      CORBA::PolicyList policies (1);
+      policies.length (1);
       policies[0] =
         orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any);
+                             scope_as_any);
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
       policies[0]->destroy ();
@@ -53,10 +54,10 @@ Client_Task::svc ()
           this->sender_->send_ready_message ();
 
           // Do it slowly.
-          ACE_OS::sleep(ACE_Time_Value(0,250000));
-         }
-       }
-  catch (const CORBA::Exception& ex)
+          ACE_OS::sleep (ACE_Time_Value (0, 250000));
+        }
+    }
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception");
       return -1;

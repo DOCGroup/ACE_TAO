@@ -1,6 +1,8 @@
 #include "Stock_Factory_Locator_i.h"
 #include "Stock_Factory_i.h"
 
+#include <cstring>
+
 Quoter_Stock_Factory_Locator_i::
 Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -20,7 +22,7 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
       PortableServer::ObjectId_to_string (oid);
 
     // Check if the ObjectId is valid
-    if (ACE_OS::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
+    if (std::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
       // Create the required servant
       PortableServer::Servant servant =
         new Quoter_Stock_Factory_i ();

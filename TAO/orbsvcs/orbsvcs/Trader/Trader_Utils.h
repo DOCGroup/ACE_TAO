@@ -16,6 +16,9 @@
 
 #include "orbsvcs/Trader/Trader.h"
 
+#include <memory>
+#include <vector>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -56,7 +59,7 @@ public:
 
   /// Returns 1 if the property at index @a index is dynamic. Returns a
   /// 0 when the index is out of bounds.
-  int is_dynamic_property(int index);
+  bool is_dynamic_property(int index);
 
   /**
     * Returns value of the property whose index is @a index. If the
@@ -91,14 +94,11 @@ protected:
   int supports_dp_;
 
   /**
-   * In order for the client to treat the results of property_value
-   * uniformly, we need to collect the dynamically allocated anys
-   * retrieved from dynamic properties and free them upon deletion. If
-   * we didn't do this, then the property_value method would leak or
-   * cause seg faults, since the client wouldn't be able to tell
-   * whether or not the return value should be freed.
+   * Keep ownership of dynamically allocated Any values retrieved from
+   * dynamic properties. property_value() returns borrowed pointers, so
+   * callers do not need to decide whether the result should be freed.
    */
-  CORBA::Any** dp_cache_;
+  std::unique_ptr<std::unique_ptr<CORBA::Any>[]> dp_cache_;
 
 private:
   TAO_Property_Evaluator (TAO_Property_Evaluator const&) = delete;
@@ -138,7 +138,7 @@ public:
    * defined and dynamic. If the property is undefined, this method
    * will throw a Property_Undefined exception with impunity.
    */
-  int is_dynamic_property(const char* property_name);
+  bool is_dynamic_property(const char* property_name);
 
   /**
     * This method is identical to its counterpart in
@@ -215,7 +215,6 @@ private:
 class TAO_Policies
 {
 public:
-#define TAO_NUM_POLICIES  11
   /**
     * This enum represents the relative order that properties are
     * passed from one trader to another. Hence, as recommended by the
@@ -440,7 +439,7 @@ private:
   TAO_Policies& operator= (TAO_Policies&&) = delete;
 
   /// The policies indexable from the enumerated type.
-  CosTrading::Policy* policies_[TAO_NUM_POLICIES];
+  CosTrading::Policy* policies_[REQUEST_ID + 1] {};
 
   /// For the validating identifier names.
   TAO_Trader_Base& trader_;
@@ -705,7 +704,7 @@ public:
                      CosTrading::Offer& destination);
 
 private:
-  using Prop_Queue = ACE_Unbounded_Queue<CosTrading::Property*>;
+  using Prop_Queue = std::vector<CosTrading::Property*>;
 
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;

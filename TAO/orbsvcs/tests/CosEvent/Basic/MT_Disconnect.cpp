@@ -6,7 +6,8 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int use_callbacks);
+                      bool use_callbacks);
+static void deactivate_servant (PortableServer::Servant servant);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -29,9 +30,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      run_test (poa.in (), 0);
+      run_test (poa.in (), false);
 
-      run_test (poa.in (), 1);
+      run_test (poa.in (), true);
 
       // ****************************************************************
 
@@ -39,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -49,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-void
+static void
 deactivate_servant (PortableServer::Servant servant)
 {
   PortableServer::POA_var poa =
@@ -61,7 +62,7 @@ deactivate_servant (PortableServer::Servant servant)
 
 void
 run_test (PortableServer::POA_ptr poa,
-          int use_callbacks)
+          bool use_callbacks)
 {
   TAO_CEC_EventChannel_Attributes attributes (poa, poa);
   attributes.disconnect_callbacks = use_callbacks;
@@ -88,23 +89,22 @@ run_test (PortableServer::POA_ptr poa,
 }
 
 MTD_Task::MTD_Task (CosEventChannelAdmin::EventChannel_ptr ec,
-            int callbacks)
-  :  event_channel (CosEventChannelAdmin::EventChannel::_duplicate (ec)),
-     use_callbacks (callbacks)
+                    bool callbacks)
+  : event_channel (CosEventChannelAdmin::EventChannel::_duplicate (ec)),
+    use_callbacks_ (callbacks)
 {
 }
-
 
 int
 MTD_Task::svc ()
 {
-  for (int i = 0; i < 10; ++i)
+  for (int i {}; i < 10; ++i)
     {
       try
         {
           this->run_iteration ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           return -1;
         }
@@ -125,14 +125,14 @@ MTD_Task::run_iteration ()
 
   // ****************************************************************
 
-  int iterations = 100;
+  constexpr int iterations {100};
 
   CEC_Counting_Supplier supplier_0;
   CEC_Counting_Supplier supplier_1;
   CEC_Counting_Consumer consumer_0 ("Consumer/0");
   CEC_Counting_Consumer consumer_1 ("Consumer/1");
 
-  for (int i = 0; i != iterations; ++i)
+  for (int i {}; i != iterations; ++i)
     {
       supplier_0.connect (supplier_admin.in ());
       consumer_0.connect (consumer_admin.in ());
@@ -154,9 +154,9 @@ MTD_Task::run_iteration ()
 
   deactivate_servant (&consumer_0);
 
-  CORBA::ULong count_0 = 0;
-  CORBA::ULong count_1 = 0;
-  if (use_callbacks)
+  CORBA::ULong count_0 {};
+  CORBA::ULong count_1 {};
+  if (this->use_callbacks_)
     {
       count_0 += iterations;
       count_1 += iterations / 2;
@@ -167,24 +167,24 @@ MTD_Task::run_iteration ()
                 "ERROR: incorrect number of disconnect calls (%d/%d) for "
                 "consumer 0 (%d)\n",
                 consumer_0.disconnect_count, count_0,
-                use_callbacks));
+                this->use_callbacks_));
   if (supplier_0.disconnect_count != count_0)
     ACE_ERROR ((LM_ERROR,
                 "ERROR: incorrect number of disconnect calls (%d/%d) for "
                 "supplier 0 (%d)\n",
                 supplier_0.disconnect_count, count_0,
-                use_callbacks));
+                this->use_callbacks_));
 
   if (consumer_1.disconnect_count != count_1)
     ACE_ERROR ((LM_ERROR,
                 "ERROR: incorrect number of disconnect calls (%d/%d) for "
                 "consumer 1 (%d)\n",
                 consumer_1.disconnect_count, count_1,
-                use_callbacks));
+                this->use_callbacks_));
   if (supplier_1.disconnect_count != count_1)
     ACE_ERROR ((LM_ERROR,
                 "ERROR: incorrect number of disconnect calls (%d/%d) for "
                 "supplier 1 (%d)\n",
                 supplier_1.disconnect_count, count_1,
-                use_callbacks));
+                this->use_callbacks_));
 }

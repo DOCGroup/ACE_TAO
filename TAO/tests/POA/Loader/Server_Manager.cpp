@@ -2,26 +2,28 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
+#include <memory>
+#include <string>
+
 Server_i::Server_i ()
-  : ior_output_file_ (0),
-    policies_ (4)
-{
-}
+  : policies_ (4)
+{}
 
 Server_i::~Server_i ()
 {
-  delete this->servant_activator_;
-  delete this->servant_locator_;
+  this->servant_activator_.reset ();
+  this->servant_locator_.reset ();
   this->orb_->destroy ();
 }
 
 // This method parses the input.
 
 int
-Server_i::parse_args (int argc, ACE_TCHAR **argv)
+Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -47,54 +49,48 @@ Server_i::parse_args (int argc, ACE_TCHAR **argv)
 // The IORs obtained are written into files for further use.
 
 int
-Server_i::write_iors_to_file (const char *first_ior,
-                              const char *second_ior)
+Server_i::write_iors_to_file (char const *first_ior,
+                              char const *second_ior)
 {
-  if (ior_output_file_ == 0)
+  if (ior_output_file_ == nullptr)
     // No filename was specified; simply return
     return 0;
 
-  char ior_output_file_1[BUFSIZ];
-  char ior_output_file_2[BUFSIZ];
+  std::string const ior_output_file_1 = std::string (ACE_TEXT_ALWAYS_CHAR (ior_output_file_)) + "_1";
+  std::string const ior_output_file_2 = std::string (ACE_TEXT_ALWAYS_CHAR (ior_output_file_)) + "_2";
 
-  ACE_OS::sprintf (ior_output_file_1, "%s_1", ACE_TEXT_ALWAYS_CHAR(ior_output_file_));
-  ACE_OS::sprintf (ior_output_file_2, "%s_2", ACE_TEXT_ALWAYS_CHAR(ior_output_file_));
-
-  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1,
-                                       "w");
-  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2,
-                                       "w");
-  if (output_file_1 == 0
-      || output_file_2 == 0)
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file_1 (
+    ACE_OS::fopen (ior_output_file_1.c_str (), "w"), ACE_OS::fclose);
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file_2 (
+    ACE_OS::fopen (ior_output_file_2.c_str (), "w"), ACE_OS::fclose);
+  if (!output_file_1 || !output_file_2)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output files for writing IORs: %C, %C\n",
-                       ior_output_file_1,
-                       ior_output_file_2),
+                       ior_output_file_1.c_str (),
+                       ior_output_file_2.c_str ()),
                       -1);
 
-  int result = ACE_OS::fprintf (output_file_1,
+  int result = ACE_OS::fprintf (output_file_1.get (),
                                 "%s",
                                 first_ior);
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
+      || static_cast<size_t> (result) != std::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %C\n",
                        first_ior,
-                       ior_output_file_1),
+                       ior_output_file_1.c_str ()),
                       -1);
 
-  result = ACE_OS::fprintf (output_file_2,
+  result = ACE_OS::fprintf (output_file_2.get (),
                             "%s",
                             second_ior);
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
+      || static_cast<size_t> (result) != std::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %C\n",
                        second_ior,
-                       ior_output_file_2),
+                       ior_output_file_2.c_str ()),
                       -1);
-  ACE_OS::fclose (output_file_1);
-  ACE_OS::fclose (output_file_2);
   return 0;
 }
 
@@ -108,7 +104,7 @@ Server_i::init (int argc, ACE_TCHAR **argv)
       // Initialize the ORB.
       orb_ = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -122,7 +118,7 @@ Server_i::init (int argc, ACE_TCHAR **argv)
       // Get the POAManager of RootPOA
       poa_manager_ = root_poa_->the_POAManager ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server_i:init_poa ()");
       return 1;
@@ -136,12 +132,10 @@ Server_i::init (int argc, ACE_TCHAR **argv)
 // Servant Locator would be used by the Servant Manager.
 
 PortableServer::POA_ptr
-Server_i::create_poa (const char *name,
+Server_i::create_poa (char const *name,
                       int servant_retention_policy)
 {
-  PortableServer::POA_ptr my_poa = 0;
-
-
+  PortableServer::POA_ptr my_poa {};
   try
     {
       policies_.length (4);
@@ -194,10 +188,10 @@ Server_i::create_poa (const char *name,
           policy->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server_i:create_poa ()");
-      return 0;
+      return nullptr;
     }
 
   return my_poa;
@@ -206,13 +200,13 @@ Server_i::create_poa (const char *name,
 // The Servant Activator object is created and initialised.
 
 int
-Server_i::create_activator (PortableServer::POA_var first_poa)
+Server_i::create_activator (PortableServer::POA_var const &first_poa)
 {
   try
     {
       // An Servant Activator object is created which will activate
       // the servant on demand.
-      ServantActivator *temp_servant_activator;
+      ServantActivator *temp_servant_activator {};
       ACE_NEW_RETURN (temp_servant_activator,
                       ServantActivator (orb_.in (),
                                         ACE_TEXT("Generic_Servant"),
@@ -222,8 +216,8 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
 
       // Set ServantActivator object as the servant_manager of
       // firstPOA.
-      this->servant_activator_ = temp_servant_activator;
-      first_poa->set_servant_manager (this->servant_activator_);
+      this->servant_activator_.reset (temp_servant_activator);
+      first_poa->set_servant_manager (this->servant_activator_.get ());
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous lines:
@@ -241,7 +235,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       first_test_ = first_poa->create_reference_with_id (first_test_oid.in (),
                                                         "IDL:test:1.0");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server_i:create_activator ()");
       return 1;
@@ -253,13 +247,13 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
 // The Servant Locator object is created and initialised.
 
 int
-Server_i::create_locator (PortableServer::POA_var second_poa)
+Server_i::create_locator (PortableServer::POA_var const &second_poa)
 {
   try
     {
       // An Servant Locator object is created which will activate
       // the servant on demand.
-      ServantLocator *temp_servant_locator = 0;
+      ServantLocator *temp_servant_locator {};
       ACE_NEW_RETURN (temp_servant_locator,
                       ServantLocator (orb_.in (),
                                       ACE_TEXT ("Generic_Servant"),
@@ -268,8 +262,8 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
                       0);
       // Set ServantLocator object as the servant Manager of
       // secondPOA.
-      this->servant_locator_ = temp_servant_locator;
-      second_poa->set_servant_manager (this->servant_locator_);
+      this->servant_locator_.reset (temp_servant_locator);
+      second_poa->set_servant_manager (this->servant_locator_.get ());
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous lines:
@@ -321,7 +315,7 @@ Server_i::run ()
                   first_test_ior.in (),
                   second_test_ior.in ()));
 
-      int write_result =
+      int const write_result =
         this->write_iors_to_file (first_test_ior.in (),
                                   second_test_ior.in ());
       if (write_result != 0)
@@ -335,7 +329,7 @@ Server_i::run ()
       // Run the ORB.
       orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server_i:run ()");
       return 1;

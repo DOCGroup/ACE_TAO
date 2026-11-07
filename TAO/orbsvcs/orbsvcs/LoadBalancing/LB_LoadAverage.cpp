@@ -9,7 +9,8 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadAverage.inl"
@@ -28,19 +29,24 @@ TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
   // and lock are only needed if dampening is enabled, i.e. non-zero.
   if (!ACE::is_equal (this->dampening_, 0.0f))
     {
-      ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      this->load_map_.reset (new (std::nothrow) TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      if (!this->load_map_)
+        {
+          errno = ENOMEM;
+          return;
+        }
 
-      ACE_NEW (this->lock_, TAO_SYNCH_MUTEX);
+      this->lock_.reset (new (std::nothrow) TAO_SYNCH_MUTEX);
+      if (!this->lock_)
+        {
+          this->load_map_.reset ();
+          errno = ENOMEM;
+          return;
+        }
     }
 
   // Initialize the random load balancing strategy.
   TAO_LB_Random::init ();
-}
-
-TAO_LB_LoadAverage::~TAO_LB_LoadAverage ()
-{
-  delete this->load_map_;
-  delete this->lock_;
 }
 
 char *
@@ -52,7 +58,7 @@ TAO_LB_LoadAverage::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LoadAverage::get_properties ()
 {
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -96,7 +102,7 @@ TAO_LB_LoadAverage::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = nullptr;
+      TAO_LB_LoadMap::ENTRY * entry {};
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -333,7 +339,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      if (ACE_OS::strcmp (property.nam[0].id.in (),
+      if (std::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LoadAverage.Tolerance") == 0)
         {
           this->extract_float_property (property,
@@ -344,7 +350,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadAverage.Dampening") == 0)
         {
           this->extract_float_property (property,
@@ -355,7 +361,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadAverage.PerBalanceLoad") == 0)
         {
           this->extract_float_property (property,

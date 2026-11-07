@@ -37,18 +37,18 @@ namespace ACE
     class MONITOR_CONTROL_Export Monitor_Group : public Monitor_Base
     {
     public:
-      Monitor_Group (const char* name);
+      explicit Monitor_Group (char const* name);
 
       void add_member (Monitor_Base* member);
 
-      virtual void update ();
+      void update () override;
 
       /// These are overridden to be no-ops.
-      virtual void receive (double data);
-      virtual void receive (size_t data);
-      virtual void receive (const Monitor_Control_Types::NameList& data);
+      void receive (double data) override;
+      void receive (size_t data) override;
+      void receive (Monitor_Control_Types::NameList const& data) override;
 
-      virtual void clear ();
+      void clear () override;
 
     private:
       using MEMBERS = ACE_Unbounded_Queue<Monitor_Base *>;

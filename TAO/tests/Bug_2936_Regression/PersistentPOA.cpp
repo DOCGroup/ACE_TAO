@@ -8,19 +8,14 @@
 
 PersistentPoa::~PersistentPoa () noexcept = default;
 
-ACE_TCHAR const *POAname_ = nullptr;
-ACE_TCHAR const *ORBname_ = nullptr;
-
 int
 PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-
   ACE_Arg_Shifter as (argc, argv);
-  POAname_ = as.get_current ();
+  ACE_TCHAR const * const poa_name = as.get_current ();
   as.ignore_arg ();
 
-  ORBname_ = as.get_current ();
+  ACE_TCHAR const * const orb_name = as.get_current ();
   as.ignore_arg ();
 
   while (as.is_anything_left ())
@@ -30,11 +25,17 @@ PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      DllORB *p_orb = ACE_Dynamic_Service<DllORB>::instance (ORBname_);
+      DllORB * const p_orb = ACE_Dynamic_Service<DllORB>::instance (orb_name);
+      if (p_orb == nullptr)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) init - ORB service not found\n")));
+          return -1;
+        }
 
       mv_orb = p_orb->orb ();
 
-      CORBA::Object_var v_poa = mv_orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const v_poa = mv_orb->resolve_initial_references ("RootPOA");
 
       mv_rootPOA = PortableServer::POA::_narrow (v_poa.in ());
 
@@ -45,21 +46,21 @@ PersistentPoa::init (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-    // Policies for the new POA
+      // Policies for the new POA
       CORBA::PolicyList policies (3);
-    policies.length (3);
+      policies.length (3);
 
-    // Threading policy
+      // Threading policy
       policies[0] = mv_rootPOA->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
 
-    // Lifespan policy
+      // Lifespan policy
       policies[1] = mv_rootPOA->create_lifespan_policy (PortableServer::PERSISTENT);
 
-    // ID assignment policy
+      // ID assignment policy
       policies[2] = mv_rootPOA->create_id_assignment_policy (PortableServer::USER_ID);
 
       mv_thisPOA = mv_rootPOA->create_POA (
-        ACE_TEXT_ALWAYS_CHAR (POAname_),
+        ACE_TEXT_ALWAYS_CHAR (poa_name),
         PortableServer::POAManager::_nil (),
         policies);
       if (CORBA::is_nil (mv_thisPOA.in ()))
@@ -85,20 +86,16 @@ PersistentPoa::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) init - POA activated\n")
-  ));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) init - POA activated\n")));
 
-  return result;
+  return 0;
 }
 
 
 int
 PersistentPoa::fini ()
 {
-  int result = 0;
-
   try
     {
       mv_poaManager->deactivate (1, 1);
@@ -111,12 +108,10 @@ PersistentPoa::fini ()
                   ACE_TEXT ("(%P|%t) init - exception\n")));
       return -1;
     }
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) fini - POA deactivated\n")
-  ));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) fini - POA deactivated\n")));
 
-  return result;
+  return 0;
 }
 
 ACE_FACTORY_DEFINE (bug2936, PersistentPoa)

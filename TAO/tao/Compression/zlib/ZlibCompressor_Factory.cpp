@@ -7,8 +7,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-Zlib_CompressorFactory::Zlib_CompressorFactory () :
-  ::TAO::CompressorFactory (::Compression::COMPRESSORID_ZLIB)
+Zlib_CompressorFactory::Zlib_CompressorFactory ()
+  : ::TAO::CompressorFactory (::Compression::COMPRESSORID_ZLIB)
 {
 }
 
@@ -21,7 +21,7 @@ Zlib_CompressorFactory::get_compressor (
                                     ::Compression::CompressionLevel(Z_BEST_COMPRESSION), // Max value
                                     compression_level); // Argument value
 
-    ::Compression::Compressor_ptr compressor = nullptr;
+    ::Compression::Compressor_ptr compressor {};
 
     {   // Ensure scoped lock for compressor Map container
 

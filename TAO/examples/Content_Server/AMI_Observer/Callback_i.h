@@ -18,6 +18,9 @@
 #include "ace/FILE_IO.h"
 #include "Push_Web_ServerS.h"
 
+#include <atomic>
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -51,32 +54,36 @@ class Callback_i :
   friend class Callback_i_Friend;
 
 public:
+  Callback_i (Callback_i const&) = delete;
+  Callback_i (Callback_i&&) = delete;
+  Callback_i& operator= (Callback_i const&) = delete;
+  Callback_i& operator= (Callback_i&&) = delete;
+
   /// Constructor
-  Callback_i (int *request_count);
+  explicit Callback_i (std::atomic<int>& request_count);
 
   /// This operation returns the next <chunk> of the file starting at
   /// <offset>.  If there are no more bindings, false is returned.
-  virtual void next_chunk (const Web_Server::Chunk_Type &chunk,
-                           CORBA::Boolean last_chunk);
+  void next_chunk (Web_Server::Chunk_Type const& chunk,
+                   CORBA::Boolean last_chunk) override;
 
   /// Set metadata associated with received data.
-  void metadata (const Web_Server::Metadata_Type &metadata);
+  void metadata (Web_Server::Metadata_Type const& metadata);
 
 private:
   /// Destructor must be private to ensure that this object is
   /// allocated on the heap.
-  ~Callback_i ();
+  ~Callback_i () override;
 
-  /// Returns one if the metadata was received, and zero otherwise.
-  int metadata_received ();
+  /// Check whether the metadata was received.
+  bool metadata_received ();
 
-  /// Returns one if the entire content was received, and zero
-  /// otherwise.
-  int content_received ();
+  /// Check whether the entire content was received.
+  bool content_received ();
 
   /// Get the name of the viewer associated with the file being
   /// retrieved.
-  int get_viewer (char *viewer, size_t length);
+  int get_viewer (std::string& viewer) const;
 
   /// Spawn an external view to display the retrieved file.
   int spawn_viewer ();
@@ -93,26 +100,19 @@ private:
   /// (e.g. read, write, etc).
   ACE_FILE_IO file_io_;
 
-  /// Reference to this Reply Handler's self.
-  Web_Server::AMI_CallbackHandler_var ami_handler_;
-
   /// The metadata associated with the file being retrieved from the
   /// web server.
   Web_Server::Metadata_Type metadata_;
 
   /// Flag that indicates entire data content has been received.
-  int last_chunk_;
+  bool last_chunk_ {};
 
   /// Lock used to prevent race conditions when checking to see if
   /// metadata or entire content has been received.
   TAO_SYNCH_MUTEX lock_;
 
-  /**
-   * Pointer to external status monitoring variable. The contents (not
-   * the pointer itself) of the <pending_data> parameter will be
-   * decremented when file retrieval has completed.
-   */
-  int *request_count_;
+  /// Shared count of outstanding requests, updated as retrievals start and finish.
+  std::atomic<int>& request_count_;
 };
 
 #endif  /* CALLBACK_I_H */

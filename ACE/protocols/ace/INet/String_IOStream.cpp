@@ -5,6 +5,8 @@
 #include "ace/INet/IOS_util.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -28,9 +30,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_StreamBufferBase<ACE_CHAR_T, TR>::~String_StreamBufferBase ()
-      {
-      }
+    String_StreamBufferBase<ACE_CHAR_T, TR>::~String_StreamBufferBase () = default;
 
     template <class ACE_CHAR_T, class TR>
     typename String_StreamBufferBase<ACE_CHAR_T, TR>::pos_type
@@ -78,7 +78,7 @@ namespace ACE
     void String_StreamBufferBase<ACE_CHAR_T, TR>::close_string ()
       {
         this->sync ();
-        this->string_ref_ = 0;
+        this->string_ref_ = nullptr;
       }
 
     template <class ACE_CHAR_T, class TR>
@@ -98,7 +98,9 @@ namespace ACE
               {
                 length = this->string_ref_->length () - this->rd_ptr_;
               }
-            ACE_OS::memmove (buffer, &(*this->string_ref_)[this->rd_ptr_], length * sizeof (char_type));
+            std::memmove (buffer,
+                          &(*this->string_ref_)[this->rd_ptr_],
+                          length * sizeof (char_type));
             this->rd_ptr_ += length;
             n = ACE_Utils::truncate_cast<int> (length);
           }
@@ -172,9 +174,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_OStreamBase<ACE_CHAR_T, TR>::~String_OStreamBase()
-      {
-      }
+    String_OStreamBase<ACE_CHAR_T, TR>::~String_OStreamBase() = default;
 
     template <class ACE_CHAR_T, class TR>
     const typename String_OStreamBase<ACE_CHAR_T, TR>::string_type&
@@ -205,9 +205,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_IStreamBase<ACE_CHAR_T, TR>::~String_IStreamBase()
-      {
-      }
+    String_IStreamBase<ACE_CHAR_T, TR>::~String_IStreamBase() = default;
 
     template <class ACE_CHAR_T, class TR>
     String_IStreamBase<ACE_CHAR_T, TR>&

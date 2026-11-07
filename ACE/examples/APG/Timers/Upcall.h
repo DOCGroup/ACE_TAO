@@ -25,9 +25,9 @@ public:
   // parameter was added.
   int timeout (PTimerQueue &timer_queue,
                PCB *handler,
-               const void *arg,
+               void const *arg,
                int recurring_timer,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
 #if 0
   // This method was removed at ACE 5.4. Replaced by cancel_type() and
@@ -41,7 +41,7 @@ public:
   // the timer is still contained in it.
   int deletion (PTimerQueue &timer_queue,
                 PCB *handler,
-                const void *arg);
+                void const *arg);
 
   // The following methods don't appear before ACE 5.4, so aren't
   // referenced in APG (it's based on ACE 5.3).
@@ -49,23 +49,23 @@ public:
   // This method is called when a timer is registered.
   int registration (PTimerQueue &timer_queue,
                     PCB *handler,
-                    const void *arg);
+                    void const *arg);
 
   // This method is called before the timer expires.
   int preinvoke (PTimerQueue &timer_queue,
                  PCB *handler,
-                 const void *arg,
+                 void const *arg,
                  int recurring_timer,
-                 const ACE_Time_Value &cur_time,
-                 const void *&upcall_act);
+                 ACE_Time_Value const &cur_time,
+                 void const *&upcall_act);
 
   // This method is called after the timer expires.
   int postinvoke (PTimerQueue &timer_queue,
                   PCB *handler,
-                  const void *arg,
+                  void const *arg,
                   int recurring_timer,
-                  const ACE_Time_Value &cur_time,
-                  const void *upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *upcall_act);
 
   // This method is called when a handler is cancelled
   int cancel_type (PTimerQueue &timer_queue,

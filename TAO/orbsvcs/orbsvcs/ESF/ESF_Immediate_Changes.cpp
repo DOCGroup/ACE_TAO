@@ -21,7 +21,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
 
 template<class PROXY, class C, class ITERATOR, class ACE_LOCK>
 TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
-    TAO_ESF_Immediate_Changes (const C &collection)
+    TAO_ESF_Immediate_Changes (C const &collection)
       :  collection_ (collection)
 {
 }

@@ -55,7 +55,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equivalent (
     lhs_tc->equivalent (rhs_tc.in ());
 
   if (!equivalent_members)
-    return 0;
+    return false;
 
   // Check case label.
   // The label must be equal when determining equivalence, too.

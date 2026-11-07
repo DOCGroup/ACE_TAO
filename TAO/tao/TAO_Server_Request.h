@@ -112,7 +112,7 @@ public:
                      CORBA::Boolean response_expected,
                      CORBA::Boolean deferred_flag,
                      TAO::ObjectKey &object_key,
-                     const char *operation,
+                     char const *operation,
                      TAO_OutputCDR &output,
                      TAO_Transport *transport,
                      TAO_ORB_Core *orb_core,
@@ -131,10 +131,10 @@ public:
    */
   //@{
   /// Return the operation name.
-  const char *operation () const;
+  char const *operation () const;
 
   /// Set the operation name.
-  void operation (const char *operation, size_t length, int release);
+  void operation (char const *operation, size_t length, int release);
 
   /// Return the length of the operation.
   size_t operation_length () const;
@@ -231,14 +231,14 @@ public:
   void reply_status (GIOP::ReplyStatusType except_type);
 
   /// Set the requesting principal
-  void requesting_principal (const CORBA::OctetSeq & principal);
+  void requesting_principal (CORBA::OctetSeq const &principal);
 
   /// Return the reference to the tagged profile
   TAO_Tagged_Profile &profile ();
 
   void tao_send_reply ();
 
-  void tao_send_reply_exception (const CORBA::Exception& ex);
+  void tao_send_reply_exception (CORBA::Exception const &ex);
 
   /// Set the boolean member to true.
   void is_dsi ();
@@ -298,30 +298,30 @@ private:
   /// to be the target of a clone operation.
   TAO_ServerRequest ();
 
-  TAO_GIOP_Message_Base *mesg_base_;
+  TAO_GIOP_Message_Base *mesg_base_ {};
 
   /// Operation name.
-  const char* operation_;
+  char const *operation_ {};
 
   /// Operation length.
-  size_t operation_len_;
+  size_t operation_len_ {};
 
   /// Do we own the memory associated with operation_?
-  bool release_operation_;
+  bool release_operation_ {};
 
   CORBA::Object_var forward_location_;
 
-  bool is_forwarded_;
+  bool is_forwarded_ {};
 
   /// Incoming stream.
-  TAO_InputCDR *incoming_;
+  TAO_InputCDR *incoming_ {};
 
   /// Outgoing stream.
-  TAO_OutputCDR *outgoing_;
+  TAO_OutputCDR *outgoing_ {};
 
   /// false: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
   /// true: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
-  CORBA::Boolean response_expected_;
+  CORBA::Boolean response_expected_ {};
 
   /**
    * false: Reply would be sent by the object of this class which is the
@@ -329,32 +329,32 @@ private:
    * true: Reply would not be prepared by this class and it would be
    *    deferred for somebody.
    */
-  CORBA::Boolean deferred_reply_;
+  CORBA::Boolean deferred_reply_ {};
 
   /// true: oneway (SYNC_WITH_SERVER)
   /// false: anything else
-  CORBA::Boolean sync_with_server_;
+  CORBA::Boolean sync_with_server_ {};
 
   /// true: this request is (or may be) queued by the POA
   /// false: no POA queuing involved
-  CORBA::Boolean is_queued_;
+  CORBA::Boolean is_queued_ {};
 
   /// Did we get passed to a CORBA::ServerRequest?
-  CORBA::Boolean is_dsi_;
+  CORBA::Boolean is_dsi_ {};
 
   /// Reply status (will be NO_EXCEPTION in the majority of the cases).
-  GIOP::ReplyStatusType reply_status_;
+  GIOP::ReplyStatusType reply_status_ {GIOP::NO_EXCEPTION};
 
   /// A pointer to the ORB Core for the context where the request was
   /// created.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
   /// Service Context info
   TAO_Service_Context request_service_context_;
   TAO_Service_Context reply_service_context_;
 
   /// Unique identifier for a request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// The tagged profile that has the addressing information.
   TAO_Tagged_Profile profile_;
@@ -363,9 +363,9 @@ private:
   CORBA::OctetSeq_var requesting_principal_;
 
   /// Used to pad CDR stream if we have used DSI.
-  ptrdiff_t dsi_nvlist_align_;
+  ptrdiff_t dsi_nvlist_align_ {};
 
-  TAO_Operation_Details const * operation_details_;
+  TAO_Operation_Details const * operation_details_ {};
 
   /**
    * An argument flag to indicate whether there is any data that is
@@ -373,22 +373,22 @@ private:
    * which indicates that we have some data that needs to be sent back
    * to the client.
    */
-  CORBA::Boolean argument_flag_;
+  CORBA::Boolean argument_flag_ {true};
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// The number of interceptors pushed on to the current interceptor
   /// flow stack.
-  size_t interceptor_count_;
+  size_t interceptor_count_ {};
 
   /// The "Request Scope Current" (RSC) object, as required by
   /// Portable Interceptors.
-  TAO::PICurrent_Impl *rs_pi_current_;
+  TAO::PICurrent_Impl *rs_pi_current_ {};
 
   /// Pointer to the caught exception.
-  CORBA::Exception * caught_exception_;
+  CORBA::Exception * caught_exception_ {};
 
   /// Reply status for the current request.
-  PortableInterceptor::ReplyStatus pi_reply_status_;
+  PortableInterceptor::ReplyStatus pi_reply_status_ {-1};
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   ///// Transport class.

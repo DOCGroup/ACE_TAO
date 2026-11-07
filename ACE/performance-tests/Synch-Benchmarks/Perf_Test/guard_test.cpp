@@ -15,8 +15,8 @@ public:
     TEST_ACE_THREAD_MUTEX_GUARD // -t
   };
 
-  virtual int svc ();
-  virtual int init (int, ACE_TCHAR *[]);
+  int svc () override;
+  int init (int, ACE_TCHAR *[]) override;
 
   void test_guard (int);
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)

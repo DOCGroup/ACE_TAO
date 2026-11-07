@@ -15,7 +15,11 @@
 
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Read_Buffer.h"
+
+#include <memory>
+#include <string>
 
 /**
  * @class Server
@@ -33,14 +37,19 @@ class Server
 {
 public:
   /// Constructor.
-  Server ();
+  Server () = default;
 
   /// Destructor.
-  ~Server ();
+  ~Server () = default;
+
+  Server (Server const&) = delete;
+  Server (Server&&) = delete;
+  Server& operator= (Server const&) = delete;
+  Server& operator= (Server&&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
-  int init (const char *servant_name,
+  int init (char const *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
 
@@ -55,9 +64,6 @@ public:
   /// Servant class
   Servant servant_;
 
-  /// name of the servant to be used for TAO Naming Service
-  const char *name;
-
   /// Parses the commandline arguments.
   int parse_args ();
 
@@ -65,17 +71,20 @@ public:
   /// registering objects.
   TAO_ORB_Manager orb_manager_;
 
+  using FILE_ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  FILE_ptr ior_output_file_ {nullptr, &ACE_OS::fclose};
 
   /// Memory pool name that stores the state
-  ACE_TCHAR* mem_pool_name_;
+  /// Borrowed from argv and valid for the lifetime of this server.
+  ACE_TCHAR const *mem_pool_name_ {};
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
-  /// The command line arguments.
-  ACE_TCHAR **argv_;
+  /// Borrowed command-line argument vector, kept alive by main().
+  ACE_TCHAR **argv_ {};
 };
 
 
@@ -95,19 +104,24 @@ class Client
 {
 public:
   /// Constructor.
-  Client ();
+  Client () = default;
 
   /// Destructor.
-  ~Client ();
+  ~Client () = default;
+
+  Client (Client const&) = delete;
+  Client (Client&&) = delete;
+  Client& operator= (Client const&) = delete;
+  Client& operator= (Client&&) = delete;
 
   /// Initialize the client communication endpoint with server.
-  int init (const char *name,int argc, ACE_TCHAR *argv[]);
+  int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
-  InterfaceObj *operator-> () { return server_.in ();};
+  InterfaceObj *operator-> () const { return this->server_.in (); }
 
   /// Returns the shutdown flag.
-  int shutdown ();
+  int shutdown () const;
 
   /// Fills in the shutdwon flag.
   void shutdown (int);
@@ -117,7 +131,7 @@ public:
 
 protected:
   /// Function to read the server IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
   int parse_args ();
@@ -126,19 +140,16 @@ protected:
   CORBA::ORB_var orb_;
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
-  /// arguments from command line.
-  ACE_TCHAR **argv_;
+  /// Borrowed command-line argument vector, kept alive by main().
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  char *ior_;
-
-  /// Flag to use the naming service
-  int naming_;
+  std::string ior_;
 
   /// Flag for shutting down the server
-  int shutdown_;
+  bool shutdown_ {};
 
   /// Server object
   Var server_;

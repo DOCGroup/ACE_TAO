@@ -33,7 +33,7 @@ Client_Task::svc ()
           this->sender_->get_data (this->event_size_, pl.out ());
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -51,6 +51,8 @@ Client_Task::validate_connections ()
         {
           this->sender_->ping ();
         }
-      catch (const CORBA::Exception&){}
+      catch (CORBA::Exception const &)
+        {
+        }
     }
 }

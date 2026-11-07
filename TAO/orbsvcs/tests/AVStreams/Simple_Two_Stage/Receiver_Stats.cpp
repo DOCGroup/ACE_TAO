@@ -8,7 +8,7 @@
 
 
 void
-Receiver_Stats::accumulate (const Receiver_Stats &rhs)
+Receiver_Stats::accumulate (Receiver_Stats const &rhs)
 {
   if (rhs.samples_count_ == 0)
     return;
@@ -36,7 +36,7 @@ Receiver_Stats::accumulate (const Receiver_Stats &rhs)
 }
 
 void
-Receiver_Stats::dump_results (const ACE_TCHAR *msg,
+Receiver_Stats::dump_results (ACE_TCHAR const *msg,
                               FILE *file,
                               ACE_UINT32 sf) const
 {

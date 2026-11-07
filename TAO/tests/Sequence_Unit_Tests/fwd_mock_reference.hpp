@@ -17,9 +17,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class fwd_mock_reference;
-typedef fwd_mock_reference * fwd_mock_reference_ptr;
-typedef TAO_Objref_Var_T<fwd_mock_reference> fwd_mock_reference_var;
-typedef TAO_Objref_Out_T<fwd_mock_reference> fwd_mock_reference_out;
+using fwd_mock_reference_ptr = fwd_mock_reference *;
+using fwd_mock_reference_var = TAO_Objref_Var_T<fwd_mock_reference>;
+using fwd_mock_reference_out = TAO_Objref_Out_T<fwd_mock_reference>;
 
 namespace TAO
 {

@@ -35,20 +35,20 @@ class ACEXML_Export ACEXML_Element_Def_Builder
 public:
   using VAR = std::unique_ptr<ACEXML_Element_Def_Builder>;
 
-  typedef enum {
+  enum class CONTENT_TYPE {
     EMPTY,
     ANY,
     MIXED,
     CHILDREN,
     UNDEFINED
-  } CONTENT_TYPE;
+  };
 
-  typedef enum {
+  enum class CARDINALITY {
     ONE,
     ZERO_OR_MORE,
     ONE_OR_MORE,
     ONE_OR_ZERO
-  } CARDINALITY;
+  };
 
   virtual ~ACEXML_Element_Def_Builder () = 0;
 

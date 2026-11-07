@@ -36,7 +36,7 @@ TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder () = default;
 ::CORBA::ValueBase *
 TAO_AMH_DSI_Exception_Holder::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val = nullptr;
+  ::CORBA::ValueBase *ret_val {};
   ACE_NEW_THROW_EX (
     ret_val,
     TAO_AMH_DSI_Exception_Holder (
@@ -263,7 +263,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     TAO_InputCDR &strm,
     TAO_AMH_DSI_Exception_Holder *&new_object)
 {
-  ::CORBA::ValueBase *base = nullptr;
+  ::CORBA::ValueBase *base {};
   ::CORBA::Boolean is_indirected = false;
   ::CORBA::Boolean is_null_object = false;
   ::CORBA::Boolean const retval =

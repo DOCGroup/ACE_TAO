@@ -64,18 +64,18 @@ public:
    * @retval 0 Success
    * @retval -1 Duplicate id if @c rebind is false
    */
-  int register_initial_reference (const char * id,
+  int register_initial_reference (char const *id,
                                   CORBA::Object_ptr obj,
                                   bool rebind = false);
 
   /**
    * Unregister an object reference with the table
    */
-  CORBA::Object_ptr unregister_initial_reference (const char * id);
+  CORBA::Object_ptr unregister_initial_reference (char const *id);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
-  CORBA::Object_ptr resolve_initial_reference (const char * id);
+  CORBA::Object_ptr resolve_initial_reference (char const *id);
 
   /// Explicitly destroy the contents of the object reference table.
   void destroy ();
@@ -96,16 +96,16 @@ private:
    * @name The canonical ACE_Map methods
    */
   //@{
-  int bind_i (const char *orb_id, CORBA::Object_ptr obj);
-  CORBA::Object_ptr find_i (const char *orb_id); // Returns a duplicate.
-  int unbind_i (const char *orb_id);
+  int bind_i (char const *orb_id, CORBA::Object_ptr obj);
+  CORBA::Object_ptr find_i (char const *orb_id); // Returns a duplicate.
+  int unbind_i (char const *orb_id);
   //@}
 
 private:
-  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &) = delete;
-  void operator= (const TAO_Object_Ref_Table &) = delete;
+  TAO_Object_Ref_Table (TAO_Object_Ref_Table const &) = delete;
+  TAO_Object_Ref_Table &operator= (TAO_Object_Ref_Table const &) = delete;
   TAO_Object_Ref_Table (TAO_Object_Ref_Table &&) = delete;
-  void operator= (TAO_Object_Ref_Table &&) = delete;
+  TAO_Object_Ref_Table &operator= (TAO_Object_Ref_Table &&) = delete;
 
 private:
   /// The implementation.

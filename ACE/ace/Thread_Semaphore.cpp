@@ -46,7 +46,7 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (unsigned int count,
 ACE_Thread_Semaphore *
 ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>::operator () (const ACE_TCHAR *name)
 {
-  ACE_Thread_Semaphore *p = nullptr;
+  ACE_Thread_Semaphore *p {};
   if (name == nullptr)
     ACE_NEW_RETURN (p, ACE_Thread_Semaphore (1, name), nullptr);
   else

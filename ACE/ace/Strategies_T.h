@@ -138,7 +138,7 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
-  ACE_Singleton_Strategy (SVC_HANDLER * = 0,
+  ACE_Singleton_Strategy (SVC_HANDLER * = nullptr,
                           ACE_Thread_Manager * = nullptr);
   int open (SVC_HANDLER *,
             ACE_Thread_Manager * = nullptr);
@@ -311,8 +311,8 @@ public:
   // = Factory method.
   /// Activate the @a svc_handler by registering it with the <Reactor>
   /// and then calling it's <open> hook.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -375,8 +375,8 @@ public:
    * its <open> method and then calling its <activate> method to turn
    * it into an active object.
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -441,8 +441,8 @@ public:
    * and then calling the @c open() method of the SVC_HANDLER in the
    * child.
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -619,7 +619,7 @@ public:
   using stream_type = typename SVC_HANDLER::stream_type;
 
   /// Constructor
-  ACE_Scheduling_Strategy (SVC_HANDLER * = 0);
+  ACE_Scheduling_Strategy (SVC_HANDLER * = nullptr);
 
   /// Destructor
   virtual ~ACE_Scheduling_Strategy ();
@@ -654,18 +654,18 @@ public:
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   /// Constructor
-  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
+  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend ();
+  virtual int suspend () override;
 
   /// Resume hook.
-  virtual int resume ();
+  virtual int resume () override;
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  virtual void dump () const override;
 
 protected:
   /// Reactor
@@ -690,18 +690,18 @@ public:
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   /// Constructor
-  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
+  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend ();
+  virtual int suspend () override;
 
   /// Resume hook.
-  virtual int resume ();
+  virtual int resume () override;
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  virtual void dump () const override;
 
 protected:
   /// Thread Manager
@@ -727,7 +727,7 @@ public:
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
   /// This is a no-op.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 };
 
 /**
@@ -751,8 +751,8 @@ public:
 
   // = Factory method.
   /// This is a no-op.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 };
 
 template <class T>

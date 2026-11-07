@@ -70,12 +70,11 @@ CORBA::NVList::_decr_refcount ()
 
 CORBA::NVList::~NVList ()
 {
-  // initialize an iterator and delete each NamedValue
   ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> iter (this->values_);
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      CORBA::NamedValue_ptr *nv = nullptr;
+      CORBA::NamedValue_ptr *nv {};
       (void) iter.next (nv);
       delete *nv;
     }
@@ -96,7 +95,7 @@ CORBA::NVList::add (CORBA::Flags flags)
 
 // add an element and just initialize its flags and name
 CORBA::NamedValue_ptr
-CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
+CORBA::NVList::add_item (char const *name, CORBA::Flags flags)
 {
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags);
@@ -115,8 +114,8 @@ CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
 
 // add a value. If necessary, increment the list
 CORBA::NamedValue_ptr
-CORBA::NVList::add_value (const char *name,
-                          const CORBA::Any &value,
+CORBA::NVList::add_value (char const *name,
+                          CORBA::Any const &value,
                           CORBA::Flags flags)
 {
   // Call the helper to allocate a NamedValue element.
@@ -209,14 +208,11 @@ CORBA::NVList::add_element (CORBA::Flags flags)
       throw ::CORBA::BAD_PARAM ();
     }
 
-  CORBA::NamedValue_ptr nv;
-
   // allocate a new NamedValue
-  ACE_NEW_THROW_EX (nv,
-                    CORBA::NamedValue,
-                    CORBA::NO_MEMORY ());
+  CORBA::NamedValue_ptr nv {};
+  ACE_NEW_THROW_EX (nv, CORBA::NamedValue, CORBA::NO_MEMORY ());
 
-  // set the flags and enqueue in the queue
+  // Set the flags and add it to the list.
   nv->flags_ = flags;
 
   if (this->values_.enqueue_tail (nv) == -1)
@@ -240,8 +236,7 @@ CORBA::NVList::item (CORBA::ULong n)
       throw ::CORBA::Bounds ();
     }
 
-  CORBA::NamedValue_ptr *nv = nullptr;
-
+  CORBA::NamedValue_ptr *nv {};
   this->values_.get (nv, n);
   return *nv;
 }
@@ -304,11 +299,9 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
       for (i.first (); !i.done (); i.advance ())
         {
-          CORBA::NamedValue_ptr *item = nullptr;
+          CORBA::NamedValue_ptr *item {};
           (void) i.next (item);
-
           CORBA::NamedValue_ptr nv = *item;
-
           if (ACE_BIT_DISABLED (nv->flags (), flag))
             {
               continue;
@@ -346,11 +339,9 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = nullptr;
+      CORBA::NamedValue_ptr *item {};
       (void) i.next (item);
-
       CORBA::NamedValue_ptr nv = *item;
-
       if (ACE_BIT_DISABLED (nv->flags (), flag))
         {
           continue;
@@ -374,11 +365,9 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = nullptr;
+      CORBA::NamedValue_ptr *item {};
       (void) i.next (item);
-
       CORBA::NamedValue_ptr nv = *item;
-
       // check if it is an in or inout parameter
       // @@ this is where we assume that the NVList is coming from
       //    a Server-side request, we could probably handle both
@@ -413,7 +402,7 @@ CORBA::NVList::_tao_target_alignment ()
       return ACE_CDR::MAX_ALIGNMENT;
     }
 
-  const char* rd = this->incoming_->start ()->rd_ptr ();
+  char const *rd = this->incoming_->start ()->rd_ptr ();
   ptrdiff_t t = ptrdiff_t (rd) % ACE_CDR::MAX_ALIGNMENT;
 
   if (t < 0)

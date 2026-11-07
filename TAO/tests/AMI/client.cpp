@@ -14,18 +14,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_test_i.h"
-
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+#include <atomic>
+ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
-int debug = 0;
-int shutdown_flag = 0;
-int perform_work_flag = 1;
-int number_of_replies = 0;
+bool debug = false;
+bool shutdown_flag = false;
+bool perform_work_flag = true;
+std::atomic<int> number_of_replies {};
 
 CORBA::Long in_number = 931232;
-char const *in_str = "Let's talk AMI.";
-int parameter_corruption = 0;
+char const* const in_str = "Let's talk AMI.";
+std::atomic<bool> parameter_corruption {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -49,10 +49,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_flag = 1;
+        shutdown_flag = true;
         break;
       case 'w':
-        perform_work_flag = 0;
+        perform_work_flag = false;
         break;
       case '?':
       default:
@@ -106,9 +106,12 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler ()
-  {
-  };
+  Handler () = default;
+  ~Handler () override = default;
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   void foo (CORBA::Long result,
             CORBA::Long out_l) override
@@ -116,7 +119,7 @@ public:
       if (result == 0)
         {
           ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = 1;
+          parameter_corruption.store (true);
         }
 
       if (debug)
@@ -127,7 +130,7 @@ public:
                       out_l));
         }
 
-      --number_of_replies;
+      number_of_replies.fetch_sub (1);
     };
 
   void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -138,7 +141,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Caught exception:");
         }
@@ -168,10 +171,6 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler ()
-  {
-  };
-
   void inout_arg_test (char const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -240,7 +239,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies = nthreads *niterations;
+      number_of_replies.store (nthreads * niterations);
 
       if (perform_work_flag)
         {
@@ -248,12 +247,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                          number_of_replies));
+                          number_of_replies.load ()));
             }
 
           // ORB loop.
 
-          while (number_of_replies > 0)
+          while (number_of_replies.load () > 0)
             {
               CORBA::Boolean pending = orb->work_pending();
 
@@ -278,7 +277,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+                      (nthreads * niterations) - number_of_replies.load ()));
         }
 
       if (shutdown_flag)
@@ -291,21 +290,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 
-  return parameter_corruption;
+  return parameter_corruption.load ();
 }
 
 // ****************************************************************
 
 Client::Client (A::AMI_Test_ptr server,
                 int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations)
+  : ami_test_var_ (A::AMI_Test::_duplicate (server)),
+    niterations_ (niterations)
 {
   the_handler_var_ = handler._this (/* */);
 }
@@ -326,7 +325,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

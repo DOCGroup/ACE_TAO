@@ -6,8 +6,8 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 
+#include <cstring>
 #include <memory>
-#include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,7 +58,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
       // If the object type_id's differ then raise an exception.
       if (id.in () && iors[i]->_stubobj ()->type_id.in () &&
-          ACE_OS::strcmp (id.in (), iors[i]->_stubobj ()->type_id.in ()))
+          std::strcmp (id.in (), iors[i]->_stubobj ()->type_id.in ()))
         throw TAO_IOP::Invalid_IOR ();
 
       // append profiles
@@ -120,7 +120,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   CORBA::String_var id =
     CORBA::string_dup (group->_stubobj ()->type_id.in ());
   if (id.in () && ior2->_stubobj ()->type_id.in () &&
-      ACE_OS::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
+      std::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
     throw TAO_IOP::Invalid_IOR ();
 
   // Since we are removing from group ...
@@ -259,8 +259,8 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior2)
 {
   CORBA::ULong count = 0;
-  TAO_Profile *pfile1 = nullptr;
-  TAO_Profile *pfile2 = nullptr;
+  TAO_Profile *pfile1 {};
+  TAO_Profile *pfile2 {};
   std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   std::unique_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
 

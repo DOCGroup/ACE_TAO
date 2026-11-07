@@ -32,45 +32,52 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-RLECompressor::RLECompressor(::Compression::CompressorFactory_ptr compressor_factory)
+  RLECompressor::RLECompressor (
+    ::Compression::CompressorFactory_ptr compressor_factory)
     : BaseCompressor (compressor_factory, 0)
-{
-}
+  {
+  }
 
-void
-RLECompressor::compress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
-{
-    // Ensure maximum is at least X 1.1 input length.
-    target.length(static_cast<CORBA::ULong>((source.length() * 1.1) + 32U));
+  void
+  RLECompressor::compress (
+    ::Compression::Buffer const &source,
+    ::Compression::Buffer &target)
+  {
+    // Ensure maximum is at least 1.1 times the input length.
+    target.length (static_cast<CORBA::ULong> ((source.length () * 1.1) + 32U));
 
-    ACE_UINT64 out_len = ACE_RLECompression::instance()->compress( source.get_buffer(),
-                                                                   source.length(),
-                                                                   target.get_buffer(),
-                                                                   target.maximum() );
-    if (ACE_UINT64(-1) == out_len) { // Overrun
-        throw ::Compression::CompressionException();
-    }
+    ACE_UINT64 const out_len = ACE_RLECompression::instance ()->compress (
+      source.get_buffer (),
+      source.length (),
+      target.get_buffer (),
+      target.maximum ());
+    if (out_len == ACE_UINT64 (-1))
+      {
+        throw ::Compression::CompressionException ();
+      }
 
-    target.length(static_cast< CORBA::ULong>(out_len)); // Set Output Buffer to the right size now.
+    target.length (static_cast<CORBA::ULong> (out_len));
 
-    // Update statistics for this compressor
-    this->update_stats(source.length(), target.length());
-}
+    this->update_stats (source.length (), target.length ());
+  }
 
-void
-RLECompressor::decompress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
-{
-    ACE_UINT64 out_len = ACE_RLECompression::instance()->decompress(source.get_buffer(),
-                                                                    source.length(),
-                                                                    target.get_buffer(),
-                                                                    target.maximum() );
-    if (ACE_UINT64(-1) == out_len) { // Overrun
-        throw ::Compression::CompressionException();
-    }
+  void
+  RLECompressor::decompress (
+    ::Compression::Buffer const &source,
+    ::Compression::Buffer &target)
+  {
+    ACE_UINT64 const out_len = ACE_RLECompression::instance ()->decompress (
+      source.get_buffer (),
+      source.length (),
+      target.get_buffer (),
+      target.maximum ());
+    if (out_len == ACE_UINT64 (-1))
+      {
+        throw ::Compression::CompressionException ();
+      }
 
-    target.length(static_cast<CORBA::ULong>(out_len));
-}
-
+    target.length (static_cast<CORBA::ULong> (out_len));
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

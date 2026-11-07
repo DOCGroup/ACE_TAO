@@ -48,18 +48,18 @@ public:
                         CosNaming::BindingType type /* = CosNaming::nobject */);
 
   /// Copy constructor.
-  TAO_Persistent_IntId (const TAO_Persistent_IntId & rhs);
+  TAO_Persistent_IntId (TAO_Persistent_IntId const &rhs);
 
   /// Destructor.
   ~TAO_Persistent_IntId ();
 
   /// Assignment operator.
-  void operator= (const TAO_Persistent_IntId & rhs);
+  void operator= (TAO_Persistent_IntId const &rhs);
 
   // = Data members.
 
   /// Stringified IOR to be stored in a Persistent Naming Context.
-  const char *ref_;
+  char const *ref_;
 
   /// Binding type for <ref_>.
   CosNaming::BindingType type_;
@@ -86,11 +86,11 @@ public:
   TAO_Persistent_ExtId ();
 
   /// Constructor.
-  TAO_Persistent_ExtId (const char *id,
-                        const char *kind);
+  TAO_Persistent_ExtId (char const *id,
+                        char const *kind);
 
   /// Copy constructor.
-  TAO_Persistent_ExtId (const TAO_Persistent_ExtId & rhs);
+  TAO_Persistent_ExtId (TAO_Persistent_ExtId const &rhs);
 
   /// Destructor.
   ~TAO_Persistent_ExtId ();
@@ -98,13 +98,13 @@ public:
   // = Assignment and comparison methods.
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_Persistent_ExtId & rhs);
+  void operator= (TAO_Persistent_ExtId const &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
-  bool operator== (const TAO_Persistent_ExtId &rhs) const;
+  bool operator== (TAO_Persistent_ExtId const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TAO_Persistent_ExtId &rhs) const;
+  bool operator!= (TAO_Persistent_ExtId const &rhs) const;
 
   /// hash() function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
@@ -114,16 +114,16 @@ public:
 
   /// id portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
-  const char * id_;
+  char const *id_;
 
   /// kind portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
-  const char * kind_;
+  char const *kind_;
 
   // Accessors.
 
-  const char * id ();
-  const char * kind ();
+  char const * id ();
+  char const * kind ();
 };
 
 /**
@@ -151,13 +151,13 @@ public:
                               TAO_Persistent_IntId> * hash_map);
 
   /// Copy constructor.
-  TAO_Persistent_Index_IntId (const TAO_Persistent_Index_IntId & rhs);
+  TAO_Persistent_Index_IntId (TAO_Persistent_Index_IntId const &rhs);
 
   /// Destructor.
   ~TAO_Persistent_Index_IntId ();
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_Persistent_Index_IntId & rhs);
+  void operator= (TAO_Persistent_Index_IntId const &rhs);
 
   // = Data members.
 
@@ -189,10 +189,10 @@ public:
   TAO_Persistent_Index_ExtId ();
 
   /// Constructor.
-  TAO_Persistent_Index_ExtId (const char *poa_id);
+  explicit TAO_Persistent_Index_ExtId (char const *poa_id);
 
   /// Copy constructor.
-  TAO_Persistent_Index_ExtId (const TAO_Persistent_Index_ExtId & rhs);
+  TAO_Persistent_Index_ExtId (TAO_Persistent_Index_ExtId const &rhs);
 
   /// Destructor.
   ~TAO_Persistent_Index_ExtId ();
@@ -200,13 +200,13 @@ public:
   // = Assignment and comparison methods.
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_Persistent_Index_ExtId & rhs);
+  void operator= (TAO_Persistent_Index_ExtId const &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
-  bool operator== (const TAO_Persistent_Index_ExtId &rhs) const;
+  bool operator== (TAO_Persistent_Index_ExtId const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TAO_Persistent_Index_ExtId &rhs) const;
+  bool operator!= (TAO_Persistent_Index_ExtId const &rhs) const;
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
@@ -216,7 +216,7 @@ public:
 
   /// POA id to be associated with the rest of the info for some
   /// Persistent Naming Context in the Persistent Context Index.
-  const char * poa_id_;
+  char const *poa_id_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

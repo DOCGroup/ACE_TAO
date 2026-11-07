@@ -545,7 +545,7 @@ public:
 
 private:
   /// Check if @a machine_name is the local host
-  static int is_local_host (const ACE_TCHAR *machine_name);
+  static bool is_local_host (const ACE_TCHAR *machine_name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

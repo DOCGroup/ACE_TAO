@@ -4,11 +4,12 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 int use_synch = 0;
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
-const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://inner.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("middle.ior");
+ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://inner.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -49,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
         return 1;
@@ -85,11 +86,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( obj.in() );
 
-    ACE_CString iorname(ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-    std::ofstream iorFile (iorname.c_str());
-    iorFile << str.in() << std::endl;
-    iorFile.close();
-    std::cout << "IOR written to " << iorname << std::endl;
+    std::string const ior_name (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+    std::ofstream ior_file (ior_name);
+    ior_file << str.in() << std::endl;
+    std::cout << "IOR written to " << ior_name << std::endl;
 
     // Accept requests from clients.
     orb->run();
@@ -97,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     std::cerr << "CORBA exception: " << ex << std::endl;
   }
 

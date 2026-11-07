@@ -13,10 +13,12 @@
 
 #include "ace/OS_main.h"
 
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
-
 #include "ace/Log_Msg.h"
+#include <cstdio>
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#include <fstream>
+#include <iostream>
+#endif
 
 
 int
@@ -41,8 +43,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
-  const char *filename = "output";
-  ofstream outfile (filename, ios::out | ios::trunc);
+  char const *const filename = "output";
+  std::ofstream outfile (filename, std::ios::out | std::ios::trunc);
 
   // Check for errors.
   if (outfile.bad ())
@@ -64,7 +66,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
               "fifth message\n"));
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ifstream infile (filename, ios::in);
+  std::ifstream infile (filename, std::ios::in);
 
   if (infile.bad ())
     return 1;
@@ -72,10 +74,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // This loop should print out the contents of file "output", which should
   // have the strings "fourth\n" and "fifth\n" in them.
 
-  char line[BUFSIZ];
+  char line[BUFSIZ] {};
 
   while (infile.getline (line, BUFSIZ, '\n'))
-    std::cout << line << std::endl;
+    std::cout << line << '\n';
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
   return 0;

@@ -1,17 +1,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_pwd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "File_Manager.h"
+#include <cstring>
+#include <string>
 
-File_Manager::File_Manager ()
-  : number_of_friends (0),
-    max_key_length (0),
-    buffer_ptr (0),
-    current_ptr (0),
-    buffer_size (0)
-{
-}
+File_Manager::File_Manager () = default;
 
 // Either opens the friends file (if FILENAME is not a NULL pointer)
 // or opens up the password file.  In either case, the number of
@@ -20,7 +14,7 @@ File_Manager::File_Manager ()
 int
 File_Manager::open_file (const char *filename)
 {
-  return filename == 0
+  return filename == nullptr
     ? this->open_passwd_file ()
     : this->open_friends_file (filename);
 }
@@ -75,18 +69,18 @@ File_Manager::open_passwd_file ()
   ACE_HANDLE f = ACE_OS::mkstemp (filename);
   FILE *fp = ACE_OS::fdopen (f, "w");
 
-  if (fp == 0)
+  if (fp == nullptr)
     return -1;
 
   passwd *pwent;
 
   for (ACE_OS::setpwent ();
-       (pwent = ACE_OS::getpwent ()) != 0; )
+       (pwent = ACE_OS::getpwent ()) != nullptr; )
     if (*pwent->pw_gecos != '\0')
       {
-        char *cp = ACE_OS::strchr (pwent->pw_gecos, ',');
+        char *cp = std::strchr (pwent->pw_gecos, ',');
 
-        if (cp != 0)
+        if (cp != nullptr)
           *cp = '\0';
 
         ACE_OS::fprintf (fp,
@@ -116,25 +110,24 @@ File_Manager::open_passwd_file ()
 int
 File_Manager::open_friends_file (const char *filename)
 {
-  char directory[MAXPATHLEN];
-  const char *pathname = directory;
+  std::string directory;
+  const char *pathname = filename;
 
   // See if we've got a filename or a pathname (i.e., directory/filename).
 
-  if (ACE_OS::strrchr (filename, '/') != 0)
+  if (std::strrchr (filename, '/') != nullptr)
     // We've got a complete pathname.
     pathname = filename;
   else
     {
-      directory[0] = '\0';
-
       const char *home = ACE_OS::getenv ("HOME");
-      if (home != 0)
+      if (home != nullptr)
         {
-          ACE_OS::strcat (directory, home);
-          ACE_OS::strcat (directory, "/");
+          directory = home;
+          directory += '/';
         }
-      ACE_OS::strcat (directory, filename);
+      directory += filename;
+      pathname = directory.c_str ();
     }
 
   // Do the mmap'ing.

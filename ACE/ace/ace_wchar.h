@@ -145,7 +145,7 @@ class ACE_Wide_To_Ascii
 {
 public:
   /// Constructor must take a wchar string.
-  ACE_Wide_To_Ascii (const wchar_t *s);
+  explicit ACE_Wide_To_Ascii (wchar_t const *s);
 
   /// Destructor will free up the memory.
   ~ACE_Wide_To_Ascii ();
@@ -165,9 +165,11 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Wide_To_Ascii ();
-  ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
-  ACE_Wide_To_Ascii& operator= (ACE_Wide_To_Ascii &);
+  ACE_Wide_To_Ascii () = delete;
+  ACE_Wide_To_Ascii (ACE_Wide_To_Ascii const &) = delete;
+  ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &&) = delete;
+  ACE_Wide_To_Ascii &operator= (ACE_Wide_To_Ascii const &) = delete;
+  ACE_Wide_To_Ascii &operator= (ACE_Wide_To_Ascii &&) = delete;
 };
 
 /**
@@ -183,7 +185,7 @@ class ACE_Ascii_To_Wide
 {
 public:
   /// Constructor must take a wchar string.
-  ACE_Ascii_To_Wide (const char *s);
+  explicit ACE_Ascii_To_Wide (char const *s);
 
   /// Destructor will free up the memory.
   ~ACE_Ascii_To_Wide ();
@@ -204,8 +206,10 @@ private:
 
   /// Disallow these operation.
   ACE_Ascii_To_Wide () = delete;
-  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &) = delete;
-  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &) = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide const &) = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &&) = delete;
+  ACE_Ascii_To_Wide &operator= (ACE_Ascii_To_Wide const &) = delete;
+  ACE_Ascii_To_Wide &operator= (ACE_Ascii_To_Wide &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

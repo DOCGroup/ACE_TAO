@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
-    const TimeBase::TimeT &duration
+    TimeBase::TimeT const &duration
   )
   : request_duration_ (duration)
 {
@@ -12,7 +12,7 @@ TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
 
 ACE_INLINE
 TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
-    const TAO_FT_Request_Duration_Policy &rhs
+    TAO_FT_Request_Duration_Policy const &rhs
   )
   : CORBA::Object (),
     CORBA::Policy (),
@@ -24,9 +24,9 @@ TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
 
 ACE_INLINE
 TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (
-    const CORBA::Boolean heartbeat,
-    const TimeBase::TimeT &interval,
-    const TimeBase::TimeT &timeout
+    CORBA::Boolean const heartbeat,
+    TimeBase::TimeT const &interval,
+    TimeBase::TimeT const &timeout
   )
   : heartbeat_ (heartbeat),
     heartbeat_interval_ (interval),
@@ -36,7 +36,7 @@ TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (
 
 ACE_INLINE
 TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (
-    const TAO_FT_Heart_Beat_Policy &rhs
+    TAO_FT_Heart_Beat_Policy const &rhs
   )
   : CORBA::Object (),
     CORBA::Policy (),

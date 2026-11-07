@@ -112,7 +112,7 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
 TAO_Queued_Message *
 TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
 {
-  TAO_Synch_Queued_Message *qm = nullptr;
+  TAO_Synch_Queued_Message *qm {};
 
   // Clone the message block.
   // NOTE: We wantedly do the cloning from <current_block_> instead of

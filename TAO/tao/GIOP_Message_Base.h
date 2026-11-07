@@ -28,6 +28,7 @@
 #include "tao/GIOP_Fragmentation_Strategy.h"
 #include "tao/CDR.h"
 #include "tao/Incoming_Message_Stack.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -248,8 +249,13 @@ private:
   void set_giop_flags (TAO_OutputCDR & msg) const;
 
 private:
-  /// Cached ORB_Core pointer...
-  TAO_ORB_Core *orb_core_;
+  TAO_GIOP_Message_Base (TAO_GIOP_Message_Base const &) = delete;
+  TAO_GIOP_Message_Base &operator= (TAO_GIOP_Message_Base const &) = delete;
+  TAO_GIOP_Message_Base (TAO_GIOP_Message_Base &&) = delete;
+  TAO_GIOP_Message_Base &operator= (TAO_GIOP_Message_Base &&) = delete;
+
+  /// Borrowed ORB core pointer.
+  TAO_ORB_Core * const orb_core_;
 
   /// All the implementations of GIOP message generator and parsers
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
@@ -268,7 +274,7 @@ protected:
   //@{
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
-  TAO_GIOP_Fragmentation_Strategy* fragmentation_strategy_;
+  std::unique_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;

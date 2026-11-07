@@ -37,6 +37,12 @@ template<typename TYPE>
 class ACE_Abstract_Timer_Queue
 {
 public:
+  ACE_Abstract_Timer_Queue () = default;
+  ACE_Abstract_Timer_Queue (ACE_Abstract_Timer_Queue const &) = delete;
+  ACE_Abstract_Timer_Queue (ACE_Abstract_Timer_Queue &&) = delete;
+  ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue const &) = delete;
+  ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue &&) = delete;
+
   /// Destructor
   virtual ~ACE_Abstract_Timer_Queue () = 0;
 
@@ -45,7 +51,7 @@ public:
 
   /// Returns the time of the earlier node in the Timer_Queue.  Must
   /// be called on a non-empty queue.
-  virtual const ACE_Time_Value &earliest_time () const = 0;
+  virtual ACE_Time_Value const &earliest_time () const = 0;
 
   /**
    * Schedule @a type that will expire at @a future_time, which is
@@ -62,17 +68,17 @@ public:
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
    * be a valid <timer_id>).
    */
-  virtual long schedule (const TYPE &type,
-                         const void *act,
-                         const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+  virtual long schedule (TYPE const &type,
+                         void const *act,
+                         ACE_Time_Value const &future_time,
+                         ACE_Time_Value const &interval = ACE_Time_Value::zero) = 0;
 
   /**
    * Run the <functor> for all timers whose values are <= @a current_time.
    * This does not account for <timer_skew>.  Returns the number of
    * timers canceled.
    */
-  virtual int expire (const ACE_Time_Value &current_time) = 0;
+  virtual int expire (ACE_Time_Value const &current_time) = 0;
 
   /**
    * Run the <functor> for all timers whose values are <=
@@ -122,7 +128,7 @@ public:
    * only if an event will be dispatched, are encapsulated in the
    * ACE_Command_Base object.
    */
-  virtual int expire_single(ACE_Command_Base & pre_dispatch_command) = 0;
+  virtual int expire_single (ACE_Command_Base &pre_dispatch_command) = 0;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -132,7 +138,7 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
-                              const ACE_Time_Value &interval) = 0;
+                              ACE_Time_Value const &interval) = 0;
 
   /**
    * Cancel all timer associated with @a type.  If
@@ -140,7 +146,7 @@ public:
    * which typically invokes the <handle_close> hook.  Returns number
    * of timers cancelled.
    */
-  virtual int cancel (const TYPE &type,
+  virtual int cancel (TYPE const &type,
                       int dont_call_handle_close = 1) = 0;
 
   /**
@@ -154,7 +160,7 @@ public:
    * cancellation succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
-                      const void **act = nullptr,
+                      void const **act = nullptr,
                       int dont_call_handle_close = 1) = 0;
 
   /**
@@ -204,7 +210,7 @@ public:
   using ITERATOR = ACE_Timer_Queue_Iterator_T<TYPE>;
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ITERATOR & iter () = 0;
+  virtual ITERATOR &iter () = 0;
 
   /// Removes the earliest node from the queue and returns it
   virtual ACE_Timer_Node_T<TYPE> *remove_first () = 0;

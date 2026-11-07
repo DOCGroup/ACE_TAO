@@ -13,26 +13,18 @@
 #include "data.h"
 #include "analyzer.h"
 #include "tao/DynamicAny/DynamicAny.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb, int debug)
+Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynunion")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynUnion::~Test_DynUnion ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynUnion::test_name () const
 {
-  return this->test_name_;
+  return "test_dynunion";
 }
 
 int
@@ -90,7 +82,7 @@ Test_DynUnion::run_test ()
       multi_label._d (2);
 
       if (multi_label._d () != 2
-          || ACE_OS::strcmp (multi_label.value (), data.m_string1) != 0)
+          || std::strcmp (multi_label.value (), data.m_string1.in ()) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: valid discriminator for the same union member was rejected\n"));
@@ -110,7 +102,7 @@ Test_DynUnion::run_test ()
         }
 
       if (multi_label._d () != 2
-          || ACE_OS::strcmp (multi_label.value (), data.m_string1) != 0)
+          || std::strcmp (multi_label.value (), data.m_string1.in ()) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: invalid discriminator modified the union\n"));
@@ -436,7 +428,7 @@ Test_DynUnion::run_test ()
       CORBA::Boolean const equal_tc3 =
         data.m_typecode1->equal (tc3.in ());
 
-      if (!ACE_OS::strcmp (m_nm.in (), "tc")
+      if (!std::strcmp (m_nm.in (), "tc")
           && tk == CORBA::tk_TypeCode
           && equal_tc3)
         {

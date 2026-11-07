@@ -24,8 +24,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
-  : invocation_ (inv),
-    rs_pi_current_ ()
+  : invocation_ (inv)
 {
   this->setup_picurrent ();
 }
@@ -95,7 +94,7 @@ TAO_ClientRequestInfo::effective_profile ()
 {
   this->check_validity ();
 
-  IOP::TaggedProfile *tagged_profile = nullptr;
+  IOP::TaggedProfile *tagged_profile {};
   ACE_NEW_THROW_EX (tagged_profile,
                     IOP::TaggedProfile,
                     CORBA::NO_MEMORY (
@@ -141,7 +140,7 @@ TAO_ClientRequestInfo::received_exception ()
   // The spec says that if it is a user exception which can't be
   // inserted then the UNKNOWN exception needs to be thrown with minor
   // code 1.
-  CORBA::Any * temp = nullptr;
+  CORBA::Any * temp {};
 
   ACE_NEW_THROW_EX (temp,
                     CORBA::Any,
@@ -193,7 +192,7 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
     {
       if (components[i].tag == id)
         {
-          IOP::TaggedComponent *tagged_component = nullptr;
+          IOP::TaggedComponent *tagged_component {};
 
           // Only allocate a sequence if we have a tagged component
           // that matches the given IOP::ComponentId.
@@ -230,7 +229,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  IOP::TaggedComponentSeq *tagged_components = nullptr;
+  IOP::TaggedComponentSeq *tagged_components {};
   IOP::TaggedComponentSeq_var safe_tagged_components;
 
   const CORBA::ULong len = components.length ();
@@ -293,7 +292,7 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type)
 
 void
 TAO_ClientRequestInfo::add_request_service_context (
-    const IOP::ServiceContext & service_context,
+    IOP::ServiceContext const &service_context,
     CORBA::Boolean replace)
 {
   this->check_validity ();

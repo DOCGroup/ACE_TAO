@@ -18,9 +18,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_NS_stdlib.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -43,7 +41,7 @@
 
 #ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
@@ -64,9 +62,9 @@ do {\
 } while (0)
 
 #define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
-  if (ace_file_stream.set_output (program, 1) != 0) \
+  if (ace_file_stream.set_output (program, true) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 
@@ -84,22 +82,16 @@ do {\
   ACE_OS::unlink (temp);
 
 
-const int ACE_NS_MAX_ENTRIES = 1000;
-const int ACE_MAX_TIMERS = 4;
-const int ACE_MAX_THREADS = 4;
-const int ACE_MAX_DELAY = 10;
-const int ACE_MAX_INTERVAL = 0;
-const int ACE_MAX_ITERATIONS = 10;
-const int ACE_MAX_PROCESSES = 10;
-
-char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
-
 class ACE_Test_Output
 {
 public:
-  ACE_Test_Output ();
-  ~ACE_Test_Output ();
-  int set_output (const ACE_TCHAR *filename, int append = 0);
+  ACE_Test_Output () = default;
+  ~ACE_Test_Output () = default;
+  ACE_Test_Output (ACE_Test_Output const &) = delete;
+  ACE_Test_Output (ACE_Test_Output &&) = delete;
+  ACE_Test_Output &operator= (ACE_Test_Output const &) = delete;
+  ACE_Test_Output &operator= (ACE_Test_Output &&) = delete;
+  int set_output (ACE_TCHAR const *filename, bool append = false);
   ofstream *output_file ();
   void close ();
 
@@ -109,16 +101,8 @@ private:
 
 static ACE_Test_Output ace_file_stream;
 
-ACE_Test_Output::ACE_Test_Output ()
-{
-}
-
-ACE_Test_Output::~ACE_Test_Output ()
-{
-}
-
 int
-ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
+ACE_Test_Output::set_output (ACE_TCHAR const *filename, bool append)
 {
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
@@ -150,28 +134,6 @@ ACE_Test_Output::close ()
 {
   this->output_file_.flush ();
   this->output_file_.close ();
-}
-
-void
-randomize (int array[], size_t size)
-{
-  size_t i;
-
-  for (i = 0; i < size; i++)
-    array [i] = static_cast<int> (i);
-
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
-
-  // Generate an array of random numbers from 0 .. size - 1.
-
-  for (i = 0; i < size; i++)
-    {
-      int index = ACE_OS::rand() % static_cast<int> (size);
-      --size;
-      int temp = array [index];
-      array [index] = array [size];
-      array [size] = temp;
-    }
 }
 
 #endif /* ACE_TEST_CONFIG_H */

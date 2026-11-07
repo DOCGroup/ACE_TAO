@@ -3,6 +3,7 @@
 #define JAWS_CONFIG_FILE_H
 
 #include "jaws3/Export.h"
+#include <memory>
 
 class JAWS_Config_File;
 class JAWS_Config_File_Impl;
@@ -43,8 +44,13 @@ class JAWS_Export JAWS_Config_File
 public:
   // = Initialization
 
-  JAWS_Config_File (const ACE_TCHAR *config_file,
-                    const ACE_TCHAR *config_dir = "./");
+  explicit JAWS_Config_File (ACE_TCHAR const *config_file,
+                             ACE_TCHAR const *config_dir = "./");
+  ~JAWS_Config_File ();
+  JAWS_Config_File (JAWS_Config_File const &) = delete;
+  JAWS_Config_File (JAWS_Config_File &&) = delete;
+  JAWS_Config_File &operator= (JAWS_Config_File const &) = delete;
+  JAWS_Config_File &operator= (JAWS_Config_File &&) = delete;
   // Parse the specified <config_file> in the <config_dir>.
 
   // = Searching
@@ -60,7 +66,7 @@ public:
   // Dump the values of all configuration variables.
 
 private:
-  JAWS_Config_File_Impl *impl_;
+  std::unique_ptr<JAWS_Config_File_Impl> impl_;
   // Opaque implementation.
 };
 

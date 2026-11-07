@@ -7,6 +7,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 UPN_i::UPN_i (Replicator &owner)
   :owner_ (owner)
 {
@@ -231,7 +233,7 @@ Replicator::send_access_state (const char *name, ImplementationRepository::AAM_S
   for (CORBA::Long i = 0; !found && i < len; i++)
     {
       if (this->to_send_[i].action._d () == ImplementationRepository::access &&
-          ACE_OS::strcmp (this->to_send_[i].name, name) == 0)
+          std::strcmp (this->to_send_[i].name, name) == 0)
         {
           found = true;
           this->to_send_[i].action.state
@@ -262,7 +264,7 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
   bool found = false;
   for (CORBA::Long i = 0; !found && i < len; i++)
     {
-      if (ACE_OS::strcmp (this->to_send_[i].name, info.name) == 0)
+      if (std::strcmp (this->to_send_[i].name, info.name) == 0)
         {
           if (this->to_send_[i].action._d () == info.action._d ())
             {

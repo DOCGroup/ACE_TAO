@@ -15,6 +15,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/QoS/QoS_Session.h"
 
+#include <memory>
+
 /**
  * @class QoS_Util
  *
@@ -26,9 +28,13 @@ class QoS_Util
 public:
   // constructor.
   QoS_Util (int argc, ACE_TCHAR *argv[]);
+  QoS_Util (QoS_Util const &) = delete;
+  QoS_Util (QoS_Util &&) = delete;
+  QoS_Util &operator= (QoS_Util const &) = delete;
+  QoS_Util &operator= (QoS_Util &&) = delete;
 
   // destructor.
-  ~QoS_Util ();
+  ~QoS_Util () = default;
 
   // Parse command-line arguments.
   int parse_args ();
@@ -42,7 +48,7 @@ public:
 
   ACE_Protocol_ID protocol () const;
 
-  int multicast_flag () const;
+  bool multicast_flag () const;
 
 private:
   // Command line arguments.
@@ -50,10 +56,10 @@ private:
   ACE_TCHAR **argv_;
 
   // Multicast session address.
-  ACE_INET_Addr *mult_session_addr_;
+  std::unique_ptr<ACE_INET_Addr> mult_session_addr_;
 
   // Unicast destination address of the receiver.
-  ACE_INET_Addr *dest_addr_;
+  std::unique_ptr<ACE_INET_Addr> dest_addr_;
 
   // Source port for the sender.
   u_short source_port_;
@@ -62,7 +68,7 @@ private:
   ACE_Protocol_ID protocol_;
 
   // Multicast Flag.
-  int multicast_flag_;
+  bool multicast_flag_;
 };
 
 #endif /* QOS_UTIL_H */

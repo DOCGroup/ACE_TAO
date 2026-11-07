@@ -16,6 +16,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -24,7 +25,7 @@ TAO_UIOP_Connector::~TAO_UIOP_Connector () = default;
 TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 
@@ -38,33 +39,40 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   // Our connect creation strategy
-  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_UIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_UIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
-  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  std::unique_ptr<TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
 
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 &this->connect_strategy_,
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+  return result;
 }
 
 int
 TAO_UIOP_Connector::close ()
 {
   // Zap the creation strategy that we created earlier.
-  delete this->base_connector_.creation_strategy ();
-  delete this->base_connector_.concurrency_strategy ();
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
 
   return this->base_connector_.close ();
 }
@@ -155,7 +163,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
 
-  TAO_UIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_UIOP_Connection_Handler *svc_handler {};
 
   // Connect.
   int result =
@@ -306,7 +314,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 TAO_Profile *
 TAO_UIOP_Connector::make_profile ()
 {
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_UIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (

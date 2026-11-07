@@ -1,21 +1,28 @@
 #include "stats.h"
+#include <algorithm>
+#include <iostream>
 
-Stats::Stats(int size) {
-  throughput_ = new float[size];
-  latency_ = new float[size];
-  thread_count_ = size;
-  init_fini_ = new Init_Fini_t[2*size];
-  for(int i = 0; i < size; i++)
-    throughput_[i] = latency_[i] = 0;
+Stats::Stats (int size)
+  : throughput_ (size > 0 ? static_cast<size_t> (size) : 0),
+    latency_ (size > 0 ? static_cast<size_t> (size) : 0),
+    init_fini_ (size > 0 ? static_cast<size_t> (2 * size) : 0),
+    thread_count_ (size > 0 ? size : 0)
+{
 }
 
-void Stats::log(int id, float throughput, float latency) {
+void
+Stats::log (int id, float throughput, float latency)
+{
+  if (id < 0 || id >= this->thread_count_)
+    return;
   throughput_[id] = throughput;
   latency_[id] = latency;
 }
 
 // Unused for now.
-void Stats::print(char *message) {
+void
+Stats::print (char const *message)
+{
   ACE_UNUSED_ARG (message);
 
   // char time_buf[64];
@@ -32,47 +39,62 @@ void Stats::print(char *message) {
 }
 
 
-int comp(const void *a, const void *b) {
-  Init_Fini_t *A = (Init_Fini_t *)a;
-  Init_Fini_t *B = (Init_Fini_t *)b;
-
-  return (A->timestamp < B->timestamp) ? -1 : (A->timestamp > B->timestamp);
-}
-
-
-void Stats::output() {
-  int i;
-  float tavg = 0, lavg = 0;
-
-  ACE_OS::qsort(init_fini_, 2*thread_count_, sizeof(Init_Fini_t), comp);
-
-  int max = 0,thread_peak = 0;
-
-  for(i = 0; i < 2*thread_count_; i++) {
-    //    cerr << " " << ((init_fini_[i].type == THREAD_START) ? "START": "END") << " " << init_fini_[i].timestamp.sec() << "." << init_fini_[i].timestamp.usec() << endl;
-    if(init_fini_[i].type == THREAD_START) {
-      if(++thread_peak > max)
-        max = thread_peak;
+void
+Stats::output ()
+{
+  if (this->thread_count_ == 0)
+    {
+      std::cout << " 0 0 0";
+      return;
     }
-    else thread_peak--;
-  }
-  for(i = 0; i < thread_count_; i++) {
-    tavg += throughput_[i];
-    lavg += latency_[i];
-  }
-  cout << " " << tavg/thread_count_ << " " << lavg/thread_count_ << " " << max;
+
+  std::sort (this->init_fini_.begin (), this->init_fini_.end (),
+             [] (Init_Fini_t const &lhs, Init_Fini_t const &rhs)
+             {
+               if (!(lhs.timestamp < rhs.timestamp)
+                   && !(rhs.timestamp < lhs.timestamp))
+                 return lhs.type == THREAD_START && rhs.type == THREAD_END;
+               return lhs.timestamp < rhs.timestamp;
+             });
+
+  int max {};
+  int thread_peak {};
+  for (Init_Fini_t const &event : this->init_fini_)
+    if (event.type == THREAD_START)
+      {
+        if (++thread_peak > max)
+          max = thread_peak;
+      }
+    else
+      --thread_peak;
+
+  float tavg {};
+  float lavg {};
+  for (int i = 0; i < this->thread_count_; ++i)
+    {
+      tavg += this->throughput_[i];
+      lavg += this->latency_[i];
+    }
+  std::cout << " " << tavg / this->thread_count_ << " "
+       << lavg / this->thread_count_ << " " << max;
 }
 
-
-void Stats::i_have_started(int id) {
-  init_fini_[2*id].type = THREAD_START;
-  init_fini_[2*id].timestamp = ACE_OS::gettimeofday();
+void
+Stats::i_have_started (int id)
+{
+  if (id < 0 || id >= this->thread_count_)
+    return;
+  this->init_fini_[2 * id].type = THREAD_START;
+  this->init_fini_[2 * id].timestamp = ACE_OS::gettimeofday ();
 }
 
-void Stats::i_am_done(int id) {
-  init_fini_[(2*id)+1].type = THREAD_END;
-
-  init_fini_[(2*id)+1].timestamp = ACE_OS::gettimeofday();
+void
+Stats::i_am_done (int id)
+{
+  if (id < 0 || id >= this->thread_count_)
+    return;
+  this->init_fini_[(2 * id) + 1].type = THREAD_END;
+  this->init_fini_[(2 * id) + 1].timestamp = ACE_OS::gettimeofday ();
 }
 
 

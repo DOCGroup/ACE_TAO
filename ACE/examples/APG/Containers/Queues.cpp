@@ -2,6 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
 #include "DataElement.h"
+#include <memory>
 
 class QueueExample
 {
@@ -51,17 +52,16 @@ int QueueExample::runStackUnboundedQueue ()
 
   ACE_Unbounded_Queue<DataElement> queue;
   DataElement elem1[10];
-  int i;
-  for (i = 0; i < 10; i++)
+  for (int i = 0; i < 10; ++i)
     {
-      elem1[i].setData (9-i);
+      elem1[i].setData (9 - i);
       queue.enqueue_head (elem1[i]);
     }
 
   DataElement elem2[10];
-  for (i = 0; i < 10; i++)
+  for (int i = 0; i < 10; ++i)
     {
-      elem2[i].setData (i+10);
+      elem2[i].setData (i + 10);
       queue.enqueue_tail (elem2[i]);
     }
 
@@ -69,7 +69,7 @@ int QueueExample::runStackUnboundedQueue ()
        !iter.done ();
        iter.advance ())
     {
-      DataElement *elem = nullptr;
+      DataElement *elem {};
       iter.next (elem);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), elem->getData ()));
     }
@@ -83,10 +83,11 @@ int QueueExample::runHeapUnboundedQueue ()
   ACE_TRACE ("QueueExample::runHeapUnboundedQueue");
 
   ACE_Unbounded_Queue<DataElement*> queue;
-  for (int i = 0; i < 20; i++)
+  for (int i = 0; i < 20; ++i)
     {
-      DataElement *elem;
+      DataElement *elem {};
       ACE_NEW_RETURN(elem, DataElement (i), -1);
+      // The ACE queue stores a raw pointer; this example owns the queued elements.
       queue.enqueue_head (elem);
     }
 
@@ -95,11 +96,11 @@ int QueueExample::runHeapUnboundedQueue ()
        !iter.done ();
        iter.advance ())
     {
-      DataElement **elem = nullptr;
+      DataElement **elem {};
       iter.next(elem);
       ACE_DEBUG
         ((LM_DEBUG, ACE_TEXT ("%d:"), (*elem)->getData ()));
-      delete (*elem);
+      std::unique_ptr<DataElement> element_owner {*elem};
     }
 
   return 0;

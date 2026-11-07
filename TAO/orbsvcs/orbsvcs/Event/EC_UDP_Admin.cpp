@@ -8,12 +8,8 @@ TAO_EC_Simple_AddrServer::TAO_EC_Simple_AddrServer (CORBA::UShort port)
 {
 }
 
-TAO_EC_Simple_AddrServer::~TAO_EC_Simple_AddrServer ()
-{
-}
-
 void
-TAO_EC_Simple_AddrServer::get_addr (const RtecEventComm::EventHeader& header,
+TAO_EC_Simple_AddrServer::get_addr (RtecEventComm::EventHeader const &header,
                                     RtecUDPAdmin::UDP_Addr_out addr)
 {
   addr.ipaddr = header.type;
@@ -22,7 +18,7 @@ TAO_EC_Simple_AddrServer::get_addr (const RtecEventComm::EventHeader& header,
 
 
 void
-TAO_EC_Simple_AddrServer::get_address (const RtecEventComm::EventHeader& header,
+TAO_EC_Simple_AddrServer::get_address (RtecEventComm::EventHeader const &header,
                                           RtecUDPAdmin::UDP_Address_out addr)
 {
   RtecUDPAdmin::UDP_Addr v4;

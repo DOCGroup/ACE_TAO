@@ -22,6 +22,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 /**
  * @class Options
@@ -31,6 +32,11 @@
 class ACE_Svc_Export Options
 {
 public:
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
   // = Options that can be enabled/disabled.
   enum
   {
@@ -75,6 +81,7 @@ public:
 
   /// Set the locking strategy used for serializing access to the
   /// reference count in <ACE_Message_Block>.
+  /// Takes ownership of the supplied strategy.
   void locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *);
 
   /// Number of seconds after connection establishment to report
@@ -144,12 +151,12 @@ private:
   static Options *instance_;
 
   /**
-   * Points to the locking strategy used for serializing access to the
-   * reference count in <ACE_Message_Block>.  If it's 0, then there's
+   * Owns the locking strategy used for serializing access to the
+   * reference count in <ACE_Message_Block>. If it's empty, then there's
    * no locking strategy and we're using a REACTIVE concurrency
    * strategy.
    */
-  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *locking_strategy_;
+  std::unique_ptr<ACE_Lock_Adapter<ACE_SYNCH_MUTEX>> locking_strategy_;
 
   /// Number of seconds after connection establishment to report
   /// throughput.

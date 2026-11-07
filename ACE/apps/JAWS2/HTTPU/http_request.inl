@@ -10,9 +10,7 @@ HTTP_Request::HTTP_Request ()
 }
 
 ACE_INLINE
-HTTP_Request::~HTTP_Request ()
-{
-}
+HTTP_Request::~HTTP_Request () = default;
 
 ACE_INLINE Parse_HTTP_Request *
 HTTP_Request::request_line ()

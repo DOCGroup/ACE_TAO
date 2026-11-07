@@ -8,6 +8,9 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -25,13 +28,9 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup ()
 {
   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-  for (Request_Ids::ITERATOR riter (this->request_ids_);
-       ! riter.done ();
-       riter.advance ())
+  for (CosTrading::Admin::OctetSeq const * old_seq : this->request_ids_)
     {
-      const CosTrading::Admin::OctetSeq** old_seq = nullptr;
-      riter.next (old_seq);
-      delete *old_seq;
+      delete old_seq;
     }
 }
 
@@ -52,7 +51,7 @@ query (const char *type,
 
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
-  const CosTrading::Admin::OctetSeq* request_id = nullptr;
+  const CosTrading::Admin::OctetSeq* request_id {};
   int check = this->seen_request_id (policies, request_id);
 
   if (check)
@@ -294,7 +293,7 @@ lookup_all_subtypes (const char* type,
 
       for (CORBA::ULong j = 0; j < num_super_types; j++)
         {
-          if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
+          if (std::strcmp (type_struct->super_types[j], type) == 0)
             {
               // Egads, a subtype! This type has the type passed
               // to query in its list of super_types.
@@ -361,7 +360,7 @@ fill_receptacles (const char* /* type */,
   // Add to the sequence, filtering out the undesired properties.
   for (i = 0; i < offers_in_sequence; i++)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       CosTrading::OfferId offer_id = 0;
 
       // Pull the next ordered offer out of the preference
@@ -388,7 +387,7 @@ fill_receptacles (const char* /* type */,
       // Add to the iterator
       for (i = 0; i < offers_in_iterator; i++)
         {
-          CosTrading::Offer* offer = nullptr;
+          CosTrading::Offer* offer {};
           CosTrading::OfferId offer_id = 0;
 
           // Pull the next ordered offer out of the preference
@@ -402,7 +401,7 @@ fill_receptacles (const char* /* type */,
   size_t num_offers = pref_inter.num_offers ();
   for (size_t j = 0; j < num_offers; j++)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       CosTrading::OfferId offer_id = 0;
 
       pref_inter.remove_offer (offer, offer_id);
@@ -430,7 +429,7 @@ create_offer_iterator (const TAO_Property_Filter& pfilter)
   // We pass the property filter to the iterators, so when the iterators
   // return the offers, they can remove the undesirable properties
   // from those offers.
-  TAO_Offer_Iterator* iterator = nullptr;
+  TAO_Offer_Iterator* iterator {};
 
   if (CORBA::is_nil (this->trader_.trading_components ().register_if ()))
     ACE_NEW_RETURN (iterator,
@@ -543,7 +542,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
   // collection. The end result is a distributed tree of offer
   // iterators, which if traversed in its entirety is probably hugely
   // inefficient, but oh well, I can't think of a better solution.
-  TAO_Offer_Iterator_Collection* offer_iter_collection = nullptr;
+  TAO_Offer_Iterator_Collection* offer_iter_collection {};
   ACE_NEW (offer_iter_collection,
            TAO_Offer_Iterator_Collection);
   offer_iter_collection->add_offer_iterator (offer_iter);
@@ -553,9 +552,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
   for (int i = links.length () - 1; i >= 0; i--)
     {
-      CosTrading::OfferSeq* out_offers = nullptr;
-      CosTrading::OfferIterator* out_offer_iter = nullptr;
-      CosTrading::PolicyNameSeq* out_limits = nullptr;
+      CosTrading::OfferSeq* out_offers {};
+      CosTrading::OfferIterator* out_offer_iter {};
+      CosTrading::PolicyNameSeq* out_limits {};
 
       try
         {
@@ -648,7 +647,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   // Copy in the ordered offers.
   for (j = 0; j < length; j++)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       pref_inter.remove_offer (offer);
       //copy[j] = *offer;
       offers[j] = *offer;
@@ -752,14 +751,9 @@ seen_request_id (TAO_Policies& policies,
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
 
-  for (Request_Ids::ITERATOR riter (this->request_ids_);
-       ! riter.done ();
-       riter.advance ())
+  for (CosTrading::Admin::OctetSeq const * old_seq : this->request_ids_)
     {
-      const CosTrading::Admin::OctetSeq** old_seq = nullptr;
-      riter.next (old_seq);
-
-      if (**old_seq == *seq)
+      if (*old_seq == *seq)
         {
           return_value = 1;
           break;
@@ -768,14 +762,23 @@ seen_request_id (TAO_Policies& policies,
 
   if (! return_value)
     {
-      if (this->request_ids_.size () == IDS_SAVED)
+      try
         {
-          const CosTrading::Admin::OctetSeq* octet_seq = nullptr;
-          this->request_ids_.dequeue_head (octet_seq);
-          delete octet_seq;
+          this->request_ids_.push_back (seq);
+        }
+      catch (std::bad_alloc const&)
+        {
+          delete seq;
+          throw CORBA::NO_MEMORY ();
         }
 
-      this->request_ids_.enqueue_tail (seq);
+      if (this->request_ids_.size () > IDS_SAVED)
+        {
+          CosTrading::Admin::OctetSeq const * octet_seq =
+            this->request_ids_.front ();
+          this->request_ids_.pop_front ();
+          delete octet_seq;
+        }
     }
 
   return return_value;
@@ -790,9 +793,7 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Register (TAO_Trader<TRADER_LO
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register ()
-{
-}
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId
@@ -808,7 +809,7 @@ _cxx_export (CORBA::Object_ptr reference,
   // Get service type map
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
-  CosTrading::Offer* offer = nullptr;
+  CosTrading::Offer* offer {};
   TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
@@ -864,7 +865,7 @@ withdraw (const char *id)
 {
   // Get service type map.
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
-  offer_database.remove_offer ((CosTrading::OfferId) id);
+  offer_database.remove_offer (id);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -873,14 +874,14 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 describe (const char *id)
 {
   // Get service type map.
-  char* type = nullptr;
+  char const* type {};
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   // Perform a lookup to find the offer.
   CosTrading::Offer* offer =
-    offer_database.lookup_offer ((CosTrading::OfferId) id, type);
+    offer_database.lookup_offer (id, type);
 
-  CosTrading::Register::OfferInfo* offer_info = nullptr;
+  CosTrading::Register::OfferInfo* offer_info {};
   ACE_NEW_THROW_EX (offer_info, CosTrading::Register::OfferInfo, CORBA::NO_MEMORY ());
 
   offer_info->reference = CORBA::Object::_duplicate (offer->reference.in ());
@@ -908,7 +909,7 @@ modify (const char *id,
   if (check)
     throw CosTrading::NotImplemented ();
 
-  char* type = nullptr;
+  char const* type {};
   TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
@@ -916,7 +917,7 @@ modify (const char *id,
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = offer_database.
-    lookup_offer (const_cast<CosTrading::OfferId> (id), type);
+    lookup_offer (id, type);
 
   if (offer != nullptr)
     {
@@ -980,21 +981,21 @@ withdraw_using_constraint (const char *type,
 
         TAO_Trader_Constraint_Evaluator evaluator (offer, dp_support);
         if (constr_inter.evaluate (evaluator))
-          ids.enqueue_tail (offer_iter.get_id ());
+          {
+            CORBA::String_var offer_id (offer_iter.get_id ());
+            ids.emplace_back (offer_id.in ());
+          }
 
         offer_iter.next_offer ();
       }
   }
 
-  if (ids.size () != 0)
+  if (! ids.empty ())
     {
-      while (! ids.is_empty ())
+      while (! ids.empty ())
         {
-          char* offer_id = nullptr;
-
-          ids.dequeue_head (offer_id);
-          offer_database.remove_offer (offer_id);
-          CORBA::string_free (offer_id);
+          offer_database.remove_offer (ids.front ().c_str ());
+          ids.pop_front ();
         }
     }
   else
@@ -1161,9 +1162,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin ()
-{
-}
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Admin::OctetSeq *
@@ -1453,9 +1452,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link ()
-{
-}
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
@@ -1533,13 +1530,13 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
     throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
-  typename Links::ENTRY* link_entry = nullptr;
+  typename Links::ENTRY* link_entry {};
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     throw CosTrading::Link::UnknownLinkName (name);
 
   // Build a new Link Info structure.
-  CosTrading::Link::LinkInfo* new_link_info = nullptr;
+  CosTrading::Link::LinkInfo* new_link_info {};
   CosTrading::Link::LinkInfo& old_link_info = link_entry->int_id_;
 
   ACE_NEW_THROW_EX (new_link_info,
@@ -1593,7 +1590,7 @@ modify_link (const char *name,
     throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
-  typename Links::ENTRY* link_entry = nullptr;
+  typename Links::ENTRY* link_entry {};
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     throw CosTrading::Link::UnknownLinkName (name);
@@ -1631,9 +1628,7 @@ TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy ()
-{
-}
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId

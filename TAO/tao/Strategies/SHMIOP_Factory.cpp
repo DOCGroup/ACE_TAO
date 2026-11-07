@@ -15,18 +15,21 @@ static const char prefix_[] = "shmiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+void
+TAO_SHMIOP_Protocol_Factory::ACE_TCHAR_String_Deleter::operator() (ACE_TCHAR *value) const
+{
+  ACE::strdelete (value);
+}
+
 TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory ()
   : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE)
 {
 }
 
-TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory ()
-{
-  delete [] this->mmap_prefix_;
-}
+TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory () = default;
 
 int
-TAO_SHMIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
+TAO_SHMIOP_Protocol_Factory::match_prefix (std::string const &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
@@ -47,13 +50,13 @@ TAO_SHMIOP_Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO_SHMIOP_Protocol_Factory::make_acceptor ()
 {
-  TAO_SHMIOP_Acceptor *acceptor = nullptr;
+  TAO_SHMIOP_Acceptor *acceptor {};
 
   ACE_NEW_RETURN (acceptor,
                   TAO_SHMIOP_Acceptor,
                   0);
 
-  acceptor->set_mmap_options (this->mmap_prefix_,
+  acceptor->set_mmap_options (this->mmap_prefix_.get (),
                               this->min_bytes_);
 
   return acceptor;
@@ -70,7 +73,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
 
   while (arg_shifter.is_anything_left ())
     {
-      ACE_TCHAR const *current_arg = nullptr;
+      ACE_TCHAR const *current_arg {};
 
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
         {
@@ -79,7 +82,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
         {
-          this->mmap_prefix_ = ACE::strnew (current_arg);
+          this->mmap_prefix_.reset (ACE::strnew (current_arg));
           arg_shifter.consume_arg ();
         }
       else
@@ -94,7 +97,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
 TAO_Connector *
 TAO_SHMIOP_Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = nullptr;
+  TAO_Connector *connector {};
 
   ACE_NEW_RETURN (connector,
                   TAO_SHMIOP_Connector,

@@ -39,10 +39,10 @@ namespace FTRTEC {
     /// Destructor.
     ~Fault_Detector_Loader () override;
 
-    Fault_Detector_Loader(Fault_Detector_Loader const&) = delete;
-    Fault_Detector_Loader(Fault_Detector_Loader&&) = delete;
-    Fault_Detector_Loader& operator=(Fault_Detector_Loader const&) = delete;
-    Fault_Detector_Loader& operator=(Fault_Detector_Loader&&) = delete;
+    Fault_Detector_Loader (Fault_Detector_Loader const &) = delete;
+    Fault_Detector_Loader (Fault_Detector_Loader &&) = delete;
+    Fault_Detector_Loader & operator= (Fault_Detector_Loader const &) = delete;
+    Fault_Detector_Loader & operator= (Fault_Detector_Loader &&) = delete;
 
     int init (int argc,
       ACE_TCHAR* []) override;

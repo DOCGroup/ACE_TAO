@@ -12,7 +12,7 @@ void
 TAO_AMI_Arguments_Converter_Impl::convert_request (
     TAO_ServerRequest & server_request,
     TAO::Argument * const args[],
-    size_t nargs)
+    std::size_t nargs)
 {
   // The AMI requests on client side just has the in and inout arguments,
   // Since the argument list in the client side is used by server side
@@ -60,7 +60,7 @@ void
 TAO_AMI_Arguments_Converter_Impl::convert_reply (
     TAO_ServerRequest & server_request,
     TAO::Argument * const args[],
-    size_t nargs)
+    std::size_t nargs)
 {
   if (server_request.operation_details ()->reply_dispatcher ())
     {

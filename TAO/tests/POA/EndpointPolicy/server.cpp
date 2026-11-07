@@ -9,18 +9,21 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *good_ior_file = ACE_TEXT ("good.ior");
-const ACE_TCHAR *bad_ior_file = ACE_TEXT ("bad.ior");
-const ACE_TCHAR *root_ior_file = ACE_TEXT("root.ior");
-const ACE_TCHAR *svc_conf_file = ACE_TEXT("multi_prot.conf");
+#include <string>
+#include <vector>
+
+ACE_TCHAR const *good_ior_file = ACE_TEXT ("good.ior");
+ACE_TCHAR const *bad_ior_file = ACE_TEXT ("bad.ior");
+ACE_TCHAR const *root_ior_file = ACE_TEXT ("root.ior");
+ACE_TCHAR const *svc_conf_file = ACE_TEXT ("multi_prot.conf");
 
 int load_advanced_resources =
 ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
 CORBA::Short endpoint_port = 12345;
-int verbose = 0;
+bool verbose = false;
 
-enum HostNameForm
+enum class HostNameForm
   {
     from_hostname,
     use_localhost,
@@ -28,9 +31,9 @@ enum HostNameForm
     multi_protocol
   };
 
-const ACE_TCHAR *form_arg;
+ACE_TCHAR const *form_arg;
 
-HostNameForm host_form = from_hostname;
+HostNameForm host_form = HostNameForm::from_hostname;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -54,7 +57,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
     else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-v")) == 0)
       {
-        verbose = 1;
+        verbose = true;
       }
     else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-h")) == 0)
       {
@@ -64,11 +67,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
                              "host form option requires an argument\n"),-1);
         form_arg = argv[c];
         if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("local")) == 0)
-          host_form = use_localhost;
+          host_form = HostNameForm::use_localhost;
         else if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("default")) == 0)
-          host_form = use_defaulted;
+          host_form = HostNameForm::use_defaulted;
         else if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("multi")) == 0)
-          host_form = multi_protocol;
+          host_form = HostNameForm::multi_protocol;
         else
           ACE_ERROR_RETURN ((LM_ERROR,
                              "invalid host form arg, '%s'\n", form_arg), -1);
@@ -98,7 +101,7 @@ int
 make_ior (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
           Hello * servant,
-          const ACE_TCHAR *ior_file)
+          ACE_TCHAR const *ior_file)
 {
   CORBA::String_var poa_name = poa->the_name();
   ACE_DEBUG ((LM_DEBUG, "Creating IOR from %C\n", poa_name.in()));
@@ -107,13 +110,13 @@ make_ior (CORBA::ORB_ptr orb,
   CORBA::Object_var o = poa->id_to_reference (oid.in ());
 
 
-  if (host_form == from_hostname || host_form == use_localhost)
+  if (host_form == HostNameForm::from_hostname || host_form == HostNameForm::use_localhost)
     {
       CORBA::String_var ior =
         orb->object_to_string (o.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file %s for writing IOR: %C",
                            ior_file,
@@ -137,26 +140,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  const ACE_TCHAR *e1_format= ACE_TEXT ("iiop://%s:%d");
-  const ACE_TCHAR *e2_format= ACE_TEXT ("iiop://%s:%d/hostname_in_ior=unreachable");
+  ACE_TCHAR const *e1_format = ACE_TEXT ("iiop://%s:%d");
+  ACE_TCHAR const *e2_format = ACE_TEXT ("iiop://%s:%d/hostname_in_ior=unreachable");
   ACE_TCHAR hostname[256];
   int num_extra = 4;
 
   switch (host_form)
     {
-    case from_hostname:
+    case HostNameForm::from_hostname:
       ACE_OS::hostname (hostname, sizeof(hostname) / sizeof (ACE_TCHAR));
       break;
 
-    case use_localhost:
+    case HostNameForm::use_localhost:
       ACE_OS::strcpy (hostname, ACE_TEXT ("localhost"));
       break;
 
-    case use_defaulted:
+    case HostNameForm::use_defaulted:
       hostname[0] = ACE_TEXT ('\0');
       break;
 
-    case multi_protocol:
+    case HostNameForm::multi_protocol:
       hostname[0] = ACE_TEXT ('\0');
       e2_format = ACE_TEXT ("diop://");
       num_extra = 6;
@@ -166,35 +169,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   size_t hostname_len = ACE_OS::strlen (hostname);
   size_t e1_len = ACE_OS::strlen (e1_format) + 5; // 5 for the port#
   size_t e2_len = ACE_OS::strlen (e2_format) + 5;
-  ACE_TCHAR **extra = 0;
-  ACE_NEW_RETURN (extra, ACE_TCHAR *[num_extra], -1);
-
-  extra[0] = ACE::strnew (ACE_TEXT ("-ORBEndpoint"));
-  ACE_NEW_RETURN (extra[1],
-                  ACE_TCHAR[e1_len + hostname_len + 1],
-                  -1);
-  ACE_OS::sprintf (extra[1], e1_format, hostname, endpoint_port);
-  extra[2] = ACE::strnew (ACE_TEXT ("-ORBEndpoint"));
-  ACE_NEW_RETURN (extra[3],
-                  ACE_TCHAR[e2_len + hostname_len + 1],
-                  -1);
-  ACE_OS::sprintf (extra[3], e2_format, hostname, endpoint_port+1);
-  if (host_form == multi_protocol)
+  std::vector<std::basic_string<ACE_TCHAR>> extra;
+  extra.reserve (num_extra);
+  extra.emplace_back (ACE_TEXT ("-ORBEndpoint"));
+  extra.emplace_back (e1_len + hostname_len + 1, ACE_TEXT ('\0'));
+  ACE_OS::sprintf (extra.back ().data (), e1_format, hostname, endpoint_port);
+  extra.emplace_back (ACE_TEXT ("-ORBEndpoint"));
+  extra.emplace_back (e2_len + hostname_len + 1, ACE_TEXT ('\0'));
+  ACE_OS::sprintf (extra.back ().data (), e2_format, hostname, endpoint_port + 1);
+  if (host_form == HostNameForm::multi_protocol)
     {
-      extra[4] = ACE::strnew (ACE_TEXT ("-ORBSvcConf"));
-      extra[5] = ACE::strnew (svc_conf_file);
+      extra.emplace_back (ACE_TEXT ("-ORBSvcConf"));
+      extra.emplace_back (svc_conf_file);
     }
 
-  ACE_TCHAR **largv = new ACE_TCHAR *[argc+num_extra];
-  int i = 0;
-  for (i = 0; i < argc; i++)
-    largv[i] = argv[i];
+  std::vector<ACE_TCHAR *> largv;
+  largv.reserve (argc + num_extra);
+  for (int i = 0; i < argc; ++i)
+    largv.push_back (argv[i]);
 
-  ACE_DEBUG ((LM_DEBUG,"server adding args: "));
-  for (i = 0; i < num_extra; i++)
+  ACE_DEBUG ((LM_DEBUG, "server adding args: "));
+  for (std::basic_string<ACE_TCHAR> &arg : extra)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s ", extra[i]));
-      largv[argc+i] = extra[i];
+      ACE_DEBUG ((LM_DEBUG, "%s ", arg.c_str ()));
+      largv.push_back (arg.data ());
     }
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
@@ -203,7 +201,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       orb =
-        CORBA::ORB_init (argc, largv, "EndpointPolicy");
+        CORBA::ORB_init (argc, largv.data (), "EndpointPolicy");
 
       obj =
         orb->resolve_initial_references("RootPOA");
@@ -224,11 +222,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception("initialization error ");
       return 1;
     }
-
-  for (i = 0; i < num_extra; i++)
-    ACE::strdelete (extra[i]);
-  delete [] extra;
-  delete [] largv;
 
   //-----------------------------------------------------------------------
 
@@ -252,7 +245,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       good_pm = poa_manager_factory->create_POAManager ("goodPOAManager",
                                                         policies);
 
-      if (host_form == use_defaulted)
+      if (host_form == HostNameForm::use_defaulted)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "ERROR: Expected to catch policy error with "
@@ -261,7 +254,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::PolicyError &)
     {
-      if (host_form == use_defaulted)
+      if (host_form == HostNameForm::use_defaulted)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Defaulted hostname properly rejected\n"), 0);
@@ -321,7 +314,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POA_var bad_poa;
 
-      if (host_form != multi_protocol)
+      if (host_form != HostNameForm::multi_protocol)
         {
           bad_poa =
           root_poa->create_POA ("badPOA",
@@ -334,7 +327,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           bad_pm->activate ();
         }
 
-      if (host_form == from_hostname || host_form == use_localhost)
+      if (host_form == HostNameForm::from_hostname || host_form == HostNameForm::use_localhost)
         {
           orb->run ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));

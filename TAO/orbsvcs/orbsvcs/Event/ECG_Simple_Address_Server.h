@@ -34,21 +34,21 @@ public:
   static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create ();
 
   /// Destructor
-  virtual ~TAO_ECG_Simple_Address_Server () override;
+  ~TAO_ECG_Simple_Address_Server () override = default;
 
-  int init (const char *arg);
+  int init (char const *arg);
 
   // = The RtecUDPAdmin::AddrServer methods
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr) override;
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6) override;
+  void get_addr (RtecEventComm::EventHeader const &header,
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
+  void get_address (RtecEventComm::EventHeader const &header,
+                    RtecUDPAdmin::UDP_Address_out addr6) override;
 
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Simple_Address_Server objects using the static create()
   /// method.
-  TAO_ECG_Simple_Address_Server ();
+  TAO_ECG_Simple_Address_Server () = default;
 
 private:
   ACE_INET_Addr addr_;

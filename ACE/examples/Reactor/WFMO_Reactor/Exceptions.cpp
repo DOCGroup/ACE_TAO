@@ -31,17 +31,22 @@ public:
                 "Event_Handler created\n"));
   }
 
-  ~Event_Handler ()
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+
+  ~Event_Handler () override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler destroyed\n"));
   }
 
-  int handle_signal (int, siginfo_t * = 0, ucontext_t * = 0)
+  int handle_signal (int, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler::handle_signal called\n"));
-    volatile int* pInt = 0x0000000;
+    volatile int *pInt = 0x0000000;
     *pInt = 20;
     return 0;
   }

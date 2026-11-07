@@ -4,7 +4,7 @@ namespace Kokyu
 template <class DSRT_Scheduler_Traits>
 ACE_INLINE int
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-init (const DSRT_ConfigInfo& config_info)
+init (DSRT_ConfigInfo const &config_info)
 {
   return this->init_i (config_info);
 }
@@ -13,7 +13,7 @@ template <class DSRT_Scheduler_Traits>
 ACE_INLINE int
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 schedule (Guid_t guid,
-          const DSRT_QoSDescriptor& qos)
+          DSRT_QoSDescriptor const &qos)
 {
   return this->schedule_i (guid, qos);
 }
@@ -22,7 +22,7 @@ template <class DSRT_Scheduler_Traits>
 ACE_INLINE int
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule (Guid_t guid,
-                 const DSRT_QoSDescriptor& qos)
+                 DSRT_QoSDescriptor const &qos)
 {
   return this->update_schedule_i (guid, qos);
 }

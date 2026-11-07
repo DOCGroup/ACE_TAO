@@ -116,49 +116,49 @@ public:
   ~ACE_Caching_Strategy_Adapter ();
 
   /// Accessor method for the timer attributes.
-  ATTRIBUTES attributes ();
+  ATTRIBUTES attributes () override;
 
   /// Get the percentage of entries to purge.
-  double purge_percent ();
+  double purge_percent () override;
 
   /// Set the percentage of entries to purge.
-  void purge_percent (double percentage);
+  void purge_percent (double percentage) override;
 
   // = Strategy related Operations
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr);
+                   const ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
   int notify_find (int result,
-                   ATTRIBUTES &attr);
+                   ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
+                     const ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
   int notify_trybind (int result,
-                      ATTRIBUTES &attr);
+                      ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs rebind
   /// method call
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
+                     const ATTRIBUTES &attr) override;
 
   /// Accessor to the implementation.
   IMPLEMENTATION &implementation ();
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility ();
+  CACHING_UTILITY &caching_utility () override;
 
   /// Dumps the state of the object.
-  void dump () const;
+  void dump () const override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

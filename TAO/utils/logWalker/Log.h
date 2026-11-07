@@ -9,6 +9,7 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
+#include <vector>
 #include "PeerProcess.h"
 #include "HostProcess.h"
 #include "GIOP_Buffer.h"
@@ -23,21 +24,21 @@ class Incident
 {
 public:
   ACE_CString timestamp_;
-  size_t offset_;
-  int thread_;
+  size_t offset_ {};
+  int thread_ {};
   ACE_CString annotation_;
-  Invocation *invocation_;
+  Invocation *invocation_ {};
 };
 
-using IncidentList = ACE_Unbounded_Queue<Incident>;
+using IncidentList = std::vector<Incident>;
 
 
 class Log
 {
 public:
-  Log (Session &s);
+  explicit Log (Session &s);
 
-  virtual ~Log();
+  virtual ~Log () = default;
 
   bool process_file (const ACE_TCHAR *filename, const char *alias = "");
 
@@ -79,7 +80,7 @@ protected:
   Session &session_;
   HostProcesses procs_;
   GIOP_Buffer unknown_msg_;
-  GIOP_Buffer* dump_target_;
+  GIOP_Buffer* dump_target_ {};
   ThreadList giop_waiters_;
   ACE_DLList<PeerProcess> conn_waiters_;
   IncidentList history_;
@@ -87,11 +88,11 @@ protected:
   // parsed for every line
   ACE_CString timestamp_;
   ACE_Time_Value time_;
-  char *line_;
-  char *info_;
-  size_t offset_;
-  HostProcess *hostproc_;
-  Thread *thr_;
+  char *line_ {};
+  char *info_ {};
+  size_t offset_ {};
+  HostProcess *hostproc_ {};
+  Thread *thr_ {};
 };
 
 #endif // LOG_WALKER_LOG_H

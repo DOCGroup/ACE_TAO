@@ -82,7 +82,7 @@ int run_main (int, ACE_TCHAR*[])
 {
   ACE_START_TEST (ACE_TEXT ("Compiler_Features_43_Test"));
 
-  int res = {};
+  int res {};
 
   TAO_DynValue_i::cached = nullptr;
   try

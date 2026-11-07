@@ -11,9 +11,7 @@ ClientTask::ClientTask(bool shutdown_after_done)
 }
 
 
-ClientTask::~ClientTask()
-{
-}
+ClientTask::~ClientTask() = default;
 
 
 void

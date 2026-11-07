@@ -29,22 +29,19 @@
 #include "asnmp/gauge.h"          // header file for gauge class
 
 // constructor with a value
-Gauge32::Gauge32( const unsigned long i):SnmpUInt32(i)
+Gauge32::Gauge32 (unsigned long i)
+  : SnmpUInt32 (i)
 {
   smival.syntax = sNMP_SYNTAX_GAUGE32;
 }
 
 // copy constructor
-Gauge32::Gauge32 ( const Gauge32 &g)
+Gauge32::Gauge32 (Gauge32 const &g)
   : SnmpUInt32 (g)
-{ this->smival.value.uNumber = g.smival.value.uNumber;
-     smival.syntax = sNMP_SYNTAX_GAUGE32;
-     valid_flag = 1;
-}
-
-// destructor
-Gauge32::~Gauge32()
 {
+  this->smival.value.uNumber = g.smival.value.uNumber;
+  smival.syntax = sNMP_SYNTAX_GAUGE32;
+  valid_flag = 1;
 }
 
 // syntax type
@@ -54,16 +51,17 @@ SmiUINT32 Gauge32::get_syntax()
 }
 
 // overloaded assignment
-Gauge32& Gauge32::operator=( const Gauge32 &uli)
+Gauge32 &Gauge32::operator= (Gauge32 const &uli)
 {
   this->smival.value.uNumber = uli.smival.value.uNumber;
-     return *this;
+  return *this;
 }
 
 // overloaded assignment
-Gauge32& Gauge32::operator=( const unsigned long int i)
+Gauge32 &Gauge32::operator= (unsigned long i)
 {
-  smival.value.uNumber=i; return *this;
+  smival.value.uNumber = i;
+  return *this;
 }
 
 // general assignment from any Value
@@ -93,7 +91,7 @@ SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
 }
 
 // otherwise, act as unsigned long
-Gauge32::operator unsigned long()
+Gauge32::operator unsigned long() const
 {
   return smival.value.uNumber;
 }

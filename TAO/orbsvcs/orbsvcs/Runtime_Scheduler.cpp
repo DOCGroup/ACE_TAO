@@ -1,7 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Runtime_Scheduler.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,8 +29,8 @@ ACE_Runtime_Scheduler::create (const char *entry_point)
 {
   // Just make sure it's there and return its handle.
   for (int i = 0; i < entry_count_; ++i)
-      if (ACE_OS::strcmp (entry_point,
-                          rt_info_[i].entry_point) == 0)
+      if (std::strcmp (entry_point,
+                       rt_info_[i].entry_point) == 0)
         return i + 1;
 
   // TODO: throw an exception or print an error.

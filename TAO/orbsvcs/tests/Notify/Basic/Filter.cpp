@@ -136,7 +136,7 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   ACE_ASSERT (!CORBA::is_nil (filter.in ()));
 
-  const char* test_filter_string = "A > B";
+  char const *test_filter_string = "A > B";
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
   constraint_list.length (1);
@@ -200,7 +200,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

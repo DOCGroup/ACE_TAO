@@ -8,12 +8,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-// Constructor.
-Server_i::Server_i () = default;
-
-// Destructor.
-Server_i::~Server_i () = default;
-
 // Parse the command-line arguments and set options.
 int
 Server_i::parse_args (int argc,
@@ -29,10 +23,10 @@ Server_i::parse_args (int argc,
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a"));
+        this->ior_output_file_.reset (
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a")));
 
-        if (this->ior_output_file_ == nullptr)
+        if (!this->ior_output_file_)
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
@@ -108,10 +102,10 @@ Server_i::create_server ()
       if (this->ior_output_file_)
         {
           // Write the IOR to the file.
-          ACE_OS::fprintf (this->ior_output_file_,
+          ACE_OS::fprintf (this->ior_output_file_.get (),
                            "%s\n",
                            objref_server.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          this->ior_output_file_.reset ();
         }
     }
   catch (CORBA::Exception const &ex)

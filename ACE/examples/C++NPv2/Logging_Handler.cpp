@@ -18,18 +18,22 @@
 
 int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 {
+  mblk = nullptr;
   // Put <logging_peer>'s hostname in new message block.
   ACE_INET_Addr peer_addr;
   logging_peer_.get_remote_addr (peer_addr);
-  mblk = new ACE_Message_Block (MAXHOSTNAMELEN + 1);
-  peer_addr.get_host_name (mblk->wr_ptr (), MAXHOSTNAMELEN);
-  mblk->wr_ptr (ACE_OS::strlen (mblk->wr_ptr ()) + 1); // Go past name
+  ACE_Message_Block_Unique_Ptr message_block_owner {
+    new ACE_Message_Block (MAXHOSTNAMELEN + 1)};
+  ACE_Message_Block *message_block = message_block_owner.get ();
+  peer_addr.get_host_name (message_block->wr_ptr (), MAXHOSTNAMELEN);
+  message_block->wr_ptr (ACE_OS::strlen (message_block->wr_ptr ()) + 1); // Go past name
 
   // Allocate a message block for the payload; initially at least
   // large enough to hold the header, but needs some room for
   // alignment.
-  ACE_Message_Block *payload =
-    new ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE);
+  ACE_Message_Block_Unique_Ptr payload_owner {
+    new ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE)};
+  ACE_Message_Block *payload = payload_owner.get ();
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (payload);
   if (logging_peer_.recv_n (payload->wr_ptr (), 8) == 8) {
@@ -57,18 +61,13 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
             if (logging_peer_.recv_n (payload->wr_ptr (), length) > 0) {
               payload->wr_ptr (length);   // Reflect additional bytes
               // Chain the payload to mblk via the continuation field.
-              mblk->cont (payload);
+              message_block->cont (payload_owner.release ());
+              mblk = message_block_owner.release ();
               return length;
             }
           }
       }
   }
-  // Error cases end up here, so we need to release the memory to
-  // prevent a leak.
-  payload->release ();
-  payload = nullptr;
-  mblk->release ();
-  mblk = nullptr;
   return -1;
 }
 
@@ -115,8 +114,8 @@ int Logging_Handler::log_record ()
   if (recv_log_record (mblk) == -1)
     return -1;
   else {
+    ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
     int result = write_log_record (mblk);
-    mblk->release (); // Free up the contents.
     return result == -1 ? -1 : 0;
   }
 }

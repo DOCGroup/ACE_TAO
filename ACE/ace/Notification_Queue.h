@@ -29,6 +29,10 @@ public:
    * @brief Constructor
    */
   ACE_Notification_Queue_Node();
+  ACE_Notification_Queue_Node (ACE_Notification_Queue_Node const &) = delete;
+  ACE_Notification_Queue_Node (ACE_Notification_Queue_Node &&) = delete;
+  ACE_Notification_Queue_Node &operator= (ACE_Notification_Queue_Node const &) = delete;
+  ACE_Notification_Queue_Node &operator= (ACE_Notification_Queue_Node &&) = delete;
 
   /**
    * @brief Modifier change the contained buffer
@@ -49,7 +53,7 @@ public:
    * @brief Return true if clearing the mask would leave no
    * notifications to deliver.
    */
-  bool mask_disables_all_notifications(ACE_Reactor_Mask mask);
+  bool mask_disables_all_notifications(ACE_Reactor_Mask mask) const;
 
   /**
    * @brief Clear the notifications specified by @c mask
@@ -82,6 +86,10 @@ class ACE_Export ACE_Notification_Queue
 public:
   ACE_Notification_Queue();
   ~ACE_Notification_Queue();
+  ACE_Notification_Queue (ACE_Notification_Queue const &) = delete;
+  ACE_Notification_Queue (ACE_Notification_Queue &&) = delete;
+  ACE_Notification_Queue &operator= (ACE_Notification_Queue const &) = delete;
+  ACE_Notification_Queue &operator= (ACE_Notification_Queue &&) = delete;
 
   /**
    * @brief Pre-allocate resources in the queue
@@ -126,12 +134,6 @@ private:
    */
   int allocate_more_buffers();
 
-  ACE_Notification_Queue (const ACE_Notification_Queue &) = delete;
-  ACE_Notification_Queue (ACE_Notification_Queue &&) = delete;
-  ACE_Notification_Queue &operator= (const ACE_Notification_Queue &) = delete;
-  ACE_Notification_Queue &operator= (ACE_Notification_Queue &&) = delete;
-
-private:
   /// Keeps track of allocated arrays of type
   /// ACE_Notification_Buffer.  The idea is to amortize allocation
   /// costs by allocating multiple ACE_Notification_Buffer objects at

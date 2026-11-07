@@ -22,13 +22,17 @@ class TAO_CosEC_PushSupplierWrapper :
   //   class wraps the Cos PushSupplier to make it look like a Rtec
   //   PushSupplier.
 public:
-  TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
+  explicit TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
   // Constructor.
 
-  ~TAO_CosEC_PushSupplierWrapper () = default;
+  ~TAO_CosEC_PushSupplierWrapper () override = default;
+  TAO_CosEC_PushSupplierWrapper (TAO_CosEC_PushSupplierWrapper const &) = delete;
+  TAO_CosEC_PushSupplierWrapper (TAO_CosEC_PushSupplierWrapper &&) = delete;
+  TAO_CosEC_PushSupplierWrapper &operator= (TAO_CosEC_PushSupplierWrapper const &) = delete;
+  TAO_CosEC_PushSupplierWrapper &operator= (TAO_CosEC_PushSupplierWrapper &&) = delete;
   // Destructor.
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
   // Disconnects the push supplier.
 
 private:
@@ -70,20 +74,16 @@ TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier ()
   // list.
 }
 
-TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
-                                                              RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer)
+TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i
+  (RtecEventChannelAdmin::SupplierQOS const &qos,
+   RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer)
   : qos_ (qos),
-    proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer)),
-    wrapper_ (0)
-{
-}
-
-TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i ()
+    proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer))
 {
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
+TAO_CosEC_ProxyPushConsumer_i::push (CORBA::Any const &data)
 {
   RtecEventComm::Event buffer[1];
   // Create an event set that does not own the buffer....
@@ -160,9 +160,9 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
   this->wrapper_ = auto_wrapper.release ();
 }
 
-int
+bool
 TAO_CosEC_ProxyPushConsumer_i::connected ()
 {
-  return this->wrapper_ == 0 ? 0 : 1;
+  return this->wrapper_ != nullptr;
 }
 

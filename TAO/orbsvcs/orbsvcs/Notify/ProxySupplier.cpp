@@ -15,14 +15,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier ()
-  : consumer_admin_ (0)
-{
-}
+TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier () = default;
 
-TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
-{
-}
+TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier () = default;
 
 void
 TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
@@ -150,7 +145,7 @@ TAO_Notify_ProxySupplier::deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & 
 }
 
 void
-TAO_Notify_ProxySupplier::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_ProxySupplier::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   TAO_Notify_Proxy::qos_changed (qos_properties);
 }

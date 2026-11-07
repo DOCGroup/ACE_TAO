@@ -25,6 +25,7 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/Log_Persistence_Strategy.h"
 #include "orbsvcs/Log/log_serv_export.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -171,7 +172,7 @@ private:
   TAO_LogMgr_i &operator= (TAO_LogMgr_i const &) = delete;
   TAO_LogMgr_i &operator= (TAO_LogMgr_i &&) = delete;
 
-  TAO_LogStore * logstore_;
+  std::unique_ptr<TAO_LogStore> logstore_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

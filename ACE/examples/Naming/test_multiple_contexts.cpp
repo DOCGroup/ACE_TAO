@@ -5,8 +5,8 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  static u_long ACE_DEFAULT_BASE_ADDR_1 = (1 * 64 * 1024 * 1024);
-  static u_long ACE_DEFAULT_BASE_ADDR_2 = (2 * 64 * 1024 * 1024);
+  static constexpr u_long ACE_DEFAULT_BASE_ADDR_1 = (1 * 64 * 1024 * 1024);
+  static constexpr u_long ACE_DEFAULT_BASE_ADDR_2 = (2 * 64 * 1024 * 1024);
 
   int i;
 
@@ -32,12 +32,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                    ACE_TEXT("-b%ld"),
                    ACE_DEFAULT_BASE_ADDR_1);
 
-  const ACE_TCHAR *m_argv[] =
+  ACE_TCHAR const *m_argv[] =
   {
     ACE_TEXT("MyName1"),
     ACE_TEXT("-cNODE_LOCAL"),
     address_arg1,
-    0
+    nullptr
   };
   int m_argc =
     sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
@@ -45,12 +45,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::sprintf (address_arg2,
                    ACE_TEXT("-b%ld"),
                    ACE_DEFAULT_BASE_ADDR_2);
-  const ACE_TCHAR *n_argv[] =
+  ACE_TCHAR const *n_argv[] =
   {
     ACE_TEXT("MyName2"),
     ACE_TEXT("-cNODE_LOCAL"),
     address_arg2,
-    0
+    nullptr
   };
 
   int n_argc =

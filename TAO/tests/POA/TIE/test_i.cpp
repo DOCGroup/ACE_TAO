@@ -7,19 +7,11 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "test_i.h"
 
 // Constructor
 Tie_i::Tie_i (CORBA::Long value)
   : value_ (value)
-{
-}
-
-// Destructor
-Tie_i::~Tie_i ()
 {
 }
 

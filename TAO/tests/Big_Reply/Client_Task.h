@@ -18,20 +18,23 @@ public:
   Client_Task (Test::Big_Reply_ptr receiver,
                CORBA::Long event_count,
                ACE_Thread_Manager *thr_mgr);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Validate the connection
   void validate_connection ();
 
-private:
   /// Reference to the test interface
   Test::Big_Reply_var reply_gen_;
 
   /// Number of remote calls
-  int event_count_;
+  CORBA::Long const event_count_;
 };
 
 #include /**/ "ace/post.h"

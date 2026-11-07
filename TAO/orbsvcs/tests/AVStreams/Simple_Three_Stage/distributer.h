@@ -112,7 +112,7 @@ public:
   Distributer ();
 
   /// Destructor.
-  ~Distributer ();
+  ~Distributer () = default;
   Distributer (Distributer const &) = delete;
   Distributer &operator= (Distributer const &) = delete;
   Distributer (Distributer &&) = delete;
@@ -134,8 +134,8 @@ public:
   TAO_AV_Protocol_Object *sender_protocol_object ();
 
   // Flag to know when we are done.
-  int done () const;
-  void done (int);
+  bool done () const;
+  void done (bool);
 
 protected:
   /// The Naming Service client.
@@ -147,10 +147,10 @@ protected:
   /// The receiver endpoint strategy.
   RECEIVER_ENDPOINT_STRATEGY receiver_endpoint_strategy_;
 
-  /// The distributer receiver multimedia device
+  /// Servant reference borrowed from the POA after activation.
   TAO_MMDevice* distributer_receiver_mmdevice_;
 
-  /// The distributer receiver multimedia device
+  /// Servant reference borrowed from the POA after activation.
   TAO_MMDevice* distributer_sender_mmdevice_;
 
   /// The receiver MMDevice.
@@ -159,15 +159,15 @@ protected:
   /// The sender MMDevice.
   AVStreams::MMDevice_var sender_mmdevice_;
 
-  /// The sender protocol object
+  /// Protocol object borrowed from the AVStreams endpoint strategy.
   TAO_AV_Protocol_Object *sender_protocol_object_;
 
-  /// Stream controller for the receivers
+  /// Stream controller servant reference borrowed from the POA.
   TAO_StreamCtrl* receiver_streamctrl_;
 
   /// Selected protocol - default is UDP
   ACE_CString protocol_;
 
   /// Flag to know when we are done.
-  int done_;
+  bool done_;
 };

@@ -30,7 +30,6 @@
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL

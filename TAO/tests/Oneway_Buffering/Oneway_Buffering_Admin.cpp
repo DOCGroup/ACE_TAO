@@ -3,7 +3,7 @@
 
 namespace
 {
-  const unsigned int timeout_in_sec= 2u;
+  constexpr unsigned int timeout_in_sec = 2u;
 }
 
 Oneway_Buffering_Admin::Oneway_Buffering_Admin (CORBA::ORB_ptr orb)

@@ -28,13 +28,14 @@
 #include "asnmp/counter.h"
 
 // constructor with a value
-Counter32::Counter32( const unsigned long i):SnmpUInt32(i)
+Counter32::Counter32 (unsigned long i)
+  : SnmpUInt32 (i)
 {
   smival.syntax = sNMP_SYNTAX_CNTR32;
 }
 
 // copy constructor
-Counter32::Counter32( const Counter32 &c)
+Counter32::Counter32 (Counter32 const &c)
   : SnmpUInt32 (c)
 {
    this->smival.value.uNumber = c.smival.value.uNumber;
@@ -73,21 +74,21 @@ SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
 }
 
 // overloaded assignment
-Counter32& Counter32::operator=( const unsigned long int i)
+Counter32 &Counter32::operator= (unsigned long i)
 {
   this->smival.value.uNumber=i;
   return *this;
 }
 
 // overloaded assignment
-Counter32& Counter32::operator=( const Counter32 &uli)
+Counter32 &Counter32::operator= (Counter32 const &uli)
 {
   this->smival.value.uNumber = uli.smival.value.uNumber;
   return *this;
 }
 
 // otherwise, behave like an unsigned long int
-Counter32::operator unsigned long()
+Counter32::operator unsigned long() const
 {
   return this->smival.value.uNumber;
 }

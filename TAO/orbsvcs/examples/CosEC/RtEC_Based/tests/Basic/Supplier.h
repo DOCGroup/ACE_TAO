@@ -30,6 +30,12 @@
 class Supplier : public POA_CosEventComm::PushSupplier
 {
 public:
+  Supplier () = default;
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
+
   /// This method connects the supplier to the EC.
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel);
 
@@ -42,10 +48,10 @@ public:
   void disconnect ();
 
   /// Send one event.
-  void send_event (const CORBA::Any &data);
+  void send_event (CORBA::Any const &data);
 
   /// The POA_CosEventComm::PushSupplier method.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   /// We talk to the EC using this proxy.

@@ -2,12 +2,15 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/OS_main.h"
 
-#define NAMING_SERVICE_NAME "NameService"
-#define EVENT_TLS_LOG_FACTORY_NAME "EventLogFactory"
-#define LOG_EVENT_COUNT 9
-#define QUERY_1 "id > 0"
-#define QUERY_2 "id >= 0"
-#define QUERY_LANG "TCL"
+namespace
+{
+  constexpr char naming_service_name[] = "NameService";
+  constexpr char event_tls_log_factory_name[] = "EventLogFactory";
+  constexpr int log_event_count = 9;
+  constexpr char query_1[] = "id > 0";
+  constexpr char query_2[] = "id >= 0";
+  constexpr char query_lang[] = "TCL";
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -15,12 +18,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Supplier supplier;
 
   return supplier.run (argc, argv);
-}
-
-// ****************************************************************
-
-Supplier::Supplier ()
-{
 }
 
 int
@@ -40,9 +37,8 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
         poa->the_POAManager ();
       poa_manager->activate ();
 
-
       CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+        this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
@@ -51,10 +47,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (EVENT_TLS_LOG_FACTORY_NAME);
+      name[0].id = CORBA::string_dup (event_tls_log_factory_name);
 
       CORBA::Object_var obj =
         this->naming_context_->resolve (name);
@@ -63,7 +58,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
         DsEventLogAdmin::EventLogFactory::_narrow (obj.in ());
 
       ACE_ASSERT (!CORBA::is_nil (this->event_log_factory_.in ()));
-
 
       // create a log..
 
@@ -77,15 +71,13 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       DsLogAdmin::LogId logid = 0;
 
       DsEventLogAdmin::EventLog_var event_log =
-      // DsLogAdmin::Log_var event_log =
         this->event_log_factory_->create (logfullaction,
                                           max_size,
                                           threshold,
                                           logid);
 
-
       ACE_DEBUG ((LM_DEBUG,
-                  "Create returned logid = %d\n",logid));
+                  "Create returned logid = %d\n", logid));
 
       CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
         event_log->for_suppliers ();
@@ -102,13 +94,13 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       CORBA::Any event;
       event <<= CORBA::ULong (10);
 
-      for (int d = 0; d < LOG_EVENT_COUNT; d++)
+      for (int d {}; d < log_event_count; ++d)
         {
           this->consumer_->push (event);
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Writing %d records...\n", LOG_EVENT_COUNT));
+                  "Writing %d records...\n", log_event_count));
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_n_records...\n"));
@@ -122,21 +114,20 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
-      ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
+      ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", query_1));
       DsLogAdmin::Iterator_var iter_out;
       DsLogAdmin::RecordList_var rec_list =
-        event_log->query (QUERY_LANG, QUERY_1, iter_out);
+        event_log->query (query_lang, query_1, iter_out);
 
-      CORBA::ULong j = 0;
-      for (; j < rec_list->length();++j)
-      ACE_DEBUG ((LM_DEBUG,
-                  "id = %Q, time= %Q\n",
-                  rec_list[j].id, rec_list[j].time));
+      for (CORBA::ULong j {}; j < rec_list->length (); ++j)
+        ACE_DEBUG ((LM_DEBUG,
+                    "id = %Q, time= %Q\n",
+                    rec_list[j].id, rec_list[j].time));
 
       ACE_DEBUG ((LM_DEBUG,
                   "Deleting records...\n"));
 
-      retval = event_log->delete_records (QUERY_LANG, QUERY_2);
+      retval = event_log->delete_records (query_lang, query_2);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_n_records...\n"));
@@ -150,11 +141,10 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
-     // Disconnect from the EC
+      // Disconnect from the EC.
       this->consumer_->disconnect_push_consumer ();
 
       // Destroy the EC....
-      //event_channel->destroy ();
       event_log->destroy ();
 
       // Deactivate this object...
@@ -164,9 +154,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0);
+      poa->destroy (true, false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;

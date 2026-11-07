@@ -43,7 +43,7 @@ public:
   TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Updates ();
+  ~TAO_Notify_Method_Request_Updates () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -71,7 +71,7 @@ public:
   TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Updates_No_Copy ();
+  ~TAO_Notify_Method_Request_Updates_No_Copy () override = default;
 
   /// Create a copy of this object.
   TAO_Notify_Method_Request_Queueable* copy () override;

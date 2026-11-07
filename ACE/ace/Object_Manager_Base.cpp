@@ -34,7 +34,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
     }
 # define ACE_OS_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ACE_Allocator::instance()->free (preallocated_object[ID]);     \
-    preallocated_object[ID] = 0;
+    preallocated_object[ID] = nullptr;
 #else
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
@@ -44,7 +44,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
     }
 # define ACE_OS_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     delete (TYPE *) preallocated_object[ID];\
-    preallocated_object[ID] = 0;
+    preallocated_object[ID] = nullptr;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_Object_Manager_Base::ACE_Object_Manager_Base ()

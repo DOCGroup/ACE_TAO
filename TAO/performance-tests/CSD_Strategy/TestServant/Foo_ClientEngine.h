@@ -18,16 +18,21 @@ class Foo_Statistics;
 class CSD_PT_TestServant_Export Foo_ClientEngine : public ClientEngine
 {
 public:
-  Foo_ClientEngine(Foo_ptr obj, unsigned  client_id = 0);
-  virtual ~Foo_ClientEngine();
+  explicit Foo_ClientEngine (Foo_ptr obj, unsigned client_id = 0);
+  ~Foo_ClientEngine () override;
 
-  virtual bool execute(unsigned num_loops);
+  bool execute (unsigned num_loops) override;
 
-  static void expected_results(Foo_Statistics& stats);
+  static void expected_results (Foo_Statistics& stats);
+
+  Foo_ClientEngine (Foo_ClientEngine const &) = delete;
+  Foo_ClientEngine (Foo_ClientEngine &&) = delete;
+  Foo_ClientEngine &operator= (Foo_ClientEngine const &) = delete;
+  Foo_ClientEngine &operator= (Foo_ClientEngine &&) = delete;
 
 private:
-  Foo_var  obj_;
-  unsigned client_id_;
+  Foo_var obj_;
+  unsigned client_id_ {};
 };
 
 #endif

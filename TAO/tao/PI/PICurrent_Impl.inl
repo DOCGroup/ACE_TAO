@@ -4,15 +4,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 TAO::PICurrent_Impl::PICurrent_Impl (
     TAO_ORB_Core   *orb_core,
-    size_t         tss_slot,
+    std::size_t    tss_slot,
     PICurrent_Impl *pop)
   : orb_core_ (orb_core),
     tss_slot_ (tss_slot),
-    pop_ (pop),
-    push_ (nullptr),
-    slot_table_ (),
-    lazy_copy_ (nullptr),
-    impending_change_callback_ (nullptr)
+    pop_ (pop)
 {
 }
 

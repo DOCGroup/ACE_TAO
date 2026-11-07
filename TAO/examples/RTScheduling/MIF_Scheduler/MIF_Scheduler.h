@@ -33,21 +33,21 @@ public MIF_Scheduling::SegmentSchedulingParameterPolicy,
        public ::CORBA::LocalObject
 {
  public:
-  virtual CORBA::Short importance ();
+  virtual CORBA::Short importance () override;
 
-  virtual void importance (CORBA::Short importance);
+  virtual void importance (CORBA::Short importance) override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  virtual CORBA::PolicyType policy_type () override;
 
-  void destroy ();
+  void destroy () override;
 
  private:
   CORBA::Short importance_;
 };
 
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> DT_Message_Queue;
+using DT_Message_Queue = ACE_Message_Queue<ACE_NULL_SYNCH>;
 
 class MIF_Scheduler:
 public MIF_Scheduling::MIF_Scheduler,
@@ -60,7 +60,7 @@ public ::CORBA::LocalObject
 
 
   virtual MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-    create_segment_scheduling_parameter (CORBA::Short segment_priority);
+    create_segment_scheduling_parameter (CORBA::Short segment_priority) override;
 
   void wait ();
 
@@ -71,63 +71,63 @@ public ::CORBA::LocalObject
   virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
                const char * name,
                CORBA::Policy_ptr sched_param,
-               CORBA::Policy_ptr implicit_sched_param);
+               CORBA::Policy_ptr implicit_sched_param) override;
 
   virtual void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
             const char * name,
             CORBA::Policy_ptr sched_param,
-            CORBA::Policy_ptr implicit_sched_param);
+            CORBA::Policy_ptr implicit_sched_param) override;
 
   virtual void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
             const char * name,
             CORBA::Policy_ptr sched_param,
-            CORBA::Policy_ptr implicit_sched_param);
+            CORBA::Policy_ptr implicit_sched_param) override;
 
   virtual void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
-               const char * name);
+               const char * name) override;
 
   virtual void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
                 const char * name,
-                CORBA::Policy_ptr outer_sched_param);
+                CORBA::Policy_ptr outer_sched_param) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
         RTScheduling::Current::IdType_out guid,
         CORBA::String_out name,
         CORBA::Policy_out sched_param,
-        CORBA::Policy_out implicit_sched_param);
+        CORBA::Policy_out implicit_sched_param) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void cancel (const RTScheduling::Current::IdType & guid);
+  virtual void cancel (const RTScheduling::Current::IdType & guid) override;
 
-  virtual CORBA::PolicyList * scheduling_policies ();
+  virtual CORBA::PolicyList * scheduling_policies () override;
 
-  virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
+  virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies) override;
 
-  virtual CORBA::PolicyList * poa_policies ();
+  virtual CORBA::PolicyList * poa_policies () override;
 
-  virtual char * scheduling_discipline_name ();
+  virtual char * scheduling_discipline_name () override;
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
-                     CORBA::Policy_ptr scheduling_parameter);
+                     CORBA::Policy_ptr scheduling_parameter) override;
 
   virtual void set_scheduling_parameter (PortableServer::Servant & resource,
            const char * name,
-           CORBA::Policy_ptr scheduling_parameter);
+           CORBA::Policy_ptr scheduling_parameter) override;
 
  private:
   RTScheduling::Current_var current_;

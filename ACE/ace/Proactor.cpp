@@ -32,7 +32,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Proactor::proactor_ = nullptr;
+ACE_Proactor *ACE_Proactor::proactor_ {};
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
@@ -83,13 +83,12 @@ protected:
   ACE_Proactor &proactor_;
 
   /// Flag used to indicate when we are shutting down.
-  int shutting_down_;
+  bool shutting_down_ {false};
 };
 
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
   : ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_),
-    proactor_ (proactor),
-    shutting_down_ (0)
+    proactor_ (proactor)
 {
 }
 
@@ -102,7 +101,7 @@ int
 ACE_Proactor_Timer_Handler::destroy ()
 {
   // Mark for closing down.
-  this->shutting_down_ = 1;
+  this->shutting_down_ = true;
 
   // Signal timer event.
   this->timer_event_.signal ();
@@ -125,7 +124,7 @@ ACE_Proactor_Timer_Handler::svc ()
   ACE_Time_Value relative_time;
   int result = 0;
 
-  while (this->shutting_down_ == 0)
+  while (!this->shutting_down_)
     {
       // Check whether the timer queue has any items in it.
       if (this->proactor_.timer_queue ()->is_empty () == 0)

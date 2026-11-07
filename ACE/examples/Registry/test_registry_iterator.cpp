@@ -16,7 +16,7 @@
 
 
 // Indentation while printing names
-static const u_long INDENTATION_LEVEL = 3;
+static constexpr u_long INDENTATION_LEVEL = 3;
 
 // Prototypes
 static int print_naming_context (ACE_Registry::Naming_Context &naming_context,
@@ -40,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                     // HKEY_CLASSES_ROOT,
                                                     // HKEY_USERS,
                                                     // HKEY_CURRENT_USER,
-                                                    argc == 2 ? argv[1] : 0);
+                                                    argc == 2 ? argv[1] : nullptr);
 
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);

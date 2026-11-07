@@ -28,7 +28,7 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
     {
       policy = rt_stub->get_cached_policy (type);
     }
-  catch (const ::CORBA::INV_POLICY&)
+  catch (::CORBA::INV_POLICY const &)
     {
       if (r.inconsistent_policies ())
         {

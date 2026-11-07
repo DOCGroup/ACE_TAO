@@ -55,7 +55,7 @@ class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer : public virtual POA_RtecE
 {
 public:
   /// Constructor.
-  TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log);
+  explicit TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log);
 
   /// Destructor.
   ~TAO_Rtec_LogConsumer () override;

@@ -90,7 +90,7 @@ protected:
    */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  RtecScheduler::Dependency_Info const &di);
 
   /// Performs an action on the entry after visiting all of
   /// its successors.  Returns 0 on success and -1 on error.
@@ -140,7 +140,7 @@ protected:
   /// visiting it.  Returns 0 on success and -1 on error.
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 
   /**
    * Marks entry as forward finished and sets its forward DFS finish
@@ -177,11 +177,11 @@ public:
 
   /// Accessor for whether or not the recursion is within a previously
   /// detected cycle.
-  int in_a_cycle ();
+  bool in_a_cycle ();
 
   /// Mutator for whether or not the recursion is within a previously
   /// detected cycle.
-  void in_a_cycle (int);
+  void in_a_cycle (bool value);
 
 protected:
   /**
@@ -219,7 +219,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 
   /**
    * Sets the entry's reverse finish time and marks it as finished in
@@ -237,7 +237,7 @@ private:
 
   /// Indicates whether or not the recursion is
   /// currently within a previously discovered cycle.
-  int in_a_cycle_;
+  bool in_a_cycle_ {};
 };
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
@@ -266,7 +266,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 };
 
 
@@ -323,7 +323,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 
 private:
   /// Number of nodes with unresolved local dependencies.
@@ -371,10 +371,10 @@ public:
 
 private:
   /// Pointer to previous tuple in the iteration.
-  TAO_Reconfig_Scheduler_Entry *previous_entry_;
+  TAO_Reconfig_Scheduler_Entry *previous_entry_ {};
 
   /// Pointer to first subpriority tuple in the priority level.
-  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_;
+  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_ {};
 
   /// Current priority value.
   RtecScheduler::Preemption_Priority_t priority_;
@@ -409,8 +409,8 @@ class TAO_Tuple_Admission_Visitor :
 {
 public:
   /// Constructor.
-  TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshold,
-                               const CORBA::Double & noncritical_utilization_threshold);
+  TAO_Tuple_Admission_Visitor (CORBA::Double const & critical_utilization_threshold,
+                               CORBA::Double const & noncritical_utilization_threshold);
 
   /**
    * Visit an RT_Info tuple.  This method determines the utilization by
@@ -484,7 +484,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

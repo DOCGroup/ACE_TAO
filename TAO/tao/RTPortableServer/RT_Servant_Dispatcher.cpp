@@ -19,8 +19,8 @@
 
 #include "tao/RTCORBA/Thread_Pool.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,7 +76,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
   if (tph != nullptr)
     {
-      char const *priority_model = nullptr;
+      char const *priority_model {};
       RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
       // NOT_SPECIFIED PriorityModel processing.
@@ -94,7 +94,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
           // Attempt to extract client-propagated priority from the
           // ServiceContextList of the request.
-          IOP::ServiceContext const *context = nullptr;
+          IOP::ServiceContext const *context {};
 
           if (request_service_context.get_context (IOP::RTCorbaPriority,
                                                    &context) == 1)
@@ -137,10 +137,10 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       if (TAO_debug_level > 0)
         {
           if (thread_pool == nullptr)
-            ACE_OS::strcpy (thread_pool_id,
-                            "default thread pool");
+            std::strcpy (thread_pool_id,
+                         "default thread pool");
           else
-            ACE_OS::sprintf (thread_pool_id,
+            std::sprintf (thread_pool_id,
                              "thread pool %d",
                              thread_pool->id ());
         }
@@ -362,7 +362,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = nullptr;
+  TAO_RT_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,

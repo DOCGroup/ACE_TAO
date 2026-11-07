@@ -5,27 +5,27 @@
  */
 #include "Server_Task.h"
 
-
-Server_Task::Server_Task(Test::Echo_ptr echo)
-  : echo_(Test::Echo::_duplicate(echo))
+Server_Task::Server_Task (Test::Echo_ptr echo)
+  : echo_ (Test::Echo::_duplicate (echo))
 {
 }
 
 int
 Server_Task::svc ()
 {
-  Test::Payload pload(16); pload.length(16);
-  int stop_loop = 0;
-  for(int i = 0; i != 1000000 && !stop_loop; ++i)
+  Test::Payload pload (16);
+  pload.length (16);
+  bool stop_loop {};
+  for (int i = 0; i != 1000000 && !stop_loop; ++i)
     {
       try
         {
-          Test::Payload_var result =
+          Test::Payload_var const result =
             this->echo_->echo_payload (pload);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
-          stop_loop = 1;
+          stop_loop = true;
         }
     }
   return 0;

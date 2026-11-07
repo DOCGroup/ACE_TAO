@@ -9,11 +9,6 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 {
 }
 
-Simple_Server_i::Simple_Server_i ()
-  : orb_ (0)
-{
-}
-
 void
 Simple_Server_i::remote_call ()
 {

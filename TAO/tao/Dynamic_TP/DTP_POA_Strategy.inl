@@ -1,14 +1,16 @@
 // -*- C++ -*-
+#include <utility>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 /// Constructor.
-TAO_DTP_POA_Strategy::TAO_DTP_POA_Strategy (ACE_CString tp_config_name,
+TAO_DTP_POA_Strategy::TAO_DTP_POA_Strategy (std::string tp_config_name,
                                             bool ss)
   : serialize_servants_ (ss),
+    dynamic_tp_config_name_ (std::move (tp_config_name)),
     config_initialized_ (false)
 {
-  this->dynamic_tp_config_name_ = tp_config_name;
 }
 
 ACE_INLINE

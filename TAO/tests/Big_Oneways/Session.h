@@ -30,7 +30,7 @@ public:
   Session &operator= (Session &&) = delete;
 
   /// Destructor
-  ~Session () override;
+  ~Session () override = default;
 
   /// Run one of the experiment threads
   int svc ();
@@ -50,13 +50,12 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work () const;
+  bool more_work () const;
 
   /// Make sure that all threads have connections avaiable to the
   /// other sessions.
   void validate_connections ();
 
-private:
   /// Synchronize the internal state
   TAO_SYNCH_MUTEX mutex_;
 
@@ -65,23 +64,23 @@ private:
   Test::Session_Control_var control_;
 
   /// Keep track of wether the test is running.
-  int running_;
+  bool running_ {};
 
   /// The other session objects participating in the test
   Test::Session_List other_sessions_;
 
   /// Size of each message
-  CORBA::ULong payload_size_;
+  CORBA::ULong const payload_size_;
 
   /// Number of threads
-  CORBA::ULong thread_count_;
+  CORBA::ULong const thread_count_;
 
   /// Number of messages to send
-  CORBA::ULong message_count_;
+  CORBA::ULong const message_count_;
 
   /// The number of threads currently running, when this reaches 0 the
   /// session destroys itself.
-  CORBA::ULong active_thread_count_;
+  CORBA::ULong active_thread_count_ {};
 
   /// Number of messages expected
   CORBA::ULong expected_messages_;

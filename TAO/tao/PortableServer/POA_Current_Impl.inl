@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "tao/SystemException.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -31,7 +33,7 @@ namespace TAO
           this->object_id_.length (id_size);
 
           // Get the buffer and copy the new object id in it's place.
-          ACE_OS::memcpy (this->object_id_.get_buffer (),
+          std::memcpy (this->object_id_.get_buffer (),
                           id.get_buffer (), id_size);
         }
       else

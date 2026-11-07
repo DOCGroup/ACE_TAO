@@ -8,25 +8,22 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Transport
 //------------------------------------------------------------
 
-TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport ()
-  :handler_ (0)
-{
-}
+TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport () = default;
 
 TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler)
   :handler_ (handler)
 {
 }
 
-TAO_AV_SCTP_SEQ_Transport::~TAO_AV_SCTP_SEQ_Transport ()
-{
-}
+TAO_AV_SCTP_SEQ_Transport::~TAO_AV_SCTP_SEQ_Transport () = default;
 
 int
 TAO_AV_SCTP_SEQ_Transport::open (ACE_Addr * /*address*/)
@@ -53,7 +50,7 @@ TAO_AV_SCTP_SEQ_Transport::get_peer_addr ()
 }
 
 ssize_t
-TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_AV_SCTP_SEQ_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
   // friends.
@@ -65,7 +62,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -84,7 +81,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
           // we should set ACE_IOV_MAX to that limit.
           if (iovcnt == ACE_IOV_MAX)
             {
-              n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+              n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                                    iovcnt);
                                                    //&timeout);
               if (n < 1)
@@ -99,7 +96,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+      n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                            iovcnt);
       if (n < 1)
         return n;
@@ -111,7 +108,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
 }
 
 ssize_t
-TAO_AV_SCTP_SEQ_Transport::send (const char *buf,
+TAO_AV_SCTP_SEQ_Transport::send (char const *buf,
                                  size_t len,
                                  ACE_Time_Value *)
 {
@@ -119,7 +116,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const char *buf,
 }
 
 ssize_t
-TAO_AV_SCTP_SEQ_Transport::send (const iovec *iov,
+TAO_AV_SCTP_SEQ_Transport::send (iovec const *iov,
                                  int iovcnt,
                                  ACE_Time_Value *)
 {
@@ -161,7 +158,7 @@ TAO_AV_SCTP_SEQ_Transport::recv (iovec *iov,
 int
 TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor,
                                               ACE_Reactor *reactor,
-                                              const ACE_INET_Addr &local_addr,
+                                              ACE_INET_Addr const &local_addr,
                                               TAO_FlowSpec_Entry *entry)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -225,9 +222,7 @@ TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor ()
-{
-}
+TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor () = default;
 
 int
 TAO_AV_SCTP_SEQ_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
@@ -388,8 +383,8 @@ TAO_AV_SCTP_SEQ_Base_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *
 
 int
 TAO_AV_SCTP_SEQ_Base_Connector::connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
-                                                   const ACE_Multihomed_INET_Addr &remote_addr,
-                                                   const ACE_Multihomed_INET_Addr &local_addr)
+                                                   ACE_Multihomed_INET_Addr const &remote_addr,
+                                                   ACE_Multihomed_INET_Addr const &local_addr)
 {
   int result = this->connect (handler,
                               remote_addr,
@@ -408,9 +403,7 @@ TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector ()
-{
-}
+TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector () = default;
 
 int
 TAO_AV_SCTP_SEQ_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
@@ -469,7 +462,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
     this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
   ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (remote_addr);
-  TAO_AV_SCTP_SEQ_Flow_Handler *handler = nullptr;
+  TAO_AV_SCTP_SEQ_Flow_Handler *handler {};
 
   ACE_Multihomed_INET_Addr remote_multi_addr;
   remote_multi_addr.set (inet_addr->get_port_number (),
@@ -480,7 +473,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   ACE_Multihomed_INET_Addr local_addr; //This can be a multihomed address
   ACE_INET_Addr *addr;
-  if (entry->get_peer_addr () != 0)
+  if (entry->get_peer_addr () != nullptr)
     {
       addr = dynamic_cast<ACE_INET_Addr *> (entry->get_peer_addr ());
     }
@@ -532,7 +525,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                   "Local Addrs\n"));
       char buf [BUFSIZ];
       size_t size = BUFSIZ;
-      ACE_INET_Addr *peer_addrs = nullptr;
+      ACE_INET_Addr *peer_addrs {};
       ACE_NEW_RETURN (peer_addrs,ACE_INET_Addr [size], -1);
       handler->peer ().get_local_addrs (peer_addrs, size);
       for (unsigned int i=0; i < size;i++)
@@ -580,13 +573,11 @@ TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory ()
-{
-}
+TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory () = default;
 
 
 int
-TAO_AV_SCTP_SEQ_Factory::match_protocol (const char *protocol_string)
+TAO_AV_SCTP_SEQ_Factory::match_protocol (char const *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"SCTP_SEQ") == 0)
     return 1;
@@ -598,7 +589,7 @@ TAO_AV_SCTP_SEQ_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
-  TAO_AV_Acceptor *acceptor = nullptr;
+  TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_SCTP_SEQ_Acceptor,
                   0);
@@ -610,7 +601,7 @@ TAO_AV_SCTP_SEQ_Factory::make_connector ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
-  TAO_AV_Connector *connector = nullptr;
+  TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_SCTP_SEQ_Connector,
                   0);
@@ -651,7 +642,7 @@ TAO_AV_SCTP_SEQ_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_SCTP_SEQ_Object::send_frame (const iovec *iov,
+TAO_AV_SCTP_SEQ_Object::send_frame (iovec const *iov,
                                     int iovcnt,
                                     TAO_AV_frame_info * /*frame_info*/)
 {
@@ -659,7 +650,7 @@ TAO_AV_SCTP_SEQ_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_SCTP_SEQ_Object::send_frame (const char*buf,
+TAO_AV_SCTP_SEQ_Object::send_frame (char const *buf,
                                     size_t len)
 {
   int result = this->transport_->send (buf, len, 0);
@@ -726,7 +717,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
   int dscp_flag=0;
   for(i=0; i < qos.QoSParams.length(); i++)
     {
-      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
+      if( std::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -742,7 +733,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
             }
         }
 
-      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
+      if( std::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
         {
           qos.QoSParams[i].property_value >>= ecn;
           // ECN value can only occupy bits 6 and 7 of the
@@ -837,8 +828,8 @@ TAO_AV_SCTP_SEQ_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_SCTP_SEQ_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                              const void *arg)
+TAO_AV_SCTP_SEQ_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                              void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -851,9 +842,7 @@ TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory ()
-{
-}
+TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory () = default;
 
 int
 TAO_AV_SCTP_SEQ_Flow_Factory::init (int /* argc */,
@@ -863,7 +852,7 @@ TAO_AV_SCTP_SEQ_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_SCTP_SEQ_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_SCTP_SEQ_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"SCTP_SEQ") == 0)
     return 1;
@@ -876,12 +865,12 @@ TAO_AV_SCTP_SEQ_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                     TAO_AV_Flow_Handler *handler,
                                                     TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Callback *callback {};
   if( endpoint->get_callback (entry->flowname (), callback) ) {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
-  TAO_AV_SCTP_SEQ_Object *object = nullptr;
+  TAO_AV_SCTP_SEQ_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_SCTP_SEQ_Object (callback,
                                           transport),

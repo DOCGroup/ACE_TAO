@@ -18,8 +18,18 @@ class Echo_i : public virtual POA_Test::Echo
 public:
   explicit Echo_i (CORBA::ORB_ptr orb);
 
+  Echo_i (Echo_i const &) = delete;
+  Echo_i (Echo_i &&) = delete;
+  Echo_i & operator= (Echo_i const &) = delete;
+  Echo_i & operator= (Echo_i &&) = delete;
+
   // Test::Echo operations
-  bool ping (::CORBA::Long sleep_time, ::CORBA::Long cache_size_expected, ::Test::Echo_ptr server, ::CORBA::Long sleep_time_server, ::CORBA::Long cache_size_expected_in_server1, ::CORBA::Long cache_size_expected_in_server2) override;
+  bool ping (::CORBA::Long sleep_time,
+             ::CORBA::Long cache_size_expected,
+             ::Test::Echo_ptr server,
+             ::CORBA::Long sleep_time_server,
+             ::CORBA::Long cache_size_expected_in_server1,
+             ::CORBA::Long cache_size_expected_in_server2) override;
 
   void shutdown () override;
 

@@ -10,9 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T ()
-{
-}
+TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T () = default;
 
 template<class TYPE> typename TAO_Notify_Seq_Worker_T<TYPE>::SEQ*
 TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container)

@@ -176,7 +176,7 @@ namespace CORBA
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 
-    /// Internal list of typecodes.
+    /// Internal list of context strings.
     ACE_Unbounded_Queue<char *> ctx_list_;
   };
 } // End CORBA namespace.

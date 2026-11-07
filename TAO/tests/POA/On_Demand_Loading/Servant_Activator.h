@@ -30,7 +30,12 @@ class ServantActivator_i :
 {
 public:
   /// Initialization.
-  ServantActivator_i (CORBA::ORB_ptr orb);
+  explicit ServantActivator_i (CORBA::ORB_ptr orb);
+
+  ServantActivator_i (ServantActivator_i const &) = delete;
+  ServantActivator_i &operator= (ServantActivator_i const &) = delete;
+  ServantActivator_i (ServantActivator_i &&) = delete;
+  ServantActivator_i &operator= (ServantActivator_i &&) = delete;
 
   /**
    * This method is invoked by a POA with USE_SERVANT_MANAGER and
@@ -43,8 +48,8 @@ public:
    * Activator or the Servant Locator interface is invoked
    * respectively.
    */
-  virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa);
+  PortableServer::Servant incarnate (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr poa) override;
 
   /**
    * This method is invoked whenever a test servant is
@@ -54,16 +59,16 @@ public:
    * the ServantActivator invokes this method which will destroy the
    * servant associated with the object.
    */
-  virtual void etherealize (const PortableServer::ObjectId &oid,
-                            PortableServer::POA_ptr adapter,
-                            PortableServer::Servant servant,
-                            CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+  void etherealize (PortableServer::ObjectId const &oid,
+                    PortableServer::POA_ptr adapter,
+                    PortableServer::Servant servant,
+                    CORBA::Boolean cleanup_in_progress,
+                    CORBA::Boolean remaining_activations) override;
 
   /// Returns an ObjectId when given a DLL name and the factory
   /// function in the DLL that will create an appropriate Servant.
-  PortableServer::ObjectId_var create_dll_object_id (const char *dllname,
-                                                     const char *factory_function);
+  PortableServer::ObjectId_var create_dll_object_id (char const *dllname,
+                                                     char const *factory_function);
 
 private:
   /**

@@ -9,15 +9,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<class PROXY>
-TAO_ESF_Proxy_RB_Tree<PROXY>::TAO_ESF_Proxy_RB_Tree ()
-{
-}
-
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 {
-  int r = this->impl_.bind (proxy, 1);
+  int const r = this->impl_.bind (proxy, 1);
   if (r == 0)
     return;
 
@@ -37,7 +32,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 {
-  int r = this->impl_.rebind (proxy, 1);
+  int const r = this->impl_.rebind (proxy, 1);
   if (r == 0)
     return;
 
@@ -49,7 +44,6 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
       proxy->_decr_refcnt ();
       return;
     }
-
   if (r == -1)
     {
       proxy->_decr_refcnt ();
@@ -59,7 +53,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy)
 {
-  int r = this->impl_.unbind (proxy);
+  int const r = this->impl_.unbind (proxy);
   if (r != 0)
     {
       // @@ Cannot remove, throw some other
@@ -72,8 +66,8 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy)
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown ()
 {
-  Iterator end = this->impl_.end ();
-  for (Iterator i = this->impl_.begin (); i != end; ++i)
+  Iterator end (this->impl_.end ());
+  for (Iterator i (this->impl_.begin ()); i != end; ++i)
     {
       // Decrement reference count
       (*i)->_decr_refcnt ();

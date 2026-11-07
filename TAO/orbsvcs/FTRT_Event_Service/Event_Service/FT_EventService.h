@@ -43,7 +43,7 @@ private:
   FT_EventService (FT_EventService &&) = delete;
   FT_EventService &operator= (FT_EventService &&) = delete;
 
-  int global_scheduler_;
+  bool global_scheduler_ {};
   // Should we use a global scheduler or a local one?
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.

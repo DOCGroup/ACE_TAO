@@ -17,7 +17,8 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Unbounded_Queue.h"
+
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,7 +49,7 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
 {
 public:
   /// Constructor.
-  TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec);
+  explicit TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec);
 
   /**
    * Returns 1 if the offer satisfies the constraint
@@ -117,7 +118,7 @@ private:
   HASH_MAP property_lookup_;
 
   /// The result of a non_boolean operation.
-  ACE_Unbounded_Queue<TAO_ETCL_Literal_Constraint> queue_;
+  std::deque<TAO_ETCL_Literal_Constraint> queue_;
 
   /// Holder for a value found in property_lookup_ or for a
   /// nested type within that value.

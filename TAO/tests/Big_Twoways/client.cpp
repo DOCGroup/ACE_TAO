@@ -1,14 +1,13 @@
 #include "Peer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -35,13 +34,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -49,17 +48,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic got a nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ior);
 
-      Test::Coordinator_var coordinator =
-        Test::Coordinator::_narrow(tmp.in ());
+      Test::Coordinator_var const coordinator =
+        Test::Coordinator::_narrow (tmp.in ());
 
       if (CORBA::is_nil (coordinator.in ()))
         {
@@ -69,18 +68,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Peer *peer_impl = 0;
+      Peer *peer_impl {};
       ACE_NEW_RETURN (peer_impl,
                       Peer (orb.in ()),
                       1);
-      PortableServer::ServantBase_var peer_owner_transfer(peer_impl);
+      PortableServer::ServantBase_var peer_owner_transfer (peer_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (peer_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Peer_var peer =
+      Test::Peer_var const peer =
         Test::Peer::_narrow (object.in ());
 
       poa_manager->activate ();
@@ -96,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

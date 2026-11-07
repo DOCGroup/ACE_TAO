@@ -14,7 +14,7 @@ parse_args (int argc,
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:"));
 
   int c;
-  while ((c= opts ()) != -1)
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
@@ -39,14 +39,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   test_var server;
-  RTScheduling::Scheduler_var safe_scheduler;
 
   try
     {
+      orb = CORBA::ORB_init (argc, argv);
+      TAO_Scheduler scheduler (orb.in ());
+
       try
         {
-          orb = CORBA::ORB_init (argc, argv);
-
           if (parse_args (argc, argv) == -1)
             return (-1);
 
@@ -54,13 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-          TAO_Scheduler* scheduler = 0;
-          ACE_NEW_RETURN (scheduler,
-                          TAO_Scheduler (orb.in ()),
-                          -1);
-          safe_scheduler = scheduler;
-
-          manager->rtscheduler (scheduler);
+          manager->rtscheduler (&scheduler);
 
 
           CORBA::Object_var object =
@@ -76,13 +70,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 1);
             }
 
-          CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+          CORBA::Object_var const current_obj =
+            orb->resolve_initial_references ("RTScheduler_Current");
 
           RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
-          const char * name = 0;
-          CORBA::Policy_ptr sched_param = 0;
-          CORBA::Policy_ptr implicit_sched_param = 0;
+          char const * const name = nullptr;
+          CORBA::Policy_ptr const sched_param = nullptr;
+          CORBA::Policy_ptr const implicit_sched_param = nullptr;
 
           current->begin_scheduling_segment (name,
                                             sched_param,
@@ -98,13 +93,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           current->end_scheduling_segment (name);
         }
-      catch (const CORBA::THREAD_CANCELLED& )
+      catch (CORBA::THREAD_CANCELLED const &)
         {
           ACE_DEBUG ((LM_DEBUG,
             "Distributable Thread Cancelled - Expected Exception\n"));
           server->shutdown ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Caught exception:");
 
@@ -113,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught unexpected exception:");
 

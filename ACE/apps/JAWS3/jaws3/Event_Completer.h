@@ -14,25 +14,25 @@ class JAWS_Export JAWS_Event_Completer
 public:
   virtual ~JAWS_Event_Completer ();
 
-  virtual void accept_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void accept_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The callback entry point when input has been read.
 
-  virtual void connect_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void connect_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The callback entry point when input has been read.
 
-  virtual void input_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void input_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The callback entry point when input has been read.
 
-  virtual void output_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void output_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The callback entry point when output has been completely written.
 
-  virtual void timer_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void timer_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The callback entry point when timer has expired.
 
-  virtual void lambda_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void lambda_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The callback entry point when a lambda event completes.
 
-  virtual void default_complete (const JAWS_Event_Result &r, void *act = 0);
+  virtual void default_complete (JAWS_Event_Result const &r, void *act = nullptr);
   // The defaul callback entry point when an event completes.
 };
 

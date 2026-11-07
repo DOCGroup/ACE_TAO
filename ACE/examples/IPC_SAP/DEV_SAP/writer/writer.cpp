@@ -19,7 +19,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        argv[1]),
                       1);
 
-  ACE_TTY_IO::Serial_Params myparams;
+  ACE_TTY_IO::Serial_Params myparams {};
   // Try to read default parameters
   if (write_dev.control (ACE_TTY_IO::GETPARAMS, &myparams) == -1)
     {
@@ -48,7 +48,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
        )
     {
       ssize_t bytes_written =
-        write_dev.send_n ((void *) &writeto,
+        write_dev.send_n (&writeto,
                           1);
 
       if (bytes_written != 1)

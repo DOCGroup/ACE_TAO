@@ -88,7 +88,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
   ACE_Cached_Mem_Pool_Node<T> *allocated = this->free_list_.remove ();
   void *ptr = allocated == 0 ? 0 : allocated->addr();
   if (ptr != nullptr)
-    ACE_OS::memset (ptr, initial_value, sizeof (T));
+    std::memset (ptr, initial_value, sizeof (T));
   return ptr;
 }
 
@@ -160,7 +160,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
   ACE_Cached_Mem_Pool_Node<char> *allocated = this->free_list_.remove ();
   void *ptr = allocated == nullptr ? nullptr : allocated->addr();
   if (ptr != nullptr)
-    ACE_OS::memset (ptr, initial_value, chunk_size_);
+    std::memset (ptr, initial_value, chunk_size_);
   return ptr;
 }
 
@@ -748,7 +748,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t nbytes,
   void *ptr = this->malloc (nbytes);
 
   if (ptr != nullptr)
-    ACE_OS::memset (ptr, initial_value, nbytes);
+    std::memset (ptr, initial_value, nbytes);
 
   return ptr;
 }
@@ -862,7 +862,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
   ACE_ALLOCATOR_RETURN (new_node,
                         (NAME_NODE *)
                         this->shared_malloc (sizeof (NAME_NODE) +
-                                             ACE_OS::strlen (name) + 1),
+                                             std::strlen (name) + 1),
                         -1);
   char *name_ptr = (char *) (new_node + 1);
 

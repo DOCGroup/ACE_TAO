@@ -7,14 +7,14 @@
 void
 Time_Date_i::bin_date (CORBA::Long_out time_date)
 {
-  time_date = static_cast<CORBA::Long> (ACE_OS::time (0));
+  time_date = static_cast<CORBA::Long> (ACE_OS::time (nullptr));
 }
 
 // Obtain the time and date in string format.
 void
 Time_Date_i::str_date (CORBA::String_out time_date)
 {
-  const time_t time = ACE_OS::time (0);
+  time_t const time = ACE_OS::time (nullptr);
 
   time_date = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ACE_OS::ctime (&time)));
 }

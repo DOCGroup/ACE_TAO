@@ -21,6 +21,7 @@
 #include "ACEXML/common/CharStream.h"
 #include "ACEXML/common/URL_Addr.h"
 #include "ACEXML/common/Mem_Map_Stream.h"
+#include <memory>
 
 /**
  * @class ACEXML_HttpCharStream
@@ -33,44 +34,49 @@ public:
   /// Default constructor.
   ACEXML_HttpCharStream ();
 
+  ACEXML_HttpCharStream (ACEXML_HttpCharStream const&) = delete;
+  ACEXML_HttpCharStream (ACEXML_HttpCharStream&&) = delete;
+  ACEXML_HttpCharStream& operator= (ACEXML_HttpCharStream const&) = delete;
+  ACEXML_HttpCharStream& operator= (ACEXML_HttpCharStream&&) = delete;
+
   /// Destructor
-  virtual ~ACEXML_HttpCharStream ();
+  ~ACEXML_HttpCharStream () override;
 
   /// Open an URL.
-  int open (const ACEXML_Char *url);
+  int open (ACEXML_Char const *url);
 
   /**
    *  Returns the available ACEXML_Char in the buffer.  -1
    *  if the object is not initialized properly.
    */
-  virtual int available ();
+  int available () override;
 
   /**
    *  Close this stream and release all resources used by it.
    */
-  virtual int close ();
+  int close () override;
 
   /**
    *  Read the next ACEXML_Char.  Return -1 if we are not able to
    *  return an ACEXML_Char, 0 if EOS is reached, or 1 if succeed.
    */
-  virtual int get (ACEXML_Char& ch);
+  int get (ACEXML_Char& ch) override;
 
   /**
    *  Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str, size_t len);
+  int read (ACEXML_Char *str, size_t len) override;
 
   /**
    *  Peek the next ACEXML_Char in the CharStream.  Return the
    *  character if succeess, -1 if EOS is reached.
    */
-  virtual int peek ();
+  int peek () override;
 
   /**
    *  Resets the file pointer to the beginning of the stream.
    */
-  virtual void rewind ();
+  void rewind () override;
 
   /**
    *  Determine the encoding of the file.
@@ -80,12 +86,12 @@ public:
   /**
    * Get the encoding of the file
    */
-  virtual const ACEXML_Char* getEncoding ();
+  ACEXML_Char const *getEncoding () override;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  virtual const ACEXML_Char* getSystemId ();
+  ACEXML_Char const *getSystemId () override;
 
 
 private:
@@ -115,19 +121,19 @@ private:
    */
   int get_url (size_t& len);
 
-  ACEXML_Char *url_;
+  std::unique_ptr<ACEXML_Char[]> url_ {};
 
-  ACEXML_URL_Addr* url_addr_;
+  std::unique_ptr<ACEXML_URL_Addr> url_addr_ {};
 
-  ACEXML_Mem_Map_Stream* stream_;
+  std::unique_ptr<ACEXML_Mem_Map_Stream> stream_ {};
 
-  Connector* connector_;
+  std::unique_ptr<Connector> connector_ {};
 
-  ACE_OFF_T size_;
+  ACE_OFF_T size_ {};
 
-  ACE_OFF_T data_offset_;
+  ACE_OFF_T data_offset_ {};
 
-  ACEXML_Char* encoding_;
+  std::unique_ptr<ACEXML_Char[]> encoding_ {};
 };
 
 

@@ -105,7 +105,7 @@
 class Sig_Handler_1 : public ACE_Event_Handler
 {
 public:
-  Sig_Handler_1 (ACE_Reactor &reactor, const char *msg)
+  Sig_Handler_1 (ACE_Reactor &reactor, char const *msg)
     : msg_ (msg),
       count_ (0),
       reactor_ (reactor)
@@ -121,6 +121,11 @@ public:
                   "%p\n",
                   "register_handler"));
   }
+
+  Sig_Handler_1 (Sig_Handler_1 const &) = delete;
+  Sig_Handler_1 (Sig_Handler_1 &&) = delete;
+  Sig_Handler_1 &operator= (Sig_Handler_1 const &) = delete;
+  Sig_Handler_1 &operator= (Sig_Handler_1 &&) = delete;
 
   // @@ Note that this code is not portable to all OS platforms since
   // it does print statements within the signal handler.
@@ -171,7 +176,7 @@ public:
   }
 
 protected:
-  const char *msg_;
+  char const *msg_;
   int count_;
   int int_sigkey_;
   int quit_sigkey_;
@@ -181,7 +186,7 @@ protected:
 class Sig_Handler_2 : public Sig_Handler_1
 {
 public:
-  Sig_Handler_2 (ACE_Reactor &reactor, const char *msg)
+  Sig_Handler_2 (ACE_Reactor &reactor, char const *msg)
     : Sig_Handler_1 (reactor, msg)
   {
   }
@@ -231,11 +236,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 #if defined (ACE_WIN32)
   ACE_WFMO_Reactor reactor_impl (argc > 1
                                  ? &multi_handlers
-                                 : (ACE_Sig_Handler *) 0);
+                                 : nullptr);
 #else
   ACE_Select_Reactor reactor_impl (argc > 1
                                    ? &multi_handlers
-                                   : (ACE_Sig_Handler *) nullptr);
+                                   : nullptr);
 #endif /* ACE_WIN32 */
   ACE_Reactor reactor (&reactor_impl);
 
@@ -244,7 +249,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       // Register an "external" signal handler so that the
       // ACE_Sig_Handlers code will have something to incorporate!
 
-      ACE_SignalHandler eh = (ACE_SignalHandler) external_handler;
+      ACE_SignalHandler eh = &external_handler;
       ACE_Sig_Action sa (eh);
 
       sa.register_action (SIGINT);

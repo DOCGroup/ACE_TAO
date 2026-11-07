@@ -195,7 +195,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoint_set.enqueue_tail (endpt);
+              endpoint_set.push_back (endpt);
               // Insert endpoint into list
             }
           else
@@ -282,7 +282,7 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
       // Append any valid string to those already specified
       // (by other -ORBPreferredInterfaces options that have been
       // seen previously)
-      if (this->pref_network_.length ())
+      if (!this->pref_network_.empty ())
         this->pref_network_+= ',';
       this->pref_network_+= s;
     }

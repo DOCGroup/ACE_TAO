@@ -13,6 +13,8 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   FT_EventService event_service;
@@ -20,8 +22,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 }
 
 FT_EventService::FT_EventService()
-  : global_scheduler_ (0)
-  , sched_impl_ (nullptr)
+  : sched_impl_ (nullptr)
   , membership_ (TAO_FTEC_Event_Channel::UNSPECIFIED)
   , num_threads_ (1)
   , task_ (orb_)
@@ -145,11 +146,11 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
 
       if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("global")) == 0)
       {
-        this->global_scheduler_ = 1;
+        this->global_scheduler_ = true;
       }
       else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("local")) == 0)
       {
-        this->global_scheduler_ = 0;
+        this->global_scheduler_ = false;
       }
       else
       {
@@ -157,7 +158,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
           ACE_TEXT("Unknown scheduling type <%s> ")
           ACE_TEXT("defaulting to local\n"),
           get_opt.opt_arg ()));
-        this->global_scheduler_ = 0;
+        this->global_scheduler_ = false;
       }
       break;
 
@@ -206,7 +207,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context)
         {
             // We must find the scheduler object reference...
 
-            if (this->global_scheduler_ == 0)
+            if (!this->global_scheduler_)
             {
                 ACE_NEW_THROW_EX (this->sched_impl_,
                     ACE_Config_Scheduler,
@@ -248,9 +249,10 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
       ORBSVCS_DEBUG((LM_DEBUG,"Factory connected\n"));
       CORBA::String_var my_ior_string = orb->object_to_string(ec);
 
-      size_t const len = ACE_OS::strlen(my_ior_string.in()) ;
+      size_t const len = std::strlen (my_ior_string.in ());
+      ssize_t const bytes_sent = stream.send_n (my_ior_string.in (), len);
 
-      if (stream.send_n(my_ior_string.in(), len) != len)
+      if (bytes_sent < 0 || static_cast<size_t> (bytes_sent) != len)
         ORBSVCS_ERROR_RETURN((LM_ERROR, "(%P|%t) IOR Transmission Error\n"), -1);
 
       stream.close();

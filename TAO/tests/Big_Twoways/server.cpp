@@ -3,18 +3,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-CORBA::ULong peer_count    = 4;
-CORBA::ULong payload_size  = 1024;
-CORBA::ULong message_count = 1000;
-CORBA::ULong thread_count  = 4;
+#include <memory>
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+CORBA::ULong peer_count {4};
+CORBA::ULong payload_size {1024};
+CORBA::ULong message_count {1000};
+CORBA::ULong thread_count {4};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:b:i:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -61,13 +61,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -75,13 +75,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic got a nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Coordinator *coordinator_impl;
+      Coordinator *coordinator_impl {};
       ACE_NEW_RETURN (coordinator_impl,
                       Coordinator (peer_count),
                       1);
@@ -91,21 +91,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      Test::Coordinator_var coordinator =
+      Test::Coordinator_var const coordinator =
         Test::Coordinator::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (coordinator.in ());
 
-      // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      // Write the IOR before activating the POA manager.
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -128,7 +130,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Building session list . . . "));
 
-      Session_Control *session_control_impl = 0;
+      Session_Control *session_control_impl {};
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);
@@ -137,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       object = root_poa->id_to_reference (id.in ());
 
-      Test::Session_Control_var session_control =
+      Test::Session_Control_var const session_control =
         Test::Session_Control::_narrow (object.in ());
 
       Test::Session_List session_list;
@@ -151,13 +153,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Giving start signal . . . "));
-      CORBA::ULong j;
+      CORBA::ULong j {};
       for (j = 0; j != peer_count; ++j)
         {
           // Make a copy of the sessions, excluding the j-th element
           Test::Session_List other_sessions (peer_count - 1);
           other_sessions.length (peer_count - 1);
-          CORBA::ULong count = 0;
+          CORBA::ULong count {};
           for (CORBA::ULong k = 0; k != peer_count; ++k)
             {
               if (k == j)
@@ -207,7 +209,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

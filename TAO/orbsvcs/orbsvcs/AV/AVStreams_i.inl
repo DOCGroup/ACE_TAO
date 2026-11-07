@@ -31,7 +31,7 @@ TAO_AV_QoS::set (AVStreams::streamQoS &stream_qos)
 
 ACE_INLINE
 int
-TAO_AV_QoS::get_flow_qos (const char *flowname,
+TAO_AV_QoS::get_flow_qos (char const *flowname,
                           AVStreams::QoS &flow_qos)
 {
   int result = this->qos_map_.find (flowname, flow_qos);

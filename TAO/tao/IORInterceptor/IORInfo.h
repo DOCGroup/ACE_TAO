@@ -46,7 +46,7 @@ class TAO_IORInfo
 {
 public:
   /// Constructor.
-  TAO_IORInfo (TAO_Root_POA *poa);
+  explicit TAO_IORInfo (TAO_Root_POA *poa);
 
   /**
    * @name PortableInterceptor::IORInfo Methods
@@ -113,11 +113,10 @@ protected:
 
 private:
   TAO_IORInfo (TAO_IORInfo const &) = delete;
-  void operator= (TAO_IORInfo const &) = delete;
+  TAO_IORInfo &operator= (TAO_IORInfo const &) = delete;
   TAO_IORInfo (TAO_IORInfo &&) = delete;
-  void operator= (TAO_IORInfo &&) = delete;
+  TAO_IORInfo &operator= (TAO_IORInfo &&) = delete;
 
-private:
   /// Pointer to POA
   TAO_Root_POA * poa_ {};
 
@@ -129,7 +128,7 @@ private:
    * called after the IORInterceptor::establish_components()
    * interception point has been called.
    */
-  CORBA::Boolean components_established_ {};
+  bool components_established_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

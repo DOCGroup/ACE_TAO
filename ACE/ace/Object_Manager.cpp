@@ -99,11 +99,11 @@ void *ACE_Object_Manager::preallocated_array[
     }
 # define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ACE_CLEANUP_DESTROYER_NAME (\
-      (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], 0);\
-    preallocated_object[ID] = 0;
+      (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], nullptr);\
+    preallocated_object[ID] = nullptr;
 # define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID, COUNT)\
     delete (ACE_Cleanup_Adapter<TYPE[COUNT]> *) preallocated_array[ID];\
-    preallocated_array[ID] = 0;
+    preallocated_array[ID] = nullptr;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)

@@ -20,10 +20,12 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Notify/CosNotify_Initializer.h"
-#include "ace/SString.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 #include "Notify_Service_Export.h"
+
+#include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
@@ -35,7 +37,7 @@ class TAO_Notify_Service_Driver;
 class LoggingWorker : public ACE_Task_Base
 {
 public:
-  LoggingWorker (TAO_Notify_Service_Driver * ns);
+  explicit LoggingWorker (TAO_Notify_Service_Driver * ns);
   LoggingWorker (LoggingWorker const &) = delete;
   LoggingWorker (LoggingWorker &&) = delete;
   LoggingWorker &operator= (LoggingWorker const &) = delete;
@@ -45,9 +47,9 @@ public:
   void end ();
 private:
   ACE_Reactor logging_reactor_;
-  TAO_Notify_Service_Driver * ns_;
-  bool started_;
-  long timer_id_;
+  TAO_Notify_Service_Driver * ns_ {};
+  bool started_ {};
+  long timer_id_ {-1};
 };
 
 /**
@@ -123,7 +125,7 @@ protected:
   /// Apply a relative round-trip timeout to the ORB
   void apply_timeout (CORBA::ORB_ptr orb);
 
-  TAO_Notify_Service * notify_service_;
+  TAO_Notify_Service * notify_service_ {};
 
   /// Resolve the naming service.
   int resolve_naming_service ();
@@ -134,23 +136,23 @@ protected:
   // = Data members
 
   /// true: this service is bootstrappable
-  bool bootstrap_;
+  bool bootstrap_ {};
 
   /// true: register itself with the name service
-  bool use_name_svc_;
+  bool use_name_svc_ {true};
 
   /// File name where the IOR of the server object is stored.
-  ACE_TCHAR const * ior_output_file_name_;
+  ACE_TCHAR const * ior_output_file_name_ {};
 
   /// The Factory name.
   ACE_CString notify_factory_name_;
 
   /// The event channel names.
-  ACE_Unbounded_Set <ACE_CString> notify_channel_name_;
+  std::vector<std::string> notify_channel_name_;
 
   /// true: create an event channel and registers it with the Naming Service
   /// with the name <notify_channel_name_>
-  bool register_event_channel_;
+  bool register_event_channel_ {};
 
   /// The Factory.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
@@ -171,13 +173,13 @@ protected:
   Worker worker_;
 
   /// Number of worker threads.
-  int nthreads_;
+  int nthreads_ {1};
 
   /// indicate that a separate ORB is used for dispatching events.
-  bool separate_dispatching_orb_;
+  bool separate_dispatching_orb_ {};
 
   /// The relative round-trip timeout
-  suseconds_t timeout_;
+  suseconds_t timeout_ {};
 
   /// Logging interval
   ACE_Time_Value logging_interval_;
@@ -186,10 +188,10 @@ protected:
   LoggingWorker logging_worker_;
 
   /// Shutdown the ORB?
-  bool shutdown_orb_;
+  bool shutdown_orb_ {true};
 
   /// Shutdown the dispatching ORB?
-  bool shutdown_dispatching_orb_;
+  bool shutdown_dispatching_orb_ {true};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

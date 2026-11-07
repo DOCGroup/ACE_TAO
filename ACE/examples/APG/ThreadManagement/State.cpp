@@ -3,6 +3,12 @@
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
+  HA_CommandHandler () = default;
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG
@@ -17,9 +23,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Main Thread running\n")));
 // Listing 1 code/ch13
   HA_CommandHandler handler;
-  int result = handler.activate (THR_NEW_LWP |
-                                 THR_JOINABLE |
-                                 THR_SUSPENDED);
+  int const result = handler.activate (THR_NEW_LWP |
+                                       THR_JOINABLE |
+                                       THR_SUSPENDED);
   ACE_ASSERT (result == 0);
 
   ACE_UNUSED_ARG (result);

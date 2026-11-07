@@ -14,7 +14,7 @@ get_iterator (CORBA::ORB_ptr orb);
 // Perform file requests
 void invoke_requests (int argc,
                       ACE_TCHAR *argv[],
-                      int *request_count,
+                      int &request_count,
                       Web_Server::Iterator_Factory_ptr f);
 
 int
@@ -56,23 +56,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // 1 millisecond delay to reduce "busy waiting" in ORB event
       // loop.  (simulating "work")
-      ACE_Time_Value tv (0, 1000);
+      ACE_Time_Value const tv (0, 1000);
 
       // Variable used to keep track of when file retrieval has
       // completed.
-      int request_count = 0;
+      int request_count {};
 
       ::invoke_requests (argc,
                          argv,
-                         &request_count,
+                         request_count,
                          factory.in ());
 
       // Run the ORB event loop.
       while (request_count > 0)
         {
-          CORBA::Boolean more_work;
-
-          more_work = orb->work_pending ();
+          bool const more_work = orb->work_pending ();
 
           if (more_work)
             {
@@ -86,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const Web_Server::Error_Result& exc)
+  catch (Web_Server::Error_Result const& exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Caught Web Server exception with ")
@@ -94,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          exc.status),
                         -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
@@ -143,28 +141,27 @@ get_iterator (CORBA::ORB_ptr o)
 
 void invoke_requests (int argc,
                       ACE_TCHAR *argv[],
-                      int *request_count,
+                      int &request_count,
                       Web_Server::Iterator_Factory_ptr f)
 {
   Web_Server::Iterator_Factory_var factory =
     Web_Server::Iterator_Factory::_duplicate (f);
 
   // Activate and run the reply handlers.
-  for (int i = 0;
+  for (int i {};
        i < argc - 1;  // Don't include the program name.
        ++i)
     {
-      Iterator_Handler *handler = 0;
+      Iterator_Handler *handler = nullptr;
       ACE_NEW_THROW_EX (handler,
-                        Iterator_Handler,
+                        Iterator_Handler (request_count),
                         CORBA::NO_MEMORY ());
 
       // Transfer ownership to the POA.
       PortableServer::ServantBase_var tmp (handler);
 
       // This ends up being an AMI call, so it won't block.
-      handler->run (request_count,
-                    ACE_TEXT_ALWAYS_CHAR(argv[i + 1]),
+      handler->run (ACE_TEXT_ALWAYS_CHAR (argv[i + 1]),
                     factory.in ());
     }
 }

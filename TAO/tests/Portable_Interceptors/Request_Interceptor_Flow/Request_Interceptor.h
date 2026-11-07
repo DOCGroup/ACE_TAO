@@ -25,7 +25,7 @@
 #include "tao/LocalObject.h"
 #include "tao/CORBA_String.h"
 
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -43,7 +43,12 @@ class Request_Interceptor
 {
 public:
   /// Constructor.
-  Request_Interceptor (const char *name);
+  explicit Request_Interceptor (char const *name);
+
+  Request_Interceptor (Request_Interceptor const &) = delete;
+  Request_Interceptor (Request_Interceptor &&) = delete;
+  Request_Interceptor &operator= (Request_Interceptor const &) = delete;
+  Request_Interceptor &operator= (Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -55,9 +60,9 @@ public:
    */
   //@{
   /// Return the name of this Requestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
   //@}
 
 protected:
@@ -66,13 +71,11 @@ protected:
 
   /// The number of times a starting interception point has been
   /// called.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-    starting_interception_point_count_;
+  std::atomic<CORBA::ULong> starting_interception_point_count_ { 0 };
 
   /// The number of times an ending interception point has been
   /// called.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-    ending_interception_point_count_;
+  std::atomic<CORBA::ULong> ending_interception_point_count_ { 0 };
 };
 
 #if defined(_MSC_VER)

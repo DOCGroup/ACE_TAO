@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Thread_Lane_Resources_Manager.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +37,7 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager
 {
 public:
   /// Constructor.
-  TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager () override;
@@ -54,7 +55,7 @@ public:
   void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (TAO_MProfile const &mprofile) override;
+  bool is_collocated (TAO_MProfile const &mprofile) override;
 
   /// @name Accessors
   // @{
@@ -69,10 +70,14 @@ private:
     TAO_Default_Thread_Lane_Resources_Manager const &) = delete;
   TAO_Default_Thread_Lane_Resources_Manager &operator= (
     TAO_Default_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager (
+    TAO_Default_Thread_Lane_Resources_Manager &&) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager &operator= (
+    TAO_Default_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
   /// Default lane resources.
-  TAO_Thread_Lane_Resources * const lane_resources_;
+  std::unique_ptr<TAO_Thread_Lane_Resources> const lane_resources_;
 };
 
 /**
@@ -87,6 +92,17 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
+  TAO_Default_Thread_Lane_Resources_Manager_Factory () = default;
+
+  TAO_Default_Thread_Lane_Resources_Manager_Factory (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager_Factory (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory &&) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory &&) = delete;
+
   /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager_Factory () override;
 

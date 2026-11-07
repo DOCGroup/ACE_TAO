@@ -54,9 +54,7 @@ public:
   {
   }
 
-  ~object_reference_sequence_element()
-  {
-  }
+  ~object_reference_sequence_element () = default;
 
   object_reference_sequence_element & operator=(
       object_reference_var const & rhs)

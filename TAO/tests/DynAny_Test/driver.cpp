@@ -21,10 +21,11 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int error_count = 0;
+  int error_count {};
   try
     {
       Driver driver;
@@ -46,7 +47,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       error_count));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 
@@ -56,17 +57,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return error_count;
 }
 
-// constructor
-Driver::Driver ()
-  : test_type_ (NO_TEST),
-    debug_ (0)
-{
-}
-
 // destructor
 Driver::~Driver ()
 {
-  if (this->orb_.in () != 0)
+  if (!CORBA::is_nil (this->orb_.in ()))
     {
       this->orb_->shutdown ();
       this->orb_->destroy ();
@@ -90,7 +84,7 @@ Driver::init (int argc, ACE_TCHAR *argv[])
                           "parse_args failed\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Driver::init");
       return -1;
@@ -111,8 +105,8 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:d"));
-  int c;
-  const ACE_TCHAR *test_str = 0;
+  int c {};
+  ACE_TCHAR const *test_str {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -121,25 +115,26 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
         test_str = get_opts.opt_arg ();
 
         if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynany")))
-          this->test_type_ = TEST_DYNANY;
+          this->test_type_ = Test_Type::dynany;
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynarray")))
-          this->test_type_ = TEST_DYNARRAY;
+          this->test_type_ = Test_Type::dynarray;
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynenum")))
-          this->test_type_ = TEST_DYNENUM;
+          this->test_type_ = Test_Type::dynenum;
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynsequence")))
-          this->test_type_ = TEST_DYNSEQUENCE;
+          this->test_type_ = Test_Type::dynsequence;
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynstruct")))
-          this->test_type_ = TEST_DYNSTRUCT;
+          this->test_type_ = Test_Type::dynstruct;
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynunion")))
-          this->test_type_ = TEST_DYNUNION;
+          this->test_type_ = Test_Type::dynunion;
         else
-          ACE_DEBUG ((LM_DEBUG,
-                      "I don't recognize test type %s\n",
-                      test_str));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Unrecognized test type: %s\n"),
+                             test_str),
+                            -1);
         break;
 
       case 'd':
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
 
       case '?':
@@ -153,67 +148,66 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
+  if (this->test_type_ == Test_Type::none)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("A test type must be selected with -t\n")),
+                      -1);
+
   // Indicates successful parsing of command line.
   return 0;
 }
 
 int
-Driver::run ()
+Driver::run () const
 {
-  int error_count = 0;
+  int error_count {};
 
   switch (this->test_type_)
     {
-      case TEST_DYNANY:
+      case Test_Type::dynany:
         {
-          Test_Wrapper<Test_DynAny>* wrapper =
-            new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_, debug_));
-          error_count = wrapper->run_test ();
-          delete wrapper;
+          Test_Wrapper<Test_DynAny> wrapper (
+            std::make_unique<Test_DynAny> (this->orb_, debug_));
+          error_count = wrapper.run_test ();
         }
         break;
-      case TEST_DYNARRAY:
+      case Test_Type::dynarray:
         {
-          Test_Wrapper<Test_DynArray>* wrapper =
-            new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_, debug_));
-          error_count = wrapper->run_test ();
-          delete wrapper;
+          Test_Wrapper<Test_DynArray> wrapper (
+            std::make_unique<Test_DynArray> (this->orb_, debug_));
+          error_count = wrapper.run_test ();
         }
         break;
-      case TEST_DYNENUM:
+      case Test_Type::dynenum:
         {
-          Test_Wrapper<Test_DynEnum>* wrapper =
-            new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_, debug_));
-          error_count = wrapper->run_test ();
-          delete wrapper;
+          Test_Wrapper<Test_DynEnum> wrapper (
+            std::make_unique<Test_DynEnum> (this->orb_, debug_));
+          error_count = wrapper.run_test ();
         }
         break;
-      case TEST_DYNSEQUENCE:
+      case Test_Type::dynsequence:
         {
-          Test_Wrapper<Test_DynSequence>* wrapper =
-            new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_, debug_));
-          error_count = wrapper->run_test ();
-          delete wrapper;
+          Test_Wrapper<Test_DynSequence> wrapper (
+            std::make_unique<Test_DynSequence> (this->orb_, debug_));
+          error_count = wrapper.run_test ();
         }
         break;
-      case TEST_DYNSTRUCT:
+      case Test_Type::dynstruct:
         {
-          Test_Wrapper<Test_DynStruct>* wrapper =
-            new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_, debug_));
-          error_count = wrapper->run_test ();
-          delete wrapper;
+          Test_Wrapper<Test_DynStruct> wrapper (
+            std::make_unique<Test_DynStruct> (this->orb_, debug_));
+          error_count = wrapper.run_test ();
         }
         break;
-      case TEST_DYNUNION:
+      case Test_Type::dynunion:
         {
-          Test_Wrapper<Test_DynUnion>* wrapper =
-            new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_, debug_));
-          error_count = wrapper->run_test ();
-          delete wrapper;
+          Test_Wrapper<Test_DynUnion> wrapper (
+            std::make_unique<Test_DynUnion> (this->orb_, debug_));
+          error_count = wrapper.run_test ();
         }
         break;
       default:
-        break;
+        return -1;
     }
 
   return error_count;

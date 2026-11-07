@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     std::cerr << "Caught CORBA::Exception: " << std::endl << ex << std::endl;
   }
 

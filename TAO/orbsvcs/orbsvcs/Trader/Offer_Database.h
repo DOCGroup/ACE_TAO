@@ -17,6 +17,8 @@
 #include "orbsvcs/Trader/Offer_Iterators.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
@@ -63,19 +65,19 @@ public:
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
-  int remove_offer (const CosTrading::OfferId offer_id);
+  int remove_offer (char const* offer_id);
 
   /// Lookup an offer whose offer_id is @a offer_id, and return
   /// it. Otherwise, throw the appropriate exception.
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id);
+  CosTrading::Offer* lookup_offer (char const* offer_id);
 
   /**
    * Lookup an offer whose OfferId is @a offer_id and return in
    * @a type_name the type name of the object. Type name is just a
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name);
+  CosTrading::Offer* lookup_offer (char const* offer_id,
+                                   char const*& type_name);
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
@@ -83,11 +85,18 @@ public:
 
   struct Offer_Map_Entry
   {
-    TAO_Offer_Map* offer_map_;
+    Offer_Map_Entry () = default;
+    Offer_Map_Entry (Offer_Map_Entry const&) = delete;
+    Offer_Map_Entry& operator= (Offer_Map_Entry const&) = delete;
+    Offer_Map_Entry (Offer_Map_Entry&&) = delete;
+    Offer_Map_Entry& operator= (Offer_Map_Entry&&) = delete;
+
+    std::unique_ptr<TAO_Offer_Map> offer_map_;
     CORBA::ULong counter_;
     LOCK_TYPE lock_;
   };
 
+  // The database explicitly manages the lifetime of each map entry.
   using Offer_Database = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                                   Offer_Map_Entry*,
                                                   ACE_Hash<CORBA::String_var>,
@@ -114,13 +123,13 @@ private:
 
   /// Take in a service type name for the offer the current value of
   /// of the counter and generate an offer id.
-  static CosTrading::OfferId generate_offer_id (const char *type_name,
+  static CosTrading::OfferId generate_offer_id (char const* type_name,
                                                 CORBA::ULong id);
 
   /// Take in a previously generated offer id and return the type
   /// and id that were used to generate the offer id.
-  static void parse_offer_id (const CosTrading::OfferId offer_id,
-                              char* &service_type,
+  static void parse_offer_id (char const* offer_id,
+                              char const*& service_type,
                               CORBA::ULong& id);
 
   // = Disallow these operations.
@@ -155,8 +164,8 @@ public:
   /// Release all the locks acquired.
   ~TAO_Service_Offer_Iterator ();
 
-  /// Returns 1 if there are more offers, 0 otherwise.
-  int has_more_offers ();
+  /// Returns true if there are more offers, otherwise returns false.
+  bool has_more_offers ();
 
   /// Get the id for the current offer.
   CosTrading::OfferId get_id ();

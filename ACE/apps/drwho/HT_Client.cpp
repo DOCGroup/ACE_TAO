@@ -1,7 +1,7 @@
 #include "HT_Client.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 // Insert a KEY_NAME into the hash table, if it doesn't already exist
 // there.  What gets returned is a pointer to the node inserted.  Note
@@ -10,23 +10,23 @@
 Protocol_Record *
 HT_Client::insert (const char *key_name, int max_len)
 {
-  Protocol_Record **prpp = 0;
+  Protocol_Record **prpp = nullptr;
 
   // This is tricky...
 
   for (prpp = &this->hash_table[ACE::hash_pjw (key_name) % this->hash_table_size];
-       *prpp != 0
-         && ACE_OS::strncmp ((*prpp)->get_login (),
-                             key_name, max_len) != 0;
+       *prpp != nullptr
+         && std::strncmp ((*prpp)->get_login (),
+                          key_name, max_len) != 0;
        prpp = &(*prpp)->next_)
     continue;
 
-  if (*prpp == 0)
+  if (*prpp == nullptr)
     {
       ACE_NEW_RETURN (*prpp,
                       Protocol_Record (ACE::strnew (key_name),
                                        *prpp),
-                      0);
+                      nullptr);
       this->count_++;
     }
 

@@ -99,9 +99,9 @@ namespace RTCORBA
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:216
 
-    virtual ::CORBA::Boolean _is_a (const char *type_id);
-    virtual const char* _interface_repository_id () const;
-    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    ::CORBA::Boolean _is_a (char const *type_id) override;
+    char const *_interface_repository_id () const override;
+    ::CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 
     // CDR Encoder/Decoder methods. (handcrafted)
     virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);

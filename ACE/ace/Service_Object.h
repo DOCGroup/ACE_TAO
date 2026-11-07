@@ -45,7 +45,7 @@ class ACE_Export ACE_Service_Object
 {
 public:
   /// Constructor.
-  ACE_Service_Object (ACE_Reactor * = 0);
+  ACE_Service_Object (ACE_Reactor * = nullptr);
 
   /// Destructor.
   ~ACE_Service_Object () override;

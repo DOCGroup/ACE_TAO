@@ -9,9 +9,9 @@
 int
 UpcallHandler::timeout (PTimerQueue &,
                         PCB *handler,
-                        const void *arg,
+                        void const *arg,
                         int /* recurring_timer */,
-                        const ACE_Time_Value &)
+                        ACE_Time_Value const &)
 {
   ACE_TRACE ("UpcallHandler::timeout");
 
@@ -39,7 +39,7 @@ UpcallHandler::cancellation (PTimerQueue &,
 int
 UpcallHandler::deletion (PTimerQueue &,
                          PCB *handler,
-                         const void *)
+                         void const *)
 {
   ACE_TRACE ("UpcallHandler::deletion");
 
@@ -57,7 +57,7 @@ UpcallHandler::deletion (PTimerQueue &,
 int
 UpcallHandler::registration (PTimerQueue &,
                              PCB *handler,
-                             const void *)
+                             void const *)
 {
   ACE_TRACE ("UpcallHandler::registration");
 
@@ -73,10 +73,10 @@ UpcallHandler::registration (PTimerQueue &,
 int
 UpcallHandler::preinvoke (PTimerQueue &,
                           PCB *handler,
-                          const void *,
+                          void const *,
                           int,
-                          const ACE_Time_Value &,
-                          const void *&)
+                          ACE_Time_Value const &,
+                          void const *&)
 {
   ACE_TRACE ("UpcallHandler::preinvoke");
 
@@ -92,10 +92,10 @@ UpcallHandler::preinvoke (PTimerQueue &,
 int
 UpcallHandler::postinvoke (PTimerQueue &,
                            PCB *handler,
-                           const void *,
+                           void const *,
                            int,
-                           const ACE_Time_Value &,
-                           const void *)
+                           ACE_Time_Value const &,
+                           void const *)
 {
   ACE_TRACE ("UpcallHandler::postinvoke");
 
@@ -146,9 +146,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   PCB cb1, cb2;
   cb1.setID (1);
   cb2.setID (2);
-  int arg1 = 1, arg2 = 2;
+  int arg1 {1};
+  int arg2 {2};
 
-  PTimerQueue *timerQueue;
+  PTimerQueue *timerQueue {};
 
   ACE_NEW_RETURN (timerQueue, PTimerHeap (), -1);
 

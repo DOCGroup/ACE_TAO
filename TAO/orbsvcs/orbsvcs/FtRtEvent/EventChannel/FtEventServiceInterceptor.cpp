@@ -7,12 +7,14 @@
 #include "../Utils/Safe_InputCDR.h"
 #include "../Utils/Log.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 CachedRequestTable::is_new_request (ACE_CString const &client_id, CORBA::Long retention_id)
 {
-  TableImpl::ENTRY *entry = nullptr;
+  TableImpl::ENTRY *entry {};
   return table_.find(client_id, entry) !=0 || entry->int_id_.retention_id != retention_id;
 }
 
@@ -23,7 +25,7 @@ CachedRequestTable::update (ACE_CString const &client_id,
 {
   CachedRequestInfo info;
   info.retention_id = retention_id;
-  TableImpl::ENTRY *entry = nullptr;
+  TableImpl::ENTRY *entry {};
   if (table_.bind(client_id, info, entry))
   {
     entry->int_id_.result = result;
@@ -36,7 +38,7 @@ CachedRequestTable::update (ACE_CString const &client_id,
 CORBA::Any
 CachedRequestTable::get_result (ACE_CString const &client_id)
 {
-  TableImpl::ENTRY *entry = nullptr;
+  TableImpl::ENTRY *entry {};
   if (table_.find(client_id, entry)) {
     return entry->int_id_.result;
   }
@@ -80,21 +82,21 @@ retrieve_ft_request_context(
 {
   service_context = ri->get_request_service_context(IOP::FT_REQUEST);
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
 
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
 
-  if ((cdr >> ft_request_service_context) == 0)
+  if (!(cdr >> ft_request_service_context))
     throw CORBA::BAD_PARAM ();
 }
 
@@ -106,26 +108,26 @@ get_transaction_depth_context(
   try{
     service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH);
   }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const &)
   {
     ORBSVCS_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
     return -1;
   }
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FTRT::TransactionDepth result;
-  if ((cdr >> result) == 0)
+  if (!(cdr >> result))
     throw CORBA::BAD_PARAM ();
 
   return result;
@@ -139,19 +141,19 @@ get_sequence_number_context(
   IOP::ServiceContext_var service_context;
   service_context = ri->get_request_service_context(FTRT::FT_SEQUENCE_NUMBER);
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
-  if ((cdr >> result) == 0)
+  if (!(cdr >> result))
     throw CORBA::BAD_PARAM ();
 
   return result;
@@ -159,7 +161,7 @@ get_sequence_number_context(
 
 
 namespace {
-FtEventServiceInterceptor *interceptor = nullptr;
+FtEventServiceInterceptor *interceptor {};
 }
 
 FtEventServiceInterceptor::FtEventServiceInterceptor ()
@@ -195,7 +197,7 @@ void
 FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::String_var operation = ri->operation ();
-  if (ACE_OS::strcmp(operation.in(), "push") == 0) {
+  if (std::strcmp (operation.in (), "push") == 0) {
     TAO_FTRTEC::Log(3, ACE_TEXT ("Received push command\n"));
     return;
   }

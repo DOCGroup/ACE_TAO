@@ -3,6 +3,7 @@
 #define COLLOCATED_TEST_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,15 +16,20 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (const ACE_TCHAR *input,
+  Client_Task (std::basic_string<ACE_TCHAR> const &input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
 private:
-  const ACE_TCHAR *input_;
+  std::basic_string<ACE_TCHAR> const input_;
 
   CORBA::ORB_var corb_;
 };

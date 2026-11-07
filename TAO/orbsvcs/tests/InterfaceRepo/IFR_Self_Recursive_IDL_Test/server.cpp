@@ -2,16 +2,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include <cstdio>
+#include <memory>
 
-
-ACE_TCHAR const* ior_output_file = ACE_TEXT("test.ior");
-int object_to_output = 1;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -23,66 +21,56 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage:  %s ")
-                           ACE_TEXT("-o <iorfile>")
-                           ACE_TEXT("\n"),
+                           ACE_TEXT("usage: %s [-o <iorfile>]\n"),
                            argv [0]),
                           -1);
       }
+
   // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      ACE_TCHAR const* ior_output_file {ACE_TEXT("test.ior")};
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT(" (%P|%t) Panic: nil RootPOA\n")),
+                           ACE_TEXT("(%P|%t) Panic: nil RootPOA\n")),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
-      GoodDay *goodday_impl;
-      ACE_NEW_RETURN (goodday_impl,
-                      GoodDay (orb.in ()),
-                      1);
-      PortableServer::ServantBase_var owner_transfer(goodday_impl);
+      GoodDay *goodday_impl {};
+      ACE_NEW_RETURN (goodday_impl, GoodDay (orb.in ()), 1);
+      PortableServer::ServantBase_var const owner_transfer (goodday_impl);
 
-      Test::GoodDay_var goodday =
-        goodday_impl->_this ();
+      Test::GoodDay_var const goodday = goodday_impl->_this ();
 
-      CORBA::String_var ior =
-        orb->object_to_string (goodday.in ());
+      CORBA::String_var const ior = orb->object_to_string (goodday.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE* output_file = ACE_OS::fopen (ior_output_file, "w");
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (ior_output_file, "w"), std::fclose);
       if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Cannot open output file for writing IOR: %s\n"),
                            ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-
-
-      ACE_OS::fclose (output_file);
+                          1);
+      std::fprintf (output_file.get (), "%s", ior.in ());
 
       orb->run ();
 
@@ -92,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

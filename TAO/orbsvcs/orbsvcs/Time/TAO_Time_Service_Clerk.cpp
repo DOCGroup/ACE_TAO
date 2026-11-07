@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 #include "orbsvcs/Time/TAO_TIO.h"
 #include "orbsvcs/Time/TAO_UTO.h"
@@ -30,18 +29,13 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
                 "schedule_timer ()"));
 }
 
-// Destructor.
-
-TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk ()
-= default;
-
 // This method returns the global time and an estimate of inaccuracy
 // in a UTO.
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time ()
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (this->get_time (),
@@ -70,7 +64,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
                                             TimeBase::TdfT tdf)
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (time,
@@ -86,7 +80,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::uto_from_utc (TimeBase::UtcT const & utc)
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   // Use the low and high values of inaccuracy
   // to calculate the total inaccuracy.
@@ -109,7 +103,7 @@ CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                                       TimeBase::TimeT upper)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   ACE_NEW_THROW_EX (tio,
                     TAO_TIO (lower,
@@ -119,12 +113,12 @@ TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
 }
 
 CORBA::ULongLong
-TAO_Time_Service_Clerk::get_time ()
+TAO_Time_Service_Clerk::get_time () const
 {
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
 
-  const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
+  ACE_Time_Value const timeofday = ACE_OS::gettimeofday ();
 
   return (CORBA::ULongLong) (static_cast<CORBA::ULongLong> (timeofday.sec ()) *
                              static_cast<ACE_UINT32> (10000000) +
@@ -136,7 +130,7 @@ TAO_Time_Service_Clerk::get_time ()
 // Returns the time displacement factor in minutes.
 // This is displacement from the GMT.
 CORBA::Short
-TAO_Time_Service_Clerk::time_displacement_factor ()
+TAO_Time_Service_Clerk::time_displacement_factor () const
 {
   return time_displacement_factor_;
 }
@@ -150,7 +144,7 @@ TAO_Time_Service_Clerk::time_displacement_factor (CORBA::Short tdf)
 
 // GET method for inaccuracy.
 TimeBase::InaccuracyT
-TAO_Time_Service_Clerk::inaccuracy ()
+TAO_Time_Service_Clerk::inaccuracy () const
 {
   return this->inaccuracy_;
 }

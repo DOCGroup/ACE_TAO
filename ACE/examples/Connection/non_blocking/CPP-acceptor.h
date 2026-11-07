@@ -18,18 +18,22 @@ class Svc_Handler : public ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
   //     This class does the work once the <ACE_Oneshot_Acceptor> has
   //     accepted a connection.
 public:
-  Svc_Handler (ACE_Reactor *r);
+  explicit Svc_Handler (ACE_Reactor *r);
+  Svc_Handler (Svc_Handler const &) = delete;
+  Svc_Handler (Svc_Handler &&) = delete;
+  Svc_Handler &operator= (Svc_Handler const &) = delete;
+  Svc_Handler &operator= (Svc_Handler &&) = delete;
 
-  virtual int open (void *);
+  int open (void *) override;
   // Perform the work of the SVC_HANDLER.
 
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
   // Handle data from the client.
 
-  virtual int close (u_long);
+  int close (u_long) override;
   // Called if ACE_Svc_Handler is closed down unexpectedly.
 
-  virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
+  int handle_timeout (ACE_Time_Value const &, void const *arg) override;
   // Handles acceptor timeouts.
 
 private:
@@ -45,20 +49,22 @@ public:
   IPC_Server ();
   // Constructor.
 
-  ~IPC_Server ();
-  // Destructor.
-
+  ~IPC_Server () override = default;
+  IPC_Server (IPC_Server const &) = delete;
+  IPC_Server (IPC_Server &&) = delete;
+  IPC_Server &operator= (IPC_Server const &) = delete;
+  IPC_Server &operator= (IPC_Server &&) = delete;
   // = Demultiplexing hooks.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask mask) override;
   // Make sure not to close down the <handle> if we're removed from
   // the <Reactor>.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the network server.
 
-  virtual int fini ();
+  int fini () override;
   // Close down the server.
 
   virtual int svc ();

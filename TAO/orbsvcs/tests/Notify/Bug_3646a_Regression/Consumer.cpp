@@ -4,13 +4,12 @@
 
 #include "Notify_Test_Client.h"
 
-#include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  int status = 0;
+  int status {};
   try
     {
       Notify_Test_Client client;
@@ -19,7 +18,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       if (status == 0)
         {
-          CosNaming::NamingContext_ptr naming = client.naming_context ();
+          CosNaming::NamingContext_ptr const naming = client.naming_context ();
           if (CORBA::is_nil (naming))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -30,13 +29,13 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup ("Channel1");
-          CORBA::Object_var obj1 = naming->resolve (name);
+          CORBA::Object_var const obj1 = naming->resolve (name);
 
           name[0].id = CORBA::string_dup ("Channel2");
-          CORBA::Object_var obj2 = naming->resolve (name);
+          CORBA::Object_var const obj2 = naming->resolve (name);
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
     {
       e._tao_print_exception ("Error: ");
       status = 1;

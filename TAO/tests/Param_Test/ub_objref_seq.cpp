@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_objref_seq.h"
 
 // ************************************************************************
@@ -37,7 +39,7 @@ Test_ObjRef_Sequence::Test_ObjRef_Sequence ()
 Test_ObjRef_Sequence::~Test_ObjRef_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -59,7 +61,7 @@ Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Coffee_Mix *tmp = 0;
+  Param_Test::Coffee_Mix const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Coffee_Mix (*tmp);
 
@@ -232,7 +234,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
           CORBA::String_var n2 = desc2->name.in ();
 
-          if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
+          if (std::strcmp(n1.in (), n2.in ()) != 0)
             {
               return 0;
             }

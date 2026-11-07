@@ -2,14 +2,12 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -23,24 +21,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Supplier_Driver::ECT_Supplier_Driver ()
-  : n_suppliers_ (1),
-    burst_count_ (10),
-    burst_size_ (100),
-    event_size_ (128),
-    burst_pause_ (100),
-    type_start_ (ACE_ES_EVENT_UNDEFINED),
-    type_count_ (1),
-    pid_file_name_ (nullptr)
-{
-}
-
-ECT_Supplier_Driver::~ECT_Supplier_Driver ()
-{
-}
-
 void
-ECT_Supplier_Driver::shutdown_consumer (void*)
+ECT_Supplier_Driver::shutdown_consumer ()
 {
 }
 
@@ -82,20 +64,22 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
                       "  type count = <%d>\n"
                       "  pid file name = <%s>\n",
 
-                      this->n_suppliers_,
-                      this->burst_count_,
-                      this->burst_size_,
-                      this->event_size_,
-                      this->burst_pause_,
-                      this->type_start_,
-                      this->type_count_,
+                      this->options_.n_suppliers,
+                      this->options_.burst_count,
+                      this->options_.burst_size,
+                      this->options_.event_size,
+                      this->options_.burst_pause,
+                      this->options_.type_start,
+                      this->options_.type_count,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
+                      this->options_.pid_file_name != nullptr
+                        ? this->options_.pid_file_name
+                        : ACE_TEXT ("nil")));
         }
 
-      if (this->pid_file_name_ != nullptr)
+      if (this->options_.pid_file_name != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          FILE* pid = ACE_OS::fopen (this->options_.pid_file_name, "w");
           if (pid != nullptr)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -104,7 +88,7 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+      int const min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
       // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
@@ -194,11 +178,11 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "orb and poa destroyed\n"));
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const& sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -210,21 +194,21 @@ ECT_Supplier_Driver::connect_suppliers
     (RtecScheduler::Scheduler_ptr scheduler,
      RtecEventChannelAdmin::EventChannel_ptr channel)
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02d", i);
 
-      ACE_NEW (this->suppliers_[i], Test_Supplier (this));
+      this->suppliers_[i] = std::make_unique<Test_Supplier> ();
 
       this->suppliers_[i]->connect (scheduler,
                                     buf,
-                                    this->burst_count_,
-                                    this->burst_size_,
-                                    this->event_size_,
-                                    this->burst_pause_,
-                                    this->type_start_,
-                                    this->type_count_,
+                                    this->options_.burst_count,
+                                    this->options_.burst_size,
+                                    this->options_.event_size,
+                                    this->options_.burst_pause,
+                                    this->options_.type_start,
+                                    this->options_.type_count,
                                     channel);
     }
 }
@@ -232,7 +216,7 @@ ECT_Supplier_Driver::connect_suppliers
 void
 ECT_Supplier_Driver::activate_suppliers ()
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       this->suppliers_[i]->activate ();
     }
@@ -241,23 +225,22 @@ ECT_Supplier_Driver::activate_suppliers ()
 void
 ECT_Supplier_Driver::disconnect_suppliers ()
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       this->suppliers_[i]->disconnect ();
 
-      delete this->suppliers_[i];
-      this->suppliers_[i] = nullptr;
+      this->suppliers_[i].reset ();
     }
 }
 
 void
 ECT_Supplier_Driver::dump_results ()
 {
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats throughput;
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->options_.n_suppliers; ++i)
     {
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::sprintf (buf, ACE_TEXT("supplier_%02d"), i);
@@ -279,38 +262,39 @@ ECT_Supplier_Driver::parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 's':
-          this->n_suppliers_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.n_suppliers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'u':
-          this->burst_count_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.burst_count = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'n':
-          this->burst_size_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.burst_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'b':
-          this->event_size_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.event_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 't':
-          this->burst_pause_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.burst_pause = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'h':
           {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (
+              ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()), ",", &aux);
 
-            this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
-            this->type_count_ = ACE_OS::atoi (arg);
+            this->options_.type_start = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            this->options_.type_count = ACE_OS::atoi (arg);
           }
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          this->options_.pid_file_name = get_opt.opt_arg ();
           break;
 
         case '?':
@@ -331,39 +315,39 @@ ECT_Supplier_Driver::parse_args (int argc, ACE_TCHAR *argv [])
         }
     }
 
-  if (this->burst_count_ <= 0)
+  if (this->options_.burst_count <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: burst count (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->burst_count_,
+                  argv[0], this->options_.burst_count,
                   100));
-      this->burst_count_ = 100;
+      this->options_.burst_count = 100;
     }
 
-  if (this->burst_size_ <= 0)
+  if (this->options_.burst_size <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: burst size (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->burst_size_,
+                  argv[0], this->options_.burst_size,
                   10));
-      this->burst_size_ = 10;
+      this->options_.burst_size = 10;
     }
 
-  if (this->event_size_ < 0)
+  if (this->options_.event_size < 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: event size (%d) is out of range, "
                   "reseting to default (%d)\n",
-                  argv[0], this->event_size_,
+                  argv[0], this->options_.event_size,
                   128));
-      this->event_size_ = 128;
+      this->options_.event_size = 128;
     }
 
-  if (this->n_suppliers_ <= 0)
+  if (this->options_.n_suppliers <= 0)
     {
-      this->n_suppliers_ = 1;
+      this->options_.n_suppliers = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",

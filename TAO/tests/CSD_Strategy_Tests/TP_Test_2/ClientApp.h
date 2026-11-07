@@ -11,10 +11,15 @@ class ClientApp : public TestAppBase
 {
   public:
     ClientApp();
-    virtual ~ClientApp();
+    ~ClientApp() override;
 
   protected:
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+    int run_i(int argc, ACE_TCHAR* argv[]) override;
+
+    ClientApp (ClientApp const &) = delete;
+    ClientApp (ClientApp &&) = delete;
+    ClientApp & operator= (ClientApp const &) = delete;
+    ClientApp & operator= (ClientApp &&) = delete;
 
   private:
     // These are all called, in order, by the run_i() method.

@@ -13,7 +13,7 @@ namespace TAO_FTRTEC {
 unsigned int Log::log_level_;
 
 #ifndef NDEBUG
-  Log::Log (unsigned int log_level, const ACE_TCHAR* format, ...)
+  Log::Log (unsigned int log_level, ACE_TCHAR const *format, ...)
   {
     if (log_level_ >= log_level) {
       va_list p;

@@ -79,7 +79,7 @@ public:
   Receiver ();
 
   /// Destructor.
-  ~Receiver ();
+  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -97,6 +97,6 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  /// Receiver MMDevice.
+  /// Receiver servant reference borrowed from the POA after activation.
   TAO_MMDevice *mmdevice_;
 };

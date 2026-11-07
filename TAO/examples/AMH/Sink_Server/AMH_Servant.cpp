@@ -4,10 +4,13 @@
 
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
+#include <memory>
 
 
 AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
-  : sleep_time_ (0)
+  : reactor_ (orb->orb_core ()->reactor ())
+  , sleep_time_ {}
 {
   // @@ Mayur, why do you obtain the reactor each time this method is
   //    called?  Why not just cache it once in the constructor.
@@ -16,11 +19,6 @@ AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
   //    remove the cached ORB pseudo-reference altogether?
   //
   // Mayur: Good point.  Never crossed my mind :)
-  this->reactor_ = orb->orb_core ()->reactor ();
-}
-
-AMH_Servant::~AMH_Servant ()
-{
 }
 
 int
@@ -29,9 +27,9 @@ AMH_Servant::parse_args (int &argc, ACE_TCHAR **argv)
   // *** To get correct behaviour, SET POSIXLY_CORECT=1 on Linux
   // systems!!! ***
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:"));
-  int c;
+  int c {};
 
-  int count_argv = 0;
+  int count_argv {};
   while ((c = get_opts ()) != -1)
     {
       ++count_argv;
@@ -39,14 +37,14 @@ AMH_Servant::parse_args (int &argc, ACE_TCHAR **argv)
         {
         case 's':
           {
-            int time = ACE_OS::atoi (get_opts.opt_arg ());
+            int const time = ACE_OS::atoi (get_opts.opt_arg ());
             if (time >= 0)
               this->sleep_time_ = time;
 
             // Remove the option '-s' from argv []
             // to avoid any confusion that might result.
             {
-              for (int i = count_argv; i < argc; i++)
+              for (int i = count_argv; i < argc; ++i)
                 argv [i] = argv [i+2];
             }
 
@@ -76,35 +74,27 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 {
   try
     {
-      // @@ Mayur, the below Timer_Handler instance will leak if your
-      //    schedule_timer() call below fails (which you do not check
-      //    for).  If the schedule_timer() call fails, then you should
-      //    delete() the Timer_Handler instance.
-      //
-      // Done.
-
-      // Handler will 'kill' itself when it is done.
-      Timer_Handler *handler = new Timer_Handler (_tao_rh,
-                                                  send_time);
+      // The reactor owns the callback after scheduling it; it self-deletes
+      // from handle_close when the timeout finishes.
+      std::unique_ptr<Timer_Handler> handler (
+        new Timer_Handler (_tao_rh, send_time));
 
       // We assume the schedule_timer method is thread-safe
-      long l = this->reactor_->schedule_timer (handler,
-                                               (void *) 0,
-                                               ACE_Time_Value (0, this->sleep_time_));
+      long const timer_id = this->reactor_->schedule_timer (
+        handler.get (), nullptr, ACE_Time_Value (0, this->sleep_time_));
 
-      if (l == -1) //schedule timer failed
+      if (timer_id == -1) // schedule timer failed
         {
-          // free memory
-          delete handler;
-
           // send a no-op to the client
           _tao_rh->test_method (static_cast<Test::Timestamp> (0));
 
           // just in case we add code later on after this if stmt
           return;
         }
+
+      handler.release ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception in start_test\n");
     }
@@ -122,7 +112,7 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
     {
       _tao_rh->start_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception in start_test\n");
     }
@@ -135,7 +125,7 @@ AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
     {
       _tao_rh->end_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception in end_test\n");
     }

@@ -4,13 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Identity_Server::Identity_Server ()
-  : group_factory_ior_ (0),
-    random_objects_ (5),
-    rr_objects_ (5)
-{
-}
-
 int
 Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -225,10 +218,6 @@ int
   result = this->orb_manager_.run ();
 
   return result;
-}
-
-Identity_Server::~Identity_Server ()
-{
 }
 
 int

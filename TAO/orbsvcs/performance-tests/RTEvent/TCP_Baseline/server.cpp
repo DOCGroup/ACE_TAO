@@ -9,8 +9,8 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Get_Opt.h"
 
-int use_rt   = 0;
-int nthreads = 1;
+bool use_rt {};
+int nthreads {1};
 ACE_TCHAR const * hi_endpoint = ACE_TEXT ("localhost:12345");
 ACE_TCHAR const * lo_endpoint = ACE_TEXT ("localhost:23456");
 
@@ -20,9 +20,13 @@ parse_args (int argc, ACE_TCHAR *argv[]);
 class Task : public ACE_Task_Base
 {
 public:
-  Task (ACE_TCHAR const *endpoint);
+  explicit Task (ACE_TCHAR const *endpoint);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  virtual int svc();
+  int svc () override;
 
 private:
   ACE_TCHAR const *endpoint_;
@@ -58,16 +62,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
-  Svc_Handler(ACE_Reactor * reactor = 0);
+  explicit Svc_Handler (ACE_Reactor *reactor = nullptr);
+  Svc_Handler (Svc_Handler const &) = delete;
+  Svc_Handler (Svc_Handler &&) = delete;
+  Svc_Handler &operator= (Svc_Handler const &) = delete;
+  Svc_Handler &operator= (Svc_Handler &&) = delete;
 
-  virtual int handle_input(ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 };
 
-typedef ACE_Acceptor<Svc_Handler,ACE_SOCK_ACCEPTOR> Acceptor;
+using Acceptor = ACE_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 
 Svc_Handler::Svc_Handler (ACE_Reactor * reactor)
-  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH> (0, 0, reactor)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH> (0, nullptr, reactor)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Accepted connection\n"));
 }
@@ -75,7 +83,7 @@ Svc_Handler::Svc_Handler (ACE_Reactor * reactor)
 int
 Svc_Handler::handle_input(ACE_HANDLE h)
 {
-  const size_t bufsize = BUFSIZ;
+  size_t const bufsize = BUFSIZ;
   char buf[bufsize];
 
   while(1)
@@ -178,7 +186,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'r':
-        use_rt = 1;
+        use_rt = true;
         break;
 
       case '?':

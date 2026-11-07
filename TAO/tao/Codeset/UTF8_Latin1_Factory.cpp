@@ -3,6 +3,8 @@
 #include "ace/Log_Msg.h"
 #include "tao/Codeset/UTF8_Latin1_Factory.h"
 
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
@@ -14,11 +16,8 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 
+TAO_UTF8_Latin1_Factory::~TAO_UTF8_Latin1_Factory () = default;
 
-TAO_UTF8_Latin1_Factory::~TAO_UTF8_Latin1_Factory ()
-{
-  delete this->translator_;
-}
 int
 TAO_UTF8_Latin1_Factory::init (int argc, ACE_TCHAR *argv[])
 {
@@ -29,15 +28,13 @@ TAO_UTF8_Latin1_Factory::init (int argc, ACE_TCHAR *argv[])
 CONV_FRAME::CodeSetId
 TAO_UTF8_Latin1_Factory::ncs () const
 {
-  create_translator();
-  return this->translator_->ncs();
+  return this->create_translator () ? this->translator_->ncs () : 0;
 }
 
 CONV_FRAME::CodeSetId
 TAO_UTF8_Latin1_Factory::tcs () const
 {
-  create_translator();
-  return this->translator_->tcs();
+  return this->create_translator () ? this->translator_->tcs () : 0;
 }
 
 // Assign either a reference to the existing translator or a new translator
@@ -47,8 +44,10 @@ TAO_UTF8_Latin1_Factory::assign (TAO_InputCDR *cdr) const
 {
   if (cdr)
     {
-      create_translator();
-      this->assign_i(cdr,this->translator_);
+      if (this->create_translator ())
+        {
+          this->assign_i (cdr, this->translator_.get ());
+        }
     }
 }
 
@@ -59,28 +58,29 @@ TAO_UTF8_Latin1_Factory::assign (TAO_OutputCDR *cdr) const
 {
   if (cdr)
     {
-      create_translator();
-      this->assign_i(cdr,this->translator_);
+      if (this->create_translator ())
+        {
+          this->assign_i (cdr, this->translator_.get ());
+        }
     }
 }
 
-void
+bool
 TAO_UTF8_Latin1_Factory::create_translator () const
 {
-  if (this->translator_ == nullptr)
-  {
-    TAO_UTF8_Latin1_Factory * pthis =
-      const_cast <TAO_UTF8_Latin1_Factory *>(this);
-    ACE_NEW (pthis->translator_, TAO_UTF8_Latin1_Translator);
-    if (this->translator_ == nullptr)
+  if (!this->translator_)
     {
-      if (TAO_debug_level)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_UTF8_Latin1_Factory cannot ")
-                    ACE_TEXT("create TAO_UTF8_Latin1_Translator\n")
-                    ));
+      this->translator_.reset (new (std::nothrow) TAO_UTF8_Latin1_Translator);
+      if (!this->translator_)
+        {
+          if (TAO_debug_level)
+            TAOLIB_ERROR ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) TAO_UTF8_Latin1_Factory cannot ")
+                           ACE_TEXT ("create TAO_UTF8_Latin1_Translator\n")));
+        }
     }
-  }
+
+  return this->translator_ != nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

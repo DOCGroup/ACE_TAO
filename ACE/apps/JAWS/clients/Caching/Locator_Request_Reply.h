@@ -77,16 +77,16 @@ public:
   size_t decode (void *buffer);
 
   /// A bunch of methods to access internal data.
-  const int how () const;
-  const int how_many () const;
-  const u_int opcode () const;
-  const ACE_URL_Property_Seq *seq () const;
-  const ACE_URL_Property_Seq *del () const;
-  const ACE_URL_Property_Seq *modify () const;
-  const ACE_URL_Offer *offer () const;
-  const ACE_WString &id () const;
-  const ACE_WString &url () const;
-  const char *buffer () const;
+  int how () const;
+  int how_many () const;
+  u_int opcode () const;
+  ACE_URL_Property_Seq const *seq () const;
+  ACE_URL_Property_Seq const *del () const;
+  ACE_URL_Property_Seq const *modify () const;
+  ACE_URL_Offer const *offer () const;
+  ACE_WString const &id () const;
+  ACE_WString const &url () const;
+  char const *buffer () const;
 
   /// Print out this object.
   void dump () const;
@@ -107,31 +107,31 @@ protected:
   u_int code_;
 
   /// Query method (if code_ == QUERY.)
-  int how_;
+  int how_ {};
 
   /// How many offers are we interested in in this query.
-  int how_many_;
+  int how_many_ {};
 
   /// Bit flag to mark valid pointers within this object.
-  int valid_ptr_;
+  int valid_ptr_ {};
 
   /// For query or del in modify_offer.
-  ACE_URL_Property_Seq *seq1_;
+  ACE_URL_Property_Seq *seq1_ {};
 
   /// For modify seq. in modify_offer.
-  ACE_URL_Property_Seq *seq2_;
+  ACE_URL_Property_Seq *seq2_ {};
 
   /// Offer to export.
-  ACE_URL_Offer *offer_;
+  ACE_URL_Offer *offer_ {};
 
   /// Offer ID.
-  ACE_WString id_;
+  ACE_NS_WString id_;
 
   /// URL of this offer.
-  ACE_WString url_;
+  ACE_NS_WString url_;
 
   /// Buffer to store encoded data.
-  char *buffer_;
+  char *buffer_ {};
 };
 
 /**
@@ -176,12 +176,12 @@ public:
   size_t decode (void *buffer);
 
   // Accessor function.
-  const size_t num_offers () const;
-  const ACE_URL_Offer *offer () const;
-  const ACE_URL_Offer_Seq *offers () const;
-  const u_int opcode () const;
-  const u_int status () const;
-  const char *buffer () const ;
+  size_t num_offers () const;
+  ACE_URL_Offer const *offer () const;
+  ACE_URL_Offer_Seq const *offers () const;
+  u_int opcode () const;
+  u_int status () const;
+  char const *buffer () const;
 
   /// Print out this object.
   void dump () const ;
@@ -201,22 +201,22 @@ protected:
   u_int code_;
 
   /// Holds the result of an operation from the Location Server.
-  int status_;
+  int status_ {};
 
   /// Holds the number of valid offers in the offers_ sequence.
-  size_t num_offers_;
+  size_t num_offers_ {};
 
   /// Flag that marks valid internal pointers.
-  int valid_ptr_;
+  int valid_ptr_ {};
 
   /// Holds a single offer.  Used in query offer property.
-  ACE_URL_Offer *offer_;
+  ACE_URL_Offer *offer_ {};
 
   /// Holds the replying offer sequence from a Locator.
-  ACE_URL_Offer_Seq *offers_;
+  ACE_URL_Offer_Seq *offers_ {};
 
   /// Buffer to store encoded data.
-  char *buffer_;
+  char *buffer_ {};
 };
 #if defined (__ACE_INLINE__)
 #include "Locator_Request_Reply.inl"

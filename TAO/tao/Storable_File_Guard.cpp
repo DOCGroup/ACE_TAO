@@ -15,10 +15,7 @@
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant, bool use_backup)
-  : fl_(nullptr)
-  , redundant_(redundant)
-  , closed_(1)
-  , rwflags_(0)
+  : redundant_(redundant)
   , use_backup_(use_backup)
 {
 }
@@ -26,13 +23,12 @@ Storable_File_Guard (bool redundant, bool use_backup)
 TAO::Storable_File_Guard::
 ~Storable_File_Guard () noexcept(false)
 {
-  delete fl_;
 }
 
 void
-TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
+TAO::Storable_File_Guard::init_no_load (Method_Type method_type)
 {
-  ACE_CString mode;
+  char const *mode {};
   this->rwflags_ = 0;
   switch (method_type)
     {
@@ -51,7 +47,7 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
       break;
     }
 
-  if( rwflags_ <= 0 )
+  if (rwflags_ <= 0)
     {
       errno = EINVAL;
       if (TAO_debug_level > 0)
@@ -64,7 +60,7 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
     }
 
   // Create the stream
-  fl_ = this->create_stream(mode.c_str ());
+  this->fl_.reset (this->create_stream (mode));
 }
 
 void
@@ -98,9 +94,9 @@ TAO::Storable_File_Guard::reload ()
 
       // now that the file is successfully opened and locked it must be
       // unlocked/closed before we leave this class
-      closed_ = 0;
+      closed_ = false;
 
-      if ( ! (rwflags_ & mode_create) )
+      if (!(rwflags_ & mode_create))
         {
           // Check if our copy is up to date
           if (this->object_obsolete ())
@@ -110,7 +106,7 @@ TAO::Storable_File_Guard::reload ()
             }
         }
     }
-  else if ( ! this->is_loaded_from_stream () || (rwflags_ & mode_write) )
+  else if (!this->is_loaded_from_stream () || (rwflags_ & mode_write))
     {
       bool file_has_data = fl_->exists ();
 
@@ -127,7 +123,7 @@ TAO::Storable_File_Guard::reload ()
 
       // now that the file is successfully opened
       // unlocked/closed before we leave this class
-      closed_ = 0;
+      closed_ = false;
 
       if (file_has_data && ! this->is_loaded_from_stream ())
         {
@@ -160,7 +156,7 @@ TAO::Storable_File_Guard::mark_object_current ()
 void
 TAO::Storable_File_Guard::release ()
 {
-  if ( ! closed_ )
+  if (!closed_)
     {
       if (this->use_backup_ &&
           (rwflags_ & mode_write) != 0)
@@ -169,9 +165,9 @@ TAO::Storable_File_Guard::release ()
         }
 
       // If we updated the disk, save the time stamp
-      if(redundant_)
+      if (redundant_)
         {
-          if( rwflags_ & mode_write )
+          if (rwflags_ & mode_write)
             {
               // This is a costly call, but necessary if
               // we are running redundant. It ensures that
@@ -185,7 +181,7 @@ TAO::Storable_File_Guard::release ()
           fl_->funlock (0, 0, 0);
         }
       fl_->close ();
-      closed_ = 1;
+      closed_ = true;
     }
 
 }
@@ -214,7 +210,7 @@ TAO::Storable_File_Guard::load ()
     }
   catch (const Storable_Read_Exception &ex)
     { // Failed to load from primary.
-      ACE_CString state_str = Storable_Base::state_as_string (ex.get_state());
+      std::string state_str = Storable_Base::state_as_string (ex.get_state());
 
       TAOLIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("TAO: (%P|%t) ERROR: State %s ")

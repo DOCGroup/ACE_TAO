@@ -12,9 +12,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
-  : handler_(this),
-    mutex_ (mt ? new ACE_SYNCH_RW_MUTEX : nullptr)
+AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy (bool mt)
+  : handler_ (this)
+  , mutex_ (mt ? std::make_unique<ACE_SYNCH_RW_MUTEX> ()
+               : std::unique_ptr<ACE_SYNCH_RW_MUTEX> {})
 {
 }
 
@@ -43,7 +44,7 @@ int AMI_Primary_Replication_Strategy::svc()
 {
   try{
     int argc = 0;
-    char** argv = nullptr;
+    char** argv {};
     orb_ = CORBA::ORB_init (argc, argv);
 
     root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA");
@@ -84,12 +85,12 @@ int AMI_Primary_Replication_Strategy::svc()
 
 void
 AMI_Primary_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
    ACE_Auto_Event event;
-   Update_Manager* manager = nullptr;
+   Update_Manager* manager {};
    bool success = false;
 
     FTRT::TransactionDepth transaction_depth =
@@ -149,7 +150,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 }
 
 void
-AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
                                              CORBA::ULong object_group_ref_version)
 {
   ACE_Auto_Event event;

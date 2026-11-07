@@ -2,15 +2,16 @@
 #include "Performance_Test_Options.h"
 #include "Adaptive_Lock_Performance_Test_Base.h"
 
+#include <utility>
+
 #if defined (ACE_HAS_THREADS)
 
-ACE_Lock *Adaptive_Lock_Performance_Test_Base::lock_ = 0;
+std::unique_ptr<ACE_Lock> Adaptive_Lock_Performance_Test_Base::lock_;
 
 int
 Adaptive_Lock_Performance_Test_Base::fini ()
 {
-  delete Adaptive_Lock_Performance_Test_Base::lock_;
-  Adaptive_Lock_Performance_Test_Base::lock_ = 0;
+  Adaptive_Lock_Performance_Test_Base::lock_.reset ();
   return 0;
 }
 
@@ -34,11 +35,10 @@ Adaptive_Lock_Performance_Test_Base::svc ()
 }
 
 int
-Adaptive_Lock_Performance_Test_Base::set_lock (ACE_Lock *lock)
+Adaptive_Lock_Performance_Test_Base::set_lock (std::unique_ptr<ACE_Lock> lock)
 {
-  delete Adaptive_Lock_Performance_Test_Base::lock_;
-  Adaptive_Lock_Performance_Test_Base::lock_ = lock;
-  return (Adaptive_Lock_Performance_Test_Base::lock_ != 0 ? 0 : -1);
+  Adaptive_Lock_Performance_Test_Base::lock_ = std::move (lock);
+  return Adaptive_Lock_Performance_Test_Base::lock_ ? 0 : -1;
 }
 
 #endif /* ACE_HAS_THREADS */

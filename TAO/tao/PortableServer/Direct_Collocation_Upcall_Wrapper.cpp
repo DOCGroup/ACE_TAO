@@ -20,7 +20,7 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   TAO::Argument ** args,
   int,
   char const * op,
-  size_t op_len,
+  std::size_t op_len,
   TAO::Collocation_Strategy strategy)
 {
   TAO_Abstract_ServantBase * const servant = obj->_servant ();

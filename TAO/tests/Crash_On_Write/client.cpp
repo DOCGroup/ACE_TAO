@@ -2,14 +2,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int iterations = 2000;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:i:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -45,7 +45,7 @@ single_iteration (Test::Oneway_Receiver_ptr oneway_receiver)
       ACE_Time_Value tv (0, 40000);
       ACE_OS::sleep (tv);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return 1;
     }
@@ -53,7 +53,7 @@ single_iteration (Test::Oneway_Receiver_ptr oneway_receiver)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -64,10 +64,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Oneway_Receiver_var oneway_receiver =
-        Test::Oneway_Receiver::_narrow(tmp.in ());
+        Test::Oneway_Receiver::_narrow (tmp.in ());
 
       if (CORBA::is_nil (oneway_receiver.in ()))
         {
@@ -81,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int exception_count = 0;
       for (int i = 0; i != iterations; ++i)
         {
-          int result = single_iteration (oneway_receiver.in ());
+          int const result = single_iteration (oneway_receiver.in ());
           if (result)
             exception_count++;
           else
@@ -103,7 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

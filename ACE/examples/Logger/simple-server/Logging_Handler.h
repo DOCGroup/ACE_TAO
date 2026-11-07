@@ -35,6 +35,10 @@ class Logging_Handler : public ACE_Event_Handler
 {
 public:
   Logging_Handler () = default;
+  Logging_Handler (Logging_Handler const &) = delete;
+  Logging_Handler (Logging_Handler &&) = delete;
+  Logging_Handler &operator= (Logging_Handler const &) = delete;
+  Logging_Handler &operator= (Logging_Handler &&) = delete;
 
   // = Hooks for opening and closing handlers.
   virtual int open ();
@@ -49,15 +53,15 @@ protected:
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
 
   // = Really should be private...
   /// Ensure dynamic allocation.
-  virtual ~Logging_Handler ();
+  ~Logging_Handler () override;
 
 private:
   /// Host we are connected to.
-  char host_name_[MAXHOSTNAMELEN + 1];
+  char host_name_[MAXHOSTNAMELEN + 1] {};
 
   /// Connection with client
   ACE_SOCK_Stream cli_stream_;

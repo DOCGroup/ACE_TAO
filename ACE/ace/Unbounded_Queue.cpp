@@ -21,13 +21,11 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Unbounded_Queue)
 
 template <class T>
 ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+  : allocator_ (alloc)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue ()");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -38,14 +36,12 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
 }
 
 template <class T>
-ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (us.allocator_)
+ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Unbounded_Queue<T> const &us)
+  : allocator_ (us.allocator_)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -56,7 +52,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
 }
 
 template <class T> void
-ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
+ACE_Unbounded_Queue<T>::operator= (ACE_Unbounded_Queue<T> const &us)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
 
@@ -92,7 +88,7 @@ ACE_Unbounded_Queue<T>::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
-  T *item = nullptr;
+  T *item {};
 #if !defined (ACE_NLOGGING)
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
@@ -107,7 +103,7 @@ ACE_Unbounded_Queue<T>::dump () const
 }
 
 template <class T> void
-ACE_Unbounded_Queue<T>::copy_nodes (const ACE_Unbounded_Queue<T> &us)
+ACE_Unbounded_Queue<T>::copy_nodes (ACE_Unbounded_Queue<T> const &us)
 {
   for (ACE_Node<T> *curr = us.head_->next_;
        curr != us.head_;
@@ -155,11 +151,11 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue ()
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
+ACE_Unbounded_Queue<T>::enqueue_head (T const &new_item)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
-  ACE_Node<T> *temp = nullptr;
+  ACE_Node<T> *temp {};
 
   // Create a new node that points to the original head.
   ACE_NEW_MALLOC_RETURN (temp,
@@ -176,7 +172,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
+ACE_Unbounded_Queue<T>::enqueue_tail (T const &new_item)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
 
@@ -185,7 +181,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   // the "tail" of the queue...
   this->head_->item_ = new_item;
 
-  ACE_Node<T> *temp = nullptr;
+  ACE_Node<T> *temp {};
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,
@@ -258,7 +254,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::set (const T &item,
+ACE_Unbounded_Queue<T>::set (T const &item,
                              size_t slot)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
@@ -327,7 +323,9 @@ ACE_Unbounded_Queue_Const_Iterator<T>::dump () const
 }
 
 template <class T>
-ACE_Unbounded_Queue_Const_Iterator<T>::ACE_Unbounded_Queue_Const_Iterator (const ACE_Unbounded_Queue<T> &q, int end)
+ACE_Unbounded_Queue_Const_Iterator<T>::ACE_Unbounded_Queue_Const_Iterator (
+  ACE_Unbounded_Queue<T> const &q,
+  int end)
   : current_ (end == 0 ? q.head_->next_ : q.head_ ),
     queue_ (q)
 {

@@ -8,10 +8,6 @@ TAO_Notify_SequencePushSupplier::TAO_Notify_SequencePushSupplier (TAO_Notify_Pro
 {
 }
 
-TAO_Notify_SequencePushSupplier::~TAO_Notify_SequencePushSupplier ()
-{
-}
-
 void
 TAO_Notify_SequencePushSupplier::init (CosNotifyComm::SequencePushSupplier_ptr push_supplier)
 {

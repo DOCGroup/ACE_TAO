@@ -23,6 +23,7 @@
 #include "ace/Event_Handler.h"
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ACE_QoS_Export.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,26 +44,26 @@ class ACE_QoS_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 public:
   // Initialization and termination methods.
   /// Constructor.
-  ACE_QoS_Decorator_Base ();
+  ACE_QoS_Decorator_Base () = default;
 
   /// Constructor.
-  ACE_QoS_Decorator_Base (ACE_Event_Handler *event_handler);
+  explicit ACE_QoS_Decorator_Base (ACE_Event_Handler *event_handler);
 
   /// Destructor.
-  ~ACE_QoS_Decorator_Base ();
+  ~ACE_QoS_Decorator_Base () override;
 
   /// Forwards the request to its event_handler_ component.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Forwards the request to its event_handler_ component.
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
   /// Forwards the request to its event_handler_ component.
-  virtual int handle_qos (ACE_HANDLE fd);
+  int handle_qos (ACE_HANDLE fd) override;
 
 private:
   /// The event handler that is decorated by this class.
-  ACE_Event_Handler *event_handler_;
+  ACE_Event_Handler *event_handler_ {};
 };
 
 /**
@@ -75,16 +76,19 @@ private:
  * receiving QoS events on a different socket so the application
  * doesnt have to be designed differently for RAPI and GQoS.
  */
+class ACE_QoS_Event_Handler;
+struct ACE_QoS_Event_Handler_Deleter;
+
 class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
 {
   /// Destructor.
-  ~ACE_QoS_Event_Handler ();
+  ~ACE_QoS_Event_Handler () override;
 
   /// Returns the RAPI file descriptor for receiving QoS events.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Calls the base class handle_input ().
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
   /// Sets the QoS session.
   void qos_session (ACE_QoS_Session *qos_session);
@@ -94,16 +98,26 @@ class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
 private:
   /// Constructor is private because only ACE_QoS_Decorator should
   /// create this object.
-  ACE_QoS_Event_Handler ();
+  ACE_QoS_Event_Handler () = default;
 
   /// The QoS Decorator passes in its base for this handler to use.
-  ACE_QoS_Event_Handler (ACE_QoS_Decorator_Base *decorator_base);
+  explicit ACE_QoS_Event_Handler (ACE_QoS_Decorator_Base *decorator_base);
+
+  friend struct ACE_QoS_Event_Handler_Deleter;
 
   /// Used to get to the RAPI file descriptor for QoS Events.
-  ACE_QoS_Session *qos_session_;
+  ACE_QoS_Session *qos_session_ {};
 
   /// Requests on the class are forwarded to this base class;
-  ACE_QoS_Decorator_Base *decorator_base_;
+  ACE_QoS_Decorator_Base *decorator_base_ {};
+};
+
+struct ACE_QoS_Event_Handler_Deleter
+{
+  void operator() (ACE_QoS_Event_Handler *event_handler) const noexcept
+  {
+    delete event_handler;
+  }
 };
 
 /**
@@ -120,7 +134,7 @@ class ACE_QoS_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 public:
   // Initialization and termination methods.
   /// Constructor.
-  ACE_QoS_Decorator ();
+  ACE_QoS_Decorator () = default;
 
   /// Constructor.
   ACE_QoS_Decorator (ACE_Event_Handler *event_handler,
@@ -128,16 +142,16 @@ public:
                      ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Destructor.
-  ~ACE_QoS_Decorator ();
+  ~ACE_QoS_Decorator () override;
 
   /// Calls the base class get_handle ().
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Calls the base class handle_input ().
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
   /// Calls the base class handle_qos ().
-  virtual int handle_qos (ACE_HANDLE fd);
+  int handle_qos (ACE_HANDLE fd) override;
 
   /// This method registers the QoS Event Handler with the Reactor
   /// to receive RAPI events.
@@ -145,19 +159,24 @@ public:
 
 private:
   /// Requests on the class are forwarded to this base class;
-  ACE_QoS_Decorator_Base *decorator_base_;
+  std::unique_ptr<ACE_QoS_Decorator_Base> decorator_base_;
 
   /// Handles the QoS events and in that sense decorates the usual
   /// ACE_Event_Handler.
-  ACE_QoS_Event_Handler *qos_event_handler_;
+  std::unique_ptr<ACE_QoS_Event_Handler, ACE_QoS_Event_Handler_Deleter> qos_event_handler_;
 
   /// Passed to the ACE_QoS_Event_Handler for retrieving the RAPI
   /// session specific information like rapi_fd.
-  ACE_QoS_Session *qos_session_;
+  ACE_QoS_Session *qos_session_ {};
 
   /// If the application wants to use an instance of Reactor other
   /// than the Singleton one.
-  ACE_Reactor *reactor_;
+  ACE_Reactor *reactor_ {};
+
+  ACE_QoS_Decorator (ACE_QoS_Decorator const &) = delete;
+  ACE_QoS_Decorator &operator= (ACE_QoS_Decorator const &) = delete;
+  ACE_QoS_Decorator (ACE_QoS_Decorator &&) = delete;
+  ACE_QoS_Decorator &operator= (ACE_QoS_Decorator &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

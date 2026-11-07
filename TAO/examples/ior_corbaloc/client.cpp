@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ior_corbaloc_client_i.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
@@ -19,23 +18,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     {
       IOR_corbaloc_Client_i client;
 
-      int init_result;
-      init_result = client.init (argc, argv);
+      int const init_status = client.init (argc, argv);
+      if (init_status != 0)
+        return init_status;
 
-        if (init_result == 0)
-          {
-            client.run ();
-          }
-        return 0;
+      return client.run ();
     }
-  catch (const CORBA::SystemException&)
-    {
-      //
-    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::SystemException const &ex)
     {
       ex._tao_print_exception ("client");
+      return 1;
     }
-
-  return 0;
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("client");
+      return 1;
+  }
 }

@@ -7,27 +7,20 @@
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 
-#include "ace/Get_Opt.h"
-#include <memory>
-#include "ace/Sched_Params.h"
 #include "ace/OS_NS_unistd.h"
 
-Test_Consumer::Test_Consumer (ECT_Driver *driver,
-                              void *cookie,
+Test_Consumer::Test_Consumer (ECT_Driver& driver,
                               int n_suppliers,
                               int stall_length)
   : driver_ (driver),
-    cookie_ (cookie),
     n_suppliers_ (n_suppliers),
-    recv_count_ (0),
-    shutdown_count_ (0),
-    stall_length_(stall_length)
+    stall_length_ (stall_length)
 {
 }
 
 void
 Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
-                        const char* name,
+                        char const* name,
                         int type_start,
                         int type_count,
                         RtecEventChannelAdmin::EventChannel_ptr ec)
@@ -38,7 +31,7 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
   ACE_Time_Value tv (0, 2000);
-  TimeBase::TimeT time;
+  TimeBase::TimeT time {};
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (rt_info,
                   RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -90,7 +83,7 @@ Test_Consumer::disconnect ()
 }
 
 void
-Test_Consumer::dump_results (const ACE_TCHAR* name,
+Test_Consumer::dump_results (ACE_TCHAR const* name,
                              ACE_Basic_Stats::scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
@@ -103,7 +96,7 @@ Test_Consumer::accumulate (ACE_Throughput_Stats& stats) const
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events)
+Test_Consumer::push (RtecEventComm::EventSet const& events)
 {
   if (events.length () == 0)
     {
@@ -119,11 +112,11 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
     {
       this->first_event_ = ACE_OS::gethrtime ();
       ACE_DEBUG ((LM_DEBUG,
-                "ECT_Consumer (%P|%t) stalling for %d seconds\n", this->stall_length_));
-      ACE_OS::sleep(this->stall_length_);
+                  "ECT_Consumer (%P|%t) stalling for %d seconds\n",
+                  this->stall_length_));
+      ACE_OS::sleep (this->stall_length_);
       ACE_DEBUG ((LM_DEBUG, "ECT_Consumer (%P|%t) finished stalling\n"));
     }
-
 
   this->recv_count_ += events.length ();
 
@@ -137,9 +130,9 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
-  for (u_int i = 0; i < events.length (); ++i)
+  for (u_int i {}; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const& e = events[i];
 
       if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
@@ -148,16 +141,16 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
             {
               // We stop the timer as soon as we realize it is time to
               // do so.
-              this->driver_->shutdown_consumer (this->cookie_);
+              this->driver_.shutdown_consumer ();
             }
         }
       else
         {
-          ACE_hrtime_t creation;
+          ACE_hrtime_t creation {};
           ORBSVCS_Time::TimeT_to_hrtime (creation,
                                          e.header.creation_time);
 
-          const ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           this->throughput_.sample (now - this->first_event_,
                                     now - creation);
         }

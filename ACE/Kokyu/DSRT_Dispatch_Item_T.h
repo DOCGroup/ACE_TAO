@@ -27,11 +27,9 @@ namespace Kokyu
   template <class DSRT_Scheduler_Traits>
   class DSRT_Dispatch_Item
   {
-    typedef typename
-    DSRT_Scheduler_Traits::Guid_t Guid_t;
+    using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
 
-    typedef typename
-    DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
+    using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
   protected:
     ACE_hthread_t thr_handle_;
@@ -40,30 +38,30 @@ namespace Kokyu
     ACE_Time_Value insertion_time_;
 
   public:
-    DSRT_Dispatch_Item (Guid_t guid, const DSRT_QoSDescriptor&);
+    DSRT_Dispatch_Item (Guid_t guid, DSRT_QoSDescriptor const &);
 
-    DSRT_Dispatch_Item (const DSRT_Dispatch_Item &) = delete;
+    DSRT_Dispatch_Item (DSRT_Dispatch_Item const &) = delete;
     DSRT_Dispatch_Item (DSRT_Dispatch_Item &&) = delete;
-    DSRT_Dispatch_Item &operator= (const DSRT_Dispatch_Item &) = delete;
+    DSRT_Dispatch_Item &operator= (DSRT_Dispatch_Item const &) = delete;
     DSRT_Dispatch_Item &operator= (DSRT_Dispatch_Item &&) = delete;
 
     /// Get the guid.
-    Guid_t guid ();
+    Guid_t guid () const;
 
     /// Get the associated qos value.
-    DSRT_QoSDescriptor qos ();
+    DSRT_QoSDescriptor qos () const;
 
     /// Get the thread handle.
-    ACE_hthread_t thread_handle ();
+    ACE_hthread_t thread_handle () const;
 
     /// Set the thread handle.
     void thread_handle (ACE_hthread_t &handle);
 
     /// Get the insertion time.
-    ACE_Time_Value insertion_time ();
+    ACE_Time_Value insertion_time () const;
 
     /// Set the insertion time.
-    void insertion_time (const ACE_Time_Value&);
+    void insertion_time (ACE_Time_Value const &);
   };
 
   /**
@@ -80,11 +78,13 @@ namespace Kokyu
   {
   public:
     explicit
-    DSRT_Dispatch_Item_var (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>
-                            *p = 0);
+    DSRT_Dispatch_Item_var (DSRT_Dispatch_Item<DSRT_Scheduler_Traits> *p = nullptr);
 
     DSRT_Dispatch_Item_var (
-         const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> &r);
+         DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &r);
+
+    DSRT_Dispatch_Item_var &operator= (
+      DSRT_Dispatch_Item_var const &) = default;
   };
 }
 

@@ -42,20 +42,20 @@ public:
 private:
   iovec *iov_;
   int iovcnt_;
-  int iov_index_;
+  int iov_index_ {};
 
   // Point internal to a message block, if we have to split one up.
-  char *iov_ptr_;
+  char *iov_ptr_ {};
 
   // Length used in a split message block.
-  size_t iov_len_left_;
+  size_t iov_len_left_ {};
 
   // Current message iterator state.
   enum class State
   {
     INTER_BLOCK,
     INTRA_BLOCK
-  } state_;
+  } state_ {State::INTER_BLOCK};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

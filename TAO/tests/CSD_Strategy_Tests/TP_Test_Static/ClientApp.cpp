@@ -15,9 +15,7 @@ ClientApp::ClientApp()
 }
 
 
-ClientApp::~ClientApp()
-{
-}
+ClientApp::~ClientApp() = default;
 
 
 int

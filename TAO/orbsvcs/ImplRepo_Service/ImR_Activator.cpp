@@ -11,7 +11,7 @@ class ImR_Activator_Shutdown : public Shutdown_Functor
 public:
   ImR_Activator_Shutdown (ImR_Activator_i& act);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   ImR_Activator_i& act_;
 };

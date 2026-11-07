@@ -15,10 +15,11 @@
 // FUZZ: disable check_for_math_include
 
 #include "ace/Get_Opt.h"
-#include "ace/Vector_T.h"
 #include "demux_testC.h"
+#include "demux_test_file.h"
 #include "demux_test_macros.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#include <vector>
 
 class Demux_Test_Client
 {
@@ -32,7 +33,7 @@ public:
     WORST
   };
 
-  typedef void (*OP_PTR) (Demux_Test_ptr);
+  using OP_PTR = void (*) (Demux_Test_ptr);
 
   struct Operation_DB_Entry
   {
@@ -43,7 +44,12 @@ public:
   Demux_Test_Client ();
 
   /// DTOR
-  ~Demux_Test_Client ();
+  ~Demux_Test_Client () = default;
+
+  Demux_Test_Client (Demux_Test_Client const &) = delete;
+  Demux_Test_Client &operator= (Demux_Test_Client const &) = delete;
+  Demux_Test_Client (Demux_Test_Client &&) = delete;
+  Demux_Test_Client &operator= (Demux_Test_Client &&) = delete;
 
   /// initialize the client test bed
   int init (int argc, ACE_TCHAR *argv []);
@@ -77,7 +83,7 @@ private:
   int argc_;
 
   /// the actual command line arguments
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// The underlying ORB
   CORBA::ORB_var orb_;
@@ -95,18 +101,18 @@ private:
   CORBA::ULong num_ops_;
 
   /// object references to the Demux_Test objects
-  typedef TAO_Intrusive_Ref_Count_Handle<Demux_Test> Demux_Test_Var;
-  typedef ACE_Vector<Demux_Test_Var> Demux_Test_Container;
+  using Demux_Test_Var = TAO_Intrusive_Ref_Count_Handle<Demux_Test>;
+  using Demux_Test_Container = std::vector<Demux_Test_Var>;
   Demux_Test_Container demux_test_;
 
   /// number of times to invoke the request
   CORBA::ULong loop_count_;
 
   /// IOR database
-  FILE *ior_fp_;
+  Demux_Test_Utils::File_Handle ior_fp_;
 
   /// temporary results file
-  FILE *result_fp_;
+  Demux_Test_Utils::File_Handle result_fp_;
 
   /**
    * Step for the no. of objects to be skipped while making remote calls

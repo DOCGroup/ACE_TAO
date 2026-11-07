@@ -7,6 +7,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/Creation_Time.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -67,7 +69,7 @@ namespace TAO
 
 #if (POA_NO_TIMESTAMP == 0)
       // Then copy the timestamp for transient POAs.
-      ACE_OS::memcpy (&buffer[starting_at],
+      std::memcpy (&buffer[starting_at],
                       this->creation_time_.creation_time (),
                       TAO::Portable_Server::Creation_Time::creation_time_length
                       ());

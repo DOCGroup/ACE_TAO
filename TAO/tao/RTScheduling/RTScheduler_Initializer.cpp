@@ -49,7 +49,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
       throw ::CORBA::INTERNAL ();
     }
 
-  TAO_RTScheduler_Current *tmp_current = nullptr;
+  TAO_RTScheduler_Current *tmp_current {};
   ACE_NEW_THROW_EX (tmp_current,
                     TAO_RTScheduler_Current,
                     CORBA::NO_MEMORY (
@@ -66,7 +66,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
 
   info->register_initial_reference ("RTScheduler_Current", current_obj.in ());
 
-  Client_Interceptor *client_interceptor = nullptr;
+  Client_Interceptor *client_interceptor {};
   ACE_NEW_THROW_EX (client_interceptor,
                     Client_Interceptor,
                     CORBA::NO_MEMORY (
@@ -80,7 +80,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
 
   info->add_client_request_interceptor (client_interceptor);
 
-  Server_Interceptor *server_interceptor = nullptr;
+  Server_Interceptor *server_interceptor {};
   ACE_NEW_THROW_EX (server_interceptor,
                     Server_Interceptor (this->current_.in ()),
                     CORBA::NO_MEMORY (
@@ -95,7 +95,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
   info->add_server_request_interceptor (server_interceptor);
 
   // Set the RTScheduler_Manager
-  TAO_RTScheduler_Manager *manager = nullptr;
+  TAO_RTScheduler_Manager *manager {};
 
   ACE_NEW_THROW_EX (manager,
                     TAO_RTScheduler_Manager (tao_info->orb_core ()),

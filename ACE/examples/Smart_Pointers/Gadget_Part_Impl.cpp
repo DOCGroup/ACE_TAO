@@ -8,15 +8,14 @@
 //=============================================================================
 
 #include "Gadget_Part_Impl.h"
-#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/Unbounded_Queue.h"
 
 Gadget_Part_Impl::Gadget_Part_Impl (Gadget_ptr owner,
-                                    const char* name,
+                                    char const *name,
                                     int size)
   : owner_ (owner),
-    name_ (ACE::strnew (name)),
+    name_ (name),
     size_ (size)
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Part_Impl constructor\n"));
@@ -26,22 +25,21 @@ Gadget_Part_Impl::~Gadget_Part_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Part_Impl destructor\n"));
 
-  delete [] name_;
 }
 
 void Gadget_Part_Impl::print_info ()
 {
-  ACE_DEBUG ((LM_INFO, "Gadget part: name=%s size=%d\n", name_, size_));
+  ACE_DEBUG ((LM_INFO, "Gadget part: name=%s size=%d\n", name_.c_str (), size_));
 }
 
 void Gadget_Part_Impl::remove_from_owner ()
 {
   // Need to guarantee the existence of the owner for the duration of this call.
-  Gadget_var owner = owner_;
+  Gadget_var const owner = owner_;
 
-  // Weak pointers are automatically set to NULL if the object they refer to
+  // Weak pointers are automatically set to nullptr if the object they refer to
   // is deleted. We can use this fact to check that our owner still exists.
-  if (owner == 0)
+  if (owner.null ())
     return;
 
   // Take all existing parts from the owner and build up a temporary list. If
@@ -49,8 +47,8 @@ void Gadget_Part_Impl::remove_from_owner ()
   ACE_Unbounded_Queue<Gadget_Part_var> parts;
   for (;;)
     {
-      Gadget_Part_var part = owner->remove_part ();
-      if (part == 0)
+      Gadget_Part_var const part = owner->remove_part ();
+      if (part.null ())
         break;
       if (part != this)
         parts.enqueue_tail (part);

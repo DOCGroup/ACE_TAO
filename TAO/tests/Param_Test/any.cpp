@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "any.h"
 #include "tao/debug.h"
 
@@ -30,7 +32,7 @@ Test_Any::Test_Any ()
 Test_Any::~Test_Any ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -215,8 +217,8 @@ Test_Any::reset_parameters ()
 
         if (TAO_debug_level > 0)
           {
-            const Param_Test::Big_Union *bu_in = 0;
-            const Param_Test::Big_Union *bu_inout = 0;
+            Param_Test::Big_Union const *bu_in {};
+            Param_Test::Big_Union const *bu_inout {};
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -239,8 +241,8 @@ Test_Any::reset_parameters ()
 
         if (TAO_debug_level > 0)
           {
-            const Param_Test::Small_Union *bu_in = 0;
-            const Param_Test::Small_Union *bu_inout = 0;
+            Param_Test::Small_Union const *bu_in {};
+            Param_Test::Small_Union const *bu_inout {};
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -312,9 +314,9 @@ Test_Any::check_validity ()
            (this->out_.in () >>= str_out) &&
            (this->ret_.in () >>= str_ret))
     {
-      if (!ACE_OS::strcmp (str_in, str_inout) &&
-          !ACE_OS::strcmp (str_in, str_out) &&
-          !ACE_OS::strcmp (str_in, str_ret))
+      if (!std::strcmp (str_in, str_inout) &&
+          !std::strcmp (str_in, str_out) &&
+          !std::strcmp (str_in, str_ret))
         return 1;
       else
         {

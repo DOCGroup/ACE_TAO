@@ -9,7 +9,8 @@
 
 #include "TestC.h"
 
-void shutdownORB (CORBA::ORB_ptr orb, char const *orbid)
+void
+shutdownORB (CORBA::ORB_ptr orb, char const *orbid)
 {
   orb->shutdown (false);
   ACE_DEBUG ((LM_DEBUG,
@@ -22,32 +23,29 @@ void shutdownORB (CORBA::ORB_ptr orb, char const *orbid)
               orbid));
 }
 
-ACE_TCHAR const *orbidAfile = ACE_TEXT ("file://iorA.ior");
-ACE_TCHAR const *orbidBfile = ACE_TEXT ("file://iorB.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            ACE_TCHAR const *&orbid_a_file,
+            ACE_TCHAR const *&orbid_b_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
         case 'a':
-          orbidAfile = get_opts.optarg;
-        break;
+          orbid_a_file = get_opts.optarg;
+          break;
         case 'b':
-          orbidBfile = get_opts.optarg;
-        break;
+          orbid_b_file = get_opts.optarg;
+          break;
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-a <iorA> "
-                           "-a <iorB> "
-                           "\n",
-                           argv [0]),
+                             "usage: %s -a <iorA> -b <iorB>\n",
+                             argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -57,39 +55,39 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *orbid_a_file = ACE_TEXT ("file://iorA.ior");
+  ACE_TCHAR const *orbid_b_file = ACE_TEXT ("file://iorB.ior");
   try
-  {
-    if (parse_args (argc, argv) != 0)
-      {
+    {
+      if (parse_args (argc, argv, orbid_a_file, orbid_b_file) != 0)
         return 1;
-      }
 
-    char const *orbidA = "orbidA";
-    CORBA::ORB_var orbA = CORBA::ORB_init (argc, argv, orbidA);
+      char const * const orbid_a = "orbidA";
+      CORBA::ORB_var const orb_a = CORBA::ORB_init (argc, argv, orbid_a);
 
-    CORBA::Object_var objA = orbA->string_to_object (orbidAfile);
-    Test::Hello_var helloA (Test::Hello::_narrow (objA.in ()));
-    CORBA::String_var resA = helloA->get_string ();
+      CORBA::Object_var const obj_a = orb_a->string_to_object (orbid_a_file);
+      Test::Hello_var const hello_a (Test::Hello::_narrow (obj_a.in ()));
+      CORBA::String_var const result_a = hello_a->get_string ();
 
-    CORBA::Object_var objB = orbA->string_to_object (orbidBfile);
-    Test::Hello_var helloB (Test::Hello::_narrow (objB.in ()));
-    CORBA::String_var resB = helloB->get_string ();
+      CORBA::Object_var const obj_b = orb_a->string_to_object (orbid_b_file);
+      Test::Hello_var const hello_b (Test::Hello::_narrow (obj_b.in ()));
+      CORBA::String_var const result_b = hello_b->get_string ();
 
-    ACE_DEBUG ((LM_DEBUG,
-                "got resA: <%C> and resB: <%C>",
-                resA.in (), resB.in ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "got resA: <%C> and resB: <%C>",
+                  result_a.in (), result_b.in ()));
 
-    helloA->shutdown ();
-    helloB->shutdown ();
-    shutdownORB (orbA.in (), orbidA);
-  }
+      hello_a->shutdown ();
+      hello_b->shutdown ();
+      shutdownORB (orb_a.in (), orbid_a);
+    }
   catch (CORBA::Exception const &ex)
-  {
-    ex._tao_print_exception ("Caught unexpected exception:");
+    {
+      ex._tao_print_exception ("Caught unexpected exception:");
 
-    ACE_ERROR ((LM_ERROR, "Bug_2953_Regression test failed.\n"));
-    return 1;
-  }
+      ACE_ERROR ((LM_ERROR, "Bug_2953_Regression test failed.\n"));
+      return 1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Client test completed successfully.\n"));

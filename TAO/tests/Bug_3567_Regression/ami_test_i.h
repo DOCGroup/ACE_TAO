@@ -24,10 +24,10 @@ class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
   /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb,
-              CORBA::Long in_l = 0,
-              char const *in_str = nullptr,
-              bool check_params = false);
+  explicit AMI_Test_i (CORBA::ORB_ptr orb,
+                       CORBA::Long in_l = 0,
+                       char const *in_str = nullptr,
+                       bool check_params = false);
   AMI_Test_i (AMI_Test_i const &) = delete;
   AMI_Test_i (AMI_Test_i &&) = delete;
   AMI_Test_i &operator= (AMI_Test_i const &) = delete;
@@ -47,15 +47,15 @@ public:
   void inout_arg_test (char *&str) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   CORBA::Long yadda_;
 
-  CORBA::Long in_l_;
+  CORBA::Long const in_l_;
 
-  CORBA::String_var in_str_;
+  CORBA::String_var const in_str_;
 
-  bool check_params_;
+  bool const check_params_;
 };
 
 #endif /* TAO_AMI_TEST_I_H */

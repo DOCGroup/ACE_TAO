@@ -16,11 +16,11 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   this->hostname_ = ACE_TEXT ("www.cs.wustl.edu");
   this->uri_ = ACE_TEXT ("index.html");
-  this->recurse_ = 0;
-  this->debug_ = 0;
+  this->recurse_ = false;
+  this->debug_ = false;
   this->timeout_.sec (ACE_DEFAULT_TIMEOUT);
-  this->url_filter_ = 0;
-  this->verbose_ = 0;
+  this->url_filter_ = nullptr;
+  this->verbose_ = false;
   this->order_ = ACE_TEXT ("FIFO");
   this->port_no_ = ACE_DEFAULT_HTTP_PORT;
 
@@ -35,7 +35,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case ACE_TEXT ('d'):
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
       case ACE_TEXT ('f'):
         this->url_filter_ = getopt.opt_arg ();
@@ -50,7 +50,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->handle_limit_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case ACE_TEXT ('r'):
-        this->recurse_ = 1;
+        this->recurse_ = true;
         break;
       case ACE_TEXT ('t'):
         this->timeout_.sec (ACE_OS::atoi (getopt.opt_arg ()));
@@ -59,7 +59,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         {
           this->hostname_ = getopt.opt_arg ();
           ACE_TCHAR *s = ACE_OS::strchr (getopt.opt_arg (), ACE_TEXT ('/'));
-          if (s != 0)
+          if (s != nullptr)
             {
               this->uri_ = s + 1;
               *s = ACE_TEXT ('\0');
@@ -71,7 +71,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         }
         break;
       case ACE_TEXT ('v'):
-        this->verbose_ = 1;
+        this->verbose_ = true;
         break;
       case ACE_TEXT ('o'):
         {
@@ -100,7 +100,7 @@ Options::port_no () const
   return this->port_no_;
 }
 
-int
+bool
 Options::recurse () const
 {
   return this->recurse_;
@@ -112,13 +112,13 @@ Options::timeout () const
   return &this->timeout_;
 }
 
-int
+bool
 Options::debug () const
 {
   return this->debug_;
 }
 
-int
+bool
 Options::verbose () const
 {
   return this->verbose_;
@@ -172,7 +172,7 @@ Options::visitor (URL_Visitor *v)
 }
 
 int
-Options::handle_limit ()
+Options::handle_limit () const
 {
   return this->handle_limit_;
 }

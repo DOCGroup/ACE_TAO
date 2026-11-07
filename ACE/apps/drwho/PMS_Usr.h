@@ -25,8 +25,8 @@ public:
   PMS_Usr ();
 
 protected:
-  virtual int encode (char *packet, int &total_bytes);
-  virtual int decode (char *packet, int &total_bytes);
+  virtual int encode (char *packet, int &total_bytes) override;
+  virtual int decode (char *packet, int &total_bytes) override;
 };
 
 #endif /* _PMS_USR_H */

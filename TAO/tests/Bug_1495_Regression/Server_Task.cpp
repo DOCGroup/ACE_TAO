@@ -12,15 +12,17 @@
 
 #include "ace/Manual_Event.h"
 
+#include <memory>
+
 
 Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
-  : ACE_Task_Base (thr_mgr),
-    output_ (output),
-    me_ (me),
-    sorb_ (CORBA::ORB::_duplicate (sorb))
+  : ACE_Task_Base (thr_mgr)
+  , output_ (output)
+  , me_ (me)
+  , sorb_ (CORBA::ORB::_duplicate (sorb))
 {
 }
 
@@ -30,7 +32,7 @@ Server_Task::svc ()
 {
   try
     {
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         sorb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -40,35 +42,36 @@ Server_Task::svc ()
           return 1;
         }
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      Bug1495_i *server_impl = 0;
+      Bug1495_i *server_impl {};
       ACE_NEW_RETURN (server_impl,
                       Bug1495_i (sorb_.in ()),
                       0);
+      // The var owns the servant's initial reference; server_impl is a borrowed pointer.
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (server_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Bug1495_Regression::Bug1495_var bug1495 =
+      Bug1495_Regression::Bug1495_var const bug1495 =
         Bug1495_Regression::Bug1495::_narrow (object.in ());
 
-      CORBA::String_var ior = sorb_->object_to_string (bug1495.in ());
+      CORBA::String_var const ior = sorb_->object_to_string (bug1495.in ());
 
-      if (output_ != 0)
+      if (output_ != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (output_, "w");
-
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (output_, "w"), ACE_OS::fclose);
+          if (!output_file)
             {
               ACE_ERROR ((LM_ERROR,
                           "Cannot open output file for writing the "
@@ -76,8 +79,7 @@ Server_Task::svc ()
               return 1;
             }
 
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // sleep for a few seconds and hope the remote server picks up the
@@ -98,7 +100,7 @@ Server_Task::svc ()
 
       sorb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught an exception in server task: ");
       return 1;

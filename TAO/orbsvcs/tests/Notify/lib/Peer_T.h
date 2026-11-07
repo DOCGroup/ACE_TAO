@@ -73,7 +73,7 @@ public:
   void deactivate ();
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   /// Activate this object in the default POA.

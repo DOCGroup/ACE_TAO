@@ -24,9 +24,7 @@ namespace ACE
       {
       }
 
-    Response::~Response()
-      {
-      }
+    Response::~Response() = default;
 
     void Response::write(ostream& str) const
       {

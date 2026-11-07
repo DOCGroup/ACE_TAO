@@ -9,10 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Filter::~TAO_EC_Filter ()
-{
-}
-
 void
 TAO_EC_Filter::adopt_child (TAO_EC_Filter* child)
 {
@@ -47,7 +43,7 @@ TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info)
 // ****************************************************************
 
 int
-TAO_EC_Null_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_Null_Filter::filter (RtecEventComm::EventSet const &event,
                             TAO_EC_QOS_Info& qos_info)
 {
   // This is a leaf, no need to query any children, and we accept all
@@ -67,7 +63,7 @@ TAO_EC_Null_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Null_Filter::push (const RtecEventComm::EventSet& event,
+TAO_EC_Null_Filter::push (RtecEventComm::EventSet const &event,
                           TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
@@ -96,7 +92,7 @@ TAO_EC_Null_Filter::max_event_size () const
 }
 
 int
-TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
+TAO_EC_Null_Filter::can_match (RtecEventComm::EventHeader const &) const
 {
   // @@ This method should be correctly so we can implement null
   // filtering at the consumers but real filtering on the suppliers.
@@ -105,9 +101,8 @@ TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
 
 int
 TAO_EC_Null_Filter::add_dependencies (
-      const RtecEventComm::EventHeader &,
-      const TAO_EC_QOS_Info &)
-
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

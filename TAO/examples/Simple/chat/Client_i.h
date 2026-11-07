@@ -49,7 +49,12 @@ public:
   int run ();
 
   /// Handle the user input.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
+
+  Client_i (Client_i const &) = delete;
+  Client_i &operator= (Client_i const &) = delete;
+  Client_i (Client_i &&) = delete;
+  Client_i &operator= (Client_i &&) = delete;
 
 private:
   /// Parse the command line arguments.
@@ -57,13 +62,13 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Function to read the server ior from a file.
-  int read_ior (const ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// IOR of the obj ref of the server.
   ACE_CString ior_;
 
   /// The filename that stores the ior of the server
-  const ACE_TCHAR* ior_file_name_;
+  ACE_TCHAR const *ior_file_name_ { ACE_TEXT ("chat.ior") };
 
   /// Nickname of the user chatting.
   ACE_CString nickname_;
@@ -75,7 +80,7 @@ private:
   Broadcaster_var server_;
 
   /// The receiver object.
-  typedef TAO_Intrusive_Ref_Count_Handle<Receiver_i> Receiver_i_var;
+  using Receiver_i_var = TAO_Intrusive_Ref_Count_Handle<Receiver_i>;
   Receiver_i_var receiver_i_;
 
   /// Pointer to the receiver object registered with the ORB.

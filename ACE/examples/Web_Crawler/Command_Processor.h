@@ -51,13 +51,13 @@ class URL_Command : public Command
 {
 public:
   /// Constructor.
-  URL_Command (URL *);
+  explicit URL_Command (URL *);
 
   /// Execute the URL command.
-  virtual int execute ();
+  int execute () override;
 
   /// Commit suicide.
-  int destroy ();
+  int destroy () override;
 private:
   /// Pointer to the URL.
   URL *url_;

@@ -10,10 +10,14 @@ class Worker_Thread : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Worker_Thread (CORBA::ORB_ptr orb);
+  explicit Worker_Thread (CORBA::ORB_ptr orb);
+  Worker_Thread (Worker_Thread const &) = delete;
+  Worker_Thread (Worker_Thread &&) = delete;
+  Worker_Thread &operator= (Worker_Thread const &) = delete;
+  Worker_Thread &operator= (Worker_Thread &&) = delete;
 
   // = The service method
-  virtual int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;

@@ -26,7 +26,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   // The ORB
 };
 

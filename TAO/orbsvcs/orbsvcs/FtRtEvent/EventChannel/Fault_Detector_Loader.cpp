@@ -17,26 +17,22 @@ namespace FTRTEC {
     ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_STREAM> , ACE_SOCK_ACCEPTOR>,
     ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >;
 
-  Fault_Detector_Loader::Fault_Detector_Loader ()
-  {
-  }
+  Fault_Detector_Loader::Fault_Detector_Loader () = default;
 
-  Fault_Detector_Loader::~Fault_Detector_Loader ()
-  {
-  }
+  Fault_Detector_Loader::~Fault_Detector_Loader () = default;
 
   int
   Fault_Detector_Loader::init (int argc, ACE_TCHAR* argv[])
   {
-    static int initialized = 0;
+    static bool initialized {};
 
     // Only allow initialization once.
     if (initialized)
       return 0;
 
-    initialized = 1;
+    initialized = true;
 
-    Fault_Detector* detector = nullptr;
+    Fault_Detector* detector {};
 
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)

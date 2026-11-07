@@ -23,7 +23,6 @@
 
 #include "tao/orbconf.h"
 
-#include "ace/Atomic_Op.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Condition_Thread_Mutex.h"
 
@@ -44,6 +43,11 @@ public:
 
   /// Destructor
   virtual ~TAO_Notify_AdminProperties ();
+
+  TAO_Notify_AdminProperties (TAO_Notify_AdminProperties const &) = delete;
+  TAO_Notify_AdminProperties (TAO_Notify_AdminProperties &&) = delete;
+  TAO_Notify_AdminProperties &operator= (TAO_Notify_AdminProperties const &) = delete;
+  TAO_Notify_AdminProperties &operator= (TAO_Notify_AdminProperties &&) = delete;
 
   /// Init
   int init (const CosNotification::PropertySeq& prop_seq);
@@ -102,7 +106,7 @@ protected:
   //= Variables
   /// This is used to count the queue length across all buffers in the Notify Service
   /// to enforce the "MaxQueueLength" property.
-  CORBA::Long global_queue_length_;
+  CORBA::Long global_queue_length_ {};
 
   /// Global queue lock used to serialize access to all queues.
   TAO_SYNCH_MUTEX global_queue_lock_;

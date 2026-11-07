@@ -29,7 +29,7 @@ ACE_NS_Node<T>::~ACE_NS_Node ()
 }
 
 template <class T>
-ACE_NS_Node<T>::ACE_NS_Node (const T &i, ACE_NS_Node<T> *n)
+ACE_NS_Node<T>::ACE_NS_Node (T const &i, ACE_NS_Node<T> *n)
   : next_ (n),
     item_ (i)
 {
@@ -44,7 +44,7 @@ ACE_NS_Node<T>::ACE_NS_Node (ACE_NS_Node<T> *n, int)
 }
 
 template <class T>
-ACE_NS_Node<T>::ACE_NS_Node (const ACE_NS_Node<T> &s)
+ACE_NS_Node<T>::ACE_NS_Node (ACE_NS_Node<T> const &s)
   : next_ (s.next_),
     item_ (s.item_)
 {
@@ -62,7 +62,7 @@ ACE_Unbounded_List<T>::size () const
 }
 
 template <class T> int
-ACE_Unbounded_List<T>::insert_tail (const T &item)
+ACE_Unbounded_List<T>::insert_tail (T const &item)
 {
   ACE_NS_Node<T> *temp;
 
@@ -102,7 +102,7 @@ ACE_Unbounded_List<T>::dump () const
   ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
   ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
-  T *item = nullptr;
+  T *item {};
 #if !defined (ACE_NLOGGING)
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
@@ -116,7 +116,7 @@ ACE_Unbounded_List<T>::dump () const
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::copy_nodes (const ACE_Unbounded_List<T> &us)
+ACE_Unbounded_List<T>::copy_nodes (ACE_Unbounded_List<T> const &us)
 {
   for (ACE_NS_Node<T> *curr = us.head_->next_;
        curr != us.head_;
@@ -158,18 +158,18 @@ ACE_Unbounded_List<T>::~ACE_Unbounded_List ()
                          this->allocator_->free,
                          ACE_NS_Node,
                          <T>);
-  this->head_ = 0;
+  this->head_ = nullptr;
 }
 
 template <class T>
 ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Allocator *alloc)
-  : head_ (0),
+  : head_ (nullptr),
     cur_size_ (0),
     allocator_ (alloc)
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::ACE_Unbounded_List");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -180,14 +180,14 @@ ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Allocator *alloc)
 }
 
 template <class T>
-ACE_Unbounded_List<T>::ACE_Unbounded_List (const ACE_Unbounded_List<T> &us)
-  : head_ (0),
+ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Unbounded_List<T> const &us)
+  : head_ (nullptr),
     cur_size_ (0),
     allocator_ (us.allocator_)
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::ACE_Unbounded_List");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -198,7 +198,7 @@ ACE_Unbounded_List<T>::ACE_Unbounded_List (const ACE_Unbounded_List<T> &us)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::operator= (const ACE_Unbounded_List<T> &us)
+ACE_Unbounded_List<T>::operator= (ACE_Unbounded_List<T> const &us)
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::operator=");
 
@@ -210,14 +210,14 @@ ACE_Unbounded_List<T>::operator= (const ACE_Unbounded_List<T> &us)
 }
 
 template <class T> int
-ACE_Unbounded_List<T>::insert (const T &item)
+ACE_Unbounded_List<T>::insert (T const &item)
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::insert");
   return this->insert_tail (item);
 }
 
 template <class T> int
-ACE_Unbounded_List<T>::remove (const T &item)
+ACE_Unbounded_List<T>::remove (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::remove");
 
@@ -340,7 +340,7 @@ template <class T> T&
 ACE_Unbounded_List_Iterator<T>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator*");
-  T *retv = nullptr;
+  T *retv {};
 
   int result = this->next (retv);
   ACE_ASSERT (result != 0);
@@ -350,14 +350,14 @@ ACE_Unbounded_List_Iterator<T>::operator* ()
 }
 
 template <class T> bool
-ACE_Unbounded_List_Iterator<T>::operator== (const ACE_Unbounded_List_Iterator<T> &rhs) const
+ACE_Unbounded_List_Iterator<T>::operator== (ACE_Unbounded_List_Iterator<T> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
 template <class T> bool
-ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T> &rhs) const
+ACE_Unbounded_List_Iterator<T>::operator!= (ACE_Unbounded_List_Iterator<T> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
@@ -365,14 +365,14 @@ ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T>
 
 // ---
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_List<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
-template <class T>  int
+template <class T> bool
 ACE_Unbounded_List<T>::is_full () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_full");

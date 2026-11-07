@@ -18,13 +18,17 @@ class Roundtrip
 {
 public:
   /// Constructor
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
+  Roundtrip (Roundtrip const &) = delete;
+  Roundtrip (Roundtrip &&) = delete;
+  Roundtrip &operator= (Roundtrip const &) = delete;
+  Roundtrip &operator= (Roundtrip &&) = delete;
 
   // = The DSI methods
-  virtual void invoke (CORBA::ServerRequest_ptr request);
-  virtual CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+  void invoke (CORBA::ServerRequest_ptr request) override;
+  CORBA::RepositoryId _primary_interface (
+      PortableServer::ObjectId const &oid,
+      PortableServer::POA_ptr poa) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

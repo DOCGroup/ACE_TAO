@@ -1,69 +1,72 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int do_shutdown = 0;
+#include <string>
+
+struct Client_Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+  bool do_shutdown {};
+};
+
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'x':
-        do_shutdown = ACE_OS::atoi (get_opts.opt_arg ());
+        options.do_shutdown = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-x <do_shutdown>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior> -x <do_shutdown>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior.c_str ());
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var const hello =
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
-      CORBA::String_var the_string =
+      CORBA::String_var const the_string =
         hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
-      if (do_shutdown)
+      if (options.do_shutdown)
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Going to shutdown server\n"));
           hello->shutdown ();
@@ -71,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

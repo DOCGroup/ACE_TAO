@@ -31,13 +31,18 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
   // = DESCRIPTION
   //
 public:
-  Test_Supplier (ECT_Driver *driver);
+  Test_Supplier ();
 
-  int svc ();
+  Test_Supplier (Test_Supplier const&) = delete;
+  Test_Supplier (Test_Supplier&&) = delete;
+  Test_Supplier& operator= (Test_Supplier const&) = delete;
+  Test_Supplier& operator= (Test_Supplier&&) = delete;
+
+  int svc () override;
   // Run the test, just forwards to the driver
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
-                const char* name,
+                char const* name,
                 int burst_count,
                 int burst_size,
                 int event_size,
@@ -60,7 +65,7 @@ public:
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
-  void dump_results (const ACE_TCHAR* name,
+  void dump_results (ACE_TCHAR const* name,
                      ACE_Basic_Stats::scale_factor_type global_scale_factor);
   // Dump the results...
 
@@ -68,13 +73,7 @@ public:
   // Add our statistics to <stats>
 
 private:
-  ECT_Driver *driver_;
-  // Class we forward to.
-
-  void *cookie_;
-  // The test provide us a cookie so we can give back our identity.
-
-  RtecEventComm::EventSourceID supplier_id_;
+  RtecEventComm::EventSourceID supplier_id_ {};
   // We generate an id based on the name....
 
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
@@ -87,12 +86,12 @@ private:
   ACE_Throughput_Stats throughput_;
   // Measure the elapsed time spent while sending the events.
 
-  int burst_count_;
-  int burst_size_;
-  int event_size_;
-  int burst_pause_;
-  int type_start_;
-  int type_count_;
+  int burst_count_ {};
+  int burst_size_ {};
+  int event_size_ {};
+  int burst_pause_ {};
+  int type_start_ {};
+  int type_count_ {};
   // The test data.
 };
 

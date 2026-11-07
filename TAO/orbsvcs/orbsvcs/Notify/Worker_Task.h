@@ -43,6 +43,11 @@ public:
   /// Constructor
   TAO_Notify_Worker_Task ();
 
+  TAO_Notify_Worker_Task (TAO_Notify_Worker_Task const &) = delete;
+  TAO_Notify_Worker_Task (TAO_Notify_Worker_Task &&) = delete;
+  TAO_Notify_Worker_Task &operator= (TAO_Notify_Worker_Task const &) = delete;
+  TAO_Notify_Worker_Task &operator= (TAO_Notify_Worker_Task &&) = delete;
+
   /// Update QoS Properties.
   virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
 
@@ -59,7 +64,7 @@ public:
 
 protected:
   /// Destructor
-  virtual ~TAO_Notify_Worker_Task ();
+  ~TAO_Notify_Worker_Task () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

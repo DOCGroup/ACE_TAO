@@ -29,7 +29,6 @@
 #include "tao/WrongTransactionC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
-#include "ace/OS_NS_string.h"
 #include "tao/AnyTypeCode_Adapter.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
@@ -56,11 +55,7 @@ CORBA::WrongTransaction::WrongTransaction ()
 {
 }
 
-CORBA::WrongTransaction::~WrongTransaction ()
-{
-}
-
-CORBA::WrongTransaction::WrongTransaction (const ::CORBA::WrongTransaction &_tao_excp)
+CORBA::WrongTransaction::WrongTransaction (::CORBA::WrongTransaction const &_tao_excp)
   : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
@@ -69,7 +64,7 @@ CORBA::WrongTransaction::WrongTransaction (const ::CORBA::WrongTransaction &_tao
 }
 
 CORBA::WrongTransaction&
-CORBA::WrongTransaction::operator= (const ::CORBA::WrongTransaction &_tao_excp)
+CORBA::WrongTransaction::operator= (::CORBA::WrongTransaction const &_tao_excp)
 {
   this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
@@ -77,7 +72,7 @@ CORBA::WrongTransaction::operator= (const ::CORBA::WrongTransaction &_tao_excp)
 
 void CORBA::WrongTransaction::_tao_any_destructor (void *_tao_void_pointer)
 {
-  WrongTransaction *_tao_tmp_pointer =
+  WrongTransaction *const _tao_tmp_pointer =
     static_cast<WrongTransaction *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
@@ -88,10 +83,10 @@ CORBA::WrongTransaction::_downcast (CORBA::Exception *_tao_excp)
   return dynamic_cast<WrongTransaction *> (_tao_excp);
 }
 
-const CORBA::WrongTransaction *
+CORBA::WrongTransaction const *
 CORBA::WrongTransaction::_downcast (CORBA::Exception const *_tao_excp)
 {
-  return dynamic_cast<const WrongTransaction *> (_tao_excp);
+  return dynamic_cast<WrongTransaction const *> (_tao_excp);
 }
 
 CORBA::Exception *CORBA::WrongTransaction::_alloc ()
@@ -144,13 +139,11 @@ void CORBA::WrongTransaction::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type () const
 {
-  TAO_AnyTypeCode_Adapter *adapter =
+  TAO_AnyTypeCode_Adapter *const adapter =
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
         "AnyTypeCode_Adapter"
       );
-  if (adapter != nullptr)
-    return adapter->_tao_type_WrongTransaction ();
-  else
+  if (adapter == nullptr)
     {
       TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
@@ -158,6 +151,8 @@ CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type () const
                   ACE_TEXT ("AnyTypeCode Adapter instance")));
       return nullptr;
     }
+
+  return adapter->_tao_type_WrongTransaction ();
 }
 
 // TAO_IDL - Generated from
@@ -165,7 +160,7 @@ CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type () const
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::WrongTransaction &_tao_aggregate
+    CORBA::WrongTransaction const &_tao_aggregate
   )
 {
   // Marshal the repository ID.
@@ -174,7 +169,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::WrongTransaction&
+    CORBA::WrongTransaction &
   )
 {
   return true;

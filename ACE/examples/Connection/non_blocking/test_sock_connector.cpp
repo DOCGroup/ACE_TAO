@@ -4,7 +4,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "CPP-connector.h"
 
-
 using PEER_HANDLER = Peer_Handler<ACE_SOCK_STREAM>;
 using IPC_CLIENT = IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
 

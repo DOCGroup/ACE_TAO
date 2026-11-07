@@ -8,20 +8,15 @@ Event_impl::Event_impl ()
   // since we should only access the state through modifier functions
 {
   // Put a timestamp on event's birth.
-  ACE_Time_Value now (ACE_OS::gettimeofday ());
+  ACE_Time_Value const now (ACE_OS::gettimeofday ());
   this->time_ (static_cast<CORBA::Long> (now.sec ()));
-}
-
-Event_impl::~Event_impl ()
-{
 }
 
 ::CORBA::ValueBase *
 Event_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 void
@@ -46,25 +41,16 @@ Event_factory::create_for_unmarshal ()
 
 // Temperature implementation  ===================================
 
-Temperature_impl::Temperature_impl ()
-{
-}
-
 Temperature_impl::Temperature_impl (CORBA::Float temp)
 {
   this->temperature_ (temp);
 }
 
-Temperature_impl::~Temperature_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Temperature_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 void
@@ -76,10 +62,6 @@ Temperature_impl::do_print ()
   ACE_DEBUG((LM_DEBUG, "Temperature is %f\n", this->temperature_() ));
 }
 
-Temperature_factory::~Temperature_factory ()
-{
-}
-
 TAO_OBV_CREATE_RETURN_TYPE (Temperature)
 Temperature_factory::create_for_unmarshal ()
 {
@@ -88,26 +70,17 @@ Temperature_factory::create_for_unmarshal ()
 
 // Position implementation  ======================================
 
-Position_impl::Position_impl ()
-{
-}
-
-Position_impl::Position_impl (Point &p)
+Position_impl::Position_impl (Point const &p)
 {
   this->xyz (p);
   // Does a copy of the p array
 }
 
-Position_impl::~Position_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Position_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 void
@@ -156,10 +129,6 @@ void Position_impl::z (CORBA::Float z)
   this->xyz()[2] = z;
 }
 
-Position_factory::~Position_factory ()
-{
-}
-
 TAO_OBV_CREATE_RETURN_TYPE (Position)
 Position_factory::create_for_unmarshal ()
 {
@@ -168,26 +137,17 @@ Position_factory::create_for_unmarshal ()
 
 // Log_Msg implementation  ===================================
 
-Log_Msg_impl::Log_Msg_impl ()
-{
-}
-
-Log_Msg_impl::Log_Msg_impl (CORBA::Short u, const char *m)
+Log_Msg_impl::Log_Msg_impl (CORBA::Short u, char const *m)
 {
   this->urgency (u);
   this->message (CORBA::string_dup (m));
 }
 
-Log_Msg_impl::~Log_Msg_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Log_Msg_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 void
@@ -206,10 +166,6 @@ Log_Msg_impl::do_print ()
     }
 }
 
-Log_Msg_factory::~Log_Msg_factory ()
-{
-}
-
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)
 Log_Msg_factory::create_for_unmarshal ()
 {
@@ -220,31 +176,23 @@ Log_Msg_factory::create_for_unmarshal ()
 
 Event_List_Link_impl::Event_List_Link_impl ()
 {
-  this->my_event (0);
-  this->next (0);
+  this->my_event (nullptr);
+  this->next (nullptr);
 }
 
-Event_List_Link_impl::Event_List_Link_impl (Event* e)
+Event_List_Link_impl::Event_List_Link_impl (Event *e)
 {
   this->my_event (e);
   // Note that the modifier increases the reference counter of e.
 
-  this->next (0);
-}
-
-Event_List_Link_impl::~Event_List_Link_impl ()
-{
-  // Destructor does nothing explicit, because my_event and next are
-  // _var types, which destroy (decrement the reference counter of)
-  // the held event resp. the next links.
+  this->next (nullptr);
 }
 
 ::CORBA::ValueBase *
 Event_List_Link_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 Event*
@@ -265,10 +213,6 @@ Event_List_Link_impl::attach_next_link (Event_List_Link *n)
   this->next (n);
 }
 
-Event_List_Link_factory::~Event_List_Link_factory ()
-{
-}
-
 TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)
 Event_List_Link_factory::create_for_unmarshal ()
 {
@@ -279,31 +223,24 @@ Event_List_Link_factory::create_for_unmarshal ()
 
 Event_List_impl::Event_List_impl ()
 {
-  this->first_link (0);
-  this->last_link_cache_ = 0;
-}
-
-Event_List_impl::~Event_List_impl ()
-{
-  // Destructor does nothing explicit, because the _var types do care.
+  this->first_link (nullptr);
 }
 
 ::CORBA::ValueBase *
 Event_List_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 void
-Event_List_impl::store_event (Event* e)
+Event_List_impl::store_event (Event *e)
 {
   // This operation should perform atomically and should
   // guard against the access to the list from another thread.
   // But this is omitted in this example.
 
-  Event_List_Link_impl *new_link_impl = 0;
+  Event_List_Link_impl *new_link_impl = nullptr;
   ACE_NEW (new_link_impl,
            Event_List_Link_impl (e));
   Event_List_Link_var new_link = new_link_impl;
@@ -314,11 +251,11 @@ Event_List_impl::store_event (Event* e)
    // From pointer to _var the reference count of the pointed to never
    // increased, but the modifier does.
 
-  if (this->last_link_cache_ == 0)
+  if (this->last_link_cache_ == nullptr)
     {
       // Search the end.
       for (Event_List_Link *i = this->first_link ();
-           i != 0;
+           i != nullptr;
            i = i->get_next_link ())
         {
           this->last_link_cache_ = i;
@@ -326,7 +263,7 @@ Event_List_impl::store_event (Event* e)
     }
 
   // If still null then the list is empty.
-  if (this->last_link_cache_ == 0)
+  if (this->last_link_cache_ == nullptr)
     {
       this->first_link (new_link);
     }
@@ -335,10 +272,6 @@ Event_List_impl::store_event (Event* e)
       this->last_link_cache_->attach_next_link (new_link);
       this->last_link_cache_ = new_link.in ();
     }
-}
-
-Event_List_factory::~Event_List_factory ()
-{
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List)
@@ -350,16 +283,6 @@ Event_List_factory::create_for_unmarshal ()
 Event_List_Iterator::Event_List_Iterator (Event_List *list)
 {
   this->init (list);
-}
-
-Event_List_Iterator::Event_List_Iterator ()
-{
-  // current_ is a _var and set itself to null.
-}
-
-Event_List_Iterator::~Event_List_Iterator ()
-{
-  // nothing
 }
 
 void
@@ -378,11 +301,11 @@ Event_List_Iterator::next (Event_var &next)
       Event *e = current_->get_event ();
       CORBA::add_ref (e);
       next = e;
-      return 1;
+      return true;
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -393,7 +316,7 @@ Event_List_Iterator::next ()
     {
       return current_->get_event ();
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -411,10 +334,6 @@ Event_List_Iterator::advance ()
 
 // Criterion classes implementation ----------------------------------
 
-Temperature_Criterion_impl::Temperature_Criterion_impl ()
-{
-}
-
 Temperature_Criterion_impl::
 Temperature_Criterion_impl (CORBA::ULong origin_id, CORBA::Float temp)
 {
@@ -423,20 +342,15 @@ Temperature_Criterion_impl (CORBA::ULong origin_id, CORBA::Float temp)
   this->meltingpoint (tmp.in ());
 }
 
-Temperature_Criterion_impl::~Temperature_Criterion_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Temperature_Criterion_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 CORBA::Boolean
-Temperature_Criterion_impl::is_critical (Event* e)
+Temperature_Criterion_impl::is_critical (Event *e)
 {
   // Downcast to a temperature.
   Temperature* t = Temperature::_downcast (e);
@@ -444,11 +358,9 @@ Temperature_Criterion_impl::is_critical (Event* e)
   if (t)
     {
       // Now return the comparison with the meltingpoint.
-      return
-        (t->temperature_ () > this->meltingpoint ()->temperature_ ()) ?
-        1 : 0;
+      return t->temperature_ () > this->meltingpoint ()->temperature_ ();
     }
-  return 0;
+  return false;
 }
 
 void
@@ -459,18 +371,10 @@ Temperature_Criterion_impl::do_print ()
   this->meltingpoint ()->do_print();
 }
 
-Temperature_Criterion_factory::~Temperature_Criterion_factory ()
-{
-}
-
 TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion)
 Temperature_Criterion_factory::create_for_unmarshal ()
 {
   return new Temperature_Criterion_impl;
-}
-
-Position_Criterion_impl::Position_Criterion_impl ()
-{
 }
 
 Position_Criterion_impl::Position_Criterion_impl (CORBA::ULong origin_id,
@@ -482,36 +386,31 @@ Position_Criterion_impl::Position_Criterion_impl (CORBA::ULong origin_id,
   this->topright(tr);
 }
 
-Position_Criterion_impl::~Position_Criterion_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Position_Criterion_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 CORBA::Boolean
-Position_Criterion_impl::is_critical (Event* e)
+Position_Criterion_impl::is_critical (Event *e)
 {
   Position* p = Position::_downcast (e);
   // Is Event really a Position ?
   if (p)
     {
       // If the position of p is out of the box return true.
-      return (
+      return !(
               (p->x () > this->leftbottom ()->x ()) &&
               (p->y () > this->leftbottom ()->y ()) &&
               (p->z () > this->leftbottom ()->z ()) &&
               (p->x () < this->topright ()->x ()) &&
               (p->y () < this->topright ()->y ()) &&
               (p->z () < this->topright ()->z ())
-              ) ? 0 : 1;
+              );
     }
-  return 0;
+  return false;
 }
 
 void
@@ -524,43 +423,30 @@ Position_Criterion_impl::do_print ( )
   this->topright ()->do_print();
 }
 
-Position_Criterion_factory::~Position_Criterion_factory ()
-{
-}
-
 TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)
 Position_Criterion_factory::create_for_unmarshal ()
 {
   return new Position_Criterion_impl;
 }
 
-Log_Msg_Criterion_impl::Log_Msg_Criterion_impl ()
-{
-}
-
-Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Log_Msg_Criterion_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 CORBA::Boolean
-Log_Msg_Criterion_impl::is_critical (Event* e)
+Log_Msg_Criterion_impl::is_critical (Event *e)
 {
   Log_Msg* lm = Log_Msg::_downcast (e);
 
   // Is Event really a Log_Msg ?
   if (lm)
     {
-      return (lm->urgency () ? 1 : 0);
+      return lm->urgency () != 0;
     }
-  return 0;
+  return false;
 }
 
 void
@@ -568,10 +454,6 @@ Log_Msg_Criterion_impl::do_print ()
 {
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
-}
-
-Log_Msg_Criterion_factory::~Log_Msg_Criterion_factory ()
-{
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)
@@ -582,7 +464,7 @@ Log_Msg_Criterion_factory::create_for_unmarshal ()
 
 Criterion_List_impl::Criterion_List_impl ()
 {
-  this->my_list (0);
+  this->my_list (nullptr);
   // We don't want create our list member here, because this constructor
   // is called before unmarshalling too. We cant't distinguish that.
   // If we transmit this type eventually. This is not done in this example.
@@ -591,16 +473,11 @@ Criterion_List_impl::Criterion_List_impl ()
   // which is not yet implemented %!)
 }
 
-Criterion_List_impl::~Criterion_List_impl ()
-{
-}
-
 ::CORBA::ValueBase *
 Criterion_List_impl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
   // Not implemented
-  return ret_val;
+  return nullptr;
 }
 
 void
@@ -638,20 +515,15 @@ Criterion_List_impl::is_critical (Event *e)
           e_c->origin_id_ () == 0)
         {
           if (c->is_critical (e))
-            return 1;
+            return true;
         }
     }
-  return 0;
+  return false;
 }
 
 Criterion_List_Iterator::Criterion_List_Iterator (Criterion_List *list)
 {
   this->init (list);
-}
-
-Criterion_List_Iterator::~Criterion_List_Iterator ()
-{
-  // nothing
 }
 
 void

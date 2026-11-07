@@ -3,11 +3,10 @@
 #include "chatter.h"
 #include "police.h"
 
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("client.ior");
+ACE_TCHAR const* ior_output_file = ACE_TEXT ("client.ior");
 int nr_threads = 1;
 
 int
@@ -65,9 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Creating the monitorable servant and activating it
     //
-    Test_Idl_SharedIntf_i* intf_i = new Test_Idl_SharedIntf_i (orb_.in());
-
-    PortableServer::ServantBase_var base_var = intf_i;
+    PortableServer::ServantBase_var base_var = new Test_Idl_SharedIntf_i (orb_.in());
     PortableServer::ObjectId_var intfId_var =
       poa->activate_object (base_var.in());
 
@@ -84,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == 0)
+    if (output_file == nullptr)
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: %s\n",
                           ior_output_file),
@@ -109,7 +106,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ACE_GUARD_RETURN (ACE_Mutex, guard, mutex, -1);
 
-      const ACE_TCHAR* serverior = ACE_TEXT("file://server.ior");
+      ACE_TCHAR const* serverior = ACE_TEXT("file://server.ior");
       Chatter worker2 (orb_.in (), serverior, stop_condition);
 
       if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
@@ -158,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = (worker2.nrequests_ == worker2.nreplies_)? 0 : -1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Error: Exception caught:");
   }

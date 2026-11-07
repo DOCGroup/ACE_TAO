@@ -22,6 +22,8 @@
 
 #include "tao/orbconf.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
@@ -60,26 +62,31 @@ namespace TAO
     };
 
     /// Constructor.
-    Interceptor_List ();
+    Interceptor_List () = default;
 
     void add_interceptor (InterceptorType_ptr_type i);
 
     /// Register an interceptor with policies.
     void add_interceptor (InterceptorType_ptr_type i,
-                          const CORBA::PolicyList& policies);
+                          CORBA::PolicyList const &policies);
 
     void destroy_interceptors ();
 
     /// Return the registered interceptor in sequence element @a index.
-    RegisteredInterceptor& registered_interceptor (size_t index);
+    RegisteredInterceptor& registered_interceptor (std::size_t index);
 
     /// Return the interceptor in sequence element @a index.
-    InterceptorType_ptr_type interceptor (size_t index);
+    InterceptorType_ptr_type interceptor (std::size_t index);
 
-    size_t size () const;
+    std::size_t size () const;
 
   private:
-    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor >;
+    Interceptor_List (Interceptor_List const &) = delete;
+    Interceptor_List &operator= (Interceptor_List const &) = delete;
+    Interceptor_List (Interceptor_List &&) = delete;
+    Interceptor_List &operator= (Interceptor_List &&) = delete;
+
+    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor>;
 
     /// Dynamic array of registered interceptors.
     RegisteredArray interceptors_;

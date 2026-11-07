@@ -36,14 +36,14 @@ class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 {
 public:
   /// Initialize ACE_Priority_Reactor with the default size.
-  ACE_Priority_Reactor (ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+  ACE_Priority_Reactor (ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /// Initialize ACE_Priority_Reactor with size @a size.
   ACE_Priority_Reactor (size_t size,
                         bool restart = false,
-                        ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+                        ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /// Close down the select_reactor and release all of its resources.
   ~ACE_Priority_Reactor () override;

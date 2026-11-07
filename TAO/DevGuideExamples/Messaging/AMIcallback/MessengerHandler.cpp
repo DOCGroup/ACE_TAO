@@ -4,28 +4,21 @@
 
 // Implementation skeleton constructor
 MessengerHandler::MessengerHandler (CORBA::ORB_ptr orb)
-: time_(0)
-, orb_(CORBA::ORB::_duplicate(orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-// Implementation skeleton destructor
-MessengerHandler::~MessengerHandler ()
-{
-}
-
-void MessengerHandler::send_message (
-   CORBA::Boolean ami_return_val,
-   const char * message,
-   CORBA::Long time
-   )
+void
+MessengerHandler::send_message (CORBA::Boolean ami_return_val,
+                                char const *message,
+                                CORBA::Long time)
 {
   if (ami_return_val)
   {
     time_ = time;
-    time_t t = time_;
-    const ACE_TCHAR * time_str = ACE_OS::ctime(&t);
-    if (time_str != 0) {
+    time_t const t = time;
+    ACE_TCHAR const *time_str = ACE_OS::ctime (&t);
+    if (time_str != nullptr) {
       std::cout << std::endl << "Message sent at " <<
         ACE_TEXT_ALWAYS_CHAR (time_str) << std::endl;
     }
@@ -39,14 +32,15 @@ void MessengerHandler::send_message (
   orb_->shutdown(false);
 }
 
-void MessengerHandler::send_message_excep (Messaging::ExceptionHolder* excep_holder)
+void
+MessengerHandler::send_message_excep (Messaging::ExceptionHolder *excep_holder)
 {
   // We'll print an error message and shut down the orb
   try
   {
     excep_holder->raise_exception();
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     std::cerr << "A CORBA Exception was thrown: " << ex << std::endl;
   }

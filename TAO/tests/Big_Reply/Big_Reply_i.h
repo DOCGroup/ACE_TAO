@@ -30,7 +30,7 @@ public:
   Big_Reply_i &operator= (Big_Reply_i &&) = delete;
 
   ///Destructor
-  ~Big_Reply_i () override;
+  ~Big_Reply_i () override = default;
 
   // = The skeleton methods
   Test::Octet_Seq *get_big_reply () override;

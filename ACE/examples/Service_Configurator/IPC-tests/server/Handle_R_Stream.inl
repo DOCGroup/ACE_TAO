@@ -10,7 +10,7 @@
 ACE_INLINE
 Handle_R_Stream::Handle_R_Stream ()
 {
-  if (Handle_R_Stream::login_name == 0) {
+  if (Handle_R_Stream::login_name == nullptr) {
 #if !defined(ACE_LACKS_CUSERID)
     Handle_R_Stream::login_name = ACE_OS::cuserid (Handle_R_Stream::login);
 #else
@@ -50,7 +50,7 @@ Handle_R_Stream::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT("tcp"),
                    ACE_TEXT("# tests remote stream\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }

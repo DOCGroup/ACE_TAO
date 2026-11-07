@@ -8,6 +8,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <iosfwd>
+#include <memory>
 #include <xercesc/util/XMLString.hpp>
 
 // Utility class that provides a std::string like facade to XMLString.
@@ -16,6 +17,19 @@
 
 namespace XML
 {
+  namespace detail
+  {
+    struct Transcoded_String_Deleter
+    {
+      void operator() (char *str) const
+      {
+        xercesc::XMLString::release (&str);
+      }
+    };
+
+    using Transcoded_String = std::unique_ptr<char, Transcoded_String_Deleter>;
+  }
+
   class XML_Utils_Export XStr
   {
   public:

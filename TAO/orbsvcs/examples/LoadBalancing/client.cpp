@@ -2,10 +2,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://obj.ior");
 
-int niterations = 100;
-int number;
+int niterations {100};
+int number {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -87,7 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client.cpp:");
       return 1;

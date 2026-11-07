@@ -31,6 +31,7 @@
 #endif
 
 #include <algorithm>
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +52,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     LANA_ENUM   lenum;
     unsigned char result;
 
-    ACE_OS::memset (&ncb, 0, sizeof(ncb));
+    std::memset (&ncb, 0, sizeof(ncb));
     ncb.ncb_command = NCBENUM;
     ncb.ncb_buffer  = reinterpret_cast<unsigned char*> (&lenum);
     ncb.ncb_length  = sizeof(lenum);
@@ -60,7 +61,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
     for(int i = 0; i < lenum.length; i++)
       {
-        ACE_OS::memset (&ncb, 0, sizeof(ncb));
+        std::memset (&ncb, 0, sizeof(ncb));
         ncb.ncb_command  = NCBRESET;
         ncb.ncb_lana_num = lenum.lana [i];
 
@@ -73,8 +74,8 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
         }
 
         ADAPTERSTAT adapter;
-        ACE_OS::memset (&ncb, 0, sizeof (ncb));
-        ACE_OS::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
+        std::memset (&ncb, 0, sizeof (ncb));
+        std::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
         ncb.ncb_command     = NCBASTAT;
         ncb.ncb_lana_num    = lenum.lana[i];
         ncb.ncb_buffer      = reinterpret_cast<unsigned char*> (&adapter);
@@ -84,7 +85,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
         if (result == 0)
         {
-          ACE_OS::memcpy (node->node,
+          std::memcpy (node->node,
               adapter.adapt.adapter_address,
               6);
           return 0;
@@ -119,7 +120,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     }
 
   struct ifreq ifr;
-  ACE_OS::strcpy (ifr.ifr_name, p_if->ifa_name);
+  std::strcpy (ifr.ifr_name, p_if->ifa_name);
   ::freeifaddrs (ifap);
 
   ACE_HANDLE handle =
@@ -144,7 +145,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::close (handle);
 
-  ACE_OS::memcpy (node->node,
+  std::memcpy (node->node,
                   sa->sa_data,
                   6);
 
@@ -215,7 +216,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::close (handle);
 
-  ACE_OS::memcpy (node->node,
+  std::memcpy (node->node,
                   sa->sa_data,
                   6);
 
@@ -252,12 +253,12 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
       if (ifr->ifr_addr.sa_family == AF_LINK)
         {
-          if(ACE_OS::strcmp (ifr->ifr_name, "en0") == 0)
+          if(std::strcmp (ifr->ifr_name, "en0") == 0)
             {
               struct sockaddr_dl* sdl =
                 (struct sockaddr_dl *) &ifr->ifr_addr;
 
-              ACE_OS::memcpy (node->node,
+              std::memcpy (node->node,
                               LLADDR(sdl),
                               6);
             }
@@ -308,7 +309,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
       if (addr->sdl_alen >= sizeof node->node)
         {
-          ACE_OS::memcpy (node->node, LLADDR (addr), sizeof node->node);
+          std::memcpy (node->node, LLADDR (addr), sizeof node->node);
           ACE_NETDB_CLEANUP;
           return 0;
         }
@@ -400,7 +401,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
       (*result)[i].ai_addrlen = sizeof (sockaddr_in);
       (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
-      ACE_OS::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
+      std::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
                       (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
         (*result)[i].ai_next = (*result) + i + 1;
@@ -447,17 +448,17 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
   if (hp == 0 || hp->h_name == 0)
     return EAI_NONAME;
 
-  if (ACE_OS::strlen (hp->h_name) >= size_t (host_len))
+  if (std::strlen (hp->h_name) >= size_t (host_len))
     {
       if (host_len > 0)
         {
-          ACE_OS::memcpy (host, hp->h_name, host_len - 1);
+          std::memcpy (host, hp->h_name, host_len - 1);
           host[host_len - 1] = '\0';
         }
       return EAI_OVERFLOW;
     }
 
-  ACE_OS::strcpy (host, hp->h_name);
+  std::strcpy (host, hp->h_name);
   return 0;
 }
 #endif /* ACE_LACKS_GETNAMEINFO */

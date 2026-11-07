@@ -8,27 +8,28 @@
 #include "tao/Messaging/Messaging.h"
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Time_Utilities.h"
+#include <cstddef>
+#include <new>
 
 /***************************************************************************/
 
 Throughput_StructuredPushConsumer::Throughput_StructuredPushConsumer (
-    Notify_Throughput *test_client
+    Notify_Throughput& test_client
   )
-  : test_client_ (test_client),
-    push_count_ (0)
+  : test_client_ (test_client)
 {
 }
 
 void
 Throughput_StructuredPushConsumer::accumulate_into (
-    ACE_Throughput_Stats &throughput) const
+    ACE_Throughput_Stats& throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
 Throughput_StructuredPushConsumer::dump_stats (
-  const ACE_TCHAR* msg,
+  ACE_TCHAR const* msg,
   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -36,18 +37,18 @@ Throughput_StructuredPushConsumer::dump_stats (
 
 void
 Throughput_StructuredPushConsumer::push_structured_event (
-    const CosNotification::StructuredEvent & notification
+    CosNotification::StructuredEvent const& notification
   )
 {
   // Extract payload.
-  const char* msg;
-  CORBA::Boolean ok = (notification.remainder_of_body >>= msg);
+  char const* msg {};
+  CORBA::Boolean const ok = (notification.remainder_of_body >>= msg);
 
   if (!ok)
     ACE_DEBUG ((LM_DEBUG, "(%t) Error extracting message body\n"));
 
-  TimeBase::TimeT Throughput_base_recorded;
-  ACE_hrtime_t Throughput_base;
+  TimeBase::TimeT Throughput_base_recorded {};
+  ACE_hrtime_t Throughput_base {};
 
   notification.filterable_data[0].value >>= Throughput_base_recorded;
 
@@ -64,51 +65,46 @@ Throughput_StructuredPushConsumer::push_structured_event (
   ++this->push_count_;
 
   // Grab timestamp again.
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
 
   // Record statistics.
   this->throughput_.sample (now - this->throughput_start_,
                             now - Throughput_base);
 
-  if (this->push_count_%1000 == 0)
+  if (this->push_count_ % 1000 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P)(%t) event count = %d\n",
                   this->push_count_));
     }
 
-  if (push_count_ == test_client_->perconsumer_count_)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t)expected count reached\n"));
-    test_client_->peer_done ();
-  }
+  if (this->push_count_ == test_client_.perconsumer_count_)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t)expected count reached\n"));
+      test_client_.peer_done ();
+    }
 }
 
 /***************************************************************************/
 
 Throughput_StructuredPushSupplier::Throughput_StructuredPushSupplier (
-    Notify_Throughput* test_client
+    Notify_Throughput& test_client
   )
-  :test_client_ (test_client),
-   push_count_ (0)
-{
-}
-
-Throughput_StructuredPushSupplier::~Throughput_StructuredPushSupplier ()
+  : test_client_ (test_client)
 {
 }
 
 void
 Throughput_StructuredPushSupplier::accumulate_into (
-    ACE_Throughput_Stats &throughput) const
+    ACE_Throughput_Stats& throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
 Throughput_StructuredPushSupplier::dump_stats (
-  const ACE_TCHAR* msg,
+  ACE_TCHAR const* msg,
   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -118,7 +114,7 @@ int
 Throughput_StructuredPushSupplier::svc ()
 {
   // Initialize a time value to pace the test.
-  ACE_Time_Value tv (0, test_client_->burst_pause_);
+  ACE_Time_Value const tv (0, test_client_.options_.burst_pause);
 
   // Operations.
   CosNotification::StructuredEvent event;
@@ -137,7 +133,7 @@ Throughput_StructuredPushSupplier::svc ()
   // OptionalHeaderFields
   // PropertySeq
   // sequence<Property>: string name, any value
-  CosNotification::PropertySeq& qos =  event.header.variable_header;
+  CosNotification::PropertySeq& qos = event.header.variable_header;
   qos.length (0); // put nothing here
 
   // FilterableEventBody
@@ -146,18 +142,17 @@ Throughput_StructuredPushSupplier::svc ()
   event.filterable_data.length (1);
   event.filterable_data[0].name = CORBA::string_dup("Throughput_base");
 
-  event.remainder_of_body <<= test_client_->payload_;
-
+  event.remainder_of_body <<= test_client_.payload_.c_str ();
 
   this->throughput_start_ = ACE_OS::gethrtime ();
 
-  for (int i = 0; i < test_client_->burst_count_; ++i)
+  for (int i {}; i < test_client_.options_.burst_count; ++i)
     {
-      for (int j = 0; j < test_client_->burst_size_; ++j)
+      for (int j {}; j < test_client_.options_.burst_size; ++j)
         {
           // Record current time.
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-          TimeBase::TimeT Throughput_base;
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
+          TimeBase::TimeT Throughput_base {};
           ORBSVCS_Time::hrtime_to_TimeT (Throughput_base,
                                          start);
           // Any.
@@ -165,7 +160,7 @@ Throughput_StructuredPushSupplier::svc ()
 
           this->proxy_->push_structured_event (event);
 
-          ACE_hrtime_t end = ACE_OS::gethrtime ();
+          ACE_hrtime_t const end = ACE_OS::gethrtime ();
           this->throughput_.sample (end - this->throughput_start_,
                                     end - start);
         }
@@ -174,34 +169,22 @@ Throughput_StructuredPushSupplier::svc ()
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%P) (%t) Supplier done\n"));
-  test_client_->peer_done ();
+  test_client_.peer_done ();
   return 0;
 }
 
 /***************************************************************************/
 Notify_Throughput::Notify_Throughput ()
-  : collocated_ec_ (0),
-    burst_count_ (1),
-    burst_pause_ (10000),
-    burst_size_ (1000),
-    payload_size_ (1024),
-    payload_ (0),
-    consumer_count_ (1),
-    supplier_count_ (1),
-    perconsumer_count_ (burst_size_*burst_count_*supplier_count_),
-    consumers_ (0),
-    suppliers_ (0),
-    nthreads_ (1),
-    peer_done_count_ (consumer_count_ + supplier_count_),
-    condition_ (lock_)
+  : condition_ (lock_)
 {
+  this->perconsumer_count_ =
+    this->options_.burst_size * this->options_.burst_count * this->options_.supplier_count;
+  this->peer_done_count_ = this->options_.consumer_count + this->options_.supplier_count;
 }
 
 Notify_Throughput::~Notify_Throughput ()
 {
   this->orb_->shutdown (false);
-
-  delete[] payload_;
 }
 
 int
@@ -237,7 +220,7 @@ Notify_Throughput::init (int argc, ACE_TCHAR* argv [])
   worker_.orb (this->orb_.in ());
 
   if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
-                        this->nthreads_) != 0)
+                        1) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot activate client threads\n"));
@@ -246,7 +229,7 @@ Notify_Throughput::init (int argc, ACE_TCHAR* argv [])
   // Create all participents ...
   this->create_EC ();
 
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid);
@@ -258,108 +241,112 @@ Notify_Throughput::init (int argc, ACE_TCHAR* argv [])
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
-  ACE_NEW_RETURN (consumers_,
-                  Throughput_StructuredPushConsumer*[this->consumer_count_],
-                  -1);
-  ACE_NEW_RETURN (suppliers_,
-                  Throughput_StructuredPushSupplier*[this->supplier_count_],
-                  -1);
-
-  // ----
-
-  int i = 0;
-
-  for (i = 0; i < this->consumer_count_; ++i)
+  try
     {
-      ACE_NEW_RETURN (consumers_[i],
-                      Throughput_StructuredPushConsumer (this),
-                      -1);
-      consumers_[i]->init (root_poa_.in ());
-
-      consumers_[i]->connect (this->consumer_admin_.in ());
+      this->consumers_.reserve (this->options_.consumer_count > 0
+                                  ? static_cast<std::size_t> (this->options_.consumer_count)
+                                  : 0);
+      this->suppliers_.reserve (this->options_.supplier_count > 0
+                                  ? static_cast<std::size_t> (this->options_.supplier_count)
+                                  : 0);
+    }
+  catch (std::bad_alloc const&)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate peer lists\n"), -1);
     }
 
-  for (i = 0; i < this->supplier_count_; ++i)
+  for (int i {}; i < this->options_.consumer_count; ++i)
     {
-      ACE_NEW_RETURN (suppliers_[i],
-                      Throughput_StructuredPushSupplier (this),
+      Throughput_StructuredPushConsumer* consumer {};
+      ACE_NEW_RETURN (consumer,
+                      Throughput_StructuredPushConsumer (*this),
                       -1);
-      suppliers_[i]->TAO_Notify_Tests_StructuredPushSupplier::init (
+      consumer->init (root_poa_.in ());
+
+      consumer->connect (this->consumer_admin_.in ());
+      this->consumers_.push_back (consumer);
+    }
+
+  for (int i {}; i < this->options_.supplier_count; ++i)
+    {
+      Throughput_StructuredPushSupplier* supplier {};
+      ACE_NEW_RETURN (supplier,
+                      Throughput_StructuredPushSupplier (*this),
+                      -1);
+      supplier->TAO_Notify_Tests_StructuredPushSupplier::init (
                          root_poa_.in ());
-      suppliers_[i]->connect (this->supplier_admin_.in ());
+      supplier->connect (this->supplier_admin_.in ());
+      this->suppliers_.push_back (supplier);
     }
 
   return 0;
 }
 
 int
-Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
+Notify_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
 {
-    ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const ACE_TCHAR* current_arg = 0;
-    while (arg_shifter.is_anything_left ())
+  ACE_TCHAR const* current_arg {};
+  while (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-collocated_ec")) == 0)
         {
-          this->collocated_ec_ = 1;
+          this->options_.collocated_ec = true;
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"))) != nullptr)
         {
-          this->consumer_count_ = ACE_OS::atoi (current_arg);
+          this->options_.consumer_count = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-suppliers"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-suppliers"))) != nullptr)
         {
-          this->supplier_count_ = ACE_OS::atoi (current_arg);
+          this->options_.supplier_count = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_size"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_size"))) != nullptr)
         {
-          this->burst_size_ = ACE_OS::atoi (current_arg);
+          this->options_.burst_size = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_count"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_count"))) != nullptr)
         {
-          this->burst_count_ = ACE_OS::atoi (current_arg);
+          this->options_.burst_count = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_pause"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_pause"))) != nullptr)
         {
-          this->burst_pause_ = ACE_OS::atoi (current_arg);
+          this->options_.burst_pause = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-payload"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-payload"))) != nullptr)
         {
-          this->payload_size_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (this->payload_,
-                          char [this->payload_size_],
-                          -1);
+          this->options_.payload_size = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EC"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EC"))) != nullptr)
         {
-          this->ec_name_ = ACE_TEXT_ALWAYS_CHAR(current_arg);
+          this->options_.ec_name = ACE_TEXT_ALWAYS_CHAR (current_arg);
           //
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg =
-                arg_shifter.get_the_parameter (ACE_TEXT("-ExpectedCount"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExpectedCount"))) != nullptr)
         {
           this->perconsumer_count_ = ACE_OS::atoi (current_arg);
+          this->options_.expected_count_set = true;
           //
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "usage: %s "
                      "-collocated_ec, "
                      "-consumers [count], "
@@ -381,19 +368,33 @@ Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
           arg_shifter.ignore_arg ();
         }
     }
-    // Recalculate.
-    peer_done_count_ = consumer_count_ + supplier_count_;
-    return 0;
+  // Recalculate.
+  if (!this->options_.expected_count_set)
+    this->perconsumer_count_ = this->options_.burst_size * this->options_.burst_count *
+      this->options_.supplier_count;
+  this->peer_done_count_ = this->options_.consumer_count + this->options_.supplier_count;
+  if (this->options_.payload_size < 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Payload size must be non-negative\n"), -1);
+  try
+    {
+      this->payload_.assign (static_cast<std::size_t> (this->options_.payload_size), 'x');
+    }
+  catch (std::bad_alloc const&)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate payload\n"), -1);
+    }
+  return 0;
 }
 
 void
 Notify_Throughput::create_EC ()
 {
-  if (this->collocated_ec_ == 1)
+  if (this->options_.collocated_ec)
     {
-      TAO_Notify_Service* notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
+      TAO_Notify_Service* const notify_service =
+        ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
 
-      if (notify_service == 0)
+      if (notify_service == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
           return;
@@ -412,11 +413,11 @@ Notify_Throughput::create_EC ()
     }
 
   // A channel name was specified, use that to resolve the service.
-  if (this->ec_name_.length () != 0)
+  if (!this->options_.ec_name.empty ())
     {
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (ec_name_.c_str ());
+      name[0].id = CORBA::string_dup (this->options_.ec_name.c_str ());
 
       CORBA::Object_var obj =
         this->naming_context_->resolve (name);
@@ -424,14 +425,14 @@ Notify_Throughput::create_EC ()
       this->ec_ =
         CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
     }
-else
-  {
-    CosNotifyChannelAdmin::ChannelID id;
+  else
+    {
+      CosNotifyChannelAdmin::ChannelID id {};
 
-    ec_ = notify_factory_->create_channel (initial_qos_,
-                                           initial_admin_,
-                                           id);
-  }
+      ec_ = notify_factory_->create_channel (initial_qos_,
+                                             initial_admin_,
+                                             id);
+    }
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
@@ -447,21 +448,22 @@ Notify_Throughput::run_test ()
               "consumer_count_ %d,  "
               "supplier_count_ %d "
               "expected count %d\n",
-              collocated_ec_,
-              burst_count_ ,
-              burst_pause_ ,
-              burst_size_ ,
-              payload_size_,
-              consumer_count_ ,
-              supplier_count_ ,
+              this->options_.collocated_ec,
+              this->options_.burst_count,
+              this->options_.burst_pause,
+              this->options_.burst_size,
+              this->options_.payload_size,
+              this->options_.consumer_count,
+              this->options_.supplier_count,
               perconsumer_count_));
 
-  for (int i = 0; i < this->supplier_count_; ++i)
+  for (int i {}; i < this->options_.supplier_count; ++i)
     {
-      suppliers_[i]->
+      this->suppliers_[static_cast<std::size_t> (i)]->
         TAO_Notify_Tests_StructuredPushSupplier::init (root_poa_.in ());
 
-      if (suppliers_[i]->ACE_Task_Base::activate (THR_NEW_LWP | THR_JOINABLE) != 0)
+      if (this->suppliers_[static_cast<std::size_t> (i)]->ACE_Task_Base::activate (
+            THR_NEW_LWP | THR_JOINABLE) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "Cannot activate client threads\n"));
@@ -479,14 +481,14 @@ Notify_Throughput::run_test ()
       }
   }
 
-  if (this->ec_name_.length () == 0) // we are not using a global EC
+  if (this->options_.ec_name.empty ()) // we are not using a global EC
     {
       // Destroy the ec.
       this->ec_->destroy ();
     }
 
   // Signal the workers.
-  this->worker_.done_ = 1;
+  this->worker_.done_.store (true, std::memory_order_relaxed);
 }
 
 void
@@ -509,31 +511,31 @@ Notify_Throughput::dump_results ()
     ACE_High_Res_Timer::global_scale_factor ();
   ACE_TCHAR buf[BUFSIZ];
 
-  for (int j = 0; j < this->consumer_count_; ++j)
+  for (int j {}; j < this->options_.consumer_count; ++j)
     {
-      ACE_OS::sprintf (buf, ACE_TEXT("Consumer [%02d]"), j);
+      ACE_OS::sprintf (buf, ACE_TEXT ("Consumer [%02d]"), j);
 
-      this->consumers_[j]->dump_stats (buf, gsf);
-      this->consumers_[j]->accumulate_into (throughput);
+      this->consumers_[static_cast<std::size_t> (j)]->dump_stats (buf, gsf);
+      this->consumers_[static_cast<std::size_t> (j)]->accumulate_into (throughput);
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
   ACE_Throughput_Stats suppliers;
 
-  for (int i = 0; i < this->supplier_count_; ++i)
+  for (int i {}; i < this->options_.supplier_count; ++i)
     {
-      ACE_OS::sprintf (buf, ACE_TEXT("Supplier [%02d]"), i);
+      ACE_OS::sprintf (buf, ACE_TEXT ("Supplier [%02d]"), i);
 
-      this->suppliers_[i]->dump_stats (buf, gsf);
-      this->suppliers_[i]->accumulate_into (suppliers);
+      this->suppliers_[static_cast<std::size_t> (i)]->dump_stats (buf, gsf);
+      this->suppliers_[static_cast<std::size_t> (i)]->accumulate_into (suppliers);
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
-  throughput.dump_results (ACE_TEXT("Notify_Consumer/totals"), gsf);
+  throughput.dump_results (ACE_TEXT ("Notify_Consumer/totals"), gsf);
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
-  suppliers.dump_results (ACE_TEXT("Notify_Supplier/totals"), gsf);
+  suppliers.dump_results (ACE_TEXT ("Notify_Supplier/totals"), gsf);
 }
 
 /***************************************************************************/
@@ -552,17 +554,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      events.init (argc, argv); //Init the Client
+      events.init (argc, argv); // Init the Client
 
       events.run_test ();
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for threads to exit...\n"));
       ACE_Thread_Manager::instance ()->wait ();
-      events.dump_results();
+      events.dump_results ();
 
       ACE_DEBUG ((LM_DEBUG, "ending main...\n"));
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const& se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
@@ -571,13 +573,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 // ****************************************************************
-
-Worker::Worker ()
-:done_ (0)
-{
-}
 
 void
 Worker::orb (CORBA::ORB_ptr orb)
@@ -588,12 +584,13 @@ Worker::orb (CORBA::ORB_ptr orb)
 int
 Worker::svc ()
 {
-  ACE_Time_Value tv(5);
+  ACE_Time_Value tv (5);
 
   do
     {
-    this->orb_->run (tv);
-  }while (!this->done_);
+      this->orb_->run (tv);
+    }
+  while (!this->done_.load (std::memory_order_relaxed));
 
   ACE_DEBUG ((LM_DEBUG, "(%P) (%t) done\n"));
 

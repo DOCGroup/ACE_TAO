@@ -9,22 +9,22 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstdio>
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace Monitor_Control
   {
-    const char* Num_Threads_Monitor::default_name_ =
+    char const* Num_Threads_Monitor::default_name_ =
       "OS/System/NumThreads";
 
-    Num_Threads_Monitor::Num_Threads_Monitor (const char* name)
+    Num_Threads_Monitor::Num_Threads_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT ("\\System\\Threads"))
-#elif defined (ACE_LINUX)
-      , file_ptr_ (nullptr)
-      , nthreads_ (0UL)
 #endif
     {
     }
@@ -47,22 +47,22 @@ namespace ACE
           return;
         }
 
-      char *item = nullptr;
-      char *arg = nullptr;
+      char const *item {};
+      char const *arg {};
 
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
+      while (std::fgets (buf_, sizeof (buf_), file_ptr_) != nullptr)
         {
-          item = ACE_OS::strtok (this->buf_, " \t\n");
-          arg = ACE_OS::strtok (nullptr, "\n");
+          item = std::strtok (this->buf_, " \t\n");
+          arg = std::strtok (nullptr, "\n");
 
           if (item == nullptr || arg == nullptr)
             {
               continue;
             }
 
-          if (ACE_OS::strcmp (item, "Threads:") == 0)
+          if (std::strcmp (item, "Threads:") == 0)
             {
-              sscanf (arg, "%lu", &this->nthreads_);
+              std::sscanf (arg, "%lu", &this->nthreads_);
               break;
             }
         }
@@ -70,11 +70,11 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (static_cast<double> (this->nthreads_));
 
-      ACE_OS::fclose (this->file_ptr_);
+      std::fclose (this->file_ptr_);
 #endif
     }
 
-    const char*
+    char const*
     Num_Threads_Monitor::default_name ()
     {
       return Num_Threads_Monitor::default_name_;

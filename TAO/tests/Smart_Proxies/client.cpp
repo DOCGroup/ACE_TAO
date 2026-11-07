@@ -16,20 +16,20 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
         ior = get_opts.opt_arg ();
-      break;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -45,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  bool test_failed {};
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -53,7 +53,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-       CORBA::Object_var object =
+      CORBA::Object_var object =
         orb->string_to_object (ior);
 
       // To use the smart proxy it is necessary to allocate the
@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // doesnt have to make sure to destroy it and also for the smart
       // proxy designer who now can manage the lifetime of the object
       // much surely.
-      Smart_Test_Factory *test_factory = 0;
+      Smart_Test_Factory *test_factory = nullptr;
       ACE_NEW_RETURN (test_factory,
                       Smart_Test_Factory,
                       -1);
@@ -84,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           CORBA::String_var sm_ior = orb->object_to_string (server.in ());
           if (Smart_Test_Proxy::fake_ior () != sm_ior.in ())
             {
-              status = 1;
+              test_failed = true;
               ACE_ERROR ((LM_ERROR,
                           "ERROR: The Smart Proxy IOR is:\n%C\n"
                           "but should have been: %C\n",
@@ -92,9 +92,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           Smart_Test_Proxy::fake_ior ().c_str ()));
             }
         }
-      catch (const CORBA::MARSHAL& ex)
+      catch (CORBA::MARSHAL const &ex)
         {
-          status = 1;
+          test_failed = true;
           ex._tao_print_exception ("Unexpected MARSHAL exception:");
         }
 
@@ -110,11 +110,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client-side exception:");
-      status = 1;
+      test_failed = true;
     }
 
-  return status;
+  return test_failed;
 }

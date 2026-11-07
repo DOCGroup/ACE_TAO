@@ -39,7 +39,7 @@ class FTRT_ClientORB_Interceptor
 {
 public:
   /// ctor.
-  FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
+  explicit FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
 
   /// dtor.
   ~FTRT_ClientORB_Interceptor () override = default;

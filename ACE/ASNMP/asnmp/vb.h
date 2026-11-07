@@ -1,5 +1,3 @@
-
-
 #ifndef VB_CLS_
 #define VB_CLS_
 //=============================================================================
@@ -49,7 +47,7 @@
 #include "asnmp/octet.h"               // octet class
 #include "asnmp/address.h"             // address class def
 #include "asnmp/integer.h"             // integer class
-
+#include <memory>
 
 //------------[ VB Class Def ]-------------------------------------
 // The Vb class is the encapsulation of the SNMP variable binding.
@@ -74,14 +72,16 @@ public:
 
   /// constructor to initialize the oid
   /// makes a vb with oid portion initialized (does not make object valid)
-  Vb( const Oid &oid);
+  explicit Vb (Oid const &oid);
 
   /// constructor to initialize the oid
   /// makes a vb with oid portion and value portion initialized, (valid)
-  Vb( const Oid& vb, const SnmpSyntax &val, const SmiUINT32=SNMP_CLASS_SUCCESS);
+  Vb (Oid const &vb, SnmpSyntax const &val, SmiUINT32 status = SNMP_CLASS_SUCCESS);
 
   /// copy constructor
-  Vb( const Vb &vb);
+  Vb (Vb const &vb);
+  Vb (Vb &&) = delete;
+  Vb &operator= (Vb &&) = delete;
 
   /**
    * destructor
@@ -91,112 +91,112 @@ public:
   ~Vb();
 
   /// return validity of Vb object (both oid and value set return 1 else 0)
-  int valid() const;
+  int valid () const;
 
   /// assignment to another Vb object overloaded
-  Vb& operator=( const Vb &vb);
+  Vb &operator= (Vb const &vb);
 
   /// equivlence operator overloaded
-  friend ASNMP_Export bool operator==( const Vb &lhs, const Vb &rhs);
+  friend ASNMP_Export bool operator== (Vb const &lhs, Vb const &rhs);
 
   //-----[ set oid / get oid part]------------------------------------------
 
   /// set value oid only with another oid
-  void set_oid( const Oid& oid);
+  void set_oid (Oid const &oid);
 
   /// get oid portion
-  void get_oid( Oid &oid) const;
+  void get_oid (Oid &oid) const;
 
   //-----[ set value part]--------------------------------------------------
 
   /// set a Vb null, if its not already
-  void set_null();
+  void set_null ();
 
   /// returns 0 on success and a value
-  void set_value( const TimeTicks& ticks);
+  void set_value (TimeTicks const &ticks);
 
   /// returns 0 on success and a value
-  void set_value( const Oid& oid);
+  void set_value (Oid const &oid);
 
   /// returns 0 on success and a value
-  void set_value( const Counter32& ctr);
+  void set_value (Counter32 const &ctr);
 
   /// returns 0 on success and a value
-  void set_value( const Counter64& ctr);
+  void set_value (Counter64 const &ctr);
 
   /// returns 0 on success and a value
-  void set_value( const Gauge32& ctr);
+  void set_value (Gauge32 const &ctr);
 
   /// returns 0 on success and a value
-  void set_value( const SnmpUInt32& ctr);
+  void set_value (SnmpUInt32 const &ctr);
 
   /// returns 0 on success and a value
-  void set_value( const SnmpInt32& ctr);
+  void set_value (SnmpInt32 const &ctr);
 
   /// get an octet string object
-  void set_value( const OctetStr& oct_str);
+  void set_value (OctetStr const &oct_str);
 
   //----[ get value ]------------------------------------------------
 
   /// returns 0 on success and a value
-  int get_value( TimeTicks& ticks);
+  int get_value (TimeTicks &ticks);
 
   /// returns 0 on success and a value
-  int get_value( Oid& oid);
+  int get_value (Oid &oid);
 
   /// returns 0 on success and a value
-  int get_value( Counter32& ctr);
+  int get_value (Counter32 &ctr);
 
   /// returns 0 on success and a value
-  int get_value( Counter64& ctr);
+  int get_value (Counter64 &ctr);
 
   /// returns 0 on success and a value
-  int get_value( Gauge32& ctr);
+  int get_value (Gauge32 &ctr);
 
   /// returns 0 on success and a value
-  int get_value( SnmpUInt32& ctr);
+  int get_value (SnmpUInt32 &ctr);
 
   /// returns 0 on success and a value
-  int get_value( SnmpInt32& ctr);
+  int get_value (SnmpInt32 &ctr);
 
   /// get an octet string object
-  int get_value( OctetStr& oct_str);
+  int get_value (OctetStr &oct_str);
 
   // escape hatch
   /// for other derived types  that can be casted
-  void set_value( const SnmpSyntax &val);
+  void set_value (SnmpSyntax const &val);
 
   /// gets a general value
-  int get_value( SnmpSyntax &val);
+  int get_value (SnmpSyntax &val);
 
   /// return the current syntax
   /// Or.. if a V2 VB exception is present then return the exception value
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax ();
 
   /// set the exception status
-  friend ASNMP_Export void set_exception_status( Vb *vb, const SmiUINT32 status);
+  friend ASNMP_Export void set_exception_status (Vb *vb, SmiUINT32 status);
 
   /// return fomatted version of this object
-  const char *to_string();
+  char const *to_string ();
 
   /// returns a formatted version of the value
-  const char *to_string_value();
+  char const *to_string_value ();
 
   /// returns a formatted version of the value
-  const char *to_string_oid();
+  char const *to_string_oid ();
 
 protected:
   /// display vb as  [ oid / value ]
-  char *output_;
+  std::unique_ptr<char[]> output_ {};
 
   /// a vb is made up of a oid
   Oid iv_vb_oid_;
 
   /// and a value...
-  SnmpSyntax *iv_vb_value_;
+  std::unique_ptr<SnmpSyntax> iv_vb_value_ {};
 
   /// are there any vb exceptions??
-  SmiUINT32 exception_status_;
+  SmiUINT32 exception_status_ {SNMP_CLASS_SUCCESS};
 
   void free_vb();
 };

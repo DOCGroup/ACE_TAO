@@ -1,12 +1,12 @@
 #include "PeerProcess.h"
 #include "PeerObject.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
 #include "Invocation.h"
 #include "HostProcess.h"
 #include "Thread.h"
 #include "Session.h"
+
+#include <cstdio>
 
 Endpoint::Endpoint ()
   : addr_ (),
@@ -109,18 +109,18 @@ PeerProcess::nextIdent(bool is_server)
 {
   static int count = 0;
   char *ident = new char[15];
-  ACE_OS::sprintf (ident,"%s_%d", (is_server ? "server" : "client"), count++);
+  std::sprintf (ident, "%s_%d", (is_server ? "server" : "client"), count++);
   return ident;
 }
 
 PeerProcess::PeerProcess (size_t offset, const ACE_CString &time, bool is_server)
-  : ident_ (0),
-    origin_ (0),
-    owner_ (0),
-    remote_ (0),
+  : ident_ (nullptr),
+    origin_ (nullptr),
+    owner_ (nullptr),
+    remote_ (nullptr),
     server_ep_ (),
     transports_ (),
-    last_transport_ (0),
+    last_transport_ (nullptr),
     is_server_role_(is_server),
     ssl_(false),
     origin_offset_ (offset),
@@ -207,7 +207,7 @@ PeerProcess::last_transport ()
 Transport *
 PeerProcess::find_transport (long handle)
 {
-  Transport *t = 0;
+  Transport *t = nullptr;
   for (ACE_DLList_Reverse_Iterator<Transport> i(this->transports_);
        !i.done();
        i.advance())
@@ -218,7 +218,7 @@ PeerProcess::find_transport (long handle)
           return t;
         }
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -232,9 +232,9 @@ PeerProcess::match_hosts (Session *session)
     this->remote_ = session->find_host(this->server_ep_, true);
   else
     {
-      Transport *t = 0;
+      Transport *t = nullptr;
       this->transports_.get(t,0);
-      if (t != 0)
+      if (t != nullptr)
         this->remote_ = session->find_host(t->client_endpoint_, false);
     }
 }
@@ -242,7 +242,7 @@ PeerProcess::match_hosts (Session *session)
 const char *
 PeerProcess::id () const
 {
-  if (this->remote_ != 0)
+  if (this->remote_ != nullptr)
     {
       const ACE_CString &pname = this->remote_->proc_name();
       if (pname.length() > 0)
@@ -255,20 +255,20 @@ PeerProcess::id () const
 void
 PeerProcess::split_filename (char *buffer, size_t len) const
 {
-  ACE_OS::snprintf (buffer, len, "%s.txt", this->ident_);
+  std::snprintf (buffer, len, "%s.txt", this->ident_);
 }
 
 PeerObject *
 PeerProcess::object_for (const char *oid, size_t len)
 {
-  PeerObject *po = 0;
+  PeerObject *po = nullptr;
   u_long key = ACE::hash_pjw (oid,len);
   int result = objects_.find(key, po);
   if (result == -1)
     {
       long index = static_cast<long>(objects_.current_size());
       char alias[20];
-      ACE_OS::sprintf (alias, "obj_%ld", index);
+      std::sprintf (alias, "obj_%ld", index);
       po = new PeerObject(index, alias, this);
       objects_.bind(key, po);
       object_by_index_.bind (index, po);
@@ -279,8 +279,8 @@ PeerProcess::object_for (const char *oid, size_t len)
 Invocation *
 PeerProcess::new_invocation (size_t req_id, Thread *thr)
 {
-  if (this->find_invocation (req_id, thr->active_handle()) != 0)
-    return 0;
+  if (this->find_invocation (req_id, thr->active_handle()) != nullptr)
+    return nullptr;
   Invocation *inv = new Invocation (this, thr, req_id);
   this->invocations_.insert_tail(inv);
   thr->add_invocation (inv);
@@ -290,7 +290,7 @@ PeerProcess::new_invocation (size_t req_id, Thread *thr)
 Invocation *
 PeerProcess::find_invocation (size_t req_id, long handle)
 {
-  Invocation *inv = 0;
+  Invocation *inv = nullptr;
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -303,13 +303,13 @@ PeerProcess::find_invocation (size_t req_id, long handle)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 Invocation *
 PeerProcess::find_invocation_size (size_t len)
 {
-  Invocation *inv = 0;
+  Invocation *inv = nullptr;
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -320,7 +320,7 @@ PeerProcess::find_invocation_size (size_t len)
           return inv;
         }
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -364,7 +364,7 @@ PeerProcess::dump_summary (ostream &strm)
        !i.done();
        i.advance())
     {
-      Transport *tran = 0;
+      Transport *tran = nullptr;
       i.next(tran);
       strm << "    connection[" << tran->handle_ << "] ";
       strm << (tran->client_endpoint_.is_client() ? "to " : "from ");
@@ -396,7 +396,7 @@ PeerProcess::dump_object_detail (ostream &strm)
        !i.done();
        i.advance())
     {
-      ObjectByIndex::ENTRY *entry = 0;
+      ObjectByIndex::ENTRY *entry = nullptr;
       i.next (entry);
       PeerObject *obj = entry->item();
       obj->dump_detail (strm);
@@ -415,7 +415,7 @@ PeerProcess::dump_invocation_detail (ostream &strm)
   else
     strm << "peer process " << this->ident_;
   strm << ":" << endl;
-  Invocation *inv = 0;
+  Invocation *inv = nullptr;
   bool show_handle = this->transports_.size() > 1;
   for (ACE_DLList_Iterator<Invocation> i(this->invocations_);
        !i.done();

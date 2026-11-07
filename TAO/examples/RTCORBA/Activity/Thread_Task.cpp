@@ -9,12 +9,9 @@
 #include "Task_Stats.h"
 #include "ace/Barrier.h"
 
-Thread_Task::Thread_Task ()
-{
-}
-
 int
-Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping)
+Thread_Task::activate_task (ACE_Barrier *barrier,
+                            RTCORBA::PriorityMapping *priority_mapping)
 {
   barrier_ = barrier;
 

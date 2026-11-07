@@ -1,27 +1,27 @@
 #include "orbsvcs/PortableGroup/PG_Operators.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-operator== (const CosNaming::Name & lhs, const CosNaming::Name & rhs)
+operator== (CosNaming::Name const &lhs, CosNaming::Name const &rhs)
 {
-  const CORBA::ULong lhs_len = lhs.length ();
-  const CORBA::ULong rhs_len = rhs.length ();
+  CORBA::ULong const lhs_len = lhs.length ();
+  CORBA::ULong const rhs_len = rhs.length ();
 
   if (lhs_len != rhs_len)
     return false;
 
   for (CORBA::ULong i = 0; i < lhs_len; ++i)
-    if (ACE_OS::strcmp (lhs[i].id.in (), rhs[i].id.in ()) != 0
-        || ACE_OS::strcmp (lhs[i].kind.in (), rhs[i].kind.in ()) != 0)
+    if (std::strcmp (lhs[i].id.in (), rhs[i].id.in ()) != 0
+        || std::strcmp (lhs[i].kind.in (), rhs[i].kind.in ()) != 0)
       return false;
 
   return true;
 }
 
 bool
-operator!= (const CosNaming::Name & lhs, const CosNaming::Name & rhs)
+operator!= (CosNaming::Name const &lhs, CosNaming::Name const &rhs)
 {
   return !(lhs == rhs);
 }

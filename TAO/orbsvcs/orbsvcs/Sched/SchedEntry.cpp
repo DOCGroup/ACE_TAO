@@ -17,45 +17,32 @@
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-Task_Entry::Task_Entry ()
-  : rt_info_ (nullptr),
-    effective_period_(0),
-    dfs_status_ (NOT_VISITED),
-    discovered_ (-1),
-    finished_ (-1),
-    is_thread_delineator_ (0),
-    has_unresolved_remote_dependencies_ (0),
-    has_unresolved_local_dependencies_ (0),
-    calls_ (),
-    callers_ ()
-{
-}
 
 Task_Entry::~Task_Entry ()
 {
   // Zero out the task entry ACT in the corresponding rt_info
-  rt_info_->volatile_token = 0;
-
-  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter(calls_);
-  Task_Entry_Link **link = nullptr;
+  if (rt_info_ != nullptr)
+    {
+      rt_info_->volatile_token = 0;
+    }
 
   // Iterate through the "calls" set of Task Entry Links and free each one
-
-  for (iter.first ();
-       ! iter.done ();
-       iter.advance (), link = nullptr)
+  Task_Entry_Link **link;
+  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (calls_);
+  while (iter.next (link) != 0)
+  {
+    iter.advance ();
+    if (link != nullptr && *link != nullptr)
     {
-      if (iter.next (link) != 0 && link != nullptr && *link != nullptr)
-        {
-          // remove the link object pointer from the calling entry's
-          // "callers" set and destroy the link object
-          (*link)->called ().callers_.remove (*link);
-          delete (*link);
-        }
+      // remove the link object pointer from the calling entry's
+      // "callers" set and destroy the link object
+      (*link)->called ().callers_.remove (*link);
+      delete *link;
     }
+  }
 }
 
 // Merge dispatches according to info type and type of call, update
@@ -147,14 +134,11 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
   // the given dependency type.
   for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
        ! iter.done ();
-      iter.advance ())
+       iter.advance ())
     {
       Task_Entry_Link **link;
-
-      if (iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr
-          || (*link)->dependency_type () == dt)
+      if (iter.next (link) == 0 || link == nullptr || *link == nullptr ||
+          (*link)->dependency_type () == dt)
         return -1;
     }
 
@@ -180,10 +164,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
        iter.advance ())
     {
       Task_Entry_Link **link;
-
-      if (iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (iter.next (link) == 0 || link == nullptr || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given
@@ -197,17 +178,17 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
@@ -220,17 +201,17 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
@@ -271,16 +252,12 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   u_long frame_size = 1;
 
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
-
   for (dep_iter.first ();
        dep_iter.done () == 0;
        dep_iter.advance ())
     {
       Task_Entry_Link **link;
-
-      if (dep_iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
@@ -294,17 +271,17 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
@@ -317,16 +294,16 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
@@ -358,9 +335,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
        dep_iter.advance ())
     {
       Task_Entry_Link **link;
-      if (dep_iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
@@ -648,7 +623,7 @@ Dispatch_Entry::Dispatch_Entry (Time arrival,
   dispatch_id_ = next_id_++;
 }
 
-Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
+Dispatch_Entry::Dispatch_Entry (Dispatch_Entry const &d)
   : priority_ (d.priority_),
     OS_priority_ (d.OS_priority_),
     dynamic_subpriority_ (d.dynamic_subpriority_),
@@ -663,7 +638,7 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
 }
 
 bool
-Dispatch_Entry::operator < (const Dispatch_Entry &d) const
+Dispatch_Entry::operator < (Dispatch_Entry const &d) const
 {
   // for positioning in the ordered dispatch multiset
 
@@ -704,7 +679,7 @@ Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry &d)
 
 // copy ctor
 
-Dispatch_Entry_Link::Dispatch_Entry_Link (const Dispatch_Entry_Link &d)
+Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry_Link const &d)
   : dispatch_entry_ (d.dispatch_entry_)
 {
 }

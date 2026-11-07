@@ -12,7 +12,7 @@
 
 ORB_Task_Activator::~ORB_Task_Activator ()
 {
-  if (this->task_ == 0)
+  if (this->task_ == nullptr)
     return;
   try{
     (*this->task_)->shutdown (0);

@@ -841,7 +841,7 @@ class ACE_TSS_Keys;
 class ACE_Export ACE_TSS_Emulation
 {
 public:
-  typedef void (*ACE_TSS_DESTRUCTOR)(void *value);
+  using ACE_TSS_DESTRUCTOR = void (*)(void *value);
 
   /// Maximum number of TSS keys allowed over the life of the program.
   static constexpr int ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS;
@@ -858,7 +858,7 @@ public:
   static int release_key (ACE_thread_key_t key);
 
   /// Check a key for validity.
-  static int is_key (ACE_thread_key_t key);
+  static bool is_key (ACE_thread_key_t key);
 
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
@@ -983,11 +983,11 @@ class ACE_TSS_Info
 {
 public:
   /// Declare pointer to function to destroy tss object.
-  typedef void (*Destructor)(void *);
+  using Destructor = void (*)(void *);
 
   /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
-                Destructor dest = 0);
+                Destructor dest = nullptr);
 
   /// Default constructor
   ACE_TSS_Info ();
@@ -1050,8 +1050,7 @@ public:
   int test_and_clear (const ACE_thread_key_t key);
 
   /// Return whether the specific key is marked as in use.
-  /// Returns 1 if the key is been marked, 0 if not.
-  int is_set (const ACE_thread_key_t key) const;
+  bool is_set (const ACE_thread_key_t key) const;
 
 private:
   /// For a given key, find the word and bit number that represent it.
@@ -1640,10 +1639,10 @@ namespace ACE_OS {
                   const char **thr_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_equal (ACE_thread_t t1, ACE_thread_t t2);
+  bool thr_equal (ACE_thread_t t1, ACE_thread_t t2);
 
   extern ACE_Export
-  void thr_exit (ACE_THR_FUNC_RETURN status = 0);
+  void thr_exit (ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getconcurrency ();
@@ -2028,6 +2027,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_OS_Thread_Mutex_Guard
 {
 public:
+  ACE_OS_Thread_Mutex_Guard (ACE_OS_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Thread_Mutex_Guard (ACE_OS_Thread_Mutex_Guard &&) = delete;
+  ACE_OS_Thread_Mutex_Guard &operator= (ACE_OS_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Thread_Mutex_Guard &operator= (ACE_OS_Thread_Mutex_Guard &&) = delete;
+
   /// Implicitly and automatically acquire the lock.
   ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m);
 
@@ -2046,9 +2050,6 @@ protected:
 
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-
-  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &) = delete;
-  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &) = delete;
 };
 
 /**
@@ -2072,6 +2073,11 @@ protected:
 class ACE_OS_Recursive_Thread_Mutex_Guard
 {
 public:
+  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_OS_Recursive_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_OS_Recursive_Thread_Mutex_Guard &&) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (ACE_OS_Recursive_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (ACE_OS_Recursive_Thread_Mutex_Guard &&) = delete;
+
   /// Implicitly and automatically acquire the lock.
   ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
 
@@ -2090,9 +2096,6 @@ protected:
 
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
-  ACE_OS_Recursive_Thread_Mutex_Guard (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

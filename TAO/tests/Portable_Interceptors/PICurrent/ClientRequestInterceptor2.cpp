@@ -1,7 +1,8 @@
 #include "ClientRequestInterceptor2.h"
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ClientRequestInterceptor2::ClientRequestInterceptor2 (
   PortableInterceptor::SlotId id)
@@ -22,11 +23,11 @@ ClientRequestInterceptor2::destroy ()
 
 void
 ClientRequestInterceptor2::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "invoke_you") != 0)
+  if (std::strcmp (op.in (), "invoke_you") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
   try
@@ -38,7 +39,7 @@ ClientRequestInterceptor2::send_request (
       // copies occurred correctly.
 
       // Retrieve data from the RSC (request scope current).
-      CORBA::Long number = 0;
+      CORBA::Long number {};
 
       CORBA::Any_var data =
         ri->get_slot (this->slot_id_);
@@ -57,7 +58,7 @@ ClientRequestInterceptor2::send_request (
                   number,
                   this->slot_id_));
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception ("Exception thrown in ""send_request()\n");
 

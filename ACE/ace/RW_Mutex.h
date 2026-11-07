@@ -37,6 +37,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_RW_Mutex
 {
 public:
+  ACE_RW_Mutex (ACE_RW_Mutex const &) = delete;
+  ACE_RW_Mutex (ACE_RW_Mutex &&) = delete;
+  ACE_RW_Mutex &operator= (ACE_RW_Mutex const &) = delete;
+  ACE_RW_Mutex &operator= (ACE_RW_Mutex &&) = delete;
+
   /// Initialize a readers/writer lock.
   ACE_RW_Mutex (int type = USYNC_THREAD,
                 const ACE_TCHAR *name = nullptr,
@@ -117,10 +122,6 @@ protected:
   /// that you don't have multiple threads simultaneously calling
   /// remove() on the same object, which is a bad idea anyway...
   bool removed_;
-
-private:
-  void operator= (const ACE_RW_Mutex &) = delete;
-  ACE_RW_Mutex (const ACE_RW_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

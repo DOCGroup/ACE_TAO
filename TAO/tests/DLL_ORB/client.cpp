@@ -13,7 +13,7 @@
 #include "ace/Thread_Manager.h"
 
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Process a Service Configurator directive that will cause the test
   // client module to be dynamically loaded.
@@ -26,7 +26,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   // In the process of doing this, the Test method provided by target
   // CORBA object will be invoked.
   if (ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE(
+        ACE_DYNAMIC_SERVICE_DIRECTIVE (
           "Client_Module",
           "Test_Client_Module",
           "_make_Test_Client_Module",

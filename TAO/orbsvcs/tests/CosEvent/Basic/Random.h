@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_RANDOM_H
 #define EC_RANDOM_H
 
@@ -32,17 +31,22 @@ class RND_Consumer
 {
 public:
   /// Constructor
-  RND_Consumer (RND_Driver *driver);
+  explicit RND_Consumer (RND_Driver* driver);
+  RND_Consumer (RND_Consumer const&) = delete;
+  RND_Consumer (RND_Consumer&&) = delete;
+  RND_Consumer& operator= (RND_Consumer const&) = delete;
+  RND_Consumer& operator= (RND_Consumer&&) = delete;
 
-  void push (const CORBA::Any &event);
-  void disconnect_push_consumer ();
+  void push (CORBA::Any const& event) override;
+  void disconnect_push_consumer () override;
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin);
   void disconnect ();
 
 protected:
   /// The driver
-  RND_Driver *driver_;
+  /// Non-owning; the driver outlives its consumers.
+  RND_Driver* driver_ {};
 
   /// The supplier.
   CosEventChannelAdmin::ProxyPushSupplier_var proxy_;
@@ -52,14 +56,10 @@ protected:
 };
 
 inline
-RND_Consumer::RND_Consumer (RND_Driver *driver)
-  :  driver_ (driver)
+RND_Consumer::RND_Consumer (RND_Driver* driver)
+  : driver_ (driver)
 {
 }
-
-// ****************************************************************
-
-// ****************************************************************
 
 /// Simple supplier object
 class RND_Supplier
@@ -68,19 +68,23 @@ class RND_Supplier
 {
 public:
   /// Constructor
-  RND_Supplier ();
+  RND_Supplier () = default;
+  RND_Supplier (RND_Supplier const&) = delete;
+  RND_Supplier (RND_Supplier&&) = delete;
+  RND_Supplier& operator= (RND_Supplier const&) = delete;
+  RND_Supplier& operator= (RND_Supplier&&) = delete;
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin);
   void disconnect ();
 
   /// Push a single event...
   void push_new_event ();
-  void push (CORBA::Any &event);
+  void push (CORBA::Any& event);
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Active method
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The supplier.
@@ -90,49 +94,46 @@ private:
   TAO_SYNCH_MUTEX lock_;
 };
 
-inline
-RND_Supplier::RND_Supplier ()
-{
-}
-
 // ****************************************************************
 
 class RND_Driver
 {
 public:
   RND_Driver ();
+  RND_Driver (RND_Driver const&) = delete;
+  RND_Driver (RND_Driver&&) = delete;
+  RND_Driver& operator= (RND_Driver const&) = delete;
+  RND_Driver& operator= (RND_Driver&&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR *argv[]);
 
   /// The main timer has expired
-  void timer (const CORBA::Any &e);
+  void timer (CORBA::Any const& e);
 
   /// One of the consumers has received an event
-  void event (const CORBA::Any &e);
-
-private:
-  RND_Driver (const RND_Driver &);
-  RND_Driver& operator= (const RND_Driver &);
+  void event (CORBA::Any const& e);
 
 private:
   /// The supplier
   RND_Supplier supplier_;
 
   /// Number of suppliers
-  int nsuppliers_;
+  int nsuppliers_ {4};
 
   /// The suppliers
-  RND_Supplier **suppliers_;
+  /// ACE-allocated pointer array; servants are deactivated and released in run().
+  RND_Supplier** suppliers_ {};
 
   /// Number of consumers
-  int nconsumers_;
+  int nconsumers_ {4};
 
   /// The consumers
-  RND_Consumer **consumers_;
+  /// ACE-allocated pointer array; servants are deactivated and released in run().
+  RND_Consumer** consumers_ {};
 
   /// Maximum recursion
-  int max_recursion_;
+  int max_recursion_ {1};
 
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin_;

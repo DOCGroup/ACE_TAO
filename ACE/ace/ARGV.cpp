@@ -1,10 +1,13 @@
 #ifndef ACE_ARGV_CPP
 #define ACE_ARGV_CPP
 
+#include "ace/ARGV.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ARGV.inl"
@@ -169,8 +172,8 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
   int first_argc = 0;
   int second_argc = 0;
 
-  CHAR_TYPE *first_buf = nullptr;
-  CHAR_TYPE *second_buf = nullptr;
+  CHAR_TYPE *first_buf {};
+  CHAR_TYPE *second_buf {};
   size_t buf_len = 1;
 
   // convert the first argv to a string
@@ -356,7 +359,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
   // Get an iterator over the queue
   ACE_Unbounded_Queue_Iterator<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > iter (this->queue_);
 
-  ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg = nullptr;
+  ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg {};
   CHAR_TYPE *ptr = this->buf_;
   size_t len;
 
@@ -382,9 +385,9 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
             {
               len = ACE_OS::strlen (arg->arg_);
               // Copy the argument into buf_
-              ACE_OS::memcpy ((void *) ptr,
-                              (const void *) (arg->arg_),
-                              len * sizeof (CHAR_TYPE));
+              std::memcpy (ptr,
+                           arg->arg_,
+                           len * sizeof (CHAR_TYPE));
               // Move the pointer down.
               ptr += len;
             }
@@ -394,9 +397,9 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
         {
           len = ACE_OS::strlen (arg->arg_);
           // Copy the argument into buf_
-          ACE_OS::memcpy ((void *) ptr,
-                          (const void *) (arg->arg_),
-                          len * sizeof (CHAR_TYPE));
+          std::memcpy (ptr,
+                       arg->arg_,
+                       len * sizeof (CHAR_TYPE));
           // Move the pointer down.
           ptr += len;
         }

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "File_i.h"
 #include "tao/debug.h"
 #include "ace/streams.h"
@@ -17,16 +16,16 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
+#include <memory>
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
@@ -54,10 +53,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_TCHAR const *ior_output_file { ACE_TEXT ("ior") };
+
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv, ior_output_file);
       if (result != 0)
         return result;
 
@@ -93,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policies[4] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
-      ACE_CString name = "firstPOA";
+      ACE_CString const name = "firstPOA";
       PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
                                                                 poa_manager.in (),
                                                                 policies);
@@ -102,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            i < policies.length ();
            ++i)
         {
-          CORBA::Policy_ptr policy = policies[i];
+          CORBA::Policy_ptr const policy = policies[i];
           policy->destroy ();
         }
 
@@ -125,14 +126,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "%C\n",
                   file_system_ior.in ()));
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR",
-                           ior_output_file),
-                          -1);
-      ACE_OS::fprintf (output_file, "%s", file_system_ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file %s for writing IOR",
+                             ior_output_file),
+                            -1);
+        ACE_OS::fprintf (output_file.get (), "%s", file_system_ior.in ());
+      }
 
       // set the state of the poa_manager to active i.e ready to process requests
       poa_manager->activate ();
@@ -142,7 +145,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("EXCEPTION CAUGHT");
       return -1;

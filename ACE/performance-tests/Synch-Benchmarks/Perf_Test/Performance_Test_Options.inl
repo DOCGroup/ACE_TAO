@@ -8,14 +8,14 @@
 // FUZZ: disable check_for_inline
 
 
-inline int
-Performance_Test_Options::do_print_summary ()
+inline bool
+Performance_Test_Options::do_print_summary () const
 {
   return this->_print_summary;
 }
 
-inline int
-Performance_Test_Options::do_udp ()
+inline bool
+Performance_Test_Options::do_udp () const
 {
   return this->_udp;
 }
@@ -32,44 +32,44 @@ Performance_Test_Options::stop_timer ()
   this->_itimer.stop ();
 }
 
-inline int
-Performance_Test_Options::do_generate ()
+inline bool
+Performance_Test_Options::do_generate () const
 {
   return this->_generate;
 }
 
-inline int
-Performance_Test_Options::do_ack ()
+inline bool
+Performance_Test_Options::do_ack () const
 {
   return this->_ack;
 }
 
-inline int
-Performance_Test_Options::do_eager_exit ()
+inline bool
+Performance_Test_Options::do_eager_exit () const
 {
   return this->_eager_exit;
 }
 
-inline int
-Performance_Test_Options::do_zero_copy ()
+inline bool
+Performance_Test_Options::do_zero_copy () const
 {
   return this->_zero_copy;
 }
 
-inline int
-Performance_Test_Options::do_checksum ()
+inline bool
+Performance_Test_Options::do_checksum () const
 {
   return this->_checksum;
 }
 
-inline int
-Performance_Test_Options::do_delete ()
+inline bool
+Performance_Test_Options::do_delete () const
 {
   return this->_free_memory;
 }
 
-inline int
-Performance_Test_Options::do_xdr ()
+inline bool
+Performance_Test_Options::do_xdr () const
 {
   return this->_xdr;
 }
@@ -81,43 +81,43 @@ Performance_Test_Options::n_lwps (size_t count)
 }
 
 inline size_t
-Performance_Test_Options::n_lwps ()
+Performance_Test_Options::n_lwps () const
 {
   return this->_n_lwps;
 }
 
 inline void
-Performance_Test_Options::pipe_addr (ACE_TCHAR *pipe)
+Performance_Test_Options::pipe_addr (std::basic_string<ACE_TCHAR> const &pipe)
 {
   this->_pipe_addr = pipe;
 }
 
-inline ACE_TCHAR *
-Performance_Test_Options::pipe_addr ()
+inline std::basic_string<ACE_TCHAR> const &
+Performance_Test_Options::pipe_addr () const
 {
   return this->_pipe_addr;
 }
 
 inline void
-Performance_Test_Options::service_entry (ACE_TCHAR *pipe)
+Performance_Test_Options::service_entry (std::basic_string<ACE_TCHAR> const &service_entry)
 {
-  this->_service_entry = pipe;
+  this->_service_entry = service_entry;
 }
 
-inline ACE_TCHAR *
-Performance_Test_Options::service_entry ()
+inline std::basic_string<ACE_TCHAR> const &
+Performance_Test_Options::service_entry () const
 {
   return this->_service_entry;
 }
 
 inline void
-Performance_Test_Options::mapped_file (ACE_TCHAR *filename)
+Performance_Test_Options::mapped_file (std::basic_string<ACE_TCHAR> const &filename)
 {
   this->_mapped_file = filename;
 }
 
-inline ACE_TCHAR *
-Performance_Test_Options::mapped_file ()
+inline std::basic_string<ACE_TCHAR> const &
+Performance_Test_Options::mapped_file () const
 {
   return this->_mapped_file;
 }
@@ -129,7 +129,7 @@ Performance_Test_Options::sleep_time (size_t count)
 }
 
 inline size_t
-Performance_Test_Options::sleep_time ()
+Performance_Test_Options::sleep_time () const
 {
   return this->_sleep_time;
 }
@@ -141,7 +141,7 @@ Performance_Test_Options::thr_count (size_t count)
 }
 
 inline size_t
-Performance_Test_Options::thr_count ()
+Performance_Test_Options::thr_count () const
 {
   return this->_thr_count;
 }
@@ -153,7 +153,7 @@ Performance_Test_Options::consecutive_ports (size_t count)
 }
 
 inline size_t
-Performance_Test_Options::consecutive_ports ()
+Performance_Test_Options::consecutive_ports () const
 {
   return this->_consecutive_ports;
 }
@@ -165,7 +165,7 @@ Performance_Test_Options::logical_connections (size_t count)
 }
 
 inline size_t
-Performance_Test_Options::logical_connections ()
+Performance_Test_Options::logical_connections () const
 {
   return this->_logical_connections;
 }
@@ -177,7 +177,7 @@ Performance_Test_Options::physical_connections (size_t count)
 }
 
 inline size_t
-Performance_Test_Options::physical_connections ()
+Performance_Test_Options::physical_connections () const
 {
   return this->_physical_connections;
 }
@@ -189,7 +189,7 @@ Performance_Test_Options::initial_queue_length (size_t length)
 }
 
 inline size_t
-Performance_Test_Options::initial_queue_length ()
+Performance_Test_Options::initial_queue_length () const
 {
   return this->_initial_queue_length;
 }
@@ -201,7 +201,7 @@ Performance_Test_Options::high_water_mark (size_t size)
 }
 
 inline size_t
-Performance_Test_Options::high_water_mark ()
+Performance_Test_Options::high_water_mark () const
 {
   return this->_high_water_mark;
 }
@@ -213,7 +213,7 @@ Performance_Test_Options::low_water_mark (size_t size)
 }
 
 inline size_t
-Performance_Test_Options::low_water_mark ()
+Performance_Test_Options::low_water_mark () const
 {
   return this->_low_water_mark;
 }
@@ -225,7 +225,7 @@ Performance_Test_Options::msg_size (size_t size)
 }
 
 inline size_t
-Performance_Test_Options::msg_size ()
+Performance_Test_Options::msg_size () const
 {
   return this->_msg_size;
 }
@@ -237,7 +237,7 @@ Performance_Test_Options::iterations (size_t n)
 }
 
 inline size_t
-Performance_Test_Options::iterations ()
+Performance_Test_Options::iterations () const
 {
   return this->_iterations;
 }
@@ -249,19 +249,19 @@ Performance_Test_Options::t_flags (long flag)
 }
 
 inline long
-Performance_Test_Options::t_flags ()
+Performance_Test_Options::t_flags () const
 {
   return this->_t_flags;
 }
 
-inline int
-Performance_Test_Options::debug ()
+inline bool
+Performance_Test_Options::debug () const
 {
   return this->_debugging;
 }
 
-inline int
-Performance_Test_Options::verbose ()
+inline bool
+Performance_Test_Options::verbose () const
 {
   return this->_verbosity;
 }

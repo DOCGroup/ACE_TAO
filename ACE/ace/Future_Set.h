@@ -17,6 +17,7 @@
 #include "ace/Future.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -43,7 +44,8 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
 {
 public:
   /// Constructor.
-  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
+  explicit ACE_Future_Set (
+    ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
 
   ACE_Future_Set (const ACE_Future_Set &) = delete;
   ACE_Future_Set (ACE_Future_Set &&) = delete;
@@ -54,8 +56,8 @@ public:
   ~ACE_Future_Set ();
 
   /**
-   * Return 1 if their are no ACE_Future objects left on its queue and
-   * 0 otherwise.
+   * Return true if there are no ACE_Future objects left on its queue and
+   * false otherwise.
    *
    * When an ACE_Future_Set has no ACE_Future>subjects to observe it is
    * empty. The ACE_Future_Set is in the empty state when either the caller(s)
@@ -63,7 +65,7 @@ public:
    * ACE_Future_Set via the ACE_Future_Set::next_readable() method,
    * or when the ACE_Future_Set has not been assigned any subjects.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /**
    * Enqueus the given ACE_Future into this objects queue when it is
@@ -94,7 +96,7 @@ public:
 
   /// Called by the ACE_Future subject in which we are subscribed to
   /// when its value is written to.
-  virtual void update (const ACE_Future<T> &future);
+  void update (ACE_Future<T> const &future) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -118,10 +120,10 @@ private:
 
   /// Message queue for notifying the reader thread of <ACE_Futures> which
   /// have been written to by client's writer thread.
-  ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
+  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_future_notification_queue_;
 
-  /// Keeps track of whether we need to delete the message queue.
-  bool delete_queue_;
+  /// Message queue used for notifications; owned if the unique pointer is set.
+  ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

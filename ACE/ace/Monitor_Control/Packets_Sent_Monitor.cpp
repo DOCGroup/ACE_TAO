@@ -8,10 +8,10 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    const char* Packets_Sent_Monitor::default_name_ =
+    char const* Packets_Sent_Monitor::default_name_ =
       "OS/Network/PacketsSent";
 
-    Packets_Sent_Monitor::Packets_Sent_Monitor (const char* name)
+    Packets_Sent_Monitor::Packets_Sent_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Multi_Instance_Monitor (
@@ -36,7 +36,7 @@ namespace ACE
       this->receive (static_cast<double> (this->value_));
     }
 
-    const char*
+    char const*
     Packets_Sent_Monitor::default_name ()
     {
       return Packets_Sent_Monitor::default_name_;

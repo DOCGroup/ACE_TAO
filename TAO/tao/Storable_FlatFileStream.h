@@ -22,6 +22,7 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 #include "ace/OS_NS_stdio.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,17 +34,17 @@ namespace TAO
   class TAO_Export Storable_FlatFileStream : public Storable_Base
   {
   public:
-    Storable_FlatFileStream(const ACE_CString & file, const char * mode,
+    Storable_FlatFileStream (std::string const &file, char const *mode,
                             bool use_backup = Storable_Base::use_backup_default,
                             bool retry_on_ebadf = Storable_Base::retry_on_ebadf_default);
 
-    virtual ~Storable_FlatFileStream();
+    ~Storable_FlatFileStream () override;
 
     /// Check if a file exists on disk (file is not open)
-    virtual int exists ();
+    int exists () override;
 
     /// Open a file (the remaining methods below all require an open file)
-    virtual int open ();
+    int open () override;
 
     /// When the locked file resides on an NFS mounted volume, occasionally
     /// the FD of the opened file becomes stale, when that happens the handle
@@ -51,52 +52,57 @@ namespace TAO
     virtual int reopen ();
 
     /// Acquire a file lock
-    virtual int close ();
+    int close () override;
 
     /// Acquire a file lock
-    virtual int flock (int whence, int start, int len);
+    int flock (int whence, int start, int len) override;
 
     /// Release a file lock
-    virtual int funlock (int whence, int start, int len);
+    int funlock (int whence, int start, int len) override;
 
     /// Returns the last time an open file was changed
-    virtual time_t last_changed ();
+    time_t last_changed () override;
 
-    virtual void rewind ();
+    void rewind () override;
 
-    virtual bool flush ();
+    bool flush () override;
 
     /// Force write of storable data to storage.
     /// Returns 0 on success, otherwise EOF
-    virtual int sync ();
+    int sync () override;
 
-    virtual Storable_Base& operator << (const ACE_CString&);
-    virtual Storable_Base& operator >> (ACE_CString&);
-    virtual Storable_Base& operator << (ACE_UINT32 );
-    virtual Storable_Base& operator >> (ACE_UINT32 &);
-    virtual Storable_Base& operator << (ACE_UINT64 );
-    virtual Storable_Base& operator >> (ACE_UINT64 &);
-    virtual Storable_Base& operator << (ACE_INT32 );
-    virtual Storable_Base& operator >> (ACE_INT32 &);
-    virtual Storable_Base& operator << (ACE_INT64 );
-    virtual Storable_Base& operator >> (ACE_INT64 &);
+    Storable_Base& operator << (std::string const &) override;
+    Storable_Base& operator >> (std::string &) override;
+    Storable_Base& operator << (ACE_UINT32) override;
+    Storable_Base& operator >> (ACE_UINT32 &) override;
+    Storable_Base& operator << (ACE_UINT64) override;
+    Storable_Base& operator >> (ACE_UINT64 &) override;
+    Storable_Base& operator << (ACE_INT32) override;
+    Storable_Base& operator >> (ACE_INT32 &) override;
+    Storable_Base& operator << (ACE_INT64) override;
+    Storable_Base& operator >> (ACE_INT64 &) override;
 
-    virtual Storable_Base& operator << (const TAO_OutputCDR & cdr);
+    Storable_Base& operator << (TAO_OutputCDR const &cdr) override;
 
-    virtual size_t write (size_t size, const char * bytes);
+    size_t write (size_t size, char const *bytes) override;
 
-    virtual size_t read (size_t size, char * bytes);
+    size_t read (size_t size, char *bytes) override;
 
-    virtual int restore_backup ();
+    int restore_backup () override;
 
   protected:
-    virtual void do_remove ();
+    void do_remove () override;
 
-    virtual void remove_backup ();
+    void remove_backup () override;
 
-    virtual int create_backup ();
+    int create_backup () override;
 
   private:
+    Storable_FlatFileStream (Storable_FlatFileStream const &) = delete;
+    Storable_FlatFileStream &operator= (Storable_FlatFileStream const &) = delete;
+    Storable_FlatFileStream (Storable_FlatFileStream &&) = delete;
+    Storable_FlatFileStream &operator= (Storable_FlatFileStream &&) = delete;
+
     /// Throw a Storable_Read_Exception if the state
     /// is not good due to a read error.
     void throw_on_read_error (Storable_State state);
@@ -105,12 +111,12 @@ namespace TAO
     /// is not good due to a write error.
     void throw_on_write_error (Storable_State state);
 
-    ACE_CString backup_file_name ();
+    std::string backup_file_name ();
 
     ACE_OS::ace_flock_t filelock_;
-    FILE* fl_;
-    ACE_CString file_;
-    ACE_CString mode_;
+    FILE *fl_ {};
+    std::string file_;
+    std::string mode_;
   };
 
   class TAO_Export Storable_FlatFileFactory : public Storable_Factory
@@ -118,25 +124,25 @@ namespace TAO
   public:
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
-    Storable_FlatFileFactory(const ACE_CString & directory,
+    explicit Storable_FlatFileFactory (std::string const &directory,
                              bool use_backup = Storable_Base::use_backup_default);
-    Storable_FlatFileFactory(const ACE_CString & directory,
+    Storable_FlatFileFactory (std::string const &directory,
                              bool use_backup,
                              bool retry_on_ebadf);
 
-    const ACE_CString & get_directory () const;
+    std::string const & get_directory () const;
 
     ~Storable_FlatFileFactory ();
 
   // Factory Methods
 
     /// Create the stream that can operate on a disk file
-    virtual Storable_Base *create_stream (const ACE_CString & file,
-                                          const char * mode,
-                                          bool = false);
+    Storable_Base *create_stream (std::string const &file,
+                                  char const *mode,
+                                  bool = false) override;
   private:
-    static bool is_nfs (const ACE_CString &dir);
-    ACE_CString directory_;
+    static bool is_nfs (std::string const &dir);
+    std::string directory_;
     bool use_backup_;
     bool retry_on_ebadf_;
   };

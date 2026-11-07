@@ -18,33 +18,7 @@ ACE_round (ACE_timer_t t)
 }
 
 Task_State::Task_State ()
-  : barrier_ (0),
-    key_ ("Cubit"),
-    loop_count_ (1000),
-    thread_count_ (2),
-    latency_ (0),
-    ave_latency_ (0),
-    datatype_ (CB_OCTET),
-    thread_per_rate_ (0),
-    global_jitter_array_ (0),
-    count_ (0),
-    shutdown_ (0),
-    oneway_ (0),
-    one_ior_ (0),
-    one_to_n_test_ (0),
-    context_switch_test_ (0),
-    iors_ (0),
-    iors_count_ (0),
-    ior_file_ (0),
-    granularity_ (1),
-    use_utilization_test_ (0),
-    high_priority_loop_count_ (0),
-    semaphore_ (0),
-    use_multiple_priority_ (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_),
-    remote_invocations_ (1),
-    util_test_time_ (0)
+  : ready_cnd_ (ready_mtx_)
 {
 }
 
@@ -261,14 +235,7 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     cubit_impl_ (CORBA::ORB::_nil (),
                  PortableServer::POA::_nil ()),
     ts_ (ts),
-    num_ (0),
     id_ (id),
-    call_count_ (0),
-    error_count_ (0),
-    my_jitter_array_ (0),
-    timer_ (0),
-    frequency_ (0),
-    latency_ (0),
     argc_ (argc),
     argv_ (argv)
 {
@@ -550,7 +517,6 @@ Client::init_orb ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
-
 
   // Convert the argv vector into a string.
   ACE_ARGV tmp_args (this->argv_);

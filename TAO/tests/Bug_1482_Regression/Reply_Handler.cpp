@@ -18,7 +18,7 @@ Reply_Handler::next_prime_excep (
     {
       ex->raise_exception ();
     }
-  catch (const CORBA::COMM_FAILURE& )
+  catch (CORBA::COMM_FAILURE const &)
     {
       /*ACE_DEBUG ((LM_DEBUG,
                   "Callback method <next_prime_excep> called:\n"));
@@ -29,7 +29,7 @@ Reply_Handler::next_prime_excep (
 
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }

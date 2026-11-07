@@ -6,18 +6,10 @@
 #include "ace/Log_Record.h"
 #include "ace/os_include/os_netdb.h"
 
-Logger_Factory_i::Logger_Factory_i ()
-{
-}
-
-Logger_Factory_i::~Logger_Factory_i ()
-{
-}
-
 Logger_ptr
-Logger_Factory_i::make_logger (const char *name)
+Logger_Factory_i::make_logger (char const *name)
 {
-  Logger_i *result = 0;
+  Logger_i *result = nullptr;
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value
 
@@ -61,16 +53,10 @@ Logger_Factory_i::make_logger (const char *name)
   return result->_this ();
 }
 
-Logger_i::Logger_i (const char *name)
-  : name_ (ACE_OS::strdup (name)),
-    verbosity_level_ (Logger::VERBOSE)
+Logger_i::Logger_i (char const *name)
+  : name_ (name)
 {
   // Do nothing
-}
-
-Logger_i::~Logger_i ()
-{
-  ACE_OS::free (this->name_);
 }
 
 ACE_Log_Priority
@@ -80,7 +66,7 @@ Logger_i::priority_conversion (Logger::Log_Priority priority)
     return LM_MAX;
   else
     {
-      int pval = static_cast<int> (priority);
+      int const pval = static_cast<int> (priority);
 
       return static_cast<ACE_Log_Priority> (1 << pval);
       // (1 << pval) == 2^pval. <ACE_Log_Priority> are powers of 2.
@@ -106,33 +92,33 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 }
 
 void
-Logger_i::log (const Logger::Log_Record &log_rec)
+Logger_i::log (Logger::Log_Record const &log_rec)
 {
   this->logv (log_rec, verbosity_level_);
 }
 
 void
-Logger_i::log_twoway (const Logger::Log_Record &log_rec)
+Logger_i::log_twoway (Logger::Log_Record const &log_rec)
 {
   this->logv (log_rec, verbosity_level_);
 }
 
 void
-Logger_i::logv_twoway (const Logger::Log_Record &log_rec,
+Logger_i::logv_twoway (Logger::Log_Record const &log_rec,
                        Logger::Verbosity_Level verbosity)
 {
   this->logv (log_rec, verbosity);
 }
 
 void
-Logger_i::logv (const Logger::Log_Record &log_rec,
+Logger_i::logv (Logger::Log_Record const &log_rec,
                Logger::Verbosity_Level verbosity)
 {
   // Create an <ACE_Log_Record> to leverage existing logging
   // code. Since Logger::Log_Priority enum tags don't cleanly map to
   // ACE_Log_Priority tags, <priority_conversion> is used to coerce
   // the mapping.
-  ACE_Log_Record rec (this->priority_conversion (log_rec.type),
+  ACE_Log_Record rec (priority_conversion (log_rec.type),
                       ACE_Time_Value (log_rec.time),
                       log_rec.app_id);
 
@@ -159,11 +145,11 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
                       static_cast<ACE_UINT32> (addr));
 
   // Create a buffer and fill it with the host name of the logger
-  ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1];
+  ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1] {};
 
   ACE_OS::strncpy (namebuf, ACE_TEXT_CHAR_TO_TCHAR(addy.get_host_addr ()), MAXHOSTNAMELEN);
 
-  u_long verb_level = this->verbosity_conversion (verbosity);
+  u_long const verb_level = verbosity_conversion (verbosity);
 
   rec.print (namebuf,
              verb_level,

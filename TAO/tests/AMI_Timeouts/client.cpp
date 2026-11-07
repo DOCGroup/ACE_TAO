@@ -14,7 +14,6 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 unsigned int msec = 50;
 
@@ -109,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TimeoutClient client (orb.in (),
                             timeout_var.in (),
                             timeoutHandler_var.in (),
-                            &timeoutHandler_i,
+                            timeoutHandler_i,
                             msec);
 
       client.activate ();
@@ -128,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

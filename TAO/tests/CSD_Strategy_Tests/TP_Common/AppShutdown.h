@@ -4,6 +4,7 @@
 #include "CSD_TP_Test_Export.h"
 #include "OrbShutdownTask.h"
 #include "tao/ORB.h"
+#include <atomic>
 
 class CSD_TP_Test_Export AppShutdown
 {
@@ -20,10 +21,15 @@ public:
 
   static AppShutdown* instance ();
 
+  AppShutdown (AppShutdown const &) = delete;
+  AppShutdown (AppShutdown &&) = delete;
+  AppShutdown & operator= (AppShutdown const &) = delete;
+  AppShutdown & operator= (AppShutdown &&) = delete;
+
 private:
   CORBA::ORB_var orb_;
   unsigned num_clients_;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients_shutdown_;
+  std::atomic<unsigned> num_clients_shutdown_;
 
   OrbShutdownTask orb_shutdown_task_;
 };

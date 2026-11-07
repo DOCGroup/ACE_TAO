@@ -6,6 +6,8 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/debug.h"
+
+#include <cstring>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -17,9 +19,7 @@ TAO_Notify_POA_Helper::TAO_Notify_POA_Helper ()
 {
 }
 
-TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
-{
-}
+TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper () = default;
 
 ACE_CString
 TAO_Notify_POA_Helper::get_unique_id ()
@@ -130,14 +130,14 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id) const
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
   // Copy the contents
-  ACE_OS::memcpy (buffer, (char*)&id, buffer_size);
+  std::memcpy (buffer, (char*)&id, buffer_size);
 
   // @@ Pradeep: TAO guarantees that Long is 4 bytes wide, but the
   // standard only guarantees that it is at least 4 bytes wide. You
   // may want to think about that....
 
   // Create and return a new ID
-  PortableServer::ObjectId *obj_id = nullptr;
+  PortableServer::ObjectId *obj_id {};
   ACE_NEW_THROW_EX (obj_id,
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,

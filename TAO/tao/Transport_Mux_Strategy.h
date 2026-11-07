@@ -38,7 +38,7 @@ class TAO_Export TAO_Transport_Mux_Strategy
 {
 public:
   /// Base class constructor.
-  TAO_Transport_Mux_Strategy (TAO_Transport *transport);
+  explicit TAO_Transport_Mux_Strategy (TAO_Transport *transport);
 
   /// Base class destructor.
   virtual ~TAO_Transport_Mux_Strategy ();
@@ -86,6 +86,12 @@ public:
 
   /// Do we have a request pending
   virtual bool has_request () = 0;
+
+private:
+  TAO_Transport_Mux_Strategy (TAO_Transport_Mux_Strategy const &) = delete;
+  TAO_Transport_Mux_Strategy (TAO_Transport_Mux_Strategy &&) = delete;
+  TAO_Transport_Mux_Strategy &operator= (TAO_Transport_Mux_Strategy const &) = delete;
+  TAO_Transport_Mux_Strategy &operator= (TAO_Transport_Mux_Strategy &&) = delete;
 
 protected:
   /// Cache the transport reference.

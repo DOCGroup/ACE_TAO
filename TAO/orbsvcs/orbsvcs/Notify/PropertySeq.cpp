@@ -6,13 +6,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_PropertySeq::TAO_Notify_PropertySeq ()
-{
-}
+TAO_Notify_PropertySeq::TAO_Notify_PropertySeq () = default;
 
-TAO_Notify_PropertySeq::~TAO_Notify_PropertySeq ()
-{
-}
+TAO_Notify_PropertySeq::~TAO_Notify_PropertySeq () = default;
 
 int
 TAO_Notify_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
@@ -39,7 +35,7 @@ TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq) co
   int index = prop_seq->length ();
   prop_seq->length (static_cast<CORBA::ULong> (index + this->property_map_.current_size ()));
 
-  for (PROPERTY_MAP::ENTRY *entry = nullptr;
+  for (PROPERTY_MAP::ENTRY *entry {};
        iterator.next (entry) != 0;
        iterator.advance (), ++index)
     {

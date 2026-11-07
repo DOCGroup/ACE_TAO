@@ -97,7 +97,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ClientCredentials ();
+      ~ClientCredentials () override = default;
 
     private:
       /// Reference to the OpenSSL @c SSL data structure associated

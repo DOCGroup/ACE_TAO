@@ -18,7 +18,7 @@ JAWS_Timer_EH::handle_timeout (const ACE_Time_Value &, const void *)
   if (this->interval_)
     return 0;
 
-  this->expired_ = 1;
+  this->expired_ = true;
   return -1;
 }
 

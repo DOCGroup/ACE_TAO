@@ -21,7 +21,7 @@ RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
   TAO_EC_Event_Channel_Attributes attr (consumer_poa,
                                         supplier_poa);
 
-  if (rtcorba_setup == 0)
+  if (rtcorba_setup == nullptr)
     {
       return new TAO_EC_Event_Channel (attr);
     }

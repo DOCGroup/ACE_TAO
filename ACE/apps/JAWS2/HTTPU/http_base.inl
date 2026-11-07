@@ -7,23 +7,19 @@
 ACE_INLINE
 HTTP_Base::HTTP_Base ()
   : status_ (200),
-    line_ (0),
+    line_ (nullptr),
     deliver_state_ (0),
-    no_headers_ (0),
+    no_headers_ (false),
     iter_ (*(this->info_.table ())),
-    mb_ (0)
+    mb_ ()
 {
 }
 
 ACE_INLINE
 HTTP_Base::~HTTP_Base ()
 {
-  if (this->line_)
+  if (this->line_ != nullptr)
     ACE_OS::free (this->line_);
-  if (this->mb_)
-    delete this->mb_;
-  this->line_ = 0;
-  this->mb_ = 0;
 }
 
 ACE_INLINE int

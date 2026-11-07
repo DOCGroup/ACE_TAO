@@ -18,7 +18,7 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev ()
 }
 
 template <class T_Producer, class T_Consumer>
-TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (const char *flowname)
+TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (char const *flowname)
   :flowname_ (flowname)
 {
   try
@@ -28,7 +28,7 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (const char *flowname)
       this->define_property ("Flow",
                              flowname_any);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_FDev::TAO_FDev");
     }
@@ -41,7 +41,7 @@ TAO_FDev<T_Producer, T_Consumer>::~TAO_FDev ()
 }
 
 template <class T_Producer, class T_Consumer>
-const char *
+char const *
 TAO_FDev<T_Producer, T_Consumer>::flowname ()
 {
   return this->flowname_.in ();
@@ -49,7 +49,7 @@ TAO_FDev<T_Producer, T_Consumer>::flowname ()
 
 template <class T_Producer, class T_Consumer>
 void
-TAO_FDev<T_Producer, T_Consumer>::flowname (const char *flow_name)
+TAO_FDev<T_Producer, T_Consumer>::flowname (char const *flow_name)
 {
   try
     {
@@ -58,7 +58,7 @@ TAO_FDev<T_Producer, T_Consumer>::flowname (const char *flow_name)
       this->define_property ("Flow",
                              flowname_any);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_FDev::flowname");
     }
@@ -91,12 +91,12 @@ TAO_FDev<T_Producer, T_Consumer>::make_producer (AVStreams::FlowConnection_ptr /
   try
     {
       // Activate the producer implementation under the Root POA.
-      T_Producer *producer_i = nullptr;
+      T_Producer *producer_i {};
       ACE_NEW_RETURN (producer_i, T_Producer, 0);
       this->producer_list_.insert_tail (producer_i);
       producer = producer_i->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_FDev::make_producer");
       return producer;
@@ -116,13 +116,13 @@ TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /
   try
     {
       // Activate the consumer implementation under the Root POA.
-  T_Consumer *consumer_i = nullptr;
+  T_Consumer *consumer_i {};
       ACE_NEW_RETURN (consumer_i, T_Consumer, 0 );
 
       this->consumer_list_.insert_tail (consumer_i);
       consumer = consumer_i->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_FDev::make_consumer");
       return consumer;
@@ -172,12 +172,12 @@ TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
 template <class T_Producer, class T_Consumer>
 void
 TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep */,
-                                           const char * /* fdev_name */)
+                                           char const * /* fdev_name */)
 {
   // @@ Shouldn't the parameters be made use of!
   // Destroy/delete all the producers and consumers.
 
-  TAO_FlowProducer *producer_i = nullptr;
+  TAO_FlowProducer *producer_i {};
 
   for (PRODUCER_LIST_ITERATOR producer_list_iterator (this->producer_list_);
        (producer_i = producer_list_iterator.next ()) != nullptr;
@@ -187,7 +187,7 @@ TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep
       delete producer_i;
     }
 
-  TAO_FlowConsumer *consumer_i = nullptr;
+  TAO_FlowConsumer *consumer_i {};
 
   for (CONSUMER_LIST_ITERATOR consumer_list_iterator (this->consumer_list_);
        (consumer_i = consumer_list_iterator.next ()) != nullptr;

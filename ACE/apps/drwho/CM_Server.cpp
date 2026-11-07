@@ -3,23 +3,23 @@
 #include "CM_Server.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_arpa_inet.h"
+#include <cstring>
 
 // Creates and binds a UDP socket...
 
 int
 CM_Server::open (short port_number)
 {
-  int max_packet_size = UDP_PACKET_SIZE;
+  const int max_packet_size = UDP_PACKET_SIZE;
 
   this->sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (this->sokfd_ < 0)
     return -1;
 
-  ACE_OS::memset (&this->sin_, 0, sizeof this->sin_);
+  std::memset (&this->sin_, 0, sizeof this->sin_);
   this->sin_.sin_family = AF_INET;
   this->sin_.sin_port = htons (port_number);
   this->sin_.sin_addr.s_addr = INADDR_ANY;

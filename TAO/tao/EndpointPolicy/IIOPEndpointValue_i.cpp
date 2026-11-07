@@ -63,7 +63,7 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
   // I'm not sure this level of validation is really required, so
   // for now I'm just leaving it out.
 
-  const ACE_INET_Addr * eps = iacc->endpoints ();
+  ACE_INET_Addr const *eps = iacc->endpoints ();
   CORBA::ULong eps_count = iacc->endpoint_count ();
   for (CORBA::ULong eps_idx = 0; eps_idx < eps_count; ++ eps_idx)
     {

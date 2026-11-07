@@ -66,7 +66,7 @@ namespace TAO
     public:
       /// Constructor.
       Accept_Strategy (TAO_ORB_Core * orb_core,
-                       const ACE_Time_Value & timeout,
+                       ACE_Time_Value const & timeout,
                        bool check_host);
 
       /// Overridden method that forces a passive connection timeout value
@@ -80,7 +80,7 @@ namespace TAO
        * handshake.  This includes both the TCP handshake and the SSL
        * handshake.
        */
-      const ACE_Time_Value timeout_;
+      ACE_Time_Value const timeout_;
       bool const check_host_;
     };
   }  // End SSLIOP namespace

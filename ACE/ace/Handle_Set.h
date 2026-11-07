@@ -77,7 +77,7 @@ public:
    * performed so @a handle must be less than
    * @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
    */
-  int is_set (ACE_HANDLE handle) const;
+  bool is_set (ACE_HANDLE handle) const;
 
   /// Enables the @a handle.  No range checking is performed so @a handle
   /// must be less than @c ACE_DEFAULT_SELECT_REACTOR_SIZE.

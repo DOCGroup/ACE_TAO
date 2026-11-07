@@ -25,7 +25,7 @@ public:
   using Cache_Manager = JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN>;
   using Cache_List_Item = JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN>;
 
-  JAWS_Cache_List (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
+  explicit JAWS_Cache_List (ACE_Allocator *alloc = nullptr, size_t maxsize = 8192);
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 

@@ -31,43 +31,48 @@
 class TAO_NT_Naming_Service : public ACE_NT_Service
 {
 public:
-  typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
+  using MUTEX = TAO_SYNCH_RECURSIVE_MUTEX;
 
   TAO_NT_Naming_Service ();
-  virtual ~TAO_NT_Naming_Service ();
+  ~TAO_NT_Naming_Service () override;
+
+  TAO_NT_Naming_Service (TAO_NT_Naming_Service const &) = delete;
+  TAO_NT_Naming_Service (TAO_NT_Naming_Service &&) = delete;
+  TAO_NT_Naming_Service &operator= (TAO_NT_Naming_Service const &) = delete;
+  TAO_NT_Naming_Service &operator= (TAO_NT_Naming_Service &&) = delete;
 
   /// We override <handle_control> because it handles stop requests
   /// privately.
-  virtual void handle_control (DWORD control_code);
+  void handle_control (DWORD control_code) override;
 
   /// We override <handle_exception> so a 'stop' control code can pop
   /// the reactor off of its wait.
-  virtual int handle_exception (ACE_HANDLE h);
+  int handle_exception (ACE_HANDLE h) override;
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc ();
+  int svc () override;
 
   /// Initialize the objects argc_ and argv_ attributes values.
-  virtual int init (int argc,
-                    ACE_TCHAR *argv[]);
+  int init (int argc,
+            ACE_TCHAR *argv[]) override;
 
   /// Helper function for setting or reporting command line args
-  int set_args (const ACE_TCHAR *args);
+  int set_args (ACE_TCHAR const *args);
 
 private:
   void arg_manip (char *args, DWORD arglen, bool query);
-  void report_error (const ACE_TCHAR *format,
-                     const ACE_TCHAR *val,
+  void report_error (ACE_TCHAR const *format,
+                     ACE_TCHAR const *val,
                      LONG result);
 
   // = Keep track of the "command-line" arguments.
   /// Argument count.
-  int argc_;
-  int argc_save_;
+  int argc_ {};
+  int argc_save_ {};
 
   /// Argument list.
-  ACE_TCHAR **argv_;
-  ACE_TCHAR **argv_save_;
+  ACE_TCHAR **argv_ {};
+  ACE_TCHAR **argv_save_ {};
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
   friend class AutoFinalizer;
@@ -81,7 +86,7 @@ private:
 class AutoFinalizer
 {
 public:
-    AutoFinalizer (TAO_NT_Naming_Service &service);
+    explicit AutoFinalizer (TAO_NT_Naming_Service &service);
     ~AutoFinalizer ();
 
 private:
@@ -89,7 +94,7 @@ private:
 };
 
 
-typedef ACE_Singleton<TAO_NT_Naming_Service, TAO_NT_Naming_Service::MUTEX> SERVICE;
+using SERVICE = ACE_Singleton<TAO_NT_Naming_Service, TAO_NT_Naming_Service::MUTEX>;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 #endif /* TAO_NT_NAMING_SERVER_H */

@@ -1,19 +1,19 @@
 // -*- C++ -*-
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "tao/Valuetype/ValueFactory.h"
+ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
+bool debug = false;
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://test.ior");
-int debug = 0;
-
-enum test_select
+enum class Test_Selection
 {
-  TEST_STATE,
-  TEST_OPERATION,
-  TEST_EXCEPTION,
-  TEST_ALL
+  State,
+  Operation,
+  Exception,
+  All
 };
 
-test_select which_test = TEST_ALL;
+Test_Selection which_test = Test_Selection::All;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -28,16 +28,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
               ior_input_file = get_opts.optarg;
               break;
       case 'd':
-              debug = 1;
+              debug = true;
               break;
       case 's':
-              which_test = TEST_STATE;
+              which_test = Test_Selection::State;
               break;
       case 'o':
-              which_test = TEST_OPERATION;
+              which_test = Test_Selection::Operation;
               break;
       case 'e':
-              which_test = TEST_EXCEPTION;
+              which_test = Test_Selection::Exception;
               break;
       case '?':
       default:
@@ -53,22 +53,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-dump_node (BaseNode* bn, int indent)
+dump_node (BaseNode *bn, int indent)
 {
-  if (bn == 0)
+  if (bn == nullptr)
     {
       return;
     }
 
-  StringNode* sn = StringNode::_downcast (bn);
+  StringNode *sn = StringNode::_downcast (bn);
 
   if (debug)
     {
       // This is ugly I know
-      int i = indent;
-      for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
+      for (int i = indent; i != 0; --i)
+        {
+          ACE_DEBUG ((LM_DEBUG, "  "));
+        }
 
-      if (sn != 0)
+      if (sn != nullptr)
         {
           ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
                      bn,
@@ -166,7 +168,7 @@ test_exception (base_ptr abs)
                       retval.in ()));
         }
     }
-  catch (const BadInput& ex)
+  catch (BadInput const &ex)
     {
       if (debug)
         {
@@ -212,37 +214,29 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       base_var package = base::_nil ();
 
-      if (which_test == TEST_STATE || which_test == TEST_ALL)
+      if (which_test == Test_Selection::State ||
+          which_test == Test_Selection::All)
         {
           // Create and register factory for BaseNode.
-          BaseNode_init *bn_factory = 0;
-          ACE_NEW_RETURN (bn_factory,
-                          BaseNode_init,
-                          1);
+          CORBA::ValueFactory_var bn_factory;
+          ACE_NEW_RETURN (bn_factory.inout (), BaseNode_init, 1);
 
-          orb->register_value_factory (bn_factory->tao_repository_id (),
-                                       bn_factory);
-          bn_factory->_remove_ref (); // release ownership
+          orb->register_value_factory (BaseNode::_tao_obv_static_repository_id (),
+                                       bn_factory.in ());
 
           // Create and register factory for TreeController.
-          TreeController_init *tc_factory = 0;
-          ACE_NEW_RETURN (tc_factory,
-                          TreeController_init,
-                          1);
+          CORBA::ValueFactory_var tc_factory;
+          ACE_NEW_RETURN (tc_factory.inout (), TreeController_init, 1);
 
-          orb->register_value_factory (tc_factory->tao_repository_id (),
-                                       tc_factory);
-          tc_factory->_remove_ref (); // release ownership
+          orb->register_value_factory (TreeController::_tao_obv_static_repository_id (),
+                                       tc_factory.in ());
 
           // Create and register factory for StringNode.
-          StringNode_init *sn_factory = 0;
-          ACE_NEW_RETURN (sn_factory,
-                          StringNode_init,
-                          1);
+          CORBA::ValueFactory_var sn_factory;
+          ACE_NEW_RETURN (sn_factory.inout (), StringNode_init, 1);
 
-          orb->register_value_factory (sn_factory->tao_repository_id (),
-                                       sn_factory);
-          sn_factory->_remove_ref (); // release ownership
+          orb->register_value_factory (StringNode::_tao_obv_static_repository_id (),
+                                       sn_factory.in ());
 
           objref->pass_state (package.out ());
 
@@ -256,7 +250,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           test_state (package.in ());
         }
 
-      if (which_test != TEST_STATE)
+      if (which_test != Test_Selection::State)
         {
           objref->pass_ops (package.out ());
 
@@ -268,17 +262,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      if (which_test == TEST_OPERATION || which_test == TEST_ALL)
+      if (which_test == Test_Selection::Operation ||
+          which_test == Test_Selection::All)
         {
           test_operation (package.in ());
         }
 
-      if (which_test == TEST_EXCEPTION || which_test == TEST_ALL)
+      if (which_test == Test_Selection::Exception ||
+          which_test == Test_Selection::All)
         {
           test_exception (package.in ());
         }
 
-      if (which_test == TEST_ALL)
+      if (which_test == Test_Selection::All)
         {
           objref->pass_nil (package.out ());
 
@@ -294,7 +290,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception caught - ");
 

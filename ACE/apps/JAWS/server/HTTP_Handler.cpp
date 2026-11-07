@@ -12,7 +12,7 @@
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
                             HTTP_Handler_Factory &factory)
   : factory_ (factory),
-    request_data_ (0),
+    request_data_ (nullptr),
     handle_ (ACE_INVALID_HANDLE),
     response_ (io, request_),
     io_ (io)
@@ -22,8 +22,9 @@ HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 
 HTTP_Handler::~HTTP_Handler ()
 {
-  this->request_data_->release ();
-  this->request_data_ = 0;
+  if (this->request_data_ != nullptr)
+    this->request_data_->release ();
+  this->request_data_ = nullptr;
 }
 
 void
@@ -234,17 +235,13 @@ HTTP_Handler::done ()
   this->factory_.destroy_http_handler (*this, this->io_);
 }
 
-HTTP_Handler_Factory::~HTTP_Handler_Factory ()
-{
-}
-
 HTTP_Handler *
 Synch_HTTP_Handler_Factory::create_http_handler ()
 {
   JAWS_Synch_IO *io;
-  ACE_NEW_RETURN (io, JAWS_Synch_IO, 0);
+  ACE_NEW_RETURN (io, JAWS_Synch_IO, nullptr);
   HTTP_Handler *handler;
-  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), 0);
+  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
 
   return handler;
 }
@@ -262,10 +259,10 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 HTTP_Handler *
 No_Cache_Synch_HTTP_Handler_Factory::create_http_handler ()
 {
-  JAWS_Synch_IO_No_Cache *io = 0;
-  ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, 0);
-  HTTP_Handler *handler = 0;
-  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), 0);
+  JAWS_Synch_IO_No_Cache *io = nullptr;
+  ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, nullptr);
+  HTTP_Handler *handler = nullptr;
+  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
 
   return handler;
 }

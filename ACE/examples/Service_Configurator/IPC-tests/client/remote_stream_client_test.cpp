@@ -13,7 +13,7 @@
 #include "ace/Truncate.h"
 
 // Name of the program.
-static const ACE_TCHAR *program_name;
+static const ACE_TCHAR *program_name = nullptr;
 
 // Port number to use.
 static u_short port_number = ACE_DEFAULT_SERVER_PORT;

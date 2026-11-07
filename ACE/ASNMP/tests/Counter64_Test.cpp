@@ -33,6 +33,8 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
+
 #include "ace/OS_main.h"
 #include "asnmp/ctr64.h"
 #include "test_config.h"
@@ -70,11 +72,11 @@ DAMAGES.
 static void TestCounter64()
 {
 #if !defined (ACE_WIN32)
-  static unsigned long ul = ULONG_MAX;
-  LLONG ll =  (LLONG) 0x7fffffffffffffffLL;
-  LLONG mll =  (LLONG) ((-ll) - 1);
-  ULLONG ull =  (ULLONG) 0xffffffffffffffffULL;
-  long double ld = (LLONG) ll;
+  constexpr unsigned long ul = ULONG_MAX;
+  constexpr LLONG ll = static_cast<LLONG> (0x7fffffffffffffffLL);
+  constexpr LLONG mll = (-ll) - 1;
+  constexpr ULLONG ull = static_cast<ULLONG> (0xffffffffffffffffULL);
+  constexpr long double ld = static_cast<long double> (ll);
 
   cerr << "max unsigned long long is " << ull << endl;
   cerr << "max long long is " << ll << endl;
@@ -89,7 +91,8 @@ static void TestCounter64()
 
   Counter64  c3(ul);
   ACE_ASSERT(c3.valid() == 1);
-  ACE_ASSERT(c3.low() == ul);
+  ACE_ASSERT(c3.high() == static_cast<unsigned long> (static_cast<ACE_UINT64> (ul) >> 32));
+  ACE_ASSERT(c3.low() == static_cast<unsigned long> (static_cast<ACE_UINT64> (ul) & 0xffffffffULL));
 
   Counter64  c4(c2);
   ACE_ASSERT(c4.valid() == 1);
@@ -106,6 +109,8 @@ static void TestCounter64()
   Counter64 c7(ull);
   ACE_ASSERT(c7 == ull);
 
+  Counter64 low_word_max (static_cast<ACE_UINT64> (0xffffffffULL));
+  ACE_ASSERT(std::strcmp (low_word_max.to_string (), "4294967295") == 0);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%s]\n",
     c1.to_string()));

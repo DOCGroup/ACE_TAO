@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,18 +75,18 @@ ACE_INLINE void
 ACE_Active_Map_Manager_Key::decode (const void *data)
 {
   // Copy the information from the user buffer into the key.
-  ACE_OS::memcpy (&this->key_data_,
-                  data,
-                  sizeof this->key_data_);
+  std::memcpy (&this->key_data_,
+               data,
+               sizeof this->key_data_);
 }
 
 ACE_INLINE void
 ACE_Active_Map_Manager_Key::encode (void *data) const
 {
   // Copy the key data to the user buffer.
-  ACE_OS::memcpy (data,
-                  &this->key_data_,
-                  sizeof this->key_data_);
+  std::memcpy (data,
+               &this->key_data_,
+               sizeof this->key_data_);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

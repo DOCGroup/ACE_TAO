@@ -11,20 +11,24 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
   // = The skeleton methods
-  virtual CORBA::Short sleep_sec ();
-  virtual void sleep_sec (CORBA::Short sleep_sec);
-  virtual char * get_string (CORBA::Long);
+  CORBA::Short sleep_sec () override;
+  void sleep_sec (CORBA::Short sleep_sec) override;
+  char * get_string (CORBA::Long) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
-  CORBA::Short sleep_sec_;
+  CORBA::ORB_var orb_ {};
+  CORBA::Short sleep_sec_ {1};
 };
 
 #include /**/ "ace/post.h"

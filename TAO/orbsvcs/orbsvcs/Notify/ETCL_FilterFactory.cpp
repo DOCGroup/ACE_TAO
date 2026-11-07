@@ -4,6 +4,9 @@
 #include "orbsvcs/Notify/Properties.h"
 #include "tao/debug.h"
 
+#include <cstring>
+#include <cstdlib>
+
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
@@ -20,12 +23,12 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mtx_);
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  for (FILTERMAP::ENTRY *entry = nullptr;
+  for (FILTERMAP::ENTRY *entry {};
     iterator.next (entry) != 0;
     iterator.advance ())
   {
     delete entry->int_id_;
-    entry->int_id_ = 0;
+    entry->int_id_ = nullptr;
   }
 
   this->filters_.unbind_all ();
@@ -79,13 +82,13 @@ CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
 {
   // @@: change to "ExTCL" later.
-  if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
-      ACE_OS::strcmp (constraint_grammar, "ETCL") != 0 &&
-      ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
+  if (std::strcmp (constraint_grammar, "TCL") != 0 &&
+      std::strcmp (constraint_grammar, "ETCL") != 0 &&
+      std::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
     throw CosNotifyFilter::InvalidGrammar ();
 
   TAO_Notify_Object::ID id = filter_ids_.id ();
-  TAO_Notify_ETCL_Filter* filter = nullptr;
+  TAO_Notify_ETCL_Filter* filter {};
   return this->create_filter (constraint_grammar, id, filter);
 }
 
@@ -97,7 +100,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
   TAO_Notify_ETCL_Filter*& filter)
 {
   // Create the RefCounted servant.
-  filter = 0;
+  filter = nullptr;
 
   ACE_NEW_THROW_EX (filter,
                     TAO_Notify_ETCL_Filter (this->filter_poa_.in (),
@@ -110,7 +113,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
     if (filters_.bind (id, filter) == -1)
     {
       throw CORBA::INTERNAL ();
-      return 0;
+      return nullptr;
     }
   }
 
@@ -128,7 +131,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
       catch (const CORBA::Exception& )
         {
           throw CORBA::INTERNAL ();
-          return 0;
+          return nullptr;
         }
     }
   CORBA::Object_var obj =
@@ -156,8 +159,8 @@ TAO_Notify_ETCL_FilterFactory::remove_filter (
   FILTERMAP::ITERATOR iterator (this->filters_);
 
   bool found = false;
-  TAO_Notify_ETCL_Filter* filter_servant = nullptr;
-  FILTERMAP::ENTRY *entry = nullptr;
+  TAO_Notify_ETCL_Filter* filter_servant {};
+  FILTERMAP::ENTRY *entry {};
   while ( !found && iterator.next (entry) != 0 ) {
     if (svt == entry->int_id_) {
       filter_servant = entry->int_id_;
@@ -182,7 +185,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 void
-TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& saver)
+TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver &saver)
 {
   bool changed = true;
   TAO_Notify::NVPList attrs; // ECF has no attributes
@@ -195,7 +198,7 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& save
     int index = 0;
     FILTERMAP::ITERATOR iterator (this->filters_);
 
-    for (FILTERMAP::ENTRY *entry = nullptr;
+    for (FILTERMAP::ENTRY *entry {};
       iterator.next (entry) != 0;
       iterator.advance (), ++index)
     {
@@ -208,18 +211,18 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& save
 
 
 TAO_Notify::Topology_Object*
-TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
-  CORBA::Long id, const TAO_Notify::NVPList& attrs)
+TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
+  CORBA::Long id, TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (id);
 
   TAO_Notify::Topology_Object* result = this;
   if (type == "filter")
   {
-    const char* value = nullptr;
+    const char* value {};
     if (attrs.find ("FilterId", value))
     {
-      TAO_Notify_Object::ID const id = ACE_OS::atoi (value);
+      TAO_Notify_Object::ID const id = std::atoi (value);
       if (DEBUG_LEVEL)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d\n"),
@@ -228,7 +231,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
 
       filter_ids_.set_last_used (id);
 
-      TAO_Notify_ETCL_Filter* filter = nullptr;
+      TAO_Notify_ETCL_Filter* filter {};
       this->create_filter (0, id, filter);
       filter->load_attrs (attrs);
 
@@ -255,7 +258,7 @@ TAO_Notify_ETCL_FilterFactory::get_filter_id (CosNotifyFilter::Filter_ptr filter
 
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_ETCL_FilterFactory::get_filter (const TAO_Notify_Object::ID& id)
+TAO_Notify_ETCL_FilterFactory::get_filter (TAO_Notify_Object::ID const &id)
 {
   return this->find_filter(id);
 }
@@ -281,7 +284,7 @@ TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
                     this->mtx_,
                     CosNotifyFilter::Filter::_nil ());
 
-  TAO_Notify_ETCL_Filter* filter = nullptr;
+  TAO_Notify_ETCL_Filter* filter {};
   if (filters_.find (id, filter) == -1)
     return CosNotifyFilter::Filter::_nil ();
   else
@@ -306,7 +309,7 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
 
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  for (FILTERMAP::ENTRY *entry = nullptr;
+  for (FILTERMAP::ENTRY *entry {};
     iterator.next (entry) != 0;
     iterator.advance ())
   {

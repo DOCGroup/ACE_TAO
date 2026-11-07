@@ -29,7 +29,7 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
   if (node->cli_stub_any_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators
@@ -56,7 +56,7 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = nullptr; // base type
+  be_type *bt {}; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -129,7 +129,7 @@ be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_any_op_cs::visit_array (be_array *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     bt = this->ctx_->alias ();
@@ -157,7 +157,7 @@ be_visitor_typedef_any_op_cs::visit_array (be_array *node)
 int
 be_visitor_typedef_any_op_cs::visit_enum (be_enum *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     bt = this->ctx_->alias ();
@@ -184,7 +184,7 @@ be_visitor_typedef_any_op_cs::visit_enum (be_enum *node)
 int
 be_visitor_typedef_any_op_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     bt = this->ctx_->alias ();
@@ -211,7 +211,7 @@ be_visitor_typedef_any_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_any_op_cs::visit_structure (be_structure *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     bt = this->ctx_->alias ();
@@ -238,7 +238,7 @@ be_visitor_typedef_any_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_typedef_any_op_cs::visit_union (be_union *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     bt = this->ctx_->alias ();

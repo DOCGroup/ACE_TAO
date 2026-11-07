@@ -7,16 +7,16 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
-const ACE_TCHAR *ior = 0;
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -35,52 +35,51 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
-
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       ACE_NEW_RETURN (temp_initializer,
                       Client_ORBInitializer,
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      // The var takes ownership of the ORB initializer's initial reference.
+      PortableInterceptor::ORBInitializer_var const orb_initializer (temp_initializer);
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       ACE_Argv_Type_Converter narrow (argc, argv);
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (narrow.get_argc (), narrow.get_ASCII_argv (), "ClientORB");
+      CORBA::ORB_var const orb {
+        CORBA::ORB_init (narrow.get_argc (), narrow.get_ASCII_argv (), "ClientORB")};
 
       ACE_Argv_Type_Converter wide (narrow.get_argc (), narrow.get_ASCII_argv ());
-      if (::parse_args (wide.get_argc (), wide.get_TCHAR_argv ()) != 0)
+      std::basic_string<ACE_TCHAR> ior {};
+      if (::parse_args (wide.get_argc (), wide.get_TCHAR_argv (), ior) != 0)
         return -1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+      CORBA::Object_var const object =
+        orb->string_to_object (ior.c_str ());
 
-      hello::GoodDay_var server =
+      hello::GoodDay_var const server =
         hello::GoodDay::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Object reference <%s> is nil\n"),
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
-      for (int i = 1; i <= 3; ++i)
+      constexpr int request_count = 3;
+      for (int i {1}; i <= request_count; ++i)
         {
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("CLIENT: Issuing request %d.\n"),
                       i));
 
-          CORBA::Short number = server->number ();
+          CORBA::Short const number = server->number ();
 
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("CLIENT: Request %d returns %d.\n"),
@@ -92,11 +91,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
     }
 
-  return status;
+  return 0;
 }

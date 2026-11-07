@@ -15,84 +15,67 @@
 
 #include "ace/Reactor.h"
 #include "asnmp/transaction.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-// pre: pdu, target report  valid() == 1
-// post: pdu sent out over the wire
-inline void reset_receive_buffer(iovec& io)
-{
-  io.iov_base = 0;
-  io.iov_len = 0;
-}
-
-transaction::transaction(const Pdu& pdu, const UdpTarget& target,
-                         ACE_SOCK_Dgram& io):
-                         result_(0),
-                         wp_(pdu,target), params_(target), session_(io)
+transaction::transaction (Pdu const &pdu, UdpTarget const &target,
+                          ACE_SOCK_Dgram &io)
+  : wp_ (pdu, target), params_ (target), session_ (io)
 {
   // last step, convert address (get ride of this once we have merged address
   UdpAddress udp;
-  target.get_address(udp);
+  target.get_address (udp);
   // via string conversion "dotted-quad:port"
-  ACE_INET_Addr tmp(udp);
+  ACE_INET_Addr tmp (udp);
   addr_ = tmp;
-  reset_receive_buffer(receive_iovec_);
 }
 
-transaction::~transaction()
+transaction::~transaction ()
 {
-  ACE_Reactor::instance()->remove_handler(this, READ_MASK | DONT_CALL);
-  ACE_Reactor::instance()->cancel_timer(this);
-
-  delete [] (char *) receive_iovec_.iov_base;
+  ACE_Reactor::instance ()->remove_handler (this, READ_MASK | DONT_CALL);
+  ACE_Reactor::instance ()->cancel_timer (this);
 }
 
 // implement state machine, send, wait (timeout/results) return
-int transaction::run()
+int transaction::run ()
 {
-  int rc, done = 0;
-  int retry_counter = 0;
-  ACE_Time_Value to(params_.get_timeout(), 0); // seconds
-  ACE_Reactor *reactor = ACE_Reactor::instance ();
+  int retry_counter {};
+  ACE_Time_Value to (params_.get_timeout (), 0); // seconds
+  ACE_Reactor * const reactor = ACE_Reactor::instance ();
 
   // 1. register io port for read access
-  if (reactor->register_handler(session_.get_handle(), this,
-                                ACE_Event_Handler::READ_MASK) == -1)
+  if (reactor->register_handler (session_.get_handle (), this,
+                                 ACE_Event_Handler::READ_MASK) == -1)
     return SNMP_CLASS_INTERNAL_ERROR;
 
   // register a time handler and a socket with this
 
-  while (!done) {
-    if ((rc = this->send()) < 0)      // send pkt to agent
-        return rc;
-    else {
-      if (retry_counter++ > params_.get_retry())
+  for (;;)
+    {
+      int const send_result = this->send ();
+      if (send_result < 0) // send pkt to agent
+        return send_result;
+      if (retry_counter++ > params_.get_retry ())
         return SNMP_CLASS_TIMEOUT;
-    }
 
-    // 2. wait for events (timeout, returned msg)
-    if (( rc = reactor->handle_events (to)) == 1) // one handler registered
-      return 0;
-    else {
-      if (rc == 0) {
-         to.set(params_.get_timeout(), 0);
-      }
+      // 2. wait for events (timeout, returned msg)
+      int const rc = reactor->handle_events (to);
+      if (rc == 1) // one handler registered
+        return 0;
+      if (rc == 0)
+        to.set (params_.get_timeout (), 0);
       else
         return SNMP_CLASS_INTERNAL_ERROR;
     }
-   }
-  return SNMP_CLASS_INTERNAL_ERROR;
 }
 
 // implement state machine, send, wait (timeout/results) return
-int transaction::run(transaction_result * r)
+int transaction::run (transaction_result *r)
 {
     result_ = r;
-    int rc;
 
     // 1. register io port for read access
-    ACE_Reactor * reactor = ACE_Reactor::instance();
-    if (reactor->register_handler(session_.get_handle(),
+    ACE_Reactor * const reactor = ACE_Reactor::instance ();
+    if (reactor->register_handler (session_.get_handle (),
                                   this,
                                   READ_MASK) == -1)
         return SNMP_CLASS_INTERNAL_ERROR;
@@ -100,11 +83,12 @@ int transaction::run(transaction_result * r)
     retry_counter_ = 0;
 
     // register a time handler and a socket with this
-    ACE_Time_Value to (params_.get_timeout());
-    if (reactor->schedule_timer(this, 0, to, to) == -1)
+    ACE_Time_Value to (params_.get_timeout ());
+    if (reactor->schedule_timer (this, nullptr, to, to) == -1)
         return SNMP_CLASS_INTERNAL_ERROR;
 
-    if ((rc = this->send()) < 0)      // send pkt to agent
+    int const rc = this->send ();
+    if (rc < 0) // send pkt to agent
         return rc;
     return 0;
 }
@@ -112,45 +96,45 @@ int transaction::run(transaction_result * r)
 // got back response from SNMPv1 agent - process it
 int transaction::handle_input (ACE_HANDLE)
 {
-  // OS allocates iovec_.iov_base ptr and len
-  delete [] (char*) receive_iovec_.iov_base;
-  reset_receive_buffer(receive_iovec_);
-  int rc = session_.recv(&receive_iovec_, receive_addr_, 0);
+  receive_buffer_.reset ();
+  receive_iovec_ = {};
+  int const rc = session_.recv (&receive_iovec_, receive_addr_, 0);
+  receive_buffer_.reset (static_cast<char *> (receive_iovec_.iov_base));
   if (rc == -1)
     {
-      delete [] (char*) receive_iovec_.iov_base;
-      reset_receive_buffer(receive_iovec_);
-      if (result_)
-        result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
+      receive_buffer_.reset ();
+      receive_iovec_ = {};
+      if (this->result_ != nullptr)
+        this->result_->result (this, SNMP_CLASS_RESOURCE_UNAVAIL);
       return SNMP_CLASS_RESOURCE_UNAVAIL;
     }
-  if (result_)
-    result_->result(this, rc);
+  if (this->result_ != nullptr)
+    this->result_->result (this, rc);
 
   return 0;
 }
 
-int transaction::handle_timeout(const ACE_Time_Value &,
-                                const void *)
+int transaction::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
-    if (this->send() < 0)      // send pkt to agent
-        result_->result(this, 0);
+    if (this->send () < 0) // send pkt to agent
+        result_->result (this, 0);
     else
         if (retry_counter_++ > params_.get_retry())
-            result_->result(this, SNMP_CLASS_TIMEOUT);
+            result_->result (this, SNMP_CLASS_TIMEOUT);
 
     return 0;
 }
 
 
-const ACE_INET_Addr& transaction::get_from_addr() const
+ACE_INET_Addr const &transaction::get_from_addr () const
 {
   return receive_addr_;
 }
 
 
 // return pdu to caller
-int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
+int transaction::result (Pdu &pdu, char *comm_str, ACE_INET_Addr *from)
 {
   // TODO: check to see the sender matches the receiver address..
 
@@ -167,21 +151,20 @@ int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
 
  // return comm str and from address of incoming pdu if requested
  int rc = tmp.get_pdu(pdu, ver);
- if (comm_str)
-   ACE_OS::strcpy(comm_str, (char *)tmp.get_community());
- if (from)
+ if (comm_str != nullptr)
+   std::strcpy (comm_str, reinterpret_cast<char const *> (tmp.get_community ()));
+ if (from != nullptr)
   *from = receive_addr_;
  return rc;
 }
 
-transaction::transaction(ACE_SOCK_Dgram& io)
-: result_(0), session_(io)
+transaction::transaction (ACE_SOCK_Dgram &io)
+  : session_(io)
 {
-  reset_receive_buffer(receive_iovec_);
 }
 
 
-int transaction::send()
+int transaction::send ()
 {
   iovec io = wp_.get_buffer();
   if (io.iov_len == 0) {

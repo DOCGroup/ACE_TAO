@@ -34,10 +34,10 @@ namespace TAO
    * templated methods.
    */
   template <typename TYPE>
-  int find (const PG_Property_Set & decoder, const ACE_CString & key, TYPE & value)
+  int find (PG_Property_Set const & decoder, ACE_CString const & key, TYPE & value)
   {
     int result = 0;
-    const PortableGroup::Value * any {};
+    PortableGroup::Value const * any {};
     if (decoder.find (key, any))
     {
       result = ((*any) >>= value);

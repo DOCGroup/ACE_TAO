@@ -198,7 +198,7 @@ namespace TAO
     RequestProcessingStrategyServantActivator::incarnate_servant (
       const PortableServer::ObjectId& object_id)
     {
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);

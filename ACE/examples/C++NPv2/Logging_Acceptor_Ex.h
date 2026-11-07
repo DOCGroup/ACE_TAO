@@ -17,11 +17,11 @@ public:
   using PEER_ADDR = ACE_INET_Addr;
 
   // Simple constructor to pass ACE_Reactor to base class.
-  Logging_Acceptor_Ex (ACE_Reactor *r = ACE_Reactor::instance ())
+  explicit Logging_Acceptor_Ex (ACE_Reactor *r = ACE_Reactor::instance ())
     : Logging_Acceptor (r) {}
 
-  int handle_input (ACE_HANDLE) {
-    Logging_Event_Handler_Ex *peer_handler = 0;
+  int handle_input (ACE_HANDLE) override {
+    Logging_Event_Handler_Ex *peer_handler = nullptr;
     ACE_NEW_RETURN (peer_handler,
                     Logging_Event_Handler_Ex (reactor ()),
                     -1);

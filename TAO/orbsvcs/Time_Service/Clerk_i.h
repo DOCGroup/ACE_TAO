@@ -14,10 +14,14 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
+
+#include <memory>
+#include <vector>
 
 /**
  * @class Clerk_i
@@ -37,10 +41,10 @@ public:
   };
 
   /// Constructor.
-  Clerk_i ();
+  Clerk_i () = default;
 
   /// Destructor.
-  ~Clerk_i ();
+  ~Clerk_i () = default;
 
   Clerk_i (Clerk_i const &) = delete;
   Clerk_i (Clerk_i &&) = delete;
@@ -48,7 +52,7 @@ public:
   Clerk_i &operator= (Clerk_i &&) = delete;
 
   /// Set of available Time servers.
-  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
+  using IORS = std::vector<CosTime::TimeService_var>;
 
   /// Initialize the Clerk state - parsing arguments and waiting.
   int init (int argc,
@@ -74,7 +78,8 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the Clerk object is stored.
-  FILE *ior_output_file_ {};
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// Initialises the name client and registers the <TimeService> Clerk
   /// object with it.
@@ -130,7 +135,7 @@ private:
   // Helper class for using the IR.
 
   /// The unbounded set of server IORS.
-  IORS server_ {Clerk_i::DEFAULT_SERVER_COUNT};
+  IORS server_ {};
 
   /// Read IORs from a file.
   bool ior_file_provided_ {};

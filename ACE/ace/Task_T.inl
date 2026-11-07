@@ -38,7 +38,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush (u_long f)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush");
   if (ACE_BIT_ENABLED (f, ACE_Task_Flags::ACE_FLUSHALL))
-    return this->msg_queue_ != 0 && this->msg_queue_->close ();
+    return this->msg_queue_ != nullptr && this->msg_queue_->close ();
   else
     return -1;   // Note, need to be more careful about what we free...
 }
@@ -66,7 +66,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Time_Value_T<TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::gettimeofday () const
 {
-  if (this->msg_queue_ != 0)
+  if (this->msg_queue_ != nullptr)
     return this->msg_queue_->gettimeofday ();
 
   return ACE_Time_Value_T<TIME_POLICY> (ACE_Time_Value::zero);
@@ -76,7 +76,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 void
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
 {
-  if (this->msg_queue_ != 0)
+  if (this->msg_queue_ != nullptr)
     this->msg_queue_->set_time_policy (rhs);
 }
 
@@ -107,7 +107,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::put_next (ACE_Message_Block *msg, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::put_next");
-  return this->next_ == 0 ? -1 : this->next_->put (msg, tv);
+  return this->next_ == nullptr ? -1 : this->next_->put (msg, tv);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -38,16 +38,16 @@ class ACEXML_DefaultHandler;
 class XML_Backing_Store : public Locator_Repository
 {
 public:
-  typedef std::pair<ACE_CString, ACE_CString> NameValue;
-  typedef std::vector<NameValue> NameValues;
+  using NameValue = std::pair<ACE_CString, ACE_CString>;
+  using NameValues = std::vector<NameValue>;
   XML_Backing_Store (const Options& opts,
                      CORBA::ORB_ptr orb,
                      bool suppress_erase = false);
 
-  virtual ~XML_Backing_Store ();
+  ~XML_Backing_Store () override;
 
   /// indicate the XML filename as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode () const;
+  const ACE_TCHAR* repo_mode () const override;
 
   /// create the Server_Info server object
   /// @param info the source Server_Info data
@@ -72,16 +72,16 @@ public:
 protected:
   /// perform XML backing store specific initialization
   /// (loads servers and activators from the backing store)
-  virtual int init_repo (PortableServer::POA_ptr imr_poa);
+  int init_repo (PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update
-  virtual int persistent_update (const Server_Info_Ptr& info, bool add);
+  int persistent_update (const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update
-  virtual int persistent_update (const Activator_Info_Ptr& info, bool add);
+  int persistent_update (const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  virtual int persistent_remove (const ACE_CString& name, bool activator);
+  int persistent_remove (const ACE_CString& name, bool activator) override;
 
   /// load the contents of a file into the repo using a Locator_XMLHandler
   /// @param filename the filename to read the contents from

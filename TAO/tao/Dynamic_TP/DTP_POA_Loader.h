@@ -50,8 +50,8 @@ private:
   int load_poa_map (ACE_TCHAR *map_str,
                     TAO_CSD_Strategy_Repository * reg);
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_POA_Loader)

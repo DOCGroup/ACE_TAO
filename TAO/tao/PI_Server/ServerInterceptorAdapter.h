@@ -152,7 +152,7 @@ namespace TAO
 
     void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
     void destroy_interceptors () override;
 

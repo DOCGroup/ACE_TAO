@@ -26,26 +26,26 @@ class Monitor_Impl
 {
 public:
   /// Constructor
-  Monitor_Impl (CORBA::ORB_ptr orb);
+  explicit Monitor_Impl (CORBA::ORB_ptr orb);
 
-  ::Monitor::NameList * get_statistic_names (const char * filter) override;
+  ::Monitor::NameList * get_statistic_names (char const *filter) override;
 
   ::Monitor::DataList * get_statistics (
-      const ::Monitor::NameList & names) override;
+      ::Monitor::NameList const &names) override;
 
   ::Monitor::DataList * get_and_clear_statistics (
-      const ::Monitor::NameList & names) override;
+      ::Monitor::NameList const &names) override;
 
   ::Monitor::NameList * clear_statistics (
-    const ::Monitor::NameList & names) override;
+    ::Monitor::NameList const &names) override;
 
   ::Monitor::ConstraintStructList * register_constraint (
-      const ::Monitor::NameList & names,
-      const char * cs,
+      ::Monitor::NameList const &names,
+      char const *cs,
       ::Monitor::Subscriber_ptr sub) override;
 
   void unregister_constraints (
-      const ::Monitor::ConstraintStructList & constraint) override;
+      ::Monitor::ConstraintStructList const &constraint) override;
 
 private:
   Monitor_Impl (Monitor_Impl const &) = delete;

@@ -9,7 +9,7 @@
 #include "Server_Request_Interceptor.h"
 #include "Server_ORBInitializer.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 int nthreads = 1;
 int use_collocated_call = 1;
 
@@ -17,7 +17,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:o:n:c:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -53,8 +53,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr);
-  virtual int svc ();
+  explicit Worker (CORBA::ORB_ptr);
+  int svc () override;
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
 private:
   // The ORB
@@ -77,7 +82,7 @@ Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server: exception raised");
     }
@@ -96,7 +101,7 @@ server_main (int argc,
 
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!
@@ -149,10 +154,10 @@ server_main (int argc,
         orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Server (%P|%t) Cannot write file %s "
                                "IOR: %C - %m",
@@ -194,7 +199,7 @@ server_main (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Server (%P|%t) ERROR: "));
 

@@ -37,7 +37,7 @@ namespace TAO
   class TAO_TkResource_Export TkResource_Factory : public GUIResource_Factory
   {
   public:
-    TkResource_Factory ();
+    TkResource_Factory () = default;
 
   protected:
     /// Create or obtain current reactor implementation

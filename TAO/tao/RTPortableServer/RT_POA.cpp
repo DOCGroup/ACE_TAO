@@ -61,7 +61,7 @@ TAO_RT_POA::new_POA (const String &name,
                      TAO_ORB_Core &orb_core,
                      TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = nullptr;
+  TAO_RT_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
@@ -233,7 +233,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   if (this->thread_pool_ == nullptr ||
       !this->thread_pool_->with_lanes ())
     {
-      TAO_Acceptor_Registry *acceptor_registry = nullptr;
+      TAO_Acceptor_Registry *acceptor_registry {};
 
       if (this->thread_pool_ == nullptr)
         {
@@ -283,7 +283,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                                       lanes[i]->resources ().acceptor_registry ());
         }
 
-      ACE_ASSERT (0);
+      ACE_ASSERT (false);
     }
 
   // If this POA has the CLIENT_PROPAGATED policy, create the IOR with
@@ -349,8 +349,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
           result =
             filter->fill_profile (object_key,
                                   mprofile,
-                                  acceptor_registry.begin (),
-                                  acceptor_registry.end (),
+                                  acceptor_registry.acceptors (),
                                   lanes[i]->lane_priority ());
           if (result == -1)
             error = true;
@@ -425,7 +424,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
 CORBA::PolicyList *
 TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 {
-  CORBA::PolicyList *client_exposed_policies = nullptr;
+  CORBA::PolicyList *client_exposed_policies {};
   ACE_NEW_THROW_EX (client_exposed_policies,
                     CORBA::PolicyList (),
                     CORBA::NO_MEMORY (TAO::VMCID,

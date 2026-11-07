@@ -10,7 +10,7 @@ class ServerInterceptor
  public:
   ServerInterceptor ();
 
-  ~ServerInterceptor () override;
+  ~ServerInterceptor () override = default;
 
   ServerInterceptor (ServerInterceptor const &) = delete;
   ServerInterceptor (ServerInterceptor &&) = delete;

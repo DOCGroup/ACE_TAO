@@ -8,18 +8,23 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
-#include "ace/OS_NS_sys_time.h"
 
 #include "Notify_Test_Client.h"
+
+#include <array>
 
 // ******************************************************************
 // Data Section
 // ******************************************************************
 
-static Notify_Structured_Push_Consumer* consumers[1024] = {0};
-static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
-static unsigned int consumer_count = 1;
-static unsigned int expected = 1;
+constexpr unsigned int max_consumers { 1024 };
+
+struct Consumer_Options
+{
+  ACE_TCHAR const* ior { ACE_TEXT ("file://supplier.ior") };
+  unsigned int consumer_count { 1 };
+  unsigned int expected_events { 1 };
+};
 
 // ******************************************************************
 // Subroutine Section
@@ -28,7 +33,15 @@ static unsigned int expected = 1;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]) override;
+
+  Consumer_Options const& options () const
+  {
+    return this->options_;
+  }
+
+private:
+  Consumer_Options options_;
 };
 
 
@@ -36,32 +49,31 @@ int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:c:f"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
   {
     case 'k':
-      ior = get_opts.optarg;
+      this->options_.ior = get_opts.optarg;
       break;
 
     case 'c':
-      consumer_count = ACE_OS::atoi (get_opts.optarg);
+      this->options_.consumer_count = ACE_OS::atoi (get_opts.optarg);
+      if (this->options_.consumer_count > max_consumers)
+        this->options_.consumer_count = max_consumers;
       break;
 
     case 'e':
-      expected = ACE_OS::atoi (get_opts.optarg);
+      this->options_.expected_events = ACE_OS::atoi (get_opts.optarg);
       break;
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-        "usage:  %s "
-        "-k <ior> "
-        "-c <# of consumers> "
-        "-e <expected events> "
-        "\n",
-        argv [0]),
-        -1);
+                         ACE_TEXT ("usage: %s -k <ior> -c <# of consumers> "
+                                   "-e <expected events>\n"),
+                         argv [0]),
+                        -1);
   }
   // Indicates successful parsing of the command line
   return 0;
@@ -81,34 +93,32 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 }
 
 
+using Consumers = std::array<Notify_Structured_Push_Consumer*, max_consumers>;
+
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
-                  Notify_Test_Client* client)
+                  Notify_Test_Client& client,
+                  Consumer_Options const& options,
+                  Consumers& consumers)
 {
-  for (unsigned int i = 0; i < consumer_count; i++)
+  for (unsigned int i = 0; i < options.consumer_count; i++)
   {
-    // startup the consumers
-    char name[64] = "";
-    ACE_OS::sprintf (name, "consumer%u", i);
-    ACE_NEW_THROW_EX (consumers[ i ],
-      Notify_Structured_Push_Consumer (
-      name,
-      expected,
-      *client),
+    ACE_NEW_THROW_EX (consumers[i],
+      Notify_Structured_Push_Consumer (options.expected_events, client),
       CORBA::NO_MEMORY ());
 
-    consumers[ i ]->init (client->root_poa ());
+    consumers[i]->init (client.root_poa ());
 
-    consumers[ i ]->connect (admin);
+    consumers[i]->connect (admin);
   }
 }
 
 static void
-disconnect_consumers ()
+disconnect_consumers (Consumers const& consumers, unsigned int consumer_count)
 {
   for (unsigned int i = 0; i < consumer_count; i++)
   {
-    consumers[ i ]->disconnect ();
+    consumers[i]->disconnect ();
   }
 }
 
@@ -118,7 +128,8 @@ disconnect_consumers ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
+  Consumers consumers {};
   try
   {
     Consumer_Client client;
@@ -131,15 +142,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         client.create_event_channel ("MyEventChannel", 1);
 
       CORBA::Object_var object =
-        client.orb ()->string_to_object (ior);
+        client.orb ()->string_to_object (client.options ().ior);
 
       sig_var sig = sig::_narrow (object.in ());
 
       if (CORBA::is_nil (sig.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-          "Object reference <%s> is nil\n",
-          ior),
+          ACE_TEXT ("Object reference <%s> is nil\n"),
+          client.options ().ior),
           1);
       }
 
@@ -148,21 +159,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (!CORBA::is_nil (admin.in ()))
       {
-        create_consumers (admin.in (), &client);
+        create_consumers (admin.in (), client, client.options (), consumers);
 
         // Tell the supplier to go
         sig->go ();
 
-        client.ORB_run();
+        client.ORB_run ();
 
-        disconnect_consumers();
+        disconnect_consumers (consumers, client.options ().consumer_count);
 
         ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
         sig->done ();
       }
     }
   }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
   {
     e._tao_print_exception ("Error: ");
     status = 1;

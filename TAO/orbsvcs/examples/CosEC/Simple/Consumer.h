@@ -28,7 +28,11 @@ class Consumer : public POA_CosEventComm::PushConsumer
 {
 public:
   /// Constructor
-  Consumer ();
+  Consumer () = default;
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
@@ -36,16 +40,16 @@ public:
   // = The CosEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const CORBA::Any &event);
-  virtual void disconnect_push_consumer ();
+  void push (CORBA::Any const &event) override;
+  void disconnect_push_consumer () override;
 
 private:
   /// Keep track of the number of events received.
-  CORBA::ULong event_count_;
+  CORBA::ULong event_count_ {};
 
   /// The orb, just a pointer because the ORB does not outlive the
   /// run() method...
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_ptr orb_ {};
 };
 
 #endif /* CONSUMER_H */

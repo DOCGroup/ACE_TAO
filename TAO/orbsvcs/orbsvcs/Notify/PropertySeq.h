@@ -39,6 +39,11 @@ public:
   /// Destructor
   ~TAO_Notify_PropertySeq ();
 
+  TAO_Notify_PropertySeq (TAO_Notify_PropertySeq const &) = delete;
+  TAO_Notify_PropertySeq (TAO_Notify_PropertySeq &&) = delete;
+  TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq const &) = delete;
+  TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq &&) = delete;
+
   /// Return 0 on success, -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq);
 

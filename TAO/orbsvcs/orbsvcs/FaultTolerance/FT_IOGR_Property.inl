@@ -10,14 +10,10 @@ TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
 }
 
 ACE_INLINE
-TAO_FT_IOGR_Property::TAO_FT_IOGR_Property ()
-{
-}
+TAO_FT_IOGR_Property::TAO_FT_IOGR_Property () = default;
 
 ACE_INLINE
-TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property ()
-{
-}
+TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property () = default;
 
 ACE_INLINE CORBA::Boolean
 TAO_FT_IOGR_Property::reset_tagged_components (
@@ -26,7 +22,7 @@ TAO_FT_IOGR_Property::reset_tagged_components (
   this->ft_group_tagged_component_ =
     &ft_group;
 
-  return 1;
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

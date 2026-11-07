@@ -29,13 +29,18 @@ class Grid_Client_i
 {
 public:
   /// Constructor
-  Grid_Client_i ();
+  Grid_Client_i () = default;
 
   /// Destructor
-  ~Grid_Client_i ();
+  ~Grid_Client_i () = default;
+
+  Grid_Client_i (Grid_Client_i const &) = delete;
+  Grid_Client_i &operator= (Grid_Client_i const &) = delete;
+  Grid_Client_i (Grid_Client_i &&) = delete;
+  Grid_Client_i &operator= (Grid_Client_i &&) = delete;
 
   /// Execute the methods.
-  int run (const char *, int, ACE_TCHAR *[]);
+  int run (char const *, int, ACE_TCHAR *[]);
 
   /// Parses the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -45,19 +50,19 @@ private:
   Client<Grid_Factory> client_;
 
   /// Height of the grid.
-  CORBA::Short height_;
+  CORBA::Short height_ {};
 
   /// Width of the grid.
-  CORBA::Short width_;
+  CORBA::Short width_ {};
 
   /// Cell identifier in which a value meeds to be stored.
-  CORBA::Short setx_;
+  CORBA::Short setx_ {};
 
   /// Cell identifier in which a value meeds to be stored.
-  CORBA::Short sety_;
+  CORBA::Short sety_ {};
 
   /// The value that needs to be stored in the cell.
-  CORBA::Long value_;
+  CORBA::Long value_ {};
 };
 
 #endif /* TIME_CLIENT_I_H */

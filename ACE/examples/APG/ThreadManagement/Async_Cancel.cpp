@@ -9,6 +9,12 @@
 class CanceledTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  CanceledTask () = default;
+  CanceledTask (CanceledTask const &) = delete;
+  CanceledTask (CanceledTask &&) = delete;
+  CanceledTask &operator= (CanceledTask const &) = delete;
+  CanceledTask &operator= (CanceledTask &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
@@ -16,7 +22,7 @@ public:
     if (this->set_cancel_mode () < 0)
       return -1;
 
-    while (1)
+    while (true)
       {
         // Put this thread in a compute loop.. no
         // cancellation points are available.
@@ -25,7 +31,7 @@ public:
 
   int set_cancel_mode ()
   {
-    cancel_state new_state;
+    cancel_state new_state {};
 
     // Set the cancel state to asynchronous and enabled.
     new_state.cancelstate = PTHREAD_CANCEL_ENABLE;

@@ -59,7 +59,7 @@ public:
   using _ptr_type = RtecEventChannelAdmin::ProxyPushConsumer_ptr;
 
   /// constructor...
-  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
   virtual ~TAO_EC_ProxyPushConsumer ();

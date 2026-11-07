@@ -25,7 +25,7 @@ TAO_DTP_POA_Strategy::custom_synch_request(
   TAO::CSD::TP_Servant_State::HandleType servant_state =
     this->get_servant_state(op->servant());
 
-  TAO::CSD::TP_Custom_Synch_Request *req_ptr;
+  TAO::CSD::TP_Custom_Synch_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
                   TAO::CSD::TP_Custom_Synch_Request(op, servant_state.in ()),
                   REQUEST_REJECTED);
@@ -49,7 +49,7 @@ TAO_DTP_POA_Strategy::custom_asynch_request (
   TAO::CSD::TP_Servant_State::HandleType servant_state =
     this->get_servant_state (op->servant ());
 
-  TAO::CSD::TP_Custom_Asynch_Request *req_ptr;
+  TAO::CSD::TP_Custom_Asynch_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
                   TAO::CSD::TP_Custom_Asynch_Request (op, servant_state.in ()),
                   REQUEST_REJECTED);
@@ -120,9 +120,9 @@ TAO_DTP_POA_Strategy::poa_deactivated_event_i ()
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_DTP_POA_Strategy::dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant)
 {
   TAO::CSD::TP_Servant_State::HandleType servant_state =
@@ -141,7 +141,7 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
   //
   // TBD-CSD: Need to use a Cached Allocator to "create" the
   //          TP_Remote_Request objects.  For now, use the heap.
-  TAO::CSD::TP_Remote_Request *req_ptr;
+  TAO::CSD::TP_Remote_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
                   TAO::CSD::TP_Remote_Request (server_request,
                                                object_id,
@@ -169,9 +169,9 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant)
 {
   TAO::CSD::TP_Servant_State::HandleType servant_state =
@@ -190,7 +190,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
   // Create the request object using the appropriate concrete type.
   if (is_sync_with_server)
     {
-      TAO::CSD::TP_Collocated_Synch_With_Server_Request *req_ptr;
+      TAO::CSD::TP_Collocated_Synch_With_Server_Request *req_ptr {};
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Synch_With_Server_Request
                         (server_request,
@@ -209,7 +209,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else if (is_synchronous)
     {
-      TAO::CSD::TP_Collocated_Synch_Request *req_ptr;
+      TAO::CSD::TP_Collocated_Synch_Request *req_ptr {};
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Synch_Request (
                                    server_request,
@@ -228,7 +228,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else
     {
-      TAO::CSD::TP_Collocated_Asynch_Request *req_ptr;
+      TAO::CSD::TP_Collocated_Asynch_Request *req_ptr {};
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Asynch_Request (server_request,
                                                               object_id,
@@ -279,7 +279,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
 void
 TAO_DTP_POA_Strategy::servant_activated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   if (this->serialize_servants_)
     {
@@ -291,7 +291,7 @@ TAO_DTP_POA_Strategy::servant_activated_event_i
 void
 TAO_DTP_POA_Strategy::servant_deactivated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->dtp_task_.cancel_servant (servant);

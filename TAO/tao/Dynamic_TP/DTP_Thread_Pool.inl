@@ -30,7 +30,7 @@ TAO_DTP_Thread_Pool::use_timeouts () const
 }
 
 ACE_INLINE
-const ACE_Time_Value&
+ACE_Time_Value const &
 TAO_DTP_Thread_Pool::dynamic_thread_time () const
 {
   return this->definition_.timeout_;

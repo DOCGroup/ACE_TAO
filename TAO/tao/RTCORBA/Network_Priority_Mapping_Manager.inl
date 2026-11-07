@@ -22,7 +22,8 @@ TAO_Network_Priority_Mapping_Manager_var::ptr () const
 }
 
 ACE_INLINE
-TAO_Network_Priority_Mapping_Manager_var::TAO_Network_Priority_Mapping_Manager_var (const ::TAO_Network_Priority_Mapping_Manager_var &p) // copy constructor
+TAO_Network_Priority_Mapping_Manager_var::TAO_Network_Priority_Mapping_Manager_var (
+  TAO_Network_Priority_Mapping_Manager_var const &p) // copy constructor
   : TAO_Base_var (),
     ptr_ (TAO_Network_Priority_Mapping_Manager::_duplicate (p.ptr ()))
 {}
@@ -42,7 +43,7 @@ TAO_Network_Priority_Mapping_Manager_var::operator= (TAO_Network_Priority_Mappin
 }
 
 ACE_INLINE TAO_Network_Priority_Mapping_Manager_var &
-TAO_Network_Priority_Mapping_Manager_var::operator= (const ::TAO_Network_Priority_Mapping_Manager_var &p)
+TAO_Network_Priority_Mapping_Manager_var::operator= (TAO_Network_Priority_Mapping_Manager_var const &p)
 {
   if (this != &p)
   {
@@ -53,7 +54,7 @@ TAO_Network_Priority_Mapping_Manager_var::operator= (const ::TAO_Network_Priorit
 }
 
 ACE_INLINE
-TAO_Network_Priority_Mapping_Manager_var::operator const ::TAO_Network_Priority_Mapping_Manager_ptr &() const // cast
+TAO_Network_Priority_Mapping_Manager_var::operator ::TAO_Network_Priority_Mapping_Manager_ptr const &() const // cast
 {
   return this->ptr_;
 }
@@ -155,19 +156,20 @@ TAO_Network_Priority_Mapping_Manager_out::TAO_Network_Priority_Mapping_Manager_o
 }
 
 ACE_INLINE
-TAO_Network_Priority_Mapping_Manager_out::TAO_Network_Priority_Mapping_Manager_out (const ::TAO_Network_Priority_Mapping_Manager_out &p) // copy constructor
+TAO_Network_Priority_Mapping_Manager_out::TAO_Network_Priority_Mapping_Manager_out (
+  TAO_Network_Priority_Mapping_Manager_out const &p) // copy constructor
   : ptr_ (const_cast<TAO_Network_Priority_Mapping_Manager_out &> (p).ptr_)
 {}
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_out &
-TAO_Network_Priority_Mapping_Manager_out::operator= (const ::TAO_Network_Priority_Mapping_Manager_out &p)
+TAO_Network_Priority_Mapping_Manager_out::operator= (TAO_Network_Priority_Mapping_Manager_out const &p)
 {
   this->ptr_ = const_cast<TAO_Network_Priority_Mapping_Manager_out&> (p).ptr_;
   return *this;
 }
 
 ACE_INLINE TAO_Network_Priority_Mapping_Manager_out &
-TAO_Network_Priority_Mapping_Manager_out::operator= (const ::TAO_Network_Priority_Mapping_Manager_var &p)
+TAO_Network_Priority_Mapping_Manager_out::operator= (TAO_Network_Priority_Mapping_Manager_var const &p)
 {
   this->ptr_ = ::TAO_Network_Priority_Mapping_Manager::_duplicate (p.ptr ());
   return *this;

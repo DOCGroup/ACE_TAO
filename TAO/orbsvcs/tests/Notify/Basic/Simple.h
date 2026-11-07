@@ -17,6 +17,8 @@
 #include "Notify_PushConsumer.h"
 #include "Notify_PushSupplier.h"
 
+#include <atomic>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -30,10 +32,10 @@ class Event_AnyPushConsumer : public TAO_Notify_Tests_PushConsumer
 {
 public:
   /// Constructor.
-  Event_AnyPushConsumer (Simple_Test *test_client);
+  explicit Event_AnyPushConsumer (Simple_Test *test_client);
 
   // = PushSupplier methods
-  virtual void push (const CORBA::Any & data);
+  void push (CORBA::Any const &data) override;
 
 protected:
   Simple_Test * test_client_;
@@ -45,10 +47,10 @@ class Event_AnyPushSupplier : public TAO_Notify_Tests_PushSupplier
 {
 public:
   /// Constructor.
-  Event_AnyPushSupplier (Simple_Test * test_client);
+  explicit Event_AnyPushSupplier (Simple_Test *test_client);
 
   /// Destructor.
-  virtual ~Event_AnyPushSupplier ();
+  ~Event_AnyPushSupplier () override;
 
 protected:
   Simple_Test* test_client_;
@@ -61,14 +63,14 @@ class Simple_Test : public Notify_Test_Client
 public:
   // Initialization and termination code
   Simple_Test ();
-  virtual ~Simple_Test ();
+  ~Simple_Test () override;
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]) ;
+                  ACE_TCHAR *argv[]) override;
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Called when an event is received.
   void on_event_received ();
@@ -87,7 +89,7 @@ protected:
   void create_EC ();
 
   /// Number of events received so far.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   /// Number of events to send
   int event_count_;

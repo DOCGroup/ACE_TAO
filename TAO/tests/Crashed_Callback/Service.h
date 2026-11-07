@@ -4,6 +4,7 @@
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
+#include <cstddef>
 
 /// Implement the Test::Service interface
 class Service
@@ -11,7 +12,7 @@ class Service
 {
 public:
   /// Constructor
-  Service ();
+  Service () = default;
 
   /// Dump the results.
   /**
@@ -20,26 +21,31 @@ public:
   void dump_results ();
 
   // = The skeleton methods
-  virtual void run_test (Test::Crashed_Callback_ptr callback);
+  void run_test (Test::Crashed_Callback_ptr callback) override;
 
-  CORBA::ORB_var orb_;
+  Service (Service const&) = delete;
+  Service (Service&&) = delete;
+  Service& operator= (Service const&) = delete;
+  Service& operator= (Service&&) = delete;
+
+  CORBA::ORB_var orb_ {};
 
 private:
   /// Call the are_you_there callback multiple times.
   /**
    * @return Number of exceptions raised
    */
-  int call_are_you_there (Test::Crashed_Callback_ptr callback);
+  std::size_t call_are_you_there (Test::Crashed_Callback_ptr callback);
 
   /// Call the test_oneway method mutiple times.
   /**
    * @return Number of exceptions raised
    */
-  int call_test_oneway (Test::Crashed_Callback_ptr callback);
+  std::size_t call_test_oneway (Test::Crashed_Callback_ptr callback);
 
 private:
   /// Count the number of tests executed
-  int test_count_;
+  std::size_t test_count_ {};
 };
 
 #include /**/ "ace/post.h"

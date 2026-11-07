@@ -21,7 +21,6 @@ TAO::PG_Object_Group_Manipulator::PG_Object_Group_Manipulator ()
   , poa_ (PortableServer::POA::_nil ())
   , iorm_ ()
   , lock_ogid_ ()
-  , next_ogid_ (1)   // don't use ogid 0
 {
 }
 
@@ -36,11 +35,13 @@ void TAO::PG_Object_Group_Manipulator::allocate_ogid (PortableGroup::ObjectGroup
   this->next_ogid_ += 1;
 }
 
-PortableServer::ObjectId * TAO::PG_Object_Group_Manipulator::convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid) const
+PortableServer::ObjectId *
+TAO::PG_Object_Group_Manipulator::convert_ogid_to_oid (
+  PortableGroup::ObjectGroupId ogid) const
 {
   // 4294967295 -- Largest 32 bit unsigned integer
   char oid_str[11];
-  ACE_OS::snprintf (oid_str, sizeof(oid_str),
+  ACE_OS::snprintf (oid_str, sizeof (oid_str),
                     ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                     static_cast<ACE_UINT32> (ogid));
   oid_str[sizeof(oid_str) - 1] = '\0';
@@ -50,19 +51,19 @@ PortableServer::ObjectId * TAO::PG_Object_Group_Manipulator::convert_ogid_to_oid
 
 PortableGroup::ObjectGroup_ptr
 TAO::PG_Object_Group_Manipulator::create_object_group (
-  const char * type_id,
-  const char * domain_id,
+  char const * type_id,
+  char const * domain_id,
   PortableGroup::ObjectGroupId & group_id)
 {
-   allocate_ogid(group_id);
-   return this->create_object_group_using_id(type_id, domain_id, group_id);
+   this->allocate_ogid (group_id);
+   return this->create_object_group_using_id (type_id, domain_id, group_id);
 }
 
 PortableGroup::ObjectGroup_ptr
 TAO::PG_Object_Group_Manipulator::create_object_group_using_id(
-  const char * type_id,
-  const char * domain_id,
-  const PortableGroup::ObjectGroupId & group_id)
+  char const * type_id,
+  char const * domain_id,
+  PortableGroup::ObjectGroupId const & group_id)
 {
   PortableServer::ObjectId_var oid = convert_ogid_to_oid (group_id);
 
@@ -71,13 +72,13 @@ TAO::PG_Object_Group_Manipulator::create_object_group_using_id(
     this->poa_->create_reference_with_id (oid.in(),
                                           type_id);
 
-  PortableGroup::TagGroupTaggedComponent tag_component;
+  PortableGroup::TagGroupTaggedComponent tag_component {};
 
-  tag_component.component_version.major = (CORBA::Octet) 1;
-  tag_component.component_version.minor = (CORBA::Octet) 0;
+  tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
   tag_component.group_domain_id = domain_id;
   tag_component.object_group_id = group_id;
-  tag_component.object_group_ref_version = 0;
+  tag_component.object_group_ref_version = {};
 
   // Set the property
   TAO::PG_Utils::set_tagged_component (object_group,
@@ -98,7 +99,7 @@ TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb,
 
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM = this->orb_->resolve_initial_references (
-    TAO_OBJID_IORMANIPULATION, 0);
+    TAO_OBJID_IORMANIPULATION, nullptr);
 
   this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
     IORM.in ());
@@ -109,7 +110,7 @@ int TAO::PG_Object_Group_Manipulator::set_primary (
       PortableGroup::ObjectGroup_ptr group,
       CORBA::Object_ptr new_primary) const
 {
-  int sts = this->iorm_->is_primary_set (prop, group);
+  int const sts = this->iorm_->is_primary_set (prop, group);
   if (sts)
   {
     (void)this->iorm_->remove_primary_tag (prop, group);
@@ -131,7 +132,7 @@ PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group_Manipulator::remove_profiles
   return this->iorm_->remove_profiles(group, profile);
 }
 
-void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member)
+void dump_membership (char const * label, PortableGroup::ObjectGroup_ptr member)
 {
   ACE_UNUSED_ARG (label);
   ACE_UNUSED_ARG (member);

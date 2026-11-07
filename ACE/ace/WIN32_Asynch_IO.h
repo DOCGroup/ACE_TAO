@@ -73,7 +73,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -133,7 +133,7 @@ protected:
   size_t bytes_transferred_;
 
   /// Success indicator.
-  int success_;
+  bool success_;
 
   /// ACT associated with handle.
   const void *completion_key_;
@@ -230,7 +230,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -406,7 +406,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -570,7 +570,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -780,7 +780,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -992,7 +992,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1158,7 +1158,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * Returns the ACT associated with the handle when it was
@@ -1380,7 +1380,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1579,7 +1579,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1767,7 +1767,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was

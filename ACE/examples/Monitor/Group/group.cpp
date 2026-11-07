@@ -17,7 +17,13 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Monitor_Checker () = default;
+  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
@@ -104,7 +110,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
        !i.done ();
        i.advance ())
     {
-      ACE_CString *item = 0;
+      ACE_CString *item = nullptr;
       i.next (item);
 
       cout << item->c_str () << endl;
@@ -120,7 +126,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
-  char * str_array[5] = {0};
+  char * str_array[5] {};
 
   for (int i = 0; i < 10; ++i)
     {

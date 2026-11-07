@@ -147,12 +147,12 @@ ACE_OS::strsignal (int signum)
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)
-    ret_val = 0;
+    ret_val = nullptr;
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
   ret_val = ::strsignal (signum);
 
-  if (ret_val <= reinterpret_cast<char *> (0))
+  if (ret_val == nullptr)
     {
       ACE_OS::snprintf (signal_text, 128, "Unknown signal: %d", signum);
       ret_val = signal_text;

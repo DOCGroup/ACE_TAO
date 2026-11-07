@@ -41,7 +41,7 @@ namespace TAO
       public virtual ::CORBA::LocalObject
     {
     public:
-      RequestProcessingPolicy (::PortableServer::RequestProcessingPolicyValue value);
+      explicit RequestProcessingPolicy (::PortableServer::RequestProcessingPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

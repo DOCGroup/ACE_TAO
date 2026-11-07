@@ -41,7 +41,12 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   TAO_Notify_FilterAdmin ();
 
   /// Destructor
-  virtual ~TAO_Notify_FilterAdmin ();
+  ~TAO_Notify_FilterAdmin () override;
+
+  TAO_Notify_FilterAdmin (TAO_Notify_FilterAdmin const &) = delete;
+  TAO_Notify_FilterAdmin (TAO_Notify_FilterAdmin &&) = delete;
+  TAO_Notify_FilterAdmin &operator= (TAO_Notify_FilterAdmin const &) = delete;
+  TAO_Notify_FilterAdmin &operator= (TAO_Notify_FilterAdmin &&) = delete;
 
   // = match operation on all the filters
   /// See if any of the filters match.
@@ -64,9 +69,9 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  TAO_Notify::Topology_Object* load_child (ACE_CString const &type, CORBA::Long id,
+    TAO_Notify::NVPList const &attrs) override;
 
   void event_channel (TAO_Notify_EventChannel* ec);
 
@@ -75,7 +80,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
                                             CosNotifyFilter::Filter_var,
                                             ACE_SYNCH_NULL_MUTEX>;
 
-  virtual void release ();
+  void release () override;
 
   /// Mutex to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;

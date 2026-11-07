@@ -9,6 +9,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
+
 #if defined (ACE_WIN32)
 # include <conio.h>
 #elif defined (ACE_HAS_TERMIOS)
@@ -26,11 +29,11 @@
 
 // An SSL session id seed value. Needs not be too unique, just somewhat
 // different. See the OpenSSL manual
-static const unsigned char session_id_context_[] =
+static unsigned char const session_id_context_[] =
   "";
 
 // Protocol name prefix
-static const char * const the_prefix[] = {"iiop", "ssliop"};
+static char const * const the_prefix[] = {"iiop", "ssliop"};
 
 // An OS-dependent path separator character
 static ACE_TCHAR const TAO_PATH_SEPARATOR_STRING[] =
@@ -111,24 +114,24 @@ namespace TAO
 {
   namespace SSLIOP
   {
-    static const long ACCEPT_TIMEOUT = 10;  // Default accept timeout
+    constexpr long ACCEPT_TIMEOUT = 10;  // Default accept timeout
                                             // in seconds.
   }
 }
 
 ACE_CString TAO::SSLIOP::Protocol_Factory::pem_passwd_;
-const ACE_CString key_prompt("prompt:");
-const ACE_CString key_file("file:");
-const ACE_CString key_env("env:");
+ACE_CString const key_prompt("prompt:");
+ACE_CString const key_file("file:");
+ACE_CString const key_env("env:");
 
 int
 TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *the_passwd)
 {
-  const char *passwd_str = reinterpret_cast<const char *>(the_passwd);
+  char const *passwd_str = reinterpret_cast<char const *>(the_passwd);
   int len = 0;
   if (the_passwd != nullptr)
     {
-      len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (passwd_str));
+      len = ACE_Utils::truncate_cast<int> (std::strlen (passwd_str));
     }
   else
     {
@@ -140,7 +143,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
         {
           size_t ofs = key_prompt.length();
           // do prompt
-          const char *prompt = pem_passwd_.length() == ofs ?
+          char const *prompt = pem_passwd_.length() == ofs ?
             "Enter password" : pem_passwd_.c_str() + ofs;
           ACE_OS::printf ("%s: ",prompt);
           pem_passwd_.resize (size);
@@ -153,7 +156,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
       else if (pem_passwd_.find (key_file) == 0)
         {
           size_t ofs = key_file.length();
-          const char *fname = pem_passwd_.c_str() + ofs;
+          char const *fname = pem_passwd_.c_str() + ofs;
           // do file
           FILE* file = ACE_OS::fopen (fname,ACE_TEXT("r"));
 
@@ -191,7 +194,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
         {
           size_t ofs = key_env.length();
           // do env
-          const char *env = pem_passwd_.length() == ofs ?
+          char const *env = pem_passwd_.length() == ofs ?
             "TAO_PEM_PASSWORD" : pem_passwd_.c_str() + ofs;
           char *pwd = ACE_OS::getenv (env);
           if (pwd != nullptr)
@@ -225,7 +228,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
                                                 (void *) passwd_str);
     }
 
-  ACE_OS::strncpy (buf, pem_passwd_.c_str(), len);
+  std::strncpy (buf, pem_passwd_.c_str (), len);
   buf[len] = 0;
   return len;
 }
@@ -233,24 +236,19 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
 TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      qop_ (::Security::SecQOPIntegrityAndConfidentiality),
-     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT),
-     check_host_ (false)
-{
-}
-
-TAO::SSLIOP::Protocol_Factory::~Protocol_Factory ()
+     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT)
 {
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
+TAO::SSLIOP::Protocol_Factory::match_prefix (std::string const &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[0]) == 0)
      || (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[1]) == 0);
 }
 
-const char *
+char const *
 TAO::SSLIOP::Protocol_Factory::prefix () const
 {
    // Note: This method doesn't seem to be used anywhere. Moreover,
@@ -269,7 +267,7 @@ TAO::SSLIOP::Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = nullptr;
+  TAO_Acceptor *acceptor {};
 
   ACE_NEW_RETURN (acceptor,
                   TAO::SSLIOP::Acceptor (this->qop_,
@@ -286,8 +284,8 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 int
 TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
 {
-  char *lst = nullptr;
-  const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
+  char *lst {};
+  char const *type_name = ACE_OS::strtok_r (arg, ":", &lst);
   path = CORBA::string_dup (ACE_OS::strtok_r (nullptr, "", &lst));
 
   if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
@@ -308,7 +306,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   CORBA::String_var ec_name;
   CORBA::String_var ca_file;
   CORBA::String_var ca_dir;
-  ACE_TCHAR *rand_path = nullptr;
+  ACE_TCHAR *rand_path {};
 
   int certificate_type = -1;
   int private_key_type = -1;
@@ -554,7 +552,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           ++curarg;
           if (curarg < argc)
             {
-              ec_name = static_cast<const char *>(ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+              ec_name = static_cast<char const *>(ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
             }
         }
     }
@@ -569,8 +567,8 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   if (rand_path != nullptr)
   {
     short errors = 0;
-    ACE_TCHAR *file_name = nullptr;
-    const ACE_TCHAR *path = ACE_OS::strtok_r (rand_path,
+    ACE_TCHAR *file_name {};
+    ACE_TCHAR const *path = ACE_OS::strtok_r (rand_path,
                                               TAO_PATH_SEPARATOR_STRING,
                                               &file_name);
     while (path != nullptr)
@@ -652,7 +650,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if (ssl_ctx->dh_params (dhparams_path.in(),
                               dhparams_type) != 0)
         {
-          if (ACE_OS::strcmp (dhparams_path.in(), certificate_path.in()))
+          if (std::strcmp (dhparams_path.in (), certificate_path.in ()))
             {
               // We only want to fail catastrophically if the user specified
               // a dh parameter file and we were unable to actually find it
@@ -839,7 +837,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
       dll_initializer = tmp_dll;
       PortableInterceptor::register_orb_initializer (dll_initializer.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Unable to register SSLIOP ORB initializer.");
@@ -853,7 +851,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 TAO_Connector *
 TAO::SSLIOP::Protocol_Factory::make_connector ()
 {
-  TAO::SSLIOP::Connector *connector = nullptr;
+  TAO::SSLIOP::Connector *connector {};
 
   ACE_NEW_RETURN (connector,
                   TAO::SSLIOP::Connector (this->qop_, this->check_host_),

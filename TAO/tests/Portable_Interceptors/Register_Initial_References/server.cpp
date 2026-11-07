@@ -4,30 +4,31 @@
 
 int test_orb (CORBA::ORB_ptr orb)
 {
-  int errors = 0;
+  int errors {};
 
-  POA_TestModule::test* test = 0;
+  POA_TestModule::test *test {};
   ACE_NEW_RETURN (test,
                   test_i, 1);
+  // Transfer ownership of the servant to the CORBA var.
   PortableServer::ServantBase_var safe (test);
 
-  CORBA::Object_var object = test->_this ();
+  CORBA::Object_var const object (test->_this ());
 
   orb->register_initial_reference ("ORBMyService",
                                     object.in ());
 
-  bool invalid_name = false;
+  bool invalid_name {};
   try
     {
       // Registering with an empty string should give an exception
       orb->register_initial_reference ("",
                                        object.in ());
     }
-  catch (const CORBA::ORB::InvalidName&)
+  catch (CORBA::ORB::InvalidName const &)
     {
       invalid_name = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -38,18 +39,18 @@ int test_orb (CORBA::ORB_ptr orb)
                             "doesn't throw an exception\n"));
     }
 
-  bool duplicate_name = false;
+  bool duplicate_name {};
   try
     {
       // Registering with an duplicate string should give an exception
       orb->register_initial_reference ("ORBMyService",
                                         object.in ());
     }
-  catch (const CORBA::ORB::InvalidName&)
+  catch (CORBA::ORB::InvalidName const &)
     {
       duplicate_name = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -60,21 +61,21 @@ int test_orb (CORBA::ORB_ptr orb)
                             "doesn't throw the expected exception\n"));
     }
 
-  bool invalid_object = false;
+  bool invalid_object {};
   try
     {
       // Registering with a nil object
       orb->register_initial_reference ("ORBNilServer",
                                        CORBA::Object::_nil());
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (CORBA::BAD_PARAM const &ex)
     {
       if ((ex.minor() & 0xFFFU) == 27)
         {
           invalid_object = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -91,33 +92,31 @@ int test_orb (CORBA::ORB_ptr orb)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Server_ORBInitializer *initializer = 0;
-  int retval = 0;
+  Server_ORBInitializer *initializer {};
+  int retval {};
 
   ACE_NEW_RETURN (initializer,
                   Server_ORBInitializer,
                   -1);  // No exceptions yet!
 
-  PortableInterceptor::ORBInitializer_var initializer_var =
-    initializer;
+  // Transfer ownership of the initializer to the CORBA var.
+  PortableInterceptor::ORBInitializer_var const initializer_var (initializer);
 
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
 
       retval = test_orb (orb.in ());
 
       PortableInterceptor::register_orb_initializer (initializer_var.in ());
 
-      CORBA::ORB_var second_orb =
-        CORBA::ORB_init (argc, argv, "SecondORB");
+      CORBA::ORB_var const second_orb (CORBA::ORB_init (argc, argv, "SecondORB"));
 
       second_orb->destroy ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in server:");
       return 1;

@@ -34,15 +34,13 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Dynamic_Service.h"
 
+#include <string>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Default_Factory::~TAO_EC_Default_Factory ()
-{
-}
 
 int
 TAO_EC_Default_Factory::init_svcs ()
@@ -53,8 +51,8 @@ TAO_EC_Default_Factory::init_svcs ()
 }
 
 void
-TAO_EC_Default_Factory::unsupported_option_value (const ACE_TCHAR * option_name,
-                                                  const ACE_TCHAR * option_value)
+TAO_EC_Default_Factory::unsupported_option_value (ACE_TCHAR const *option_name,
+                                                  ACE_TCHAR const *option_value)
 {
   ORBSVCS_ERROR ((LM_ERROR,
               "EC_Default_Factory - "
@@ -77,7 +75,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
@@ -85,7 +83,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->dispatching_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("mt")) == 0)
@@ -102,12 +100,12 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           // Need to be in the form of <flags>:<priority>
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* s = arg_shifter.get_current ();
+              ACE_TCHAR const *s = arg_shifter.get_current ();
               // need to parse the flags...ugh
-              ACE_TCHAR* opt = ACE_OS::strdup (s);
+              std::basic_string<ACE_TCHAR> opt (s);
 
-              ACE_TCHAR* aux = nullptr;
-              ACE_TCHAR* flags = ACE_OS::strtok_r (opt, ACE_TEXT (":"), &aux);
+              ACE_TCHAR* aux {};
+              ACE_TCHAR* flags = ACE_OS::strtok_r (opt.data (), ACE_TEXT (":"), &aux);
 
               TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
               this->dispatching_threads_flags_ = tf.flags ();
@@ -124,7 +122,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                   // Should we set the default priority?
                   this->dispatching_threads_priority_ = tf.default_priority ();
                 }
-              ACE_OS::free (opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -135,7 +132,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -147,7 +144,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->filtering_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("basic")) == 0)
@@ -168,7 +165,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->supplier_filtering_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("per-supplier")) == 0)
@@ -185,7 +182,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->timeout_ = 0;
               else
@@ -200,7 +197,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->observer_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("basic")) == 0)
@@ -219,7 +216,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->scheduling_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("group")) == 0)
@@ -236,14 +233,14 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *current_arg = arg_shifter.get_current ();
-              ACE_TCHAR *opt = ACE_OS::strdup (current_arg);
+              ACE_TCHAR const *current_arg = arg_shifter.get_current ();
+              std::basic_string<ACE_TCHAR> opt (current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
 
               ACE_TCHAR* aux;
-              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
+              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
                    arg != nullptr;
                    arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
@@ -268,7 +265,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                                 "EC_Default_Factory - "
                                 "Unknown consumer collection modifier <%s>.\n", arg));
                 }
-              ACE_OS::free (opt);
               this->consumer_collection_ =
                  (synch_type << 8) |(collection_type << 4) | iteration_type;
               arg_shifter.consume_arg ();
@@ -281,14 +277,14 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* current_arg = arg_shifter.get_current();
-              ACE_TCHAR* opt = ACE_OS::strdup(current_arg);
+              ACE_TCHAR const *current_arg = arg_shifter.get_current();
+              std::basic_string<ACE_TCHAR> opt (current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
 
               ACE_TCHAR* aux;
-              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
+              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
                    arg != nullptr;
                    arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
@@ -313,7 +309,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                                 "EC_Default_Factory - "
                                 "Unknown supplier collection modifier <%s>.\n", arg));
                 }
-              ACE_OS::free(opt);
               this->supplier_collection_ =
                 (synch_type << 8) | (collection_type << 4) | iteration_type;
               arg_shifter.consume_arg ();
@@ -326,7 +321,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->consumer_lock_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("thread")) == 0)
@@ -345,7 +340,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->supplier_lock_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("thread")) == 0)
@@ -376,7 +371,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->consumer_control_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
@@ -393,7 +388,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->supplier_control_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
@@ -410,7 +405,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->consumer_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -422,7 +417,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->supplier_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -434,7 +429,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
@@ -447,7 +442,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->supplier_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
@@ -460,7 +455,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->consumer_validate_connection_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -471,7 +466,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->queue_full_service_object_name_.set(opt);
               arg_shifter.consume_arg ();
             }
@@ -506,10 +501,10 @@ TAO_EC_Default_Factory::fini ()
 // ****************************************************************
 
 TAO_EC_Queue_Full_Service_Object*
-TAO_EC_Default_Factory::find_service_object (const ACE_TCHAR* wanted,
-                                             const ACE_TCHAR* fallback)
+TAO_EC_Default_Factory::find_service_object (ACE_TCHAR const *wanted,
+                                             ACE_TCHAR const *fallback)
 {
-  TAO_EC_Queue_Full_Service_Object* so = nullptr;
+  TAO_EC_Queue_Full_Service_Object* so {};
   so = ACE_Dynamic_Service<TAO_EC_Queue_Full_Service_Object>::instance (wanted);
   if (so != nullptr)
     return so;
@@ -647,7 +642,7 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
   if (this->timeout_ == 0)
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -676,14 +671,14 @@ TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
   else if (this->observer_ == 1)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock = nullptr;
+      ACE_Lock* lock {};
       ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
       return new TAO_EC_Basic_ObserverStrategy (ec, lock);
     }
   else if (this->observer_ == 2)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock = nullptr;
+      ACE_Lock* lock {};
       ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
       return new TAO_EC_Reactive_ObserverStrategy (ec, lock);
     }
@@ -953,7 +948,7 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->consumer_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -977,7 +972,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->supplier_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 

@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SHMIOP_Endpoint.inl"
@@ -113,7 +113,7 @@ int
 TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
   size_t actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
+    std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + std::strlen ("65536")         // max port
     + sizeof ('\0');
@@ -121,7 +121,7 @@ TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   if (length < actual_len)
     return -1;
 
-  ACE_OS::sprintf (buffer, "%s:%d",
+  std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
   return 0;
@@ -144,7 +144,7 @@ TAO_SHMIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_SHMIOP_Endpoint::duplicate ()
 {
-  TAO_SHMIOP_Endpoint *endpoint = nullptr;
+  TAO_SHMIOP_Endpoint *endpoint {};
   ACE_NEW_RETURN (endpoint,
                   TAO_SHMIOP_Endpoint (this->host_.in (),
                                        this->port_,
@@ -167,7 +167,7 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   return
     this->port_ == endpoint->port_
-    && ACE_OS::strcmp (this->host_.in (), endpoint->host_.in ()) == 0;
+    && std::strcmp (this->host_.in (), endpoint->host_.in ()) == 0;
 }
 
 CORBA::ULong

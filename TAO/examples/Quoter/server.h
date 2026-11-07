@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef QUOTER_SERVER_H
 #define QUOTER_SERVER_H
 
@@ -28,6 +27,8 @@
 #include "Quoter_i.h"
 #include "QuoterC.h"
 
+#include <memory>
+
 /**
  * @class Quoter_Server
  *
@@ -42,10 +43,15 @@ class Quoter_Server
 {
 public:
   /// Default constructor
-  Quoter_Server ();
+  Quoter_Server () = default;
 
   /// Destructor
   ~Quoter_Server ();
+
+  Quoter_Server (Quoter_Server const &) = delete;
+  Quoter_Server &operator= (Quoter_Server const &) = delete;
+  Quoter_Server (Quoter_Server &&) = delete;
+  Quoter_Server &operator= (Quoter_Server &&) = delete;
 
   /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc, ACE_TCHAR *argv[]);
@@ -54,6 +60,12 @@ public:
   int run ();
 
 private:
+  struct Options
+  {
+    int num_of_objects {1};
+    int debug_level {1};
+  };
+
   /// Parses the commandline arguments.
   int parse_args ();
 
@@ -61,26 +73,22 @@ private:
   /// name server.
   int init_naming_service ();
 
-  /// Number of quoter objects we export.
-  int num_of_objs_;
-
   /// Naming Service context
-  CosNaming::NamingContext_var namingContext_var_;
+  CosNaming::NamingContext_var namingContext_var_ {};
 
   /// Instantiate the Quoter Factory
-  Quoter_Factory_i  *quoter_Factory_i_ptr_;
+  std::unique_ptr<Quoter_Factory_i> quoter_Factory_i_ptr_;
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
-  /// commandline arguments.
-  ACE_TCHAR **argv_;
+  /// Pointer-array copy made after ORB_init removes its own options.
+  std::unique_ptr<ACE_TCHAR *[]> argv_;
 
-  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  Options options_ {};
 };
 
 #endif /* QUOTER_SERVER_H */

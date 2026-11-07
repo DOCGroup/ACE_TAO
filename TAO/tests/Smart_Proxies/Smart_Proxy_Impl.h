@@ -6,7 +6,7 @@ class Smart_Test_Factory : public virtual TAO_Test_Default_Proxy_Factory
 public:
   Smart_Test_Factory ();
 
-  virtual Test_ptr create_proxy (Test_ptr proxy);
+  Test_ptr create_proxy (Test_ptr proxy) override;
   // This method will create the smart_proxy.
 };
 
@@ -15,12 +15,12 @@ class Smart_Test_Proxy : public virtual TAO_Test_Smart_Proxy_Base
 public:
   Smart_Test_Proxy (Test_ptr proxy);
 
-  virtual bool can_convert_to_ior () const;
+  bool can_convert_to_ior () const override;
 
-  virtual char* convert_to_ior (bool use_omg_ior_format,
-                                const char* ior_prefix) const;
+  char *convert_to_ior (bool use_omg_ior_format,
+                        char const *ior_prefix) const override;
 
-  virtual CORBA::Short method (CORBA::Short boo);
+  CORBA::Short method (CORBA::Short boo) override;
   // "Smartify" the method call!
 
   static const ACE_CString& fake_ior ();

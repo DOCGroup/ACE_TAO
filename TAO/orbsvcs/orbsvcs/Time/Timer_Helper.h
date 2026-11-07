@@ -21,8 +21,8 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Event_Handler.h"
-#include "ace/Containers.h"
 #include "orbsvcs/Time/time_serv_export.h"
+#include <vector>
 
 #include "orbsvcs/TimeServiceS.h"
 
@@ -48,13 +48,13 @@ class TAO_Time_Serv_Export Timer_Helper : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Timer_Helper ();
+  Timer_Helper () = default;
 
   /// Destructor.
-  ~Timer_Helper () override;
+  ~Timer_Helper () override = default;
 
   /// Constructor that sets the clerk.
-  Timer_Helper (TAO_Time_Service_Clerk * clerk);
+  explicit Timer_Helper (TAO_Time_Service_Clerk * clerk);
 
   /// This method is called periodically by the Reactor to update the
   /// clerk's time.
@@ -68,10 +68,10 @@ protected:
   Timer_Helper &operator= (Timer_Helper &&) = delete;
 
   /// Clerk's instance that this class helps to update time.
-  TAO_Time_Service_Clerk *clerk_;
+  TAO_Time_Service_Clerk *clerk_ {};
 
-  /// The set of server IORs.
-  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
+  /// The server IORs.
+  using IORS = std::vector<CosTime::TimeService_var>;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -11,7 +11,8 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Process_Mutex.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -73,7 +74,7 @@ ACE_PI_Control_Block::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("Name Node:\n")));
   for (ACE_Name_Node *nextn = this->name_head_;
-       nextn != 0;
+       nextn != nullptr;
        nextn = nextn->next_)
     nextn->dump ();
 
@@ -82,7 +83,7 @@ ACE_PI_Control_Block::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMalloc Header:\n")));
   for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
-       nexth != 0 && nexth != &this->base_;
+       nexth != nullptr && nexth != &this->base_;
        nexth = nexth->next_block_)
     nexth->dump ();
 
@@ -107,15 +108,9 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
-  ACE_OS::strcpy (n, name);
+  std::strcpy (n, name);
   if (next != nullptr)
     next->prev_ = this;
-}
-
-ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
-{
-  ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
-  ACE_ASSERT (0); // not implemented!
 }
 
 const char *
@@ -127,14 +122,10 @@ ACE_PI_Control_Block::ACE_Name_Node::name () const
 void
 ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
 {
-  ACE_ASSERT (0); // not implemented yet.
+  ACE_ASSERT (false); // not implemented yet.
 }
 
-ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
-  : next_block_ (nullptr),
-    size_ (0)
-{
-}
+ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header () = default;
 
 void
 ACE_PI_Control_Block::ACE_Name_Node::dump () const

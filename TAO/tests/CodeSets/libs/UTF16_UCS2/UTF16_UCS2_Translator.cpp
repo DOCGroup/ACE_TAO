@@ -28,8 +28,8 @@
 #include "ace/Log_Msg.h"
 // ****************************************************************
 
-typedef ACE_CDR::UShort ACE_UTF16_T;
-static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
+using ACE_UTF16_T = ACE_CDR::UShort;
+size_t constexpr ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
 
 /////////////////////////////
 // UTF16_UCS2_Translator implementation
@@ -66,7 +66,7 @@ UTF16_UCS2_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
 
 #if defined (ACE_LITTLE_ENDIAN)
           ACE_CDR::Short ux;
-          ACE_CDR::swap_2 (reinterpret_cast <const char*> (&sx),
+          ACE_CDR::swap_2 (reinterpret_cast <char const *> (&sx),
                            reinterpret_cast <char *> (&ux));
           x = static_cast <ACE_CDR::WChar> (ux);
 #else
@@ -138,7 +138,7 @@ UTF16_UCS2_Translator::read_wstring (ACE_InputCDR &cdr,
       x[0] = '\x00';
       return 1;
     }
-  x = 0;
+  x = nullptr;
   return 0;
 }
 
@@ -150,7 +150,7 @@ UTF16_UCS2_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
 {
   int must_swap = 0;
   char* buf;
-  static const size_t align = ACE_CDR::SHORT_ALIGN;
+  size_t constexpr align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf) == 0)
     {
       ACE_UTF16_T *sb = reinterpret_cast <ACE_UTF16_T *> (buf);
@@ -241,10 +241,10 @@ UTF16_UCS2_Translator::write_wchar_i (ACE_OutputCDR &cdr, ACE_CDR::WChar x)
 ACE_CDR::Boolean
 UTF16_UCS2_Translator::write_wstring (ACE_OutputCDR & cdr,
                                      ACE_CDR::ULong len,
-                                     const ACE_CDR::WChar *x)
+                                     ACE_CDR::WChar const *x)
 {
   // we'll accept a null pointer but only for an empty string
-  ACE_ASSERT (x != 0 || len == 0);
+  ACE_ASSERT (x != nullptr || len == 0);
   if (static_cast <ACE_CDR::Short> (this->major_version(cdr)) == 1
       && static_cast <ACE_CDR::Short> (this->minor_version(cdr)) == 2)
     {
@@ -253,7 +253,7 @@ UTF16_UCS2_Translator::write_wstring (ACE_OutputCDR & cdr,
         return this->write_4(cdr, &len);
 
       ACE_CDR::ULong l = len * ACE_UTF16_CODEPOINT_SIZE;
-      if (this->write_4 (cdr, &l) && x != 0)
+      if (this->write_4 (cdr, &l) && x != nullptr)
         {
           if (cdr.do_byte_swap())
             {
@@ -272,7 +272,7 @@ UTF16_UCS2_Translator::write_wstring (ACE_OutputCDR & cdr,
 
       if (this->write_4 (cdr, &l))
         {
-          if (x != 0)
+          if (x != nullptr)
             {
               return this->write_wchar_array_i (cdr, x, len + 1);
             }
@@ -289,7 +289,7 @@ UTF16_UCS2_Translator::write_wstring (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 UTF16_UCS2_Translator::write_wchar_array (ACE_OutputCDR & cdr,
-                                         const ACE_CDR::WChar *x,
+                                         ACE_CDR::WChar const *x,
                                          ACE_CDR::ULong length)
 {
   if (static_cast <ACE_CDR::Short> (this->major_version(cdr)) == 1
@@ -307,13 +307,13 @@ UTF16_UCS2_Translator::write_wchar_array (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 UTF16_UCS2_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
-                                           const ACE_CDR::WChar *x,
+                                           ACE_CDR::WChar const *x,
                                            ACE_CDR::ULong length)
 {
   if (length == 0)
     return 1;
   char* buf;
-  static const size_t align = ACE_CDR::SHORT_ALIGN;
+  size_t constexpr align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf)
       != 0)
     {
@@ -331,13 +331,13 @@ UTF16_UCS2_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 UTF16_UCS2_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
-                                           const ACE_CDR::WChar *x,
+                                           ACE_CDR::WChar const *x,
                                            ACE_CDR::ULong length)
 {
   if (length == 0)
     return 1;
   char* buf;
-  static const size_t align = ACE_CDR::SHORT_ALIGN;
+  size_t constexpr align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf)
       != 0)
     {
@@ -348,7 +348,7 @@ UTF16_UCS2_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
 
   for (size_t i = 0; i < length; ++i)
     {
-      ACE_CDR::swap_2 (reinterpret_cast <const char*> (&x[i]),
+      ACE_CDR::swap_2 (reinterpret_cast <char const *> (&x[i]),
                        reinterpret_cast <char *> (&sb[i]));
     }
   return 1;

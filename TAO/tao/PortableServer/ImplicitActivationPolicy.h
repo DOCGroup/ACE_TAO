@@ -41,7 +41,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      ImplicitActivationPolicy (::PortableServer::ImplicitActivationPolicyValue value);
+      explicit ImplicitActivationPolicy (::PortableServer::ImplicitActivationPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

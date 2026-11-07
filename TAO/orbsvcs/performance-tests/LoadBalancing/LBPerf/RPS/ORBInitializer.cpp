@@ -6,12 +6,6 @@
 
 #include "tao/ORB_Constants.h"
 
-ORBInitializer::ORBInitializer ()
-  : load_alert_ (),
-    interceptor_ (0)
-{
-}
-
 void
 ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)

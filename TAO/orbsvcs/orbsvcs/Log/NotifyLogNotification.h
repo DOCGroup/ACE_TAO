@@ -45,7 +45,7 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
 {
 public:
   /// Constructor.
-  TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr event_channel);
+  explicit TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr event_channel);
 
   /// Destructor.
   ~TAO_NotifyLogNotification () override;

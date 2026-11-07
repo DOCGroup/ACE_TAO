@@ -41,7 +41,7 @@ public:
   TAO_EC_Null_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Null_Factory () override;
+  ~TAO_EC_Null_Factory () override = default;
 
   TAO_EC_Null_Factory (TAO_EC_Null_Factory const &) = delete;
   TAO_EC_Null_Factory (TAO_EC_Null_Factory &&) = delete;
@@ -49,67 +49,67 @@ public:
   TAO_EC_Null_Factory &operator= (TAO_EC_Null_Factory &&) = delete;
 
   // = The EC_Factory methods
-  virtual TAO_EC_Dispatching*
+  TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_dispatching (TAO_EC_Dispatching*) override;
-  virtual TAO_EC_Filter_Builder*
+  TAO_EC_Filter_Builder*
       create_filter_builder (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_filter_builder (TAO_EC_Filter_Builder*) override;
-  virtual TAO_EC_Supplier_Filter_Builder*
+  TAO_EC_Supplier_Filter_Builder*
       create_supplier_filter_builder (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*) override;
-  virtual TAO_EC_ConsumerAdmin*
+  TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_consumer_admin (TAO_EC_ConsumerAdmin*) override;
-  virtual TAO_EC_SupplierAdmin*
+  TAO_EC_SupplierAdmin*
       create_supplier_admin (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_supplier_admin (TAO_EC_SupplierAdmin*) override;
-  virtual TAO_EC_ProxyPushSupplier*
+  TAO_EC_ProxyPushSupplier*
       create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*) override;
-  virtual TAO_EC_ProxyPushConsumer*
+  TAO_EC_ProxyPushConsumer*
       create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) override;
-  virtual TAO_EC_Timeout_Generator*
+  TAO_EC_Timeout_Generator*
       create_timeout_generator (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_timeout_generator (TAO_EC_Timeout_Generator*) override;
-  virtual TAO_EC_ObserverStrategy*
+  TAO_EC_ObserverStrategy*
       create_observer_strategy (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*) override;
-  virtual TAO_EC_Scheduling_Strategy*
+  TAO_EC_Scheduling_Strategy*
       create_scheduling_strategy (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*) override;
-  virtual TAO_EC_ProxyPushConsumer_Collection*
+  TAO_EC_ProxyPushConsumer_Collection*
       create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*) override;
-  virtual TAO_EC_ProxyPushSupplier_Collection*
+  TAO_EC_ProxyPushSupplier_Collection*
     create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*) override;
 
-  virtual ACE_Lock* create_consumer_lock () override;
-  virtual void destroy_consumer_lock (ACE_Lock*) override;
-  virtual ACE_Lock* create_supplier_lock () override;
-  virtual void destroy_supplier_lock (ACE_Lock*) override;
+  ACE_Lock* create_consumer_lock () override;
+  void destroy_consumer_lock (ACE_Lock*) override;
+  ACE_Lock* create_supplier_lock () override;
+  void destroy_supplier_lock (ACE_Lock*) override;
 
-  virtual TAO_EC_ConsumerControl*
+  TAO_EC_ConsumerControl*
       create_consumer_control (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_consumer_control (TAO_EC_ConsumerControl*) override;
-  virtual TAO_EC_SupplierControl*
+  TAO_EC_SupplierControl*
       create_supplier_control (TAO_EC_Event_Channel_Base*) override;
-  virtual void
+  void
       destroy_supplier_control (TAO_EC_SupplierControl*) override;
 };
 

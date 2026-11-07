@@ -16,11 +16,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-Life_Cycle_Service_Server::Life_Cycle_Service_Server ()
-  : life_Cycle_Service_i_ptr_ (nullptr),
-    debug_level_ (1)
-{
-}
+Life_Cycle_Service_Server::Life_Cycle_Service_Server () = default;
 
 Life_Cycle_Service_Server::~Life_Cycle_Service_Server ()
 {
@@ -32,7 +28,7 @@ Life_Cycle_Service_Server::~Life_Cycle_Service_Server ()
       generic_Factory_Name[0].id = CORBA::string_dup ("LifeCycle_Service");
       this->namingContext_var_->unbind (generic_Factory_Name);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("User Exception");
     }
@@ -116,7 +112,7 @@ Life_Cycle_Service_Server::init (int argc,
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Life_Cycle_Service_Server::init");
@@ -193,7 +189,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv [])
           life_Cycle_Service_Server.run ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("LifeCycleService::main");
       return -1;

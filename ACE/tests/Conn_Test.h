@@ -32,10 +32,10 @@ public:
   Svc_Handler (ACE_Thread_Manager * = 0);
 
   /// Initialization hook.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Prepare for recycling.
-  virtual int recycle (void * = 0);
+  int recycle (void * = 0) override;
 
   /// Send data to server.
   void send_data ();
@@ -44,8 +44,8 @@ public:
   void recv_data ();
 
   /// Shutdown the <Svc_Handler>.
-  int close (u_long = 0);
+  int close (u_long = 0) override;
 
   /// Set <this> to idle.
-  int idle (u_long flags);
+  int idle (u_long flags) override;
 };

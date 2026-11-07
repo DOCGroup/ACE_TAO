@@ -31,7 +31,7 @@ public:
   TAO_AV_UDP_Factory ();
   ~TAO_AV_UDP_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -49,7 +49,7 @@ class TAO_AV_Export TAO_AV_UDP_Transport
 public:
   TAO_AV_UDP_Transport ();
 
-  TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
+  explicit TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
 
   ~TAO_AV_UDP_Transport () override;
   int open (ACE_Addr *addr) override;
@@ -60,7 +60,7 @@ public:
 
   ACE_Addr *get_peer_addr () override;
 
-  virtual int set_remote_address (const ACE_INET_Addr &address);
+  virtual int set_remote_address (ACE_INET_Addr const &address);
 
   /// Write the complete Message_Block chain to the connection.
   ssize_t send (ACE_Message_Block const *mblk,
@@ -95,8 +95,8 @@ public:
   TAO_AV_UDP_Flow_Handler *handler () { return this->handler_; }
 
 protected:
-  TAO_AV_UDP_Flow_Handler *handler_;
-  ACE_Addr *addr_;
+  TAO_AV_UDP_Flow_Handler *handler_ {};
+  ACE_Addr *addr_ {};
   ACE_INET_Addr peer_addr_;
 };
 
@@ -126,7 +126,7 @@ public:
   int change_qos (AVStreams::QoS) override;
 
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram sock_dgram_;
 };
@@ -161,12 +161,12 @@ public:
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
 
 protected:
-  ACE_INET_Addr *address_;
-  ACE_INET_Addr *control_inet_address_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
-  TAO_AV_Core::Flow_Component flow_component_;
+  ACE_INET_Addr *address_ {};
+  ACE_INET_Addr *control_inet_address_ {};
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
+  TAO_AV_Core::Flow_Component flow_component_ {TAO_AV_Core::TAO_AV_DATA};
 };
 
 /**
@@ -190,13 +190,13 @@ public:
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
   int close () override;
 protected:
-  ACE_INET_Addr *control_inet_address_;
-  bool delete_control_inet_address_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_Core *av_core_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
-  TAO_AV_Core::Flow_Component flow_component_;
+  ACE_INET_Addr *control_inet_address_ {};
+  bool delete_control_inet_address_ {};
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_AV_Core *av_core_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
+  TAO_AV_Core::Flow_Component flow_component_ {TAO_AV_Core::TAO_AV_DATA};
 };
 
 /**

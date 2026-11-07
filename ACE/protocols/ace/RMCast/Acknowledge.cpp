@@ -58,7 +58,7 @@ namespace ACE_RMCast
 
     for (;; ++sn)
     {
-      Queue::ENTRY* e = 0;
+      Queue::ENTRY* e = nullptr;
 
       if (q.find (sn, e) == -1 || e->int_id_.lost ()) break;
 
@@ -269,7 +269,7 @@ namespace ACE_RMCast
 
       u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
-      Map::ENTRY* e = 0;
+      Map::ENTRY* e = nullptr;
 
       if (hold_.find (from, e) == -1)
       {
@@ -369,7 +369,7 @@ namespace ACE_RMCast
     }
 
     if (nrtm->empty ())
-      return Profile_ptr (0);
+      return Profile_ptr (nullptr);
     else
       return Profile_ptr (nrtm.release ());
   }
@@ -378,6 +378,6 @@ namespace ACE_RMCast
   track_thunk (void* obj)
   {
     reinterpret_cast<Acknowledge*> (obj)->track ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 }

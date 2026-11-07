@@ -22,18 +22,11 @@
 template <class T>
 Param_Test_Client<T>::Param_Test_Client (CORBA::ORB_ptr orb,
                                          Param_Test_ptr objref,
-                                         T *t)
+                                         T *test_object)
   : orb_ (orb),
     param_test_ (objref),
-    test_object_ (t)
+    test_object_ (test_object)
 {
-}
-
-// destructor
-template <class T>
-Param_Test_Client<T>::~Param_Test_Client ()
-{
-  delete this->test_object_;
 }
 
 // All the individual tests.

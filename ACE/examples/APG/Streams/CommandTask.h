@@ -15,17 +15,17 @@ public:
 
   virtual ~CommandTask () = default;
 
-  virtual int open (void * = 0 );
+  int open (void * = nullptr) override;
 
   int put (ACE_Message_Block *message,
            ACE_Time_Value *timeout);
 
-  virtual int svc ();
+  int svc () override;
 
-  virtual int close (u_long flags);
+  int close (u_long flags) override;
 
 protected:
-  CommandTask (int command);
+  explicit CommandTask (int command);
 
   virtual int process (Command *message);
 

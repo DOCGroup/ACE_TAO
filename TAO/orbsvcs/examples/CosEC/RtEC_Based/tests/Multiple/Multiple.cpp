@@ -1,19 +1,5 @@
 #include "Multiple.h"
 
-Multiple::Multiple ()
-  : cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
-    service_name_ (ACE_TEXT ("CosEventService")),
-    orb_ (CORBA::ORB::_nil ())
-{
-  // No-Op.
-}
-
-
-Multiple::~Multiple ()
-{
-  // No-Op.
-}
-
 int
 Multiple::init (int argc, ACE_TCHAR *argv[])
 {
@@ -57,7 +43,7 @@ Multiple::init_ORB  (int argc, ACE_TCHAR *argv [])
 
       poa_manager->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Multiple::init_ORB\n");
       return -1;
@@ -92,7 +78,7 @@ Multiple::init_CosEC ()
       this->cos_ec_ =
         CosEventChannelAdmin::EventChannel::_narrow (EC_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Multiple::init_ORB\n");
       return -1;
@@ -108,7 +94,7 @@ Multiple::runORB ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
     }

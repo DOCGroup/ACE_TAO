@@ -26,23 +26,22 @@ class Cubit_i : public POA_Cubit
 public:
   Cubit_i (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa);
-  ~Cubit_i ();
+  ~Cubit_i () override = default;
 
-  virtual CORBA::Octet cube_octet (CORBA::Octet o);
+  CORBA::Octet cube_octet (CORBA::Octet o) override;
 
-  virtual CORBA::Short cube_short (CORBA::Short s);
+  CORBA::Short cube_short (CORBA::Short s) override;
 
-  virtual CORBA::Long cube_long (CORBA::Long l);
+  CORBA::Long cube_long (CORBA::Long l) override;
 
-  virtual Cubit::Many cube_struct (const Cubit::Many &values);
+  Cubit::Many cube_struct (Cubit::Many const &values) override;
 
-  virtual void noop ();
+  void noop () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// The default POA
-  virtual PortableServer::POA_ptr
-      _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   /// Keep a pointer to the ORB so we can shut it down.

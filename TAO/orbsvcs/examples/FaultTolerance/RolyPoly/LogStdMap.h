@@ -9,13 +9,11 @@ template <typename RI, typename RV>
 class Log
 {
 public:
-  typedef RI RecordIdType;
-  typedef RV RecordValueType;
+  using RecordIdType = RI;
+  using RecordValueType = RV;
 
 private:
-  typedef
-  std::map <RecordIdType, RecordValueType>
-  Map_;
+  using Map_ = std::map <RecordIdType, RecordValueType>;
 
 public:
   class Duplicate {};

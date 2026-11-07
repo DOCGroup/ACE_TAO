@@ -8,7 +8,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Category.h"  // for ACE_ASSERT
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -108,7 +109,7 @@ ACE_New_Allocator::calloc (size_t nbytes,
 
   ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
+  std::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
 }
 
@@ -234,7 +235,7 @@ ACE_Static_Allocator_Base::calloc (size_t nbytes,
 {
   void *ptr = this->malloc (nbytes);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
+  std::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
 }
 

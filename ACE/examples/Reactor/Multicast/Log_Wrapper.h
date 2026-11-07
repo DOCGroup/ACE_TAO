@@ -19,8 +19,12 @@ class Log_Wrapper
   //      multicast.
 {
 public:
-  Log_Wrapper ();
-  ~Log_Wrapper ();
+  Log_Wrapper () = default;
+  ~Log_Wrapper () = default;
+  Log_Wrapper (Log_Wrapper const &) = delete;
+  Log_Wrapper (Log_Wrapper &&) = delete;
+  Log_Wrapper &operator= (Log_Wrapper const &) = delete;
+  Log_Wrapper &operator= (Log_Wrapper &&) = delete;
 
   // = Types of logging messages.
   enum Log_Priority
@@ -32,7 +36,7 @@ public:
     LM_EMERG
   };
 
-  int open (const int port, const char* mcast_addr);
+  int open (int port, char const *mcast_addr);
   // Subscribe to a given UDP multicast group
 
   int log_message (Log_Priority type, char *message);
@@ -53,10 +57,10 @@ private:
   ACE_INET_Addr server_;
   // Server address where records are logged.
 
-  u_long sequence_number_;
+  u_long sequence_number_ {};
   // Keep track of the sequence.
 
-  Log_Record log_msg_;
+  Log_Record log_msg_ {};
   // One record used for many log messages.
 
   ACE_SOCK_Dgram_Mcast logger_;

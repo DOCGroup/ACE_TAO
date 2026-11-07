@@ -1,13 +1,11 @@
 #include "orbsvcs/Trader/Offer_Iterators.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
+TAO_Offer_Iterator::TAO_Offer_Iterator (TAO_Property_Filter const& pfilter)
   : pfilter_ (pfilter)
-{
-}
-
-TAO_Offer_Iterator::~TAO_Offer_Iterator ()
 {
 }
 
@@ -26,20 +24,16 @@ TAO_Offer_Iterator::destroy ()
 }
 
 TAO_Query_Only_Offer_Iterator::
-TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
+TAO_Query_Only_Offer_Iterator (TAO_Property_Filter const& pfilter)
   : TAO_Offer_Iterator (pfilter)
-{
-}
-
-TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator()
 {
 }
 
 void
 TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
-                                          const CosTrading::Offer* offer)
+                                          CosTrading::Offer const* offer)
 {
-  this->offers_.enqueue_tail ((CosTrading::Offer*) offer);
+  this->offers_.push_back (const_cast<CosTrading::Offer*> (offer));
   CORBA::string_free (offer_id);
 }
 
@@ -53,33 +47,31 @@ CORBA::Boolean
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers)
 {
-  offers = new CosTrading::OfferSeq;
+  std::unique_ptr<CosTrading::OfferSeq> offer_sequence =
+    std::make_unique<CosTrading::OfferSeq> ();
 
-  CORBA::ULong sequence_size = static_cast<CORBA::ULong> (this->offers_.size ());
-  CORBA::ULong offers_in_sequence = (n < sequence_size) ? n : sequence_size;
-  offers->length (offers_in_sequence);
+  CORBA::ULong const sequence_size = static_cast<CORBA::ULong> (this->offers_.size ());
+  CORBA::ULong const offers_in_sequence = (n < sequence_size) ? n : sequence_size;
+  offer_sequence->length (offers_in_sequence);
 
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-      CosTrading::Offer* source = nullptr;
-      this->offers_.dequeue_head (source);
-      this->pfilter_.filter_offer (source, offers[i]);
+      CosTrading::Offer* source = this->offers_.front ();
+      this->offers_.pop_front ();
+      this->pfilter_.filter_offer (source, (*offer_sequence)[i]);
     }
 
+  offers = offer_sequence.release ();
   return offers_in_sequence != 0;
-}
-
-TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection ()
-{
 }
 
 TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
 {
-  while (! this->iters_.is_empty ())
+  while (! this->iters_.empty ())
     {
-      CosTrading::OfferIterator* offer_iter = nullptr;
-      this->iters_.dequeue_head (offer_iter);
+      CosTrading::OfferIterator* offer_iter = this->iters_.front ();
+      this->iters_.pop_front ();
 
       try
         {
@@ -100,7 +92,7 @@ TAO_Offer_Iterator_Collection::
 add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 {
   if (! CORBA::is_nil (offer_iter))
-    this->iters_.enqueue_tail (offer_iter);
+    this->iters_.push_back (offer_iter);
 }
 
 CORBA::Boolean
@@ -115,12 +107,12 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                     CosTrading::OfferSeq,
                     CORBA::NO_MEMORY ());
 
-  while (offers_left > 0 && ! this->iters_.is_empty ())
+  while (offers_left > 0 && ! this->iters_.empty ())
     {
       CORBA::ULong offset = 0;
       CORBA::Boolean any_left = false;
-      CosTrading::OfferIterator* iter = nullptr;
-      this->iters_.dequeue_head (iter);
+      CosTrading::OfferIterator* iter = this->iters_.front ();
+      this->iters_.pop_front ();
 
       // Determine how many offers we should retrieve from this
       // iterator.
@@ -137,7 +129,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
           CORBA::release (iter);
         }
       else
-        this->iters_.enqueue_head (iter);
+        this->iters_.push_front (iter);
 
       // Merge it with the passed set.
       offset = offers->length ();
@@ -149,7 +141,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
     }
 
   // Determine if we have anything left to offer.
-  if (this->iters_.is_empty ())
+  if (this->iters_.empty ())
     return_value = false;
 
   return return_value;
@@ -159,14 +151,9 @@ void
 TAO_Offer_Iterator_Collection::destroy ()
 {
   // Destroy all iterators in the collection.
-  for (Offer_Iters::ITERATOR iters_iter (this->iters_);
-       ! iters_iter.done ();
-       iters_iter.advance ())
+  for (CosTrading::OfferIterator* iter : this->iters_)
     {
-      CosTrading::OfferIterator** iter = nullptr;
-
-      iters_iter.next (iter);
-      (*iter)->destroy ();
+      iter->destroy ();
     }
 
   // Remove self from POA
@@ -184,25 +171,6 @@ CORBA::ULong
 TAO_Offer_Iterator_Collection::max_left ()
 {
   throw CosTrading::UnknownMaxLeft();
-}
-
-TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator ()
-{
-}
-
-TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator ()
-{
-  int return_value = 0;
-
-  do
-    {
-      CosTrading::OfferId offer_id = 0;
-
-      return_value = this->ids_.dequeue_head (offer_id);
-      if (return_value == 0)
-        CORBA::string_free (offer_id);
-    }
-  while (return_value == 0);
 }
 
 CORBA::ULong
@@ -244,9 +212,9 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   // Transfer OfferIds chunk.
   for (CORBA::ULong i = 0; i < returnable_items; i++)
     {
-      CosTrading::OfferId offer_id = 0;
-      this->ids_.dequeue_head (offer_id);
-      (*_ids)[i] = offer_id;
+      std::string offer_id = this->ids_.front ();
+      this->ids_.pop_front ();
+      (*_ids)[i] = offer_id.c_str ();
     }
 
   // Return true only if there are items left to be returned in
@@ -257,7 +225,8 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
 void
 TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
 {
-  this->ids_.enqueue_tail (new_id);
+  CORBA::String_var offer_id (new_id);
+  this->ids_.emplace_back (offer_id.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

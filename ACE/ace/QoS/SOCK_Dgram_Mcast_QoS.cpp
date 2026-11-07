@@ -93,7 +93,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   // with MSVC.  The reliable way of getting the interface list is
   // available only with MSVC 5.
 
-  if (net_if == 0)
+  if (net_if == nullptr)
     {
       ACE_INET_Addr *if_addrs = nullptr;
       size_t if_cnt;
@@ -209,7 +209,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
     {
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
-      if (qos_session != 0 && mcast_addr == qos_session->dest_addr ())
+      if (qos_session != nullptr && mcast_addr == qos_session->dest_addr ())
         {
           // Subscribe to the QoS session.
           if (this->qos_manager_.join_qos_session (qos_session) == -1)
@@ -220,8 +220,10 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       else
         {
           if (this->close () != 0)
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Unable to close socket\n")));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Unable to close socket\n")));
+            }
             ACELIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Dest Addr in the QoS Session does")
                                ACE_TEXT (" not match the address passed into")
@@ -241,7 +243,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
         return -1;
 
       else
-        if (qos_params.socket_qos () != 0 && qos_session != 0)
+        if (qos_params.socket_qos () != nullptr && qos_session != nullptr)
           qos_session->qos (*(qos_params.socket_qos ()));
 
       return 0;

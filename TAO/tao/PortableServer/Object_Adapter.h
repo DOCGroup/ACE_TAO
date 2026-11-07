@@ -34,6 +34,7 @@
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Map_T.h"
+#include <memory>
 
 #include "tao/PortableServer/Servant_Location.h"
 
@@ -241,7 +242,7 @@ public:
   class TAO_PortableServer_Export Active_Hint_Strategy : public Hint_Strategy
   {
   public:
-    Active_Hint_Strategy (CORBA::ULong map_size);
+    explicit Active_Hint_Strategy (CORBA::ULong map_size);
 
     ~Active_Hint_Strategy () override = default;
 
@@ -293,7 +294,7 @@ public:
   friend class No_Hint_Strategy;
 
 protected:
-  Hint_Strategy *hint_strategy_ {};
+  std::unique_ptr<Hint_Strategy> hint_strategy_;
 
   /// Base class of the id map.
   using transient_poa_map = ACE_Map<
@@ -346,13 +347,13 @@ protected:
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Strategy for dispatching a request to a servant.
-  TAO_Servant_Dispatcher *servant_dispatcher_ {};
+  std::unique_ptr<TAO_Servant_Dispatcher> servant_dispatcher_;
 
   /// Persistent POA map
-  persistent_poa_name_map *persistent_poa_name_map_ {};
+  std::unique_ptr<persistent_poa_name_map> persistent_poa_name_map_;
 
   /// Transient POA map
-  transient_poa_map *transient_poa_map_ {};
+  std::unique_ptr<transient_poa_map> transient_poa_map_;
 
 protected:
   static CORBA::ULong transient_poa_name_size_;
@@ -363,7 +364,7 @@ protected:
 
   TAO_SYNCH_MUTEX thread_lock_;
 
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   ACE_Reverse_Lock<ACE_Lock> reverse_lock_;
 

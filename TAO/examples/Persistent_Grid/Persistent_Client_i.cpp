@@ -1,22 +1,7 @@
 #include "Persistent_Client.h"
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 
 // This is the interface program that accesses the remote object
-
-// Constructor.
-Persistent_Client_i::Persistent_Client_i ()
-  : height_ (0),
-    width_ (0)
-{
-  //no-op
-}
-
-//Destructor.
-Persistent_Client_i::~Persistent_Client_i ()
-{
-  //no-op
-}
 
 int
 Persistent_Client_i::parse_args (int argc,
@@ -25,19 +10,19 @@ Persistent_Client_i::parse_args (int argc,
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:f:xw:h:r"));
 
-  int c = 0;
+  int c {};
   while ((c = get_opts ()) != -1)
     {
       switch (c)
       {
       case 'w':
-        this->width_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->width_ = static_cast<CORBA::Short> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'h':
-        this->height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->height_ = static_cast<CORBA::Short> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'r':
-        this->remove_ = 1;
+        this->remove_ = true;
         break;
       }
     }
@@ -46,54 +31,55 @@ Persistent_Client_i::parse_args (int argc,
 }
 
 int
-Persistent_Client_i::run (const char *name,
+Persistent_Client_i::run (char const *name,
                           int argc,
                           ACE_TCHAR *argv[])
 {
   // Initialize the client.
-  if (client.init (name, argc, argv) == -1)
+  if (this->client.init (name, argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
-
-
   try
     {
       // Make the Grid.
-      Grid_ptr grid = client->make_grid (width_,
-                                         height_);
+      Grid_ptr const grid = this->client->make_grid (this->width_,
+                                                     this->height_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid successfully\n"));
-
-
-      for (CORBA::Short index_ = 0; index_ < height_; index_++)
+      for (CORBA::Short row {}; row < this->height_; ++row)
         {
-          for (CORBA::Short ctr = 0; ctr < width_; ctr++)
+          for (CORBA::Short column {}; column < this->width_; ++column)
             {
-              CORBA::Long ret_val = grid->get (index_,
-                                               ctr);
+              CORBA::Long const ret_val = grid->get (row,
+                                                     column);
 
               ACE_DEBUG ((LM_DEBUG,
-                          "Grid value [%d][%d] =  %d\n",index_, ctr,ret_val));
+                          "Grid value [%d][%d] = %d\n",
+                          row,
+                          column,
+                          ret_val));
             }
         }
 
-      if (client.shutdown () == 1) {
-        client->shutdown ();
-      }
+      if (this->client.shutdown ())
+        {
+          this->client->shutdown ();
+        }
 
-      if (this->remove_ == 1) {
-        client->cleanup ();
-      }
+      if (this->remove_)
+        {
+          this->client->cleanup ();
+        }
     }
-  catch (const CORBA::UserException& range_ex)
+  catch (CORBA::UserException const &range_ex)
     {
       range_ex._tao_print_exception ("\tFrom get and set grid");
       return -1;
     }
-  catch (const CORBA::SystemException& memex)
+  catch (CORBA::SystemException const &memex)
     {
       memex._tao_print_exception ("Cannot make grid as Memory exhausted");
       return -1;

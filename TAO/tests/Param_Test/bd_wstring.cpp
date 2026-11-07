@@ -20,10 +20,10 @@
 
 Test_Bounded_WString::Test_Bounded_WString ()
   : opname_ (CORBA::string_dup ("test_bounded_wstring")),
-    in_ (0),
-    inout_ (0),
-    out_ (0),
-    ret_ (0)
+    in_ (nullptr),
+    inout_ (nullptr),
+    out_ (nullptr),
+    ret_ (nullptr)
 {
 }
 
@@ -34,11 +34,11 @@ Test_Bounded_WString::~Test_Bounded_WString ()
   CORBA::wstring_free (this->inout_);
   CORBA::wstring_free (this->out_);
   CORBA::wstring_free (this->ret_);
-  this->opname_ = 0;
-  this->in_ = 0;
-  this->inout_ = 0;
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->opname_ = nullptr;
+  this->in_ = nullptr;
+  this->inout_ = nullptr;
+  this->out_ = nullptr;
+  this->ret_ = nullptr;
 }
 
 const char *
@@ -86,10 +86,10 @@ Test_Bounded_WString::init_parameters (Param_Test_ptr)
   CORBA::wstring_free (this->inout_);
   CORBA::wstring_free (this->out_);
   CORBA::wstring_free (this->ret_);
-  this->in_ = 0;
-  this->inout_ = 0;
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->in_ = nullptr;
+  this->inout_ = nullptr;
+  this->out_ = nullptr;
+  this->ret_ = nullptr;
 
   this->in_ = gen->gen_wstring (32);
   this->inout_ = CORBA::wstring_dup (this->in_);
@@ -103,9 +103,9 @@ Test_Bounded_WString::reset_parameters ()
   CORBA::wstring_free (this->inout_);
   CORBA::wstring_free (this->out_);
   CORBA::wstring_free (this->ret_);
-  this->inout_ = 0;
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->inout_ = nullptr;
+  this->out_ = nullptr;
+  this->ret_ = nullptr;
 
   this->inout_ = CORBA::wstring_dup (this->in_);
   return 0;

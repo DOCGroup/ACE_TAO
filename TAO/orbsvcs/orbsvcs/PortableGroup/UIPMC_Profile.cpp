@@ -7,15 +7,17 @@
 #include "tao/debug.h"
 #include "tao/target_specification.h"
 #include "ace/OS_NS_ctype.h"
+#include <cstring>
+#include <cstdio>
 
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
 
-static const char the_prefix[] = "miop";
+static constexpr char the_prefix[] = "miop";
 
 // UIPMC doesn't support object keys, so send profiles by default in the
 // GIOP 1.2 target specification.
-static const CORBA::Short default_addressing_mode_ =
+static constexpr CORBA::Short default_addressing_mode_ =
   TAO_Target_Specification::Profile_Addr;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,9 +37,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
                                            TAO_DEF_GIOP_MINOR))
   , endpoint_ ()
   , tagged_profile_ ()
-  , group_id_ (0)
-  , ref_version_ (0)
-  , has_ref_version_ (false)
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
@@ -46,7 +45,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
   this->addressing_mode_ = default_addressing_mode_;
 }
 
-TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
+TAO_UIPMC_Profile::TAO_UIPMC_Profile (ACE_INET_Addr const &addr,
                                       TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
@@ -54,9 +53,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                                            TAO_DEF_GIOP_MINOR))
   , endpoint_ (addr)
   , tagged_profile_ ()
-  , group_id_ (0)
-  , ref_version_ (0)
-  , has_ref_version_ (false)
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
@@ -170,13 +166,13 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_UIPMC_Profile::parse_string (const char *string)
+TAO_UIPMC_Profile::parse_string (char const *string)
 {
   this->parse_string_i (string);
 }
 
 void
-TAO_UIPMC_Profile::parse_string_i (const char *string)
+TAO_UIPMC_Profile::parse_string_i (char const *string)
 {
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -239,7 +235,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // The Domain ID is terminated with a '-'.
 
   // Look for the group domain delimitor.
-  const char *pos = ACE_OS::strchr (string, '-');
+  char const *pos = std::strchr (string, '-');
 
   if (pos == 0)
     {
@@ -260,7 +256,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 
   // Skip past the last '-'.
   string = pos + 1;
-  pos = ACE_OS::strchr (string, '-');
+  pos = std::strchr (string, '-');
 
   bool parse_group_ref_version_flag = false;
 
@@ -273,7 +269,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   else
     {
       // Look for a slash as the separator.
-      pos = ACE_OS::strchr (string, '/');
+      pos = std::strchr (string, '/');
 
       if (pos == 0)
         {
@@ -286,7 +282,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         }
     }
 
-  if (ACE_OS::strspn (string, "0123456789") !=
+  if (std::strspn (string, "0123456789") !=
       static_cast<size_t> (pos - string))
     {
       // Throw an exception if it's not a proper number
@@ -310,7 +306,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
     {
       // Try to find the group version.  It is terminated by a '/'.
       string = pos + 1;
-      pos = ACE_OS::strchr (string, '/');
+      pos = std::strchr (string, '/');
       if (pos == 0)
         {
           // The group version was expected but not found,
@@ -322,7 +318,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
             CORBA::COMPLETED_NO);
         }
 
-      if (ACE_OS::strspn (string, "0123456789") !=
+      if (std::strspn (string, "0123456789") !=
           static_cast<size_t> (pos - string))
         {
           // Throw an exception if it's not a proper number
@@ -343,7 +339,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // Parse the group multicast address.
   // The multicast address is terminated by a ':'.
   string = pos + 1;
-  pos = ACE_OS::strrchr (string, ':');
+  pos = std::strrchr (string, ':');
 
   if (pos == 0)
     {
@@ -376,7 +372,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      pos = ACE_OS::strchr (string, ']');
+      pos = std::strchr (string, ']');
       if (pos == 0)
         {
           // No valid IPv6 address specified.
@@ -409,7 +405,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
     }
 
   size_t mcast_addr_len = mcast_addr.length ();
-  if (ACE_OS::strspn (mcast_addr.c_str (),
+  if (std::strspn (mcast_addr.c_str (),
                       ".:0123456789ABCDEFabcdef") != mcast_addr_len)
     {
       // Throw an exception if it's not a proper IPv4/IPv6 address
@@ -437,8 +433,8 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // Port can have name thus letters and '-' are allowed.
   static const char port_chars[] =
     "-0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  size_t port_len = ACE_OS::strlen (string);
-  if (ACE_OS::strspn (string, port_chars) != port_len)
+  size_t port_len = std::strlen (string);
+  if (std::strspn (string, port_chars) != port_len)
     {
       // Throw an exception if it's not a proper port
       throw CORBA::INV_OBJREF (
@@ -480,13 +476,13 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 }
 
 CORBA::Boolean
-TAO_UIPMC_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_UIPMC_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_UIPMC_Profile *op =
-    dynamic_cast<const TAO_UIPMC_Profile *> (other_profile);
+  TAO_UIPMC_Profile const *op =
+    dynamic_cast<TAO_UIPMC_Profile const *> (other_profile);
 
-  if (op == 0)
-    return 0;
+  if (op == nullptr)
+    return false;
 
   return this->endpoint_.is_equivalent (&op->endpoint_);
 }
@@ -528,7 +524,7 @@ TAO_UIPMC_Profile::to_string () const
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) + /* "miop" */
+                   std::strlen (::the_prefix) + /* "miop" */
                    1 /* colon separator */ +
                    1 /* miop major version */ +
                    1 /* decimal point */ +
@@ -556,7 +552,7 @@ TAO_UIPMC_Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%c.%c-%s-"
                    ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    ::the_prefix,
@@ -569,7 +565,7 @@ TAO_UIPMC_Profile::to_string () const
 
   if (this->has_ref_version_)
     {
-      ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+      std::sprintf (&buf[std::strlen (buf)],
                        "-" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->ref_version_);
     }
@@ -577,14 +573,14 @@ TAO_UIPMC_Profile::to_string () const
 #if defined (ACE_HAS_IPV6)
   if (this->endpoint_.object_addr ().get_type () == AF_INET6)
     {
-      ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+      std::sprintf (&buf[std::strlen (buf)],
                        "/[%s]:%d",
                        this->endpoint_.host (),
                        this->endpoint_.port ());
     }
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+  std::sprintf (&buf[std::strlen (buf)],
                    "/%s:%d",
                    this->endpoint_.host (),
                    this->endpoint_.port ());
@@ -592,7 +588,7 @@ TAO_UIPMC_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_UIPMC_Profile::prefix ()
 {
   return ::the_prefix;
@@ -625,11 +621,11 @@ TAO_UIPMC_Profile::create_tagged_profile ()
       this->tagged_profile_.profile_data.length (length);
       CORBA::Octet *buffer =
         this->tagged_profile_.profile_data.get_buffer ();
-      for (const ACE_Message_Block *i = encap.begin ();
+      for (ACE_Message_Block const *i = encap.begin ();
            i != encap.end ();
            i = i->next ())
         {
-          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          std::memcpy (buffer, i->rd_ptr (), i->length ());
           buffer += i->length ();
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
@@ -651,7 +647,7 @@ TAO_UIPMC_Profile::create_profile_body (TAO_OutputCDR &encap) const
 void
 TAO_UIPMC_Profile::set_group_info (
   GIOP::Version const &component_version,
-  const char *domain_id,
+  char const *domain_id,
   PortableGroup::ObjectGroupId group_id,
   bool has_ref_version,
   PortableGroup::ObjectGroupRefVersion ref_version)
@@ -707,12 +703,12 @@ TAO_UIPMC_Profile::update_cached_group_component ()
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
+  for (ACE_Message_Block const *iterator = out_cdr.begin ();
+       iterator != nullptr;
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }
@@ -777,7 +773,7 @@ TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode)
 
 int
 TAO_UIPMC_Profile::extract_group_component (
-  const IOP::TaggedProfile &profile,
+  IOP::TaggedProfile const &profile,
   PortableGroup::TagGroupTaggedComponent &group)
 {
   // Create the decoding stream from the encapsulation in the buffer,
@@ -787,7 +783,7 @@ TAO_UIPMC_Profile::extract_group_component (
   CORBA::Octet const *buf =
     profile.profile_data.get_buffer ();
 
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (buf),
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (buf),
                     profile.profile_data.length ());
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -843,7 +839,7 @@ TAO_UIPMC_Profile::extract_group_component (
   // Found it.
   buf = tagged_component.component_data.get_buffer ();
 
-  TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+  TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                        tagged_component.component_data.length ());
 
   // Extract the Byte Order.

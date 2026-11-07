@@ -5,9 +5,7 @@
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Concurrency.h"
 
-JAWS_Protocol_State::~JAWS_Protocol_State ()
-{
-}
+JAWS_Protocol_State::~JAWS_Protocol_State () = default;
 
 
 JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
@@ -23,14 +21,14 @@ JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
 
 JAWS_Protocol_Handler::~JAWS_Protocol_Handler ()
 {
-  this->mb_.replace_data_block (0);
+  this->mb_.replace_data_block (nullptr);
 }
 
 
 int
 JAWS_Protocol_Handler::service ()
 {
-  if (this->state_ == 0)
+  if (this->state_ == nullptr)
     return -1;
 
   return this->state_->service (this, this->data_);

@@ -45,7 +45,7 @@ public:
 
 protected:
   /// TAO_ESF_Worker method
-  void work (TYPE* object);
+  void work (TYPE* object) override;
 
   /// The result
   SEQ_VAR seq_;

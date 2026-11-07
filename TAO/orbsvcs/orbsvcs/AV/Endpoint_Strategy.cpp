@@ -15,6 +15,8 @@
 
 #include "ace/Process_Semaphore.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------------
@@ -27,9 +29,7 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy ()
 }
 
 // Destructor.
-TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy ()
-{
-}
+TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy () = default;
 
 // The base class defines the "failure" case, so that unless the
 // subclasses override this, the call will fail. This is done so that
@@ -71,9 +71,7 @@ TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_
 }
 
 // Destructor.
-TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy ()
-{
-}
+TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy () = default;
 
 // Spawns the process, and waits for it to finish booting.
 // Then uses bind_to_naming_service, get_stream_endpoint, and get_vdev
@@ -149,7 +147,7 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
       // Get the Vdev created by the child from the naming service
       this->get_vdev ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy::activate");
@@ -177,7 +175,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service ()
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service");
@@ -193,7 +191,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
   try
     {
       char vdev_name [BUFSIZ];
-      ACE_OS::sprintf (vdev_name,
+      std::sprintf (vdev_name,
                        "%s:%s:%ld",
                        "VDev",
                        this->host_,
@@ -220,7 +218,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy::get_vdev");
@@ -240,9 +238,7 @@ TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Proc
 }
 
 // Destructor
-TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A ()
-{
-}
+TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A () = default;
 
 // the "A" type endpoint creator
 int
@@ -268,7 +264,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
   try
     {
       char stream_endpoint_name[BUFSIZ];
-      ACE_OS::sprintf (stream_endpoint_name,
+      std::sprintf (stream_endpoint_name,
                        "%s:%s:%ld",
                        "Stream_Endpoint_A",
                        this->host_,
@@ -296,7 +292,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
                            " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint");
@@ -316,9 +312,7 @@ TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Proc
 }
 
 // Destructor
-TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B ()
-{
-}
+TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B () = default;
 
 // Creates and returns a "B" type endpoint
 int
@@ -341,7 +335,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
     stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate ( this->stream_endpoint_b_.in() );
     vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
@@ -357,7 +351,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
   try
     {
       char stream_endpoint_name[BUFSIZ];
-      ACE_OS::sprintf (stream_endpoint_name,
+      std::sprintf (stream_endpoint_name,
                        "%s:%s:%ld",
                        "Stream_Endpoint_B",
                        this->host_,
@@ -385,7 +379,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint");

@@ -106,12 +106,12 @@ HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
 int
 HTML_Body_Validation_Strategy::execute ()
 {
-  char host_name_buf[BUFSIZ + 1];
+  char host_name_buf[BUFSIZ + 1] {};
   ACE_CString host_name (host_name_buf);
   host_name.set (url_.url_addr ().get_host_name (),1);
 
   // All to facilitate relative paths
-  char temp[BUFSIZ + 1];
+  char temp[BUFSIZ + 1] {};
   ACE_CString prev_location (temp);
 
   prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
@@ -381,7 +381,7 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
         return 0;
 
       // Get back if the recurse option isnt set.
-      if (OPTIONS::instance ()->recurse () != 1)
+      if (!OPTIONS::instance ()->recurse ())
         return 0;
 
       Auto_Destroyer <URL_Iterator> is (vs->make_body_iterator ());

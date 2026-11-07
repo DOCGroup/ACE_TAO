@@ -16,7 +16,7 @@ void
 SequencePushConsumer::push_structured_events (
     const CosNotification::EventBatch &batch)
 {
-  this->test_client_->events_received_ += batch.length ();
+  this->test_client_->events_received_.fetch_add (static_cast<int> (batch.length ()));
 
   if (batch.length () > this->test_client_->consumer_batch_size_)
       ACE_DEBUG ((LM_ERROR,
@@ -43,7 +43,7 @@ SequencePushSupplier::~SequencePushSupplier ()
 /***************************************************************************/
 Sequence::Sequence ()
   : event_count_ (15), supplier_batch_size_ (5), consumer_batch_size_ (3),
-    pacing_ (2), order_policy_ (CosNotification::PriorityOrder), events_received_ (0),
+    pacing_ (2), order_policy_ (CosNotification::PriorityOrder),
     consumer_delay_ (1)
 {
 }
@@ -128,7 +128,7 @@ Sequence::parse_args (int argc,
 {
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -204,9 +204,9 @@ Sequence::on_event_received ()
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "Events received = %d\n",
-                this->events_received_.value ()));
+                this->events_received_.load ()));
 
-  if (this->events_received_.value () == this->event_count_)
+  if (this->events_received_.load () == this->event_count_)
     {
       this->end_test ();
     }
@@ -251,9 +251,9 @@ Sequence::run_test ()
 
   CosNotification::EventBatch batch;
   batch.length (this->supplier_batch_size_);
-  CORBA::ULong batch_index = 0;
+  CORBA::ULong batch_index {};
 
-  for (int i = 0; i < this->event_count_; ++i)
+  for (int i {}; i < this->event_count_; ++i)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -277,7 +277,7 @@ Sequence::run_test ()
 
           // reset
           batch.length (this->supplier_batch_size_);
-          batch_index = 0;
+          batch_index = {};
         }
     } // for
 
@@ -303,7 +303,7 @@ Sequence::check_results ()
   // Destroy the channel.
   this->ec_->destroy ();
 
-  if (this->events_received_.value () == this->event_count_)
+  if (this->events_received_.load () == this->event_count_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Sequence test success\n"));
@@ -337,19 +337,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.ORB_run();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = events.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

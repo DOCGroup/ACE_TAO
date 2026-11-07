@@ -3,28 +3,17 @@
 #if (TAO_HAS_HTTP_PARSER == 1)
 
 #include "tao/HTTP_Handler.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_HTTP_Client::TAO_HTTP_Client ()
-  : filename_ (nullptr)
-{
-}
-
-TAO_HTTP_Client::~TAO_HTTP_Client ()
-{
-  this->close ();
-}
 
 int
 TAO_HTTP_Client::open (const ACE_TCHAR *filename,
                        const ACE_TCHAR *hostname,
                        u_short port)
 {
-  this->filename_ = ACE_OS::strdup (filename);
+  this->filename_ = filename;
   this->inet_addr_.set (port, hostname);
   return 0;
 }
@@ -33,7 +22,7 @@ int
 TAO_HTTP_Client::read (ACE_Message_Block *mb)
 {
   // Create a HTTP_Client Reader
-  TAO_HTTP_Reader HTTP_reader (mb, this->filename_);
+  TAO_HTTP_Reader HTTP_reader (mb, this->filename_.c_str ());
   TAO_HTTP_Handler *brp = &HTTP_reader;
 
   // Connect to the server
@@ -48,11 +37,7 @@ TAO_HTTP_Client::read (ACE_Message_Block *mb)
 int
 TAO_HTTP_Client::close ()
 {
-  if (this->filename_)
-    {
-      ACE_OS::free ((void *) this->filename_);
-      this->filename_ = nullptr;
-    }
+  this->filename_.clear ();
   return 0;
 }
 

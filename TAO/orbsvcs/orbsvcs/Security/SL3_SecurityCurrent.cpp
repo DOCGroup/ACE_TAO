@@ -13,11 +13,6 @@ TAO::SL3::SecurityCurrent::SecurityCurrent (size_t tss_slot,
 {
 }
 
-
-TAO::SL3::SecurityCurrent::~SecurityCurrent ()
-{
-}
-
 SecurityLevel3::ClientCredentials_ptr
 TAO::SL3::SecurityCurrent::client_credentials ()
 {

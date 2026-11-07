@@ -17,6 +17,7 @@
 #include "tao/orbconf.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "tao/Acceptor_Registry.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,22 +45,27 @@ class TAO_Acceptor;
 class TAO_Export TAO_Acceptor_Filter
 {
 public:
+  TAO_Acceptor_Filter () = default;
   virtual ~TAO_Acceptor_Filter ();
 
   /**
    * Populate @a mprofile with profiles. Profiles are created for
-   * selected acceptors (endpoints) from the array delimited by
-   * @a acceptors_begin and @a acceptors_end.
+   * selected acceptors (endpoints) in @a acceptors.
    */
-  virtual int fill_profile (const TAO::ObjectKey &object_key,
+  virtual int fill_profile (TAO::ObjectKey const &object_key,
                             TAO_MProfile &mprofile,
-                            TAO_Acceptor **acceptors_begin,
-                            TAO_Acceptor **acceptors_end,
+                            TAO_AcceptorSet const& acceptors,
                             CORBA::Short priority = TAO_INVALID_PRIORITY) = 0;
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
   /// tag component of profiles.
   virtual int encode_endpoints (TAO_MProfile &mprofile) = 0;
+
+private:
+  TAO_Acceptor_Filter (TAO_Acceptor_Filter const &) = delete;
+  TAO_Acceptor_Filter &operator= (TAO_Acceptor_Filter const &) = delete;
+  TAO_Acceptor_Filter (TAO_Acceptor_Filter &&) = delete;
+  TAO_Acceptor_Filter &operator= (TAO_Acceptor_Filter &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

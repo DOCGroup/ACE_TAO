@@ -1,20 +1,19 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "structC.h"
+#include <cstring>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 1; // Failed until changed.
+  int result {1}; // Failed until changed.
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the reference to the CodecFactory.
-      CORBA::Object_var
-        obj = orb->resolve_initial_references ("CodecFactory");
-      IOP::CodecFactory_var
-        codec_factory = IOP::CodecFactory::_narrow (obj.in ());
+      CORBA::Object_var const obj = orb->resolve_initial_references ("CodecFactory");
+      IOP::CodecFactory_var const codec_factory = IOP::CodecFactory::_narrow (obj.in ());
 
       // Obtain the codec from the factory.
       // Set up a structure that contains information necessary to
@@ -23,8 +22,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       encoding.format = IOP::ENCODING_CDR_ENCAPS;
       encoding.major_version = 1;
       encoding.minor_version = 2;
-      IOP::Codec_var
-        codec = codec_factory->create_codec (encoding);
+      IOP::Codec_var const codec = codec_factory->create_codec (encoding);
 
       // Create the CDR we want to check
       CORBA::Octet mixed_endian_cdr[] = {
@@ -66,13 +64,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                false);
 
       // Now try and decode this message
-      CORBA::Any_var
-        decodedData = codec->decode (oct_seq);
+      CORBA::Any_var const decoded_data = codec->decode (oct_seq);
       // And extract the actual struct (still owned by the any)
-      Test::theStruct const *my_struct = nullptr;
-      if (decodedData.in () >>= my_struct)
+      Test::theStruct const *my_struct {};
+      if (decoded_data.in () >>= my_struct)
         {
-          if (!ACE_OS::strcmp (my_struct->theString, "Hello"))
+          if (std::strcmp (my_struct->theString, "Hello") == 0)
             {
               result = 0; // Success!
             }

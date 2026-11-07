@@ -28,41 +28,46 @@
 
 #include "asnmp/snmp.h"
 #include "asnmp/pdu.h"       // include Pdu class definition
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
+#include <cerrno>
+#include <cstdio>
+#include <cstring>
+#include <new>
+#include <utility>
 
 //=====================[ constructor no args ]=========================
-Pdu::Pdu(): vb_count_(0), error_status_(0), error_index_(0),
-validity_(0), request_id_(0), pdu_type_(0), notify_timestamp_(0),
-output_(0)
-{
-}
+Pdu::Pdu() = default;
 
 //=====================[ constructor with vbs_ and count ]==============
-Pdu::Pdu( Vb* pvbs, const int pvb_count): vb_count_(0), error_index_(0),
-validity_(0), request_id_(0), pdu_type_(0), notify_timestamp_(0),
-output_(0)
+Pdu::Pdu (Vb *pvbs, int pvb_count)
 {
-   int z = 0;  // looping variable
-
    // zero is ok
-   if ( pvb_count == 0) {
+   if (pvb_count == 0)
+     {
       validity_ = 1;
       return;
-   }
+     }
 
    // check for over then max
-   if ( pvb_count > MAX_VBS) {
+   if (pvb_count < 0 || pvb_count > MAX_VBS)
+     {
        validity_ = 0;
        return;
-   }
+     }
 
    // loop through and assign internal vbs_
-   for (z = 0;z < pvb_count; z++) {
-     validity_ = 0;
-     ACE_NEW(vbs_[z], Vb( pvbs[z]));
-     validity_ = 1;
-   }
+   for (int z = 0; z < pvb_count; ++z)
+     {
+       validity_ = 0;
+       std::unique_ptr<Vb> value {new (std::nothrow) Vb (pvbs[z])};
+       if (!value)
+         {
+           errno = ENOMEM;
+           return;
+         }
+       vbs_[z] = std::move (value);
+       ++vb_count_;
+       validity_ = 1;
+     }
 
    // assign the vb count
    vb_count_ = pvb_count;
@@ -71,29 +76,19 @@ output_(0)
 }
 
 //=====================[ constructor with another Pdu instance ]========
-Pdu::Pdu( const Pdu &pdu): vb_count_(0),
-error_index_(0), validity_(0), request_id_(0), pdu_type_(0),
-notify_timestamp_(0), output_(0)
+Pdu::Pdu (Pdu const &pdu)
 {
    *this = pdu;
-   return;
 }
 
 //=====================[ destructor ]====================================
-Pdu::~Pdu()
-{
-  delete_all_vbs();
-  delete [] output_;
-}
-
+Pdu::~Pdu() = default;
 
 //=====================[ assignment to another Pdu object overloaded ]===
-Pdu& Pdu::operator=( const Pdu &pdu)
+Pdu &Pdu::operator= (Pdu const &pdu)
 {
    if (this == &pdu)
      return *this;
-
-   int z;   // looping variable
 
    // Initialize all mv's
    error_status_ = pdu.error_status_;
@@ -105,10 +100,7 @@ Pdu& Pdu::operator=( const Pdu &pdu)
    notify_enterprise_ = pdu.notify_enterprise_;
    validity_ = 1;
 
-   // free up old vbs_
-   for ( z = 0;z < vb_count_; z++)
-     delete vbs_[z];
-   vb_count_ = 0;
+   delete_all_vbs ();
 
    // check for zero case
    if ( pdu.vb_count_ == 0) {
@@ -116,18 +108,25 @@ Pdu& Pdu::operator=( const Pdu &pdu)
    }
 
    // loop through and fill em up
-   for (z = 0; z < pdu.vb_count_; z++) {
-     validity_ = 0;
-     ACE_NEW_RETURN(vbs_[z], Vb ( *(pdu.vbs_[z])), *this);
-     validity_ = 1;
-   }
+   for (int z = 0; z < pdu.vb_count_; ++z)
+     {
+       validity_ = 0;
+       std::unique_ptr<Vb> value {new (std::nothrow) Vb (*pdu.vbs_[z])};
+       if (!value)
+         {
+           errno = ENOMEM;
+           return *this;
+         }
+       vbs_[z] = std::move (value);
+       ++vb_count_;
+       validity_ = 1;
+     }
 
-   vb_count_ = pdu.vb_count_;
    return *this;
 }
 
 // append operator, appends a string
-Pdu& Pdu::operator+=( Vb &vb)
+Pdu &Pdu::operator+= (Vb &vb)
 {
   // do we have room?
   if ( vb_count_ + 1 > MAX_VBS)
@@ -135,7 +134,13 @@ Pdu& Pdu::operator+=( Vb &vb)
 
   // add the new one
   validity_ = 0;
-  ACE_NEW_RETURN(vbs_[vb_count_], Vb (vb), *this);
+  std::unique_ptr<Vb> value {new (std::nothrow) Vb (vb)};
+  if (!value)
+    {
+      errno = ENOMEM;
+      return *this;
+    }
+  vbs_[vb_count_] = std::move (value);
   // set up validity_
   validity_ = 1;
 
@@ -147,40 +152,44 @@ Pdu& Pdu::operator+=( Vb &vb)
 }
 
 // return fomatted version of this object
-const char * Pdu::to_string()
+char const *Pdu::to_string ()
 {
   // determine how big a buffer and allocate it
-  const int HEADER_STR = 100;
-  unsigned size = HEADER_STR; // header takes up this much room
-  int z;
+  constexpr std::size_t HEADER_STR = 100;
+  std::size_t size = HEADER_STR; // header takes up this much room
 
-   for ( z = 0; z < vb_count_; z++)
-       size += ACE_OS::strlen(vbs_[z]->to_string());
+   for (int z = 0; z < vb_count_; ++z)
+       size += std::strlen (vbs_[z]->to_string ()) + 2;
 
-  ACE_NEW_RETURN(output_, char[size], "");
+  std::unique_ptr<char[]> buffer {new (std::nothrow) char[size]};
+  if (!buffer)
+    {
+      errno = ENOMEM;
+      return "";
+    }
+  output_ = std::move (buffer);
 
   // print pdu header info
-  ACE_OS::sprintf(output_, "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
-                  err idx: %d\n",     validity_, pdu_type_, (int) request_id_,
+  std::sprintf (output_.get (), "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
+                  err idx: %d\n",     validity_, pdu_type_, static_cast<int> (request_id_),
                   vb_count_, error_status_, error_index_ );
 
   // now append vb pairs in this object
-   for ( z = 0; z < vb_count_; z++) {
-     ACE_OS::strcat(output_, vbs_[z]->to_string());
-     ACE_OS::strcat(output_, "\n\t");
+   for (int z = 0; z < vb_count_; ++z) {
+     std::strcat (output_.get (), vbs_[z]->to_string ());
+     std::strcat (output_.get (), "\n\t");
    }
 
-  return output_;
+  return output_.get ();
 }
-
 
 //=====================[ extract Vbs from Pdu ]==========================
 // how do you know that the caler has enough memory???
 // should I self allocate this in here and require the
 // caller then to free it up at soem later time
-int Pdu::get_vblist( Vb* pvbs, const int pvb_count)
+int Pdu::get_vblist (Vb *pvbs, int pvb_count)
 {
-   if ((!pvbs) || ( pvb_count < 0) || ( pvb_count > vb_count_))
+   if (pvbs == nullptr || pvb_count < 0 || pvb_count > vb_count_)
       return 0;
 
    // loop through all vbs_ and assign to params
@@ -192,20 +201,15 @@ int Pdu::get_vblist( Vb* pvbs, const int pvb_count)
 }
 
 //=====================[ deposit Vbs ]===================================
-int Pdu::set_vblist( Vb* pvbs, const int pvb_count)
+int Pdu::set_vblist (Vb *pvbs, int pvb_count)
 {
    // if invalid then don't destroy
-   if ((!pvbs) || ( pvb_count < 0) || ( pvb_count > MAX_VBS))
+   if (pvbs == nullptr || pvb_count < 0 || pvb_count > MAX_VBS)
      return 0;
-
-   // free up current vbs_
-   int z;
-   for ( z = 0; z < vb_count_; z++)
-     delete vbs_[z];
-   vb_count_ = 0;
 
    // check for zero case
    if ( pvb_count == 0) {
+      delete_all_vbs ();
       validity_ = 1;
       error_status_ = 0;
       error_index_ = 0;
@@ -213,14 +217,20 @@ int Pdu::set_vblist( Vb* pvbs, const int pvb_count)
       return 0;
    }
 
+   // Build the replacement list first so allocation failure leaves this PDU intact.
+   std::array<std::unique_ptr<Vb>, MAX_VBS> new_vbs {};
+   for (int z = 0; z < pvb_count; ++z)
+     {
+       std::unique_ptr<Vb> value {new (std::nothrow) Vb (pvbs[z])};
+       if (!value)
+         {
+           errno = ENOMEM;
+           return 0;
+         }
+       new_vbs[z] = std::move (value);
+     }
 
-   // loop through all vbs_ and reassign them
-   for ( z = 0; z < pvb_count; z++) {
-     validity_ = 0;
-     ACE_NEW_RETURN(vbs_[z], Vb (pvbs[z]), 0);
-     validity_ = 1;
-   }
-
+   vbs_ = std::move (new_vbs);
    vb_count_ = pvb_count;
 
    // clear error status and index since no longer valid
@@ -235,7 +245,7 @@ int Pdu::set_vblist( Vb* pvbs, const int pvb_count)
 //===================[ get a particular vb ]=============================
 // here the caller has already instantiated a vb object
 // index is zero based
-int Pdu::get_vb( Vb &vb, const int index) const
+int Pdu::get_vb (Vb &vb, int index) const
 {
    // can't have an index less than 0
    if ( index < 0)
@@ -252,7 +262,7 @@ int Pdu::get_vb( Vb &vb, const int index) const
 }
 
 //===================[ set a particular vb ]=============================
-int Pdu::set_vb( Vb &vb, const int index)
+int Pdu::set_vb (Vb &vb, int index)
 {
    // can't set a vb at index less than 0
    if ( index < 0)
@@ -262,129 +272,132 @@ int Pdu::set_vb( Vb &vb, const int index)
    if ( index > (vb_count_ - 1))
       return 0;
 
-   // delete what is there
-   delete vbs_[index];
-
-   // assign it
-   validity_ = 0;
-   ACE_NEW_RETURN(vbs_[index], Vb (vb), 0);
+   std::unique_ptr<Vb> value {new (std::nothrow) Vb (vb)};
+   if (!value)
+     {
+       errno = ENOMEM;
+       return 0;
+     }
+   vbs_[index] = std::move (value);
    validity_ = 1;
 
    return 1;
 }
 
 //=====================[ return number of vbs_ ]==========================
-int Pdu::get_vb_count() const
+int Pdu::get_vb_count () const
 {
    return vb_count_;
 }
 
 //=====================[ return the error status ]=======================
-int Pdu::get_error_status() const
+int Pdu::get_error_status () const
 {
    return error_status_;
 }
 
-const char *Pdu::agent_error_reason()
+char const *Pdu::agent_error_reason ()
 {
-    int pdu_err = get_error_status();
+    int const pdu_err = get_error_status ();
     if (pdu_err == 0) // any real error?
         return "not in error state";
 
-    int n_vbs = get_vb_count();
+    int const n_vbs = get_vb_count ();
     Vb bad;
     get_vb(bad, get_error_index() -1); // not zero based??
-    const char *pmsg =   Snmp::error_string(get_error_status());
-    const char *id =   bad.to_string_oid();
-    const char *val =  bad.to_string_value();
-    const int HDR_SZ = 100;
+    char const * const pmsg = Snmp::error_string (get_error_status ());
+    char const * const id = bad.to_string_oid ();
+    char const * const val = bad.to_string_value ();
+    constexpr std::size_t HDR_SZ = 100;
 
-    if (!output_) {
-      int size = ACE_OS::strlen(pmsg) + ACE_OS::strlen(id) +
-           ACE_OS::strlen(val);
-      ACE_NEW_RETURN(output_, char[size + HDR_SZ], "");
-    }
+    std::size_t const size = std::strlen (pmsg) + std::strlen (id) + std::strlen (val);
+    std::unique_ptr<char[]> buffer {new (std::nothrow) char[size + HDR_SZ]};
+    if (!buffer)
+      {
+        errno = ENOMEM;
+        return "";
+      }
+    output_ = std::move (buffer);
 
-    ACE_OS::sprintf(output_,
+    std::sprintf (output_.get (),
                     "FAIL PDU REPORT: pdu id: %lu vb cnt: %d vb idx: %d\n"
                     "                 msg: %s vb oid: %s value: %s\n",
                     get_request_id(), n_vbs, get_error_index(),
                     pmsg, id, val);
 
-    return output_;
+    return output_.get ();
 }
 
 //=====================[ set the error status ]==========================
 // friend
-void set_error_status( Pdu *pdu, const int status)
+void set_error_status (Pdu *pdu, int status)
 {
-   if (pdu)
+   if (pdu != nullptr)
      pdu->error_status_ = status;
 }
 
 //=====================[ return the error index ]========================
-int Pdu::get_error_index() const
+int Pdu::get_error_index () const
 {
    return error_index_;
 }
 
 //=====================[ set the error index ]===========================
 // friend
-void set_error_index( Pdu *pdu, const int index)
+void set_error_index (Pdu *pdu, int index)
 {
-   if (pdu)
+   if (pdu != nullptr)
      pdu->error_index_ = index;
 }
 
 //=====================[ clear error status ]=============================
-void clear_error_status( Pdu *pdu)
+void clear_error_status (Pdu *pdu)
 {
-   if (pdu)
+   if (pdu != nullptr)
      pdu->error_status_ = 0;
 }
 
 //=====================[ clear error index ]==============================
-void clear_error_index( Pdu *pdu)
+void clear_error_index (Pdu *pdu)
 {
-   if (pdu)
+   if (pdu != nullptr)
      pdu->error_index_ = 0;
 }
 
 //=====================[ return the request id ]==========================
-unsigned long Pdu::get_request_id() const
+unsigned long Pdu::get_request_id () const
 {
    return request_id_;
 }
 
 //=====================[ set the request id ]=============================
 // friend function
-void set_request_id( Pdu *pdu, const unsigned long rid)
+void set_request_id (Pdu *pdu, unsigned long rid)
 {
-   if (pdu)
+   if (pdu != nullptr)
      pdu->request_id_ = rid;
 }
 
 //=====================[ returns validity_ of Pdu instance ]===============
-int Pdu::valid() const
+int Pdu::valid () const
 {
    return validity_;
 }
 
 //=====================[ get the pdu type ]===============================
-unsigned short Pdu::get_type()const
+unsigned short Pdu::get_type () const
 {
    return pdu_type_;
 }
 
 // set the pdu type
-void Pdu::set_type( unsigned short type)
+void Pdu::set_type (unsigned short type)
 {
    pdu_type_ = type;
 }
 
-
 // trim off the last vb
-int Pdu::trim(const int p)
+int Pdu::trim (int p)
 {
    int lp = p;
 
@@ -394,7 +407,7 @@ int Pdu::trim(const int p)
 
    while ( lp != 0)   {
      if ( vb_count_ > 0) {
-         delete vbs_[vb_count_ - 1];
+         vbs_[vb_count_ - 1].reset ();
          vb_count_--;
      }
      lp--;
@@ -402,77 +415,74 @@ int Pdu::trim(const int p)
    return 1;
 }
 
-
 // delete a Vb anywhere within the Pdu
-int Pdu::delete_vb( const int p)
+int Pdu::delete_vb (int p)
 {
    // position has to be in range
    if (( p < 0) || ( p > (vb_count_ - 1)))
       return 0;
 
    // safe to remove it
-   delete vbs_[ p];
-
    for ( int z=p;z < (vb_count_-1);z++) {
-      vbs_[z] = vbs_[z+1];
+      vbs_[z] = std::move (vbs_[z + 1]);
    }
+   vbs_[vb_count_ - 1].reset ();
    vb_count_--;
 
    return 1;
 }
 
-void Pdu::delete_all_vbs()
+void Pdu::delete_all_vbs ()
 {
   for ( int z = 0; z < vb_count_; z++)
-     delete vbs_[z];
+    vbs_[z].reset ();
    vb_count_ = 0;
 }
 
-
 // set notify timestamp
-void Pdu::set_notify_timestamp( const TimeTicks & timestamp)
+void Pdu::set_notify_timestamp (TimeTicks const &timestamp)
 {
    notify_timestamp_ = timestamp;
 }
 
-
 // get notify timestamp
-void Pdu::get_notify_timestamp( TimeTicks & timestamp) const
+void Pdu::get_notify_timestamp (TimeTicks &timestamp) const
 {
     timestamp = notify_timestamp_;
 }
 
 // set the notify id
-void Pdu::set_notify_id( const Oid id)
+void Pdu::set_notify_id (Oid id)
 {
     notify_id_ = id;
 }
 
 // get the notify id
-void Pdu::get_notify_id( Oid &id) const
+void Pdu::get_notify_id (Oid &id) const
 {
    id = notify_id_;
 }
 
 // set the notify enterprise
-void Pdu::set_notify_enterprise( const Oid &enterprise)
+void Pdu::set_notify_enterprise (Oid const &enterprise)
 {
    notify_enterprise_ = enterprise;
 }
 
 // get the notify enterprise
-void Pdu::get_notify_enterprise( Oid & enterprise) const
+void Pdu::get_notify_enterprise (Oid &enterprise) const
 {
     enterprise = notify_enterprise_;
 }
 
 // ------   class VbIter -------------------
-VbIter::VbIter(Pdu& pdu): idx_(-1), pdu_(&pdu)
+VbIter::VbIter (Pdu &pdu)
+  : pdu_ (&pdu)
 {
 }
 
 // returns 1 if ok, else 0 if none left
-int VbIter::next(Vb& vb)
+int VbIter::next (Vb &vb)
 {
    if (idx_ == -1) {
     idx_ = 0;

@@ -14,14 +14,19 @@ public:
   Oneway_Buffering (CORBA::ORB_ptr orb,
                     Test::Oneway_Buffering_Admin_ptr admin);
 
+  Oneway_Buffering (Oneway_Buffering const &) = delete;
+  Oneway_Buffering &operator= (Oneway_Buffering const &) = delete;
+  Oneway_Buffering (Oneway_Buffering &&) = delete;
+  Oneway_Buffering &operator= (Oneway_Buffering &&) = delete;
+
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload);
+  void receive_data (Test::Payload const &the_payload) override;
 
-  virtual void flush ();
+  void flush () override;
 
-  virtual void sync ();
+  void sync () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.

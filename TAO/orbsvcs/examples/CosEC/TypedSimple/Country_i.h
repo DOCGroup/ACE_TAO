@@ -13,19 +13,24 @@ class Country_i : public virtual POA_Country
 {
 public:
   //Constructor
-  Country_i (CORBA::ORB_ptr orb);
+  explicit Country_i (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~Country_i ();
+  ~Country_i () override = default;
 
-  virtual void update_population (const char * country,
-                                  CORBA::Long population);
+  void update_population (char const *country,
+                          CORBA::Long population) override;
 
-  virtual CORBA::Object_ptr get_typed_consumer ();
+  CORBA::Object_ptr get_typed_consumer () override;
 
-  virtual void push (const CORBA::Any & data);
+  void push (CORBA::Any const &data) override;
 
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
+
+  Country_i (Country_i const &) = delete;
+  Country_i (Country_i &&) = delete;
+  Country_i &operator= (Country_i const &) = delete;
+  Country_i &operator= (Country_i &&) = delete;
 
 private:
   /// The ORB

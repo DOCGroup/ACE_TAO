@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/UserException.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,7 +49,7 @@ namespace CORBA
     UnknownUserException ();
 
     /// Constructor.
-    UnknownUserException (CORBA::Any& exception);
+    explicit UnknownUserException (CORBA::Any& exception);
 
     /// Copy constructor.
     UnknownUserException (UnknownUserException const& e);
@@ -80,7 +81,7 @@ namespace CORBA
 
   private:
     /// Holder for the actual exception.
-    CORBA::Any *exception_ {};
+    std::unique_ptr<CORBA::Any> exception_;
   };
 
   // The CORBA::UnknownUserException TypeCode.

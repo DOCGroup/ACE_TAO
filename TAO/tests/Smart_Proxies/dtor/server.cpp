@@ -7,10 +7,10 @@ class Test_i: public virtual POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  void hello (CORBA::Long howmany);
+  void hello (CORBA::Long howmany) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown  ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:

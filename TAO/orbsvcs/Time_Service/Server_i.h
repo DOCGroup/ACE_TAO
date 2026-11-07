@@ -14,10 +14,13 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
+
+#include <memory>
 
 /**
  * @class Server_i
@@ -31,10 +34,10 @@ class Server_i
 {
 public:
   /// Constructor.
-  Server_i ();
+  Server_i () = default;
 
   /// Destructor.
-  ~Server_i ();
+  ~Server_i () = default;
 
   Server_i (Server_i const &) = delete;
   Server_i (Server_i &&) = delete;
@@ -69,7 +72,8 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the Clerk object is stored.
-  FILE *ior_output_file_ {};
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// An instance of the name server used for registering the
   /// <TimeService Server> object.

@@ -55,7 +55,7 @@ be_visitor_root_sth::visit_module (be_module *node)
       return 0;
     }
 
-  TAO_OutStream *os = tao_cg->server_template_header ();
+  TAO_OutStream * const os = tao_cg->server_template_header ();
 
   // Generate the skeleton class name.
 

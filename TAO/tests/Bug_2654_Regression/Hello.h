@@ -3,6 +3,7 @@
 #include /**/ "ace/pre.h"
 
 #include "HelloS.h"
+#include <atomic>
 
 /// Implement the Test::Hello interface
 class Hello
@@ -28,7 +29,7 @@ private:
   /// the application.
   CORBA::ORB_var orb_;
   Test::CallBack_var callback_;
-  int count_;
+  std::atomic<int> count_ {};
 };
 
 #include /**/ "ace/post.h"

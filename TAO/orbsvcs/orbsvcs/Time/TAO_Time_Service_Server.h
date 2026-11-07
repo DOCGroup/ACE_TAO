@@ -36,10 +36,10 @@ class TAO_Time_Serv_Export TAO_Time_Service_Server : public POA_CosTime::TimeSer
 {
 public:
   /// Constructor.
-  TAO_Time_Service_Server ();
+  TAO_Time_Service_Server () = default;
 
   /// Destructor.
-  ~TAO_Time_Service_Server () override;
+  ~TAO_Time_Service_Server () override = default;
 
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.

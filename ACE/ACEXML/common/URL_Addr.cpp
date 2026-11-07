@@ -12,8 +12,8 @@
 #include <memory>
 
 ACEXML_URL_Addr::ACEXML_URL_Addr ()
-  : path_name_ (0),
-    addr_string_ (0),
+  : path_name_ (nullptr),
+    addr_string_ (nullptr),
     addr_string_len_ (0)
 {
 }
@@ -46,7 +46,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
     {
       ACE_ALLOCATOR_RETURN (this->addr_string_,
                             (ACEXML_Char *) ACE_OS::realloc(this->addr_string_,
-                                                            size), 0);
+                                                            size), nullptr);
       this->addr_string_len_ = size;
     }
   ACE_OS::sprintf (this->addr_string_,
@@ -72,7 +72,7 @@ int
 ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
                                  int /*address_family */)
 {
-  if (s == 0)
+  if (s == nullptr)
     return -1;
 
   const ACEXML_Char* http = ACE_TEXT ("http://");
@@ -82,7 +82,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   if (ACE_OS::strncmp (http, s, http_len) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid URL %s\n"), s), -1);
 
-  const ACEXML_Char* url = 0;
+  const ACEXML_Char* url = nullptr;
   // Get the host name
   for (url = s + http_len; *url != '\0' && *url != ':' && *url != '/'; ++url)
     ;
@@ -90,7 +90,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   size_t host_len = url - s;
   host_len -= http_len;
 
-  ACEXML_Char* host_name = 0;
+  ACEXML_Char* host_name = nullptr;
   ACE_NEW_RETURN (host_name, ACEXML_Char[host_len + 1], -1);
   ACE_OS::strncpy (host_name, s + http_len, host_len);
   host_name[host_len] = '\0';
@@ -112,7 +112,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
     return -1;
 
   // Get the path name
-  const ACEXML_Char* path_name = 0;
+  const ACEXML_Char* path_name = nullptr;
   if (*url == '\0')
     path_name = ACE_TEXT ("/");
   else
@@ -124,8 +124,8 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
 
 ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
   : ACE_INET_Addr (),
-    path_name_ (0),
-    addr_string_ (0),
+    path_name_ (nullptr),
+    addr_string_ (nullptr),
     addr_string_len_ (0)
 {
   if (this->set (addr) == -1)
@@ -143,11 +143,11 @@ ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
     return -1;
   else
     {
-      if (addr.path_name_)
+      if (addr.path_name_ != nullptr)
         ACE_ALLOCATOR_RETURN (this->path_name_,
                               ACE_OS::strdup (addr.path_name_),
                               -1);
-      if (addr.addr_string_)
+      if (addr.addr_string_ != nullptr)
         ACE_ALLOCATOR_RETURN (this->addr_string_,
                               ACE_OS::strdup (addr.addr_string_),
                               -1);
@@ -161,7 +161,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_Char *host_name,
                             unsigned short port)
   : ACE_INET_Addr (port, host_name),
     path_name_ (ACE_OS::strdup (path_name)),
-    addr_string_ (0),
+    addr_string_ (nullptr),
     addr_string_len_ (0)
 {
 }
@@ -170,5 +170,5 @@ ACEXML_URL_Addr::~ACEXML_URL_Addr ()
 {
   ACE_OS::free (this->path_name_);
   ACE_OS::free (this->addr_string_);
-  this->path_name_ = 0;
+  this->path_name_ = nullptr;
 }

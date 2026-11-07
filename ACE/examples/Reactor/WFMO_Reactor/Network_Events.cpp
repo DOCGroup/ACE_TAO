@@ -28,6 +28,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
 
@@ -35,12 +36,17 @@ class Network_Handler : public ACE_Event_Handler
 {
 public:
   /// Default constructor
-  Network_Handler (ACE_SOCK_Stream &s);
+  explicit Network_Handler (ACE_SOCK_Stream &s);
 
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  virtual ACE_HANDLE  get_handle () const;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
+  ACE_HANDLE get_handle () const override;
+
+  Network_Handler (Network_Handler const &) = delete;
+  Network_Handler (Network_Handler &&) = delete;
+  Network_Handler &operator= (Network_Handler const &) = delete;
+  Network_Handler &operator= (Network_Handler &&) = delete;
 
   ACE_SOCK_Stream stream_;
 };
@@ -65,13 +71,13 @@ Network_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_input handle = %d\n", handle));
 
-  while (1)
+  while (true)
     {
       char message[BUFSIZ];
-      int result = this->stream_.recv (message, sizeof message);
+      int result = this->stream_.recv (message, sizeof message - 1);
       if (result > 0)
         {
-          message[result] = 0;
+          message[result] = '\0';
           ACE_DEBUG ((LM_DEBUG, "Remote message: %s\n", message));
         }
       else if (result == 0)
@@ -111,12 +117,17 @@ public:
   /// Default constructor
   /// Default constructor
   Network_Listener ();
-  ~Network_Listener ();
+  ~Network_Listener () override;
 
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  ACE_HANDLE get_handle () const;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
+  ACE_HANDLE get_handle () const override;
+
+  Network_Listener (Network_Listener const &) = delete;
+  Network_Listener (Network_Listener &&) = delete;
+  Network_Listener &operator= (Network_Listener const &) = delete;
+  Network_Listener &operator= (Network_Listener &&) = delete;
 
   ACE_INET_Addr local_address_;
   ACE_SOCK_Acceptor acceptor_;
@@ -132,9 +143,7 @@ Network_Listener::Network_Listener ()
   ACE_TEST_ASSERT (result == 0);
 }
 
-Network_Listener::~Network_Listener ()
-{
-}
+Network_Listener::~Network_Listener () = default;
 
 ACE_HANDLE
 Network_Listener::get_handle () const
@@ -155,20 +164,22 @@ Network_Listener::handle_input (ACE_HANDLE handle)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle = this->reactor ()->uses_event_associations ();
+  int const reset_new_handle = this->reactor ()->uses_event_associations ();
 
-  int result = this->acceptor_.accept (stream, // stream
-                                       &remote_address, // remote address
-                                       0, // timeout
-                                       1, // restart
-                                       reset_new_handle);  // reset new handler
+  int const result = this->acceptor_.accept (stream, // stream
+                                             &remote_address, // remote address
+                                             nullptr, // timeout
+                                             1, // restart
+                                             reset_new_handle);  // reset new handler
   ACE_TEST_ASSERT (result == 0);
 
   ACE_DEBUG ((LM_DEBUG, "Remote connection from: "));
   remote_address.dump ();
 
-  Network_Handler *handler = 0;
+  // The registered handler deletes itself when the connection closes.
+  Network_Handler *handler {};
   ACE_NEW_RETURN (handler, Network_Handler (stream), -1);
+  ACE_UNUSED_ARG (handler);
 
   return 0;
 }
@@ -189,8 +200,9 @@ Network_Listener::handle_close (ACE_HANDLE handle,
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  Network_Listener *listener = 0;
-  listener = new Network_Listener;
+  // The reactor owns the registered listener; handle_close deletes it.
+  Network_Listener *listener {};
+  ACE_NEW_RETURN (listener, Network_Listener, 1);
   ACE_UNUSED_ARG (listener);
 
   ACE_Reactor::run_event_loop ();

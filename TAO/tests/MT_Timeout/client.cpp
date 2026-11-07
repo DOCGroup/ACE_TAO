@@ -1,7 +1,8 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 int iterations = 500;
 int threads = 4;
 
@@ -9,7 +10,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -32,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage:  %s "
                            "-k <ior> "
                            "-i <iterations> "
-                           "-i <threads> "
+                           "-n <threads> "
                            "\n",
                            argv [0]),
                           -1);
@@ -42,27 +43,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ior.c_str ());
 
-      Test::Sleep_Service_var sleep_service =
-        Test::Sleep_Service::_narrow(tmp.in ());
+      Test::Sleep_Service_var const sleep_service =
+        Test::Sleep_Service::_narrow (tmp.in ());
 
       if (CORBA::is_nil (sleep_service.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil process reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
@@ -106,8 +107,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // No more than 5 % of the calls are allowed to have a too big
       // difference
-      if (task0.too_big_difference_calls () > iterations/20
-          || task1.too_big_difference_calls () > iterations/20)
+      if (task0.too_big_difference_calls () > iterations / 20
+          || task1.too_big_difference_calls () > iterations / 20)
         {
           //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
@@ -117,8 +118,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       task1.too_big_difference_calls ()));
           //FUZZ: enable check_for_lack_ACE_OS
         }
-      else  if (task0.too_big_difference_calls () != 0
-                || task1.too_big_difference_calls () != 0)
+      else if (task0.too_big_difference_calls () != 0
+               || task1.too_big_difference_calls () != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Warning: some calls (task0: %d, task1: %d) "
@@ -141,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "expected for task 1\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -27,17 +27,22 @@ class test_i : public virtual POA_Test
 {
 public:
   /// Constructor.
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// The client-side test operation.
-  virtual void client_test (Test::TestScenario scenario);
+  void client_test (Test::TestScenario scenario) override;
 
   /// The server-side test operation.
-  virtual void server_test (Test::TestScenario scenario,
-                            CORBA::ULongSeq_out myseq);
+  void server_test (Test::TestScenario scenario,
+                    CORBA::ULongSeq_out myseq) override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Pseudo-reference to the ORB.

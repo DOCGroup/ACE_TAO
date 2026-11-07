@@ -141,7 +141,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
     tc->discriminator_type ();
 
   CORBA::Any disc_any;
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
 
   // Get a CDR stream - if the Any doesn't have one, make one.
   TAO::Any_Impl *impl = any.impl ();
@@ -220,7 +220,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
       CORBA::TypeCode_var member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
-      TAO::Unknown_IDL_Type *unk = nullptr;
+      TAO::Unknown_IDL_Type *unk {};
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
                                       in));
@@ -258,7 +258,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
             tc->member_type (index);
 
           CORBA::Any default_any;
-          TAO::Unknown_IDL_Type *unk = nullptr;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
                                           in));
@@ -720,7 +720,7 @@ TAO_DynUnion_i::to_any ()
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -871,10 +871,20 @@ TAO_DynUnion_i::label_match (CORBA::Any const& my_any,
           {
             TAO::Any_Impl *other_impl = other_any.impl ();
 
+            if (other_impl == nullptr)
+              {
+                return false;
+              }
+
             if (other_impl->encoded ())
               {
                 TAO::Unknown_IDL_Type *other_unk =
                   dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
+
+                if (other_unk == nullptr)
+                  {
+                    return false;
+                  }
 
                 // We don't want unk's rd_ptr to move, in case we are
                 // shared by another Any, so we use this to copy the

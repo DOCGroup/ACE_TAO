@@ -1,11 +1,7 @@
-
-//=============================================================================
-//=============================================================================
-
+#include <cstring>
 
 #include "ace/Get_Opt.h"
-#include "ace/Task.h"
-#include "ace/OS_NS_string.h"
+#include "ace/Log_Msg.h"
 
 #include "ChildS.h"
 
@@ -13,7 +9,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -34,7 +30,6 @@ class ChildHandler : public POA_ChildModule::AMI_ChildInterfaceHandler
 {
 public:
   ChildHandler () = default;
-  ~ChildHandler () = default;
   ChildHandler (ChildHandler const &) = delete;
   ChildHandler &operator= (ChildHandler const &) = delete;
   ChildHandler (ChildHandler &&) = delete;
@@ -45,7 +40,6 @@ class NonRelatedChildHandler : public POA_AMI_ChildInterfaceHandler
 {
 public:
   NonRelatedChildHandler () = default;
-  ~NonRelatedChildHandler () = default;
   NonRelatedChildHandler (NonRelatedChildHandler const &) = delete;
   NonRelatedChildHandler &operator= (NonRelatedChildHandler const &) = delete;
   NonRelatedChildHandler (NonRelatedChildHandler &&) = delete;
@@ -53,23 +47,21 @@ public:
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-
-
+  int result {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var object_var =
+      CORBA::Object_var const object_var =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var poa_var =
+      PortableServer::POA_var const poa_var =
         PortableServer::POA::_narrow (object_var.in ());
 
-      PortableServer::POAManager_var poa_manager_var =
+      PortableServer::POAManager_var const poa_manager_var =
         poa_var->the_POAManager ();
 
       poa_manager_var->activate ();
@@ -86,11 +78,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object = poa_var->id_to_reference (id.in ());
 
-      ChildModule::AMI_ChildInterfaceHandler_var the_child_handler_var =
+      ChildModule::AMI_ChildInterfaceHandler_var const the_child_handler_var =
         ChildModule::AMI_ChildInterfaceHandler::_narrow (object.in ());
 
-      char const *expectedid = "IDL:child.pragma.prefix/ChildModule/AMI_ChildInterfaceHandler:1.0";
-      if (ACE_OS::strcmp (the_child_handler_var->_interface_repository_id (), expectedid) != 0)
+      char const * const expectedid = "IDL:child.pragma.prefix/ChildModule/AMI_ChildInterfaceHandler:1.0";
+      if (std::strcmp (the_child_handler_var->_interface_repository_id (), expectedid) != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error: REGRESSION - ChildModule::repository id is "
                                 "incorrectly generated, received %s\n",
@@ -103,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       object = poa_var->id_to_reference (id.in ());
 
-      AMI_ChildInterfaceHandler_var the_non_related_child_handler_var =
+      AMI_ChildInterfaceHandler_var const the_non_related_child_handler_var =
         AMI_ChildInterfaceHandler::_narrow (object.in ());
 
       // Check that both handler objects narrow successfully to their parent
@@ -154,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

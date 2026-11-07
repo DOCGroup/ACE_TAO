@@ -32,7 +32,7 @@ public:
   TAO_EC_Group_Scheduling ();
 
   // Read EC_Scheduling_Strategy.h for more details
-  virtual void add_proxy_supplier_dependencies (
+  void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer) override;
   virtual void schedule_event (const RtecEventComm::EventSet &event,

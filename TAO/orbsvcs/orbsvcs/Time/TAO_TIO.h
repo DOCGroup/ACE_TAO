@@ -39,7 +39,7 @@ public:
            TimeBase::TimeT upper);
 
   /// Destructor.
-  ~TAO_TIO () override;
+  ~TAO_TIO () override = default;
 
   /// This is the get method for the attribute time interval.
   TimeBase::IntervalT time_interval () override;

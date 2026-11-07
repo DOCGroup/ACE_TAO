@@ -15,6 +15,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Reactor.h"
+#include "ace/Unbounded_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -31,8 +32,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
-template <class T> class ACE_Unbounded_Set;
-template <class T> class ACE_Unbounded_Set_Iterator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

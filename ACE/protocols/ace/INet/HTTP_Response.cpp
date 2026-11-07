@@ -32,9 +32,7 @@ namespace ACE
       {
       }
 
-    Response::~Response()
-      {
-      }
+    Response::~Response() = default;
 
     void Response::add_cookie(const ACE_CString & cookie)
       {

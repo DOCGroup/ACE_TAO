@@ -1,5 +1,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+
+#include <memory>
 
 #include "AMH_Servant.h"
 #include "Base_Server.h"
@@ -14,11 +17,7 @@
 Base_Server::Base_Server (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_ (ACE_TEXT("test.ior"))
-{
-}
-
-Base_Server::~Base_Server ()
+  , ior_output_file_ (ACE_TEXT ("test.ior"))
 {
 }
 
@@ -28,8 +27,8 @@ Base_Server::parse_args ()
   // *** To get correct behaviour, set ** POSIXLY_CORECT=1 ** on Linux
   // systems!!! ***
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("o:"));
-  int c;
-  int count_argv = 0;
+  int c {};
+  int count_argv {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -100,7 +99,7 @@ Base_Server::shutdown_orb_and_poa ()
       this->orb_->destroy ();
       this->orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception raised shutting down ORB or POA");
       return -1;
@@ -119,7 +118,7 @@ Base_Server::start_orb_and_poa ()
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -133,7 +132,7 @@ Base_Server::start_orb_and_poa ()
 
       poa_manager->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
@@ -157,7 +156,7 @@ Base_Server::register_servant (AMH_Servant *servant)
 
       (void) this->write_ior_to_file (ior.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception raised while registering servant");
     }
@@ -170,7 +169,7 @@ Base_Server::run_event_loop ()
   try
     {
       ACE_Time_Value period (0, 11000);
-      while (1)
+      for (;;)
         {
           // @@ Mayur, where's the work_pending() call?
           //
@@ -184,7 +183,7 @@ Base_Server::run_event_loop ()
           this->orb_->perform_work (period);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Caught exceptionin Base_Server::run_event_loop");
@@ -192,21 +191,21 @@ Base_Server::run_event_loop ()
 }
 
 int
-Base_Server::write_ior_to_file (const char * ior)
+Base_Server::write_ior_to_file (char const *ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle output_file (ACE_OS::fopen (this->ior_output_file_.c_str (), "w"),
+                           &ACE_OS::fclose);
 
-  if (output_file == 0)
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  this->ior_output_file_));
+                  this->ior_output_file_.c_str ()));
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior);
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", ior);
   return 0;
 }

@@ -5,19 +5,19 @@
 
 // static HTTP_Config_Info config_info;
 
-HTTP_Config_Info *HTTP_Config::instance_ = 0;
+HTTP_Config_Info *HTTP_Config::instance_ = nullptr;
 
 HTTP_Config_Info *
 HTTP_Config::instance ()
 {
-  if (HTTP_Config::instance_ == 0)
+  if (HTTP_Config::instance_ == nullptr)
     {
       HTTP_Config::instance_ = new HTTP_Config_Info;
 
-      HTTP_Config::instance_->document_root (0);
-      HTTP_Config::instance_->cgi_path (0);
-      HTTP_Config::instance_->user_dir (0);
-      HTTP_Config::instance_->dir_index (0);
+      HTTP_Config::instance_->document_root (nullptr);
+      HTTP_Config::instance_->cgi_path (nullptr);
+      HTTP_Config::instance_->user_dir (nullptr);
+      HTTP_Config::instance_->dir_index (nullptr);
       HTTP_Config::instance_->proxy_flag (0);
     }
 
@@ -25,15 +25,11 @@ HTTP_Config::instance ()
 }
 
 HTTP_Config_Info::HTTP_Config_Info ()
-  : document_root_ (0),
-    cgi_path_ (0),
-    user_dir_ (0),
-    dir_index_ (0),
+  : document_root_ (nullptr),
+    cgi_path_ (nullptr),
+    user_dir_ (nullptr),
+    dir_index_ (nullptr),
     proxy_flag_ (0)
-{
-}
-
-HTTP_Config_Info::~HTTP_Config_Info ()
 {
 }
 

@@ -14,10 +14,6 @@ TAO_EC_RTCORBA_Factory::
 {
 }
 
-TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory ()
-{
-}
-
 
 int
 TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])
@@ -36,11 +32,11 @@ TAO_EC_RTCORBA_Factory::fini ()
 TAO_EC_Dispatching*
 TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
-  TAO_EC_Dispatching *dispatching = nullptr;
+  TAO_EC_Dispatching *dispatching {};
   try
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 

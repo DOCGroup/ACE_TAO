@@ -1,17 +1,11 @@
 #include "Payload_Receiver.h"
 
-Payload_Receiver::Payload_Receiver ()
-  : message_count_ (0)
-  , maybe_lost_count_ (0)
-{
-}
-
 void
 Payload_Receiver::more_data (
-  const Test::Payload& payload,
+  Test::Payload const &payload,
   CORBA::Boolean maybe_lost)
 {
-  if (payload.length() > 0)
+  if (payload.length () > 0)
     {
       if (maybe_lost)
         {
@@ -33,6 +27,6 @@ int
 Payload_Receiver::count (bool maybe_lost) const
 {
   return (maybe_lost) ?
-         maybe_lost_count_.value ()
-       : message_count_.value ();
+         maybe_lost_count_.load ()
+       : message_count_.load ();
 }

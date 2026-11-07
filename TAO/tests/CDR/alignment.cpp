@@ -17,7 +17,7 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int status = 0;
+  int status {};
 
   for (CORBA::ULong i = 16; i != 64; ++i)
     {
@@ -25,7 +25,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_CDR::mb_align (&mb);
       mb.wr_ptr (i);
 
-      CORBA::Double dbl = i;
+      CORBA::Double const dbl = i;
 
       TAO_OutputCDR cdr;
       cdr.write_ulong (i); // length
@@ -35,7 +35,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       TAO_InputCDR input (cdr);
 
-      CORBA::ULong len;
+      CORBA::ULong len {};
 
       input.read_ulong (len);
 
@@ -52,7 +52,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       mb.wr_ptr (len);
       input.read_char_array (mb.rd_ptr (), len);
 
-      CORBA::Double read_dbl;
+      CORBA::Double read_dbl {};
       if (input.read_double (read_dbl) == 0)
         ACE_DEBUG ((LM_DEBUG, "Failure reading double...\n"));
 
@@ -63,20 +63,20 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       "ERROR: mismatched doubles,"
                       " got %f, expected %f\n",
                       read_dbl, dbl));
-          for (const ACE_Message_Block *j = cdr.begin ();
+          for (ACE_Message_Block const *j = cdr.begin ();
                j != cdr.end ();
                j = j->cont ())
             {
               ACE_HEX_DUMP ((LM_DEBUG,
                              j->rd_ptr (),
                              j->length (),
-                             ACE_TEXT("Output CDR stream")));
+                             ACE_TEXT ("Output CDR stream")));
             }
           TAO_InputCDR debug (cdr);
           ACE_HEX_DUMP ((LM_DEBUG,
                          debug.rd_ptr (),
                          debug.length (),
-                         ACE_TEXT("Input CDR stream")));
+                         ACE_TEXT ("Input CDR stream")));
         }
     }
 

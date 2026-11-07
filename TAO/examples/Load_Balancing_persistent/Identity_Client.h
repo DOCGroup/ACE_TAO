@@ -41,10 +41,15 @@ class Identity_Client
 {
 public:
   /// Default constructor.
-  Identity_Client ();
+  Identity_Client () = default;
 
   /// Destructor.
-  ~Identity_Client ();
+  ~Identity_Client () = default;
+
+  Identity_Client (Identity_Client const &) = delete;
+  Identity_Client (Identity_Client &&) = delete;
+  Identity_Client &operator= (Identity_Client const &) = delete;
+  Identity_Client &operator= (Identity_Client &&) = delete;
 
   /// Initializes <orb_manager_>, and parses commandline arguments.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -61,21 +66,21 @@ private:
 
   /// The ior of the <Object_Group_Factory> object we shall use to
   /// to obtain an <Object_Group> object.
-  const ACE_TCHAR *group_factory_ior_;
+  /// Borrowed from the command-line arguments.
+  ACE_TCHAR const *group_factory_ior_ {};
 
   /// Number of times to invoke <get_name> method on <Identity>
   /// objects.  The default value is 5.
-  size_t number_of_invocations_;
+  size_t number_of_invocations_ {5};
 
   /**
    * Flag indicating which <Object_Group> to use to obtain references
-   * to <Identity> objects.  Random group should be used if the flag
-   * is set to 1, and round robin group otherwise.  Round robin is the
-   * default.
+   * to <Identity> objects. Random group is used when the flag is true,
+   * and round robin otherwise. Round robin is the default.
    */
-  size_t use_random_;
+  bool use_random_ {};
 
-  int iterations_;
+  int iterations_ {};
 };
 
 #endif /* IDENTITY_CLIENT_H_ */

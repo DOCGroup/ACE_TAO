@@ -1,12 +1,6 @@
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
 
-Logger_Server::Logger_Server ()
-  :service_name_ (ACE_TEXT("LoggingService"))
-{
-  // Do nothing
-}
-
 int
 Logger_Server::parse_args ()
 {
@@ -68,20 +62,20 @@ Logger_Server::init (int argc,
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
                                                  &this->factory_impl_);
-    if (TAO_debug_level > 0)
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The IOR is: <%s>\n",
                 str.in ()));
 
-    // Initialize the naming service
-    int ret = this->init_naming_service ();
-    if (ret != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
+  // Initialize the naming service
+  int const ret = this->init_naming_service ();
+  if (ret != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_naming_service"),
                       -1);
-  else
-    return 0;
+
+  return 0;
 }
 
 
@@ -114,15 +108,10 @@ Logger_Server::init_naming_service ()
 int
 Logger_Server::run ()
 {
-  int ret = this->orb_manager_.run ();
+  int const ret = this->orb_manager_.run ();
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Logger_Server::run"),
                       -1);
   return 0;
-}
-
-Logger_Server::~Logger_Server ()
-{
-  // Do nothing
 }

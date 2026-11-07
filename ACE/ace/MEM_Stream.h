@@ -62,7 +62,7 @@ public:
   ACE_MEM_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
-  ACE_MEM_Stream (ACE_HANDLE h);
+  explicit ACE_MEM_Stream (ACE_HANDLE h);
 
   /// Destructor.
   ~ACE_MEM_Stream ();

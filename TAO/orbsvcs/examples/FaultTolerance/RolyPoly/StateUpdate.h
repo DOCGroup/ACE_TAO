@@ -8,8 +8,7 @@
 class Checkpointable
 {
 public:
-  virtual
-  ~Checkpointable ();
+  virtual ~Checkpointable () = default;
 
   virtual CORBA::Any*
   get_state ();

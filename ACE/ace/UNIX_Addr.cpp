@@ -1,5 +1,8 @@
 #include "ace/UNIX_Addr.h"
+#include "ace/OS_NS_string.h"
+
 #include <algorithm>
+#include <cstring>
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -22,7 +25,7 @@ ACE_UNIX_Addr::set_addr (const void *addr, int len)
   ACE_TRACE ("ACE_UNIX_Addr::set_addr");
 
   this->ACE_Addr::base_set (AF_UNIX, len);
-  ACE_OS::memcpy (&this->unix_addr_, addr, len);
+  std::memcpy (&this->unix_addr_, addr, len);
 }
 
 // Return a pointer to the underlying address.
@@ -41,7 +44,7 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
   ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
                     sizeof this->unix_addr_.sun_path);
 
-  size_t const len = ACE_OS::strlen (this->unix_addr_.sun_path);
+  size_t const len = std::strlen (this->unix_addr_.sun_path);
 #if defined (ACE_LINUX)
   if (*this->unix_addr_.sun_path == '@') // abstract path
     {
@@ -103,9 +106,9 @@ ACE_UNIX_Addr::ACE_UNIX_Addr ()
   : ACE_Addr (AF_UNIX,
               sizeof this->unix_addr_ - sizeof (this->unix_addr_.sun_path))
 {
-  (void) ACE_OS::memset ((void *) &this->unix_addr_,
-                         0,
-                         sizeof this->unix_addr_);
+  (void) std::memset (&this->unix_addr_,
+                      0,
+                      sizeof this->unix_addr_);
 
   this->unix_addr_.sun_family = AF_UNIX;
 }
@@ -114,12 +117,12 @@ int
 ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
 {
   if (sa.get_type () == AF_ANY)
-    (void) ACE_OS::memset ((void *) &this->unix_addr_,
-                           0,
-                           sizeof this->unix_addr_);
+    (void) std::memset (&this->unix_addr_,
+                        0,
+                        sizeof this->unix_addr_);
   else
-    ACE_OS::strcpy (this->unix_addr_.sun_path,
-                    sa.unix_addr_.sun_path);
+    std::strcpy (this->unix_addr_.sun_path,
+                 sa.unix_addr_.sun_path);
 
   this->unix_addr_.sun_family = AF_UNIX;
   this->base_set (sa.get_type (), sa.get_size ());
@@ -138,8 +141,8 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
 int
 ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
 {
-  (void) ACE_OS::memset ((void *) &this->unix_addr_, 0,
-                   sizeof this->unix_addr_);
+  (void) std::memset (&this->unix_addr_, 0,
+                      sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
 #if defined (ACE_LINUX)
   int const n = (std::min) (len - int (sizeof this->unix_addr_ -
@@ -147,10 +150,10 @@ ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
                             int (sizeof (this->unix_addr_.sun_path)));
   if (n > 0)
     {
-      memcpy (this->unix_addr_.sun_path, un->sun_path, n);
+      std::memcpy (this->unix_addr_.sun_path, un->sun_path, n);
     }
 #else
-  ACE_OS::strcpy (this->unix_addr_.sun_path, un->sun_path);
+  std::strcpy (this->unix_addr_.sun_path, un->sun_path);
 #endif /* ACE_LINUX */
   this->base_set (AF_UNIX, len);
   return 0;
@@ -164,15 +167,15 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const sockaddr_un *un, int len)
 int
 ACE_UNIX_Addr::set (const char rendezvous_point[])
 {
-  (void) ACE_OS::memset ((void *) &this->unix_addr_,
-                         0,
-                         sizeof this->unix_addr_);
+  (void) std::memset (&this->unix_addr_,
+                      0,
+                      sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
   (void) ACE_OS::strsncpy (this->unix_addr_.sun_path,
                            rendezvous_point,
                            sizeof this->unix_addr_.sun_path);
 
-  size_t const len = ACE_OS::strlen (this->unix_addr_.sun_path);
+  size_t const len = std::strlen (this->unix_addr_.sun_path);
 #if defined (ACE_LINUX)
   if (*this->unix_addr_.sun_path == '@') // abstract path
     {

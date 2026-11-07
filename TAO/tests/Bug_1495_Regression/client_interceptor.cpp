@@ -7,8 +7,8 @@
 
 Echo_Client_Request_Interceptor::
 Echo_Client_Request_Interceptor (char const *id)
-  : myname_ ("Echo_Client_Interceptor"),
-    orb_id_ (CORBA::string_dup (id))
+  : myname_ ("Echo_Client_Interceptor")
+  , orb_id_ (CORBA::string_dup (id))
 {
 }
 

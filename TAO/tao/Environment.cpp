@@ -3,7 +3,7 @@
 #include "tao/SystemException.h"
 #include "tao/default_environment.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Environment.inl"
@@ -138,12 +138,12 @@ CORBA::Environment::exception_type () const
 
   const char *id = this->exception_->_rep_id ();
 
-  if ((ACE_OS::strncmp (id,
-                        sysex_prefix,
-                        sizeof sysex_prefix - 1) == 0
-       && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
-                           typecode_extra,
-                           sizeof typecode_extra - 1) != 0))
+  if ((std::strncmp (id,
+                     sysex_prefix,
+                     sizeof sysex_prefix - 1) == 0
+       && std::strncmp (id + sizeof sysex_prefix - 1,
+                        typecode_extra,
+                        sizeof typecode_extra - 1) != 0))
     return CORBA::SYSTEM_EXCEPTION;
   else
     return CORBA::USER_EXCEPTION;

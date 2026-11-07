@@ -82,21 +82,21 @@ public:
                         size_t inc = ACE_DEFAULT_FREE_LIST_INC);
 
   /// Destructor - removes all the elements from the free_list.
-  virtual ~ACE_Locked_Free_List ();
+  ~ACE_Locked_Free_List () override;
 
   /// Inserts an element onto the free list (if it isn't past the high
   /// water mark).
-  virtual void add (T *element);
+  void add (T *element) override;
 
   /// Takes a element off the freelist and returns it.  It creates
   /// <inc> new elements if the size is at or below the low water mark.
-  virtual T *remove ();
+  T *remove () override;
 
   /// Returns the current size of the free list.
-  virtual size_t size ();
+  size_t size () override;
 
   /// Resizes the free list to @a newsize.
-  virtual void resize (size_t newsize);
+  void resize (size_t newsize) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -130,9 +130,10 @@ protected:
   ACE_LOCK mutex_;
 
 private:
-  // = Don't allow these operations for now.
-  ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
-  void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
+  ACE_Locked_Free_List (ACE_Locked_Free_List const &) = delete;
+  ACE_Locked_Free_List (ACE_Locked_Free_List &&) = delete;
+  ACE_Locked_Free_List &operator= (ACE_Locked_Free_List const &) = delete;
+  ACE_Locked_Free_List &operator= (ACE_Locked_Free_List &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

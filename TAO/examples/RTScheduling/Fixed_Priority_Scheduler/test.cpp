@@ -33,7 +33,7 @@ public:
 #endif
   }
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  virtual int handle_signal (int, siginfo_t*, ucontext_t*) override
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down...\n"));
     this->orb_->shutdown ();

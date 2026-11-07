@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core * orb_core)
+TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
 {
 }
@@ -29,15 +29,13 @@ TAO_EndpointPolicy_Factory::create_policy (
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
     {
-      EndpointPolicy::EndpointList const* endpoint_list = nullptr;
+      EndpointPolicy::EndpointList const* endpoint_list {};
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
       TAO_Acceptor_Registry & registry =
         this->orb_core_->lane_resources ().acceptor_registry ();
 
-      TAO_Acceptor ** const acceptors_begin = registry.begin ();
-      TAO_Acceptor ** const acceptors_end = registry.end ();
       CORBA::ULong const num_eps = endpoint_list->length ();
 
       // need to count the protocol types offered by the acceptors
@@ -46,13 +44,11 @@ TAO_EndpointPolicy_Factory::create_policy (
 
       CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
       int prot_count = 0;
-      for (TAO_Acceptor** acceptor = acceptors_begin;
-           acceptor != acceptors_end;
-           ++acceptor)
+      for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
         {
-          if ((*acceptor)->tag () != last_known_prot)
+          if (acceptor->tag () != last_known_prot)
             {
-              last_known_prot = (*acceptor)->tag ();
+              last_known_prot = acceptor->tag ();
               ++prot_count;
             }
         }
@@ -74,12 +70,10 @@ TAO_EndpointPolicy_Factory::create_policy (
           if (evi == nullptr)
             continue;
 
-          for (TAO_Acceptor** acceptor = acceptors_begin;
-               !found_one && acceptor != acceptors_end;
-               ++acceptor)
+          for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
             {
-              if ((*acceptor)->tag () == prot_tag)
-                found_one = evi->validate_acceptor (*acceptor, prot_count > 1);
+              if (!found_one && acceptor->tag () == prot_tag)
+                found_one = evi->validate_acceptor (acceptor.get (), prot_count > 1);
             }
         }
 
@@ -89,7 +83,7 @@ TAO_EndpointPolicy_Factory::create_policy (
       if (!found_one)
         throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
 
-      TAO_EndpointPolicy_i *tmp = nullptr;
+      TAO_EndpointPolicy_i *tmp {};
       ACE_NEW_THROW_EX (tmp,
                         TAO_EndpointPolicy_i (*endpoint_list),
                         CORBA::NO_MEMORY (TAO::VMCID,

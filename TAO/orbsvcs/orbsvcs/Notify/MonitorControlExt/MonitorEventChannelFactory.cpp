@@ -7,6 +7,9 @@
 
 #include "ace/Monitor_Point_Registry.h"
 
+#include <cstring>
+#include <string>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -20,7 +23,7 @@ class EventChannels
 {
 public:
   EventChannels (TAO_MonitorEventChannelFactory* ecf,
-                 const ACE_CString& name,
+                 ACE_CString const &name,
                  Monitor_Control_Types::Information_Type type,
                  bool active)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannelFactory> (ecf,
@@ -30,7 +33,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
@@ -40,7 +43,7 @@ public:
       }
     else
       {
-        this->receive (this->interf_->get_ecs (0, this->active_));
+        this->receive (this->interf_->get_ecs (nullptr, this->active_));
       }
   }
 
@@ -53,16 +56,16 @@ private:
 // ******************************************************************
 
 TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
-  const char* name)
+  char const *name)
   : name_ (name)
 {
-  if (name != 0)
+  if (name != nullptr)
     {
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name (dir_name +
                              NotifyMonitoringExt::ActiveEventChannelCount);
 
-      EventChannels* event_channels = nullptr;
+      EventChannels* event_channels {};
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
@@ -75,7 +78,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelCount;
-      event_channels = 0;
+      event_channels = nullptr;
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
@@ -88,7 +91,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::ActiveEventChannelNames;
-      event_channels = 0;
+      event_channels = nullptr;
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
@@ -101,7 +104,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelNames;
-      event_channels = 0;
+      event_channels = nullptr;
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
@@ -114,7 +117,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelCreationTime;
-      Monitor_Base* timestamp = nullptr;
+      Monitor_Base* timestamp {};
       ACE_NEW (timestamp,
                Timestamp_Monitor (stat_name.c_str ()));
 
@@ -134,7 +137,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       Monitor_Base* names =
         instance->get (NotifyMonitoringExt::EventChannelFactoryNames);
 
-      if (names == 0)
+      if (names == nullptr)
         {
           stat_name = NotifyMonitoringExt::EventChannelFactoryNames;
           ACE_NEW_THROW_EX (names,
@@ -164,12 +167,12 @@ TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory ()
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_MonitorEventChannelFactory::create_named_channel (
-   const CosNotification::QoSProperties& initial_qos,
-   const CosNotification::AdminProperties& initial_admin,
+   CosNotification::QoSProperties const &initial_qos,
+   CosNotification::AdminProperties const &initial_admin,
    CosNotifyChannelAdmin::ChannelID_out id,
-   const char* name)
+   char const *name)
 {
-  if (ACE_OS::strlen (name) == 0)
+  if (std::strlen (name) == 0)
     {
       throw NotifyMonitoringExt::NameMapError ();
     }
@@ -216,8 +219,8 @@ TAO_MonitorEventChannelFactory::create_named_channel (
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_MonitorEventChannelFactory::create_channel (
-  const CosNotification::QoSProperties& initial_qos,
-  const CosNotification::AdminProperties& initial_admin,
+  CosNotification::QoSProperties const &initial_qos,
+  CosNotification::AdminProperties const &initial_admin,
   CosNotifyChannelAdmin::ChannelID_out id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
@@ -234,16 +237,15 @@ TAO_MonitorEventChannelFactory::create_channel (
   TAO_MonitorEventChannel* mec =
     dynamic_cast<TAO_MonitorEventChannel*> (ec->_servant ());
 
-  if (mec == 0)
+  if (mec == nullptr)
     {
       throw CORBA::INTERNAL ();
     }
 
   // Construct the name using the new id
   ACE_CString sname (this->name_ + "/");
-  char name[64];
-  ACE_OS::sprintf(name, "%d", id);
-  sname += name;
+  const std::string id_name = std::to_string (id);
+  sname += id_name.c_str ();
 
   ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
 
@@ -269,7 +271,7 @@ TAO_MonitorEventChannelFactory::remove (TAO_Notify_EventChannel* channel)
   TAO_MonitorEventChannel* mec =
     dynamic_cast<TAO_MonitorEventChannel*> (channel);
 
-  if (mec != 0)
+  if (mec != nullptr)
     {
       ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
       this->map_.unbind (mec->name ());
@@ -379,7 +381,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
         {
           count++;
 
-          if (names != 0)
+          if (names != nullptr)
             {
               ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX,
                                      guard,
@@ -387,7 +389,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
                                      0);
 
               Map::iterator itr (this->map_);
-              Map::value_type* entry = nullptr;
+              Map::value_type* entry {};
 
               while (itr.next (entry))
                 {
@@ -411,10 +413,9 @@ TAO_MonitorEventChannelFactory::get_ecs (
 
 TAO_MonitorEventChannelFactory::Unbinder::Unbinder (
   TAO_MonitorEventChannelFactory::Map& map,
-  const ACE_CString& name)
+  ACE_CString const &name)
   : map_ (map),
-     name_ (name),
-     released_ (false)
+     name_ (name)
 {
 }
 

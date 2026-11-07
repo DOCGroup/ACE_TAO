@@ -2,14 +2,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ::X509 *
-TAO::SSLIOP_Credentials::x509 ()
+TAO::SSLIOP_Credentials::x509 () const
 {
   return
     TAO::SSLIOP::OpenSSL_traits< ::X509 >::_duplicate (this->x509_.in ());
 }
 
 ACE_INLINE ::EVP_PKEY *
-TAO::SSLIOP_Credentials::evp ()
+TAO::SSLIOP_Credentials::evp () const
 {
   return
     TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::_duplicate (this->evp_.in ());

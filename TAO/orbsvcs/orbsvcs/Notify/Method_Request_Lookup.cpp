@@ -35,10 +35,6 @@ TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
 {
 }
 
-TAO_Notify_Method_Request_Lookup::~TAO_Notify_Method_Request_Lookup ()
-{
-}
-
 void
 TAO_Notify_Method_Request_Lookup::work (
   TAO_Notify_ProxySupplier* proxy_supplier)
@@ -79,7 +75,7 @@ int TAO_Notify_Method_Request_Lookup::execute_i ()
 
   TAO_Notify_Consumer_Map::ENTRY* entry = map.find (this->event_->type ());
 
-  TAO_Notify_ProxySupplier_Collection* consumers = nullptr;
+  TAO_Notify_ProxySupplier_Collection* consumers {};
 
   if (entry != nullptr)
   {
@@ -112,11 +108,12 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
   TAO_InputCDR & cdr)
 {
   bool ok = true;
-  TAO_Notify_Method_Request_Lookup_Queueable * result = nullptr;
+  TAO_Notify_Method_Request_Lookup_Queueable * result {};
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
-    TAO_Notify::IdVec id_path (count);
+    TAO_Notify::IdVec id_path;
+    id_path.reserve (count);
     for (size_t nid = 0; ok && nid < count; ++nid)
     {
       TAO_Notify_Object::ID id = 0;
@@ -181,10 +178,6 @@ TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Que
 }
 
 
-TAO_Notify_Method_Request_Lookup_Queueable::~TAO_Notify_Method_Request_Lookup_Queueable ()
-{
-}
-
 int
 TAO_Notify_Method_Request_Lookup_Queueable::execute ()
 {
@@ -197,10 +190,6 @@ TAO_Notify_Method_Request_Lookup_No_Copy::TAO_Notify_Method_Request_Lookup_No_Co
         const TAO_Notify_Event* event,
         TAO_Notify_ProxyConsumer* proxy_consumer)
   : TAO_Notify_Method_Request_Lookup (event, proxy_consumer)
-{
-}
-
-TAO_Notify_Method_Request_Lookup_No_Copy::~TAO_Notify_Method_Request_Lookup_No_Copy ()
 {
 }
 

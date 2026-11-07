@@ -11,7 +11,7 @@ class Logging_Svc_Shutdown
 public:
   Logging_Svc_Shutdown (Basic_Logging_Service& svc);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 
 private:
   Basic_Logging_Service&        svc_;

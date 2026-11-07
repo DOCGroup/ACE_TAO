@@ -24,7 +24,7 @@ class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
   /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb,
+  explicit AMI_Test_i (CORBA::ORB_ptr orb,
               CORBA::Long in_l = 0,
               char const *in_str = nullptr,
               bool check_params = false);
@@ -49,13 +49,13 @@ public:
 private:
   CORBA::ORB_var orb_;
 
-  CORBA::Long yadda_;
+  CORBA::Long yadda_ {};
 
-  CORBA::Long in_l_;
+  CORBA::Long in_l_ {};
 
   CORBA::String_var in_str_;
 
-  bool check_params_;
+  bool check_params_ {};
 };
 
 #endif /* TAO_AMI_TEST_I_H */

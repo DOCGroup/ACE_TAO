@@ -110,7 +110,7 @@ namespace TAO
 
     private:
       /// Set the Bidirectional context info in the service context list
-      void set_bidir_context_info (TAO_Operation_Details &opdetails);
+      void set_bidir_context_info (TAO_Operation_Details &opdetails) override;
 
       /// Add the listen points in <acceptor> to the <listen_point_list>
       /// if this connection is in the same interface as that of the

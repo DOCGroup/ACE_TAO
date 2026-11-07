@@ -4,6 +4,8 @@
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
 #include "../Utils/resolve_init.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 UpdateableHandler::UpdateableHandler(AMI_Primary_Replication_Strategy* strategy)
@@ -16,8 +18,8 @@ FTRT::AMI_UpdateableHandler_ptr UpdateableHandler::activate(
   PortableServer::ObjectId& object_id)
 {
   object_id.length(sizeof(mgr) + sizeof(id));
-  ACE_OS::memcpy(object_id.get_buffer(), &mgr, sizeof(mgr));
-  ACE_OS::memcpy(object_id.get_buffer() + sizeof(mgr), &id, sizeof(id));
+  std::memcpy (object_id.get_buffer (), &mgr, sizeof (mgr));
+  std::memcpy (object_id.get_buffer () + sizeof (mgr), &id, sizeof (id));
   strategy_->poa()->activate_object_with_id(object_id,
                                             this);
   CORBA::Object_var object = strategy_->poa()->id_to_reference(
@@ -39,8 +41,8 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
   Update_Manager* mgr;
   int id;
 
-  ACE_OS::memcpy(&mgr, object_id->get_buffer(), sizeof(mgr));
-  ACE_OS::memcpy(&id, object_id->get_buffer()+sizeof(mgr), sizeof(id));
+  std::memcpy (&mgr, object_id->get_buffer (), sizeof (mgr));
+  std::memcpy (&id, object_id->get_buffer () + sizeof (mgr), sizeof (id));
 
   ORBSVCS_DEBUG((LM_DEBUG, "%d\n", id));
 

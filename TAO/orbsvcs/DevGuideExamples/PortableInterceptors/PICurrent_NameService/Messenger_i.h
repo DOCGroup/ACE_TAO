@@ -20,11 +20,11 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
-  Messenger_i ();
+  // Constructor
+  Messenger_i () = default;
 
-  //Destructor
-  virtual ~Messenger_i ();
+  // Destructor
+  ~Messenger_i () override = default;
 
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;

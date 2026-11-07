@@ -88,7 +88,7 @@ TAO_Active_Object_Map::find_system_id_using_user_id (
 
   TAO_Active_Object_Map_Entry *entry {};
   int result =
-    this->id_uniqueness_strategy_->bind_using_user_id (0,
+    this->id_uniqueness_strategy_->bind_using_user_id (nullptr,
                                                        user_id,
                                                        priority,
                                                        entry);
@@ -264,14 +264,14 @@ TAO_Active_Object_Map::remaining_activations (PortableServer::Servant servant)
   return this->id_uniqueness_strategy_->remaining_activations (servant);
 }
 
-ACE_INLINE size_t
+ACE_INLINE std::size_t
 TAO_Active_Object_Map::current_size ()
 {
   return this->user_id_map_->current_size ();
 }
 
 /* static */
-ACE_INLINE size_t
+ACE_INLINE std::size_t
 TAO_Active_Object_Map::system_id_size ()
 {
   return TAO_Active_Object_Map::system_id_size_;

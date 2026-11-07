@@ -10,7 +10,7 @@
 #include "tao/Unbounded_Octet_Sequence_T.h"
 #include "ace/Log_Msg.h"
 
-typedef TAO::unbounded_value_sequence <CORBA::Octet> s_sequence;
+using s_sequence = TAO::unbounded_value_sequence <CORBA::Octet>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -48,7 +48,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       b.replace(64, 0, s_sequence::allocbuf(64), true);
 
       CORBA::Octet const * x = d.get_buffer();
-      if (x != 0)
+      if (x != nullptr)
       {
         s_sequence::freebuf(a.get_buffer(true));
       }

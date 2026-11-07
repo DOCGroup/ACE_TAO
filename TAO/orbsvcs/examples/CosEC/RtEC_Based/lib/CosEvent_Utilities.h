@@ -37,7 +37,11 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   CosEC_ServantBase ();
 
   /// Destructor.
-  virtual ~CosEC_ServantBase () = default;
+  ~CosEC_ServantBase () override = default;
+  CosEC_ServantBase (CosEC_ServantBase const &) = delete;
+  CosEC_ServantBase (CosEC_ServantBase &&) = delete;
+  CosEC_ServantBase &operator= (CosEC_ServantBase const &) = delete;
+  CosEC_ServantBase &operator= (CosEC_ServantBase &&) = delete;
 
   /**
    * This method creates a local scheduler, rtec and cosec.
@@ -56,24 +60,23 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   /// If the servant_id is not nil then it is used to supply the object id
   /// for <this> servant.
-  int activate (const char* servant_id);
+  int activate (char const *servant_id);
 
   /// Deactivates the CosEC and friends with the POA.
   void deactivate ();
 
   // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
+  CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
+  CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
   /// Destroys this Event Channel object.
-  virtual void destroy ();
+  void destroy () override;
 
  protected:
   // = RtEC creation, activation and deactivation methods.
   /// Create a local rtec.
-  virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec ();
+  virtual POA_RtecEventChannelAdmin::EventChannel_ptr create_rtec ();
 
   /// Activates the rtec.
   virtual void activate_rtec ();
@@ -113,10 +116,10 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   PortableServer::POA_var poa_;
 
   /// The Event Channel servant.
-  POA_RtecEventChannelAdmin::EventChannel_ptr rtec_servant_;
+  POA_RtecEventChannelAdmin::EventChannel_ptr rtec_servant_ {};
 
   /// The servant object of the COS Event Channel.
-  TAO_CosEC_EventChannel_i *cosec_servant_;
+  TAO_CosEC_EventChannel_i *cosec_servant_ {};
 
   /// Ref to the Rtec.
   RtecEventChannelAdmin::EventChannel_var rtec_;
@@ -132,18 +135,18 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   /// The list of EventTypeIDs (for ConsumerQOS) separated by spaces.
   /// e.g. "1 2 3 4"
-  ACE_TCHAR *eventTypeIds_;
+  ACE_TCHAR *eventTypeIds_ {};
 
   /// The list of EventSourceIDs (for ConsumerQOS) separated by spaces.
   /// e.g. "1 2 3 4"
-  ACE_TCHAR *eventSourceIds_;
+  ACE_TCHAR *eventSourceIds_ {};
 
   /**
    * The pairs of Source and EventType Ids (for the SupplierQOS).
    * e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
    * event id pairs.
    */
-  ACE_TCHAR *source_type_pairs_;
+  ACE_TCHAR *source_type_pairs_ {};
 };
 
 #include /**/ "ace/post.h"

@@ -19,7 +19,7 @@ namespace FTRTEC
   namespace {
     std::unique_ptr<Replication_Strategy> replication_strategy;
     int threads = 1;
-    Replication_Service* service;
+    Replication_Service* service {};
   }
 
   Replication_Service* Replication_Service::instance()
@@ -34,13 +34,13 @@ namespace FTRTEC
 
   int Replication_Service::init (int argc, ACE_TCHAR* argv[])
   {
-    static int initialized = 0;
+    static bool initialized {};
 
     // Only allow initialization once.
     if (initialized)
       return 0;
 
-    initialized = 1;
+    initialized = true;
     bool ami = false;
 
     // Parse any service configurator parameters.
@@ -82,7 +82,7 @@ namespace FTRTEC
 
         PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
       {
         ex._tao_print_exception (
           "Unexpected exception caught while ""initializing the TransactionDepth");
@@ -112,7 +112,8 @@ namespace FTRTEC
   }
 
 
-  void Replication_Service::replicate_request(const FtRtecEventChannelAdmin::Operation& update,
+  void Replication_Service::replicate_request(
+    FtRtecEventChannelAdmin::Operation const& update,
     RollbackOperation rollback)
   {
     TAO_OutputCDR cdr;
@@ -144,7 +145,7 @@ namespace FTRTEC
       update.object_id);
   }
 
-  void Replication_Service::add_member(const FTRT::ManagerInfo & info,
+  void Replication_Service::add_member(FTRT::ManagerInfo const &info,
                                        CORBA::ULong object_group_ref_version)
   {
     replication_strategy->add_member(info, object_group_ref_version);
@@ -152,21 +153,21 @@ namespace FTRTEC
 
   int  Replication_Service::acquire_read ()
   {
-    int r =  replication_strategy->acquire_read();
+    int const r = replication_strategy->acquire_read();
     TAO_FTRTEC::Log(3, ACE_TEXT("Read Lock acquired %d\n"), r);
     return r;
   }
 
   int  Replication_Service::acquire_write ()
   {
-    int r= replication_strategy->acquire_write();
+    int const r = replication_strategy->acquire_write();
     TAO_FTRTEC::Log(3, ACE_TEXT("Write Lock acqured %d\n"), r);
     return r;
   }
 
   int  Replication_Service::release ()
   {
-    int r= replication_strategy->release();
+    int const r = replication_strategy->release();
     TAO_FTRTEC::Log(3, ACE_TEXT("Lock Released %d\n"), r);
     return r;
   }

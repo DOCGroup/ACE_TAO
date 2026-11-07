@@ -30,7 +30,7 @@ namespace TAO
     void create_policy (
         POLICYTYPE *& policy,
         POLICYVALUE &value,
-        const CORBA::Any& val
+        CORBA::Any const &val
         )
     {
       if ((val >>= value) == 0)

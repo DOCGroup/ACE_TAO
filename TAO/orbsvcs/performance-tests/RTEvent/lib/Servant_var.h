@@ -27,7 +27,7 @@ public:
    * @param s The contained servant.  The constructor assumes
    * ownership.
    */
-  explicit Servant_var (SERVANT *s = 0);
+  explicit Servant_var (SERVANT *s = nullptr);
 
   /// Copy constructor
   Servant_var (const Servant_var<SERVANT> &rhs);

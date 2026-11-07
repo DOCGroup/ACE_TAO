@@ -7,7 +7,7 @@ class SYNCH_Export Synch_i : public POA_Synch
 {
  public:
   Synch_i ();
-  virtual void go (CORBA::Long base_time);
+  virtual void go (CORBA::Long base_time) override;
 
   int synched ();
 

@@ -6,23 +6,16 @@
 #include "tao/CDR.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/Log_Macros.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor ()
-    : object_group_ref_version_ (0)
-    , is_primary_ (false)
-    , iogr_ (nullptr)
-    , orb_ (nullptr)
-  {
-  }
+  FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor () = default;
 
-  FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor ()
-  {
-  }
+  FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor () = default;
 
   char *
   FT_ServerRequest_Interceptor::name ()
@@ -47,12 +40,12 @@ namespace TAO
 
         this->check_iogr_version (sc.in ());
       }
-    catch (const CORBA::BAD_PARAM&)
+    catch (CORBA::BAD_PARAM const &)
       {
         // No group version context, no problem just return.
         return;
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         throw;
       }
@@ -67,7 +60,7 @@ namespace TAO
     CORBA::String_var op =
       ri->operation ();
 
-    if (ACE_OS::strcmp (op.in (),
+    if (std::strcmp (op.in (),
                         "tao_update_object_group") == 0)
     {
       this->update_iogr (ri);
@@ -96,21 +89,21 @@ namespace TAO
 
   void
   FT_ServerRequest_Interceptor::check_iogr_version (
-      const IOP::ServiceContext &svc)
+      IOP::ServiceContext const &svc)
   {
-    TAO_InputCDR cdr (reinterpret_cast<const char*> (svc.context_data.get_buffer ()),
+    TAO_InputCDR cdr (reinterpret_cast<char const *> (svc.context_data.get_buffer ()),
                       svc.context_data.length ());
 
     CORBA::Boolean byte_order;
 
-    if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
       return;
 
     cdr.reset_byte_order (static_cast<int> (byte_order));
 
     FT::FTGroupVersionServiceContext fgvsc;
 
-    if ((cdr >> fgvsc) == 0)
+    if (!(cdr >> fgvsc))
       throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
 
@@ -155,7 +148,7 @@ namespace TAO
           ri->orb_id ();
 
         int argc = 0;
-        ACE_TCHAR **argv = nullptr;
+        ACE_TCHAR **argv {};
 
         this->orb_ =
           CORBA::ORB_init (argc,
@@ -172,7 +165,7 @@ namespace TAO
     if (param->length () != 3 )
       throw CORBA::TRANSIENT ();
 
-    char const* str = nullptr;
+    char const* str {};
 
     (*param)[0].argument >>= str;
     (*param)[1].argument >>= this->object_group_ref_version_;

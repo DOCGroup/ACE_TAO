@@ -11,17 +11,19 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  Messenger_i (CORBA::ORB_ptr orb);
+  explicit Messenger_i (CORBA::ORB_ptr const orb);
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
-  virtual ~Messenger_i ();
+  void send_message (CORBA::OctetSeq const &user_name) override;
 
-  virtual void send_message (const CORBA::OctetSeq & user_name);
-
-  virtual void shutdown ();
+  void shutdown () override;
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 

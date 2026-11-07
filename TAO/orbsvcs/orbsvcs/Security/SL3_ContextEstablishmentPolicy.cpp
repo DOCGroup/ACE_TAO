@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
   SecurityLevel3::CredsDirective             creds_directive,
-  const SecurityLevel3::OwnCredentialsList & creds_list,
+  SecurityLevel3::OwnCredentialsList const & creds_list,
   SecurityLevel3::FeatureDirective           use_client_auth,
   SecurityLevel3::FeatureDirective           use_target_auth,
   SecurityLevel3::FeatureDirective           use_confidentiality,
@@ -18,10 +18,6 @@ TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
 {
 }
 
-TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy ()
-{
-}
-
 SecurityLevel3::CredsDirective
 TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
 {
@@ -31,7 +27,7 @@ TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::ContextEstablishmentPolicy::creds_list ()
 {
-  SecurityLevel3::OwnCredentialsList * creds = nullptr;
+  SecurityLevel3::OwnCredentialsList * creds {};
 
   ACE_NEW_THROW_EX (creds,
                     SecurityLevel3::OwnCredentialsList (this->creds_list_),

@@ -1,7 +1,5 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
-
-
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 bool server_shutdown {};
 
@@ -45,7 +43,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
       Test::Big_Reply_var reply_gen =

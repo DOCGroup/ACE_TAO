@@ -117,7 +117,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           this->get_dll_names (dll_name, dll_names);
 #endif
 
-          ACE_TString *name = nullptr;
+          ACE_TString *name {};
           for (ACE_Array_Iterator<ACE_TString> name_iter (dll_names);
                name_iter.next (name); name_iter.advance ())
             {
@@ -451,7 +451,7 @@ ACE_DLL_Handle::open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* e
 /******************************************************************/
 
 // Pointer to the Singleton instance.
-ACE_DLL_Manager *ACE_DLL_Manager::instance_ = nullptr;
+ACE_DLL_Manager *ACE_DLL_Manager::instance_ {};
 
 
 ACE_DLL_Manager *
@@ -521,8 +521,8 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 {
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
 
-  ACE_DLL_Handle *temp_handle = nullptr;
-  ACE_DLL_Handle *dll_handle = nullptr;
+  ACE_DLL_Handle *temp_handle {};
+  ACE_DLL_Handle *dll_handle {};
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
     dll_handle = this->find_dll (dll_name);
@@ -571,7 +571,7 @@ int
 ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
 {
   ACE_TRACE ("ACE_DLL_Manager::close_dll");
-  ACE_DLL_Handle *handle = nullptr;
+  ACE_DLL_Handle *handle {};
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
@@ -626,7 +626,7 @@ ACE_DLL_Manager::open (int size)
 {
   ACE_TRACE ("ACE_DLL_Manager::open");
 
-  ACE_DLL_Handle **temp = nullptr;
+  ACE_DLL_Handle **temp {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,

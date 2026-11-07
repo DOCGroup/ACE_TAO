@@ -3,7 +3,7 @@
 #include "orbsvcs/Trader/Constraint_Tokens.h"
 
 #include "tao/AnyTypeCode/Any.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Trader/Constraint_Nodes.inl"
@@ -583,7 +583,7 @@ operator== (const TAO_Literal_Constraint& left,
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) == 0);
+      return_value = (std::strcmp ((const char*) left, (const char*) right) == 0);
       break;
     case TAO_DOUBLE:
       return_value = ACE::is_equal ((CORBA::Double) left, (CORBA::Double) right);
@@ -616,7 +616,7 @@ operator< (const TAO_Literal_Constraint& left,
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) < 0);
+      return_value = (std::strcmp ((const char*) left, (const char*) right) < 0);
       break;
     case TAO_DOUBLE:
       return_value = (CORBA::Double) left < (CORBA::Double) right;
@@ -648,7 +648,7 @@ operator> (const TAO_Literal_Constraint& left,
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) > 0);
+      return_value = (std::strcmp ((const char*) left, (const char*) right) > 0);
       break;
     case TAO_DOUBLE:
       return_value = (CORBA::Double) left > (CORBA::Double) right;
@@ -679,7 +679,7 @@ operator== (const TAO::String_Manager& left,
   bool result = false;
 
   if (static_cast<const char*> (right) != nullptr)
-    result = ACE_OS::strcmp ((const char*) left,
+    result = std::strcmp ((const char*) left,
                              (const char*) right) == 0;
   return result;
 }

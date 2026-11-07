@@ -30,14 +30,18 @@ public:
   Echo_Collocated_ORBInitializer
     (PortableInterceptor::ProcessingMode server_proc_mode,
      PortableInterceptor::ProcessingMode client_proc_mode);
+  Echo_Collocated_ORBInitializer (Echo_Collocated_ORBInitializer const &) = delete;
+  Echo_Collocated_ORBInitializer (Echo_Collocated_ORBInitializer &&) = delete;
+  Echo_Collocated_ORBInitializer &operator= (Echo_Collocated_ORBInitializer const &) = delete;
+  Echo_Collocated_ORBInitializer &operator= (Echo_Collocated_ORBInitializer &&) = delete;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-  PortableInterceptor::ProcessingMode server_processing_mode_;
-  PortableInterceptor::ProcessingMode client_processing_mode_;
+  PortableInterceptor::ProcessingMode const server_processing_mode_;
+  PortableInterceptor::ProcessingMode const client_processing_mode_;
 };
 
 #if defined (_MSC_VER)

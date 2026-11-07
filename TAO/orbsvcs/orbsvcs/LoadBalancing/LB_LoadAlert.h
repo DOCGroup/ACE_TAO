@@ -61,12 +61,12 @@ public:
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~TAO_LB_LoadAlert () override;
+  ~TAO_LB_LoadAlert () override = default;
 
 private:
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager?
-  CORBA::Boolean alerted_;
+  CORBA::Boolean alerted_ {};
 
   /// Lock used to synchronized access to the LoadAlert state.
   mutable TAO_SYNCH_MUTEX lock_;

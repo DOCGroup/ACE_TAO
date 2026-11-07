@@ -13,6 +13,8 @@
 #include "tao/SystemException.h"
 #include "tao/ZIOP_Adapter.h"
 #include <algorithm>
+#include <cstdio>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,30 +30,28 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                 fragmentation_strategy_,
+                 fragmentation_strategy_.get (),
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  const int nibbles = 2 * sizeof (size_t);
+  int const nibbles = 2 * sizeof (size_t);
   char hex_string[nibbles + 1];
-  ACE_OS::sprintf (hex_string,
+  std::sprintf (hex_string,
                    "%8.8X",
                    transport->id ());
   hex_string[nibbles] = '\0';
-  ACE_CString monitor_name ("OutputCDR_");
+  std::string monitor_name ("OutputCDR_");
   monitor_name += hex_string;
   this->out_stream_.register_monitor (monitor_name.c_str ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
-
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base ()
 {
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   this->out_stream_.unregister_monitor ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
-  delete fragmentation_strategy_;
 }
 
 void
@@ -138,7 +138,6 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
       if (TAO_debug_level)
         TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing locate request header\n")));
-
 
       return -1;
     }
@@ -232,7 +231,7 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream)
   // Check whether the output cdr stream is build up of multiple
   // messageblocks. If so, consolidate them to one block that can be
   // dumped
-  ACE_Message_Block* consolidated_block = nullptr;
+  ACE_Message_Block* consolidated_block {};
   char *buf = const_cast <char*> (stream.buffer ());
   size_t const total_len = stream.total_length ();
   if (stream.begin()->cont () != nullptr)
@@ -625,7 +624,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                        this->fragmentation_strategy_,
+                        this->fragmentation_strategy_.get (),
                         qd->giop_version ().major_version (),
                         qd->giop_version ().minor_version ());
 
@@ -644,7 +643,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
@@ -678,7 +677,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+      std::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
                        transport->id ());
       //due to alignment data block has an offset which needs to be corrected
       this->dump_msg (buf,
@@ -765,7 +764,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
@@ -799,7 +798,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+      std::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
                        params.transport_->id ());
       this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
@@ -1133,7 +1132,6 @@ TAO_GIOP_Message_Base::process_request (
   return 0;
 }
 
-
 int
 TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
                                                TAO_InputCDR &input,
@@ -1145,9 +1143,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
   TAO_GIOP_Locate_Request_Header locate_request (input, this->orb_core_);
 
   TAO_GIOP_Locate_Status_Msg status_info;
-
-  // Defaulting.
-  status_info.status = GIOP::UNKNOWN_OBJECT;
 
   CORBA::Boolean response_required = true;
 
@@ -1530,7 +1525,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // request/reply id.
     CORBA::ULong tmp = 0;
     CORBA::ULong *id = std::addressof(tmp);
-    char *tmp_id = nullptr;
+    char *tmp_id {};
 
     if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
         ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
@@ -1624,7 +1619,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
 bool
 TAO_GIOP_Message_Base::has_pending_fragments () const
 {
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
   return this->fragment_stack_.top (qd) == 0;
 }
 
@@ -1698,7 +1693,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
   // copies at all here. The same is also done in the higher layers.
 
   ACE_Message_Block::Message_Flags flg = 0;
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   flg = qd->msg_block ()->self_flags ();
@@ -1792,8 +1787,8 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 {
   TAO::Incoming_Message_Stack reverse_stack;
 
-  TAO_Queued_Data *tail = nullptr;
-  TAO_Queued_Data *head = nullptr;
+  TAO_Queued_Data *tail {};
+  TAO_Queued_Data *head {};
 
   //
   // CONSOLIDATE FRAGMENTED MESSAGE
@@ -1946,7 +1941,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
       return -1;
     }
 
-  TAO_Queued_Data *head = nullptr;
+  TAO_Queued_Data *head {};
 
   // Revert stack
   while (this->fragment_stack_.pop (head) != -1)
@@ -2000,7 +1995,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 TAO_GIOP_Fragmentation_Strategy *
 TAO_GIOP_Message_Base::fragmentation_strategy ()
 {
-  return this->fragmentation_strategy_;
+  return this->fragmentation_strategy_.get ();
 }
 
 void

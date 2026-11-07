@@ -20,8 +20,8 @@ class Client_Request_Interceptor
 {
 public:
   /// Constructor.
-  Client_Request_Interceptor (char const *orb_id,
-                              char const *forward_str);
+  Client_Request_Interceptor (char const *const orb_id,
+                              char const *const forward_str);
   Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
   Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
   Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
@@ -54,18 +54,18 @@ public:
 
 private:
   ///The ID of the ORB this interceptor is registered with.
-  CORBA::String_var orb_id_;
+  CORBA::String_var orb_id_ {};
 
   /// Pseudo-reference to the ORB this interceptor is registered
   /// with.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
   /// Stringified reference to the object the initial request will be
   /// forwarded to by this interceptor.
-  CORBA::String_var forward_str_;
+  CORBA::String_var forward_str_ {};
 };
 
 #endif  /* CLIENT_REQUEST_INTERCEPTOR_H */

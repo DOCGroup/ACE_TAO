@@ -1,11 +1,11 @@
-project(*Server): taoserver, messaging, bidir_giop, threads {
+project(*Server): taoserver, messaging, bidir_giop, threads, utils {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoserver, bidir_giop, threads {
+project(*Client): taoserver, bidir_giop, threads, utils {
   exename = client
   after  += *Server
 

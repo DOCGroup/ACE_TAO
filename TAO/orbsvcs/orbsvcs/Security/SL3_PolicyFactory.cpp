@@ -6,13 +6,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
-                                        const CORBA::Any & value)
+                                        CORBA::Any const & value)
 {
   CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
   if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      SecurityLevel3::ContextEstablishmentPolicyArgument const * arg = nullptr;
+      SecurityLevel3::ContextEstablishmentPolicyArgument const * arg {};
       if (!(value >>= arg))
         throw CORBA::INTERNAL ();
 
@@ -28,7 +28,7 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
     }
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
-      SecurityLevel3::ObjectCredentialsPolicyArgument const * creds = nullptr;
+      SecurityLevel3::ObjectCredentialsPolicyArgument const * creds {};
       if (!(value >>= creds))
         throw CORBA::INTERNAL ();
 

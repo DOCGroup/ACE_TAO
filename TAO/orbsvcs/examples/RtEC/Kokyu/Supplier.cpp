@@ -5,7 +5,7 @@
 
 
 Supplier::Supplier (RtecEventComm::EventSourceID id,
-                    const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)
+                    RtecEventChannelAdmin::ProxyPushConsumer_ptr const consumer_proxy)
 :id_ (id),
  consumer_proxy_ (consumer_proxy)
 {
@@ -38,13 +38,13 @@ Supplier::disconnect_push_supplier ()
 {
 }
 
-Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
+Timeout_Consumer::Timeout_Consumer (Supplier *supplier)
   :supplier_impl_ (supplier)
 {
 }
 
 void
-Timeout_Consumer::push (const RtecEventComm::EventSet& events)
+Timeout_Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {

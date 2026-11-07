@@ -69,6 +69,11 @@ namespace TAO
       /// Setter for recursive reference.
       void set_recursive_tc (CORBA::TypeCode_ptr);
 
+      Indirected_Type (Indirected_Type const &) = delete;
+      Indirected_Type (Indirected_Type &&) = delete;
+      Indirected_Type &operator= (Indirected_Type const &) = delete;
+      Indirected_Type &operator= (Indirected_Type &&) = delete;
+
     protected:
       /**
        * @name @c TAO CORBA::TypeCode Template Methods

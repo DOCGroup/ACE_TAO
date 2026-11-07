@@ -35,41 +35,41 @@ public:
    * Check if a character @a c is a BaseChar. This method checks for the
    * complete set of characters allowed when WCHAR support is enabled.
    *
-   * @retval 1 if @a c is a valid XML Character, 0 otherwise.
+   * @retval true if @a c is a valid XML Character, false otherwise.
    */
-  static int isBasechar_i (const ACEXML_Char c);
+  static bool isBasechar_i (ACEXML_Char const c);
 
   /**
    * Check if a character @a c is a Ideographic. This method checks for the
    * complete set of characters allowed when WCHAR support is enabled.
    *
-   * @retval 1 if @a c is a valid XML Character, 0 otherwise.
+   * @retval true if @a c is a valid XML Character, false otherwise.
    */
-  static int isIdeographic_i (const ACEXML_Char c);
+  static bool isIdeographic_i (ACEXML_Char const c);
 
   /**
    * Check if a character @a c is a CombiningChar. This method checks for the
    * complete set of characters allowed when WCHAR support is enabled.
    *
-   * @retval 1 if @a c is a valid XML Character, 0 otherwise.
+   * @retval true if @a c is a valid XML Character, false otherwise.
    */
-  static int isCombiningchar_i (const ACEXML_Char c);
+  static bool isCombiningchar_i (ACEXML_Char const c);
 
   /**
    * Check if a character @a c is a Digit. This method checks for the
    * complete set of characters allowed when WCHAR support is enabled.
    *
-   * @retval 1 if @a c is a valid XML Character, 0 otherwise.
+   * @retval true if @a c is a valid XML Character, false otherwise.
    */
-  static int isDigit_i (const ACEXML_Char c);
+  static bool isDigit_i (ACEXML_Char const c);
 
   /**
    * Check if a character @a c is an Extender. This method checks for the
    * complete set of characters allowed when WCHAR support is enabled.
    *
-   * @retval 1 if @a c is a valid XML Character, 0 otherwise.
+   * @retval true if @a c is a valid XML Character, false otherwise.
    */
-  static int isExtender_i (const ACEXML_Char c);
+  static bool isExtender_i (ACEXML_Char const c);
 
 #endif /* ACE_USES_WCHAR */
 

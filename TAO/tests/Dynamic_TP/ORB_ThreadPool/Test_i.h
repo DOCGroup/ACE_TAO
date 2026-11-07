@@ -12,15 +12,19 @@ class Sleeper_i : public virtual POA_Test::Sleeper
 {
 public:
   /// Constructor
-  Sleeper_i (CORBA::ORB_ptr orb);
+  explicit Sleeper_i (CORBA::ORB_ptr orb);
+  Sleeper_i (Sleeper_i const &) = delete;
+  Sleeper_i (Sleeper_i &&) = delete;
+  Sleeper_i &operator= (Sleeper_i const &) = delete;
+  Sleeper_i &operator= (Sleeper_i &&) = delete;
 
   // = The skeleton methods
-  virtual void delay (CORBA::Short sec);
+  void delay (CORBA::Short sec) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 
@@ -30,15 +34,19 @@ class Middle_i : public virtual POA_Test::Middle
 public:
   /// Constructor
   Middle_i (CORBA::ORB_ptr orb, Test::Sleeper_ptr sleeper);
+  Middle_i (Middle_i const &) = delete;
+  Middle_i (Middle_i &&) = delete;
+  Middle_i &operator= (Middle_i const &) = delete;
+  Middle_i &operator= (Middle_i &&) = delete;
 
   // = The skeleton methods
-  virtual void call_delay (CORBA::Short sec);
+  void call_delay (CORBA::Short sec) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
-  Test::Sleeper_var sleeper_;
+  CORBA::ORB_var const orb_;
+  Test::Sleeper_var const sleeper_;
 
   TAO_SYNCH_MUTEX lock_;
   ACE_Unbounded_Set<ACE_hthread_t> threads_;

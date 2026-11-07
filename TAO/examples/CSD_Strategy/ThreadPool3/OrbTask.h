@@ -15,17 +15,21 @@
 class OrbTask : public ACE_Task_Base
 {
 public:
-  OrbTask(CORBA::ORB_ptr orb, unsigned num_threads = 1);
-  virtual ~OrbTask() = default;
+  explicit OrbTask (CORBA::ORB_ptr orb, unsigned num_threads = 1);
+  ~OrbTask () override = default;
+  OrbTask (OrbTask const &) = delete;
+  OrbTask (OrbTask &&) = delete;
+  OrbTask & operator= (OrbTask const &) = delete;
+  OrbTask & operator= (OrbTask &&) = delete;
 
-  virtual int open(void* x = 0);
-  virtual int svc();
-  virtual int close(u_long);
+  int open (void *x = nullptr) override;
+  int svc () override;
+  int close (u_long) override;
 
 
 private:
-  CORBA::ORB_var orb_;
-  unsigned       num_threads_;
+  CORBA::ORB_var const orb_;
+  unsigned const num_threads_;
 };
 
 #endif

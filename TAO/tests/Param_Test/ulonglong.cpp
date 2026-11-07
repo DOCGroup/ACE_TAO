@@ -21,7 +21,7 @@ Test_ULongLong::Test_ULongLong ()
 Test_ULongLong::~Test_ULongLong ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *

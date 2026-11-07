@@ -30,20 +30,25 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
+
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task & operator= (Server_Task const &) = delete;
+  Server_Task & operator= (Server_Task &&) = delete;
 
 private:
   /// The sender object
-  Sender_i *sender_;
+  Sender_i * const sender_; // Non-owning; the POA servant outlives this task.
 
   /// The synchronizer
   ACE_Manual_Event &event_;
 
   /// Number of messages that needs to be sent
-  int no_iterations_;
+  int const no_iterations_;
 
   /// The ORB on which we run..
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

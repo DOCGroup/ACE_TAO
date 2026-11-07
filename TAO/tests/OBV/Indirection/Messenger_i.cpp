@@ -2,23 +2,30 @@
 
 #include "tao/AnyTypeCode/TypeCode.h"
 
+#include <algorithm>
 #include <sstream>
-
-Messenger_i::Messenger_i()
-{
-}
-
-Messenger_i::~Messenger_i()
-{
-}
+#include <vector>
 
 char * Messenger_i::receive_boxedvalue (::demo::value::idl::boxedValue * b)
 {
   std::ostringstream os;
-  if (b == 0)
-    os << "null boxed values";
+  if (b == nullptr)
+    {
+      os << "null boxed values";
+    }
   else
-    os << "boxed values: " << b->b1 ()->_value() << ", " << b->b2 ()->_value();
+    {
+      ::demo::value::idl::boxedLong * const b1 = b->b1 ();
+      ::demo::value::idl::boxedLong * const b2 = b->b2 ();
+      if (b1 == nullptr || b2 == nullptr)
+        {
+          os << "null boxed member";
+        }
+      else
+        {
+          os << "boxed values: " << b1->_value () << ", " << b2->_value ();
+        }
+    }
 
   return CORBA::string_dup (os.str().c_str());
 }
@@ -28,12 +35,18 @@ char * Messenger_i::receive_long (
                                   ::demo::value::idl::boxedLong * p2)
 {
   std::ostringstream os;
-  if (p1 == 0 || p2 == 0)
-    os << "one or two null values";
+  if (p1 == nullptr || p2 == nullptr)
+    {
+      os << "one or two null values";
+    }
   else if (p1 == p2)
-    os << "shared long: " << p1->_value ();
+    {
+      os << "shared long: " << p1->_value ();
+    }
   else
-    os << "two longs: " << p1->_value () << ", " << p2->_value ();
+    {
+      os << "two longs: " << p1->_value () << ", " << p2->_value ();
+    }
 
   return CORBA::string_dup (os.str().c_str());
 }
@@ -43,12 +56,18 @@ char * Messenger_i::receive_string (
                                     ::demo::value::idl::boxedString * s2)
 {
   std::ostringstream os;
-  if (s1 == 0 || s2 == 0)
-    os << "one or two null values";
+  if (s1 == nullptr || s2 == nullptr)
+    {
+      os << "one or two null values";
+    }
   else if (s1 == s2)
-    os << "shared string: " << s1->_value ();
+    {
+      os << "shared string: " << s1->_value ();
+    }
   else
-    os << "two strings: " << s1->_value () << ", " << s2->_value ();
+    {
+      os << "two strings: " << s1->_value () << ", " << s2->_value ();
+    }
 
   return CORBA::string_dup (os.str().c_str());
 }
@@ -56,35 +75,27 @@ char * Messenger_i::receive_string (
 char * Messenger_i::receive_list (::demo::value::idl::Node * node)
 {
   std::ostringstream os;
-  typedef ACE_Vector< ::demo::value::idl::Node *> NodeVector;
-  NodeVector l;
-  ::demo::value::idl::Node* x = node;
+  // These pointers borrow nodes from the request's valuetype graph.
+  std::vector<::demo::value::idl::Node *> nodes;
+  ::demo::value::idl::Node *x = node;
 
-  while (x != 0)
+  while (x != nullptr)
   {
-    size_t const len = l.size ();
-    size_t i = 0;
-    for (i = 0; i < len; ++i)
-    {
-      if (l[i] == x)
-        break;
-    }
-
-    if (l[i] == x)
+    if (std::find (nodes.begin (), nodes.end (), x) != nodes.end ())
       break;
 
-    l.push_back (x);
+    nodes.push_back (x);
     x = x->next ();
   }
 
-  size_t const len = l.size ();
+  size_t const len = nodes.size ();
 
   os << "list of length: " << len << " -- ";
 
   for (size_t i = 0; i < len; ++i)
   {
-    os << l[i]->id ();
-    if (l[i]->next () != 0)
+    os << nodes[i]->id ();
+    if (nodes[i]->next () != nullptr)
       os << " ";
   }
   return CORBA::string_dup (os.str().c_str());
@@ -93,6 +104,11 @@ char * Messenger_i::receive_list (::demo::value::idl::Node * node)
 char *
 Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
 {
+  if (v == nullptr)
+    {
+      return CORBA::string_dup ("null truncatable value");
+    }
+
   v->data (v->data () + 1);
   v->basic_data (v->basic_data () + 1);
 
@@ -102,17 +118,31 @@ Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
 }
 
 char *
-Messenger_i::receive_sequence (const ::demo::value::idl::ConfigValues & v)
+Messenger_i::receive_sequence (
+    ::demo::value::idl::ConfigValues const &v)
 {
   std::ostringstream os;
   os << "valuetype sequence: " << std::endl;
   CORBA::ULong const len = v.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
   {
-    os << v[i]->name();
-    const char* str;
-    v[i]->value () >>= str;
-    os << " - " << str << std::endl;
+    ::demo::value::idl::ConfigValue * const value = v[i];
+    if (value == nullptr)
+      {
+        os << "null config value" << std::endl;
+        continue;
+      }
+
+    os << value->name ();
+    char const *str {};
+    if (value->value () >>= str)
+      {
+        os << " - " << (str == nullptr ? "" : str) << std::endl;
+      }
+    else
+      {
+        os << " - <not a string>" << std::endl;
+      }
   }
   os << std::endl;
   return CORBA::string_dup (os.str().c_str());

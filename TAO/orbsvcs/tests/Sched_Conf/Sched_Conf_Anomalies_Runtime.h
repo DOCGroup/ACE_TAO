@@ -21,21 +21,45 @@ ERROR: The following entry points have unresolved local dependencies:
 
 
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
-{"good_supplier", 1, 5000, 5000, 5000,   500000, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 1,  15, 0, 0, (RtecScheduler::Info_Type_t) 0}
+{"good_supplier", 1, 5000, 5000, 5000, 500000,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 1, 15, 0, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"good_consumer", 2, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,  15, 1, 0, (RtecScheduler::Info_Type_t) 0}
+{"good_consumer", 2, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 15, 1, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"unresolved_remote_supplier", 3, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type_t) 3}
+{"unresolved_remote_supplier", 3, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 0, 0, 0,
+ (RtecScheduler::Info_Type_t) 3, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"unresolved_remote_consumer", 4, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type_t) 0}
+{"unresolved_remote_consumer", 4, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 0, 0, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"unresolved_local_supplier", 5, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type_t) 0}
+{"unresolved_local_supplier", 5, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 0, 0, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"unresolved_local_consumer", 6, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type_t) 0}
+{"unresolved_local_consumer", 6, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 0, 0, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"both_unresolved_consumer_1", 7, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type_t) 0}
+{"both_unresolved_consumer_1", 7, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 0, 0, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 ,
-{"both_unresolved_consumer_2", 8, 5000, 5000, 5000,        0, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type_t) 0}
+{"both_unresolved_consumer_2", 8, 5000, 5000, 5000, 0,
+ (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1,
+ 0, 0, 0, 0, 0,
+ (RtecScheduler::Info_Type_t) 0, (RtecScheduler::RT_Info_Enabled_Type_t) 1}
 };
 
 static int infos_size = sizeof(infos)/sizeof(infos[0]);

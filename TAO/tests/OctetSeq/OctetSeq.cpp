@@ -18,11 +18,14 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstddef>
+#include <cstring>
+#include <memory>
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,
-                  char* /* buf */,
+                  char * /* buf */,
                   size_t bufsize)
 {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -35,64 +38,60 @@ test_write_octet (TAO_OutputCDR &cdr,
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
 
-  if ((cdr << os) == 0)
+  if (!(cdr << os))
     return -1;
   return 0;
 }
 
 static int
 test_read_octet (TAO_InputCDR &cdr,
-                 char* /* buf */,
+                 char * /* buf */,
                  size_t /* bufsize */)
 {
   Test::OctetSeq os;
 
-  if ((cdr >> os) == 0)
+  if (!(cdr >> os))
     return -1;
   return 0;
 }
 
 static int
 test_write_char (TAO_OutputCDR &cdr,
-                 char* buf,
+                 char *buf,
                  size_t bufsize)
 {
   Test::CharSeq cs (bufsize, bufsize, buf);
 
-  if ((cdr << cs) == 0)
+  if (!(cdr << cs))
     return -1;
   return 0;
 }
 
 static int
 test_read_char (TAO_InputCDR &cdr,
-                char* /* buf */,
+                char * /* buf */,
                 size_t /* bufsize */)
 {
   Test::CharSeq cs;
 
-  if ((cdr >> cs) == 0)
+  if (!(cdr >> cs))
     return -1;
   return 0;
 }
 
-typedef
-int (*Writer)(TAO_OutputCDR& cdr,
-              char* buf, size_t bufsize);
-typedef
-int (*Reader)(TAO_InputCDR& cdr,
-              char* buf, size_t bufsize);
+using Writer = int (*) (TAO_OutputCDR &cdr, char *buf, size_t bufsize);
+using Reader = int (*) (TAO_InputCDR &cdr, char *buf, size_t bufsize);
 
 int
-run (char* buf, size_t bufsize,
+run (char *buf, size_t bufsize,
      size_t n, size_t lo, size_t s,
-     int quiet,
-     const ACE_TCHAR* name,
+     bool quiet,
+     ACE_TCHAR const *name,
      Writer writer, Reader reader)
 {
-  size_t count = 0;
-  double sum_read = 0;
-  double sum_write = 0;
+  size_t count {};
+  double sum_read {};
+  double sum_write {};
 
   for (size_t x = lo; x <= bufsize; x += s)
     {
@@ -115,7 +114,7 @@ run (char* buf, size_t bufsize,
           reading.stop_incr ();
         }
 
-      double m = n;
+      double const m = n;
 
       ACE_Time_Value wtv;
       writing.elapsed_time_incr (wtv);
@@ -129,13 +128,13 @@ run (char* buf, size_t bufsize,
       rusecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
-      double write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
-      double read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
+      double const write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
+      double const read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
 
       count++;
       sum_read += read_average;
       sum_write += write_average;
-      if (quiet == 0)
+      if (!quiet)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%s: %d %.3f %.3f\n",
@@ -159,15 +158,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int n = 64;
-      int lo = 128;
-      int hi = 65536;
-      int s = 32;
+      int n {64};
+      int lo {128};
+      int hi {65536};
+      int s {32};
 
-      int quiet = 0;
+      bool quiet {};
 
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("qn:l:h:s:"));
-      int opt;
+      int opt {};
 
       while ((opt = get_opt ()) != EOF)
         {
@@ -186,7 +185,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               s = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'q':
-              quiet = 1;
+              quiet = true;
               break;
 
             case '?':
@@ -216,25 +215,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   lo, hi, s, n));
 
       // Create a "big" buffer and fill it up.
-      char* buf = new char[hi];
-      CORBA::Long l = 0xdeadbeef;
-      for (int i = 0; i < hi / (int) sizeof (l); ++i)
+      std::unique_ptr<char[]> const buf = std::make_unique<char[]> (hi);
+      CORBA::Long const l = 0xdeadbeef;
+      for (int i = 0; i < hi / static_cast<int> (sizeof (l)); ++i)
         {
-          ACE_OS::memcpy (buf + sizeof (l) * i, &l, sizeof (l));
+          std::memcpy (buf.get () + sizeof (l) * i, &l, sizeof (l));
         }
 
-      if (run (buf, hi,
+      if (run (buf.get (), hi,
                n, lo, s, quiet,
                ACE_TEXT ("OCTET"), test_write_octet, test_read_octet) != 0)
         return 1;
 
-      if (run (buf, hi,
+      if (run (buf.get (), hi,
                n, lo, s, quiet,
                ACE_TEXT ("CHAR"), test_write_char, test_read_char) != 0)
         return 1;
-      delete[] buf;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("OctetSeq");
     }

@@ -28,7 +28,7 @@ TAO_Linear_Priority_Mapping::to_native (
 //      || corba_priority > RTCORBA::maxPriority
      )
     {
-      return 0;
+      return false;
     }
 
 #if defined (ACE_WIN32)
@@ -55,7 +55,7 @@ TAO_Linear_Priority_Mapping::to_native (
       native_priority = static_cast<RTCORBA::NativePriority>
         (ACE_Sched_Params::next_priority (this->policy_, native_priority));
     }
-  return 1;
+  return true;
 
 #else
 
@@ -65,7 +65,7 @@ TAO_Linear_Priority_Mapping::to_native (
        * (corba_priority - RTCORBA::minPriority)
        / (RTCORBA::maxPriority - RTCORBA::minPriority));
 
-  return 1;
+  return true;
 
 #endif /* ACE_WIN32 */
 }
@@ -98,7 +98,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
     }
 
   if (native_priority_index == 0)
-    return 0;
+    return false;
 
   int delta = total - 1;
   if (delta != 0)
@@ -125,7 +125,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
       corba_priority = RTCORBA::minPriority;
     }
 
-  return 1;
+  return true;
 
 #else
 
@@ -140,7 +140,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
                     "TAO (%P|%t) - Linear_Priority_Mapping::to_CORBA: "
                     " priority %d out of range [%d,%d]\n",
                     native_priority, this->min_, this->max_));
-      return 0;
+      return false;
     }
 
   int delta = this->max_ - this->min_;
@@ -166,11 +166,11 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
     {
       // There is only one native priority.
       if (native_priority != this->min_)
-        return 0;
+        return false;
       corba_priority = RTCORBA::minPriority;
     }
 
-  return 1;
+  return true;
 
 #endif /* ACE_WIN32 */
 }

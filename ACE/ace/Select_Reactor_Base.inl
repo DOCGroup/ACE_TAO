@@ -42,7 +42,7 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::find");
 
-  ACE_Event_Handler * eh = nullptr;
+  ACE_Event_Handler * eh {};
 
   if (this->handle_in_range (handle))
     {

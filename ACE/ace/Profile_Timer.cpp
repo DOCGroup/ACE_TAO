@@ -5,7 +5,8 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 #if defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
 
@@ -31,14 +32,14 @@ ACE_Profile_Timer::dump () const
 ACE_Profile_Timer::ACE_Profile_Timer ()
 {
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
-  ACE_OS::memset (&this->end_usage_, 0, sizeof this->end_usage_);
-  ACE_OS::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
-  ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
+  std::memset (&this->end_usage_, 0, sizeof this->end_usage_);
+  std::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
+  std::memset (&this->last_usage_, 0, sizeof this->last_usage_);
 
 #  if defined (ACE_HAS_GETRUSAGE)
-  ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
-  ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
-  ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
+  std::memset (&this->begin_time_, 0, sizeof this->begin_time_);
+  std::memset (&this->end_time_, 0, sizeof this->end_time_);
+  std::memset (&this->last_time_, 0, sizeof this->last_time_);
 #  endif /* ACE_HAS_GETRUSAGE */
 }
 
@@ -180,13 +181,13 @@ ACE_Profile_Timer::ACE_Profile_Timer ()
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
 #  if defined (ACE_HAS_GETRUSAGE)
 
-  ACE_OS::memset (&this->end_usage_, 0, sizeof this->end_usage_);
-  ACE_OS::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
-  ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
+  std::memset (&this->end_usage_, 0, sizeof this->end_usage_);
+  std::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
+  std::memset (&this->last_usage_, 0, sizeof this->last_usage_);
 
-  ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
-  ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
-  ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
+  std::memset (&this->begin_time_, 0, sizeof this->begin_time_);
+  std::memset (&this->end_time_, 0, sizeof this->end_time_);
+  std::memset (&this->last_time_, 0, sizeof this->last_time_);
 #  endif /* ACE_HAS_GETRUSAGE */
 }
 

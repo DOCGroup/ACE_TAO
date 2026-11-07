@@ -70,7 +70,7 @@ namespace TAO
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
       CORBA::ULong index = 0;
-      IOP::IOR *ior_info = nullptr;
+      IOP::IOR *ior_info {};
 
       if (this->resolver_.stub ()->create_ior_info (ior_info, index) == -1)
         {

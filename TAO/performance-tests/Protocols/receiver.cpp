@@ -8,11 +8,17 @@
 #include "ace/Throughput_Stats.h"
 #include "tao/debug.h"
 #include "testS.h"
+#include <memory>
 
-static const ACE_TCHAR *ior_file = ACE_TEXT ("receiver.ior");
-static int do_dump_history = 0;
-static int print_missed_invocations = 0;
-static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
+struct Options
+{
+  ACE_TCHAR const *ior_file {ACE_TEXT ("receiver.ior")};
+  bool do_dump_history {};
+  bool print_missed_invocations {};
+  ACE_High_Res_Timer::global_scale_factor_type gsf {};
+};
+
+static Options options;
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
@@ -24,15 +30,15 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'd':
-        do_dump_history = ACE_OS::atoi (get_opts.opt_arg ());
+        options.do_dump_history = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'f':
-        ior_file = get_opts.opt_arg ();
+        options.ior_file = get_opts.opt_arg ();
         break;
 
       case 'm':
-        print_missed_invocations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.print_missed_invocations = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       default:
@@ -43,9 +49,9 @@ parse_args (int argc, ACE_TCHAR **argv)
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
                            "\n",
                            argv[0],
-                           do_dump_history,
-                           ior_file,
-                           print_missed_invocations),
+                           options.do_dump_history,
+                           options.ior_file,
+                           options.print_missed_invocations),
                           -1);
       }
 
@@ -59,66 +65,63 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  ~test_i ();
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+  ~test_i () override = default;
 
   void start_test (CORBA::Long session_id,
-                   const char *protocol,
+                   char const *protocol,
                    CORBA::ULong invocation_rate,
                    CORBA::ULong message_size,
-                   CORBA::ULong iterations);
+                   CORBA::ULong iterations) override;
 
-  void end_test ();
+  void end_test () override;
 
-  void oneway_sync ();
+  void oneway_sync () override;
 
-  void twoway_sync ();
+  void twoway_sync () override;
 
   void oneway_method (CORBA::Long session_id,
                       CORBA::ULong iteration,
-                      const ::test::octets &payload);
+                      ::test::octets const &payload) override;
 
   void twoway_method (CORBA::Long &session_id,
                       CORBA::ULong &iteration,
-                      ::test::octets &payload);
+                      ::test::octets &payload) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
-  typedef ACE_Array_Base<CORBA::Boolean> Invocations;
+  using Invocations = ACE_Array_Base<CORBA::Boolean>;
   Invocations invocations_received_;
-  ACE_hrtime_t time_of_last_call_;
-  ACE_hrtime_t test_start_;
-  ACE_hrtime_t test_end_;
-  CORBA::Boolean first_invocation_;
-  ACE_Sample_History *inter_arrival_times_;
-  CORBA::ULong iterations_;
-  CORBA::ULong number_of_invocations_received_;
-  CORBA::Long session_id_;
+  ACE_hrtime_t time_of_last_call_ {};
+  ACE_hrtime_t test_start_ {};
+  ACE_hrtime_t test_end_ {};
+  CORBA::Boolean first_invocation_ {};
+  std::unique_ptr<ACE_Sample_History> inter_arrival_times_;
+  CORBA::ULong iterations_ {};
+  CORBA::ULong number_of_invocations_received_ {};
+  CORBA::Long session_id_ {-1};
 };
 
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    poa_ (PortableServer::POA::_duplicate (poa)),
-    inter_arrival_times_ (0),
-    iterations_ (0),
-    session_id_ (-1)
-{
-}
-
-test_i::~test_i ()
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 void
 test_i::start_test (CORBA::Long session_id,
-                    const char *protocol,
+                    char const *protocol,
                     CORBA::ULong invocation_rate,
                     CORBA::ULong message_size,
                     CORBA::ULong iterations)
@@ -145,10 +148,9 @@ test_i::start_test (CORBA::Long session_id,
   //
   // Initialize counters and tables.
   //
-  this->inter_arrival_times_ =
-    new ACE_Sample_History (iterations);
+  this->inter_arrival_times_ = std::make_unique<ACE_Sample_History> (iterations);
 
-  this->first_invocation_ = 1;
+  this->first_invocation_ = true;
 
   this->invocations_received_.size (iterations);
   for (CORBA::ULong i = 0;
@@ -168,9 +170,9 @@ test_i::end_test ()
   this->test_end_ =
     ACE_OS::gethrtime ();
 
-  if (do_dump_history)
+  if (options.do_dump_history)
     {
-      this->inter_arrival_times_->dump_samples (ACE_TEXT("Inter-arrival times"), gsf);
+      this->inter_arrival_times_->dump_samples (ACE_TEXT("Inter-arrival times"), options.gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -178,7 +180,7 @@ test_i::end_test ()
 
   ACE_DEBUG ((LM_DEBUG,
               "Max Latency = %6d ",
-              stats.max_ / gsf / 1000));
+              stats.max_ / options.gsf / 1000));
 
   ACE_DEBUG ((LM_DEBUG,
               "Invocations expected / received / missed / missed %% = %6d / %6d / %6d / %5.2f\n",
@@ -187,7 +189,7 @@ test_i::end_test ()
               this->iterations_ - this->number_of_invocations_received_,
               (this->iterations_ - this->number_of_invocations_received_) / (double) this->iterations_ * 100));
 
-  if (print_missed_invocations)
+  if (options.print_missed_invocations)
     {
       ACE_DEBUG ((LM_DEBUG, "\nFollowing invocations were never received:\n"));
 
@@ -212,17 +214,17 @@ test_i::end_test ()
                   "Session id ends %d\n",
                   this->session_id_));
 
-      stats.dump_results (ACE_TEXT("Inter-arrival times"), gsf);
+      stats.dump_results (ACE_TEXT("Inter-arrival times"), options.gsf);
 
       ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Inter-arrival times"),
-                                             gsf,
+                                             options.gsf,
                                              this->test_end_ - this->test_start_,
                                              stats.samples_count ());
     }
 
   this->session_id_ = -1;
 
-  delete this->inter_arrival_times_;
+  this->inter_arrival_times_.reset ();
 }
 
 void
@@ -238,7 +240,7 @@ test_i::twoway_sync ()
 void
 test_i::oneway_method (CORBA::Long session_id,
                        CORBA::ULong iteration,
-                       const ::test::octets &payload)
+                       ::test::octets const &payload)
 {
   if (this->session_id_ != session_id)
     {
@@ -260,11 +262,11 @@ test_i::oneway_method (CORBA::Long session_id,
   this->invocations_received_[iteration] = 1;
   ++this->number_of_invocations_received_;
 
-  ACE_hrtime_t time_of_current_call =
+  ACE_hrtime_t const time_of_current_call =
     ACE_OS::gethrtime ();
 
   if (this->first_invocation_)
-    this->first_invocation_ = 0;
+    this->first_invocation_ = false;
   else
     this->inter_arrival_times_->sample (time_of_current_call - this->time_of_last_call_);
 
@@ -296,11 +298,11 @@ test_i::twoway_method (CORBA::Long &session_id,
   this->invocations_received_[iteration] = 1;
   ++this->number_of_invocations_received_;
 
-  ACE_hrtime_t time_of_current_call =
+  ACE_hrtime_t const time_of_current_call =
     ACE_OS::gethrtime ();
 
   if (this->first_invocation_)
-    this->first_invocation_ = 0;
+    this->first_invocation_ = false;
   else
     this->inter_arrival_times_->sample (time_of_current_call - this->time_of_last_call_);
 
@@ -325,14 +327,14 @@ test_i::shutdown ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  gsf = ACE_High_Res_Timer::global_scale_factor ();
+  options.gsf = ACE_High_Res_Timer::global_scale_factor ();
 
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int parse_args_result =
+      int const parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
@@ -346,9 +348,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      test_i *servant =
-        new test_i (orb.in (),
-        root_poa.in ());
+      test_i *servant {};
+      ACE_NEW_RETURN (servant,
+                      test_i (orb.in (),
+                              root_poa.in ()),
+                      -1);
 
       PortableServer::ServantBase_var safe_servant (servant);
 
@@ -358,25 +362,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (test.in ());
 
-      FILE *output_file =
-        ACE_OS::fopen (ior_file, "w");
-      ACE_ASSERT (output_file != 0);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_file, "w"), ACE_OS::fclose);
+        ACE_ASSERT (output_file != nullptr);
 
-      u_int result =
-        ACE_OS::fprintf (output_file,
-                         "%s",
-                         ior.in ());
-      ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
-      ACE_UNUSED_ARG (result);
-
-      ACE_OS::fclose (output_file);
+        u_int const result =
+          ACE_OS::fprintf (output_file.get (),
+                           "%s",
+                           ior.in ());
+        ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+        ACE_UNUSED_ARG (result);
+      }
 
       poa_manager->activate ();
 
       orb->run ();
       ACE_OS::sleep(1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

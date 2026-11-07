@@ -3,24 +3,23 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -28,10 +27,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
       if (parse_args (argc, argv) != 0)
@@ -39,42 +38,44 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::Servant_var<Server> impl;
       {
-        Server * tmp;
+        Server *tmp {};
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
         // reasonable way to handle allocation errors in ACE.
         ACE_NEW_RETURN (tmp,
-                        Server(orb.in()),
+                        Server (orb.in ()),
                         1);
         impl = tmp;
       }
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (impl.in ());
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Test::Server_var server =
+      Test::Server_var const server =
         Test::Server::_narrow (object_act.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
-      // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      // Write the IOR before activating the POA manager.
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
-      ORB_Task task(orb.in());
-      task.activate(THR_NEW_LWP | THR_JOINABLE, 4, 1);
+      ORB_Task task (orb.in ());
+      task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1);
 
       task.wait();
 
@@ -84,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -97,7 +98,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

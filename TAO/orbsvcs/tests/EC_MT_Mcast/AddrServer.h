@@ -26,14 +26,18 @@ class AddrServer : public POA_RtecUDPAdmin::AddrServer
   //   provided at initialization time.
   //
 public:
-  AddrServer (const ACE_INET_Addr &addr);
+  explicit AddrServer (ACE_INET_Addr const& addr);
+  AddrServer (AddrServer const&) = delete;
+  AddrServer (AddrServer&&) = delete;
+  AddrServer& operator= (AddrServer const&) = delete;
+  AddrServer& operator= (AddrServer&&) = delete;
   // Constructor
 
   // = The RtecUDPAdmin::AddrServer methods
-  void get_addr (RtecEventComm::EventHeader const &header,
+  void get_addr (RtecEventComm::EventHeader const& header,
                  RtecUDPAdmin::UDP_Addr_out addr) override;
 
-  void get_address (RtecEventComm::EventHeader const &header,
+  void get_address (RtecEventComm::EventHeader const& header,
                     RtecUDPAdmin::UDP_Address_out addr) override;
 
 private:

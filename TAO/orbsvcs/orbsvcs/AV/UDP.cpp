@@ -7,6 +7,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/UDP.inl"
 #endif /* __ACE_INLINE__ */
@@ -48,8 +50,8 @@ TAO_AV_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
+TAO_AV_UDP_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                         void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -95,7 +97,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
   int dscp_flag=0;
   for(i=0; i < qos.QoSParams.length(); i++)
     {
-      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
+      if( std::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
           dscp_flag=1;
@@ -108,7 +110,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
             }
         }
 
-      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
+      if( std::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
         {
           qos.QoSParams[i].property_value >>= ecn;
           // ECN value can only occupy bits 6 and 7 of the
@@ -168,7 +170,7 @@ TAO_AV_UDP_Transport::TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler)
 TAO_AV_UDP_Transport::~TAO_AV_UDP_Transport () = default;
 
 int
-TAO_AV_UDP_Transport::set_remote_address (const ACE_INET_Addr &address)
+TAO_AV_UDP_Transport::set_remote_address (ACE_INET_Addr const &address)
 {
   this->peer_addr_ = address;
   return 0;
@@ -199,7 +201,7 @@ TAO_AV_UDP_Transport::get_peer_addr ()
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_AV_UDP_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
   // friends.
@@ -209,7 +211,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -228,7 +230,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
           // we should set ACE_IOV_MAX to that limit.
           if (iovcnt == ACE_IOV_MAX)
             {
-               n = this->handler_->get_socket ()->send ((const iovec *) iov,
+               n = this->handler_->get_socket ()->send ((iovec const *) iov,
                                                         iovcnt,
                                                         this->peer_addr_);
 
@@ -244,7 +246,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->get_socket ()->send ((const iovec *) iov,
+      n = this->handler_->get_socket ()->send ((iovec const *) iov,
                                                iovcnt,
                                                this->peer_addr_);
 
@@ -258,7 +260,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const char *buf,
+TAO_AV_UDP_Transport::send (char const *buf,
                             size_t len,
                             ACE_Time_Value *)
 {
@@ -271,11 +273,11 @@ TAO_AV_UDP_Transport::send (const char *buf,
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const iovec *iov,
+TAO_AV_UDP_Transport::send (iovec const *iov,
                           int iovcnt,
                           ACE_Time_Value *)
 {
-  return this->handler_->get_socket ()->send ((const iovec *) iov,
+  return this->handler_->get_socket ()->send ((iovec const *) iov,
                                               iovcnt,
                                               this->peer_addr_);
 }
@@ -314,11 +316,7 @@ TAO_AV_UDP_Transport::recv (iovec *iov,
 // TAO_AV_UDP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor ()
-  : address_ (0),
-    control_inet_address_ (0)
-{
-}
+TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor () = default;
 
 TAO_AV_UDP_Acceptor::~TAO_AV_UDP_Acceptor ()
 {
@@ -421,9 +419,9 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                              int is_default_addr)
 {
   int result = -1;
-  ACE_INET_Addr *local_addr = nullptr;
+  ACE_INET_Addr *local_addr {};
 
-  TAO_AV_Flow_Handler *flow_handler = nullptr;
+  TAO_AV_Flow_Handler *flow_handler {};
 
   // if using a default address and this is the control flow component, the
   //  handler and local address are already set in the flow spec entry
@@ -458,7 +456,9 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
           }
 
           local_addr->set (local_addr->get_port_number (),
-                           local_addr->get_host_name ());
+                           local_addr->get_host_name (),
+                           1,
+                           local_addr->get_type ());
 
           if (is_default_addr)
             {
@@ -475,8 +475,8 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                     }
                   else
                     {
-                      ACE_INET_Addr *local_control_addr = nullptr;
-                      TAO_AV_Flow_Handler *control_flow_handler = nullptr;
+                      ACE_INET_Addr *local_control_addr {};
+                      TAO_AV_Flow_Handler *control_flow_handler {};
 
                       ACE_NEW_RETURN (this->control_inet_address_,
                                       ACE_INET_Addr ("0"),
@@ -560,11 +560,7 @@ TAO_AV_UDP_Acceptor::close ()
 //------------------------------------------------------------
 // TAO_AV_UDP_Connector
 //------------------------------------------------------------
-TAO_AV_UDP_Connector::TAO_AV_UDP_Connector ()
-  : control_inet_address_ (0)
-  , delete_control_inet_address_ (false)
-{
-}
+TAO_AV_UDP_Connector::TAO_AV_UDP_Connector () = default;
 
 TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector ()
 {
@@ -596,8 +592,8 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Transport *&transport,
                                TAO_AV_Core::Flow_Component flow_component)
 {
-  ACE_INET_Addr *local_addr = nullptr;
-  ACE_INET_Addr *control_inet_addr = nullptr;
+  ACE_INET_Addr *local_addr {};
+  ACE_INET_Addr *control_inet_addr {};
 
   this->entry_ = entry;
   this->flow_component_ = flow_component;
@@ -616,7 +612,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
       control_inet_addr = dynamic_cast<ACE_INET_Addr*> (entry->control_address ());
     }
 
-  TAO_AV_Flow_Handler *flow_handler = nullptr;
+  TAO_AV_Flow_Handler *flow_handler {};
 
   // if this is the control flow component, the
   //  handler and local address are already set in the flow spec entry
@@ -668,8 +664,8 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                 }
               else
                 {
-                  ACE_INET_Addr *local_control_addr = nullptr;
-                  TAO_AV_Flow_Handler *control_flow_handler = nullptr;
+                  ACE_INET_Addr *local_control_addr {};
+                  TAO_AV_Flow_Handler *control_flow_handler {};
 
                   if (entry->is_multicast ())
                     control_inet_addr =  dynamic_cast<ACE_INET_Addr*> (entry->control_address ()) ;
@@ -834,7 +830,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
             ACE_OS::perror("SO_RCVBUF");
         }
       ACE_NEW_RETURN (local_addr,
-                      ACE_INET_Addr ("0"),
+                      ACE_INET_Addr ("0", inet_addr->get_type ()),
                       -1);
 
       if (ct == ACCEPTOR)
@@ -844,7 +840,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
             ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
 
           local_addr->set (local_addr->get_port_number (),
-                           local_addr->get_host_name ());
+                           local_addr->get_host_name (),
+                           1,
+                           local_addr->get_type ());
           handler->set_peer_addr (local_addr);
         }
     }
@@ -892,7 +890,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       result = handler->get_socket ()->get_local_addr (*local_addr);
 
       local_addr->set (local_addr->get_port_number (),
-                       local_addr->get_host_name ());
+                       local_addr->get_host_name (),
+                       1,
+                       local_addr->get_type ());
 
       ACE_TCHAR buf [BUFSIZ];
       local_addr->addr_to_string (buf, BUFSIZ);
@@ -915,7 +915,7 @@ TAO_AV_UDP_Factory::TAO_AV_UDP_Factory ()
 TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory () = default;
 
 int
-TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
+TAO_AV_UDP_Factory::match_protocol (char const *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"UDP") == 0)
     return 1;
@@ -928,7 +928,7 @@ TAO_AV_Acceptor*
 TAO_AV_UDP_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_acceptor\n"));
-  TAO_AV_Acceptor *acceptor = nullptr;
+  TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_UDP_Acceptor,
                   0);
@@ -939,7 +939,7 @@ TAO_AV_Connector*
 TAO_AV_UDP_Factory::make_connector ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_connector\n"));
-  TAO_AV_Connector *connector = nullptr;
+  TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_UDP_Connector,
                   0);
@@ -983,7 +983,7 @@ TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_UDP_Object::send_frame (const iovec *iov,
+TAO_AV_UDP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                TAO_AV_frame_info * /*frame_info*/)
 {
@@ -994,7 +994,7 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_UDP_Object::send_frame (const char*buf,
+TAO_AV_UDP_Object::send_frame (char const *buf,
                                size_t len)
 {
   int const result = this->transport_->send (buf, len, 0);
@@ -1039,7 +1039,7 @@ TAO_AV_UDP_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_UDP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_UDP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"UDP") == 0)
     return 1;
@@ -1052,12 +1052,12 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Flow_Handler *handler,
                                                TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Callback *callback {};
   if( endpoint->get_callback (entry->flowname (), callback) ) {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
-  TAO_AV_UDP_Object *object = nullptr;
+  TAO_AV_UDP_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_UDP_Object (callback,
                                      transport),

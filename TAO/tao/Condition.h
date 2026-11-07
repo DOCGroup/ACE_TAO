@@ -46,7 +46,7 @@ public:
 
   // = Initialiation and termination methods.
   /// Initialize the condition variable.
-  TAO_Condition (MUTEX &m);
+  explicit TAO_Condition (MUTEX &m);
 
   /// A default constructor. Since no lock is provided by the user,
   /// one will be created internally.

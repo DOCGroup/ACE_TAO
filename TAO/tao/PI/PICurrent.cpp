@@ -28,7 +28,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
-                         const CORBA::Any &data)
+                         CORBA::Any const &data)
 {
   this->check_validity (identifier);
 
@@ -68,7 +68,7 @@ TAO::PICurrent::tsc ()
 }
 
 void
-TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
+TAO::PICurrent::check_validity (PortableInterceptor::SlotId const &identifier)
 {
   // If the slot_count is zero, no initialization has been done (if there are
   // no slots, then the PICurrent_impl object is not created as there is no

@@ -59,9 +59,7 @@ TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
   , ns_name_(nullptr)
   , naming_context_ (nullptr)
   , this_name_ (1)
-  , rm_register_ (1)
   , replication_manager_ (nullptr)
-  , registered_ (0)
   , identity_ ("")
   , proxy_infos_ (0)
   , consumer_connects_(0)
@@ -72,9 +70,6 @@ TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
   , consumer_admin_ (nullptr)
   , structured_proxy_push_consumer_ (nullptr)
   , sequence_proxy_push_consumer_ (nullptr)
-  , quit_on_idle_(0)
-  , quitting_(0)
-  , gone_(0)
 {
 }
 
@@ -165,7 +160,7 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'q':
       {
-        this->quit_on_idle_ = 1;
+        this->quit_on_idle_ = true;
         break;
       }
       case '?':
@@ -206,7 +201,7 @@ void TAO::FT_FaultNotifier_i::_remove_ref ()
   ORBSVCS_ERROR ((LM_ERROR,
     "FaultNotifier (%P|%t) _remove_ref setting gone\n"
   ));
-  this->gone_ = 1;
+  this->gone_ = true;
 }
 
 int TAO::FT_FaultNotifier_i::fini ()
@@ -240,7 +235,7 @@ int TAO::FT_FaultNotifier_i::fini ()
       // RM may be down.
     }
 
-    this->registered_ = 0;
+    this->registered_ = false;
   }
   return 0;
 }
@@ -383,7 +378,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
           ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultNotifier registered with ReplicationManager.\n"
             ));
-          this->registered_ = 1;
+          this->registered_ = true;
         }
         else
         {
@@ -506,14 +501,14 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
   // use the first nil entry or a new entry if no nils found
 
   size_t infoPos = 0;
-  int looking = 1;
-  for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
+  bool looking = true;
+  for (size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
     ProxyInfo & pi = this->proxy_infos_[pos];
     if (CORBA::is_nil(pi.proxyVar_.in ()))
     {
       infoPos = pos;
-      looking = 0;
+      looking = false;
     }
   }
   if (looking)
@@ -568,14 +563,14 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
   // use the first nil entry or a new entry if no nils found
 
   size_t infoPos = 0;
-  int looking = 1;
-  for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
+  bool looking = true;
+  for (size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
     ProxyInfo & pi = this->proxy_infos_[pos];
     if (CORBA::is_nil(pi.proxyVar_.in ()))
     {
       infoPos = pos;
-      looking = 0;
+      looking = false;
     }
   }
   if (looking)
@@ -676,7 +671,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
         static_cast<unsigned int> (this->consumer_disconnects_)
         ));
       this->poa_->deactivate_object (this->object_id_.in ());
-      this->quitting_ = 1;
+      this->quitting_ = true;
     }
   }
 
@@ -685,22 +680,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
 
 CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive ()
 {
-  METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) 1;
-}
-
-//////////////
-// ProxyInfo
-
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo ()
-  : proxyId_ (0)
-  , proxyVar_ (::CosNotifyChannelAdmin::ProxySupplier::_nil())
-{
-}
-
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (ProxyInfo const & rhs)
-  : proxyId_ (rhs.proxyId_)
-  , proxyVar_ (rhs.proxyVar_)
-{
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

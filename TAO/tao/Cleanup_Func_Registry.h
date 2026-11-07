@@ -58,10 +58,12 @@ protected:
   void cleanup (ACE_Array_Base<void *> &ts_objects);
 
 private:
-  TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &) = delete;
-  TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &) = delete;
+  TAO_Cleanup_Func_Registry (TAO_Cleanup_Func_Registry const &) = delete;
+  TAO_Cleanup_Func_Registry &operator= (TAO_Cleanup_Func_Registry const &) = delete;
+  TAO_Cleanup_Func_Registry (TAO_Cleanup_Func_Registry &&) = delete;
+  TAO_Cleanup_Func_Registry &operator= (TAO_Cleanup_Func_Registry &&) = delete;
 
-  /// Array of registered cleanup functions.  The number of
+  /// Vector of registered cleanup functions.  The number of
   /// registered cleanup functions should be the same as the number
   /// of registered thread-specific objects in the ORB Core TSS
   /// resources.

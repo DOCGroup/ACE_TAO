@@ -5,6 +5,7 @@
 #include "ace/Log_Category.h"
 #include "ace/SString.h"
 #include "ace/os_include/os_pdhmsg.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,30 +14,45 @@ namespace ACE
   namespace Monitor_Control
   {
     Windows_Multi_Instance_Monitor::Windows_Multi_Instance_Monitor (
-      const ACE_TCHAR *wildcard_path)
-      : value_ (0.0)
-      , instances_ (0)
-      , n_instances_ (0)
-      , status_ (ERROR_SUCCESS)
+      ACE_TCHAR const *wildcard_path)
     {
       /// Create a string which is a concatentation of the path
       /// name of each 'instance' we need to monitor.
 
       DWORD paths_size = 4096;
-      ACE_LPSTR paths = (ACE_LPSTR) GlobalAlloc (GPTR, paths_size);
+      std::unique_ptr<void, void (*) (void *)> paths (
+        GlobalAlloc (GPTR, paths_size),
+        [] (void *memory)
+        {
+          if (memory != nullptr)
+            GlobalFree (static_cast<HGLOBAL> (memory));
+        });
 
+      if (paths == nullptr)
+        {
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("GlobalAlloc failed\n")));
+          return;
+        }
+
+      ACE_LPSTR path_buffer = static_cast<ACE_LPSTR> (paths.get ());
       this->status_ = ACE_TEXT_PdhExpandCounterPath (wildcard_path,
-                                                     paths,
+                                                     path_buffer,
                                                      &paths_size);
 
       if (PDH_MORE_DATA == static_cast<DWORD> (this->status_))
         {
           ++paths_size;
-          GlobalFree (paths);
-          paths = (ACE_LPSTR) GlobalAlloc (GPTR, paths_size);
+          paths.reset (GlobalAlloc (GPTR, paths_size));
 
+          if (paths == nullptr)
+            {
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("GlobalAlloc failed\n")));
+              return;
+            }
+
+          path_buffer = static_cast<ACE_LPSTR> (paths.get ());
           this->status_ = ACE_TEXT_PdhExpandCounterPath (wildcard_path,
-                                                         paths,
+                                                         path_buffer,
                                                          &paths_size);
         }
 
@@ -47,34 +63,40 @@ namespace ACE
                       wildcard_path));
         }
 
-      ACE_LPSTR path = paths;
+      ACE_LPSTR path = path_buffer;
 
       /// Create a regular Windows monitor for each path name.
-      while (*path != 0)
+      while (*path != ACE_TEXT ('\0'))
         {
-          Windows_Monitor *instance = new Windows_Monitor (path);
-          this->instances_.enqueue_tail (instance);
+          std::unique_ptr<Windows_Monitor> instance {
+            new Windows_Monitor (path)
+          };
+
+          if (this->instances_.enqueue_tail (instance.get ()) == -1)
+            ACELIB_ERROR ((LM_ERROR,
+                           ACE_TEXT ("Failed to queue Windows monitor instance\n")));
+          else
+            instance.release ();
+
           path += ACE_OS::strlen (path) + 1;
         }
-
-      GlobalFree (paths);
     }
 
     Windows_Multi_Instance_Monitor::~Windows_Multi_Instance_Monitor ()
     {
-      Windows_Monitor *instance = nullptr;
+      Windows_Monitor *instance {};
 
       /// Destroy the single instance monitors created in the constructor.
       while (this->instances_.dequeue_head (instance) == 0)
         {
-          delete instance;
+          std::unique_ptr<Windows_Monitor> instance_owner {instance};
         }
     }
 
     void
     Windows_Multi_Instance_Monitor::update_i ()
     {
-      Windows_Monitor **current_instance = nullptr;
+      Windows_Monitor **current_instance {};
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())
@@ -90,7 +112,7 @@ namespace ACE
     void
     Windows_Multi_Instance_Monitor::clear_impl ()
     {
-      Windows_Monitor **current_instance = nullptr;
+      Windows_Monitor **current_instance {};
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())

@@ -3,31 +3,31 @@
 
 #include "ace/Log_Msg.h"
 
-const char *ior =
+constexpr char ior[] =
   "corbaloc:iiop:192.3.47/10007/RandomObject";
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
       // First connection happens here..
-      test::_narrow (tmp.in ());
+      test_var const narrowed = test::_narrow (tmp.in ());
     }
-  catch (const CORBA::TRANSIENT& )
+  catch (CORBA::TRANSIENT const&)
     {
       // This exception is correct.
       ACE_DEBUG ((LM_DEBUG,
                   "_narrow() to non-existent object failed correctly.  Test succeeded.\n"));
       return 0;
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const& ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
     }

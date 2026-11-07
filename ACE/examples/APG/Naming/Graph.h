@@ -4,13 +4,11 @@
 #include "Graphable_Element.h"
 
 class Graph
-  {
-  public:
-    Graph()
-    {
-    }
+{
+public:
+  Graph () = default;
 
-    void graph( char * filename, Graphable_Element_List & data );
-  };
+  void graph (char const *filename, Graphable_Element_List &data);
+};
 
 #endif /* GRAPH_H */

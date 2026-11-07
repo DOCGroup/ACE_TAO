@@ -51,7 +51,7 @@ class TAO_Export TAO_Policy_Validator
 {
 public:
   /// Constructor.
-  TAO_Policy_Validator (TAO_ORB_Core &orb_core);
+  explicit TAO_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   virtual ~TAO_Policy_Validator ();
@@ -88,7 +88,7 @@ public:
   /**
    * Accessor for the stored ORB core reference
    */
- TAO_ORB_Core & orb_core() const;
+  TAO_ORB_Core &orb_core () const;
 
 protected:
   virtual void validate_impl (TAO_Policy_Set &policies) = 0;
@@ -100,11 +100,13 @@ protected:
   TAO_ORB_Core &orb_core_;
 
 private:
-  void operator= (const TAO_Policy_Validator &);
-  TAO_Policy_Validator (const TAO_Policy_Validator &);
+  TAO_Policy_Validator (TAO_Policy_Validator const &) = delete;
+  TAO_Policy_Validator &operator= (TAO_Policy_Validator const &) = delete;
+  TAO_Policy_Validator (TAO_Policy_Validator &&) = delete;
+  TAO_Policy_Validator &operator= (TAO_Policy_Validator &&) = delete;
 
 private:
-  TAO_Policy_Validator *next_;
+  TAO_Policy_Validator *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -56,10 +56,10 @@ public:
 
 private:
   /// The timer.
-  TAO_Notify_Timer_Reactor::Ptr timer_;
+  TAO_Notify_Timer_Reactor::Ptr timer_ {};
 
   /// Release
-  virtual void release ();
+  void release () override;
 };
 
 

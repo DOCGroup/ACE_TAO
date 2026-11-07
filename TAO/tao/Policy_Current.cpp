@@ -4,10 +4,6 @@
 
 #include "tao/TSS_Resources.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/Policy_Current.inl"
-#endif /* ! __ACE_INLINE__ */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Current_Impl &
@@ -35,8 +31,7 @@ TAO_Policy_Current::get_policy (CORBA::PolicyType policy)
 }
 
 CORBA::PolicyList *
-TAO_Policy_Current::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
-
+TAO_Policy_Current::get_policy_overrides (CORBA::PolicyTypeSeq const &ts)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
@@ -44,7 +39,7 @@ TAO_Policy_Current::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
 }
 
 void
-TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
+TAO_Policy_Current::set_policy_overrides (CORBA::PolicyList const &policies,
                                           CORBA::SetOverrideType set_add)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();

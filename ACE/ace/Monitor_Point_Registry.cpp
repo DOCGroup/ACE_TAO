@@ -95,7 +95,10 @@ namespace ACE
       Monitor_Control_Types::NameList name_holder_;
 
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                          guard,
+                          this->mutex_,
+                          Monitor_Control_Types::NameList {});
 
         for (Map::CONST_ITERATOR i (this->map_); !i.done (); i.advance ())
           {
@@ -146,7 +149,7 @@ namespace ACE
            i != this->map_.end ();
            i.advance ())
         {
-          Map::ENTRY* entry = nullptr;
+          Map::ENTRY* entry {};
           i.next (entry);
           entry->int_id_->remove_ref ();
         }

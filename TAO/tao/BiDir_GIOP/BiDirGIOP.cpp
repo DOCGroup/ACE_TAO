@@ -52,7 +52,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ());
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {
@@ -72,7 +72,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   if (TAO_DEF_GIOP_MINOR < 2)
     return;
 
-  TAO_BiDirPolicy_Validator *validator = nullptr;
+  TAO_BiDirPolicy_Validator *validator {};
   ACE_NEW_THROW_EX (validator,
                     TAO_BiDirPolicy_Validator (val.orb_core ()),
                     CORBA::NO_MEMORY (

@@ -36,26 +36,32 @@
 class Test_Server_Module_Export Test_Server_Module : public ACE_Task_Base
 {
 public:
+  Test_Server_Module () = default;
+
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc ();
+  int svc () override;
 
-  virtual ~Test_Server_Module ();
+  ~Test_Server_Module () override;
+  Test_Server_Module (Test_Server_Module const &) = delete;
+  Test_Server_Module (Test_Server_Module &&) = delete;
+  Test_Server_Module &operator= (Test_Server_Module const &) = delete;
+  Test_Server_Module &operator= (Test_Server_Module &&) = delete;
 
 private:
   /// Reference to the ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Reference to the POA.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 
   /// Reference to the POA Manager.
-  PortableServer::POAManager_var poa_manager_;
+  PortableServer::POAManager_var poa_manager_ {};
 
   /// The servant that implements the "Test" object.
   Test_i servant_;

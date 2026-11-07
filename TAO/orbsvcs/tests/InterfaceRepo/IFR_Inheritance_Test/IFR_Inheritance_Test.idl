@@ -27,6 +27,14 @@ module IFR_Test
 
     readonly attribute string sub_attr2;
   };
+
+  abstract interface IFRAbstractBase
+  {
+  };
+
+  abstract interface AbstractChild : IFRAbstractBase
+  {
+  };
 };
 
 #endif

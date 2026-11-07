@@ -14,7 +14,7 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy)
    ACE_DEBUG ((LM_DEBUG,
                "create_smart_proxy\n"));
 
-   if (CORBA::is_nil (proxy) == 0)
+   if (!CORBA::is_nil (proxy))
        ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
@@ -32,9 +32,9 @@ Smart_Test_Proxy::can_convert_to_ior () const
   return true;
 }
 
-char*
+char *
 Smart_Test_Proxy::convert_to_ior (bool,
-                                  const char*) const
+                                  char const *) const
 {
   // If this implementation wasn't provided, the ORB would provide
   // a stringified representation of this object.
@@ -47,12 +47,12 @@ Smart_Test_Proxy::method (CORBA::Short boo)
   ACE_DEBUG ((LM_DEBUG,
               "Yahoo, I am smart\n"));
 
-  CORBA::Short retval = 0;
+  CORBA::Short retval {};
   try
     {
       retval = TAO_Test_Smart_Proxy_Base::method (boo);
     }
-  catch (const Test::Oops& reason)
+  catch (Test::Oops const &reason)
     {
       reason._tao_print_exception ("User Exception");
       return -1;

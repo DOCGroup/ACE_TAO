@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/) = default;
+TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer () = default;
 
 void
 TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)

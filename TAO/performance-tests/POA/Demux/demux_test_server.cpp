@@ -15,23 +15,12 @@
 // Constructor
 Demux_Test_Server::Demux_Test_Server ()
   : argc_ (0),
-    argv_ (0),
     num_POAs_ (1),
     num_objs_ (1),
-    poa_fp_ (0),
-    ior_fp_ (0),
-    servant_fp_ (0),
-    use_user_id_ (0),
-    use_transient_poas_ (0)
+    use_user_id_ (false),
+    use_transient_poas_ (false)
 {
 }
-
-// destructor
-Demux_Test_Server::~Demux_Test_Server ()
-{
-  ACE_OS::fclose (this->poa_fp_);
-}
-
 
 //
 // initialize the Demux_Test_Server
@@ -163,34 +152,30 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
   // now create a POA hierarchy of the desired depth and populate each POA with
   // the specified number of objects. Finally, activate these objects.
 
-  char poa_file [128];
-
   // open the file that has all the POA names in it
-  if ((this->poa_fp_ = ACE_OS::fopen ("poa_names_100.dat", "r")) == 0)
+  this->poa_fp_.reset (ACE_OS::fopen ("poa_names_100.dat", "r"));
+  if (!this->poa_fp_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to open POA file %s\n", poa_file),
+                         " (%P|%t) Unable to open POA names file\n"),
                         -1);
     }
 
   // Open the file that has the servant names in it.
-  if ((this->servant_fp_ = ACE_OS::fopen ("names_file", "r")) == 0)
+  this->servant_fp_.reset (ACE_OS::fopen ("names_file", "r"));
+  if (!this->servant_fp_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to open POA file %s\n", poa_file),
+                         " (%P|%t) Unable to open servant names file\n"),
                         -1);
     }
 
-  // loop indices
-  CORBA::ULong i, j;
-
   PortableServer::POA *prev_poa = this->root_poa_.in ();
-  for (i = 0; i < this->num_POAs_; i++)
+  for (CORBA::ULong i = 0; i < this->num_POAs_; ++i)
     {
-      char poa_name [128];
+      char poa_name [128] {};
 
-      ACE_OS::memset (poa_name, 0, 128);
-      int n_matched = fscanf (this->poa_fp_, "%s", poa_name);
+      int n_matched = fscanf (this->poa_fp_.get (), "%s", poa_name);
       ACE_UNUSED_ARG (n_matched);
 
       try
@@ -205,7 +190,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
           throw;
         }
 
-      for (j = 0; j < this->num_objs_; j++)
+      for (CORBA::ULong j = 0; j < this->num_objs_; ++j)
         {
           PortableServer::ObjectId_var id;
 
@@ -214,7 +199,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
               // activate the object
               try
                 {
-                  Demux_Test_i * demux_test_i_ptr = 0;
+                  Demux_Test_i *demux_test_i_ptr {};
                   ACE_NEW_RETURN (demux_test_i_ptr,
                                   Demux_Test_i,
                                   -1);
@@ -239,7 +224,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
                     (demux_var.in ());
 
 
-                  ACE_OS::fprintf (this->ior_fp_, "%s\n", ior.in ());
+                  ACE_OS::fprintf (this->ior_fp_.get (), "%s\n", ior.in ());
                 }
               catch (const CORBA::Exception& ex)
                 {
@@ -251,18 +236,15 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
             {
               // Use the USER_ID policy.
 
-              char servant_name [128];
-
               try
                 {
-                  Demux_Test_i * demux_test_i_ptr;
+                  Demux_Test_i *demux_test_i_ptr {};
                   ACE_NEW_RETURN (demux_test_i_ptr,
                                   Demux_Test_i (this->child_poa_[i].in ()),
                                   -1);
 
-                  ACE_OS::memset (servant_name, 0, 128);
-
-                  n_matched = fscanf (this->servant_fp_, "%s", servant_name);
+                  char servant_name [128] {};
+                  n_matched = fscanf (this->servant_fp_.get (), "%s", servant_name);
                   ACE_UNUSED_ARG (n_matched);
 
                   ACE_DEBUG ((LM_DEBUG,
@@ -283,7 +265,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
                     (demux_var.in ());
 
 
-                  ACE_OS::fprintf (this->ior_fp_, "%s\n", ior.in ());
+                  ACE_OS::fprintf (this->ior_fp_.get (), "%s\n", ior.in ());
                 }
               catch (const CORBA::Exception& ex)
                 {
@@ -298,9 +280,9 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
       prev_poa = this->child_poa_[i].in ();
     } // i loop
 
-  ACE_OS::fclose (this->ior_fp_);
-  this->ior_fp_ = 0;
-  ACE_OS::fclose (this->servant_fp_);
+  this->poa_fp_.reset ();
+  this->ior_fp_.reset ();
+  this->servant_fp_.reset ();
 
   // now activate the POAs
 
@@ -332,8 +314,8 @@ Demux_Test_Server::parse_args ()
         TAO_debug_level++;
         break;
       case 'f':
-        this->ior_fp_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_fp_ == 0)
+        this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_fp_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -363,10 +345,10 @@ Demux_Test_Server::parse_args ()
           }
         break;
       case 'u':
-        this->use_user_id_ = 1;
+        this->use_user_id_ = true;
         break;
       case 't':
-        this->use_transient_poas_ = 1;
+        this->use_transient_poas_ = true;
         break;
       case '?':
       default:
@@ -383,8 +365,8 @@ Demux_Test_Server::parse_args ()
   if (!this->ior_fp_)
     {
       // open default IOR file
-      this->ior_fp_ = ACE_OS::fopen ("ior.dat", "w");
-      if (this->ior_fp_ == 0)
+      this->ior_fp_.reset (ACE_OS::fopen ("ior.dat", "w"));
+      if (!this->ior_fp_)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to open file ior.dat for writing\n"), -1);
     }

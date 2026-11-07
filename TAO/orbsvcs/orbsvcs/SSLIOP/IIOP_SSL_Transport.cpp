@@ -18,10 +18,6 @@ TAO::IIOP_SSL_Transport::IIOP_SSL_Transport (
     TAO::SSLIOP::Util::current (orb_core);
 }
 
-TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport ()
-{
-}
-
 int
 TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
                                        ACE_Time_Value *max_wait_time)

@@ -15,11 +15,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Connect::EC_Connect ()
-  : order_ (0)
-{
-}
-
 void
 EC_Connect::execute_test ()
 {
@@ -36,7 +31,7 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const* arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-connection_order")) == 0)
         {
@@ -44,13 +39,13 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("consumers")) == 0)
-                this->order_ = 0;
+                this->order_ = Order::consumers;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("suppliers")) == 0)
-                this->order_ = 1;
+                this->order_ = Order::suppliers;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("interleaved")) == 0)
-                this->order_ = 2;
+                this->order_ = Order::interleaved;
               else
                 ACE_ERROR ((LM_ERROR,
                             "EC_Connect - invalid choice <%s> for"
@@ -88,13 +83,13 @@ EC_Connect::print_args () const
   ACE_DEBUG ((LM_DEBUG,
               "EC_Connect parameters:\n"
               "  order = <%d>\n",
-              this->order_));
+              static_cast<int> (this->order_)));
 }
 
 void
 EC_Connect::dump_results ()
 {
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "\nConnect time:\n"));
   this->consumer_connect_.dump_results (ACE_TEXT("Consumer/connect"), gsf);
@@ -108,10 +103,10 @@ EC_Connect::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i)
 {
-  ACE_hrtime_t start = ACE_OS::gethrtime ();
+  ACE_hrtime_t const start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_consumer (consumer_admin,
                                      i);
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   this->consumer_connect_.sample (now - this->start_time_,
                                   now - start);
 }
@@ -121,10 +116,10 @@ EC_Connect::connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i)
 {
-  ACE_hrtime_t start = ACE_OS::gethrtime ();
+  ACE_hrtime_t const start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_supplier (supplier_admin,
                                      i);
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   this->supplier_connect_.sample (now - this->start_time_,
                                   now - start);
 }
@@ -147,24 +142,22 @@ EC_Connect::connect_clients ()
   this->start_time_ = ACE_OS::gethrtime ();
   switch (this->order_)
     {
-    default:
-    case 0:
+    case Order::consumers:
       this->connect_consumers ();
       this->connect_suppliers ();
       return;
 
-    case 1:
+    case Order::suppliers:
       this->connect_suppliers ();
       this->connect_consumers ();
       return;
 
-    case 2:
+    case Order::interleaved:
       break;
     }
 
-  int max = this->n_consumers_;
-  if (max < this->n_suppliers_)
-    max = this->n_suppliers_;
+  int const max = this->n_consumers_ > this->n_suppliers_
+                    ? this->n_consumers_ : this->n_suppliers_;
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers ();
@@ -172,7 +165,7 @@ EC_Connect::connect_clients ()
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->event_channel_->for_suppliers ();
 
-  for (int i = 0; i != max; ++i)
+  for (int i {}; i != max; ++i)
     {
       if (i < this->n_consumers_)
         {
@@ -183,7 +176,6 @@ EC_Connect::connect_clients ()
           this->connect_supplier (supplier_admin.in (), i);
         }
     }
-
 }
 
 void
@@ -191,24 +183,22 @@ EC_Connect::disconnect_clients ()
 {
   switch (this->order_)
     {
-    default:
-    case 0:
+    case Order::consumers:
       this->disconnect_suppliers ();
       this->disconnect_consumers ();
       return;
 
-    case 1:
+    case Order::suppliers:
       this->disconnect_consumers ();
       this->disconnect_suppliers ();
       return;
 
-    case 2:
+    case Order::interleaved:
       break;
     }
 
-  int max = this->n_consumers_;
-  if (max < this->n_suppliers_)
-    max = this->n_suppliers_;
+  int const max = this->n_consumers_ > this->n_suppliers_
+                    ? this->n_consumers_ : this->n_suppliers_;
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers ();
@@ -216,31 +206,31 @@ EC_Connect::disconnect_clients ()
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->event_channel_->for_suppliers ();
 
-  ACE_hrtime_t start_time = ACE_OS::gethrtime ();
-  for (int i = 0; i != max; ++i)
+  ACE_hrtime_t const start_time = ACE_OS::gethrtime ();
+  for (int i {}; i != max; ++i)
     {
       if (i < this->n_suppliers_)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
           this->suppliers_[i]->disconnect ();
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           this->supplier_disconnect_.sample (now - start_time,
                                              now - start);
         }
       if (i < this->n_consumers_)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
           this->consumers_[i]->disconnect ();
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           this->consumer_disconnect_.sample (now - start_time,
                                              now - start);
         }
     }
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
   this->consumer_disconnect_.dump_results (ACE_TEXT("Consumer/disconnect"), gsf);
   this->supplier_disconnect_.dump_results (ACE_TEXT("Supplier/disconnect"), gsf);
@@ -249,18 +239,18 @@ EC_Connect::disconnect_clients ()
 void
 EC_Connect::disconnect_consumers ()
 {
-  ACE_hrtime_t start_time = ACE_OS::gethrtime ();
-  for (int i = 0; i < this->n_consumers_; ++i)
+  ACE_hrtime_t const start_time = ACE_OS::gethrtime ();
+  for (int i {}; i < this->n_consumers_; ++i)
     {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
       this->consumers_[i]->disconnect ();
 
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
+      ACE_hrtime_t const now = ACE_OS::gethrtime ();
       this->consumer_disconnect_.sample (now - start_time,
                                          now - start);
     }
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
   this->consumer_disconnect_.dump_results (ACE_TEXT("Consumer/disconnect"),
                                            gsf);
@@ -271,37 +261,35 @@ EC_Connect::disconnect_consumers ()
 void
 EC_Connect::disconnect_suppliers ()
 {
-  ACE_hrtime_t start_time = ACE_OS::gethrtime ();
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  ACE_hrtime_t const start_time = ACE_OS::gethrtime ();
+  for (int i {}; i < this->n_suppliers_; ++i)
     {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
       this->suppliers_[i]->disconnect ();
 
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
+      ACE_hrtime_t const now = ACE_OS::gethrtime ();
       this->supplier_disconnect_.sample (now - start_time,
                                          now - start);
     }
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
   this->supplier_disconnect_.dump_results (ACE_TEXT("Supplier/disconnect"),
                                            gsf);
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) suppliers disconnected\n"));
 }
-
-
 // ****************************************************************
 
 ECC_Consumer::ECC_Consumer (EC_Driver* driver, void* cookie)
-  :  EC_Consumer (driver, cookie)
+  : EC_Consumer (driver, cookie)
 {
 }
 
 void
 ECC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    const RtecEventChannelAdmin::ConsumerQOS& qos,
+    RtecEventChannelAdmin::ConsumerQOS const& qos,
     int shutdown_event_type)
 {
   this->EC_Consumer::connect (consumer_admin,
@@ -311,18 +299,18 @@ ECC_Consumer::connect (
 
 void
 ECC_Consumer::connect (
-    const RtecEventChannelAdmin::ConsumerQOS& qos,
+    RtecEventChannelAdmin::ConsumerQOS const& qos,
     int shutdown_event_type)
 {
-  ACE_hrtime_t start = ACE_OS::gethrtime ();
+  ACE_hrtime_t const start = ACE_OS::gethrtime ();
   this->EC_Consumer::connect (qos,
                               shutdown_event_type);
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }
 
 void
-ECC_Consumer::dump_results (const ACE_TCHAR* name,
+ECC_Consumer::dump_results (ACE_TCHAR const* name,
                             ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->connect_time_.dump_results (name, gsf);
@@ -332,14 +320,14 @@ ECC_Consumer::dump_results (const ACE_TCHAR* name,
 // ****************************************************************
 
 ECC_Supplier::ECC_Supplier (EC_Driver* driver, void* cookie)
-  :  EC_Supplier (driver, cookie)
+  : EC_Supplier (driver, cookie)
 {
 }
 
 void
 ECC_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    const RtecEventChannelAdmin::SupplierQOS& qos,
+    RtecEventChannelAdmin::SupplierQOS const& qos,
     int shutdown_event_type)
 {
   this->EC_Supplier::connect (supplier_admin,
@@ -349,18 +337,18 @@ ECC_Supplier::connect (
 
 void
 ECC_Supplier::connect (
-    const RtecEventChannelAdmin::SupplierQOS& qos,
+    RtecEventChannelAdmin::SupplierQOS const& qos,
     int shutdown_event_type)
 {
-  ACE_hrtime_t start = ACE_OS::gethrtime ();
+  ACE_hrtime_t const start = ACE_OS::gethrtime ();
   this->EC_Supplier::connect (qos,
                               shutdown_event_type);
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }
 
 void
-ECC_Supplier::dump_results (const ACE_TCHAR* name,
+ECC_Supplier::dump_results (ACE_TCHAR const* name,
                             ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->connect_time_.dump_results (name, gsf);

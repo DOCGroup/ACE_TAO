@@ -3,7 +3,8 @@
 
 #include "ace/INet/BidirStreamBuffer.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,14 +20,14 @@ namespace ACE
       : bufsize_ (bufsz),
         mode_ (mode),
         stream_ (sh),
-        interceptor_ (0)
+        interceptor_ (nullptr)
       {
         this->stream_->add_reference ();
 
-        char_type* p = 0;
+        char_type* p = nullptr;
         ACE_NEW_NORETURN (p, char_type [bufsz]);
         this->read_buffer_.reset (p);
-        p = 0;
+        p = nullptr;
         ACE_NEW_NORETURN (p, char_type [bufsz]);
         this->write_buffer_.reset (p);
 
@@ -67,9 +68,9 @@ namespace ACE
         int putback = int (this->gptr () - this->eback ());
         if (putback > 4) putback = 4;
 
-        ACE_OS::memmove (this->read_buffer_.get () + (4 - putback),
-                         this->gptr () - putback,
-                         putback * sizeof (char_type));
+        std::memmove (this->read_buffer_.get () + (4 - putback),
+                      this->gptr () - putback,
+                      putback * sizeof (char_type));
 
         if (this->interceptor_)
           this->interceptor_->before_read (this->bufsize_ - 4);
@@ -118,11 +119,11 @@ namespace ACE
     void
     BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::close_stream ()
       {
-        if (this->stream_ != 0)
+        if (this->stream_ != nullptr)
           {
             ACE_Errno_Guard eguard (errno);
             this->stream_->remove_reference ();
-            this->stream_ = 0;
+            this->stream_ = nullptr;
           }
       }
 
@@ -162,14 +163,14 @@ namespace ACE
     int
     BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::read_from_stream (char_type* buffer, std::streamsize length)
       {
-        return this->stream_ == 0 ? 0 : this->stream_->read_from_stream (buffer, length, sizeof(char_type));
+        return this->stream_ == nullptr ? 0 : this->stream_->read_from_stream (buffer, length, sizeof(char_type));
       }
 
     template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
     int
     BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::write_to_stream (const char_type* buffer, std::streamsize length)
       {
-        return this->stream_ == 0 ? 0 : this->stream_->write_to_stream (buffer, length, sizeof(char_type));
+        return this->stream_ == nullptr ? 0 : this->stream_->write_to_stream (buffer, length, sizeof(char_type));
       }
 
     template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
@@ -204,9 +205,7 @@ namespace ACE
       }
 
     template <class STREAM_HANDLER>
-    BidirStreamBuffer<STREAM_HANDLER>::~BidirStreamBuffer ()
-      {
-      }
+    BidirStreamBuffer<STREAM_HANDLER>::~BidirStreamBuffer () = default;
 
   }
 }

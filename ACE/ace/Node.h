@@ -51,18 +51,20 @@ public:
 
   ~ACE_Node () = default;
 
+  ACE_Node (ACE_Node const &) = delete;
+  ACE_Node (ACE_Node &&) = delete;
+  ACE_Node &operator= (ACE_Node const &) = delete;
+  ACE_Node &operator= (ACE_Node &&) = delete;
+
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Node (const T &i, ACE_Node<T, C> *n);
+  ACE_Node (T const &i, ACE_Node<T, C> *n);
   ACE_Node (ACE_Node<T, C> *n = nullptr, int = 0);
-  ACE_Node (const ACE_Node<T, C> &n);
-private:
-  void operator= (const ACE_Node<T, C> &) = delete;
 
 private:
   /// Pointer to next element in the list of ACE_Nodes.
-  ACE_Node<T, C> *next_;
+  ACE_Node<T, C> *next_ {};
 
   /// Current value of the item in this node.
   T item_;

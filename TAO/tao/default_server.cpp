@@ -52,7 +52,7 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count ()
 void
 TAO_Default_Server_Strategy_Factory::tokenize (ACE_TCHAR* flag_string)
 {
-  ACE_TCHAR* lasts = nullptr;
+  ACE_TCHAR* lasts {};
 
   for (ACE_TCHAR* flag = ACE_OS::strtok_r (flag_string,
                                       ACE_TEXT("|"),
@@ -164,10 +164,10 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         ++curarg;
         if (curarg < argc)
           {
-            ACE_TCHAR* value = argv[curarg];
+            ACE_TCHAR const *value = argv[curarg];
 
             this->active_object_map_creation_parameters_.use_active_hint_in_ids_ =
-              ACE_OS::atoi (value);
+              ACE_OS::atoi (value) != 0;
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -176,10 +176,10 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         ++curarg;
         if (curarg < argc)
           {
-            ACE_TCHAR* value = argv[curarg];
+            ACE_TCHAR const *value = argv[curarg];
 
             this->active_object_map_creation_parameters_.use_active_hint_in_poa_names_ =
-              ACE_OS::atoi (value);
+              ACE_OS::atoi (value) != 0;
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -188,10 +188,10 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         ++curarg;
         if (curarg < argc)
           {
-            ACE_TCHAR* value = argv[curarg];
+            ACE_TCHAR const *value = argv[curarg];
 
             this->active_object_map_creation_parameters_.allow_reactivation_of_system_ids_ =
-              ACE_OS::atoi (value);
+              ACE_OS::atoi (value) != 0;
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],

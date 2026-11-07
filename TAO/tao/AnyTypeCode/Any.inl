@@ -36,7 +36,7 @@ CORBA::Any_var::operator CORBA::Any *&()
 }
 
 ACE_INLINE
-CORBA::Any_var::operator const CORBA::Any *() const
+CORBA::Any_var::operator CORBA::Any const *() const
 {
   return this->ptr_;
 }
@@ -47,7 +47,7 @@ CORBA::Any_var::operator-> ()
   return this->ptr_;
 }
 
-ACE_INLINE const CORBA::Any &
+ACE_INLINE CORBA::Any const &
 CORBA::Any_var::in () const
 {
   return *this->ptr_;
@@ -137,13 +137,13 @@ operator <<= (CORBA::Any_var &lhs, CORBA::Double rhs)
 }
 
 ACE_INLINE void
-operator <<= (CORBA::Any_var &lhs, const CORBA::Any& rhs)
+operator <<= (CORBA::Any_var &lhs, CORBA::Any const &rhs)
 {
   lhs.inout () <<= rhs;
 }
 
 ACE_INLINE void
-operator <<= (CORBA::Any_var &lhs, const char* rhs)
+operator <<= (CORBA::Any_var &lhs, char const *rhs)
 {
   lhs.inout () <<= rhs;
 }
@@ -155,7 +155,7 @@ operator <<= (CORBA::Any_var &lhs, CORBA::TypeCode_ptr rhs)
 }
 
 ACE_INLINE void
-operator <<= (CORBA::Any_var &lhs, const CORBA::Object_ptr rhs)
+operator <<= (CORBA::Any_var &lhs, CORBA::Object_ptr const rhs)
 {
   lhs.inout () <<= rhs;
 }
@@ -201,115 +201,115 @@ operator <<= (CORBA::Any_var &lhs, CORBA::Any::from_wstring rhs)
 // *************************************************************
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Short &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Short &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::UShort &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::UShort &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Long &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Long &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::ULong &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::ULong &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::LongLong &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::LongLong &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::ULongLong &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::ULongLong &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Float &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Float &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Double &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Double &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, const CORBA::Any *&rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any const *&rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::TypeCode_ptr &rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::TypeCode_ptr &rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, const char *&rhs)
+operator >>= (CORBA::Any_var const &lhs, char const *&rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, const CORBA::WChar *&rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::WChar const *&rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_boolean rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_boolean rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_octet rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_octet rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_char rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_char rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_wchar rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_wchar rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_string rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_string rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_wstring rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_wstring rhs)
 {
   return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_object rhs)
+operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_object rhs)
 {
   return lhs.in () >>= rhs;
 }
@@ -334,13 +334,13 @@ CORBA::Any_out::Any_out (CORBA::Any_var &s)
 }
 
 ACE_INLINE
-CORBA::Any_out::Any_out (const CORBA::Any_out &s)
+CORBA::Any_out::Any_out (CORBA::Any_out const &s)
   : ptr_ (s.ptr_)
 {
 }
 
 ACE_INLINE CORBA::Any_out &
-CORBA::Any_out::operator= (const CORBA::Any_out &s)
+CORBA::Any_out::operator= (CORBA::Any_out const &s)
 {
   this->ptr_ = s.ptr_;
   return *this;

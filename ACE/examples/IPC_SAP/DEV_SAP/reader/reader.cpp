@@ -20,7 +20,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        argv[1]),
                       1);
 
-  ACE_TTY_IO::Serial_Params myparams;
+  ACE_TTY_IO::Serial_Params myparams {};
   // Try to read default parameters
   if (read_dev.control (ACE_TTY_IO::GETPARAMS, &myparams) == -1)
     {
@@ -45,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (char readback = 'x'; readback != 'q'; )
     {
       ssize_t bytes_read =
-        read_dev.recv ((void *) &readback, 1);
+        read_dev.recv (&readback, 1);
 
       if (bytes_read == 1)
           ACE_DEBUG ((LM_DEBUG,

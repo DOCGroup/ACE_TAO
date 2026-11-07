@@ -29,16 +29,21 @@ class Time_Date_Client_i
 {
 public:
   /// Constructor
-  Time_Date_Client_i ();
+  Time_Date_Client_i () = default;
 
   /// Destructor
-  virtual ~Time_Date_Client_i ();
+  ~Time_Date_Client_i () = default;
+
+  Time_Date_Client_i (Time_Date_Client_i const &) = delete;
+  Time_Date_Client_i &operator= (Time_Date_Client_i const &) = delete;
+  Time_Date_Client_i (Time_Date_Client_i &&) = delete;
+  Time_Date_Client_i &operator= (Time_Date_Client_i &&) = delete;
 
   /// Execute the methods.
-  virtual int run (const char *, int, ACE_TCHAR *[]);
+  int run (char const *, int, ACE_TCHAR *[]);
 
   /// Parses the command line arguments.
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   /// Instantiate the client object.

@@ -16,6 +16,8 @@
 
 #include "tao/TransportCurrent/Current_ORBInitializer_Base.h"
 
+#include <cstddef>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -31,11 +33,11 @@ namespace TAO
       : public Current_ORBInitializer_Base
     {
     public:
-      Current_ORBInitializer (const ACE_TCHAR* id);
+      explicit Current_ORBInitializer (ACE_TCHAR const *id);
 
     protected:
       TAO::Transport::Current_ptr
-      make_current_instance (TAO_ORB_Core* c, size_t s) override;
+      make_current_instance (TAO_ORB_Core *c, std::size_t s) override;
     };
   }
 }

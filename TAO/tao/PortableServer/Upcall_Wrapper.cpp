@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              TAO::Argument * const args[],
-                             size_t nargs,
+                             std::size_t nargs,
                              TAO::Upcall_Command & command
 #if TAO_HAS_INTERCEPTORS == 1
                              , TAO::Portable_Server::Servant_Upcall *servant_upcall
@@ -62,7 +62,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
   // By default, we assume that we will use the server-side args.
   TAO::Argument * const * the_args = args;
-  size_t the_nargs = nargs;
+  std::size_t the_nargs = nargs;
 
   if (server_request.collocated())
     {
@@ -215,7 +215,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 void
 TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
                                  TAO::Argument * const * args,
-                                 size_t nargs)
+                                 std::size_t nargs)
 {
   // Demarshal the operation "in" and "inout" arguments, if any.
 
@@ -246,7 +246,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
 void
 TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
                                   TAO::Argument * const * args,
-                                  size_t nargs)
+                                  std::size_t nargs)
 {
   TAO_OutputCDR & cdr = (*server_request.outgoing ());
   TAO::Argument * const * const begin = args;

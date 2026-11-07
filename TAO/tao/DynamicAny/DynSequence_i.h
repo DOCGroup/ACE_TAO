@@ -20,7 +20,8 @@
 
 #include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
-#include "ace/Containers.h"
+
+#include "ace/Array_Base.h"
 
 #if defined (_MSC_VER)
 # pragma warning(push)

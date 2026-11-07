@@ -38,7 +38,7 @@ Roundtrip_Handler::test_octet_method_excep (::Messaging::ExceptionHolder *holder
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_octet_method:");
     }
@@ -63,7 +63,7 @@ Roundtrip_Handler::test_char_method_excep (::Messaging::ExceptionHolder *holder)
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_char_method:");
     }
@@ -88,7 +88,7 @@ Roundtrip_Handler::test_long_method_excep (::Messaging::ExceptionHolder *holder)
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_long_method:");
     }
@@ -113,7 +113,7 @@ Roundtrip_Handler::test_short_method_excep (::Messaging::ExceptionHolder *holder
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_short_method:");
     }
@@ -138,7 +138,7 @@ Roundtrip_Handler::test_double_method_excep (::Messaging::ExceptionHolder *holde
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_double_method:");
     }
@@ -163,12 +163,11 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_longlong_method:");
     }
-}
-
+  }
 
 // = Other methods
 
@@ -184,7 +183,7 @@ Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("shutdown:");
     }

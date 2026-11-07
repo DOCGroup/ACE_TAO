@@ -37,7 +37,7 @@ be_visitor_map_cdr_op_cs::visit_map (be_map *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 

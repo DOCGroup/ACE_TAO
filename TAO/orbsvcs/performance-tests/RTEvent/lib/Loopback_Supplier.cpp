@@ -36,7 +36,7 @@ Loopback_Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
     this->_this ();
 
   RtecEventChannelAdmin::SupplierQOS supplier_qos;
-  supplier_qos.is_gateway = 0;
+  supplier_qos.is_gateway = false;
   supplier_qos.publications.length (1);
   RtecEventComm::EventHeader& sh0 =
     supplier_qos.publications[0].event.header;

@@ -12,6 +12,9 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <vector>
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -114,7 +117,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const TypeCodeType&
+TypeCodeType const &
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
@@ -127,7 +130,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const FieldArrayType&
+FieldArrayType const &
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
@@ -277,7 +280,7 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
+  std::vector<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)

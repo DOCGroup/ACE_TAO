@@ -25,6 +25,8 @@
 #endif /* _MSC_VER */
 
 #include "tao/Pseudo_VarOut_T.h"
+#include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,7 +70,7 @@ public:
    */
   void check_close (int wait_for_completion);
 
-  /// Insert a new adapter into the registry.
+  /// Insert an adapter; ownership transfers to the registry after successful insertion.
   void insert (TAO_Adapter *adapter);
 
   /**
@@ -81,14 +83,14 @@ public:
                  CORBA::Object_out forward_to);
 
   /// Create a collocated object using the given profile and stub.
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *, const TAO_MProfile &);
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *, TAO_MProfile const &);
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.
   CORBA::Long initialize_collocated_object (TAO_Stub *);
 
   /// Fetch the adapter named @a name
-  TAO_Adapter *find_adapter (const char *name) const;
+  TAO_Adapter *find_adapter (char const *name) const;
 
 private:
   TAO_Adapter_Registry (TAO_Adapter_Registry const &) = delete;
@@ -96,14 +98,11 @@ private:
   TAO_Adapter_Registry (TAO_Adapter_Registry &&) = delete;
   TAO_Adapter_Registry &operator= (TAO_Adapter_Registry &&) = delete;
 
-  /**
-   * @name A simple array of adapters.
-   */
-  //@{
-  size_t adapters_capacity_;
-  size_t adapters_count_;
-  TAO_Adapter **adapters_;
-  //@}
+  using adapter_type = std::unique_ptr<TAO_Adapter>;
+  using adapter_container_type = std::vector<adapter_type>;
+
+  /// The registry owns adapters after a successful insert, ordered by priority.
+  adapter_container_type adapters_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

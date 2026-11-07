@@ -86,7 +86,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     RtecEventChannelAdmin::EventChannel_var gateway =
       gateway_servant.activate(root_poa.in());
 
-    if (ior_file_name.length())
+    if (!ior_file_name.is_empty ())
     {
       CORBA::String_var str = orb->object_to_string(gateway.in());
 

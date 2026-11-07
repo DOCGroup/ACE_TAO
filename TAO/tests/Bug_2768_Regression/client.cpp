@@ -1,13 +1,11 @@
 #include "MessengerC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -29,32 +27,31 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("");
   try
     {
-    //init the orb
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      // Initialize the ORB.
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args (argc, argv) != 0)
-      return 1;
+      if (parse_args (argc, argv, ior) != 0)
+        return 1;
 
-    CORBA::Object_var object_temp =
-      orb->string_to_object (ior);
+      CORBA::Object_var const object_temp = orb->string_to_object (ior);
 
-    SimpleMessenger::Messenger_var messenger =
-      SimpleMessenger::Messenger::_unchecked_narrow (object_temp.in ());
+      SimpleMessenger::Messenger_var const messenger =
+        SimpleMessenger::Messenger::_unchecked_narrow (object_temp.in ());
 
-    CORBA::PolicyList_var unused;
-    messenger->_validate_connection (unused);
+      CORBA::PolicyList_var unused {};
+      messenger->_validate_connection (unused);
 
-    messenger->send ();
+      messenger->send ();
 
-    orb->destroy ();
+      orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

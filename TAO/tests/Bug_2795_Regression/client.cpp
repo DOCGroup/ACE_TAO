@@ -1,10 +1,12 @@
-#include "tao/ORB_Core.h"
+#include <cstring>
+
+#include "tao/ORB.h"
 #include "tao/StringSeqC.h"
 
 void
 StringOutTest (CORBA::String_out so)
 {
-  CORBA::String_var sv;
+  CORBA::String_var sv {};
   sv = "StringOutTest";
   so = sv._retn ();
 }
@@ -12,6 +14,7 @@ StringOutTest (CORBA::String_out so)
 void
 StringInoutTest (char *&so)
 {
+  // The inout string pointer belongs to the caller; free it before replacing it.
   CORBA::string_free (so);
   so = CORBA::string_dup ("StringInoutTest");
 }
@@ -21,27 +24,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       CORBA::StringSeq ts;
       ts.length (1);
       ts[0] = CORBA::string_dup ("Hello World");
 
       StringOutTest (ts[0].out ());
-      ACE_ASSERT (ACE_OS::strcmp (ts[0].in (), "StringOutTest") == 0);
+      ACE_ASSERT (std::strcmp (ts[0].in (), "StringOutTest") == 0);
 
       StringInoutTest (ts[0].inout ());
-      ACE_ASSERT (ACE_OS::strcmp (ts[0].in (), "StringInoutTest") == 0);
+      ACE_ASSERT (std::strcmp (ts[0].in (), "StringInoutTest") == 0);
 
-      CORBA::String_var sv = ts[0]._retn ();
-      ACE_ASSERT (ACE_OS::strcmp (ts[0].in (), "") == 0);
+      CORBA::String_var const sv (ts[0]._retn ());
+      ACE_ASSERT (std::strcmp (ts[0].in (), "") == 0);
 
       ts[0] = CORBA::string_dup ("Hello Again");
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {
-      ACE_ERROR ((LM_ERROR, "Exception caught: %s\"%s\"\n"
-                  , ex._name(), ex._rep_id ()));
+      ACE_ERROR ((LM_ERROR,
+                  "Exception caught: %s\"%s\"\n",
+                  ex._name (),
+                  ex._rep_id ()));
       return 1;
     }
 

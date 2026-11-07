@@ -20,6 +20,12 @@
 
 #include "Connection_Handler.h"
 
+static void
+end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 int
 Connection_Handler::open (void *)
 {
@@ -71,7 +77,7 @@ Connection_Handler::svc ()
                       -1);
   // Schedule a timer.
   else if (this->reactor ()->schedule_timer (this,
-                                             (const void *) this,
+                                             this,
                                              ACE_Time_Value (2),
                                              ACE_Time_Value (2)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -116,11 +122,13 @@ Connection_Handler::handle_close (ACE_HANDLE,
 int
 Connection_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  char buf[BUFSIZ + 1] {};
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) handle_input\n")));
 
-  switch (this->peer ().recv (buf, sizeof buf))
+  ssize_t const n = this->peer ().recv (buf, sizeof buf - 1);
+
+  switch (n)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -133,7 +141,8 @@ Connection_Handler::handle_input (ACE_HANDLE)
                          this->get_handle ()),
                         -1);
     default:
-      if (buf[0] == (char) EOF)
+      buf[n] = '\0';
+      if (buf[0] == static_cast<char> (EOF))
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) closing log daemon (fd = %d)\n"),
                            this->get_handle ()),
@@ -180,7 +189,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
-  u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
+  u_short const port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in main\n")));
 
@@ -188,7 +197,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Connection_Acceptor peer_acceptor;
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter sa (end_reactor_event_loop);
 
   // Register the signal handler adapter.
   if (ACE_Reactor::instance ()->register_handler (SIGINT, &sa) == -1)
@@ -210,7 +219,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Perform connection service until we receive SIGINT.
 
-  while (ACE_Reactor::event_loop_done() == 0)
+  while (!ACE_Reactor::event_loop_done ())
     ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,

@@ -51,10 +51,10 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties,
+      PortableGroup::TagGroupTaggedComponent const & tagged_component,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      TAO::PG_Property_Set_var const & type_properties,
       TAO::Storable_Factory & storable_factory,
       TAO_FT_Naming_Replication_Manager *replicator);
 
@@ -100,6 +100,7 @@ namespace TAO
     /// so can know if we should propagate a change type of NEW.
     bool file_created_;
 
+    /// Borrowed from the Naming server.
     TAO_FT_Naming_Replication_Manager *replicator_;
     /**
      * Although it is assumed for replication that services

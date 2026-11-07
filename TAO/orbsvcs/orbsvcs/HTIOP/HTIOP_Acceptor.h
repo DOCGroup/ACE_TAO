@@ -32,6 +32,9 @@
 
 #include "ace/SOCK_Acceptor.h"
 
+#include <memory>
+#include <string>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
@@ -103,7 +106,7 @@ namespace TAO
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority) override;
 
-      int is_collocated (const TAO_Endpoint *endpoint) override;
+      bool is_collocated (const TAO_Endpoint *endpoint) override;
 
       CORBA::ULong endpoint_count () override;
 
@@ -172,7 +175,7 @@ namespace TAO
     protected:
       /// Array of ACE::HTBP::Addr instances, each one corresponding to a
       /// given network interface.
-      ACE::HTBP::Addr *addrs_;
+      std::unique_ptr<ACE::HTBP::Addr[]> addrs_;
 
       /**
        * Cache the information about the endpoints serviced by this
@@ -181,7 +184,7 @@ namespace TAO
        * example, if the IP address is INADDR_ANY (0.0.0.0) then there
        * will be possibly a different hostname for each interface.
        */
-      char **hosts_;
+      std::unique_ptr<char *[]> hosts_;
 
       /// The number of host names cached in the hosts_ array (equivalent
       /// to the number of endpoints opened by this Acceptor).
@@ -190,7 +193,7 @@ namespace TAO
       /**
        * Override the hostname used in the ORBEndPoint.
        */
-      char *hostname_in_ior_;
+      std::string hostname_in_ior_;
 
       /**
        * The GIOP version for this endpoint
@@ -207,9 +210,9 @@ namespace TAO
       BASE_ACCEPTOR base_acceptor_;
 
       /// Acceptor strategies.
-      CREATION_STRATEGY *creation_strategy_;
-      CONCURRENCY_STRATEGY *concurrency_strategy_;
-      ACCEPT_STRATEGY *accept_strategy_;
+      std::unique_ptr<CREATION_STRATEGY> creation_strategy_;
+      std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_;
+      std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_;
 
       ACE::HTBP::Environment *ht_env_;
 

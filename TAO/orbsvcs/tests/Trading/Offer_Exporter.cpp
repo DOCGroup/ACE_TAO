@@ -17,10 +17,10 @@ TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter ()
 {
-  while (! this->clean_up_.is_empty ())
+  while (!this->clean_up_.empty ())
     {
-      TAO_Dynamic_Property* dp = 0;
-      this->clean_up_.dequeue_head (dp);
+      TAO_Dynamic_Property *dp = this->clean_up_.back ();
+      this->clean_up_.pop_back ();
       dp->destroy ();
     }
 }
@@ -390,8 +390,8 @@ TAO_Offer_Exporter::create_offers ()
       TAO_Dynamic_Property* file_sizes =
         new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (ulong_seq);
 
-      this->clean_up_.enqueue_head (user_queue);
-      this->clean_up_.enqueue_head (file_sizes);
+      this->clean_up_.push_back (user_queue);
+      this->clean_up_.push_back (file_sizes);
 
       dp_user_queue = user_queue->construct_dynamic_prop
         (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
@@ -448,8 +448,8 @@ TAO_Offer_Exporter::create_offers ()
       TAO_Dynamic_Property* file_sizes =
         new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (ulong_seq);
 
-      this->clean_up_.enqueue_head (user_queue);
-      this->clean_up_.enqueue_head (file_sizes);
+      this->clean_up_.push_back (user_queue);
+      this->clean_up_.push_back (file_sizes);
 
       dp_user_queue = user_queue->construct_dynamic_prop
         (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
@@ -499,7 +499,7 @@ TAO_Offer_Exporter::create_offers ()
       TAO_Dynamic_Property* space_left =
         new TAO_Simple_Dynamic_Property<CORBA::ULong> (i * 4434343);
 
-      this->clean_up_.enqueue_head (space_left);
+      this->clean_up_.push_back (space_left);
 
       dp_space_left = space_left->construct_dynamic_prop
         (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],

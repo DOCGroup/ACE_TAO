@@ -60,7 +60,7 @@ TAO_CSD_POA::new_POA (const String &name,
                       TAO_ORB_Core &orb_core,
                       TAO_Object_Adapter *object_adapter)
 {
-  TAO_CSD_POA *poa = nullptr;
+  TAO_CSD_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_CSD_POA (name,
@@ -78,7 +78,7 @@ TAO_CSD_POA::new_POA (const String &name,
 
   if (repo)
     {
-      CSD_Framework::Strategy_var strategy = repo->find (name);
+      CSD_Framework::Strategy_var strategy = repo->find (std::string (name.c_str ()));
 
       if (! ::CORBA::is_nil (strategy.in ()))
         {

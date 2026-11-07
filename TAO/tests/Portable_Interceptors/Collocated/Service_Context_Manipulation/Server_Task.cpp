@@ -1,9 +1,10 @@
 #include "Server_Task.h"
 #include "test_i.h"
+#include <memory>
 #include "ace/OS_NS_time.h"
 #include "ace/Manual_Event.h"
 
-Server_Task::Server_Task (const ACE_TCHAR *output,
+Server_Task::Server_Task (ACE_TString const &output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
@@ -17,10 +18,10 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
 int
 Server_Task::svc ()
 {
- try
-   {
+  try
+    {
      CORBA::Object_var poa_object =
-       this->sorb_->resolve_initial_references("RootPOA");
+       this->sorb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
        PortableServer::POA::_narrow (poa_object.in ());
@@ -35,12 +36,13 @@ Server_Task::svc ()
 
      poa_manager->activate ();
 
-     Visual_i *vi = 0;
+     Visual_i *vi {};
      ACE_NEW_RETURN (vi, Visual_i (sorb_.in ()), 1);
+     // The servant var assumes ownership of the ACE_NEW allocation.
      PortableServer::ServantBase_var server_impl = vi;
 
      PortableServer::ObjectId_var id =
-       root_poa->activate_object (server_impl.in());
+       root_poa->activate_object (server_impl.in ());
 
      CORBA::Object_var test_obj =
        root_poa->id_to_reference (id.in ());
@@ -52,16 +54,17 @@ Server_Task::svc ()
        sorb_->object_to_string (server.in ());
 
      // If the ior_output_file exists, output the ior to it
-     if (output_ != 0)
+     if (!this->output_.is_empty ())
        {
-         FILE *output_file= ACE_OS::fopen (output_, "w");
-         if (output_file == 0)
+         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+           ACE_OS::fopen (this->output_.c_str (), ACE_TEXT ("w")),
+           ACE_OS::fclose);
+         if (!output_file)
            ACE_ERROR_RETURN ((LM_ERROR,
-                              "Cannot open output file for writing IOR: %s",
-                              output_),
-                              1);
-         ACE_OS::fprintf (output_file, "%s", ior.in ());
-         ACE_OS::fclose (output_file);
+                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                              this->output_.c_str ()),
+                             1);
+         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
        }
 
      // Signal the main thread before we call orb->run ();
@@ -69,19 +72,20 @@ Server_Task::svc ()
 
      sorb_->run ();
 
-     struct timespec ts = {0,250000000}; // quarter second
+     struct timespec ts {};
+     ts.tv_nsec = 250000000; // quarter second
      ACE_OS::nanosleep (&ts);
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server task - event loop finished\n"));
 
      root_poa->destroy (true, true);
 
      this->sorb_->destroy ();
-   }
- catch (const CORBA::Exception& ex)
-   {
+    }
+  catch (CORBA::Exception const &ex)
+    {
      ex._tao_print_exception ("Exception caught in server task:");
      return 1;
-   }
+    }
 
- return 0;
+  return 0;
 }

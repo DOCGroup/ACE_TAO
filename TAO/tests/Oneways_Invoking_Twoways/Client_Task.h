@@ -22,7 +22,12 @@ public:
                Receiver_i * receiver_impl);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
 private:
   /// Reference to the test interface
@@ -31,7 +36,7 @@ private:
   /// Reference to the test interface
   Test::Receiver_var us_;
 
-  Receiver_i* receiver_impl_;
+  Receiver_i *receiver_impl_ {};
 };
 
 #include /**/ "ace/post.h"

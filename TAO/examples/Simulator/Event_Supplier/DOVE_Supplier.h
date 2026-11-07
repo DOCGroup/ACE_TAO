@@ -21,6 +21,10 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
+#include <cstddef>
+#include <memory>
+#include <vector>
+
 
 #ifndef DOVE_SUPPLIER_H
 #define DOVE_SUPPLIER_H
@@ -34,16 +38,21 @@ public:
   DOVE_Supplier ();
 
   /// Destructor.
-  ~DOVE_Supplier ();
+  ~DOVE_Supplier () = default;
+
+  DOVE_Supplier (DOVE_Supplier const &) = delete;
+  DOVE_Supplier (DOVE_Supplier &&) = delete;
+  DOVE_Supplier &operator= (DOVE_Supplier const &) = delete;
+  DOVE_Supplier &operator= (DOVE_Supplier &&) = delete;
 
   /// Initialize the ORB and the connection to the Name Service
   int init ();
 
   /// Connect to the event service.
-  int connect (const char * MIB_name = 0,
-               const char* es_name = 0,
-               const char * ss_name = 0,
-               ACE_Scheduler_Factory::POD_RT_Info * pod_rt_info = 0);
+  int connect (char const *MIB_name = nullptr,
+               char const *es_name = nullptr,
+               char const *ss_name = nullptr,
+               ACE_Scheduler_Factory::POD_RT_Info *pod_rt_info = nullptr);
 
   /// Perform all post-connection-establishment processing.
   void connected ();
@@ -69,21 +78,21 @@ private:
     friend class DOVE_Supplier;
 
   public:
-    virtual void disconnect_push_supplier ()
+    void disconnect_push_supplier () override
     {
     }
 
   private:
-    Internal_DOVE_Supplier (DOVE_Supplier* impl_ptr);
+    explicit Internal_DOVE_Supplier (DOVE_Supplier *impl_ptr);
 
-    DOVE_Supplier* impl_ptr_;
+    DOVE_Supplier *impl_ptr_;
   };
 
 private:
   struct Connection_Params
   {
-    const char * es_name_;
-    const char * ss_name_;
+    char const *es_name_;
+    char const *ss_name_;
     RtecEventChannelAdmin::EventChannel_var eventChannel_var_;
     RtecEventChannelAdmin::SupplierAdmin_var supplierAdmin_var_;
     RtecEventChannelAdmin::ProxyPushConsumer_var proxyPushConsumer_var_;
@@ -107,23 +116,22 @@ private:
   static ACE_Scheduler_Factory::POD_RT_Info * pod_rt_info_instance_;
 
   // Object initialization flags
-  int initialized_;
-  int connected_;
+  bool initialized_ {};
+  bool connected_ {};
 
-  Connection_Params ** connection_params_list_;
-  Connection_Params * current_connection_params_;
-  int connection_count_;
-  int current_connection_index_;
+  std::vector<std::unique_ptr<Connection_Params>> connection_params_list_;
+  Connection_Params *current_connection_params_ {};
+  std::size_t current_connection_index_ {};
 
   // = ORB, ORB Services adminstration references.
   CosNaming::NamingContext_var namingContext_var_;
   PortableServer::POA_var root_POA_var_;
   PortableServer::POAManager_var poa_manager_;
 
-  Internal_DOVE_Supplier* internal_DOVE_Supplier_ptr_;
+  std::unique_ptr<Internal_DOVE_Supplier> internal_DOVE_Supplier_ptr_;
 
   /// Keep the name of the MIB around.
-  const char * MIB_name_;
+  char const *MIB_name_ {};
 };
 
 #endif /* DOVE_SUPPLIER_H */

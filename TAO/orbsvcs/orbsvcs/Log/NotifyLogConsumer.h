@@ -52,7 +52,7 @@ class TAO_Notify_LogConsumer :
 {
 public:
   /// Constructor.
-  TAO_Notify_LogConsumer (TAO_NotifyLog_i * log);
+  explicit TAO_Notify_LogConsumer (TAO_NotifyLog_i * log);
 
   /// Connect to NotifyLog.
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);

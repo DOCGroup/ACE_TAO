@@ -1,15 +1,7 @@
 // -*- C++ -*-
 #include "Ptest.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
-
-Ptest::Ptest ()
-  : debug_ (false),
-    query_ (false)
-{
-}
-
-Ptest::~Ptest () = default;
+#include <cstring>
 
 int
 Ptest::init (int argc, ACE_TCHAR *argv[])
@@ -18,24 +10,22 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
     {
       this->orb_ = CORBA::ORB_init (argc, argv);
 
-      int retval = this->parse_args (argc, argv);
+      int const retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("InterfaceRepository");
 
       if (CORBA::is_nil (object.in ()))
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "Null objref from resolve_initial_references\n"
-            ), -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Null objref from resolve_initial_references\n")),
+                            -1);
         }
 
-      this->repo_ =
-        CORBA::Repository::_narrow (object.in ());
+      this->repo_ = CORBA::Repository::_narrow (object.in ());
 
       if (CORBA::is_nil (this->repo_.in ()))
         {
@@ -44,7 +34,7 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Ptest::init");
       return -1;
@@ -64,7 +54,7 @@ Ptest::shutdown ()
 
       this->orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Ptest::init");
       return -1;
@@ -86,7 +76,7 @@ Ptest::run ()
           this->populate ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Ptest::run");
       return -1;
@@ -100,7 +90,7 @@ Ptest::parse_args (int argc,
                    ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("dq"));
-  int c;
+  int c {};
 
   while ((c = opts ()) != -1)
     switch (c)
@@ -114,10 +104,7 @@ Ptest::parse_args (int argc,
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-d]"
-                           " [-q]"
-                           "\n",
+                           ACE_TEXT ("usage: %s [-d] [-q]\n"),
                            argv [0]),
                           -1);
       }
@@ -147,11 +134,10 @@ Ptest::populate ()
                                                    members[0].type_def.in ());
   members[1].type = members[1].type_def->type ();
 
-
-  CORBA::StructDef_var svar = this->repo_->create_struct ("IDL:my_struct:1.0",
-                                                          "my_struct",
-                                                          "1.0",
-                                                          members);
+  CORBA::StructDef_var const svar = this->repo_->create_struct ("IDL:my_struct:1.0",
+                                                                "my_struct",
+                                                                "1.0",
+                                                                members);
 
   CORBA::EnumMemberSeq def_members (2);
   def_members.length (2);
@@ -159,10 +145,10 @@ Ptest::populate ()
   def_members[0] = CORBA::string_dup ("ZERO");
   def_members[1] = CORBA::string_dup ("ONE");
 
-  CORBA::EnumDef_var e_def_var = svar->create_enum ("IDL:my_def_enum:1.0",
-                                                    "my_enum",
-                                                    "1.0",
-                                                    def_members);
+  CORBA::EnumDef_var const enum_def = svar->create_enum ("IDL:my_def_enum:1.0",
+                                                        "my_enum",
+                                                        "1.0",
+                                                        def_members);
 }
 
 int
@@ -176,18 +162,16 @@ Ptest::query ()
         ));
     }
 
-  const char *members[] =
+  char const* const members[] =
   {
     "long_mem",
     "array_mem",
     "my_enum"
   };
 
-  CORBA::ContainedSeq_var contents =
-    this->repo_->contents (CORBA::dk_all,
-                           0);
+  CORBA::ContainedSeq_var contents = this->repo_->contents (CORBA::dk_all, 0);
 
-  CORBA::ULong length = contents->length ();
+  CORBA::ULong const length = contents->length ();
 
   if (length != 1)
     {
@@ -198,10 +182,9 @@ Ptest::query ()
                         -1);
     }
 
-  CORBA::ULong i = 0;
+  CORBA::ULong const i = 0;
 
-  CORBA::StructDef_var svar =
-    CORBA::StructDef::_narrow (contents[i]);
+  CORBA::StructDef_var const svar = CORBA::StructDef::_narrow (contents[i]);
 
   if (CORBA::is_nil (svar.in ()))
     {
@@ -210,21 +193,20 @@ Ptest::query ()
                         -1);
     }
 
-  CORBA::StructMemberSeq_var out_members =
-    svar->members ();
+  CORBA::StructMemberSeq_var const out_members = svar->members ();
 
-  length = out_members->length ();
+  CORBA::ULong const member_count = out_members->length ();
 
-  if (length != 3)
+  if (member_count != 3)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: StructDef::members::length: %d")
                          ACE_TEXT (" while it's expected to be 3\n"),
-                         length),
+                         member_count),
                         -1);
     }
 
-  for (i = 0; i < length; ++i)
+  for (CORBA::ULong i = 0; i < member_count; ++i)
     {
       if (this->debug_)
         {
@@ -234,9 +216,9 @@ Ptest::query ()
                       out_members[i].name.in ()));
         }
 
-      if (i == length - 1)
+      if (i == member_count - 1)
         {
-          if (ACE_OS::strcmp (out_members[i].name, "my_enum") != 0)
+          if (std::strcmp (out_members[i].name, "my_enum") != 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ERROR: Incorrect struct member\n")),
@@ -245,7 +227,7 @@ Ptest::query ()
         }
       else
         {
-          if (ACE_OS::strcmp (out_members[i].name, members[i]) != 0)
+          if (std::strcmp (out_members[i].name, members[i]) != 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ERROR: Incorrect struct member\n")),
@@ -253,11 +235,6 @@ Ptest::query ()
             }
         }
     }
-
-#if defined (ACE_NDEBUG)
-  // ACE_ASSERT macro expands to nothing, so...
-  ACE_UNUSED_ARG (members);
-#endif /* ACE_NDEBUG */
 
   svar->destroy ();
 

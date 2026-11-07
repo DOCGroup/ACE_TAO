@@ -16,13 +16,24 @@ public:
   Record () = default;
   ~Record () = default;
 
-  Record (const Record& rec)
+  Record (Record const &rec)
     : id1_(rec.id1_), id2_(rec.id2_)
   {
     ACE_OS::strcpy (recName_, rec.name_);
     this->name_ = recName_;
   }
-  Record (int id1, int id2, char *name)
+  Record &operator= (Record const &rec)
+  {
+    if (this != &rec)
+      {
+        this->id1_ = rec.id1_;
+        this->id2_ = rec.id2_;
+        ACE_OS::strcpy (this->recName_, rec.name_);
+        this->name_ = this->recName_;
+      }
+    return *this;
+  }
+  Record (int id1, int id2, char const *name)
     : id1_(id1), id2_(id2)
   {
     ACE_OS::strcpy (recName_, name);
@@ -35,7 +46,7 @@ public:
 private:
   int id1_ {};
   int id2_ {};
-  char recName_[128];
+  char recName_[128] {};
   ACE_Based_Pointer_Basic<char> name_;
 };
 // Listing 11

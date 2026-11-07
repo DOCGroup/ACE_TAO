@@ -10,7 +10,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (TAO::ObjectKey const &key)
   : object_key_ (key)
-  , refcount_ (1)
 {
 }
 

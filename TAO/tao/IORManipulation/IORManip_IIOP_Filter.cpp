@@ -6,6 +6,7 @@
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/CDR.h"
+#include <cstdlib>
 #include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -165,7 +166,7 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
           if (delim != nullptr)
             {
               *delim = '\0';
-              pinfo.port_ = static_cast<CORBA::UShort> (ACE_OS::atoi (delim + 1));
+              pinfo.port_ = static_cast<CORBA::UShort> (std::atoi (delim + 1));
               status = 1;
             }
         }
@@ -223,7 +224,7 @@ TAO_IIOP_Profile*
 TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile* profile)
 {
   ACE_INET_Addr addr;
-  TAO_IIOP_Profile* new_profile = nullptr;
+  TAO_IIOP_Profile* new_profile {};
   ACE_NEW_THROW_EX (new_profile,
                    TAO_IIOP_Profile (addr,
                                      profile->object_key (),

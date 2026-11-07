@@ -12,7 +12,7 @@ class Logging_Svc_Shutdown
 public:
   Logging_Svc_Shutdown (RTEvent_Logging_Service& svc);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 
 private:
   RTEvent_Logging_Service&        svc_;

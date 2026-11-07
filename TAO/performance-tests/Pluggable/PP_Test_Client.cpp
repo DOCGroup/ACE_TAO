@@ -51,25 +51,21 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (PP_Test_Client_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Constructor.
-PP_Test_Client::PP_Test_Client (int shutdown)
-  : orb_ (0),
-    factory_key_ (0),
-    loop_count_ (1),
+PP_Test_Client::PP_Test_Client (bool shutdown)
+  : loop_count_ (1),
     shutdown_ (shutdown),
     objref_ (Pluggable_Test::_nil ()),
-    call_count_ (0),
     error_count_ (0),
-    factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
-    only_void_ (0),
-    only_oneway_ (0)
+    only_void_ (false),
+    only_oneway_ (false)
 {
 }
 
 // Reads the Cubit factory ior from a file
 
 int
-PP_Test_Client::read_ior (ACE_TCHAR *filename)
+PP_Test_Client::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
@@ -86,14 +82,14 @@ PP_Test_Client::read_ior (ACE_TCHAR *filename)
 
   char *data = ior_buffer.read ();
 
-  if (data == 0)
+  if (data == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to allocate memory to read ior: %p\n"),
                         -1);
     }
 
-  this->factory_key_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
+  this->factory_key_ = ACE_TEXT_CHAR_TO_TCHAR (data);
 
   ior_buffer.alloc ()->free (data);
 
@@ -103,43 +99,39 @@ PP_Test_Client::read_ior (ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-PP_Test_Client::parse_args ()
+PP_Test_Client::parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("ovdn:f:k:x"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ovdn:f:k:x"));
   int c;
-  int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'v':
-        this->only_void_ = 1;
+        this->only_void_ = true;
         break;
       case 'o':
-        this->only_oneway_ = 1;
+        this->only_oneway_ = true;
         break;
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
       case 'n':                 // loop count
-        this->loop_count_ =
-          (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->loop_count_ = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.opt_arg ());
-        if (result < 0)
+        if (this->read_ior (get_opts.opt_arg ()) < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
                              get_opts.opt_arg ()),
                             -1);
         break;
       case 'k': // read the cubit IOR from the command-line.
-        this->factory_key_ =
-          ACE_OS::strdup (get_opts.opt_arg ());
+        this->factory_key_ = get_opts.opt_arg ();
         break;
       case 'x':
         ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
       case '?':
       default:
@@ -153,7 +145,7 @@ PP_Test_Client::parse_args ()
                            " [-k obj-ref-key]"
                            " [-x]"
                            "\n",
-                           this->argv_ [0]),
+                           argv [0]),
                           -1);
       }
 
@@ -170,7 +162,6 @@ PP_Test_Client::send_oneway ()
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
       this->objref_->send_oneway ();
-      this->call_count_++;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -189,7 +180,6 @@ PP_Test_Client::send_void ()
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
       this->objref_->send_void ();
-      this->call_count_++;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -216,24 +206,20 @@ PP_Test_Client::run ()
       return this->run_oneway ();
     }
 
-  CORBA::ULong i;
-
   // Show the results one type at a time.
 
   // VOID
-  this->call_count_ = 0;
   this->error_count_ = 0;
 
-  for (i = 0; i < this->loop_count_; i++)
+  for (CORBA::ULong i = 0; i < this->loop_count_; ++i)
     {
       this->send_void ();
     }
 
   // ONEWAY
-  this->call_count_ = 0;
   this->error_count_ = 0;
 
-  for (i = 0; i < this->loop_count_; i++)
+  for (CORBA::ULong i = 0; i < this->loop_count_; ++i)
     {
       this->send_oneway ();
     }
@@ -246,7 +232,7 @@ PP_Test_Client::run ()
 }
 
 int
-PP_Test_Client::shutdown_server (int do_shutdown)
+PP_Test_Client::shutdown_server (bool do_shutdown)
 {
   try
     {
@@ -256,7 +242,6 @@ PP_Test_Client::shutdown_server (int do_shutdown)
                       "shutdown on Pluggable_Test object\n"));
 
           this->objref_->shutdown ();
-
 
           ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
@@ -276,13 +261,10 @@ PP_Test_Client::run_oneway ()
 {
   try
     {
-      CORBA::ULong i;
-
       // ONEWAY
-      this->call_count_ = 0;
       this->error_count_ = 0;
 
-      for (i = 0; i < this->loop_count_; i++)
+      for (CORBA::ULong i = 0; i < this->loop_count_; ++i)
         {
           this->send_oneway ();
         }
@@ -314,13 +296,10 @@ PP_Test_Client::run_void ()
 {
   try
     {
-      CORBA::ULong i;
-
       // ONEWAY
-      this->call_count_ = 0;
       this->error_count_ = 0;
 
-      for (i = 0; i < this->loop_count_; i++)
+      for (CORBA::ULong i = 0; i < this->loop_count_; ++i)
         {
           this->send_void ();
         }
@@ -349,51 +328,38 @@ PP_Test_Client::run_void ()
 
 PP_Test_Client::~PP_Test_Client ()
 {
-  // Free resources and close the IOR files.
-  if (this->factory_ior_file_)
-    {
-      ACE_OS::fclose (this->factory_ior_file_);
-    }
-
+  // Close the IOR file handle if it remains open after parsing or reading fails.
   if (this->f_handle_ != ACE_INVALID_HANDLE)
     {
       ACE_OS::close (this->f_handle_);
-    }
-
-  if (this->factory_key_ != 0)
-    {
-      ACE_OS::free (this->factory_key_);
     }
 }
 
 int
 PP_Test_Client::init (int argc, ACE_TCHAR **argv)
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
                                     "internet");
       // Parse command line and verify parameters.
-      if (this->parse_args () == -1)
+      if (this->parse_args (argc, argv) == -1)
         {
           return -1;
         }
 
-      if (this->factory_key_ == 0)
+      if (this->factory_key_.empty ())
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "%s: no factory key specified\n",
-                             this->argv_[0]),
+                             argv [0]),
                             -1);
         }
 
       CORBA::Object_var factory_object =
-        this->orb_->string_to_object (this->factory_key_);
+        this->orb_->string_to_object (this->factory_key_.c_str ());
 
       this->factory_ =
         Pluggable_Test_Factory::_narrow (factory_object.in());
@@ -402,7 +368,7 @@ PP_Test_Client::init (int argc, ACE_TCHAR **argv)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "invalid factory key <%s>\n",
-                             this->factory_key_),
+                             this->factory_key_.c_str ()),
                             -1);
         }
 

@@ -11,16 +11,16 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
-static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
+static constexpr u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
+static ACE_TCHAR const *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
 static constexpr int MAX_ITERATIONS = 10;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *logger_host = argc > 1 ? argv[1] : LOGGER_HOST;
-  u_short logger_port  = argc > 2 ? ACE_OS::atoi (argv[2]) : LOGGER_PORT;
-  int max_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : MAX_ITERATIONS;
+  ACE_TCHAR const *const logger_host = argc > 1 ? argv[1] : LOGGER_HOST;
+  u_short const logger_port = argc > 2 ? ACE_OS::atoi (argv[2]) : LOGGER_PORT;
+  int const max_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : MAX_ITERATIONS;
 
   ACE_SOCK_Stream logger;
   ACE_SOCK_Connector connector;
@@ -32,14 +32,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (int i = 0; i < max_iterations; i++)
     {
       ACE_Log_Record log_record (LM_DEBUG,
-                                 ACE_OS::time ((time_t *) 0),
+                                 ACE_OS::time (nullptr),
                                  ACE_OS::getpid ());
 
-      ACE_TCHAR buf[BUFSIZ];
+      ACE_TCHAR buf[BUFSIZ] {};
       ACE_OS::sprintf (buf, ACE_TEXT ("message = %d\n"), i + 1);
       log_record.msg_data (buf);
 
-      const size_t max_payload_size =
+      size_t const max_payload_size =
         4 // type()
         + 8 // timestamp
         + 4 // process id
@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       payload << log_record;
 
       // Get the number of bytes used by the CDR stream.
-      ACE_CDR::ULong length =
+      ACE_CDR::ULong const length =
         ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
       // Send a header so the receiver can determine the byte order and
@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       header << ACE_CDR::ULong (length);
 
       // Use an iovec to send both buffer and payload simultaneously.
-      iovec iov[2];
+      iovec iov[2] {};
       iov[0].iov_base = header.begin ()->rd_ptr ();
       iov[0].iov_len  = 8;
       iov[1].iov_base = payload.begin ()->rd_ptr ();

@@ -76,13 +76,13 @@ public:
    */
   ACE_Arg_Shifter_T (int &argc,
                      CHAR_TYPE const **argv,
-                     CHAR_TYPE const **temp = 0);
+                     CHAR_TYPE const **temp = nullptr);
 
   /// Same behavior as the preceding constructor, but without the
   /// "const" qualifier.
   ACE_Arg_Shifter_T (int &argc,
                      CHAR_TYPE **argv,
-                     CHAR_TYPE **temp = 0);
+                     CHAR_TYPE **temp = nullptr);
 
   /// Destructor.
   ~ACE_Arg_Shifter_T ();
@@ -174,13 +174,13 @@ public:
   /// Returns the number of args left to see in the vector.
   int is_anything_left () const;
 
-  /// Returns 1 if there's a next item in the vector and it begins with
+  /// Returns true if there's a next item in the vector and it begins with
   /// '-'.
-  int is_option_next () const;
+  bool is_option_next () const;
 
-  /// Returns 1 if there's a next item in the vector and it doesn't
+  /// Returns true if there's a next item in the vector and it doesn't
   /// begin with '-'.
-  int is_parameter_next () const;
+  bool is_parameter_next () const;
 
   /// Returns the number of irrelevant args seen.
   int num_ignored_args () const;
@@ -188,9 +188,11 @@ public:
 private:
   /// Copy Constructor should not be used.
   ACE_Arg_Shifter_T (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T (ACE_Arg_Shifter_T &&) = delete;
 
   /// Assignment '=' operator should not be used.
-  ACE_Arg_Shifter_T operator= (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T &&) = delete;
 
   /// Refactor the constructor logic.
   void init ();

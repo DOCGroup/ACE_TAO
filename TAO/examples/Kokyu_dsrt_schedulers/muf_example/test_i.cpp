@@ -4,6 +4,7 @@
 #include "ace/ACE.h"
 #include "tao/debug.h"
 #include "ace/Countdown_Time.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
@@ -12,18 +13,18 @@
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long exec_duration)
 {
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
-  int prio;
-  int guid;
+  int prio {};
+  int guid {};
   RTScheduling::Current::IdType_var id = this->current_->id ();
 
-  ACE_OS::memcpy (&guid,
-                  id->get_buffer (),
-                  sizeof (id->length ()));
+  std::memcpy (&guid,
+               id->get_buffer (),
+               sizeof (id->length ()));
 
   ACE_High_Res_Timer timer;
-  ACE_Time_Value elapsed_time;
+  ACE_Time_Value elapsed_time {};
 
   ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
 
@@ -46,7 +47,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
 
-  static CORBA::ULong prime_number = 9619899;
+  constexpr CORBA::ULong prime_number = 9619899;
 
   ACE_Time_Value compute_count_down_time (exec_duration, 0);
   ACE_Countdown_Time compute_count_down (&compute_count_down_time);
@@ -59,7 +60,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   ACE_Countdown_Time yield_count_down (&yield_count_down_time);
 
   timer.start ();
-  int j=0;
+  int j {};
   while (compute_count_down_time > ACE_Time_Value::zero)
     {
       ACE::is_prime (prime_number,
@@ -69,15 +70,15 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
       ++j;
 
 #ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0)
+      if (j % 1000 == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
             "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration));
         }
 #endif
-      if (j%1000 == 0)
+      if (j % 1000 == 0)
         {
-          ACE_Time_Value run_time = ACE_OS::gettimeofday ();
+          ACE_Time_Value const run_time = ACE_OS::gettimeofday ();
           task_stats_.sample (run_time.msec (), guid);
         }
 
@@ -91,10 +92,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
               CORBA::Policy_var sched_param_policy =
                 current_->scheduling_parameter();
 
-              const char * name = 0;
-
-              CORBA::Policy_ptr implicit_sched_param = 0;
-              current_->update_scheduling_segment (name,
+              CORBA::Policy_ptr implicit_sched_param {};
+              current_->update_scheduling_segment (nullptr,
                                                    sched_param_policy.in (),
                                                    implicit_sched_param);
               yield_count_down_time = yield_interval;

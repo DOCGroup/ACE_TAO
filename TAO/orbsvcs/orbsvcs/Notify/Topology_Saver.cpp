@@ -2,9 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify::Topology_Saver::~Topology_Saver ()
-{
-}
+TAO_Notify::Topology_Saver::~Topology_Saver () = default;
 
 void
 TAO_Notify::Topology_Saver::close ()

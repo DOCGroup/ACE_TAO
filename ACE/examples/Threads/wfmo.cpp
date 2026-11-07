@@ -22,11 +22,18 @@ static constexpr int MAX_ITERATIONS = 100;
 class WFMO_Test : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
+  WFMO_Test () = default;
+
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
+  int open (void *) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
+
+  WFMO_Test (WFMO_Test const &) = delete;
+  WFMO_Test (WFMO_Test &&) = delete;
+  WFMO_Test &operator= (WFMO_Test const &) = delete;
+  WFMO_Test &operator= (WFMO_Test &&) = delete;
 
   // Use two handles here..
   ACE_sema_t sema_handles_[2];

@@ -34,10 +34,6 @@ TAO_EC_Reactive_SupplierControl::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_EC_Reactive_SupplierControl::~TAO_EC_Reactive_SupplierControl ()
-{
-}
-
 void
 TAO_EC_Reactive_SupplierControl::query_suppliers ()
 {

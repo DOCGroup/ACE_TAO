@@ -33,10 +33,43 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
+#include <memory>
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
 #include "asnmp/address.h"
 #include "test_config.h"
+
+static void TestAddressIter ()
+{
+  Address_Iter iter ("localhost");
+  ACE_ASSERT(iter.valid() == 1);
+
+  int const expected_count = iter.how_many_addresses();
+  ACE_ASSERT(expected_count > 0);
+
+  IpAddress address;
+  int addresses_read = 0;
+  int result = 0;
+  do
+    {
+      result = iter.next (address);
+      ACE_ASSERT(address.valid() == 1);
+      ++addresses_read;
+    }
+  while (result == 0);
+
+  ACE_ASSERT(result == 1);
+  ACE_ASSERT(addresses_read == expected_count);
+}
+
+static void TestAppleTalkAddress ()
+{
+  char const address_bytes[] {1, 2, 3, '\0'};
+  AppleTalkAddress address (address_bytes);
+
+  ACE_ASSERT (address.valid () == 1);
+  ACE_ASSERT (std::strcmp (address.to_string (), "1.2.3") == 0);
+}
 
 // test the GenAddress interface
 static void TestGenAddr()
@@ -44,7 +77,7 @@ static void TestGenAddr()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress: Tests: var(expected) [actual]\n"));
 
   // the constructors and destructors
-  GenAddress *ga1 = new GenAddress("1.2.3.4"); // use ipv4 address
+  std::unique_ptr<GenAddress> ga1 = std::make_unique<GenAddress> ("1.2.3.4");
   ACE_ASSERT(ga1->valid() == 1);
   GenAddress ga2(*ga1); // copy constructor;
   ACE_ASSERT(ga2.valid() == 1);
@@ -52,6 +85,7 @@ static void TestGenAddr()
   ACE_ASSERT(ga3.valid() == 1);
   GenAddress ga4; // default constructor
   ACE_ASSERT(ga4.valid() == 0);
+  ACE_ASSERT(std::strcmp (ga4.to_string (), "") == 0);
   GenAddress ga5; // default constructor
   ACE_ASSERT(ga5.valid() == 0);
   GenAddress ga6("127.0.0.1:7"); // udp address
@@ -63,9 +97,9 @@ static void TestGenAddr()
   GenAddress ga8(ip); // Address conversion
   ACE_ASSERT(ga8.valid() == 1);
 
-  const char *ptr = (const char *)ga8;
+  char const *ptr = static_cast<char const *> (ga8);
 
-  ACE_ASSERT(ga1 != 0);
+  ACE_ASSERT(ga1 != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga1(\"1.2.3.4\") [%s]\n",
     ga1->to_string()));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga2(ga1) [%s]\n",
@@ -105,7 +139,7 @@ static void TestGenAddr()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga2.get_type(\"1\") [%d]\n",
      a));
 
-  delete ga1, ga1 = 0;
+  ga1.reset ();
 }
 
 /* public methods
@@ -134,6 +168,15 @@ static void TestIpAddress()
   // constructors
   GenAddress ga("255.255.255.255");
   IpAddress ia1;
+  ACE_ASSERT(ia1.valid() == 0);
+  ACE_ASSERT(ia1[0] == 0);
+  ACE_ASSERT(std::strcmp (ia1.to_string (), "") == 0);
+  IpAddress ia_zero ("0.0.0.0");
+  ACE_ASSERT (ia_zero.valid () == 1);
+  ACE_ASSERT (std::strcmp (ia_zero.to_string (), "0.0.0.0") == 0);
+  IpAddress ia_whitespace (" 127.0.0.1 ");
+  ACE_ASSERT (ia_whitespace.valid () == 1);
+  ACE_ASSERT (ia_whitespace.is_loopback ());
   IpAddress ia2("224.2.3.4");
   ACE_ASSERT(ia2.is_multicast());
   ACE_ASSERT(!ia2.is_loopback());
@@ -169,20 +212,20 @@ static void TestIpAddress()
 
   // other routines
   int status = 1;
-  const char *ptr = ia5.resolve_hostname(status);
-  ACE_ASSERT(status == 0);
-  ACE_ASSERT(ptr != 0);
+  char const *ptr = ia5.resolve_hostname(status);
+  ACE_ASSERT(ptr != nullptr);
+  ACE_ASSERT(status == 0 ? ptr[0] != '\0' : ptr[0] == '\0');
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia5.resolve_hostname():(\"\") [%s]\n",
     ptr));
 
   // now lets try one we setup with a hostname
   ptr = ia3.resolve_hostname(status);
   ACE_ASSERT(status == 0);
-  ACE_ASSERT(ptr != 0);
+  ACE_ASSERT(ptr != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia3.resolve_hostname()(\"localhost\") [%s]\n",
     ptr));
 
-   ptr = (const char *)ia5;
+   ptr = static_cast<char const *> (ia5);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:(const char *)(\"255.255.255.255\") [%s]\n",
     ptr));
 
@@ -203,7 +246,6 @@ static void TestIpAddress()
    ACE_ASSERT(ia5.get_type() == type_ip);
    ACE_ASSERT(ia5.valid() == 1);
 }
-
 
 // --------------- Netbios ---------------
 /*
@@ -251,7 +293,8 @@ static void TestNetbiosAddress()
 
   n1 = n4;
   ACE_ASSERT(n1 == n4);
-  ACE_ASSERT(ACE_OS::strcmp((const char *)n1, (const char *)n4) == 0);
+  ACE_ASSERT(std::strcmp(static_cast<char const *> (n1),
+                         static_cast<char const *> (n4)) == 0);
 
   n1.set_service_type(nb_server);
   ACE_ASSERT(nb_server == n1.get_service_type());
@@ -320,10 +363,9 @@ static void TestIpxAddress()
   ACE_ASSERT(xa8.valid() == 0);
   IpxAddress xa9(gen);
   ACE_ASSERT(xa9.valid() == 1);
-  IpxAddress *xa10 = new IpxAddress(xa9);
+  std::unique_ptr<IpxAddress> xa10 = std::make_unique<IpxAddress> (xa9);
   ACE_ASSERT(xa10->get_type() == type_ipx);
   ACE_ASSERT(xa10->valid() == 1);
-  delete xa10;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa1(\"\") [%s]\n",
     xa1.to_string()));
@@ -349,7 +391,7 @@ static void TestIpxAddress()
   ACE_ASSERT(mac.valid() == 1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa4:get_hostid(\"01:23:45:67:89:ab\") [%s]\n", mac.to_string()));
 
-  const char *ptr = (const char *)xa7;
+  char const *ptr = static_cast<char const *> (xa7);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa7-ptr(\"01234567-012345-6789AB\") [%s]\n", ptr));
 }
 
@@ -416,7 +458,7 @@ static void TestMacAddress()
     ma4.to_string()));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MacAddress:ma5(\"\") [%s]\n",
     ma5.to_string()));
-  const char * ptr = (const char *)ma5;
+  char const *ptr = static_cast<char const *> (ma5);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MacAddress:ma5(\"\") [%s]\n",
     ptr));
 
@@ -478,14 +520,13 @@ static void TestUdpAddress()
   ACE_ASSERT(ua5.valid() == 1);
   ACE_ASSERT(ua5.get_type() == type_udp);
 
-  UdpAddress *ua6 = new UdpAddress("localhost:161");
+  std::unique_ptr<UdpAddress> ua6 = std::make_unique<UdpAddress> ("localhost:161");
   ACE_ASSERT(ua6->valid() == 1);
   ACE_ASSERT(ua6->get_type() == type_udp);
 
   UdpAddress ua7 = UdpAddress("localhost/162");
   ACE_ASSERT(ua7.valid() == 1);
   ACE_ASSERT(ua7.get_type() == type_udp);
-
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua1(\"\") [%s]\n",
     ua1.to_string()));
@@ -502,8 +543,6 @@ static void TestUdpAddress()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua7()(\"localhost/162\") [%s]\n",
     ua7.to_string()));
 
-  delete ua6; // destructor
-
   // assignment tests.
   ua1 = ua2;
   ACE_ASSERT(ua1 == ua2);
@@ -516,7 +555,7 @@ static void TestUdpAddress()
   ua1.set_port(333);
   ACE_ASSERT(ua1.get_port() == 333);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua1.set_port()(\"333\") [%s]\n",
-    (const char *)ua1));
+    static_cast<char const *> (ua1)));
 }
 
 int
@@ -524,6 +563,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Address_Test"));
 
+  TestAddressIter();
+  TestAppleTalkAddress();
   TestGenAddr();
   TestIpAddress();
   TestUdpAddress();

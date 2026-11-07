@@ -12,10 +12,10 @@ public:
   CallerId () : id_ (ACE_TEXT ("UNKNOWN"))
   { }
 
-  CallerId (ACE_TString id) : id_(id)
+  explicit CallerId (ACE_TString id) : id_ (id)
   { }
 
-  const ACE_TCHAR * string()
+  const ACE_TCHAR *string () const
   {
     return this->id_.c_str ();
   }
@@ -55,11 +55,11 @@ public:
     LAST_CODEC
   };
 
-  MessageType (int codec, const ACE_FILE_Addr& addr)
-    : codec_(codec), addr_(addr)
+  MessageType (int codec, const ACE_FILE_Addr &addr)
+    : codec_ (codec), addr_ (addr)
   { }
 
-  int get_codec ()
+  int get_codec () const
   {
     return this->codec_;
   }
@@ -69,21 +69,21 @@ public:
     return this->addr_;
   }
 
-  int is_video ()
+  bool is_video () const
   {
     return
       this->get_codec () > FIRST_VIDEO_CODEC &&
       this->get_codec () < LAST_VIDEO_CODEC;
   }
 
-  int is_audio ()
+  bool is_audio () const
   {
     return
       this->get_codec () > FIRST_AUDIO_CODEC &&
       this->get_codec () < LAST_AUDIO_CODEC ;
   }
 
-  int is_text ()
+  bool is_text () const
   {
     return
       this->get_codec () > FIRST_TEXT_CODEC &&

@@ -1,11 +1,14 @@
 #include "Supports_Test_impl.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int num_trials = 1;
-int id = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int num_trials {1};
+  int id {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:i:k:"));
   int c;
@@ -14,15 +17,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 't':
-        num_trials = ACE_OS::atoi (get_opts.opt_arg ());
+        options.num_trials = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        id = ACE_OS::atoi (get_opts.opt_arg ());
+        options.id = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -41,13 +44,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
@@ -66,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       /* Create, register factories */
 
-      Supports_Test::Node_init * node_factory = 0;
+      Supports_Test::Node_init *node_factory = nullptr;
 
       ACE_NEW_RETURN (node_factory, node_init_impl, 1);
 
@@ -74,12 +78,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->register_value_factory (node_factory->tao_repository_id (),
                                      node_factory);
 
-      ACE_ASSERT (returned_factory == 0);
+      ACE_ASSERT (returned_factory == nullptr);
 
       node_factory->_remove_ref ();
 
 
-      Supports_Test::vt_graph_init * vt_graph_factory = 0;
+      Supports_Test::vt_graph_init *vt_graph_factory = nullptr;
 
       ACE_NEW_RETURN (vt_graph_factory, vt_graph_init_impl, 1);
 
@@ -87,14 +91,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->register_value_factory (vt_graph_factory->tao_repository_id (),
                                      vt_graph_factory);
 
-      ACE_ASSERT (returned_factory == 0);
+      ACE_ASSERT (returned_factory == nullptr);
 
       vt_graph_factory->_remove_ref ();
 
 
       /* Check return values for register_value_factory */
 
-      Supports_Test::Node_init * node_factory2 = 0;
+      Supports_Test::Node_init *node_factory2 = nullptr;
 
       ACE_NEW_RETURN (node_factory2, node_init_impl, 1);
 
@@ -109,25 +113,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       /* Get test object reference */
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var tmp = orb->string_to_object (options.ior);
 
       Supports_Test::test_var my_test =
         Supports_Test::test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (my_test.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::test obj ref <%s>\n", ior), 1);
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Nil Supports_Test::test obj ref <%s>\n",
+                           options.ior),
+                          1);
 
       my_test->start ();
 
       /* Perform test */
 
-      for (int i = 0; i < num_trials; i++)
+      for (int i = 0; i < options.num_trials; i++)
         {
           // Create a vt_graph_impl instance and store the reference as a
           // vt_graph_var. Then register the instance with the POA to obtain an
           // object reference, stored as a graph_var. Increment the reference count
           // of the vt_graph_impl instance.
-          vt_graph_impl * the_vt_graph = 0;
+          vt_graph_impl *the_vt_graph {};
           ACE_NEW_RETURN (the_vt_graph, vt_graph_impl (3), 1);
           Supports_Test::vt_graph_var test_vt_graph = the_vt_graph;
 
@@ -183,9 +190,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      ACE_DEBUG ((LM_DEBUG, "Client (%P.%t) completed test successfully\n", id));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Client (%P.%t) completed test %d successfully\n",
+                  options.id));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

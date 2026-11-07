@@ -63,7 +63,7 @@ XML_Backing_Store::persist ()
   ACE_OS::fprintf (fp,"<%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
@@ -71,7 +71,7 @@ XML_Backing_Store::persist ()
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
@@ -320,7 +320,7 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
                                    const ACE_CString& ior,
                                    const NameValues& )
 {
-  Activator_Info *ai = nullptr;
+  Activator_Info *ai {};
   ACE_NEW (ai,
            Activator_Info (activator_name, token, ior));
 

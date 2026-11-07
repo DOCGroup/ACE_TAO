@@ -37,6 +37,11 @@ public:
                CORBA::ULong sleep_time,
                CORBA::ULong timeout);
 
+  Client_Task (Client_Task const&) = delete;
+  Client_Task (Client_Task&&) = delete;
+  Client_Task& operator= (Client_Task const&) = delete;
+  Client_Task& operator= (Client_Task&&) = delete;
+
   /// Return the total number of successful calls
   int successful_calls () const;
 
@@ -48,7 +53,7 @@ public:
   int too_big_difference_calls () const;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Run one iteration of the test
@@ -59,19 +64,19 @@ private:
 
 private:
   /// A reference to the ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Reference to the test interface
-  Test::Sleep_Service_var sleep_service_;
+  Test::Sleep_Service_var const sleep_service_;
 
   /// Total number of processes created by each thread
-  int iterations_;
+  int const iterations_;
 
   /// Sleep time for each request, in microseconds
-  CORBA::ULong sleep_time_;
+  CORBA::ULong const sleep_time_;
 
   /// Timeout period, in microseconds
-  CORBA::ULong timeout_;
+  CORBA::ULong const timeout_;
 
   /// Count how many calls were successful
   int successful_calls_;

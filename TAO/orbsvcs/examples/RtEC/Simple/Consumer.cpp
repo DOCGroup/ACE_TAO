@@ -13,11 +13,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
-
 int
 Consumer::run (int argc, ACE_TCHAR* argv[])
 {
@@ -98,7 +93,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer::run");
       return 1;
@@ -107,7 +102,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {

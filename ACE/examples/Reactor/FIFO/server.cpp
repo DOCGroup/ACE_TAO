@@ -12,6 +12,10 @@ class FIFO_Recv_Handler : public ACE_Event_Handler
 public:
   FIFO_Recv_Handler ();
   ~FIFO_Recv_Handler () override;
+  FIFO_Recv_Handler (FIFO_Recv_Handler const &) = delete;
+  FIFO_Recv_Handler (FIFO_Recv_Handler &&) = delete;
+  FIFO_Recv_Handler &operator= (FIFO_Recv_Handler const &) = delete;
+  FIFO_Recv_Handler &operator= (FIFO_Recv_Handler &&) = delete;
 
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
@@ -56,7 +60,7 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
 
   ACE_Str_Buf msg (buf, 0, sizeof buf);
 
-  ssize_t n = this->fifo_reader_.recv (msg);
+  ssize_t const n = this->fifo_reader_.recv (msg);
 
   if (n < 0)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv")), -1);

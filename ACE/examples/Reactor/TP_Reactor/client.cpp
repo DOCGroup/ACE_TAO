@@ -30,10 +30,10 @@ int printUsage(ACE_TCHAR *arg) {
 
 int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     // size and count for transmissions
-    int size = 0, count = -1;
+    int size {}, count {-1};
 
     // the server's answer is a single byte
-    char answer;
+    char answer {};
 
     // parse the <size> argument
     if ((argc < 2) || (((size = ACE_OS::strtol(argv[1], nullptr, 10)) < 1) ||
@@ -42,15 +42,12 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
     // take size as the number of MiB and create appropriate buffer
     size *= BASE;
-    char *someData = new (std::nothrow) char[size];
+    std::unique_ptr<char[]> someData (new (std::nothrow) char[size]);
 
     if (someData == nullptr)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%N:%l: Failed to allocate ")
                          ACE_TEXT ("data buffer.\n")), -1);
-
-    // put someData in a kind of auto_ptr so it gets deleted automatically
-    std::unique_ptr<char[]> pSomeData(someData);
 
     // parse the <count> argument if available
     if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], nullptr, 10)) < 1) ||
@@ -58,7 +55,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
         return printUsage(argv[0]);
 
     // the server listens on localhost on default port (from common.h)
-    ACE_INET_Addr serverAddr(PORT, "localhost");
+    ACE_INET_Addr const serverAddr(PORT, "localhost");
 
     ACE_SOCK_Stream stream;
     ACE_SOCK_Connector connector;
@@ -97,7 +94,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
             // server answer, 'K" indicates a positive answer
             if (answer == 'K') {
                 // send a huge message to the server
-                if (stream.send_n(someData, size, &connTimeout) != size) {
+                if (stream.send_n(someData.get (), size, &connTimeout) != size) {
                   ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
                              ACE_TEXT ("someData. (errno = %i: %m)\n"), ACE_ERRNO_GET));
                     throw 1;

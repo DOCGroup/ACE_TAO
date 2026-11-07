@@ -31,7 +31,7 @@
 
 #include "ace/os_include/os_limits.h"
 
-static const char usage [] =
+constexpr char usage [] =
 "[-? |\n"
 "            [-c <consumers> [4]]\n"
 "            [-d directly connect all consumers/suppliers\n"
@@ -40,17 +40,13 @@ static const char usage [] =
 "            [-s <suppliers>, [1]]\n"
 "            [-t <timeout interval>, msec [250]]]";
 
-static int received = 0;
+static int received {};
 
 // ************************************************************
 
-Demo_Consumer::Demo_Consumer ()
-{
-}
-
 int
 Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
-                              const char *my_name)
+                              char const *my_name)
 {
   try
     {
@@ -107,13 +103,13 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->suppliers_->connect_push_consumer (objref.in (),
                                                dependencies.get_ConsumerQOS ());
     }
-  catch (const RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR& )
+  catch (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demo_Consumer::open: subscribe failed.\n"),
                         -1);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demo_Consumer::open: unexpected exception.\n"),
@@ -130,7 +126,7 @@ Demo_Consumer::disconnect_push_consumer ()
 }
 
 void
-Demo_Consumer::push (const RtecEventComm::EventSet &events)
+Demo_Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -168,7 +164,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events)
 
               if (ret)
                 {
-                  const Navigation *navigation_ {};
+                  Navigation const *navigation_ {};
                   events[i].data.any_value >>= navigation_;
                   ACE_DEBUG ((LM_DEBUG, "Found a Navigation struct in the any: pos_lat = %d\n", navigation_->position_latitude));
                 }
@@ -178,13 +174,13 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events)
 
                   if (ret)
                     {
-                      const Weapons *weapons_ {};
+                      Weapons const *weapons_ {};
                       events[i].data.any_value >>= weapons_;
                       ACE_DEBUG ((LM_DEBUG, "Found a Weapons struct in the any: nr_of_weapons = %u\n", weapons_->number_of_weapons));
                     }
                 }
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
             }
@@ -205,7 +201,7 @@ Demo_Consumer::shutdown ()
 
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                  "(%t) Demo_Consumer::shutdown: unexpected exception.\n"));
@@ -311,10 +307,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create consumer.
 
-      Demo_Consumer *demo_consumer = 0;
-      ACE_NEW_RETURN (demo_consumer,
-                      Demo_Consumer (),
-                      -1);
+      std::unique_ptr<Demo_Consumer> demo_consumer =
+        std::make_unique<Demo_Consumer> ();
 
       if (demo_consumer->open_consumer (ec.in (),
                                         "demo_consumer") == -1)
@@ -328,11 +322,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      delete demo_consumer;
-
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

@@ -53,7 +53,7 @@ protected:
   /// representing @a constraints from the tokens returned by it.
   int build_tree (const char* constraints);
 
-  static int is_empty_string (const char* str);
+  static bool is_empty_string (const char* str);
 
   /// The root of the expression tree, not equal to null if build_tree
   /// successfully builds a tree from the constraints.

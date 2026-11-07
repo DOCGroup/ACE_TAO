@@ -12,7 +12,6 @@
 
 
 #include "Servant_Locator.h"
-#include "ace/OS_NS_string.h"
 
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and
@@ -20,9 +19,9 @@
 // is used to kill the servant.
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
-                                const ACE_TCHAR *dllname,
-                                const ACE_TCHAR *factory_function,
-                                const ACE_TCHAR *garbage_collection_function)
+                                ACE_TCHAR const *dllname,
+                                ACE_TCHAR const *factory_function,
+                                ACE_TCHAR const *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.
@@ -56,16 +55,16 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
+ServantLocator::preinvoke (PortableServer::ObjectId const &oid,
                            PortableServer::POA_ptr poa,
-                           const char * /* operation */,
+                           char const * /* operation */,
                            PortableServer::ServantLocator::Cookie &cookie)
 {
-  PortableServer::Servant servant =
+  PortableServer::Servant const servant =
     (*servant_supplier_) (oid,
                           poa,
                           this->orb_.in ());
-  if (servant != 0)
+  if (servant != nullptr)
     {
       // Return the servant as the cookie , used as a check when
       // postinvoke is called on this ServantLocator.
@@ -82,14 +81,14 @@ ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
 // postinvoke method.
 
 void
-ServantLocator::postinvoke (const PortableServer::ObjectId &oid,
+ServantLocator::postinvoke (PortableServer::ObjectId const &oid,
                             PortableServer::POA_ptr poa ,
-                            const char * /* operation */,
+                            char const * /* operation */,
                             PortableServer::ServantLocator::Cookie cookie,
                             PortableServer::Servant servant)
 {
   // Check the passed servant with the cookie.
-  PortableServer::Servant my_servant =
+  PortableServer::Servant const my_servant =
     reinterpret_cast<PortableServer::Servant> (cookie);
 
   ACE_ASSERT (servant == my_servant);

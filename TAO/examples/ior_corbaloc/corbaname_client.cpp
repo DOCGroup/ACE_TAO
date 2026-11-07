@@ -20,11 +20,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if(argc < 2 )
+      if (argc < 2)
         {
-          ACE_ERROR_RETURN((LM_ERROR,
-                            "Usage:\n  %s [corbaname URL]\n",
-                            argv[0]),
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Usage:\n  %s [corbaname URL]\n"),
+                             argv [0]),
                            1);
         }
 
@@ -39,8 +39,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: Object reference <%s> is nil\n",
-                             argv[1]),
+                             ACE_TEXT ("ERROR: Object reference <%s> is nil\n"),
+                             argv [1]),
                             -1);
         }
 
@@ -48,23 +48,23 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       CORBA::Boolean ret_value =
         factory->print_status ();
 
-      if (ret_value != 0)
+      if (ret_value)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "The server has not been contacted. Error!!\n",
-                      0));
+                      ACE_TEXT ("The server has not been contacted. Error!!\n")));
+          return -1;
         }
 
       return 0;
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
-      //
+      return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
+      return 1;
     }
 
-  return 0;
 }

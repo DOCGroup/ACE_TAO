@@ -24,11 +24,16 @@ class Collocated_ORBInitializer :
 {
 public:
   /// Constructor
-  Collocated_ORBInitializer ();
+  Collocated_ORBInitializer () = default;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Collocated_ORBInitializer (Collocated_ORBInitializer const &) = delete;
+  Collocated_ORBInitializer (Collocated_ORBInitializer &&) = delete;
+  Collocated_ORBInitializer &operator= (Collocated_ORBInitializer const &) = delete;
+  Collocated_ORBInitializer &operator= (Collocated_ORBInitializer &&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #if defined(_MSC_VER)

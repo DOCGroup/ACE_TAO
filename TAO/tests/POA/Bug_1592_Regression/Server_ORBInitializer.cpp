@@ -2,10 +2,6 @@
 #include "tao/ORB_Constants.h"
 #include "Server_Request_Interceptor.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -16,7 +12,7 @@ void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor {};
 
   ACE_NEW_THROW_EX (interceptor,
                     Server_Request_Interceptor,

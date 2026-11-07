@@ -51,7 +51,7 @@ TAO_EC_Disjunction_Filter::size () const
 }
 
 int
-TAO_EC_Disjunction_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_Disjunction_Filter::filter (RtecEventComm::EventSet const &event,
                                    TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
@@ -83,7 +83,7 @@ TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Disjunction_Filter::push (const RtecEventComm::EventSet& event,
+TAO_EC_Disjunction_Filter::push (RtecEventComm::EventSet const &event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
@@ -128,7 +128,7 @@ TAO_EC_Disjunction_Filter::max_event_size () const
 
 int
 TAO_EC_Disjunction_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      RtecEventComm::EventHeader const &header) const
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -143,8 +143,8 @@ TAO_EC_Disjunction_Filter::can_match (
 
 int
 TAO_EC_Disjunction_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

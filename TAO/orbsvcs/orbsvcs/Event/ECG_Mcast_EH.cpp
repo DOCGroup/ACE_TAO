@@ -3,8 +3,6 @@
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "ace/Unbounded_Set.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
 
@@ -16,22 +14,22 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
-                                    const ACE_TCHAR *net_if,
+                                    ACE_TCHAR const *net_if,
                                     CORBA::ULong sz)
-  : net_if_ (net_if ? ACE_OS::strdup (net_if) : nullptr)
+  : net_if_ ()
   , subscriptions_ ()
   , receiver_ (recv)
   , recvbuf_size_ (sz)
   , observer_ ()
   , auto_observer_disconnect_ ()
 {
+  if (net_if != nullptr)
+    this->net_if_ = net_if;
+
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH ()
-{
-  ACE_OS::free (this->net_if_);
-}
+TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH () = default;
 
 void
 TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
@@ -128,7 +126,7 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 
 void
 TAO_ECG_Mcast_EH::update_consumer (
-         const RtecEventChannelAdmin::ConsumerQOS& sub)
+         RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   Address_Set multicast_addresses;
 
@@ -142,13 +140,13 @@ TAO_ECG_Mcast_EH::update_consumer (
 
 void
 TAO_ECG_Mcast_EH::compute_required_subscriptions (
-    const RtecEventChannelAdmin::ConsumerQOS& sub,
+    RtecEventChannelAdmin::ConsumerQOS const &sub,
     Address_Set& multicast_addresses)
 {
   CORBA::ULong count = sub.dependencies.length ();
   for (CORBA::ULong i = 0; i != count; ++i)
     {
-      const RtecEventComm::EventHeader& header =
+      RtecEventComm::EventHeader const &header =
                            sub.dependencies[i].event.header;
       if (0 < header.type && header.type < ACE_ES_EVENT_UNDEFINED)
         {
@@ -177,7 +175,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
               break;
             }
         }
-      catch (const ::CORBA::BAD_OPERATION &)
+      catch (::CORBA::BAD_OPERATION const &)
         {
           // server only supports IPv4
            // Grab the right mcast group for this event...
@@ -214,8 +212,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
                                                ACE_Event_Handler::READ_MASK);
       (void) socket->close();
       delete socket;
-      // Move the deleted subscription out of the <subscriptions_>
-      // array by moving the last subscription in array into its place.
+      // Move the last subscription into the removed subscription's place.
       this->subscriptions_[i] =
         this->subscriptions_[this->subscriptions_.size () - 1];
       this->subscriptions_.size (this->subscriptions_.size () - 1);
@@ -228,7 +225,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
 void
 TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 {
-  using Address_Iterator = ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
+  using Address_Iterator = Address_Set::iterator;
   for (Address_Iterator k = multicast_addresses.begin ();
        k != multicast_addresses.end ();
        ++k)
@@ -243,7 +240,9 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
-      if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
+      ACE_TCHAR const *net_if = this->net_if_ ? this->net_if_->c_str () : nullptr;
+
+      if (socket->open (new_subscription.mcast_addr, net_if, 1) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to open multicast socket\n",
                     ACE_ERRNO_GET));
@@ -255,7 +254,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
                     ACE_ERRNO_GET));
       }
 
-      if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
+      if (socket->join (new_subscription.mcast_addr, 1, net_if) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to join multicast group\n",
                     ACE_ERRNO_GET));
@@ -289,7 +288,7 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& sub)
+        RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   if (this->eh_)
     this->eh_->update_consumer (sub);
@@ -297,7 +296,7 @@ TAO_ECG_Mcast_EH::Observer::update_consumer (
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&)
+    RtecEventChannelAdmin::SupplierQOS const &)
 {
 }
 

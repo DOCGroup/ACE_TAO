@@ -7,14 +7,8 @@ Country_i::Country_i (CORBA::ORB_ptr orb) :
 {
 }
 
-// Implementation skeleton destructor
-Country_i::~Country_i ()
-{
-}
-
-void Country_i::update_population (const char * country,
+void Country_i::update_population (char const *country,
                                    CORBA::Long population)
-
 {
   //Add your implementation here
   ACE_DEBUG ((LM_DEBUG, "Country %s has population %d\n",
@@ -36,7 +30,7 @@ Country_i::get_typed_consumer ()
 }
 
 void
-Country_i::push (const CORBA::Any & /* data */)
+Country_i::push (CORBA::Any const & /* data */)
 {
   //Add your implementation here
 }

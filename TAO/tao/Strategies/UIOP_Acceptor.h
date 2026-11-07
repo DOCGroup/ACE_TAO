@@ -32,6 +32,8 @@
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -78,7 +80,7 @@ public:
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
@@ -121,9 +123,9 @@ private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
 
   // Acceptor strategies.
-  TAO_UIOP_CREATION_STRATEGY *creation_strategy_ {};
-  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_ {};
+  std::unique_ptr<TAO_UIOP_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_UIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<TAO_UIOP_ACCEPT_STRATEGY> accept_strategy_;
 
   /// The GIOP version for this endpoint
   TAO_GIOP_Message_Version version_;

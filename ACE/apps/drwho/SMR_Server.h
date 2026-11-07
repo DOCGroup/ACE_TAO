@@ -17,7 +17,7 @@
 class SMR_Server : public SM_Server
 {
 public:
-  SMR_Server (short port_number);
+  explicit SMR_Server (short port_number);
   ~SMR_Server ();
 };
 

@@ -19,9 +19,7 @@ namespace ACE
       }
 
     template <class STREAM_BUFFER>
-    FixedLengthStreamPolicyBase<STREAM_BUFFER>::~FixedLengthStreamPolicyBase ()
-      {
-      }
+    FixedLengthStreamPolicyBase<STREAM_BUFFER>::~FixedLengthStreamPolicyBase () = default;
 
     template <class STREAM_BUFFER>
     int FixedLengthStreamPolicyBase<STREAM_BUFFER>::read_from_stream (
@@ -63,9 +61,7 @@ namespace ACE
       }
 
     template <class STREAM_BUFFER>
-    ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::~ChunkedTransferStreamPolicyBase ()
-      {
-      }
+    ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::~ChunkedTransferStreamPolicyBase () = default;
 
     template <class STREAM_BUFFER>
     int ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::getc ()

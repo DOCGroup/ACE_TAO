@@ -10,10 +10,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
+#include <cstdio>
+#include <memory>
 
 static const char prefix_[] = "uiop";
 
@@ -63,7 +63,7 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -147,7 +147,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
 
   CORBA::String_var rendezvous = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (rendezvous.inout (), start, length);
+  std::strncpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
@@ -241,21 +241,21 @@ TAO_UIOP_Profile::to_string () const
 
   u_int buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
-                  ACE_OS::strlen (::prefix_) +
+                  std::strlen (::prefix_) +
                   1 /* colon separator */ +
                   1 /* major version */ +
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
-                  ACE_OS::strlen (this->endpoint_.rendezvous_point ()) +
+                  std::strlen (this->endpoint_.rendezvous_point ()) +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+                  std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (buflen);
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
@@ -275,10 +275,12 @@ TAO_UIOP_Profile::prefix ()
 int
 TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
-  char *rendezvous = nullptr;
+  char *rendezvous {};
 
   // Get rendezvous_point
-  if (cdr.read_string (rendezvous) == 0)
+  int const read_result = cdr.read_string (rendezvous);
+  std::unique_ptr<char[]> rendezvous_owner (rendezvous);
+  if (read_result == 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
@@ -299,9 +301,6 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
                       ACE_TEXT ("ACE_UNIX_Addr::set() failed\n")));
         }
     }
-
-  // Clean up
-  delete [] rendezvous;
 
   return 1;
 }
@@ -409,7 +408,7 @@ TAO_UIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_UIOP_Endpoint *endpoint = nullptr;
+          TAO_UIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_UIOP_Endpoint,
                           -1);

@@ -12,14 +12,13 @@
  */
 //=============================================================================
 
-
 #if !defined (IOR_CORBALOC_CLIENT_I_H)
 #define IOR_CORBALOC_CLIENT_I_H
 
 #include "corbalocC.h"
 #include "orbsvcs/CosNamingC.h"
 
-#include "ace/SString.h"
+#include <string>
 
 /**
  * @class IOR_corbaloc_Client_i
@@ -30,8 +29,13 @@ class IOR_corbaloc_Client_i
 {
  public:
   // = Constructor and destructor.
-  IOR_corbaloc_Client_i ();
-  ~IOR_corbaloc_Client_i ();
+  IOR_corbaloc_Client_i () = default;
+  ~IOR_corbaloc_Client_i () = default;
+
+  IOR_corbaloc_Client_i (IOR_corbaloc_Client_i const &) = delete;
+  IOR_corbaloc_Client_i &operator= (IOR_corbaloc_Client_i const &) = delete;
+  IOR_corbaloc_Client_i (IOR_corbaloc_Client_i &&) = delete;
+  IOR_corbaloc_Client_i &operator= (IOR_corbaloc_Client_i &&) = delete;
 
   /// Execute the client example code.
   int run ();
@@ -41,10 +45,10 @@ class IOR_corbaloc_Client_i
 
  private:
   /// corbaloc url to test
-  ACE_TString corbaloc_url_;
+  std::basic_string<ACE_TCHAR> corbaloc_url_;
 
   /// Naming context
-  CosNaming::NamingContextExt_var naming_context_;
+  CosNaming::NamingContextExt_var naming_context_ {};
 };
 
 #endif /* IOR_CORBALOC_CLIENT_I_H */

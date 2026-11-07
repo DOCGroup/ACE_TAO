@@ -12,6 +12,11 @@ class Naming_Svc_Shutdown : public Shutdown_Functor
 public:
   explicit Naming_Svc_Shutdown (TAO_Naming_Service &ns);
 
+  Naming_Svc_Shutdown (Naming_Svc_Shutdown const &) = delete;
+  Naming_Svc_Shutdown (Naming_Svc_Shutdown &&) = delete;
+  Naming_Svc_Shutdown &operator= (Naming_Svc_Shutdown const &) = delete;
+  Naming_Svc_Shutdown &operator= (Naming_Svc_Shutdown &&) = delete;
+
   void operator() (int which_signal) override;
 private:
   TAO_Naming_Service &ns_;

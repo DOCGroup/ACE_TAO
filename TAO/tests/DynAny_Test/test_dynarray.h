@@ -17,18 +17,21 @@
 class Test_DynArray
 {
 public:
-  Test_DynArray (CORBA::ORB_var orb, int debug);
-  ~Test_DynArray ();
+  Test_DynArray (CORBA::ORB_var orb, bool debug);
+  ~Test_DynArray () = default;
+  Test_DynArray (Test_DynArray const&) = delete;
+  Test_DynArray (Test_DynArray&&) = delete;
+  Test_DynArray& operator= (Test_DynArray const&) = delete;
+  Test_DynArray& operator= (Test_DynArray&&) = delete;
 
-  const char* test_name () const;
+  char const* test_name () const;
 
   int run_test ();
 
 private:
   CORBA::ORB_var orb_;
-  char* test_name_;
-  CORBA::ULong error_count_;
-  int debug_;
+  CORBA::ULong error_count_ {};
+  bool debug_ {};
 };
 
 #endif /* TEST_DYNARRAY_H */

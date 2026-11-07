@@ -9,14 +9,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::PolicyList *
-TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
+TAO_Policy_Manager::get_policy_overrides (CORBA::PolicyTypeSeq const &ts)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
   return this->impl_.get_policy_overrides (ts);
 }
 
 void
-TAO_Policy_Manager::set_policy_overrides (const CORBA::PolicyList & policies,
+TAO_Policy_Manager::set_policy_overrides (CORBA::PolicyList const &policies,
                                           CORBA::SetOverrideType set_add)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);

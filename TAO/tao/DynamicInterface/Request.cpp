@@ -62,7 +62,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
 {
   if (this->exceptions_.in () == nullptr)
     {
-      CORBA::ExceptionList *tmp = nullptr;
+      CORBA::ExceptionList *tmp {};
       ACE_NEW (tmp,
                CORBA::ExceptionList);
 
@@ -79,7 +79,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     flags_ (0)
     // env_ (env)
 {
-  CORBA::ExceptionList *tmp = nullptr;
+  CORBA::ExceptionList *tmp {};
   ACE_NEW (tmp,
            CORBA::ExceptionList);
 

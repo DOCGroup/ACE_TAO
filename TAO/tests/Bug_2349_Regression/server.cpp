@@ -1,14 +1,13 @@
 #include "fooS.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -30,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-class foo_i: public POA_foo
+class foo_i : public POA_foo
 {
 public:
   explicit foo_i (CORBA::ORB_ptr orb)
@@ -61,16 +60,16 @@ foo_i::shutdown ()
 void
 foo_i::destroy ()
 {
-  bool expected_exception_raised = false;
+  bool expected_exception_raised {};
 
   try
     {
       // This should case an BAD_INV_ORDER exception
       this->orb_->destroy ();
     }
-  catch (const CORBA::BAD_INV_ORDER& ex)
+    catch (CORBA::BAD_INV_ORDER const &ex)
     {
-      if ((ex.minor() & 0xFFFU) == 3)
+      if ((ex.minor () & 0xFFFU) == 3)
         {
           expected_exception_raised = true;
         }
@@ -84,19 +83,20 @@ foo_i::destroy ()
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -104,34 +104,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      foo_i* server_impl = 0;
+      foo_i *server_impl {};
       ACE_NEW_RETURN (server_impl,
                       foo_i (orb.in ()),
                       1);
+      // ServantBase_var assumes ownership of the allocated servant.
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (server_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      foo_var server = foo::_narrow (object.in ());
+      foo_var const server = foo::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -140,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CORBA::Exception");
     }

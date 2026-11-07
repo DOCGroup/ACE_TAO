@@ -4,6 +4,7 @@
 #include "ace/Task.h"
 #include "ace/Module.h"
 #include "ace/svc_export.h"
+#include <memory>
 
 
 using MT_Task = ACE_Task<ACE_SYNCH>;
@@ -13,6 +14,8 @@ using MT_Module = ACE_Module<ACE_SYNCH>;
 class ACE_Svc_Export Test_Task : public MT_Task
 {
 public:
+  Test_Task () = default;
+
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *) override;
   int close (u_long) override;
@@ -22,6 +25,11 @@ public:
   int fini () override;
   int suspend () override;
   int resume () override;
+
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
 };
 
 int
@@ -85,6 +93,19 @@ Test_Task::fini ()
 ACE_SVC_FACTORY_DECLARE (Test_Task)
 ACE_SVC_FACTORY_DEFINE (Test_Task)
 
+static MT_Module *
+make_module (ACE_TCHAR const *name)
+{
+  std::unique_ptr<Test_Task> writer = std::make_unique<Test_Task> ();
+  std::unique_ptr<Test_Task> reader = std::make_unique<Test_Task> ();
+  std::unique_ptr<MT_Module> module =
+    std::make_unique<MT_Module> (name, writer.get (), reader.get ());
+  // ACE_Module takes ownership of both tasks.
+  writer.release ();
+  reader.release ();
+  return module.release ();
+}
+
 // Dynamically linked functions used to control configuration.
 
 extern "C" ACE_Svc_Export MT_Stream *make_stream ();
@@ -92,29 +113,28 @@ extern "C" ACE_Svc_Export MT_Module *make_da ();
 extern "C" ACE_Svc_Export MT_Module *make_ea ();
 extern "C" ACE_Svc_Export MT_Module *make_mr ();
 
+// These factories transfer ownership of their raw pointers to ACE's service
+// configuration and stream/module lifecycle.
 MT_Stream *
 make_stream ()
 {
-  return new MT_Stream;
+  return std::make_unique<MT_Stream> ().release ();
 }
 
 MT_Module *
 make_da ()
 {
-  return new MT_Module (ACE_TEXT ("Device_Adapter"),
-                        new Test_Task, new Test_Task);
+  return make_module (ACE_TEXT ("Device_Adapter"));
 }
 
 MT_Module *
 make_ea ()
 {
-  return new MT_Module (ACE_TEXT ("Event_Analyzer"),
-                        new Test_Task, new Test_Task);
+  return make_module (ACE_TEXT ("Event_Analyzer"));
 }
 
 MT_Module *
 make_mr ()
 {
-  return new MT_Module (ACE_TEXT ("Multicast_Router"),
-                        new Test_Task, new Test_Task);
+  return make_module (ACE_TEXT ("Multicast_Router"));
 }

@@ -24,11 +24,11 @@ TAO_NVList_Adapter_Impl::create_list (
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
     {
-      new_list->max_ = (CORBA::ULong) count;
+      new_list->max_ = static_cast<CORBA::ULong> (count);
 
       for (CORBA::Long i = 0; i < count; ++i)
         {
-          CORBA::NamedValue_ptr nv = nullptr;
+          CORBA::NamedValue_ptr nv {};
           ACE_NEW_THROW_EX (nv,
                             CORBA::NamedValue,
                             CORBA::NO_MEMORY (

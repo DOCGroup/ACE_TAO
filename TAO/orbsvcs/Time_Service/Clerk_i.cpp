@@ -10,12 +10,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
 
-// Constructor.
-Clerk_i::Clerk_i () = default;
-
-// Destructor.
-Clerk_i::~Clerk_i () = default;
-
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
 int
@@ -120,10 +114,10 @@ Clerk_i::parse_args (int argc,
         break;
 
      case 'o':  // output the Clerk IOR to a file.
-       this->ior_output_file_ =
-         ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
+       this->ior_output_file_.reset (
+         ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w")));
 
-       if (this->ior_output_file_ == nullptr)
+       if (!this->ior_output_file_)
          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n"),
                             get_opts.opt_arg ()), -1);
@@ -310,10 +304,10 @@ Clerk_i::create_clerk ()
       // Print the Time Service clerk IOR to a file.
       if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (this->ior_output_file_,
+          ACE_OS::fprintf (this->ior_output_file_.get (),
                            "%s",
                            objref_clerk.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          this->ior_output_file_.reset ();
         }
 
       // Register the clerk implementation with the Interface
@@ -390,8 +384,7 @@ Clerk_i::init (int argc,
       ACE_Argv_Type_Converter command (argc, argv);
 
       // Set the size of the Server IOR Array.
-      this->server_.max_size (10);
-      this->server_.size (0);
+      this->server_.reserve (Clerk_i::DEFAULT_SERVER_COUNT);
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
@@ -480,13 +473,5 @@ void
 Clerk_i::insert_server (CosTime::TimeService_ptr server)
 {
   // We duplicate the capacity of the Array.
-  size_t s = this->server_.size ();
-
-  if (this->server_.max_size () == s)
-    this->server_.max_size (2 * s);
-
-  this->server_[s] =
-    CosTime::TimeService::_duplicate (server);
-
-  this->server_.size (s + 1);
+  this->server_.push_back (CosTime::TimeService::_duplicate (server));
 }

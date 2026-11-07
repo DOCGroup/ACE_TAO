@@ -23,9 +23,7 @@ TAO_Notify_Supplier::TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy)
 {
 }
 
-TAO_Notify_Supplier::~TAO_Notify_Supplier ()
-{
-}
+TAO_Notify_Supplier::~TAO_Notify_Supplier () = default;
 
 TAO_Notify_Proxy*
 TAO_Notify_Supplier::proxy ()
@@ -35,8 +33,8 @@ TAO_Notify_Supplier::proxy ()
 
 void
 TAO_Notify_Supplier::dispatch_updates_i (
-  const CosNotification::EventTypeSeq& added,
-  const CosNotification::EventTypeSeq& removed)
+  CosNotification::EventTypeSeq const &added,
+  CosNotification::EventTypeSeq const &removed)
 {
   if (!CORBA::is_nil (this->subscribe_.in ()))
     this->subscribe_->subscription_change (added, removed);

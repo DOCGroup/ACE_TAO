@@ -2,6 +2,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // implementing the special types
@@ -337,7 +339,7 @@ ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
   if (x)
     {
       ACE_CDR::ULong const len =
-        static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
+        static_cast<ACE_CDR::ULong> (std::strlen (x));
       return this->write_string (len, x);
     }
 
@@ -1455,7 +1457,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 
   if (x.val_ != 0)
     {
-      len = static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x.val_));
+      len = static_cast<ACE_CDR::ULong> (std::strlen (x.val_));
     }
 
   os.write_string (len, x.val_);
@@ -1617,7 +1619,7 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
     (is.read_string (const_cast<char *&> (x.val_))
      && is.good_bit ()
      && (!x.bound_
-         || ACE_OS::strlen (x.val_) <= x.bound_));
+         || std::strlen (x.val_) <= x.bound_));
 }
 
 ACE_INLINE ACE_CDR::Boolean

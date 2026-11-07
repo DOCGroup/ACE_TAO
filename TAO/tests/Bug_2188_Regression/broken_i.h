@@ -37,11 +37,15 @@
 class ServerAdmin_i : public virtual POA_ServerAdmin
 {
 public:
-  ServerAdmin_i (ArrayTest_ptr target);
-  virtual ~ServerAdmin_i ();
-  ArrayTest_ptr target();
+  explicit ServerAdmin_i (ArrayTest_ptr target);
+  ServerAdmin_i (ServerAdmin_i const &) = delete;
+  ServerAdmin_i &operator= (ServerAdmin_i const &) = delete;
+  ServerAdmin_i (ServerAdmin_i &&) = delete;
+  ServerAdmin_i &operator= (ServerAdmin_i &&) = delete;
+  ~ServerAdmin_i () override;
+  ArrayTest_ptr target () override;
 
-  void shutdown ();
+  void shutdown () override;
 private:
   ArrayTest_var target_;
 };
@@ -49,6 +53,7 @@ private:
 class  ArrayTest_i : public virtual POA_ArrayTest
 {
 private:
+  // These slices are allocated and released with their generated *_alloc/*_free functions.
   LongArray_slice * longArray_;
   ULongArray_slice *  ulongArray_;
   StringArray_slice * stringArray_;
@@ -64,158 +69,125 @@ private:
   LongArrayArray_slice * longArrayArray_;
   MyEnumArray_slice * enumArray_;
 
-  CORBA::Char char_;
+  CORBA::Char char_ {};
 public:
   //Constructor
   ArrayTest_i ();
+  ArrayTest_i (ArrayTest_i const &) = delete;
+  ArrayTest_i &operator= (ArrayTest_i const &) = delete;
+  ArrayTest_i (ArrayTest_i &&) = delete;
+  ArrayTest_i &operator= (ArrayTest_i &&) = delete;
 
   //Destructor
-  virtual ~ArrayTest_i ();
+  ~ArrayTest_i () override;
 
-  virtual
   ::LongArray_slice * longArrayOp (
       const ::LongArray p1,
       ::LongArray p2,
-      ::LongArray_out p3);
+      ::LongArray_out p3) override;
 
-  virtual
   ::StringArray_slice * stringArrayOp (
       const ::StringArray p1,
       ::StringArray p2,
-      ::StringArray_out p3);
+      ::StringArray_out p3) override;
 
-  virtual
   ::ShortArray_slice * shortArrayOp (
       const ::ShortArray p1,
       ::ShortArray p2,
-      ::ShortArray_out p3);
+      ::ShortArray_out p3) override;
 
-  virtual
   ::UShortArray_slice * ushortArrayOp (
       const ::UShortArray p1,
       ::UShortArray p2,
-      ::UShortArray_out p3);
+      ::UShortArray_out p3) override;
 
-  virtual
   ::CharArray_slice * charArrayOp (
       const ::CharArray p1,
       ::CharArray p2,
-      ::CharArray_out p3);
+      ::CharArray_out p3) override;
 
-  virtual
   ::OctetArray_slice * octetArrayOp (
       const ::OctetArray p1,
       ::OctetArray p2,
-      ::OctetArray_out p3);
+      ::OctetArray_out p3) override;
 
-  virtual
   ::DoubleArray_slice * doubleArrayOp (
       const ::DoubleArray p1,
       ::DoubleArray p2,
-      ::DoubleArray_out p3);
+      ::DoubleArray_out p3) override;
 
-  virtual
-  ::LongArray_slice * a_longArray ();
+  ::LongArray_slice * a_longArray () override;
 
-  virtual
   void a_longArray (
-      const ::LongArray a_longArray);
+      const ::LongArray a_longArray) override;
 
-  virtual
-  ::ULongArray_slice * a_ulongArray ();
+  ::ULongArray_slice * a_ulongArray () override;
 
-  virtual
   void a_ulongArray (
-      const ::ULongArray a_ulongArray);
+      const ::ULongArray a_ulongArray) override;
 
-  virtual
-  ::StringArray_slice * a_stringArray ();
+  ::StringArray_slice * a_stringArray () override;
 
-  virtual
   void a_stringArray (
-      const ::StringArray a_stringArray);
+      const ::StringArray a_stringArray) override;
 
-  virtual
-  ::ShortArray_slice * a_shortArray ();
+  ::ShortArray_slice * a_shortArray () override;
 
-  virtual
   void a_shortArray (
-      const ::ShortArray a_shortArray);
+      const ::ShortArray a_shortArray) override;
 
-  virtual
-  ::UShortArray_slice * a_ushortArray ();
+  ::UShortArray_slice * a_ushortArray () override;
 
-  virtual
   void a_ushortArray (
-      const ::UShortArray a_ushortArray);
+      const ::UShortArray a_ushortArray) override;
 
-  virtual
-  CORBA::Char a_char ();
+  CORBA::Char a_char () override;
 
-  virtual
-  void a_char (::CORBA::Char a_char);
+  void a_char (::CORBA::Char a_char) override;
 
-  virtual
-  ::CharArray_slice * a_charArray ();
+  ::CharArray_slice * a_charArray () override;
 
-  virtual
-  void a_charArray (const ::CharArray a_charArray);
+  void a_charArray (const ::CharArray a_charArray) override;
 
-  virtual
-  ::OctetArray_slice * a_octetArray ();
+  ::OctetArray_slice * a_octetArray () override;
 
-  virtual
   void a_octetArray (
-      const ::OctetArray a_octetArray);
+      const ::OctetArray a_octetArray) override;
 
-  virtual
-  ::DoubleArray_slice * a_doubleArray ();
+  ::DoubleArray_slice * a_doubleArray () override;
 
-  virtual
   void a_doubleArray (
-      const ::DoubleArray a_doubleArray);
+      const ::DoubleArray a_doubleArray) override;
 
-  virtual
-  ::FloatArray_slice * a_floatArray ();
+  ::FloatArray_slice * a_floatArray () override;
 
-  virtual
   void a_floatArray (
-      const ::FloatArray a_floatArray);
+      const ::FloatArray a_floatArray) override;
 
-  virtual
-  ::BucketArray_slice * a_bucketArray ();
+  ::BucketArray_slice * a_bucketArray () override;
 
-  virtual
   void a_bucketArray (
-      const ::BucketArray a_bucketArray);
+      const ::BucketArray a_bucketArray) override;
 
-  virtual
-  ::AccountArray_slice * a_accountArray ();
+  ::AccountArray_slice * a_accountArray () override;
 
-  virtual
   void a_accountArray (
-      const ::AccountArray a_accountArray);
+      const ::AccountArray a_accountArray) override;
 
-  virtual
-  ::BooleanArray_slice * a_booleanArray ();
+  ::BooleanArray_slice * a_booleanArray () override;
 
-  virtual
   void a_booleanArray (
-      const ::BooleanArray a_booleanArray);
+      const ::BooleanArray a_booleanArray) override;
 
-  virtual
-  ::LongArrayArray_slice * a_longArrayArray ();
+  ::LongArrayArray_slice * a_longArrayArray () override;
 
-  virtual
   void a_longArrayArray (
-      const ::LongArrayArray a_longArrayArray);
+      const ::LongArrayArray a_longArrayArray) override;
 
-  virtual
-  ::MyEnumArray_slice * a_myEnumArray ();
+  ::MyEnumArray_slice * a_myEnumArray () override;
 
-  virtual
   void a_myEnumArray (
-      const ::MyEnumArray a_myEnumArray);
+      const ::MyEnumArray a_myEnumArray) override;
 };
 
 #endif /* BROKEN_I_H_  */

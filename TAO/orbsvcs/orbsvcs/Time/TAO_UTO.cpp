@@ -22,11 +22,6 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   this->attr_utc_time_.tdf = tdf;
 }
 
-// Destructor.
-
-TAO_UTO::~TAO_UTO ()
-= default;
-
 // Get Method for the readonly attribute time.
 
 TimeBase::TimeT
@@ -81,12 +76,12 @@ CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto)
 {
-  TimeBase::TimeT uto_time = uto->time ();
+  TimeBase::TimeT const uto_time = uto->time ();
 
-  TimeBase::InaccuracyT this_inaccuracy =
+  TimeBase::InaccuracyT const this_inaccuracy =
     this->inaccuracy ();
 
-  TimeBase::InaccuracyT uto_inaccuracy =
+  TimeBase::InaccuracyT const uto_inaccuracy =
     uto->inaccuracy ();
 
   if (comparison_type == CosTime::MidC)
@@ -139,11 +134,11 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
-      TimeBase::TimeT uto_time = uto->time ();
+      TimeBase::TimeT const uto_time = uto->time ();
 
       if (this->time () > uto_time)
         {
@@ -160,7 +155,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                             CORBA::NO_MEMORY ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();
@@ -175,17 +170,17 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 CosTime::TIO_ptr
 TAO_UTO::interval ()
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
-      TimeBase::TimeT this_inaccuracy =
+      TimeBase::TimeT const this_inaccuracy =
           this->inaccuracy ();
 
-      TimeBase::TimeT lower =
+      TimeBase::TimeT const lower =
         this->time () - this_inaccuracy;
 
-      TimeBase::TimeT upper =
+      TimeBase::TimeT const upper =
         this->time () + this_inaccuracy;
 
       ACE_NEW_THROW_EX (tio,
@@ -193,7 +188,7 @@ TAO_UTO::interval ()
                                  upper),
                         CORBA::NO_MEMORY ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();

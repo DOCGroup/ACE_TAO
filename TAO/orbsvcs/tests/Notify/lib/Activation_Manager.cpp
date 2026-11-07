@@ -156,7 +156,7 @@ TAO_Notify_Tests_Activation_Manager::activate_suppliers ()
   // For each supplier : activate
   TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
-  for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
+  for (; iter.done () == 0; iter.advance ())
     {
       if (iter.next (entry) != 0)
         {
@@ -191,8 +191,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
   // For each supplier
   TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
-  u_int index = 0;
-  for (; sup_iter.done () == 0; sup_iter.advance (), ++index)
+  for (; sup_iter.done () == 0; sup_iter.advance ())
     {
       if (sup_iter.next (sup_entry) != 0)
         {
@@ -207,7 +206,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
   TAO_Notify_Tests_PeriodicConsumer_Entry* cons_entry;
 
   TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
-  for (index = 0; cons_iter.done () == 0; cons_iter.advance (), ++index)
+  for (; cons_iter.done () == 0; cons_iter.advance ())
     {
       if (cons_iter.next (cons_entry) != 0)
         {

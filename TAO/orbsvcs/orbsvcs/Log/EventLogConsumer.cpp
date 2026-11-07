@@ -9,15 +9,13 @@ TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i * log)
 {
 }
 
-TAO_Event_LogConsumer::~TAO_Event_LogConsumer ()
-{
-}
+TAO_Event_LogConsumer::~TAO_Event_LogConsumer () = default;
 
 void
 TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Connect to the event channel.
-  CosEventComm::PushConsumer_var myself = this->_this ();
+  CosEventComm::PushConsumer_var const myself = this->_this ();
   this->supplier_proxy_ = consumer_admin->obtain_push_supplier ();
   this->supplier_proxy_->connect_push_consumer (myself.in());
 }
@@ -60,19 +58,19 @@ TAO_Event_LogConsumer::push (CORBA::Any const & data)
       // log the RecordList.
       this->log_->write_recordlist (recList);
     }
-  catch (const DsLogAdmin::LogFull& )
+  catch (DsLogAdmin::LogFull const &)
     {
       throw CORBA::NO_RESOURCES ();
     }
-  catch (const DsLogAdmin::LogOffDuty& )
+  catch (DsLogAdmin::LogOffDuty const &)
     {
       throw CORBA::NO_RESOURCES ();
     }
-  catch (const DsLogAdmin::LogLocked& )
+  catch (DsLogAdmin::LogLocked const &)
     {
       throw CORBA::NO_PERMISSION ();
     }
-  catch (const DsLogAdmin::LogDisabled& )
+  catch (DsLogAdmin::LogDisabled const &)
     {
       throw CORBA::TRANSIENT ();
     }

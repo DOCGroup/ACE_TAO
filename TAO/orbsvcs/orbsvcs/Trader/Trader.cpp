@@ -6,6 +6,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 // The following #include is needed only for the instantiation pragmas.
 #include "orbsvcs/Trader/Trader_Interfaces.h"
 
@@ -19,9 +21,7 @@ TAO_Trader_Base::TAO_Trader_Base ()
 {
 }
 
-TAO_Trader_Base::~TAO_Trader_Base ()
-{
-}
+TAO_Trader_Base::~TAO_Trader_Base () = default;
 
 TAO_Import_Attributes_i &
 TAO_Trader_Base::import_attributes ()
@@ -79,7 +79,7 @@ TAO_Trader_Base::is_valid_property_name (const char* ident)
   if (ident == nullptr)
     return return_value;
 
-  size_t length = ACE_OS::strlen (ident);
+  size_t length = std::strlen (ident);
   if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
     {
       return_value = true;
@@ -109,7 +109,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   // Allow scoped identifiers
   CORBA::Boolean done = false;
   char const * pos =
-    ACE_OS::strstr (ident,
+    std::strstr (ident,
                     double_colon);
 
   do
@@ -121,7 +121,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
       }
 
     size_t length =
-      pos ? static_cast<size_t>(pos - ident) : ACE_OS::strlen (ident);
+      pos ? static_cast<size_t>(pos - ident) : std::strlen (ident);
 
     if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
       {
@@ -144,7 +144,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
       {
         // More identifiers
         ident = pos + 2;
-        pos = ACE_OS::strstr (ident, double_colon);
+        pos = std::strstr (ident, double_colon);
       }
     else
       {
@@ -157,9 +157,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
-TAO_Lockable::~TAO_Lockable ()
-{
-}
+TAO_Lockable::~TAO_Lockable () = default;
 
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
@@ -172,9 +170,7 @@ TAO_Support_Attributes_i (TAO_Lockable &locker)
 {
 }
 
-TAO_Support_Attributes_i::~TAO_Support_Attributes_i ()
-{
-}
+TAO_Support_Attributes_i::~TAO_Support_Attributes_i () = default;
 
 CORBA::Boolean
 TAO_Support_Attributes_i::supports_modifiable_properties () const
@@ -272,9 +268,7 @@ TAO_Import_Attributes_i (TAO_Lockable &locker)
 }
 
 
-TAO_Import_Attributes_i::~TAO_Import_Attributes_i ()
-{
-}
+TAO_Import_Attributes_i::~TAO_Import_Attributes_i () = default;
 
 CORBA::ULong
 TAO_Import_Attributes_i::def_search_card () const
@@ -477,9 +471,7 @@ TAO_Trading_Components_i::TAO_Trading_Components_i (TAO_Lockable &locker)
 {
 }
 
-TAO_Trading_Components_i::~TAO_Trading_Components_i ()
-{
-}
+TAO_Trading_Components_i::~TAO_Trading_Components_i () = default;
 
 CosTrading::Lookup_ptr
 TAO_Trading_Components_i::lookup_if () const
@@ -563,9 +555,7 @@ TAO_Link_Attributes_i::TAO_Link_Attributes_i (TAO_Lockable &locker)
 {
 }
 
-TAO_Link_Attributes_i::~TAO_Link_Attributes_i ()
-{
-}
+TAO_Link_Attributes_i::~TAO_Link_Attributes_i () = default;
 
 CosTrading::FollowOption
 TAO_Link_Attributes_i::max_link_follow_policy () const
@@ -671,7 +661,7 @@ TAO_Trader_Factory::manufacture_trader ()
   using MT_TRADER = TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 #endif /* ACE_HAS_THREADS */
 
-  TAO_TRADER* return_value = nullptr;
+  TAO_TRADER* return_value {};
   int components = static_cast<int> (TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)

@@ -23,25 +23,30 @@ protected:
 
 public:
   // Initialize the base class and logging handler.
-  Logging_Event_Handler (ACE_Reactor *reactor)
+  explicit Logging_Event_Handler (ACE_Reactor *reactor)
     : ACE_Event_Handler (reactor),
       logging_handler_ (log_file_) {};
 
-  virtual ~Logging_Event_Handler () {}; // No-op destructor.
+  Logging_Event_Handler (const Logging_Event_Handler &) = delete;
+  Logging_Event_Handler (Logging_Event_Handler &&) = delete;
+  Logging_Event_Handler &operator= (const Logging_Event_Handler &) = delete;
+  Logging_Event_Handler &operator= (Logging_Event_Handler &&) = delete;
+
+  ~Logging_Event_Handler () override = default;
 
   // Activate the object.
   virtual int open ();
 
   // Called by a reactor when logging events arrive.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
   // Called when this object is destroyed, e.g., when it's
   // removed from a reactor.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
   // Return socket handle of the contained <Logging_Handler>.
-  virtual ACE_HANDLE get_handle () const {
+  ACE_HANDLE get_handle () const override {
     // Need a non-const reference to call peer(), but that's
     // safe since we call a const method using it.
     Logging_Handler& h =

@@ -27,8 +27,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Stub::TAO_Stub (const char *repository_id,
-                    const TAO_MProfile &profiles,
+TAO_Stub::TAO_Stub (char const *repository_id,
+                    TAO_MProfile const &profiles,
                     TAO_ORB_Core *orb_core)
   : type_id (repository_id)
   , orb_core_ (orb_core)
@@ -106,8 +106,8 @@ TAO_Stub::~TAO_Stub ()
 }
 
 void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
-                                const CORBA::Boolean permanent_forward)
+TAO_Stub::add_forward_profiles (TAO_MProfile const &mprofiles,
+                                CORBA::Boolean permanent_forward)
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
@@ -185,7 +185,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
     }
 
 
-  IOP::IOR *tmp_info = nullptr;
+  IOP::IOR *tmp_info {};
 
   if (this->forward_profiles_ != nullptr)
     {
@@ -237,7 +237,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
   return -1;
 }
 
-const TAO::ObjectKey &
+TAO::ObjectKey const &
 TAO_Stub::object_key () const
 {
   // Return the profile in use's object key if you see one.
@@ -462,11 +462,11 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 }
 
 TAO_Stub *
-TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
+TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
                                 CORBA::SetOverrideType set_add)
 {
   // Notice the use of an explicit constructor....
-  std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+  std::unique_ptr<TAO_Policy_Set> policy_manager = std::make_unique<TAO_Policy_Set> (TAO_POLICY_OBJECT_SCOPE);
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
@@ -495,11 +495,11 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 CORBA::PolicyList *
-TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
+TAO_Stub::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   if (this->policies_ == nullptr)
     {
-      CORBA::PolicyList *policy_list_ptr = nullptr;
+      CORBA::PolicyList *policy_list_ptr {};
       ACE_NEW_THROW_EX (policy_list_ptr,
                         CORBA::PolicyList (),
                         CORBA::NO_MEMORY ());
@@ -524,7 +524,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
   if ( ! this->forward_profiles_perm_)
     {
-      const TAO_MProfile& mprofile = this->base_profiles_;
+      TAO_MProfile const &mprofile = this->base_profiles_;
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
       if ((cdr << profile_count) == 0)
@@ -534,7 +534,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     // anyway to achieve that?
     for (CORBA::ULong i = 0; i < profile_count; ++i)
       {
-        const TAO_Profile* p = mprofile.get_profile (i);
+        TAO_Profile const *p = mprofile.get_profile (i);
         if (p->encode (cdr) == 0)
           return 0;
       }
@@ -558,7 +558,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
       // paranoid - in case of FT the basic_profiles_ would do, too,
       // but might be dated
-      const TAO_MProfile& mprofile =
+      TAO_MProfile const &mprofile =
           this->forward_profiles_perm_
         ? *(this->forward_profiles_perm_)
         : this->base_profiles_;
@@ -571,7 +571,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
       // anyway to achieve that?
       for (CORBA::ULong i = 0; i < profile_count; ++i)
         {
-          const TAO_Profile* p = mprofile.get_profile (i);
+          TAO_Profile const *p = mprofile.get_profile (i);
           if (p->encode (cdr) == 0)
             return 0;
         }

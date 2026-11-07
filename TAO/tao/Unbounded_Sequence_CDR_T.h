@@ -13,6 +13,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 #include "tao/Basic_Types_IDLv4.h"
+#include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

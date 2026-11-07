@@ -14,9 +14,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <new>
 
-TAO::ORBInitializer_Registry::ORBInitializer_Registry () = default;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
@@ -49,7 +49,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 
       this->register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -70,8 +70,8 @@ TAO::ORBInitializer_Registry::fini ()
                     -1);
 
   // Release all initializers in the array
-  size_t const initializer_count (this->initializers_.size ());
-  for (size_t i = initializer_count; i > 0;)
+  std::size_t const initializer_count (this->initializers_.size ());
+  for (std::size_t i = initializer_count; i > 0;)
     {
       --i;
       if (TAO_debug_level > 8)
@@ -96,9 +96,8 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  guard,
                  this->lock_);
 
-      // Increase the length of the ORBInitializer array by one.
-      size_t const cur_len = this->initializers_.size ();
-      size_t const new_len = cur_len + 1;
+      std::size_t const cur_len = this->initializers_.size ();
+      std::size_t const new_len = cur_len + 1;
       if (this->initializers_.size (new_len) != 0)
         throw ::CORBA::INTERNAL ();
 
@@ -121,7 +120,7 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  CORBA::COMPLETED_NO);
 }
 
-size_t
+std::size_t
 TAO::ORBInitializer_Registry::pre_init (
   TAO_ORB_Core *orb_core,
   int argc,
@@ -133,11 +132,11 @@ TAO::ORBInitializer_Registry::pre_init (
                     this->lock_,
                     0);
 
-  size_t const initializer_count (this->initializers_.size ());
+  std::size_t const initializer_count (this->initializers_.size ());
 
   if (initializer_count > 0)
     {
-      TAO_ORBInitInfo * orb_init_info_temp = nullptr;
+      TAO_ORBInitInfo * orb_init_info_temp {};
 
       ACE_NEW_THROW_EX (orb_init_info_temp,
                         TAO_ORBInitInfo (orb_core,
@@ -152,7 +151,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (size_t i = 0; i < initializer_count; ++i)
+      for (std::size_t i = 0; i < initializer_count; ++i)
         {
           this->initializers_[i]->pre_init (orb_init_info_.in ());
         }
@@ -170,7 +169,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
 void
 TAO::ORBInitializer_Registry::post_init (
-  size_t pre_init_count,
+  std::size_t pre_init_count,
   TAO_ORB_Core *orb_core,
   int argc,
   char *argv[],
@@ -182,7 +181,7 @@ TAO::ORBInitializer_Registry::post_init (
                  guard,
                  this->lock_);
 
-      TAO_ORBInitInfo * orb_init_info_temp = nullptr;
+      TAO_ORBInitInfo * orb_init_info_temp {};
 
       ACE_NEW_THROW_EX (orb_init_info_temp,
                         TAO_ORBInitInfo (orb_core,
@@ -197,7 +196,7 @@ TAO::ORBInitializer_Registry::post_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (size_t i = 0; i < pre_init_count; ++i)
+      for (std::size_t i = 0; i < pre_init_count; ++i)
         {
           this->initializers_[i]->post_init (orb_init_info_.in ());
         }

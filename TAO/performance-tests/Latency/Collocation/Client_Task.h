@@ -19,12 +19,16 @@ public:
   Client_Task (Test::Roundtrip_ptr reference,
                int iterations,
                ACE_Thread_Manager *thr_mgr);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
-  const int niterations;
+  int const niterations_;
   Test::Roundtrip_var remote_ref_;
 };
 

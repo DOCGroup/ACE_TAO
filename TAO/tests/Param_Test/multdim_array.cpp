@@ -30,7 +30,7 @@ Test_Multdim_Array::Test_Multdim_Array ()
 Test_Multdim_Array::~Test_Multdim_Array ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *

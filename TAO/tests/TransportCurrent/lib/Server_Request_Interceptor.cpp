@@ -6,19 +6,17 @@
 
 namespace Test
 {
-  Server_Request_Interceptor::Server_Request_Interceptor (const char* orbid, TEST test)
+  Server_Request_Interceptor::Server_Request_Interceptor (char const *orbid, TEST test)
     : request_count_ (0)
     , orb_id_ (::CORBA::string_dup (orbid))
     , test_ (test)
   {
   }
 
-  Server_Request_Interceptor::~Server_Request_Interceptor ()
-  {
-  }
+  Server_Request_Interceptor::~Server_Request_Interceptor () = default;
 
   void
-  Server_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
+  Server_Request_Interceptor::test_transport_current (ACE_TCHAR const *amethod)
   {
     CORBA::String_var name (this->name ());
     ACE_DEBUG ((LM_DEBUG,
@@ -34,7 +32,7 @@ namespace Test
                    name.in ()));
 
     int tmpargc = 0;
-    ACE_TCHAR **argv = 0;
+    ACE_TCHAR **argv = nullptr;
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
                                           argv,
                                           this->orb_id_.in ());

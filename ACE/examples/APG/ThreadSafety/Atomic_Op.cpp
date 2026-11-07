@@ -15,64 +15,70 @@ using SafeUInt = ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>;
 using SafeInt = ACE_Atomic_Op<ACE_Null_Mutex, int>;
 #endif /* RUNNING_ON_UNSAFE_MULTIPROCESSOR) */
 
-static constexpr unsigned int Q_SIZE = 2;
-static constexpr int MAX_PROD = 10;
+static constexpr unsigned int Q_SIZE {2};
+static constexpr int MAX_PROD {10};
 
 // Listing 3 code/ch14
 class Producer : public ACE_Task_Base
 {
 public:
-  Producer (int *buf, SafeUInt &in, SafeUInt &out)
-    : buf_(buf), in_(in), out_(out)
-  { }
+  Producer (int *buffer, SafeUInt &in, SafeUInt &out)
+    : buf_ (buffer), in_ (in), out_ (out) {}
+  Producer (Producer const &) = delete;
+  Producer (Producer &&) = delete;
+  Producer &operator= (Producer const &) = delete;
+  Producer &operator= (Producer &&) = delete;
 
   int svc () override
   {
-    SafeInt itemNo = 0;
-    while (1)
+    SafeInt item_no {0};
+    while (true)
       {
         // Busy wait.
         do
           { }
         while (in_.value () - out_.value () == Q_SIZE);
 
-        itemNo++;
-        buf_[in_.value () % Q_SIZE] = itemNo.value ();
+        ++item_no;
+        buf_[in_.value () % Q_SIZE] = item_no.value ();
         in_++;
 
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Produced %d\n"),
-                    itemNo.value ()));
+                    item_no.value ()));
 
-        if (check_termination (itemNo.value ()))
+        if (check_termination (item_no.value ()))
           break;
       }
 
     return 0;
   }
 
-  int check_termination (int item)
+  bool check_termination (int const item) const
   {
     return (item == MAX_PROD);
   }
 
 private:
-  int * buf_;
-  SafeUInt& in_;
-  SafeUInt& out_;
+  int *buf_ {};
+  SafeUInt &in_;
+  SafeUInt &out_;
 };
 
 class Consumer : public ACE_Task_Base
 {
 public:
-  Consumer (int *buf, SafeUInt &in, SafeUInt& out)
-    : buf_(buf), in_(in), out_(out)
-  { }
+  Consumer (int *buffer, SafeUInt &in, SafeUInt &out)
+    : buf_ (buffer), in_ (in), out_ (out) {}
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   int svc () override
   {
-    while (1)
+    while (true)
       {
-        int item;
+        int item {};
 
         // Busy wait.
         do
@@ -92,32 +98,32 @@ public:
     return 0;
   }
 
-  int check_termination (int item)
+  bool check_termination (int const item) const
   {
     return (item == MAX_PROD);
   }
 
 private:
-  int * buf_;
-  SafeUInt& in_;
-  SafeUInt& out_;
+  int *buf_ {};
+  SafeUInt &in_;
+  SafeUInt &out_;
 };
 // Listing 3
 
 // Listing 4 code/ch14
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int shared_buf[Q_SIZE];
-  SafeUInt in = 0;
-  SafeUInt out = 0;
+  int shared_buf[Q_SIZE] {};
+  SafeUInt in {0};
+  SafeUInt out {0};
 
   Producer producer (shared_buf, in, out);
   Consumer consumer (shared_buf, in, out);
 
-  producer.activate();
-  consumer.activate();
-  producer.wait();
-  consumer.wait();
+  producer.activate ();
+  consumer.activate ();
+  producer.wait ();
+  consumer.wait ();
 
   return 0;
 }

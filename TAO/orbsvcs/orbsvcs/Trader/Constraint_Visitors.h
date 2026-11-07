@@ -15,7 +15,8 @@
 
 #include "orbsvcs/Trader/Interpreter_Utils.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
-#include "ace/Containers.h"
+
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -307,14 +308,17 @@ public:
   int visit_property (TAO_Property_Constraint* literal) override;
 
 private:
-  class TAO_Trading_Serv_Export Operand_Queue :
-    public ACE_Unbounded_Queue <TAO_Literal_Constraint>
+  class TAO_Trading_Serv_Export Operand_Queue
   // = TITLE
   // A queue adapter with methods to setting and getting operands
   // from the expression evaluation results.
   {
   public:
-    Operand_Queue  ();
+    Operand_Queue ();
+
+    bool empty () const;
+    void clear ();
+    void push_front (TAO_Literal_Constraint const & operand);
 
     /// In a binary operation, obtain the left operand.
     TAO_Literal_Constraint& get_left_operand ();
@@ -327,6 +331,9 @@ private:
 
     /// Remove an operand from the queue.
     void dequeue_operand ();
+
+  private:
+    std::deque<TAO_Literal_Constraint> operands_;
   };
 
   /// Method for performing a arithmetic or comparison operation.

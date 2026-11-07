@@ -2,8 +2,9 @@
 #include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/POAManager.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
+
+#include <cstring>
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -45,7 +46,7 @@ TAO_POAManager_Factory::create_POAManager (
 
   PortableServer::POAManager_var poamanager;
 
-  if (id != 0)
+  if (id != nullptr)
   {
     poamanager = this->find (id);
 
@@ -59,7 +60,7 @@ TAO_POAManager_Factory::create_POAManager (
   // this indirection brought to you by borland's compiler and its refusal
   // to directly assign the newly created TAO_POA_Manager to a POAManager_var.
   {
-    PortableServer::POAManager_ptr pm = nullptr;
+    PortableServer::POAManager_ptr pm {};
     ACE_NEW_THROW_EX (pm,
                       TAO_POA_Manager (object_adapter_, id, policies, this),
                       CORBA::NO_MEMORY
@@ -88,10 +89,10 @@ TAO_POAManager_Factory::list ()
 
   CORBA::ULong index = 0;
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
-        iterator != this->poamanager_set_.end ();
-        ++iterator, ++index)
+       iterator != this->poamanager_set_.end ();
+       ++iterator, ++index)
     {
-      ::PortableServer::POAManager_ptr poamanager = (*iterator);
+      ::PortableServer::POAManager_ptr poamanager = *iterator;
       poamanagers[index] =
         PortableServer::POAManager::_duplicate (poamanager);
     }
@@ -106,14 +107,15 @@ TAO_POAManager_Factory::find (const char * id)
     ::PortableServer::POAManager::_nil();
 
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
-        iterator != this->poamanager_set_.end ();
-        ++iterator)
+       iterator != this->poamanager_set_.end ();
+       ++iterator)
     {
-      CORBA::String_var poamanagerid = (*iterator)->get_id ();
+      ::PortableServer::POAManager_ptr manager = *iterator;
+      CORBA::String_var poamanagerid = manager->get_id ();
 
-      if (ACE_OS::strcmp (id, poamanagerid.in()) == 0)
+      if (std::strcmp (id, poamanagerid.in()) == 0)
         {
-          poamanager = PortableServer::POAManager::_duplicate (*iterator);
+          poamanager = PortableServer::POAManager::_duplicate (manager);
           break;
         }
     }
@@ -125,10 +127,10 @@ void
 TAO_POAManager_Factory::remove_all_poamanagers ()
 {
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
-        iterator != this->poamanager_set_.end ();
-        ++iterator)
+       iterator != this->poamanager_set_.end ();
+       ++iterator)
     {
-      ::PortableServer::POAManager_ptr poamanager = (*iterator);
+      ::PortableServer::POAManager_ptr poamanager = *iterator;
       CORBA::release (poamanager);
     }
   this->poamanager_set_.reset ();
@@ -138,7 +140,7 @@ int
 TAO_POAManager_Factory::remove_poamanager (
   ::PortableServer::POAManager_ptr poamanager)
 {
-  int retval = this->poamanager_set_.remove (poamanager);
+  int const retval = this->poamanager_set_.remove (poamanager);
 
   if (retval == 0)
     {

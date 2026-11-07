@@ -45,8 +45,8 @@ public:
                          void *arg,
                          ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
-                         , ACE_SEH_EXCEPT_HANDLER selector = 0
-                         , ACE_SEH_EXCEPT_HANDLER handler = 0
+                         , ACE_SEH_EXCEPT_HANDLER selector = nullptr
+                         , ACE_SEH_EXCEPT_HANDLER handler = nullptr
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                          , long cancel_flags = 0);
 

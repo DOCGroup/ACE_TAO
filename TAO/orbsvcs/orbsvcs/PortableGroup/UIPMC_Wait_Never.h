@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Wait_Never : public TAO_Wait_Strategy
 {
 public:
-  TAO_UIPMC_Wait_Never (TAO_Transport *transport);
+  explicit TAO_UIPMC_Wait_Never (TAO_Transport *transport);
   ~TAO_UIPMC_Wait_Never () override = default;
 
   // = Documented in TAO_Wait_Strategy.

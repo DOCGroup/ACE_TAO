@@ -33,7 +33,11 @@ class RPS_Monitor
 {
 public:
   /// Constructor
-  RPS_Monitor (ServerRequestInterceptor * interceptor);
+  explicit RPS_Monitor (ServerRequestInterceptor *interceptor);
+  RPS_Monitor (RPS_Monitor const &) = delete;
+  RPS_Monitor (RPS_Monitor &&) = delete;
+  RPS_Monitor &operator= (RPS_Monitor const &) = delete;
+  RPS_Monitor &operator= (RPS_Monitor &&) = delete;
 
   /**
    * @name CosLoadBalancing::LoadMonitor Methods
@@ -45,7 +49,7 @@ public:
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location ();
+  CosLoadBalancing::Location *the_location () override;
 
   /// Return the average CPU load at the location which this
   /// LoadMonitor resides.
@@ -54,7 +58,7 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads ();
+  CosLoadBalancing::LoadList *loads () override;
 
   //@}
 
@@ -64,7 +68,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~RPS_Monitor ();
+  ~RPS_Monitor () override = default;
 
 private:
   /// The name of the location at which this LoadMonitor resides.

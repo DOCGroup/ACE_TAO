@@ -13,12 +13,8 @@
 
 #include "QuoterS.h"
 
-// Forward declaration.
-class Quoter_i;
-
-// Typedefs.
-typedef Quoter_i *Quoter_i_ptr;
-typedef Quoter_i_ptr Quoter_i_ref;
+#include <memory>
+#include <vector>
 
 /**
  * @class Quoter_i:
@@ -31,44 +27,43 @@ typedef Quoter_i_ptr Quoter_i_ref;
 class Quoter_i: public POA_Stock::Quoter
 {
 public:
-  /// Constructor (use_LifeCycle_Service is 1 if the LifeCycle_Service should be used
+  /// Constructor (use_LifeCycle_Service is true if the LifeCycle_Service should be used
   /// instead of the Quoter Generic_Factory
-  Quoter_i (const char *obj_name = "",
-            const unsigned char use_LifeCycle_Service = 0,
-            PortableServer::POA_ptr poa_ptr = 0);
+  explicit Quoter_i (bool use_LifeCycle_Service,
+                     PortableServer::POA_ptr poa_ptr = nullptr);
 
   /// Destructor
-  ~Quoter_i ();
+  ~Quoter_i () override = default;
+
+  Quoter_i (Quoter_i const &) = delete;
+  Quoter_i &operator= (Quoter_i const &) = delete;
+  Quoter_i (Quoter_i &&) = delete;
+  Quoter_i &operator= (Quoter_i &&) = delete;
 
   /// Returns the current quote for the stock <stock_name>
-  virtual CORBA::Long get_quote (const char *stock_name);
+  CORBA::Long get_quote (char const *stock_name) override;
 
   // = Lifecycle methods
 
   /// Make a copy of this object
-  virtual CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
-                                                  const CosLifeCycle::Criteria &the_criteria);
+  CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
+                                          CosLifeCycle::Criteria const &the_criteria) override;
 
   /// Move this object using <there>
-  virtual void move (CosLifeCycle::FactoryFinder_ptr there,
-                     const CosLifeCycle::Criteria &the_criteria);
+  void move (CosLifeCycle::FactoryFinder_ptr there,
+             CosLifeCycle::Criteria const &the_criteria) override;
 
   /// Removes the object.
-  virtual void remove ();
+  void remove () override;
 
 private:
-  /// This flag defines if a Generic Factory is used (0 by default) or
-  /// the more sophisticated LifeCycle Service (1)
-  unsigned char use_LifeCycle_Service_;
+  /// This flag defines if a Generic Factory is used (false by default) or
+  /// the more sophisticated LifeCycle Service (true)
+  bool use_LifeCycle_Service_ {};
 
   /// Keep a reference to the POA for use by the move operation
-  PortableServer::POA_var poa_var_;
+  PortableServer::POA_var poa_var_ {};
 };
-
-// Forward declaration.
-class Quoter_Factory_i;
-
-typedef Quoter_Factory_i *Quoter_Factory_i_ptr;
 
 /**
  * @class Quoter_Factory_i:
@@ -84,26 +79,31 @@ public:
   Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr);
 
   /// Destructor.
-  ~Quoter_Factory_i ();
+  ~Quoter_Factory_i () override = default;
+
+  Quoter_Factory_i (Quoter_Factory_i const &) = delete;
+  Quoter_Factory_i &operator= (Quoter_Factory_i const &) = delete;
+  Quoter_Factory_i (Quoter_Factory_i &&) = delete;
+  Quoter_Factory_i &operator= (Quoter_Factory_i &&) = delete;
 
   /// Initialize everything in the factory
   int init ();
 
   /// Return the quoter by the id <name>.
-  virtual Stock::Quoter_ptr create_quoter (const char *name);
+  Stock::Quoter_ptr create_quoter (char const *name) override;
 
 private:
   /// Pointer to the poa.
-  PortableServer::POA_ptr poa_ptr_;
+  PortableServer::POA_var poa_var_ {};
 
-  /// Array of quoters.
-  Quoter_i **my_quoters_;
+  /// Owns the servants registered by this factory.
+  std::vector<std::unique_ptr<Quoter_i>> quoters_;
 
   /// Number of quoters.
-  size_t quoter_num_;
+  size_t quoter_num_ {};
 
   /// Which quoter to return next.
-  size_t next_quoter_;
+  size_t next_quoter_ {};
 };
 
 #endif /* QUOTER_IMPL_H */

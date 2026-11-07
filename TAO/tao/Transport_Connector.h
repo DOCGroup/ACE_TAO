@@ -56,7 +56,7 @@ class TAO_Export TAO_Connector
 {
 public:
   /// Default constructor.
-  TAO_Connector (CORBA::ULong tag);
+  explicit TAO_Connector (CORBA::ULong tag);
 
   /// The destructor.
   virtual ~TAO_Connector ();

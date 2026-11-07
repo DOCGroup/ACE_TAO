@@ -14,9 +14,7 @@ Foo_C_Custom_ClientEngine::Foo_C_Custom_ClientEngine
 }
 
 
-Foo_C_Custom_ClientEngine::~Foo_C_Custom_ClientEngine()
-{
-}
+Foo_C_Custom_ClientEngine::~Foo_C_Custom_ClientEngine() = default;
 
 
 bool

@@ -161,8 +161,8 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
 template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
                                               ACE_Filecache_Hash_Entry *prev)
-  : ext_id_ (0),
-    int_id_ (0),
+  : ext_id_ (nullptr),
+    int_id_ (nullptr),
     next_ (next),
     prev_ (prev)
 {
@@ -241,7 +241,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
                          ACE_SYNCH_RW_MUTEX &filelock,
                          int mapit)
 {
-  ACE_Filecache_Object *handle = nullptr;
+  ACE_Filecache_Object *handle {};
 
   if (this->hash_.find (filename, handle) == -1)
     {
@@ -266,7 +266,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
 ACE_Filecache_Object *
 ACE_Filecache::remove_i (const ACE_TCHAR *filename)
 {
-  ACE_Filecache_Object *handle = nullptr;
+  ACE_Filecache_Object *handle {};
 
   // Disassociate file from the cache.
   if (this->hash_.unbind (filename, handle) == 0)
@@ -292,7 +292,7 @@ ACE_Filecache::update_i (const ACE_TCHAR *filename,
                          ACE_SYNCH_RW_MUTEX &filelock,
                          int mapit)
 {
-  ACE_Filecache_Object *handle = nullptr;
+  ACE_Filecache_Object *handle {};
 
   handle = this->remove_i (filename);
   handle = this->insert_i (filename, filelock, mapit);
@@ -310,7 +310,7 @@ ACE_Filecache::find (const ACE_TCHAR *filename)
 ACE_Filecache_Object *
 ACE_Filecache::remove (const ACE_TCHAR *filename)
 {
-  ACE_Filecache_Object *handle = nullptr;
+  ACE_Filecache_Object *handle {};
 
   ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
@@ -333,7 +333,7 @@ ACE_Filecache::remove (const ACE_TCHAR *filename)
 ACE_Filecache_Object *
 ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 {
-  ACE_Filecache_Object *handle = nullptr;
+  ACE_Filecache_Object *handle {};
 
   ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
@@ -381,7 +381,7 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 ACE_Filecache_Object *
 ACE_Filecache::create (const ACE_TCHAR *filename, int size)
 {
-  ACE_Filecache_Object *handle = nullptr;
+  ACE_Filecache_Object *handle {};
 
   ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
@@ -467,7 +467,7 @@ ACE_Filecache_Object::init ()
   this->tempname_ = nullptr;
   this->size_ = 0;
 
-  ACE_OS::memset (&(this->stat_), 0, sizeof (this->stat_));
+  this->stat_ = {};
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object ()

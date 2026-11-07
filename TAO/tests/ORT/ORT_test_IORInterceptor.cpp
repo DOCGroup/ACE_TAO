@@ -67,7 +67,7 @@ ORT_test_IORInterceptor::components_established (
 
 void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
-    const char * id,
+    char const *id,
     PortableInterceptor::AdapterState)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -76,7 +76,7 @@ ORT_test_IORInterceptor::adapter_manager_state_changed (
 
 void
 ORT_test_IORInterceptor:: adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+    PortableInterceptor::ObjectReferenceTemplateSeq const &,
     PortableInterceptor::AdapterState)
 {
 }

@@ -67,7 +67,7 @@ namespace TAO
     ObjectKey object_key_;
 
     /// The refcount on the object key..
-    CORBA::ULong refcount_ {};
+    CORBA::ULong refcount_ {1};
   };
 }
 

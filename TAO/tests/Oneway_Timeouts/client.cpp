@@ -15,8 +15,8 @@ using namespace PortableServer;
 
 namespace
 {
-  const ACE_TCHAR *non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
-  const int TIME_THRESHOLD = 100; //ms
+  ACE_TCHAR const *non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
+  constexpr int TIME_THRESHOLD = 100; //ms
 
   int request_timeout = 0;
   Messaging::SyncScope sync_scope;
@@ -41,9 +41,9 @@ namespace
   bool retry_transients = false;
   bool retry_timeouts = false;
   bool make_request_queued = false;
-  const ACE_TCHAR *server_ior = ACE_TEXT ("file://test.ior");
+  ACE_TCHAR const *server_ior = ACE_TEXT ("file://test.ior");
 
-  void print_usage (const ACE_TCHAR *argv0)
+  void print_usage (ACE_TCHAR const *argv0)
   {
     ACE_ERROR ((LM_ERROR,
                 "%s [-request_timeout ms=0] "
@@ -395,7 +395,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
                 }
 
             }
-          catch (const CORBA::TRANSIENT&)
+          catch (CORBA::TRANSIENT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Transient exception during test () invocation %d\n",
@@ -405,7 +405,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               else
                 throw;
             }
-          catch (const CORBA::TIMEOUT&)
+          catch (CORBA::TIMEOUT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Timeout exception during test () invocation %d\n",
@@ -505,7 +505,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       return 0;
     }
-  catch (const CORBA::TRANSIENT &)
+  catch (CORBA::TRANSIENT const &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught transient exception\n"));
       if (force_timeout)
@@ -544,7 +544,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           ACE_ERROR_RETURN ((LM_ERROR, "Error: Unexpected\n"), 1);
         }
     }
-  catch (const CORBA::TIMEOUT &)
+  catch (CORBA::TIMEOUT const &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught timeout exception\n"));
       if (force_timeout)
@@ -585,7 +585,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
         }
 
     }
-  catch (Exception &ex)
+  catch (Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %d ms.\n",
                   ex._name(),

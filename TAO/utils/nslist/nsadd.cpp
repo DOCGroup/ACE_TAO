@@ -13,15 +13,15 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-int showIOR = 0;
-int showNSonly = 0;
+bool showIOR = false;
+bool showNSonly = false;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
-  const ACE_TCHAR *ior = 0;
+  ACE_TCHAR const *ior = nullptr;
 
   int err = 0;
 
@@ -36,12 +36,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         quiet = false,
         rebind = false,
         context = false;
-      const ACE_TCHAR
-        *const pname = argv[0];
-      const ACE_TCHAR *nameService = 0;
+      ACE_TCHAR const *const pname = argv[0];
+      ACE_TCHAR const *nameService = nullptr;
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name = 0;
+      ACE_TCHAR *name = nullptr;
 
       if (0 < argc)
         {
@@ -214,7 +213,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Assemble the name from the user string given
       ACE_TCHAR *cp;
-      while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+      while ((cp = ACE_OS::strtok (name, ctxsep)) != nullptr)
         {
           const int index= the_name.length();
           the_name.length (index+1);
@@ -225,7 +224,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
             }
           the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
-          name = 0; // way strtok works
+          name = nullptr; // way strtok works
         }
 
       // Now attempt the (re)bind

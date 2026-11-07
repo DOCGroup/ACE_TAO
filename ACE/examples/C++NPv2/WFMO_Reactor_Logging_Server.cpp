@@ -38,10 +38,10 @@ public:
                                 ACE_Event_Handler::DONT_CALL);
   }
 
-  virtual int handle_input (ACE_HANDLE h) {
+  int handle_input (ACE_HANDLE h) override {
     CHAR user_input[BUFSIZ];
     DWORD count;
-    if (!ReadFile (h, user_input, BUFSIZ, &count, 0))
+    if (!ReadFile (h, user_input, BUFSIZ, &count, nullptr))
       return -1;
 
     user_input[count] = '\0';
@@ -50,12 +50,12 @@ public:
     return 0;
   }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask) {
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override {
     quit_seen_.signal ();
     return 0;
   }
 
-  virtual int handle_signal (int, siginfo_t *, ucontext_t *) {
+  int handle_signal (int, siginfo_t *, ucontext_t *) override {
     reactor ()->end_reactor_event_loop ();
     return 0;
   }
@@ -69,7 +69,7 @@ public:
     : Logging_Event_Handler_Ex (r) {}
 
 protected:
-  int handle_input (ACE_HANDLE) {
+  int handle_input (ACE_HANDLE) override {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, lock_, -1);
     return logging_handler_.log_record ();
   }
@@ -86,8 +86,8 @@ public:
     : Logging_Acceptor_Ex (r) {};
 
 protected:
-  virtual int handle_input (ACE_HANDLE) {
-    Logging_Event_Handler_WFMO *peer_handler = 0;
+  int handle_input (ACE_HANDLE) override {
+    Logging_Event_Handler_WFMO *peer_handler = nullptr;
     ACE_NEW_RETURN (peer_handler,
                     Logging_Event_Handler_WFMO (reactor ()),
                     -1);

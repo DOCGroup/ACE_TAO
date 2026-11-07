@@ -36,7 +36,7 @@ namespace ACE
           {
             private:
               SessionFactory_Impl ();
-              virtual ~SessionFactory_Impl ();
+              ~SessionFactory_Impl () override;
 
               friend class ACE_Singleton<SessionFactory_Impl, ACE_SYNCH::NULL_MUTEX>;
 
@@ -46,18 +46,18 @@ namespace ACE
                 {
                   public:
                     SessionHolder_Impl ();
-                    virtual ~SessionHolder_Impl();
+                    ~SessionHolder_Impl () override;
 
                   protected:
-                    virtual ACE::HTTP::SessionBase& session ();
+                    ACE::HTTP::SessionBase& session () override;
 
                   private:
                     Session_T<ACE_SYNCH> session_;
                 };
 
             public:
-              virtual ACE::INet::ConnectionHolder* create_connection (
-                  const ACE::INet::ConnectionKey& key) const;
+              ACE::INet::ConnectionHolder* create_connection (
+                  const ACE::INet::ConnectionKey& key) const override;
           };
       }
   }

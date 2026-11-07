@@ -11,11 +11,9 @@ class ORB_Initializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void
-  post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #endif /* ORB_INITIALIZER_H */

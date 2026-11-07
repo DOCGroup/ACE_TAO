@@ -32,9 +32,9 @@ class TAO_FTEC_Event_Channel_Impl : public TAO_EC_Event_Channel_Base
                              , public TAO_FTEC_Group_Manager
 {
 public:
-  TAO_FTEC_Event_Channel_Impl(const TAO_EC_Event_Channel_Attributes& attributes);
+  explicit TAO_FTEC_Event_Channel_Impl(TAO_EC_Event_Channel_Attributes const &attributes);
 
-  ~TAO_FTEC_Event_Channel_Impl() override;
+  ~TAO_FTEC_Event_Channel_Impl() override = default;
 
   TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl const&) = delete;
   TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl&&) = delete;
@@ -50,14 +50,14 @@ public:
 
 
   // = The RtecEventChannelAdmin::EventChannel methods...
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers () override;
 
 
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
+  RtecEventChannelAdmin::SupplierAdmin_ptr
       for_suppliers () override;
 
-  void get_state (FtRtecEventChannelAdmin::EventChannelState & s);
+  void get_state (FtRtecEventChannelAdmin::EventChannelState &s) override;
 
   void set_state (const FTRT::State & stat);
 

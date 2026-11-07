@@ -6,8 +6,8 @@
 #include "ace/OS_Memory.h"
 
 ACE_URL_Addr::ACE_URL_Addr ()
-  : path_name_ (0),
-    addr_string_ (0),
+  : path_name_ (nullptr),
+    addr_string_ (nullptr),
     addr_string_len_ (0)
 {
 }
@@ -59,9 +59,9 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
   if (size > this->addr_string_len_)
     {
       ACE_ALLOCATOR_RETURN (this_ptr->addr_string_,
-                            (ACE_TCHAR *) ACE_OS::realloc ((void *) this->addr_string_,
-                                                           size),
-                            0);
+                            static_cast<ACE_TCHAR *> (ACE_OS::realloc (this->addr_string_,
+                                                                       size)),
+                            nullptr);
       this_ptr->addr_string_len_ = size;
     }
   ACE_OS::sprintf (this->addr_string_,
@@ -91,7 +91,7 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
 
   ACE_TCHAR *path_name = ACE_OS::strchr (t, ACE_TEXT ('/'));
   const ACE_TCHAR *name = ACE_TEXT ("index.html");
-  if (path_name != 0)
+  if (path_name != nullptr)
     {
       if (ACE_OS::strlen (path_name + 1) > 0)
         name = path_name + 1;
@@ -107,7 +107,7 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
   // Now handle the host address and port number.
   ACE_TCHAR *port_number = ACE_OS::strchr (t, ':');
 
-  if (port_number == 0)
+  if (port_number == nullptr)
     {
       // Assume it's an ip-address or ip-number.
       result = this->ACE_INET_Addr::set (ACE_DEFAULT_HTTP_PORT,
@@ -216,7 +216,7 @@ ACE_URL_Addr::~ACE_URL_Addr ()
                                                       (this->path_name_)));
   ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
                                                       (this->addr_string_)));
-  this->path_name_ = 0;
+  this->path_name_ = nullptr;
 }
 
 int

@@ -11,12 +11,12 @@
 #include "ace/OS_NS_unistd.h"
 #include "TestC.h"
 
-const ACE_TCHAR *udp_mcast_address =
+static ACE_TCHAR const* udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
-bool valuetype = false;
+static bool valuetype {};
 
-int parse_args (int argc, ACE_TCHAR *argv[]);
+static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (valuetype)
         {
-          Hello::ValueTypeData_init *vb_factory = 0;
+          Hello::ValueTypeData_init* vb_factory {};
           ACE_NEW_RETURN (vb_factory,
                           Hello::ValueTypeData_init,
                           1); // supplied by mapping
@@ -138,13 +138,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecUDPAdmin::AddrServer_var address_server =
         as_impl._this ();
 
-      TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
+      TAO_ECG_Refcounted_Endpoint endpoint (new TAO_ECG_UDP_Out_Endpoint);
 
       // Now we connect the sender as a consumer of events, it will
       // receive any event from any source and send it to the "right"
       // multicast group, as defined by the address server set above:
       RtecEventChannelAdmin::ConsumerQOS sub;
-      sub.is_gateway = 1;
+      sub.is_gateway = true;
 
       sub.dependencies.length (1);
       sub.dependencies[0].event.header.type =
@@ -191,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       pub.publications.length (1);
       pub.publications[0].event.header.type   = ACE_ES_EVENT_ANY;
       pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
-      pub.is_gateway = 1;
+      pub.is_gateway = true;
 
       receiver->connect (pub);
 
@@ -213,7 +213,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Wait for events, including incoming multicast data.
       // We could also use orb->run(), but that will not let us
       // terminate the application in a nice way.
-      for (int i = 0; i != 100; ++i)
+      for (int i {}; i != 100; ++i)
         {
           CORBA::Boolean there_is_work =
             orb->work_pending ();
@@ -285,7 +285,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "UDP receiver ready\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -295,10 +295,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+static int parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vm:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

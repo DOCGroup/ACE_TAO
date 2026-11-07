@@ -11,7 +11,7 @@ class Reply_Handler
 {
 public:
   /// Constructor
-  Reply_Handler ();
+  Reply_Handler () = default;
   Reply_Handler (Reply_Handler const &) = delete;
   Reply_Handler &operator= (Reply_Handler const &) = delete;
   Reply_Handler (Reply_Handler &&) = delete;

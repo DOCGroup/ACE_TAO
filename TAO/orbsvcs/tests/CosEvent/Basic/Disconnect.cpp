@@ -6,7 +6,8 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int use_callbacks);
+                      bool use_callbacks);
+static void deactivate_servant (PortableServer::Servant servant);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -29,9 +30,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      run_test (poa.in (), 0);
+      run_test (poa.in (), false);
 
-      run_test (poa.in (), 1);
+      run_test (poa.in (), true);
 
       // ****************************************************************
 
@@ -39,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -49,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-void
+static void
 deactivate_servant (PortableServer::Servant servant)
 {
   PortableServer::POA_var poa =
@@ -61,7 +62,7 @@ deactivate_servant (PortableServer::Servant servant)
 
 void
 run_test (PortableServer::POA_ptr poa,
-          int use_callbacks)
+          bool use_callbacks)
 {
   TAO_CEC_EventChannel_Attributes attributes (poa, poa);
   attributes.disconnect_callbacks = use_callbacks;
@@ -84,14 +85,14 @@ run_test (PortableServer::POA_ptr poa,
 
   // ****************************************************************
 
-  int iterations = 100;
+  constexpr int iterations {100};
 
   CEC_Counting_Supplier supplier_0;
   CEC_Counting_Supplier supplier_1;
   CEC_Counting_Consumer consumer_0 ("Consumer/0");
   CEC_Counting_Consumer consumer_1 ("Consumer/1");
 
-  for (int i = 0; i != iterations; ++i)
+  for (int i {}; i != iterations; ++i)
     {
       supplier_0.connect (supplier_admin.in ());
       consumer_0.connect (consumer_admin.in ());
@@ -120,8 +121,8 @@ run_test (PortableServer::POA_ptr poa,
 
   deactivate_servant (&ec_impl);
 
-  CORBA::ULong count_0 = 1;
-  CORBA::ULong count_1 = 0;
+  CORBA::ULong count_0 {1};
+  CORBA::ULong count_1 {};
   if (use_callbacks)
     {
       count_0 += iterations;

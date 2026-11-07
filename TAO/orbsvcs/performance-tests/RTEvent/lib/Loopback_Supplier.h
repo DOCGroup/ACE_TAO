@@ -44,8 +44,8 @@ public:
   //@{
   /** @name The RtecEventComm::PushSupplier methods
    */
-  virtual void disconnect_push_supplier ();
-  virtual PortableServer::POA_ptr _default_POA ();
+  void disconnect_push_supplier () override;
+  PortableServer::POA_ptr _default_POA () override;
   //@}
 
 private:

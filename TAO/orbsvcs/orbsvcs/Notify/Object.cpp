@@ -16,14 +16,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Object::TAO_Notify_Object ()
-: poa_ (0)
-, proxy_poa_ (0)
-, own_proxy_poa_ (false)
-, object_poa_ (0)
-, own_object_poa_ (false)
-, id_ (0)
-, own_worker_task_ (false)
-, shutdown_ (false)
 {
   if (TAO_debug_level > 2 )
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));

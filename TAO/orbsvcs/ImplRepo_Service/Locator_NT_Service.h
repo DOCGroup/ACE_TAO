@@ -34,24 +34,24 @@ extern const ACE_TCHAR* IMR_LOCATOR_DESCRIPTION;
 class Locator_NT_Service : public ACE_NT_Service
 {
 public:
-  typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
+  using MUTEX = TAO_SYNCH_RECURSIVE_MUTEX;
 
   /// We override <handle_control> because it handles stop requests
   /// privately.
-  virtual void handle_control (DWORD control_code);
+  void handle_control (DWORD control_code) override;
 
   /// We override <handle_exception> so a 'stop' control code can wake
   /// the reactor off of its wait.
-  virtual int handle_exception (ACE_HANDLE h);
+  int handle_exception (ACE_HANDLE h) override;
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc ();
+  int svc () override;
 
 private:
   friend class ACE_Singleton<Locator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Locator_NT_Service, ACE_Mutex> SERVICE;
+using SERVICE = ACE_Singleton<Locator_NT_Service, ACE_Mutex>;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 

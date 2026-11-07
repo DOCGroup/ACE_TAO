@@ -55,7 +55,7 @@ public:
   virtual const void *act () const = 0;
 
   /// Did the operation succeed?
-  virtual int success () const = 0;
+  virtual bool success () const = 0;
 
   /// This ACT is not the same as the ACT associated with the
   /// asynchronous operation.

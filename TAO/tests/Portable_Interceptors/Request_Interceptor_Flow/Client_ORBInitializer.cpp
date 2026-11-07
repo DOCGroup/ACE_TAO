@@ -14,8 +14,8 @@ Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Create and register the test request interceptors.
-  PortableInterceptor::ClientRequestInterceptor_ptr ci =
-    PortableInterceptor::ClientRequestInterceptor::_nil ();
+  // The var below takes ownership of each ACE_NEW allocation.
+  PortableInterceptor::ClientRequestInterceptor_ptr ci {};
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT A"),
                     CORBA::NO_MEMORY (

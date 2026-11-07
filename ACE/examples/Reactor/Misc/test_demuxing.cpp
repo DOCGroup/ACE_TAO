@@ -15,9 +15,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-
 // Default is to have a 2 second timeout.
-static int timeout = 2;
+static int timeout {2};
 
 // This class illustrates how to handle signal-driven I/O using
 // the <ACE_Reactor> framework.  Note that signals may be caught
@@ -27,6 +26,10 @@ class Sig_Handler : public ACE_Event_Handler
 {
 public:
   Sig_Handler ();
+  Sig_Handler (Sig_Handler const &) = delete;
+  Sig_Handler (Sig_Handler &&) = delete;
+  Sig_Handler &operator= (Sig_Handler const &) = delete;
+  Sig_Handler &operator= (Sig_Handler &&) = delete;
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE) override;
 
@@ -37,7 +40,7 @@ public:
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
 private:
-  ACE_HANDLE handle_;
+  ACE_HANDLE handle_ {};
 };
 
 // A dummy_handle is required to reserve a slot in the ACE_Reactor's
@@ -165,9 +168,12 @@ class STDIN_Handler : public ACE_Event_Handler
 public:
   STDIN_Handler ();
   ~STDIN_Handler () override;
+  STDIN_Handler (STDIN_Handler const &) = delete;
+  STDIN_Handler (STDIN_Handler &&) = delete;
+  STDIN_Handler &operator= (STDIN_Handler const &) = delete;
+  STDIN_Handler &operator= (STDIN_Handler &&) = delete;
   int handle_input (ACE_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &, void const *arg) override;
 };
 
 STDIN_Handler::STDIN_Handler ()
@@ -210,8 +216,7 @@ STDIN_Handler::~STDIN_Handler ()
 }
 
 int
-STDIN_Handler::handle_timeout (const ACE_Time_Value &tv,
-                               const void *)
+STDIN_Handler::handle_timeout (ACE_Time_Value const &tv, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) timeout occurred at %d sec, %d usec\n",
@@ -226,7 +231,7 @@ int
 STDIN_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[BUFSIZ];
-  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+  ssize_t const n = ACE_OS::read (handle, buf, sizeof buf);
 
   switch (n)
     {
@@ -260,6 +265,10 @@ class Message_Handler : public ACE_Task <ACE_SYNCH>
 {
 public:
   Message_Handler ();
+  Message_Handler (Message_Handler const &) = delete;
+  Message_Handler (Message_Handler &&) = delete;
+  Message_Handler &operator= (Message_Handler const &) = delete;
+  Message_Handler &operator= (Message_Handler &&) = delete;
 
   int handle_input (ACE_HANDLE) override;
   // Called back within the context of the <ACE_Reactor> Singleton to
@@ -294,11 +303,9 @@ Message_Handler::svc ()
 {
   for (int i = 0;; i++)
     {
-      ACE_Message_Block *mb = nullptr;
-
-      ACE_NEW_RETURN (mb,
-                      ACE_Message_Block (1),
-                      0);
+      ACE_Message_Block *message_block {};
+      ACE_NEW_RETURN (message_block, ACE_Message_Block (1), 0);
+      ACE_Message_Block_Unique_Ptr mb {message_block};
 
       mb->msg_priority (i);
       ACE_OS::sleep (1);
@@ -307,7 +314,7 @@ Message_Handler::svc ()
       // notify() hook of our ACE_Reactor_Notification_Strategy,
       // thereby informing the <ACE_Reactor> Singleton to call our
       // <handle_input> method.
-      if (this->putq (mb) == -1)
+      if (this->putq (mb.get ()) == -1)
         {
           if (errno == ESHUTDOWN)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -318,6 +325,7 @@ Message_Handler::svc ()
                                "putq"),
                               -1);
         }
+      mb.release ();
     }
 
   ACE_NOTREACHED (return 0);
@@ -329,7 +337,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Message_Handler::handle_input\n"));
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     ACE_ERROR ((LM_ERROR,

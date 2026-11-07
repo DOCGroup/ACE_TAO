@@ -24,11 +24,11 @@ using EVENT = ACE_Singleton <ACE_Auto_Event, ACE_Thread_Mutex>;
 static int work_time;
 
 // Reader thread.
-static void *
+static ACE_THR_FUNC_RETURN
 reader (void *arg)
 {
   // Shared data via a reference.
-  int& data = *(int *) arg;
+  int &data = *static_cast<int *> (arg);
 
   // Wait for writer to complete.
 
@@ -43,14 +43,14 @@ reader (void *arg)
   // Read shared data.
   ACE_DEBUG ((LM_DEBUG, "(%t) reader: value of data is: %d\n", data));
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Writer thread.
-static void *
+static ACE_THR_FUNC_RETURN
 writer (void *arg)
 {
-  int& data = *(int *) arg;
+  int &data = *static_cast<int *> (arg);
 
   // Calculate (work).
   ACE_DEBUG ((LM_DEBUG, "(%t) writer: working for %d secs\n", work_time));
@@ -68,14 +68,14 @@ writer (void *arg)
       ACE_OS::exit (0);
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   // Shared data: set by writer, read by reader.
-  int data;
+  int data {};
 
   // Work time for writer.
   work_time = argc == 2 ? ACE_OS::atoi (argv[1]) : 5;
@@ -84,11 +84,11 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   ACE_Thread_Manager& tm = *ACE_Thread_Manager::instance ();
 
   // Create reader thread.
-  if (tm.spawn ((ACE_THR_FUNC) reader, (void *) &data) == -1)
+  if (tm.spawn (reader, &data) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for reader failed"), -1);
 
   // Create writer thread.
-  if (tm.spawn ((ACE_THR_FUNC) writer, (void *) &data) == -1)
+  if (tm.spawn (writer, &data) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for writer failed"), -1);
 
   // Wait for both.

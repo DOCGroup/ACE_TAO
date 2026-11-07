@@ -17,12 +17,10 @@
 #include "orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/// Default constructor.
-TAO::FT_DefaultFaultAnalyzer::FT_DefaultFaultAnalyzer () = default;
 
 /// Destructor.
 TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
@@ -33,7 +31,7 @@ TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
 int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
   CosNotification::StructuredEvent const & event)
 {
-  int result = 0;
+  int result {};
 
   // CORBA 3.0.2, section 23.4.5.1 states:
   //
@@ -54,8 +52,8 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
 
   if (result == 0)
   {
-    if (ACE_OS::strcmp (domain_name.in(), FT::FT_EVENT_TYPE_DOMAIN) != 0 ||
-        ACE_OS::strcmp (type_name.in(), FT::FT_EVENT_TYPE_NAME) != 0)
+    if (std::strcmp (domain_name.in(), FT::FT_EVENT_TYPE_DOMAIN) != 0 ||
+        std::strcmp (type_name.in(), FT::FT_EVENT_TYPE_NAME) != 0)
     {
       if (TAO_debug_level > 6)
       {
@@ -93,7 +91,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
     if (event.filterable_data.length () >= 2)
     {
       // Check for FTDomainId.
-      if (ACE_OS::strcmp (
+      if (std::strcmp (
             event.filterable_data[0].name.in(), FT::FT_DOMAIN_ID) != 0)
       {
         if (TAO_debug_level > 6)
@@ -107,7 +105,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
         }
         result = -1;
       }
-      else if (ACE_OS::strcmp (
+      else if (std::strcmp (
             event.filterable_data[1].name.in(), FT::FT_LOCATION) != 0)
       {
         if (TAO_debug_level > 6)

@@ -1,74 +1,54 @@
 #include "DllORB.h"
 #include "ace/Barrier.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
+DllORB::DllORB () = default;
 
-DllORB::DllORB ()
- : failPrePostInit_ (3),
-   mp_barrier_ (0),
-   mv_orb_ (),
-   mv_rootPOA_ ()
-{
-}
-
-DllORB::~DllORB ()
-{
-  delete mp_barrier_;
-}
+DllORB::~DllORB () = default;
 
 int
-DllORB::init (int argc, ACE_TCHAR *argv[])
+DllORB::init (int argc, ACE_TCHAR* argv[])
 {
-  int threadCnt = 1;
+  int thread_count { 1 };
 
   try
     {
-      ACE_Arg_Shifter as (argc, argv);
-      const ACE_TCHAR *currentArg = 0;
-      while (as.is_anything_left ())
+      ACE_Arg_Shifter arg_shifter (argc, argv);
+      ACE_TCHAR const* current_arg {};
+      while (arg_shifter.is_anything_left ())
         {
-          if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+          if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-NumThreads"))) != nullptr)
             {
-              int num = ACE_OS::atoi (currentArg);
-              if (num >= 1)
-                threadCnt = num;
-              as.consume_arg ();
+              int const count = ACE_OS::atoi (current_arg);
+              if (count >= 1)
+                thread_count = count;
+              arg_shifter.consume_arg ();
             }
-        else
-          as.ignore_arg ();
+          else
+            arg_shifter.ignore_arg ();
         }
 
-      if (failPrePostInit_ < 3)
+      if (this->fail_pre_post_init_ < 3)
         {
-          ACE_DEBUG ((LM_INFO,
-                      ACE_TEXT ("Pre-ORB initialization ...\n")));
-          // -----------------------------------------------------------------
-          // Pre-ORB initialization steps necessary for proper DLL ORB
-          // support.
-          // -----------------------------------------------------------------
+          ACE_DEBUG ((LM_INFO, ACE_TEXT ("Pre-ORB initialization ...\n")));
           // Make sure TAO's singleton manager is initialized, and set to not
-          // register itself with the ACE_Object_Manager since it is under the
-          // control of the Service Configurator.  If we register with the
-          // ACE_Object_Manager, then the ACE_Object_Manager will still hold
-          // (dangling) references to instances of objects created by this
-          // module and destroyed by this object when it is dynamically
-          // unloaded.
-          int register_with_object_manager = 0;
-          TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
-          int result = p_tsm->init (register_with_object_manager);
+          // register itself with the ACE_Object_Manager. The Service Configurator
+          // controls its lifetime, so ACE_Object_Manager must not retain dangling
+          // references after this module is unloaded.
+          int const register_with_object_manager = 0;
+          TAO_Singleton_Manager* const singleton_manager = TAO_Singleton_Manager::instance ();
+          int const result = singleton_manager->init (register_with_object_manager);
 
           if (result == -1)
             {
-              if (failPrePostInit_ == 0)
+              if (this->fail_pre_post_init_ == 0)
                 {
-                  ACE_DEBUG ((LM_ERROR,
-                              ACE_TEXT ("Pre-ORB initialization failed.\n")));
+                  ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Pre-ORB initialization failed.\n")));
                   return -1;
                 }
-              else if (failPrePostInit_ < 2)
+              else if (this->fail_pre_post_init_ < 2)
                 {
                   ACE_DEBUG ((LM_WARNING,
                               ACE_TEXT ("Pre-ORB initialization failed (ignored due to FailPrePostInit setting).\n")));
@@ -80,73 +60,62 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
                 }
             }
           else
-            {
-              ACE_DEBUG ((LM_INFO,
-                          ACE_TEXT ("Pre-ORB initialization done.\n")));
-            }
+            ACE_DEBUG ((LM_INFO, ACE_TEXT ("Pre-ORB initialization done.\n")));
         }
 
-      // Initialize the ORB
-      mv_orb_ = CORBA::ORB_init (argc, argv);
-      if (CORBA::is_nil (mv_orb_.in ()))
+      this->orb_ = CORBA::ORB_init (argc, argv);
+      if (CORBA::is_nil (this->orb_.in ()))
         {
           ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil ORB\n")));
           return -1;
         }
 
-      CORBA::Object_var v_poa =
-        mv_orb_->resolve_initial_references ("RootPOA");
-
-      mv_rootPOA_ = PortableServer::POA::_narrow (v_poa.in ());
-      if (CORBA::is_nil (mv_rootPOA_.in ()))
+      CORBA::Object_var const poa_object =
+        this->orb_->resolve_initial_references ("RootPOA");
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
+      if (CORBA::is_nil (this->root_poa_.in ()))
         {
           ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil RootPOA\n")));
           return -1;
         }
 
-      mv_poaManager_ = mv_rootPOA_->the_POAManager ();
-      if (CORBA::is_nil (mv_poaManager_.in ()))
+      this->poa_manager_ = this->root_poa_->the_POAManager ();
+      if (CORBA::is_nil (this->poa_manager_.in ()))
         {
           ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil POAManager\n")));
           return -1;
         }
 
-      mv_poaManager_->activate ();
+      this->poa_manager_->activate ();
     }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("DllORB::init: ");
-    return -1;
-  }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("DllORB::init: ");
+      return -1;
+    }
   catch (...)
-  {
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: exception\n")));
-    return -1;
-  }
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: exception\n")));
+      return -1;
+    }
 
-  mp_barrier_ = new ACE_Thread_Barrier (threadCnt + 1);
-
-  this->activate (THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED, threadCnt);
-  mp_barrier_->wait ();
-
+  this->barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
+  this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_count);
+  this->barrier_->wait ();
   return 0;
 }
-
 
 int
 DllORB::fini ()
 {
   try
     {
-      mv_poaManager_->deactivate (1, 1);
-      mv_poaManager_ = PortableServer::POAManager::_nil ();
-
-      // attempt to protect against sporadic BAD_INV_ORDER exceptions
+      this->poa_manager_->deactivate (1, 1);
+      this->poa_manager_ = PortableServer::POAManager::_nil ();
       ACE_OS::sleep (ACE_Time_Value (0, 500));
-
-      mv_orb_->shutdown (true);
+      this->orb_->shutdown (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("DllORB::fini: ");
       return -1;
@@ -157,42 +126,32 @@ DllORB::fini ()
       return -1;
     }
 
-  // wait for our threads to finish
   this->wait ();
-
-  delete mp_barrier_;
-  mp_barrier_ = 0;
+  this->barrier_.reset ();
 
   try
     {
-      mv_orb_->destroy ();
-      mv_orb_ = CORBA::ORB::_nil ();
+      this->orb_->destroy ();
+      this->orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
     }
 
-  if (failPrePostInit_ < 3)
+  if (this->fail_pre_post_init_ < 3)
     {
-      // -----------------------------------------------------------------
-      // Post-ORB finalization steps necessary for proper DLL ORB
-      // support.
-      // -----------------------------------------------------------------
-      // Explicitly clean up singletons created by TAO before
-      // unloading this module.
-      TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
-      int result = p_tsm->fini ();
+      TAO_Singleton_Manager* const singleton_manager = TAO_Singleton_Manager::instance ();
+      int const result = singleton_manager->fini ();
       if (result == -1)
         {
-          if (failPrePostInit_ == 0)
+          if (this->fail_pre_post_init_ == 0)
             {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("Post-ORB finalization failed.\n")));
+              ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Post-ORB finalization failed.\n")));
               return -1;
             }
-          else if (failPrePostInit_ < 2)
+          else if (this->fail_pre_post_init_ < 2)
             {
               ACE_DEBUG ((LM_WARNING,
                           ACE_TEXT ("Post-ORB finalization failed (ignored due to FailPrePostInit setting).\n")));
@@ -204,27 +163,23 @@ DllORB::fini ()
             }
         }
       else
-        {
-          ACE_DEBUG ((LM_INFO,
-                      ACE_TEXT ("Post-ORB finalization done.\n")));
-        }
+        ACE_DEBUG ((LM_INFO, ACE_TEXT ("Post-ORB finalization done.\n")));
     }
 
   return 0;
 }
 
-
-int DllORB::svc ()
+int
+DllORB::svc ()
 {
-  mp_barrier_->wait ();
-
-  int result = 0;
+  this->barrier_->wait ();
+  int result {};
 
   try
     {
-      mv_orb_->run ();
+      this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("DllORB::svc: ");
       result = 1;
@@ -237,6 +192,5 @@ int DllORB::svc ()
 
   return result;
 }
-
 
 ACE_FACTORY_DEFINE (bug3688, DllORB)

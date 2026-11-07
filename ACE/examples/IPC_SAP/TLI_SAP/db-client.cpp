@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 
 #if defined (ACE_HAS_TLI)
-const int MAXLINE = 255;
+constexpr int MAXLINE = 255;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

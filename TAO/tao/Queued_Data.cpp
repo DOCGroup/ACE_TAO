@@ -5,6 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Queued_Data.inl"
 #endif /* __ACE_INLINE__ */
@@ -34,15 +36,15 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
   size_t const aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
 
   // Get the allocators
-  ACE_Allocator *data_allocator = nullptr;
-  ACE_Allocator *data_block_allocator = nullptr;
-  ACE_Allocator *message_block_allocator = nullptr;
+  ACE_Allocator *data_allocator {};
+  ACE_Allocator *data_block_allocator {};
+  ACE_Allocator *message_block_allocator {};
   mb->access_allocators (data_allocator,
                          data_block_allocator,
                          message_block_allocator);
 
   // Create a new Message Block
-  ACE_Message_Block *nb = nullptr;
+  ACE_Message_Block *nb {};
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Message_Block*> (
                                          message_block_allocator->malloc (
@@ -77,7 +79,7 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                                    ACE_Data_Block *db)
 {
   // Get a node for the queue..
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
 
   if (message_buffer_alloc)
     {
@@ -95,11 +97,13 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                       nullptr);
     }
 
+  std::unique_ptr<TAO_Queued_Data, void (*) (TAO_Queued_Data *)> qd_guard (
+    qd, &TAO_Queued_Data::release);
+
   // Providing an ACE_Data_Block indicates that the caller wants
   // an aligned ACE_Message_Block added to the TAO_Queued_Data.
   if (db != nullptr)
     {
-      // If this allocation fails, the TAO_Queued_Data will be leaked.
       if (input_cdr_alloc == nullptr)
         ACE_NEW_RETURN (qd->msg_block_,
                         ACE_Message_Block (db,
@@ -118,7 +122,7 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
       ACE_CDR::mb_align (qd->msg_block_);
     }
 
-  return qd;
+  return qd_guard.release ();
 }
 
 /*static*/
@@ -169,7 +173,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
     (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
 
 
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
 
   if (sqd.allocator_)
     {

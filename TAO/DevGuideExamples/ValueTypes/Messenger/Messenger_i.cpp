@@ -5,7 +5,7 @@
 #include <sstream>
 
 
-CORBA::Boolean Messenger_i::send_message (Message*& msg)
+CORBA::Boolean Messenger_i::send_message (Message *&msg)
 {
   msg->print();
 

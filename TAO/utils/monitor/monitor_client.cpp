@@ -5,12 +5,12 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Monitor/Monitor.h"
 
-const ACE_TCHAR *monitor_ior = ACE_TEXT ("file://monitor.ior");
-::Monitor::NameList* monitor_point = 0;
+ACE_TCHAR const *monitor_ior = ACE_TEXT ("file://monitor.ior");
+Monitor::NameList_var monitor_point;
 bool mp_clear = false;
 int n_iterations = 1;
 ACE_Time_Value sleep_time = ACE_Time_Value (1);
-const ACE_TCHAR * filter = ACE_TEXT ("");
+ACE_TCHAR const *filter = ACE_TEXT ("");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -29,11 +29,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'p':
         {
-          if (monitor_point == 0)
+          if (monitor_point.ptr () == nullptr)
             {
-              ACE_NEW_THROW_EX (monitor_point,
+              ::Monitor::NameList *new_monitor_point = nullptr;
+              ACE_NEW_THROW_EX (new_monitor_point,
                                 ::Monitor::NameList,
                                 CORBA::NO_MEMORY ());
+              monitor_point = new_monitor_point;
             }
 
           monitor_point->length (monitor_point->length () + 1);
@@ -102,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              -1);
         }
 
-      if (monitor_point != 0)
+      if (monitor_point.ptr () != nullptr)
         {
           /// Access the monitor's value a few times and watch it grow.
           for (int i = 0; i < n_iterations; ++i)
@@ -150,7 +152,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Monitor_client: Exception caught:");
       return 1;

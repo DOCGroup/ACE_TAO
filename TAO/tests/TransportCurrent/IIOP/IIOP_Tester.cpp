@@ -48,15 +48,15 @@ test_transport_current (CORBA::ORB_ptr orb)
 
   ::CORBA::String_var lhost (tc->local_host ());
 
-  ::CORBA::Long id = tc->id ();
+  ::CORBA::Long const id = tc->id ();
 
-  ::TAO::CounterT bs = tc->bytes_sent ();
+  ::TAO::CounterT const bs = tc->bytes_sent ();
 
-  ::TAO::CounterT br = tc->bytes_received ();
+  ::TAO::CounterT const br = tc->bytes_received ();
 
-  ::TAO::CounterT rs = tc->messages_sent ();
+  ::TAO::CounterT const rs = tc->messages_sent ();
 
-  ::TAO::CounterT rr = tc->messages_received ();
+  ::TAO::CounterT const rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Tester (%P|%t) Transport [%q] [%C:%d -> %C:%d] ")

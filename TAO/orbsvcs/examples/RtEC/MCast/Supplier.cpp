@@ -2,10 +2,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-Supplier::Supplier ()
-{
-}
-
 void
 Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
@@ -18,7 +14,7 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
   // Simple publication, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
   RtecEventChannelAdmin::SupplierQOS qos;
-  qos.is_gateway = 0;
+  qos.is_gateway = false;
 
   qos.publications.length (1);
   RtecEventComm::EventHeader& h0 =
@@ -37,7 +33,7 @@ Supplier::disconnect ()
     {
       this->proxy_->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -63,7 +59,7 @@ Supplier::perform_push ()
 
       this->proxy_->push (event);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 }

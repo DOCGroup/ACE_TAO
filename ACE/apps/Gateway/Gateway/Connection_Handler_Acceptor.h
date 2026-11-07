@@ -36,13 +36,17 @@ public:
   /// Constructor.
   Connection_Handler_Acceptor (Event_Channel &,
                                char connection_role);
+  Connection_Handler_Acceptor (Connection_Handler_Acceptor const &) = delete;
+  Connection_Handler_Acceptor (Connection_Handler_Acceptor &&) = delete;
+  Connection_Handler_Acceptor &operator= (Connection_Handler_Acceptor const &) = delete;
+  Connection_Handler_Acceptor &operator= (Connection_Handler_Acceptor &&) = delete;
 
   /// Hook method for creating an appropriate <Connection_Handler>.
-  virtual int make_svc_handler (Connection_Handler *&ch);
+  int make_svc_handler (Connection_Handler *&ch) override;
 
   /// Hook method for accepting a connection into the
   /// <Connection_Handler>.
-  virtual int accept_svc_handler (Connection_Handler *ch);
+  int accept_svc_handler (Connection_Handler *ch) override;
 
 protected:
   /// Make life easier later on.

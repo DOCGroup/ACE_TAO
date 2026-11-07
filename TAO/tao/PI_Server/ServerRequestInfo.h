@@ -171,16 +171,16 @@ namespace TAO
 
     /// Insert data into the "request scope" @c PICurrent object.
     void set_slot (PortableInterceptor::SlotId id,
-                   const CORBA::Any & data) override;
+                   CORBA::Any const &data) override;
 
     /// Returns true if the target's type corresponds to the given
     /// @c RepositoryId.
-    CORBA::Boolean target_is_a (const char * id) override;
+    CORBA::Boolean target_is_a (char const *id) override;
 
     /// Add the @c IOP::ServiceContext to the reply (outgoing)
     /// @c IOP::ServiceContextList.
     void add_reply_service_context (
-        const IOP::ServiceContext & service_context,
+        IOP::ServiceContext const &service_context,
         CORBA::Boolean replace) override;
 
   public:

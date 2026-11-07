@@ -3,11 +3,9 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-
-void do_nothing ()
+namespace
 {
-}
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,6 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 int
@@ -130,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

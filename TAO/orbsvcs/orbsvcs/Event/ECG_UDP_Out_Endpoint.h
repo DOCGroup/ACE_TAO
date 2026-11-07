@@ -23,7 +23,8 @@
 
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/SOCK_Dgram.h"
-#include "ace/Atomic_Op.h"
+
+#include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
@@ -51,10 +52,10 @@ public:
   ~TAO_ECG_UDP_Out_Endpoint ();
 
   /// Copy Constructor
-  TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs);
+  TAO_ECG_UDP_Out_Endpoint (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
   /// Assignment operator
-  TAO_ECG_UDP_Out_Endpoint& operator= (const TAO_ECG_UDP_Out_Endpoint& rhs);
+  TAO_ECG_UDP_Out_Endpoint& operator= (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
   /// Obtain the datagram associated with this endpoint. Clients of
   /// this class must open, and register (if necessary) this datagram.
@@ -65,11 +66,11 @@ public:
 
   /// The endpoint can detect if a data-gram was sent by itself, this
   /// is useful to ignore or remove messages sent by the same process.
-  CORBA::Boolean is_loopback (const ACE_INET_Addr& from);
+  CORBA::Boolean is_loopback (ACE_INET_Addr const &from);
 
 private:
   /// The request id....
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong> request_id_generator_;
+  std::atomic<CORBA::ULong> request_id_generator_;
 
   /// The datagram....
   ACE_SOCK_Dgram dgram_;

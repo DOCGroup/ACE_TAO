@@ -73,8 +73,6 @@ namespace
 }
 
 TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
-  : forward_on_reply_closed_count_ (0)
-  , forward_on_exception_limit_used_ (false)
 {
   this->ex_count_map_[FOE_OBJECT_NOT_EXIST] = 0;
   this->ex_count_map_[FOE_COMM_FAILURE] = 0;
@@ -105,8 +103,6 @@ TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
     }
 }
 
-TAO::Invocation_Retry_State::~Invocation_Retry_State () = default;
-
 bool
 TAO::Invocation_Retry_State::forward_on_exception_limit_used () const
 {
@@ -114,7 +110,7 @@ TAO::Invocation_Retry_State::forward_on_exception_limit_used () const
 }
 
 bool
-TAO::Invocation_Retry_State::forward_on_exception_increment (const int ef)
+TAO::Invocation_Retry_State::forward_on_exception_increment (int const ef)
 {
   if (!this->forward_on_exception_limit_used_)
     return false;

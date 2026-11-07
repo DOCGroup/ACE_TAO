@@ -50,8 +50,8 @@ public:
    * the @a address it is assumed to be an ip-number or ip-address
    * number, with the port number ACE_DEFAULT_HTTP_PORT.
    */
-  virtual int string_to_addr (const ACE_TCHAR *address,
-                              int address_family = AF_UNSPEC);
+  int string_to_addr (const ACE_TCHAR *address,
+                      int address_family = AF_UNSPEC) override;
 
   /**
    * Transform the current ACE_INET_Addr address into string format.
@@ -62,9 +62,9 @@ public:
    * "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the @a size of
    * the <buffer> is too small, else 0.
    */
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int ipaddr_format = 1) const;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int ipaddr_format = 1) const override;
 
   /**
    * Transform the current <ACE_INET_Addr> address into string format.
@@ -95,7 +95,7 @@ public:
   bool operator != (const ACE_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// Return the path name.
   const ACE_TCHAR *get_path_name () const;

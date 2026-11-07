@@ -10,13 +10,11 @@
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <memory>
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -31,6 +29,11 @@ public:
   /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
+
+  reference_counted_test_i (reference_counted_test_i const &) = delete;
+  reference_counted_test_i (reference_counted_test_i &&) = delete;
+  reference_counted_test_i &operator= (reference_counted_test_i const &) = delete;
+  reference_counted_test_i &operator= (reference_counted_test_i &&) = delete;
 };
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
@@ -40,13 +43,13 @@ reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
 {
 }
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT ("ior");
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -70,27 +73,23 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 static int
-write_iors_to_file (const char *ior)
+write_iors_to_file (ACE_TCHAR const *filename, char const *ior)
 {
-  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
 
-  if (output_file == 0)
+  if (!output_file)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s\n",
-                       ior_output_file),
+                       filename),
                       -1);
 
-  u_int result = 0;
+  int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
 
-  result = ACE_OS::fprintf (output_file,
-                            "%s",
-                            ior);
-  ACE_OS::fclose (output_file);
-
-  if (result != ACE_OS::strlen (ior))
+  if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,
-                       ior_output_file),
+                       filename),
                       -1);
 
   return 0;
@@ -104,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -121,7 +120,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       // Create a servant.
-      reference_counted_test_i *servant = 0;
+      reference_counted_test_i *servant {};
       ACE_NEW_RETURN (servant,
                       reference_counted_test_i (orb.in (),
                                                 root_poa.in ()),
@@ -141,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "%C\n",
                   ior.in ()));
 
-      int write_result = write_iors_to_file (ior.in ());
+      int const write_result = write_iors_to_file (ior_output_file, ior.in ());
       if (write_result != 0)
         return write_result;
 
@@ -151,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

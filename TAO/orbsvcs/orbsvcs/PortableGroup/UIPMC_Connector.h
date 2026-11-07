@@ -49,9 +49,9 @@ public:
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
-  TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
+  TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
 
-  int check_prefix (const char *endpoint) override;
+  int check_prefix (char const *endpoint) override;
 
   char object_key_delimiter () const override;
 
@@ -68,6 +68,12 @@ protected:
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
+
+private:
+  TAO_UIPMC_Connector (TAO_UIPMC_Connector const &) = delete;
+  TAO_UIPMC_Connector (TAO_UIPMC_Connector &&) = delete;
+  TAO_UIPMC_Connector & operator= (TAO_UIPMC_Connector const &) = delete;
+  TAO_UIPMC_Connector & operator= (TAO_UIPMC_Connector &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

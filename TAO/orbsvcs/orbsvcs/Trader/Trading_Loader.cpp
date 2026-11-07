@@ -28,6 +28,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+
 TAO_Trading_Loader::TAO_Trading_Loader ()
   : federate_ (false),
     ior_output_file_ (nullptr),
@@ -51,7 +53,7 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
           else
-            ACE_OS::strcpy (host_name, tmp);
+            std::strcpy (host_name, tmp);
         }
 
       ACE_OS::sprintf (trader_name,
@@ -59,8 +61,8 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
                        host_name,
                        static_cast<long> (ACE_OS::getpid ()));
 
-      for (char* dot = nullptr;
-           (dot = ACE_OS::strchr (trader_name, '.')) != nullptr;
+  for (char* dot {};
+           (dot = std::strchr (trader_name, '.')) != nullptr;
            *dot = '_')
         continue;
 
@@ -319,7 +321,7 @@ TAO_Trading_Loader::bootstrap_to_federation ()
        i--)
     {
       // Avoid linking to ourselves.
-      if (ACE_OS::strcmp (static_cast<const char *> (link_name_seq[i]),
+      if (std::strcmp (static_cast<const char *> (link_name_seq[i]),
                           this->name_.in ()) != 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -411,7 +413,7 @@ TAO_Trading_Loader::init_multicast_server ()
                 "The multicast server setup is done.\n"));
 
   // Other trader instances will bootstrap to us.
-  this->bootstrapper_ = 1;
+  this->bootstrapper_ = true;
 
 #endif /* ACE_HAS_IP_MULTICAST */
   return 0;
@@ -431,7 +433,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
                           ACE_TEXT("-TSfederate")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->federate_ = 1;
+          this->federate_ = true;
         }
       if (ACE_OS::strcmp (current_arg,
                           ACE_TEXT("-TSdumpior")) == 0)

@@ -43,7 +43,7 @@ template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     CosNaming::Binding_out b)
 {
-  CosNaming::Binding *binding = nullptr;
+  CosNaming::Binding *binding {};
 
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
@@ -81,7 +81,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
                                CORBA::INTERNAL ());
 
       // Return a binding.
-      TABLE_ENTRY *hash_entry = nullptr;
+      TABLE_ENTRY *hash_entry {};
       hash_iter_->next (hash_entry);
 
       if (populate_binding (hash_entry, *binding) == 0)
@@ -134,7 +134,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
       // bindings.
       bl->length (how_many);
 
-      TABLE_ENTRY *hash_entry = nullptr;
+      TABLE_ENTRY *hash_entry {};
 
       // Iterate and populate the BindingList.
       for (CORBA::ULong i = 0; i < how_many; i++)
@@ -183,18 +183,18 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (
   // Here we perform a check before assignment to make sure
   // CORBA::string_dup is not called on 0 pointer, since the spec does
   // not say what should happen in that case.
-  if (hash_entry->ext_id_.id () != 0)
+  if (hash_entry->ext_id_.id () != nullptr)
     {
       b.binding_name[0].id =
         hash_entry->ext_id_.id ();
-      if (b.binding_name[0].id.in () == 0)
+      if (b.binding_name[0].id.in () == nullptr)
         return 0;
     }
-  if (hash_entry->ext_id_.kind () != 0)
+  if (hash_entry->ext_id_.kind () != nullptr)
     {
       b.binding_name[0].kind =
         hash_entry->ext_id_.kind ();
-      if (b.binding_name[0].kind.in () == 0)
+      if (b.binding_name[0].kind.in () == nullptr)
         return 0;
     }
   return 1;

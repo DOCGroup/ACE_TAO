@@ -1,44 +1,40 @@
 #include "util.h"
 
-URL::URL(char *input_buf) {
-  char *buffer = new char[BUFSIZ];
-
-  ACE_OS::strcpy(buffer,input_buf);
-  if(buffer == 0)
+URL::URL (char const *input)
+{
+  if (input == nullptr)
     return;
 
-  char *temp;
-  char *lasts;
+  std::string const url (input);
+  std::string::size_type const scheme_end = url.find ("://");
+  if (scheme_end == std::string::npos)
+    return;
 
-  if((temp = ACE_OS::strtok_r(buffer,": ",&lasts)))  {
-    protocol_ = (char *) ACE_OS::malloc(ACE_OS::strlen(temp) + 1);
-    ACE_OS::strcpy(protocol_, temp);
-  }
-
-  if((temp = ACE_OS::strtok_r(0,"/",&lasts)))  {
-    hostname_ = (char *) ACE_OS::malloc(ACE_OS::strlen(temp) + 1);
-    ACE_OS::strcpy(hostname_, temp);
-  }
-  if((temp = ACE_OS::strtok_r(0,"\0",&lasts))) {
-    filename_ = (char *) ACE_OS::malloc(ACE_OS::strlen(temp) + 1);
-    ACE_OS::strcpy(filename_, temp);
-  }
-  else {
-    filename_ = (char *) ACE_OS::malloc(ACE_OS::strlen(INDEX_NAME) + 1);
-    ACE_OS::strcpy(filename_,INDEX_NAME);
-  }
+  this->protocol_ = url.substr (0, scheme_end);
+  std::string::size_type const host_begin = scheme_end + 3;
+  std::string::size_type const path_begin = url.find ('/', host_begin);
+  this->hostname_ = url.substr (host_begin, path_begin - host_begin);
+  this->filename_ = path_begin == std::string::npos
+    ? INDEX_NAME
+    : url.substr (path_begin);
 }
 
-char *URL::get_protocol() {
-  return protocol_;
+std::string const &
+URL::get_protocol () const
+{
+  return this->protocol_;
 }
 
-char *URL::get_hostname() {
-  return hostname_;
+std::string const &
+URL::get_hostname () const
+{
+  return this->hostname_;
 }
 
-char *URL::get_filename() {
-  return filename_;
+std::string const &
+URL::get_filename () const
+{
+  return this->filename_;
 }
 
 

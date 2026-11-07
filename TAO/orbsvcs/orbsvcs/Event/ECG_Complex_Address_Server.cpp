@@ -3,6 +3,8 @@
 #include "ace/SString.h"
 #include "ace/streams.h"
 
+#include <cstring>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Complex_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
@@ -10,30 +12,26 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
-                                              int is_source_mapping)
+                                              bool is_source_mapping)
   : is_source_mapping_ (is_source_mapping)
 {
 }
 
-TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server ()
-{
-}
-
 int
-TAO_ECG_Complex_Address_Server::init (const char *arg)
+TAO_ECG_Complex_Address_Server::init (char const *arg)
 {
   ACE_CString key_string;
   ACE_CString mcast_string;
 
   // Our position in parsing initialization string.
-  const char * data = arg;
+  char const *data = arg;
 
   // Parse initialization string until we reach the end.
   while (*data != '\0')
     {
       // Extract lookup value (it is followed by '@').
-      const char * location = nullptr;
-      location = ACE_OS::strchr (data, '@');
+      char const *location {};
+      location = std::strchr (data, '@');
       if (!location)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -50,7 +48,7 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
       // Extract mcast address to be mapped to just extracted lookup
       // value.
       location = nullptr;
-      location = ACE_OS::strchr (data, ' ');
+      location = std::strchr (data, ' ');
       if (location)
         {
           len = location - data;
@@ -60,7 +58,7 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
       else
         {
           // This must be the last entry in the mapping.
-          len = ACE_OS::strlen (data);
+          len = std::strlen (data);
           mcast_string.set (data, len, true);
           data += len;
         }
@@ -74,11 +72,11 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
 }
 
 int
-TAO_ECG_Complex_Address_Server::add_entry (const char * key,
-                                           const char * mcast_addr)
+TAO_ECG_Complex_Address_Server::add_entry (char const *key,
+                                           char const *mcast_addr)
 {
   // Check whether this is the default mcast address.
-  if (ACE_OS::strlen (key) == 1
+  if (std::strlen (key) == 1
       && *key == '*')
     {
       if (this->default_addr_.set (mcast_addr) == -1)
@@ -90,7 +88,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
     }
 
   // Convert strings to values.
-  char * endptr = nullptr;
+  char * endptr {};
   CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
@@ -122,7 +120,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
 
 void
 TAO_ECG_Complex_Address_Server::get_addr (
-                         const RtecEventComm::EventHeader& header,
+                         RtecEventComm::EventHeader const &header,
                          RtecUDPAdmin::UDP_Addr_out addr)
 {
   CORBA::Long key;
@@ -131,7 +129,7 @@ TAO_ECG_Complex_Address_Server::get_addr (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = nullptr;
+  MAP::ENTRY * mapping_entry {};
   if (this->mcast_mapping_.find (key, mapping_entry) == -1)
     {
       // Key was not found in the mapping.  Use default.
@@ -155,7 +153,7 @@ TAO_ECG_Complex_Address_Server::get_addr (
 
 void
 TAO_ECG_Complex_Address_Server::get_address (
-                         const RtecEventComm::EventHeader& header,
+                         RtecEventComm::EventHeader const &header,
                          RtecUDPAdmin::UDP_Address_out addr)
 {
   CORBA::Long key;
@@ -164,7 +162,7 @@ TAO_ECG_Complex_Address_Server::get_address (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = nullptr;
+  MAP::ENTRY * mapping_entry {};
   ACE_INET_Addr &src_addr =
     (this->mcast_mapping_.find (key, mapping_entry) == -1) ?
     this->default_addr_ : mapping_entry->int_id_;
@@ -174,7 +172,7 @@ TAO_ECG_Complex_Address_Server::get_address (
       RtecUDPAdmin::UDP_Addr_v6 v6;
       sockaddr_in6 *in6 =
         reinterpret_cast<sockaddr_in6 *>(src_addr.get_addr());
-      ACE_OS::memcpy (v6.ipaddr,&in6->sin6_addr,16);
+      std::memcpy (v6.ipaddr, &in6->sin6_addr, 16);
       v6.port = src_addr.get_port_number();
       addr.v6_addr (v6);
       return;

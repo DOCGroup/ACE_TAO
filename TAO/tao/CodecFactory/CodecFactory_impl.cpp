@@ -18,8 +18,8 @@ TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
 IOP::Codec_ptr
 TAO_CodecFactory::create_codec_with_codesets (IOP::Encoding_1_2 const& enc)
 {
-  TAO_Codeset_Translator_Base *char_trans = nullptr;
-  TAO_Codeset_Translator_Base *wchar_trans = nullptr;
+  TAO_Codeset_Translator_Base *char_trans {};
+  TAO_Codeset_Translator_Base *wchar_trans {};
   CONV_FRAME::CodeSetId ncsc {};
   CONV_FRAME::CodeSetId ncsw {};
 
@@ -85,10 +85,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
 
   switch (encoding_format)
     {
-      // @@ MSVC 6 gets confused and thinks that
-      //    IOP::ENCODING_CDR_ENCAPS is not a constant, so its actual
-      //    value (0) is used instead.
-    case 0 /* IOP::ENCODING_CDR_ENCAPS */:
+    case IOP::ENCODING_CDR_ENCAPS:
       if (major < 1)
         {
           // There is no such thing as a "0.x" CDR encapsulation.

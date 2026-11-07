@@ -12,10 +12,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern unsigned long TAO_EC_TPC_debug_level;
 
-TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier ()
-{
-}
-
 void
 TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier ()
 {

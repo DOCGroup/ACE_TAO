@@ -62,8 +62,8 @@ class Connection_Config_File_Parser : public File_Parser<Connection_Config_Info>
 {
 public:
   /// Read in a <Connection_Config_Info> entry.
-  virtual FPRT::Return_Type read_entry (Connection_Config_Info &entry,
-                                        int &line_number);
+  FPRT::Return_Type read_entry (Connection_Config_Info &entry,
+                                int &line_number) override;
 };
 
 /**
@@ -97,8 +97,8 @@ class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_Info>
 {
 public:
   /// Read in a <Consumer_Config_Info> entry.
-  virtual FPRT::Return_Type read_entry (Consumer_Config_Info &entry,
-                                        int &line_number);
+  FPRT::Return_Type read_entry (Consumer_Config_Info &entry,
+                                int &line_number) override;
 };
 
 #endif /* _CONFIG_FILES */

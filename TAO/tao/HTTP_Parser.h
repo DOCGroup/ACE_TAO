@@ -44,8 +44,8 @@ public:
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
-  bool match_prefix (const char *ior_string) const override;
-  CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) override;
+  bool match_prefix (char const *ior_string) const override;
+  CORBA::Object_ptr parse_string (char const *ior, CORBA::ORB_ptr orb) override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_HTTP_Parser)

@@ -12,6 +12,7 @@
 
 #include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminS.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,10 +32,10 @@ public:
 
   ~TAO_FTEC_Event_Channel() override;
 
-  TAO_FTEC_Event_Channel(TAO_FTEC_Event_Channel const&) = delete;
-  TAO_FTEC_Event_Channel(TAO_FTEC_Event_Channel&&) = delete;
-  TAO_FTEC_Event_Channel& operator=(TAO_FTEC_Event_Channel const&) = delete;
-  TAO_FTEC_Event_Channel& operator=(TAO_FTEC_Event_Channel&&) = delete;
+  TAO_FTEC_Event_Channel (TAO_FTEC_Event_Channel const &) = delete;
+  TAO_FTEC_Event_Channel (TAO_FTEC_Event_Channel &&) = delete;
+  TAO_FTEC_Event_Channel & operator= (TAO_FTEC_Event_Channel const &) = delete;
+  TAO_FTEC_Event_Channel & operator= (TAO_FTEC_Event_Channel &&) = delete;
 
   enum MEMBERSHIP {
     UNSPECIFIED,
@@ -106,7 +107,7 @@ public:
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
-  void set_state (const FTRT::State & s);
+  void set_state (const FTRT::State & s) override;
 
   void set_update (const FTRT::State & s) override;
 
@@ -136,7 +137,7 @@ public:
 private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_, persistent_poa_;
-  TAO_FTEC_Event_Channel_Impl* ec_impl_;
+  std::unique_ptr<TAO_FTEC_Event_Channel_Impl> ec_impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

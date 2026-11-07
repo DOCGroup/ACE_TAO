@@ -8,6 +8,8 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Kokyu_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
@@ -30,10 +32,6 @@ const char* designator (long dsgn)
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Kokyu_Filter_Builder::~TAO_EC_Kokyu_Filter_Builder ()
-{
-}
 
 TAO_EC_Filter*
 TAO_EC_Kokyu_Filter_Builder::build (
@@ -201,7 +199,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       RtecBase::handle_t conj_rt_info = parent_info;
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
@@ -219,7 +217,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                            conj_rt_info,
                                            conj_rt_info,
                                            RtecScheduler::CONJUNCTION),
-                      0);
+                      nullptr);
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
       // @@
@@ -243,7 +241,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
@@ -260,7 +258,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                            disj_rt_info,
                                            disj_rt_info,
                                            RtecScheduler::DISJUNCTION),
-                      0);
+                      nullptr);
 
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
@@ -282,7 +280,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         RtecBase::handle_t h_consumer_rt_info = qos.dependencies[pos].rt_info;
 
         //build a unique name using the cosumer_rt_info
-        ACE_OS::sprintf (buf, "TIMEOUT:%umsec:%d",
+        std::sprintf (buf, "TIMEOUT:%umsec:%d",
                          static_cast<u_int> ((e.header.creation_time / 10000)),
                          h_consumer_rt_info);
         ACE_CString name = buf;
@@ -365,7 +363,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                        parent_info,
                                        parent_info,
                                        RtecScheduler::OPERATION),
-                  0);
+                  nullptr);
 
   TAO_EC_QOS_Info qos_info;
   filter->get_qos_info (qos_info);
@@ -434,7 +432,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
       pos++;
 
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%umsec",
+      std::sprintf (buf, "TIMEOUT:%umsec",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 

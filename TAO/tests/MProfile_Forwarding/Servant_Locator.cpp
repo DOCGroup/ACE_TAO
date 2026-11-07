@@ -14,17 +14,7 @@
 #include "Servant_Locator.h"
 #include "ace/Log_Msg.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
-
-Servant_Locator::Servant_Locator (CORBA::ORB_ptr orb_ptr)
-  : orb_var_ (CORBA::ORB::_duplicate (orb_ptr))
-{
-}
-
-Servant_Locator::~Servant_Locator ()
-{
-}
-
+#include <cstring>
 
 PortableServer::Servant
 Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
@@ -32,17 +22,17 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             const char * /*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
 {
-  CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+  CORBA::String_var const s = PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
               "The OID is <%s>\n", s.in ()));
-  if (ACE_OS::strstr (s.in (), "Simple_Server") == 0)
+  if (std::strstr (s.in (), "Simple_Server") == nullptr)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
 
   // Combined IOR stuff
-  Simple_Server_var server =
+  Simple_Server_var const server =
     Simple_Server::_narrow (this->objref_.in ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -58,7 +48,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
 
 void
 Servant_Locator::postinvoke (const PortableServer::ObjectId &,
-                             PortableServer::POA_ptr ,
+                             PortableServer::POA_ptr,
                              const char *,
                              PortableServer::ServantLocator::Cookie ,
                              PortableServer::Servant)
@@ -66,7 +56,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
 }
 
 void
-Servant_Locator::set (CORBA::Object_var objref)
+Servant_Locator::set (CORBA::Object_ptr objref)
 {
-  this->objref_ = CORBA::Object::_duplicate (objref.in ());
+  this->objref_ = CORBA::Object::_duplicate (objref);
 }

@@ -3,13 +3,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_RT_Factory::TAO_Notify_RT_Factory ()
-{
-}
+TAO_Notify_RT_Factory::TAO_Notify_RT_Factory () = default;
 
-TAO_Notify_RT_Factory::~TAO_Notify_RT_Factory ()
-{
-}
+TAO_Notify_RT_Factory::~TAO_Notify_RT_Factory () = default;
 
 void
 TAO_Notify_RT_Factory::create (TAO_Notify_StructuredProxyPushSupplier*& proxy)

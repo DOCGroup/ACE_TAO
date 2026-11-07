@@ -2,12 +2,14 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-int status {};
+#include <atomic>
+
+std::atomic_bool status {};
 
 class ORB_Task : public ACE_Task_Base
 {
 public:
-  ORB_Task (CORBA::ORB_ptr orb)
+  explicit ORB_Task (CORBA::ORB_ptr const orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
@@ -31,13 +33,13 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 class Worker_Task : public ACE_Task_Base
 {
 public:
-  Worker_Task (CORBA::ORB_ptr orb)
+  explicit Worker_Task (CORBA::ORB_ptr const orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
@@ -50,15 +52,16 @@ public:
   {
     try
       {
-        Message_init *mi = new Message_init ();
-        CORBA::ValueFactoryBase_var safe (mi);
+        Message_init * const mi {new Message_init ()};
+        // The CORBA var owns the initial reference; mi is a non-owning typed alias.
+        CORBA::ValueFactoryBase_var const factory (mi);
 
         while (true)
           {
-            CORBA::ValueFactoryBase_var tmp1 =
-              this->orb_->register_value_factory (mi->tao_repository_id (), mi);
+            CORBA::ValueFactoryBase_var const tmp1 =
+              this->orb_->register_value_factory (mi->tao_repository_id (), factory.in ());
 
-            CORBA::ValueFactoryBase_var tmp2 =
+            CORBA::ValueFactoryBase_var const tmp2 =
               this->orb_->lookup_value_factory (mi->tao_repository_id ());
 
             this->orb_->unregister_value_factory (mi->tao_repository_id ());
@@ -73,13 +76,13 @@ public:
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("ERROR: Unexpected exception.\n")));
-        status = 1;
+        status = true;
       }
     return 0;
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 int
@@ -87,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       ORB_Task orb_runner (orb.in ());
       if (orb_runner.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
@@ -124,5 +127,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return status;
+  return status.load () ? 1 : 0;
 }

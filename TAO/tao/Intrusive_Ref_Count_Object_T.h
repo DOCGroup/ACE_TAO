@@ -21,6 +21,7 @@
 #include /**/ "tao/Intrusive_Ref_Count_Base_T.h"
 
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +38,7 @@ class TAO_Intrusive_Ref_Count_Object : public TAO_Intrusive_Ref_Count_Base <ACE_
 {
 public:
   /// take ownership of obj.
-  TAO_Intrusive_Ref_Count_Object (OBJ *obj);
+  explicit TAO_Intrusive_Ref_Count_Object (OBJ *obj);
   ~TAO_Intrusive_Ref_Count_Object () override;
 
   OBJ *get () const;
@@ -52,7 +53,7 @@ private:
   TAO_Intrusive_Ref_Count_Object (TAO_Intrusive_Ref_Count_Object &&) = delete;
   TAO_Intrusive_Ref_Count_Object &operator= (TAO_Intrusive_Ref_Count_Object &&) = delete;
 
-  OBJ *obj_ {};
+  std::unique_ptr<OBJ> obj_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

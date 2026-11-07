@@ -11,15 +11,22 @@
 template <class ACCEPTOR>
 class Reactor_Logging_Server_Adapter : public ACE_Service_Object {
 public:
+  Reactor_Logging_Server_Adapter () = default;
+
+  Reactor_Logging_Server_Adapter (const Reactor_Logging_Server_Adapter &) = delete;
+  Reactor_Logging_Server_Adapter (Reactor_Logging_Server_Adapter &&) = delete;
+  Reactor_Logging_Server_Adapter &operator= (const Reactor_Logging_Server_Adapter &) = delete;
+  Reactor_Logging_Server_Adapter &operator= (Reactor_Logging_Server_Adapter &&) = delete;
+
   // Hook methods inherited from <ACE_Service_Object>.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int suspend ();
-  virtual int resume ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int suspend () override;
+  int resume () override;
 
 private:
-  Reactor_Logging_Server<ACCEPTOR> *server_;
+  Reactor_Logging_Server<ACCEPTOR> *server_ = nullptr;
 };
 
 #include "Reactor_Logging_Server_Adapter.cpp"

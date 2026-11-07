@@ -1,132 +1,119 @@
 #include "TestBroadcaster.h"
 
-TestBroadcaster::TestBroadcaster()
-{
-}
+TestBroadcaster::TestBroadcaster () = default;
 
-TestBroadcaster::~TestBroadcaster() noexcept
-{
-  // ensure nothrow guarantee
-  try
-  {
-    disconnect();
-  } /* end of try */
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("TestBroadcaster::~TestBroadcaster: ");
-  }
-  catch (...)
-  {
-  }
-}
-
-bool TestBroadcaster::connect(
-  CORBA::ORB_ptr p_orb,
-  std::string const & rc_channelIor)
+TestBroadcaster::~TestBroadcaster () noexcept
 {
   try
-  {
-    CosNotifyChannelAdmin::EventChannel_var v_eventChannel;
-    CosNotifyChannelAdmin::SupplierAdmin_var v_supplierAdmin;
-    CosNotifyChannelAdmin::ProxyConsumer_var v_proxyConsumer;
-    CosNotifyChannelAdmin::AdminID supplierAdminId;
-    CosNotifyChannelAdmin::ProxyID proxyConsumerId;
-
-    CORBA::Object_var v_obj = p_orb->string_to_object(rc_channelIor.c_str());
-
-    v_eventChannel = CosNotifyChannelAdmin::EventChannel::_narrow(v_obj.in());
-
-    v_supplierAdmin =
-      v_eventChannel->new_for_suppliers (
-      CosNotifyChannelAdmin::OR_OP,
-      supplierAdminId);
-
-    v_proxyConsumer = v_supplierAdmin->obtain_notification_push_consumer(
-      CosNotifyChannelAdmin::SEQUENCE_EVENT,
-      proxyConsumerId);
-
-    mv_sequenceProxyPushConsumer =
-      CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(
-        v_proxyConsumer.in());
-
-    mv_sequenceProxyPushConsumer->connect_sequence_push_supplier(
-      CosNotifyComm::SequencePushSupplier::_nil());
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("TestBroadcaster::connect: ");
-    return false;
-  }
-  catch (...)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-bool TestBroadcaster::disconnect()
-{
-  try
-  {
-    if(isConnected())
     {
-      mv_sequenceProxyPushConsumer->disconnect_sequence_push_consumer();
-      mv_sequenceProxyPushConsumer = CosNotifyChannelAdmin::SequenceProxyPushConsumer_var();
+      this->disconnect ();
     }
-  } /* end of try */
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("TestBroadcaster::disconnect: ");
-    return false;
-  }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("TestBroadcaster::~TestBroadcaster: ");
+    }
   catch (...)
-  {
-    return false;
-  }
+    {
+    }
+}
 
-  return true;
-} /* end of TestBroadcaster::disconnect */
-
-
-bool TestBroadcaster::sendData()
+bool
+TestBroadcaster::connect (CORBA::ORB_ptr orb, std::string const& channel_ior)
 {
   try
-  {
-    CosNotification::EventBatch events;
-    events.length(5);
-
-    for (CORBA::ULong idx = 0, max = events.length(); idx < max; ++idx)
     {
-      events[idx].header.fixed_header.event_type.domain_name = "Test";
-      events[idx].header.fixed_header.event_type.type_name = "Data";
-      events[idx].header.fixed_header.event_name = "Info";
-      events[idx].header.variable_header.length(0);
+      CORBA::Object_var const object = orb->string_to_object (channel_ior.c_str ());
+      CosNotifyChannelAdmin::EventChannel_var const event_channel =
+        CosNotifyChannelAdmin::EventChannel::_narrow (object.in ());
+      CosNotifyChannelAdmin::AdminID supplier_admin_id {};
+      CosNotifyChannelAdmin::SupplierAdmin_var const supplier_admin =
+        event_channel->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, supplier_admin_id);
+      CosNotifyChannelAdmin::ProxyID proxy_consumer_id {};
+      CosNotifyChannelAdmin::ProxyConsumer_var const proxy_consumer =
+        supplier_admin->obtain_notification_push_consumer (
+          CosNotifyChannelAdmin::SEQUENCE_EVENT,
+          proxy_consumer_id);
 
-      // provide filter criteria
-      events[idx].filterable_data.length(1);
-      events[idx].filterable_data[0].name = "data";
-      events[idx].filterable_data[0].value <<= idx;
-
-      events[idx].remainder_of_body <<= idx;
-    } /* end of for */
-
-    mv_sequenceProxyPushConsumer->push_structured_events(events);
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("TestBroadcaster::sendEvents: ");
-    return false;
-  }
+      this->sequence_proxy_push_consumer =
+        CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow (proxy_consumer.in ());
+      this->sequence_proxy_push_consumer->connect_sequence_push_supplier (
+        CosNotifyComm::SequencePushSupplier::_nil ());
+    }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("TestBroadcaster::connect: ");
+      return false;
+    }
   catch (...)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   return true;
 }
 
-bool TestBroadcaster::isConnected() const
+bool
+TestBroadcaster::disconnect ()
 {
-  return !CORBA::is_nil(mv_sequenceProxyPushConsumer.in());
+  try
+    {
+      if (this->is_connected ())
+        {
+          this->sequence_proxy_push_consumer->disconnect_sequence_push_consumer ();
+          this->sequence_proxy_push_consumer =
+            CosNotifyChannelAdmin::SequenceProxyPushConsumer_var ();
+        }
+    }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("TestBroadcaster::disconnect: ");
+      return false;
+    }
+  catch (...)
+    {
+      return false;
+    }
+
+  return true;
+}
+
+bool
+TestBroadcaster::send_data ()
+{
+  try
+    {
+      CosNotification::EventBatch events;
+      events.length (5);
+
+      for (CORBA::ULong index {}, count = events.length (); index < count; ++index)
+        {
+          events[index].header.fixed_header.event_type.domain_name = "Test";
+          events[index].header.fixed_header.event_type.type_name = "Data";
+          events[index].header.fixed_header.event_name = "Info";
+          events[index].header.variable_header.length (0);
+          events[index].filterable_data.length (1);
+          events[index].filterable_data[0].name = "data";
+          events[index].filterable_data[0].value <<= index;
+          events[index].remainder_of_body <<= index;
+        }
+
+      this->sequence_proxy_push_consumer->push_structured_events (events);
+    }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("TestBroadcaster::send_data: ");
+      return false;
+    }
+  catch (...)
+    {
+      return false;
+    }
+
+  return true;
+}
+
+bool
+TestBroadcaster::is_connected () const
+{
+  return !CORBA::is_nil (this->sequence_proxy_push_consumer.in ());
 }

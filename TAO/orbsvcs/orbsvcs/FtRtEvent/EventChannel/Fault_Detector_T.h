@@ -23,8 +23,13 @@ template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 class Fault_Detector_T : public Fault_Detector
 {
 public:
-  Fault_Detector_T();
-  ~Fault_Detector_T() override;
+  Fault_Detector_T() = default;
+  ~Fault_Detector_T() override = default;
+
+  Fault_Detector_T(Fault_Detector_T const&) = delete;
+  Fault_Detector_T(Fault_Detector_T&&) = delete;
+  Fault_Detector_T& operator=(Fault_Detector_T const&) = delete;
+  Fault_Detector_T& operator=(Fault_Detector_T&&) = delete;
   int connect(FTRT::Location const& addr) override;
 protected:
   ACCEPTOR acceptor_;

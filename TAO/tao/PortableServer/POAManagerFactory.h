@@ -23,6 +23,7 @@
 #include "tao/PortableServer/POAManagerFactoryC.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/LocalObject.h"
+
 #include "ace/Unbounded_Set.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

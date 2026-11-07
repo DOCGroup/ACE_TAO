@@ -33,7 +33,7 @@ namespace TAO
       : public CORBA::PolicyList
     {
     public:
-      PolicyList_Destroyer(CORBA::ULong length_hint);
+      explicit PolicyList_Destroyer (CORBA::ULong length_hint);
       ~PolicyList_Destroyer() noexcept;
 
     private:

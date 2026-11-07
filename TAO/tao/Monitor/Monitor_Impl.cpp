@@ -9,7 +9,7 @@
 class TAO_Control_Action : public Control_Action
 {
 public:
-  TAO_Control_Action (::Monitor::Subscriber_ptr sub)
+  explicit TAO_Control_Action (::Monitor::Subscriber_ptr sub)
     : sub_ (::Monitor::Subscriber::_duplicate (sub))
   {
   }
@@ -22,7 +22,7 @@ public:
         ::Monitor::DataList d;
         sub_->push (d);
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
       }
   }
@@ -42,12 +42,12 @@ Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
 }
 
 ::Monitor::NameList *
-Monitor_Impl::get_statistic_names (const char * filter)
+Monitor_Impl::get_statistic_names (char const *filter)
 {
   Monitor_Control_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();
 
-  ::Monitor::NameList *namelist = nullptr;
+  ::Monitor::NameList *namelist {};
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::NameList (static_cast<CORBA::ULong> (mc_names.size ())),
                     CORBA::NO_MEMORY ());
@@ -56,7 +56,7 @@ Monitor_Impl::get_statistic_names (const char * filter)
        !i.done ();
        i.advance ())
     {
-      ACE_CString *item = nullptr;
+      ACE_CString *item {};
       i.next (item);
 
       if (ACE::wild_match (item->c_str (), filter, false))
@@ -71,9 +71,9 @@ Monitor_Impl::get_statistic_names (const char * filter)
 }
 
 ::Monitor::DataList *
-Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
+Monitor_Impl::get_statistics (::Monitor::NameList const &names)
 {
-  ::Monitor::DataList *datalist = nullptr;
+  ::Monitor::DataList *datalist {};
   ACE_NEW_THROW_EX (datalist,
                     ::Monitor::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -106,9 +106,9 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
 }
 
 ::Monitor::DataList *
-Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
+Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
 {
-  ::Monitor::DataList *datalist = nullptr;
+  ::Monitor::DataList *datalist {};
   ACE_NEW_THROW_EX (datalist,
                     ::Monitor::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -207,9 +207,9 @@ TAO_Monitor::get_monitor_data (
 
 
 ::Monitor::NameList *
-Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
+Monitor_Impl::clear_statistics (::Monitor::NameList const &names)
 {
-  ::Monitor::NameList *namelist = nullptr;
+  ::Monitor::NameList *namelist {};
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::NameList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -240,11 +240,11 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
 
 ::Monitor::ConstraintStructList *
 Monitor_Impl::register_constraint (
-      const ::Monitor::NameList & names,
-      const char * cs,
+      ::Monitor::NameList const &names,
+      char const *cs,
       ::Monitor::Subscriber_ptr sub)
 {
-  ::Monitor::ConstraintStructList *constraintlist = nullptr;
+  ::Monitor::ConstraintStructList *constraintlist {};
   ACE_NEW_THROW_EX (constraintlist,
                     ::Monitor::ConstraintStructList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -278,7 +278,7 @@ Monitor_Impl::register_constraint (
 
 void
 Monitor_Impl::unregister_constraints (
-  const ::Monitor::ConstraintStructList & constraint)
+  ::Monitor::ConstraintStructList const &constraint)
 {
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");

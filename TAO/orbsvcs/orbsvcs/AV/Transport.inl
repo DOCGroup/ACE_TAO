@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
 ACE_INLINE
-const ACE_CString &
+ACE_CString const &
 TAO_AV_Transport_Item::name ()
 {
   return this->name_;
@@ -30,7 +30,7 @@ TAO_AV_Transport_Item::factory (TAO_AV_Transport_Factory *factory)
 // TAO_AV_Flow_Protocol_Item
 //------------------------------------------------------------
 ACE_INLINE
-const ACE_CString &
+ACE_CString const &
 TAO_AV_Flow_Protocol_Item::name ()
 {
   return this->name_;
@@ -89,7 +89,7 @@ TAO_AV_Acceptor_Registry::end ()
 // TAO_AV_Acceptor
 //------------------------------------------------------------
 ACE_INLINE
-const char *
+char const *
 TAO_AV_Acceptor::flowname ()
 {
   return this->flowname_.c_str ();
@@ -99,7 +99,7 @@ TAO_AV_Acceptor::flowname ()
 // TAO_AV_Connector
 //------------------------------------------------------------
 ACE_INLINE
-const char *
+char const *
 TAO_AV_Connector::flowname ()
 {
   return this->flowname_.c_str ();

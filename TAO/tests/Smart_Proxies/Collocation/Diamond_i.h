@@ -15,7 +15,7 @@ public:
   ~Top_i ();
   // Ctor and dtor.
 
-  virtual char* shape ();
+  char* shape () override;
   // Return the shape of this object (interface.)
 };
 
@@ -26,11 +26,15 @@ public:
   ~Left_i ();
   // Ctor, dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 
-  virtual char * color ();
+  char * color () override;
   // Return the color of this object (interface.)
+
+  CORBA::Long combine (CORBA::Long first,
+                       CORBA::Long &second,
+                       CORBA::Long_out third) override;
 };
 
 class Diamond_Export Right_i : public POA_Diamond::Right
@@ -40,13 +44,13 @@ public:
   ~Right_i ();
   // Ctor, dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 
   virtual char * color ();
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width ();
+  CORBA::Long width () override;
   // Return the width of the stuff.
 };
 
@@ -57,16 +61,20 @@ public:
   ~Buttom_i ();
   // Ctor, dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 
-  virtual char * color ();
+  char * color () override;
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width ();
+  CORBA::Long combine (CORBA::Long first,
+                       CORBA::Long &second,
+                       CORBA::Long_out third) override;
+
+  CORBA::Long width () override;
   // Return the width of the stuff.
 
-  virtual char * name ();
+  char * name () override;
   // Return the name of the object.
 };
 

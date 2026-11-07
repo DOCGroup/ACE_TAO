@@ -68,7 +68,7 @@ namespace TAO
     Cache_IntId_T ();
 
     /// Constructor.
-    Cache_IntId_T (transport_type *transport);
+    explicit Cache_IntId_T (transport_type *transport);
 
     /// Copy constructor.
     Cache_IntId_T (const Cache_IntId_T & rhs);

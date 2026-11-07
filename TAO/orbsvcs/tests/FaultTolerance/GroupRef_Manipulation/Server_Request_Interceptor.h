@@ -22,6 +22,7 @@
 
 #include "testC.h"
 #include "tao/LocalObject.h"
+#include <array>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -39,18 +40,21 @@ class Server_Request_Interceptor
 {
 public:
   /// Constructor.
-  Server_Request_Interceptor ();
+  Server_Request_Interceptor () = default;
+  Server_Request_Interceptor (Server_Request_Interceptor const&) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor&&) = delete;
+  Server_Request_Interceptor& operator= (Server_Request_Interceptor const&) = delete;
+  Server_Request_Interceptor& operator= (Server_Request_Interceptor&&) = delete;
 
   /// Destructor.
-  ~Server_Request_Interceptor ();
+  ~Server_Request_Interceptor () override = default;
 
   /// Set the references to which requests will be forwarded.
-  virtual void forward_references (CORBA::Object_ptr obj1,
-                                   CORBA::Object_ptr obj2);
+  void forward_references (CORBA::Object_ptr obj1,
+                           CORBA::Object_ptr obj2) override;
 
   /// Reset to initial state, like counter etc, keeps the object-references
-  virtual void reset ();
-
+  void reset () override;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -62,35 +66,35 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
 
 private:
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
   /// References to the two objects used in this test.
-  CORBA::Object_ptr obj_[2];
+  std::array<CORBA::Object_var, 2> obj_ {};
 
   /// Flag to indicate whether a forward request was thrown.
-  bool forward_request_thrown_;
+  bool forward_request_thrown_ {};
 };
 
 #if defined(_MSC_VER)

@@ -18,7 +18,7 @@ TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint ()
 }
 
 CORBA::Boolean
-TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
+TAO_ECG_UDP_Out_Endpoint::is_loopback (ACE_INET_Addr const &from)
 {
   if (this->port_number_ == 0)
     {
@@ -51,11 +51,11 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
 }
 
 TAO_ECG_UDP_Out_Endpoint&
-TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
+TAO_ECG_UDP_Out_Endpoint::operator= (TAO_ECG_UDP_Out_Endpoint const &rhs)
 {
   if (this != &rhs)
     {
-      this->request_id_generator_ = rhs.request_id_generator_;
+      this->request_id_generator_.store (rhs.request_id_generator_.load ());
       this->dgram_ = rhs.dgram_;
       this->port_number_ = rhs.port_number_;
       this->if_count_ = rhs.if_count_;

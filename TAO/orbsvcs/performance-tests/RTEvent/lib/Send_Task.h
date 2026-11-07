@@ -32,7 +32,7 @@ public:
 
   /// This is for compilers that are a PITA complaining that we are
   /// hiding something.
-  virtual int init (int argc, ACE_TCHAR *argv[])
+  int init (int argc, ACE_TCHAR *argv[]) override
   {
     return ACE_Task_Base::init (argc, argv);
   }
@@ -46,7 +46,7 @@ public:
              ACE_Barrier *barrier);
 
   /// Run the experiment
-  int svc ();
+  int svc () override;
 
   /// Stop the experiment
   void stop ();
@@ -67,7 +67,7 @@ private:
   ACE_Barrier *barrier_;
 
   TAO_SYNCH_MUTEX mutex_;
-  int stop_;
+  bool stop_ {};
 };
 
 

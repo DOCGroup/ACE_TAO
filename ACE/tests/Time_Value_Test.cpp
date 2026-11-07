@@ -21,7 +21,7 @@
 #include <sstream>
 #include <type_traits>
 
-int timeval_test_func (const ACE_Time_Value* timeout)
+int timeval_test_func (ACE_Time_Value const *timeout)
 {
   int ret = 0;
   timeval timeval_test;
@@ -54,7 +54,7 @@ int timeval_test_func (const ACE_Time_Value* timeout)
 }
 
 // Test whether ACE_Time_Value is stored correctly for the specified year month
-int test_year_month (const ACE_Time_Value& time, long year, long month)
+int test_year_month (ACE_Time_Value const &time, long year, long month)
 {
   int ret = 0;
 
@@ -292,15 +292,15 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("time_t is at least 64bit, this platform will not have problems after 2038\n")));
     }
 
-  ret += timeval_test_func ((ACE_Time_Value *) &ACE_Time_Value::zero);
+  ret += timeval_test_func (&ACE_Time_Value::zero);
 
   // Test whether some times in the past and the future are correctly converted to year/month, no need to check
   // day/time as that could be challenging due to timezones.
-  ACE_Time_Value dt20250726 ((time_t)1753519444);
+  ACE_Time_Value dt20250726 (static_cast<time_t> (1753519444));
   ret += test_year_month (dt20250726, 2025, 7);
-  ACE_Time_Value dt20370726 ((time_t)2132203444);
+  ACE_Time_Value dt20370726 (static_cast<time_t> (2132203444));
   ret += test_year_month (dt20370726, 2037, 7);
-  ACE_Time_Value dt20570726 ((time_t)2763355444);
+  ACE_Time_Value dt20570726 (static_cast<time_t> (2763355444));
   ret += test_year_month (dt20570726, 2057, 7);
   ACE_END_TEST;
 

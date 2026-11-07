@@ -3,10 +3,9 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 
-FactoryDriver::FactoryDriver (const ACE_TCHAR* name)
-  :factoryName_ (name),
-   child_poa_name_ ("CosEC_ChildPOA"),
-   factory_servant_ (0)
+FactoryDriver::FactoryDriver (ACE_TCHAR const *name)
+  : factoryName_ (name),
+    child_poa_name_ ("CosEC_ChildPOA")
 {
 }
 
@@ -116,12 +115,12 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
 
       orb_->run ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const &ue)
     {
       ue._tao_print_exception ("cosecfactory: ");
       return 1;
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
     {
       se._tao_print_exception ("cosecfactory: ");
       return 1;

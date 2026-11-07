@@ -52,7 +52,7 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this

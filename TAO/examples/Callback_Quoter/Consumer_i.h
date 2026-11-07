@@ -31,11 +31,16 @@ public:
   /// Constructor.
   Consumer_i () = default;
 
+  Consumer_i (Consumer_i const &) = delete;
+  Consumer_i &operator= (Consumer_i const &) = delete;
+  Consumer_i (Consumer_i &&) = delete;
+  Consumer_i &operator= (Consumer_i &&) = delete;
+
   /// Destructor.
   ~Consumer_i () = default;
 
   /// Gets the stock information from the Notifier.
-  void push (const Callback_Quoter::Info & data) override;
+  void push (Callback_Quoter::Info const &data) override;
 
   /// Used to get the consumer to shut down.
   void shutdown () override;
@@ -45,11 +50,11 @@ public:
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   // @@ Please rename to Notifier.
   /// Smart pointer to the Notifier object.
-  Notifier_var server_;
+  Notifier_var server_ {};
 };
 
 #endif /* CONSUMER_I_H  */

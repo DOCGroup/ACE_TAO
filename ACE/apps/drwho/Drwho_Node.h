@@ -38,13 +38,13 @@ public:
   const char *get_real_name ();
   const char *set_real_name (const char *);
 
-  const char *key_name1_;
-  const char *key_name2_;
-  const char *tty_name_;
-  int idle_time_;
-  int active_count_;
-  int inactive_count_;
-  Drwho_Node *next_;
+  const char *key_name1_ {};
+  const char *key_name2_ {};
+  const char *tty_name_ {};
+  int idle_time_ {};
+  int active_count_ {};
+  int inactive_count_ {};
+  Drwho_Node *next_ {};
 };
 
 #endif /* _DRWHO_NODE_H */

@@ -55,7 +55,7 @@ public:
   TAO_Multi_Priority_Mapping (int base_native_priority,
                               int base_corba_priority,
                               int priority_spacing = 1,
-                              int priorities_contiguous = 1,
+                              bool priorities_contiguous = true,
                               int policy = ACE_SCHED_FIFO);
 
   /// The destructor
@@ -74,7 +74,7 @@ private:
   int base_corba_priority_;
 
   const int priority_spacing_;
-  const int priorities_contiguous_;
+  bool const priorities_contiguous_;
 
   /// The scheduling policy
   int policy_;

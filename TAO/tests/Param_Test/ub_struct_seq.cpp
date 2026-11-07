@@ -12,6 +12,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_struct_seq.h"
 
 // ************************************************************************
@@ -29,7 +31,7 @@ Test_Struct_Sequence::Test_Struct_Sequence ()
 Test_Struct_Sequence::~Test_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -51,7 +53,7 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::StructSeq *tmp = 0;
+  Param_Test::StructSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::StructSeq (*tmp);
 
@@ -225,7 +227,7 @@ Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence ()
 Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -247,7 +249,7 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::PathSpec *tmp = 0;
+  Param_Test::PathSpec const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::PathSpec (*tmp);
 
@@ -357,8 +359,8 @@ Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
       const Param_Test::Step& vs1 = s1[i];
       const Param_Test::Step& vs2 = s2[i];
 
-      if (ACE_OS::strcmp (vs1.name.id.in (), vs2.name.id.in ())
-          || ACE_OS::strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
+      if (std::strcmp (vs1.name.id.in (), vs2.name.id.in ())
+          || std::strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
           || vs1.process != vs2.process)
         return 0;
     }

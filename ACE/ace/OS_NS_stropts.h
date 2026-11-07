@@ -104,7 +104,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int ioctl (ACE_HANDLE handle,
              ACE_IOCTL_TYPE_ARG2 cmd,
-             void * = 0);
+             void * = nullptr);
 
   /// QoS-enabled @c ioctl
   extern ACE_Export

@@ -31,7 +31,11 @@ class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  Supplier ();
+  Supplier () = default;
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
@@ -45,7 +49,7 @@ public:
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   /// The proxy

@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "TestS.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 /***************************/
 /*** Servant Declaration ***/
@@ -12,7 +13,7 @@ class ST_AMH_Servant
   : public virtual POA_Test::AMH_Roundtrip
 {
 public:
-  ST_AMH_Servant (CORBA::ORB_ptr orb);
+  explicit ST_AMH_Servant (CORBA::ORB_ptr orb);
   ST_AMH_Servant (ST_AMH_Servant const &) = delete;
   ST_AMH_Servant &operator= (ST_AMH_Servant const &) = delete;
   ST_AMH_Servant (ST_AMH_Servant &&) = delete;
@@ -43,10 +44,11 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp)
 {
   // Throw an overload exception
-  Test::ServerOverload *ts = new Test::ServerOverload;
-
-  // Caller owns the memory now.  Need not delete 'ts'
-  Test::AMH_RoundtripExceptionHolder holder (ts);
+  std::unique_ptr<Test::ServerOverload> exception =
+    std::make_unique<Test::ServerOverload> ();
+  Test::AMH_RoundtripExceptionHolder holder (exception.get ());
+  // The exception holder takes ownership of the exception.
+  exception.release ();
 
   try
     {
@@ -90,18 +92,18 @@ public:
 
 public:
   /// Accesor method (for servants) to the initialized ORB
-  CORBA::ORB_ptr orb () { return this->orb_.in (); }
+  CORBA::ORB_ptr orb () const { return this->orb_.in (); }
 
 protected:
   int argc_;
   ACE_TCHAR **argv_;
-  ACE_TCHAR const *ior_output_file_;
+  ACE_TCHAR const* ior_output_file_ {ACE_TEXT ("test.ior")};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
 private:
   /// Write servant IOR to file specified with the '-o' option
-  int write_ior_to_file (CORBA::String_var ior);
+  int write_ior_to_file (CORBA::String_var const& ior);
 };
 
 /*** Server Declaration ***/
@@ -110,7 +112,6 @@ ST_AMH_Server::ST_AMH_Server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
-  this->ior_output_file_ = ACE_TEXT ("test.ior");
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
@@ -131,11 +132,10 @@ ST_AMH_Server::~ST_AMH_Server ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
-
 }
 
 int
@@ -160,7 +160,7 @@ ST_AMH_Server::start_orb_and_poa ()
 
       poa_manager->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -193,7 +193,7 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 
       (void) this->write_ior_to_file (ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
@@ -210,17 +210,17 @@ ST_AMH_Server::run_event_loop ()
               this->orb_->perform_work (&period);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {}
 }
 
 int
-ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
+ST_AMH_Server::write_ior_to_file (CORBA::String_var const& ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file = ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                     "w");
-  if (output_file == nullptr)
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (ST_AMH_Server::ior_output_file_, "w"), ACE_OS::fclose);
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
@@ -228,8 +228,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
   return 0;
 }
 

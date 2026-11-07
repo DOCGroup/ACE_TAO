@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-char const *TAO_Contained_i::tmp_name_holder_ = nullptr;
+char const *TAO_Contained_i::tmp_name_holder_ {};
 
 TAO_Contained_i::TAO_Contained_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)

@@ -13,13 +13,17 @@ public:
   /// Constructor
   Session_Factory (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa);
+  Session_Factory (Session_Factory const &) = delete;
+  Session_Factory (Session_Factory &&) = delete;
+  Session_Factory &operator= (Session_Factory const &) = delete;
+  Session_Factory &operator= (Session_Factory &&) = delete;
 
   // = The skeleton methods
-  virtual Test::Session_ptr create_new_session (Test::Callback_ptr cb);
+  Test::Session_ptr create_new_session (Test::Callback_ptr cb) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// Use an ORB reference to shutdown the application.

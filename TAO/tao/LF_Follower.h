@@ -44,7 +44,7 @@ class TAO_Export TAO_LF_Follower
 {
 public:
   /// Constructor
-  TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
+  explicit TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
   ~TAO_LF_Follower ();

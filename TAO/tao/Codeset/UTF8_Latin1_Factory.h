@@ -9,6 +9,8 @@
 
 #include "tao/Codeset/UTF8_Latin1_Translator.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
@@ -41,10 +43,10 @@ private:
   TAO_UTF8_Latin1_Factory (TAO_UTF8_Latin1_Factory &&) = delete;
   TAO_UTF8_Latin1_Factory &operator= (TAO_UTF8_Latin1_Factory &&) = delete;
 
-  void create_translator () const;
+  bool create_translator () const;
 
 private:
-  TAO_UTF8_Latin1_Translator *translator_ {};
+  mutable std::unique_ptr<TAO_UTF8_Latin1_Translator> translator_ {};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF8_Latin1_Factory)

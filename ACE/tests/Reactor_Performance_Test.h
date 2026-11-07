@@ -33,10 +33,10 @@ public:
   static void set_countdown (int nconnections);
 
   /// The Svc_Handler callbacks.
-  virtual int open (void *);
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int open (void *) override;
+  int handle_input (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
 private:
   /// How many connections are we waiting for.
@@ -52,7 +52,7 @@ private:
 class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
-  virtual int open (void *);
+  int open (void *) override;
   virtual int send_data ();
 };
 

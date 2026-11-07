@@ -4,6 +4,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
@@ -74,7 +76,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
             }
 
           // copy the beginnning of the line
-          ACE_OS::memcpy (temp_buffer, buffer, buffer_size);
+          std::memcpy (temp_buffer, buffer, buffer_size);
           read_pos = buffer_size - 1;
           buffer_size *= 2;
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -154,7 +156,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           else if (ACE_OS::strncmp (end, ACE_TEXT ("dword:"), 6) == 0)
             {
               // number type
-              ACE_TCHAR* endptr = nullptr;
+              ACE_TCHAR* endptr {};
               unsigned long value = ACE_OS::strtoul (end + 6, &endptr, 16);
               if (config_.set_integer_value (section, name,
                                              static_cast<u_int> (value)))
@@ -175,7 +177,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               // divide by 3 to get the actual buffer length
               size_t length = string_length / 3;
               size_t remaining = length;
-              u_char* data = nullptr;
+              u_char* data {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
               ACE_ALLOCATOR_RETURN (data,
                                     static_cast<u_char*> (ACE_Allocator::instance()->malloc(sizeof(u_char) * length)),
@@ -187,7 +189,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 #endif /* ACE_HAS_ALLOC_HOOKS */
               u_char* out = data;
               ACE_TCHAR* inb = end + 4;
-              ACE_TCHAR* endptr = nullptr;
+              ACE_TCHAR* endptr {};
               while (remaining)
                 {
                   u_char charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
@@ -295,7 +297,7 @@ namespace
 {
   int write_string (const char *string, FILE *stream)
   {
-    const size_t count = ACE_OS::strlen (string);
+    const size_t count = std::strlen (string);
     return (ACE_OS::fwrite (string, 1, count, stream) < count) ? -1 : 0;
   }
 }

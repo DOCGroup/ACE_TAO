@@ -413,7 +413,7 @@ AST_Decl::compute_full_name ()
         }
     }
 
-  this->full_name_ = name;
+  this->full_name_ = std::move (name);
 }
 
 // Compute stringified repository ID.
@@ -1061,12 +1061,14 @@ AST_Decl::compute_name (std::string const& prefix,
   ACE_NEW_RETURN (result_local_id,
                   Identifier (result_local_str),
                   nullptr);
+  std::unique_ptr<Identifier> result_local_id_owner (result_local_id);
 
   // UTL_Scoped name for the resulting local name.
   UTL_ScopedName *result_local_name = nullptr;
   ACE_NEW_RETURN (result_local_name,
-                  UTL_ScopedName (result_local_id, nullptr),
+                  UTL_ScopedName (result_local_id_owner.get (), nullptr),
                   nullptr);
+  result_local_id_owner.release ();
 
   // Global scope?
   UTL_ScopedName *result_name = nullptr;
@@ -1096,6 +1098,12 @@ AST_Decl::compute_name (std::string const& prefix,
                 }
             }
         }
+    }
+
+  if (result_name == nullptr)
+    {
+      result_local_name->destroy ();
+      delete result_local_name;
     }
 
   return result_name;

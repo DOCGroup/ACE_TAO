@@ -10,24 +10,20 @@ static bool initialized = false;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_ClientService_Activate::TAO_FT_ClientService_Activate ()
-{
-}
+TAO_FT_ClientService_Activate::TAO_FT_ClientService_Activate () = default;
 
-TAO_FT_ClientService_Activate::~TAO_FT_ClientService_Activate ()
-{
-}
+TAO_FT_ClientService_Activate::~TAO_FT_ClientService_Activate () = default;
 
 
 TAO_Service_Callbacks *
 TAO_FT_ClientService_Activate::activate_services (TAO_ORB_Core *orb_core)
 {
-  TAO_FT_Service_Callbacks *ft_service_callback = nullptr;
+  TAO_FT_Service_Callbacks *ft_service_callback {};
 
   // Construct service callback object
   ACE_NEW_RETURN (ft_service_callback,
                   TAO_FT_Service_Callbacks (orb_core),
-                  0);
+                  nullptr);
 
 
   return ft_service_callback;
@@ -37,7 +33,7 @@ TAO_FT_ClientService_Activate::activate_services (TAO_ORB_Core *orb_core)
 int
 TAO_FT_ClientService_Activate::Initializer ()
 {
-  if (initialized == false)
+  if (!initialized)
     {
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_FT_ClientService_Activate);

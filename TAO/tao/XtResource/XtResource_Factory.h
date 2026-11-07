@@ -38,7 +38,7 @@ namespace TAO
   class TAO_XtResource_Export XtResource_Factory : public GUIResource_Factory
   {
   public:
-    XtResource_Factory (XtAppContext context);
+    explicit XtResource_Factory (XtAppContext context);
 
     /// Create or obtain current reactor implementation
     ACE_Reactor_Impl *reactor_impl () override;
@@ -53,7 +53,7 @@ namespace TAO
     ACE_XtReactor *reactor_impl_ {};
 
     /// Xt context for XtReactor
-    XtAppContext  context_;
+    XtAppContext const context_;
 
     /// for internal locking
     TAO_SYNCH_MUTEX lock_;

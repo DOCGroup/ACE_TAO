@@ -11,6 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 GroupInfoPublisherBase::GroupInfoPublisherBase()
   : info_(new Info)
 {
+  subscribers_.reserve (2);
   info_->primary = false;
 }
 

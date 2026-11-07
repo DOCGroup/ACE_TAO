@@ -836,7 +836,7 @@ bool
 LiveCheck::has_server (const char *server)
 {
   ACE_CString s (server);
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   int const result = entry_map_.find (s, entry);
   return (result == 0 && entry != nullptr);
 }
@@ -859,12 +859,12 @@ LiveCheck::add_server (const char *server,
     return;
 
   ACE_CString s (server);
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   ACE_NEW (entry, LiveEntry (this, server, may_ping, ref, pid));
   int result = entry_map_.bind (s, entry);
   if (result != 0)
     {
-      LiveEntry *old = nullptr;
+      LiveEntry *old {};
       result = entry_map_.rebind (s, entry, old);
       if (old)
         {
@@ -884,7 +884,7 @@ LiveCheck::set_pid (const char *server, int pid)
                       server, pid));
     }
   ACE_CString s(server);
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   int const result = entry_map_.find (s, entry);
   if (result != -1 && entry != nullptr)
     {
@@ -911,7 +911,7 @@ LiveCheck::remove_server (const char *server, int pid)
                       server, pid));
     }
   ACE_CString s(server);
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   int const result = entry_map_.find (s, entry);
   if (result != -1 && entry != nullptr && entry->has_pid (pid))
     {
@@ -993,7 +993,7 @@ LiveCheck::remove_deferred_servers ()
               // match when the server has already been restarted between the
               // moment it got in the removed_entries_ stack and this point
               // where we remove it from the internal administration
-              LiveEntry *entry = nullptr;
+              LiveEntry *entry {};
               int const result = entry_map_.find (name_pid_pair.first, entry);
               if (result != -1 && entry != nullptr)
                 {
@@ -1069,7 +1069,7 @@ LiveCheck::add_per_client_listener (LiveListener *l,
   if (!this->running_)
     return false;
 
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   ACE_NEW_RETURN (entry, LiveEntry (this, l->server (), true, ref, 0), false);
 
   if (this->per_client_.insert_tail(entry) == 0)
@@ -1099,7 +1099,7 @@ LiveCheck::add_poll_listener (LiveListener *l)
   if (!this->running_)
     return false;
 
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   ACE_CString key (l->server());
   int const result = entry_map_.find (key, entry);
   if (result == -1 || entry == nullptr)
@@ -1119,7 +1119,7 @@ LiveCheck::add_listener (LiveListener *l)
   if (!this->running_)
     return false;
 
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   ACE_CString key (l->server());
   int const result = entry_map_.find (key, entry);
   if (result == -1 || entry == nullptr)
@@ -1137,7 +1137,7 @@ LiveCheck::remove_listener (LiveListener *l)
   if (!this->running_)
     return;
 
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   ACE_CString key (l->server());
   int const result = entry_map_.find (key, entry);
   if (result != -1 && entry != nullptr)
@@ -1231,7 +1231,7 @@ LiveCheck::is_alive (const char *server)
     }
 
   ACE_CString s(server);
-  LiveEntry *entry = nullptr;
+  LiveEntry *entry {};
   int const result = entry_map_.find (s, entry);
   if (result == 0 && entry != nullptr)
     {

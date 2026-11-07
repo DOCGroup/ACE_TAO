@@ -36,7 +36,7 @@ public:
   virtual ~ACEXML_Element_Tree_Node ();
 
   /// Accessor for next element in chain
-  ACEXML_Element_Tree_Node *next ();
+  ACEXML_Element_Tree_Node *next () const;
   void next (ACEXML_Element_Tree_Node *n);
 
   /// Displaying the content.
@@ -45,7 +45,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  ACEXML_Element_Tree_Node *next_;
+  ACEXML_Element_Tree_Node *next_; // Owns the remaining nodes in this chain.
 };
 
 /**
@@ -61,14 +61,14 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Element_Tree_Name_Node
 {
 public:
   /// Constructor.
-  ACEXML_Element_Tree_Name_Node (const ACEXML_Char *name,
-                                 int release = 1);
+  explicit ACEXML_Element_Tree_Name_Node (ACEXML_Char const *name,
+                                          bool release = true);
 
   /// Change the name of this node.
-  void set (const ACEXML_Char *name,
-            int release = 1);
+  void set (ACEXML_Char const *name,
+            bool release = true);
 
-  virtual void dump ();
+  void dump () override;
 
   ACE_ALLOC_HOOK_DECLARE;
 protected:
@@ -91,35 +91,35 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Element_Tree_List_Node
 public:
   friend class ACEXML_Element_Tree_List_Stack;
 
-  typedef enum {
+  enum class LIST_TYPE {
     SEQUENCE,
     CHOICE
-  } LIST_TYPE;
+  };
 
   /// Default constructor.
   ACEXML_Element_Tree_List_Node ();
 
   /// Destructor.
-  virtual ~ACEXML_Element_Tree_List_Node ();
+  ~ACEXML_Element_Tree_List_Node () override;
 
   /// Insert a new ACEXML_Element_Tree_Node into the list.
-  int insert (ACEXML_Element_Tree_Node *node);
+  int insert (ACEXML_Element_Tree_Node *node); // Takes ownership of node.
 
   /// Get/set the type of list.
-  LIST_TYPE get ();
+  LIST_TYPE get () const;
   int set (LIST_TYPE type);
 
-  virtual void dump ();
+  void dump () override;
 
   ACE_ALLOC_HOOK_DECLARE;
 protected:
   LIST_TYPE type_;
 
-  ACEXML_Element_Tree_Node *head_;
+  ACEXML_Element_Tree_Node *head_; // Owns the child node chain.
 
-  ACEXML_Element_Tree_Node *tail_;
+  ACEXML_Element_Tree_Node *tail_; // Non-owning alias into the child node chain.
 
-  ACEXML_Element_Tree_List_Node *pop_next_;
+  ACEXML_Element_Tree_List_Node *pop_next_; // Non-owning stack link.
 };
 
 /**
@@ -138,14 +138,14 @@ public:
 
   ACEXML_Element_Tree_List_Node *pop ();
 
-  ACEXML_Element_Tree_List_Node *top ();
+  ACEXML_Element_Tree_List_Node *top () const;
 
-  int empty ();
+  bool empty () const;
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  ACEXML_Element_Tree_List_Node *top_;
+  ACEXML_Element_Tree_List_Node *top_; // Non-owning; the tree owns the list nodes.
 };
 
 #if defined (__ACEXML_INLINE__)

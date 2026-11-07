@@ -1,20 +1,17 @@
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 #include "tao/ORB_Constants.h"
 
-ACE_TCHAR const *proxy_ior = nullptr;
-ACE_TCHAR const *control_ior = nullptr;
-
 int
-parse_args (int argc, ACE_TCHAR * argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&proxy_ior,
+            ACE_TCHAR const *&control_ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:c:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:c:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'p':
         proxy_ior = get_opts.opt_arg ();
@@ -30,56 +27,54 @@ parse_args (int argc, ACE_TCHAR * argv[])
                            "-p <proxy>"
                            "\n",
                            argv [0]),
-                           -1);
+                          -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_TCHAR const *proxy_ior {};
+  ACE_TCHAR const *control_ior {};
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, proxy_ior, control_ior) == -1)
         return -1;
 
-      CORBA::Object_var obj =
-        orb->string_to_object (proxy_ior);
+      CORBA::Object_var const proxy_object = orb->string_to_object (proxy_ior);
 
-      if (CORBA::is_nil (obj.in ()))
+      if (CORBA::is_nil (proxy_object.in ()))
         {
-          ACE_ERROR_RETURN  ((LM_ERROR,
-                              "The received object is nil\n"),
-                              -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The received object is nil\n"),
+                            -1);
         }
 
-      Simple_Server_var server =
-        Simple_Server::_narrow (obj.in ());
+      Simple_Server_var const proxy = Simple_Server::_narrow (proxy_object.in ());
 
-      if (CORBA::is_nil (server.in ()))
+      if (CORBA::is_nil (proxy.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference is nil\n"),
-                             -1);
+                            -1);
         }
 
       try
         {
           while (true)
-          {
-            // Make a remote call
-            server->remote_call ();
-            ACE_OS::sleep (2);
-          }
+            {
+              // Make a remote call
+              proxy->remote_call ();
+              ACE_OS::sleep (2);
+            }
         }
       catch (CORBA::TRANSIENT const &ex)
         {
-          CORBA::ULong m = ex.minor () & 0x00000F80u;
-          if (m == TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE &&
+          CORBA::ULong const minor = ex.minor () & 0x00000F80u;
+          if (minor == TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE &&
               ex.completed () == CORBA::COMPLETED_NO)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -92,20 +87,18 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
             }
         }
 
-      obj =
-        orb->string_to_object (control_ior);
+      CORBA::Object_var const control_object = orb->string_to_object (control_ior);
 
-      if (obj.in () == 0)
+      if (CORBA::is_nil (control_object.in ()))
         {
-          ACE_ERROR_RETURN  ((LM_ERROR,
-                              "The received objref is NULL\n"),
-                              -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The received objref is NULL\n"),
+                            -1);
         }
 
-      server =
-        Simple_Server::_narrow (obj.in ());
+      Simple_Server_var const control_server = Simple_Server::_narrow (control_object.in ());
 
-      server->shutdown ();
+      control_server->shutdown ();
 
       orb->destroy ();
     }

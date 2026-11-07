@@ -74,7 +74,7 @@ FTRT_ClientORB_Interceptor::send_request (
 
     ri->add_request_service_context (sc, 0);
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     // Not much can be done anyway. Just keep quiet
   }
@@ -92,13 +92,13 @@ FTRT_ClientORB_Interceptor::receive_reply (
     service_context =
       ri->get_reply_service_context(FTRT::FT_FORWARD);
   }
-  catch (const CORBA::Exception&){
+  catch (CORBA::Exception const&){
     return;
   }
 
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
 
   TAO_InputCDR cdr (buf,
     service_context->context_data.length ());

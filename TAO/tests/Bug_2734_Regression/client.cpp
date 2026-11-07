@@ -4,15 +4,14 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int min_timeout = 0;
-int max_timeout = 20;
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[],
+            ACE_TCHAR const *&ior,
+            int &min_timeout,
+            int &max_timeout)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:h:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -44,26 +43,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-enum TO_TYPE {none = 0, orb1 = 1, thread1 = 2, object1 = 3};
-char const *to_type_names[4] = {"none", "orb", "thread", "object"};
+enum class TO_TYPE {none, orb, thread, object};
+constexpr int to_type_count {4};
+constexpr char const *to_type_names[to_type_count] = {"none", "orb", "thread", "object"};
 
-static int timeout_count[4] = {0, 0, 0, 0};
-static int in_time_count[4] = {0, 0, 0, 0};
+static int timeout_count[to_type_count] {};
+static int in_time_count[to_type_count] {};
 
 void
 send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
            Simple_Server_ptr server,
-           CORBA::Long t)
+           CORBA::Long t,
+           int max_timeout)
 {
   try
     {
       server->echo (0, t);
 
-      ++in_time_count[ctype];
+      ++in_time_count[static_cast<int> (ctype)];
     }
   catch (const CORBA::TIMEOUT& )
     {
-      ++timeout_count[ctype];
+      ++timeout_count[static_cast<int> (ctype)];
 
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,
@@ -83,18 +84,21 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+  int min_timeout {};
+  int max_timeout {20};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, min_timeout, max_timeout) != 0)
         return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -108,16 +112,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       object =
         orb->resolve_initial_references ("ORBPolicyManager");
 
-      CORBA::PolicyManager_var policy_manager =
+      CORBA::PolicyManager_var const policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
 
       object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
-      TimeBase::TimeT mid_value =
+      TimeBase::TimeT const mid_value =
         10000 * (min_timeout + max_timeout) / 2; // convert from msec to "TimeT" (0.1 usec units)
 
       CORBA::Any any_orb;
@@ -136,7 +140,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         server->_set_policy_overrides (policy_list,
                                        CORBA::SET_OVERRIDE);
 
-      Simple_Server_var timeout_server =
+      Simple_Server_var const timeout_server =
         Simple_Server::_narrow (object.in ());
 
       policy_list[0]->destroy ();
@@ -161,7 +165,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           policy_current->set_policy_overrides (policy_list,
                                                 CORBA::SET_OVERRIDE);
 
-          send_echo (none, orb.in (), server.in (), t);
+          send_echo (TO_TYPE::none, orb.in (), server.in (), t, max_timeout);
 
           ACE_DEBUG ((LM_DEBUG,
                       "client(%P) Set the ORB policies\n"));
@@ -174,7 +178,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           policy_manager->set_policy_overrides (policy_list,
                                                 CORBA::SET_OVERRIDE);
 
-          send_echo (orb1, orb.in (), server.in (), t);
+          send_echo (TO_TYPE::orb, orb.in (), server.in (), t, max_timeout);
 
           policy_list[0]->destroy ();
 
@@ -189,13 +193,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           policy_current->set_policy_overrides (policy_list,
                                                 CORBA::SET_OVERRIDE);
 
-          send_echo (thread1, orb.in (), server.in (), t);
+          send_echo (TO_TYPE::thread, orb.in (), server.in (), t, max_timeout);
 
           policy_list[0]->destroy ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "client(%P) Use the object policies\n"));
-          send_echo (object1, orb.in (), timeout_server.in (), t);
+          send_echo (TO_TYPE::object, orb.in (), timeout_server.in (), t, max_timeout);
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -207,13 +211,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE);
 
-      send_echo (none, orb.in (), server.in (), 0);
+      send_echo (TO_TYPE::none, orb.in (), server.in (), 0, max_timeout);
 
       server->shutdown ();
 
-      int timeout_count_total = 0;
-      int in_time_count_total = 0;
-      for (int i = 0; i < 4; ++i) {
+      int timeout_count_total {};
+      int in_time_count_total {};
+      for (int i = 0; i < to_type_count; ++i) {
         timeout_count_total += timeout_count[i];
         in_time_count_total += in_time_count[i];
         ACE_DEBUG ((LM_DEBUG, "in_time_count[%C]= %d timeout_count[%C]= %d\n",
@@ -236,7 +240,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

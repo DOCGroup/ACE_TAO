@@ -47,8 +47,14 @@ template <class ENTRY>
 class File_Parser
 {
 public:
+  File_Parser () = default;
+
   /// Destructor.
   virtual ~File_Parser ();
+  File_Parser (File_Parser const &) = delete;
+  File_Parser (File_Parser &&) = delete;
+  File_Parser &operator= (File_Parser const &) = delete;
+  File_Parser &operator= (File_Parser &&) = delete;
 
   // = Open and Close the file specified
   int open (const ACE_TCHAR filename[]);

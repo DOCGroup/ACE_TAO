@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-const ACE_TCHAR *ior_file = ACE_TEXT ("file://middle.ior");
+ACE_TCHAR const *ior_file = ACE_TEXT ("file://middle.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -68,7 +68,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     std::cerr << "CORBA exception: " << ex << std::endl;
   }
 

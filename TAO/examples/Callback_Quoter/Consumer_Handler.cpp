@@ -23,23 +23,12 @@
 #include "ace/Event_Handler.h"
 #include "ace/OS_NS_fcntl.h"
 
-Consumer_Handler::Consumer_Handler ()
-  : stock_name_ ("Unknown"),
-    threshold_value_ (0),
-    server_ (),
-    registered_ (0),
-    unregistered_ (0),
-    ior_ (0),
-    shutdown_ (0),
-    use_naming_service_ (1),
-    interactive_ (1)
-{
-}
+Consumer_Handler::Consumer_Handler () = default;
 
 Consumer_Handler::~Consumer_Handler ()
 {
   // Make sure to cleanup the STDIN handler.
-  if (this->interactive_ == 1)
+  if (this->interactive_)
     {
       if (ACE_Event_Handler::remove_stdin_handler
           (this->orb_->orb_core ()->reactor (),
@@ -52,7 +41,7 @@ Consumer_Handler::~Consumer_Handler ()
 
 // Reads the Server factory IOR from a file.
 int
-Consumer_Handler::read_ior (ACE_TCHAR *filename)
+Consumer_Handler::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -66,12 +55,12 @@ Consumer_Handler::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
-  if (data == 0)
+  if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
+  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR(data);
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
@@ -83,7 +72,7 @@ Consumer_Handler::read_ior (ACE_TCHAR *filename)
 int
 Consumer_Handler::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("a:t:d:f:xk:xs"));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_.get (), ACE_TEXT("a:t:d:f:xk:xs"));
   int c;
   int result;
 
@@ -95,7 +84,7 @@ Consumer_Handler::parse_args ()
         break;
 
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_ = get_opts.opt_arg ();
         break;
 
       case 'f': // read the IOR from the file.
@@ -108,12 +97,12 @@ Consumer_Handler::parse_args ()
         break;
 
       case 's': // don't use the naming service
-        this->use_naming_service_ = 0;
+        this->use_naming_service_ = false;
         break;
 
       case 'a': // to be given only on using run_test.pl
         this->stock_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
-        this->interactive_ = 0;
+        this->interactive_ = false;
         break;
 
       case 't':
@@ -121,7 +110,7 @@ Consumer_Handler::parse_args ()
         break;
 
       case 'x':
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
 
       case '?':
@@ -136,7 +125,7 @@ Consumer_Handler::parse_args ()
                            " [-a stock_name]"
                            " [-t threshold]"
                            "\n",
-                           this->argv_ [0]),
+                           this->argv_[0]),
                           -1);
       }
 
@@ -169,7 +158,7 @@ Consumer_Handler::via_naming_service ()
       this->server_ =
         Notifier::_narrow (notifier_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Consumer_Handler::via_naming_service\n");
@@ -184,7 +173,11 @@ int
 Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
-  this->argv_ = argv;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
 
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
@@ -192,7 +185,7 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_.get ());
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -200,7 +193,7 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
                            "parse_args failed\n"),
                           -1);
 
-      if (this->interactive_ == 1)
+      if (this->interactive_)
         {
           ACE_DEBUG ((LM_DEBUG,
                       " Services provided:\n"
@@ -244,19 +237,19 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
          }
       else
         {
-          if (this->ior_ == 0)
+          if (this->ior_.empty ())
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
                                this->argv_[0]),
                               -1);
 
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_);
+            this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               this->ior_),
+                               this->ior_.c_str ()),
                               -1);
           // The downcasting from CORBA::Object_var to Notifier_var is
           // done using the <_narrow> method.
@@ -264,7 +257,7 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer_Handler::init");
       return -1;
@@ -290,9 +283,11 @@ Consumer_Handler::run ()
 
      poa_manager->activate ();
 
-     ACE_NEW_RETURN (this->consumer_servant_,
+     Consumer_i *servant = nullptr;
+     ACE_NEW_RETURN (servant,
                      Consumer_i (),
                      -1);
+     this->consumer_servant_.reset (servant);
      // Set the orb in the consumer_ object.
      this->consumer_servant_->orb (this->orb_.in ());
 
@@ -300,7 +295,7 @@ Consumer_Handler::run ()
      this->consumer_var_ =
        this->consumer_servant_->_this ();
 
-      if (this->interactive_ == 0)
+      if (!this->interactive_)
         {
           // Register with the server.
           this->server_->register_callback (this->stock_name_.c_str (),
@@ -308,8 +303,8 @@ Consumer_Handler::run ()
                                             this->consumer_var_.in ());
 
           // Note the registration.
-          this->registered_ = 1;
-          this->unregistered_ = 0;
+          this->registered_ = true;
+          this->unregistered_ = false;
 
           ACE_DEBUG ((LM_DEBUG,
                       "registeration done!\n"));
@@ -318,7 +313,7 @@ Consumer_Handler::run ()
       // Run the ORB.
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer_Handler::init");
       return -1;

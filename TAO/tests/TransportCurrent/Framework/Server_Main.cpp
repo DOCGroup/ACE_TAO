@@ -12,7 +12,7 @@ test_transport_current (CORBA::ORB_ptr orb);
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Test::Server_Request_Interceptor* cri = 0;
+  Test::Server_Request_Interceptor *cri = nullptr;
   ACE_NEW_RETURN (cri,
                   Test::Server_Request_Interceptor ("test_orb",
                                                     test_transport_current),

@@ -2,8 +2,9 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+#include "tao/Valuetype/ValueFactory.h"
+#include <memory>
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,34 +40,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = 0;
-      ACE_NEW_RETURN (bn_factory,
-                      BaseNode_init,
-                      1);
+      CORBA::ValueFactory_var bn_factory;
+      ACE_NEW_RETURN (bn_factory.inout (), BaseNode_init, 1);
 
-      orb->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory);
-      bn_factory->_remove_ref (); // release ownership
+      orb->register_value_factory (BaseNode::_tao_obv_static_repository_id (),
+                                   bn_factory.in ());
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = 0;
-      ACE_NEW_RETURN (tc_factory,
-                      TreeController_init,
-                      1);
+      CORBA::ValueFactory_var tc_factory;
+      ACE_NEW_RETURN (tc_factory.inout (), TreeController_init, 1);
 
-      orb->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory);
-      tc_factory->_remove_ref (); // release ownership
+      orb->register_value_factory (TreeController::_tao_obv_static_repository_id (),
+                                   tc_factory.in ());
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = 0;
-      ACE_NEW_RETURN (sn_factory,
-                      StringNode_init,
-                      1);
+      CORBA::ValueFactory_var sn_factory;
+      ACE_NEW_RETURN (sn_factory.inout (), StringNode_init, 1);
 
-      orb->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory);
-      sn_factory->_remove_ref (); // release ownership
+      orb->register_value_factory (StringNode::_tao_obv_static_repository_id (),
+                                   sn_factory.in ());
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -106,11 +98,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
 
-          if (output_file == 0)
+          if (!output_file)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Can't open output file for writing IOR: %s",
@@ -118,10 +111,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 1);
             }
 
-          ACE_OS::fprintf (output_file,
+          ACE_OS::fprintf (output_file.get (),
                            "%s",
                            ior.in ());
-          ACE_OS::fclose (output_file);
         }
 
       poa_manager->activate ();
@@ -133,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server: exception caught - ");
       return 1;

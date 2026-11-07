@@ -28,14 +28,14 @@ class Fault_Detector
 {
 public:
   Fault_Detector() = default;
-  virtual ~Fault_Detector();
+  virtual ~Fault_Detector() = default;
 
   static Fault_Detector* instance();
 
   int init(int argc, ACE_TCHAR** argv);
   void stop();
   void set_listener(TAO_FTEC_Fault_Listener*);
-  const FTRT::Location& my_location() const;
+  FTRT::Location const& my_location() const;
   virtual int connect(FTRT::Location const& location) = 0;
 
 private:
@@ -51,15 +51,19 @@ protected:
   class ReactorTask : public ACE_Task_Base
   {
   public:
-    // ctor
     ReactorTask();
+    ReactorTask(ReactorTask const&) = delete;
+    ReactorTask(ReactorTask&&) = delete;
+    ReactorTask& operator=(ReactorTask const&) = delete;
+    ReactorTask& operator=(ReactorTask&&) = delete;
+
     int svc () override;
     ACE_Reactor reactor_;
   };
 
   FTRT::Location location_;
   ReactorTask reactor_task_;
-  TAO_FTEC_Fault_Listener* listener_;
+  TAO_FTEC_Fault_Listener* listener_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

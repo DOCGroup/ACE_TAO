@@ -13,19 +13,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_PG
 {
   ACE_INLINE
-  Properties_Encoder::NamedValue::NamedValue ()
-  {
-  }
-
-  ACE_INLINE
-  Properties_Encoder::NamedValue::NamedValue (const ACE_CString & name, const PortableGroup::Value & value)
+  Properties_Encoder::NamedValue::NamedValue (
+    ACE_CString const & name,
+    PortableGroup::Value const & value)
     : name_ (name)
     , value_ (value)
   {
   }
 
   ACE_INLINE
-  Properties_Encoder::NamedValue::NamedValue (const Properties_Encoder::NamedValue & rhs)
+  Properties_Encoder::NamedValue::NamedValue (Properties_Encoder::NamedValue const & rhs)
     : name_ (rhs.name_)
     , value_ (rhs.value_)
   {
@@ -33,7 +30,7 @@ namespace TAO_PG
 
   ACE_INLINE
   Properties_Encoder::NamedValue &
-  Properties_Encoder::NamedValue::operator = (const Properties_Encoder::NamedValue & rhs)
+  Properties_Encoder::NamedValue::operator = (Properties_Encoder::NamedValue const & rhs)
   {
     if (this != &rhs)
     {
@@ -41,20 +38,6 @@ namespace TAO_PG
       this->value_ = rhs.value_;
     }
     return *this;
-  }
-
-  ACE_INLINE
-  bool
-  Properties_Encoder::NamedValue::operator == (const Properties_Encoder::NamedValue &rhs) const
-  {
-    return this->name_ == rhs.name_;
-  }
-
-  ACE_INLINE
-  bool
-  Properties_Encoder::NamedValue::operator != (const Properties_Encoder::NamedValue &rhs) const
-  {
-    return this->name_ != rhs.name_;
   }
 
 } //namespace TAO_PG

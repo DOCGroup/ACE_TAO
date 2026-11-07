@@ -18,7 +18,7 @@ RWho_DB_Manager::RWho_DB_Manager ()
     WHOD_HEADER_SIZE (sizeof host_data - sizeof host_data.wd_we),
     rwho_dir_name (RWHODIR)
 {
-  if (ACE_OS::getcwd (this->original_pathname, MAXPATHLEN + 1) == 0)
+  if (ACE_OS::getcwd (this->original_pathname, MAXPATHLEN + 1) == nullptr)
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 Options::program_name,
@@ -73,7 +73,7 @@ RWho_DB_Manager::get_next_host ()
   // Go through each file in the directory looking for valid entries.
 
   for (dirent *dir_ptr = this->rwho_dir.read ();
-       dir_ptr != 0;
+       dir_ptr != nullptr;
        dir_ptr = this->rwho_dir.read ())
     {
       ACE_HANDLE user_file =

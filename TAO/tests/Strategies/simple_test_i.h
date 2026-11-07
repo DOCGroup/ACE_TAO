@@ -27,9 +27,9 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb);
 
   // = The Simple_Server methods.
-  CORBA::Boolean print_status ();
+  CORBA::Boolean print_status () override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

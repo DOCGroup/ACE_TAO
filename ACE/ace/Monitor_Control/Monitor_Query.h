@@ -43,8 +43,8 @@ namespace ACE
       Monitor_Point_Auto_Query ();
 
       /// Override of ACE base class method.
-      virtual int handle_timeout (const ACE_Time_Value& current,
-                                  const void* monitor_query);
+      int handle_timeout (ACE_Time_Value const& current,
+                          void const* monitor_query) override;
     };
 
     /**
@@ -57,12 +57,12 @@ namespace ACE
     class MONITOR_CONTROL_Export Monitor_Query
     {
     public:
-      Monitor_Query (const char* monitor_name);
+      explicit Monitor_Query (char const* monitor_name);
 
-      void query ();
+      void query () const;
 
     private:
-      Monitor_Base* monitor_;
+      Monitor_Base* monitor_ {};
     };
   }
 }

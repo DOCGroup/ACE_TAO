@@ -6,6 +6,8 @@
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
 
+#include <cstring>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
@@ -17,12 +19,12 @@ class FTEC_Gateway_ConsumerAdmin
   : public POA_RtecEventChannelAdmin::ConsumerAdmin
 {
 public:
-  FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl);
-  ~FTEC_Gateway_ConsumerAdmin () override;
-  FTEC_Gateway_ConsumerAdmin(FTEC_Gateway_ConsumerAdmin const&) = delete;
-  FTEC_Gateway_ConsumerAdmin(FTEC_Gateway_ConsumerAdmin&&) = delete;
-  FTEC_Gateway_ConsumerAdmin& operator=(FTEC_Gateway_ConsumerAdmin const&) = delete;
-  FTEC_Gateway_ConsumerAdmin& operator=(FTEC_Gateway_ConsumerAdmin&&) = delete;
+  explicit FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_ConsumerAdmin () override = default;
+  FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_ConsumerAdmin const &) = delete;
+  FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_ConsumerAdmin &&) = delete;
+  FTEC_Gateway_ConsumerAdmin &operator= (FTEC_Gateway_ConsumerAdmin const &) = delete;
+  FTEC_Gateway_ConsumerAdmin &operator= (FTEC_Gateway_ConsumerAdmin &&) = delete;
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
   FTEC_Gateway_Impl* impl_;
@@ -32,12 +34,12 @@ class FTEC_Gateway_SupplierAdmin
   : public POA_RtecEventChannelAdmin::SupplierAdmin
 {
 public:
-  FTEC_Gateway_SupplierAdmin (FTEC_Gateway_Impl *impl);
-  ~FTEC_Gateway_SupplierAdmin () override;
-  FTEC_Gateway_SupplierAdmin(FTEC_Gateway_SupplierAdmin const&) = delete;
-  FTEC_Gateway_SupplierAdmin(FTEC_Gateway_SupplierAdmin&&) = delete;
-  FTEC_Gateway_SupplierAdmin& operator=(FTEC_Gateway_SupplierAdmin const&) = delete;
-  FTEC_Gateway_SupplierAdmin& operator=(FTEC_Gateway_SupplierAdmin&&) = delete;
+  explicit FTEC_Gateway_SupplierAdmin (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_SupplierAdmin () override = default;
+  FTEC_Gateway_SupplierAdmin (FTEC_Gateway_SupplierAdmin const &) = delete;
+  FTEC_Gateway_SupplierAdmin (FTEC_Gateway_SupplierAdmin &&) = delete;
+  FTEC_Gateway_SupplierAdmin &operator= (FTEC_Gateway_SupplierAdmin const &) = delete;
+  FTEC_Gateway_SupplierAdmin &operator= (FTEC_Gateway_SupplierAdmin &&) = delete;
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   RtecEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
   FTEC_Gateway_Impl* impl_;
@@ -47,12 +49,12 @@ class FTEC_Gateway_ProxyPushSupplier
   : public POA_RtecEventChannelAdmin::ProxyPushSupplier
 {
 public:
-  FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_Impl *impl);
-  ~FTEC_Gateway_ProxyPushSupplier () override;
-  FTEC_Gateway_ProxyPushSupplier(FTEC_Gateway_ProxyPushSupplier const&) = delete;
-  FTEC_Gateway_ProxyPushSupplier(FTEC_Gateway_ProxyPushSupplier&&) = delete;
-  FTEC_Gateway_ProxyPushSupplier& operator=(FTEC_Gateway_ProxyPushSupplier const&) = delete;
-  FTEC_Gateway_ProxyPushSupplier& operator=(FTEC_Gateway_ProxyPushSupplier&&) = delete;
+  explicit FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_ProxyPushSupplier () override = default;
+  FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_ProxyPushSupplier const &) = delete;
+  FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_ProxyPushSupplier &&) = delete;
+  FTEC_Gateway_ProxyPushSupplier &operator= (FTEC_Gateway_ProxyPushSupplier const &) = delete;
+  FTEC_Gateway_ProxyPushSupplier &operator= (FTEC_Gateway_ProxyPushSupplier &&) = delete;
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
@@ -67,12 +69,12 @@ class FTEC_Gateway_ProxyPushConsumer
   : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
 public:
-  FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_Impl *impl);
-  ~FTEC_Gateway_ProxyPushConsumer () override;
-  FTEC_Gateway_ProxyPushConsumer(FTEC_Gateway_ProxyPushConsumer const&) = delete;
-  FTEC_Gateway_ProxyPushConsumer(FTEC_Gateway_ProxyPushConsumer&&) = delete;
-  FTEC_Gateway_ProxyPushConsumer& operator=(FTEC_Gateway_ProxyPushConsumer const&) = delete;
-  FTEC_Gateway_ProxyPushConsumer& operator=(FTEC_Gateway_ProxyPushConsumer&&) = delete;
+  explicit FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_ProxyPushConsumer () override = default;
+  FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_ProxyPushConsumer const &) = delete;
+  FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_ProxyPushConsumer &&) = delete;
+  FTEC_Gateway_ProxyPushConsumer &operator= (FTEC_Gateway_ProxyPushConsumer const &) = delete;
+  FTEC_Gateway_ProxyPushConsumer &operator= (FTEC_Gateway_ProxyPushConsumer &&) = delete;
 
   void push (RtecEventComm::EventSet const &data) override;
       // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
@@ -87,12 +89,12 @@ public:
 class PushConsumerHandler : public POA_FtRtecEventComm::AMI_PushConsumerHandler
 {
 public:
-  PushConsumerHandler ();
-  ~PushConsumerHandler () override;
-  PushConsumerHandler(PushConsumerHandler const&) = delete;
-  PushConsumerHandler(PushConsumerHandler&&) = delete;
-  PushConsumerHandler& operator=(PushConsumerHandler const&) = delete;
-  PushConsumerHandler& operator=(PushConsumerHandler&&) = delete;
+  PushConsumerHandler () = default;
+  ~PushConsumerHandler () override = default;
+  PushConsumerHandler (PushConsumerHandler const &) = delete;
+  PushConsumerHandler (PushConsumerHandler &&) = delete;
+  PushConsumerHandler &operator= (PushConsumerHandler const &) = delete;
+  PushConsumerHandler &operator= (PushConsumerHandler &&) = delete;
   void push () override;
 
   void push_excep (::Messaging::ExceptionHolder *excep_holder) override;
@@ -127,13 +129,13 @@ struct FTEC_Gateway_Impl
   FTEC_Gateway_ProxyPushConsumer proxy_consumer_servant;
   PushConsumerHandler push_handler_servant;
   FtRtecEventComm::AMI_PushConsumerHandler_var push_handler;
-  bool local_orb;
+  bool local_orb {};
   FTEC_Gateway_Impl();
 
-  FTEC_Gateway_Impl(FTEC_Gateway_Impl const&) = delete;
-  FTEC_Gateway_Impl(FTEC_Gateway_Impl&&) = delete;
-  FTEC_Gateway_Impl& operator=(FTEC_Gateway_Impl const&) = delete;
-  FTEC_Gateway_Impl& operator=(FTEC_Gateway_Impl&&) = delete;
+  FTEC_Gateway_Impl (FTEC_Gateway_Impl const &) = delete;
+  FTEC_Gateway_Impl (FTEC_Gateway_Impl &&) = delete;
+  FTEC_Gateway_Impl &operator= (FTEC_Gateway_Impl const &) = delete;
+  FTEC_Gateway_Impl &operator= (FTEC_Gateway_Impl &&) = delete;
 };
 
 FTEC_Gateway_Impl::FTEC_Gateway_Impl()
@@ -144,8 +146,9 @@ FTEC_Gateway_Impl::FTEC_Gateway_Impl()
 {
 }
 
-FTEC_Gateway::FTEC_Gateway(CORBA::ORB_ptr orb, FtRtecEventChannelAdmin::EventChannel_ptr ftec)
-: impl_(new FTEC_Gateway_Impl)
+FTEC_Gateway::FTEC_Gateway (CORBA::ORB_ptr orb,
+                            FtRtecEventChannelAdmin::EventChannel_ptr ftec)
+  : impl_ (std::make_unique<FTEC_Gateway_Impl> ())
 {
   impl_->local_orb = CORBA::is_nil(orb);
   if (!impl_->local_orb)
@@ -157,7 +160,6 @@ FTEC_Gateway::~FTEC_Gateway()
 {
   if (impl_->local_orb)
     impl_->orb->shutdown();
-  delete impl_;
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
@@ -168,7 +170,7 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
 
   if (impl_->local_orb) {
     int argc = 0;
-    char** argv = nullptr;
+    char** argv {};
     impl_->orb = CORBA::ORB_init(argc, argv, "FTEC_GatewayORB");
 
     Interceptor_Destoryer::execute(impl_->orb.in());
@@ -262,12 +264,12 @@ void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handl
 }
 
 void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                        const RtecEventComm::EventSet & data)
+                        RtecEventComm::EventSet const &data)
 {
   const PortableServer::ObjectId_var object_id =
     impl_->poa->reference_to_id(proxy_consumer);
   FtRtecEventComm::ObjectId** result;
-  ACE_OS::memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
+  std::memcpy (&result, &object_id[0], sizeof (FtRtecEventComm::ObjectId**));
 
   impl_->ftec->push(**result, data);
 }
@@ -275,12 +277,8 @@ void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consu
 
 /// FTEC_Gateway_ConsumerAdmin
 
-FTEC_Gateway_ConsumerAdmin::FTEC_Gateway_ConsumerAdmin(FTEC_Gateway_Impl* impl)
-: impl_(impl)
-{
-}
-
-FTEC_Gateway_ConsumerAdmin::~FTEC_Gateway_ConsumerAdmin()
+FTEC_Gateway_ConsumerAdmin::FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl)
+  : impl_ (impl)
 {
 }
 
@@ -292,7 +290,7 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  ACE_OS::memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
+  std::memcpy (&local_oid[0], &remote_proxy_oid_ptr, sizeof (remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
@@ -303,12 +301,8 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 
 /// FTEC_Gateway_SupplierAdmin
 
-FTEC_Gateway_SupplierAdmin::FTEC_Gateway_SupplierAdmin(FTEC_Gateway_Impl* impl)
-: impl_(impl)
-{
-}
-
-FTEC_Gateway_SupplierAdmin::~FTEC_Gateway_SupplierAdmin()
+FTEC_Gateway_SupplierAdmin::FTEC_Gateway_SupplierAdmin (FTEC_Gateway_Impl *impl)
+  : impl_ (impl)
 {
 }
 
@@ -321,7 +315,7 @@ FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  ACE_OS::memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
+  std::memcpy (&local_oid[0], &remote_proxy_oid_ptr, sizeof (remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
@@ -342,18 +336,14 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb)
     current->get_object_id();
 
   FtRtecEventComm::ObjectId** result;
-  ACE_OS::memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
+  std::memcpy (&result, &object_id[0], sizeof (FtRtecEventComm::ObjectId**));
   return result;
 }
 
 /// FTEC_Gateway_ProxyPushSupplier
 
-FTEC_Gateway_ProxyPushSupplier::FTEC_Gateway_ProxyPushSupplier(FTEC_Gateway_Impl* impl)
-: impl_(impl)
-{
-}
-
-FTEC_Gateway_ProxyPushSupplier::~FTEC_Gateway_ProxyPushSupplier()
+FTEC_Gateway_ProxyPushSupplier::FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_Impl *impl)
+  : impl_ (impl)
 {
 }
 
@@ -361,7 +351,7 @@ FTEC_Gateway_ProxyPushSupplier::~FTEC_Gateway_ProxyPushSupplier()
 // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
-  const RtecEventChannelAdmin::ConsumerQOS &qos)
+  RtecEventChannelAdmin::ConsumerQOS const &qos)
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
@@ -390,19 +380,15 @@ void FTEC_Gateway_ProxyPushSupplier::resume_connection ()
 
 /// FTEC_Gateway_ProxyPushConsumer
 
-FTEC_Gateway_ProxyPushConsumer::FTEC_Gateway_ProxyPushConsumer(FTEC_Gateway_Impl* impl)
-: impl_(impl)
-{
-}
-
-FTEC_Gateway_ProxyPushConsumer::~FTEC_Gateway_ProxyPushConsumer()
+FTEC_Gateway_ProxyPushConsumer::FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_Impl *impl)
+  : impl_ (impl)
 {
 }
 
 
 // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 
-void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
+void FTEC_Gateway_ProxyPushConsumer::push (RtecEventComm::EventSet const &data)
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
@@ -420,7 +406,7 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
 
 void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
   RtecEventComm::PushSupplier_ptr push_supplier,
-  const RtecEventChannelAdmin::SupplierQOS& qos)
+  RtecEventChannelAdmin::SupplierQOS const &qos)
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos);
@@ -432,14 +418,6 @@ void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer ()
   impl_->ftec->disconnect_push_consumer(**oid_ptr);
   delete *oid_ptr;
   delete oid_ptr;
-}
-
-PushConsumerHandler::PushConsumerHandler()
-{
-}
-
-PushConsumerHandler::~PushConsumerHandler()
-{
 }
 
 void PushConsumerHandler::push ()

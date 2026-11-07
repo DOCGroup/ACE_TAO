@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 
+#include <cstring>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_DynamicImplementation.inl"
 #endif /* __ACE_INLINE__ */
@@ -17,7 +19,7 @@ void
 TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
 {
   // Trap the _is_a request
-  if (ACE_OS::strcmp ("_is_a", request->operation () ) == 0)
+  if (std::strcmp ("_is_a", request->operation () ) == 0)
     {
       this->is_a (request);
     }
@@ -29,7 +31,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
       TAO_CEC_Operation_Params *oper_params =
         this->typed_event_channel_->find_from_ifr_cache (request->operation () );
 
-      if (oper_params == 0)
+      if (oper_params == nullptr)
         {
           if (TAO_debug_level >= 10)
             {
@@ -48,7 +50,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
           request->arguments (list);
 
           // Populate the TypedEvent with the list and operation name.
-          TAO_CEC_TypedEvent typed_event (list, request->operation () );
+          TAO_CEC_TypedEvent const typed_event (list, request->operation () );
 
           // Pass the TypedEvent to the TypedProxyPushConsumer
           this->typed_pp_consumer_->invoke (typed_event);
@@ -57,7 +59,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
 }
 
 CORBA::RepositoryId
-TAO_CEC_DynamicImplementationServer::_primary_interface (const PortableServer::ObjectId &,
+TAO_CEC_DynamicImplementationServer::_primary_interface (PortableServer::ObjectId const &,
                                                          PortableServer::POA_ptr)
 {
   return CORBA::string_dup (repository_id_);
@@ -88,7 +90,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   CORBA::NamedValue_ptr nv = list->item (0);
 
   CORBA::Any_ptr ap = nv->value ();
-  const char *value {};
+  char const *value {};
   *ap >>= value;
 
   if (TAO_debug_level >= 10)
@@ -98,7 +100,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   value));
     }
 
-  const char *object_id =
+  char const *object_id =
     CORBA::_tc_Object->id ();
 
   if (TAO_debug_level >= 10)
@@ -111,15 +113,15 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   object_id));
     }
 
-  CORBA::Boolean result = 0;
-  if (ACE_OS::strcmp (value, this->repository_id_) == 0
-      || ACE_OS::strcmp (value, object_id) == 0)
+  CORBA::Boolean result = false;
+  if (std::strcmp (value, this->repository_id_) == 0
+      || std::strcmp (value, object_id) == 0)
     {
-      result = 1;
+      result = true;
     }
   else
     {
-      CORBA::ULong num = this->typed_event_channel_->number_of_base_interfaces ();
+      CORBA::ULong const num = this->typed_event_channel_->number_of_base_interfaces ();
       for (CORBA::ULong base=0; base<num; base++)
         {
           if (TAO_debug_level >= 10)
@@ -129,9 +131,9 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                           this->typed_event_channel_->base_interfaces (base) ));
             }
 
-          if (ACE_OS::strcmp (value, this->typed_event_channel_->base_interfaces (base) ) == 0)
+          if (std::strcmp (value, this->typed_event_channel_->base_interfaces (base) ) == 0)
             {
-              result = 1;
+              result = true;
             }
         }
     }
@@ -144,7 +146,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
     }
 
   CORBA::Any result_any;
-  CORBA::Any::from_boolean from_boolean (result);
+  CORBA::Any::from_boolean const from_boolean (result);
   result_any <<= from_boolean;
 
   request->set_result (result_any);

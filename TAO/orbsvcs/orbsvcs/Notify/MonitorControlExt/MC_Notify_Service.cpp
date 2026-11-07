@@ -13,14 +13,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MC_Notify_Service::~TAO_MC_Notify_Service ()
-{
-}
-
 TAO_Notify_Factory*
 TAO_MC_Notify_Service::create_factory ()
 {
-  TAO_MC_Default_Factory* factory = nullptr;
+  TAO_MC_Default_Factory* factory {};
   ACE_NEW_THROW_EX (factory,
                     TAO_MC_Default_Factory (),
                     CORBA::NO_MEMORY ());
@@ -35,7 +31,7 @@ TAO_MC_Notify_Service::init_i (CORBA::ORB_ptr orb)
   TAO_MonitorManager* monitor =
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
-  if (monitor == 0)
+  if (monitor == nullptr)
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG, "%s must be loaded via "
@@ -57,7 +53,7 @@ TAO_MC_Notify_Service::init_i2 (CORBA::ORB_ptr orb,
   TAO_MonitorManager* monitor =
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
-  if (monitor == 0)
+  if (monitor == nullptr)
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG, "%s must be loaded via "

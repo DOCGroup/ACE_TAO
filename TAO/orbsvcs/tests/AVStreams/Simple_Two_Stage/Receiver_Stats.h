@@ -33,7 +33,7 @@ public:
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
    */
-  Receiver_Stats ();
+  Receiver_Stats () = default;
 
   /// The number of samples received so far
   ACE_UINT32 samples_count () const;
@@ -42,7 +42,7 @@ public:
   void sample (ACE_UINT64 value);
 
   /// Update the values to reflect the stats in @a rhs.
-  void accumulate (const Receiver_Stats &rhs);
+  void accumulate (Receiver_Stats const &rhs);
 
   /// Dump all the samples
   /**
@@ -51,31 +51,31 @@ public:
    * high resolution timer samples are acquired in clock ticks, but often
    * presented in microseconds.
    */
-  void dump_results (const ACE_TCHAR *msg,
+  void dump_results (ACE_TCHAR const *msg,
                      FILE *file,
                      ACE_UINT32 scale_factor) const;
 
 private:
   /// The number of samples
-  ACE_UINT32 samples_count_;
+  ACE_UINT32 samples_count_ {};
 
   /// The minimum value
-  ACE_UINT64 min_;
+  ACE_UINT64 min_ {};
 
   /// The number of the sample that had the minimum value
-  ACE_UINT32 min_at_;
+  ACE_UINT32 min_at_ {};
 
   /// The maximum value
-  ACE_UINT64 max_;
+  ACE_UINT64 max_ {};
 
   /// The number of the sample that had the maximum value
-  ACE_UINT32 max_at_;
+  ACE_UINT32 max_at_ {};
 
   /// The sum of all the values
-  ACE_UINT64 sum_;
+  ACE_UINT64 sum_ {};
 
   /// The sum of the square of all the values
-  ACE_UINT64 sum2_;
+  ACE_UINT64 sum2_ {};
 };
 
 #if defined (__ACE_INLINE__)

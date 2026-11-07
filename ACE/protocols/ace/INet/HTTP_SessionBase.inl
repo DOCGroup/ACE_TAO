@@ -107,12 +107,12 @@ namespace ACE
         if (this->in_stream_)
           {
             delete this->in_stream_;
-            this->in_stream_ = 0;
+            this->in_stream_ = nullptr;
           }
         if (this->out_stream_)
           {
             delete this->out_stream_;
-            this->out_stream_ = 0;
+            this->out_stream_ = nullptr;
           }
       }
   }

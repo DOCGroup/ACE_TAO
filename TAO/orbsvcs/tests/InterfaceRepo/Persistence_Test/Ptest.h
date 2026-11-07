@@ -33,10 +33,10 @@ class Ptest
 {
 public:
   /// Constructor
-  Ptest ();
+  Ptest () = default;
 
   /// Destructor
-  ~Ptest ();
+  ~Ptest () = default;
 
   Ptest (Ptest const&) = delete;
   Ptest (Ptest&&) = delete;
@@ -63,10 +63,10 @@ private:
                   ACE_TCHAR *argv[]);
 
   /// Flag to output results of IFR queries.
-  CORBA::Boolean debug_;
+  bool debug_ {};
 
   /// Are we populating a new IFR or querying a persistent one?
-  CORBA::Boolean query_;
+  bool query_ {};
 
   /// Storage of the ORB reference.
   CORBA::ORB_var orb_;

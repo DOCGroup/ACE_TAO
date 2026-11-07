@@ -26,8 +26,8 @@
 //         in the range)
 // Note the use of unsigned short for UTF-16 codepoints.  wchar_t may
 // by four bytes
-typedef ACE_CDR::UShort ACE_UTF16_T;
-static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof(ACE_UTF16_T);
+using ACE_UTF16_T = ACE_CDR::UShort;
+size_t constexpr ACE_UTF16_CODEPOINT_SIZE = sizeof(ACE_UTF16_T);
 
 // surrogate high           1101.10HH.HHHH.HHHH
 // surrogate low            1101.11LL.LLLL.LLLL
@@ -35,28 +35,28 @@ static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof(ACE_UTF16_T);
 // add offset               0000.0000.0000.0000.0001.0000.0000.0000
 
 // range of surrogate values for high-order bits
-static const unsigned short ACE_UTF16_SURROGATE_HIGH_BEGIN = 0xD800U;
-static const unsigned short ACE_UTF16_SURROGATE_HIGH_END = 0xDC00U;
+unsigned short constexpr ACE_UTF16_SURROGATE_HIGH_BEGIN = 0xD800U;
+unsigned short constexpr ACE_UTF16_SURROGATE_HIGH_END = 0xDC00U;
 
-static const unsigned short ACE_UTF16_SURROGATE_LOW_BEGIN = 0xDC00U;
-static const unsigned short ACE_UTF16_SURROGATE_LOW_END = 0xE000U;
+unsigned short constexpr ACE_UTF16_SURROGATE_LOW_BEGIN = 0xDC00U;
+unsigned short constexpr ACE_UTF16_SURROGATE_LOW_END = 0xE000U;
 
 // offset to UTF16 values encoded with surrogates start at 2^16
-static const unsigned long ACE_UTF16_SURROGATE_OFFSET = 0x000010000UL;
+unsigned long constexpr ACE_UTF16_SURROGATE_OFFSET = 0x000010000UL;
 
 // shift high order bits from surrogate into correct postion
-static const int ACE_UTF16_SURROGATE_HIGH_SHIFT = 10;
-static const unsigned short ACE_UTF16_SURROGATE_LOW_MASK = 0x3FF;
+int constexpr ACE_UTF16_SURROGATE_HIGH_SHIFT = 10;
+unsigned short constexpr ACE_UTF16_SURROGATE_LOW_MASK = 0x3FF;
 
 // largest value that can be represented in UTF16 without using surrogates + 1
-static const unsigned long ACE_UTF16_RAW_END = 0x00010000LU;
+unsigned long constexpr ACE_UTF16_RAW_END = 0x00010000LU;
 
 // largest value that can be represented in UTF16 + 1
-static const unsigned long ACE_UTF16_END = 0x00110000LU;
+unsigned long constexpr ACE_UTF16_END = 0x00110000LU;
 
-static const unsigned short ACE_UNICODE_SUBSTITUTE_CHARACTER = 0xFFFDU;
-static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
-static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
+unsigned short constexpr ACE_UNICODE_SUBSTITUTE_CHARACTER = 0xFFFDU;
+unsigned short constexpr ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
+unsigned short constexpr ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 
 /////////////////////////////////////////////////////
 // Static inline routines to simplify conversion code
@@ -69,7 +69,7 @@ static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 static
 //ACE_INLINE
 ACE_UTF16_T
-load_raw_wchar (const char * buffer, size_t & pos, int do_byte_swap)
+load_raw_wchar (char const *buffer, size_t &pos, int do_byte_swap)
 {
   // need a two byte object to load the UTF16 2 byte codepoint
   ACE_UTF16_T utf16_char = * reinterpret_cast<ACE_UTF16_T const *> (&buffer[pos*ACE_UTF16_CODEPOINT_SIZE]);
@@ -102,7 +102,7 @@ convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 static
 //ACE_INLINE
 ACE_CDR::WChar
-load_wchar (const char * buffer, size_t & pos, size_t length, int do_byte_swap)
+load_wchar (char const *buffer, size_t &pos, size_t length, int do_byte_swap)
 {
   ACE_CDR::WChar rc = ACE_UNICODE_SUBSTITUTE_CHARACTER;
   if (pos < length)
@@ -188,7 +188,7 @@ size_t encode_utf16 (ACE_UTF16_T * buffer, ACE_CDR::WChar value)
 /// to UTF-16 surrogate pairs
 static
 size_t count_potential_surrogates (
-    const ACE_CDR::WChar *buffer,
+    ACE_CDR::WChar const *buffer,
     ACE_CDR::ULong len)
 {
   size_t count = 0;
@@ -209,13 +209,9 @@ size_t count_potential_surrogates (
 /////////////////////////////
 // WUCS4_UTF16 implementation
 
-WUCS4_UTF16::WUCS4_UTF16 ()
-{
-}
+WUCS4_UTF16::WUCS4_UTF16 () = default;
 
-WUCS4_UTF16::~WUCS4_UTF16 ()
-{
-}
+WUCS4_UTF16::~WUCS4_UTF16 () = default;
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
@@ -344,7 +340,7 @@ WUCS4_UTF16::read_wstring (ACE_InputCDR &cdr,
       x[0] = '\x00';
       return 1;
     }
-  x = 0;
+  x = nullptr;
   return 0;
 }
 
@@ -450,7 +446,7 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
     {
       len = 1;
       if (cdr.byte_order())
-        ACE_CDR::swap_2 (reinterpret_cast<const char *> (&x),
+        ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
                          reinterpret_cast<char *> (buffer));
       else
         buffer[0] = static_cast<ACE_CDR::Short> (x);
@@ -474,7 +470,7 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
 ACE_CDR::Boolean
 WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
                 ACE_CDR::ULong len,
-                const ACE_CDR::WChar *x)
+                ACE_CDR::WChar const *x)
 {
   if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) > 1)
@@ -486,7 +482,7 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       ACE_CDR::ULong length = len + count_potential_surrogates (x, len);
       ACE_CDR::ULong l = length * ACE_UTF16_CODEPOINT_SIZE;
 
-      if (this->write_4 (cdr, &l) && x != 0)
+      if (this->write_4 (cdr, &l) && x != nullptr)
         {
           this->write_2 (cdr, &bom);
           return this->write_measured_wchar_array (cdr, x, len, length);
@@ -498,7 +494,7 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
 
       if (this->write_4 (cdr, &l))
         {
-          if (x != 0)
+          if (x != nullptr)
             {
               return this->write_wchar_array (cdr, x, len + 1);
             }
@@ -515,7 +511,7 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 WUCS4_UTF16::write_wchar_array (ACE_OutputCDR & cdr,
-                const ACE_CDR::WChar *x,
+                ACE_CDR::WChar const *x,
                 ACE_CDR::ULong length)
 {
 #if 0
@@ -545,7 +541,7 @@ WUCS4_UTF16::write_wchar_array (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
-                                         const ACE_CDR::WChar *x,
+                                         ACE_CDR::WChar const *x,
                                          ACE_CDR::ULong length,
                                          ACE_CDR::ULong transmission_length)
 {

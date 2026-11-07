@@ -13,6 +13,8 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynAny_i::~TAO_DynAny_i () = default;
@@ -140,7 +142,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
         TAO_OutputCDR stream;
         stream << CORBA::Object::_nil ();
         TAO_InputCDR in (stream);
-        TAO::Unknown_IDL_Type *unk = nullptr;
+        TAO::Unknown_IDL_Type *unk {};
         ACE_NEW (unk,
                  TAO::Unknown_IDL_Type (tc, in));
         this->any_.replace (unk);
@@ -457,7 +459,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
               }
           }
 
-        return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
+        return std::strcmp (rhs_v, lhs_v) == 0;
       }
     case CORBA::tk_wstring:
       {

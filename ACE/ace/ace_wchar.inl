@@ -26,8 +26,8 @@ inline char *
 ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 {
   // Short circuit null pointer case
-  if (wstr == 0)
-    return 0;
+  if (wstr == nullptr)
+    return nullptr;
 
 # if defined (ACE_WIN32)
   UINT const cp = GetACP ();  // Codepage

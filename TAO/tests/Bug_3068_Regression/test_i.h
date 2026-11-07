@@ -12,25 +12,32 @@
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
 
+#include <memory>
+
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
+#include "ace/Guard_T.h"
 #include "ace/Condition_T.h"
 
 class Caller : public ACE_Task_Base
 {
 public:
   Caller (Callback_ptr cb, CORBA::ORB_ptr orb);
+  Caller (Caller const &) = delete;
+  Caller &operator= (Caller const &) = delete;
+  Caller (Caller &&) = delete;
+  Caller &operator= (Caller &&) = delete;
   void go ();
 
   int svc () override;
 
 private:
-  Callback_var cbobj_;
-  CORBA::ORB_var orb_;
+  Callback_var const cbobj_;
+  CORBA::ORB_var const orb_;
   TAO_SYNCH_MUTEX lock_;
   ACE_Condition<TAO_SYNCH_MUTEX> cond_;
-  bool going_;
+  bool going_ {};
   CORBA::OctetSeq payload_;
 };
 
@@ -47,7 +54,11 @@ class Callback_i : public POA_Callback
 {
 public:
   /// ctor
-  Callback_i (CORBA::ORB_ptr orb);
+  explicit Callback_i (CORBA::ORB_ptr orb);
+  Callback_i (Callback_i const &) = delete;
+  Callback_i &operator= (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i &operator= (Callback_i &&) = delete;
 
   /// Safe way to shutdown
   void shutdown () override;
@@ -57,7 +68,7 @@ public:
 
 private:
   /// The orb
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 /**
@@ -72,7 +83,11 @@ class Simple_Server_i : public POA_Simple_Server
 {
 public:
   /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   // = The Simple_Server methods.
   void ow_test () override;
@@ -85,13 +100,13 @@ public:
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Callback Object
-  Caller *caller_ {};
+  std::unique_ptr<Caller> caller_ {};
 
   /// Number of times the callback needs to be called
-  int ow_count_;
+  int ow_count_ {};
 };
 
 #if defined(__ACE_INLINE__)

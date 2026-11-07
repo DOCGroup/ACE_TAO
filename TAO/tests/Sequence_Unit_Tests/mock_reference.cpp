@@ -27,16 +27,16 @@ allocate(int id)
 mock_reference * mock_reference::
 _nil()
 {
-  return 0;
+  return nullptr;
 }
 
 mock_reference * mock_reference::
 _duplicate(mock_reference * rhs)
 {
   duplicate_calls();
-  if (rhs == 0)
+  if (rhs == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   return new mock_reference(*rhs);
 }

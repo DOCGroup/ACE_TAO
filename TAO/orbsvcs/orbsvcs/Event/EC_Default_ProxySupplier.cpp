@@ -15,10 +15,6 @@ TAO_EC_Default_ProxyPushSupplier::TAO_EC_Default_ProxyPushSupplier (
 {
 }
 
-TAO_EC_Default_ProxyPushSupplier::~TAO_EC_Default_ProxyPushSupplier ()
-{
-}
-
 void
 TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
@@ -36,7 +32,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->consumer_reconnect () == 0)
+        if (!this->event_channel_->consumer_reconnect ())
           throw RtecEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed....

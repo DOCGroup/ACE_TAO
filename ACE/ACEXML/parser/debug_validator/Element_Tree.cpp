@@ -27,7 +27,7 @@ ACEXML_Element_Tree_List_Node::~ACEXML_Element_Tree_List_Node ()
 int
 ACEXML_Element_Tree_List_Node::insert (ACEXML_Element_Tree_Node *node)
 {
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     {
       this->tail_ = this->head_ = node;
     }
@@ -43,16 +43,17 @@ void
 ACEXML_Element_Tree_List_Node::dump ()
 {
   ACEXML_Element_Tree_Node *ptr = this->head_;
-  const ACEXML_Char *separator = (this->type_ == SEQUENCE) ? ACE_TEXT(" , ") : ACE_TEXT(" | ");
+  ACEXML_Char const *separator =
+    (this->type_ == LIST_TYPE::SEQUENCE) ? ACE_TEXT (" , ") : ACE_TEXT (" | ");
 
   cout << "(";
 
-  if (ptr != 0)
+  if (ptr != nullptr)
     {
       ptr->dump ();
       ptr = ptr->next ();
 
-      while (ptr != 0)
+      while (ptr != nullptr)
         {
           cout << separator;
           ptr->dump ();

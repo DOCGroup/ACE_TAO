@@ -10,7 +10,7 @@
 template<class SERVANT> ACE_INLINE SERVANT *
 Servant_var<SERVANT>::duplicate (SERVANT *servant)
 {
-  if (servant != 0)
+  if (servant != nullptr)
     servant->_add_ref ();
   return servant;
 }

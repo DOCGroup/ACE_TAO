@@ -13,25 +13,26 @@ namespace ACE_TMCast
   class Message
   {
   public:
-    virtual
-    ~Message () {}
+    virtual ~Message () = default;
   };
 
-  typedef
-  ACE_Strong_Bound_Ptr<Message, ACE_SYNCH_MUTEX>
-  MessagePtr;
+  using MessagePtr = ACE_Strong_Bound_Ptr<Message, ACE_SYNCH_MUTEX>;
 
-  typedef
-  MTQueue<MessagePtr, ACE_Thread_Mutex, ACE_Condition<ACE_Thread_Mutex> >
-  MessageQueue;
+  using MessageQueue =
+    MTQueue<MessagePtr, ACE_Thread_Mutex, ACE_Condition<ACE_Thread_Mutex>>;
 
   struct MessageQueueAutoLock
   {
-    MessageQueueAutoLock (MessageQueue& q)
+    explicit MessageQueueAutoLock (MessageQueue& q)
         : q_ (q)
     {
       q_.lock ();
     }
+
+    MessageQueueAutoLock (MessageQueueAutoLock const&) = delete;
+    MessageQueueAutoLock (MessageQueueAutoLock&&) = delete;
+    MessageQueueAutoLock& operator= (MessageQueueAutoLock const&) = delete;
+    MessageQueueAutoLock& operator= (MessageQueueAutoLock&&) = delete;
 
     void
     unlock ()

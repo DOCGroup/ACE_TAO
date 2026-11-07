@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "objref_struct.h"
 
 // ************************************************************************
@@ -28,7 +30,7 @@ Test_Objref_Struct::Test_Objref_Struct ()
 Test_Objref_Struct::~Test_Objref_Struct ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -50,7 +52,7 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Objref_Struct *tmp = 0;
+  Param_Test::Objref_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Objref_Struct (*tmp);
 
@@ -162,9 +164,9 @@ Test_Objref_Struct::check_validity ()
 
       Coffee::Desc_var s_ret = this->ret_->y->description ();
 
-      if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
+      if (std::strcmp (s_in->name, s_out->name) != 0
+          || std::strcmp (s_in->name, s_inout->name) != 0
+          || std::strcmp (s_in->name, s_ret->name) != 0 )
         {
           return 0;
         }

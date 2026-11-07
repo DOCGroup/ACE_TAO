@@ -18,12 +18,12 @@ public:
   // = The skeleton methods
   void pass_callback (Test::TestCallback_ptr test) override;
 
-  bool got_callback ();
+  bool got_callback () const;
   void make_callback ();
   void shutdown_client ();
 
 private:
-  Test::TestCallback_var callback_;
+  Test::TestCallback_var callback_ {};
 };
 
 #include /**/ "ace/post.h"

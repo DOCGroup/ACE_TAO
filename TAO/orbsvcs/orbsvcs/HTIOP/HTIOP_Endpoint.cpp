@@ -7,6 +7,8 @@
 #include "tao/IOPC.h"
 #include "tao/debug.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/HTIOP/HTIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
@@ -72,9 +74,7 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     this->htid_ = htid;
 }
 
-TAO::HTIOP::Endpoint::~Endpoint ()
-{
-}
+TAO::HTIOP::Endpoint::~Endpoint () = default;
 
 int
 TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
@@ -113,9 +113,9 @@ TAO::HTIOP::Endpoint::addr_to_string (char *buffer, size_t length)
   if (this->port_ != 0)
     {
       size_t actual_len =
-        ACE_OS::strlen (this->host_.in ()) // chars in host name
+        std::strlen (this->host_.in ()) // chars in host name
         + sizeof (':')                     // delimiter
-        + ACE_OS::strlen ("65536")         // max port
+        + std::strlen ("65536")         // max port
         + sizeof ('\0');
 
       if (length < actual_len)
@@ -126,9 +126,9 @@ TAO::HTIOP::Endpoint::addr_to_string (char *buffer, size_t length)
     }
   else
     {
-      if (length < ACE_OS::strlen (this->htid_.in())+1)
+      if (length < std::strlen (this->htid_.in ()) + 1)
         return -1;
-      ACE_OS::strcpy (buffer,this->htid_.in());
+      std::strcpy (buffer, this->htid_.in ());
     }
   return 0;
 }
@@ -172,7 +172,7 @@ TAO::HTIOP::Endpoint::duplicate ()
   // using this method for some other purpose later, this will be a
   // seed for bugs.
 
-  TAO::HTIOP::Endpoint *endpoint = nullptr;
+  TAO::HTIOP::Endpoint *endpoint {};
 
   ACE_NEW_RETURN (endpoint,
                   TAO::HTIOP::Endpoint (this->host_.in (),
@@ -195,18 +195,18 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == nullptr)
     return 0;
 
-  if (this->htid_.in() && ACE_OS::strlen (this->htid_.in()))
+  if (this->htid_.in() && std::strlen (this->htid_.in ()))
     return (endpoint->htid() &&
-            ACE_OS::strcmp (this->htid_.in(),endpoint->htid()) == 0);
+            std::strcmp (this->htid_.in (), endpoint->htid ()) == 0);
 
   return (this->port_ == endpoint->port_
-          && (ACE_OS::strcmp(this->host(), endpoint->host()) == 0));
+          && (std::strcmp (this->host (), endpoint->host ()) == 0));
 }
 
 CORBA::ULong
 TAO::HTIOP::Endpoint::hash ()
 {
-  if (this->htid_.in() && ACE_OS::strlen (this->htid_.in()))
+  if (this->htid_.in() && std::strlen (this->htid_.in ()))
     return ACE::hash_pjw(this->htid_.in());
   return this->object_addr ().hash();
 }

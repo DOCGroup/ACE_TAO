@@ -249,7 +249,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   // dynamically loaded from shared libraries via ORB_init (), and we
   // just need to be able to access such preloaded libraries here as
   // we unmarshal objrefs.
-  CORBA::ULong profiles = 0;
+  CORBA::ULong profiles {};
 
   // get the count of profiles that follow
   continue_skipping = stream->read_ulong (profiles);
@@ -396,10 +396,10 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
       return TAO::TRAVERSE_STOP;
     }
 
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
-  const CORBA::ULong null_member = ~static_cast<CORBA::ULong> (0U);
+  CORBA::ULong const null_member = ~static_cast<CORBA::ULong> (0U);
 
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
@@ -603,7 +603,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   // For CORBA basic types, the skip can be optimized
   CORBA::TCKind const kind = tc2->kind ();
 
-  char *dummy = nullptr;
+  char *dummy {};
   switch (kind)
     {
     case CORBA::tk_octet:
@@ -800,7 +800,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_STOP;
 
   // Number of fields in the exception
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
   for (CORBA::ULong i = 0;
@@ -916,7 +916,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
       if (adapter->is_value_chunked (value_tag))
         {
-          CORBA::Long chunk_tag = 0;
+          CORBA::Long chunk_tag {};
           while (chunk_tag != -1)
             {
               if (!stream->read_long (chunk_tag))

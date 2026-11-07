@@ -58,12 +58,6 @@ Pluggable_Test_Factory_i::Pluggable_Test_Factory_i (CORBA::ORB_ptr orb)
 {
 }
 
-// Factory Destructor
-
-Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i ()
-{
-}
-
 Pluggable_Test_ptr
 Pluggable_Test_Factory_i::make_pluggable_test ()
 {
@@ -75,12 +69,6 @@ Pluggable_Test_Factory_i::make_pluggable_test ()
 
 PP_Test_i::PP_Test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
-// Destructor
-
-PP_Test_i::~PP_Test_i ()
 {
 }
 

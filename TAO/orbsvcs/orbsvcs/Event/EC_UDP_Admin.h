@@ -37,17 +37,17 @@ class TAO_RTEvent_Serv_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin
 {
 public:
   /// Constructor
-  TAO_EC_Simple_AddrServer (CORBA::UShort port);
+  explicit TAO_EC_Simple_AddrServer (CORBA::UShort port);
 
   /// Destructor
-  virtual ~TAO_EC_Simple_AddrServer () override;
+  ~TAO_EC_Simple_AddrServer () override = default;
 
   // = The RtecUDPAdmin::AddrServer methods
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr) override;
+  void get_addr (RtecEventComm::EventHeader const &header,
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
 
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr) override;
+  void get_address (RtecEventComm::EventHeader const &header,
+                    RtecUDPAdmin::UDP_Address_out addr) override;
 
 private:
   CORBA::UShort port_;

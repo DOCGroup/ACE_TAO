@@ -51,7 +51,7 @@ using QUEUE = Unbounded_Queue<Record>;
 
 QUEUE* squeue(ALLOCATOR* shmem_allocator)
 {
-  void *queue = nullptr;
+  void *queue {};
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
@@ -83,7 +83,7 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
   return (QUEUE*)queue;
 }
 
-static ALLOCATOR * g_shmem_allocator = nullptr;
+static ALLOCATOR *g_shmem_allocator {};
 
 // Listing 4 code/ch17
 int processRecord (ALLOCATOR *shmem_allocator)
@@ -186,7 +186,7 @@ int sendRecord (int recordId,  ALLOCATOR *shmem_allocator)
 // Listing 2 code/ch17
 int handle_parent (ACE_TCHAR *cmdLine)
 {
-  ALLOCATOR *shmem_allocator = nullptr;
+  ALLOCATOR *shmem_allocator {};
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
@@ -225,7 +225,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 // Listing 3 code/ch17
 int handle_child ()
 {
-  ALLOCATOR *shmem_allocator = nullptr;
+  ALLOCATOR *shmem_allocator {};
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);

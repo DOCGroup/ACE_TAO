@@ -2,19 +2,13 @@
 #include "tao/OctetSeqC.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Thread.h"
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
-  : myname_ ("Echo_Server_Interceptor"),
-    forward_location_done_ (false)
-{
-}
+#include <cstring>
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location)
-  : myname_ ("Echo_Server_Interceptor"),
-    forward_location_ (CORBA::Object::_duplicate (forward_location)),
-    forward_location_done_ (false)
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (
+    CORBA::Object_ptr forward_location)
+  : forward_location_ (CORBA::Object::_duplicate (forward_location))
 {
 }
 
@@ -45,7 +39,7 @@ void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "%C.receive_request_service_contexts from "
@@ -57,8 +51,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0 ||
-      ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0 ||
+      std::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   this->forward_location_done_ = true;
@@ -99,7 +93,7 @@ Echo_Server_Request_Interceptor::send_other (
   // This will throw an exception if a location forward has not
   // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference ();
+  CORBA::Object_var const forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
     throw CORBA::INTERNAL ();

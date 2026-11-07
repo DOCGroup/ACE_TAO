@@ -3,13 +3,10 @@
 #include "Web_Crawler.h"
 
 
-Web_Crawler::~Web_Crawler ()
-{
-  delete this->url_visitor_factory_;
-}
+Web_Crawler::~Web_Crawler () = default;
 
 Web_Crawler::Web_Crawler ()
-  : url_visitor_factory_ (nullptr)
+  : url_visitor_factory_ {}
 {
 }
 
@@ -22,9 +19,11 @@ Web_Crawler::open (int argc, ACE_TCHAR *argv[])
   else
     {
       // For now just hardcode this to create "validation" visitors.
-      ACE_NEW_RETURN (this->url_visitor_factory_,
+      URL_Visitor_Factory *factory;
+      ACE_NEW_RETURN (factory,
                       URL_Validation_Visitor_Factory,
                       -1);
+      this->url_visitor_factory_.reset (factory);
       return 0;
     }
 }
@@ -62,26 +61,27 @@ Web_Crawler::run ()
                   ACE_URL_Addr (OPTIONS::instance()->hostname (),
                                 OPTIONS::instance()->path_name (),
                                 OPTIONS::instance()->port_no ()), //KIRTHIKA
-                  0);
+                  -1);
   Auto_Destroyer<ACE_URL_Addr> url_addr_ptr (url_addr);
 
   HTTP_URL *http_url;
   ACE_NEW_RETURN (http_url,
                   HTTP_URL (**url_addr_ptr),
-                  0);
+                  -1);
 
   Auto_Destroyer<HTTP_URL> http_url_ptr (http_url);
 
   URL_Command *url_command;
   ACE_NEW_RETURN (url_command,
                   URL_Command (*http_url_ptr),
-                  0);
-  // Auto_Destroyer<URL_Command> url_command_ptr (url_command);
+                  -1);
+  Auto_Destroyer<URL_Command> url_command_ptr (url_command);
 
-  if (cp->insert (url_command) != 0)
+  if (cp->insert (*url_command_ptr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n", "insert"),
                       -1);
+  url_command_ptr.release ();
 
  if (cp->execute () != 0)
    ACE_ERROR_RETURN ((LM_ERROR,

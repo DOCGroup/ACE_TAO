@@ -10,20 +10,24 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
+#include <memory>
+#include <new>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 1000;
-int burst = 10;
-int do_shutdown = 1;
-int do_dump_history = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+  int iterations = 1000;
+  int burst = 10;
+  bool shutdown = true;
+  bool dump_history = false;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:b:"));
   int c;
@@ -32,35 +36,29 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'h':
-        do_dump_history = 1;
+        options.dump_history = true;
         break;
 
       case 'x':
-        do_shutdown = 0;
+        options.shutdown = false;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        burst = ACE_OS::atoi (get_opts.opt_arg ());
+        options.burst = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-b <burst> "
-                           "-x (disable shutdown) "
-                           "-h (dump history) "
-                           "\n",
+                           ACE_TEXT("usage: %s -k <ior> -i <niterations> -b <burst> -x -h\n"),
                            argv [0]),
                           -1);
       }
@@ -96,77 +94,70 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-
-      Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in ());
+      CORBA::Object_var object = orb->string_to_object (options.ior);
+      Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Test::Roundtrip reference <%s>\n",
-                             ior),
+                             ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      for (int j = 0; j < 100; ++j)
+      for (int i = 0; i < 100; ++i)
         {
-          ACE_hrtime_t start = 0;
+          ACE_hrtime_t const start {};
           (void) roundtrip->test_method (start);
         }
 
-      ACE_Sample_History history (niterations);
+      ACE_Sample_History history (options.iterations);
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-      CORBA::Request_var *request;
-      ACE_NEW_RETURN (request, CORBA::Request_var[burst], 1);
+      std::unique_ptr<CORBA::Request_var[]> requests {
+        new (std::nothrow) CORBA::Request_var[options.burst]
+      };
+      if (!requests)
+        ACE_ERROR_RETURN ((LM_ERROR, "Cannot allocate request array\n"), 1);
 
-      for (int i = 0; i < niterations; ++i)
+      for (int i = 0; i < options.iterations; ++i)
         {
-          int j;
-
-          for (j = 0; j != burst; ++j)
+          for (int j = 0; j != options.burst; ++j)
             {
-              CORBA::ULongLong start = ACE_OS::gethrtime ();
-
-              request[j] =
-                roundtrip->_request ("test_method");
-
-              request[j]->add_in_arg () <<= start;
-              request[j]->set_return_type (CORBA::_tc_ulonglong);
-
-              request[j]->send_deferred ();
+              CORBA::ULongLong const start = ACE_OS::gethrtime ();
+              requests [j] = roundtrip->_request ("test_method");
+              requests [j]->add_in_arg () <<= start;
+              requests [j]->set_return_type (CORBA::_tc_ulonglong);
+              requests [j]->send_deferred ();
             }
 
-          for (j = 0; j != burst; ++j)
+          for (int j = 0; j != options.burst; ++j)
             {
-              request[j]->get_response ();
-
-              CORBA::ULongLong retval;
-              if ((request[j]->return_value () >>= retval) == 1)
+              requests [j]->get_response ();
+              CORBA::ULongLong retval {};
+              if ((requests [j]->return_value () >>= retval) == 1)
                 {
-                  ACE_hrtime_t now = ACE_OS::gethrtime ();
+                  ACE_hrtime_t const now = ACE_OS::gethrtime ();
                   history.sample (ACE_HRTIME_TO_U64(now) - retval);
                 }
             }
         }
-      delete[] request;
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-      if (do_dump_history)
+      if (options.dump_history)
         {
           history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
@@ -179,12 +170,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                              test_end - test_start,
                                              stats.samples_count ());
 
-      if (do_shutdown)
+      if (options.shutdown)
         {
           roundtrip->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

@@ -13,6 +13,7 @@
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,10 +29,10 @@ public:
   TAO_FTEC_Group_Manager();
   ~TAO_FTEC_Group_Manager() override;
 
-  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager const&) = delete;
-  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager&&) = delete;
-  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager const&) = delete;
-  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager&&) = delete;
+  TAO_FTEC_Group_Manager (TAO_FTEC_Group_Manager const &) = delete;
+  TAO_FTEC_Group_Manager (TAO_FTEC_Group_Manager &&) = delete;
+  TAO_FTEC_Group_Manager & operator= (TAO_FTEC_Group_Manager const &) = delete;
+  TAO_FTEC_Group_Manager & operator= (TAO_FTEC_Group_Manager &&) = delete;
 
   bool init(CORBA::ORB_ptr orb);
 
@@ -62,7 +63,7 @@ private:
 
 protected:
   FTRT::FaultListener_var listener_;
-  TAO_FTEC_Group_Manager_Impl* impl_;
+  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

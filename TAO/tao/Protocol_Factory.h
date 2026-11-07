@@ -20,9 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include <string>
 
 #include "ace/Service_Object.h"
-#include "ace/SStringfwd.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +32,7 @@ class TAO_Connector;
 class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {
 public:
-  TAO_Protocol_Factory (CORBA::ULong tag);
+  explicit TAO_Protocol_Factory (CORBA::ULong tag);
   ~TAO_Protocol_Factory () override;
 
   /// Initialization hook.
@@ -43,10 +43,10 @@ public:
   CORBA::ULong tag () const;
 
   /// Verify prefix is a match
-  virtual int match_prefix (const ACE_CString &prefix) = 0;
+  virtual int match_prefix (std::string const &prefix) = 0;
 
   /// Returns the prefix used by the protocol.
-  virtual const char *prefix () const = 0;
+  virtual char const *prefix () const = 0;
 
   /// Return the character used to mark where an endpoint ends and
   /// where its options begin.
@@ -69,6 +69,11 @@ public:
   virtual int requires_explicit_endpoint () const = 0;
 
 private:
+  TAO_Protocol_Factory (TAO_Protocol_Factory const &) = delete;
+  TAO_Protocol_Factory &operator= (TAO_Protocol_Factory const &) = delete;
+  TAO_Protocol_Factory (TAO_Protocol_Factory &&) = delete;
+  TAO_Protocol_Factory &operator= (TAO_Protocol_Factory &&) = delete;
+
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 };

@@ -28,13 +28,17 @@ class Test_i : public virtual POA_Test
 public:
   /// Constructor.
   Test_i ();
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
 
   /// Simple two-way operation used to excercise the ORB transport
   /// internals.
-  virtual void invoke_me ();
+  void invoke_me () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB to be shutdown by the shutdown() method in this
   /// class.
@@ -42,7 +46,7 @@ public:
 
 private:
   /// Pseudo-reference to the ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif  /* TEST_I_H */

@@ -36,7 +36,7 @@ public:
    * iterator interface to include an "initialize" and "next"
    * function!
    */
-  virtual Protocol_Record *get_next_entry ();
+  virtual Protocol_Record *get_next_entry () override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -45,7 +45,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry ();
+  virtual Protocol_Record *get_each_entry () override;
 
   /**
    * This function is used to merge the <key_name> from server
@@ -53,7 +53,7 @@ public:
    * side.
    */
   virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN) = 0;
+                                   int max_len = MAXUSERIDNAMELEN) override = 0;
 
   /// This function is passed to qsort to perform the comparison
   /// between login names for two friends.

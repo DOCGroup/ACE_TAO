@@ -8,6 +8,8 @@
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Process-wide ACE_Allocator.
@@ -109,7 +111,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
-  ACE_OS::strcpy (n, name);
+  std::strcpy (n, name);
   if (next != nullptr)
     next->prev_ = this;
 }

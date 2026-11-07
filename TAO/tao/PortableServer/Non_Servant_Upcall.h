@@ -49,7 +49,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      Non_Servant_Upcall (::TAO_Root_POA &poa);
+      explicit Non_Servant_Upcall (::TAO_Root_POA &poa);
 
       /// Destructor.
       ~Non_Servant_Upcall ();

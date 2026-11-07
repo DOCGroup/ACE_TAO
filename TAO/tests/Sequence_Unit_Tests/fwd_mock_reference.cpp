@@ -12,7 +12,7 @@ TAO::Objref_Traits<fwd_mock_reference>::duplicate (
     fwd_mock_reference_ptr
   )
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -25,7 +25,7 @@ TAO::Objref_Traits<fwd_mock_reference>::release (
 fwd_mock_reference_ptr
 TAO::Objref_Traits<fwd_mock_reference>::nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 CORBA::Boolean

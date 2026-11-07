@@ -14,8 +14,7 @@ ACE_QtReactor::ACE_QtReactor (QApplication *qapp ,
     int s_queue ):
     ACE_Select_Reactor( sh, tq, disable_notify_pipe,
         notify, mask_signals, s_queue),
-    qapp_(qapp),
-    qtime_ (0)
+    qapp_ (qapp)
 {
     reopen_notification_pipe();
 }
@@ -33,8 +32,7 @@ ACE_QtReactor::ACE_QtReactor (size_t size,
     ACE_Select_Reactor( size, restart, sh, tq,
         disable_notify_pipe, notify, mask_signals,
         s_queue ),
-    qapp_(qapp),
-    qtime_ (0)
+    qapp_ (qapp)
 
 {
     reopen_notification_pipe();
@@ -69,48 +67,30 @@ void ACE_QtReactor::reopen_notification_pipe()
 
 ACE_QtReactor::~ACE_QtReactor ()
 {
-    // iterate over QSocketNotifiers for read and release them
-    MAP::ITERATOR iter = this->read_notifier_.begin ();
-    MAP::ITERATOR iterEnd = this->read_notifier_.end ();
-    while( iter != iterEnd )
-    {
-        MAP::ENTRY &entry = *iter;
-        // QOBject destructor notifies qapplication (hopefully) on delete
-        delete entry.int_id_;
-        ++iter;
-    }
+  // The ACE maps store non-owning pointer values; release each notifier here.
+  for (MAP::ITERATOR iter = this->read_notifier_.begin ();
+       iter != this->read_notifier_.end ();
+       ++iter)
+    delete (*iter).int_id_;
 
-    // iterate over QSocketNotifiers for write and release them
-    this->write_notifier_.begin ();
-    this->write_notifier_.end ();
-    while( iter != iterEnd )
-    {
-        MAP::ENTRY &entry = *iter;
-        // QOBject destructor notifies qapplication (hopefully) on delete
-        delete entry.int_id_;
-        ++iter;
-    }
+  for (MAP::ITERATOR iter = this->write_notifier_.begin ();
+       iter != this->write_notifier_.end ();
+       ++iter)
+    delete (*iter).int_id_;
 
-    // iterate over QSocketNotifiers for exceptions and release them
-    this->exception_notifier_.begin ();
-    this->exception_notifier_.end ();
-    while( iter != iterEnd )
-    {
-        MAP::ENTRY &entry = *iter;
-        // QOBject destructor notifies qapplication (hopefully) on delete
-        delete entry.int_id_;
-        ++iter;
-    }
+  for (MAP::ITERATOR iter = this->exception_notifier_.begin ();
+       iter != this->exception_notifier_.end ();
+       ++iter)
+    delete (*iter).int_id_;
 
-    // QOBject destructor notifies qapplication (hopefully) on delete
-    delete qtime_;
+  delete this->qtime_;
 }
 
 void
 ACE_QtReactor::qapplication (QApplication *qapp)
 {
   // reparent QSocketNotifiers and QTimer
-  qapp_ = qapp ;
+  this->qapp_ = qapp;
 }
 
 void
@@ -131,7 +111,9 @@ ACE_QtReactor::handle_from_sender () const
   // The argument passed to the Qt slot method is ignored due to this bug:
   // https://bugreports.qt.io/browse/QTBUG-70441
   QSocketNotifier *const notifier = dynamic_cast<QSocketNotifier *> (this->sender ());
-  return notifier ? ACE_HANDLE (notifier->socket ()) : ACE_INVALID_HANDLE;
+  return notifier
+    ? static_cast<ACE_HANDLE> (notifier->socket ())
+    : ACE_INVALID_HANDLE;
 }
 #endif
 
@@ -144,7 +126,7 @@ ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
   ACE_UNUSED_ARG (p_handle);
   ACE_HANDLE const handle = this->handle_from_sender ();
 #else
-  ACE_HANDLE handle = ACE_HANDLE( p_handle );
+  ACE_HANDLE const handle = static_cast<ACE_HANDLE> (p_handle);
 #endif
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
@@ -163,8 +145,8 @@ ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // enable socket notifier according to current mask
-  ACE_Reactor_Mask mask = 0;
-  mask = mask_ops( handle, mask, ACE_Reactor::GET_MASK );
+  int const mask =
+    this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if ( -1 != mask )
         set_enable_flag_by_mask ( 1, handle, mask);
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
@@ -179,7 +161,7 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
   ACE_UNUSED_ARG (p_handle);
   ACE_HANDLE const handle = this->handle_from_sender ();
 #else
-  ACE_HANDLE handle = ACE_HANDLE( p_handle );
+  ACE_HANDLE const handle = static_cast<ACE_HANDLE> (p_handle);
 #endif
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
@@ -197,8 +179,8 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // enable socket notifier according to current mask
-  ACE_Reactor_Mask mask = 0;
-  mask = mask_ops( handle, mask, ACE_Reactor::GET_MASK );
+  int const mask =
+    this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if ( -1 != mask )
         set_enable_flag_by_mask ( 1, handle, mask);
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
@@ -213,7 +195,7 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
   ACE_UNUSED_ARG (p_handle);
   ACE_HANDLE const handle = this->handle_from_sender ();
 #else
-  ACE_HANDLE handle = ACE_HANDLE( p_handle );
+  ACE_HANDLE const handle = static_cast<ACE_HANDLE> (p_handle);
 #endif
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
@@ -231,8 +213,8 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // enable socket notifier according to current mask
-  ACE_Reactor_Mask mask = 0;
-  mask = mask_ops( handle, mask, ACE_Reactor::GET_MASK );
+  int const mask =
+    this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if ( -1 != mask )
         set_enable_flag_by_mask ( 1, handle, mask);
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
@@ -243,13 +225,13 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
                                         ACE_HANDLE handle,
                                         ACE_Reactor_Mask mask)
 {
-  QSocketNotifier *qs_not;
+  QSocketNotifier *qs_not {};
 
   if (ACE_BIT_ENABLED(mask, ACE_Event_Handler::READ_MASK) ||
       ACE_BIT_ENABLED( mask, ACE_Event_Handler::ACCEPT_MASK))
     {
       // Find the current notifier
-      qs_not = 0;
+      qs_not = nullptr;
       if ((this->read_notifier_.find (handle, qs_not) == -1))
         return -1;
 
@@ -260,7 +242,7 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
       ACE_BIT_ENABLED( mask, ACE_Event_Handler::ACCEPT_MASK) ||
       ACE_BIT_ENABLED( mask, ACE_Event_Handler::CONNECT_MASK))
     {
-      qs_not = 0;
+      qs_not = nullptr;
       if ((this->write_notifier_.find (handle, qs_not) == -1))
         return -1;
 
@@ -270,7 +252,7 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
   if (ACE_BIT_ENABLED( mask,
                        ACE_Event_Handler::EXCEPT_MASK))
     {
-      qs_not = 0;
+      qs_not = nullptr;
       if ((this->exception_notifier_.find (handle, qs_not) == -1))
         return -1;
 
@@ -286,11 +268,11 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
                         ACE_Select_Reactor_Handle_Set &handle_set,
                         int ops)
 {
-  int result;
   ACE_Select_Reactor_Handle_Set preserved_handle_set = handle_set;
 
   // Call regular bit_ops
-  if ((result = ACE_Select_Reactor::bit_ops (handle, mask, handle_set, ops)) == -1)
+  int const result = ACE_Select_Reactor::bit_ops (handle, mask, handle_set, ops);
+  if (result == -1)
     return -1;
 
   // disable or enable the notifiers based on handle_set and mask
@@ -361,7 +343,7 @@ ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
         qsock_notifier->setEnabled (0);
     }
 
-    qsock_notifier = 0;
+    qsock_notifier = nullptr;
 
 
     // if there is already a write socket notifier for this handle, do nothing
@@ -389,7 +371,7 @@ ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
     }
 
 
-    qsock_notifier = 0;
+    qsock_notifier = nullptr;
 
     // if there is already a write socket notifier for this handle, do nothing
     // otherwise create read notifier
@@ -450,7 +432,7 @@ ACE_QtReactor::destroy_notifiers_for_handle (ACE_HANDLE handle)
 }
 
 int
-ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
+ACE_QtReactor::register_handler_i (ACE_HANDLE handle,
                                    ACE_Event_Handler *handler,
                                    ACE_Reactor_Mask mask)
 {
@@ -458,14 +440,13 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
 
   this->create_notifiers_for_handle (handle);
 
-  int result;
-  if ((result = ACE_Select_Reactor::register_handler_i(handle,
-                                                       handler,
-                                                       mask ))
-      == -1)
+  int const result = ACE_Select_Reactor::register_handler_i (handle,
+                                                             handler,
+                                                             mask);
+  if (result == -1)
     {
         // destroy notifiers only when there is no handler for handle
-        if ( !ACE_Select_Reactor::find_handler( handle ) )
+        if (!ACE_Select_Reactor::find_handler (handle))
             this->destroy_notifiers_for_handle (handle);
       return -1;
     }
@@ -474,7 +455,7 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
 }
 
 int
-ACE_QtReactor::register_handler_i (const ACE_Handle_Set &handles,
+ACE_QtReactor::register_handler_i (ACE_Handle_Set const &handles,
                                    ACE_Event_Handler *handler,
                                    ACE_Reactor_Mask mask)
 {
@@ -483,21 +464,21 @@ ACE_QtReactor::register_handler_i (const ACE_Handle_Set &handles,
                                                 mask);
 }
 
-int ACE_QtReactor::remove_handler_i (ACE_HANDLE handle ,
-                                     ACE_Reactor_Mask mask   )
+int ACE_QtReactor::remove_handler_i (ACE_HANDLE handle,
+                                     ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_QtReactor::remove_handler_i");
 
-  int result = ACE_Select_Reactor::remove_handler_i (handle, mask);
+  int const result = ACE_Select_Reactor::remove_handler_i (handle, mask);
   // destroy notifiers only when there is no handler for handle
-  if ( !ACE_Select_Reactor::find_handler( handle ) )
+  if (!ACE_Select_Reactor::find_handler (handle))
       this->destroy_notifiers_for_handle (handle);
   return result;
 }
 
 
 int
-ACE_QtReactor::remove_handler_i (const ACE_Handle_Set &handles,
+ACE_QtReactor::remove_handler_i (ACE_Handle_Set const &handles,
                                  ACE_Reactor_Mask  mask)
 {
   return ACE_Select_Reactor::remove_handler_i (handles,
@@ -510,41 +491,39 @@ ACE_QtReactor::remove_handler_i (const ACE_Handle_Set &handles,
 void
 ACE_QtReactor::reset_timeout ()
 {
-  if (this->qtime_ != 0)
+  if (this->qtime_ != nullptr)
     {
       delete this->qtime_;
-      this->qtime_ = 0;
+      this->qtime_ = nullptr;
     }
 
-  ACE_Time_Value *max_wait_time =
-    this->timer_queue_->calculate_timeout (0) ;
+  ACE_Time_Value const *max_wait_time =
+    this->timer_queue_->calculate_timeout (0);
 
-  if (max_wait_time)
+  if (max_wait_time != nullptr)
   {
     ACE_NEW (this->qtime_,
              QTimer);
-
-    QObject::connect (qtime_,
+    QObject::connect (this->qtime_,
                       SIGNAL (timeout ()),
                       this,
                       SLOT (timeout_event ()));
 
 #if QT_VERSION >= 0x040000
-    qtime_->setSingleShot (1);
-    qtime_->start(max_wait_time->msec());
+    this->qtime_->setSingleShot (1);
+    this->qtime_->start (max_wait_time->msec ());
 #else
-    qtime_->start(max_wait_time->msec(), 1);
+    this->qtime_->start (max_wait_time->msec (), 1);
 #endif
   }
 
 }
 
-
 long
 ACE_QtReactor::schedule_timer (ACE_Event_Handler *handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval)
+                               void const *arg,
+                               ACE_Time_Value const &delay_time,
+                               ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_QtReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token,
@@ -552,17 +531,17 @@ ACE_QtReactor::schedule_timer (ACE_Event_Handler *handler,
                             this->token_,
                             -1));
 
-  long result;
-  if ((result = ACE_Select_Reactor::schedule_timer(handler,
-                                                   arg,
-                                                   delay_time,
-                                                   interval)) == -1 )
+  long const result = ACE_Select_Reactor::schedule_timer (handler,
+                                                          arg,
+                                                          delay_time,
+                                                          interval);
+  if (result == -1)
     return -1;
   else
-  {
-    this->reset_timeout ();
-    return result;
-  }
+    {
+      this->reset_timeout ();
+      return result;
+    }
 }
 
 int
@@ -572,30 +551,31 @@ ACE_QtReactor::cancel_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_QtReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (handler,
-                                        dont_call_handle_close ) == -1 )
+                                        dont_call_handle_close) == -1)
     return -1 ;
   else
-  {
-    this->reset_timeout( ) ;
-    return 0 ;
-  }
+    {
+      this->reset_timeout ();
+      return 0;
+    }
 }
 
-int ACE_QtReactor::cancel_timer (long  timer_id,
-                                 const void **arg,
-                                 int dont_call_handle_close )
+int
+ACE_QtReactor::cancel_timer (long timer_id,
+                             void const **arg,
+                             int dont_call_handle_close)
 {
-  ACE_TRACE ("ACE_QtReactor::cancel_timer") ;
+  ACE_TRACE ("ACE_QtReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,
-                                        dont_call_handle_close ) == -1 )
+                                        dont_call_handle_close) == -1)
     return -1 ;
   else
-  {
-    this->reset_timeout( ) ;
-    return 0 ;
-  }
+    {
+      this->reset_timeout ();
+      return 0;
+    }
 }
 
 // mbrudka: who needs QtWaitForMultipleEvents? It seems it's cargo load now!
@@ -613,11 +593,12 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
   // Check to make sure our handle's are all usable.
   ACE_Select_Reactor_Handle_Set temp_set = wait_set;
 
+  ACE_Time_Value const zero (ACE_Time_Value::zero);
   if (ACE_OS::select (width,
                       temp_set.rd_mask_,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
-                      (ACE_Time_Value *) &ACE_Time_Value::zero ) == -1)
+                      &zero) == -1)
     return -1; // Bad file arguments...
 
   // Qt processing.
@@ -632,11 +613,11 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
 
   // Now actually read the result needed by the <Select_Reactor> using
   // <select>.
-  return ACE_OS::select(width,
+  return ACE_OS::select (width,
                         orig_wait_set.rd_mask_,
                         orig_wait_set.wr_mask_,
                         orig_wait_set.ex_mask_,
-                        (ACE_Time_Value *) &ACE_Time_Value::zero);
+                        &zero);
 }
 
 // mbrudka: who needs wait_for_multiple_events? It seems it's cargo load now!
@@ -647,7 +628,7 @@ ACE_QtReactor::wait_for_multiple_events (
 {
   ACE_TRACE ("ACE_QtReactor::wait_for_multiple_events");
 
-  int nfound = 0;
+  int nfound {};
   do
   {
     max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
@@ -670,8 +651,8 @@ ACE_QtReactor::wait_for_multiple_events (
 #endif /* ACE_WIN32 */
   }
 
+  // Timed out or input available.
   return nfound;
-  // Timed out or input available
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

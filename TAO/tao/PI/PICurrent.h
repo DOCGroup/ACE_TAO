@@ -28,6 +28,8 @@
 #include "tao/LocalObject.h"
 #include "ace/Array_Base.h"
 
+#include <cstddef>
+
 #if defined(_MSC_VER)
 # pragma warning(push)
 # pragma warning(disable:4250)
@@ -58,7 +60,7 @@ namespace TAO
   {
   public:
     /// Constructor.
-    PICurrent (TAO_ORB_Core &orb_core);
+    explicit PICurrent (TAO_ORB_Core &orb_core);
 
     /**
      * @name PortableInterceptor::Current Methods
@@ -73,7 +75,7 @@ namespace TAO
 
     /// Set information in the slot table at the given SlotId.
     void set_slot (PortableInterceptor::SlotId identifier,
-                   const CORBA::Any & data) override;
+                   CORBA::Any const &data) override;
     //@}
 
     CORBA::ORB_ptr _get_orb () override;
@@ -86,7 +88,7 @@ namespace TAO
     PICurrent_Impl * tsc ();
 
     /// Verify the validity of the given SlotId.
-    void check_validity (const PortableInterceptor::SlotId &identifier);
+    void check_validity (PortableInterceptor::SlotId const &identifier);
 
     /// Initialize the PICurrent object.
     void initialize (PortableInterceptor::SlotId sc);
@@ -102,9 +104,9 @@ namespace TAO
 
   private:
     PICurrent (PICurrent const &) = delete;
-    void operator= (PICurrent const &) = delete;
+    PICurrent &operator= (PICurrent const &) = delete;
     PICurrent (PICurrent &&) = delete;
-    void operator= (PICurrent &&) = delete;
+    PICurrent &operator= (PICurrent &&) = delete;
 
   private:
     /// Reference to the orb core.
@@ -113,7 +115,7 @@ namespace TAO
     /// TSS slot assigned to PICurrent_Impl objects in the OrbCore.
     /// Allocated by the orb_core_.add_tss_cleanup_func() when our
     /// initialize() method is called.
-    size_t tss_slot_ {};
+    std::size_t tss_slot_ {};
 
     /// The number of allocated PICurrent slots end user wants. (0 is
     /// uninitialized or PICurrent is not used as no data is to be stored).

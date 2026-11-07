@@ -6,16 +6,24 @@
 #include "MessengerS.h"
 #include "ace/Task.h"
 #include <iostream>
+#include <memory>
+
+class MessengerShutdownTimer;
 
 //Class MessengerServer
 class MessengerServer
 {
 public:
   //Constructor
-  MessengerServer (CORBA::ORB_ptr orb);
+  explicit MessengerServer (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~MessengerServer ();
+  ~MessengerServer ();
+
+  MessengerServer (MessengerServer const &) = delete;
+  MessengerServer (MessengerServer &&) = delete;
+  MessengerServer &operator= (MessengerServer const &) = delete;
+  MessengerServer &operator= (MessengerServer &&) = delete;
 
   // parse arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
@@ -36,24 +44,31 @@ public:
   // spawn thread to monitor console and shutdown on console input
   void shutdown_on_console_input ();
 
-  enum ShutdownMethod {
-    s_client_call,     // shutdown on client invocation
-    s_polling_loop,    // shutdown after some iterations through loop
-    s_timer,           // schedule a timer to shutdown
-    s_console_input,   // shutdown on console input
-    s_run_time_value   // use CORBA::ORB::run() with time value
+  enum class ShutdownMethod {
+    client_call,     // shutdown on client invocation
+    polling_loop,    // shutdown after some iterations through loop
+    timer,           // schedule a timer to shutdown
+    console_input,   // shutdown on console input
+    run_time_value   // use CORBA::ORB::run() with time value
   };
 
   // Task to monitor console input.
   class ConsoleMonitor : public ACE_Task_Base
   {
   public:
-    ConsoleMonitor (CORBA::ORB_ptr orb)
+    explicit ConsoleMonitor (CORBA::ORB_ptr orb)
       : orb_(CORBA::ORB::_duplicate(orb))
       {
       }
 
-    virtual int svc()
+    ~ConsoleMonitor () override = default;
+
+    ConsoleMonitor (ConsoleMonitor const &) = delete;
+    ConsoleMonitor (ConsoleMonitor &&) = delete;
+    ConsoleMonitor &operator= (ConsoleMonitor const &) = delete;
+    ConsoleMonitor &operator= (ConsoleMonitor &&) = delete;
+
+    int svc () override
       {
         char c;
         std::cin.get (c);
@@ -66,7 +81,8 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  ConsoleMonitor * monitor_;
+  std::unique_ptr<ConsoleMonitor> monitor_;
+  std::unique_ptr<MessengerShutdownTimer> timer_;
 };
 
 #endif /* MESSENGERSERVER_H_  */

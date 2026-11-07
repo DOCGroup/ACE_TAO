@@ -59,6 +59,11 @@ public:
   /// Constructor
   TAO_CEC_SupplierControl () = default;
 
+  TAO_CEC_SupplierControl (TAO_CEC_SupplierControl const &) = delete;
+  TAO_CEC_SupplierControl (TAO_CEC_SupplierControl &&) = delete;
+  TAO_CEC_SupplierControl &operator= (TAO_CEC_SupplierControl const &) = delete;
+  TAO_CEC_SupplierControl &operator= (TAO_CEC_SupplierControl &&) = delete;
+
   /// destructor...
   virtual ~TAO_CEC_SupplierControl () = default;
 
@@ -93,10 +98,10 @@ public:
   /// proxy is PortableServer::ServantBase* due to the fact that this
   /// method will be used for TAO_CEC_ProxyPushSupplier's and
   /// TAO_CEC_ProxyPullSupplier's.
-  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
+  virtual bool need_to_disconnect (PortableServer::ServantBase *proxy);
 
   /// Allow others to inform us when a send or receive was successful.
-  virtual void successful_transmission (PortableServer::ServantBase* proxy);
+  virtual void successful_transmission (PortableServer::ServantBase *proxy);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

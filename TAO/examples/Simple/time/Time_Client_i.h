@@ -29,13 +29,18 @@ class Time_Client_i
 {
 public:
   /// Constructor
-  Time_Client_i ();
+  Time_Client_i () = default;
 
   /// Destructor
-  ~Time_Client_i ();
+  ~Time_Client_i () = default;
+
+  Time_Client_i (Time_Client_i const &) = delete;
+  Time_Client_i &operator= (Time_Client_i const &) = delete;
+  Time_Client_i (Time_Client_i &&) = delete;
+  Time_Client_i &operator= (Time_Client_i &&) = delete;
 
   /// Execute the methods
-  int run (const char *, int, ACE_TCHAR**);
+  int run (char const *, int, ACE_TCHAR **);
 
 private:
   /// Instantiate the client object.

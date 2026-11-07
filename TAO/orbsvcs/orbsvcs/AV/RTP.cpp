@@ -41,6 +41,8 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // RTP_Packet
@@ -51,7 +53,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   // skip the standard header info
   int index = 12;
 
-  ACE_OS::memcpy(this->packet_, buffer, length);
+  std::memcpy(this->packet_, buffer, length);
 
   for (int j=0; j<(int)this->cc(); j++)
     {
@@ -105,7 +107,6 @@ RTP_Packet::RTP_Packet(unsigned char padding,
                        ACE_UINT32 *csrc_list,
                        char *data,
                        ACE_UINT16 data_size)
-  :extension_bytes_(0)
 {
   //size of header (in octets) without contributing sources
   ACE_UINT16 size = 3*4;
@@ -152,7 +153,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       index+=4;
     }
 
-    ACE_OS::memcpy (this->host_byte_order_payload_, data, data_size);
+    std::memcpy (this->host_byte_order_payload_, data, data_size);
 
   this->payload_size_ = data_size;
 
@@ -175,9 +176,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       }
 }
 
-RTP_Packet::~RTP_Packet()
-{
-}
+RTP_Packet::~RTP_Packet() = default;
 
 ACE_UINT16
 RTP_Packet::packet_size()
@@ -261,7 +260,7 @@ RTP_Packet::get_frame_info (TAO_AV_frame_info *frame_info)
   frame_info->format = static_cast<CORBA::Octet> (this->pt());
 }
 
-int
+bool
 RTP_Packet::is_valid ()
 {
   // taken from RFC 1889 - Appendix A.1
@@ -334,7 +333,7 @@ TAO_AV_RTP_Object::handle_input ()
     {
       if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
         {
-          this->connection_gone_ = 1;
+          this->connection_gone_ = true;
           return -1;
         }
       else
@@ -357,7 +356,7 @@ TAO_AV_RTP_Object::handle_input ()
   rtp_packet.get_payload(&data_ptr, length);
 
   this->frame_.rd_ptr (this->frame_.base ());
-  ACE_OS::memcpy (this->frame_.rd_ptr (), data_ptr, length);
+  std::memcpy (this->frame_.rd_ptr (), data_ptr, length);
   this->frame_.wr_ptr (this->frame_.rd_ptr() + length);
 
   this->callback_->receive_frame (&this->frame_, &frame_info, *addr);
@@ -380,7 +379,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   int result = -1;
   RTP_Packet *rtp_packet;
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
-  ACE_UINT32 *csrc_list = nullptr;
+  ACE_UINT32 *csrc_list {};
 
   if (frame_info != nullptr)
     {
@@ -488,14 +487,14 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_RTP_Object::send_frame (const iovec *iov,
+TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                TAO_AV_frame_info *frame_info)
 {
   int result = -1;
-  RTP_Packet *rtp_packet = nullptr;
+  RTP_Packet *rtp_packet {};
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
-  ACE_UINT32 *csrc_list = nullptr;
+  ACE_UINT32 *csrc_list {};
 
   if (this->connection_gone_)
     {
@@ -612,7 +611,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_RTP_Object::send_frame (const char*,
+TAO_AV_RTP_Object::send_frame (char const *,
                                size_t)
 {
   return 0;
@@ -622,9 +621,7 @@ TAO_AV_RTP_Object::send_frame (const char*,
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   : TAO_AV_Protocol_Object (callback, transport)
-  , format_ (0)
   , control_object_ (nullptr)
-  , connection_gone_ (0)
 {
   this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());
   this->timestamp_offset_ = ACE_OS::rand ();
@@ -654,11 +651,11 @@ TAO_AV_RTP_Object::destroy ()
 }
 
 int
-TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
+TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
 {
   this->policy_list_ = policy_list;
   CORBA::ULong const num_policies = this->policy_list_.length ();
-  TAO_AV_Policy *policy = nullptr;
+  TAO_AV_Policy *policy {};
 
   for (u_int i=0; i< num_policies;i++)
     {
@@ -734,13 +731,13 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Flow_Handler *handler,
                                                TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Callback *callback {};
 
   if( endpoint->get_callback (entry->flowname (), callback) ) {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
-  TAO_AV_Protocol_Object *object = nullptr;
+  TAO_AV_Protocol_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_RTP_Object (callback,
                                      transport),
@@ -755,7 +752,7 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 }
 
 int
-TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_RTP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"RTP",3) == 0)
     {
@@ -764,7 +761,7 @@ TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
   return 0;
 }
 
-const char *
+char const *
 TAO_AV_RTP_Flow_Factory::control_flow_factory ()
 {
   return "RTCP";

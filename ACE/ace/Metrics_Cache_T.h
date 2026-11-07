@@ -71,19 +71,24 @@ public:
                          const char *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
+  ACE_Metrics_Timeprobe (ACE_Metrics_Timeprobe const &) = delete;
+  ACE_Metrics_Timeprobe &operator= (ACE_Metrics_Timeprobe const &) = delete;
+  ACE_Metrics_Timeprobe (ACE_Metrics_Timeprobe &&) = delete;
+  ACE_Metrics_Timeprobe &operator= (ACE_Metrics_Timeprobe &&) = delete;
+
   /// Destructor.
   virtual ~ACE_Metrics_Timeprobe ();
 
   /// Returns true if a timeprobe event matches the passed id.
-  int is_event (const ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
-                ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::event_id id);
+  bool is_event (const ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
+                 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::event_id id) const;
 
   /// Accessor and mutator for probe name.
-  const char * probe_name ();
-  void probe_name (char * name);
+  const char * probe_name () const;
+  void probe_name (const char *name);
 
   /// Accessor for probe id.
-  u_int probe_id ();
+  u_int probe_id () const;
 
   /// Mutator for probe id.
   void probe_id (u_int id);
@@ -96,12 +101,7 @@ protected:
   u_int id_;
 
   /// Name of the timeprobe.
-  char* name_;
-
-private:
-  // Declare but do not define.
-  ACE_Metrics_Timeprobe (const ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> &);
-  void operator =(const ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> &);
+  char* name_ {};
 };
 
 /**
@@ -127,6 +127,11 @@ public:
 
   /// Destructor.
   ~ACE_Metrics_Cache () = default;
+
+  ACE_Metrics_Cache (ACE_Metrics_Cache const &) = delete;
+  ACE_Metrics_Cache &operator= (ACE_Metrics_Cache const &) = delete;
+  ACE_Metrics_Cache (ACE_Metrics_Cache &&) = delete;
+  ACE_Metrics_Cache &operator= (ACE_Metrics_Cache &&) = delete;
 
   // = Dispatching metrics.
 
@@ -154,10 +159,10 @@ public:
   void flush_ACE_Metrics_Cache ();
 
   /// Set the enable state for metrics collection.
-  void metrics_enabled(int enabled);
+  void metrics_enabled (bool enabled);
 
   /// Return the enable state for metrics collection.
-  int metrics_enabled() const;
+  bool metrics_enabled () const;
 
 protected:
   /// Obtain an allocator pointer correctly thunked for the current
@@ -168,27 +173,27 @@ protected:
   // = Implementation members.
 
   /// Number of probes in each supplier/consumer set.
-  u_long probe_set_size_;
+  u_long probe_set_size_ {};
 
   /// Probe data counts for each supplier/consumer set.
-  u_long * enqueue_count_ [2];
-  u_long * dequeue_count_ [2];
+  u_long * enqueue_count_ [2] {};
+  u_long * dequeue_count_ [2] {};
 
   /// Probes for each supplier/consumer set.
-  ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> ** enqueue_probes_ [2];
-  ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> ** dequeue_probes_ [2];
+  ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> ** enqueue_probes_ [2] {};
+  ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> ** dequeue_probes_ [2] {};
 
   /// Names for the probes.
-  char ** enqueue_names_;
-  char ** dequeue_names_;
+  char ** enqueue_names_ {};
+  char ** dequeue_names_ {};
 
   /// Index from which probe events are being consumed.
   /// for WSOA, it's the data being sent to the logger
-  int consumer_index_;
+  int consumer_index_ {};
 
   /// Index to which probe events are being supplied.
   /// for WSOA, it's the data being recorded from the probes
-  int supplier_index_;
+  int supplier_index_ {1};
 
   /// Size of the timestamp table in each probe.
   u_long table_size_;
@@ -201,18 +206,14 @@ protected:
 
   /// Flag to indicate whether or not start time of interval has been
   /// initialized since the last reset.
-  int interval_initialized_;
+  bool interval_initialized_ {};
 
   /// Indicator of whether metrics is enabled.
-  int metrics_enabled_;
+  bool metrics_enabled_ {true};
 
 private:
   /// Allocation strategy object.
   ALLOCATOR* allocator_;
-
-  // Declare but do not define.
-  ACE_Metrics_Cache (const ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR> &);
-  void operator = (const ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR> &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

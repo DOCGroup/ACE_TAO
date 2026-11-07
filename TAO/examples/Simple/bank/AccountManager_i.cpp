@@ -3,17 +3,6 @@
 #include "tao/debug.h"
 #include "tao/Utils/ORB_Manager.h"
 
-// Constructor
-AccountManager_i::AccountManager_i () :
-  orb_manager_ (0)
-{
-}
-
-// Destructor
-AccountManager_i::~AccountManager_i ()
-{
-}
-
 // Set the ORB pointer
 void
 AccountManager_i::orb (CORBA::ORB_ptr o)
@@ -36,7 +25,7 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 // Open an account for the given name.
 
 Bank::Account_ptr
-AccountManager_i::open (const char *name,
+AccountManager_i::open (char const *name,
                         CORBA::Float initial_balance)
 {
   // If name is already in the map, <find> will assign <result> to the
@@ -49,7 +38,7 @@ AccountManager_i::open (const char *name,
                   name,
                   initial_balance));
 
-      Account_i *tmp = 0;
+      Account_i *tmp = nullptr;
       ACE_NEW_THROW_EX (tmp,
                         Account_i (name,
                                    initial_balance),
@@ -107,7 +96,7 @@ AccountManager_i::close (Bank::Account_ptr account)
           poa->deactivate_object (id.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unable to close Account\n");
     }

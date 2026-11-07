@@ -3,7 +3,7 @@
 class Server : public POA_Test::Server
 {
 public:
-  Server (CORBA::ORB_ptr orb)
+  explicit Server (CORBA::ORB_ptr orb)
     : POA_Test::Server (),
       orb_ (CORBA::ORB::_duplicate (orb)) {}
   ~Server () override = default;
@@ -20,8 +20,8 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
-  ::Test::Client_var cli_;
+  CORBA::ORB_var const orb_;
+  ::Test::Client_var cli_ {};
 };
 
 

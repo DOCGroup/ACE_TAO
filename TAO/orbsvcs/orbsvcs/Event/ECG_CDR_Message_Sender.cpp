@@ -43,9 +43,9 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   // ACE_ASSERT (max_fragment_payload != 0);
 
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-  const int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
+  constexpr int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
 #else
-  const int TAO_WRITEV_MAX = ACE_IOV_MAX;
+  constexpr int TAO_WRITEV_MAX = ACE_IOV_MAX;
 #endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
   iovec iov[TAO_WRITEV_MAX];
 
@@ -64,7 +64,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   CORBA::ULong fragment_id = 0;
   CORBA::ULong fragment_offset = 0;
   CORBA::ULong fragment_size = 0;
-  for (const ACE_Message_Block* b = cdr.begin ();
+  for (ACE_Message_Block const *b = cdr.begin ();
        b != cdr.end ();
        b = b->cont ())
     {
@@ -268,8 +268,8 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
 
 
 CORBA::ULong
-TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* begin,
-                                                    const ACE_Message_Block* end,
+TAO_ECG_CDR_Message_Sender::compute_fragment_count (ACE_Message_Block const *begin,
+                                                    ACE_Message_Block const *end,
                                                     int iov_size,
                                                     CORBA::ULong max_fragment_payload,
                                                     CORBA::ULong& total_length)
@@ -280,7 +280,7 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
   CORBA::ULong fragment_size = 0;
   // Reserve the first iovec for the header...
   int iovcnt = 1;
-  for (const ACE_Message_Block* b = begin;
+  for (ACE_Message_Block const *b = begin;
        b != end;
        b = b->cont ())
     {

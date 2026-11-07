@@ -11,30 +11,36 @@
 #include "ace/Asynch_IO.h"
 #include "ace/Service_Object.h"
 // Listing 1 code/ch08
-#include "ace/Asynch_IO.h"
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
+// The acceptor creates each service; callbacks destroy it on terminal errors.
 class HA_Proactive_Service : public ACE_Service_Handler
 {
 public:
-  ~HA_Proactive_Service ()
-   {
-     if (this->handle () != ACE_INVALID_HANDLE)
-       ACE_OS::closesocket (this->handle ());
-   }
+  HA_Proactive_Service () = default;
+  HA_Proactive_Service (HA_Proactive_Service const &) = delete;
+  HA_Proactive_Service (HA_Proactive_Service &&) = delete;
+  HA_Proactive_Service &operator= (HA_Proactive_Service const &) = delete;
+  HA_Proactive_Service &operator= (HA_Proactive_Service &&) = delete;
 
-  virtual void open (ACE_HANDLE h, ACE_Message_Block&);
+  ~HA_Proactive_Service () override
+  {
+    if (this->handle () != ACE_INVALID_HANDLE)
+      ACE_OS::closesocket (this->handle ());
+  }
+
+  void open (ACE_HANDLE h, ACE_Message_Block &) override;
 
   // This method will be called when an asynchronous read
   // completes on a stream.
-  virtual void handle_read_stream
-    (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream
+    (ACE_Asynch_Read_Stream::Result const &result) override;
 
   // This method will be called when an asynchronous write
   // completes on a stream.
-  virtual void handle_write_stream
-    (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream
+    (ACE_Asynch_Write_Stream::Result const &result) override;
 
 private:
   ACE_Asynch_Read_Stream reader_;
@@ -50,10 +56,16 @@ class HA_Proactive_Acceptor :
     public ACE_Asynch_Acceptor<HA_Proactive_Service>
 {
 public:
-  virtual int validate_connection
-    (const ACE_Asynch_Accept::Result& result,
-     const ACE_INET_Addr &remote,
-     const ACE_INET_Addr &local);
+  HA_Proactive_Acceptor () = default;
+  HA_Proactive_Acceptor (HA_Proactive_Acceptor const &) = delete;
+  HA_Proactive_Acceptor (HA_Proactive_Acceptor &&) = delete;
+  HA_Proactive_Acceptor &operator= (HA_Proactive_Acceptor const &) = delete;
+  HA_Proactive_Acceptor &operator= (HA_Proactive_Acceptor &&) = delete;
+
+  int validate_connection
+    (ACE_Asynch_Accept::Result const &result,
+     ACE_INET_Addr const &remote,
+     ACE_INET_Addr const &local) override;
 };
 // Listing 2
 
@@ -76,10 +88,10 @@ class HA_Proactive_Status : public ACE_Service_Object
 {
 public:
   // Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   // Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 };
 
 #endif /* __HA_PROACTIVE_STATUS_H */

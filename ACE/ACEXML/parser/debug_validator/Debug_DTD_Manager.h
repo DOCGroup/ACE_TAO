@@ -24,7 +24,11 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_DTD_Manager : public ACEXML_D
 public:
   ACEXML_Debug_DTD_Manager ();
 
-  virtual ~ACEXML_Debug_DTD_Manager ();
+  ~ACEXML_Debug_DTD_Manager () override;
+  ACEXML_Debug_DTD_Manager (ACEXML_Debug_DTD_Manager const &) = delete;
+  ACEXML_Debug_DTD_Manager (ACEXML_Debug_DTD_Manager &&) = delete;
+  ACEXML_Debug_DTD_Manager &operator= (ACEXML_Debug_DTD_Manager const &) = delete;
+  ACEXML_Debug_DTD_Manager &operator= (ACEXML_Debug_DTD_Manager &&) = delete;
 
   /**
    * Acquire a pointer to an element definition builder. The XML parser use
@@ -35,27 +39,27 @@ public:
    *
    * @retval 0 if error occurs creating the builder.
    */
-  virtual ACEXML_Element_Def_Builder *getElement_Def_Builder ();
+  ACEXML_Element_Def_Builder *getElement_Def_Builder () override;
 
   /**
    * Insert a new element definition into the DTD Manager.
    *
    * @retval 0 if success, -1 if error.
    */
-  virtual int insertElement_Definition (ACEXML_Element_Def_Builder *def);
+  int insertElement_Definition (ACEXML_Element_Def_Builder *def) override;
 
   /**
    * Acquire a pointer to an attributes definition builder.
    *
    */
-  virtual ACEXML_Attributes_Def_Builder *getAttribute_Def_Builder ();
+  ACEXML_Attributes_Def_Builder *getAttribute_Def_Builder () override;
 
   /**
    * Insert a new attributes definition into the DTD Manager.
    *
    * @retval 0 if success, -1 otherwise.
    */
-  virtual int insertAttributes_Definition (ACEXML_Attributes_Def_Builder *def);
+  int insertAttributes_Definition (ACEXML_Attributes_Def_Builder *def) override;
 
   /**
    * Acquire an element validator to validate an XML element.
@@ -63,9 +67,9 @@ public:
    * @todo I haven't figured out what memory management scheme
    *       we should use for the acquired validator.
    */
-  virtual ACEXML_Validator *getValidator (const ACEXML_Char *namespaceURI,
-                                          const ACEXML_Char *localName,
-                                          const ACEXML_Char *qName);
+  ACEXML_Validator *getValidator (ACEXML_Char const *namespaceURI,
+                                  ACEXML_Char const *localName,
+                                  ACEXML_Char const *qName) override;
 };
 
 #include /**/ "ace/post.h"

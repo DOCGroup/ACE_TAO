@@ -16,24 +16,22 @@
 
 #include "alt_mappingC.h"
 #include "ace/Singleton.h"
+#include <string>
 
 class Generator
 {
 public:
-  Generator ();
+  Generator () = default;
+  ~Generator () = default;
+  Generator (Generator const &) = delete;
+  Generator (Generator &&) = delete;
+  Generator &operator= (Generator const &) = delete;
+  Generator &operator= (Generator &&) = delete;
 
-  ~Generator ();
-
-  CORBA::Short gen_short ();
-  CORBA::Long gen_long ();
-  char* gen_string ();
-  char* gen_string (int maxlength);
-  CORBA::WChar* gen_wstring ();
-  CORBA::WChar* gen_wstring (int maxlength);
-  Alt_Mapping::Fixed_Struct const gen_fixed_struct ();
-
- private:
-  Alt_Mapping::Fixed_Struct fixed_struct_;
+  CORBA::Long gen_long () const;
+  std::string gen_string () const;
+  std::string gen_string (CORBA::ULong maxlength) const;
+  Alt_Mapping::Fixed_Struct gen_fixed_struct () const;
 };
 
 using GENERATOR = ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX>;

@@ -6,7 +6,7 @@
 
 
 void
-Simple_Server_i::send_line (const char *line)
+Simple_Server_i::send_line (char const *line)
 {
   ACE_DEBUG ((LM_DEBUG, "%s\n", line));
 }

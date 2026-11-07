@@ -124,8 +124,15 @@ template<class PROXY>
 class TAO_ESF_Proxy_Collection
 {
 public:
+  TAO_ESF_Proxy_Collection () = default;
+
   /// destructor
-  virtual ~TAO_ESF_Proxy_Collection ();
+  virtual ~TAO_ESF_Proxy_Collection () = default;
+
+  TAO_ESF_Proxy_Collection (TAO_ESF_Proxy_Collection const &) = delete;
+  TAO_ESF_Proxy_Collection (TAO_ESF_Proxy_Collection &&) = delete;
+  TAO_ESF_Proxy_Collection &operator= (TAO_ESF_Proxy_Collection const &) = delete;
+  TAO_ESF_Proxy_Collection &operator= (TAO_ESF_Proxy_Collection &&) = delete;
 
   /**
    * Iterate over the collection and invoke worker->work() for each

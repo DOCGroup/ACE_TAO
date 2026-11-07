@@ -57,13 +57,13 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// Instance of the creation service
-  Life_Cycle_Service_i * life_Cycle_Service_i_ptr_;
+  Life_Cycle_Service_i * life_Cycle_Service_i_ptr_ {};
 
   /// reference to the naming service
   CosNaming::NamingContext_var namingContext_var_;
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int debug_level_ {1};
 };
 
 #endif /* LIFECYCLE_SERVICE_H */

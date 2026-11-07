@@ -1,10 +1,11 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
-static FILE *output_file = 0;
+static FILE *output_file {};
 // File handle of the file into which received data is written.
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
+static ACE_TString output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
 int
@@ -35,16 +36,16 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result =
         ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
                         1,
+                        frame->length (),
                         output_file);
 
-      if (result == frame->length ())
+      if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -76,11 +77,7 @@ Receiver_Callback::handle_destroy ()
 }
 
 Receiver::Receiver ()
-  : mmdevice_ (0)
-{
-}
-
-Receiver::~Receiver ()
+  : mmdevice_ (nullptr)
 {
 }
 
@@ -188,12 +185,14 @@ ACE_TMAIN (int argc,
         return -1;
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (
+        ACE_OS::fopen (output_file_name.c_str (), "w"), ACE_OS::fclose);
+      // The receive callback borrows the file handle while the ORB is running.
+      output_file = output_file_owner.get ();
+      if (output_file == nullptr)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file %s\n"),
+                           output_file_name.c_str ()),
                           -1);
 
       else
@@ -220,8 +219,6 @@ ACE_TMAIN (int argc,
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

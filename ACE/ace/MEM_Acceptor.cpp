@@ -114,7 +114,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                                                addr,
                                                len_ptr));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
-             && restart != 0
+             && restart
              && errno == EINTR
              && timeout == nullptr);
 

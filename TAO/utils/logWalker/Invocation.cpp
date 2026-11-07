@@ -6,18 +6,20 @@
 #include "HostProcess.h"
 #include "Thread.h"
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
 Invocation::Invocation (PeerProcess *peer, Thread *thr, size_t rid)
-  :req_octets_(0),
-   repl_octets_(0),
+  :req_octets_ (nullptr),
+   repl_octets_ (nullptr),
    waiter_ (thr),
    notify_incidents_ (),
    peer_(peer),
    req_id_(rid),
-   target_(0),
+   target_ (nullptr),
    handle_(thr->active_handle()),
    finish_reported_(false),
    req_level_ (0),
@@ -34,11 +36,11 @@ Invocation::~Invocation ()
 bool
 Invocation::init (const char * text, size_t offset, Thread *thread)
 {
-  if (GIOP_Buffer::size_leadin == 0)
+  if (GIOP_Buffer::size_leadin == nullptr)
     GIOP_Buffer::init_leadin (Session::tao_version());
-  const char *size_str = ACE_OS::strstr(text, GIOP_Buffer::size_leadin);
-  const char *id = size_str == 0 ? 0 : ACE_OS::strchr(size_str, '[');
-  if (size_str == 0 || id == 0)
+  const char *size_str = std::strstr (text, GIOP_Buffer::size_leadin);
+  const char *id = size_str == nullptr ? nullptr : std::strchr (size_str, '[');
+  if (size_str == nullptr || id == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Not a request preamble line %d:\n '%s'\n",offset,
@@ -46,7 +48,7 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
       return false;
   }
 
-  if( ACE_OS::strstr(text,"Request") == 0)
+  if (std::strstr (text, "Request") == nullptr)
     this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
   else
     this->req_octets_  = new GIOP_Buffer(text, offset, thread, this);
@@ -56,23 +58,23 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
 void
 Invocation::add_notify_incident (const ACE_CString &text, size_t /* offset */)
 {
-  this->notify_incidents_.enqueue_tail (text);
+  this->notify_incidents_.push_back (text);
 }
 
 bool
 Invocation::is_oneway() const
 {
-  return this->req_octets_ == 0 ? false : this->req_octets_->is_oneway();
+  return this->req_octets_ == nullptr ? false : this->req_octets_->is_oneway();
 }
 
 void
 Invocation::set_target (const char *oid, size_t oid_len)
 {
   PeerObject *tgt = this->peer_->object_for (oid, oid_len);
-  if (tgt == 0)
+  if (tgt == nullptr)
     return;
 
-  if (this->target_ == 0)
+  if (this->target_ == nullptr)
     {
       this->target_ = tgt;
       this->target_->add_invocation (this);
@@ -84,11 +86,11 @@ Invocation::message_complete ()
 {
   if (this->is_oneway())
     {
-      if (this->req_octets_ == 0 || !this->req_octets_->is_full())
+      if (this->req_octets_ == nullptr || !this->req_octets_->is_full())
         return false;
     }
   else
-    if (this->repl_octets_ == 0 || !this->repl_octets_->is_full())
+    if (this->repl_octets_ == nullptr || !this->repl_octets_->is_full())
       return false;
 
   return true;
@@ -106,9 +108,9 @@ Invocation::give_octets (bool request)
   GIOP_Buffer *result = request ? this->req_octets_ : this->repl_octets_ ;
 
   if (request)
-    this->req_octets_ = 0;
+    this->req_octets_ = nullptr;
   else
-    this->repl_octets_ = 0;
+    this->repl_octets_ = nullptr;
   return result;
 }
 
@@ -117,7 +119,7 @@ Invocation::set_octets (bool request, GIOP_Buffer *octets)
 {
   if (request)
     {
-      if (this->req_octets_ != 0)
+      if (this->req_octets_ != nullptr)
         {
           return;
         }
@@ -125,7 +127,7 @@ Invocation::set_octets (bool request, GIOP_Buffer *octets)
     }
   else
     {
-      if (this->repl_octets_ != 0)
+      if (this->repl_octets_ != nullptr)
         {
           return;
         }
@@ -147,13 +149,13 @@ Invocation::sent_request () const
 size_t
 Invocation::request_id () const
 {
-  return this->req_octets_ == 0 ? this->req_id_ : this->req_octets_->expected_req_id();
+  return this->req_octets_ == nullptr ? this->req_id_ : this->req_octets_->expected_req_id();
 }
 
 size_t
 Invocation::expected_size () const
 {
-  if (repl_octets_ != 0)
+  if (repl_octets_ != nullptr)
     return repl_octets_->expected_size();
   return req_octets_->expected_size();
 }
@@ -161,7 +163,7 @@ Invocation::expected_size () const
 size_t
 Invocation::request_bytes () const
 {
-  return req_octets_ != 0 ? req_octets_->expected_size() : 0;
+  return req_octets_ != nullptr ? req_octets_->expected_size() : 0;
 }
 
 Thread *
@@ -179,23 +181,23 @@ Invocation::handle () const
 bool
 Invocation::contains (size_t line)
 {
-  if (this->req_octets_ == 0 || this->is_oneway())
+  if (this->req_octets_ == nullptr || this->is_oneway())
     return false;
   return
     line > this->req_octets_->log_posn() &&
-    (this->repl_octets_ == 0 || line < this->repl_octets_->log_posn());
+    (this->repl_octets_ == nullptr || line < this->repl_octets_->log_posn());
 }
 
 size_t
 Invocation::req_line ()
 {
-  return this->req_octets_ == 0 ? 0 : this->req_octets_->log_posn();
+  return this->req_octets_ == nullptr ? 0 : this->req_octets_->log_posn();
 }
 
 size_t
 Invocation::repl_line ()
 {
-  return this->repl_octets_ == 0 ? 0 : this->repl_octets_->log_posn();
+  return this->repl_octets_ == nullptr ? 0 : this->repl_octets_->log_posn();
 }
 
 void
@@ -241,7 +243,7 @@ Invocation::dump_rel_time (ostream &strm, const ACE_Time_Value &tv, const ACE_Ti
   int subsec = (int)(reltime.usec()/1000);
 
   char buffer[20];
-  ACE_OS::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
+  std::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
               hours, min, sec, subsec);
 
   strm << buffer << ' ';
@@ -250,7 +252,7 @@ Invocation::dump_rel_time (ostream &strm, const ACE_Time_Value &tv, const ACE_Ti
 void
 Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value& start)
 {
-  if (this->req_octets_ == 0)
+  if (this->req_octets_ == nullptr)
     return;
   this->req_level_ = indent;
   strm << setw(7) << this->req_octets_->log_posn() << " " << setw(0);
@@ -265,7 +267,7 @@ Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value&
   const char *dir_1 = "sent to ";
   const char *dir_2 = " in ";
 
-  if (this->req_octets_ != 0)
+  if (this->req_octets_ != nullptr)
     {
       opname = this->req_octets_->operation();
       if (this->req_octets_->sending())
@@ -279,11 +281,11 @@ Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value&
 
   strm << "start request ";
 
-  if (opname == 0 || opname[0] == 0)
+  if (opname == nullptr || opname[0] == 0)
     opname = "<no operation>";
 
   strm << dir_1;
-  if (this->target_ == 0)
+  if (this->target_ == nullptr)
     strm << "<unknown object>" ;
   else
     strm << this->target_->name();
@@ -291,7 +293,7 @@ Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value&
   strm << " [" << opname << "]";
   if (this->is_oneway())
     strm << " oneway";
-  else if (this->repl_octets_ == 0)
+  else if (this->repl_octets_ == nullptr)
     strm << " <no reply found>";
   strm << endl;
 }
@@ -301,7 +303,7 @@ Invocation::dump_finish_line (ostream &strm, size_t indent, const ACE_Time_Value
 {
   bool is_popped = this->repl_level_ > 0 && indent == this->req_level_;
 
-  if (!is_popped && (this->finish_reported_ || this->is_oneway() || this->repl_octets_ == 0))
+  if (!is_popped && (this->finish_reported_ || this->is_oneway() || this->repl_octets_ == nullptr))
     return;
 
   if (!this->finish_reported_)
@@ -321,7 +323,7 @@ Invocation::dump_finish_line (ostream &strm, size_t indent, const ACE_Time_Value
 
   const char *dir = "reply from ";
 
-  if (this->req_octets_ != 0)
+  if (this->req_octets_ != nullptr)
     {
       opname = this->req_octets_->operation();
       if (this->req_octets_->sending())
@@ -330,7 +332,7 @@ Invocation::dump_finish_line (ostream &strm, size_t indent, const ACE_Time_Value
         }
     }
 
-  if (opname == 0 || opname[0] == 0)
+  if (opname == nullptr || opname[0] == 0)
     {
       opname = "<no operation>";
     }
@@ -364,7 +366,7 @@ Invocation::dump_detail (ostream &strm,
   const char *dir_1 = "sent to ";
   const char *dir_2 = " in ";
 
-  if (this->req_octets_ != 0)
+  if (this->req_octets_ != nullptr)
     {
       opname = this->req_octets_->operation();
       if (this->req_octets_->sending())
@@ -376,11 +378,11 @@ Invocation::dump_detail (ostream &strm,
 
   this->new_line (strm, indent, 0, false, true);
 
-  if (opname == 0 || opname[0] == 0)
+  if (opname == nullptr || opname[0] == 0)
     opname = "<no operation>";
 
   strm << dir_1;
-  if (this->target_ == 0)
+  if (this->target_ == nullptr)
     strm << "<unknown object>" ;
   else
     strm << this->target_->name();
@@ -394,10 +396,10 @@ Invocation::dump_detail (ostream &strm,
   ACE_Time_Value req_time;
   ACE_Time_Value rep_time;
   size_t delta = 0;
-  if (!this->is_oneway() && this->req_octets_ != 0)
+  if (!this->is_oneway() && this->req_octets_ != nullptr)
     {
       req_time = this->req_octets_->time();
-      if (this->repl_octets_ != 0)
+      if (this->repl_octets_ != nullptr)
         {
           rep_time = this->repl_octets_->time();
           delta = this->repl_octets_->log_posn() -
@@ -407,7 +409,7 @@ Invocation::dump_detail (ostream &strm,
   if (req_time.msec() != 0 && rep_time.msec() != 0)
     strm << " took " << (rep_time.msec() - req_time.msec()) << " ms";
 
-  if (this->req_octets_ != 0)
+  if (this->req_octets_ != nullptr)
     {
       strm << " Request, ";
       if (this->req_octets_->num_contexts() > 0)
@@ -423,7 +425,7 @@ Invocation::dump_detail (ostream &strm,
     strm << " oneway";
   else
     {
-      if (this->repl_octets_ != 0)
+      if (this->repl_octets_ != nullptr)
         {
           strm << " Reply, ";
           if (this->repl_octets_->num_contexts() > 0)
@@ -449,17 +451,14 @@ Invocation::dump_detail (ostream &strm,
     }
   if (delta > 0)
     strm << " log span = " << delta;
-  if (this->req_octets_ != 0 && this->req_octets_->has_octets())
+  if (this->req_octets_ != nullptr && this->req_octets_->has_octets())
     this->dump_special_details (strm, indent, opname);
   strm << endl;
-  if (this->notify_incidents_.size() > 0)
+  if (!this->notify_incidents_.empty ())
     {
-      for (NotifyIncidents::ITERATOR i = this->notify_incidents_.begin();
-           !(i.done()); i.advance())
+      for (ACE_CString const & note : this->notify_incidents_)
         {
-          ACE_CString *note = 0;
-          i.next(note);
-          strm << "            " << *note << endl;
+          strm << "            " << note << endl;
         }
     }
 }
@@ -468,10 +467,10 @@ void
 Invocation::dump_special_details (ostream &strm, size_t indent, const char *opname)
 {
   size_t rstat = 0;
-  if (this->repl_octets_ != 0 && this->repl_octets_->has_octets())
+  if (this->repl_octets_ != nullptr && this->repl_octets_->has_octets())
     rstat = this->repl_octets_->reply_status();
   int opid = 0;
-  if (ACE_OS::strcmp (opname, "_is_a") == 0)
+  if (std::strcmp (opname, "_is_a") == 0)
     {
       opid = 1;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
@@ -489,12 +488,12 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
           strm << "expected type parse failed";
         }
     }
-  else if (ACE_OS::strcmp (opname, "_get_MyID") == 0)
+  else if (std::strcmp (opname, "_get_MyID") == 0)
     {
       opid = 2;
     }
-  else if (ACE_OS::strcmp (opname, "resolve_str") == 0 ||
-           ACE_OS::strcmp (opname, "get_object_group_ref_from_name") == 0)
+  else if (std::strcmp (opname, "resolve_str") == 0 ||
+           std::strcmp (opname, "get_object_group_ref_from_name") == 0)
     {
       opid = 3;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
@@ -508,10 +507,10 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
           strm << "name (len = " << len << ") " << cdr.rd_ptr();
         }
     }
-  else if (ACE_OS::strcmp (opname, "resolve") == 0 ||
-           ACE_OS::strcmp (opname, "bind") == 0 ||
-           ACE_OS::strcmp (opname, "rebind") == 0 ||
-           ACE_OS::strcmp (opname, "bind_new_context") == 0
+  else if (std::strcmp (opname, "resolve") == 0 ||
+           std::strcmp (opname, "bind") == 0 ||
+           std::strcmp (opname, "rebind") == 0 ||
+           std::strcmp (opname, "bind_new_context") == 0
            )
     {
       opid = 3;
@@ -551,17 +550,17 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
             }
         }
     }
-  else if (ACE_OS::strcmp (opname, "register_activator") == 0 ||
-           ACE_OS::strcmp (opname, "unregister_activator") == 0 ||
-           ACE_OS::strcmp (opname, "notify_child_death") == 0 ||
-           ACE_OS::strcmp (opname, "start_server") == 0 ||
-           ACE_OS::strcmp (opname, "wait_for_startup") == 0 ||
-           ACE_OS::strcmp (opname, "activate_server") == 0 ||
-           ACE_OS::strcmp (opname, "add_or_update_server") == 0 ||
-           ACE_OS::strcmp (opname, "shutdown_server") == 0 ||
-           ACE_OS::strcmp (opname, "server_is_running") == 0 ||
-           ACE_OS::strcmp (opname, "server_is_shutting_down") == 0 ||
-           ACE_OS::strcmp (opname, "find") == 0)
+  else if (std::strcmp (opname, "register_activator") == 0 ||
+           std::strcmp (opname, "unregister_activator") == 0 ||
+           std::strcmp (opname, "notify_child_death") == 0 ||
+           std::strcmp (opname, "start_server") == 0 ||
+           std::strcmp (opname, "wait_for_startup") == 0 ||
+           std::strcmp (opname, "activate_server") == 0 ||
+           std::strcmp (opname, "add_or_update_server") == 0 ||
+           std::strcmp (opname, "shutdown_server") == 0 ||
+           std::strcmp (opname, "server_is_running") == 0 ||
+           std::strcmp (opname, "server_is_shutting_down") == 0 ||
+           std::strcmp (opname, "find") == 0)
     {
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
       ACE_InputCDR cdr (giop_cdr.rd_ptr(),
@@ -571,17 +570,17 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
       if (cdr >> len)
         {
           this->new_line (strm, indent, 8, true, false);
-          if (this->repl_octets_ == 0)
+          if (this->repl_octets_ == nullptr)
             strm << "<nrf> ";
-          else if (ACE_OS::strcmp (opname, "server_is_running") == 0)
+          else if (std::strcmp (opname, "server_is_running") == 0)
             strm << "<sir> ";
-          else if (ACE_OS::strcmp (opname, "server_is_shutting_down") == 0)
+          else if (std::strcmp (opname, "server_is_shutting_down") == 0)
             strm << "<ssd> ";
           strm << "name ( len = " << len << ") " << cdr.rd_ptr();
         }
     }
 
-  if (this->repl_octets_ == 0 || !this->repl_octets_->has_octets())
+  if (this->repl_octets_ == nullptr || !this->repl_octets_->has_octets())
     return;
 
   ACE_InputCDR &giop_cdr = this->repl_octets_->payload();

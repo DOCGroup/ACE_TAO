@@ -4,14 +4,14 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://MessengerServer.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://MessengerServer.ior");
 long msecs = 0; // the RelativeRoundtripTimeout value
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -20,7 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 't':
-        msecs = ACE_OS::atoi(get_opts.opt_arg ());
+        msecs = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -36,35 +36,36 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    CORBA::Object_var obj = orb->string_to_object(ior);
-    if (CORBA::is_nil(obj.in())) {
+    CORBA::Object_var obj = orb->string_to_object (ior);
+    if (CORBA::is_nil (obj.in ())) {
       std::cerr << "Nil Messenger reference" << std::endl;
       return 1;
     }
-    Messenger_var messenger = Messenger::_narrow(obj.in());
-    ACE_ASSERT(! CORBA::is_nil(messenger.in()));
+    Messenger_var messenger = Messenger::_narrow (obj.in ());
+    ACE_ASSERT (!CORBA::is_nil (messenger.in ()));
 
-    obj = orb->resolve_initial_references("ORBPolicyManager");
-    CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow(obj.in());
-    ACE_ASSERT(! CORBA::is_nil(policy_manager.in()));
-    obj = orb->resolve_initial_references("PolicyCurrent");
+    obj = orb->resolve_initial_references ("ORBPolicyManager");
+    CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow (obj.in ());
+    ACE_ASSERT (!CORBA::is_nil (policy_manager.in ()));
+    obj = orb->resolve_initial_references ("PolicyCurrent");
     CORBA::PolicyCurrent_var policy_current = CORBA::PolicyCurrent::_narrow (obj.in());
-    ACE_ASSERT(! CORBA::is_nil(policy_current.in()));
+    ACE_ASSERT (!CORBA::is_nil (policy_current.in ()));
 
     // TimeT is in 10ths of a microsecond (10000 == 1.0e-3 * 1.0e7).
     if (msecs <= 0) {
       std::cout << "Enter relative roundtrip timeout in milliseconds -->";
       std::cin >> msecs;
     }
-    TimeBase::TimeT relative_rt_timeout = msecs * 10000;
+    TimeBase::TimeT const relative_rt_timeout = msecs * 10000;
 
     CORBA::Any relative_rt_timeout_as_any;
     relative_rt_timeout_as_any <<= relative_rt_timeout;
@@ -93,11 +94,14 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
     try {
       messenger->send_message ("TAO User", "TAO Test", message.inout());
       std::cerr << "ERROR: Message did not timeout." << std::endl;
-    } catch(const CORBA::TIMEOUT&) {
+    }
+    catch (CORBA::TIMEOUT const &)
+    {
       std::cout << "Message Timed out as expected." << std::endl;
     }
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex)
+  {
     std::cerr << "Caught a CORBA exception: " << ex << std::endl;
     return 1;
   }

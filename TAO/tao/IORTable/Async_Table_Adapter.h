@@ -29,7 +29,7 @@ class TAO_Async_IORTable_Export TAO_Async_Table_Adapter : public TAO_Table_Adapt
 {
 public:
   /// Constructor
-  TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
+  explicit TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
   ~TAO_Async_Table_Adapter () override;

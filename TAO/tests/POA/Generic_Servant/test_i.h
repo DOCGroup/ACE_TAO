@@ -19,22 +19,22 @@ public:
           PortableServer::POA_ptr poa);
 
   /// Returns the Default POA of this servant
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   /// A twoway operation.
-  void method ();
+  void method () override;
 
   /// A oneway operation.
-  void oneway_method ();
+  void oneway_method () override;
 
   /// A timed twoway operation.
-  void timed_method (CORBA::ULong timeout);
+  void timed_method (CORBA::ULong timeout) override;
 
   /// A timed twoway operation.
-  void timed_oneway_method (CORBA::ULong timeout);
+  void timed_oneway_method (CORBA::ULong timeout) override;
 
   /// Shutdown the ORB
-  void shutdown ();
+  void shutdown () override;
 
   /// Sleep for some time.
   void sleep (CORBA::ULong timeout,

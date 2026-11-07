@@ -40,8 +40,7 @@ public:
   void shutdown () override;
 
 private:
-  /// Use an ORB reference to convert strings to objects and shutdown
-  /// the application.
+  /// Non-owning pointer to the server's ORB_Killer, which outlives this servant.
   ORB_Killer *killer_;
 };
 

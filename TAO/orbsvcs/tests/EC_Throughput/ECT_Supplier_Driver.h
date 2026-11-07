@@ -21,6 +21,9 @@
 #include "orbsvcs/Channel_Clients_T.h"
 #include "ECT_Driver.h"
 #include "ECT_Supplier.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include <array>
+#include <memory>
 
 class ECT_Supplier_Driver : public ECT_Driver
 {
@@ -30,16 +33,18 @@ class ECT_Supplier_Driver : public ECT_Driver
   // = DESCRIPTION
   //
 public:
-  ECT_Supplier_Driver ();
-  ~ECT_Supplier_Driver () override;
+  ECT_Supplier_Driver () = default;
+  ~ECT_Supplier_Driver () override = default;
 
-  void shutdown_consumer (void* consumer_cookie) override;
+  ECT_Supplier_Driver (ECT_Supplier_Driver const&) = delete;
+  ECT_Supplier_Driver (ECT_Supplier_Driver&&) = delete;
+  ECT_Supplier_Driver& operator= (ECT_Supplier_Driver const&) = delete;
+  ECT_Supplier_Driver& operator= (ECT_Supplier_Driver&&) = delete;
+
+  void shutdown_consumer () override;
   // Not used....
 
-  enum {
-    MAX_SUPPLIERS = 16
-    // Maximum number of suppliers.
-  };
+  static constexpr int MAX_SUPPLIERS {16};
 
   int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
@@ -60,30 +65,20 @@ private:
   // Dump the results for each supplier.
 
 private:
-  Test_Supplier* suppliers_[ECT_Supplier_Driver::MAX_SUPPLIERS];
-  // The suppliers array.
+  struct Options
+  {
+    int n_suppliers {1};
+    int burst_count {10};
+    int burst_size {100};
+    int event_size {128};
+    int burst_pause {100};
+    int type_start {ACE_ES_EVENT_UNDEFINED};
+    int type_count {1};
+    ACE_TCHAR const* pid_file_name {};
+  } options_;
 
-  int n_suppliers_;
-  // The number of suppliers.
-
-  int burst_count_;
-  // How many bursts we will send from each supplier.
-
-  int burst_size_;
-  // The number of events
-
-  int event_size_;
-  // The size of the payload on each event.
-
-  int burst_pause_;
-  // The time between each event burst, in microseconds.
-
-  int type_start_;
-  int type_count_;
-  // We send two types of events, with different contents.
-
-  const ACE_TCHAR* pid_file_name_;
-  // The name of a file where the process stores its pid
+  /// These pointers own suppliers; POA references are released by disconnect().
+  std::array<std::unique_ptr<Test_Supplier>, MAX_SUPPLIERS> suppliers_ {};
 };
 
 #endif /* ECT_SUPPLIER_DRIVER_H */

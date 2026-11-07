@@ -45,7 +45,7 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_i
 {
 public:
   /// Constructor.
-  TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const& value);
+  explicit TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const &value);
 
   /// Copy constructor.
   TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const& rhs);

@@ -38,7 +38,7 @@ namespace ACE
               SessionBase (u_short port,
                            const ACE_Time_Value& timeout,
                            bool keep_alive = false,
-                           const ACE_Time_Value* alive_timeout = 0);
+                           const ACE_Time_Value* alive_timeout = nullptr);
 
               virtual ~SessionBase ();
 

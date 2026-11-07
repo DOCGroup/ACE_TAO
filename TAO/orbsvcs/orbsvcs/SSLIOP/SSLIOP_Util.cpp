@@ -29,7 +29,7 @@ TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
 
       return tao_current._retn ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception (

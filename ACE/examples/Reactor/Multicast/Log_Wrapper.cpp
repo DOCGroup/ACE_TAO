@@ -4,38 +4,31 @@
 #include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_utsname.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdlib.h"
 
-
-Log_Wrapper::Log_Wrapper ()
-{
-  sequence_number_ = 0;
-  this->log_msg_.app_id = ACE_OS::getpid ();
-}
-
-Log_Wrapper::~Log_Wrapper () = default;
+#include <cstring>
 
 // Set the log_msg_ host address.
 
 int
-Log_Wrapper::open (const int port, const char *mcast_addr)
+Log_Wrapper::open (int port, char const *mcast_addr)
 {
-  struct hostent *host_info;
+  struct hostent *host_info {};
   ACE_utsname host_data;
 
   if (ACE_OS::uname (&host_data) < 0)
     return -1;
 
-  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == 0)
+  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == nullptr)
     return -1;
-  else
-    ACE_OS::memcpy ((char *) &this->log_msg_.host,
-                    (char *) host_info->h_addr,
-                    host_info->h_length);
+
+  std::memcpy (&this->log_msg_.host,
+               host_info->h_addr,
+               host_info->h_length);
+  this->log_msg_.app_id = ACE_OS::getpid ();
 
   // This starts out initialized to all zeros!
   server_ = ACE_INET_Addr (port, mcast_addr);
@@ -59,9 +52,9 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   this->log_msg_.type = type;
   // Casting time() to long will start causing bad results sometime in 2038
   // but the receiver isn't looking at the time, so who cares?
-  this->log_msg_.time = (long) ACE_OS::time (0);
+  this->log_msg_.time = static_cast<long> (ACE_OS::time (nullptr));
   this->log_msg_.msg_length =
-    ACE_Utils::truncate_cast<ACE_INT32> (ACE_OS::strlen (message) + 1);
+    ACE_Utils::truncate_cast<ACE_INT32> (std::strlen (message) + 1);
   this->log_msg_.sequence_number = ACE_HTONL(sequence_number_);
 
   iovec iovp[2];

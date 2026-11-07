@@ -16,7 +16,7 @@ TAO_Base_Transport_Property::duplicate ()
     return nullptr;
 
   // Construct a copy of our class
-  TAO_Base_Transport_Property *prop = nullptr;
+  TAO_Base_Transport_Property *prop {};
   ACE_NEW_RETURN (prop, TAO_Base_Transport_Property (endpt, true), nullptr);
   return prop;
 }

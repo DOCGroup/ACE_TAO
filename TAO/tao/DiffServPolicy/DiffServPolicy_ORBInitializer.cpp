@@ -30,9 +30,8 @@ TAO_DiffServPolicy_ORBInitializer::pre_init (
     }
 
   // Bind the service context handler for Diffserv
-  TAO_DiffServ_Service_Context_Handler* h = nullptr;
-  ACE_NEW (h,
-           TAO_DiffServ_Service_Context_Handler());
+  TAO_DiffServ_Service_Context_Handler *h {};
+  ACE_NEW (h, TAO_DiffServ_Service_Context_Handler ());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::REP_NWPRIORITY, h);
 }
 
@@ -80,7 +79,7 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -91,11 +90,6 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
               // ORBInitializer.
               return;
             }
-          throw;
-        }
-      catch ( ::CORBA::Exception&)
-        {
-          // Rethrow any other exceptions...
           throw;
         }
     }

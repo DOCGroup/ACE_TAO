@@ -34,7 +34,7 @@ public:
   int svc () override;
 
 private:
-  /// Output file for IOR
+  /// Borrowed from main; the task finishes before the caller's argument storage expires.
   ACE_TCHAR const *output_;
 
   /// Manual event to wake up the main thread to create a client

@@ -99,7 +99,7 @@ TAO_EC_Dispatching_Task::svc ()
     {
       try
         {
-          ACE_Message_Block *mb = nullptr;
+          ACE_Message_Block *mb {};
 
           if (this->getq (mb) == -1)
             {
@@ -179,10 +179,6 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 }
 
 // ****************************************************************
-
-TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command ()
-{
-}
 
 // ****************************************************************
 
