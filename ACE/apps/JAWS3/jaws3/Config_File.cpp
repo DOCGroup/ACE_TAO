@@ -28,7 +28,7 @@ public:
   const ACE_TCHAR * duplicate (const ACE_TCHAR *s)
   {
     void **x;
-    ACE_TCHAR const *d = nullptr;
+    ACE_TCHAR const *d {};
     ACE_Unbounded_Queue_Iterator<void *> iter (this->queue_);
 
     while (iter.next (x))
@@ -116,8 +116,8 @@ JAWS_Config_File_Impl::parse_file ()
   const ACE_TCHAR *sym_name;
   const ACE_TCHAR *sym_value;
   bool last_line_was_read = false;
-  ACE_TCHAR *end_of_current_line = nullptr;
-  ACE_TCHAR *p = nullptr;
+  ACE_TCHAR *end_of_current_line {};
+  ACE_TCHAR *p {};
 
   while (last_line_was_read
          || (count = fio.recv (buffer.wr_ptr (), buffer.space () - 2)) >= 0)
@@ -174,8 +174,8 @@ JAWS_Config_File_Impl::parse_file ()
               || (buffer.rd_ptr ()[0] != ' '
                   && buffer.rd_ptr ()[0] != '\t')))
         {
-          ACE_TCHAR *name = nullptr;
-          ACE_TCHAR *value = nullptr;
+          ACE_TCHAR *name {};
+          ACE_TCHAR *value {};
 
           name = line.rd_ptr ();
           for (p = name; *p != '\0'; p++)
@@ -250,7 +250,7 @@ void
 JAWS_Config_File_Impl::dump ()
 {
   JAWS_SYMBOL_TABLE_ITERATOR iter (*this->symbols_);
-  JAWS_SYMBOL_TABLE_ENTRY *entry = nullptr;
+  JAWS_SYMBOL_TABLE_ENTRY *entry {};
 
   while (iter.next (entry))
     {

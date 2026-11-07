@@ -14,7 +14,7 @@ JAWS_Options::JAWS_Options ()
 const char *
 JAWS_Options::getenv (const char *key)
 {
-  char const *value = nullptr;
+  char const *value {};
   if (this->cf_ == nullptr || this->cf_->find (key, value) < 0)
     value = ACE_OS::getenv (key);
 

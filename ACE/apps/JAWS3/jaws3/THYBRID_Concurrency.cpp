@@ -102,7 +102,7 @@ JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
         }
     }
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   int result = task->getq (mb);
 
   if (result != -1)

@@ -54,7 +54,7 @@ JAWS_TPOOL_Concurrency::getq (JAWS_Protocol_Handler *&ph)
   if (this->shutdown_task_ && task->msg_queue ()->message_count () == 0)
     return -1;
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int result = task->getq (mb);
 

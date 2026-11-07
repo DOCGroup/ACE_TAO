@@ -81,7 +81,7 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
   JAWS_EC_AH_Adapter *jecaha;
   jecaha = JAWS_EC_AH_Adapter::make (completer);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = nullptr;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
   header_and_trailer =
     new ACE_Asynch_Transmit_File::Header_And_Trailer ( header
                                                      , header->length ()
