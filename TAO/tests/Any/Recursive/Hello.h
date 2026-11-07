@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HELLO_H
 #define HELLO_H
 
@@ -34,7 +33,7 @@ public:
 
 private:
   /// The ORB which will be shutdown by Hello::shutdown().
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* HELLO_H */

@@ -11,10 +11,10 @@ struct Client_Options
   std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -29,22 +29,22 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s -k <ior>\n"),
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
   return 0;
 }
 
-template<typename T>
-void
-perform_invocation (Test::Hello_ptr hello,
-                    CORBA::Any const & the_any)
+template <typename T>
+static void
+perform_invocation (Test::Hello_ptr const hello,
+                    CORBA::Any const& the_any)
 {
   // Execute more than once to help verify that mutable recursive
   // TypeCode state is managed correctly.
-  for (unsigned int n = 0; n < 2; ++n)
+  for (unsigned int n {}; n < 2; ++n)
     {
-      CORBA::Any_var my_any =
+      CORBA::Any_var const my_any =
         hello->get_any (the_any);
 
       T const *my_foo {};
@@ -52,7 +52,7 @@ perform_invocation (Test::Hello_ptr hello,
         throw Test::Demarshaling_From_Any_Failed ();
 
       CORBA::TypeCode_var const the_tc = the_any.type ();
-      CORBA::TypeCode_var const my_tc = my_any->type ();
+      CORBA::TypeCode_var const my_tc = my_any.in ().type ();
 
       CORBA::Boolean const equal_tc =
         the_tc->equal (my_tc.in ());
@@ -68,12 +68,12 @@ perform_invocation (Test::Hello_ptr hello,
     }
 }
 
-void
+static void
 recursive_struct_test (CORBA::ORB_ptr /* orb */,
                        Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing recursive struct test\n"));
+              ACE_TEXT ("Executing recursive struct test\n")));
 
   Test::RecursiveStruct foo {};
 
@@ -88,12 +88,12 @@ recursive_struct_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::RecursiveStruct> (hello, the_any);
 }
 
-void
+static void
 nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
                              Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing nested recursive struct test\n"));
+              ACE_TEXT ("Executing nested recursive struct test\n")));
 
   Test::NestedRecursiveStruct foo {};
 
@@ -108,34 +108,34 @@ nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::NestedRecursiveStruct> (hello, the_any);
 }
 
-void
+static void
 recursive_union_test (CORBA::ORB_ptr /* orb */,
                       Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing recursive union test\n"));
+              ACE_TEXT ("Executing recursive union test\n")));
 
   CORBA::Any the_any {};
 
   Test::EnumUnion foo_enum {};
-  constexpr CORBA::Short test_long = 23901;
+  constexpr CORBA::Short test_short = 23901;
 
   // First simple case, just an union with an enum as discriminator
-  foo_enum.i (test_long);
+  foo_enum.i (test_short);
   the_any <<= foo_enum;
 
   ::perform_invocation<Test::EnumUnion> (hello, the_any);
 
   // Non-recursive member case.
   Test::RecursiveUnion foo {};
-  foo.i (test_long);
+  foo.i (test_short);
 
   the_any <<= foo;
 
   ::perform_invocation<Test::RecursiveUnion> (hello, the_any);
 
   Test::RecursiveUnion2 foo2 {};
-  foo2.i (test_long);
+  foo2.i (test_short);
 
   the_any <<= foo2;
 
@@ -143,16 +143,14 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
                                                the_any);
 
   Test::RecursiveUnion3 foo3 {};
-  foo3.a (test_long);
+  foo3.a (test_short);
 
   the_any <<= foo3;
 
-  for (int n = 0; n < 200; ++n)
-  {
-    ::perform_invocation<Test::RecursiveUnion3> (hello,
-        the_any);
-  }
-
+  for (int n {}; n < 200; ++n)
+    {
+      ::perform_invocation<Test::RecursiveUnion3> (hello, the_any);
+    }
 
   // Recursive member case.
   Test::RecursiveUnionSeq seq {};
@@ -164,8 +162,7 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   the_any <<= foo;
 
-  ::perform_invocation<Test::RecursiveUnion> (hello,
-                                              the_any);
+  ::perform_invocation<Test::RecursiveUnion> (hello, the_any);
 
   // Recursive member case with no default member
   Test::RecursiveUnionSeqNoDefault seqnodefault {};
@@ -178,8 +175,7 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   the_any <<= foonodefault;
 
-  ::perform_invocation<Test::RecursiveUnionNoDefault> (hello,
-                                                       the_any);
+  ::perform_invocation<Test::RecursiveUnionNoDefault> (hello, the_any);
 
   // Recursive member case with enum .
   Test::VSortRecursiveUnionSeq vsortseq {};
@@ -192,15 +188,13 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   the_any <<= vsort_foo;
 
-  ::perform_invocation<Test::VSortRecursiveUnion> (hello,
-                                                   the_any);
+  ::perform_invocation<Test::VSortRecursiveUnion> (hello, the_any);
 
   // Non-recursive member case with enum .
   Test::NonRecursiveUnionWithEnum val {};
   the_any <<= val;
 
-  ::perform_invocation<Test::NonRecursiveUnionWithEnum> (hello,
-                                                         the_any);
+  ::perform_invocation<Test::NonRecursiveUnionWithEnum> (hello, the_any);
 
   // Non-recursive member case with recursive struct .
 
@@ -210,37 +204,36 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::NonRecursiveUnionWithStringStruct> (hello, the_any);
 }
 
-
-void
+static void
 indirectly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
                                      Test::Hello_ptr /* hello */)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing indirectly recursive valuetype test\n"));
+              ACE_TEXT ("Executing indirectly recursive valuetype test\n")));
 
   ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
+              ACE_TEXT ("  Currently unimplemented.\n")));
 }
 
-void
+static void
 directly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
                                    Test::Hello_ptr /* hello */)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing directly recursive valuetype test\n"));
+              ACE_TEXT ("Executing directly recursive valuetype test\n")));
 
   ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
+              ACE_TEXT ("  Currently unimplemented.\n")));
 }
 
 #if TAO_HAS_MINIMUM_CORBA == 0
 
-void
+static void
 recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                                        Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing recursive struct via TypeCodeFactory test\n"));
+              ACE_TEXT ("Executing recursive struct via TypeCodeFactory test\n")));
 
   Test::RecursiveStruct foo {};
 
@@ -281,44 +274,43 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                                                the_any);
 }
 
-void
+static void
 recursive_union_typecodefactory_test (CORBA::ORB_ptr /* orb */,
                                       Test::Hello_ptr /* hello */)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing recursive union via TypeCodeFactory test\n"));
+              ACE_TEXT ("Executing recursive union via TypeCodeFactory test\n")));
 
   ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
+              ACE_TEXT ("  Currently unimplemented.\n")));
 }
 
-void
+static void
 indirectly_recursive_valuetype_typecodefactory_test (
   CORBA::ORB_ptr /* orb */,
   Test::Hello_ptr /* hello */)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing indirectly recursive valuetype via "
-              "TypeCodeFactory test\n"));
+              ACE_TEXT ("Executing indirectly recursive valuetype via "
+                        "TypeCodeFactory test\n")));
 
   ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
+              ACE_TEXT ("  Currently unimplemented.\n")));
 }
 
-void
+static void
 directly_recursive_valuetype_typecodefactory_test (CORBA::ORB_ptr /* orb */,
                                                    Test::Hello_ptr /* hello */)
 {
   ACE_DEBUG ((LM_INFO,
-              "Executing directly recursive valuetype via "
-              "TypeCodeFactory test\n"));
+              ACE_TEXT ("Executing directly recursive valuetype via "
+                        "TypeCodeFactory test\n")));
 
   ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
+              ACE_TEXT ("  Currently unimplemented.\n")));
 }
 
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -351,16 +343,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       static Test_Function const tests[] =
         {
-          recursive_struct_test
-          , nested_recursive_struct_test
-          , indirectly_recursive_valuetype_test
-          , directly_recursive_valuetype_test
-          , recursive_union_test
+          recursive_struct_test,
+          nested_recursive_struct_test,
+          indirectly_recursive_valuetype_test,
+          directly_recursive_valuetype_test,
+          recursive_union_test,
 #if TAO_HAS_MINIMUM_CORBA == 0
-          , recursive_struct_typecodefactory_test
-          , recursive_union_typecodefactory_test
-          , indirectly_recursive_valuetype_typecodefactory_test
-          , directly_recursive_valuetype_typecodefactory_test
+          recursive_struct_typecodefactory_test,
+          recursive_union_typecodefactory_test,
+          indirectly_recursive_valuetype_typecodefactory_test,
+          directly_recursive_valuetype_typecodefactory_test
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
         };
 

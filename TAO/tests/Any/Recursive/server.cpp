@@ -10,10 +10,10 @@ struct Server_Options
   std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("test.ior")};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s -o <iorfile>\n"),
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
   return 0;
@@ -94,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) server - event loop finished\n")));
 
       root_poa->destroy (true, true);
 
