@@ -64,14 +64,9 @@ TAO::TypeCode::Value<StringType,
   if (!success)
     return false;
 
-  Value_Field<StringType, TypeCodeType> const * const begin =
-    &this->fields_[0];
-  Value_Field<StringType, TypeCodeType> const * const end =
-    begin + this->nfields_;
-
-  for (Value_Field<StringType, TypeCodeType> const * i = begin; i != end; ++i)
+  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
-      Value_Field<StringType, TypeCodeType> const & field = *i;
+      Value_Field<StringType, TypeCodeType> const & field = this->fields_[i];
 
       if (!(enc << Traits<StringType>::get_string (field.name))
           || !marshal (enc,

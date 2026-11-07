@@ -59,17 +59,10 @@ TAO::TypeCode::Value<char const *,
   if (!success)
     return false;
 
-  Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const begin =
-    &this->fields_[0];
-  Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const end =
-    begin + this->nfields_;
-
-  for (Value_Field<char const *, CORBA::TypeCode_ptr const *> const * i =
-         begin;
-       i != end;
-       ++i)
+  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
-      Value_Field<char const *, CORBA::TypeCode_ptr const *> const & field = *i;
+      Value_Field<char const *, CORBA::TypeCode_ptr const *> const & field =
+        this->fields_[i];
 
       if (!(enc << Traits<char const *>::get_string (field.name))
           || !marshal (enc,

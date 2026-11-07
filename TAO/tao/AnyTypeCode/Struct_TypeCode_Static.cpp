@@ -54,18 +54,10 @@ TAO::TypeCode::Struct<char const *,
   if (!success)
     return false;
 
-  Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const begin =
-    &this->fields_[0];
-  Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const end =
-    begin + this->nfields_;
-
-  for (Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * i =
-         begin;
-       i != end;
-       ++i)
+  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
       Struct_Field<char const *, CORBA::TypeCode_ptr const *> const & field =
-        *i;
+        this->fields_[i];
 
       if (!(enc << TAO_OutputCDR::from_string (
                        Traits<char const *>::get_string (field.name), 0))
