@@ -376,9 +376,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         showNSonly = false;
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name = nullptr;
+      ACE_TCHAR *name {};
       ACE_TCHAR const *const pname = argv[0];
-      ACE_TCHAR const *nameService = nullptr;
+      ACE_TCHAR const *nameService {};
 
       if (0 < argc)
         {

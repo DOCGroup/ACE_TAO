@@ -75,10 +75,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         quiet = false,
         destroy = false;
       ACE_TCHAR const *const pname = argv[0];
-      ACE_TCHAR const *nameService = nullptr;
+      ACE_TCHAR const *nameService {};
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name = nullptr;
+      ACE_TCHAR *name {};
       ACE_Time_Value
         rtt = ACE_Time_Value::zero;
 
