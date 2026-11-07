@@ -93,7 +93,7 @@ AST_Template_Module::match_param_refs (UTL_StrList const& refs,
                                        UTL_Scope *decl_scope)
 {
   UTL_Scope *s = decl_scope;
-  AST_Template_Module *enclosing = nullptr;
+  AST_Template_Module *enclosing {};
 
   while (enclosing == nullptr && s != nullptr)
     {

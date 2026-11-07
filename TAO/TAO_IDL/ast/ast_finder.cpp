@@ -28,7 +28,7 @@ AST_Finder::destroy ()
 void
 AST_Finder::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   this->dump_i (o, "finder ");
   this->local_name ()->dump (o);

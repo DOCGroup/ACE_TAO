@@ -79,7 +79,7 @@ AST_Annotation_Appls::operator[] (std::size_t index) const
 AST_Annotation_Appl *
 AST_Annotation_Appls::find (AST_Annotation_Decl *annotation) const
 {
-  AST_Annotation_Appl *result = nullptr;
+  AST_Annotation_Appl *result {};
   for (AST_Annotation_Appl_Ptr const& appl_ptr : vector_)
     {
       AST_Annotation_Appl *appl = appl_ptr.get ();

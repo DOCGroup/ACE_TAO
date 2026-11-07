@@ -129,7 +129,7 @@ AST_Array::compute_dims (UTL_ExprList *ds,
       AST_Expression::ExprType const ex_type =
         (ph == nullptr ? orig->ev ()->et : ph->info ()->const_type_);
 
-      AST_Expression *copy = nullptr;
+      AST_Expression *copy {};
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
                                       ex_type),

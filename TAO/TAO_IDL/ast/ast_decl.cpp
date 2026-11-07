@@ -282,7 +282,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 
   // OK, not global. So copy name of containing scope, then
   // smash last cdr of copy with new component
-  UTL_ScopedName *cn = nullptr;
+  UTL_ScopedName *cn {};
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
   if (d)
     {
@@ -297,14 +297,14 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
     {
       if (this->pd_name)
         {
-          UTL_ScopedName *conc_name = nullptr;
+          UTL_ScopedName *conc_name {};
           ACE_NEW (conc_name,
                    UTL_ScopedName (this->pd_local_name->copy (), nullptr));
           this->pd_name->nconc (conc_name);
         }
       else
         {
-          UTL_ScopedName *scoped_name = nullptr;
+          UTL_ScopedName *scoped_name {};
           ACE_NEW (scoped_name,
                    UTL_ScopedName (this->pd_local_name->copy (), nullptr));
           this->pd_name.reset (scoped_name);
@@ -1057,21 +1057,21 @@ AST_Decl::compute_name (std::string const& prefix,
   result_local_str.append (suffix);
 
   // Identifier for the resulting local name.
-  Identifier *result_local_id = nullptr;
+  Identifier *result_local_id {};
   ACE_NEW_RETURN (result_local_id,
                   Identifier (result_local_str),
                   nullptr);
   std::unique_ptr<Identifier> result_local_id_owner (result_local_id);
 
   // UTL_Scoped name for the resulting local name.
-  UTL_ScopedName *result_local_name = nullptr;
+  UTL_ScopedName *result_local_name {};
   ACE_NEW_RETURN (result_local_name,
                   UTL_ScopedName (result_local_id_owner.get (), nullptr),
                   nullptr);
   result_local_id_owner.release ();
 
   // Global scope?
-  UTL_ScopedName *result_name = nullptr;
+  UTL_ScopedName *result_name {};
   if (!this->defined_in ())
     {
       result_name = result_local_name;

@@ -89,7 +89,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 static std::unique_ptr<AST_Expression::AST_ExprValue>
 new_expr_value ()
 {
-  AST_Expression::AST_ExprValue *value = nullptr;
+  AST_Expression::AST_ExprValue *value {};
   ACE_NEW_NORETURN (value, AST_Expression::AST_ExprValue);
   return std::unique_ptr<AST_Expression::AST_ExprValue> (value);
 }
@@ -1625,7 +1625,7 @@ static AST_Expression::AST_ExprValue *
 eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 {
   // Make a copy to simplify the memory management logic.
-  AST_Expression::AST_ExprValue *newval = nullptr;
+  AST_Expression::AST_ExprValue *newval {};
   ACE_NEW_RETURN (newval,
                   AST_Expression::AST_ExprValue,
                   nullptr);
@@ -1636,7 +1636,7 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
       *newval = *ev;
     }
 
-  AST_Expression::AST_ExprValue *retval = nullptr;
+  AST_Expression::AST_ExprValue *retval {};
 
   switch (ek)
   {
@@ -1745,7 +1745,7 @@ do_eval_bin_op_float (AST_Expression::ExprComb op, Type a, Type b, Type &result)
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 {
-  AST_ExprValue *retval = nullptr;
+  AST_ExprValue *retval {};
 
   if (this->pd_v1 == nullptr || this->pd_v2 == nullptr)
     {
@@ -1860,7 +1860,7 @@ do_eval_mod_op (Type a, Type b, Type &result)
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 {
-  AST_ExprValue *retval = nullptr;
+  AST_ExprValue *retval {};
 
   if (this->pd_v1 == nullptr || this->pd_v2 == nullptr)
     {
@@ -1996,7 +1996,7 @@ do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 {
-  AST_Expression::AST_ExprValue *retval = nullptr;
+  AST_Expression::AST_ExprValue *retval {};
 
   if (this->pd_v1 == nullptr || this->pd_v2 == nullptr)
     {
@@ -2094,7 +2094,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
 {
-  AST_ExprValue *retval = nullptr;
+  AST_ExprValue *retval {};
 
   if (this->pd_ev != nullptr)
     {
@@ -2212,9 +2212,9 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
 {
-  UTL_Scope *s = nullptr;
-  AST_Decl *d = nullptr;
-  AST_Constant *c = nullptr;
+  UTL_Scope *s {};
+  AST_Decl *d {};
+  AST_Constant *c {};
 
   // Is there a symbol stored?
   if (this->pd_n == nullptr)
@@ -2354,7 +2354,7 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
 AST_Expression::AST_ExprValue *
 AST_Expression::coerce (AST_Expression::ExprType t)
 {
-  AST_ExprValue *tmp = nullptr;
+  AST_ExprValue *tmp {};
 
   // First, evaluate it, then try to coerce result type.
   // If already evaluated, return the result.
@@ -2421,7 +2421,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     }
 
   // Create a copy to contain coercion result.
-  AST_ExprValue *copy = nullptr;
+  AST_ExprValue *copy {};
   ACE_NEW_RETURN (copy,
                   AST_ExprValue,
                   nullptr);

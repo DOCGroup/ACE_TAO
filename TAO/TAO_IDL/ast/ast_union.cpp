@@ -106,7 +106,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                    local,
                    abstract)
 {
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
 
   if (dt == nullptr)
     {
@@ -685,8 +685,8 @@ AST_Union::compute_default_value ()
 int
 AST_Union::compute_default_index ()
 {
-  AST_Decl *d = nullptr;
-  AST_UnionBranch *ub = nullptr;
+  AST_Decl *d {};
+  AST_UnionBranch *ub {};
   int i = 0;
 
   // If default case does not exist, it will have a value of -1 according to

@@ -68,7 +68,7 @@ AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   if (this->pd_base_home != nullptr)
     {
@@ -84,7 +84,7 @@ AST_Decl *
 AST_Home::look_in_supported (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.

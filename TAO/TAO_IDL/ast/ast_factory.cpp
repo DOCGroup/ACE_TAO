@@ -179,9 +179,9 @@ AST_Factory::compute_argument_attr ()
       return 0;
     }
 
-  AST_Decl *d = nullptr;
-  AST_Type *type = nullptr;
-  AST_Argument *arg = nullptr;
+  AST_Decl *d {};
+  AST_Type *type {};
+  AST_Argument *arg {};
 
   this->argument_count_ = 0;
 
@@ -225,9 +225,9 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
   std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
 
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  UTL_ScopedName *nl_n {};
+  AST_Type *fe {};
+  AST_Decl *d {};
 
   this->pd_exceptions.reset ();
 
@@ -257,7 +257,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 
       fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = nullptr;
+      UTL_ExceptList *el {};
       ACE_NEW_RETURN (el,
                       UTL_ExceptList (fe, nullptr),
                       nullptr);
@@ -281,7 +281,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 void
 AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   this->dump_i (o, "factory ");
   this->local_name ()->dump (o);

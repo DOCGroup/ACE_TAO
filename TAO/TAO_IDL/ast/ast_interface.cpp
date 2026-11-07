@@ -575,8 +575,8 @@ AST_Interface::redef_clash ()
   this->insert_queue.clear ();
   this->redef_clash_populate_r (this);
 
-  AST_Decl *group1_member_item = nullptr;
-  AST_Decl *group2_member_item = nullptr;
+  AST_Decl *group1_member_item {};
+  AST_Decl *group2_member_item {};
 
   // Now compare all pairs.
   for (std::size_t i = 0; i < this->insert_queue.size (); ++i)
@@ -681,8 +681,8 @@ AST_Decl *
 AST_Interface::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = nullptr;
-  AST_Decl *d_before = nullptr;
+  AST_Decl *d {};
+  AST_Decl *d_before {};
   AST_Type_List const& inherited = this->inherits ();
 
   // Can't look in an interface which was not yet defined.
@@ -758,7 +758,7 @@ AST_Interface::look_in_inherited_local (Identifier *e,
       return nullptr;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   AST_Type_List const& inherited = this->inherits ();
 
   /// OK, loop through inherited interfaces.
@@ -791,7 +791,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
     }
 
   Identifier *id = d->local_name ();
-  AST_Decl *prev = nullptr;
+  AST_Decl *prev {};
   AST_Decl::NodeType nt = NT_root;
   AST_Interface_List const& inherited = this->inherits_flat ();
 

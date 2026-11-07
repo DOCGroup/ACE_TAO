@@ -117,7 +117,7 @@ bool
 AST_InterfaceFwd::full_def_seen ()
 {
   UTL_Scope *s = this->defined_in ();
-  AST_Interface *i = nullptr;
+  AST_Interface *i {};
 
   // If a full definition is seen in a previous module opening
   // or anywhere in the current scope (before or after our

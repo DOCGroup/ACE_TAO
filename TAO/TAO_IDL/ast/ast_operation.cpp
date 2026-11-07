@@ -123,7 +123,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_flags (fl),
     pd_exceptions (nullptr)
 {
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
 
   // Check that if the operation is oneway, the return type must be void.
   if (rt != nullptr && pd_flags == OP_oneway)
@@ -244,9 +244,9 @@ AST_Operation::compute_argument_attr ()
       return 0;
     }
 
-  AST_Decl *d = nullptr;
-  AST_Type *type = nullptr;
-  AST_Argument *arg = nullptr;
+  AST_Decl *d {};
+  AST_Type *type {};
+  AST_Argument *arg {};
 
   this->argument_count_ = 0;
 
@@ -318,9 +318,9 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
   std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
 
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  UTL_ScopedName *nl_n {};
+  AST_Type *fe {};
+  AST_Decl *d {};
 
   this->pd_exceptions.reset ();
 
@@ -429,7 +429,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          UTL_ExceptList *exceptions = nullptr;
+          UTL_ExceptList *exceptions {};
           ACE_NEW_RETURN (exceptions,
                           UTL_ExceptList (fe,
                                           nullptr),
@@ -438,7 +438,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
         }
       else
         {
-          UTL_ExceptList *el = nullptr;
+          UTL_ExceptList *el {};
           ACE_NEW_RETURN (el,
                           UTL_ExceptList (fe,
                                           nullptr),
@@ -461,8 +461,8 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
-  AST_Type *e = nullptr;
+  AST_Decl *d {};
+  AST_Type *e {};
   if (this->pd_flags == OP_oneway)
     {
       this->dump_i (o, "oneway ");
