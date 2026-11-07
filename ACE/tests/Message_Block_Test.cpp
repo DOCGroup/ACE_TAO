@@ -107,7 +107,7 @@ Worker_Task::svc ()
 
   for (int count = 0; ; count++)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       if (-1 == this->msg_queue ()->dequeue_head (mb))
         ACE_ERROR_BREAK ((LM_ERROR,
@@ -252,7 +252,7 @@ static int
 produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   int status;
 
   // Send <n_iteration> messages through the pipeline.
@@ -359,7 +359,7 @@ alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 static int
 test_message_block_unique_ptr ()
 {
-  ACE_Message_Block *raw_message_block = nullptr;
+  ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN (raw_message_block,
                   ACE_Message_Block (16),
                   -1);
@@ -399,7 +399,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   // A quick user-defined data block test, then the main event
-  User_Data *user_data_block = nullptr;
+  User_Data *user_data_block {};
   ACE_NEW_MALLOC_RETURN (user_data_block,
                          static_cast<User_Data *>(
                            ACE_Allocator::instance()->malloc(sizeof (User_Data))),
@@ -408,7 +408,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Create a new message block referring to the User_Data block and
   // ensure it is released and freed correctly.
-  ACE_Message_Block *wrapper_mb = nullptr;
+  ACE_Message_Block *wrapper_mb {};
   ACE_NEW_RETURN (wrapper_mb,
                   ACE_Message_Block (user_data_block),
                   -1);
