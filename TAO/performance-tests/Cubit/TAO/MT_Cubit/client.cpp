@@ -1,5 +1,7 @@
 #include "ace/config-all.h"
 
+#include <algorithm>
+
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN client
@@ -65,7 +67,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 Client_i::~Client_i ()
 {
   this->high_priority_client_.reset ();
-  if (this->low_priority_client_ != 0)
+  if (this->low_priority_client_ != nullptr)
     // Delete the low priority task array.
     for (u_int i = this->num_low_priority_;
          i > 0;
@@ -336,6 +338,9 @@ Client_i::activate_low_client ()
   ACE_NEW_RETURN (this->low_priority_client_,
                   Client *[this->ts_->thread_count_],
                   -1);
+  std::fill_n (this->low_priority_client_,
+               this->ts_->thread_count_,
+               nullptr);
 
   // Hack to make sure we have something in this pointer, when
   // thread_count == 1.
