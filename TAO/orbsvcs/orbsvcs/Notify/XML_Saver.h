@@ -44,7 +44,7 @@ public:
   /// Open the output file.
   /// \param file_name the fully qualified file name
   /// \return true if successful
-  bool open (const ACE_TString & file_name, size_t backup_count);
+  bool open (ACE_TString const &file_name, size_t backup_count);
 
   //////////////////////////////////
   // Override Topology_Saver methods
