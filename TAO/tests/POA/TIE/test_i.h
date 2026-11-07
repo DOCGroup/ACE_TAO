@@ -8,21 +8,20 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "testS.h"
 
 class Tie_i
 {
 public:
-  // constructor - takes a POA and a value parameter
-  Tie_i (CORBA::Long value);
+  explicit Tie_i (CORBA::Long value);
 
-  /// Destructor.
-  virtual ~Tie_i ();
+  virtual ~Tie_i () = default;
 
-  // Simple doit method
+  Tie_i (Tie_i const &) = delete;
+  Tie_i (Tie_i &&) = delete;
+  Tie_i &operator= (Tie_i const &) = delete;
+  Tie_i &operator= (Tie_i &&) = delete;
+
   virtual CORBA::Long doit ();
 
 protected:
@@ -36,11 +35,14 @@ public:
   A_i (CORBA::Long value,
        PortableServer::POA_ptr poa);
 
-  // Simple doit method
-  virtual CORBA::Long doit ();
+  A_i (A_i const &) = delete;
+  A_i (A_i &&) = delete;
+  A_i &operator= (A_i const &) = delete;
+  A_i &operator= (A_i &&) = delete;
 
-  // Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA ();
+  CORBA::Long doit () override;
+
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   CORBA::Long value_;
@@ -59,11 +61,14 @@ public:
     B_i (CORBA::Long value,
          PortableServer::POA_ptr poa);
 
-    // Simple doit method
-    virtual CORBA::Long doit ();
+    B_i (B_i const &) = delete;
+    B_i (B_i &&) = delete;
+    B_i &operator= (B_i const &) = delete;
+    B_i &operator= (B_i &&) = delete;
 
-    // Returns the Default POA of this Servant object
-    virtual PortableServer::POA_ptr _default_POA ();
+    CORBA::Long doit () override;
+
+    PortableServer::POA_ptr _default_POA () override;
 
   protected:
     CORBA::Long value_;
@@ -82,11 +87,14 @@ public:
       C_i (CORBA::Long value,
            PortableServer::POA_ptr poa);
 
-      // Simple doit method
-      virtual CORBA::Long doit ();
+      C_i (C_i const &) = delete;
+      C_i (C_i &&) = delete;
+      C_i &operator= (C_i const &) = delete;
+      C_i &operator= (C_i &&) = delete;
 
-      // Returns the Default POA of this Servant object
-      virtual PortableServer::POA_ptr _default_POA ();
+      CORBA::Long doit () override;
+
+      PortableServer::POA_ptr _default_POA () override;
 
     protected:
       CORBA::Long value_;
