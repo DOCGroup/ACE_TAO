@@ -4,8 +4,8 @@
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 
 // Creates DynUnion using typecodes generated through IDL compiler.
-int
-runStatic (CORBA::ORB_ptr orb)
+static int
+runStatic (CORBA::ORB_ptr const orb)
 {
   try
     {
@@ -53,8 +53,8 @@ runStatic (CORBA::ORB_ptr orb)
 
 // Creates DynUnion from typecode created programmatically
 
-int
-runDynamic (CORBA::ORB_ptr orb)
+static int
+runDynamic (CORBA::ORB_ptr const orb)
 {
   try
     {
@@ -137,6 +137,7 @@ runDynamic (CORBA::ORB_ptr orb)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Dynamic Test Failed with exception");
+      return -1;
     }
   return 0;
 }
@@ -148,11 +149,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (runStatic (orb.in ()) != 0)
-        return -1;
+      int result = runStatic (orb.in ());
+      if (result == 0)
+        result = runDynamic (orb.in ());
 
-      if (runDynamic (orb.in ()) != 0)
-        return -1;
+      orb->destroy ();
+      return result;
   }
   catch (CORBA::Exception const &ex)
     {
