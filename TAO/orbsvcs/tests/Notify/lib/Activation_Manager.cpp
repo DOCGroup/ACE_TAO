@@ -7,8 +7,7 @@
 #include "ace/Barrier.h"
 
 TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager ()
-  : barrier_ (0)
-  , active_suppliers_ (0)
+  : active_suppliers_ (0)
   , active_consumers_ (0)
   , active_done_ (lock_)
   , ior_output_file_ (0)
@@ -20,8 +19,6 @@ TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager ()
 
 TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 {
-  delete this->barrier_;
-
   if (this->ior_output_file_)
     ACE_OS::fclose(this->ior_output_file_);
 }
@@ -151,7 +148,7 @@ TAO_Notify_Tests_Activation_Manager::activate_suppliers ()
   TAO_Notify_Tests_PeriodicSupplier_Entry* entry;
 
   // Create the barrier to synch activated auppiers.
-  this->barrier_ = new ACE_Barrier (this->supplier_count () + 1);
+  this->barrier_ = std::make_unique<ACE_Barrier> (this->supplier_count () + 1);
 
   // For each supplier : activate
   TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
@@ -162,7 +159,7 @@ TAO_Notify_Tests_Activation_Manager::activate_suppliers ()
         {
           supplier = entry->int_id_;
 
-          if (supplier->activate_task (this->barrier_) != 0)
+          if (supplier->activate_task (this->barrier_.get ()) != 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Supplier list activation failed\n"));
               return -1;

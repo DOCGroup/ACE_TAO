@@ -23,6 +23,8 @@
 #include "Periodic_Consumer.h"
 #include "Activation_ManagerS.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -45,6 +47,11 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_No
 public:
   /// Constructor
   TAO_Notify_Tests_Activation_Manager ();
+
+  TAO_Notify_Tests_Activation_Manager (TAO_Notify_Tests_Activation_Manager const &) = delete;
+  TAO_Notify_Tests_Activation_Manager &operator=(TAO_Notify_Tests_Activation_Manager const &) = delete;
+  TAO_Notify_Tests_Activation_Manager (TAO_Notify_Tests_Activation_Manager &&) = delete;
+  TAO_Notify_Tests_Activation_Manager &operator=(TAO_Notify_Tests_Activation_Manager &&) = delete;
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Activation_Manager ();
@@ -97,7 +104,7 @@ protected:
   TAO_SYNCH_MUTEX lock_;
 
   /// The barrier to synch all supplier on so that everyone starts at the same instance.
-  ACE_Barrier* barrier_;
+  std::unique_ptr<ACE_Barrier> barrier_ {};
 
   /// Number of Active suppliers (still running a ACE_Task and sending events)
   int active_suppliers_;
