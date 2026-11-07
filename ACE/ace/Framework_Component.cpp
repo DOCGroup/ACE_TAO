@@ -27,7 +27,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Framework_Repository)
 sig_atomic_t ACE_Framework_Repository::shutting_down_ = 0;
 
 // Pointer to the Singleton instance.
-ACE_Framework_Repository *ACE_Framework_Repository::repository_ = nullptr;
+ACE_Framework_Repository *ACE_Framework_Repository::repository_ {};
 
 ACE_Framework_Repository::~ACE_Framework_Repository ()
 {
@@ -40,7 +40,7 @@ ACE_Framework_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Framework_Repository::open");
 
-  ACE_Framework_Component **temp = nullptr;
+  ACE_Framework_Component **temp {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,

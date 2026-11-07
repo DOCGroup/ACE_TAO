@@ -1088,7 +1088,7 @@ public:
    * @code
         ACE_DLList<Item> list;
         ...   // insert dynamically allocated Items...
-        Item *p = nullptr;
+        Item *p {};
         while ((p = list.delete_head()) != nullptr)
           delete p;
       @endcode

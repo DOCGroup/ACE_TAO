@@ -217,7 +217,7 @@ ACE_Data_Block::size (size_t length)
   else
     {
       // We need to resize!
-      char *buf = nullptr;
+      char *buf {};
       ACE_ALLOCATOR_RETURN (buf,
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
@@ -771,7 +771,7 @@ ACE_Data_Block::release_i ()
 
   ACE_ASSERT (this->reference_count_ > 0);
 
-  ACE_Data_Block *result = nullptr;
+  ACE_Data_Block *result {};
 
   // decrement reference count
   --this->reference_count_;
@@ -790,8 +790,8 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
 {
   ACE_TRACE ("ACE_Data_Block::release_no_delete");
 
-  ACE_Data_Block *result = nullptr;
-  ACE_Lock *lock_to_be_used = nullptr;
+  ACE_Data_Block *result {};
+  ACE_Lock *lock_to_be_used {};
 
   // Check if we were passed in a lock
   if (lock != nullptr)
@@ -860,7 +860,7 @@ ACE_Message_Block::release ()
   // This flag is set to 1 when we have to destroy the data_block
   int destroy_dblock = 0;
 
-  ACE_Lock *lock = nullptr;
+  ACE_Lock *lock {};
 
   // Do we have a valid data block
   if (this->data_block ())
@@ -906,7 +906,7 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
   if (this->cont_)
     {
       ACE_Message_Block *mb = this->cont_;
-      ACE_Message_Block *tmp = nullptr;
+      ACE_Message_Block *tmp {};
 
       do
         {
@@ -1011,14 +1011,14 @@ ACE_Message_Block::duplicate () const
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");
 
-  ACE_Message_Block *nb_top = nullptr;
-  ACE_Message_Block *nb = nullptr;
-  const ACE_Message_Block *current = this;
+  ACE_Message_Block *nb_top {};
+  ACE_Message_Block *nb {};
+  ACE_Message_Block const *current = this;
 
   // Increment the reference counts of all the continuation messages.
   while (current)
     {
-      ACE_Message_Block* cur_dup = nullptr;
+      ACE_Message_Block* cur_dup {};
 
       // Create a new <ACE_Message_Block> that contains unique copies of
       // the message block fields, but a reference counted duplicate of
@@ -1143,9 +1143,9 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
 
   // You always want to clear this one to prevent memory leaks but you
   // might add some others later.
-  const ACE_Message_Block::Message_Flags always_clear = ACE_Message_Block::DONT_DELETE;
-  const size_t newsize = max_size == 0 ? this->max_size_ : max_size;
-  ACE_Data_Block *nb = nullptr;
+  ACE_Message_Block::Message_Flags const always_clear = ACE_Message_Block::DONT_DELETE;
+  size_t const newsize = max_size == 0 ? this->max_size_ : max_size;
+  ACE_Data_Block *nb {};
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Data_Block*> (
@@ -1180,7 +1180,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
 {
   ACE_TRACE ("ACE_Message_Block::clone");
 
-  const ACE_Message_Block *old_message_block = this;
+  ACE_Message_Block const *old_message_block = this;
   ACE_Message_Block *new_message_block {};
   ACE_Message_Block *new_previous_message_block {};
   ACE_Message_Block *new_root_message_block {};
