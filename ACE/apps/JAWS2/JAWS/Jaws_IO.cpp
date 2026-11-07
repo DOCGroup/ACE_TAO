@@ -385,7 +385,7 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_Filecache_Handle *handle;
 
   ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, ACE_NOMAP));
@@ -441,7 +441,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
 
   int result = 0;
 
@@ -495,7 +495,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
   JAWS_Cached_FILE *cf = new JAWS_Cached_FILE (filename);
 
   if (cf->file ()->get_handle () != ACE_INVALID_HANDLE)
@@ -556,7 +556,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
   if (mb == 0)

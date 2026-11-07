@@ -101,7 +101,7 @@ push (const EXT_ID &ext_id, const INT_ID &int_id)
 template <class EXT_ID, class INT_ID> JAWS_HASH_BUCKET_ITEM *
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::pop ()
 {
-  JAWS_HASH_BUCKET_ITEM *item = 0;
+  JAWS_HASH_BUCKET_ITEM *item {};
 
   if (! this->is_empty ())
     {
@@ -126,7 +126,7 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::pop ()
 template <class EXT_ID, class INT_ID> void
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::reset ()
 {
-  JAWS_HASH_BUCKET_ITEM *item = 0;
+  JAWS_HASH_BUCKET_ITEM *item {};
 
   while ((item = this->pop ()) != 0)
     this->remove (item);
@@ -334,7 +334,7 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
 ::find_i (const EXT_ID &ext_id) const
 {
   JAWS_HASH_BUCKET_DLCSTACK_ITERATOR iter (this->dlcstack_);
-  JAWS_HASH_BUCKET_ITEM *item = 0;
+  JAWS_HASH_BUCKET_ITEM *item {};
 
   if (iter.first ())
     while (!iter.done ())

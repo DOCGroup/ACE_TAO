@@ -109,7 +109,7 @@ JAWS_Headers::find (const char *const &header_name)
 JAWS_Header_Data *
 JAWS_Headers::find_next (const char *const &header_name)
 {
-  JAWS_Header_Data *data = 0;
+  JAWS_Header_Data *data {};
   JAWS_Header_Table_Iterator &i = this->iter_;
 
   while (! i.done ())
