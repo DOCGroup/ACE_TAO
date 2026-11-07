@@ -10,30 +10,34 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "Servant_Activator.h"
 #include "ace/OS_NS_stdio.h"
 
-static const ACE_TCHAR *ior_output_file = 0;
-static const ACE_TCHAR *forward_to_ior = 0;
+#include <memory>
+
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {};
+  ACE_TCHAR const *forward_to_ior {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:o:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'f':
-        forward_to_ior = get_opts.opt_arg ();
+        options.forward_to_ior = get_opts.opt_arg ();
         break;
 
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -46,7 +50,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (ior_output_file == 0)
+  if (options.ior_output_file == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "output IOR file not specified\n"),
                       -1);
@@ -93,20 +97,22 @@ setup_poa (PortableServer::POA_ptr root_poa)
 
 ServantActivator *
 create_servant_manager (CORBA::ORB_ptr orb,
-                        PortableServer::POA_ptr child_poa)
+                        PortableServer::POA_ptr child_poa,
+                        Server_Options const &options)
 {
   CORBA::Object_var forward_to;
-  if (forward_to_ior)
+  if (options.forward_to_ior != nullptr)
     {
       forward_to =
-        orb->string_to_object (forward_to_ior);
+        orb->string_to_object (options.forward_to_ior);
     }
 
-  ServantActivator *activator = 0;
+  ServantActivator *activator {};
   ACE_NEW_RETURN (activator,
                   ServantActivator (orb,
                                     forward_to.in ()),
-                  0);
+                  nullptr);
+  PortableServer::Servant_var<ServantActivator> activator_owner (activator);
 
   // Set ServantActivator to be the servant activator.
   child_poa->set_servant_manager (activator);
@@ -120,13 +126,13 @@ create_servant_manager (CORBA::ORB_ptr orb,
   // child_poa->set_servant_manager (servant_activator.in (),
   //);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_RETURN (servant,
                   test_i (orb,
                           child_poa,
                           *activator,
                           127),
-                  0);
+                  nullptr);
 
   PortableServer::ServantBase_var servant_var (servant);
 
@@ -136,22 +142,22 @@ create_servant_manager (CORBA::ORB_ptr orb,
   CORBA::String_var ior =
     orb->object_to_string (test.in ());
 
-  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-  if (output_file == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR: %s\n",
-                  ior_output_file));
-    }
-  else
-    {
-      ACE_OS::fprintf (output_file,
-                      "%s",
-                      ior.in ());
-      ACE_OS::fclose (output_file);
-    }
+  {
+    std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+      ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+    if (!output_file)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Cannot open output file for writing IOR: %s\n",
+                    options.ior_output_file));
+      }
+    else
+      {
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
+  }
 
-  return activator;
+  return activator_owner._retn ();
 }
 
 int
@@ -163,10 +169,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      Server_Options options;
+      int const result = parse_args (argc, argv, options);
 
-      if (result == -1)
+      if (result != 0)
         return -1;
 
       // Obtain the RootPOA.
@@ -183,19 +189,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var child_poa =
         setup_poa (root_poa.in ());
 
-      ServantActivator *manager =
+      PortableServer::Servant_var<ServantActivator> manager =
         create_servant_manager (orb.in (),
-                                child_poa.in ());
+                                child_poa.in (),
+                                options);
 
       poa_manager->activate ();
 
       orb->run ();
 
       orb->destroy ();
-
-      delete manager;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in server");
       return -1;
