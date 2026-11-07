@@ -13,10 +13,10 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  void test_method ();
+  void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
