@@ -419,7 +419,7 @@ DRV_sweep_dirs (std::string const& rel_path,
     }
   bname += rel_path;
   bool include_added = false;
-  char abspath[MAXPATHLEN] = {};
+  char abspath[MAXPATHLEN] {};
   for (ACE_DIRENT *dir_entry; (dir_entry = dir.read ()) != nullptr;)
     {
       // Skip the ".." and "." files in each directory.
