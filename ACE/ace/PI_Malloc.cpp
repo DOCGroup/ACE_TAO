@@ -11,7 +11,8 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Process_Mutex.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -107,7 +108,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
-  ACE_OS::strcpy (n, name);
+  std::strcpy (n, name);
   if (next != nullptr)
     next->prev_ = this;
 }
