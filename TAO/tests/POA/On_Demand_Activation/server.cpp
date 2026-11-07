@@ -9,27 +9,31 @@
  */
 //=============================================================================
 
-
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
 #include "ace/OS_NS_stdio.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
+#include <memory>
+#include <string>
+
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file { ACE_TEXT ("ior") };
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'f':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -47,62 +51,58 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 static int
-write_iors_to_file (const char *first_ior,
-                    const char *second_ior)
+write_iors_to_file (ACE_TCHAR const *ior_output_file,
+                    char const *first_ior,
+                    char const *second_ior)
 {
-  char ior_output_file_1[BUFSIZ];
-  char ior_output_file_2[BUFSIZ];
+  std::basic_string<ACE_TCHAR> ior_output_file_1 (ior_output_file);
+  std::basic_string<ACE_TCHAR> ior_output_file_2 (ior_output_file);
+  ior_output_file_1 += ACE_TEXT ("_1");
+  ior_output_file_2 += ACE_TEXT ("_2");
 
-  ACE_OS::sprintf (ior_output_file_1, "%s_1", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-  ACE_OS::sprintf (ior_output_file_2, "%s_2", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file_1 (
+    ACE_OS::fopen (ior_output_file_1.c_str (), "w"), ACE_OS::fclose);
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file_2 (
+    ACE_OS::fopen (ior_output_file_2.c_str (), "w"), ACE_OS::fclose);
 
-  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
-  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
-
-  if (output_file_1 == 0 ||
-      output_file_2 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %C, %C\n",
-                       ior_output_file_1,
-                       ior_output_file_2),
+  if (!output_file_1 || !output_file_2)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open output files for writing IORs: %C, %C\n",
+                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_1.c_str ()),
+                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_2.c_str ())),
                       -1);
 
-  int result = ACE_OS::fprintf (output_file_1,
-                                "%s",
-                                first_ior);
+  int result = ACE_OS::fprintf (output_file_1.get (), "%s", first_ior);
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        first_ior,
-                       ior_output_file_1),
+                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_1.c_str ())),
                       -1);
 
-  result = ACE_OS::fprintf (output_file_2,
-                            "%s",
-                            second_ior);
+  result = ACE_OS::fprintf (output_file_2.get (), "%s", second_ior);
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        second_ior,
-                       ior_output_file_2),
+                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_2.c_str ())),
                       -1);
-
-  ACE_OS::fclose (output_file_1);
-  ACE_OS::fclose (output_file_2);
 
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      Server_Options options;
+      int const result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -118,7 +118,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-
 
       CORBA::PolicyList policies (4);
       policies.length (4);
@@ -141,11 +140,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         policies[3] =
           root_poa->create_servant_retention_policy (PortableServer::RETAIN);
 
-        ACE_CString name = "firstPOA";
-
         // Create firstPOA as the child of RootPOA with the above policies
         // firstPOA will use SERVANT_ACTIVATOR because of RETAIN policy.
-        first_poa = root_poa->create_POA (name.c_str (),
+        first_poa = root_poa->create_POA ("firstPOA",
                                           poa_manager.in (),
                                           policies);
       }
@@ -156,12 +153,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         policies[3] =
           root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
-        ACE_CString name = "secondPOA";
-
         // Create secondPOA as child of RootPOA with the above policies
         // secondPOA will use a SERVANT_LOCATOR because of NON_RETAIN
         // policy.
-        second_poa = root_poa->create_POA (name.c_str (),
+        second_poa = root_poa->create_POA ("secondPOA",
                                            poa_manager.in (),
                                            policies);
       }
@@ -172,7 +167,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
            i < policies.length ();
            ++i)
         {
-          CORBA::Policy_ptr policy = policies[i];
+          CORBA::Policy_ptr const policy = policies[i];
           policy->destroy ();
         }
 
@@ -233,18 +228,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var first_test_ior =
         orb->object_to_string (first_test.in ());
 
-
       CORBA::String_var second_test_ior =
         orb->object_to_string (second_test.in ());
 
       // Print the ior's of first_test and second_test.
 
-      ACE_DEBUG((LM_DEBUG,"Cs\n%C\n",
+      ACE_DEBUG ((LM_DEBUG, "%C\n%C\n",
                  first_test_ior.in (),
                  second_test_ior.in ()));
 
-      int write_result = write_iors_to_file (first_test_ior.in (),
-                                             second_test_ior.in ());
+      int const write_result = write_iors_to_file (options.ior_output_file,
+                                                   first_test_ior.in (),
+                                                   second_test_ior.in ());
       if (write_result != 0)
         return write_result;
 
@@ -256,7 +251,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in main");
       return -1;
