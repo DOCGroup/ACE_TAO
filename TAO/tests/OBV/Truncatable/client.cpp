@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create factories.
 
-      OBV_TruncatableTest::BaseValue_init *base_factory = nullptr;
+      OBV_TruncatableTest::BaseValue_init *base_factory {};
       ACE_NEW_RETURN (base_factory,
                       OBV_TruncatableTest::BaseValue_init,
                       1);
@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    base_factory);
       base_factory->_remove_ref (); // release ownership
 
-      OBV_TruncatableTest::TValue1_init *value1_factory = nullptr;
+      OBV_TruncatableTest::TValue1_init *value1_factory {};
       ACE_NEW_RETURN (value1_factory,
                       OBV_TruncatableTest::TValue1_init,
                       1);
@@ -81,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value1_factory);
       value1_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue2_init *value2_factory = nullptr;
+      OBV_TruncatableTest::TValue2_init *value2_factory {};
       ACE_NEW_RETURN (value2_factory,
                       OBV_TruncatableTest::TValue2_init,
                       1);
@@ -90,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value2_factory);
       value2_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue3_init *value3_factory = nullptr;
+      OBV_TruncatableTest::TValue3_init *value3_factory {};
       ACE_NEW_RETURN (value3_factory,
                       OBV_TruncatableTest::TValue3_init,
                       1);
@@ -99,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value3_factory);
       value3_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue4_init *value4_factory = nullptr;
+      OBV_TruncatableTest::TValue4_init *value4_factory {};
       ACE_NEW_RETURN (value4_factory,
                       OBV_TruncatableTest::TValue4_init,
                       1);
@@ -108,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value4_factory);
       value4_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue5_init *value5_factory = nullptr;
+      OBV_TruncatableTest::TValue5_init *value5_factory {};
       ACE_NEW_RETURN (value5_factory,
                       OBV_TruncatableTest::TValue5_init,
                       1);
@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value5_factory);
       value5_factory->_remove_ref ();
 
-      OBV_TruncatableTest::NestedValue_init *nested_value_factory = nullptr;
+      OBV_TruncatableTest::NestedValue_init *nested_value_factory {};
       ACE_NEW_RETURN (nested_value_factory,
                       OBV_TruncatableTest::NestedValue_init,
                       1);
