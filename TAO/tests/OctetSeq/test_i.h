@@ -13,6 +13,8 @@
 
 #include "testS.h"
 
+#include <memory>
+
 /**
  * @class Database_i
  *
@@ -26,7 +28,7 @@ public:
               Test::Index max_range);
 
   /// dtor
-  ~Database_i ();
+  ~Database_i () override = default;
 
   Database_i (Database_i const &) = delete;
   Database_i &operator= (Database_i const &) = delete;
@@ -53,7 +55,7 @@ private:
   Test::Index max_range_;
 
   /// The elements
-  Test::OctetSeq* elements_;
+  std::unique_ptr<Test::OctetSeq[]> elements_;
 };
 
 #if defined(__ACE_INLINE__)

@@ -3,16 +3,21 @@
 #include "ace/ACE.h"
 #include "testC.h"
 #include "ace/OS_NS_time.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 5;
-unsigned int seed = 0;
-bool verbose = false;
+#include <array>
+#include <cstring>
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int niterations {5};
+  unsigned int seed {};
+  bool verbose {};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vk:i:s:"));
   int c {};
@@ -21,19 +26,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 's':
-        seed = ACE_OS::atoi (get_opts.opt_arg ());
+        options.seed = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'v':
-        verbose = true;
+        options.verbose = true;
         break;
 
      case '?':
@@ -53,18 +58,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options {};
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::Database_var server =
         Test::Database::_narrow (object.in ());
@@ -72,8 +78,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior),
                             1);
         }
 
@@ -81,7 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var repository_id =
         server->_repository_id ();
 
-      if (ACE_OS::strcmp (repository_id.in (), "IDL:Test/Database:1.0") != 0)
+      if (std::strcmp (repository_id.in (), "IDL:Test/Database:1.0") != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Repository id is wrong <%C>\n",
@@ -90,37 +96,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
-      if (seed == 0)
+      if (options.seed == 0)
         {
-          seed = static_cast<unsigned int> (ACE_OS::time (nullptr));
-          ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", seed));
+          options.seed = static_cast<unsigned int> (ACE_OS::time (nullptr));
+          ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", options.seed));
         }
 
-      const int nelements = 64; // @@ TODO
-      const int maxsize = 1024;
-      Test::OctetSeq elements[nelements];
+      constexpr size_t nelements = 64; // @@ TODO
+      constexpr size_t maxsize = 1024;
+      std::array<Test::OctetSeq, nelements> elements {};
 
-      for (int i = 0; i != niterations; ++i)
+      for (int i = 0; i != options.niterations; ++i)
         {
-          CORBA::ULong r = ACE_OS::rand_r (&seed);
-          Test::Index idx = (r % nelements);
+          CORBA::ULong r = ACE_OS::rand_r (&options.seed);
+          Test::Index const idx = static_cast<Test::Index> (r % nelements);
 
           if (i % 100 == 0)
             {
-              for (int j = 0; j != nelements; ++j)
+              for (size_t j = 0; j != nelements; ++j)
                 {
-                  CORBA::ULong r = ACE_OS::rand_r (&seed);
-                  CORBA::ULong l = r % maxsize;
+                  CORBA::ULong fill_random = ACE_OS::rand_r (&options.seed);
+                  CORBA::ULong const l = fill_random % maxsize;
                   elements[j].length (l);
-                  CORBA::Double token = 0;
+                  CORBA::Double token {};
                   for (CORBA::ULong k = 0; k != l; ++k)
                     {
-                      r = ACE_OS::rand_r (&seed);
-                      elements[j][k] = (r % 128);
-                      token += r;
+                      fill_random = ACE_OS::rand_r (&options.seed);
+                      elements[j][k] = (fill_random % 128);
+                      token += fill_random;
                     }
-                  CORBA::Double returned_token;
-                  server->set (Test::Index (j),
+                  CORBA::Double returned_token {};
+                  server->set (static_cast<Test::Index> (j),
                                elements[j],
                                token,
                                returned_token);
@@ -130,7 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_ERROR ((LM_ERROR,
                                   "ERROR - invalid token <%f> returned,"
                                   " expecting %f in (%d,%d)\n",
-                                  returned_token, token, i, j));
+                                  returned_token, token, i, static_cast<int> (j)));
                     }
                 }
             }
@@ -147,7 +153,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "CRC mismatch for element %d\n", idx));
             }
-          else if (verbose)
+          else if (options.verbose)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "CRC <%u> matched for element %d\n",
@@ -157,7 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       server->shutdown ();
-      ACE_OS::sleep(1);
+      ACE_OS::sleep (1);
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

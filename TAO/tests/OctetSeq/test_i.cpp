@@ -6,11 +6,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-Database_i::~Database_i ()
-{
-  delete[] this->elements_;
-}
-
 void
 Database_i::set (Test::Index i,
                  Test::OctetSeq const &seq,
@@ -23,7 +18,7 @@ Database_i::set (Test::Index i,
   returned_token = verification_token;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-  CORBA::ULong len = seq.length ();
+  CORBA::ULong const len = seq.length ();
   // CORBA::ULong max = seq.maximum ();
   ACE_Message_Block *mb = seq.mb ();
   if (mb == nullptr)
