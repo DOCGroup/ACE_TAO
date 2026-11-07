@@ -14,6 +14,7 @@
 #include "ace/Truncate.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Types.h"
+#include <cstring>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
@@ -51,7 +52,7 @@ Options::init ()
 
   // Check for default case.
   if (this->message_len_ == 0)
-    this->message_len_ = ACE_OS::strlen ("TAO");
+    this->message_len_ = std::strlen ("TAO");
   ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
 
   this->message_len_ += sizeof (ACE_UINT32);
@@ -65,13 +66,13 @@ Options::init ()
   ACE_UINT32 length =
     ACE_NTOHL (ACE_Utils::truncate_cast<ACE_UINT32> (this->message_len_));
 
-  ACE_OS::memcpy ((void *) this->message_buf_,
-                  (void *) &length,
-                  sizeof length);
+  std::memcpy (this->message_buf_,
+               &length,
+               sizeof length);
 
-  ACE_OS::memset ((void *) (this->message_buf_ + sizeof (ACE_UINT32)),
-                  'a',
-                  this->message_len_ - sizeof (ACE_UINT32));
+  std::memset (this->message_buf_ + sizeof (ACE_UINT32),
+               'a',
+               this->message_len_ - sizeof (ACE_UINT32));
 
   // Allocate the barrier with the correct count.
   ACE_MT (ACE_NEW_RETURN (this->barrier_,
@@ -105,9 +106,9 @@ Options::read (void *buf, size_t len, size_t &iteration)
     return 0;
   else
     {
-      ACE_OS::memcpy (buf,
-                      this->message_buf (),
-                      len);
+      std::memcpy (buf,
+                   this->message_buf (),
+                   len);
       iteration++;
       return ACE_Utils::truncate_cast<ssize_t> (len);
     }
@@ -263,9 +264,9 @@ Options::oneway_client_test (void *)
        (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        options->quit_string (),
-                        ACE_OS::strlen (options->quit_string ())) == 0)
+    if (std::memcmp (request,
+                     options->quit_string (),
+                     ACE_OS::strlen (options->quit_string ())) == 0)
       break;
     else if (cli_stream.send_n (request, r_bytes) == -1)
       {
@@ -320,9 +321,9 @@ Options::twoway_client_test (void *)
        (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        options->quit_string (),
-                        ACE_OS::strlen (options->quit_string ())) == 0)
+    if (std::memcmp (request,
+                     options->quit_string (),
+                     ACE_OS::strlen (options->quit_string ())) == 0)
       break;
 
     // Transmit <request> to the server.

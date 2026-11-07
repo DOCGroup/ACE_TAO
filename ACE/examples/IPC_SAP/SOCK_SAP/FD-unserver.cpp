@@ -3,7 +3,7 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
@@ -36,10 +36,10 @@ handle_client (ACE_LSOCK_Stream &stream)
 
   ACE_OS::sprintf (buf, "%d", static_cast<int> (ACE_OS::getpid ()));
 
-  ACE_DEBUG ((LM_DEBUG, "(%s, %d) ----------------------------------------\n", buf, ACE_OS::strlen (buf)));
+  ACE_DEBUG ((LM_DEBUG, "(%s, %d) ----------------------------------------\n", buf, std::strlen (buf)));
 
   // Tell the client to shut down.
-  if (stream.send_n (buf, ACE_OS::strlen (buf)) == -1)
+  if (stream.send_n (buf, std::strlen (buf)) == -1)
     ACE_ERROR ((LM_ERROR, "%p", "send"));
 
   // Close new endpoint (listening endpoint stays open).

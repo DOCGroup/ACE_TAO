@@ -4,7 +4,7 @@
 // is useful as a baseline to compare against ORB-level performance
 // for the same types of data.
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/MEM_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Thread_Manager.h"
@@ -26,7 +26,7 @@ run_client ()
   char buf [MAXPATHLEN];
   while (ACE_OS::fgets (buf, MAXPATHLEN, stdin) != nullptr)
     {
-      stream.send (buf, ACE_OS::strlen (buf)+1);
+      stream.send (buf, std::strlen (buf) + 1);
       stream.recv (buf, MAXPATHLEN);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Echo: %C\n"), buf));
     }

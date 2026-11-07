@@ -1,5 +1,5 @@
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
@@ -40,7 +40,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   /* Set up the address information to become a server */
-  ACE_OS::memset ((void *) &saddr, 0, sizeof saddr);
+  std::memset (&saddr, 0, sizeof saddr);
   saddr.sin_family = AF_INET;
   saddr.sin_port = port_num;
   saddr.sin_addr.s_addr = INADDR_ANY;
