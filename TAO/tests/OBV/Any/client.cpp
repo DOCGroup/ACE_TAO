@@ -1,10 +1,8 @@
 #include "AnyC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -36,15 +34,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test started.\n"));
 
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       // Create and register factories.
 
-      OBV_AnyTest::VA_init *va_factory = nullptr;
+      OBV_AnyTest::VA_init *va_factory {};
       ACE_NEW_RETURN (va_factory,
                       OBV_AnyTest::VA_init,
                       1); // supplied by mapping
@@ -53,8 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    va_factory);
       va_factory->_remove_ref (); // release ownership
 
-
-      OBV_AnyTest::VB_init *vb_factory = nullptr;
+      OBV_AnyTest::VB_init *vb_factory {};
       ACE_NEW_RETURN (vb_factory,
                       OBV_AnyTest::VB_init,
                       1); // supplied by mapping
@@ -82,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       OBV_AnyTest::VA *pva = va2._retn ();
       a2 <<= &pva;
 
-      OBV_AnyTest::VA *dst = nullptr;
+      OBV_AnyTest::VA *dst {};
 
       if (!(a1 >>= dst) || dst->id () != magic)
         {
@@ -97,7 +96,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              "(%P|%t) client - test failed.\n"),
                             1);
         }
-
 
       // It should be possible to extract to a base type
       OBV_AnyTest::VB_var vb1;
@@ -120,7 +118,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-
       // Now do remote test
 
       CORBA::Object_var tmp =
@@ -137,7 +134,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-
       // STEP 1.
       CORBA::Any_var result = test->get_something (
           false);
@@ -150,7 +146,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // STEP 2.
-      OBV_AnyTest::VB *dst_vb = nullptr;
+      OBV_AnyTest::VB *dst_vb {};
       result = test->get_something (
           true);
 

@@ -9,7 +9,7 @@ CORBA::Any *
 Test_impl::get_something (
     CORBA::Boolean need_vb)
 {
-  CORBA::Any_ptr ret_val_ptr = nullptr;
+  CORBA::Any_ptr ret_val_ptr {};
   ACE_NEW_RETURN (ret_val_ptr, CORBA::Any, nullptr);
   CORBA::Any_var ret_val = ret_val_ptr;
 
