@@ -346,7 +346,7 @@ public:
   // Listing 13 code/ch18
   int record (RecordingDevice *recorder)
   {
-    ACE_Message_Block * mb = nullptr;
+    ACE_Message_Block *mb {};
     ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(Message)), -1);
 
     Message *message = (Message *)mb->wr_ptr ();

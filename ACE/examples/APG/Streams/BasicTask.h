@@ -36,7 +36,7 @@ public:
   // Listing 1020 code/ch18
   int svc () override
   {
-    for (ACE_Message_Block *message = nullptr; ; )
+    for (ACE_Message_Block *message {}; ; )
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("BasicTask::svc() - ")

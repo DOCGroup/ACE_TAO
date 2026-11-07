@@ -7,6 +7,8 @@
 #include "RecordingDevice_Text.h"
 #include "Util.h"
 
+#include <memory>
+
 TextListenerAcceptor::TextListenerAcceptor ()
   : ACE_Event_Handler(), RecordingDevice()
 { }
@@ -147,8 +149,8 @@ CallerId *TextListener::retrieve_callerId ()
 // Listing 04 code/ch18
 int TextListener::play_message (ACE_FILE_Addr &addr)
 {
-  MessageType *type = Util::identify_message (addr);
-  if (type->is_text ())
+  MessageType const type = Util::identify_message (addr);
+  if (type.is_text ())
     {
       Command *c = new Command ();
       c->command_ = Command::CMD_PLAY_MESSAGE;
@@ -158,15 +160,17 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
     }
 
   ACE_FILE_Addr temp (ACE_TEXT ("/tmp/outgoing_message.text"));
-  ACE_FILE_IO *file;
-  if (type->is_audio ())
+  std::unique_ptr<ACE_FILE_IO> file;
+  if (type.is_audio ())
     file = Util::audio_to_text (addr, temp);
-  else if (type->is_video ())
+  else if (type.is_video ())
     file = Util::video_to_text (addr, temp);
   else
     ACE_ERROR_RETURN
       ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
-        type->get_codec ()), -1);
+        type.get_codec ()), -1);
+  if (!file)
+    return -1;
   int rval = this->play_message (temp);
   file->remove ();
   return rval;
