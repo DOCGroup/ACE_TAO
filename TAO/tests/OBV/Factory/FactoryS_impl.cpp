@@ -9,7 +9,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 OBV_FactoryTest::BaseValue *
 Test_impl::get_base_value ()
 {
-  OBV_FactoryTest::BaseValue *ret_val = nullptr;
+  OBV_FactoryTest::BaseValue *ret_val {};
   ACE_NEW_RETURN (ret_val,
                   OBV_OBV_FactoryTest::BaseValue,
                   nullptr);
@@ -20,7 +20,7 @@ Test_impl::get_base_value ()
 OBV_FactoryTest::Value1 *
 Test_impl::get_value1 ()
 {
-  OBV_FactoryTest::Value1 *ret_val = nullptr;
+  OBV_FactoryTest::Value1 *ret_val {};
   ACE_NEW_RETURN (ret_val,
                   OBV_OBV_FactoryTest::Value1,
                   nullptr);
@@ -31,7 +31,7 @@ Test_impl::get_value1 ()
 OBV_FactoryTest::Value2 *
 Test_impl::get_value2 ()
 {
-  OBV_FactoryTest::Value2 *ret_val = nullptr;
+  OBV_FactoryTest::Value2 *ret_val {};
   ACE_NEW_RETURN (ret_val,
                   Value2_impl,
                   nullptr);

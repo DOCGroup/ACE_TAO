@@ -93,7 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Create factories.
-      OBV_FactoryTest::BaseValue_init *base_factory = nullptr;
+      OBV_FactoryTest::BaseValue_init *base_factory {};
       ACE_NEW_RETURN (base_factory,
                       OBV_FactoryTest::BaseValue_init,
                       1); // supplied by mapping
@@ -102,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    base_factory);
       base_factory->_remove_ref (); // release ownership
 
-      OBV_FactoryTest::Value1_init *value1_factory = nullptr;
+      OBV_FactoryTest::Value1_init *value1_factory {};
       ACE_NEW_RETURN (value1_factory,
                       OBV_FactoryTest::Value1_init,
                       1); // supplied by mapping
@@ -111,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value1_factory);
       value1_factory->_remove_ref ();
 
-      OBV_FactoryTest::Value2_init *value2_factory = nullptr;
+      OBV_FactoryTest::Value2_init *value2_factory {};
       ACE_NEW_RETURN (value2_factory,
                       Value2_init_impl,
                       1); // custom implementation
