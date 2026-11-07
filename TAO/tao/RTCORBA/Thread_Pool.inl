@@ -131,7 +131,7 @@ ACE_INLINE
 TAO_Thread_Lane **
 TAO_Thread_Pool::lanes ()
 {
-  return this->lanes_;
+  return this->lanes_.get ();
 }
 
 ACE_INLINE

@@ -28,6 +28,7 @@
 #include "tao/New_Leader_Generator.h"
 #include "ace/Task.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -344,7 +345,8 @@ private:
   CORBA::ULong max_request_buffer_size_;
   ACE_Time_Value const dynamic_thread_time_;
 
-  TAO_Thread_Lane **lanes_;
+  // Owns the lane-pointer array. The lane objects are deleted explicitly.
+  std::unique_ptr<TAO_Thread_Lane *[]> lanes_;
   CORBA::ULong number_of_lanes_;
   bool with_lanes_;
 };

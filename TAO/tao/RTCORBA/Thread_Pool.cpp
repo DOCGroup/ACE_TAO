@@ -495,7 +495,6 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     max_request_buffer_size_ (max_request_buffer_size),
     // lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time),
-    lanes_ (nullptr),
     number_of_lanes_ (1),
     with_lanes_ (false)
 {
@@ -504,8 +503,10 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     throw ::CORBA::NO_IMPLEMENT ();
 
   // Create one lane.
-  ACE_NEW (this->lanes_,
-           TAO_Thread_Lane *[this->number_of_lanes_]);
+  TAO_Thread_Lane **lane_array {};
+  ACE_NEW (lane_array,
+           TAO_Thread_Lane *[this->number_of_lanes_] ());
+  this->lanes_.reset (lane_array);
   ACE_NEW (this->lanes_[0],
            TAO_Thread_Lane (*this,
                             0,
@@ -535,7 +536,6 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     max_request_buffer_size_ (max_request_buffer_size),
     // lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time),
-    lanes_ (nullptr),
     number_of_lanes_ (lanes.length ()),
     with_lanes_ (true)
 {
@@ -545,8 +545,10 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     throw ::CORBA::NO_IMPLEMENT ();
 
   // Create multiple lane.
-  ACE_NEW (this->lanes_,
-           TAO_Thread_Lane *[this->number_of_lanes_]);
+  TAO_Thread_Lane **lane_array {};
+  ACE_NEW (lane_array,
+           TAO_Thread_Lane *[this->number_of_lanes_] ());
+  this->lanes_.reset (lane_array);
   for (CORBA::ULong i = 0;
        i != this->number_of_lanes_;
        ++i)
@@ -574,13 +576,14 @@ TAO_Thread_Pool::open ()
 
 TAO_Thread_Pool::~TAO_Thread_Pool ()
 {
-  // Delete all the lanes.
-  for (CORBA::ULong i = 0;
-       i != this->number_of_lanes_;
-       ++i)
-    delete this->lanes_[i];
-
-  delete[] this->lanes_;
+  if (this->lanes_)
+    {
+      // Delete all the lanes.
+      for (CORBA::ULong i = 0;
+           i != this->number_of_lanes_;
+           ++i)
+        delete this->lanes_[i];
+    }
 }
 
 void
