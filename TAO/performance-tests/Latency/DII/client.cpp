@@ -11,13 +11,16 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 100;
-int do_dump_history = 0;
-int do_shutdown = 1;
+struct Client_Options
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+  int iterations = 100;
+  bool dump_history = false;
+  bool shutdown = true;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
   int c;
@@ -26,29 +29,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'h':
-        do_dump_history = 1;
+        options.dump_history = true;
         break;
 
       case 'x':
-        do_shutdown = 0;
+        options.shutdown = false;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-x (disable shutdown) "
-                           "\n",
+                           ACE_TEXT("usage: %s -k <ior> -i <niterations> -x (disable shutdown)\n"),
                            argv [0]),
                           -1);
       }
@@ -83,62 +82,62 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var object = orb->string_to_object (options.ior);
 
       if (CORBA::is_nil (object.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil CORBA::Object reference <%s>\n",
-                             ior),
+                             ACE_TEXT("Nil CORBA::Object reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      for (int j = 0; j < 100; ++j)
+      for (int i = 0; i < 100; ++i)
         {
           CORBA::Request_var request =
             object->_request ("test_method");
 
-          CORBA::ULongLong dummy = 0;
-          request->add_in_arg("send_time") <<= dummy;
+          CORBA::ULongLong const dummy {};
+          request->add_in_arg ("send_time") <<= dummy;
 
           request->set_return_type (CORBA::_tc_ulonglong);
           request->invoke ();
         }
 
-      ACE_Sample_History history (niterations);
+      ACE_Sample_History history (options.iterations);
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-      for (int i = 0; i < niterations; ++i)
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
+      for (int i = 0; i < options.iterations; ++i)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
           CORBA::Request_var request =
             object->_request ("test_method");
 
-          CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
-          request->add_in_arg("send_time") <<= start_time;
+          CORBA::ULongLong const start_time = static_cast<CORBA::ULongLong> (start);
+          request->add_in_arg ("send_time") <<= start_time;
 
           request->set_return_type (CORBA::_tc_ulonglong);
           request->invoke ();
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           history.sample (now - start);
         }
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-      if (do_dump_history)
+      if (options.dump_history)
         {
           history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
@@ -151,7 +150,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                              test_end - test_start,
                                              stats.samples_count ());
 
-      if (do_shutdown)
+      if (options.shutdown)
         {
           CORBA::Request_var request =
             object->_request ("shutdown");
@@ -159,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           request->invoke ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
