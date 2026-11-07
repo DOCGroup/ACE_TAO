@@ -28,13 +28,13 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method ();
+  void method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -264,7 +264,7 @@ rt_poa (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),

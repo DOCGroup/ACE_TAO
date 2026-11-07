@@ -75,7 +75,7 @@ public:
                  RTCORBA::Current_ptr current,
                  CORBA::Short priority);
 
-  int svc ();
+  int svc () override;
 
   void validate_connection ();
 
@@ -157,7 +157,7 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };
