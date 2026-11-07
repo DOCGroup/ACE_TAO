@@ -64,7 +64,7 @@ Backend::ok () const
 
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
-  Backend b;
+  Backend b {};
   ACE_Log_Msg_Backend *const old_backend = ACE_Log_Msg::msg_backend (&b);
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
@@ -72,10 +72,12 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   std::array<std::basic_string<ACE_TCHAR>, 2> orb_options {
     ACE_TEXT ("-ORBServiceConfigLoggerKey"), mykey
   };
-  std::array<ACE_TCHAR *, 4> orb_argv {argv[0], orb_options[0].data (), orb_options[1].data (), nullptr};
+  std::array<ACE_TCHAR *, 4> orb_argv {
+    argv[0], orb_options[0].data (), orb_options[1].data (), nullptr};
   int orb_argc {3};
 
-  CORBA::ORB_var const orb = CORBA::ORB_init (orb_argc, orb_argv.data (), "ServerORB1");
+  CORBA::ORB_var const orb {
+    CORBA::ORB_init (orb_argc, orb_argv.data (), "ServerORB1")};
 
   if (!b.ok ())
     {
