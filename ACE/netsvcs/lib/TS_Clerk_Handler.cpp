@@ -328,7 +328,7 @@ ACE_TS_Clerk_Processor::alloc ()
   ACE_TRACE ("ACE_TS_Clerk_Processor::alloc");
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
-  void *temp = 0;
+  void *temp {};
 
   // Only create the state if it doesn't already exist.
   if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
@@ -374,7 +374,7 @@ ACE_TS_Clerk_Processor::update_time ()
   ACE_Time_Info time_info;
 
   //  Call send_request() on all handlers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
@@ -433,7 +433,7 @@ ACE_TS_Clerk_Processor::fini ()
     ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
 
   // Destroy all the handlers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
@@ -482,7 +482,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
     ? ACE_Synch_Options::asynch : ACE_Synch_Options::synch;
 
   // Now set up connections to all servers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;

@@ -498,7 +498,7 @@ ACE_Name_Handler::lists ()
     }
   else
     {
-      ACE_NS_WString *one_entry = 0;
+      ACE_NS_WString *one_entry {};
 
       for (ACE_Unbounded_Set_Iterator<ACE_NS_WString> set_iterator (set);
            set_iterator.next (one_entry) !=0;
@@ -571,7 +571,7 @@ ACE_Name_Handler::lists_entries ()
 
   if (result == 0)
     {
-      ACE_Name_Binding *one_entry = 0;
+      ACE_Name_Binding *one_entry {};
 
       for (ACE_Unbounded_Set_Iterator<ACE_Name_Binding> set_iterator (set);
            set_iterator.next (one_entry) !=0;
