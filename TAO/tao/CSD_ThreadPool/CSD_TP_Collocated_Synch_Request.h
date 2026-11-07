@@ -22,6 +22,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Corba_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Synch_Helper.h"
 #include "tao/Exception.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,7 +85,7 @@ namespace TAO
 
       /// Set to null initially, and will only be set thereafter if an
       /// exception is raised from the dispatch() call on the server_request_.
-      CORBA::Exception* exception_ {};
+      std::unique_ptr<CORBA::Exception> exception_;
     };
   }
 }
