@@ -6,8 +6,6 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 
-Server_ORBInitializer::Server_ORBInitializer () = default;
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -18,7 +16,7 @@ void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor {};
   ACE_NEW_THROW_EX (interceptor,
                     Server_Request_Interceptor,
                     CORBA::NO_MEMORY (
@@ -27,10 +25,9 @@ Server_ORBInitializer::post_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::ServerRequestInterceptor_var
-    server_interceptor = interceptor;
+  PortableInterceptor::ServerRequestInterceptor_var const server_interceptor (interceptor);
 
-  info->add_server_request_interceptor (interceptor);
+  info->add_server_request_interceptor (server_interceptor.in ());
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

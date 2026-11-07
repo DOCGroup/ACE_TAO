@@ -61,8 +61,8 @@ public:
 
   Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
   Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
-  Server_Request_Interceptor & operator = (Server_Request_Interceptor const &) = delete;
-  Server_Request_Interceptor & operator = (Server_Request_Interceptor &&) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
 
 protected:
   /// Destructor.

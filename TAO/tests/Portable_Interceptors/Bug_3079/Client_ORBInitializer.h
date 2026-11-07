@@ -35,8 +35,8 @@ public:
 
   Client_ORBInitializer (Client_ORBInitializer const &) = delete;
   Client_ORBInitializer (Client_ORBInitializer &&) = delete;
-  Client_ORBInitializer & operator = (Client_ORBInitializer const &) = delete;
-  Client_ORBInitializer & operator = (Client_ORBInitializer &&) = delete;
+  Client_ORBInitializer &operator= (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer &operator= (Client_ORBInitializer &&) = delete;
 };
 
 #if defined(_MSC_VER)

@@ -31,7 +31,7 @@ class Server_ORBInitializer :
 {
 public:
   /// Constructor.
-  Server_ORBInitializer ();
+  Server_ORBInitializer () = default;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
@@ -39,8 +39,8 @@ public:
 
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;
   Server_ORBInitializer (Server_ORBInitializer &&) = delete;
-  Server_ORBInitializer & operator = (Server_ORBInitializer const &) = delete;
-  Server_ORBInitializer & operator = (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 };
 
 #if defined(_MSC_VER)

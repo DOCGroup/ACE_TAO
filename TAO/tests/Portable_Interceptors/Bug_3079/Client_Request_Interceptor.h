@@ -64,8 +64,8 @@ public:
 
   Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
   Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
-  Client_Request_Interceptor & operator = (Client_Request_Interceptor const &) = delete;
-  Client_Request_Interceptor & operator = (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
 
 private:
   ///The ID of the ORB this interceptor is registered with.
