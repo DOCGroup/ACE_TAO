@@ -44,7 +44,12 @@ class Client_Request_Interceptor
 {
 public:
   /// Constructor.
-  Client_Request_Interceptor (const char *name);
+  explicit Client_Request_Interceptor (char const *name);
+
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor

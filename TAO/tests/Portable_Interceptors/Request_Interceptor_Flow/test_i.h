@@ -27,7 +27,12 @@ class test_i : public virtual POA_Test
 {
 public:
   /// Constructor.
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// The client-side test operation.
   void client_test (Test::TestScenario scenario) override;

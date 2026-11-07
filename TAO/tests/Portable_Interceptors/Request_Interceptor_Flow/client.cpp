@@ -1,30 +1,34 @@
 // -*- C++ -*-
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior = 0;
+struct Options
+{
+  ACE_TString ior {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   if (argc != 3)  // foo -k IOR
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        if (ior == 0)
-          ior = get_opts.opt_arg ();
+        if (options.ior.is_empty ())
+          options.ior = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,9 +46,9 @@ client_test (Test_ptr server)
 {
   // Currently, there are only four scenarios for the client side
   // tests.
-  const Test::TestScenario MAX_CLIENT_SCENARIO = 4;
+  Test::TestScenario constexpr MAX_CLIENT_SCENARIO { 4 };
 
-  for (Test::TestScenario i = 1; i <= MAX_CLIENT_SCENARIO; ++i)
+  for (Test::TestScenario i { 1 }; i <= MAX_CLIENT_SCENARIO; ++i)
     {
       ACE_DEBUG ((LM_INFO,
                   "\nCLIENT SCENARIO %d\n"
@@ -62,15 +66,15 @@ client_test (Test_ptr server)
               "operation.\n"));
             }
         }
-      catch (const Test::X&)
+      catch (Test::X const &)
         {
           // Expected exception.  Ignore it.
         }
-      catch (const CORBA::NO_PERMISSION&)
+      catch (CORBA::NO_PERMISSION const &)
         {
           // Expected exception.  Ignore it.
         }
-      catch (const Test::UnknownScenario& ex)
+      catch (Test::UnknownScenario const &ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Unknown scenario <%d> condition "
@@ -79,7 +83,7 @@ client_test (Test_ptr server)
                       ex.scenario));
           throw;
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Exception thrown from client_test() "
@@ -94,9 +98,9 @@ server_test (Test_ptr server)
 {
   // Currently, there are only four scenarios for the server side
   // tests.
-  const Test::TestScenario MAX_SERVER_SCENARIO = 4;
+  Test::TestScenario constexpr MAX_SERVER_SCENARIO { 4 };
 
-  for (Test::TestScenario i = 1; i <= MAX_SERVER_SCENARIO; ++i)
+  for (Test::TestScenario i { 1 }; i <= MAX_SERVER_SCENARIO; ++i)
     {
       ACE_DEBUG ((LM_INFO,
                   "\nSERVER SCENARIO %d\n"
@@ -115,15 +119,15 @@ server_test (Test_ptr server)
                           "operation.\n"));
             }
         }
-      catch (const Test::X&)
+      catch (Test::X const &)
         {
           // Expected exception.  Ignore it.
         }
-      catch (const CORBA::NO_PERMISSION&)
+      catch (CORBA::NO_PERMISSION const &)
         {
           // Expected exception.  Ignore it.
         }
-      catch (const Test::UnknownScenario& ex)
+      catch (Test::UnknownScenario const &ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Unknown scenario <%d> condition "
@@ -132,7 +136,7 @@ server_test (Test_ptr server)
                       ex.scenario));
           throw;
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Exception thrown from server_test() "
@@ -143,39 +147,38 @@ server_test (Test_ptr server)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options;
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
+      // The ORB initializer var assumes ownership of the ACE_NEW allocation.
       ACE_NEW_RETURN (temp_initializer,
                       Client_ORBInitializer,
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Client ORB");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, "Client ORB");
 
-      if (::parse_args (argc, argv) != 0)
+      if (::parse_args (argc, argv, options) != 0)
         return -1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior.c_str ());
 
-      Test_var server =
+      Test_var const server =
         Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -187,7 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

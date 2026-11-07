@@ -43,7 +43,12 @@ class Request_Interceptor
 {
 public:
   /// Constructor.
-  Request_Interceptor (const char *name);
+  explicit Request_Interceptor (char const *name);
+
+  Request_Interceptor (Request_Interceptor const &) = delete;
+  Request_Interceptor (Request_Interceptor &&) = delete;
+  Request_Interceptor &operator= (Request_Interceptor const &) = delete;
+  Request_Interceptor &operator= (Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -66,11 +71,11 @@ protected:
 
   /// The number of times a starting interception point has been
   /// called.
-  std::atomic<CORBA::ULong> starting_interception_point_count_ {0};
+  std::atomic<CORBA::ULong> starting_interception_point_count_ { 0 };
 
   /// The number of times an ending interception point has been
   /// called.
-  std::atomic<CORBA::ULong> ending_interception_point_count_ {0};
+  std::atomic<CORBA::ULong> ending_interception_point_count_ { 0 };
 };
 
 #if defined(_MSC_VER)
