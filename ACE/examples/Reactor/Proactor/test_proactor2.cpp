@@ -56,7 +56,7 @@ int PrintSigMask ();
 #define  COUT(X)  cout << X ; cout.flush ();
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static ACE_TCHAR *host {};
 
 // duplex mode: ==0 half-duplex
 //              !=0 full duplex
@@ -221,7 +221,7 @@ int Receiver::initiate_read_stream ()
               "initiate_read_stream called\n"));
 
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -505,7 +505,7 @@ int Sender::initiate_read_stream ()
               "initiate_read_stream called\n"));
 
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -566,7 +566,7 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
     }
 
   {
-    ACE_GUARD_RETURN (MyMutex, locker, m_Mtx);
+    ACE_GUARD (MyMutex, locker, m_Mtx);
     --nIOCount;
   }
 }

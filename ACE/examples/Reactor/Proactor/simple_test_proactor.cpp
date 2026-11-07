@@ -134,7 +134,7 @@ int
 Simple_Tester::initiate_read_file ()
 {
   // Create Message_Block
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ + 1), -1);
 
   // Inititiate an asynchronous read from the file
