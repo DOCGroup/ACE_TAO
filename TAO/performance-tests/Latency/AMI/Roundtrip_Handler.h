@@ -12,7 +12,11 @@ class Roundtrip_Handler
 {
 public:
   /// Constructor
-  Roundtrip_Handler (int expected_callbacks);
+  explicit Roundtrip_Handler (int expected_callbacks);
+  Roundtrip_Handler (Roundtrip_Handler const &) = delete;
+  Roundtrip_Handler (Roundtrip_Handler &&) = delete;
+  Roundtrip_Handler &operator= (Roundtrip_Handler const &) = delete;
+  Roundtrip_Handler &operator= (Roundtrip_Handler &&) = delete;
 
   /// Return the number of pending callbacks
   int pending_callbacks () const;
@@ -21,11 +25,11 @@ public:
   void dump_results (ACE_High_Res_Timer::global_scale_factor_type gsf);
 
   // = The skeleton methods
-  virtual void test_method (Test::Timestamp send_time);
-  virtual void test_method_excep (::Messaging::ExceptionHolder *holder);
+  void test_method (Test::Timestamp send_time) override;
+  void test_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  virtual void shutdown ();
-  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
+  void shutdown () override;
+  void shutdown_excep (::Messaging::ExceptionHolder *holder) override;
 
 private:
   /// The number of callbacks not received yet
