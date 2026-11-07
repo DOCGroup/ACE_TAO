@@ -45,7 +45,7 @@ public:
   ~Server_Request_Interceptor () override;
 
   /// Set the references to which requests will be forwarded.
-  void forward_reference (char const * iorstr);
+  void forward_reference (char const * iorstr) override;
 
   /**
    * @name Methods Required by the Server Request Interceptor
