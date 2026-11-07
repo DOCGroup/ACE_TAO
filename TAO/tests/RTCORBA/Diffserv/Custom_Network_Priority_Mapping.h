@@ -36,10 +36,10 @@ public:
   Custom_Network_Priority_Mapping ();
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
-                             RTCORBA::NetworkPriority &network_priority);
+                             RTCORBA::NetworkPriority &network_priority) override;
 
   CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority network_priority,
-                           RTCORBA::Priority &corba_priority);
+                           RTCORBA::Priority &corba_priority) override;
 
   void corba_priority (RTCORBA::Priority corba_priority);
 
