@@ -242,16 +242,12 @@ Routing_Slip_Persistence_Manager::remove()
     delete this->first_event_block_;
     this->first_event_block_ = nullptr;
   }
-  while (! this->allocated_routing_slip_blocks_.empty ())
+  while (this->allocated_routing_slip_blocks_.pop (block_number) == 0)
   {
-    block_number = this->allocated_routing_slip_blocks_.back ();
-    this->allocated_routing_slip_blocks_.pop_back ();
     this->allocator_->free(block_number);
   }
-  while (! this->allocated_event_blocks_.empty ())
+  while (this->allocated_event_blocks_.pop (block_number) == 0)
   {
-    block_number = this->allocated_event_blocks_.back ();
-    this->allocated_event_blocks_.pop_back ();
     this->allocator_->free(block_number);
   }
   this->removed_ = true;
@@ -543,23 +539,21 @@ Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
 bool
 Routing_Slip_Persistence_Manager::build_chain(
     Persistent_Storage_Block* first_block, Block_Header& first_header,
-    std::vector<size_t>& allocated_blocks,
+    ACE_Unbounded_Stack<size_t>& allocated_blocks,
     const ACE_Message_Block& data)
 {
   size_t data_size = data.total_length();
   size_t remainder = data_size;
   bool result = true;
   // Save the number of items currently on the allocation list for
-  std::vector<size_t> blocks_to_free;
+  ACE_Unbounded_Stack<size_t> blocks_to_free;
   size_t block_number = 0;
 
   // reverse the order so when we pop, we free up things closer to block 0
   // first
-  while (! allocated_blocks.empty ())
+  while (allocated_blocks.pop (block_number) == 0)
   {
-    block_number = allocated_blocks.back ();
-    allocated_blocks.pop_back ();
-    blocks_to_free.push_back (block_number);
+    blocks_to_free.push (block_number);
   }
   size_t pos = first_header.put_header(
     *first_block);
@@ -584,7 +578,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     ACE_NEW_RETURN(hdr, Overflow_Header, result);
 
     Persistent_Storage_Block* curblk = this->allocator_->allocate();
-    allocated_blocks.push_back (curblk->block_number ());
+    allocated_blocks.push (curblk->block_number ());
     // Set the previous block's overflow "pointer" to us.
     prevhdr->next_overflow = ACE_Utils::truncate_cast<Block_Number> (curblk->block_number());
     prevhdr->put_header(*prevblk);
@@ -626,10 +620,8 @@ Routing_Slip_Persistence_Manager::build_chain(
   pos = first_header.put_header(
     *first_block);
   // Free all but the first routing_slip_block
-  while (! blocks_to_free.empty ())
+  while (blocks_to_free.pop (block_number) == 0)
   {
-    block_number = blocks_to_free.back ();
-    blocks_to_free.pop_back ();
     this->allocator_->free(block_number);
   }
 
@@ -639,7 +631,7 @@ Routing_Slip_Persistence_Manager::build_chain(
 bool
 Routing_Slip_Persistence_Manager::reload_chain(
   Persistent_Storage_Block* first_block, Block_Header& first_header,
-  std::vector<size_t>& allocated_blocks,
+  ACE_Unbounded_Stack<size_t>& allocated_blocks,
   ACE_Message_Block* amb,
   ACE_UINT64 expected_serial_number
   )
@@ -673,7 +665,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
         psb->reassign_data(static_cast<unsigned char*> (static_cast<void*> (mbptr->wr_ptr())), true);
         // ...read into the PSB (whose data is inside of the AMB)...
         this->allocator_->read(psb);
-        allocated_blocks.push_back (psb->block_number ());
+        allocated_blocks.push (psb->block_number ());
         // ...extract all headers so we know the data's size...
         pos = overflow_header.extract_header(*psb);
         // ...set up the region that somebody else can look at...
