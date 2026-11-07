@@ -467,7 +467,7 @@ ACE_Filecache_Object::init ()
   this->tempname_ = nullptr;
   this->size_ = 0;
 
-  ACE_OS::memset (&(this->stat_), 0, sizeof (this->stat_));
+  this->stat_ = {};
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object ()
