@@ -4,12 +4,12 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int retval {};
+  int result {};
 
   CORBA::ORB_var const orb =
     CORBA::ORB_init (argc, argv);
 
-  SeqTest::NodeSeq ns;
+  SeqTest::NodeSeq ns {};
   ns.length (1);
   ns[0].ls.length (1);
   ns[0].ls[0] = 42;
@@ -21,15 +21,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (ns[0].ls.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Test passed\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed\n")));
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Test failed\n"));
-      retval = 1;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed\n")));
+      result = 1;
     }
 
   orb->destroy ();
 
-  return retval;
+  return result;
 }
