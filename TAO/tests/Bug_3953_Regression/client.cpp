@@ -126,7 +126,7 @@ ACE_TMAIN (int argc,
 
       poa_manager->activate ();
 
-      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+      object = orb->string_to_object (ior.c_str ());
 
       server_var const server = server::_narrow (object.in ());
 
