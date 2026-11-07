@@ -11,7 +11,7 @@
 #include <memory>
 #include <utility>
 
-static ACEXML_Char const *test_string =
+static ACEXML_Char const * const test_string =
 ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &quot; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
 
 static void
@@ -30,16 +30,16 @@ usage (ACE_TCHAR const *program)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACEXML_Char* filename = nullptr;
-  bool sax = false;             // Use SAXPrint handler or not.
-  bool str = false;
+  ACEXML_Char const *filename {};
+  bool sax {};                  // Use SAXPrint handler or not.
+  bool str {};
 #ifdef USE_ZZIP
-  bool zip = false;
+  bool zip {};
 #endif
-  ACEXML_Char* url = nullptr;
+  ACEXML_Char const *url {};
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != EOF)
     {
@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             break;
 #endif /* USE_ZZIP */
           default:
-            usage(argv[0]);
+            usage (argv[0]);
             return -1;
         }
     }
@@ -136,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       stm = std::move (sstm);
     }
 
-  ACEXML_Char const *name = (filename == nullptr) ? url : filename;
+  ACEXML_Char const * const name = (filename == nullptr) ? url : filename;
   if (!sax)
     handler = std::make_unique<ACEXML_Print_Handler> (name);
   else
@@ -155,18 +155,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   {
     parser.parse (&input);
   }
-  catch (const ACEXML_Exception& ex)
+  catch (ACEXML_Exception const &ex)
     {
-      ex.print();
+      ex.print ();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
     }
   try
   {
     parser.parse (&input);
   }
-  catch (const ACEXML_SAXException& ex)
+  catch (ACEXML_SAXException const &ex)
     {
-      ex.print();
+      ex.print ();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
       return 1;
     }

@@ -33,9 +33,9 @@ public:
    */
   ~ACEXML_SAXPrint_Handler () override = default;
 
-  ACEXML_SAXPrint_Handler (const ACEXML_SAXPrint_Handler&) = delete;
+  ACEXML_SAXPrint_Handler (ACEXML_SAXPrint_Handler const &) = delete;
   ACEXML_SAXPrint_Handler (ACEXML_SAXPrint_Handler&&) = delete;
-  ACEXML_SAXPrint_Handler& operator= (const ACEXML_SAXPrint_Handler&) = delete;
+  ACEXML_SAXPrint_Handler& operator= (ACEXML_SAXPrint_Handler const &) = delete;
   ACEXML_SAXPrint_Handler& operator= (ACEXML_SAXPrint_Handler&&) = delete;
 
   // Methods inherit from ACEXML_ContentHandler.
