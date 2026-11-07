@@ -44,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Destringify ior
       CORBA::Object_var const obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+        orb->string_to_object (ior.c_str ());
 
       // Narrow
       Messenger_var const messenger = Messenger::_narrow (obj.in ());
