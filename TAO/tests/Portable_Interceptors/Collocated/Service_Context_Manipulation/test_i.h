@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #ifndef SERVICE_CONTEXT_MANIPULATION_COLLOCATED_TEST_I_H
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_TEST_I_H
 
@@ -20,7 +19,12 @@
 class Visual_i : public virtual POA_Test_Interceptors::Visual
 {
 public:
-  Visual_i (CORBA::ORB_ptr orb);
+  explicit Visual_i (CORBA::ORB_ptr orb);
+
+  Visual_i (Visual_i const &) = delete;
+  Visual_i (Visual_i &&) = delete;
+  Visual_i &operator= (Visual_i const &) = delete;
+  Visual_i &operator= (Visual_i &&) = delete;
 
   void normal (CORBA::Long arg);
 

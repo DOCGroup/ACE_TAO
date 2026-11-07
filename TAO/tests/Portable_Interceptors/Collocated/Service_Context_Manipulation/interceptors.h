@@ -22,11 +22,13 @@ class Echo_Client_Request_Interceptor
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Client_Request_Interceptor (const char *orb_id);
-  // ctor.
+  explicit Echo_Client_Request_Interceptor (char const *orb_id);
 
-  virtual ~Echo_Client_Request_Interceptor ();
-  // dtor.
+  virtual ~Echo_Client_Request_Interceptor () = default;
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -44,7 +46,7 @@ public:
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Echo_Client_Interceptor" };
 
   CORBA::String_var orb_id_;
   // The ID of the ORB where this interceptor was created, usually
@@ -59,11 +61,13 @@ class Echo_Server_Request_Interceptor
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor ();
-  // cotr.
+  Echo_Server_Request_Interceptor () = default;
 
   ~Echo_Server_Request_Interceptor ();
-  // dotr.
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor &&) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -72,8 +76,7 @@ public:
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
 
@@ -82,7 +85,7 @@ public:
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Echo_Server_Interceptor" };
 };
 
 #if defined(_MSC_VER)

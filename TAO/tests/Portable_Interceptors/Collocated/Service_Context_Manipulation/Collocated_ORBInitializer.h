@@ -24,7 +24,12 @@ class Collocated_ORBInitializer :
 {
 public:
   /// Constructor
-  Collocated_ORBInitializer ();
+  Collocated_ORBInitializer () = default;
+
+  Collocated_ORBInitializer (Collocated_ORBInitializer const &) = delete;
+  Collocated_ORBInitializer (Collocated_ORBInitializer &&) = delete;
+  Collocated_ORBInitializer &operator= (Collocated_ORBInitializer const &) = delete;
+  Collocated_ORBInitializer &operator= (Collocated_ORBInitializer &&) = delete;
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
