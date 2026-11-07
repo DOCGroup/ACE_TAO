@@ -2,6 +2,8 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
@@ -14,7 +16,7 @@ ACE_Token_Collection::ACE_Token_Collection (bool debug,
 {
   ACE_TRACE ("ACE_Token_Collection::ACE_Token_Collection");
 
-  if (name == 0)
+  if (name == nullptr)
     name = ACE_TEXT ("no name");
 
   ACE_OS::strsncpy (this->name_,
@@ -27,7 +29,7 @@ ACE_Token_Collection::insert (ACE_Token_Proxy &new_token)
 {
   ACE_TRACE ("ACE_Token_Collection::insert");
 
-  TOKEN_NAME name (new_token.name ());
+  TOKEN_NAME const name (new_token.name ());
 
   // Check if the new_proxy is already in the list.
   if (collection_.find (name) == 1)
@@ -35,10 +37,12 @@ ACE_Token_Collection::insert (ACE_Token_Proxy &new_token)
     return -1;
 
   // Clone the new token.
-  ACE_Token_Proxy *temp = new_token.clone ();
+  std::unique_ptr<ACE_Token_Proxy> temp {new_token.clone ()};
 
-  if (collection_.bind (name, temp) == -1)
+  if (collection_.bind (name, temp.get ()) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("bind failed\n")), -1);
+
+  temp.release ();
   return 0;
 }
 
@@ -46,25 +50,25 @@ int
 ACE_Token_Collection::extract (const ACE_TCHAR *token_name, ACE_Token_Proxy *&proxy)
 {
   ACE_TRACE ("ACE_Token_Collection::extract");
-  TOKEN_NAME name (token_name);
-  return collection_.unbind (token_name, proxy);
+  TOKEN_NAME const name (token_name);
+  return collection_.unbind (name, proxy);
 }
 
 ACE_Token_Proxy *
 ACE_Token_Collection::is_member (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Collection::is_member");
-  TOKEN_NAME name (token_name);
-  ACE_Token_Proxy *temp;
+  TOKEN_NAME const name (token_name);
+  ACE_Token_Proxy *temp {};
   // Get the token from the collection.
-  return collection_.find (name, temp) == -1 ? 0 : temp;
+  return collection_.find (name, temp) == -1 ? nullptr : temp;
 }
 
 bool
 ACE_Token_Collection::is_member (const ACE_Token_Proxy &token)
 {
   ACE_TRACE ("ACE_Token_Collection::is_member");
-  TOKEN_NAME token_name (token.name ());
+  TOKEN_NAME const token_name (token.name ());
   return collection_.find (token_name) == 0;
 }
 
@@ -106,10 +110,10 @@ ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
                                ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::acquire");
-  TOKEN_NAME name (token_name);
-  ACE_Token_Proxy *temp;
+  TOKEN_NAME const name (token_name);
+  ACE_Token_Proxy *temp {};
   // Get the token from the collection.
-  int result = collection_.find (name, temp);
+  int const result = collection_.find (name, temp);
   // did we find it?
   if (result == -1)
     return result;
@@ -123,10 +127,10 @@ ACE_Token_Collection::tryacquire (const ACE_TCHAR *token_name,
                                   void (*sleep_hook)(void *))
 {
   ACE_TRACE ("ACE_Token_Collection::tryacquire");
-  TOKEN_NAME name (token_name);
-  ACE_Token_Proxy *temp;
+  TOKEN_NAME const name (token_name);
+  ACE_Token_Proxy *temp {};
   // Get the token from the collection.
-  int result = collection_.find (name, temp);
+  int const result = collection_.find (name, temp);
   // did we find it?
   if (result == -1)
     return result;
@@ -185,11 +189,11 @@ ACE_Token_Collection::renew (const ACE_TCHAR *token_name,
                              ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::renew");
-  TOKEN_NAME name (token_name);
-  ACE_Token_Proxy *temp;
+  TOKEN_NAME const name (token_name);
+  ACE_Token_Proxy *temp {};
 
   // Get the token from the collection.
-  int result = collection_.find (name, temp);
+  int const result = collection_.find (name, temp);
 
   // Did we find it?
   if (result == -1)
@@ -225,10 +229,10 @@ ACE_Token_Collection::release (const ACE_TCHAR *token_name,
                                ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::release");
-  TOKEN_NAME name (token_name);
-  ACE_Token_Proxy *temp;
+  TOKEN_NAME const name (token_name);
+  ACE_Token_Proxy *temp {};
   // get the token from the collection
-  int result = collection_.find (name, temp);
+  int const result = collection_.find (name, temp);
   // did we find it?
   if (result != 0)
     return result;
@@ -257,7 +261,7 @@ ACE_Token_Proxy *
 ACE_Token_Collection::clone () const
 {
   ACE_TRACE ("ACE_Token_Collection::clone");
-  return (ACE_Token_Proxy *) 0;
+  return nullptr;
 }
 
 // This method doesn't mean anything for a collection.
@@ -265,7 +269,7 @@ ACE_Tokens *
 ACE_Token_Collection::create_token (const ACE_TCHAR *)
 {
   ACE_TRACE ("ACE_Token_Collection::create_token");
-  return (ACE_Tokens *) 0;
+  return nullptr;
 }
 
 void
