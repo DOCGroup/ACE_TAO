@@ -24,10 +24,12 @@ class Echo_Client_Request_Interceptor
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Client_Request_Interceptor ();
-  // ctor.
-  virtual ~Echo_Client_Request_Interceptor ();
-  // dtor.
+  Echo_Client_Request_Interceptor () = default;
+  virtual ~Echo_Client_Request_Interceptor () = default;
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -48,9 +50,9 @@ public:
       PortableInterceptor::ClientRequestInfo_ptr ri);
 
   // Some identifiers that are used for error checking
-  static CORBA::ULong client_interceptor_check_;
+  inline static CORBA::ULong client_interceptor_check_ {};
 private:
-  const char *myname_;
+  char const *const myname_ { "Echo_Client_Interceptor" };
 };
 
 class Echo_Server_Request_Interceptor
@@ -59,10 +61,12 @@ class Echo_Server_Request_Interceptor
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor ();
-  // cotr.
-  ~Echo_Server_Request_Interceptor ();
-  // dotr.
+  Echo_Server_Request_Interceptor () = default;
+  virtual ~Echo_Server_Request_Interceptor () = default;
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor &&) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -81,10 +85,10 @@ public:
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
   // Some identifiers that are used for error checking
-  static CORBA::ULong server_interceptor_check_;
+  inline static CORBA::ULong server_interceptor_check_ {};
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Echo_Server_Interceptor" };
 };
 
 #if defined(_MSC_VER)
