@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include <chrono>
+#include <string>
 
 static size_t
 cache_size (CORBA::ORB_ptr orb)
@@ -39,25 +40,27 @@ wait_for_idle_close (CORBA::ORB_ptr orb, int seconds)
   return expect_cache (orb, 0);
 }
 
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
+struct Client_Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://server.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
+  while ((option = get_opts ()) != -1)
     {
-      switch (c)
+      switch (option)
         {
         case 'k':
-          ior = get_opts.opt_arg ();
+          options.ior = get_opts.opt_arg ();
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "usage: %s -k <ior>\n", argv[0]), -1);
+                             ACE_TEXT ("usage: %s -k <ior>\n"), argv [0]), -1);
         }
     }
   return 0;
@@ -68,12 +71,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Client_Options options;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object = orb->string_to_object (ior);
-      Transport_Idle_Timeout_Long_Request_Test::Test_var test =
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
+      Transport_Idle_Timeout_Long_Request_Test::Test_var const test =
         Transport_Idle_Timeout_Long_Request_Test::Test::_narrow (object.in ());
 
       if (CORBA::is_nil (test.in ()))
