@@ -85,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policy_manager->set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
 
       CORBA::Object_var const tmp =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+        orb->string_to_object (ior.c_str ());
 
       Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 

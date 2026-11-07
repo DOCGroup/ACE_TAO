@@ -73,7 +73,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get server CORBA object and call it
 
-      CORBA::Object_var const tmp = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+      CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
 
       Test::TestServer_var const server = Test::TestServer::_narrow (tmp.in ());
 
