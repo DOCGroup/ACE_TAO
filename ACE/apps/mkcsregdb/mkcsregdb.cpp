@@ -156,7 +156,7 @@ csdb_generator::read_from (const char *srcfile)
       ACE_OS::unlink (this->tempfilename_.c_str ());
       return -1;
     }
-  char *ptr = nullptr;
+  char *ptr {};
   while (this->inf_.good () && !this->inf_.eof ()) {
     linecounter_++;
     switch (read_line ()) {
