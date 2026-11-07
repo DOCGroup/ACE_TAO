@@ -1,104 +1,89 @@
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
+#include "ace/SString.h"
 #include "testC.h"
 
-// Name of file contains ior.
-static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
-
-// Default iterations.
-static u_long iterations = 20;
-
-// Default number of bytes to send as data.
-static CORBA::ULong data_bytes = 1000;
-
-// Flag indicates whether to shutdown remote server or not upon client
-// shutdown.
-static int shutdown_server = 0;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://ior")};
+  CORBA::ULong iterations {20};
+  CORBA::ULong data_bytes {1000};
+  bool shutdown_server {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:d:x"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:i:d:x"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'd':
-        data_bytes = ACE_OS::atoi (get_opts.opt_arg ());
+        options.data_bytes = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k IOR "
-                           "-i iterations "
-                           "-d data bytes "
-                           "-x shutdown server "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior> -i <iterations> -d <data bytes> -x\n"),
+                           argv[0]),
                           -1);
       }
 
-  if (IOR == 0)
+  if (options.ior.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
+                       ACE_TEXT ("Please specify the IOR for the servant\n")), -1);
 
-  if (data_bytes < 10)
+  if (options.data_bytes < 10)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify a value of more than 10 bytes\n"),
+                       ACE_TEXT ("Please specify a value of at least 10 bytes\n")),
                       -1);
 
-  // Indicates successful parsing of command line.
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // Initialize the ORB.
-      CORBA::ORB_var orb =
+      Client_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
-      if (parse_args_result != 0)
-        return parse_args_result;
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
 
-      // Get an object reference from the argument string.
-      CORBA::Object_var object =
-        orb->string_to_object (IOR);
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
 
-      // Try to narrow the object reference to a <test> reference.
-      test_var test_object = test::_narrow (object.in ());
+      test_var const test_object = test::_narrow (object.in ());
 
-      test::data the_data0 (data_bytes);
-      the_data0.length (data_bytes);
+      CORBA::ULong const data_bytes0 = options.data_bytes;
+      CORBA::ULong const data_bytes1 = options.data_bytes * 10;
+      CORBA::ULong const data_bytes2 = data_bytes1 / 100;
 
-      data_bytes *= 10;
-      test::data the_data1 (data_bytes);
-      the_data1.length (data_bytes);
+      test::data the_data0 (data_bytes0);
+      the_data0.length (data_bytes0);
 
-      data_bytes /= 100;
-      test::data the_data2 (data_bytes);
-      the_data2.length (data_bytes);
+      test::data the_data1 (data_bytes1);
+      the_data1.length (data_bytes1);
 
-      for (CORBA::ULong i = 1; i <= iterations; ++i)
+      test::data the_data2 (data_bytes2);
+      the_data2.length (data_bytes2);
+
+      for (CORBA::ULong i {1}; i <= options.iterations; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "client: Iteration %d @ %T\n",
+                      ACE_TEXT ("client: Iteration %u @ %T\n"),
                       i));
 
           // Invoke the oneway method.
@@ -115,10 +100,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Shutdown server.
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Sending a shutdown call..\n"));
+                      ACE_TEXT ("(%P|%t) Sending a shutdown call..\n")));
           test_object->shutdown ();
         }
 
@@ -130,12 +115,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // queues before main() ends.
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-
-
   return 0;
 }
