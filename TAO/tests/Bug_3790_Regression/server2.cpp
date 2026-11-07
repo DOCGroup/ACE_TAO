@@ -66,7 +66,7 @@ char *
 Task::locate (char const *)
 {
   CORBA::Object_var const forward_object =
-    orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (this->another_ior_.c_str ()));
+    orb_->string_to_object (this->another_ior_.c_str ());
   CORBA::String_var forward_string = orb_->object_to_string (forward_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -140,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "IORTable entry...\n"));
 
           CORBA::Object_var const client_object =
-            orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (test_ior.c_str ()));
+            orb->string_to_object (test_ior.c_str ());
 
           simple::SimpleTest_T_var const simple_test_client =
             simple::SimpleTest_T::_narrow (client_object.in ());

@@ -241,7 +241,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // We reuse the object_var smart pointer!
-      object_var = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+      object_var = orb->string_to_object (ior.c_str ());
 
       A::AMI_Test_var const ami_test_var =
         A::AMI_Test::_narrow (object_var.in ());
