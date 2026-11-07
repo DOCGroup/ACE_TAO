@@ -5,7 +5,7 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -40,8 +40,9 @@ run_test (Test_Interceptors::Visual_ptr server)
 
   server->normal (10, msg.out ());
 
-  CORBA::Long one = 1, two = 1, result = 0;
-  result = server->calculate (one, two);
+  CORBA::Long const one {1};
+  CORBA::Long const two {1};
+  CORBA::Long const result {server->calculate (one, two)};
 
   ACE_DEBUG ((LM_DEBUG,
               "calculate() result = %d\n",
@@ -61,7 +62,7 @@ run_test (Test_Interceptors::Visual_ptr server)
     {
       server->user ();
     }
-  catch (const Test_Interceptors::Silly&)
+  catch (Test_Interceptors::Silly const&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
@@ -70,7 +71,7 @@ run_test (Test_Interceptors::Visual_ptr server)
     {
       server->system ();
     }
-  catch (const CORBA::INV_OBJREF&)
+  catch (CORBA::INV_OBJREF const&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
@@ -79,7 +80,7 @@ run_test (Test_Interceptors::Visual_ptr server)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
 
   try
     {
@@ -122,7 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
