@@ -24,12 +24,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor ()
-  : addr_family_ (0),
-    listen_handle_ (ACE_INVALID_HANDLE),
-    pass_addresses_ (false),
-    validate_new_connection_ (false),
-    reissue_accept_ (true),
-    bytes_to_read_ (0)
+  : addr_family_ {},
+    listen_handle_ {ACE_INVALID_HANDLE},
+    pass_addresses_ {},
+    validate_new_connection_ {},
+    reissue_accept_ {true},
+    bytes_to_read_ {}
 {
 }
 
@@ -239,7 +239,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   ACE_TRACE ("ACE_Asynch_Acceptor<>::handle_accept");
 
   // Variable for error tracking
-  bool error = false;
+  bool error {};
 
   // If the asynchronous accept fails.
   if (!result.success () || result.accept_handle () == ACE_INVALID_HANDLE)
@@ -388,8 +388,8 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
 
   sockaddr *local_addr {};
   sockaddr *remote_addr {};
-  int local_size = 0;
-  int remote_size = 0;
+  int local_size {};
+  int remote_size {};
   // This matches setup in accept().
   size_t addr_size = sizeof (sockaddr_in) + 16;
 #if defined (ACE_HAS_IPV6)

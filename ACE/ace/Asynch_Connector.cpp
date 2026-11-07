@@ -21,8 +21,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
 ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
-  : pass_addresses_ (false),
-    validate_new_connection_ (false)
+  : pass_addresses_ {},
+    validate_new_connection_ {}
 {
 }
 
@@ -70,7 +70,7 @@ template <class HANDLER> void
 ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result &result)
 {
   // Variable for error tracking
-  bool error = false;
+  bool error {};
 
   // If the asynchronous connect fails.
   if (!result.success () ||
