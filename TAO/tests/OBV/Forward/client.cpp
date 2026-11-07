@@ -4,10 +4,8 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -33,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-dump_node (BaseNode *bn, int indent)
+dump_node (BaseNode *const bn, int const indent)
 {
   if (bn == nullptr)
     {
@@ -63,7 +61,7 @@ dump_node (BaseNode *bn, int indent)
 }
 
 void
-dump_tree (TreeController *tc)
+dump_tree (TreeController *const tc)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) start tree dump <%x>\n",
@@ -76,23 +74,24 @@ dump_tree (TreeController *tc)
               tc));
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = nullptr;
+      BaseNode_init *bn_factory {};
       ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
@@ -102,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = nullptr;
+      TreeController_init *tc_factory {};
       ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
@@ -112,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = nullptr;
+      StringNode_init *sn_factory {};
       ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);
