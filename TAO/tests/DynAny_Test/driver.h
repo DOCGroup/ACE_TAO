@@ -47,7 +47,7 @@ public:
   /**
    * @return The number of errors detected
    */
-  int run ();
+  int run () const;
 
 private:
   /// underlying ORB (we do not own it)

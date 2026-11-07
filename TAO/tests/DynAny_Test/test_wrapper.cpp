@@ -19,7 +19,7 @@ template <class T>
 int
 Test_Wrapper<T>::run_test ()
 {
-  char const* test_name = this->test_object_->test_name ();
+  char const *const test_name = this->test_object_->test_name ();
 
   ACE_DEBUG ((LM_DEBUG,
               "********************* %C *******************\n\n",

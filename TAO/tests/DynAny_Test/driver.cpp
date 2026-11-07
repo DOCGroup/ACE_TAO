@@ -25,7 +25,7 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int error_count = 0;
+  int error_count {};
   try
     {
       Driver driver;
@@ -47,7 +47,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       error_count));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 
@@ -84,7 +84,7 @@ Driver::init (int argc, ACE_TCHAR *argv[])
                           "parse_args failed\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Driver::init");
       return -1;
@@ -105,8 +105,8 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:d"));
-  int c;
-  ACE_TCHAR const* test_str {};
+  int c {};
+  ACE_TCHAR const *test_str {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -127,9 +127,10 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynunion")))
           this->test_type_ = Test_Type::dynunion;
         else
-          ACE_DEBUG ((LM_DEBUG,
-                      "I don't recognize test type %s\n",
-                      test_str));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Unrecognized test type: %s\n"),
+                             test_str),
+                            -1);
         break;
 
       case 'd':
@@ -147,14 +148,19 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
+  if (this->test_type_ == Test_Type::none)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("A test type must be selected with -t\n")),
+                      -1);
+
   // Indicates successful parsing of command line.
   return 0;
 }
 
 int
-Driver::run ()
+Driver::run () const
 {
-  int error_count = 0;
+  int error_count {};
 
   switch (this->test_type_)
     {
@@ -201,7 +207,7 @@ Driver::run ()
         }
         break;
       default:
-        break;
+        return -1;
     }
 
   return error_count;
