@@ -4,20 +4,25 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager_T.h"
+#include <string>
 
-static char const *ior = nullptr;
+struct Client_Options
+{
+  std::basic_string<ACE_TCHAR> ior;
+};
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c {};
-  while ((c = get_opts ()) != -1)
+  int option {};
+
+  while ((option = get_opts ()) != -1)
     {
-      switch (c)
+      switch (option)
         {
         case 'k':
-          ior = get_opts.opt_arg ();
+          options.ior = get_opts.opt_arg ();
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -26,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (ior == nullptr)
+  if (options.ior.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) client: -k <IOR> is required\n")),
                       -1);
@@ -45,13 +50,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Client_Options options;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object = orb->string_to_object (ior);
-      Test::OnewayIdle_var test = Test::OnewayIdle::_narrow (object.in ());
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
+      Test::OnewayIdle_var const test = Test::OnewayIdle::_narrow (object.in ());
       if (CORBA::is_nil (test.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Narrow to Test::OnewayIdle failed\n")),

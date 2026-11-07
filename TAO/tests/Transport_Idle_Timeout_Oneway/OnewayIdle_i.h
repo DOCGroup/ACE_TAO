@@ -19,7 +19,7 @@ public:
   bool request_received () const;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   bool test_failed_ {};
   bool request_received_ {};
 };
