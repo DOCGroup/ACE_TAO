@@ -24,6 +24,7 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 #include "tao/LocalObject.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -79,7 +80,7 @@ private:
   TAO_Priority_Mapping_Manager &operator= (TAO_Priority_Mapping_Manager &&) = delete;
 
 private:
-  TAO_Priority_Mapping *mapping_;
+  std::unique_ptr<TAO_Priority_Mapping> mapping_;
 };
 
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var

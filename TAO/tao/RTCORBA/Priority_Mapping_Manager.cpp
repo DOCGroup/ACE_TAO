@@ -8,10 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager ()
-{
-  delete this->mapping_;
-}
+TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager () = default;
 
 TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj)

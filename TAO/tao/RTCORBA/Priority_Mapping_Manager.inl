@@ -210,14 +210,14 @@ TAO_Priority_Mapping_Manager::TAO_Priority_Mapping_Manager (RTCORBA::PriorityMap
 ACE_INLINE RTCORBA::PriorityMapping *
 TAO_Priority_Mapping_Manager::mapping ()
 {
-  return this->mapping_;
+  return this->mapping_.get ();
 }
 
 ACE_INLINE void
 TAO_Priority_Mapping_Manager::mapping (RTCORBA::PriorityMapping *mapping)
 {
-  delete this->mapping_;
-  this->mapping_ = mapping;
+  if (mapping != this->mapping_.get ())
+    this->mapping_.reset (mapping);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -210,14 +210,14 @@ TAO_Network_Priority_Mapping_Manager::TAO_Network_Priority_Mapping_Manager (RTCO
 ACE_INLINE RTCORBA::NetworkPriorityMapping *
 TAO_Network_Priority_Mapping_Manager::mapping ()
 {
-  return this->mapping_;
+  return this->mapping_.get ();
 }
 
 ACE_INLINE void
 TAO_Network_Priority_Mapping_Manager::mapping (RTCORBA::NetworkPriorityMapping *mapping)
 {
-  delete this->mapping_;
-  this->mapping_ = mapping;
+  if (mapping != this->mapping_.get ())
+    this->mapping_.reset (mapping);
 }
 
 
