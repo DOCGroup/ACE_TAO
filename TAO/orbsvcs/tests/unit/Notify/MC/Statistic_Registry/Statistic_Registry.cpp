@@ -30,15 +30,15 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       TAO_Singleton_Manager::instance ()->init ();
 
       // Test registry acquisition.
-      Monitor_Point_Registry* reg = Monitor_Point_Registry::instance ();
+      Monitor_Point_Registry * const reg = Monitor_Point_Registry::instance ();
 
-      if (reg == 0)
+      if (reg == nullptr)
         {
           error ("Monitor_Point_Registry::instance() failed");
         }
 
       // Test registry addition.
-      Monitor_Base* s = 0;
+      Monitor_Base *s {};
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test1",
                                     Monitor_Control_Types::MC_COUNTER),
