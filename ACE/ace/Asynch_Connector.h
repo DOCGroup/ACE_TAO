@@ -45,7 +45,7 @@ class ACE_Asynch_Connector : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Connector ();
+  ACE_Asynch_Connector () = default;
 
   /// Virtual destruction
   ~ACE_Asynch_Connector () override = default;
@@ -146,10 +146,10 @@ private:
   ACE_Asynch_Connect asynch_connect_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  bool pass_addresses_;
+  bool pass_addresses_ {};
 
   /// Flag that indicates if address validation is required.
-  bool validate_new_connection_;
+  bool validate_new_connection_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

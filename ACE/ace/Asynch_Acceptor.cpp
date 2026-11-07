@@ -23,17 +23,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
-ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor ()
-  : addr_family_ {},
-    listen_handle_ {ACE_INVALID_HANDLE},
-    pass_addresses_ {},
-    validate_new_connection_ {},
-    reissue_accept_ {true},
-    bytes_to_read_ {}
-{
-}
-
-template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor ()
 {
   // Close down the listen socket

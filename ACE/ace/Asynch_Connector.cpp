@@ -19,13 +19,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
-  : pass_addresses_ {},
-    validate_new_connection_ {}
-{
-}
-
 template <class HANDLER> int
 ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
                                      ACE_Proactor *proactor,

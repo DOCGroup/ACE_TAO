@@ -45,7 +45,7 @@ class ACE_Asynch_Acceptor : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Acceptor ();
+  ACE_Asynch_Acceptor () = default;
 
   /// Virtual destruction
   ~ACE_Asynch_Acceptor () override;
@@ -235,27 +235,27 @@ protected:
 
   /// Address family used to open this object. Obtained from @a address passed
   /// to @c open().
-  int addr_family_;
+  int addr_family_ {};
 
 private:
   /// Handle used to listen for new connections.
-  ACE_HANDLE listen_handle_;
+  ACE_HANDLE listen_handle_ {ACE_INVALID_HANDLE};
 
   /// Asynch_Accept used to make life easier :-)
   ACE_Asynch_Accept asynch_accept_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  bool pass_addresses_;
+  bool pass_addresses_ {};
 
   /// Flag that indicates if address validation is required.
-  bool validate_new_connection_;
+  bool validate_new_connection_ {};
 
   /// Flag that indicates if a new accept should be reissued when a
   /// accept completes.
-  bool reissue_accept_;
+  bool reissue_accept_ {true};
 
   /// Bytes to be read with the <accept> call.
-  size_t bytes_to_read_;
+  size_t bytes_to_read_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
