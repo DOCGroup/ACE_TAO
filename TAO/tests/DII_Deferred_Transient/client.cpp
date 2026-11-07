@@ -15,7 +15,7 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -29,10 +29,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage: %s -k <ior>\n"),
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -53,7 +52,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // The string is borrowed from the request's return Any, which owns it.
       char const *the_string {};
 
-      ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Deferred twoway DII (using get_response())\n"));
+      ACE_DEBUG ((LM_INFO,
+                  "(%P|%t) - #### Deferred twoway DII (using get_response())\n"));
 
       CORBA::Request_var req = obj->_request ("get_string");
       req->set_return_type (CORBA::_tc_string);
@@ -61,12 +61,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       req->send_deferred ();
       ACE_DEBUG ((LM_INFO, "(%P|%t) - Get response...\n"));
       req->get_response ();
-      req->return_value () >>= the_string;
+      if (!(req->return_value () >>= the_string))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) - Could not extract the string return value\n"),
+                          1);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));
 
-      ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Oneway DII to initiate crash\n"));
+      ACE_DEBUG ((LM_INFO,
+                  "(%P|%t) - #### Oneway DII to initiate crash\n"));
 
       req = obj->_request ("crash");
 
@@ -74,38 +78,42 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_OS::sleep (1); // Give the server time to terminate.
 
-      ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Multiple deferred twoway DII (with discarded replies)\n"));
+      ACE_DEBUG ((LM_INFO,
+                  "(%P|%t) - #### Multiple deferred twoway DII (with discarded replies)\n"));
 
-      int const iterations = 10;
+      constexpr int iterations {10};
       int exceptions {};
       for (int i {}; i < iterations; ++i)
-      {
-        try
         {
-          ACE_DEBUG ((LM_INFO, "(%P|%t) - get_string iteration #%d\n", i));
+          try
+            {
+              ACE_DEBUG ((LM_INFO, "(%P|%t) - get_string iteration #%d\n", i));
 
-          req = obj->_request ("get_string");
-          req->set_return_type (CORBA::_tc_string);
+              req = obj->_request ("get_string");
+              req->set_return_type (CORBA::_tc_string);
 
-          req->send_deferred ();
-          // discard reply
+              req->send_deferred ();
+              // Discard reply.
 
-          ACE_DEBUG ((LM_INFO, "(%P|%t) - sent deferred\n"));
+              ACE_DEBUG ((LM_INFO, "(%P|%t) - sent deferred\n"));
+            }
+          catch (CORBA::Exception const &)
+            {
+              ++exceptions;
+            }
         }
-        catch (CORBA::Exception const &)
-        {
-          ++exceptions;
-        }
-      }
 
       if (exceptions == 0)
-      {
-        ACE_DEBUG ((LM_ERROR, "(%P|%t) - All requests unexpectedly succeeded\n"));
-      }
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) - All requests unexpectedly succeeded\n"));
+        }
       else
-      {
-        ACE_DEBUG ((LM_INFO, "(%P|%t) - Caught exceptions from requests as expected (%d)\n", exceptions));
-      }
+        {
+          ACE_DEBUG ((LM_INFO,
+                      "(%P|%t) - Caught exceptions from requests as expected (%d)\n",
+                      exceptions));
+        }
 
       orb->destroy ();
     }
