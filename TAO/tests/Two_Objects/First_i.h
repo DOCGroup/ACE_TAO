@@ -15,7 +15,7 @@ class First_i
 {
 public:
   // Ctor..
-  First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
+  explicit First_i (ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
   void oneway_method () override;
@@ -26,9 +26,6 @@ public:
   First_i & operator= (First_i &&) = delete;
 
 private:
-  /// Use an ORB reference to convert strings to objects and shutdown
-  /// the application.
-  CORBA::ORB_var orb_;
   ACE_Auto_Event &two_way_done_;
 };
 

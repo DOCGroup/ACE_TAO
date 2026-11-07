@@ -11,7 +11,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   // Ctor
-  explicit Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr const orb);
 
   // The thread entry point.
   int svc () override;
@@ -23,7 +23,7 @@ public:
 
 private:
   // The orb
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif  /* TAO_TWO_OBJECTS_WORKER_H */

@@ -13,7 +13,7 @@ class Second_i
   : public virtual POA_Two_Objects_Test::Second
 {
 public:
-  Second_i (CORBA::ORB_ptr orb,
+  Second_i (CORBA::ORB_ptr const orb,
             CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
   Two_Objects_Test::Octet_Seq *twoway_method () override;
@@ -28,8 +28,8 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
-  CORBA::ULong length_;
+  CORBA::ORB_var const orb_;
+  CORBA::ULong const length_;
   ACE_Auto_Event &two_way_done_;
 };
 

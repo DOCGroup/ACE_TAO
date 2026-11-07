@@ -5,7 +5,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "ace/Auto_Event.h"
 
-Second_i::Second_i (CORBA::ORB_ptr orb,
+Second_i::Second_i (CORBA::ORB_ptr const orb,
                     CORBA::ULong len, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     length_ (len),
@@ -16,7 +16,7 @@ Second_i::Second_i (CORBA::ORB_ptr orb,
 Two_Objects_Test::Octet_Seq *
 Second_i::twoway_method ()
 {
-  Two_Objects_Test::Octet_Seq *preply_mesg = nullptr;
+  Two_Objects_Test::Octet_Seq *preply_mesg {};
 
   ACE_NEW_THROW_EX (preply_mesg,
                     Two_Objects_Test::Octet_Seq (this->length_),

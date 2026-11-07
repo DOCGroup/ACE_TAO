@@ -1,8 +1,8 @@
 
 #include "worker.h"
 
-Worker::Worker (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+Worker::Worker (CORBA::ORB_ptr const orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

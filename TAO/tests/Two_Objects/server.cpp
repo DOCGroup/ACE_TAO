@@ -2,29 +2,34 @@
 #include "Object_Factory_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-  int msglen = 100; // Default length of reply message is 100 bytes.
-  int nthreads = 2;
-  ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+#include <memory>
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Server_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:l:t:"));
-  int c;
+  ACE_TString ior_output_file {ACE_TEXT ("test.ior")};
+  int message_length {100};
+  int thread_count {2};
+};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:n:l:t:"));
+  int option {};
+
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'l':
-        msglen = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_length = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.thread_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -43,20 +48,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Get initial reference to the Root POA
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
       // Narrow down to the appropriate type
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -65,50 +70,54 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
 
       // Get referencee to the POA manager
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Parse the arguments
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      ACE_DEBUG(( LM_DEBUG, "ior file = %s\t#threads = %d\t"
-                  "msglen = %d\n",
-                  ior_output_file, nthreads, msglen));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ior file = %s\t#threads = %d\tmsglen = %d\n"),
+                  options.ior_output_file.c_str (),
+                  options.thread_count,
+                  options.message_length));
 
       // Create the factory servant
-      Object_Factory_i *factory_impl = nullptr;
+      Object_Factory_i *factory_impl {};
       ACE_NEW_THROW_EX (factory_impl,
-                        Object_Factory_i (orb.in (), msglen),
+                        Object_Factory_i (orb.in (), options.message_length),
                         CORBA::NO_MEMORY ());
       PortableServer::ServantBase_var safe (factory_impl);
 
       // _this method registers the object withe the POA and returns
       // an object reference
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (factory_impl);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Two_Objects_Test::Object_Factory_var factory =
+      Two_Objects_Test::Object_Factory_var const factory =
         Two_Objects_Test::Object_Factory::_narrow (object_act.in ());
 
       // Convert the object reference to a string so that it can
       // be saved in a file and used by clinet programs later
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (factory.in ());
 
-      // If the ior_output_file exists, output the ior to it
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                             options.ior_output_file.c_str ()),
+                            1);
 
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          1);
-
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       // Activate the POA manager
       poa_manager->activate ();
@@ -117,7 +126,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Worker worker (orb.in ());
 
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.thread_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate server threads\n"),
                           1);

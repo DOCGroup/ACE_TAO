@@ -14,8 +14,8 @@ class Object_Factory_i
   : public virtual POA_Two_Objects_Test::Object_Factory
 {
 public:
-  Object_Factory_i (CORBA::ORB_ptr orb,
-                    CORBA::ULong len);
+  Object_Factory_i (CORBA::ORB_ptr const orb,
+                    CORBA::ULong const len);
 
   Two_Objects_Test::First_ptr create_first () override;
 
@@ -29,8 +29,8 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
-  CORBA::ULong length_;
+  CORBA::ORB_var const orb_;
+  CORBA::ULong const length_;
   ACE_Auto_Event two_way_done_;
 };
 
