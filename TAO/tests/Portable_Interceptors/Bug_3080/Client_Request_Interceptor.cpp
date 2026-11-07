@@ -28,7 +28,7 @@ Client_Request_Interceptor::destroy ()
 
 void
 Client_Request_Interceptor::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
   ++this->request_count_;
 }
