@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (long init_obj_ref_count)
 {
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = nullptr;
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_Bound_Ptr_Counter<ACE_LOCK> (init_obj_ref_count),
                   nullptr);
@@ -41,7 +41,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
 template <class ACE_LOCK> inline long
 ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
 {
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del = nullptr;
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del {};
   long new_obj_ref_count;
 
   {
@@ -89,7 +89,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK>* c
 template <class ACE_LOCK> inline void
 ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
 {
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del = nullptr;
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del {};
 
   {
     ACE_GUARD (ACE_LOCK, guard, counter->lock_);
