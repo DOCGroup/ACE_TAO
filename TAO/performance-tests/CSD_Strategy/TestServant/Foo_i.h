@@ -12,17 +12,17 @@ class CSD_PT_TestServant_Export Foo_i : public virtual POA_Foo
     Foo_i();
     virtual ~Foo_i();
 
-    virtual void op1();
+    void op1 () override;
 
-    virtual void op2(CORBA::Long value);
+    void op2 (CORBA::Long value) override;
 
-    virtual CORBA::Long op3(CORBA::Long value);
+    CORBA::Long op3 (CORBA::Long value) override;
 
-    virtual void op4(CORBA::Long value);
+    void op4 (CORBA::Long value) override;
 
-    virtual void op5();
+    void op5 () override;
 
-    virtual void done();
+    void done () override;
 
 
     void gather_stats(Foo_Statistics& stats);

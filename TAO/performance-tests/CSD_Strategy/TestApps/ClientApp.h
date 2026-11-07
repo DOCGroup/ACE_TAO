@@ -20,7 +20,7 @@ public:
   virtual ~ClientApp();
 
 protected:
-  virtual int run_i(int argc, ACE_TCHAR* argv[]);
+  int run_i (int argc, ACE_TCHAR *argv[]) override;
 
 private:
   // These are all called, in order, by the run_i() method.

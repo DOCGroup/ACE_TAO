@@ -21,7 +21,7 @@ public:
   Foo_ClientEngine(Foo_ptr obj, unsigned  client_id = 0);
   virtual ~Foo_ClientEngine();
 
-  virtual bool execute(unsigned num_loops);
+  bool execute (unsigned num_loops) override;
 
   static void expected_results(Foo_Statistics& stats);
 
