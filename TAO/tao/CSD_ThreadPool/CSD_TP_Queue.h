@@ -80,10 +80,10 @@ namespace TAO
       TP_Queue (TP_Queue &&) = delete;
       TP_Queue &operator= (TP_Queue &&) = delete;
 
-      /// The request at the front of the queue.
+      /// Non-owning front link; put() adds a reference for each queued request.
       TP_Request* head_ {};
 
-      /// The request at the end of the queue.
+      /// Non-owning tail link to a request whose queue reference is held by put().
       TP_Request* tail_ {};
     };
   }

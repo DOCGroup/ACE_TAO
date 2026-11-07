@@ -107,10 +107,10 @@ namespace TAO
       /// the prev_ and next_ (private) data members.
       friend class TP_Queue;
 
-      /// The previous TP_Request object (in the queue).
+      /// Non-owning link to the previous queued TP_Request object.
       TP_Request* prev_ {};
 
-      /// The next TP_Request object (in the queue).
+      /// Non-owning link to the next queued TP_Request object.
       TP_Request* next_ {};
 
       /// Reference to the servant object.

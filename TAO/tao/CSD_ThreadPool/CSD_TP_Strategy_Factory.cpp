@@ -16,13 +16,13 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 {
   ACE_TRACE ("TAO::CSD::TP_Strategy_Factory::init");
 
-  static int initialized {};
+  static bool initialized {};
 
   // Only allow initialization once.
   if (initialized)
     return 0;
 
-  initialized = 1;
+  initialized = true;
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
       (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
