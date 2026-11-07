@@ -392,7 +392,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      FILE *output_file = nullptr;
+      FILE *output_file {};
 
       if (idl_global->multi_file_input ())
         {
