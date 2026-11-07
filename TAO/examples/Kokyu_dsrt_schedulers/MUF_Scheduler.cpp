@@ -35,7 +35,7 @@ MUF_Sched_Param_Policy::value (const MUF_Scheduling::SchedulingParameter& value)
 CORBA::Policy_ptr
 MUF_Sched_Param_Policy::copy ()
 {
-  MUF_Sched_Param_Policy* tmp = 0;
+  MUF_Sched_Param_Policy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     MUF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -338,7 +338,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-  const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
+  Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered MUF_Scheduler::receive_request\n"));
@@ -572,7 +572,7 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
-      const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
+      Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
       CORBA::Any sc_qos_as_any;
       CORBA::Any_var scqostmp = codec_->decode (oc_seq);
       sc_qos_as_any = scqostmp.in ();
