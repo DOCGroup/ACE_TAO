@@ -14,15 +14,16 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 void
 Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 {
-  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
+  char const *operation = request->operation ();
+  if (ACE_OS::strcmp ("shutdown", operation) == 0)
     {
       this->orb_->shutdown (false);
 
       return;
     }
-  else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("_is_a", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       CORBA::Any type_id;
@@ -31,16 +32,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       request->arguments (list);
 
-      CORBA::NamedValue_ptr nv = list->item (0);
+      CORBA::NamedValue_ptr const nv = list->item (0);
 
-      const char *arg;
+      char const *arg;
       *(nv->value ()) >>= arg;
 
-      CORBA::Boolean type_matches = 0;
-      if (ACE_OS::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
-          || ACE_OS::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
-          || ACE_OS::strcmp (arg, "") == 0)
-        type_matches = 1;
+      CORBA::Boolean const type_matches =
+        ACE_OS::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
+        || ACE_OS::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
+        || ACE_OS::strcmp (arg, "") == 0;
 
       CORBA::Any result;
       result <<= CORBA::Any::from_boolean (type_matches);
@@ -49,9 +49,9 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_octet_method", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("test_octet_method", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       // Set up the argument list
@@ -68,15 +68,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1);
+      CORBA::NamedValue_ptr const nv = list->item (1);
 
       request->set_result (*(nv->value ()));
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_long_method", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("test_long_method", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       // Set up the argument list
@@ -93,15 +93,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1);
+      CORBA::NamedValue_ptr const nv = list->item (1);
 
       request->set_result (*(nv->value ()));
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_short_method", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("test_short_method", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       // Set up the argument list
@@ -118,15 +118,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1);
+      CORBA::NamedValue_ptr const nv = list->item (1);
 
       request->set_result (*(nv->value ()));
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_char_method", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("test_char_method", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       // Set up the argument list
@@ -143,15 +143,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1);
+      CORBA::NamedValue_ptr const nv = list->item (1);
 
       request->set_result (*(nv->value ()));
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_longlong_method", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("test_longlong_method", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       // Set up the argument list
@@ -168,15 +168,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1);
+      CORBA::NamedValue_ptr const nv = list->item (1);
 
       request->set_result (*(nv->value ()));
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_double_method", request->operation ()) == 0)
+  else if (ACE_OS::strcmp ("test_double_method", operation) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       // Set up the argument list
@@ -193,7 +193,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1);
+      CORBA::NamedValue_ptr const nv = list->item (1);
 
       request->set_result (*(nv->value ()));
 
@@ -207,7 +207,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 }
 
 CORBA::RepositoryId
-Roundtrip::_primary_interface (const PortableServer::ObjectId &,
+Roundtrip::_primary_interface (PortableServer::ObjectId const &,
                                PortableServer::POA_ptr)
 {
   return CORBA::string_dup ("IDL:Test/Roundtrip:1.0");
