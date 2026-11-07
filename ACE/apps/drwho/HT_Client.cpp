@@ -10,7 +10,7 @@
 Protocol_Record *
 HT_Client::insert (const char *key_name, int max_len)
 {
-  Protocol_Record **prpp = nullptr;
+  Protocol_Record **prpp {};
 
   // This is tricky...
 
