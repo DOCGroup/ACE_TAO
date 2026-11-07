@@ -26,9 +26,9 @@
 =====================================================================*/
 
 #include "asnmp/ctr64.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
-#define MAX32 4294967295u
+static constexpr ACE_UINT64 counter64_base = 1ULL << 32;
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 Counter64::get_syntax()
@@ -37,7 +37,7 @@ SmiUINT32 Counter64::get_syntax()
 }
 
 //------------------[ constructor with values ]--------------------------
-Counter64::Counter64( unsigned long hiparm, unsigned long loparm)
+Counter64::Counter64 (unsigned long hiparm, unsigned long loparm)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
   smival.value.hNumber.hipart = hiparm;
@@ -45,15 +45,15 @@ Counter64::Counter64( unsigned long hiparm, unsigned long loparm)
 }
 
 //------------------[ constructor with low value only ]------------------
-Counter64::Counter64( ACE_UINT64 llw )
+Counter64::Counter64 (ACE_UINT64 llw)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
-  smival.value.hNumber.hipart = (unsigned long) (llw >> 32);
-  smival.value.hNumber.lopart = (unsigned long) llw & 0xffffffff;
+  smival.value.hNumber.hipart = static_cast<unsigned long> (llw >> 32);
+  smival.value.hNumber.lopart = static_cast<unsigned long> (llw & 0xffffffffULL);
 }
 
 //------------------[ copy constructor ]---------------------------------
-Counter64::Counter64( const Counter64 &ctr64 )
+Counter64::Counter64 (Counter64 const &ctr64)
   : SnmpSyntax (ctr64)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -61,19 +61,12 @@ Counter64::Counter64( const Counter64 &ctr64 )
   smival.value.hNumber.lopart = ctr64.low();
 }
 
-//------------------[ destructor ]---------------------------------
-Counter64::~Counter64()
-{
-}
-
-
 //------------------[ Counter64::high() ]------------------------------
 // return the high part
 unsigned long Counter64::high() const
 {
   return smival.value.hNumber.hipart;
 }
-
 
 //------------------[ Counter64::low() ]-------------------------------
 // return the low part
@@ -84,39 +77,39 @@ unsigned long Counter64::low() const
 
 //------------------[ set_high( const unsigned long h) ]-----------
 // set the high part
-void Counter64::set_high( const unsigned long h)
+void Counter64::set_high (unsigned long h)
 {
   smival.value.hNumber.hipart = h;
 }
 
 //------------------[ set_low( const unsigned long l) ]------------
 // set the low part
-void Counter64::set_low( const unsigned long l)
+void Counter64::set_low (unsigned long l)
 {
   smival.value.hNumber.lopart = l;
 }
 
-
 //-----------[ to_long_double( Counter64 c64) ]-----------------------------
 // convert a Counter 64 to a long double
-long double Counter64::to_long_double()  const
+long double Counter64::to_long_double () const
 {
   long double ld = this->high();
-  ld *= MAX32;
+  ld *= counter64_base;
   ld += this->low();
   return ld;
 }
 
-
 //-----------[ ld_to_c64( long double ld) ]----------------------------
 // convert a long double to a Counter64
 // semantics changed from prior version
-Counter64& Counter64::assign( long double ld)
+Counter64 &Counter64::assign (long double ld)
 {
-   smival.syntax = sNMP_SYNTAX_CNTR64;
-   unsigned long h = smival.value.hNumber.hipart = (unsigned long)(ld / MAX32);
-   smival.value.hNumber.lopart = (unsigned long)(ld - h);
-   return  *this;
+  smival.syntax = sNMP_SYNTAX_CNTR64;
+  unsigned long const high_word = static_cast<unsigned long> (ld / counter64_base);
+  smival.value.hNumber.hipart = high_word;
+  smival.value.hNumber.lopart = static_cast<unsigned long> (
+    ld - static_cast<long double> (high_word) * counter64_base);
+  return *this;
 }
 
 //----------------[ general Value = operator ]---------------------
@@ -154,15 +147,15 @@ SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
 }
 
 // overloaded assignment
-Counter64& Counter64::operator=( const ACE_UINT64 rhs)
+Counter64 &Counter64::operator= (ACE_UINT64 rhs)
 {
-   smival.value.hNumber.hipart =  (unsigned long) (rhs >> 32);
-   smival.value.hNumber.lopart = (unsigned long) rhs;
+   smival.value.hNumber.hipart = static_cast<unsigned long> (rhs >> 32);
+   smival.value.hNumber.lopart = static_cast<unsigned long> (rhs);
    return *this;
 }
 
 // overloaded assignment
-Counter64& Counter64::operator=( const Counter64 &rhs)
+Counter64 &Counter64::operator= (Counter64 const &rhs)
 {
    smival.value.hNumber.hipart = rhs.high();
    smival.value.hNumber.lopart = rhs.low();
@@ -170,9 +163,9 @@ Counter64& Counter64::operator=( const Counter64 &rhs)
 }
 
 // otherwise, behave like an unsigned long int
-Counter64::operator ACE_UINT64()
+Counter64::operator ACE_UINT64() const
 {
-  ACE_UINT64 val = smival.value.hNumber.hipart;
+  ACE_UINT64 val = static_cast<ACE_UINT64> (smival.value.hNumber.hipart);
   val = val << 32; // shift right 4 bytes
   val |= smival.value.hNumber.lopart;
   return val;
@@ -194,12 +187,13 @@ int Counter64::valid() const
 //----------[ return ASCII format ]-------------------------
 // TODO:  Fix up to do real 64bit decimal value printing...
 //        For now, print > 32-bit values in hex
-const char * Counter64::to_string()
+char const *Counter64::to_string ()
 {
   if ( high() != 0 )
-    ACE_OS::sprintf(output_buffer, "0x%X%08X",
-                    (unsigned int)high(), (unsigned int)low());
+    std::snprintf (output_buffer, sizeof output_buffer, "0x%X%08X",
+                    static_cast<unsigned int> (high()),
+                    static_cast<unsigned int> (low()));
   else
-    ACE_OS::sprintf(output_buffer, "%d", (int) low());
+    std::snprintf (output_buffer, sizeof output_buffer, "%lu", low());
   return output_buffer;
 }

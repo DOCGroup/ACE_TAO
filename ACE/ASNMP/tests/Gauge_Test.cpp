@@ -81,6 +81,8 @@ TestGuage ()
    ACE_ASSERT(g6 == static_cast<unsigned long> (ni));
    Gauge32 g7(ui);
    ACE_ASSERT(g7 == ui);
+   Gauge32 const &g7_ref = g7;
+   ACE_ASSERT(static_cast<unsigned long> (g7_ref) == ui);
    std::unique_ptr<Gauge32> g8 = std::make_unique<Gauge32> (g5);
    ACE_ASSERT(g8 != nullptr);
 
