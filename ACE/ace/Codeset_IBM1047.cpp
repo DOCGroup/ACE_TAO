@@ -16,7 +16,8 @@
 #if defined (ACE_HAS_EBCDIC)
 
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 namespace
 {
@@ -81,7 +82,7 @@ ACE_IBM1047_ISO8859::read_char (ACE_InputCDR &in,
 {
   if (this->read_1 (in, reinterpret_cast<ACE_CDR::Octet*> (&x)))
     {
-      x = to_IBM1047[x];
+      x = to_IBM1047[static_cast<unsigned char> (x)];
       return 1;
     }
   return 0;
@@ -136,7 +137,6 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
         return true;
       }
 
-      delete [] x;
     }
 
   x.clear ();
@@ -155,7 +155,7 @@ ACE_IBM1047_ISO8859::read_char_array (ACE_InputCDR& in,
                         len))
     {
       for (ACE_CDR::ULong i = 0; i != len; ++i)
-        x[i] = to_IBM1047[x[i]];
+        x[i] = to_IBM1047[static_cast<unsigned char> (x[i])];
 
       return 1;
     }
@@ -169,7 +169,8 @@ ACE_IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
 {
   return
     this->write_1 (out,
-                   reinterpret_cast<const ACE_CDR::Octet*> (&from_IBM1047[x]));
+                   reinterpret_cast<const ACE_CDR::Octet*> (
+                     &from_IBM1047[static_cast<unsigned char> (x)]));
 }
 
 ACE_CDR::Boolean
@@ -190,10 +191,10 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
   char *buf = nullptr;
   if (this->adjust (out, len, 1, buf) == 0)
     {
-      ACE_OS::memcpy (buf, x, len);
+      std::memcpy (buf, x, len);
 
       for (ACE_CDR::ULong i = 0; i != len; ++i)
-        buf[i] = from_IBM1047[buf[i]];
+        buf[i] = from_IBM1047[static_cast<unsigned char> (buf[i])];
 
       return 1;
     }
@@ -222,7 +223,7 @@ ACE_ISO8859_IBM1047::read_char (ACE_InputCDR& in,
 {
   if (this->read_1 (in, reinterpret_cast<ACE_CDR::Octet*> (&x)))
     {
-      x = from_IBM1047[x];
+      x = from_IBM1047[static_cast<unsigned char> (x)];
       return 1;
     }
   return 0;
@@ -277,7 +278,6 @@ ACE_ISO8859_IBM1047::read_string (ACE_InputCDR& in,
         return true;
       }
 
-      delete [] x;
     }
 
   x.clear ();
@@ -296,7 +296,7 @@ ACE_ISO8859_IBM1047::read_char_array (ACE_InputCDR &in,
                         len))
     {
       for (ACE_CDR::ULong i = 0; i != len; ++i)
-        x[i] = from_IBM1047[x[i]];
+        x[i] = from_IBM1047[static_cast<unsigned char> (x[i])];
 
       return 1;
     }
@@ -310,7 +310,8 @@ ACE_ISO8859_IBM1047::write_char (ACE_OutputCDR &out,
 {
   return
     this->write_1 (out,
-                   reinterpret_cast<const ACE_CDR::Octet *> (&to_IBM1047[x]));
+                   reinterpret_cast<const ACE_CDR::Octet *> (
+                     &to_IBM1047[static_cast<unsigned char> (x)]));
 }
 
 ACE_CDR::Boolean
@@ -333,10 +334,10 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
 
   if (this->adjust (out, len, 1, buf) == 0)
     {
-      ACE_OS::memcpy (buf, x, len);
+      std::memcpy (buf, x, len);
 
       for (ACE_CDR::ULong i = 0; i != len; ++i)
-        buf[i] = to_IBM1047[buf[i]];
+        buf[i] = to_IBM1047[static_cast<unsigned char> (buf[i])];
 
       return 1;
     }
