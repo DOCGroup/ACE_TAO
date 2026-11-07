@@ -7,16 +7,16 @@ public:
 
   void loop (client_ptr remote_partner,
              CORBA::ULong event_loop_depth,
-             CORBA::ULong event_loop_iterations);
+             CORBA::ULong event_loop_iterations) override;
 
   void run_no_ops (client_ptr remote_partner,
                    CORBA::ULong iterations);
 
   void no_op (client_ptr remote_partner,
               const act &act_for_iterations,
-              const act &act_for_flag);
+              const act &act_for_flag) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -28,12 +28,12 @@ public:
   client_i (server_ptr remote_partner);
 
   void loop (CORBA::ULong event_loop_depth,
-             CORBA::ULong event_loop_iterations);
+             CORBA::ULong event_loop_iterations) override;
 
   void oneway_no_op (const act &act_for_iterations,
-                     const act &act_for_flag);
+                     const act &act_for_flag) override;
 
-  void twoway_no_op ();
+  void twoway_no_op () override;
 
 private:
   server_var remote_partner_;
