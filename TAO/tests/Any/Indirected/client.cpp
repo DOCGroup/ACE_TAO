@@ -8,10 +8,10 @@
 
 static void
 dump_cdr (TAO_OutputCDR const &cdr,
-          size_t dump_limit,
-          ACE_TCHAR const *single_message,
-          ACE_TCHAR const *first_message,
-          ACE_TCHAR const *second_message)
+          size_t const dump_limit,
+          ACE_TCHAR const * const single_message,
+          ACE_TCHAR const * const first_message,
+          ACE_TCHAR const * const second_message)
 {
   if (TAO_debug_level >= 2)
     {
@@ -30,7 +30,7 @@ dump_cdr (TAO_OutputCDR const &cdr,
     }
 }
 
-bool
+static bool
 recursive_union_test ()
 {
   constexpr size_t dump_limit = 512;
@@ -38,9 +38,9 @@ recursive_union_test ()
   bool rc {true};
 
   ACE_DEBUG ((LM_INFO,
-              "Executing recursive union test\n"));
+              ACE_TEXT ("Executing recursive union test\n")));
   ACE_DEBUG ((LM_INFO,
-              "* Simple marshaling -> demarshaling\n"));
+              ACE_TEXT ("* Simple marshaling -> demarshaling\n")));
   {
     CORBA::Any the_any {}, the_out_any {};
 
@@ -64,22 +64,23 @@ recursive_union_test ()
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Extracting any\n"));
+                  ACE_TEXT ("> Extracting any\n")));
 
     in >> the_out_any;
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Extracted any\n"));
+                  ACE_TEXT ("> Extracted any\n")));
   }
   // Any's typecode out of scope
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_INFO,
-                "> Any destructed\n"));
+                ACE_TEXT ("> Any destructed\n")));
 
   ACE_DEBUG ((LM_INFO,
-              "* Marshaling -> demarshaling with external reference\n"));
+              ACE_TEXT ("* Marshaling -> demarshaling with external reference\n")));
   {
+    // Keep an external reference to the nested indirected typecode alive.
     CORBA::TypeCode_var tc {};
 
     {
@@ -105,7 +106,7 @@ recursive_union_test ()
 
       if (TAO_debug_level >= 1)
         ACE_DEBUG ((LM_INFO,
-                    "> Extracting any\n"));
+                    ACE_TEXT ("> Extracting any\n")));
 
       in >> the_out_any;
 
@@ -119,21 +120,21 @@ recursive_union_test ()
 
       if (TAO_debug_level >= 1)
         ACE_DEBUG ((LM_INFO,
-                    "> Extracted any and stored external reference to Indirected_Type typecode\n"));
+                    ACE_TEXT ("> Extracted any and stored external reference to Indirected_Type typecode\n")));
     }
     // Any's typecode out of scope
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Any destructed\n"));
+                  ACE_TEXT ("> Any destructed\n")));
   }
   // referenced recursive typecode out of scope
   // Any's typecode out of scope
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_INFO,
-                "> External Indirected_Type typecode reference destructed\n"));
+                ACE_TEXT ("> External Indirected_Type typecode reference destructed\n")));
 
   ACE_DEBUG ((LM_INFO,
-              "* Marshaling -> demarshaling -> marshaling -> demarshaling\n"));
+              ACE_TEXT ("* Marshaling -> demarshaling -> marshaling -> demarshaling\n")));
   {
     CORBA::Any the_any {}, the_out_any {}, the_out_any2 {};
 
@@ -157,13 +158,13 @@ recursive_union_test ()
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Extracting any\n"));
+                  ACE_TEXT ("> Extracting any\n")));
 
     in >> the_out_any;
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Extracted any\n"));
+                  ACE_TEXT ("> Extracted any\n")));
 
     TAO_OutputCDR out2 {};
 
@@ -181,25 +182,25 @@ recursive_union_test ()
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Re-extracting any\n"));
+                  ACE_TEXT ("> Re-extracting any\n")));
 
     in2 >> the_out_any2;
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
-                  "> Re-extracted any\n"));
+                  ACE_TEXT ("> Re-extracted any\n")));
 
     if (!the_out_any._tao_get_typecode ()->equal (the_out_any2._tao_get_typecode ()))
       {
         ACE_ERROR ((LM_ERROR,
-                    "extracted recursive typecodes differ\n"));
+                    ACE_TEXT ("extracted recursive typecodes differ\n")));
         rc = false;
       }
   }
   // Any's typecodes out of scope
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_INFO,
-                "> Anys destructed\n"));
+                ACE_TEXT ("> Anys destructed\n")));
 
   return rc;
 }
@@ -221,8 +222,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-
-  return 0;
 }
 
 #else
