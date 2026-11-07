@@ -20,7 +20,7 @@
 // #include BPR_Drivers.h instead of BPR_Drivers_T.h
 // to avoid problems with circular includes
 #include "BPR_Drivers.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_unistd.h"
 
 
@@ -188,7 +188,7 @@ Bounded_Packet_Relay_Driver<TQ>::get_next_request ()
 template <class TQ> ssize_t
 Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
 {
-  ACE_OS::memset (buf, 0, bufsiz);
+  std::memset (buf, 0, bufsiz);
 
   // Wait for user to type commands.  This call is automatically
   // restarted when SIGINT or SIGALRM signals occur.
