@@ -38,12 +38,13 @@ DAMAGES.
 #include "test_config.h"
 
 #if !defined (ACE_WIN32)
-static long const l = LONG_MAX, nl = LONG_MIN;  // limits.h
-static unsigned long const ul = ULONG_MAX, def = 0;
-static int const i = INT_MAX, ni = INT_MIN;
-static unsigned int const ui = UINT_MAX;
-static unsigned short const us = 10;
-static unsigned short const si = 32768;
+static constexpr long l = LONG_MAX, nl = LONG_MIN;  // limits.h
+static constexpr unsigned long ul = ULONG_MAX;
+static constexpr unsigned long def {};
+static constexpr int i = INT_MAX, ni = INT_MIN;
+static constexpr unsigned int ui = UINT_MAX;
+static constexpr unsigned short us = 10;
+static constexpr unsigned short si = 32768;
  #endif /*ACE_WIN32*/
 
 /*

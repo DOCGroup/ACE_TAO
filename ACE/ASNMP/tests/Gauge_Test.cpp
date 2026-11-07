@@ -58,12 +58,13 @@ static void
 TestGuage ()
 {
 #if !defined (ACE_WIN32)
-   long const l = LONG_MAX, nl = LONG_MIN;  // limits.h
-   unsigned long const ul = ULONG_MAX, def = 0;
-   int const i = INT_MAX, ni = INT_MIN;
-   unsigned int const ui = UINT_MAX;
-   unsigned short const us = 10;
-   short const si = static_cast<short> (65535);
+   constexpr long l = LONG_MAX, nl = LONG_MIN;  // limits.h
+   constexpr unsigned long ul = ULONG_MAX;
+   constexpr unsigned long def {};
+   constexpr int i = INT_MAX, ni = INT_MIN;
+   constexpr unsigned int ui = UINT_MAX;
+   constexpr unsigned short us = 10;
+   constexpr short si = static_cast<short> (65535);
 
    // constructors
    Gauge32 g1;

@@ -132,7 +132,7 @@ static void OidTest()
   ACE_ASSERT(d1.valid() == 1);
 
   // concat
-  unsigned long const ll = ULONG_MAX;
+  constexpr unsigned long ll = ULONG_MAX;
   d1 = "";
   d1 += 0UL;
   d1 += ll;

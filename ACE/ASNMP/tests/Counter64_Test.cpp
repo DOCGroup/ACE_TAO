@@ -70,11 +70,11 @@ DAMAGES.
 static void TestCounter64()
 {
 #if !defined (ACE_WIN32)
-  static unsigned long ul = ULONG_MAX;
-  LLONG ll =  (LLONG) 0x7fffffffffffffffLL;
-  LLONG mll =  (LLONG) ((-ll) - 1);
-  ULLONG ull =  (ULLONG) 0xffffffffffffffffULL;
-  long double ld = (LLONG) ll;
+  constexpr unsigned long ul = ULONG_MAX;
+  constexpr LLONG ll = static_cast<LLONG> (0x7fffffffffffffffLL);
+  constexpr LLONG mll = (-ll) - 1;
+  constexpr ULLONG ull = static_cast<ULLONG> (0xffffffffffffffffULL);
+  constexpr long double ld = static_cast<long double> (ll);
 
   cerr << "max unsigned long long is " << ull << endl;
   cerr << "max long long is " << ll << endl;
