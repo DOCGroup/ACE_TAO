@@ -40,7 +40,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value ending_time_of_day;
 
   // Number of times the timer expired early
-  int no_of_early_timers = 0;
+  int no_of_early_timers {};
 
   // Maximum early timeout
   ACE_Time_Value maximum_early_timeout;

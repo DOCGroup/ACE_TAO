@@ -40,10 +40,8 @@ public:
 private:
   int handled_ {};
 
-  static int task_count_;
+  inline static int task_count_ {};
 };
-
-int Test_Task::task_count_ = 0;
 
 static std::atomic<int> done_count {MAX_TASKS * 2};
 

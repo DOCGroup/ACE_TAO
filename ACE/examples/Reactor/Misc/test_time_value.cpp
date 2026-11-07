@@ -8,7 +8,7 @@
 constexpr int my_abs (int d) { return d > 0 ? d : -d; }
 
 ostream &
-operator<< (ostream &stream, const ACE_Time_Value &tv)
+operator<< (ostream &stream, ACE_Time_Value const &tv)
 {
   if (tv.usec () < 0 || tv.sec () < 0)
     stream << "-";
