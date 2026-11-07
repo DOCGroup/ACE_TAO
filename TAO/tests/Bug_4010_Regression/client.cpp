@@ -77,7 +77,7 @@ public:
                     "\n(%P|%t) - handling timeout with %d iterations left\n",
                     this->iterations_left_ + 1));
         CORBA::Object_var const tmp =
-          this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ()));
+          this->orb_->string_to_object (this->ior_.c_str ());
 
         Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
