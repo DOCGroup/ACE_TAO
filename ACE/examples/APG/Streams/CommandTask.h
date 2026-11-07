@@ -18,7 +18,7 @@ public:
   int open (void * = nullptr) override;
 
   int put (ACE_Message_Block *message,
-           ACE_Time_Value *timeout);
+           ACE_Time_Value *timeout) override;
 
   int svc () override;
 

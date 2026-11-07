@@ -35,7 +35,7 @@ public:
   // RecordingDevice interface
 
   // Open a listening socket on the port specified by argv.
-  int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   ACE_Event_Handler *get_handler () const override;
 

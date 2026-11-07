@@ -27,7 +27,7 @@ public:
 
   // Listing 101 code/ch18
   int put (ACE_Message_Block *message,
-           ACE_Time_Value *timeout)
+           ACE_Time_Value *timeout) override
   {
     return this->putq (message, timeout);
   }
