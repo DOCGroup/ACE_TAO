@@ -2,8 +2,8 @@
 
 // Author: Phil Mesnier
 
-#include "ace/OS_NS_string.h"
 #include "Sig_List.h"
+#include <cstring>
 #include <utility>
 
 //-----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ Sig_List::add (ACE_CString const &s)
   if (size_ == capacity_) {
     int ncap = capacity_ * 2;
     std::unique_ptr<Signature *[]> narray (new Signature *[ncap]);
-    ACE_OS::memcpy (narray.get (), array_.get (), capacity_ * sizeof (Signature *));
+    std::memcpy (narray.get (), array_.get (), capacity_ * sizeof (Signature *));
     array_ = std::move (narray);
     capacity_ = ncap;
   }
@@ -55,7 +55,7 @@ Sig_List::add (Sig_List const &other)
   if (capacity_ < size_ + other.capacity_) {
     int ncap = size_ + other.capacity_ + 50;
     std::unique_ptr<Signature *[]> narray (new Signature *[ncap]);
-    ACE_OS::memcpy (narray.get (), array_.get (), capacity_ * sizeof (Signature *));
+    std::memcpy (narray.get (), array_.get (), capacity_ * sizeof (Signature *));
     array_ = std::move (narray);
     capacity_ = ncap;
   }

@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // File: SO_Group.cpp
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 #include "ace/Process.h"
@@ -10,6 +9,7 @@
 
 #include "Library.h"
 #include "SO_Group.h"
+#include <cstring>
 
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
@@ -47,7 +47,7 @@ SO_Group::add_executable (char const *path)
 
   while (true)
   {
-    ACE_OS::memset (line,0,max_line_length);
+    std::memset (line, 0, max_line_length);
     int len = 0;
     int nread = 0;
     bool bogus = false;
@@ -83,7 +83,7 @@ SO_Group::add_executable (char const *path)
       }
 
     line[len] = '\0';
-    char * dot = ACE_OS::strchr (line,'.');
+    char *dot = std::strchr (line, '.');
 
     if (dot != nullptr)
       {
@@ -104,7 +104,7 @@ SO_Group::add_executable (char const *path)
     {
       std::unique_ptr<Library> nlib = std::make_unique<Library> (
         ACE_TEXT_CHAR_TO_TCHAR (libname));
-      ACE_OS::memset (line,0,max_line_length);
+      std::memset (line, 0, max_line_length);
 
       // Skip over '=> '.
       if (ACE_OS::read (pipe[0], line, 3) != 3)

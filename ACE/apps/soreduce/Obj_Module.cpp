@@ -6,12 +6,12 @@
 // This file contains the implementation of the classes responsible for
 // managing the contents of a single object module (.o file).
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Process.h"
 #include "ace/Pipe.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 #include "Obj_Module.h"
 
@@ -146,7 +146,7 @@ Obj_Module::add_source(char const *p, bool imports_only)
     if (eoln == 2)
       break;
     is_import = dummy == 'U';
-    is_export = !imports_only && ACE_OS::strchr ("BCDRTVW", dummy) != nullptr;
+    is_export = !imports_only && std::strchr ("BCDRTVW", dummy) != nullptr;
 
     //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)

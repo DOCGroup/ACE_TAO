@@ -15,6 +15,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 #include "Library.h"
 
@@ -176,7 +177,7 @@ void
 Library::set_path (ACE_TCHAR const *p)
 {
   char abspath[1000];
-  ACE_OS::memset (abspath,0,1000);
+  std::memset (abspath, 0, 1000);
   ssize_t abspathlen = ACE_OS::readlink(p,abspath,999);
   ACE_CString path (p);
   if (abspathlen > 0) {
