@@ -19,13 +19,10 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -47,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
                              ior.c_str ()),
                             1);
         }
@@ -63,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

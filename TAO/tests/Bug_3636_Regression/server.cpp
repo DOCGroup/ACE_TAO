@@ -21,13 +21,10 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_outpu
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -73,10 +70,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
                              ior_output_file.c_str ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
@@ -106,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Expected
     }
-  catch (CORBA::Exception const & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
