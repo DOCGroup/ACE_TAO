@@ -31,11 +31,11 @@ public:
           PortableServer::POA_ptr poa,
           Tests &tests);
 
-  void start ();
+  void start () override;
 
-  void method ();
+  void method () override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   int client_propagated ();
 
@@ -752,7 +752,7 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };
