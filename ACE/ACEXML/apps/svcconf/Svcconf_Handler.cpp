@@ -70,7 +70,7 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
           throw ACEXML_SAXException (msg.c_str ());
         }
 
-      ACE_Service_Object_Exterminator gobbler = nullptr;
+      ACE_Service_Object_Exterminator gobbler {};
 
       long const temp_ptr =
         reinterpret_cast<long> (svc_dll.symbol (active_info->init_func ()));

@@ -10,7 +10,7 @@
 extern "C" ACE_Proper_Export_Flag ACE_XML_Svc_Conf *
 _ACEXML_create_XML_Svc_Conf_Object ()
 {
-  ACE_XML_Svc_Conf *retp = nullptr;
+  ACE_XML_Svc_Conf *retp {};
 
   ACE_NEW_RETURN (retp,
                   ACEXML_Svcconf_Parser (),
