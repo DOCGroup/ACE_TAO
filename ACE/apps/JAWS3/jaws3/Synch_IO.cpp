@@ -11,7 +11,7 @@
 static JAWS_Event_Result
 JAWS_synch_send ( ACE_HANDLE handle
                 , ACE_Message_Block *mb
-                , const ACE_Time_Value *tv = 0
+                , ACE_Time_Value const *tv = nullptr
                 )
 {
   JAWS_Event_Result io_result;

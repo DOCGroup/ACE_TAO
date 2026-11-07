@@ -70,7 +70,7 @@ class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
 public:
   explicit JAWS_TSS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
 
-  ~JAWS_TSS_Cached_Allocator () override;
+  ~JAWS_TSS_Cached_Allocator () override = default;
   JAWS_TSS_Cached_Allocator (JAWS_TSS_Cached_Allocator const &) = delete;
   JAWS_TSS_Cached_Allocator (JAWS_TSS_Cached_Allocator &&) = delete;
   JAWS_TSS_Cached_Allocator &operator= (JAWS_TSS_Cached_Allocator const &) = delete;
