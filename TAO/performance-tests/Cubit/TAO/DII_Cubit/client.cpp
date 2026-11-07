@@ -12,7 +12,9 @@
 //=============================================================================
 
 #include <array>
+#include <cstddef>
 #include <memory>
+#include <string>
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/debug.h"
@@ -35,7 +37,7 @@ constexpr int SMALL_OCTET_SEQ_LENGTH = 16;
 constexpr int LARGE_OCTET_SEQ_LENGTH = 4096;
 constexpr int SMALL_LONG_SEQ_LENGTH = 4;
 constexpr int LARGE_LONG_SEQ_LENGTH = 1024;
-constexpr int NUMBER_OF_TESTS = 10;
+constexpr std::size_t NUMBER_OF_TESTS = 10;
 
 /**
  * @class DII_Cubit_Client
@@ -157,7 +159,7 @@ private:
   CORBA::ULong error_count_ {};
 
   /// IOR of the factory used to make a Cubit object.
-  ACE_CString factory_IOR_ {DEFAULT_FACTORY_IOR};
+  std::string factory_IOR_ {DEFAULT_FACTORY_IOR};
 };
 
 int
@@ -714,7 +716,7 @@ DII_Cubit_Client::run ()
   // Order and format of test calls matches that of SII (IDL) tests
   // for easy comparison.
 
-  for (int j = 0; j < NUMBER_OF_TESTS; j++)
+  for (std::size_t j = 0; j < NUMBER_OF_TESTS; j++)
     {
       this->call_count_ = 0;
 
