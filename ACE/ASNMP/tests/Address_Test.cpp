@@ -39,6 +39,29 @@ DAMAGES.
 #include "asnmp/address.h"
 #include "test_config.h"
 
+static void TestAddressIter ()
+{
+  Address_Iter iter ("localhost");
+  ACE_ASSERT(iter.valid() == 1);
+
+  int const expected_count = iter.how_many_addresses();
+  ACE_ASSERT(expected_count > 0);
+
+  IpAddress address;
+  int addresses_read = 0;
+  int result = 0;
+  do
+    {
+      result = iter.next (address);
+      ACE_ASSERT(address.valid() == 1);
+      ++addresses_read;
+    }
+  while (result == 0);
+
+  ACE_ASSERT(result == 1);
+  ACE_ASSERT(addresses_read == expected_count);
+}
+
 // test the GenAddress interface
 static void TestGenAddr()
 {
@@ -525,6 +548,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Address_Test"));
 
+  TestAddressIter();
   TestGenAddr();
   TestIpAddress();
   TestUdpAddress();

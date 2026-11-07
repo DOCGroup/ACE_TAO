@@ -650,67 +650,71 @@ void IpAddress::mask( const IpAddress& ipaddr)
 //========== DNS Iterator Implementation ================================
 //=======================================================================
 
-
-Address_Iter::Address_Iter (const char *hostname)
-  : valid_(0),
-    count_(0),
-    entry_(0)
+Address_Iter::Address_Iter (char const *hostname)
 {
   ACE_OS::memset (&buffer_, 0, sizeof (ACE_HOSTENT_DATA));
   ACE_OS::memset (&lookupResult_, 0, sizeof (struct hostent));
 
-  if (ACE_OS::inet_addr (hostname) == (unsigned long) -1)
+  in_addr numeric_address {};
+  if (ACE_OS::inet_aton (hostname, &numeric_address) == 0)
     {
-      valid_ = query_dns (hostname);
+      valid_ = query_dns (hostname) == 0 && lookupResult_.h_addr_list != nullptr;
     }
   else
     {
       ACE_ASSERT (0);             // don't support dot-quad lookup yet
     }
 
-  // count number of hostnames
-  int n;
-  char **pc;
-
-  for (n = 0, pc = lookupResult_.h_addr_list; *pc != 0; ++n, ++pc)
+  if (valid_)
     {
-      // Do nothing.
+      for (char **pc = lookupResult_.h_addr_list; *pc != nullptr; ++pc)
+        {
+          ++count_;
+        }
     }
-
-  count_ = n;          // plus first one
-  entry_ = lookupResult_.h_addr_list;
 }
 
 int Address_Iter::valid() const
 {
-  return (valid_ == 1);
+  return valid_ ? 1 : 0;
 }
 
-int Address_Iter::how_many_addresses()
+int Address_Iter::how_many_addresses() const
 {
   return count_;
 }
 
-// return next entry, rc = 0, if entry is null return 0
-int Address_Iter::next(IpAddress& addr)
+// Return 0 when another address follows; return 1 after the last address or when exhausted.
+int Address_Iter::next (IpAddress &addr)
 {
-  if (!entry_ || *entry_ == 0)
+  if (!valid_ || this->entry_index_ >= this->count_)
     return 1;
 
-  IpAddress tmp(*entry_++); // return data
-  addr = tmp;
-  if (*entry_ == 0)
+  in_addr binary_address {};
+  ACE_OS::memcpy (&binary_address.s_addr,
+                  this->lookupResult_.h_addr_list[this->entry_index_],
+                  sizeof binary_address.s_addr);
+
+  char address_string[MAX_DISPLAY_SZ] {};
+  if (ACE_OS::inet_ntop (AF_INET, &binary_address, address_string, sizeof address_string) == nullptr)
     return 1;
-  return 0;
+
+  IpAddress resolved_address (address_string);
+  if (!resolved_address.valid())
+    return 1;
+
+  addr = resolved_address;
+  ++this->entry_index_;
+  return this->entry_index_ == this->count_ ? 1 : 0;
 }
 
 //  query DNS here
-int Address_Iter::query_dns(const char *hostname)
+int Address_Iter::query_dns (char const *hostname)
 {
   int loc_errno = 0;
   if (ACE_OS::gethostbyname_r( hostname, &lookupResult_, buffer_,
                                 &loc_errno)) {
-    if (lookupResult_.h_length == (int) sizeof(IPV4LEN) &&
+    if (lookupResult_.h_length == static_cast<int> (sizeof (in_addr)) &&
         lookupResult_.h_addrtype == AF_INET) {
       return 0;
     }

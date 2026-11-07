@@ -304,25 +304,29 @@ protected:
 class ASNMP_Export Address_Iter
 {
 public:
-  Address_Iter(const char *hostname); // fully qualified domain name, hostname
+  explicit Address_Iter (char const *hostname);
+  Address_Iter (Address_Iter const &) = delete;
+  Address_Iter &operator= (Address_Iter const &) = delete;
+  Address_Iter (Address_Iter &&) = delete;
+  Address_Iter &operator= (Address_Iter &&) = delete;
 
   /// did hostname resolve via DNS?
   int valid() const;
 
   /// how many addresses associated with this hostname
-  int how_many_addresses();
+  int how_many_addresses() const;
 
   /// return next address
-  int next(IpAddress& addr);
+  int next (IpAddress &addr);
 
 private:
-  Address_Iter(const Address_Iter&);
-  int valid_;                  // ctor status
-  int count_;                   // number of addresses
-  char **entry_;                // ptr to current address
+  bool valid_ {};
+  int count_ {};
+  int entry_index_ {};
+  // Resolver results point into buffer_; both stay alive during iteration.
   struct hostent lookupResult_;
   ACE_HOSTENT_DATA buffer_;
-  int query_dns(const char *hostname);
+  int query_dns (char const *hostname);
 };
 
 //------------------------------------------------------------------------
