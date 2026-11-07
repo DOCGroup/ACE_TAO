@@ -22,6 +22,7 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 
 #include "demux_test_i.h"
+#include "demux_test_file.h"
 #include "demux_test_macros.h"
 
 class Demux_Test_Server
@@ -31,7 +32,12 @@ public:
   Demux_Test_Server ();
 
   /// dtor
-  ~Demux_Test_Server ();
+  ~Demux_Test_Server () = default;
+
+  Demux_Test_Server (Demux_Test_Server const &) = delete;
+  Demux_Test_Server &operator= (Demux_Test_Server const &) = delete;
+  Demux_Test_Server (Demux_Test_Server &&) = delete;
+  Demux_Test_Server &operator= (Demux_Test_Server &&) = delete;
 
   /// Execute client code.
   int run ();
@@ -53,7 +59,7 @@ private:
   int argc_;
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// the ORB
   CORBA::ORB_var orb_;
@@ -82,20 +88,20 @@ private:
   CORBA::ULong  num_objs_;
 
   /// file storing POA names
-  FILE *poa_fp_;
+  Demux_Test_Utils::File_Handle poa_fp_;
 
   /// file for storing IORs
-  FILE *ior_fp_;
+  Demux_Test_Utils::File_Handle ior_fp_;
 
   /// file for storing Servant Names.
-  FILE *servant_fp_;
+  Demux_Test_Utils::File_Handle servant_fp_;
 
   /// Use the USER_ID policy for servants as opposed to System ID.
-  int use_user_id_;
+  bool use_user_id_;
 
   /// Use the Transient POAs for servant activation as opposed
   /// to persistent POAs.
-  int use_transient_poas_;
+  bool use_transient_poas_;
 };
 
 
