@@ -89,7 +89,7 @@ be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
                        false,
                        false);
 
-  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  get_op.set_name (static_cast<UTL_IdList *> (node->name ()->copy ()));
   if (this->visit_operation (&get_op) == -1)
     {
        ACE_ERROR_RETURN ((LM_ERROR,
@@ -117,7 +117,7 @@ be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
                                          node->field_type (),
                                          node->name ());
 
-  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+  arg->set_name (static_cast<UTL_IdList *> (node->name ()->copy ()));
 
   // Create the operation.
   be_operation set_op (&rt,
@@ -126,7 +126,7 @@ be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
                        false,
                        false);
 
-  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.set_name (static_cast<UTL_IdList *> (node->name ()->copy ()));
   set_op.be_add_argument (arg);
 
   if (this->visit_operation (&set_op) == -1)

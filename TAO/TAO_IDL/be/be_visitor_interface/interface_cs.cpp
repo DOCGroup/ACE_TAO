@@ -604,12 +604,12 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                           -1);
 
           UTL_ScopedName *new_op_name =
-            (UTL_ScopedName *)node->name ()->copy ();
+            static_cast<UTL_ScopedName *> (node->name ()->copy ());
           new_op_name->nconc (item_new_name);
 
           be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_op_name =
-            (UTL_ScopedName *) op->name ()->copy ();
+            static_cast<UTL_ScopedName *> (op->name ()->copy ());
           op->set_name (new_op_name);
           op->set_defined_in (node);
           op->is_abstract (node->is_abstract ());

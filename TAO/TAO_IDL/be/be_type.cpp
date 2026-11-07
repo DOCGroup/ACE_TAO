@@ -82,7 +82,7 @@ be_type::compute_tc_name ()
           this->tc_name_->nconc (conc_name);
         }
 
-      n = (UTL_ScopedName *)n->tail ();
+      n = static_cast<UTL_ScopedName *> (n->tail ());
     }
 
   std::string namebuf ("_tc_");

@@ -112,7 +112,7 @@ be_array::create_name ()
   if (scope)
     {
       // Make a copy of the enclosing scope's  name.
-      n = (UTL_ScopedName *)scope->name ()->copy ();
+      n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
       Identifier *id {};
       ACE_NEW_RETURN (id,

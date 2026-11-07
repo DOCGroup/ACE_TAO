@@ -1011,7 +1011,7 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
                                set_name),
                   nullptr);
 
-  arg->set_name ((UTL_ScopedName *) node->name ()->copy ());
+  arg->set_name (static_cast<UTL_ScopedName *> (node->name ()->copy ()));
 
   // Create the operation.
   be_operation *operation {};
