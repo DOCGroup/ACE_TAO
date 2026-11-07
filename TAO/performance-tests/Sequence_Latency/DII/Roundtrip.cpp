@@ -6,43 +6,42 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 }
 
 Test::Timestamp
-Roundtrip::test_octet_method (const Test::octet_load &,
+Roundtrip::test_octet_method (Test::octet_load const &,
                               Test::Timestamp send_time)
 {
   return send_time;
 }
 
 Test::Timestamp
-Roundtrip::test_long_method (const Test::long_load &,
+Roundtrip::test_long_method (Test::long_load const &,
                               Test::Timestamp send_time)
 {
   return send_time;
 }
 
 Test::Timestamp
-Roundtrip::test_char_method (const Test::char_load &,
+Roundtrip::test_char_method (Test::char_load const &,
                              Test::Timestamp send_time)
 {
   return send_time;
 }
 
 Test::Timestamp
-Roundtrip::test_longlong_method (const Test::longlong_load &,
+Roundtrip::test_longlong_method (Test::longlong_load const &,
                                  Test::Timestamp send_time)
 {
   return send_time;
 }
 
 Test::Timestamp
-Roundtrip::test_double_method (const Test::double_load &,
+Roundtrip::test_double_method (Test::double_load const &,
                                Test::Timestamp send_time)
 {
   return send_time;
 }
 
-
 Test::Timestamp
-Roundtrip::test_short_method (const Test::short_load &,
+Roundtrip::test_short_method (Test::short_load const &,
                               Test::Timestamp send_time)
 {
   return send_time;
