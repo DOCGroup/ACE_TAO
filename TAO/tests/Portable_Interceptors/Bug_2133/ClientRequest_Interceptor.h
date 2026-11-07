@@ -28,7 +28,7 @@ class ClientRequest_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  ClientRequest_Interceptor ();
+  ClientRequest_Interceptor () = default;
 
   ClientRequest_Interceptor (ClientRequest_Interceptor const &) = delete;
   ClientRequest_Interceptor (ClientRequest_Interceptor &&) = delete;
@@ -56,7 +56,7 @@ public:
 
 private:
   /// Name of the interceptor.
-  char const *name_;
+  char const *const name_ { "ClientRequest_Interceptor" };
 };
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -4,14 +4,13 @@
 void
 ClientORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
-    // No-op
+  // No-op
 }
 
 void
 ClientORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::ClientRequestInterceptor_ptr cri =
-    PortableInterceptor::ClientRequestInterceptor::_nil ();
+  PortableInterceptor::ClientRequestInterceptor_ptr cri {};
 
   ACE_NEW_THROW_EX (cri,
                     ClientRequest_Interceptor,
