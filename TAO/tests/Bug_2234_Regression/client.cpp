@@ -7,10 +7,8 @@
 
 #include <cstring>
 
-ACE_TCHAR const * ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
@@ -41,13 +39,14 @@ ACE_TMAIN (
   ACE_TCHAR *argv[])
 {
   CORBA::Boolean testFailed {};
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 (Interceptor arg list with var len out params)\n"));
   try
   {
     CORBA::ORB_var
-       orb= CORBA::ORB_init (argc, argv);
+       orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (argc, argv, ior) != 0)
       return 1;
 
     CORBA::Object_var

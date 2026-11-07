@@ -21,10 +21,8 @@
 
 #include <cstring>
 
-ACE_TCHAR const * ior_output_file = ACE_TEXT ("test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
@@ -49,8 +47,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-CORBA::ORB_ptr orb {};
-
 // The test case code for the server always sends back to the client:
 // b(out)= a(in) *2
 // c(inout)= c(inout) + 1
@@ -62,7 +58,11 @@ CORBA::ORB_ptr orb {};
 class FooImpl : public POA_Test::Foo
 {
 public:
-  FooImpl () = default;
+  explicit FooImpl (CORBA::ORB_ptr orb)
+    : orb_ (orb)
+  {
+  }
+
   FooImpl (FooImpl const &) = delete;
   FooImpl (FooImpl &&) = delete;
   FooImpl & operator= (FooImpl const &) = delete;
@@ -518,8 +518,12 @@ public:
   void ShutdownServer () override
   {
     ACE_DEBUG( (LM_INFO, ". in ShutdownServer\n") );
-    orb->shutdown(0);
+    this->orb_->shutdown (false);
   }
+
+private:
+  // The ORB outlives this servant and owns its lifetime.
+  CORBA::ORB_ptr const orb_;
 };
 
 // Here is our Regression test class that actually tests the problem with
@@ -776,6 +780,7 @@ private:
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
   try
   {
     ACE_DEBUG( (LM_INFO, "Server start\n") );
@@ -787,7 +792,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       initialiser= initialiser_p;
     PortableInterceptor::register_orb_initializer( initialiser.in() );
 
-    orb= CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
     CORBA::Object_var
       Object = orb->resolve_initial_references( "RootPOA" );
     PortableServer::POA_var rootPOA=
@@ -795,11 +800,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POAManager_var
       rootPOAMgr = rootPOA->the_POAManager( );
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (argc, argv, ior_output_file) != 0)
       return 1;
 
-    FooImpl
-      phooey;
+    FooImpl phooey (orb.in ());
     PortableServer::ObjectId_var
       phooeyId= rootPOA->activate_object( &phooey );
     CORBA::Object_var
