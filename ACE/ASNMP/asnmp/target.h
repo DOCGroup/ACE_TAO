@@ -1,5 +1,3 @@
-
-
 #ifndef TARGET_
 #define TARGET_
 //=============================================================================
@@ -77,65 +75,67 @@ public:
   virtual ~SnmpTarget();
 
   /// return validity of target
-  int valid() const;
+  int valid () const;
 
   /// set the retry value
-  void set_retry( const int r);
+  void set_retry (int r);
 
   /// set the object's timeout (in seconds)
-  void set_timeout( const unsigned long t);
+  void set_timeout (unsigned long t);
 
   /// set the instance version
-  void set_version( const snmp_version v);
+  void set_version (snmp_version v);
 
   /// all classes constructed will have this write community string
-  void set_max_pdu_size(const unsigned long max_pdu_sz);
+  void set_max_pdu_size (unsigned long max_pdu_sz);
 
   /// change the "class" default default timeout (in seconds)
-  void set_default_timeout( const unsigned long t);
+  void set_default_timeout (unsigned long t);
 
   /// change the default send retries
-  void set_default_retry( const int r);
+  void set_default_retry (int r);
 
   /// all classes constructed will have this write community string
-  void set_default_max_pdu_size(const unsigned long max_pdu_sz);
+  void set_default_max_pdu_size (unsigned long max_pdu_sz);
 
   /// change class default
-  void set_default_version( const snmp_version v);
+  void set_default_version (snmp_version v);
 
   // *** get methods ***
 
   /// get the retry value
-  int get_default_retry() const;
+  int get_default_retry () const;
 
   /// get the timeout (seconds)
-  unsigned long get_timeout() const;
+  unsigned long get_timeout () const;
 
   /// get instance max buffer size
-  unsigned long get_max_pdu_size() const;
+  unsigned long get_max_pdu_size () const;
 
   /// all classes constructed will have this write community string
-  void get_default_max_pdu_size(const unsigned long max_pdu_sz);
+  void get_default_max_pdu_size (unsigned long max_pdu_sz);
 
   /// get the version
-  snmp_version get_version() const;
+  snmp_version get_version () const;
 
-  snmp_version get_default_version() const;
+  snmp_version get_default_version () const;
 
   /// return send retry number for this instancd
-  int get_retry() const;
+  int get_retry () const;
 
   /**
     * virtual clone operation for creating a new SnmpTarget from an existing
     * SnmpTarget.  The caller MUST use the delete operation on the return
     * value when done.
     */
-  virtual SnmpTarget *clone() const = 0;
+  virtual SnmpTarget *clone () const = 0;
 
   /// manipulate the base part
-  friend bool operator==(const SnmpTarget& lhs, const SnmpTarget& rhs);
+  friend bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs);
 
-  SnmpTarget& operator=(const SnmpTarget& lhs);
+  SnmpTarget &operator= (SnmpTarget const &lhs);
+  SnmpTarget (SnmpTarget &&) = delete;
+  SnmpTarget &operator= (SnmpTarget &&) = delete;
 
 protected:
   ///     SnmpTarget(const SnmpTarget &);
@@ -143,7 +143,7 @@ protected:
   SnmpTarget (SnmpTarget const &) = default;
 
   /// used by derived class instances
-  int validity_;
+  bool validity_ {};
 
   /// instance value xmit timeout in milli secs
   unsigned long timeout_;
@@ -183,65 +183,67 @@ class ASNMP_Export UdpTarget : public SnmpTarget
 public:
   UdpTarget();
   UdpTarget (UdpTarget const &) = default;
+  UdpTarget (UdpTarget &&) = delete;
+  UdpTarget &operator= (UdpTarget &&) = delete;
 
   /**
     * constructor with only address
     * assumes default as public, public
     * can be constructed with IP address object
     */
-  UdpTarget( const UdpAddress& udp);
+  explicit UdpTarget (UdpAddress const &udp);
 
   /// can be constructed with Udp address object TODO: merge addresses
-  UdpTarget( ACE_INET_Addr& ace_inet_addr);
+  explicit UdpTarget (ACE_INET_Addr &ace_inet_addr);
 
   /// destructor
-  ~UdpTarget() override;
+  ~UdpTarget () override;
 
   // ** set ***
 
   /// set the read community using an OctetStr
-  void set_read_community( const OctetStr& new_read_community);
+  void set_read_community (OctetStr const &new_read_community);
 
   /// set the write community using an OctetStr
-  void set_write_community( const OctetStr& write_community);
+  void set_write_community (OctetStr const &write_community);
 
   /// set the address
-  int set_address( UdpAddress &udp_address);
+  int set_address (UdpAddress &udp_address);
 
   // ** get ***
 
   /// get the read community as an Octet Str object
-  void get_read_community( OctetStr& read_community_oct) const;
+  void get_read_community (OctetStr &read_community_oct) const;
 
   /// get the write community as an OctetStr
-  void get_write_community( OctetStr &write_community_oct) const;
+  void get_write_community (OctetStr &write_community_oct) const;
 
   /// get the address
-  void get_address( UdpAddress& address) const;
+  void get_address (UdpAddress &address) const;
 
   /// all classes constructed will have this read community string
-  void set_default_read_community(const OctetStr& rd_community);
+  void set_default_read_community (OctetStr const &rd_community);
 
   /// all classes constructed will have this write community string
-  void set_default_write_community(const OctetStr& wr_community);
+  void set_default_write_community (OctetStr const &wr_community);
 
   /// all classes constructed will have this read community string
-  void get_default_read_community(OctetStr& rd_community) const;
+  void get_default_read_community (OctetStr &rd_community) const;
 
   /// all classes constructed will have this write community string
-  void get_default_write_community(OctetStr& wr_community) const;
+  void get_default_write_community (OctetStr &wr_community) const;
 
   /// overloaded assignment
-  UdpTarget& operator=( const UdpTarget& target);
+  UdpTarget &operator= (UdpTarget const &target);
 
   /// compare two C targets
-  friend bool operator==( const UdpTarget &lhs, const UdpTarget &rhs);
+  friend bool operator== (UdpTarget const &lhs, UdpTarget const &rhs);
 
   /// string representation of object
-  const char *to_string();
+  char const *to_string ();
 
   /// clone from existing UdpTarget
-  SnmpTarget *clone() const override;
+  SnmpTarget *clone () const override;
 
 protected:
   static OctetStr default_rd_community_;
@@ -249,8 +251,6 @@ protected:
   OctetStr read_community_;
   OctetStr write_community_;
   UdpAddress udp_address_;
-  snmp_version version_;
-
   /// to_string() rep of data
   char output_buffer_[MAX_TARGET_STRING_REP];
 };

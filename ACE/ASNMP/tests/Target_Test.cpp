@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -33,12 +32,12 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
 #include <memory>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"
 #include "asnmp/target.h"
 #include "test_config.h"
-
 /*
   Percieved Problems with this CTarget aka UdpTarget Interface:
 
@@ -107,6 +106,9 @@ static void TestSnmpTarget()
   c2.get_address (ga);
   ACE_ASSERT(ga.valid() == 1);
   ACE_ASSERT(c2.get_version() == version1);
+  c2.set_version (version2c);
+  ACE_ASSERT(c2.get_version() == version2c);
+  ACE_ASSERT(std::strstr (c2.to_string (), "ver: 1") != nullptr);
   ACE_ASSERT(ga.valid() == 1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c2(\"\") [%s]\n",
     c2.to_string()));
@@ -116,7 +118,8 @@ static void TestSnmpTarget()
   ACE_ASSERT(c5->valid() == 1);
   c5->get_address (ga);
   ACE_ASSERT(ga.valid() == 1);
-  ACE_ASSERT(c5->get_version() == version1);
+  ACE_ASSERT(c5->get_version() == version2c);
+  ACE_ASSERT(std::strstr (c5->to_string (), "ver: 1") != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c5(\"\") [%s]\n",
     c5->to_string()));
 
