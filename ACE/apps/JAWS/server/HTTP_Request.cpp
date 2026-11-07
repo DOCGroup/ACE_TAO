@@ -5,6 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 const char *const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
@@ -100,7 +101,7 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
         while (this->headers_.complete_header_line (mb.rd_ptr ()) > 0);
     }
 
-  mb.wr_ptr (ACE_OS::strlen(mb.rd_ptr ()) - mb.length ());
+  mb.wr_ptr (std::strlen (mb.rd_ptr ()) - mb.length ());
 
   if (this->headers_.end_of_headers ()
       || (this->got_request_line () && this->version () == nullptr))
@@ -118,7 +119,7 @@ HTTP_Request::parse_request_line (char *const request_line)
 
   this->status_ = HTTP_Status_Code::STATUS_OK;
 
-  ptr = ACE_OS::strchr (request_line, '\n');
+  ptr = std::strchr (request_line, '\n');
 
   if (ptr > request_line && ptr[-1] == '\r')
     ptr--, offset++;
@@ -155,7 +156,7 @@ HTTP_Request::parse_request_line (char *const request_line)
               (this->uri () ? this->uri () : "="),
               (this->version () ? this->version () : "HTTP/0.9")));
 
-  ACE_OS::memmove (buf, ptr, ACE_OS::strlen (ptr)+1);
+  std::memmove (buf, ptr, std::strlen (ptr) + 1);
 }
 
 int
@@ -396,7 +397,7 @@ HTTP_Request::type (const char *type_string)
        i < HTTP_Request::NUM_METHOD_STRINGS;
        i++)
 
-    if (ACE_OS::strcmp (type_string, this->method_strings_[i]) == 0)
+    if (std::strcmp (type_string, this->method_strings_[i]) == 0)
       {
         this->type_ = i;
         break;
@@ -417,7 +418,7 @@ HTTP_Request::cgi (char *uri_string)
 
   ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi (%s)\n", uri_string));
 
-  if (uri_string == nullptr || ACE_OS::strlen (uri_string) == 0)
+  if (uri_string == nullptr || std::strlen (uri_string) == 0)
     return 0;
 
   // There are 2 cases where a file could be a CGI script
@@ -465,7 +466,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
   if (cgi_path_next)
     do
       {
-        int len = ACE_OS::strlen (cgi_path_next);
+        int len = std::strlen (cgi_path_next);
 
         // match path to cgi path
         bool in_cgi_path = false;
@@ -475,12 +476,12 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
             // cgi path next points to an ``absolute'' path
             extra_path_info = uri_string;
             in_cgi_path =
-              (ACE_OS::strncmp (extra_path_info, cgi_path_next, len) == 0);
+              (std::strncmp (extra_path_info, cgi_path_next, len) == 0);
           }
         else
           {
             // cgi path next points to a ``relative'' path
-            extra_path_info = ACE_OS::strstr (uri_string, cgi_path_next);
+            extra_path_info = std::strstr (uri_string, cgi_path_next);
             in_cgi_path = (extra_path_info != nullptr);
           }
 
@@ -518,7 +519,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
 int
 HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
 {
-  extra_path_info = ACE_OS::strstr (uri_string, ".cgi");
+  extra_path_info = std::strstr (uri_string, ".cgi");
 
   ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi_in_extension (%s)\n",
               uri_string));
@@ -537,7 +538,7 @@ HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
         case '?':
           break;
         default:
-          extra_path_info = ACE_OS::strstr (extra_path_info, ".cgi");
+          extra_path_info = std::strstr (extra_path_info, ".cgi");
           continue;
         }
       this->cgi_ = true;
@@ -553,7 +554,7 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
   char *cgi_question {};
 
   if (extra_path_info)
-    cgi_question = ACE_OS::strchr (extra_path_info, '?');
+    cgi_question = std::strchr (extra_path_info, '?');
 
   if (extra_path_info == cgi_question)
     extra_path_info = nullptr;
@@ -581,7 +582,7 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
 
           count++;
 
-          if (ACE_OS::strchr (cgi_question, '='))
+          if (std::strchr (cgi_question, '='))
             {
               ACE_NEW (this->cgi_env_, char *[count+1]);
 
@@ -632,7 +633,7 @@ HTTP_Request::path (const char *uri_string)
           *ptr = '\0';
 
           if (ptr == buf)
-            ACE_OS::strcpy (buf, ACE_OS::getenv ("HOME"));
+            std::strcpy (buf, ACE_OS::getenv ("HOME"));
           else
             {
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
@@ -642,19 +643,19 @@ HTTP_Request::path (const char *uri_string)
               if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf,
                                       sizeof (pw_buf), &pw_struct_ptr) == 0)
                 return nullptr;
-              ACE_OS::strcpy (buf, pw_struct.pw_dir);
+              std::strcpy (buf, pw_struct.pw_dir);
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }
 
-          ACE_OS::strcat (buf, "/");
-          ACE_OS::strcat (buf, HTTP_Config::instance ()->user_dir ());
-          ACE_OS::strcat (buf, file_name);
+          std::strcat (buf, "/");
+          std::strcat (buf, HTTP_Config::instance ()->user_dir ());
+          std::strcat (buf, file_name);
         }
       else
         {
           // With a starting '/' but no '~'
-          ACE_OS::strcat (buf, HTTP_Config::instance ()->document_root ());
-          ACE_OS::strcat (buf, file_name - 1);
+          std::strcat (buf, HTTP_Config::instance ()->document_root ());
+          std::strcat (buf, file_name - 1);
         }
     }
 

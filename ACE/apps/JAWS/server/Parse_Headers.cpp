@@ -5,6 +5,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
+#include <cstring>
 
 // Implementation of class Headers
 
@@ -25,7 +26,7 @@ Headers::parse_header_line (char * const header_line)
   char *buf = header_line;
   int offset = 1;
 
-  ptr = ACE_OS::strchr (header_line, '\n');
+  ptr = std::strchr (header_line, '\n');
 
   if (ptr > header_line && ptr[-1] == '\r')
     {
@@ -60,7 +61,7 @@ Headers::parse_header_line (char * const header_line)
     }
 
   // Write back the unused portion of the input.
-  ACE_OS::memmove (header_line, ptr, ACE_OS::strlen(ptr) + 1);
+  std::memmove (header_line, ptr, std::strlen (ptr) + 1);
 }
 
 int
@@ -84,7 +85,7 @@ Headers::complete_header_line (char *const header_line)
 
   if (ptr == header_line)
     {
-      ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
+      std::memmove (ptr, ptr + offset, std::strlen (ptr + offset) + 1);
       this->done_ = true;
       ACE_DEBUG ((LM_DEBUG, "  (%t) no more headers\n"));
       return 0;
@@ -96,7 +97,7 @@ Headers::complete_header_line (char *const header_line)
         {
         case ' ':
         case '\t':
-          ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
+          std::memmove (ptr, ptr + offset, std::strlen (ptr + offset) + 1);
           break;
 
         case '\n':
@@ -137,7 +138,7 @@ int
 Headers::end_of_line (char *&line, int &offset) const
 {
   char *old_line = line;
-  char *ptr = ACE_OS::strchr (old_line, '\n');
+  char *ptr = std::strchr (old_line, '\n');
 
   if (ptr == nullptr)
     return 0;

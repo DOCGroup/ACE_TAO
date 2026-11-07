@@ -10,6 +10,7 @@
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
 #include "JAWS_IO.h"
+#include <cstring>
 
 #if defined (ACE_JAWS_BASELINE)
 static char * const EMPTY_HEADER = "";
@@ -134,7 +135,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
                      log_message);
 
   if (this->request_.version () == nullptr
-      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+      || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     buf = buf2;
   else
     {
@@ -196,7 +197,7 @@ HTTP_Response::normal_response ()
       if (hv == nullptr || *hv == '\0')
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unauthorized to use PUT method");
-      else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
+      else if (std::strncmp (hv, "Basic ", 6) != 0)
         // ``6'' is the length of the string "Basic "
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unknown authorization method");
@@ -205,13 +206,13 @@ HTTP_Response::normal_response ()
           ACE_Mem_Map mmapfile;
           const char *hvv = hv + 6;
           // Skip past the string "Basic "
-          char *buf = new char [ACE_OS::strlen (hv)];
+          char *buf = new char [std::strlen (hv)];
           char *auth
-            = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
+            = HTTP_Helper::HTTP_decode_base64 (std::strcpy (buf, hvv));
 
           if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
               && auth != nullptr
-              && ACE_OS::strstr (static_cast<char const *> (mmapfile.addr ()), auth)
+              && std::strstr (static_cast<char const *> (mmapfile.addr ()), auth)
                 != nullptr)
             this->io_.receive_file (this->request_.path (),
                                     this->request_.data (),
@@ -333,7 +334,7 @@ HTTP_Response::build_headers ()
   // then do not include content-* headers.
 
   if (this->request_.version () == nullptr
-      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+      || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     {
       HTTP_HEADER = EMPTY_HEADER;
       HTTP_HEADER_LENGTH = 0;
@@ -385,7 +386,7 @@ HTTP_Response::build_headers ()
       else
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n";
 
-      HTTP_HEADER_LENGTH = ACE_OS::strlen (HTTP_HEADER);
+      HTTP_HEADER_LENGTH = std::strlen (HTTP_HEADER);
 
 #endif /* ACE_JAWS_BASELINE */
     }

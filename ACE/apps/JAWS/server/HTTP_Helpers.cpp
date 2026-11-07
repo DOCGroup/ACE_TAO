@@ -6,6 +6,7 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstring>
 
 // = Static initialization.
 const char *const
@@ -29,7 +30,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 {
   char *buf;
 
-  ACE_NEW_RETURN (buf, char[ACE_OS::strlen (httpdate) + 1], (time_t) -1);
+  ACE_NEW_RETURN (buf, char[std::strlen (httpdate) + 1], (time_t) -1);
 
   // Make spaces in the date be semi-colons so we can parse robustly
   // with sscanf.
@@ -160,7 +161,7 @@ int
 HTTP_Helper::HTTP_month (const char *month)
 {
   for (size_t i = 0; i < 12; i++)
-    if (ACE_OS::strcmp(month, HTTP_Helper::months_[i]) == 0)
+    if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
       return i;
 
   return -1;
@@ -207,10 +208,10 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
 {
   char inalphabet[256], decoder[256];
 
-  ACE_OS::memset (inalphabet, 0, sizeof (inalphabet));
-  ACE_OS::memset (decoder, 0, sizeof (decoder));
+  std::memset (inalphabet, 0, sizeof (inalphabet));
+  std::memset (decoder, 0, sizeof (decoder));
 
-  for (int i = ACE_OS::strlen (HTTP_Helper::alphabet_) - 1;
+  for (int i = std::strlen (HTTP_Helper::alphabet_) - 1;
        i >= 0;
        i--)
     {
@@ -336,7 +337,7 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
             }
         }
       *outdata = '\0';
-      ACE_OS::strcpy (data, buf);
+      std::strcpy (data, buf);
     }
 
   return (error ? 0 : data);
