@@ -6,26 +6,29 @@
 
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+struct Options
+{
+  ACE_TString ior_output_file { ACE_TEXT ("test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("Usage: %s -o <iorfile>\n"),
                            argv[0]),
                           -1);
       }
@@ -35,13 +38,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options;
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       ACE_NEW_RETURN (temp_initializer,
                       FOO_IORInterceptor_ORBInitializer,
@@ -73,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       test_i server_impl (orb.in ());
@@ -93,19 +96,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_INFO, "FOO::test: <%C>\n", ior.in ()));
 
-      // If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != 0)
-        {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing "
-                               "IOR: %s",
-                               ior_output_file),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
-        }
+      // Write the IOR to the output file.
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file <%s> for writing IOR: %C"),
+                             options.ior_output_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       orb->run ();
 
@@ -114,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // The interceptors will be destroyed when we call this
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("IORInterceptor test (server-side):");
 
