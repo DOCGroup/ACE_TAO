@@ -31,6 +31,7 @@
   =====================================================================*/
 
 #include "asnmp/address.h"
+#include <charconv>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
@@ -60,16 +61,14 @@ int Address::valid() const
 // destructive trim white space
 void Address::trim_white_space( char * ptr)
 {
-  char *tmp;
+  char *source = ptr;
+  while (*source == ' ')
+    ++source;
 
-  tmp = ptr;
-  // skip leading white space
-  while (*tmp==' ')tmp++;
-  ACE_OS::strcpy(ptr,tmp);
-
-  // find end of string
-  while ((*tmp!=' ') && (*tmp !=0)) tmp++;
-  if (*tmp!=0) *tmp=0;
+  char *destination = ptr;
+  while (*source != ' ' && *source != '\0')
+    *destination++ = *source++;
+  *destination = '\0';
 }
 
 //TM: this is not used nor needed, remove?
@@ -422,12 +421,7 @@ const char *IpAddress::resolve_hostname(int &status)
 // parse a dotted string
 int IpAddress::parse_dotted_ipstring( const char *inaddr)
 {
-  char *ip_token;
-  int token_count=0;
-  unsigned int value;
-  int error_status = 0;
   char temp[MAXHOSTNAMELEN +1];  // temp buffer for destruction
-  int z,w;
 
   // check len, an ip can never be bigger than 15
   // 123456789012345
@@ -439,49 +433,34 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
   if ( ACE_OS::strlen( temp) > 15)
     return 0;
 
-  // must only have three dots
-  // strtok will not catch this !
-  char *ptr = temp;
-  int dot_count = 0;
-  while ( *ptr != 0) {
-    if ( *ptr == '.') dot_count++;
-    ptr++;
-  }
-  if ( dot_count != 3)
-    return 0;
+  char const *token = temp;
+  for (std::size_t index = 0; index < IPV4LEN; ++index)
+    {
+      char const *token_end = token;
+      while (*token_end != '.' && *token_end != '\0')
+        ++token_end;
 
-  // look for dot token separator
-  ip_token = ACE_OS::strtok( (char *) temp,".");
-
-  // while more tokens..
-  while ( ip_token != 0) {
-    // verify that the token is all numerics
-    w = ACE_OS::strlen( ip_token);
-    if (w>3)
-      return 0;
-    for (z=0;z<w;z++)
-      if (( ip_token[z] < '0') || ( ip_token[z] > '9'))
+      if (token_end == token || token_end - token > 3)
         return 0;
 
-    value = ( unsigned int) ACE_OS::strtod(ip_token,0);
-    if (( value > 0)&& ( value <=255))
-      address_buffer[token_count] = (unsigned char) value;
-    else
-      if (ACE_OS::strcmp(ip_token,"0")==0)
-        address_buffer[token_count]= (unsigned char) 0;
+      unsigned int value {};
+      std::from_chars_result const result = std::from_chars (token, token_end, value);
+      if (result.ec != std::errc {} || result.ptr != token_end || value > 255)
+        return 0;
+
+      address_buffer[index] = static_cast<unsigned char> (value);
+      if (index + 1 == IPV4LEN)
+        {
+          if (*token_end != '\0')
+            return 0;
+        }
       else
-        error_status = 1;
-    token_count++;
-    ip_token = ACE_OS::strtok( 0, ".");
-  }
-
-  // gota be four in len
-  if ( token_count != 4)
-    return 0;
-
-  // any parsing errors?
-  if ( error_status)
-    return 0;
+        {
+          if (*token_end != '.')
+            return 0;
+          token = token_end + 1;
+        }
+    }
 
   return 1;
 }

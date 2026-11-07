@@ -171,6 +171,12 @@ static void TestIpAddress()
   ACE_ASSERT(ia1.valid() == 0);
   ACE_ASSERT(ia1[0] == 0);
   ACE_ASSERT(std::strcmp (ia1.to_string (), "") == 0);
+  IpAddress ia_zero ("0.0.0.0");
+  ACE_ASSERT (ia_zero.valid () == 1);
+  ACE_ASSERT (std::strcmp (ia_zero.to_string (), "0.0.0.0") == 0);
+  IpAddress ia_whitespace (" 127.0.0.1 ");
+  ACE_ASSERT (ia_whitespace.valid () == 1);
+  ACE_ASSERT (ia_whitespace.is_loopback ());
   IpAddress ia2("224.2.3.4");
   ACE_ASSERT(ia2.is_multicast());
   ACE_ASSERT(!ia2.is_loopback());
@@ -207,8 +213,8 @@ static void TestIpAddress()
   // other routines
   int status = 1;
   char const *ptr = ia5.resolve_hostname(status);
-  ACE_ASSERT(status == 0);
   ACE_ASSERT(ptr != nullptr);
+  ACE_ASSERT(status == 0 ? ptr[0] != '\0' : ptr[0] == '\0');
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia5.resolve_hostname():(\"\") [%s]\n",
     ptr));
 
