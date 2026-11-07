@@ -86,7 +86,7 @@ ACE_OS_Exit_Info::at_exit_i (void *object,
 {
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.
-  ACE_Cleanup_Info_Node *new_node = nullptr;
+  ACE_Cleanup_Info_Node *new_node {};
 
   ACE_NEW_RETURN (new_node,
                   ACE_Cleanup_Info_Node (object, cleanup_hook, param, name),
@@ -117,7 +117,7 @@ ACE_OS_Exit_Info::find (void *object)
 bool
 ACE_OS_Exit_Info::remove (void *object)
 {
-  ACE_Cleanup_Info_Node *node = nullptr;
+  ACE_Cleanup_Info_Node *node {};
   for (ACE_Cleanup_Info_Node *iter = registered_objects_.head ();
        iter != nullptr;
        iter = iter->next ())

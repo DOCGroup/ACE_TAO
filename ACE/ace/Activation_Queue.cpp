@@ -45,7 +45,7 @@ ACE_Activation_Queue::ACE_Activation_Queue (
     this->queue_ = new_queue;
   else
     {
-      ACE_Message_Queue<ACE_SYNCH> *queue = nullptr;
+      ACE_Message_Queue<ACE_SYNCH> *queue {};
       ACE_NEW (queue,
                ACE_Message_Queue<ACE_SYNCH>);
       this->owned_queue_.reset (queue);
@@ -65,7 +65,7 @@ ACE_Activation_Queue::~ACE_Activation_Queue () = default;
 ACE_Method_Request *
 ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // Dequeue the message.
   if (this->queue_->dequeue_head (mb, tv) != -1)
@@ -85,7 +85,7 @@ int
 ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
                                ACE_Time_Value *tv)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // We pass sizeof (*mr) here so that flow control will work
   // correctly.  Since we also pass <mr> note that no unnecessary
