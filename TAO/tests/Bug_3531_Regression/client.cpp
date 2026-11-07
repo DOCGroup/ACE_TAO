@@ -142,7 +142,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "Client interface started on <%C>\n",
                   local_ior.in ()));
       CORBA::Object_var const remote_object {
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ())) };
+        orb->string_to_object (ior.c_str ()) };
 
       Simple_Server_var const remote_server {Simple_Server::_narrow (remote_object.in ())};
 
