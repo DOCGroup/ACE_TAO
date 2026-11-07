@@ -14,25 +14,15 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-Results::Results ()
-{
-}
-
-Results::~Results ()
-{
-  delete [] this->elapsed_time_;
-}
-
 void
 Results::print_stats ()
 {
-  double
-    avg_real_time = 0,
-    avg_user_time = 0,
-    avg_system_time = 0,
-    cps; // calls per sec
+  double avg_real_time {};
+  double avg_user_time {};
+  double avg_system_time {};
+  double cps {};
 
-  CORBA::ULong i;
+  CORBA::ULong i {};
 
   if (TAO_debug_level > 0 && this->error_count_ == 0)
     {
@@ -97,7 +87,7 @@ Results::print_stats ()
 }
 
 void
-Results::print_exception (const char * /* call_name */)
+Results::print_exception (char const * /* call_name */)
 {
   //ACE_PRINT_EXCEPTION (call_name);
 }
@@ -116,7 +106,7 @@ Results::stop_timer ()
 }
 
 CORBA::ULong
-Results::call_count ()
+Results::call_count () const
 {
   return this->call_count_;
 }
@@ -128,7 +118,7 @@ Results::call_count (CORBA::ULong c)
 }
 
 CORBA::ULong
-Results::error_count ()
+Results::error_count () const
 {
   return this->error_count_;
 }
@@ -142,5 +132,5 @@ Results::error_count (CORBA::ULong c)
 void
 Results::iterations (CORBA::ULong iters)
 {
-  this->elapsed_time_ = new ACE_Profile_Timer::ACE_Elapsed_Time [iters];
+  this->elapsed_time_.resize (iters);
 }
