@@ -28,7 +28,7 @@ MessageImpl::MessageImpl
 ::CORBA::ValueBase *
 MessageImpl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val = nullptr;
+  ::CORBA::ValueBase *ret_val {};
   ACE_NEW_THROW_EX (
     ret_val,
     MessageImpl (
