@@ -1,7 +1,8 @@
 #include "Blob_Handler.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include <cstdio>
+#include <cstring>
 #include <memory>
 #include <new>
 
@@ -82,16 +83,16 @@ ACE_Blob_Reader::send_request ()
   char mesg [MAX_HEADER_SIZE];
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
+  if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
                          + ACE_OS::strlen (filename_.c_str ())
-                         + ACE_OS::strlen (request_suffix_) + 4))
+                         + std::strlen (request_suffix_) + 4))
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int len = ACE_OS::sprintf (mesg, "%s %s %s",
-                             request_prefix_,
-                             ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
-                             request_suffix_);
+  int len = std::sprintf (mesg, "%s %s %s",
+                          request_prefix_,
+                          ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
+                          request_suffix_);
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
@@ -121,9 +122,9 @@ ACE_Blob_Reader::receive_reply ()
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
-      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != nullptr)
+      if ((buf_ptr = std::strstr (buf, "\r\n\r\n")) != nullptr)
         buf_ptr += 4;
-      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != nullptr)
+      else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)
         buf_ptr += 2;
       else
         buf_ptr = buf;
@@ -255,9 +256,9 @@ ACE_Blob_Writer::send_request ()
   // the server. Note that we add 32 for safety -- this corresponds to
   // the number of bytes needed for the length field.
   size_t mesglen =
-    ACE_OS::strlen (request_prefix_)
+    std::strlen (request_prefix_)
     + ACE_OS::strlen (filename_.c_str ())
-    + ACE_OS::strlen (request_suffix_)
+    + std::strlen (request_suffix_)
     + 32; // safety
 
   // Allocate a buffer to hold the header
@@ -266,9 +267,9 @@ ACE_Blob_Writer::send_request ()
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Unable to allocate request header"), -1);
 
   // Create the header, store the actual length in mesglen.
-  mesglen = ACE_OS::sprintf (mesg.get (), "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
-                             request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
-                             request_suffix_, length_);
+  mesglen = std::sprintf (mesg.get (), "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
+                          request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
+                          request_suffix_, length_);
 
   // Send the header followed by the data
 
