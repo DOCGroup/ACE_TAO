@@ -163,11 +163,11 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  ACE_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
                               const LOG_MESSAGE_RECEIVER &receiver);
 
-  virtual int open (void* = 0) override;
+  virtual int open (void* = nullptr) override;
 };
 
 #if defined (ACE_HAS_THREADS)
@@ -192,10 +192,10 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
-  virtual int open (void * = 0) override;
+  virtual int open (void * = nullptr) override;
   virtual int svc () override;
 };
 

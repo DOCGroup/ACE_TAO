@@ -66,7 +66,7 @@ class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STRE
 {
 public:
   /// Default constructor.
-  ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = 0,
+  ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = nullptr,
                         ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
 
   // = Set/get the current state
@@ -93,7 +93,7 @@ public:
 
   /// Activate this instance of the <ACE_TS_Clerk_Handler>
   /// (called by the <ACE_TS_Clerk_Processor>).
-  virtual int open (void * = 0) override;
+  virtual int open (void * = nullptr) override;
 
   /// Return the handle of the message_fifo_;
   virtual ACE_HANDLE get_handle () const override;

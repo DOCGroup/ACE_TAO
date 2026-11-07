@@ -37,11 +37,11 @@ class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STR
 {
 public:
   /// Default constructor.
-  ACE_TS_Server_Handler (ACE_Thread_Manager * = 0);
+  ACE_TS_Server_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Activate this instance of the <ACE_TS_Server_Handler> (called by the
   /// <ACE_Strategy_Acceptor>).
-  virtual int open (void * = 0) override;
+  virtual int open (void * = nullptr) override;
 
 protected:
   /// Must be allocated dynamically.

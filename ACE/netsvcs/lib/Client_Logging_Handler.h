@@ -58,7 +58,7 @@ public:
 
   /// Activate this instance of the ACE_Client_Logging_Handler
   /// (called by the ACE_Client_Logging_Acceptor).
-  virtual int open (void * = 0) override;
+  virtual int open (void * = nullptr) override;
 
   /// Return the handle of the IPC endpoint.
   virtual ACE_HANDLE get_handle () const override;

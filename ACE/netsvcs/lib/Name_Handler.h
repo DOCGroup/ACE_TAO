@@ -59,11 +59,11 @@ public:
   using REQUEST = ACE_Name_Request (ACE_Name_Handler::*) (ACE_NS_WString *);
 
   /// Default constructor.
-  ACE_Name_Handler (ACE_Thread_Manager * = 0);
+  ACE_Name_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Activate this instance of the <ACE_Name_Handler> (called by the
   /// <ACE_Strategy_Acceptor>).
-  virtual int open (void * = 0) override;
+  virtual int open (void * = nullptr) override;
 
 protected:
   // = Helper routines for the operations exported to clients.

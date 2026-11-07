@@ -54,7 +54,7 @@ public:
    */
   ACE_Time_Request (ACE_INT32 msg_type,
                     const time_t time,
-                    ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value *timeout = nullptr);
 
   // Get the fixed size of message
   ssize_t size () const;
