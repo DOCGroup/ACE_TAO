@@ -1,21 +1,24 @@
 // -*- C++ -*-
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 #include "ServantLocator.h"
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR * ior_file = 0;
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
 
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_file = get_opts.opt_arg ();
@@ -25,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
                            "-o IOR\n",
-                           argv[0]),
+                           argv [0]),
                           -1);
       }
 
@@ -33,11 +36,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);  // No exceptions yet!
@@ -48,6 +51,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "Server ORB");
+
+      ACE_TCHAR const *ior_file {};
+      if (parse_args (argc, argv, ior_file) != 0)
+        return -1;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -79,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-      ServantLocator* sl = 0;
+      ServantLocator *sl {};
       ACE_NEW_THROW_EX (sl,
                         ServantLocator (orb.in ()),
                         CORBA::NO_MEMORY ());
@@ -95,20 +102,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (obj.in ());
 
-      if (::parse_args (argc, argv) != 0)
-        return -1;
-
-      // Write IOR to a file.
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file <%s> for writing "
-                           "IOR:\n%s\n",
-                           ior_file,
-                           ior.in ()),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      // Write IOR to a file and close it before waiting for client requests.
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file <%s> for writing "
+                             "IOR:\n%s\n",
+                             ior_file,
+                             ior.in ()),
+                            1);
+        int const result = std::fprintf (output_file.get (), "%s", ior.in ());
+        if (result < 0 || static_cast<size_t> (result) != std::strlen (ior.in ()))
+          ACE_ERROR_RETURN ((LM_ERROR, "Failed writing IOR to <%s>\n", ior_file), 1);
+      }
 
       // Run the ORB event loop.
       orb->run ();
@@ -117,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      if (sl->error_status_ == false)
+      if (!sl->error_status_)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "PortableInterceptor / ServantLocator test passed.\n"));
@@ -129,7 +137,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

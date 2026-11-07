@@ -1,16 +1,14 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
-const ACE_TCHAR * ior = 0;
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -20,7 +18,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
                            "-k IOR\n",
-                           argv[0]),
+                           argv [0]),
                           -1);
       }
 
@@ -28,17 +26,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
-
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "Client ORB");
 
-      if (::parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior {};
+      if (parse_args (argc, argv, ior) != 0)
         return -1;
 
       // Start out with the first IOR.  Interaction with the second
@@ -62,11 +59,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
     }
 
-  return status;
+  return 0;
 }
