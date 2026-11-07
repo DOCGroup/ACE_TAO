@@ -36,11 +36,11 @@ Dispatcher*
 Dispatcher_Factory::
 create_dispatcher (Dispatcher_Attributes const &attrs)
 {
-  Dispatcher_Impl *raw_impl = nullptr;
+  Dispatcher_Impl *raw_impl {};
   ACE_NEW_RETURN (raw_impl, Default_Dispatcher_Impl, nullptr);
   std::unique_ptr<Dispatcher_Impl> impl (raw_impl);
 
-  Dispatcher *raw_dispatcher = nullptr;
+  Dispatcher *raw_dispatcher {};
   ACE_NEW_RETURN (raw_dispatcher, Dispatcher, nullptr);
   std::unique_ptr<Dispatcher> dispatcher (raw_dispatcher);
 

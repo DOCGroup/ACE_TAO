@@ -31,7 +31,7 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 
   this->ntasks_ = size;
 
-  Dispatcher_Task_Auto_Ptr *tasks_array = nullptr;
+  Dispatcher_Task_Auto_Ptr *tasks_array {};
   ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
   //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
@@ -48,7 +48,7 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
   for (;i<size && iter.next (config);iter.advance ())
     {
       //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
-      Dispatcher_Task *task = nullptr;
+      Dispatcher_Task *task {};
       ACE_NEW_RETURN (task,
                       Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance()),
@@ -143,7 +143,7 @@ Default_Dispatcher_Impl::shutdown_i ()
   for(i=0; i<ntasks_; ++i)
     {
       QoSDescriptor qos_info;
-      Shutdown_Task_Command *raw_shutdown_cmd = nullptr;
+      Shutdown_Task_Command *raw_shutdown_cmd {};
       ACE_NEW_RETURN (raw_shutdown_cmd, Shutdown_Task_Command, -1);
       std::unique_ptr<Shutdown_Task_Command> shutdown_cmd (raw_shutdown_cmd);
       if (tasks_[i]->enqueue (shutdown_cmd.get (), qos_info) == 0)
