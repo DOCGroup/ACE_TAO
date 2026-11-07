@@ -16,28 +16,32 @@ class Roundtrip
 {
 public:
   /// Constructor
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
+  Roundtrip (Roundtrip const &) = delete;
+  Roundtrip (Roundtrip &&) = delete;
+  Roundtrip &operator= (Roundtrip const &) = delete;
+  Roundtrip &operator= (Roundtrip &&) = delete;
 
   // = The skeleton methods
-  Test::Timestamp test_octet_method (const Test::octet_load& ol,
-                                     Test::Timestamp send_time);
+  Test::Timestamp test_octet_method (Test::octet_load const &ol,
+                                     Test::Timestamp send_time) override;
 
-  Test::Timestamp test_long_method (const Test::long_load& ol,
-                                    Test::Timestamp send_time);
+  Test::Timestamp test_long_method (Test::long_load const &ol,
+                                    Test::Timestamp send_time) override;
 
-  Test::Timestamp test_short_method (const Test::short_load& ol,
-                                     Test::Timestamp send_time);
+  Test::Timestamp test_short_method (Test::short_load const &ol,
+                                     Test::Timestamp send_time) override;
 
-  Test::Timestamp test_char_method (const Test::char_load& ol,
-                                     Test::Timestamp send_time);
+  Test::Timestamp test_char_method (Test::char_load const &ol,
+                                    Test::Timestamp send_time) override;
 
-  Test::Timestamp test_longlong_method (const Test::longlong_load& ol,
-                                        Test::Timestamp send_time);
+  Test::Timestamp test_longlong_method (Test::longlong_load const &ol,
+                                        Test::Timestamp send_time) override;
 
-  Test::Timestamp test_double_method (const Test::double_load& ol,
-                                      Test::Timestamp send_time);
+  Test::Timestamp test_double_method (Test::double_load const &ol,
+                                     Test::Timestamp send_time) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

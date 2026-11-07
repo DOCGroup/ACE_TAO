@@ -5,18 +5,21 @@
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 #include "ace/OS_NS_errno.h"
+#include <array>
 
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 1000;
-int do_shutdown = 1;
-int sz = 512;
-
-const ACE_TCHAR *data_type = ACE_TEXT("octet");
+struct Client_Options
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+  ACE_TCHAR const *data_type = ACE_TEXT("octet");
+  int iterations = 1000;
+  bool shutdown = true;
+  int size = 512;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:s:xk:i:"));
   int c;
@@ -25,43 +28,38 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 't':
-        data_type = get_opts.opt_arg ();
+        options.data_type = get_opts.opt_arg ();
 
-        if (ACE_OS::strcmp (data_type, ACE_TEXT("octet")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("char")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("long")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("short")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("double")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("longlong")) != 0)
+        if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
           return -1;
         break;
 
       case 's':
-        sz = ACE_OS::atoi (get_opts.opt_arg ());
+        options.size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        do_shutdown = 0;
+        options.shutdown = false;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-t <datatype> "
-                           "-s <size> "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-x (disable shutdown) "
-                           "\n",
+                           ACE_TEXT("usage: %s -t <datatype> -s <size> -k <ior> "
+                                    "-i <niterations> -x\n"),
                            argv [0]),
                           -1);
       }
@@ -98,53 +96,49 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-
-      Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in ());
+      CORBA::Object_var object = orb->string_to_object (options.ior);
+      Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Test::Roundtrip reference <%s>\n",
-                             ior),
+                             ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      /// Begin the test
-
       ACE_DEBUG ((LM_DEBUG, "Starting threads\n"));
 
-      Client_Task task0(data_type, sz, roundtrip.in (), niterations);
-      Client_Task task1(data_type, sz, roundtrip.in (), niterations);
-      Client_Task task2(data_type, sz, roundtrip.in (), niterations);
-      Client_Task task3(data_type, sz, roundtrip.in (), niterations);
+      std::array<Client_Task, 4> tasks {{
+        Client_Task (options.data_type, options.size, roundtrip.in (), options.iterations),
+        Client_Task (options.data_type, options.size, roundtrip.in (), options.iterations),
+        Client_Task (options.data_type, options.size, roundtrip.in (), options.iterations),
+        Client_Task (options.data_type, options.size, roundtrip.in (), options.iterations)
+      }};
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-      task0.activate(THR_NEW_LWP | THR_JOINABLE);
-      task1.activate(THR_NEW_LWP | THR_JOINABLE);
-      task2.activate(THR_NEW_LWP | THR_JOINABLE);
-      task3.activate(THR_NEW_LWP | THR_JOINABLE);
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
+      for (Client_Task &task : tasks)
+        task.activate (THR_NEW_LWP | THR_JOINABLE);
 
-      task0.thr_mgr()->wait ();
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      tasks [0].thr_mgr ()->wait ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "Threads finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_Basic_Stats totals;
-      task0.accumulate_and_dump (totals, ACE_TEXT("Task[0]"), gsf);
-      task1.accumulate_and_dump (totals, ACE_TEXT("Task[1]"), gsf);
-      task2.accumulate_and_dump (totals, ACE_TEXT("Task[2]"), gsf);
-      task3.accumulate_and_dump (totals, ACE_TEXT("Task[3]"), gsf);
+      tasks [0].accumulate_and_dump (totals, ACE_TEXT("Task[0]"), gsf);
+      tasks [1].accumulate_and_dump (totals, ACE_TEXT("Task[1]"), gsf);
+      tasks [2].accumulate_and_dump (totals, ACE_TEXT("Task[2]"), gsf);
+      tasks [3].accumulate_and_dump (totals, ACE_TEXT("Task[3]"), gsf);
 
       totals.dump_results (ACE_TEXT("Total"), gsf);
 
@@ -153,12 +147,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                              test_end - test_start,
                                              totals.samples_count ());
 
-      if (do_shutdown)
+      if (options.shutdown)
         {
           roundtrip->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
