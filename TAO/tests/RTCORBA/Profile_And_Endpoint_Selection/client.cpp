@@ -246,7 +246,7 @@ Client::priority_invocations (int debug)
 
   u_long i = 0;
 
-  Worker_Thread **workers = 0;
+  Worker_Thread **workers {};
 
   ACE_NEW_THROW_EX (workers,
                     Worker_Thread *[priorities.size ()],

@@ -4,7 +4,7 @@
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_stdlib.h"
 
-typedef ACE_Array_Base<CORBA::ULong> ULong_Array;
+using ULong_Array = ACE_Array_Base<CORBA::ULong>;
 
 int
 get_priority_bands (const char *test_type,
@@ -19,7 +19,7 @@ get_priority_bands (const char *test_type,
   FILE* file =
     ACE_OS::fopen (bands_file, "r");
 
-  if (file == 0)
+  if (file == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s\n",
                        bands_file),
@@ -31,7 +31,7 @@ get_priority_bands (const char *test_type,
     reader.read (EOF, ' ', '\0');
 
   // Check for empty bands file.
-  if (string == 0)
+  if (string == nullptr)
     {
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
@@ -116,7 +116,7 @@ get_values (const char *test_type,
   FILE* file =
     ACE_OS::fopen (file_name, "r");
 
-  if (file == 0)
+  if (file == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s\n",
                        file_name),
@@ -128,7 +128,7 @@ get_values (const char *test_type,
     reader.read (EOF, ' ', '\0');
 
   // Check for empty lanes file.
-  if (string == 0)
+  if (string == nullptr)
     {
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
@@ -156,10 +156,10 @@ get_values (const char *test_type,
     {
       // sscanf with "%ul" doesn't seem to work properly on HP-UX.  So,
       // we will use strtoul instead.
-      char* endptr = 0;
+      char *endptr {};
       values[i] = ACE_OS::strtoul (working_string, &endptr, 10);
 
-      if (endptr != working_string && endptr != 0 && *endptr != '\0')
+      if (endptr != working_string && *endptr != '\0')
         {
           result = 0;
           break;

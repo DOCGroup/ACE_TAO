@@ -230,7 +230,7 @@ Task::svc ()
       ACE_Thread_Manager thread_manager;
 
       // Workers.
-      Worker_Thread **workers = 0;
+      Worker_Thread **workers {};
 
       ACE_NEW_RETURN (workers,
                       Worker_Thread *[priorities.size ()],

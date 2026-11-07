@@ -180,7 +180,7 @@ vanilla_poa (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),
@@ -290,7 +290,7 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };
