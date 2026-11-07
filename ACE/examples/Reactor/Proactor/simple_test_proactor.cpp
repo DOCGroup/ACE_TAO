@@ -51,10 +51,10 @@ protected:
   // = These methods are called by the framework.
 
   /// This is called when asynchronous reads from the socket complete.
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
   /// This is called when asynchronous writes from the socket complete.
-  virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
+  void handle_write_file (const ACE_Asynch_Write_File::Result &result) override;
 
 private:
   int initiate_read_file ();

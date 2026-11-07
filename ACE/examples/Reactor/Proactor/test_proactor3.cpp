@@ -89,7 +89,7 @@ class MyTask: public ACE_Task<ACE_MT_SYNCH>
 public:
   MyTask () : threads_ (0), proactor_ (0) {}
 
-  int svc ();
+  int svc () override;
   void waitready () { event_.wait (); }
 
 private:
@@ -182,8 +182,8 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
 
   static long get_number_sessions () { return sessions_; }
 
@@ -192,11 +192,11 @@ protected:
 
   /// This is called when asynchronous <read> operation from the socket
   /// complete.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This is called when an asynchronous <write> to the file
   /// completes.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
   int  initiate_read_stream ();
@@ -421,17 +421,17 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
 
-  ACE_HANDLE handle () const;
-  virtual void handle (ACE_HANDLE);
+  ACE_HANDLE handle () const override;
+  void handle (ACE_HANDLE) override;
 
 protected:
   // These methods are called by the framework
 
   /// This is called when asynchronous reads from the socket complete
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This is called when asynchronous writes from the socket complete
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
   int initiate_read_stream ();
