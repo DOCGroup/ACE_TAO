@@ -16,38 +16,38 @@ class Roundtrip
 {
 public:
   /// Constructor
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
+  Roundtrip (const Roundtrip &) = delete;
+  Roundtrip (Roundtrip &&) = delete;
+  Roundtrip &operator= (const Roundtrip &) = delete;
+  Roundtrip &operator= (Roundtrip &&) = delete;
 
   // = The skeleton methods
   void test_octet_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                          const Test::octet_load& ol,
-                          Test::Timestamp send_time);
-
+                          Test::octet_load const &ol,
+                          Test::Timestamp send_time) override;
 
   void test_long_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                         const Test::long_load& ol,
-                         Test::Timestamp send_time);
+                         Test::long_load const &ol,
+                         Test::Timestamp send_time) override;
 
   void test_short_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                          const Test::short_load& ol,
-                          Test::Timestamp send_time);
-
+                          Test::short_load const &ol,
+                          Test::Timestamp send_time) override;
 
   void test_char_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                         const Test::char_load& ol,
-                         Test::Timestamp send_time);
+                         Test::char_load const &ol,
+                         Test::Timestamp send_time) override;
 
   void test_longlong_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             const Test::longlong_load& ol,
-                             Test::Timestamp send_time);
-
+                             Test::longlong_load const &ol,
+                             Test::Timestamp send_time) override;
 
   void test_double_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                           const Test::double_load& ol,
-                           Test::Timestamp send_time);
+                           Test::double_load const &ol,
+                           Test::Timestamp send_time) override;
 
-
-  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

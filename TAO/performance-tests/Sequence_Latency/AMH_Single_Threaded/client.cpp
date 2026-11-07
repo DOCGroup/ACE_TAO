@@ -9,16 +9,18 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 100;
-int do_dump_history = 0;
-int do_shutdown = 1;
-int sz = 512;
-
-const ACE_TCHAR *data_type = ACE_TEXT("octet");
+struct Client_Options
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+  ACE_TCHAR const *data_type = ACE_TEXT("octet");
+  int iterations = 100;
+  bool dump_history = false;
+  bool shutdown = true;
+  int size = 512;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:s:hxk:i:"));
   int c;
@@ -27,48 +29,42 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 't':
-        data_type = get_opts.opt_arg ();
+        options.data_type = get_opts.opt_arg ();
 
-        if (ACE_OS::strcmp (data_type, ACE_TEXT("octet")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("char")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("long")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("short")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("double")) != 0 &&
-            ACE_OS::strcmp (data_type, ACE_TEXT("longlong")) != 0)
+        if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
+            ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
           return -1;
         break;
 
       case 's':
-        sz = ACE_OS::atoi (get_opts.opt_arg ());
+        options.size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'h':
-        do_dump_history = 1;
+        options.dump_history = true;
         break;
 
       case 'x':
-        do_shutdown = 0;
+        options.shutdown = false;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-t <datatype> "
-                           "-s <size> "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-x (disable shutdown) "
-                           "-h (dump history) "
-                           "\n",
+                           ACE_TEXT("usage: %s -t <datatype> -s <size> -k <ior> "
+                                    "-i <niterations> -x -h\n"),
                            argv [0]),
                           -1);
       }
@@ -76,251 +72,36 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
+template <typename Sequence, typename Operation>
 void
-test_octet_seq (Test::Roundtrip_ptr roundtrip)
+test_sequence (Test::Roundtrip_ptr roundtrip,
+               Operation const operation,
+               int const size,
+               int const iterations,
+               int const dump_history)
 {
-  ACE_Sample_History history (niterations);
+  ACE_Sample_History history (iterations);
+  Sequence sequence (size);
+  sequence.length (size);
 
-  Test::octet_load ol (sz);
-  ol.length (sz);
-
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
+  ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
+  for (int i = 0; i < iterations; ++i)
     {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-      (void) roundtrip->test_octet_method (ol, start);
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      history.sample (now - start);
+      const ACE_hrtime_t start = ACE_OS::gethrtime ();
+      (roundtrip->*operation) (sequence, start);
+      history.sample (ACE_OS::gethrtime () - start);
     }
 
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+  ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-  if (do_dump_history)
-    {
-      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
-    }
-
-  ACE_Basic_Stats stats;
-  history.collect_basic_stats (stats);
-  stats.dump_results (ACE_TEXT("Total"), gsf);
-
-  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
-                                         test_end - test_start,
-                                         stats.samples_count ());
-}
-
-
-void
-test_long_seq (Test::Roundtrip_ptr roundtrip)
-{
-  ACE_Sample_History history (niterations);
-
-  Test::long_load ll (sz);
-  ll.length (sz);
-
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
-    {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-      (void) roundtrip->test_long_method (ll, start);
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      history.sample (now - start);
-    }
-
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-  ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
-
-  if (do_dump_history)
-    {
-      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
-    }
-
-  ACE_Basic_Stats stats;
-  history.collect_basic_stats (stats);
-  stats.dump_results (ACE_TEXT("Total"), gsf);
-
-  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
-                                         test_end - test_start,
-                                         stats.samples_count ());
-}
-
-
-void
-test_short_seq (Test::Roundtrip_ptr roundtrip)
-{
-  ACE_Sample_History history (niterations);
-
-  Test::short_load sl (sz);
-  sl.length (sz);
-
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
-    {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-      (void) roundtrip->test_short_method (sl, start);
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      history.sample (now - start);
-    }
-
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-  ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
-
-  if (do_dump_history)
-    {
-      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
-    }
-
-  ACE_Basic_Stats stats;
-  history.collect_basic_stats (stats);
-  stats.dump_results (ACE_TEXT("Total"), gsf);
-
-  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
-                                         test_end - test_start,
-                                         stats.samples_count ());
-}
-
-
-void
-test_char_seq (Test::Roundtrip_ptr roundtrip)
-{
-  ACE_Sample_History history (niterations);
-
-  Test::char_load cl (sz);
-  cl.length (sz);
-
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
-    {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-      (void) roundtrip->test_char_method (cl, start);
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      history.sample (now - start);
-    }
-
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-  ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
-
-  if (do_dump_history)
-    {
-      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
-    }
-
-  ACE_Basic_Stats stats;
-  history.collect_basic_stats (stats);
-  stats.dump_results (ACE_TEXT("Total"), gsf);
-
-  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
-                                         test_end - test_start,
-                                         stats.samples_count ());
-}
-
-
-void
-test_longlong_seq (Test::Roundtrip_ptr roundtrip)
-{
-  ACE_Sample_History history (niterations);
-
-  Test::longlong_load ll (sz);
-  ll.length (sz);
-
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
-    {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-      (void) roundtrip->test_longlong_method (ll, start);
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      history.sample (now - start);
-    }
-
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-  ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
-
-  if (do_dump_history)
-    {
-      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
-    }
-
-  ACE_Basic_Stats stats;
-  history.collect_basic_stats (stats);
-  stats.dump_results (ACE_TEXT("Total"), gsf);
-
-  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
-                                         test_end - test_start,
-                                         stats.samples_count ());
-}
-
-
-void
-test_double_seq (Test::Roundtrip_ptr roundtrip)
-{
-  ACE_Sample_History history (niterations);
-
-  Test::double_load dl (sz);
-  dl.length (sz);
-
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
-    {
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-      (void) roundtrip->test_double_method (dl, start);
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      history.sample (now - start);
-    }
-
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-
-  ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
-
-  if (do_dump_history)
+  if (dump_history)
     {
       history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
@@ -363,11 +144,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::Roundtrip_var roundtrip =
         Test::Roundtrip::_narrow (object.in ());
@@ -375,46 +157,68 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (roundtrip.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Test::Roundtrip reference <%s>\n",
-                             ior),
+                             ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      Test::octet_load oc;
+      Test::octet_load octets;
 
-      for (int j = 0; j < 100; ++j)
+      for (int i = 0; i < 100; ++i)
         {
-          ACE_hrtime_t start = 0;
-          (void) roundtrip->test_octet_method (oc,
-                                               start);
+          roundtrip->test_octet_method (octets, 0);
         }
 
-      if (ACE_OS::strcmp (data_type, ACE_TEXT("octet")) == 0)
+      if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) == 0)
         {
-          test_octet_seq (roundtrip.in ());
+          test_sequence<Test::octet_load> (roundtrip.in (),
+                                           &Test::Roundtrip::test_octet_method,
+                                           options.size,
+                                           options.iterations,
+                                           options.dump_history);
         }
-      else if (ACE_OS::strcmp (data_type, ACE_TEXT("char")) == 0)
+      else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) == 0)
         {
-          test_char_seq (roundtrip.in ());
+          test_sequence<Test::char_load> (roundtrip.in (),
+                                          &Test::Roundtrip::test_char_method,
+                                          options.size,
+                                          options.iterations,
+                                          options.dump_history);
         }
-      else if (ACE_OS::strcmp (data_type, ACE_TEXT("long")) == 0)
+      else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) == 0)
         {
-          test_long_seq (roundtrip.in ());
+          test_sequence<Test::long_load> (roundtrip.in (),
+                                          &Test::Roundtrip::test_long_method,
+                                          options.size,
+                                          options.iterations,
+                                          options.dump_history);
         }
-      else if (ACE_OS::strcmp (data_type, ACE_TEXT("short")) == 0)
+      else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) == 0)
         {
-          test_short_seq (roundtrip.in ());
+          test_sequence<Test::short_load> (roundtrip.in (),
+                                           &Test::Roundtrip::test_short_method,
+                                           options.size,
+                                           options.iterations,
+                                           options.dump_history);
         }
-      else if (ACE_OS::strcmp (data_type, ACE_TEXT("double")) == 0)
+      else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) == 0)
         {
-          test_double_seq (roundtrip.in ());
+          test_sequence<Test::double_load> (roundtrip.in (),
+                                            &Test::Roundtrip::test_double_method,
+                                            options.size,
+                                            options.iterations,
+                                            options.dump_history);
         }
-      else if (ACE_OS::strcmp (data_type, ACE_TEXT("longlong")) == 0)
+      else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) == 0)
         {
-          test_longlong_seq (roundtrip.in ());
+          test_sequence<Test::longlong_load> (roundtrip.in (),
+                                              &Test::Roundtrip::test_longlong_method,
+                                              options.size,
+                                              options.iterations,
+                                              options.dump_history);
         }
 
-      if (do_shutdown)
+      if (options.shutdown)
         {
           roundtrip->shutdown ();
         }
