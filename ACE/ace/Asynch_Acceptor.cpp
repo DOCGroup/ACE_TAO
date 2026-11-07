@@ -202,7 +202,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::accept");
 
-  ACE_Message_Block *message_block = nullptr;
+  ACE_Message_Block *message_block {};
   // The space_needed calculation is drive by needs of Windows. POSIX doesn't
   // need to extra 16 bytes, but it doesn't hurt.
   size_t space_needed = sizeof (sockaddr_in) + 16;
@@ -282,7 +282,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       error = true;
     }
 
-  HANDLER *new_handler = nullptr;
+  HANDLER *new_handler {};
   if (!error)
     {
       // The Template method
@@ -386,8 +386,8 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
 
   ACE_Message_Block &message_block = result.message_block ();
 
-  sockaddr *local_addr = nullptr;
-  sockaddr *remote_addr = nullptr;
+  sockaddr *local_addr {};
+  sockaddr *remote_addr {};
   int local_size = 0;
   int remote_size = 0;
   // This matches setup in accept().
@@ -439,7 +439,7 @@ template <class HANDLER> HANDLER *
 ACE_Asynch_Acceptor<HANDLER>::make_handler ()
 {
   // Default behavior
-  HANDLER *handler = nullptr;
+  HANDLER *handler {};
   ACE_NEW_RETURN (handler,
                   HANDLER,
                   0);

@@ -112,7 +112,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       error = true;
     }
 
-  HANDLER *new_handler = nullptr;
+  HANDLER *new_handler {};
   if (!error)
     {
       // The Template method
@@ -227,7 +227,7 @@ template <class HANDLER> HANDLER *
 ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
-  HANDLER *handler = nullptr;
+  HANDLER *handler {};
   ACE_NEW_RETURN (handler, HANDLER, 0);
   return handler;
 }
