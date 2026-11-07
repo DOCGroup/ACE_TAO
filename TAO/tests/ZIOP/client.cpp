@@ -10,7 +10,7 @@
 #include <cstring>
 
 static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
-static ::Compression::CompressionManager_var compression_manager = 0;
+static ::Compression::CompressionManager_var compression_manager {};
 CORBA::ULong big_msg_size = 40000;
 
 int start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb);
