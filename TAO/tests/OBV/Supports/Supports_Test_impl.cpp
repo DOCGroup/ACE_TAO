@@ -30,7 +30,7 @@ vt_graph_impl::size ()
 void
 vt_graph_impl::add_node (char const *name)
 {
-  Supports_Test::Node *new_node = nullptr;
+  Supports_Test::Node *new_node {};
   ACE_NEW (new_node, node_impl (name));
   nodes_ ().length (nodes_ ().length () + 1);
   nodes_ ()[nodes_ ().length () - 1] = new_node;
@@ -56,7 +56,7 @@ vt_graph_impl::print ()
 Supports_Test::vt_graph *
 vt_graph_init_impl::create ()
 {
-  vt_graph_impl *ret_val = nullptr;
+  vt_graph_impl *ret_val {};
   ACE_NEW_RETURN (ret_val, vt_graph_impl, nullptr);
   return ret_val;
 }
@@ -64,7 +64,7 @@ vt_graph_init_impl::create ()
 CORBA::ValueBase *
 vt_graph_init_impl::create_for_unmarshal ()
 {
-  vt_graph_impl *ret_val = nullptr;
+  vt_graph_impl *ret_val {};
   ACE_NEW_RETURN (ret_val, vt_graph_impl, nullptr);
   return ret_val;
 }
@@ -99,7 +99,7 @@ void
 test_impl::pass_obj_graph_out (
   Supports_Test::graph_out graph_param)
 {
-  vt_graph_impl *the_vt_graph = nullptr;
+  vt_graph_impl *the_vt_graph {};
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   graph_param = the_vt_graph->_this ();
 
@@ -112,7 +112,7 @@ void
 test_impl::pass_vt_graph_out (
   Supports_Test::vt_graph_out vt_graph_param)
 {
-  vt_graph_impl *the_vt_graph = nullptr;
+  vt_graph_impl *the_vt_graph {};
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   vt_graph_param = the_vt_graph;
 
@@ -207,7 +207,7 @@ node_impl::print ()
 Supports_Test::Node *
 node_init_impl::create ()
 {
-  node_impl *ret_val = nullptr;
+  node_impl *ret_val {};
   ACE_NEW_RETURN (ret_val, node_impl, nullptr);
   return ret_val;
 }
@@ -215,7 +215,7 @@ node_init_impl::create ()
 CORBA::ValueBase *
 node_init_impl::create_for_unmarshal ()
 {
-  node_impl *ret_val = nullptr;
+  node_impl *ret_val {};
   ACE_NEW_RETURN (ret_val, node_impl, nullptr);
   return ret_val;
 }

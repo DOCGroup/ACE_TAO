@@ -1,11 +1,14 @@
 #include "Supports_Test_impl.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int num_trials = 1;
-int id = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int num_trials {1};
+  int id {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:i:k:"));
   int c;
@@ -14,15 +17,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 't':
-        num_trials = ACE_OS::atoi (get_opts.opt_arg ());
+        options.num_trials = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        id = ACE_OS::atoi (get_opts.opt_arg ());
+        options.id = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -47,7 +50,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
@@ -109,25 +113,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       /* Get test object reference */
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var tmp = orb->string_to_object (options.ior);
 
       Supports_Test::test_var my_test =
         Supports_Test::test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (my_test.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::test obj ref <%s>\n", ior), 1);
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Nil Supports_Test::test obj ref <%s>\n",
+                           options.ior),
+                          1);
 
       my_test->start ();
 
       /* Perform test */
 
-      for (int i = 0; i < num_trials; i++)
+      for (int i = 0; i < options.num_trials; i++)
         {
           // Create a vt_graph_impl instance and store the reference as a
           // vt_graph_var. Then register the instance with the POA to obtain an
           // object reference, stored as a graph_var. Increment the reference count
           // of the vt_graph_impl instance.
-          vt_graph_impl *the_vt_graph = nullptr;
+          vt_graph_impl *the_vt_graph {};
           ACE_NEW_RETURN (the_vt_graph, vt_graph_impl (3), 1);
           Supports_Test::vt_graph_var test_vt_graph = the_vt_graph;
 
@@ -183,7 +190,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      ACE_DEBUG ((LM_DEBUG, "Client (%P.%t) completed test successfully\n", id));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Client (%P.%t) completed test %d successfully\n",
+                  options.id));
     }
   catch (CORBA::Exception const& ex)
     {
