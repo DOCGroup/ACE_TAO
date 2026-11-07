@@ -9,19 +9,17 @@
 #include "ACEXML/common/Encoding.h"
 
 /* Header FSM states. */
-static const int HDST_LINE1_PROTOCOL = 0;
-static const int HDST_LINE1_WHITESPACE = 1;
-static const int HDST_LINE1_STATUS = 2;
-static const int HDST_BOL = 10;
-static const int HDST_TEXT = 11;
-static const int HDST_LF = 12;
-static const int HDST_CR = 13;
-static const int HDST_CRLF = 14;
-static const int HDST_CRLFCR = 15;
+constexpr int HDST_LINE1_PROTOCOL = 0;
+constexpr int HDST_LINE1_WHITESPACE = 1;
+constexpr int HDST_LINE1_STATUS = 2;
+constexpr int HDST_BOL = 10;
+constexpr int HDST_TEXT = 11;
+constexpr int HDST_LF = 12;
+constexpr int HDST_CR = 13;
+constexpr int HDST_CRLF = 14;
+constexpr int HDST_CRLFCR = 15;
 
-ACEXML_HttpCharStream::ACEXML_HttpCharStream ()
-{
-}
+ACEXML_HttpCharStream::ACEXML_HttpCharStream () = default;
 
 ACEXML_HttpCharStream::~ACEXML_HttpCharStream ()
 {
@@ -34,10 +32,10 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
   this->close ();
   this->url_.reset (ACE::strnew (url));
 
-  ACEXML_URL_Addr* url_addr = nullptr;
+  ACEXML_URL_Addr *url_addr {};
   ACE_NEW_RETURN (url_addr, ACEXML_URL_Addr, -1);
   this->url_addr_.reset (url_addr);
-  ACEXML_Mem_Map_Stream* stream = nullptr;
+  ACEXML_Mem_Map_Stream *stream {};
   ACE_NEW_RETURN (stream, ACEXML_Mem_Map_Stream, -1);
   this->stream_.reset (stream);
 
@@ -46,7 +44,7 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
   }
 
-  Connector* connector = nullptr;
+  Connector *connector {};
   ACE_NEW_RETURN (connector, Connector (nullptr, ACE_NONBLOCK), -1);
   this->connector_.reset (connector);
 
@@ -61,7 +59,7 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_request"), -1);
   }
 
-  size_t len = 0;
+  size_t len {};
   result = this->get_url(len);
   if (result == -1) {
     this->close();
@@ -114,8 +112,8 @@ ACEXML_HttpCharStream::get_url (size_t& len)
     }
 
   int header_state = HDST_LINE1_PROTOCOL;
-  int status = 0;
-  size_t b = 0;
+  int status {};
+  size_t b {};
   char const * buf = nullptr;
   size_t buflen = BUFSIZ;
 
@@ -269,7 +267,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 int
 ACEXML_HttpCharStream::send_request ()
 {
-  char* path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
+  char * const path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
   std::unique_ptr<char[]> path_ptr (path);
   size_t commandsize = std::strlen (path)
                        + std::strlen (this->url_addr_->get_host_name ())
@@ -277,7 +275,7 @@ ACEXML_HttpCharStream::send_request ()
                        + 1      // NUL byte
                        + 16 ;   // Protocol filler...
 
-  char* command;
+  char *command {};
   ACE_NEW_RETURN (command, char[commandsize], -1);
 
   // Ensure that the <command> memory is deallocated.
@@ -328,10 +326,10 @@ ACEXML_HttpCharStream::determine_encoding ()
   if (this->stream_ == nullptr)
     return -1;
 
-  char input[] = {0, 0, 0, 0};
+  char input[4] {};
   size_t const len = sizeof (input) / sizeof (input[0]);
 
-  size_t i = 0;
+  size_t i {};
   for (; i < len && input[i] != static_cast<char> (EOF); ++i)
     input[i] = static_cast<char> (this->stream_->peek_char (i));
 
@@ -395,7 +393,7 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
   if (this->stream_ == nullptr)
     return -1;
   len = len * sizeof (ACEXML_Char);
-  const char* temp = this->stream_->recv (len);
+  char const *temp = this->stream_->recv (len);
   if (temp == nullptr)
     return -1;
   ACE_OS::strncpy (str, ACE_TEXT_CHAR_TO_TCHAR (temp), len);
@@ -439,10 +437,10 @@ ACEXML_HttpCharStream::get_i (ACEXML_Char& ch)
       ch = (ACEXML_Char) this->stream_->get_char();
       return (ch == (ACEXML_Char)EOF ? -1 : 0);
     }
-  int BE = (ACE_OS::strcmp (this->encoding_.get (),
-                            ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
-  ACEXML_Char input[2] = {0};
-  int i = 0;
+  bool const BE = ACE_OS::strcmp (this->encoding_.get (),
+                                  ACE_TEXT ("UTF-16BE")) == 0;
+  ACEXML_Char input[2] {};
+  int i {};
   for (; i < 2 && (input[i] = this->stream_->get_char()) > 0; ++i)
     ;
   if (i < 2)
@@ -464,11 +462,11 @@ ACEXML_HttpCharStream::peek_i ()
       return ch;
     }
 
-  int BE = (ACE_OS::strcmp (this->encoding_.get (),
-                            ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
+  bool const BE = ACE_OS::strcmp (this->encoding_.get (),
+                                  ACE_TEXT ("UTF-16BE")) == 0;
   // Peek into the stream.
   ACEXML_Char input[2];
-  int i = 0;
+  int i {};
   for (; i < 2 && (input[i] = this->stream_->peek_char (i)) > 0; ++i)
     ;
   if (i < 2)
