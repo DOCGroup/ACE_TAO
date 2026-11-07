@@ -62,7 +62,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_thread_key_t key;
   if (ACE_Thread::keycreate (&key, 0) == 0)
     {
-      void* specific = 0;
+      void *specific {};
       if (ACE_Thread::getspecific (key, &specific) == 0)
         {
           if (specific == 0)

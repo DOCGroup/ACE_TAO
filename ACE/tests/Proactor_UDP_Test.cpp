@@ -199,7 +199,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
   ACE_UNUSED_ARG (type_proactor);
   ACE_UNUSED_ARG (max_op);
 
-  ACE_WIN32_Proactor *proactor_impl = 0;
+  ACE_WIN32_Proactor *proactor_impl {};
 
   ACE_NEW_RETURN (proactor_impl,
                   ACE_WIN32_Proactor,

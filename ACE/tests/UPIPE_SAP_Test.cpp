@@ -41,7 +41,7 @@ connector (void *)
   if (con.connect (c_stream, addr) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connector ACE_UPIPE_Connector failed\n")));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ("hello thanks") * sizeof (char)), 0);
 
@@ -98,7 +98,7 @@ acceptor (void *args)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) ACE_UPIPE_Acceptor.accept failed\n")));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
 
   if (s_stream.recv (mb) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));

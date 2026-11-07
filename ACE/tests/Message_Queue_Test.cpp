@@ -549,7 +549,7 @@ single_thread_performance_test (int queue_type = 0)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of
   // stack space available.
-  ACE_Message_Block *receive_block = 0;
+  ACE_Message_Block *receive_block {};
   ACE_NEW_RETURN (receive_block,
                   ACE_Message_Block[max_messages],
                   -1);

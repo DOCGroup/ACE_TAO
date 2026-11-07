@@ -247,7 +247,7 @@ main (int, char **)
 {
   char const *const program = "UnloadLibACE";
 
-  FILE *logfp = 0;
+  FILE *logfp {};
 
   if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != 0)
     {

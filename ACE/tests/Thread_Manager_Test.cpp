@@ -276,13 +276,13 @@ run_main (int, ACE_TCHAR *[])
 
 #if 0
   // Assign thread (VxWorks task) names to test that feature.
-  ACE_hthread_t *thread_name = 0;
+  ACE_hthread_t *thread_name {};
   ACE_NEW_RETURN (thread_name,
                   ACE_hthread_t[n_threads],
                   -1);
 
   // And test the ability to specify stack size.
-  size_t *stack_size = 0;
+  size_t *stack_size {};
   ACE_NEW_RETURN (stack_size,
                   size_t[n_threads],
                   -1);

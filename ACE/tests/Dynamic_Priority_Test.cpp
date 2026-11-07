@@ -153,7 +153,7 @@ order_consumer (void *args)
        *expected != '\0';
        ++expected)
   {
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb {};
 
     int result = msg_queue->dequeue_head (mb);
 
@@ -345,7 +345,7 @@ performance_consumer (void * args)
   ACE_TEST_ASSERT (msg_queue != 0);
 
   u_int local_count = 0;
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
 
   // reset, then start timer
   timer.reset ();

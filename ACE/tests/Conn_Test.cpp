@@ -589,13 +589,13 @@ spawn_threads (ACCEPTOR *acceptor,
 
 #if 0
   // Assign thread (VxWorks task) names to test that feature.
-  ACE_hthread_t *server_name = 0;
+  ACE_hthread_t *server_name {};
   ACE_NEW_RETURN (server_name,
                   ACE_hthread_t[n_servers],
                   -1);
 
   // And test ability to provide stacks.
-  size_t *stack_size = 0;
+  size_t *stack_size {};
   ACE_NEW_RETURN (stack_size,
                   size_t[n_servers],
                   -1);
