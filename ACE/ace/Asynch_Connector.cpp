@@ -117,7 +117,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
     {
       // The Template method
       new_handler = this->make_handler ();
-      if (new_handler == 0)
+      if (new_handler == nullptr)
         {
           error = true;
           ACELIB_ERROR ((LM_ERROR,
@@ -228,7 +228,7 @@ ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
   HANDLER *handler {};
-  ACE_NEW_RETURN (handler, HANDLER, 0);
+  ACE_NEW_RETURN (handler, HANDLER, nullptr);
   return handler;
 }
 

@@ -287,7 +287,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       // The Template method
       new_handler = this->make_handler ();
-      if (new_handler == 0)
+      if (new_handler == nullptr)
         {
           error = true;
         }
@@ -298,7 +298,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       // Update the Proactor unless make_handler() or constructed handler
       // set up its own.
-      if (new_handler->proactor () == 0)
+      if (new_handler->proactor () == nullptr)
         new_handler->proactor (this->proactor ());
 
       // Pass the addresses
@@ -442,7 +442,7 @@ ACE_Asynch_Acceptor<HANDLER>::make_handler ()
   HANDLER *handler {};
   ACE_NEW_RETURN (handler,
                   HANDLER,
-                  0);
+                  nullptr);
   return handler;
 }
 
