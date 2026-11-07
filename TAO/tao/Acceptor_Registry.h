@@ -86,9 +86,6 @@ public:
 
   TAO_AcceptorSet const& acceptors () const;
 
-  TAO_AcceptorSet::const_iterator begin () const;
-  TAO_AcceptorSet::const_iterator end () const;
-
 private:
   TAO_Acceptor_Registry (TAO_Acceptor_Registry const &) = delete;
   TAO_Acceptor_Registry &operator= (TAO_Acceptor_Registry const &) = delete;

@@ -196,7 +196,7 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
 
   IIOP::ListenPointList listen_point_list;
 
-  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a IIOP acceptor
       if (acceptor->tag () == this->tag ())

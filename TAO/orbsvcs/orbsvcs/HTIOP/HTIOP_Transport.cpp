@@ -226,7 +226,7 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
   ::HTIOP::ListenPointList listen_point_list;
 
-  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a HTIOP acceptor
       if (acceptor->tag () == this->tag ())

@@ -44,7 +44,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 
       CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
       int prot_count = 0;
-      for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry)
+      for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
         {
           if (acceptor->tag () != last_known_prot)
             {
@@ -70,7 +70,7 @@ TAO_EndpointPolicy_Factory::create_policy (
           if (evi == nullptr)
             continue;
 
-          for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry)
+          for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
             {
               if (!found_one && acceptor->tag () == prot_tag)
                 found_one = evi->validate_acceptor (acceptor.get (), prot_count > 1);
