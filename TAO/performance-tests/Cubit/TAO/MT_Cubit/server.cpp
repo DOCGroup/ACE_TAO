@@ -129,8 +129,8 @@ Server::write_iors ()
 
   FILE *ior_f = 0;
 
-  if (GLOBALS::instance ()->ior_file != 0)
-    ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file,
+  if (GLOBALS::instance ()->ior_file)
+    ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file.get (),
                            "w");
 
   for (j = 0;

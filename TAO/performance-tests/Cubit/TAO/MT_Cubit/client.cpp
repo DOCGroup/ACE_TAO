@@ -64,7 +64,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 
 Client_i::~Client_i ()
 {
-  delete this->high_priority_client_;
+  this->high_priority_client_.reset ();
   if (this->low_priority_client_ != 0)
     // Delete the low priority task array.
     for (u_int i = this->num_low_priority_;
@@ -72,8 +72,8 @@ Client_i::~Client_i ()
          i--)
       delete this->low_priority_client_[i - 1];
   delete [] this->low_priority_client_;
-  delete this->util_thread_;
-  delete this->ts_;
+  this->util_thread_.reset ();
+  this->ts_.reset ();
 }
 
 int
@@ -92,9 +92,11 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
   // the default maximum.
   ACE::set_handle_limit ();
 
-  ACE_NEW_RETURN (this->ts_,
+  Task_State *task_state {};
+  ACE_NEW_RETURN (task_state,
                   Task_State,
                   -1);
+  this->ts_.reset (task_state);
 
   // Preliminary argument processing.
   for (int i=0;
@@ -282,18 +284,20 @@ Client_i::calc_util_time ()
 int
 Client_i::activate_high_client ()
 {
-  ACE_NEW_RETURN (this->high_priority_client_,
+  Client *client {};
+  ACE_NEW_RETURN (client,
                   Client (&this->client_thread_manager_,
-                          this->ts_,
+                          this->ts_.get (),
                           this->argc_,
                           this->argv_,
                           0),
                   -1);
+  this->high_priority_client_.reset (client);
 
 #if defined (ACE_HAS_VXTHREADS)
   // Set a task_handle string starting with "@", so we are able to
   // accurately count the number of context switches.
-  ACE_OS::strcpy (this->task_name_,
+  ACE_OS::strcpy (this->task_name_.get (),
                   "@High");
 #endif /* ACE_HAS_VXTHREADS */
 
@@ -304,7 +308,7 @@ Client_i::activate_high_client ()
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
 
-  const char *t_name = this->task_name_;
+  const char *t_name = this->task_name_.get ();
 
   if (this->high_priority_client_->activate (
       GLOBALS::instance ()->thr_create_flags,
@@ -336,7 +340,7 @@ Client_i::activate_low_client ()
   // Hack to make sure we have something in this pointer, when
   // thread_count == 1.
   this->low_priority_client_[0] =
-    this->high_priority_client_;
+    this->high_priority_client_.get ();
   this->num_low_priority_ =
     this->ts_->thread_count_ - 1;
 
@@ -354,7 +358,7 @@ Client_i::activate_low_client ()
     {
       ACE_NEW_RETURN (this->low_priority_client_ [i - 1],
                       Client (&this->client_thread_manager_,
-                              this->ts_,
+                              this->ts_.get (),
                               this->argc_,
                               this->argv_,
                               i),
@@ -366,7 +370,7 @@ Client_i::activate_low_client ()
 
       // Set a task_name string starting with "@", so we are able to
       // accurately count the number of context switches on VXWORKS
-      ACE_OS::sprintf (this->task_name_,
+      ACE_OS::sprintf (this->task_name_.get (),
                        "@Low%u",
                        i);
 #endif /* ACE_HAS_VXTHREADS */
@@ -376,7 +380,7 @@ Client_i::activate_low_client ()
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
-      const char *t_name = this->task_name_;
+      const char *t_name = this->task_name_.get ();
 
       if (this->low_priority_client_[i - 1]->activate (
           GLOBALS::instance ()->thr_create_flags,
@@ -415,10 +419,12 @@ Client_i::activate_low_client ()
 int
 Client_i::activate_util_thread ()
 {
-  ACE_NEW_RETURN (this->util_thread_,
-                  Util_Thread (this->ts_,
+  Util_Thread *util_thread {};
+  ACE_NEW_RETURN (util_thread,
+                  Util_Thread (this->ts_.get (),
                                &this->util_thread_manager_),
                   -1);
+  this->util_thread_.reset (util_thread);
 
   // Time the utilization thread' "computation" to get %IdleCPU at the
   // end of the test.
@@ -601,9 +607,11 @@ Client_i::do_priority_inversion_test ()
   this->timer_.start ();
 #if defined (ACE_HAS_VXTHREADS)
   ctx = 0;
-  ACE_NEW_RETURN (this->task_name_,
+  char *task_name {};
+  ACE_NEW_RETURN (task_name,
                   char[TASK_HANDLE_LEN],
                   -1);
+  this->task_name_.reset (task_name);
 #endif /* ACE_HAS_VXTHREADS */
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
@@ -680,22 +688,22 @@ int
 Client_i::do_thread_per_rate_test ()
 {
   Client CB_20Hz_client (&this->client_thread_manager_,
-                         this->ts_,
+                         this->ts_.get (),
                          this->argc_,
                          this->argv_,
                          CB_20HZ_CONSUMER);
   Client CB_10Hz_client (&this->client_thread_manager_,
-                         this->ts_,
+                         this->ts_.get (),
                          this->argc_,
                          this->argv_,
                          CB_10HZ_CONSUMER);
   Client CB_5Hz_client (&this->client_thread_manager_,
-                        this->ts_,
+                        this->ts_.get (),
                         this->argc_,
                         this->argv_,
                         CB_5HZ_CONSUMER);
   Client CB_1Hz_client (&this->client_thread_manager_,
-                        this->ts_,
+                        this->ts_.get (),
                         this->argc_,
                         this->argv_,
                         CB_1HZ_CONSUMER);

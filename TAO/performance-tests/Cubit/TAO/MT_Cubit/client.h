@@ -13,6 +13,7 @@
 
 
 #include "ace/Task.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -108,7 +109,7 @@ private:
   void get_context_switches ();
 
   /// Pointer to the high priority client object.
-  Client *high_priority_client_ {};
+  std::unique_ptr<Client> high_priority_client_ {};
 
   /// Array to hold pointers to the low priority tasks.
   Client **low_priority_client_ {};
@@ -120,7 +121,7 @@ private:
   MT_Priority priority_;
 
   /// Utilization thread.
-  Util_Thread *util_thread_ {};
+  std::unique_ptr<Util_Thread> util_thread_ {};
 
   /// Utilization thread manager.
   ACE_Thread_Manager util_thread_manager_;
@@ -129,7 +130,7 @@ private:
   ACE_timer_t util_task_duration_ {};
 
   /// Pointer to task state.
-  Task_State *ts_ {};
+  std::unique_ptr<Task_State> ts_ {};
 
   /// Priority used for the high priority client.
   ACE_Sched_Priority high_priority_ {};
@@ -156,7 +157,7 @@ private:
 
   // Set a task_name string starting with "@", so we are able to
   // accurately count the number of context switches.
-  char *task_name_ {};
+  std::unique_ptr<char[]> task_name_ {};
 
   /// elapsed time for the latency tests.
   ACE_Time_Value delta_ {};

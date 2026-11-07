@@ -118,9 +118,11 @@ Cubit_Task::initialize_orb ()
           if (GLOBALS::instance ()->parse_args (argc,
                                                 argv) == -1)
             return -1;
-          ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
+          ACE_Barrier *barrier {};
+          ACE_NEW_RETURN (barrier,
                           ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
                           -1);
+          GLOBALS::instance ()->barrier_.reset (barrier);
           ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon,
                                     GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;

@@ -30,12 +30,16 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
         thread_per_rate = 1;
         break;
       case 'f':
-        ACE_NEW_RETURN (ior_file,
-                        ACE_TCHAR[BUFSIZ],
-                        -1);
-        ACE_OS::strcpy (ior_file,
-                        opts.opt_arg ());
-        break;
+        {
+          ACE_TCHAR *file_name {};
+          ACE_NEW_RETURN (file_name,
+                          ACE_TCHAR[BUFSIZ],
+                          -1);
+          ior_file.reset (file_name);
+          ACE_OS::strcpy (ior_file.get (),
+                          opts.opt_arg ());
+          break;
+        }
       case 'e':
         ACE_OS::strcpy (endpoint,
                         opts.opt_arg ());

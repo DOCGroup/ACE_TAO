@@ -22,9 +22,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Get_Opt.h"
+#include "ace/Barrier.h"
 #include "ace/Sched_Params.h"
 #include "ace/Singleton.h"
 #include "ace/Condition_Thread_Mutex.h"
+
+#include <memory>
 
 #include "tao/orbconf.h"
 
@@ -87,10 +90,6 @@ argv = force_argv;
 // A constant to avoid the utility thread blocking the machine and to
 // bound its  number of computations.
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Barrier;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class Globals
  *
@@ -132,7 +131,7 @@ public:
   ACE_TCHAR endpoint[BUFSIZ] {};
 
   /// file name to read/write the iors of the servants.
-  ACE_TCHAR *ior_file {};
+  std::unique_ptr<ACE_TCHAR[]> ior_file {};
 
   /// number of objects per servant thread.
   u_int num_of_objs {2};
@@ -157,7 +156,7 @@ public:
 
   /// Barrier for the multiple servants to synchronize after binding to
   /// the orb.
-  ACE_Barrier *barrier_ {};
+  std::unique_ptr<ACE_Barrier> barrier_ {};
 };
 
 // Make the globals a Singleton.
