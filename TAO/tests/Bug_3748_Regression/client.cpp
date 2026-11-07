@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include <string>
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
@@ -18,10 +18,8 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior>"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -39,14 +37,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var const tmp = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+      CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
 
       Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
                              ior.c_str ()),
                             1);
         }

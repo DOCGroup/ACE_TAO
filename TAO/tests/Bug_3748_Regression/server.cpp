@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 
-int
+static int
 parse_args (int argc,
             ACE_TCHAR *argv[],
             std::basic_string<ACE_TCHAR> &ior_output_file)
@@ -23,10 +23,15 @@ parse_args (int argc,
 
       case 'h':
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
+                           argv[0]),
+                          -1);
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -86,10 +91,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <output_filename>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
                              ior_output_file.c_str ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
