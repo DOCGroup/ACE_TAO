@@ -51,7 +51,7 @@ query (const char *type,
 
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
-  const CosTrading::Admin::OctetSeq* request_id = {};
+  const CosTrading::Admin::OctetSeq* request_id {};
   int check = this->seen_request_id (policies, request_id);
 
   if (check)
@@ -874,7 +874,7 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 describe (const char *id)
 {
   // Get service type map.
-  char const* type = {};
+  char const* type {};
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   // Perform a lookup to find the offer.
@@ -909,7 +909,7 @@ modify (const char *id,
   if (check)
     throw CosTrading::NotImplemented ();
 
-  char const* type = {};
+  char const* type {};
   TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
@@ -1530,7 +1530,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
     throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
-  typename Links::ENTRY* link_entry = {};
+  typename Links::ENTRY* link_entry {};
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     throw CosTrading::Link::UnknownLinkName (name);
@@ -1590,7 +1590,7 @@ modify_link (const char *name,
     throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
-  typename Links::ENTRY* link_entry = {};
+  typename Links::ENTRY* link_entry {};
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     throw CosTrading::Link::UnknownLinkName (name);

@@ -61,7 +61,7 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
                        host_name,
                        static_cast<long> (ACE_OS::getpid ()));
 
-  for (char* dot = {};
+  for (char* dot {};
            (dot = std::strchr (trader_name, '.')) != nullptr;
            *dot = '_')
         continue;
