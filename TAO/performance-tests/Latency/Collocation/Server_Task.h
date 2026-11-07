@@ -21,9 +21,13 @@ public:
   Server_Task (CORBA::ORB_ptr sorb,
                ACE_Manual_Event &cond,
                ACE_Thread_Manager *thr_mgr);
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
   //Test::Roundtrip_prt get_reference ();
   Test::Roundtrip * get_reference ();

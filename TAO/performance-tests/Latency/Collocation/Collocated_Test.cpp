@@ -7,10 +7,13 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-int niterations = 250000;
+struct Test_Options
+{
+  int iterations = 250000;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Test_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
   int c;
@@ -19,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'n':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       default:
@@ -31,13 +34,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-set_priority()
+set_priority ()
 {
-  int priority =
+  int const base_priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
+  int const priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                        base_priority);
   // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
@@ -59,14 +62,15 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   //Use Real-time Scheduling class if possible
-  set_priority();
+  set_priority ();
 
   try
     {
       CORBA::ORB_var sorb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc,argv) == -1)
+      Test_Options options;
+      if (parse_args (argc, argv, options) == -1)
         return -1;
 
       ACE_Manual_Event wait_for_event;
@@ -89,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Roundtrip_var reference = server_task.get_reference ();
 
       Client_Task client_task (reference.in (),
-                               niterations,
+                               options.iterations,
                                ACE_Thread_Manager::instance ());
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
@@ -101,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }

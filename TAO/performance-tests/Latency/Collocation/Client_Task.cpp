@@ -4,15 +4,13 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/SString.h"
 
 Client_Task::Client_Task (Test::Roundtrip_ptr reference,
                           int iterations,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr),
-    niterations (iterations),
+    niterations_ (iterations),
     remote_ref_ (Test::Roundtrip::_duplicate (reference))
-
 {
 }
 
@@ -28,33 +26,32 @@ Client_Task::svc ()
                           1);
       }
 
-      //// Start Test ///////////////////////////////
-      CORBA::Long test_time = 1234L;
+      CORBA::Long const test_time = 1234L;
 
       // Warm up the system
-      for (int i=0; i < 1000; i++)
+      for (int i = 0; i < 1000; ++i)
         this->remote_ref_->test_method (test_time);
 
       // Start for actual Measurements
-      ACE_Sample_History history (niterations);
+      ACE_Sample_History history (this->niterations_);
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-      for (int itercounter = 0; itercounter < niterations; ++itercounter)
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
+      for (int iteration = 0; iteration < this->niterations_; ++iteration)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
           (void) this->remote_ref_->test_method (start);
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           history.sample (now - start);
         }
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
@@ -70,7 +67,7 @@ Client_Task::svc ()
       this->remote_ref_->shutdown ();
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
