@@ -27,6 +27,7 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -66,7 +67,8 @@ private:
   void operator= (RT_Endpoint_Selector_Factory &&) = delete;
 
 private:
-  TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_ {};
+  std::unique_ptr<TAO_RT_Invocation_Endpoint_Selector>
+    rt_invocation_endpoint_selector_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
