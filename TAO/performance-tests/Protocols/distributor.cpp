@@ -7,10 +7,17 @@
 #include "tao/Policy_CurrentC.h"
 #include "tao/debug.h"
 #include "testS.h"
+#include <memory>
+#include <cstring>
 
-static const ACE_TCHAR *ior_file = ACE_TEXT ("distributor.ior");
-static const ACE_TCHAR *ior = ACE_TEXT ("file://receiver.ior");
-static int number_of_connection_attempts = 20;
+struct Options
+{
+  ACE_TCHAR const *ior_file {ACE_TEXT ("distributor.ior")};
+  ACE_TCHAR const *ior {ACE_TEXT ("file://receiver.ior")};
+};
+
+static Options options;
+static int const number_of_connection_attempts {20};
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
@@ -22,11 +29,11 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'f':
-        ior_file = get_opts.opt_arg ();
+        options.ior_file = get_opts.opt_arg ();
         break;
 
       default:
@@ -36,8 +43,8 @@ parse_args (int argc, ACE_TCHAR **argv)
                            "\t-k <ior> (defaults to %s)\n"
                            "\n",
                            argv[0],
-                           ior_file,
-                           ior),
+                           options.ior_file,
+                           options.ior),
                           -1);
       }
 
@@ -54,33 +61,37 @@ public:
           CORBA::PolicyManager_ptr policy_manager,
           test_ptr receiver);
 
-  ~test_i ();
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+  ~test_i () override = default;
 
   void start_test (CORBA::Long session_id,
-                   const char *protocol,
+                   char const *protocol,
                    CORBA::ULong invocation_rate,
                    CORBA::ULong message_size,
-                   CORBA::ULong iterations);
+                   CORBA::ULong iterations) override;
 
-  void end_test ();
+  void end_test () override;
 
-  void oneway_sync ();
+  void oneway_sync () override;
 
-  void twoway_sync ();
+  void twoway_sync () override;
 
   void oneway_method (CORBA::Long session_id,
                       CORBA::ULong iteration,
-                      const ::test::octets &payload);
+                      ::test::octets const &payload) override;
 
   void twoway_method (CORBA::Long &session_id,
                       CORBA::ULong &iteration,
-                      ::test::octets &payload);
+                      ::test::octets &payload) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -125,13 +136,9 @@ test_i::test_i (CORBA::ORB_ptr orb,
     this->rtorb_->create_client_protocol_policy (protocols);
 }
 
-test_i::~test_i ()
-{
-}
-
 void
 test_i::start_test (CORBA::Long session_id,
-                    const char *protocol,
+                    char const *protocol,
                     CORBA::ULong invocation_rate,
                     CORBA::ULong message_size,
                     CORBA::ULong iterations)
@@ -143,12 +150,12 @@ test_i::start_test (CORBA::Long session_id,
   protocols[0].orb_protocol_properties =
     RTCORBA::ProtocolProperties::_nil ();
 
-  if (ACE_OS::strcmp (protocol, "DIOP") == 0)
+  if (std::strcmp (protocol, "DIOP") == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
       protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
-  else if (ACE_OS::strcmp (protocol, "SCIOP") == 0)
+  else if (std::strcmp (protocol, "SCIOP") == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
       protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
@@ -180,7 +187,7 @@ test_i::start_test (CORBA::Long session_id,
 
           goto test_protocol_success;
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const&)
         {
           ++j;
 
@@ -221,7 +228,7 @@ test_i::start_test (CORBA::Long session_id,
 
           goto base_protocol_success;
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const&)
         {
           ACE_OS::sleep (1);
 
@@ -270,7 +277,7 @@ test_i::twoway_sync ()
 void
 test_i::oneway_method (CORBA::Long session_id,
                        CORBA::ULong iteration,
-                       const ::test::octets &payload)
+                       ::test::octets const &payload)
 {
   this->receiver_->oneway_method (session_id,
                                   iteration,
@@ -321,7 +328,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
 
-      int parse_args_result =
+      int const parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
@@ -336,17 +343,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       test_var receiver =
         test::_narrow (object.in ());
 
-      test_i *servant =
-        new test_i (orb.in (),
-                    root_poa.in (),
-                    rtorb.in (),
-                    policy_manager.in (),
-                    receiver.in ());
+      test_i *servant {};
+      ACE_NEW_RETURN (servant,
+                      test_i (orb.in (),
+                              root_poa.in (),
+                              rtorb.in (),
+                              policy_manager.in (),
+                              receiver.in ()),
+                      -1);
       PortableServer::ServantBase_var safe_servant (servant);
       ACE_UNUSED_ARG (safe_servant);
 
@@ -356,25 +365,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (test.in ());
 
-      FILE *output_file =
-        ACE_OS::fopen (ior_file, "w");
-      ACE_ASSERT (output_file != 0);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_file, "w"), ACE_OS::fclose);
+        ACE_ASSERT (output_file != nullptr);
 
-      u_int result =
-        ACE_OS::fprintf (output_file,
-                         "%s",
-                         ior.in ());
-      ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
-      ACE_UNUSED_ARG (result);
-
-      ACE_OS::fclose (output_file);
+        u_int const result =
+          ACE_OS::fprintf (output_file.get (),
+                           "%s",
+                           ior.in ());
+        ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+        ACE_UNUSED_ARG (result);
+      }
 
       poa_manager->activate ();
 
       orb->run ();
       ACE_OS::sleep(1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

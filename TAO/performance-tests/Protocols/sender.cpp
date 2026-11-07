@@ -17,30 +17,36 @@
 #include "Custom_Network_Priority_Mapping.cpp"
 #include "tao/debug.h"
 #include "testC.h"
+#include <memory>
 
 // Types of tests supported.
-enum Test_Type
+enum class Test_Type
   {
-    PACED,
-    THROUGHPUT,
-    LATENCY
+    paced,
+    throughput,
+    latency
   };
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://distributor.ior");
-static int shutdown_server = 0;
-static CORBA::ULong iterations = 5;
-static CORBA::ULong invocation_rate = 5;
-static int count_missed_end_deadlines = 0;
-static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
-static int do_dump_history = 0;
-static int print_missed_invocations = 0;
-static CORBA::ULong message_size = 0;
-static const ACE_TCHAR *test_protocol = ACE_TEXT ("IIOP");
-static int print_statistics = 1;
-static int number_of_connection_attempts = 20;
-static int enable_diffserv_code_points = 0;
-static RTCORBA::Priority corba_priority = RTCORBA::minPriority;
-static Test_Type test_type = PACED;
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://distributor.ior")};
+  bool shutdown_server {};
+  CORBA::ULong iterations {5};
+  CORBA::ULong invocation_rate {5};
+  bool count_missed_end_deadlines {};
+  ACE_High_Res_Timer::global_scale_factor_type gsf {};
+  bool do_dump_history {};
+  bool print_missed_invocations {};
+  CORBA::ULong message_size {};
+  ACE_TCHAR const *test_protocol {ACE_TEXT ("IIOP")};
+  bool print_statistics {true};
+  int number_of_connection_attempts {20};
+  bool enable_diffserv_code_points {};
+  RTCORBA::Priority corba_priority {RTCORBA::minPriority};
+  Test_Type test_type {Test_Type::paced};
+};
+
+static Options options;
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
@@ -52,76 +58,77 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'a':
-        test_type = static_cast<Test_Type> (ACE_OS::atoi (get_opts.opt_arg ()));
+        options.test_type = static_cast<Test_Type> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'b':
-        enable_diffserv_code_points = ACE_OS::atoi (get_opts.opt_arg ());
+        options.enable_diffserv_code_points = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'c':
-        corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
+        options.corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        do_dump_history = ACE_OS::atoi (get_opts.opt_arg ());
+        options.do_dump_history = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'e':
-        count_missed_end_deadlines = ACE_OS::atoi (get_opts.opt_arg ());
+        options.count_missed_end_deadlines = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'm':
-        print_missed_invocations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.print_missed_invocations = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'p':
-        test_protocol = get_opts.opt_arg ();
+        options.test_protocol = get_opts.opt_arg ();
         break;
 
       case 'r':
-        invocation_rate = ACE_OS::atoi (get_opts.opt_arg ());
+        options.invocation_rate = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 's':
-        message_size = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        print_statistics = ACE_OS::atoi (get_opts.opt_arg ());
+        options.print_statistics = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'x':
-        shutdown_server = ACE_OS::atoi (get_opts.opt_arg ());
+        options.shutdown_server = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       default:
         {
-          const ACE_TCHAR *test = 0;
-          switch (test_type)
+          ACE_TCHAR const *test {};
+          switch (options.test_type)
             {
-            case PACED:
+            case Test_Type::paced:
               test = ACE_TEXT ("PACED");
               break;
-            case THROUGHPUT:
+            case Test_Type::throughput:
               test = ACE_TEXT ("THROUGHPUT");
               break;
-            case LATENCY:
+            case Test_Type::latency:
               test = ACE_TEXT ("LATENCY");
               break;
             }
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage:  %s\n"
-                             "\t-a <test type> (defaults to %s [valid values are PACED(%d), THROUGHPUT(%d), and LATENCY(%d))\n"
+                             "\t-a <test type> (defaults to %s [valid values are PACED(%d), "
+                             "THROUGHPUT(%d), and LATENCY(%d))\n"
                              "\t-b <enable diffserv code points> (defaults to %d)\n"
                              "\t-c <corba priority> (defaults to %d)\n"
                              "\t-d <show history> (defaults to %d)\n"
@@ -137,19 +144,21 @@ parse_args (int argc, ACE_TCHAR **argv)
                              "\t-x <shutdown server> (defaults to %d)\n"
                              "\n",
                              argv[0],
-                             test, PACED, THROUGHPUT, LATENCY,
-                             enable_diffserv_code_points,
-                             corba_priority,
-                             do_dump_history,
-                             count_missed_end_deadlines,
-                             iterations,
-                             ior,
-                             print_missed_invocations,
-                             test_protocol,
-                             invocation_rate,
-                             message_size,
-                             print_statistics,
-                             shutdown_server),
+                             test, static_cast<int> (Test_Type::paced),
+                             static_cast<int> (Test_Type::throughput),
+                             static_cast<int> (Test_Type::latency),
+                             options.enable_diffserv_code_points,
+                             options.corba_priority,
+                             options.do_dump_history,
+                             options.count_missed_end_deadlines,
+                             options.iterations,
+                             options.ior,
+                             options.print_missed_invocations,
+                             options.test_protocol,
+                             options.invocation_rate,
+                             options.message_size,
+                             options.print_statistics,
+                             options.shutdown_server),
                             -1);
         }
       }
@@ -178,6 +187,10 @@ to_hrtime (double seconds,
 class Worker
 {
 public:
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
   Worker (CORBA::ORB_ptr orb,
           RTCORBA::RTORB_ptr rtorb,
           CORBA::PolicyManager_ptr policy_manager,
@@ -198,20 +211,20 @@ private:
   CORBA::PolicyManager_var policy_manager_;
   test_var test_;
   ACE_Sample_History history_;
-  ACE_hrtime_t interval_between_calls_;
-  ACE_hrtime_t test_start_;
-  ACE_hrtime_t test_end_;
-  CORBA::ULong missed_start_deadlines_;
-  CORBA::ULong missed_end_deadlines_;
+  ACE_hrtime_t interval_between_calls_ {};
+  ACE_hrtime_t test_start_ {};
+  ACE_hrtime_t test_end_ {};
+  CORBA::ULong missed_start_deadlines_ {};
+  CORBA::ULong missed_end_deadlines_ {};
 
-  typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
+  using Missed_Invocations = ACE_Array_Base<CORBA::ULong>;
   Missed_Invocations missed_start_invocations_;
   Missed_Invocations missed_end_invocations_;
 
   CORBA::PolicyList base_protocol_policy_;
   CORBA::PolicyList test_protocol_policy_;
 
-  CORBA::Long session_id_;
+  CORBA::Long session_id_ {};
 };
 
 Worker::Worker (CORBA::ORB_ptr orb,
@@ -221,21 +234,18 @@ Worker::Worker (CORBA::ORB_ptr orb,
   : rtorb_ (RTCORBA::RTORB::_duplicate (rtorb)),
     policy_manager_ (CORBA::PolicyManager::_duplicate (policy_manager)),
     test_ (test::_duplicate (test)),
-    history_ (iterations),
-    interval_between_calls_ (),
-    missed_start_deadlines_ (0),
-    missed_end_deadlines_ (0),
-    missed_start_invocations_ (iterations),
-    missed_end_invocations_ (iterations)
+    history_ (options.iterations),
+    missed_start_invocations_ (options.iterations),
+    missed_end_invocations_ (options.iterations)
 {
   // Each sender will have a random session id.  This helps in
   // identifying late packets arriving at the server.
-  ACE_OS::srand ((unsigned) ACE_OS::time (0));
+  ACE_OS::srand (static_cast<unsigned> (ACE_OS::time (nullptr)));
   this->session_id_ = ACE_OS::rand ();
 
   // Interval is inverse of rate.
   this->interval_between_calls_ =
-    to_hrtime (1 / double (invocation_rate), gsf);
+    to_hrtime (1 / double (options.invocation_rate), options.gsf);
 
   // Base protocol is used for setting up and tearing down the test.
   this->base_protocol_policy_.length (1);
@@ -250,7 +260,8 @@ Worker::Worker (CORBA::ORB_ptr orb,
   RTCORBA::TCPProtocolProperties_var tcp_base_transport_protocol_properties =
     RTCORBA::TCPProtocolProperties::_narrow (base_transport_protocol_properties.in ());
 
-  tcp_base_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+  tcp_base_transport_protocol_properties->enable_network_priority (
+    options.enable_diffserv_code_points);
 
   RTCORBA::ProtocolList protocols;
   protocols.length (1);
@@ -266,12 +277,12 @@ Worker::Worker (CORBA::ORB_ptr orb,
   this->base_protocol_policy_[0] =
     this->rtorb_->create_client_protocol_policy (protocols);
 
-  if (ACE_OS::strcmp (test_protocol, ACE_TEXT ("DIOP")) == 0)
+  if (ACE_OS::strcmp (options.test_protocol, ACE_TEXT ("DIOP")) == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
       protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
-  else if (ACE_OS::strcmp (test_protocol, ACE_TEXT ("SCIOP")) == 0)
+  else if (ACE_OS::strcmp (options.test_protocol, ACE_TEXT ("SCIOP")) == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
       protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
@@ -291,21 +302,24 @@ Worker::Worker (CORBA::ORB_ptr orb,
       RTCORBA::UserDatagramProtocolProperties_var udp_test_transport_protocol_properties =
         RTCORBA::UserDatagramProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
-      udp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+      udp_test_transport_protocol_properties->enable_network_priority (
+        options.enable_diffserv_code_points);
     }
   else if (protocols[0].protocol_type == TAO_TAG_SCIOP_PROFILE)
     {
       RTCORBA::StreamControlProtocolProperties_var sctp_test_transport_protocol_properties =
         RTCORBA::StreamControlProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
-      sctp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+      sctp_test_transport_protocol_properties->enable_network_priority (
+        options.enable_diffserv_code_points);
     }
   else if (protocols[0].protocol_type == IOP::TAG_INTERNET_IOP)
     {
       RTCORBA::TCPProtocolProperties_var tcp_test_transport_protocol_properties =
         RTCORBA::TCPProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
-      tcp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+      tcp_test_transport_protocol_properties->enable_network_priority (
+        options.enable_diffserv_code_points);
     }
 
   protocols[0].transport_protocol_properties =
@@ -322,7 +336,7 @@ Worker::print_stats ()
     this->missed_start_deadlines_ + this->missed_end_deadlines_;
 
   CORBA::ULong made_total_deadlines =
-    iterations - missed_total_deadlines;
+    options.iterations - missed_total_deadlines;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n************ Statistics ************\n\n"));
@@ -331,31 +345,33 @@ Worker::print_stats ()
   // Senders-side stats for PACED invocations are not too relevant
   // since we are doing one way calls.
   //
-  if (test_type == PACED)
+  if (options.test_type == Test_Type::paced)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Rate = %d/sec; Iterations = %d; ",
-                  invocation_rate,
-                  iterations));
+                  options.invocation_rate,
+                  options.iterations));
 
-      if (count_missed_end_deadlines)
+      if (options.count_missed_end_deadlines)
         ACE_DEBUG ((LM_DEBUG,
                     "Deadlines made/missed[start,end]/%% = %d/%d[%d,%d]/%.2f%%; Effective Rate = %.2f\n",
                     made_total_deadlines,
                     missed_total_deadlines,
                     this->missed_start_deadlines_,
                     this->missed_end_deadlines_,
-                    made_total_deadlines * 100 / (double) iterations,
-                    made_total_deadlines / to_seconds (this->test_end_ - this->test_start_, gsf)));
+                    made_total_deadlines * 100 / (double) options.iterations,
+                    made_total_deadlines / to_seconds (this->test_end_ - this->test_start_,
+                                                       options.gsf)));
       else
         ACE_DEBUG ((LM_DEBUG,
                     "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
                     made_total_deadlines,
                     missed_total_deadlines,
-                    made_total_deadlines * 100 / (double) iterations,
-                    made_total_deadlines / to_seconds (this->test_end_ - this->test_start_, gsf)));
+                    made_total_deadlines * 100 / (double) options.iterations,
+                    made_total_deadlines / to_seconds (this->test_end_ - this->test_start_,
+                                                       options.gsf)));
 
-      if (print_missed_invocations)
+      if (options.print_missed_invocations)
         {
           ACE_DEBUG ((LM_DEBUG, "\nMissed start invocations are:\n"));
 
@@ -370,7 +386,7 @@ Worker::print_stats ()
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
 
-          if (count_missed_end_deadlines)
+          if (options.count_missed_end_deadlines)
             {
               ACE_DEBUG ((LM_DEBUG, "\nMissed end invocations are:\n"));
 
@@ -389,32 +405,32 @@ Worker::print_stats ()
     }
 
   // Individual calls are relevant for the PACED and LATENCY tests.
-  if (test_type == PACED ||
-      test_type == LATENCY)
+  if (options.test_type == Test_Type::paced ||
+      options.test_type == Test_Type::latency)
     {
-      if (do_dump_history)
+      if (options.do_dump_history)
         {
-          this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);
+          this->history_.dump_samples (ACE_TEXT("HISTORY"), options.gsf);
         }
 
       ACE_Basic_Stats stats;
       this->history_.collect_basic_stats (stats);
-      stats.dump_results (ACE_TEXT("Total"), gsf);
+      stats.dump_results (ACE_TEXT("Total"), options.gsf);
 
-      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), options.gsf,
                                              this->test_end_ - this->test_start_,
-                                             iterations);
+                                             options.iterations);
     }
   else
     {
-      ACE_hrtime_t elapsed_time =
+      ACE_hrtime_t const elapsed_time =
         this->test_end_ - this->test_start_;
 
-      double seconds =
-        to_seconds (elapsed_time, gsf);
+      double const seconds =
+        to_seconds (elapsed_time, options.gsf);
 
-      ACE_hrtime_t bits = iterations;
-      bits *= message_size * 8;
+      ACE_hrtime_t bits = options.iterations;
+      bits *= options.message_size * 8;
 
       ACE_DEBUG ((LM_DEBUG,
                   "%Q bits sent in %5.1f seconds at a rate of %5.2f Mbps\n",
@@ -447,7 +463,7 @@ Worker::missed_start_deadline (CORBA::ULong invocation)
 void
 Worker::missed_end_deadline (CORBA::ULong invocation)
 {
-  if (count_missed_end_deadlines)
+  if (options.count_missed_end_deadlines)
     this->missed_end_invocations_[this->missed_end_deadlines_++] =
       invocation;
 }
@@ -473,11 +489,11 @@ Worker::setup ()
 
           goto test_protocol_success;
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const&)
         {
           ++j;
 
-          if (j < number_of_connection_attempts)
+          if (j < options.number_of_connection_attempts)
             {
               ACE_OS::sleep (1);
               goto test_protocol_setup;
@@ -507,18 +523,18 @@ Worker::setup ()
         {
           // Let the server know what to expect..
           this->test_->start_test (this->session_id_,
-                                   ACE_TEXT_ALWAYS_CHAR (test_protocol),
-                                   invocation_rate,
-                                   message_size,
-                                   iterations);
+                                   ACE_TEXT_ALWAYS_CHAR (options.test_protocol),
+                                   options.invocation_rate,
+                                   options.message_size,
+                                   options.iterations);
 
           goto base_protocol_success;
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const&)
         {
           ACE_OS::sleep (1);
 
-          if (k < number_of_connection_attempts)
+          if (k < options.number_of_connection_attempts)
             {
               ACE_OS::sleep (1);
               goto base_protocol_setup;
@@ -545,15 +561,15 @@ Worker::run ()
 
   // Payload.
   ::test::octets_var payload (new ::test::octets);
-  payload->length (message_size);
+  payload->length (options.message_size);
 
-  CORBA::Octet *buffer =
+  CORBA::Octet * const buffer =
     payload->get_buffer ();
 
   // Not necessary but good for debugging.
   ACE_OS::memset (buffer,
                   1,
-                  message_size * sizeof (CORBA::Octet));
+                  options.message_size * sizeof (CORBA::Octet));
 
   // Record the start time of the test.
   this->test_start_ =
@@ -561,22 +577,22 @@ Worker::run ()
 
   // Test with several iterations.
   for (CORBA::ULong i = 0;
-       i < iterations;
+       i < options.iterations;
        ++i)
     {
-      ACE_hrtime_t time_before_call = 0;
-      ACE_hrtime_t deadline_for_current_call = 0;
+      ACE_hrtime_t time_before_call {};
+      ACE_hrtime_t deadline_for_current_call {};
 
       // For PACED and LATENCY, each sender call is individually
       // noted.
-      if (test_type == PACED ||
-          test_type == LATENCY)
+      if (options.test_type == Test_Type::paced ||
+          options.test_type == Test_Type::latency)
         {
           time_before_call =
             ACE_OS::gethrtime ();
 
           // Pacing code.
-          if (test_type == PACED)
+          if (options.test_type == Test_Type::paced)
             {
               deadline_for_current_call =
                 this->deadline_for_current_call (i);
@@ -590,8 +606,8 @@ Worker::run ()
         }
 
       // Use oneways for PACING and THROUGHPUT.
-      if (test_type == PACED ||
-          test_type == THROUGHPUT)
+      if (options.test_type == Test_Type::paced ||
+          options.test_type == Test_Type::throughput)
         {
           this->test_->oneway_method (this->session_id_,
                                       i,
@@ -607,18 +623,18 @@ Worker::run ()
 
       // For PACED and LATENCY, each sender call is individually
       // noted.
-      if (test_type == PACED ||
-          test_type == LATENCY)
+      if (options.test_type == Test_Type::paced ||
+          options.test_type == Test_Type::latency)
         {
-          ACE_hrtime_t time_after_call =
+          ACE_hrtime_t const time_after_call =
             ACE_OS::gethrtime ();
 
-          if (test_type == LATENCY)
+          if (options.test_type == Test_Type::latency)
             this->history_.sample ((time_after_call - time_before_call) / 2);
           else
             this->history_.sample (time_after_call - time_before_call);
 
-          if (test_type == PACED)
+          if (options.test_type == Test_Type::paced)
             {
               if (time_after_call > deadline_for_current_call)
                 {
@@ -630,7 +646,7 @@ Worker::run ()
                 deadline_for_current_call - time_after_call;
 
               ACE_OS::sleep (ACE_Time_Value (0,
-                                             long (to_seconds (sleep_time, gsf) *
+                                             long (to_seconds (sleep_time, options.gsf) *
                                                    ACE_ONE_SECOND_IN_USECS)));
             }
         }
@@ -638,8 +654,8 @@ Worker::run ()
 
   // This call is used to ensure that all the THROUGHPUT related data
   // has reached the server.
-  if (test_type == THROUGHPUT &&
-      ACE_OS::strcmp (test_protocol, ACE_TEXT ("DIOP")) != 0)
+  if (options.test_type == Test_Type::throughput &&
+      ACE_OS::strcmp (options.test_protocol, ACE_TEXT ("DIOP")) != 0)
     {
       this->test_->twoway_sync ();
     }
@@ -658,7 +674,7 @@ Worker::run ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  gsf = ACE_High_Res_Timer::global_scale_factor ();
+  options.gsf = ACE_High_Res_Timer::global_scale_factor ();
 
   try
     {
@@ -677,7 +693,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
 
-      int parse_args_result =
+      int const parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
@@ -690,21 +706,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
       // Initialize the custom priority mapping
-      Custom_Network_Priority_Mapping *cnpm = 0;
-      ACE_NEW_RETURN  (cnpm,
+      Custom_Network_Priority_Mapping *raw_cnpm {};
+      ACE_NEW_RETURN (raw_cnpm,
                        Custom_Network_Priority_Mapping,
                        -1);
+      std::unique_ptr<Custom_Network_Priority_Mapping> cnpm (raw_cnpm);
 
       // Set the desired corba priority on the network mapping manager
-      cnpm->corba_priority (corba_priority);
+      cnpm->corba_priority (options.corba_priority);
 
       // Load the custom network priority mapping object in the
       // network priority mapping manager. The user can thus add his
       // own priority mapping.
-      mapping_manager->mapping (cnpm);
+      mapping_manager->mapping (cnpm.get ());
+      // The mapping manager takes ownership of the custom mapping.
+      cnpm.release ();
 
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       test_var test =
         test::_narrow (object.in ());
@@ -718,16 +737,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       worker.run ();
 
-      if (print_statistics)
+      if (options.print_statistics)
         worker.print_stats ();
 
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           test->shutdown ();
         }
       ACE_OS::sleep(1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Error!");
       return -1;
