@@ -16,6 +16,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_ctype.h"
+#include <cstring>
 
 #if !defined (__GNUG__)
 # include <memory>
@@ -180,9 +181,9 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
                     input (param,
                            param->buffer->input_ + amount,
                            read_more);
-                    ACE_OS::memmove (param->buffer->input_,
-                                     param->buffer->input_ + read_more,
-                                     amount);
+                    std::memmove (param->buffer->input_,
+                                  param->buffer->input_ + read_more,
+                                  amount);
                   }
               }
             skip_bytes = param->buffer->size_;
@@ -246,9 +247,9 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
             {
               result = max_size;
             }
-          ACE_OS::memcpy (buf,
-                          param->source.directive + param->buffer->start_,
-                          result);
+          std::memcpy (buf,
+                       param->source.directive + param->buffer->start_,
+                       result);
           param->buffer->start_ += (result / sizeof (ACE_TCHAR));
         }
       break;
@@ -422,60 +423,60 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                   {
                     str = str_buf;
                   }
-                ACE_OS::strncpy (str, buffer->input_ + buffer->index_, size - 1);
+                std::strncpy (str, buffer->input_ + buffer->index_, size - 1);
                 str[size - 1] = '\0';
 
-                if (ACE_OS::strcmp (str, "dynamic") == 0)
+                if (std::strcmp (str, "dynamic") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_DYNAMIC;
                   }
-                else if (ACE_OS::strcmp (str, "static") == 0)
+                else if (std::strcmp (str, "static") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_STATIC;
                   }
-                else if (ACE_OS::strcmp (str, "suspend") == 0)
+                else if (std::strcmp (str, "suspend") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_SUSPEND;
                   }
-                else if (ACE_OS::strcmp (str, "resume") == 0)
+                else if (std::strcmp (str, "resume") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_RESUME;
                   }
-                else if (ACE_OS::strcmp (str, "remove") == 0)
+                else if (std::strcmp (str, "remove") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_REMOVE;
                   }
-                else if (ACE_OS::strcmp (str, "stream") == 0)
+                else if (std::strcmp (str, "stream") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_USTREAM;
                   }
-                else if (ACE_OS::strcmp (str, "Module") == 0)
+                else if (std::strcmp (str, "Module") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_MODULE_T;
                   }
-                else if (ACE_OS::strcmp (str, "Service_Object") == 0)
+                else if (std::strcmp (str, "Service_Object") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_SVC_OBJ_T;
                   }
-                else if (ACE_OS::strcmp (str, "STREAM") == 0)
+                else if (std::strcmp (str, "STREAM") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_STREAM_T;
                   }
-                else if (ACE_OS::strcmp (str, "active") == 0)
+                else if (std::strcmp (str, "active") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_ACTIVE;
                   }
-                else if (ACE_OS::strcmp (str, "inactive") == 0)
+                else if (std::strcmp (str, "inactive") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_INACTIVE;
@@ -554,8 +555,8 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
         {
           buffer->size_ = current - buffer->index_;
           if (buffer->size_ != 0 && buffer->index_ != 0)
-            ACE_OS::memmove (buffer->input_,
-                             buffer->input_ + buffer->index_, buffer->size_);
+            std::memmove (buffer->input_,
+                          buffer->input_ + buffer->index_, buffer->size_);
           buffer->index_ = 0;
           buffer->state_ = ACE_NO_STATE;
         }
@@ -590,8 +591,8 @@ ACE_Svc_Conf_Lexer::convert_to_utf8 (
             reinterpret_cast<ACE_Byte*> (target),
             ACE_YY_CONVERSION_SPACE) == ACE_Encoding_Converter::CONVERSION_OK)
         {
-          ACE_OS::strcpy (param->buffer->input_ + skip_bytes, target);
-          param->buffer->size_ = ACE_OS::strlen (target) + skip_bytes;
+          std::strcpy (param->buffer->input_ + skip_bytes, target);
+          param->buffer->size_ = std::strlen (target) + skip_bytes;
           status = true;
         }
     }
@@ -650,8 +651,8 @@ ACE_Svc_Conf_Lexer::locate_bom (char* source,
     {
       if (source_size >= boms[i].length_)
         {
-          if (ACE_OS::memcmp (source,
-                              boms[i].data_, boms[i].length_) == 0)
+          if (std::memcmp (source,
+                           boms[i].data_, boms[i].length_) == 0)
             {
               bytes_used = boms[i].length_;
               return boms[i].hint_;
