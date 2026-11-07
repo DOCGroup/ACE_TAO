@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -107,6 +106,7 @@ static void VbTest()
 
   Vb v3;
   TimeTicks t(0), t1;
+  ACE_ASSERT (std::strcmp (t.to_string (), "0:00:00.00") == 0);
   v3.set_oid(o1);
   v3.set_value(t);
   ACE_ASSERT(v3.valid() == 1);
@@ -172,7 +172,6 @@ static void VbTest()
   // test assignment over all datatypes
   v10 = v5;
   ACE_ASSERT(v10 == v5);
-
 
   Vb v11(o1, s1, SNMP_CLASS_SUCCESS);
   ACE_ASSERT(v11.valid() == 1);

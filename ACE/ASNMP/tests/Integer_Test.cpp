@@ -32,7 +32,9 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
 #include <memory>
+#include <string>
 #include "ace/OS_main.h"
 #include "asnmp/integer.h"
 #include "test_config.h"
@@ -70,6 +72,7 @@ static void TestInteger32()
    ACE_ASSERT(i1 == static_cast<long> (def));
    SnmpInt32 i2(l);
    ACE_ASSERT(i2 == l);
+   ACE_ASSERT (std::strcmp (i2.to_string (), std::to_string (l).c_str ()) == 0);
    SnmpInt32 i3(nl);
    ACE_ASSERT(i3 == nl);
    SnmpInt32 i4(ul);
@@ -138,6 +141,7 @@ static void TestUnsignedInteger32()
    ACE_ASSERT(u3 == static_cast<unsigned long> (nl));
    SnmpUInt32 u4(ul);
    ACE_ASSERT(u4 == ul);
+   ACE_ASSERT (std::strcmp (u4.to_string (), std::to_string (ul).c_str ()) == 0);
    SnmpUInt32 u5(i);
    ACE_ASSERT(u5 == static_cast<unsigned long> (i));
    SnmpUInt32 u6(ni);
