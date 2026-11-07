@@ -395,7 +395,7 @@ struct Tester
     char upperbuf[256];
     ACE_OS::sprintf (upperbuf, "%s", "THIS IS A TEST");
     size_t n = (ACE_OS::strlen (upperbuf) + 1) * sizeof (char);
-    ACE_Message_Block * upper_mb = nullptr;
+    ACE_Message_Block * upper_mb {};
     ACE_NEW_RETURN (upper_mb,
         ACE_Message_Block (n), 1);
     // Copy buf into the Message_Block and update the wr_ptr ().

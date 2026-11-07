@@ -214,7 +214,7 @@ struct Tester
     expected_calls r (tested_element_traits::release_calls);
 
     {
-      string_type xe = nullptr;
+      string_type xe {};
       tested_element x(xe, true);
 
       string_type y =

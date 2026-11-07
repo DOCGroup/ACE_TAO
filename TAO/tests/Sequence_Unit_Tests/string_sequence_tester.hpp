@@ -203,7 +203,7 @@ struct string_sequence_tester
 
     tested_sequence const & y = x;
     character_type const * lhs;
-    character_type const * rhs = nullptr;
+    character_type const * rhs {};
     CHECK_THROW(lhs = y[32], std::range_error);
     CHECK_THROW(x[32] = rhs, std::range_error);
     ACE_UNUSED_ARG (lhs);
