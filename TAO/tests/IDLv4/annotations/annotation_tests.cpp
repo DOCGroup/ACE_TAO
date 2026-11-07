@@ -134,7 +134,7 @@ annotation_tests ()
    * These tests assert that annotations can be declared.
    */
 
-  AST_Annotation_Decl *test_annotation_1 = 0;
+  AST_Annotation_Decl *test_annotation_1 {};
   try {
     Annotation_Test t ("Annotation Declaration with No Members");
     test_annotation_1 = t.run (
@@ -210,7 +210,7 @@ annotation_tests ()
     t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (boolean_value, false);
   } catch (Failed const &) {}
 
-  AST_Annotation_Decl *test_annotation_4 = 0;
+  AST_Annotation_Decl *test_annotation_4 {};
   try {
     Annotation_Test t ("Annotation Declaration with Mixed Members");
     test_annotation_4 = t.run (
@@ -232,7 +232,7 @@ annotation_tests ()
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 0);
   } catch (Failed const &) {}
 
-  AST_Annotation_Decl *test_annotation_in_module = 0;
+  AST_Annotation_Decl *test_annotation_in_module {};
   try {
     Annotation_Test t ("Annotation Declaration In Module");
     test_annotation_in_module = t.run (
@@ -245,10 +245,10 @@ annotation_tests ()
     t.assert_annotation_member_count (test_annotation_in_module, 0);
   } catch (Failed const &) {}
 
-  AST_Annotation_Decl *enum_annotation = 0;
-  AST_Expression *enum_annotation_a = 0;
-  AST_Expression *enum_annotation_b = 0;
-  AST_Expression *enum_annotation_c = 0;
+  AST_Annotation_Decl *enum_annotation {};
+  AST_Expression *enum_annotation_a {};
+  AST_Expression *enum_annotation_b {};
+  AST_Expression *enum_annotation_c {};
   try {
     Annotation_Test t ("Annotation Declaration with Enum");
     enum_annotation = t.run (
@@ -278,7 +278,7 @@ annotation_tests ()
     t.assert_annotation_member_value (value, enum_annotation_a);
   } catch (Failed const &) {}
 
-  AST_Annotation_Decl *string_annotation = 0;
+  AST_Annotation_Decl *string_annotation {};
   try {
     Annotation_Test t ("Annotation Declaration with String");
     string_annotation = t.run (
@@ -295,9 +295,9 @@ annotation_tests ()
       (value, test_string);
   } catch (Failed const &) {}
 
-  AST_Expression *constant_annotation_x = 0;
-  AST_Expression *constant_annotation_y = 0;
-  AST_Annotation_Decl *constant_annotation = 0;
+  AST_Expression *constant_annotation_x {};
+  AST_Expression *constant_annotation_y {};
+  AST_Annotation_Decl *constant_annotation {};
   try {
     Annotation_Test t ("Annotation Declaration with Constant");
     constant_annotation = t.run (
@@ -318,7 +318,7 @@ annotation_tests ()
     t.assert_annotation_member_value (value, constant_annotation_x);
   } catch (Failed const &) {}
 
-  AST_Annotation_Decl *boolean_annotation = 0;
+  AST_Annotation_Decl *boolean_annotation {};
   try {
     Annotation_Test t ("Annotation Declaration with Single Boolean");
     boolean_annotation = t.run (
@@ -784,8 +784,8 @@ annotation_tests ()
       "};\n"
     );
 
-    AST_Decl *struct_member = 0;
-    AST_Annotation_Appl *appl = 0;
+    AST_Decl *struct_member {};
+    AST_Annotation_Appl *appl {};
 
     struct_member = t.assert_node ("struct13::test_member_1");
     t.assert_annotation_appl_count (struct_member, 1);
@@ -1083,7 +1083,7 @@ annotation_tests ()
                "case C:\n"
                "default: float cfloat;\n"
                "};\n").assert_node<AST_Union>("::empty_union");
-    AST_Field *af = nullptr;
+    AST_Field *af {};
     test_union->field(af, 2);
     AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(af);
     if (ub != nullptr)
