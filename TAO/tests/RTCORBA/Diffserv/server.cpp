@@ -133,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
         RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
-      Custom_Network_Priority_Mapping *cnpm = 0;
+      Custom_Network_Priority_Mapping *cnpm {};
       ACE_NEW_RETURN  (cnpm,
                        Custom_Network_Priority_Mapping,
                        -1);
