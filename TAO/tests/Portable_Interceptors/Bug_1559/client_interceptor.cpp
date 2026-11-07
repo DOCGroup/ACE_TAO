@@ -4,17 +4,16 @@
 #include "tao/ORB_Constants.h"
 #include <cstring>
 
-constexpr IOP::ServiceId service_id = 0xdeadbeef;
-constexpr char request_msg[] = "REQUEST message";
-constexpr char reply_msg[] = "REPLY message";
-constexpr char forward_msg[] = "FORWARD message";
-int send_request_count = 0;
-int exception_count = 0;
+constexpr IOP::ServiceId service_id { 0xdeadbeef };
+constexpr char request_msg[] { "REQUEST message" };
+constexpr char reply_msg[] { "REPLY message" };
+constexpr char forward_msg[] { "FORWARD message" };
+static int send_request_count {};
+static int exception_count {};
 
 Echo_Client_Request_Interceptor::
 Echo_Client_Request_Interceptor (char const *id)
-  : myname_ ("Echo_Client_Interceptor"),
-    orb_id_ (CORBA::string_dup (id))
+  : orb_id_ (CORBA::string_dup (id))
 {
 }
 
@@ -42,19 +41,19 @@ Echo_Client_Request_Interceptor::send_request (
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      int argc {};
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation =
+  CORBA::String_var const operation =
     ri->operation ();
 
-  CORBA::Object_var target =
+  CORBA::Object_var const target =
     ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -64,16 +63,16 @@ Echo_Client_Request_Interceptor::send_request (
               operation.in (),
               ior.in ()));
 
-  send_request_count++;
+  ++send_request_count;
 
   try
     {
       ri->get_request_service_context (::service_id);
     }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const &)
     {
       // This is supposed to happen
-      exception_count++;
+      ++exception_count;
     }
 
   if (send_request_count == 1)
@@ -87,11 +86,12 @@ Echo_Client_Request_Interceptor::send_request (
       // Populate target member of the ClientRequestInfo.
 
       // Make the context to send the context to the target
-      IOP::ServiceContext sc;
+      IOP::ServiceContext sc {};
       sc.context_id = ::service_id;
 
-      CORBA::ULong string_len = std::strlen (request_msg) + 1;
-      CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
+      CORBA::ULong const string_len = std::strlen (request_msg) + 1;
+      // context_data.replace (..., true) takes ownership of the buffer.
+      CORBA::Octet *const buf = CORBA::OctetSeq::allocbuf (string_len);
       std::strcpy (reinterpret_cast<char *> (buf), request_msg);
 
       sc.context_data.replace (string_len, string_len, buf, true);
@@ -100,19 +100,19 @@ Echo_Client_Request_Interceptor::send_request (
       ri->add_request_service_context (sc, false);
 
       // Check that the request service context can be retrieved.
-      IOP::ServiceContext_var sc2 =
+      IOP::ServiceContext_var const sc2 =
         ri->get_request_service_context (::service_id);
 
-      char const *buf2 =
+      char const *const buf2 =
         reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
       if (std::strcmp (buf2, request_msg) != 0)
         {
-            ACE_ERROR ((LM_ERROR,
-                        "ERROR: Expected request service context to be: %C.\n"
-                        "  Got: %C\n",
-                        request_msg,
-                        buf2));
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Expected request service context to be: %C.\n"
+                      "  Got: %C\n",
+                      request_msg,
+                      buf2));
         }
     }
   else if (send_request_count == 2)
@@ -127,11 +127,12 @@ Echo_Client_Request_Interceptor::send_request (
       // Populate target member of the ClientRequestInfo.
 
       // Make the context to send the context to the target
-      IOP::ServiceContext sc;
+      IOP::ServiceContext sc {};
       sc.context_id = ::service_id;
 
-      CORBA::ULong string_len = std::strlen (forward_msg) + 1;
-      CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
+      CORBA::ULong const string_len = std::strlen (forward_msg) + 1;
+      // context_data.replace (..., true) takes ownership of the buffer.
+      CORBA::Octet *const buf = CORBA::OctetSeq::allocbuf (string_len);
       std::strcpy (reinterpret_cast<char *> (buf), forward_msg);
 
       sc.context_data.replace (string_len, string_len, buf, true);
@@ -139,19 +140,19 @@ Echo_Client_Request_Interceptor::send_request (
       ri->add_request_service_context (sc, false);
 
       // Check that the request service context can be retrieved.
-      IOP::ServiceContext_var sc2 =
+      IOP::ServiceContext_var const sc2 =
         ri->get_request_service_context (::service_id);
 
-      char const *buf2 =
+      char const *const buf2 =
         reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
       if (std::strcmp (buf2, forward_msg) != 0)
         {
-            ACE_ERROR ((LM_ERROR,
-                        "ERROR: Expected request service context to be: %C.\n"
-                        "  Got: %C\n",
-                        forward_msg,
-                        buf2));
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Expected request service context to be: %C.\n"
+                      "  Got: %C\n",
+                      forward_msg,
+                      buf2));
         }
     }
   else
@@ -167,19 +168,19 @@ Echo_Client_Request_Interceptor::receive_reply (
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      int argc {};
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation =
+  CORBA::String_var const operation =
     ri->operation ();
 
-  CORBA::Object_var target =
+  CORBA::Object_var const target =
     ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -191,10 +192,10 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   // Check that the reply service context was received as
   // expected.
-  IOP::ServiceContext_var sc =
+  IOP::ServiceContext_var const sc =
     ri->get_reply_service_context (::service_id);
 
-  char const *buf =
+  char const *const buf =
     reinterpret_cast<char const *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %C\n",
@@ -202,25 +203,25 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   if (std::strcmp (buf, reply_msg) != 0)
     {
-        ACE_ERROR ((LM_ERROR,
-                    "ERROR: Expected reply service context to be: %C\n",
-                    reply_msg));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Expected reply service context to be: %C\n",
+                  reply_msg));
     }
 
   // Check that no one has messed with the request service context.
-  IOP::ServiceContext_var sc2 =
+  IOP::ServiceContext_var const sc2 =
     ri->get_request_service_context (::service_id);
 
-  char const *buf2 =
+  char const *const buf2 =
     reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
   if (std::strcmp (buf2, forward_msg) != 0)
     {
-        ACE_ERROR ((LM_ERROR,
-                    "ERROR: Expected request service context to be: %C.\n"
-                    "  Got: %C\n",
-                    forward_msg,
-                    buf2));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Expected request service context to be: %C.\n"
+                  "  Got: %C\n",
+                  forward_msg,
+                  buf2));
     }
   send_request_count = 0;
   exception_count = 0;
@@ -232,17 +233,17 @@ Echo_Client_Request_Interceptor::receive_other (
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      int argc {};
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target ();
+  CORBA::Object_var const target = ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -253,10 +254,10 @@ Echo_Client_Request_Interceptor::receive_other (
               ior.in ()));
 
   // Check that no one has messed with the request service context.
-  IOP::ServiceContext_var sc =
+  IOP::ServiceContext_var const sc =
     ri->get_request_service_context (::service_id);
 
-  char const *buf =
+  char const *const buf =
     reinterpret_cast<char const *> (sc->context_data.get_buffer ());
 
   if (std::strcmp (buf, request_msg) != 0)
@@ -275,17 +276,17 @@ Echo_Client_Request_Interceptor::receive_exception (
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      int argc {};
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target ();
+  CORBA::Object_var const target = ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -297,10 +298,10 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   // Check that the reply service context was received as
   // expected.
-  IOP::ServiceContext_var sc =
+  IOP::ServiceContext_var const sc =
     ri->get_reply_service_context (::service_id);
 
-  char const *buf =
+  char const *const buf =
     reinterpret_cast<char const *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %C\n",
@@ -314,10 +315,10 @@ Echo_Client_Request_Interceptor::receive_exception (
     }
 
   // Check that no one has messed with the request service context.
-  IOP::ServiceContext_var sc2 =
+  IOP::ServiceContext_var const sc2 =
     ri->get_request_service_context (::service_id);
 
-  char const *buf2 =
+  char const *const buf2 =
     reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
   if (std::strcmp (buf2, forward_msg) != 0)

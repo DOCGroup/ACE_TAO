@@ -22,7 +22,7 @@ class Echo_Server_Request_Interceptor
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor ();
+  Echo_Server_Request_Interceptor () = default;
   // cotr.
 
   explicit Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
@@ -50,11 +50,11 @@ public:
 
   Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
   Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor &&) = delete;
-  Echo_Server_Request_Interceptor & operator = (Echo_Server_Request_Interceptor const &) = delete;
-  Echo_Server_Request_Interceptor & operator = (Echo_Server_Request_Interceptor &&) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor &&) = delete;
 
 private:
-  char const *myname_;
+  char const *const myname_ { "Echo_Server_Interceptor" };
   CORBA::Object_var forward_location_;
 };
 

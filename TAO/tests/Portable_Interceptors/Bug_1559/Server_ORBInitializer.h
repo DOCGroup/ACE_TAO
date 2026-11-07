@@ -27,7 +27,7 @@ class Server_ORBInitializer :
 {
 public:
   /// Constructor
-  Server_ORBInitializer ();
+  Server_ORBInitializer () = default;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 

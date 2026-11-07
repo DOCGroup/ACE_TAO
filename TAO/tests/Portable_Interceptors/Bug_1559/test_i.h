@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INTERCEPTOR_TEST_I_H
 #define TAO_INTERCEPTOR_TEST_I_H
 
@@ -36,8 +35,8 @@ public:
 
   Visual_i (Visual_i const &) = delete;
   Visual_i (Visual_i &&) = delete;
-  Visual_i & operator = (Visual_i const &) = delete;
-  Visual_i & operator = (Visual_i &&) = delete;
+  Visual_i &operator= (Visual_i const &) = delete;
+  Visual_i &operator= (Visual_i &&) = delete;
 
 private:
   /// The ORB pseudo-reference (for shutdown).

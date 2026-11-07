@@ -45,11 +45,11 @@ public:
 
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
-  Echo_Client_Request_Interceptor & operator = (Echo_Client_Request_Interceptor const &) = delete;
-  Echo_Client_Request_Interceptor & operator = (Echo_Client_Request_Interceptor &&) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
 
 private:
-  char const *myname_;
+  char const *const myname_ { "Echo_Client_Interceptor" };
 
   CORBA::String_var orb_id_;
   // The ID of the ORB where this interceptor was created, usually

@@ -2,32 +2,38 @@
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/SString.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+struct Options
+{
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ef:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("ef:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'e':
-      break;
-      case 'f':
-        ior = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-v "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'e':
+          break;
+        case 'f':
+          options.ior = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-v "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
@@ -66,7 +72,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
+      Options options;
 
       ACE_NEW_RETURN (temp_initializer,
                       Client_ORBInitializer,
@@ -79,11 +86,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior.c_str ());
 
       Test_Interceptors::Visual_var server =
         Test_Interceptors::Visual::_narrow (object.in ());
@@ -92,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             options.ior.c_str ()),
                             1);
         }
 
