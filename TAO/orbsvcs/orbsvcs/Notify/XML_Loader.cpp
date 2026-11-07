@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Loader.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 
@@ -25,7 +24,7 @@ using namespace TAO_Notify;
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify {
-  extern const char TOPOLOGY_ID_NAME[];
+  extern char const TOPOLOGY_ID_NAME[];
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -58,7 +57,7 @@ namespace TAO_Notify
   XML_Loader::~XML_Loader () = default;
 
   bool
-  XML_Loader::open (const ACE_TString & base_name)
+  XML_Loader::open (ACE_TString const &base_name)
   {
     bool result = false;
 
@@ -96,7 +95,7 @@ namespace TAO_Notify
         {
           parser.parse (&input);
         }
-        catch (const ACEXML_Exception& ex)
+        catch (ACEXML_Exception const &ex)
         {
           // The only way to find out what it is, it to let it print itself, so...
           ORBSVCS_ERROR ((LM_ERROR, "Unable to load \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
@@ -151,7 +150,7 @@ namespace TAO_Notify
         if (! object_stack_.empty ())
           object_stack_.pop_back ();
       }
-      catch (const ACEXML_Exception& ex)
+      catch (ACEXML_Exception const &ex)
       {
         // The only way to find out what it is, it to let it print itself, so...
         ORBSVCS_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
@@ -167,9 +166,9 @@ namespace TAO_Notify
   }
 
   void
-  XML_Loader::startElement (const ACEXML_Char*,
-    const ACEXML_Char*,
-    const ACEXML_Char* name,
+  XML_Loader::startElement (ACEXML_Char const *,
+    ACEXML_Char const *,
+    ACEXML_Char const *name,
     ACEXML_Attributes* xml_attrs)
   {
     ACE_ASSERT (name != nullptr);
@@ -195,7 +194,7 @@ namespace TAO_Notify
               ACE_ASSERT(next != nullptr);
               object_stack_.push_back (next);
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const &ex)
             {
               throw ACEXML_SAXException (ACE_TEXT_CHAR_TO_TCHAR(ex._info ().c_str ()));
             }
@@ -204,9 +203,9 @@ namespace TAO_Notify
   }
 
   void
-  XML_Loader::endElement (const ACEXML_Char*,
-    const ACEXML_Char*,
-    const ACEXML_Char* name)
+  XML_Loader::endElement (ACEXML_Char const *,
+    ACEXML_Char const *,
+    ACEXML_Char const *name)
   {
     ACE_UNUSED_ARG (name);
     if (this->live_)

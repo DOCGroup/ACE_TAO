@@ -65,11 +65,11 @@ private:
 private:
   /// A stream representing our current output.
   FILE * output_ {};
-  bool close_out_ = false;
+  bool close_out_ {};
 
   /// the name of the output file
   ACE_TString base_name_;
-  size_t backup_count_ = 1;
+  size_t backup_count_ {1};
 
   /// true to enable timestamping
   bool timestamp_;

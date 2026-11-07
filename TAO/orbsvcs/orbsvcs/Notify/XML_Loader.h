@@ -49,7 +49,7 @@ public:
 
   /// Open a file and perform preliminary validation to determine whether
   /// the file is complete and valid.
-  bool open (const ACE_TString & file_name);
+  bool open (ACE_TString const &file_name);
 
   ///////////////////////////////////
   // Override Topology_Loader methods
@@ -76,7 +76,7 @@ private:
   using TopoStack = std::vector<Topology_Object *>;
   TopoStack object_stack_;
   /// If false, then we're just checking syntax of topology file.
-  bool live_ = false;
+  bool live_ {};
 };
 } // namespace TAO_Notify
 
