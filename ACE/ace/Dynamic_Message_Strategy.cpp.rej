@@ -1,0 +1,24 @@
+--- ace/Dynamic_Message_Strategy.cpp
++++ ace/Dynamic_Message_Strategy.cpp
+@@ -122,10 +122,6 @@ ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long stat
+ {
+ }
+ 
+-ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy ()
+-{
+-}
+-
+ void
+ ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
+                                                  const ACE_Message_Block & mb)
+@@ -164,10 +160,6 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
+ {
+ }
+ 
+-ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy ()
+-{
+-}
+-
+ void
+ ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
+                                                const ACE_Message_Block & mb)

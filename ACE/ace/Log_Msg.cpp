@@ -1750,7 +1750,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
 #  if defined ACE_USES_WCHAR
                   {
-                    char tid_buf[ACE_LOG_MSG_GET_THREAD_ID_BUFFER_SIZE] = {};
+                    char tid_buf[ACE_LOG_MSG_GET_THREAD_ID_BUFFER_SIZE] {};
                     ACE_LOG_MSG_GET_THREAD_ID (tid_buf, sizeof tid_buf);
                     this_len = ACE_OS::strlen (tid_buf);
                     ACE_OS::strncpy (bp, ACE_TEXT_CHAR_TO_TCHAR (tid_buf),

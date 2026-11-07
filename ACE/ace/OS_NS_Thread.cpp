@@ -2648,7 +2648,7 @@ ACE_OS::event_init (ACE_event_t *event,
 
       int result = 0;
 # if !ACE_EVENT_USE_COND_PSHARED
-      char sem_name[128] = {};
+      char sem_name[128] {};
       format_name (sem_name, name, "._ACE_EVTSEM_");
       result = ACE_OS::sema_init (&event->semaphore_, 0, type, attributes,
                                   sem_name, arg);
@@ -2657,7 +2657,7 @@ ACE_OS::event_init (ACE_event_t *event,
 # if !ACE_EVENT_USE_MUTEX_PSHARED
       if (result == 0)
         {
-          char lck_name[128] = {};
+          char lck_name[128] {};
           format_name (lck_name, name, "._ACE_EVTLCK_");
           result = ACE_OS::sema_init (&event->lock_, owner, type, attributes,
                                       lck_name, arg);

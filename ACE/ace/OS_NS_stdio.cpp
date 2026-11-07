@@ -1468,7 +1468,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
       ACE_UINT64 val;
       ACE_INT64 sval;
       long double fval;
-      wchar_t tmp_wstr[2] = {};
+      wchar_t tmp_wstr[2] {};
 
       // Parse conversion specifier (diouxXfFeEgGaAcCsSpn) and convert arg
       char spec = *fmt++;

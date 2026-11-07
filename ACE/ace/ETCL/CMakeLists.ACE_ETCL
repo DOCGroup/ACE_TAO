@@ -1,0 +1,68 @@
+cmake_minimum_required(VERSION 3.12.0)
+
+set(ACE_ROOT $ENV{ACE_ROOT})
+if(WIN32)
+  link_libraries(iphlpapi)
+endif()
+
+project(ACE_ETCL CXX)
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
+
+set(HEADER_FILES_ACE_ETCL ETCL_Constraint.h ETCL_Constraint_Visitor.h ace_etcl_export.h)
+
+set(INLINE_FILES_ACE_ETCL ETCL_Constraint.inl)
+
+set(SOURCE_FILES_ACE_ETCL ETCL_Constraint.cpp ETCL_Constraint_Visitor.cpp)
+if(CMAKE_CONFIGURATION_TYPES)
+set(TARGET_LINK_LIBRARIES_ACE_ETCL $<$<CONFIG:Debug>:ACE${LIBRARY_DECORATOR}d>
+                          $<$<CONFIG:Release>:ACE${LIBRARY_DECORATOR}>)
+else()
+set(TARGET_LINK_LIBRARIES_ACE_ETCL ACE${LIBRARY_DECORATOR})
+endif()
+set(PROJECT_TARGET_ACE_ETCL ACE_ETCL${LIBRARY_DECORATOR})
+if(MSVC)
+  add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE)
+endif()
+if(MSVC)
+  add_compile_options(/wd4355)
+endif()
+if(MSVC)
+  add_compile_definitions(_WINSOCK_DEPRECATED_NO_WARNINGS)
+endif()
+
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ACE_ROOT}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${ACE_ROOT}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${ACE_ROOT}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ACE_ROOT}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ACE_ROOT}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${ACE_ROOT}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${ACE_ROOT}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${ACE_ROOT}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${ACE_ROOT}/lib)
+
+add_library(${PROJECT_TARGET_ACE_ETCL} ${SOURCE_FILES_ACE_ETCL})
+if(BUILD_SHARED_LIBS)
+  target_compile_definitions(${PROJECT_TARGET_ACE_ETCL} PRIVATE ACE_ETCL_BUILD_DLL)
+else()
+  target_compile_definitions(${PROJECT_TARGET_ACE_ETCL} PRIVATE ACE_AS_STATIC_LIBS)
+endif()
+target_link_libraries(${PROJECT_TARGET_ACE_ETCL} ${TARGET_LINK_LIBRARIES_ACE_ETCL})
+set_target_properties(${PROJECT_TARGET_ACE_ETCL} PROPERTIES DEBUG_POSTFIX "d")
+target_compile_features(${PROJECT_TARGET_ACE_ETCL} PUBLIC "cxx_std_17")
+
+
+if(CMAKE_CONFIGURATION_TYPES)
+target_compile_definitions(${PROJECT_TARGET_ACE_ETCL} PUBLIC
+                           $<$<CONFIG:Debug>:MPC_LIB_MODIFIER="${LIBRARY_DECORATOR}d">
+                           $<$<CONFIG:Release>:MPC_LIB_MODIFIER="${LIBRARY_DECORATOR}">)
+endif()
+
+target_include_directories(${PROJECT_TARGET_ACE_ETCL} PRIVATE ${ACE_ROOT})
+
+target_link_directories(${PROJECT_TARGET_ACE_ETCL} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${ACE_ROOT}/lib)
+
+target_compile_definitions(${PROJECT_TARGET_ACE_ETCL} PUBLIC ACE_HAS_IPV6)
+
+

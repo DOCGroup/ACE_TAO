@@ -1,0 +1,13 @@
+diff --git a/ACE/ace/DLL_Manager.cpp b/ACE/ace/DLL_Manager.cpp
+index 048787ca657..be305c98b3e 100644
+--- a/ACE/ace/DLL_Manager.cpp
++++ b/ACE/ace/DLL_Manager.cpp
+@@ -148,7 +148,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
+               // mask it.
+               // @TODO: If we've found our DLL _and_ it's
+               // broken, should we continue at all?
+-              if ((errno != 0) && (errno != ENOENT) && (errors || ACE::debug ()))
++              if ((errno != 0) && (errors || ACE::debug ()))
+                 {
+                   ACE_TString errtmp;
+                   if (errors)

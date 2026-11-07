@@ -1,0 +1,68 @@
+cmake_minimum_required(VERSION 3.12.0)
+
+set(ACE_ROOT $ENV{ACE_ROOT})
+if(WIN32)
+  link_libraries(iphlpapi)
+endif()
+
+project(SSL CXX)
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
+
+set(HEADER_FILES_SSL SSL_Asynch_BIO.h SSL_Asynch_Stream.h SSL_Context.h SSL_Export.h SSL_Initializer.h SSL_SOCK.h SSL_SOCK_Acceptor.h SSL_SOCK_Connector.h SSL_SOCK_Stream.h sslconf.h)
+
+set(INLINE_FILES_SSL SSL_Asynch_Stream.inl SSL_Context.inl SSL_SOCK.inl SSL_SOCK_Acceptor.inl SSL_SOCK_Connector.inl SSL_SOCK_Stream.inl)
+
+set(SOURCE_FILES_SSL SSL_Asynch_BIO.cpp SSL_Asynch_Stream.cpp SSL_Context.cpp SSL_Initializer.cpp SSL_SOCK.cpp SSL_SOCK_Acceptor.cpp SSL_SOCK_Connector.cpp SSL_SOCK_Stream.cpp)
+if(CMAKE_CONFIGURATION_TYPES)
+set(TARGET_LINK_LIBRARIES_SSL $<$<CONFIG:Debug>:ACE${LIBRARY_DECORATOR}d>
+                          $<$<CONFIG:Release>:ACE${LIBRARY_DECORATOR}> ${OPENSSL_LIBRARIES})
+else()
+set(TARGET_LINK_LIBRARIES_SSL ACE${LIBRARY_DECORATOR} ${OPENSSL_LIBRARIES})
+endif()
+set(PROJECT_TARGET_SSL ACE_SSL${LIBRARY_DECORATOR})
+if(MSVC)
+  add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE)
+endif()
+if(MSVC)
+  add_compile_options(/wd4355)
+endif()
+if(MSVC)
+  add_compile_definitions(_WINSOCK_DEPRECATED_NO_WARNINGS)
+endif()
+
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ACE_ROOT}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${ACE_ROOT}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${ACE_ROOT}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ACE_ROOT}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ACE_ROOT}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${ACE_ROOT}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${ACE_ROOT}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${ACE_ROOT}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${ACE_ROOT}/lib)
+
+add_library(${PROJECT_TARGET_SSL} ${SOURCE_FILES_SSL})
+if(BUILD_SHARED_LIBS)
+  target_compile_definitions(${PROJECT_TARGET_SSL} PRIVATE ACE_SSL_BUILD_DLL)
+else()
+  target_compile_definitions(${PROJECT_TARGET_SSL} PRIVATE ACE_AS_STATIC_LIBS)
+endif()
+target_link_libraries(${PROJECT_TARGET_SSL} ${TARGET_LINK_LIBRARIES_SSL})
+set_target_properties(${PROJECT_TARGET_SSL} PROPERTIES DEBUG_POSTFIX "d")
+target_compile_features(${PROJECT_TARGET_SSL} PUBLIC "cxx_std_17")
+
+
+if(CMAKE_CONFIGURATION_TYPES)
+target_compile_definitions(${PROJECT_TARGET_SSL} PUBLIC
+                           $<$<CONFIG:Debug>:MPC_LIB_MODIFIER="${LIBRARY_DECORATOR}d">
+                           $<$<CONFIG:Release>:MPC_LIB_MODIFIER="${LIBRARY_DECORATOR}">)
+endif()
+
+target_include_directories(${PROJECT_TARGET_SSL} PRIVATE ${ACE_ROOT} ${OPENSSL_INCLUDE_DIR})
+
+target_link_directories(${PROJECT_TARGET_SSL} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${ACE_ROOT}/lib)
+
+target_compile_definitions(${PROJECT_TARGET_SSL} PUBLIC ACE_HAS_IPV6)
+
+
