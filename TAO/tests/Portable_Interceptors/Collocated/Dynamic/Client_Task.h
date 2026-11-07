@@ -27,7 +27,7 @@ public:
   Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
   void run_test (Test_Interceptors::Visual_ptr server);
 

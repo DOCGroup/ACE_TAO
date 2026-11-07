@@ -33,7 +33,7 @@ public:
   Server_Task &operator= (Server_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Output file for IOR
