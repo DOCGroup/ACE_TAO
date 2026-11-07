@@ -330,8 +330,6 @@ Activity::run (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  CORBA::release (this->naming_);
-
   // Hack for proper cleanup.
   this->builder_->fini ();
 
