@@ -120,10 +120,10 @@ ACE_Ping_Socket::ACE_Ping_Socket (ACE_Addr const & local,
   // trying to increase the size of socket receive buffer - some
   // protection from multiple responses e.g., when falling to the
   // multi-cast address
-  int size = 64 * 1024;
+  int size {64 * 1024};
   ACE_SOCK::set_option (SOL_SOCKET,
                         SO_RCVBUF,
-                        (void *) &size,
+                        static_cast<void *> (&size),
                         sizeof (size));
 }
 
@@ -146,20 +146,20 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
 {
   ACE_TRACE ("ACE_Ping_Socket::receive_echo_reply");
 
-  ACE_Time_Value before = ACE_OS::gettimeofday ();
+  ACE_Time_Value const before {ACE_OS::gettimeofday ()};
   ACE_Time_Value after;
   ACE_Time_Value time_left;
-  ACE_Time_Value *wait_time = const_cast<ACE_Time_Value *> (timeout);
-  const ACE_Time_Value half_millisec (0, 500);
+  ACE_Time_Value *wait_time {const_cast<ACE_Time_Value *> (timeout)};
+  ACE_Time_Value const half_millisec (0, 500);
 
   std::memset (icmp_recv_buff_, 0, sizeof icmp_recv_buff_);
 
   do
     {
-      ssize_t rval_recv = inherited::recv (icmp_recv_buff_,
-                                           sizeof icmp_recv_buff_,
-                                           0,
-                                           wait_time);
+      ssize_t const rval_recv = inherited::recv (icmp_recv_buff_,
+                                                 sizeof icmp_recv_buff_,
+                                                 0,
+                                                 wait_time);
       if (rval_recv < 0)
         {
           if (errno == EINTR)
@@ -204,24 +204,20 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
 int
 ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
 {
-  unsigned char hlen1;
-  ssize_t icmplen;
-  struct ip * ip;
-  struct icmp * icmp;
-
-  ip = (struct ip *) ptr;                 // start of IP header
+  unsigned char hlen1 {static_cast<unsigned char> (*ptr)};
+  struct ip const *ip {reinterpret_cast<struct ip const *> (ptr)};
 
   // Warning... using knowledge of IP header layout. This avoids a maze of
   // #if blocks for various systems. The first byte of the header has the
   // IP version in the left-most 4 bits and the length in the other 4 bits.
-  hlen1 = static_cast<unsigned char>(*ptr);
   hlen1 <<= 4;                            // Bump the version off
   hlen1 >>= 4;                            // Zero-extended length remains
   hlen1 <<= 2;                            // Now it counts bytes, not words
 
-  icmp = (struct icmp *) (ptr + hlen1);   // start of ICMP header
+  struct icmp const *icmp {reinterpret_cast<struct icmp const *> (ptr + hlen1)};
+  ssize_t const icmplen {len - hlen1};
 
-  if ((icmplen = len - hlen1) < ICMP_MIN)
+  if (icmplen < ICMP_MIN)
     {
       ACELIB_DEBUG
         ((LM_DEBUG,
@@ -293,8 +289,8 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
       return -1;
     }
 
-  sockaddr_in *addr_connect = nullptr;
-  addr_connect = (sockaddr_in *) remote_addr.get_addr ();
+  sockaddr_in * const addr_connect {
+    reinterpret_cast<sockaddr_in *> (remote_addr.get_addr ())};
 
   /*
    * Nulling port field to prevent strange behavior, when a raw
@@ -308,7 +304,7 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
   if (to_connect && !this->connected_socket_)
     {
       if (ACE_OS::connect (this->get_handle (),
-                           (sockaddr*) addr_connect,
+                           reinterpret_cast<sockaddr *> (addr_connect),
                            remote_addr.get_size ()) == -1)
         {
           if (errno != EINTR)
@@ -318,33 +314,29 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
     }
 
   std::memset (this->icmp_send_buff_, 0, sizeof this->icmp_send_buff_);
-  int datalen = ICMP_DATA_LENGTH;
-  struct icmp *_icmp = nullptr;
-
-  _icmp = (struct icmp *) this->icmp_send_buff_;
-  _icmp->icmp_type = ICMP_ECHO;
-  _icmp->icmp_code = 0;
-  _icmp->icmp_id = ACE_OS::getpid () & 0xFFFF;
-  _icmp->icmp_seq = sequence_number_++;
+  int const datalen {ICMP_DATA_LENGTH};
+  struct icmp * const icmp_header {
+    reinterpret_cast<struct icmp *> (this->icmp_send_buff_)};
+  icmp_header->icmp_type = ICMP_ECHO;
+  icmp_header->icmp_code = 0;
+  icmp_header->icmp_id = ACE_OS::getpid () & 0xFFFF;
+  icmp_header->icmp_seq = sequence_number_++;
 
 #if defined (ACE_WIN32)
-  _icmp->icmp_data = GetTickCount ();
+  icmp_header->icmp_data = GetTickCount ();
 #else  /* #if defined (ACE_WIN32) */
-  gettimeofday ((struct timeval *) &_icmp->icmp_data, nullptr);
+  gettimeofday (reinterpret_cast<struct timeval *> (&icmp_header->icmp_data), nullptr);
 #endif  /* #if defined (ACE_WIN32) */
 
-  int length_icmp = ICMP_MIN + datalen; // checksum ICMP header and data.
-  _icmp->icmp_cksum = 0;
-  _icmp->icmp_cksum = inherited::calculate_checksum ((u_short *) _icmp,
-                                                     length_icmp);
-  ssize_t rval_send = -1;
+  int const length_icmp {ICMP_MIN + datalen}; // checksum ICMP header and data.
+  icmp_header->icmp_cksum = 0;
+  icmp_header->icmp_cksum = inherited::calculate_checksum (
+    reinterpret_cast<u_short *> (icmp_header), length_icmp);
 
-  if ((rval_send = send ((void const *) icmp_send_buff_,
-                         length_icmp,
-                         remote_addr)) != length_icmp)
-    {
-      return -1;
-    }
+  ssize_t const rval_send = send (icmp_send_buff_, length_icmp, remote_addr);
+  if (rval_send != length_icmp)
+    return -1;
+
   return 0;
 }
 
@@ -353,10 +345,8 @@ ACE_Ping_Socket::make_echo_check (ACE_INET_Addr & remote_addr,
                                   bool to_connect,
                                   ACE_Time_Value const * timeout)
 {
-  int rval_send = -1;
-
-  if ((rval_send = this->send_echo_check (remote_addr,
-                                          to_connect)) == -1)
+  int const rval_send = this->send_echo_check (remote_addr, to_connect);
+  if (rval_send == -1)
     return -1;
 
   ACELIB_DEBUG
