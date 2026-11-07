@@ -8,7 +8,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
@@ -232,7 +232,7 @@ Consumer::svc ()
       if (length > 0)
         ACE_OS::write (ACE_STDOUT,
                        mb->rd_ptr (),
-                       ACE_OS::strlen (mb->rd_ptr ()));
+                       std::strlen (mb->rd_ptr ()));
 
       if (length == 0)
         break;
@@ -257,7 +257,7 @@ Filter::put (ACE_Message_Block *mb,
       char buf[BUFSIZ + 1] {};
 
       // Stash a copy of the buffer away.
-      ACE_OS::strncpy (buf, mb->rd_ptr (), sizeof buf - 1);
+      std::strncpy (buf, mb->rd_ptr (), sizeof buf - 1);
 
       // Increase the size of the buffer large enough that it will be
       // reallocated (in order to test the reallocation mechanisms).
