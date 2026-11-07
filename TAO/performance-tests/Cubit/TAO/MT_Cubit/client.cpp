@@ -60,24 +60,6 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 }
 #endif /* ACE_HAS_VXTHREADS */
 
-// Constructor.
-
-Client_i::Client_i ()
-  : high_priority_client_ (0),
-    low_priority_client_ (0),
-    util_thread_ (0),
-    ts_ (0),
-    num_low_priority_ (0),
-    num_priorities_ (0),
-    grain_ (0),
-    counter_ (0),
-    task_name_ (0),
-    argc_ (0),
-    argv_ (0),
-    context_switch_ (0)
-{
-}
-
 // Destructor.
 
 Client_i::~Client_i ()

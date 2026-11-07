@@ -5,15 +5,7 @@
 #include "ace/Null_Mutex.h"
 
 Globals::Globals ()
-  : thr_create_flags (0),
-    default_priority (0),
-    ior_file (0),
-    num_of_objs (2),
-    thread_per_rate (0),
-    use_multiple_priority (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_),
-    barrier_ (0)
+  : ready_cnd_ (ready_mtx_)
 {
   const ACE_TCHAR default_endpoint[] = ACE_TEXT("iiop://");
   // Default to iiop
@@ -115,16 +107,6 @@ Globals::sched_fifo_init ()
 #endif /* ACE_HAS_THREADS */
 }
 
-MT_Priority::MT_Priority ()
-  : num_priorities_ (0),
-    grain_ (0)
-{
-}
-
-MT_Priority::~MT_Priority ()
-{
-}
-
 ACE_Sched_Priority
 MT_Priority::get_high_priority ()
 {
@@ -218,6 +200,5 @@ MT_Priority::grain ()
 {
   return this->grain_;
 }
-
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Globals,  ACE_Null_Mutex);

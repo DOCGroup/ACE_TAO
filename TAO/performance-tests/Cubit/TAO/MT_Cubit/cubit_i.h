@@ -26,7 +26,7 @@ class Cubit_i : public POA_Cubit
 public:
   Cubit_i (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa);
-  ~Cubit_i () override;
+  ~Cubit_i () override = default;
 
   CORBA::Octet cube_octet (CORBA::Octet o) override;
 

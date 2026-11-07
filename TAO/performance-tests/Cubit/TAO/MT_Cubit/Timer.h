@@ -42,7 +42,7 @@ private:
   ACE_High_Res_Timer timer_;
 
   /// Elapsed time in microseconds.
-  ACE_Time_Value delta_;
+  ACE_Time_Value delta_ {};
 
   /**
    * This is the granularity of the timing of the CORBA requests. A

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/config-all.h"
 
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
@@ -31,17 +30,6 @@
 #if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
-
-Server::Server ()
-  :argc_ (0),
-   argv_ (0),
-   cubits_ (0),
-   high_priority_task_ (0),
-   low_priority_tasks_ (0),
-   high_argv_ (0),
-   low_argv_ (0)
-{
-}
 
 int
 Server::init (int argc, ACE_TCHAR **argv)
@@ -361,7 +349,6 @@ Server::start_servants ()
     return result;
   return 0;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

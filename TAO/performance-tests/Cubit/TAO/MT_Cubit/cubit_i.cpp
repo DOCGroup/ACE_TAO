@@ -9,10 +9,6 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
 {
 }
 
-Cubit_i::~Cubit_i ()
-{
-}
-
 CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o)
 {

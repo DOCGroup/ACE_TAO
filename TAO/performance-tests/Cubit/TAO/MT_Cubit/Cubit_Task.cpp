@@ -4,23 +4,15 @@
 #include "tao/TAO_Internal.h"
 #include "ace/Barrier.h"
 
-Cubit_Task::Cubit_Task ()
-{
-  // No-op.
-}
-
 Cubit_Task::Cubit_Task (const ACE_TCHAR *args,
                         const char *orbname,
                         u_int num_of_objs,
                         ACE_Thread_Manager *thr_mgr,
                         u_int task_id)
   : ACE_Task<ACE_SYNCH> (thr_mgr),
-    key_ ("Cubit"),
     orbname_ (orbname),
     orbargs_ (args),
     num_of_objs_ (num_of_objs),
-    servants_ (0),
-    servants_iors_ (0),
     task_id_ (task_id)
 {
 }
@@ -222,7 +214,6 @@ Cubit_Task::create_servants ()
 
           Cubit_var cubit =
             Cubit::_narrow (object_act.in ());
-
 
           CORBA::String_var str =
             this->orb_->object_to_string (cubit.in ());
