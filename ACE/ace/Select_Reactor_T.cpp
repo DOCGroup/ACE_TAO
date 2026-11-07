@@ -230,7 +230,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers ()
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  ACE_Event_Handler *eh = nullptr;
+  ACE_Event_Handler *eh {};
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
        iter.next (eh) != 0;
@@ -248,7 +248,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers ()
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  ACE_Event_Handler *eh = nullptr;
+  ACE_Event_Handler *eh {};
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
        iter.next (eh) != 0;
@@ -1073,7 +1073,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout = nullptr;
+  ACE_Time_Value *this_timeout {};
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 
