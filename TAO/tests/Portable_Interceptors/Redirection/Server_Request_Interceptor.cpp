@@ -4,14 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "CrashPoint.h"
 
-Server_Request_Interceptor::Server_Request_Interceptor ()
-  : request_count_ (0)
-{
-}
-
-Server_Request_Interceptor::~Server_Request_Interceptor ()
-{
-}
+Server_Request_Interceptor::~Server_Request_Interceptor () = default;
 
 char *
 Server_Request_Interceptor::name ()
