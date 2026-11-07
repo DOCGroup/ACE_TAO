@@ -7,7 +7,7 @@ Blocking_Sync_None::Blocking_Sync_None (CORBA::ORB_ptr orb)
 }
 
 void
-Blocking_Sync_None::slow_operation (const Test::Payload &,
+Blocking_Sync_None::slow_operation (Test::Payload const &,
                                     CORBA::ULong sleep_microseconds)
 {
   ACE_Time_Value const sleep_time (0, sleep_microseconds);

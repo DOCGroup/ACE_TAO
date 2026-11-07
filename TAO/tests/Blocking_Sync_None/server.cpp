@@ -2,37 +2,40 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+#include <string>
+
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options;
   try
     {
       CORBA::ORB_var const orb =
@@ -52,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       Blocking_Sync_None *blocking_sync_none_impl {};
@@ -74,12 +77,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Write the IOR before activating the POA manager.
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             ior_output_file),
+                             options.ior_output_file.c_str ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
