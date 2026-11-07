@@ -22,17 +22,17 @@ struct Barriers
   ACE_Barrier client_fini_;
 };
 
-static const ACE_TCHAR *server_cmd = 0;
+static ACE_TCHAR const *server_cmd {};
 
 void *
 svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
-  Barriers *thread_barrier = (Barriers *) arg;
+  Barriers *thread_barrier = static_cast<Barriers *> (arg);
 
   ACE_TCHAR cmd_line[BUFSIZ];
   ACE_OS::strcpy (cmd_line, ACE_TEXT("server "));
-  if (server_cmd != 0)
+  if (server_cmd != nullptr)
     ACE_OS::strcat (cmd_line, server_cmd);
   ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
@@ -60,7 +60,7 @@ svr_worker (void *arg)
       userex._tao_print_exception ("User Exception");
       return (void *) 1;
     }
-  return 0;
+  return nullptr;
 }
 
 
@@ -69,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:"));
   int c = -1;
-  const ACE_TCHAR *client_cmd = 0;
+  ACE_TCHAR const *client_cmd {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -90,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ACE_TCHAR cmd_line[1024];
   ACE_OS::strcpy (cmd_line, ACE_TEXT("client "));
-  if (client_cmd != 0)
+  if (client_cmd != nullptr)
     ACE_OS::strcat (cmd_line, client_cmd);
   ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
