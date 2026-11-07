@@ -8,39 +8,39 @@
 //=============================================================================
 
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Filecache.h"
 #include "http_handler.h"
+#include <cstdio>
+#include <cstring>
 
 HTTP_Handler::HTTP_Handler (char const *path)
 {
   // How long is the request going to be?
   this->request_[0] = '\0';
   this->request_size_ =
-    ACE_OS::strlen ("GET ")
-    + ACE_OS::strlen (path)
-    + ACE_OS::strlen (" HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
+    std::strlen ("GET ")
+    + std::strlen (path)
+    + std::strlen (" HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
 
   // Make the request.
   if (this->request_size_ < sizeof (this->request_))
-    ACE_OS::sprintf (this->request_,
-                     "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
-                     path);
+    std::sprintf (this->request_,
+                  "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
+                  path);
   else
     this->request_size_ = 0;
 
   // Find the filename.
-  char const *last = ACE_OS::strrchr (path, '/');
+  char const *last = std::strrchr (path, '/');
 
   if (last == nullptr)
     last = path;
   else if (last[1] == '\0')
     last = "index.html";
   else
-    last = last+1;
+    last = last + 1;
 
-  ACE_OS::sprintf (this->filename_, "%s", last);
+  std::sprintf (this->filename_, "%s", last);
 }
 
 int
@@ -84,7 +84,7 @@ HTTP_Handler::svc ()
           buf[count] = '\0';
 
           if (count >= 2)
-            done = ACE_OS::strcmp (buf + count - 2, "\n\n") == 0;
+            done = std::strcmp (buf + count - 2, "\n\n") == 0;
 
           if (done)
             break;
@@ -92,7 +92,7 @@ HTTP_Handler::svc ()
           if (count < 4)
             continue;
 
-          done = ACE_OS::strcmp (buf + count - 4, "\r\n\r\n") == 0;
+          done = std::strcmp (buf + count - 4, "\r\n\r\n") == 0;
 
           if (done)
             break;
@@ -100,28 +100,28 @@ HTTP_Handler::svc ()
 
       if (!done)
         {
-          char *last = ACE_OS::strrchr (buf, '\n');
+          char *last = std::strrchr (buf, '\n');
           if (last == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR, "Malformed HTTP response header\n"), -1);
           last[0] = '\0';
 
-          if ((contentlength = ACE_OS::strstr (buf, "\nContent-length:"))
-              || (contentlength = ACE_OS::strstr (buf, "\nContent-Length:")))
+          if ((contentlength = std::strstr (buf, "\nContent-length:"))
+              || (contentlength = std::strstr (buf, "\nContent-Length:")))
             done = true;
           else
             {
               last[0] = '\n';
-              count = ACE_OS::strlen (last);
-              ACE_OS::memmove (buf, last, count + 1);
+              count = std::strlen (last);
+              std::memmove (buf, last, count + 1);
             }
         }
       else
         {
-          contentlength = ACE_OS::strstr (buf, "\nContent-length:");
+          contentlength = std::strstr (buf, "\nContent-length:");
 
           if (!contentlength)
             contentlength =
-              ACE_OS::strstr (buf, "\nContent-Length:");
+              std::strstr (buf, "\nContent-Length:");
         }
 
     }
@@ -219,13 +219,13 @@ HTTP_Connector::parseurl (char const *url,
               else
                 {
                   *port = DEFAULT_SERVER_PORT;
-                  ACE_OS::strcpy (path, "/");
+                  std::strcpy (path, "/");
                 }
             }
           else
             *port = DEFAULT_SERVER_PORT;
         }
-      else ACE_OS::strcpy (path, "/");
+      else std::strcpy (path, "/");
     }
 
   // 0 => success

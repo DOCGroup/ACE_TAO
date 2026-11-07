@@ -15,6 +15,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "http_handler.h"
+#include <cstring>
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -35,7 +36,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       char *s = buf;
 
       // get rid of trailing '\n'
-      int len = ACE_OS::strlen (s);
+      int len = std::strlen (s);
 
       if (len > 0 && s[len - 1] == '\n')
         s[len - 1] = 0;
@@ -53,7 +54,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
           if (ACE_OS::system (ACE_TEXT_CHAR_TO_TCHAR (s)) == -1)
             ACE_ERROR ((LM_ERROR, ACE_TEXT (" ! Error executing: %C\n"), s));
         }
-      else if (ACE_OS::strncmp (s, "http://", 7) == 0)
+      else if (std::strncmp (s, "http://", 7) == 0)
         {
           // URL
           HTTP_Connector connector;
