@@ -10,6 +10,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 #include <cstring>
+#include <memory>
 
 #include "InvokeMeS.h"
 
@@ -329,19 +330,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Dump the ior.
   //
-  FILE * const output_file = ACE_OS::fopen (ior_output_file, "w");
-  if (output_file == nullptr)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open output file <%s> for writing "
-                         "IOR: %C",
-                         ior_output_file,
-                         ior.in ()),
-                        1);
-    }
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+      if (!output_file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file <%s> for writing "
+                           "IOR: %C",
+                           ior_output_file,
+                           ior.in ()),
+                          1);
 
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+    }
 
   ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%s'\n", ior_output_file));
 
