@@ -7,7 +7,6 @@ Client_Task::Client_Task (ACE_TCHAR const *ior,
   : ACE_Task_Base (thr_mgr)
   , input_ (ior)
   , corb_ (CORBA::ORB::_duplicate (corb))
-
 {
 }
 
@@ -21,7 +20,7 @@ Client_Task::svc ()
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = nullptr;
+      BaseNode_init *bn_factory {};
       ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
@@ -31,7 +30,7 @@ Client_Task::svc ()
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = nullptr;
+      TreeController_init *tc_factory {};
       ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
@@ -41,7 +40,7 @@ Client_Task::svc ()
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = nullptr;
+      StringNode_init *sn_factory {};
       ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);

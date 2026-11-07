@@ -5,6 +5,8 @@
 #include "Test_impl.h"
 
 #include "ace/Manual_Event.h"
+#include "ace/OS_NS_stdio.h"
+#include <memory>
 
 Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
@@ -26,7 +28,7 @@ Server_Task::svc ()
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = nullptr;
+      BaseNode_init *bn_factory {};
       ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
@@ -36,7 +38,7 @@ Server_Task::svc ()
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = nullptr;
+      TreeController_init *tc_factory {};
       ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
@@ -46,7 +48,7 @@ Server_Task::svc ()
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = nullptr;
+      StringNode_init *sn_factory {};
       ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);
@@ -71,7 +73,7 @@ Server_Task::svc ()
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Test_impl *test_impl;
+      Test_impl *test_impl {};
       ACE_NEW_RETURN (test_impl,
                       Test_impl (this->sorb_.in ()),
                       1);
@@ -89,14 +91,16 @@ Server_Task::svc ()
         this->sorb_->object_to_string (test.in ());
 
       // If the this->output_ exists, output the ior to it
-      FILE *output_file = ACE_OS::fopen (this->output_, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           this->output_),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (this->output_, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             this->output_),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
