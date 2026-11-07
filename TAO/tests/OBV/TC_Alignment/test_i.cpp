@@ -8,17 +8,18 @@ test_i::test_i (CORBA::ORB_ptr orb)
 CORBA::Any *
 test_i::get_value (CORBA::Long offset)
 {
-  CORBA::Any_ptr retval_ptr = nullptr;
+  CORBA::Any_ptr retval_ptr {};
   ACE_NEW_THROW_EX (retval_ptr,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
   CORBA::Any_var retval = retval_ptr;
 
+  // The non-copying Any insertion overloads take ownership of these values.
   switch (offset)
   {
     case 1:
     {
-      obvmod::tcOffset1 *vt1 = nullptr;
+      obvmod::tcOffset1 *vt1 {};
       ACE_NEW_RETURN (vt1,
                       tcOffset1_i,
                       nullptr);
@@ -28,7 +29,7 @@ test_i::get_value (CORBA::Long offset)
     }
     case 3:
     {
-      obvmod::tcOffset003 *vt3 = nullptr;
+      obvmod::tcOffset003 *vt3 {};
       ACE_NEW_RETURN (vt3,
                       tcOffset3_i,
                       nullptr);
@@ -38,7 +39,7 @@ test_i::get_value (CORBA::Long offset)
     }
     case 5:
     {
-      obvmod::tcOffset00005 *vt5 = nullptr;
+      obvmod::tcOffset00005 *vt5 {};
       ACE_NEW_RETURN (vt5,
                       tcOffset5_i,
                       nullptr);
@@ -48,7 +49,7 @@ test_i::get_value (CORBA::Long offset)
     }
     case 7:
     {
-      obvmod::tcOffset0000007 *vt7 = nullptr;
+      obvmod::tcOffset0000007 *vt7 {};
       ACE_NEW_RETURN (vt7,
                       tcOffset7_i,
                       nullptr);
