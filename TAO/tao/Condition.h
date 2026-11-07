@@ -22,6 +22,8 @@
 #include "ace/Condition_T.h"
 #include "ace/Global_Macros.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -91,17 +93,19 @@ public:
   MUTEX *mutex ();
 
 private:
-  TAO_Condition (const TAO_Condition<MUTEX> &) = delete;
-  TAO_Condition &operator= (const TAO_Condition<MUTEX> &) = delete;
+  TAO_Condition (TAO_Condition<MUTEX> const &) = delete;
+  TAO_Condition &operator= (TAO_Condition<MUTEX> const &) = delete;
+  TAO_Condition (TAO_Condition<MUTEX> &&) = delete;
+  TAO_Condition &operator= (TAO_Condition<MUTEX> &&) = delete;
 
-  /// Reference to mutex lock.
-  MUTEX *mutex_;
+  /// Internally owned mutex, empty when an external mutex is used.
+  std::unique_ptr<MUTEX> owned_mutex_ {};
 
-  /// A flag to indicate whether the lock needs to be deleted.
-  bool delete_lock_;
+  /// Mutex used by the condition variable.
+  MUTEX *mutex_ {};
 
   /// Condition variable.
-  TAO_SYNCH_CONDITION *cond_;
+  std::unique_ptr<TAO_SYNCH_CONDITION> cond_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
