@@ -7,11 +7,7 @@
 #include "Server_Interceptor.h"
 #include "Shared_Interceptor.h"
 #include "tao/OctetSeqC.h"
-#include "ace/OS_NS_string.h"
-
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
-{
-}
+#include <cstring>
 
 char *
 Echo_Server_Request_Interceptor::name ()
@@ -31,22 +27,21 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   CORBA::String_var operation =
     ri->operation ();
 
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
-  IOP::ServiceId id = ::service_id;
+  IOP::ServiceId const id = ::service_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id);
 
-  if (sc->context_data.length() != magic_cookie_len
-      || ACE_OS::memcmp(
-                magic_cookie, sc->context_data.get_buffer(),
-                magic_cookie_len) != 0)
+  if (sc->context_data.length () != magic_cookie_len
+      || std::memcmp (magic_cookie,
+                      sc->context_data.get_buffer (),
+                      magic_cookie_len) != 0)
     {
       throw CORBA::BAD_PARAM();
     }
 }
-
 
 void
 Echo_Server_Request_Interceptor::receive_request (
@@ -68,6 +63,6 @@ Echo_Server_Request_Interceptor::send_exception (
 
 void
 Echo_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr)
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
