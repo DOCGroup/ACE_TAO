@@ -11,9 +11,9 @@ namespace TAO
     bool block)
     : obj_ (p)
     , stub_ (stub)
-    , transport_ (0)
-    , profile_ (0)
-    , is_released_ (false)
+    , transport_ { nullptr }
+    , profile_ {}
+    , is_released_ {}
     , blocked_ (block)
   {
   }

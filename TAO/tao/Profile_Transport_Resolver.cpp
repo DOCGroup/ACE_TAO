@@ -55,7 +55,7 @@ namespace TAO
         // with profile management. This would cover some potential
         // issues that Ossama is working on.  Ossama, please remove
         // them when you are done.
-        TAO_Profile *tmp = this->profile_;
+        TAO_Profile * const tmp = this->profile_;
 
         (void) p->_incr_refcnt ();
         this->profile_ = p;
@@ -73,7 +73,7 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_time_val);
 
-    TAO_Invocation_Endpoint_Selector *es =
+    TAO_Invocation_Endpoint_Selector * const es =
       this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector ();
 
     // Select the endpoint
@@ -124,7 +124,7 @@ namespace TAO
        ACE_Time_Value *timeout,
        bool parallel)
   {
-    TAO_Connector_Registry *conn_reg =
+    TAO_Connector_Registry * const conn_reg =
       this->stub_->orb_core ()->connector_registry ();
 
     if (conn_reg == nullptr)
@@ -155,7 +155,7 @@ namespace TAO
         timeout = nullptr;
       }
 
-    TAO_Connector *con = conn_reg->get_connector (desc->endpoint ()->tag ());
+    TAO_Connector * const con = conn_reg->get_connector (desc->endpoint ()->tag ());
     ACE_ASSERT(con != nullptr);
     if (parallel)
       {
@@ -199,7 +199,7 @@ namespace TAO
   bool
   Profile_Transport_Resolver::use_parallel_connect () const
   {
-    TAO_ORB_Core *oc = this->stub_->orb_core();
+    TAO_ORB_Core * const oc = this->stub_->orb_core();
     return (oc->orb_params()->use_parallel_connects()
 #if 0       // it was decided that even with blocked connects
             // parallel connects could be useful, at least for cache
