@@ -61,7 +61,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 void*
 ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 {
-  void* temp = nullptr;
+  void* temp {};
   if (ACE_Thread::getspecific (key_, &temp) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
@@ -133,7 +133,7 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 // Set the signal handler to point to the handle_signal() function.
-ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = nullptr;
+ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ {};
 
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
@@ -141,7 +141,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 // = Set by command-line options.
 
 /// Pathname of file to write process id.
-ACE_TCHAR *ACE_Service_Config::pid_file_name_ = nullptr;
+ACE_TCHAR *ACE_Service_Config::pid_file_name_ {};
 
 /// Shall we become a daemon process?
 bool ACE_Service_Config::be_a_daemon_ = false;
@@ -453,7 +453,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_DLL &dll,
                                           int active)
 {
-  ACE_Service_Type *sp = nullptr;
+  ACE_Service_Type *sp {};
   ACE_NEW_RETURN (sp,
                   ACE_Service_Type (n, o, dll, active),
                   0);
@@ -468,7 +468,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
                                               u_int flags,
                                               ACE_Service_Object_Exterminator gobbler)
 {
-  ACE_Service_Type_Impl *stp = nullptr;
+  ACE_Service_Type_Impl *stp {};
 
   // Note, the only place we need to put a case statement.  This is
   // also the place where we'd put the RTTI tests, if the compiler

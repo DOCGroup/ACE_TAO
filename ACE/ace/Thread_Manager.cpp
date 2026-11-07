@@ -38,14 +38,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 // Process-wide Thread Manager.
-ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = nullptr;
+ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ {};
 
 // Controls whether the Thread_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
 bool ACE_Thread_Manager::delete_thr_mgr_ = false;
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
-ACE_TSS_TYPE (ACE_Thread_Exit) *ACE_Thread_Manager::thr_exit_ = nullptr;
+ACE_TSS_TYPE (ACE_Thread_Exit) *ACE_Thread_Manager::thr_exit_ {};
 
 int
 ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
@@ -230,7 +230,7 @@ ACE_Thread_Descriptor::at_exit (void *object,
    }
   else
    {
-     ACE_At_Thread_Exit* cleanup = nullptr;
+     ACE_At_Thread_Exit* cleanup {};
      ACE_NEW_RETURN (cleanup,
                      ACE_At_Thread_Exit_Func (object,
                                               cleanup_hook,
@@ -593,7 +593,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // Reset thread descriptor status
   new_thr_desc->reset (this);
 
-  ACE_Thread_Adapter *thread_args = nullptr;
+  ACE_Thread_Adapter *thread_args {};
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
@@ -818,7 +818,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
-  ACE_Thread_Descriptor *thr_desc = nullptr;
+  ACE_Thread_Descriptor *thr_desc {};
 
   if (td == nullptr)
     {
@@ -973,7 +973,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 void
 ACE_Thread_Manager::remove_thr_all ()
 {
-  ACE_Thread_Descriptor *td = nullptr;
+  ACE_Thread_Descriptor *td {};
 
   while ((td = this->thr_list_.delete_head ()) != nullptr)
     {
@@ -1133,7 +1133,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   int const result = OP (ptr, ARG); \
   ACE_Errno_Guard error (errno); \
   while (! this->thr_to_be_removed_.is_empty ()) { \
-    ACE_Thread_Descriptor * td = nullptr; \
+    ACE_Thread_Descriptor * td {}; \
     this->thr_to_be_removed_.dequeue_head (td); \
     this->remove_thr (td, 1); \
   } \
@@ -1770,7 +1770,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         this->remove_thr_all ();
 
 #if !defined (ACE_HAS_VXTHREADS)
-  ACE_Thread_Descriptor_Base* item = nullptr;
+  ACE_Thread_Descriptor_Base* item {};
   while ((item = this->terminated_thr_list_.delete_head ()) != nullptr)
     {
       term_thr_list_copy.insert_tail (item);
@@ -1830,7 +1830,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
 
-      for (ACE_Thread_Descriptor *td = nullptr;
+      for (ACE_Thread_Descriptor *td {};
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
         this->remove_thr (td, 1);

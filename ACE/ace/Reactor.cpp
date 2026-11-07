@@ -88,7 +88,7 @@ ACE_Reactor::~ACE_Reactor ()
 }
 
 // Process-wide ACE_Reactor.
-ACE_Reactor *ACE_Reactor::reactor_ = nullptr;
+ACE_Reactor *ACE_Reactor::reactor_ {};
 
 // Controls whether the Reactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
