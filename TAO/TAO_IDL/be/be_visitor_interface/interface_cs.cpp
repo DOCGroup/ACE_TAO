@@ -25,7 +25,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       return 0;
     }
 
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Set the right type.
   if (this->ctx_->alias ())
@@ -576,7 +576,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -597,7 +597,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName *item_new_name  = nullptr;
+          UTL_ScopedName *item_new_name  {};
           ACE_NEW_RETURN (item_new_name,
                           UTL_ScopedName (d->local_name ()->copy (),
                                           nullptr),

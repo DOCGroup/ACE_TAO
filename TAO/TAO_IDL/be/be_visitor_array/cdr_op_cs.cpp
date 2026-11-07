@@ -641,7 +641,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
-          be_string *str = nullptr;
+          be_string *str {};
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
@@ -768,7 +768,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
-          be_string *str = nullptr;
+          be_string *str {};
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {

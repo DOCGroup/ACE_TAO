@@ -192,7 +192,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);

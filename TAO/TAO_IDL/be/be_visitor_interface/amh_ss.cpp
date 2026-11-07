@@ -186,7 +186,7 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
 
   if (base->is_nested ())
     {
-      be_decl *scope = nullptr;
+      be_decl *scope {};
       scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::AMH_"

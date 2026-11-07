@@ -11,7 +11,7 @@
 std::string
 IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
 {
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
 
   switch (t->node_type ())
     {

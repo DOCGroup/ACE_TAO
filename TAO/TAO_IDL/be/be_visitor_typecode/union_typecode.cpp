@@ -128,7 +128,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 int
 TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
 {
-  AST_Field *member_ptr = nullptr;
+  AST_Field *member_ptr {};
 
   ACE_CDR::ULong const count = node->nfields ();
 
@@ -182,7 +182,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   ACE_CDR::ULong const countFields = node->nfields ();
   for (ACE_CDR::ULong fieldNumber = 0u; fieldNumber < countFields; ++fieldNumber)
     {
-      AST_Field *member_ptr = nullptr;
+      AST_Field *member_ptr {};
       node->field (member_ptr, fieldNumber);
 
       be_type * const type =

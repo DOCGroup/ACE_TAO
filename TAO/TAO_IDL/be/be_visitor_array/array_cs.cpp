@@ -176,7 +176,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   // Now generate code such that every element of the array gets assigned
   // inside the innermost level of the  nested loops generated above.
-  be_array *primitive_type = nullptr;
+  be_array *primitive_type {};
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {

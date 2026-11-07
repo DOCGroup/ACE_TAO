@@ -131,7 +131,7 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
                               "Explicit",
                               m));
 
-  be_interface *i = nullptr;
+  be_interface *i {};
   ACE_NEW_RETURN (i,
                   be_interface (explicit_name.get (),
                                 header.inherits (),
@@ -183,7 +183,7 @@ be_visitor_xplicit_pre_proc::visit_operation (be_operation *node)
 {
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_operation *home_op = nullptr;
+  be_operation *home_op {};
   ACE_NEW_RETURN (home_op,
                   be_operation (node->return_type (),
                                 node->flags (),
@@ -239,7 +239,7 @@ be_visitor_xplicit_pre_proc::visit_argument (be_argument *node)
   AST_Type *arg_type =
     dynamic_cast<AST_Type*> (this->type_holder_);
 
-  be_argument *added_arg = nullptr;
+  be_argument *added_arg {};
   ACE_NEW_RETURN (added_arg,
                   be_argument (node->direction (),
                                arg_type,
@@ -259,7 +259,7 @@ be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
   AST_Home *f_home =
     dynamic_cast<AST_Home*> (node->defined_in ());
 
-  be_operation *added_factory = nullptr;
+  be_operation *added_factory {};
   ACE_NEW_RETURN (added_factory,
                   be_operation (f_home->managed_component (),
                                 AST_Operation::OP_noflags,
@@ -293,7 +293,7 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
   AST_Home *f_home =
     dynamic_cast<AST_Home*> (node->defined_in ());
 
-  be_operation *added_finder = nullptr;
+  be_operation *added_finder {};
   ACE_NEW_RETURN (added_finder,
                   be_operation (f_home->managed_component (),
                                 AST_Operation::OP_noflags,
@@ -370,7 +370,7 @@ be_visitor_xplicit_pre_proc::visit_structure (be_structure *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_structure *added_struct = nullptr;
+  be_structure *added_struct {};
   ACE_NEW_RETURN (added_struct,
                   be_structure (&sn,
                                 false,
@@ -398,14 +398,14 @@ be_visitor_xplicit_pre_proc::visit_structure_fwd (
 {
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_structure *dummy = nullptr;
+  be_structure *dummy {};
   ACE_NEW_RETURN (dummy,
                   be_structure (&sn,
                                 false,
                                 false),
                   -1);
 
-  be_structure_fwd *added_struct_fwd = nullptr;
+  be_structure_fwd *added_struct_fwd {};
   ACE_NEW_RETURN (added_struct_fwd,
                   be_structure_fwd (dummy,
                                     &sn),
@@ -423,7 +423,7 @@ be_visitor_xplicit_pre_proc::visit_exception (be_exception *node)
 {
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_exception *added_excep = nullptr;
+  be_exception *added_excep {};
   ACE_NEW_RETURN (added_excep,
                   be_exception (&sn,
                                 false,
@@ -458,7 +458,7 @@ be_visitor_xplicit_pre_proc::visit_enum (be_enum *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_enum *added_enum = nullptr;
+  be_enum *added_enum {};
   ACE_NEW_RETURN (added_enum,
                   be_enum (&sn,
                            false,
@@ -503,7 +503,7 @@ be_visitor_xplicit_pre_proc::visit_field (be_field *node)
   AST_Type *field_type =
     dynamic_cast<AST_Type*> (this->type_holder_);
 
-  be_field *added_field = nullptr;
+  be_field *added_field {};
   ACE_NEW_RETURN (added_field,
                   be_field (field_type,
                             &sn,
@@ -539,7 +539,7 @@ be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_attribute *added_attr = nullptr;
+  be_attribute *added_attr {};
   ACE_NEW_RETURN (added_attr,
                   be_attribute (node->readonly (),
                                 attr_type,
@@ -583,7 +583,7 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_union *added_union = nullptr;
+  be_union *added_union {};
   ACE_NEW_RETURN (added_union,
                   be_union (disc,
                             &sn,
@@ -611,7 +611,7 @@ be_visitor_xplicit_pre_proc::visit_union_fwd (be_union_fwd *node)
 {
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_union *dummy = nullptr;
+  be_union *dummy {};
   ACE_NEW_RETURN (dummy,
                   be_union (nullptr,
                             &sn,
@@ -619,7 +619,7 @@ be_visitor_xplicit_pre_proc::visit_union_fwd (be_union_fwd *node)
                             false),
                   -1);
 
-  be_union_fwd *added_union_fwd = nullptr;
+  be_union_fwd *added_union_fwd {};
   ACE_NEW_RETURN (added_union_fwd,
                   be_union_fwd (dummy,
                                 &sn),
@@ -663,7 +663,7 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
 
   // ACE_NEW_RETURN requires a raw output pointer; the list stays guarded until
   // ownership transfers to the branch.
-  be_union_branch *added_branch = nullptr;
+  be_union_branch *added_branch {};
   ACE_NEW_RETURN (added_branch,
                   be_union_branch (label_list.get (), bt, &sn),
                   -1);
@@ -699,7 +699,7 @@ be_visitor_xplicit_pre_proc::visit_constant (be_constant *node)
       return 0;
     }
 
-  AST_Expression *new_v = nullptr;
+  AST_Expression *new_v {};
   ACE_NEW_RETURN (new_v,
                   AST_Expression (node->constant_value (),
                                   node->et ()),
@@ -708,7 +708,7 @@ be_visitor_xplicit_pre_proc::visit_constant (be_constant *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_constant *added_const = nullptr;
+  be_constant *added_const {};
   ACE_NEW_RETURN (added_const,
                   be_constant (node->et (),
                                value_owner.get (),
@@ -735,7 +735,7 @@ be_visitor_xplicit_pre_proc::visit_enum_val (be_enum_val *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_enum_val *added_enum_val = nullptr;
+  be_enum_val *added_enum_val {};
   ACE_NEW_RETURN (added_enum_val,
                   be_enum_val (node->constant_value ()->ev ()->u.ulval,
                                &sn),
@@ -770,14 +770,14 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 
   for (std::size_t i = 0; i < node->n_dims (); ++i)
     {
-      AST_Expression *v = nullptr;
+      AST_Expression *v {};
       ACE_NEW_RETURN (v,
                       AST_Expression (node->dims ()[i].get (),
                                       AST_Expression::EV_ulong),
                       -1);
       std::unique_ptr<AST_Expression, AST_Expression_Deleter> v_owner (v);
 
-      UTL_ExprList *el = nullptr;
+      UTL_ExprList *el {};
       ACE_NEW_RETURN (el,
                       UTL_ExprList (v_owner.get (), nullptr),
                       -1);
@@ -796,7 +796,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_array *added_array = nullptr;
+  be_array *added_array {};
   ACE_NEW_RETURN (added_array,
                   be_array (&sn,
                             node->n_dims (),
@@ -842,7 +842,7 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
 
   AST_Expression *v = node->max_size ();
 
-  AST_Expression *bound = nullptr;
+  AST_Expression *bound {};
   ACE_NEW_RETURN (bound,
                   AST_Expression (v,
                                   AST_Expression::EV_ulong),
@@ -885,7 +885,7 @@ be_visitor_xplicit_pre_proc::visit_string (be_string *node)
       return 0;
     }
 
-  AST_Expression *bound = nullptr;
+  AST_Expression *bound {};
   ACE_NEW_RETURN (bound,
                   AST_Expression (b,
                                   AST_Expression::EV_ulong),
@@ -933,7 +933,7 @@ be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
   AST_Type *bt =
     dynamic_cast<AST_Type*> (this->type_holder_);
 
-  be_typedef *added_typedef = nullptr;
+  be_typedef *added_typedef {};
   ACE_NEW_RETURN (added_typedef,
                   be_typedef (bt,
                               &sn,
@@ -957,7 +957,7 @@ be_visitor_xplicit_pre_proc::visit_native (be_native *node)
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  be_native *added_native = nullptr;
+  be_native *added_native {};
   ACE_NEW_RETURN (added_native,
                   be_native (&sn),
                   -1);

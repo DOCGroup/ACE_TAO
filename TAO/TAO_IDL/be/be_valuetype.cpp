@@ -651,7 +651,7 @@ be_valuetype::traverse_supports_list_graphs (
   this->insert_queue.clear ();
   this->del_queue.clear ();
 
-  be_interface *supported_interface = nullptr;
+  be_interface *supported_interface {};
 
   for (std::size_t i = 0; i < n_supports; ++i)
     {

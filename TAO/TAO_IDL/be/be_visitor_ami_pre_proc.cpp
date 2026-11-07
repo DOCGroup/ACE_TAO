@@ -280,7 +280,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   AST_Type_List const p_intf = this->create_inheritance_list (node);
 
-  be_interface *reply_handler = nullptr;
+  be_interface *reply_handler {};
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
                                 p_intf,             // list of inherited
@@ -394,7 +394,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
       return nullptr;
     }
 
-  Identifier *id = nullptr;
+  Identifier *id {};
 
   // Create the new name
   // Prepend "sendc_" to the name of the operation
@@ -408,7 +408,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   idl_global->scopes ().push (node->defined_in ());
 
   // Create the operation
-  be_operation *op = nullptr;
+  be_operation *op {};
   // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
@@ -467,7 +467,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
                   nullptr);
   std::unique_ptr<Identifier> id_owner (id);
 
-  UTL_ScopedName *tmp = nullptr;
+  UTL_ScopedName *tmp {};
 
   ACE_NEW_RETURN (tmp,
                   UTL_ScopedName (id_owner.get (),
@@ -479,7 +479,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
     static_cast<UTL_ScopedName *> (op->name ()->copy ()));
   sn_owner->nconc (tmp);
 
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                field_type, // is also a valuetype
@@ -537,7 +537,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
               original_arg->direction () == AST_Argument::dir_INOUT)
             {
               // Create the argument.
-              be_argument *arg_new = nullptr;
+              be_argument *arg_new {};
               FE_Utils::Scoped_Name_Owner new_name (
                 static_cast<UTL_ScopedName *> (original_arg->name ()->copy ()));
               ACE_NEW_RETURN (arg_new,
@@ -587,8 +587,8 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
     static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ()));
 
   // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
-  Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
+  Identifier *id {};
+  UTL_ScopedName *sn {};
   ACE_NEW_RETURN (id,
                   Identifier (original_op_name),
                   -1);
@@ -605,7 +605,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
   sn_owner.release ();
 
   // Create the operation.
-  be_operation *operation = nullptr;
+  be_operation *operation {};
   ACE_NEW_RETURN (operation,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -627,7 +627,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                       -1);
       id_owner.reset (id);
 
-      UTL_ScopedName *tmp = nullptr;
+      UTL_ScopedName *tmp {};
 
       ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id_owner.get (),
@@ -642,7 +642,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
       tmp_owner.release ();
 
       // Create the argument.
-      be_argument *arg = nullptr;
+      be_argument *arg {};
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_IN,
                                    node->return_type (),
@@ -696,7 +696,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
               original_arg->direction () == AST_Argument::dir_OUT)
             {
               // Create the argument.
-              be_argument *arg = nullptr;
+              be_argument *arg {};
               FE_Utils::Scoped_Name_Owner new_name (
                 static_cast<UTL_ScopedName *> (original_arg->name ()->copy ()));
               ACE_NEW_RETURN (arg,
@@ -755,7 +755,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 
   // Create the return type, which is "void".
   // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
-  Identifier *id = nullptr;
+  Identifier *id {};
 
   // Create the argument.
   ACE_NEW_RETURN (id,
@@ -763,7 +763,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                   -1);
   std::unique_ptr<Identifier> id_owner (id);
 
-  UTL_ScopedName *sn = nullptr;
+  UTL_ScopedName *sn {};
   ACE_NEW_RETURN (sn,
                   UTL_ScopedName (id_owner.get (),
                                   nullptr),
@@ -772,7 +772,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   FE_Utils::Scoped_Name_Owner sn_owner (sn);
 
   be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                excep_holder, // is also a valuetype
@@ -815,7 +815,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   AST_PredefinedType *rt = be_global->void_type ();
 
   // Create the operation.
-  be_operation *operation = nullptr;
+  be_operation *operation {};
   ACE_NEW_RETURN (operation,
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
@@ -880,7 +880,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           }
       }
 
-      AST_Decl **raw_elements = nullptr;
+      AST_Decl **raw_elements {};
       ACE_NEW_RETURN (raw_elements,
                       AST_Decl *[number_of_elements],
                       -1);
@@ -968,7 +968,7 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
   get_name->last_component ()->replace_string (new_op_name);
 
-  be_operation *operation = nullptr;
+  be_operation *operation {};
   ACE_NEW_RETURN (operation,
                   be_operation (node->field_type (),
                                 AST_Operation::OP_noflags,
@@ -1004,7 +1004,7 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   set_name->last_component ()->replace_string (new_op_name);
 
   // Argument type is the same as the attribute type.
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                node->field_type (),
@@ -1014,7 +1014,7 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   arg->set_name ((UTL_ScopedName *) node->name ()->copy ());
 
   // Create the operation.
-  be_operation *operation = nullptr;
+  be_operation *operation {};
   ACE_NEW_RETURN (operation,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -1046,7 +1046,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node)
   AST_Type_List retval;
   AST_Type_List const& parents = node->inherits ();
   std::size_t const n_parents = parents.size ();
-  AST_Type *parent = nullptr;
+  AST_Type *parent {};
   std::size_t n_rh_parents = 0;
 
   for (std::size_t i = 0; i < n_parents; ++i)

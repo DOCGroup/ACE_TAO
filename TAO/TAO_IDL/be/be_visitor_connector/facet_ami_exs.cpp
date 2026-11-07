@@ -690,7 +690,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
   os_ << be_nl
       << "{" << be_idt_nl;
 
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
   pdt = dynamic_cast<AST_PredefinedType*> (bt);
   bool ret = true;
   if ((pdt != nullptr) && (pdt->pt () == AST_PredefinedType::PT_void))

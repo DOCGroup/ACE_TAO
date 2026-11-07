@@ -35,7 +35,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 
-TAO_IDL_BE_Export BE_GlobalData *be_global = nullptr;
+TAO_IDL_BE_Export BE_GlobalData *be_global {};
 
 void
 BE_AST_Decl_Deleter::operator() (AST_Decl *decl) const
@@ -1890,16 +1890,16 @@ BE_GlobalData::ccmobject ()
 {
   if (nullptr == this->ccmobject_)
     {
-      Identifier *local_id = nullptr;
+      Identifier *local_id {};
       ACE_NEW_RETURN (local_id,
                       Identifier ("CCMObject"),
                       nullptr);
-      UTL_ScopedName *local_name = nullptr;
+      UTL_ScopedName *local_name {};
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (local_id, nullptr),
                       nullptr);
 
-      Identifier *module_id = nullptr;
+      Identifier *module_id {};
       ACE_NEW_RETURN (module_id,
                       Identifier ("Components"),
                       nullptr);
@@ -1931,8 +1931,8 @@ BE_GlobalData::messaging ()
 {
   if (nullptr == this->messaging_)
     {
-      Identifier *id = nullptr;
-      UTL_ScopedName *sn = nullptr;
+      Identifier *id {};
+      UTL_ScopedName *sn {};
 
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
@@ -1943,7 +1943,7 @@ BE_GlobalData::messaging ()
                                       nullptr),
                       nullptr);
 
-      be_module *messaging = nullptr;
+      be_module *messaging {};
       ACE_NEW_RETURN (messaging,
                       be_module (sn),
                       nullptr);
@@ -1960,7 +1960,7 @@ BE_GlobalData::messaging_exceptionholder ()
 {
   if (nullptr == this->messaging_exceptionholder_)
     {
-      Identifier *id = nullptr;
+      Identifier *id {};
       be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
@@ -1970,7 +1970,7 @@ BE_GlobalData::messaging_exceptionholder ()
 
       // Create a valuetype "ExceptionHolder"
       // from which we inherit.
-      UTL_ScopedName *full_name = nullptr;
+      UTL_ScopedName *full_name {};
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (id,
                                       nullptr),
@@ -1980,7 +1980,7 @@ BE_GlobalData::messaging_exceptionholder ()
                       Identifier ("ExceptionHolder"),
                       nullptr);
 
-      UTL_ScopedName *local_name = nullptr;
+      UTL_ScopedName *local_name {};
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (id,
                                       nullptr),
@@ -1988,7 +1988,7 @@ BE_GlobalData::messaging_exceptionholder ()
 
       full_name->nconc (local_name);
 
-      be_valuetype *exceptionholder = nullptr;
+      be_valuetype *exceptionholder {};
       ACE_NEW_RETURN (exceptionholder,
                       be_valuetype (full_name,
                                     AST_Type_List {},
@@ -2030,8 +2030,8 @@ BE_GlobalData::messaging_replyhandler ()
       be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
-      Identifier *id = nullptr;
-      UTL_ScopedName *local_name = nullptr;
+      Identifier *id {};
+      UTL_ScopedName *local_name {};
 
       // Create a virtual module named "Messaging"
       // "and an interface "ReplyHandler"
@@ -2040,7 +2040,7 @@ BE_GlobalData::messaging_replyhandler ()
                       Identifier ("Messaging"),
                       nullptr);
 
-      UTL_ScopedName *full_name = nullptr;
+      UTL_ScopedName *full_name {};
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (id,
                                       nullptr),
@@ -2057,7 +2057,7 @@ BE_GlobalData::messaging_replyhandler ()
 
       full_name->nconc (local_name);
 
-      be_interface *replyhandler = nullptr;
+      be_interface *replyhandler {};
       ACE_NEW_RETURN (replyhandler,
                       be_interface (full_name,
                                     AST_Type_List {},  // inherited interfaces

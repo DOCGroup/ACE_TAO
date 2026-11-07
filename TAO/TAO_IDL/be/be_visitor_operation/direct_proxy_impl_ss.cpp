@@ -171,7 +171,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     {
       arg = dynamic_cast<AST_Argument*> (si.item ());
 
-      char const *arg_direction = nullptr;
+      char const *arg_direction {};
       switch (arg->direction ())
         {
           case AST_Argument::dir_IN:

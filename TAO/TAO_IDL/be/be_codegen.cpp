@@ -29,7 +29,7 @@
 #include <random>
 #include <utility>
 
-TAO_CodeGen * tao_cg = nullptr;
+TAO_CodeGen * tao_cg {};
 
 TAO_CodeGen::TAO_CodeGen ()
   : strategy_ (TAO_PERFECT_HASH)

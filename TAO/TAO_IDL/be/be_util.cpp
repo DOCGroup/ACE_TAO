@@ -974,7 +974,7 @@ be_util::generator_init ()
 {
   tao_cg = TAO_CODEGEN::instance ();
 
-  AST_Generator *gen = nullptr;
+  AST_Generator *gen {};
   ACE_NEW_RETURN (gen,
                   be_generator,
                   nullptr);

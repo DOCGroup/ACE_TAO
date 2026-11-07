@@ -66,7 +66,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_idt_nl << ": " << be_idt;
 
   long i;  // loop index
-  be_valuetype *inherited = nullptr;
+  be_valuetype *inherited {};
   long n_inherits = node->n_inherits ();
   bool inherits_eventtype = false;
 
@@ -87,7 +87,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "," << be_nl;
             }
 
-          be_decl *scope = nullptr;
+          be_decl *scope {};
 
           if (inherited->is_nested ())
             {
@@ -498,7 +498,7 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
 

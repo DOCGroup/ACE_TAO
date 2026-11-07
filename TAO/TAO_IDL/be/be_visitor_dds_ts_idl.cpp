@@ -328,7 +328,7 @@ be_visitor_dds_ts_idl::init_file ()
   std::string fname (fname_noext);
   fname += ".idl";
 
-  TAO_OutStream *stream = nullptr;
+  TAO_OutStream *stream {};
   ACE_NEW_RETURN (stream,
                   TAO_OutStream,
                   -1);

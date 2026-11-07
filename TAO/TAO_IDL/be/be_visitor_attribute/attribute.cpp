@@ -73,13 +73,13 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   std::string op_name (this->ctx_->port_prefix ());
   op_name += node->local_name ()->get_string ();
   // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
-  Identifier *op_id = nullptr;
+  Identifier *op_id {};
   ACE_NEW_RETURN (op_id,
                   Identifier (op_name),
                   -1);
   std::unique_ptr<Identifier> op_id_owner (op_id);
 
-  UTL_ScopedName *op_ln = nullptr;
+  UTL_ScopedName *op_ln {};
   ACE_NEW_RETURN (op_ln,
                   UTL_ScopedName (op_id_owner.get (), nullptr),
                   -1);

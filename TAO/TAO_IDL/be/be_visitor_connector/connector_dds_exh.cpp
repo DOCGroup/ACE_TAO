@@ -89,7 +89,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
           bool needs_bool = false;
           bool is_fixed = false;
-          FE_Utils::T_Param_Info *param = nullptr;
+          FE_Utils::T_Param_Info *param {};
 
           if (slot - 1 >= this->t_params_->size ())
             {

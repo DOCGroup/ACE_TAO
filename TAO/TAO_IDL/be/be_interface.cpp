@@ -649,7 +649,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
       return 0;
     }
 
-  be_decl *d = nullptr;
+  be_decl *d {};
 
   for (UTL_ScopeActiveIterator si (base_interface, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -891,7 +891,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
 
         // Make a new outstream to hold the gperf_temp_file for this
         // interface.
-        TAO_OutStream *os = nullptr;
+        TAO_OutStream *os {};
         ACE_NEW_NORETURN (os, TAO_OutStream);
 
         if (os == nullptr)
@@ -1495,7 +1495,7 @@ be_interface::traverse_inheritance_graph (
   bool abstract_paths_only,
   bool add_ccm_object)
 {
-  AST_Type *intf = nullptr;  // element inside the queue
+  AST_Type *intf {};  // element inside the queue
 
   if (!this->insert_queue.empty ())
     {
@@ -2285,7 +2285,7 @@ be_interface::gen_skel_inheritance (TAO_OutStream *os)
 {
   AST_Type_List const& parents = this->inherits ();
   std::size_t const n_parents = parents.size ();
-  AST_Type *parent = nullptr;
+  AST_Type *parent {};
   bool has_concrete_parent = false;
 
   for (std::size_t i = 0; i < n_parents; ++i)

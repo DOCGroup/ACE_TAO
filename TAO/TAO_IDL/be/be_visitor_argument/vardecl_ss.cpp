@@ -64,7 +64,7 @@ int be_visitor_args_vardecl_ss::visit_array (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -112,7 +112,7 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -174,7 +174,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -270,7 +270,7 @@ int be_visitor_args_vardecl_ss::visit_sequence (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -411,7 +411,7 @@ be_visitor_args_vardecl_ss::emit_common (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -447,7 +447,7 @@ be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {

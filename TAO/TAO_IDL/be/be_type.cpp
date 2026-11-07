@@ -74,7 +74,7 @@ be_type::compute_tc_name ()
         }
       else
         {
-          UTL_ScopedName *conc_name = nullptr;
+          UTL_ScopedName *conc_name {};
           ACE_NEW (conc_name,
                    UTL_ScopedName (n->head ()->copy (),
                                    nullptr));
@@ -88,7 +88,7 @@ be_type::compute_tc_name ()
   std::string namebuf ("_tc_");
   namebuf += n->last_component ()->get_string ();
 
-  Identifier *id = nullptr;
+  Identifier *id {};
   ACE_NEW (id,
            Identifier (namebuf));
 
@@ -101,7 +101,7 @@ be_type::compute_tc_name ()
     }
   else
     {
-      UTL_ScopedName *conc_name = nullptr;
+      UTL_ScopedName *conc_name {};
       ACE_NEW (conc_name,
                UTL_ScopedName (id,
                                nullptr));
@@ -159,7 +159,7 @@ void
 be_type::gen_fwd_helper_name ()
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
-  Identifier *segment = nullptr;
+  Identifier *segment {};
   this->fwd_helper_name_.clear ();
 
   if (parent != nullptr && parent->node_type () != AST_Decl::NT_root)
