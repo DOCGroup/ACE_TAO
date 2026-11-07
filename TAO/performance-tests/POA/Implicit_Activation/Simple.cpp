@@ -1,9 +1,5 @@
 #include "Simple.h"
 
-Simple::Simple ()
-{
-}
-
 void
 Simple::destroy ()
 {

@@ -16,11 +16,11 @@ class Simple
 {
 public:
   /// Constructor
-  Simple ();
+  Simple () = default;
 
   // = The skeleton methods
 
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #if defined(_MSC_VER)
