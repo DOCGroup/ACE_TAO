@@ -3666,8 +3666,8 @@ void yyfree (void * ptr )
 static bool
 same_file (std::string const& path1, std::string const& path2)
 {
-  char fullpath1 [MAXPATHLEN + 1] = {};
-  char fullpath2 [MAXPATHLEN + 1] = {};
+  char fullpath1 [MAXPATHLEN + 1] {};
+  char fullpath2 [MAXPATHLEN + 1] {};
 
   char *fp1 = ACE_OS::realpath (path1.c_str (), fullpath1);
   char *fp2 = ACE_OS::realpath (path2.c_str (), fullpath2);
