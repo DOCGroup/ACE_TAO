@@ -10,6 +10,41 @@
 #include "URL_Array_Helper.h"
 #include <memory>
 
+static ACE_NS_WString
+ace_url_wstring (ACE_UINT16 const *value)
+{
+  ACE_NS_WString result;
+  if (value != nullptr)
+    while (*value != 0)
+      result += static_cast<ACE_WSTRING_TYPE> (*value++);
+  return result;
+}
+
+ACE_URL_Property::ACE_URL_Property (ACE_UINT16 const *name,
+                                    ACE_UINT16 const *value)
+  : name_ (ace_url_wstring (name)),
+    value_ (ace_url_wstring (value))
+{
+}
+
+void
+ACE_URL_Property::name (ACE_UINT16 const *name)
+{
+  this->name_ = ace_url_wstring (name);
+}
+
+void
+ACE_URL_Property::value (ACE_UINT16 const *value)
+{
+  this->value_ = ace_url_wstring (value);
+}
+
+void
+ACE_URL_Offer::url (ACE_UINT16 const *url)
+{
+  this->url_ = ace_url_wstring (url);
+}
+
 size_t
 ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
 {
@@ -62,14 +97,20 @@ ACE_URL_Property::dump () const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   if (this->name_.length () > 0)
-    ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n",
-                std::unique_ptr<char[]> (this->name_.char_rep ()).get ()));
+    {
+      std::unique_ptr<char[]> name (this->name_.char_rep ());
+      ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n",
+                  name.get ()));
+    }
   else
     ACE_DEBUG ((LM_DEBUG, "\n   name_:  \"\"\n"));
 
   if (this->value_.length () > 0)
-    ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
-                std::unique_ptr<char[]> (this->value_.char_rep ()).get ()));
+    {
+      std::unique_ptr<char[]> value (this->value_.char_rep ());
+      ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
+                  value.get ()));
+    }
   else
     ACE_DEBUG ((LM_DEBUG, "   value_:  \"\"\n"));
 
@@ -121,8 +162,11 @@ ACE_URL_Offer::dump () const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   if (this->url_.length () > 0)
-    ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n",
-                std::unique_ptr<char[]> (this->url_.char_rep ()).get ()));
+    {
+      std::unique_ptr<char[]> url (this->url_.char_rep ());
+      ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n",
+                  url.get ()));
+    }
   else
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
 

@@ -12,6 +12,16 @@
 #include "URL_Locator.h"
 #include <memory>
 
+static ACE_NS_WString
+ace_url_wstring (ACE_UINT16 const *value)
+{
+  ACE_NS_WString result;
+  if (value != nullptr)
+    while (*value != 0)
+      result += static_cast<ACE_WSTRING_TYPE> (*value++);
+  return result;
+}
+
 int
 ACE_URL_Locator_Request::url_query (const int how,
                                     const ACE_URL_Property_Seq &pseq,
@@ -43,7 +53,7 @@ ACE_URL_Locator_Request::withdraw_offer (const ACE_WString &offer_id)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::withdraw_offer");
 
-  this->id_ = offer_id;
+  static_cast<ACE_WString &> (this->id_) = offer_id;
   this->code_ = ACE_URL_Locator::WITHDRAW;
   return 0;
 }
@@ -53,7 +63,7 @@ ACE_URL_Locator_Request::describe_offer (const ACE_WString &offer_id)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::describe_offer");
 
-  this->id_ = offer_id;
+  static_cast<ACE_WString &> (this->id_) = offer_id;
   this->code_ = ACE_URL_Locator::DESCRIBE;
   return 0;
 }
@@ -70,9 +80,9 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
   ACE_NEW_RETURN (this->seq2_, ACE_URL_Property_Seq (modify), -1);
 
   if (url != 0)
-    this->url_ = *url;
+    static_cast<ACE_WString &> (this->url_) = *url;
 
-  this->id_ = offer_id;
+  static_cast<ACE_WString &> (this->id_) = offer_id;
   this->code_ = ACE_URL_Locator::MODIFY;
   return 0;
 }
@@ -181,10 +191,12 @@ ACE_URL_Locator_Request::decode (void *buffer)
       total_length += this->offer_->decode (cbuffer + total_length);
     }
 
-  this->id_ = ACE_WString ((ACE_UINT16 *) (cbuffer + total_length));
-  total_length += ACE_WString_Helper::decode (cbuffer + total_length);
-  this->url_ = ACE_WString ((ACE_UINT16 *) (cbuffer + total_length));
-  total_length += ACE_WString_Helper::decode (cbuffer + total_length);
+  size_t id_length = ACE_WString_Helper::decode (cbuffer + total_length);
+  this->id_ = ace_url_wstring (reinterpret_cast<ACE_UINT16 *> (cbuffer + total_length));
+  total_length += id_length;
+  size_t url_length = ACE_WString_Helper::decode (cbuffer + total_length);
+  this->url_ = ace_url_wstring (reinterpret_cast<ACE_UINT16 *> (cbuffer + total_length));
+  total_length += url_length;
 
   ACE_ASSERT (total_length == buf_size);
   return total_length;
@@ -296,6 +308,7 @@ ACE_URL_Locator_Reply::query_reply (int result, size_t num,
 
   this->code_ = ACE_URL_Locator::QUERY;
   this->status_ = result;
+  this->num_offers_ = num;
   ACE_NEW_RETURN (this->offers_, ACE_URL_Offer_Seq (offers), -1);
   return 0;
 }
