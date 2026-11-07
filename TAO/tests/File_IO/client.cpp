@@ -21,7 +21,6 @@
 #include "ace/Malloc_Base.h"
 #include <memory>
 #include <string>
-#include <utility>
 
 struct Client_Options
 {
@@ -91,7 +90,7 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
   return 0;
 }
 
-void
+static void
 validate_connection (CORBA::Object_ptr object)
 {
   // Try to validate the connection several times, ignoring transient
@@ -129,11 +128,7 @@ MTTEST (void *args)
 
       for (int i {}; i < context.iterations; ++i)
         {
-          //seek to the beginning of the file
-#if 0
-          ACE_DEBUG((LM_DEBUG,"Making request number %d\n",i));
-#endif /*if 0*/
-
+          // Seek to the beginning of the file.
           fd->lseek (0, SEEK_SET);
 
           // Read back the written message
@@ -154,7 +149,7 @@ MTTEST (void *args)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Client_Options options;
   try
@@ -182,24 +177,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Unable to read ior\n"),
                           -1);
 
-      std::string ior (data.get ());
+      Client_Context context {orb, data.get (), options.file_name, options.iterations};
 
-      Client_Context context;
-      context.orb = orb;
-      context.ior = std::move (ior);
-      context.file_name = options.file_name;
-      context.iterations = options.iterations;
-
-      if (ACE_Thread_Manager::instance ()->spawn_n (options.thread_count,
-                                                    MTTEST,
-                                                    &context,
-                                                    THR_NEW_LWP | THR_DETACHED) == -1)
+      ACE_Thread_Manager *const thread_manager = ACE_Thread_Manager::instance ();
+      if (thread_manager->spawn_n (options.thread_count,
+                                   MTTEST,
+                                   &context,
+                                   THR_NEW_LWP | THR_DETACHED) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n%a"),
                       ACE_TEXT ("thread create failed")));
+          thread_manager->wait ();
+          return -1;
         }
-      ACE_Thread_Manager::instance ()->wait ();
+
+      thread_manager->wait ();
     }
   catch (CORBA::Exception const &ex)
     {

@@ -16,7 +16,6 @@ struct Server_Options
 
 constexpr int nthreads = 2;
 
-
 /**
  * Run a server thread
  *
@@ -73,15 +72,27 @@ parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Server_Options options;
-  ACE_HANDLE const handle = ACE_OS::open ("big.txt",
+  ACE_HANDLE const handle = ACE_OS::open (ACE_TEXT ("big.txt"),
                                           O_RDWR | O_CREAT,
                                           ACE_DEFAULT_FILE_PERMS);
+  if (handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot create test file: %p\n"),
+                       ACE_TEXT ("big.txt")),
+                      -1);
 
-  ACE_OS::lseek (handle, 1024*1024*10, SEEK_SET);
-  ACE_OS::write (handle, "", 1);
+  if (ACE_OS::lseek (handle, 1024 * 1024 * 10, SEEK_SET) == -1 ||
+      ACE_OS::write (handle, "", 1) != 1)
+    {
+      ACE_OS::close (handle);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot initialize test file: %p\n"),
+                         ACE_TEXT ("big.txt")),
+                        -1);
+    }
   ACE_OS::close (handle);
 
   try
@@ -157,19 +168,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var const file_system_ior =
         orb->object_to_string (file_system.in ());
 
-      ACE_DEBUG ((LM_DEBUG,"%C\n",
+      ACE_DEBUG ((LM_DEBUG, "%C\n",
                   file_system_ior.in ()));
 
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
-        ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                           options.ior_output_file.c_str ()),
-                          -1);
-      ACE_OS::fprintf (output_file.get (), "%s", file_system_ior.in ());
-      output_file.reset ();
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file.c_str ()),
+                            -1);
+        ACE_OS::fprintf (output_file.get (), "%s", file_system_ior.in ());
+      }
 
       // set the state of the poa_manager to active i.e ready to
       // process requests
