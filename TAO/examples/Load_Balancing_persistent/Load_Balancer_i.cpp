@@ -23,7 +23,7 @@ Object_Group_Factory_i::Object_Group_Factory_i (CORBA::ORB_ptr orb,
    poa_ (PortableServer::POA::_duplicate (poa))
 {
   ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
-  ALLOCATOR *mem_pool = nullptr;
+  ALLOCATOR *mem_pool {};
   ACE_NEW (mem_pool,
            ALLOCATOR ("Mem_Pool",
                       "Mem_Pool",
@@ -85,7 +85,7 @@ Object_Group_Factory_i::unbind_round_robin (char const *id)
       this->rr_groups_ = reinterpret_cast <HASH_MAP *> (tmp_rr);
     }
 
-  char *int_id = nullptr;
+  char *int_id {};
 
   // Throw an exception if not found in the HASH MAP
   if (this->rr_groups_->find (const_cast<char *> (id),
@@ -163,7 +163,7 @@ Object_Group_Factory_i::unbind_random (char const *id)
       this->random_groups_ = reinterpret_cast <HASH_MAP *> (tmp_random);
     }
 
-  char *int_id = nullptr;
+  char *int_id {};
 
   // Throw an exception if not found in the HASH MAP
   if (this->random_groups_->find (const_cast<char *> (id),
@@ -202,7 +202,7 @@ Object_Group_Factory_i::make_group (bool random,
   Load_Balancer::Object_Group_var group;
 
   // Create an appropriate servant.
-  Object_Group_i *group_servant = nullptr;
+  Object_Group_i *group_servant {};
 
   // Check to make sure we don't already have a group with the same
   // <id>.
@@ -357,7 +357,7 @@ Object_Group_Factory_i::resolve (char const *id)
       this->update_objects ();
     }
 
-  char *ior = nullptr;
+  char *ior {};
 
   if (rr_groups_->find (const_cast<char *> (id),
                         ior,
@@ -419,7 +419,7 @@ Object_Group_Factory_i::list_groups (bool random)
     group_iter = &rr_iter;
 
   // Iterate over groups and populate the list.
-  HASH_MAP::ENTRY *hash_entry = nullptr;
+  HASH_MAP::ENTRY *hash_entry {};
   for (CORBA::ULong i = 0; i < len; i++)
     {
       group_iter->next (hash_entry);
@@ -497,8 +497,8 @@ void
 Object_Group_Factory_i::update_objects ()
 {
   // Create an appropriate servant.
-  Object_Group_i *group_servant = nullptr;
-  Object_Group_i *group_servant_rep = nullptr;
+  Object_Group_i *group_servant {};
+  Object_Group_i *group_servant_rep {};
 
   // Check the value of of flags_ & do the instantiation and
   // registration
@@ -544,7 +544,7 @@ Object_Group_i::Object_Group_i (char const *id,
    id_ (id)
 {
   ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
-  ALLOCATOR *allocator = nullptr;
+  ALLOCATOR *allocator {};
   ACE_NEW (allocator,
            ALLOCATOR ("Mem_Pool",
                       "Mem_Pool",
@@ -759,7 +759,7 @@ Object_Group_i::resolve_with_id (char const *id)
 Load_Balancer::Member_ID_List *
 Object_Group_i::members ()
 {
-  Load_Balancer::Member_ID_List *list = nullptr;
+  Load_Balancer::Member_ID_List *list {};
 
   this->read_from_memory ();
 
@@ -775,7 +775,7 @@ Object_Group_i::members ()
   // Create an iterator for <member_id_list_> to populate the list.
   Object_Group_i::ITERATOR id_iter (*this->member_id_list_);
 
-  char **item = nullptr;
+  char **item {};
   // Iterate over groups and populate the list.
   for (CORBA::ULong i = 0; i < len; i++)
     {
@@ -868,14 +868,14 @@ Random_Object_Group::resolve ()
   size_t member = ACE_OS::rand() % group_size;
 
   // Get the id of the member to return to the client.
-  char **id = nullptr;
+  char **id {};
   this->member_id_list_->get (id, member);
   ACE_DEBUG ((LM_DEBUG, "In Random Group resolved to: %s\n",
               *id));
 
   // Return the object reference corresponding to the found id to the
   // client.
-  char *objref = nullptr;
+  char *objref {};
   this->members_->find (*id,
                         objref,
                         this->allocator_.get ());
@@ -893,7 +893,7 @@ RR_Object_Group::RR_Object_Group (char const *id,
 char *
 RR_Object_Group::resolve ()
 {
-  char *objref = nullptr;
+  char *objref {};
 
   this->read_from_memory ();
 
@@ -902,7 +902,7 @@ RR_Object_Group::resolve ()
     throw Load_Balancer::no_such_member ();
 
   // Get the id of the member to return to the client.
-  char **id = nullptr;
+  char **id {};
   this->member_id_list_->get (id, next_);
   ACE_DEBUG ((LM_DEBUG,
               "In RR Group resolved to: %s\n", *id));
