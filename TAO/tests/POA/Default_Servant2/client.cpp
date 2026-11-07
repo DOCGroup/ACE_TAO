@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "FileC.h"
 #include "tao/debug.h"
 #include "ace/streams.h"
@@ -19,30 +18,33 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-static const ACE_TCHAR *iorfile = 0;
-static const ACE_TCHAR *filename = ACE_TEXT ("test");
-static const ACE_TCHAR *message = ACE_TEXT ("POA rules!!");
+struct Client_Options
+{
+  ACE_TCHAR const *ior_file {};
+  ACE_TCHAR const *filename { ACE_TEXT ("test") };
+  ACE_TCHAR const *message { ACE_TEXT ("POA rules!!") };
+};
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:f:m:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'd':
         ++TAO_debug_level;
         break;
       case 'k':
-        iorfile = get_opts.opt_arg ();
+        options.ior_file = get_opts.opt_arg ();
         break;
       case 'f':
-        filename = get_opts.opt_arg ();
+        options.filename = get_opts.opt_arg ();
         break;
       case 'm':
-        message = get_opts.opt_arg ();
+        options.message = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -56,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  if (iorfile == 0)
+  if (options.ior_file == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant"), -1);
 
@@ -72,28 +74,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
+      Client_Options options;
       // Parse the command-line arguments to get the IOR
-      parse_args (argc, argv);
-
-      // parse args should catch this, but just in case...
-      if (iorfile == 0)
-        return 0;
+      if (parse_args (argc, argv, options) != 0)
+        return -1;
 
       // Read the file, and get the IOR
-      ACE_HANDLE input_file = ACE_OS::open (iorfile, 0);
+      ACE_HANDLE const input_file = ACE_OS::open (options.ior_file, 0);
       if (input_file == ACE_INVALID_HANDLE)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open input file %s for reading IOR\n",
-                           iorfile),
+                           options.ior_file),
                           -1);
       ACE_Read_Buffer ior_buffer (input_file);
       char *data = ior_buffer.read ();
-      if (data == 0)
+      if (data == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to read ior\n"),
                           -1);
 
-      ACE_CString ior = data;
+      ACE_CString const ior = data;
       ior_buffer.alloc ()->free (data);
       ACE_OS::close (input_file);
 
@@ -103,12 +103,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       File::System_var file_system = File::System::_narrow (object.in ());
 
       // Creat the file filename i.e "test"
-      File::Descriptor_var fd = file_system->open (ACE_TEXT_ALWAYS_CHAR (filename),
+      File::Descriptor_var fd = file_system->open (ACE_TEXT_ALWAYS_CHAR (options.filename),
                                                    O_CREAT | O_RDWR);
 
-      int message_length = ACE_OS::strlen (message) + 1;
+      int const message_length = ACE_OS::strlen (options.message) + 1;
       CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
-      ACE_OS::strcpy ((char *) buffer, ACE_TEXT_ALWAYS_CHAR (message));
+      ACE_OS::strcpy (reinterpret_cast<char *> (buffer), ACE_TEXT_ALWAYS_CHAR (options.message));
       File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, 1);
 
       // write the message to the file
@@ -120,10 +120,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Read back the written message
       File::Descriptor::DataBuffer_var data_received = fd->read (message_length);
 
-      char *result = (char *) &data_received[0];
+      char *result = reinterpret_cast<char *> (&data_received[0]);
 
       // print the read message
-      ACE_DEBUG((LM_DEBUG, "%C\n",
+      ACE_DEBUG ((LM_DEBUG, "%C\n",
                  result));
 
       // close the file
@@ -133,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in main");
       return -1;
