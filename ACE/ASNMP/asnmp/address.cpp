@@ -38,7 +38,9 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
+#include <cerrno>
 #include <cstdio>
+#include <new>
 
 //=================================================================
 //======== Abstract Address Class Implementation ==================
@@ -1992,10 +1994,10 @@ void MacAddress::to_octet(OctetStr& octet) const
 //-----------[ get the syntax]----------------------------------------------
 SmiUINT32 GenAddress::get_syntax()
 {
-   if (address != 0)
-       return address->get_syntax();
+  if (address)
+    return address->get_syntax ();
 
-   return sNMP_SYNTAX_NULL;
+  return sNMP_SYNTAX_NULL;
 }
 
 void GenAddress::init_smi()
@@ -2005,8 +2007,42 @@ void GenAddress::init_smi()
   smival.value.string.ptr = address_buffer;     // constant
 }
 
+template <typename ConcreteAddress>
+static std::unique_ptr<Address> create_address ()
+{
+  std::unique_ptr<Address> result (new (std::nothrow) ConcreteAddress);
+  if (!result)
+    errno = ENOMEM;
+  return result;
+}
+
+template <typename ConcreteAddress>
+static std::unique_ptr<Address> create_address (char const *text)
+{
+  std::unique_ptr<Address> result (new (std::nothrow) ConcreteAddress (text));
+  if (!result)
+    errno = ENOMEM;
+  return result;
+}
+
+void GenAddress::copy_smi_value ()
+{
+  smival.syntax = sNMP_SYNTAX_NULL;
+  smival.value.string.len = 0;
+  smival.value.string.ptr = address_buffer;
+  if (!valid_flag || !address)
+    return;
+
+  OctetStr octets;
+  address->to_octet (octets);
+  smival.syntax = address->get_syntax ();
+  smival.value.string.len = octets.length ();
+  if (smival.value.string.len != 0)
+    ACE_OS::memcpy (smival.value.string.ptr, octets.data (), smival.value.string.len);
+}
+
 //-----------[ constructor with a string argument ]----------------------
-GenAddress::GenAddress( const char  *addr): address(0)
+GenAddress::GenAddress (char const *addr)
 {
   valid_flag = 0;
   // initialize SMI info
@@ -2023,23 +2059,11 @@ GenAddress::GenAddress( const char  *addr): address(0)
 
   parse_address(addr);
 
-  // Copy real address smival info into GenAddr smival
-  // BOK: smival is generally not used for GenAddress, but
-  //      we need this to be a replica of the real address'
-  //      smival info so that <class>::operator=SnmpSyntax
-  //      will work.
-  if ( valid_flag ) {
-      smival.syntax = ((GenAddress *)address)->smival.syntax;
-      smival.value.string.len =
-          ((GenAddress *)address)->smival.value.string.len;
-      ACE_OS::memcpy(smival.value.string.ptr,
-          ((GenAddress *)address)->smival.value.string.ptr,
-          (size_t)smival.value.string.len);
-  }
+  copy_smi_value ();
 }
 
 //-----------[ constructor with an Address argument ]--------------------
-GenAddress::GenAddress( const Address &addr): address(0)
+GenAddress::GenAddress (Address const &addr)
 {
   valid_flag = 0;
 
@@ -2054,31 +2078,18 @@ GenAddress::GenAddress( const Address &addr): address(0)
     return;
   }
 
-  address = (Address*)addr.clone();
+  address.reset (static_cast<Address *> (addr.clone ()));
   if (address)
     valid_flag = address->valid();
 
-  // Copy real address smival info into GenAddr smival
-  // BOK: smival is generally not used for GenAddress, but
-  //      we need this to be a replica of the real address'
-  //      smival info so that <class>::operator=SnmpSyntax
-  //      will work.
-  if ( valid_flag ) {
-      smival.syntax = address->get_syntax();
-      smival.value.string.len =
-          ((GenAddress *)address)->smival.value.string.len;
-      ACE_OS::memcpy(smival.value.string.ptr,
-          ((GenAddress *)address)->smival.value.string.ptr,
-          (size_t)smival.value.string.len);
-  }
+  copy_smi_value ();
 
   format_output();
 }
 
 //-----------------[ constructor with another GenAddress object ]-------------
-GenAddress::GenAddress( const GenAddress &addr)
-  : Address (addr),
-    address(0)
+GenAddress::GenAddress (GenAddress const &addr)
+  : Address (addr)
 {
   valid_flag = 0;
 
@@ -2089,38 +2100,22 @@ GenAddress::GenAddress( const GenAddress &addr)
   init_smi();
 
   // make sure that the object is valid
-  if (!addr.valid_flag) {
+  if (!addr.valid_flag || !addr.address) {
     format_output();
     return;
   }
 
-  address = (Address *)addr.address->clone();
+  address.reset (static_cast<Address *> (addr.address->clone ()));
   if (address)
     valid_flag = address->valid();
 
-  // Copy real address smival info into GenAddr smival
-  // BOK: smival is generally not used for GenAddress, but
-  //      we need this to be a replica of the real address'
-  //      smival info so that <class>::operator=SnmpSyntax
-  //      will work.
-  if ( valid_flag ) {
-      smival.syntax = ((GenAddress *)address)->smival.syntax;
-      smival.value.string.len =
-          ((GenAddress *)address)->smival.value.string.len;
-      ACE_OS::memcpy(smival.value.string.ptr,
-          ((GenAddress *)address)->smival.value.string.ptr,
-          (size_t)smival.value.string.len);
-  }
+  copy_smi_value ();
 
   format_output();
 }
 
 //----------[ destructor ] ------------------------------------------------
-GenAddress::~GenAddress()
-{
-  if ( address != 0)
-    delete address;
-}
+GenAddress::~GenAddress() = default;
 
 //----------[ create a new instance of this Value ]------------------------
 SnmpSyntax *GenAddress::clone() const
@@ -2129,55 +2124,36 @@ SnmpSyntax *GenAddress::clone() const
 }
 
 //------[ assignment GenAddress = GenAddress ]-----------------------------
-GenAddress& GenAddress::operator=( const GenAddress &addr)
+GenAddress& GenAddress::operator= (GenAddress const &addr)
 {
   // protect against assignment from itself
   if ( this == &addr )
       return *this;
 
   valid_flag = 0;
-  if (address) {
-    delete address;
-    address = 0;
-  }
+  address.reset ();
 
   if (addr.address)
-    address = (Address *)(addr.address)->clone();
+    address.reset (static_cast<Address *> (addr.address->clone ()));
 
   if (address)
     valid_flag = address->valid();
 
-  // Copy real address smival info into GenAddr smival
-  // BOK: smival is generally not used for GenAddress, but
-  //      we need this to be a replica of the real address'
-  //      smival info so that <class>::operator=SnmpSyntax
-  //      will work.
-  if ( valid_flag ) {
-      smival.syntax = ((GenAddress *)address)->smival.syntax;
-      smival.value.string.len =
-          ((GenAddress *)address)->smival.value.string.len;
-      ACE_OS::memcpy(smival.value.string.ptr,
-          ((GenAddress *)address)->smival.value.string.ptr,
-          (size_t)smival.value.string.len);
-  }
+  copy_smi_value ();
 
   format_output();
   return *this;
 }
 
-
 //------[ assignment GenAddress = any SnmpSyntax ]-----------------------
-SnmpSyntax& GenAddress::operator=( SnmpSyntax &val)
+SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
 {
   // protect against assignment from itself
   if ( this == &val )
       return *this;
 
-  valid_flag = 0;               // will get set to 1 if really valid
-  if ( address != 0) {
-    delete address;
-    address = 0;
-  }
+  valid_flag = 0;
+  address.reset ();
 
   if (val.valid())  {
     switch ( val.get_syntax() ) {
@@ -2187,9 +2163,7 @@ SnmpSyntax& GenAddress::operator=( SnmpSyntax &val)
       // Left here for posterity.
     case sNMP_SYNTAX_IPADDR:
     {
-      address = (Address *)val.clone();
-      if (address)
-        valid_flag = address->valid();
+      address.reset (static_cast<Address *> (val.clone ()));
     }
     break;
 
@@ -2207,56 +2181,49 @@ SnmpSyntax& GenAddress::operator=( SnmpSyntax &val)
 
     case sNMP_SYNTAX_OCTETS:
     {
-      unsigned long val_len;
-      val_len = ((GenAddress &)val).smival.value.string.len;
+      unsigned long val_len = 0;
+      Address const *address_value = dynamic_cast<Address const *> (&val);
+      if (address_value)
+        {
+          OctetStr octets;
+          address_value->to_octet (octets);
+          val_len = octets.length ();
+        }
+      else
+        {
+          OctetStr const *octets = dynamic_cast<OctetStr const *> (&val);
+          if (octets == nullptr)
+            break;
+          val_len = octets->length ();
+        }
 
-      if (val_len == UDPIPV4LEN) {
-        ACE_NEW_RETURN(address,  UdpAddress, *this);
-      }
-      else if (val_len ==IPV4LEN) {
-        ACE_NEW_RETURN(address, IpAddress, *this);
-      }
-      else if (val_len == IPXLEN) {
-        ACE_NEW_RETURN(address, IpxAddress, *this);
-      }
-      else if (val_len == IPXSOCKLEN) {
-        ACE_NEW_RETURN(address, IpxSockAddress, *this);
-      }
-      else  if (val_len == MACLEN) {
-        ACE_NEW_RETURN(address, MacAddress, *this);
-      }
-      else if (val_len == APPLETKLEN) {
-        ACE_NEW_RETURN(address, AppleTalkAddress, *this);
-      }
-      else if (val_len == DECNETLEN) {
-        ACE_NEW_RETURN(address, DecNetAddress, *this);
-      }
-      else if (val_len == NETBIOSLEN) {
-        ACE_NEW_RETURN(address, DecNetAddress, *this);
-      }
+      if (val_len == UDPIPV4LEN)
+        address = create_address<UdpAddress> ();
+      else if (val_len == IPV4LEN)
+        address = create_address<IpAddress> ();
+      else if (val_len == IPXLEN)
+        address = create_address<IpxAddress> ();
+      else if (val_len == IPXSOCKLEN)
+        address = create_address<IpxSockAddress> ();
+      else if (val_len == MACLEN)
+        address = create_address<MacAddress> ();
+      else if (val_len == APPLETKLEN)
+        address = create_address<AppleTalkAddress> ();
+      else if (val_len == DECNETLEN)
+        address = create_address<DecNetAddress> ();
+      else if (val_len == NETBIOSLEN)
+        address = create_address<DecNetAddress> ();
 
-      if (address) {
+      if (address)
         *address = val;
-        valid_flag = address->valid();
-      }
     }
     break;
     }   // end switch
   }
 
-  // Copy real address smival info into GenAddr smival
-  // BOK: smival is generally not used for GenAddress, but
-  //      we need this to be a replica of the real address'
-  //      smival info so that <class>::operator=SnmpSyntax
-  //      will work.
-  if ( valid_flag ) {
-      smival.syntax = ((GenAddress *)address)->smival.syntax;
-      smival.value.string.len =
-          ((GenAddress *)address)->smival.value.string.len;
-      ACE_OS::memcpy(smival.value.string.ptr,
-          ((GenAddress *)address)->smival.value.string.ptr,
-          (size_t)smival.value.string.len);
-  }
+  if (address)
+    valid_flag = address->valid ();
+  copy_smi_value ();
 
   format_output();
   return *this;
@@ -2265,10 +2232,15 @@ SnmpSyntax& GenAddress::operator=( SnmpSyntax &val)
 
 // redefined parse address for macs
 // TODO: Add netbios, appletalk, and decnet addresses here
-int GenAddress::parse_address( const char *addr)
+int GenAddress::parse_address (char const *addr)
 {
-   if ( address != 0)
-      delete address;
+  address.reset ();
+  if (addr == nullptr)
+    {
+      valid_flag = 0;
+      format_output ();
+      return 0;
+    }
 
    // try to create each of the addresses until the correct one
    // is found
@@ -2278,24 +2250,28 @@ int GenAddress::parse_address( const char *addr)
 //     portion is a valid ipaddress string... stupid WinSOCK!
 
     // ipxsock address
-    ACE_NEW_RETURN(address, IpxSockAddress( addr), -1);
+    address = create_address<IpxSockAddress> (addr);
+    if (!address)
+      return -1;
     valid_flag = address->valid();
-    if ( valid_flag && ((IpxSockAddress*)address)->get_socket()) {
+    if ( valid_flag && static_cast<IpxSockAddress *> (address.get ())->get_socket()) {
        format_output();
        return 1;   // ok its an ipxsock address
     }
         // otherwise delete it and try another
-    delete address;
+    address.reset ();
 
     // ipx address
-    ACE_NEW_RETURN(address, IpxAddress( addr), -1);
+    address = create_address<IpxAddress> (addr);
+    if (!address)
+      return -1;
     valid_flag = address->valid();
     if ( valid_flag)  {
        format_output();
        return 1;   // ok its an ipx address
     }
         // otherwise delete it and try another
-    delete address;
+    address.reset ();
 
 //TM: Must try the derived classes first...one pitfall of the
 //following solution is if someone creates with a port/socket of 0 the
@@ -2303,18 +2279,22 @@ int GenAddress::parse_address( const char *addr)
 //to parse the strings ourselves.
 
     // udp address
-    ACE_NEW_RETURN(address, UdpAddress( addr), -1);
+    address = create_address<UdpAddress> (addr);
+    if (!address)
+      return -1;
     valid_flag = address->valid();
-    if ( valid_flag && ((UdpAddress*)address)->get_port()) {
+    if ( valid_flag && static_cast<UdpAddress *> (address.get ())->get_port()) {
        format_output();
        return 1;       // ok its a udp address
     }
 
     // otherwise delete it and try another
-    delete address;
+    address.reset ();
 
     // ip address
-    ACE_NEW_RETURN(address, IpAddress( addr), -1);
+    address = create_address<IpAddress> (addr);
+    if (!address)
+      return -1;
     valid_flag = address->valid();
     if ( valid_flag)
     {
@@ -2322,10 +2302,12 @@ int GenAddress::parse_address( const char *addr)
        return 1;       // ok its an ip address
     }
         // otherwise delete it and try another
-    delete address;
+    address.reset ();
 
     // mac address
-    ACE_NEW_RETURN(address, MacAddress( addr), -1);
+    address = create_address<MacAddress> (addr);
+    if (!address)
+      return -1;
     valid_flag = address->valid();
     if ( valid_flag) {
        format_output();
@@ -2335,7 +2317,9 @@ int GenAddress::parse_address( const char *addr)
     // guess by length of argument the type of address
     switch  (ACE_OS::strlen(addr)) {
     case NETBIOSLEN:
-        ACE_NEW_RETURN(address, NetbiosAddress( addr), -1);
+        address = create_address<NetbiosAddress> (addr);
+        if (!address)
+          return -1;
         valid_flag = address->valid();
         if ( valid_flag) {
           format_output();
@@ -2344,7 +2328,9 @@ int GenAddress::parse_address( const char *addr)
         break;
 
     case APPLETKLEN:
-        ACE_NEW_RETURN(address, AppleTalkAddress( addr), -1);
+        address = create_address<AppleTalkAddress> (addr);
+        if (!address)
+          return -1;
         valid_flag = address->valid();
         if ( valid_flag) {
           format_output();
@@ -2353,7 +2339,9 @@ int GenAddress::parse_address( const char *addr)
         break;
 
     case DECNETLEN:
-        ACE_NEW_RETURN(address, DecNetAddress( addr), -1);
+        address = create_address<DecNetAddress> (addr);
+        if (!address)
+          return -1;
         valid_flag = address->valid();
         if ( valid_flag) {
           format_output();
@@ -2362,27 +2350,26 @@ int GenAddress::parse_address( const char *addr)
         break;
     }
         // otherwise its invalid
-    delete address;
-    address = 0;
+    address.reset ();
     format_output();
     return 0;
 }
 
-GenAddress::operator const char *() const
+GenAddress::operator char const *() const
 {
-  if ( address != 0)
-    return (const char *)*address;      // pass thru
+  if (address)
+    return static_cast<char const *> (*address);      // pass thru
   else
-    return (char *)output_buffer;
+    return output_buffer;
 }
 
 // to_string form of the contained address
-const char * GenAddress::to_string()
+char const * GenAddress::to_string()
 {
-  if ( address != 0)
+  if (address)
     return address->to_string();        // pass thru
   else
-    return (char *)output_buffer;
+    return output_buffer;
 }
 
 // format output

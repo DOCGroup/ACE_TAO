@@ -39,6 +39,7 @@
 
 #include "asnmp/smival.h"
 #include "asnmp/octet.h"
+#include <memory>
 
 //----[ enumerated types ] --------------------------------
 enum address_lengths {
@@ -779,13 +780,14 @@ class ASNMP_Export GenAddress : public Address
 {
 public:
   /// constructor with a string argument
-  explicit GenAddress( const char  *addr = "");
+  explicit GenAddress (char const *addr = "");
 
   /// constructor with an Address
-  GenAddress( const Address &addr);
+  GenAddress (Address const &addr);
 
   /// constructor with another GenAddress
-  GenAddress( const GenAddress &addr);
+  GenAddress (GenAddress const &addr);
+  GenAddress (GenAddress &&) = delete;
 
   /// destructor
   ~GenAddress() override;
@@ -797,16 +799,17 @@ public:
   SnmpSyntax *clone() const override;
 
   /// assignment of a GenAddress
-  GenAddress& operator=( const GenAddress &addr);
+  GenAddress& operator= (GenAddress const &addr);
+  GenAddress& operator= (GenAddress &&) = delete;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val) override;
+  SnmpSyntax& operator= (SnmpSyntax& val) override;
 
   /// string representation of object value
-  const char *to_string() override;
+  char const *to_string() override;
 
   /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  operator char const *() const override;
 
   /// return the type
   addr_type get_type() const override;
@@ -815,20 +818,23 @@ public:
   void to_octet(OctetStr& octet) const override;
 
 protected:
-  /// pointer to a a concrete address
-  Address *address;
+  /// owns the concrete address represented by this generic address
+  std::unique_ptr<Address> address {};
 
   /// output buffer of objects value
   char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for macs
-  int parse_address( const char *addr) override;
+  int parse_address (char const *addr) override;
 
   /// format output for a generic address
   void format_output() override;
 
   /// initialize smi data structure
   void init_smi();
+
+  /// copy the contained address's syntax and octet value into this object's SMI value
+  void copy_smi_value ();
 };
 
 #endif  //_ADDRESS

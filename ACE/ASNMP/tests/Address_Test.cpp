@@ -122,6 +122,8 @@ static void TestGenAddr()
   ga5 = ga3;                    // regular assignment
   ga3 = ga3;                   // self assignment
   ACE_ASSERT(ga5 == ga3);
+  *ga1 = ga3;
+  ACE_ASSERT (std::strcmp (ga2.to_string (), "1.2.3.4") == 0);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga5=ga3(\"localhost\") [%s]\n",
     ga5.to_string()));
