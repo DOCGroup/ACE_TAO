@@ -115,7 +115,7 @@ ACE_POSIX_Proactor::get_handle () const
 ACE_Asynch_Read_Stream_Impl *
 ACE_POSIX_Proactor::create_asynch_read_stream ()
 {
-  ACE_Asynch_Read_Stream_Impl *implementation = nullptr;
+  ACE_Asynch_Read_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Read_Stream (this),
                   nullptr);
@@ -151,7 +151,7 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result
 ACE_Asynch_Write_Stream_Impl *
 ACE_POSIX_Proactor::create_asynch_write_stream ()
 {
-  ACE_Asynch_Write_Stream_Impl *implementation = nullptr;
+  ACE_Asynch_Write_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Write_Stream (this),
                   nullptr);
@@ -187,7 +187,7 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result
 ACE_Asynch_Read_File_Impl *
 ACE_POSIX_Proactor::create_asynch_read_file ()
 {
-  ACE_Asynch_Read_File_Impl *implementation = nullptr;
+  ACE_Asynch_Read_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Read_File (this),
                   nullptr);
@@ -227,7 +227,7 @@ ACE_POSIX_Proactor::create_asynch_read_file_result
 ACE_Asynch_Write_File_Impl *
 ACE_POSIX_Proactor::create_asynch_write_file ()
 {
-  ACE_Asynch_Write_File_Impl *implementation = nullptr;
+  ACE_Asynch_Write_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Write_File (this),
                   nullptr);
@@ -267,7 +267,7 @@ ACE_POSIX_Proactor::create_asynch_write_file_result
 ACE_Asynch_Read_Dgram_Impl *
 ACE_POSIX_Proactor::create_asynch_read_dgram ()
 {
-    ACE_Asynch_Read_Dgram_Impl *implementation = nullptr;
+    ACE_Asynch_Read_Dgram_Impl *implementation {};
     ACE_NEW_RETURN (implementation,
                     ACE_POSIX_Asynch_Read_Dgram (this),
                     nullptr);
@@ -308,7 +308,7 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result
 ACE_Asynch_Write_Dgram_Impl *
 ACE_POSIX_Proactor::create_asynch_write_dgram ()
 {
-        ACE_Asynch_Write_Dgram_Impl *implementation = nullptr;
+        ACE_Asynch_Write_Dgram_Impl *implementation {};
         ACE_NEW_RETURN (implementation,
                         ACE_POSIX_Asynch_Write_Dgram (this),
                         nullptr);
@@ -348,7 +348,7 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result
 ACE_Asynch_Accept_Impl *
 ACE_POSIX_Proactor::create_asynch_accept ()
 {
-  ACE_Asynch_Accept_Impl *implementation = nullptr;
+  ACE_Asynch_Accept_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Accept (this),
                   nullptr);
@@ -387,7 +387,7 @@ ACE_POSIX_Proactor::create_asynch_accept_result
 ACE_Asynch_Connect_Impl *
 ACE_POSIX_Proactor::create_asynch_connect ()
 {
-  ACE_Asynch_Connect_Impl *implementation = nullptr;
+  ACE_Asynch_Connect_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Connect (this),
                   nullptr);
@@ -420,7 +420,7 @@ ACE_POSIX_Proactor::create_asynch_connect_result
 ACE_Asynch_Transmit_File_Impl *
 ACE_POSIX_Proactor::create_asynch_transmit_file ()
 {
-  ACE_Asynch_Transmit_File_Impl *implementation = nullptr;
+  ACE_Asynch_Transmit_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Transmit_File (this),
                   nullptr);
@@ -507,7 +507,7 @@ ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_r
 int
 ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
 {
-  ACE_POSIX_Wakeup_Completion *wakeup_completion = nullptr;
+  ACE_POSIX_Wakeup_Completion *wakeup_completion {};
 
   for (int ci = 0; ci < how_many; ci++)
     {
@@ -1018,7 +1018,7 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result ()
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr));
 
 
-  ACE_POSIX_Asynch_Result* result = nullptr;
+  ACE_POSIX_Asynch_Result* result {};
 
   if (this->result_queue_.dequeue_head (result) != 0)
     return nullptr;
@@ -1036,7 +1036,7 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result ()
 int ACE_POSIX_AIOCB_Proactor::clear_result_queue ()
 {
   int ret_val = 0;
-  ACE_POSIX_Asynch_Result* result = nullptr;
+  ACE_POSIX_Asynch_Result* result {};
 
   while ((result = this->getq_result ()) != nullptr)
     {
@@ -1050,7 +1050,7 @@ int ACE_POSIX_AIOCB_Proactor::clear_result_queue ()
 int ACE_POSIX_AIOCB_Proactor::process_result_queue ()
 {
   int ret_val = 0;
-  ACE_POSIX_Asynch_Result* result = nullptr;
+  ACE_POSIX_Asynch_Result* result {};
 
   while ((result = this->getq_result ()) != nullptr)
     {
@@ -1164,7 +1164,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, nullptr));
 
-  ACE_POSIX_Asynch_Result *asynch_result = nullptr;
+  ACE_POSIX_Asynch_Result *asynch_result {};
 
   if (num_started_aio_ == 0)  // save time
     return nullptr;
@@ -1324,7 +1324,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio_i");
 
   int ret_val;
-  const ACE_TCHAR *ptype = nullptr;
+  ACE_TCHAR const *ptype {};
 
   // Start IO
   // The following aio_ptr anathema is required to work around a bug in

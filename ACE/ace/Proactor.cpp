@@ -32,7 +32,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Proactor::proactor_ = nullptr;
+ACE_Proactor *ACE_Proactor::proactor_ {};
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
