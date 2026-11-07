@@ -48,7 +48,7 @@ Hello::test_basic_arg (
 }
 
 void
-Hello::test_unbounded_string_arg(const char* message)
+Hello::test_unbounded_string_arg (char const *message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
@@ -61,7 +61,7 @@ Hello::test_unbounded_string_arg(const char* message)
 }
 
 void
-Hello::test_unbounded_string_arg_out(const char* message, ::CORBA::String_out out_message)
+Hello::test_unbounded_string_arg_out (char const *message, ::CORBA::String_out out_message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg_out ")
@@ -74,9 +74,8 @@ Hello::test_unbounded_string_arg_out(const char* message, ::CORBA::String_out ou
   out_message = CORBA::string_dup (message);
 }
 
-
 void
-Hello::test_bounded_string_arg(const char* message)
+Hello::test_bounded_string_arg (char const *message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_string_arg ")
@@ -88,11 +87,10 @@ Hello::test_bounded_string_arg(const char* message)
   }
 }
 
-
 void
-Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
+Hello::test_fixed_array_arg (::Test::Fixed_Array const message)
 {
-  for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
+  for (CORBA::ULong i = 0; i < ::Test::FIX_ARRAY_SIZE; ++i)
   {
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_array_arg ")
@@ -103,9 +101,8 @@ Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
   }
 }
 
-
 void
-Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message)
+Hello::test_bounded_var_size_arg (::Test::Bounded_Var_Size_Arg const &message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_var_size_arg ")
@@ -114,9 +111,8 @@ Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message)
     ERROR_COUNT ("Hello::test_bounded_var_size_arg")
 }
 
-
 void
-Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message)
+Hello::test_unbounded_var_size_arg (::Test::Unbounded_Var_Size_Arg const &message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
@@ -125,9 +121,8 @@ Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
     ERROR_COUNT ("Hello::test_unbounded_var_size_arg")
 }
 
-
 void
-Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
+Hello::test_fixed_size_arg (::Test::TimeOfDay const &t)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_size_arg ")
@@ -140,11 +135,10 @@ Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
     ERROR_COUNT ("Hello::test_fixed_size_arg")
 }
 
-
 void
-Hello::test_var_array_arg(const Test::Var_Array messages)
+Hello::test_var_array_arg (Test::Var_Array const messages)
 {
-  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
+  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; ++i)
   {
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_var_array_arg ")
@@ -154,9 +148,8 @@ Hello::test_var_array_arg(const Test::Var_Array messages)
   }
 }
 
-
 void
-Hello::test_special_basic_arg(CORBA::Char value)
+Hello::test_special_basic_arg (CORBA::Char value)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_special_basic_arg ")
@@ -164,7 +157,6 @@ Hello::test_special_basic_arg(CORBA::Char value)
   if (value != TEST_SPECIAL_VALUE)
     ERROR_COUNT ("Hello::test_special_basic_arg")
 }
-
 
 void Hello::test_objref_arg (
     ::Test::Simple_Test_ptr test
@@ -232,9 +224,9 @@ void Hello::test_args_1 (
 }
 
 void Hello::test_args_2 (
-    const char * arg1,
-    const ::Test::Fixed_Array arg2,
-    const ::Test::TimeOfDay & arg3
+    char const *arg1,
+    ::Test::Fixed_Array const arg2,
+    ::Test::TimeOfDay const &arg3
   )
 {
   if (debug)
@@ -242,7 +234,7 @@ void Hello::test_args_2 (
   if (std::strcmp (arg1, TEST_STR) != 0)
     ERROR_COUNT ("Hello::test_args_2")
 
-  for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
+  for (CORBA::ULong i = 0; i < ::Test::FIX_ARRAY_SIZE; ++i)
   {
     if (arg2[i] != static_cast<CORBA::Long> (i + 999))
       ERROR_COUNT ("Hello::test_args_2")
@@ -255,10 +247,10 @@ void Hello::test_args_2 (
 }
 
 void Hello::test_args_3 (
-    const char * arg1,
-    const ::Test::Bounded_Var_Size_Arg & arg2,
-    const ::Test::Unbounded_Var_Size_Arg & arg3,
-    const ::Test::Var_Array arg4
+    char const *arg1,
+    ::Test::Bounded_Var_Size_Arg const &arg2,
+    ::Test::Unbounded_Var_Size_Arg const &arg3,
+    ::Test::Var_Array const arg4
   )
 {
   if (debug)
@@ -317,7 +309,7 @@ Hello::get_string ()
 
 char *
 Hello::test_unbounded_string (
-    const char * s1,
+    char const *s1,
     char *& s2,
     CORBA::String_out s3
   )
@@ -345,5 +337,3 @@ CORBA::ULong Hello::error_count () const
 {
   return error_count_;
 }
-
-

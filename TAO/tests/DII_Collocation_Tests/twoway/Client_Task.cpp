@@ -16,8 +16,8 @@ CORBA::Short TEST_HOUR = 12;
 CORBA::Short TEST_MINUTE = 59;
 CORBA::Short TEST_SECOND = 59;
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
-                          const ACE_TCHAR *simple_test_ior,
+Client_Task::Client_Task (ACE_TCHAR const *ior,
+                          ACE_TCHAR const *simple_test_ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
@@ -147,7 +147,6 @@ Client_Task::svc ()
         <<= CORBA::Any::from_string (bs.c_str (), ::Test::BOUNDED_STRING_SIZE);
       req->invoke ();
 
-
       req = obj->_request ("test_fixed_array_arg");
 
       ::Test::Fixed_Array fixed_array {};
@@ -160,7 +159,6 @@ Client_Task::svc ()
       req->add_in_arg ("fixed_array") <<= ::Test::Fixed_Array_forany (fixed_array);
       req->invoke ();
 
-
       req = obj->_request ("test_var_array_arg");
 
       ::Test::Var_Array var_array {};
@@ -172,7 +170,6 @@ Client_Task::svc ()
 
       req->add_in_arg ("var_array") <<= var_array;
       req->invoke ();
-
 
       req = obj->_request ("test_bounded_var_size_arg");
 
@@ -188,7 +185,6 @@ Client_Task::svc ()
       req->add_in_arg ("bd_var_size") <<= bd_var_size.release ();
       req->invoke ();
 
-
       req = obj->_request ("test_unbounded_var_size_arg");
 
       std::unique_ptr<::Test::Unbounded_Var_Size_Arg> ub_var_size =
@@ -200,7 +196,6 @@ Client_Task::svc ()
       req->add_in_arg ("ub_var_size") <<= ub_var_size.release ();
       req->invoke ();
 
-
       req = obj->_request ("test_fixed_size_arg");
 
       ::Test::TimeOfDay t {};
@@ -211,24 +206,20 @@ Client_Task::svc ()
       req->add_in_arg ("fixed_size") <<= t;
       req->invoke ();
 
-
       req = obj->_request ("test_special_basic_arg");
 
       req->add_in_arg ("special") <<= CORBA::Any::from_char (TEST_SPECIAL_VALUE);
       req->invoke ();
-
 
       req = obj->_request ("test_object_arg");
 
       req->add_in_arg ("object") <<= simple_test_obj.in ();
       req->invoke ();
 
-
       req = obj->_request ("test_objref_arg");
 
       req->add_in_arg ("objref") <<= simple_test.in ();
       req->invoke ();
-
 
       req = obj->_request ("test_args_1");
 
@@ -237,14 +228,12 @@ Client_Task::svc ()
       req->add_in_arg ("arg3") <<= simple_test.in ();
       req->invoke ();
 
-
       req = obj->_request ("test_args_2");
 
       req->add_in_arg ("arg1") <<= TEST_STR;
       req->add_in_arg ("arg2") <<= ::Test::Fixed_Array_forany (fixed_array);
       req->add_in_arg ("arg3") <<= t;
       req->invoke ();
-
 
       req = obj->_request ("test_args_3");
 
@@ -269,7 +258,6 @@ Client_Task::svc ()
       req->add_in_arg ("arg3") <<= ub_var_size.release ();
       req->add_in_arg ("arg4") <<= var_array;
       req->invoke ();
-
 
       req = obj->_request ("shutdown");
 
