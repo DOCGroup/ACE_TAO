@@ -33,9 +33,7 @@ namespace TAO_Notify
     Topology_Object::topology_parent_ = &parent;
   }
 
-  Reconnection_Registry::~Reconnection_Registry ()
-  {
-  }
+  Reconnection_Registry::~Reconnection_Registry () = default;
 
   //////////////////////////
   // During normal operation
@@ -88,7 +86,7 @@ namespace TAO_Notify
   CORBA::Boolean
   Reconnection_Registry::is_alive ()
   {
-    return CORBA::Boolean(1);
+    return true;
   }
 
   //////////////////////
@@ -193,7 +191,7 @@ namespace TAO_Notify
               static_cast<int> (entry->ext_id_)
             ));
         }
-        ACE_CString & ior = entry->int_id_;
+        ACE_CString const& ior = entry->int_id_;
         CORBA::Object_var obj = orb->string_to_object (ior.c_str ());
         NotifyExt::ReconnectionCallback_var callback =
           NotifyExt::ReconnectionCallback::_narrow (obj.in ());
@@ -222,10 +220,9 @@ namespace TAO_Notify
         //@@todo : we might want to check for retryable exceptions, but for now...
       }
     }
-    size_t bad_count = bad_ids.size ();
-    for (size_t nbad = 0; nbad < bad_count; ++nbad)
+    for (NotifyExt::ReconnectionRegistry::ReconnectionID const bad_id : bad_ids)
     {
-      this->reconnection_registry_.unbind (bad_ids[nbad]);
+      this->reconnection_registry_.unbind (bad_id);
     }
   }
 

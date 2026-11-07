@@ -53,7 +53,7 @@ namespace TAO_Notify
     explicit Reconnection_Registry (Topology_Parent & parent);
 
     /// Destructor
-    virtual ~Reconnection_Registry ();
+    ~Reconnection_Registry () override;
 
     //////////////////////////
     // During normal operation
