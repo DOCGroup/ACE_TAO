@@ -6,12 +6,16 @@
 
 #include <string>
 
+struct Server_Options
+{
+  std::basic_string<ACE_TCHAR> orb1_args {
+    ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_1.conf")};
+  std::basic_string<ACE_TCHAR> orb2_args {ACE_TEXT ("BBB")};
+  int expected_value {};
+};
+
 int
-parse_args (int argc,
-            ACE_TCHAR *argv[],
-            std::basic_string<ACE_TCHAR> &orb1_args,
-            std::basic_string<ACE_TCHAR> &orb2_args,
-            int &expected_value)
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:e:"));
   int option {};
@@ -20,13 +24,13 @@ parse_args (int argc,
     switch (option)
       {
       case 'a':
-        orb1_args = get_opts.opt_arg ();
+        options.orb1_args = get_opts.opt_arg ();
         break;
       case 'b':
-        orb2_args = get_opts.opt_arg ();
+        options.orb2_args = get_opts.opt_arg ();
         break;
       case 'e':
-        expected_value = ACE_OS::atoi (get_opts.opt_arg ());
+        options.expected_value = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -39,7 +43,6 @@ parse_args (int argc,
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -48,19 +51,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      std::basic_string<ACE_TCHAR> orb1_args {
-        ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_1.conf")};
-      std::basic_string<ACE_TCHAR> orb2_args {ACE_TEXT ("BBB")};
-      int expected_value {};
-      if (parse_args (argc, argv, orb1_args, orb2_args, expected_value) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
-      ACE_ARGV orb1_argv (orb1_args.c_str ());
+      ACE_ARGV orb1_argv (options.orb1_args.c_str ());
       int orb1_argc = orb1_argv.argc ();
 
-      ACE_ARGV orb2_argv (orb2_args.c_str ());
+      ACE_ARGV orb2_argv (options.orb2_args.c_str ());
       int orb2_argc = orb2_argv.argc ();
 
       ACE_DEBUG ((LM_DEBUG,
@@ -94,7 +94,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (trf1->cache_maximum () == trf2->cache_maximum () ||
-          (0 != expected_value && trf1->cache_maximum () != expected_value))
+          (options.expected_value != 0
+           && trf1->cache_maximum () != options.expected_value))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("ERROR: '-ORBConnectionCacheMax' is ")
