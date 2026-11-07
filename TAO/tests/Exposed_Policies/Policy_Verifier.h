@@ -38,15 +38,15 @@ public:
 
   bool init (int argc, ACE_TCHAR *argv[]);
 
-  void run ();
+  void run () const;
 
 private:
   // -- Helper methods --
   void verify_reference (Counter_ptr counter,
-                         RT_Properties const &rt_properties);
+                         RT_Properties const &rt_properties) const;
 
-  CORBA::Boolean check_reference (CORBA::Object_ptr object,
-                                  char const *msg);
+  static CORBA::Boolean check_reference (CORBA::Object_ptr object,
+                                         char const *msg);
 
 private:
   CORBA::ORB_var orb_ {};

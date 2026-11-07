@@ -18,7 +18,7 @@
 #include <memory>
 
 void
-Policy_Tester::run ()
+Policy_Tester::run () const
 {
   PortableServer::POAManager_var const poa_manager =
     this->child_poa_->the_POAManager ();
@@ -242,7 +242,7 @@ Policy_Tester::create_objects ()
 }
 
 void
-Policy_Tester::shutdown ()
+Policy_Tester::shutdown () const
 {
   this->orb_->shutdown (false);
 }

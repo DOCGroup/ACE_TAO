@@ -19,10 +19,6 @@
 class RT_Properties
 {
 public:
-  // -- Ctor/Dtor --
-  RT_Properties () = default;
-  ~RT_Properties () = default;
-
   static std::unique_ptr<RT_Properties> create ();
   static std::unique_ptr<RT_Properties> read_from (ACE_TString const &file_name);
 

@@ -8,7 +8,7 @@
 #include "tao/Strategies/advanced_resource.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status {};
 

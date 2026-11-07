@@ -33,19 +33,19 @@ public:
   Policy_Tester &operator= (Policy_Tester &&) = delete;
 
   /// Runs the test.
-  void run ();
+  void run () const;
 
   int init (int argc,
             ACE_TCHAR *argv[]);
 
-  void shutdown ();
+  void shutdown () const;
 
 private:
   // Helper method used internally.
   int create_objects ();
 
-  CORBA::Boolean check_reference (CORBA::Object_ptr object,
-                                  char const *msg);
+  static CORBA::Boolean check_reference (CORBA::Object_ptr object,
+                                         char const *msg);
 
   RTCORBA::RTORB_var rt_orb_ {};
   CORBA::ORB_var orb_ {};

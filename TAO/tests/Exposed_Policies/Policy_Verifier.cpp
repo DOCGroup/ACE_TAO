@@ -86,7 +86,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Policy_Verifier::run ()
+Policy_Verifier::run () const
 {
   this->verify_reference (this->base_object_.in (),
                           *this->rt_poa_properties_);
@@ -97,7 +97,7 @@ Policy_Verifier::run ()
 
 void
 Policy_Verifier::verify_reference (Counter_ptr object,
-                                   RT_Properties const &rt_properties)
+                                   RT_Properties const &rt_properties) const
 {
   try
     {

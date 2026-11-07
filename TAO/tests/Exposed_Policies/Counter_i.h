@@ -42,7 +42,7 @@ public:
 protected:
   CORBA::Long count_ {};
   // Borrowed; Policy_Tester outlives the servant.
-  Policy_Tester *policy_tester_;
+  Policy_Tester *const policy_tester_;
 };
 
 #endif /*COUNTER_I_H_*/
