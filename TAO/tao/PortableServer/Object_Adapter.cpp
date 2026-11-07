@@ -4,6 +4,7 @@
 #include "tao/PortableServer/Servant_Upcall.h"
 
 #include <cstring>
+#include <utility>
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Regular_POA.h"
 #include "tao/PortableServer/Creation_Time.h"
@@ -217,9 +218,9 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   // Give ownership to the unique pointer.
   std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
 
-  this->hint_strategy_ = new_hint_strategy.release ();
-  this->persistent_poa_name_map_ = new_persistent_poa_name_map.release ();
-  this->transient_poa_map_ = new_transient_poa_map.release ();
+  this->hint_strategy_ = std::move (new_hint_strategy);
+  this->persistent_poa_name_map_ = std::move (new_persistent_poa_name_map);
+  this->transient_poa_map_ = std::move (new_transient_poa_map);
 }
 
 void
@@ -274,12 +275,11 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies)
 
 TAO_Object_Adapter::~TAO_Object_Adapter ()
 {
-  delete this->hint_strategy_;
-  delete this->persistent_poa_name_map_;
-  delete this->transient_poa_map_;
-  delete this->lock_;
-
-  delete this->servant_dispatcher_;
+  this->hint_strategy_.reset ();
+  this->persistent_poa_name_map_.reset ();
+  this->transient_poa_map_.reset ();
+  this->lock_.reset ();
+  this->servant_dispatcher_.reset ();
 
   // This cleanup may have already occurred in the close() method.  If
   // that is the case then this won't cause any harm since root_ and
@@ -541,8 +541,10 @@ TAO_Object_Adapter::open ()
   // default one.
   if (!this->servant_dispatcher_)
     {
-      ACE_NEW (this->servant_dispatcher_,
+      TAO_Servant_Dispatcher *dispatcher {};
+      ACE_NEW (dispatcher,
                TAO_Default_Servant_Dispatcher);
+      this->servant_dispatcher_.reset (dispatcher);
     }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -1156,10 +1158,7 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw ()
 void
 TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
 {
-  if (this->servant_dispatcher_)
-    delete this->servant_dispatcher_;
-
-  this->servant_dispatcher_ = dispatcher;
+  this->servant_dispatcher_.reset (dispatcher);
 }
 
 void
