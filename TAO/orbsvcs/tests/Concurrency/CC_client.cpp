@@ -24,35 +24,14 @@
 #include "ace/OS_NS_fcntl.h"
 
 
-// Constructor.
-CC_Client::CC_Client ()
-  : naming_service_ (0),
-    cc_factory_ior_file_ (0),
-    cc_factory_key_ (0),
-    f_handle_ (ACE_INVALID_HANDLE),
-    shutdown_ (0),
-    use_naming_service_ (1),
-    run_basic_tests_ (0),
-    run_extended_tests_ (0),
-    use_script_file_ (0),
-    script_file_ (0)
-{
-}
-
 CC_Client::~CC_Client ()
 {
-  // Free resources and close the ior files.
-  if (this->cc_factory_ior_file_)
-    ACE_OS::fclose (this->cc_factory_ior_file_);
-
+  // Close the IOR file handle.
   if (this->f_handle_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->f_handle_);
 
   if (this->cc_factory_key_ != 0)
     ACE_OS::free (this->cc_factory_key_);
-
-  if (naming_service_!=0)
-    delete naming_service_;
 }
 
 // Reads the lock set factory ior from a file
@@ -97,17 +76,17 @@ CC_Client::parse_args ()
     switch (c)
       {
       case 'b':  // debug flag
-        this->run_basic_tests_ = 1;
+        this->run_basic_tests_ = true;
         break;
       case 'c':
-        this->use_script_file_ = 1;
+        this->use_script_file_ = true;
         this->script_file_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
       case 'e':  // debug flag
-        run_extended_tests_ = 1;
+        run_extended_tests_ = true;
         this->extended_tests_params_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'f': // read the IOR from the file.
@@ -123,10 +102,10 @@ CC_Client::parse_args ()
           ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'x':
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
       case 's': // Don't use the TAO Naming Service.
-        this->use_naming_service_ = 0;
+        this->use_naming_service_ = false;
         break;
       case 'h':
       default:
@@ -143,7 +122,7 @@ CC_Client::parse_args ()
 int
 CC_Client::run ()
 {
-  int tests_run = 0;
+  bool tests_run {};
   // Tells whether any tests have been run
 
   int success = CC_SUCCESS;
@@ -154,7 +133,7 @@ CC_Client::run ()
       success = run_basic_tests ();
       if(success==CC_FAIL)
         ACE_DEBUG((LM_DEBUG, "Basic tests did not succeed\n"));
-      tests_run = 1;
+      tests_run = true;
     }
 
   if (this->run_extended_tests_ && success == CC_SUCCESS)
@@ -162,7 +141,7 @@ CC_Client::run ()
       success = run_extended_tests (this->extended_tests_params_);
       if(success==CC_FAIL)
         ACE_DEBUG((LM_DEBUG, "Extended tests did not succeed\n"));
-      tests_run = 1;
+      tests_run = true;
     }
 
   if(this->use_script_file_ && success == CC_SUCCESS)
@@ -206,19 +185,19 @@ CC_Client::run ()
 int
 CC_Client::run_basic_tests ()
 {
-  Test_Single_Lock_With_Mode t1 (naming_service_,
+  Test_Single_Lock_With_Mode t1 (naming_service_.get (),
                                  CosConcurrencyControl::read);
-  Test_Single_Lock_With_Mode t2 (naming_service_,
+  Test_Single_Lock_With_Mode t2 (naming_service_.get (),
                                  CosConcurrencyControl::write);
-  Test_Single_Lock_With_Mode t3 (naming_service_,
+  Test_Single_Lock_With_Mode t3 (naming_service_.get (),
                                  CosConcurrencyControl::upgrade);
-  Test_Single_Lock_With_Mode t4 (naming_service_,
+  Test_Single_Lock_With_Mode t4 (naming_service_.get (),
                                  CosConcurrencyControl::intention_read);
-  Test_Single_Lock_With_Mode t5 (naming_service_,
+  Test_Single_Lock_With_Mode t5 (naming_service_.get (),
                                  CosConcurrencyControl::intention_write);
   // This test should be run for several different lock mode, but
   // since we do not support
-  Test_Release_Not_Held_Lock t6 (naming_service_,
+  Test_Release_Not_Held_Lock t6 (naming_service_.get (),
                                  CosConcurrencyControl::read);
   if (t1.run () == CC_SUCCESS &&
       t2.run () == CC_SUCCESS &&
@@ -303,8 +282,8 @@ CC_Client::run_extended_tests (ACE_TCHAR *params)
 
   ACE_DEBUG((LM_DEBUG, "Number of arguments: %i\n", no_of_args));
 
-  char *cmd  = ACE_OS::strtok (ACE_TEXT_ALWAYS_CHAR(params), ";");
-  char *arg1 = ACE_OS::strtok (0, ";");
+  char *const cmd = ACE_OS::strtok (ACE_TEXT_ALWAYS_CHAR(params), ";");
+  char *const arg1 = ACE_OS::strtok (nullptr, ";");
   //  char *arg2 = ACE_OS::strtok (0, ";");
 
   // A possible scenario using test 1,2, and 3 Create and lock the
@@ -317,19 +296,19 @@ CC_Client::run_extended_tests (ACE_TCHAR *params)
 
   if (ACE_OS::strcmp (cmd, "1") == 0)
     {
-      Test_Setup_LockSet t1 (naming_service_, arg1);
+      Test_Setup_LockSet t1 (naming_service_.get (), arg1);
       success = t1.run ();
     }
 
   if (ACE_OS::strcmp (cmd, "2") == 0)
     {
-      Test_Use_Already_Created_LockSet t2 (naming_service_, arg1);
+      Test_Use_Already_Created_LockSet t2 (naming_service_.get (), arg1);
       success = t2.run ();
     }
 
   if (ACE_OS::strcmp (cmd, "3") == 0)
     {
-      Test_Unlock_Already_Created_LockSet t3 (naming_service_, arg1);
+      Test_Unlock_Already_Created_LockSet t3 (naming_service_.get (), arg1);
       success = t3.run ();
     }
 
@@ -357,9 +336,7 @@ CC_Client::init_naming_service ()
 {
   try
     {
-      ACE_NEW_RETURN (naming_service_,
-                      CC_naming_service,
-                      -1);
+      naming_service_ = std::make_unique<CC_naming_service> ();
 
       this->naming_service_->Init (this->orb_);
     }
