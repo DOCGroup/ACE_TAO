@@ -30,8 +30,8 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s -o <iorfile>\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
+                           argv[0]),
                           -1);
       }
   return 0;
@@ -60,7 +60,7 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_ {};
+  CORBA::ORB_var const orb_ {};
 };
 
 class Descriptors
@@ -151,7 +151,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // the current rlimit for file desriptors (which will later on be
     // increased).
     rlimit rlim {};
-    if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+    if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rlim) == 0)
       {
         cout << "server evaluating rlimit, cur = "
              << rlim.rlim_cur << " max = " << rlim.rlim_max
@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
             rlim.rlim_max = ACE_DEFAULT_SELECT_REACTOR_SIZE;
-            ACE_OS::setrlimit(RLIMIT_NOFILE, &rlim);
+            ACE_OS::setrlimit (RLIMIT_NOFILE, &rlim);
             cout << "server set rlimit_nofile" << endl;
           }
       }
@@ -183,7 +183,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
+                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                           1);
 
       if (parse_args (argc, argv, options) != 0)
@@ -227,7 +227,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #ifdef _WRS_KERNEL
                         "server.out");
 #else
-                        argv [0]);
+                        argv[0]);
 #endif
 
       ACE_Time_Value tv (10);

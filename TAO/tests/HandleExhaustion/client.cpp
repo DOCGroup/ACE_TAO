@@ -24,13 +24,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -51,10 +48,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var const tmp = orb->string_to_object (
-        ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
 
-      Test_var const test = Test::_narrow (tmp.in ());
+      Test_var const test = Test::_narrow (object.in ());
 
       if (CORBA::is_nil (test.in ()))
         {
