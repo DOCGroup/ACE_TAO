@@ -10,6 +10,10 @@ class Callback_i : public POA_Test::Callback
 public:
   /// Constructor.
   Callback_i (int expected_samples);
+  Callback_i (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i &operator= (Callback_i const &) = delete;
+  Callback_i &operator= (Callback_i &&) = delete;
 
   /// Return 1 when all the samples have been received
   int done ();
@@ -20,7 +24,7 @@ public:
   /// Implement the CORBA methods
   //@{
   void response (Test::TimeStamp,
-                 const Test::Payload &);
+                 Test::Payload const &) override;
   //@}
 
 private:

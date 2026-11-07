@@ -1,11 +1,5 @@
-ACE_INLINE
-Server_i::Server_i ()
-  : done_ (0)
-{
-}
-
-ACE_INLINE int
-Server_i::done ()
+ACE_INLINE bool
+Server_i::done () const
 {
   return this->done_;
 }

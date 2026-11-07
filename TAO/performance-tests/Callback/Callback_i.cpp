@@ -15,9 +15,9 @@ Callback_i::done ()
 
 void
 Callback_i::response (Test::TimeStamp time_stamp,
-                      const Test::Payload &)
+                      Test::Payload const &)
 {
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (this->remaining_samples_ == 0)
     return;
