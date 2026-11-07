@@ -314,7 +314,7 @@ Gen_Perf::compute_binary_search ()
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr = nullptr;
+  List_Node *curr {};
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
@@ -334,7 +334,7 @@ Gen_Perf::compute_linear_search ()
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr = nullptr;
+  List_Node *curr {};
   int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
@@ -348,7 +348,7 @@ Gen_Perf::compute_linear_search ()
 int
 Gen_Perf::compute_perfect_hash ()
 {
-  List_Node *curr = nullptr;
+  List_Node *curr {};
 
   for (curr = this->key_list.head;
        curr != nullptr;

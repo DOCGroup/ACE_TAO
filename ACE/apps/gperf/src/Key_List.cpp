@@ -106,7 +106,7 @@ output_return_type (char const *type, bool const is_const)
 char *
 dup_string (const char *const str)
 {
-  char *buf = nullptr;
+  char *buf {};
   ACE_NEW_RETURN (buf,
                   char [std::strlen (str) + 1],
                   nullptr);
@@ -131,7 +131,7 @@ Key_List::~Key_List ()
   // Free up all the nodes in the list.
   while (this->head != nullptr)
     {
-      List_Node *temp = nullptr;
+      List_Node *temp {};
 
       // Make sure to delete the linked nodes, as well.
       for (List_Node *ptr = this->head->link;
@@ -170,7 +170,7 @@ char *
 Key_List::special_input (char delimiter)
 {
   int size = 80;
-  char *buf = nullptr;
+  char *buf {};
   ACE_NEW_RETURN (buf,
                   char[size],
                   nullptr);
@@ -207,7 +207,7 @@ Key_List::special_input (char delimiter)
         {
           // Yikes, time to grow the buffer!
 
-          char *temp = nullptr;
+          char *temp {};
           ACE_NEW_RETURN (temp,
                           char[size *= 2],
                           nullptr);
@@ -331,7 +331,7 @@ Key_List::read_keys ()
       // Read in all the keywords from the input file.
       else
         {
-          List_Node *temp = nullptr;
+          List_Node *temp {};
           const char *delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
@@ -360,7 +360,7 @@ Key_List::read_keys ()
 
           // Make large hash table for efficiency.
           Hash_Table table (this->list_len * Key_List::TABLE_MULTIPLE);
-          List_Node *trail = nullptr;
+          List_Node *trail {};
 
           // Test whether there are any links and also set the maximum
           // length an identifier in the keyword list.
@@ -529,7 +529,7 @@ Key_List::already_determined (List_Node *ptr)
 void
 Key_List::reorder ()
 {
-  List_Node *ptr = nullptr;
+  List_Node *ptr {};
 
   for (ptr = head; ptr; ptr = ptr->next)
     ptr->occurrence = occurrence (ptr);
@@ -570,7 +570,7 @@ Key_List::reorder ()
 void
 Key_List::output_min_max ()
 {
-  List_Node *temp = nullptr;
+  List_Node *temp {};
   for (temp = head; temp->next; temp = temp->next)
     continue;
 
@@ -760,7 +760,7 @@ Key_List::output_switch (int use_keyword_table)
                 }
               else
                 {
-                  List_Node *links = nullptr;
+                  List_Node *links {};
 
                   for (links = temp; links; links = links->link)
                     {
@@ -1482,12 +1482,12 @@ Key_List::output_lookup_array ()
     {
       const int DEFAULT_VALUE = -1;
 
-      Duplicate_Entry *duplicates = nullptr;
+      Duplicate_Entry *duplicates {};
       ACE_NEW_RETURN (duplicates,
                       Duplicate_Entry[total_duplicates],
                       -1);
 
-      int *lookup_array = nullptr;
+      int *lookup_array {};
       ACE_NEW_RETURN (lookup_array,
                       int[max_hash_value + 1],
                       -1);
@@ -2051,7 +2051,7 @@ Key_List::string_sort ()
       List_Node *curr;
       if(ptr->link)
         {
-          List_Node *last_node = nullptr;
+          List_Node *last_node {};
 
           for(curr = ptr->link; curr; curr = curr->link)
             {

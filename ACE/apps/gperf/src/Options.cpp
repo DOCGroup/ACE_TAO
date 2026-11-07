@@ -178,7 +178,7 @@ Options::~Options ()
 {
   if (ACE_BIT_ENABLED (option_word_, DEBUGGING))
     {
-      char *ptr = nullptr;
+      char *ptr {};
 
       ACE_OS::fprintf (stderr,
                        "\ndumping Options:"
