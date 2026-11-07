@@ -7,13 +7,18 @@
 #include <memory>
 #include <string>
 
+struct Server_Options
+{
+  std::basic_string<ACE_TCHAR> orb1_args {
+    ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_1.conf")};
+  std::basic_string<ACE_TCHAR> orb2_args {
+    ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_2.conf")};
+  std::basic_string<ACE_TCHAR> mapping_file1 {ACE_TEXT ("TAO_PRIORITY_MAPPING1.dat")};
+  std::basic_string<ACE_TCHAR> mapping_file2 {ACE_TEXT ("TAO_PRIORITY_MAPPING2.dat")};
+};
+
 int
-parse_args (int argc,
-            ACE_TCHAR *argv[],
-            std::basic_string<ACE_TCHAR> &orb1_args,
-            std::basic_string<ACE_TCHAR> &orb2_args,
-            std::basic_string<ACE_TCHAR> &mapping_file1,
-            std::basic_string<ACE_TCHAR> &mapping_file2)
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:y:z:"));
   int option {};
@@ -22,16 +27,16 @@ parse_args (int argc,
     switch (option)
       {
       case 'a':
-        orb1_args = get_opts.opt_arg ();
+        options.orb1_args = get_opts.opt_arg ();
         break;
       case 'b':
-        orb2_args = get_opts.opt_arg ();
+        options.orb2_args = get_opts.opt_arg ();
         break;
       case 'y':
-        mapping_file1 = get_opts.opt_arg ();
+        options.mapping_file1 = get_opts.opt_arg ();
         break;
       case 'z':
-        mapping_file2 = get_opts.opt_arg ();
+        options.mapping_file2 = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -54,7 +59,7 @@ write_priority_mapping (RTCORBA::PriorityMapping *mapping,
                         char const *mapping_name)
 {
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-    ACE_OS::fopen (mapping_file, "w"), ACE_OS::fclose);
+    ACE_OS::fopen (mapping_file, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Cannot open output file for mapping %C\n"),
@@ -92,30 +97,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      std::basic_string<ACE_TCHAR> orb1_args {
-        ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_1.conf")};
-      std::basic_string<ACE_TCHAR> orb2_args {
-        ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_2.conf")};
-      std::basic_string<ACE_TCHAR> mapping_file1 {ACE_TEXT ("TAO_PRIORITY_MAPPING1.dat")};
-      std::basic_string<ACE_TCHAR> mapping_file2 {ACE_TEXT ("TAO_PRIORITY_MAPPING2.dat")};
+      Server_Options options;
 
-      if (parse_args (argc, argv, orb1_args, orb2_args, mapping_file1, mapping_file2) != 0)
+      if (parse_args (argc, argv, options) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Cannot process args\n")),
                           1);
 
-      ACE_ARGV orb1_argv {orb1_args.c_str ()};
+      ACE_ARGV orb1_argv {options.orb1_args.c_str ()};
       int orb1_argc = orb1_argv.argc ();
-      ACE_ARGV orb2_argv {orb2_args.c_str ()};
+      ACE_ARGV orb2_argv {options.orb2_args.c_str ()};
       int orb2_argc = orb2_argv.argc ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Initialize ORB instances...\n"));
 
       CORBA::ORB_var const orb1 {
-        CORBA::ORB_init (orb1_argc, orb1_argv.argv (), mapping_file1.c_str ())};
+        CORBA::ORB_init (orb1_argc, orb1_argv.argv (), options.mapping_file1.c_str ())};
       CORBA::ORB_var const orb2 {
-        CORBA::ORB_init (orb2_argc, orb2_argv.argv (), mapping_file2.c_str ())};
+        CORBA::ORB_init (orb2_argc, orb2_argv.argv (), options.mapping_file2.c_str ())};
 
       ACE_DEBUG ((LM_DEBUG,
                   "After ORB_init...\n"));
@@ -129,7 +129,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Priority Manager & mapping interfaces resolved.\n"));
-      if (write_priority_mapping (priority_mapping1, mapping_file1.c_str (), "1") != 0)
+      if (write_priority_mapping (priority_mapping1,
+                                  options.mapping_file1.c_str (),
+                                  "1") != 0)
         return -1;
 
       CORBA::Object_var const manager_object2 =
@@ -141,7 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Priority Manager & mapping interfaces resolved.\n"));
-      if (write_priority_mapping (priority_mapping2, mapping_file2.c_str (), "2") != 0)
+      if (write_priority_mapping (priority_mapping2,
+                                  options.mapping_file2.c_str (),
+                                  "2") != 0)
         return -1;
     }
   catch (CORBA::SystemException const &ex)
