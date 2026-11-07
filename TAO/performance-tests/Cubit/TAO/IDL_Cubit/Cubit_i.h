@@ -32,61 +32,59 @@ public:
   Cubit_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  ~Cubit_i ();
+  ~Cubit_i () override;
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   /// Test a oneway call.
-  virtual void cube_oneway ();
+  void cube_oneway () override;
 
   /// Test a twoway call.
-  virtual void cube_void ();
+  void cube_void () override;
 
   /// Cube an octet
-  virtual CORBA::Octet cube_octet (CORBA::Octet o);
+  CORBA::Octet cube_octet (CORBA::Octet o) override;
 
   /// Cube a short
-  virtual CORBA::Short cube_short (CORBA::Short s);
+  CORBA::Short cube_short (CORBA::Short s) override;
 
   /// Cube a long
-  virtual CORBA::Long cube_long (CORBA::Long l);
+  CORBA::Long cube_long (CORBA::Long l) override;
 
   /// Cube a struct.
-  virtual Cubit::Many cube_struct (const Cubit::Many &values);
+  Cubit::Many cube_struct (const Cubit::Many &values) override;
 
   /// Cube a union.
-  virtual Cubit::oneof cube_union (const Cubit::oneof &values);
+  Cubit::oneof cube_union (const Cubit::oneof &values) override;
 
   /// Cube a sequence.
-  virtual void cube_long_sequence (const Cubit::long_seq &input,
-                                   Cubit::long_seq_out output);
+  void cube_long_sequence (const Cubit::long_seq &input,
+                           Cubit::long_seq_out output) override;
 
   /// Cube an octet sequence.
-  virtual void cube_octet_sequence (const Cubit::octet_seq &input,
-                                    Cubit::octet_seq_out output);
+  void cube_octet_sequence (const Cubit::octet_seq &input,
+                            Cubit::octet_seq_out output) override;
 
   /// Cube an Many sequence.
-  virtual void cube_many_sequence (const Cubit::many_seq & input,
-                                   Cubit::many_seq_out output);
+  void cube_many_sequence (const Cubit::many_seq & input,
+                           Cubit::many_seq_out output) override;
 
   /// Cube a sequence.
-  virtual void cube_rti_data (const Cubit::RtiPacket &input,
-                              Cubit::RtiPacket_out output);
+  void cube_rti_data (const Cubit::RtiPacket &input,
+                      Cubit::RtiPacket_out output) override;
 
   /// Cube a long in an any
-  virtual CORBA::Any * cube_any (const CORBA::Any & any);
+  CORBA::Any * cube_any (const CORBA::Any & any) override;
 
   /// Cube a struct in an any
-  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any);
+  CORBA::Any * cube_any_struct (const CORBA::Any & any) override;
 
   /// Shutdown routine.
-  virtual void shutdown ();
-
+  void shutdown () override;
 
   /// A ping. Please see the idl file for details.
-  virtual void ping ();
-
+  void ping () override;
 
   /// Set default poa.
   void set_default_poa (PortableServer::POA_ptr poa);
@@ -112,10 +110,10 @@ public:
   Cubit_Factory_i (CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~Cubit_Factory_i ();
+  ~Cubit_Factory_i () override;
 
   /// Make a cubit object.
-  virtual Cubit_ptr make_cubit ();
+  Cubit_ptr make_cubit () override;
 
   void set_default_poa (PortableServer::POA_ptr poa);
 
