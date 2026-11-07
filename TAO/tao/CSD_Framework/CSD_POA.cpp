@@ -29,17 +29,15 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
                    orb_core,
                    object_adapter)
 {
-  ACE_NEW_THROW_EX (this->sds_proxy_,
+  TAO::CSD::Strategy_Proxy *sds_proxy {};
+  ACE_NEW_THROW_EX (sds_proxy,
                     TAO::CSD::Strategy_Proxy (),
                     CORBA::NO_MEMORY ());
+  this->sds_proxy_.reset (sds_proxy);
 }
-
 
 // Implementation skeleton destructor
-TAO_CSD_POA::~TAO_CSD_POA ()
-{
-  delete this->sds_proxy_;
-}
+TAO_CSD_POA::~TAO_CSD_POA () = default;
 
 void TAO_CSD_POA::set_csd_strategy (::CSD_Framework::Strategy_ptr strategy)
 {

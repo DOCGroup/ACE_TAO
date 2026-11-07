@@ -21,6 +21,7 @@
 
 #include "tao/PortableServer/Regular_POA.h"
 #include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -81,7 +82,7 @@ public:
     servant_dispatching_strategy_proxy () const;
 
 private:
-  TAO::CSD::Strategy_Proxy* sds_proxy_ {};
+  std::unique_ptr<TAO::CSD::Strategy_Proxy> sds_proxy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
