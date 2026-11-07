@@ -41,7 +41,12 @@ public:
               u_int task_id);
 
   /// Active Object entry point.
-  virtual int svc ();
+  int svc () override;
+
+  Cubit_Task (Cubit_Task const &) = delete;
+  Cubit_Task (Cubit_Task &&) = delete;
+  Cubit_Task &operator= (Cubit_Task const &) = delete;
+  Cubit_Task &operator= (Cubit_Task &&) = delete;
 
   /// Gets the ior of the cubit servant in this task.
   char* get_servant_ior (u_int index);

@@ -29,7 +29,12 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// The thread entry point function.
-  virtual int svc ();
+  int svc () override;
+
+  Util_Thread (Util_Thread const &) = delete;
+  Util_Thread (Util_Thread &&) = delete;
+  Util_Thread &operator= (Util_Thread const &) = delete;
+  Util_Thread &operator= (Util_Thread &&) = delete;
 
   /// Gets the number of computations the thread was able to perform.
   u_long get_number_of_computations ();

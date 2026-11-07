@@ -84,8 +84,8 @@ enum Cubit_Datatypes
   CB_LOW_PRIORITY_RATE = 10
 };
 
-typedef ACE_Unbounded_Queue<ACE_timer_t> JITTER_ARRAY;
-typedef ACE_Unbounded_Queue_Iterator<ACE_timer_t> JITTER_ARRAY_ITERATOR;
+using JITTER_ARRAY = ACE_Unbounded_Queue<ACE_timer_t>;
+using JITTER_ARRAY_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_timer_t>;
 
 /**
  * @class Task_State
@@ -106,6 +106,11 @@ public:
 
   /// Destructor
   ~Task_State ();
+
+  Task_State (Task_State const &) = delete;
+  Task_State (Task_State &&) = delete;
+  Task_State &operator= (Task_State const &) = delete;
+  Task_State &operator= (Task_State &&) = delete;
 
   /// Barrier for the multiple clients to synchronize after binding to
   /// the servants.
@@ -251,8 +256,13 @@ public:
   /// destructor.
   ~Client ();
 
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
+
   /// The thread function.
-  virtual int svc ();
+  int svc () override;
 
   /// Returns the latency of the high priority thread in usecs.
   ACE_timer_t get_high_priority_latency ();

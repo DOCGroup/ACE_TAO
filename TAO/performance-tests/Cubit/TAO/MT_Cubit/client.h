@@ -45,7 +45,12 @@ public:
   Client_i ();
 
   /// destructor.
-  virtual ~Client_i ();
+  ~Client_i () override;
+
+  Client_i (Client_i const &) = delete;
+  Client_i (Client_i &&) = delete;
+  Client_i &operator= (Client_i const &) = delete;
+  Client_i &operator= (Client_i &&) = delete;
 
   /// Initialize the state of <Client_i>.
   int init (int argc, ACE_TCHAR *argv[]);

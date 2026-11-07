@@ -32,7 +32,7 @@ Cubit_i::cube_long (CORBA::Long l)
 }
 
 Cubit::Many
-Cubit_i::cube_struct (const Cubit::Many &values)
+Cubit_i::cube_struct (Cubit::Many const &values)
 {
   Cubit::Many out_values;
 

@@ -107,6 +107,11 @@ public:
   /// parse the arguments.
   int parse_args (int argc, ACE_TCHAR **argv);
 
+  Globals (Globals const &) = delete;
+  Globals (Globals &&) = delete;
+  Globals &operator= (Globals const &) = delete;
+  Globals &operator= (Globals &&) = delete;
+
   /**
    * Enables fifo scheduling.
    * Returns 0 on success, 1 if insufficient permission, or -1
@@ -156,7 +161,7 @@ public:
 };
 
 // Make the globals a Singleton.
-typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
+using GLOBALS = ACE_Singleton<Globals, ACE_Null_Mutex>;
 
 /**
  * @class MT_Priority

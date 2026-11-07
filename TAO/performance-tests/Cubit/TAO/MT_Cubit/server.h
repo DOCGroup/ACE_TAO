@@ -62,6 +62,11 @@ public:
   /// Default constructor.
   Server ();
 
+  Server (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server const &) = delete;
+  Server &operator= (Server &&) = delete;
+
   /// Initialize the server state.
   int init (int argc, ACE_TCHAR **argv);
 
