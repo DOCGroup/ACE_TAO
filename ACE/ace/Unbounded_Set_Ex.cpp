@@ -28,7 +28,7 @@ template <class T, class C> int
 ACE_Unbounded_Set_Ex<T, C>::insert_tail (const T &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::insert_tail");
-  NODE *temp = nullptr;
+  NODE *temp {};
 
   // Insert <item> into the old dummy node location.
   this->head_->item_ = item;
@@ -67,7 +67,7 @@ ACE_Unbounded_Set_Ex<T, C>::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
-  T *item = nullptr;
+  T *item {};
 #if !defined (ACE_NLOGGING)
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
@@ -361,7 +361,7 @@ template <class T, class C> T&
 ACE_Unbounded_Set_Ex_Iterator<T, C>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator*");
-  T *retv = nullptr;
+  T *retv {};
 
   int result = this->next (retv);
   ACE_ASSERT (result != 0);
@@ -468,7 +468,7 @@ template <class T, class C> T&
 ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator*");
-  T *retv = nullptr;
+  T *retv {};
 
   int const result = this->next (retv);
   ACE_ASSERT (result != 0);
