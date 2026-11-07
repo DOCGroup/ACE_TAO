@@ -1,5 +1,7 @@
 #include "testC.h"
 
+#include <cstring>
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -58,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            i = i->cont ())
         {
           CORBA::ULong const len = i->length ();
-          ACE_OS::memcpy (buffer, i->rd_ptr (), static_cast<size_t> (len));
+          std::memcpy (buffer, i->rd_ptr (), static_cast<size_t> (len));
           buffer += len;
         }
 
@@ -89,8 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception (
-                           "Caught exception in server:");
+      ex._tao_print_exception ("Caught exception in server:");
       return 1;
     }
 
