@@ -297,7 +297,7 @@ namespace
 {
   int write_string (const char *string, FILE *stream)
   {
-    const size_t count = ACE_OS::strlen (string);
+    const size_t count = std::strlen (string);
     return (ACE_OS::fwrite (string, 1, count, stream) < count) ? -1 : 0;
   }
 }
