@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "testC.h"
 #include "tao/debug.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -22,11 +21,12 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
+#include <memory>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int priority =
+  int const priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
 
@@ -34,8 +34,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                           priority,
                                           ACE_SCOPE_PROCESS));
 
-  int n = 50000;
-  int insertion = 1;
+  struct Options
+  {
+    int iteration_count {50000};
+    bool insertion {true};
+    int debug_level {};
+  } options;
 
   try
     {
@@ -49,16 +53,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           switch (opt)
             {
             case 'd':
-              TAO_debug_level++;
+              ++options.debug_level;
               break;
             case 'i':
-              insertion = 1;
+              options.insertion = true;
               break;
             case 'e':
-              insertion = 0;
+              options.insertion = false;
               break;
             case 'n':
-              n = ACE_OS::atoi (get_opt.opt_arg ());
+              options.iteration_count = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case '?':
             default:
@@ -72,8 +76,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      CORBA::Boolean result = 0;
-      int j;
+      TAO_debug_level += options.debug_level;
+      int const n = options.iteration_count;
+      bool const insertion = options.insertion;
+      CORBA::Boolean result = false;
 
       {
         CORBA::Object_var obj =
@@ -81,23 +87,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         Param_Test_var param_test =
           TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in ());
-        TAO_Stub *stub = param_test->_stubobj ();
+        TAO_Stub * const stub = param_test->_stubobj ();
         stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= param_test.in ();
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
                 Param_Test_ptr o;
@@ -110,18 +116,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
                 Param_Test_ptr o;
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Objref insertion test finished\n"));
@@ -134,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -153,20 +159,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
             CORBA::Short i = 123;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
                 CORBA::Short o;
@@ -179,18 +185,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
                 CORBA::Short o;
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Short insertion test finished\n"));
@@ -202,7 +208,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -221,20 +227,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
             CORBA::Long i = 123;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
                 CORBA::Long o;
@@ -247,18 +253,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
                 CORBA::Long o;
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Long insertion test finished\n"));
@@ -271,7 +277,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -290,20 +296,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
             CORBA::Double i = 123;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
                 CORBA::Double o;
@@ -316,18 +322,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
                 CORBA::Double o;
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Double insertion test finished\n"));
@@ -340,7 +346,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -364,26 +370,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         i.s = 5;
         i.o = 255;
         i.f = 2.3f;
-        i.b = 0;
+        i.b = false;
         i.d = 3.1416;
 
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const Param_Test::Fixed_Struct *o = 0;
+                Param_Test::Fixed_Struct const *o {};
 
                 result = any >>= o;
               }
@@ -391,20 +397,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                const Param_Test::Fixed_Struct *o = 0;
+                Param_Test::Fixed_Struct const *o {};
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Struct copying insertion test finished\n"));
@@ -417,7 +423,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -436,53 +442,58 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-        for (j = 0; j != n; ++j)
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
-            Param_Test::Fixed_Struct *i = 0;
-            ACE_NEW_RETURN (i,
+            Param_Test::Fixed_Struct *raw_i {};
+            ACE_NEW_RETURN (raw_i,
                             Param_Test::Fixed_Struct,
                             -1);
+            std::unique_ptr<Param_Test::Fixed_Struct> i (raw_i);
             i->l = -7;
             i->c = 'c';
             i->s = 5;
             i->o = 255;
             i->f = 2.3f;
-            i->b = 0;
+            i->b = false;
             i->d = 3.1416;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
-                any <<= i;
+                any <<= i.get ();
+                // Non-copying insertion transfers ownership to the Any.
+                i.release ();
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const Param_Test::Fixed_Struct *o = 0;
+                Param_Test::Fixed_Struct const *o {};
 
                 result = any >>= o;
               }
             else
               {
-                any <<= i;
+                any <<= i.get ();
+                // Non-copying insertion transfers ownership to the Any.
+                i.release ();
 
-                const Param_Test::Fixed_Struct *o = 0;
+                Param_Test::Fixed_Struct const *o {};
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Struct non-copying insertion test finished\n"));
@@ -495,7 +506,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -513,7 +524,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "\n"));
 
       {
-        CORBA::ULong len = 1024;
+        CORBA::ULong const len = 1024;
         Param_Test::Long_Seq i (len);
         i.length (len);
 
@@ -523,22 +534,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const Param_Test::Long_Seq *o = 0;
+                Param_Test::Long_Seq const *o {};
 
                 result = any >>= o;
               }
@@ -546,20 +557,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                const Param_Test::Long_Seq *o = 0;
+                Param_Test::Long_Seq const *o {};
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Sequence copying insertion test finished\n"));
@@ -572,7 +583,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -590,16 +601,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "\n"));
 
       {
-        CORBA::ULong len = 1024;
+        CORBA::ULong const len = 1024;
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-        for (j = 0; j != n; ++j)
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
-            Param_Test::Long_Seq *i = 0;
-            ACE_NEW_RETURN (i,
+            Param_Test::Long_Seq *raw_i {};
+            ACE_NEW_RETURN (raw_i,
                             Param_Test::Long_Seq (len),
                             -1);
+            std::unique_ptr<Param_Test::Long_Seq> i (raw_i);
             i->length (len);
 
             for (CORBA::ULong k = 0; k < len; ++k)
@@ -607,37 +619,41 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 (*i)[k] = 11;
               }
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
-                any <<= i;
+                any <<= i.get ();
+                // Non-copying insertion transfers ownership to the Any.
+                i.release ();
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const Param_Test::Long_Seq *o = 0;
+                Param_Test::Long_Seq const *o {};
 
                 result = any >>= o;
               }
             else
               {
-                any <<= i;
+                any <<= i.get ();
+                // Non-copying insertion transfers ownership to the Any.
+                i.release ();
 
-                const Param_Test::Long_Seq *o = 0;
+                Param_Test::Long_Seq const *o {};
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Sequence non-copying insertion test finished\n"));
@@ -650,7 +666,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -669,24 +685,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
             CORBA::Any i;
             i <<= CORBA::Short (123);
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const CORBA::Any *o;
+                CORBA::Any const *o {};
                 CORBA::Short oo;
 
                 result = any >>= o;
@@ -696,23 +712,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                const CORBA::Any *o;
+                CORBA::Any const *o {};
                 CORBA::Short oo;
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
                 result = *o >>= oo;
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Any copying insertion test finished\n"));
@@ -725,7 +741,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -744,27 +760,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
-            CORBA::Any *i = 0;
-            ACE_NEW_RETURN (i,
+            CORBA::Any *raw_i {};
+            ACE_NEW_RETURN (raw_i,
                             CORBA::Any,
                             -1);
+            std::unique_ptr<CORBA::Any> i (raw_i);
             *i <<= CORBA::Short (123);
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
-                any <<= i;
+                any <<= i.get ();
+                // Non-copying insertion transfers ownership to the Any.
+                i.release ();
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const CORBA::Any *o;
+                CORBA::Any const *o {};
                 CORBA::Short oo;
 
                 result = any >>= o;
@@ -772,25 +791,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
             else
               {
-                any <<= i;
+                any <<= i.get ();
+                // Non-copying insertion transfers ownership to the Any.
+                i.release ();
 
-                const CORBA::Any *o;
+                CORBA::Any const *o {};
                 CORBA::Short oo;
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
                 result = *o >>= oo;
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Any non-copying insertion test finished\n"));
@@ -803,7 +824,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -822,23 +843,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
-            const char i[] = "1234567890";
+            char const i[] = "1234567890";
 
-            if (insertion == 1)
+            if (insertion)
               {
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 any <<= i;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                const char *o;
+                char const *o {};
 
                 result = any >>= o;
                   }
@@ -846,20 +867,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                const char *o;
+                char const *o {};
 
-                ACE_hrtime_t start = ACE_OS::gethrtime ();
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
                 result = any >>= o;
 
-                ACE_hrtime_t now = ACE_OS::gethrtime ();
+                ACE_hrtime_t const now = ACE_OS::gethrtime ();
                 history.sample (now - start);
               }
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
-        if (insertion == 1)
+        if (insertion)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "String insertion test finished\n"));
@@ -874,7 +895,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
@@ -893,30 +914,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         ACE_Sample_History history (n);
-        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-        for (j = 0; j != n; ++j)
+        for (int j = 0; j != n; ++j)
           {
             CORBA::Any any;
-            const char i[] = "1234567890";
+            char const i[] = "1234567890";
             any <<= i;
             CORBA::Any copy;
 
-            ACE_hrtime_t start = ACE_OS::gethrtime ();
+            ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
             copy = any;
 
-            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            ACE_hrtime_t const now = ACE_OS::gethrtime ();
             history.sample (now - start);
           }
 
-        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+        ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
         ACE_DEBUG ((LM_DEBUG,
                     "Copy test finished\n"));
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor_type const gsf =
           ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
