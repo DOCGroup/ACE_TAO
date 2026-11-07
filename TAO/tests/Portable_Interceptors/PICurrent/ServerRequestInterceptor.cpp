@@ -2,7 +2,8 @@
 #include "ServerRequestInterceptor.h"
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ServerRequestInterceptor::ServerRequestInterceptor (
   PortableInterceptor::SlotId id,
@@ -29,16 +30,16 @@ ServerRequestInterceptor::receive_request_service_contexts (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
+  if (std::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
   try
     {
       // Insert data into the RSC (request scope current).
 
-      CORBA::Long number = 62;
+      CORBA::Long const number (62);
 
-      CORBA::Any data;
+      CORBA::Any data {};
       data <<= number;
 
       ri->set_slot (this->slot_id_, data);
@@ -47,7 +48,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
                   "(%P|%t) Inserted number <%d> into RSC.\n",
                   number));
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception (
         "Exception thrown in ""receive_request_service_contexts()\n");
@@ -66,8 +67,8 @@ ServerRequestInterceptor::receive_request (
 {
   try
     {
-      CORBA::Any new_data;
-      CORBA::Long number = 19;
+      CORBA::Any new_data {};
+      CORBA::Long const number (19);
       new_data <<= number;
 
       // Set a value in RSC, this should not effect TSC anymore
@@ -79,7 +80,7 @@ ServerRequestInterceptor::receive_request (
       CORBA::Any_var data2 =
         this->pi_current_->get_slot (this->slot_id_);
 
-      CORBA::Long number2 = 0;
+      CORBA::Long number2 {};
       if ((data2.in () >>= number2)
           && number == number2)
         {
@@ -90,7 +91,7 @@ ServerRequestInterceptor::receive_request (
           throw CORBA::INTERNAL ();
         }
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception ("Exception thrown in ""send_reply()\n");
 
@@ -112,7 +113,7 @@ ServerRequestInterceptor::send_reply (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
+  if (std::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
   try
@@ -129,7 +130,7 @@ ServerRequestInterceptor::send_reply (
       // following extraction from the CORBA::Any fails, then the
       // original data in the RSC was not replaced with the data in
       // the TSC after the test method completed.
-      const char *str = 0;
+      char const *str {};
       if (data.in () >>= str)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -148,8 +149,8 @@ ServerRequestInterceptor::send_reply (
       // Now verify that the RSC is truly independent of the TSC.  In
       // particular, modifying the TSC at this point should not cause
       // the RSC to be modified.
-      CORBA::Any new_data;
-      CORBA::Long number = 19;
+      CORBA::Any new_data {};
+      CORBA::Long const number (19);
 
       new_data <<= number;
 
@@ -163,9 +164,9 @@ ServerRequestInterceptor::send_reply (
       CORBA::Any_var data2 =
         ri->get_slot (this->slot_id_);
 
-      const char *str2 = 0;
+      char const *str2 {};
       if (!(data2.in () >>= str2)
-          || ACE_OS::strcmp (str, str2) != 0)
+          || std::strcmp (str, str2) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR: RSC was modified after "
@@ -174,7 +175,7 @@ ServerRequestInterceptor::send_reply (
           throw CORBA::INTERNAL ();
         }
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception ("Exception thrown in ""send_reply()\n");
 
