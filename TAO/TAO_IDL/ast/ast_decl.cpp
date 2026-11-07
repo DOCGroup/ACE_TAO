@@ -1087,7 +1087,7 @@ AST_Decl::compute_name (std::string const& prefix,
           UTL_ScopedName *cn = d->name ();
           if (cn)
             {
-              result_name = (UTL_ScopedName *) cn->copy ();
+              result_name = static_cast<UTL_ScopedName *> (cn->copy ());
               if (result_name)
                 {
                   result_name->nconc (result_local_name);

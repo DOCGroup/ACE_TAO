@@ -197,7 +197,7 @@ munge_name_for_enumval (UTL_ScopedName *n,
   while (len > 3)
     {
       len--;
-      n = (UTL_ScopedName *) n->tail ();
+      n = static_cast<UTL_ScopedName *> (n->tail ());
     }
 
   UTL_IdList *id {};
@@ -245,12 +245,12 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                                             t->name ());
 
   UTL_ScopedName *sn =
-    munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
+    munge_name_for_enumval (static_cast<UTL_IdList *> (t->name ()->copy ()),
                             t->local_name ());
 
   t->set_name (sn);
 
-  sn = munge_name_for_enumval ((UTL_IdList *) t1->name ()->copy (),
+  sn = munge_name_for_enumval (static_cast<UTL_IdList *> (t1->name ()->copy ()),
                                 t1->local_name ());
 
   t1->set_name (sn);
