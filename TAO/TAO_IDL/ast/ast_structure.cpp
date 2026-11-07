@@ -506,7 +506,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                 }
 
               // Use full definition node.
-              std::unique_ptr<AST_Structure> redefined_structure (i);
+              std::unique_ptr<AST_Structure> const redefined_structure (i);
               i->destroy ();
               i = fd;
             }

@@ -171,7 +171,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
 unsigned long
 AST_Enum::next_enum_val ()
 {
-  unsigned long i = pd_enum_counter++;
+  unsigned long const i = pd_enum_counter++;
 
   return i;
 }

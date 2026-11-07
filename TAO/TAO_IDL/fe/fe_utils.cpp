@@ -315,7 +315,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 
   (void) c->fe_add_structure (connection);
 
-  ACE_CDR::ULong bound = 0;
+  ACE_CDR::ULong const bound = 0;
   AST_Expression *bound_expr =
     idl_global->gen ()->create_expr (bound,
                                      AST_Expression::EV_ulong);
@@ -353,7 +353,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 
   for (std::string const &item : idl_global->included_ami_recep_names ())
     {
-      Scoped_Name_Owner sn = FE_Utils::string_to_scoped_name_owner (item);
+      Scoped_Name_Owner const sn = FE_Utils::string_to_scoped_name_owner (item);
 
       AST_Decl *d =
         idl_global->root ()->lookup_by_name (sn.get (), true);
@@ -706,7 +706,7 @@ FE_Utils::original_local_name (Identifier *local_name)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
 
-      unsigned int len =
+      unsigned int const len =
         static_cast<unsigned int> (lname.size () - 5);
 
       TAO_IDL_CPP_Keyword_Entry const *entry =
@@ -723,8 +723,8 @@ bool
 FE_Utils::can_be_redefined (AST_Decl *prev_decl,
                             AST_Decl *curr_decl)
 {
-  AST_Decl::NodeType pnt = prev_decl->node_type ();
-  AST_Decl::NodeType cnt = curr_decl->node_type ();
+  AST_Decl::NodeType const pnt = prev_decl->node_type ();
+  AST_Decl::NodeType const cnt = curr_decl->node_type ();
 
   switch (cnt)
   {
@@ -750,8 +750,8 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
   AST_Template_Module *ptm {};
   AST_Template_Module *ctm {};
 
-  bool nt_eq = (pnt == cnt);
-  bool s_eq = (prev_scope == curr_scope);
+  bool const nt_eq = (pnt == cnt);
+  bool const s_eq = (prev_scope == curr_scope);
 
   switch (pnt)
   {

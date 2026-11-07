@@ -316,7 +316,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       return nullptr;
     }
 
-  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> const t_owner (t);
 
   UTL_ScopedName *nl_n {};
   AST_Type *fe {};
@@ -390,7 +390,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_native:
             {
               // This is the only use case for this node type.
-              int compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
+              int const compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
 
               if (compare != 0)
                 {
@@ -409,7 +409,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             break;
         };
 
-      bool oneway_op =
+      bool const oneway_op =
         (this->flags () == AST_Operation::OP_oneway);
 
       fe = dynamic_cast<AST_Type*> (d);

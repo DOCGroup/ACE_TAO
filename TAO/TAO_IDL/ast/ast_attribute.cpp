@@ -206,7 +206,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
           && nt != AST_Decl::NT_param_holder)
@@ -259,7 +259,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
           && nt != AST_Decl::NT_param_holder)

@@ -111,7 +111,7 @@ AST_Map::AST_Map (AST_Expression *ms,
 {
   FE_Utils::tmpl_mod_ref_check (this, key_bt);
 
-  AST_Decl::NodeType knt = key_bt->node_type ();
+  AST_Decl::NodeType const knt = key_bt->node_type ();
 
   if (knt == AST_Decl::NT_param_holder)
     {
@@ -129,7 +129,7 @@ AST_Map::AST_Map (AST_Expression *ms,
 
   FE_Utils::tmpl_mod_ref_check (this, val_bt);
 
-  AST_Decl::NodeType vnt = val_bt->node_type ();
+  AST_Decl::NodeType const vnt = val_bt->node_type ();
 
   if (vnt == AST_Decl::NT_param_holder)
     {

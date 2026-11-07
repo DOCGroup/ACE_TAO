@@ -223,7 +223,7 @@ AST_Factory::fe_add_argument (AST_Argument *t)
 UTL_NameList *
 AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
-  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> const t_owner (t);
 
   UTL_ScopedName *nl_n {};
   AST_Type *fe {};
