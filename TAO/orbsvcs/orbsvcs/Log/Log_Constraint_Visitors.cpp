@@ -50,7 +50,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord co
   // Bind an entry for each item in the record's attribute list.
   CORBA::Long const len = rec.attr_list.length ();
 
-  for (CORBA::Long i = 0; i < len; ++i)
+  for (CORBA::Long i {}; i < len; ++i)
     {
       this->property_lookup_.bind (ACE_CString (rec.attr_list[i].name,
                                                 0,
@@ -62,7 +62,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord co
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
 {
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   this->queue_.clear ();
 
   // Evaluate the constraint in root_;
@@ -238,7 +238,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                   tc->member_count ();
 
                 char const *member_name {};
-                CORBA::ULong i = 0;
+                CORBA::ULong i {};
 
                 for (i = 0; i < count; ++i)
                   {
@@ -302,7 +302,7 @@ TAO_Log_Constraint_Visitor::visit_component_pos (ETCL_Component_Pos *pos)
       CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
       DynamicAny::DynAny_var member;
-      CORBA::Boolean success = false;
+      CORBA::Boolean success {};
       CORBA::ULong const slot = static_cast<CORBA::ULong> (*pos->integer ());
 
       switch (kind)
@@ -423,7 +423,7 @@ TAO_Log_Constraint_Visitor::visit_component_array (
       CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
       DynamicAny::DynAny_var member;
-      CORBA::Boolean success = false;
+      CORBA::Boolean success {};
       CORBA::ULong const slot = static_cast<CORBA::ULong> (*array->integer ());
 
       switch (kind)
@@ -679,7 +679,7 @@ TAO_Log_Constraint_Visitor::visit_unary_expr (
   if (subexpr->accept (this) == 0)
     {
       TAO_ETCL_Literal_Constraint subexpr_result;
-      CORBA::Boolean result = false;
+      CORBA::Boolean result {};
       int const op_type = unary_expr->type ();
 
       switch (op_type)
@@ -752,7 +752,7 @@ TAO_Log_Constraint_Visitor::visit_or (
     ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   ETCL_Constraint *lhs = binary->lhs ();
 
   if (lhs->accept (this) == 0)
@@ -793,7 +793,7 @@ TAO_Log_Constraint_Visitor::visit_and (
     ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   ETCL_Constraint *lhs = binary->lhs ();
 
   if (lhs->accept (this) == 0)
@@ -836,7 +836,7 @@ TAO_Log_Constraint_Visitor::visit_binary_op (
 {
   int return_value = -1;
   ETCL_Constraint *lhs = binary->lhs ();
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
 
   // Evaluate the constraint
   // Perform an operation on the results of evaluating the left and
@@ -988,7 +988,7 @@ TAO_Log_Constraint_Visitor::visit_in (
                   return return_value;
                 }
 
-              CORBA::Boolean result = false;
+              CORBA::Boolean result {};
 
               switch (kind)
               {
@@ -1063,7 +1063,7 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
 
       CORBA::ULong const length = any_seq->length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           TAO_ETCL_Literal_Constraint const element (&any_seq[i]);
 
@@ -1109,7 +1109,7 @@ TAO_Log_Constraint_Visitor::array_does_contain (
 
       CORBA::ULong const length = any_seq->length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           TAO_ETCL_Literal_Constraint const element (&any_seq[i]);
 
@@ -1144,7 +1144,7 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
       CORBA::TypeCode_var tc;
       CORBA::TCKind kind;
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           tc = members[i].value.type ();
           kind = TAO_DynAnyFactory::unalias (tc.in ());

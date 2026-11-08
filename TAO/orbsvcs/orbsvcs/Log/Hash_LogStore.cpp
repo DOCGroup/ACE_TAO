@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_LogStore::TAO_Hash_LogStore (TAO_LogMgr_i * logmgr_i)
-  : next_id_ (0),
+  : next_id_ {},
     logmgr_i_ (logmgr_i)
 {
 }
@@ -41,7 +41,7 @@ TAO_Hash_LogStore::list_logs ()
   // Iterate over and populate the list.
   HASHMAP::ENTRY *hash_entry {};
 
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; i++)
     {
       iter.next (hash_entry);
       iter.advance ();
@@ -77,7 +77,7 @@ TAO_Hash_LogStore::list_logs_by_id ()
   // Iterate over and populate the list.
   HASHMAP::ENTRY *hash_entry {};
 
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; i++)
     {
       iter.next (hash_entry);
       iter.advance ();

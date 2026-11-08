@@ -811,7 +811,7 @@ TAO_Log_i::write_records (DsLogAdmin::Anys const &records)
   DsLogAdmin::RecordList reclist (records.length ());
   reclist.length (records.length ());
 
-  for (CORBA::ULong i = 0; i < records.length (); ++i)
+  for (CORBA::ULong i {}; i < records.length (); ++i)
     {
       reclist [i].info = records[i];
     }
@@ -858,9 +858,9 @@ TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
       throw DsLogAdmin::LogOffDuty ();
     }
 
-  CORBA::Short num_written (0);
+  CORBA::Short num_written {};
 
-  for (CORBA::ULong i = 0; i < reclist.length (); i++)
+  for (CORBA::ULong i {}; i < reclist.length (); i++)
     {
       // retval == 1 => log store reached max size.
 
@@ -979,7 +979,7 @@ TAO_Log_i::scheduled ()
       TimeBase::TimeT const nano_sunday =
         static_cast<CORBA::ULongLong> (tv.sec ()) * 10000000;
 
-      for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
+      for (CORBA::ULong i {}; i < weekly_intervals_.length (); ++i)
         {
           if (current_time >= (weekly_intervals_[i].start + nano_sunday)
               && current_time <= (weekly_intervals_[i].stop + nano_sunday))
@@ -1165,7 +1165,7 @@ CORBA::Boolean
 TAO_Log_i::validate_capacity_alarm_thresholds (
     DsLogAdmin::CapacityAlarmThresholdList const & threshs)
 {
-  for (CORBA::ULong i = 0; i < threshs.length (); i++)
+  for (CORBA::ULong i {}; i < threshs.length (); i++)
     if (threshs[i] > 100)
       return false;
 
@@ -1176,7 +1176,7 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
   // normalizing the sequence.
 
   if (threshs.length () > 1)
-    for (CORBA::ULong i = 0; i < threshs.length () - 1; i++)
+    for (CORBA::ULong i {}; i < threshs.length () - 1; i++)
       if (threshs[i] >= threshs[i + 1])
         return false;
 
@@ -1197,7 +1197,7 @@ TAO_Log_i::reset_log_qos (DsLogAdmin::QoSList const & qos)
 
   DsLogAdmin::QoSType qostype = DsLogAdmin::QoSNone;
 
-  for (CORBA::ULong i = 0; i < qos.length (); ++i)
+  for (CORBA::ULong i {}; i < qos.length (); ++i)
     {
       qostype = qos[i];
     }
@@ -1216,7 +1216,7 @@ TAO_Log_i::validate_log_qos (DsLogAdmin::QoSList const & qos)
   DsLogAdmin::QoSList denied;
 
   // validate properties..
-  for (CORBA::ULong i = 0; i < qos.length (); ++i)
+  for (CORBA::ULong i {}; i < qos.length (); ++i)
     {
       DsLogAdmin::QoSType const qostype = qos[i];
       if (qostype != DsLogAdmin::QoSNone &&
@@ -1240,15 +1240,15 @@ TAO_Log_i::validate_log_qos (DsLogAdmin::QoSList const & qos)
 void
 TAO_Log_i::reset_week_mask (DsLogAdmin::WeekMask const & masks)
 {
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   weekly_intervals_.length (100);
 
   // convert the weekmask into a sequence of time intervals.
-  for (CORBA::ULong k = 0; k < masks.length (); ++k)
+  for (CORBA::ULong k {}; k < masks.length (); ++k)
     {
-      for (CORBA::ULong j = 0; j < masks[k].intervals.length (); ++j)
+      for (CORBA::ULong j {}; j < masks[k].intervals.length (); ++j)
         {
-          for (int d = 0; d < 7; ++d)
+          for (int d {}; d < 7; ++d)
             {
               if ( (1 << d) & masks[k].days)
                 {
@@ -1280,7 +1280,7 @@ TAO_Log_i::reset_week_mask (DsLogAdmin::WeekMask const & masks)
 void
 TAO_Log_i::validate_week_mask (DsLogAdmin::WeekMask const & masks)
 {
-  for (CORBA::ULong i = 0; i < masks.length (); ++i)
+  for (CORBA::ULong i {}; i < masks.length (); ++i)
     {
       if (masks[i].days > (DsLogAdmin::Sunday +
                            DsLogAdmin::Monday +
@@ -1292,7 +1292,7 @@ TAO_Log_i::validate_week_mask (DsLogAdmin::WeekMask const & masks)
           )
         throw DsLogAdmin::InvalidMask ();
 
-      for (CORBA::ULong j = 0; j < masks[i].intervals.length (); ++j)
+      for (CORBA::ULong j {}; j < masks[i].intervals.length (); ++j)
         {
           if (masks[i].intervals[j].start.hour > 23 ||
               masks[i].intervals[j].start.minute > 59 ||
@@ -1325,7 +1325,7 @@ operator==(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
       return false;
     }
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       if (rhs[i] != lhs[i])
         {
@@ -1355,7 +1355,7 @@ operator==(DsLogAdmin::IntervalsOfDay const & rhs,
       return false;
     }
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       if (rhs[i] != lhs[i])
         {
@@ -1385,7 +1385,7 @@ operator==(DsLogAdmin::QoSList const & rhs,
       return false;
     }
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       if (rhs[i] != lhs[i])
         {
@@ -1479,7 +1479,7 @@ operator==(DsLogAdmin::WeekMask const & rhs,
       return false;
     }
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       if (rhs[i] != lhs[i])
         {

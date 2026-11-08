@@ -59,7 +59,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
                     CORBA::NO_MEMORY ());
   rec_list->length (how_many);
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   CORBA::ULong current_position = this->current_position_;
 
   for ( ;

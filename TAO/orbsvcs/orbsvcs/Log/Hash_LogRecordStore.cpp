@@ -219,7 +219,7 @@ TAO_Hash_LogRecordStore::purge_old_records ()
   if (num_records_to_purge < 1)
     num_records_to_purge = 1;
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   if (num_records_to_purge > 0 )
     {
@@ -227,7 +227,7 @@ TAO_Hash_LogRecordStore::purge_old_records ()
       LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
       LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-      for (CORBA::ULongLong i = 0;
+      for (CORBA::ULongLong i {};
            iter != iter_end && i < num_records_to_purge;
            ++i)
         {
@@ -276,7 +276,7 @@ TAO_Hash_LogRecordStore::set_records_attribute (
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
   LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   for ( ; iter != iter_end; ++iter)
     {
@@ -324,7 +324,7 @@ TAO_Hash_LogRecordStore::flush ()
 size_t
 TAO_Hash_LogRecordStore::log_record_size (DsLogAdmin::LogRecord const &rec)
 {
-  size_t mb_size = 0;
+  size_t mb_size {};
   TAO::Any_Impl *impl = rec.info.impl ();
 
   if (impl->encoded ())
@@ -366,7 +366,7 @@ TAO_Hash_LogRecordStore::query_i (char const *constraint,
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
   LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0;       // count of matches found.
+  CORBA::ULong count {};       // count of matches found.
 
   for ( ; ((iter != iter_end) && (count < how_many)); ++iter)
     {
@@ -475,7 +475,7 @@ TAO_Hash_LogRecordStore::match (char const *grammar,
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
   LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   for ( ; iter != iter_end; ++iter)
     {
@@ -505,7 +505,7 @@ TAO_Hash_LogRecordStore::delete_records (char const *grammar,
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
   LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   while (iter != iter_end)
     {
@@ -530,9 +530,9 @@ TAO_Hash_LogRecordStore::delete_records (char const *grammar,
 CORBA::ULong
 TAO_Hash_LogRecordStore::delete_records_by_id (DsLogAdmin::RecordIdList const &ids)
 {
-  CORBA::ULong count (0);
+  CORBA::ULong count {};
 
-  for (CORBA::ULong i = 0; i < ids.length (); i++)
+  for (CORBA::ULong i {}; i < ids.length (); i++)
     {
       if (this->remove_i (ids [i]) == 0)
         {
@@ -562,7 +562,7 @@ TAO_Hash_LogRecordStore::remove_old_records ()
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
   LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   while (iter != iter_end)
     {
