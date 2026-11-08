@@ -75,7 +75,7 @@ namespace ACE
       {
         INET_TRACE ("ACE_HTTPS_Session::connect_i");
 
-        connection_type* new_connection = nullptr;
+        connection_type* new_connection {};
 
         if (this->is_proxy_connection ())
           {

@@ -20,7 +20,7 @@ namespace ACE
         mode_ (mode),
         interceptor_ (nullptr)
       {
-        char_type* p = nullptr;
+        char_type* p {};
         ACE_NEW_NORETURN (p, char_type [bufsz]);
         this->buffer_.reset (p);
 

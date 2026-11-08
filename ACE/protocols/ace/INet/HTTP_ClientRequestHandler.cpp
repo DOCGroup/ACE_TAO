@@ -33,7 +33,7 @@ namespace ACE
     SessionFactory*
     SessionFactoryRegistry::find_session_factory (const ACE_CString& scheme)
       {
-        SessionFactory* factory = nullptr;
+        SessionFactory* factory {};
         this->factory_map_.find (scheme, factory);
         return factory;
       }
@@ -84,7 +84,7 @@ namespace ACE
         const ClientRequestHandler::HttpConnectionKey& ikey =
             dynamic_cast<const ClientRequestHandler::HttpConnectionKey&> (key);
 
-        SessionHolder_Impl* session_holder = nullptr;
+        SessionHolder_Impl* session_holder {};
         ACE_NEW_RETURN (session_holder,
                         SessionHolder_Impl (),
                         0);
@@ -141,7 +141,7 @@ namespace ACE
 
     ACE::INet::ConnectionKey* ClientRequestHandler::HttpConnectionKey::duplicate () const
       {
-        ACE::INet::ConnectionKey* k = nullptr;
+        ACE::INet::ConnectionKey* k {};
         if (this->proxy_connection_)
           {
             ACE_NEW_RETURN (k,
@@ -264,7 +264,7 @@ namespace ACE
             return false;
           }
 
-        ACE::INet::ConnectionHolder* pch = nullptr;
+        ACE::INet::ConnectionHolder* pch {};
         if (proxy_conn)
           {
             if (!this->connection_cache ().claim_connection (HttpConnectionKey (proxy_host,

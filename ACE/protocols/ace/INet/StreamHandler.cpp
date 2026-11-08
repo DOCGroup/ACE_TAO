@@ -93,7 +93,7 @@ namespace ACE
             INET_HEX_DUMP (11, (LM_DEBUG, buffer, bytes_in, DLINFO
                                 ACE_TEXT ("ACE_IOS_StreamHandler::handle_input_i <--")));
 
-            ACE_Message_Block *mb = nullptr;
+            ACE_Message_Block *mb {};
             ACE_NEW_RETURN (mb, ACE_Message_Block (bytes_in), -1);
             mb->copy (buffer, bytes_in);
             ACE_Time_Value nowait (ACE_OS::gettimeofday ());
@@ -140,7 +140,7 @@ namespace ACE
       {
         INET_TRACE ("ACE_IOS_StreamHandler::handle_output_i");
 
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
         size_t bytes_out = 0;
         if (-1 != this->getq (mb, &nowait))
@@ -326,11 +326,11 @@ namespace ACE
             wait += *timeout;
             timeout_countdown.start ();
           }
-        ACE_Message_Block *mb_remain = nullptr;
+        ACE_Message_Block *mb_remain {};
         size_t recv_char_count = 0;
         while (!this->msg_queue ()->is_empty () && char_length > 0)
           {
-            ACE_Message_Block *mb = nullptr;
+            ACE_Message_Block *mb {};
             if (this->getq (mb, &wait) == -1)
               {
                 if (ACE_OS::last_error () == EWOULDBLOCK)
@@ -345,7 +345,7 @@ namespace ACE
               {
                 if ((mb_remain->length () + mb->length ()) < char_size)
                   {
-                    ACE_Message_Block *mb_new = nullptr;
+                    ACE_Message_Block *mb_new {};
                     ACE_NEW_NORETURN (mb,
                                       ACE_Message_Block (mb_remain->length () + mb->length ()));
                     if (mb_new == nullptr)
@@ -451,7 +451,7 @@ namespace ACE
                                                 &this->notification_strategy_ : nullptr);
 
         size_t datasz = length * char_size;
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         ACE_NEW_RETURN (mb, ACE_Message_Block (datasz), -1);
         mb->copy ((const char*)buf, datasz);
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());

@@ -162,7 +162,7 @@ namespace ACE
         ACE_CString::size_type pos = url_string.find (':');
         if (pos >0 )
           {
-            Factory* url_factory = nullptr;
+            Factory* url_factory {};
             if (factories_->find (url_string.substr (0, pos), url_factory) == 0)
               {
                 return url_factory->create_from_string (url_string);
@@ -227,7 +227,7 @@ namespace ACE
           };
       }
 
-    URL_Base::TURLFactoryMap* URL_Base::factories_ = nullptr;
+    URL_Base::TURLFactoryMap* URL_Base::factories_ {};
 
     URL_Base::Factory::Factory ()
       {}

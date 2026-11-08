@@ -24,7 +24,7 @@ namespace ACE
       {
         this->stream_->add_reference ();
 
-        char_type* p = nullptr;
+        char_type* p {};
         ACE_NEW_NORETURN (p, char_type [bufsz]);
         this->read_buffer_.reset (p);
         p = nullptr;

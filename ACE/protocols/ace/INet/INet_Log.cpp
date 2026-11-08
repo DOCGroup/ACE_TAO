@@ -44,7 +44,7 @@ namespace ACE
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-            ofstream* output_stream = nullptr;
+            ofstream* output_stream {};
 
             ACE_NEW_NORETURN (output_stream,
                               ofstream ());

@@ -120,7 +120,7 @@ namespace ACE
                                     this->ftp_timeout_);
         connector_type connector;
 
-        connection_type* new_connection = nullptr;
+        connection_type* new_connection {};
         ACE_NEW_RETURN (new_connection,
                         connection_type(sync_opt),
                         false);
