@@ -307,8 +307,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
   ACE_NEW_RETURN (stack_size_array,
                   size_t[count],
                   -1);
-  size_t index {};
-  for (index = 0; index != count; ++index)
+  for (size_t index {}; index != count; ++index)
     stack_size_array[index] =
       this->definition_.stack_size_;
 
