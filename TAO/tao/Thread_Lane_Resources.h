@@ -158,11 +158,11 @@ private:
 
   /// The registry which maintains a list of acceptor factories for
   /// each loaded protocol.
-  std::unique_ptr<TAO_Acceptor_Registry> acceptor_registry_;
+  std::unique_ptr<TAO_Acceptor_Registry> acceptor_registry_ {};
 
   /// The connector registry which all active connectors must register
   /// themselves with.
-  std::unique_ptr<TAO_Connector_Registry> connector_registry_;
+  std::unique_ptr<TAO_Connector_Registry> connector_registry_ {};
 
   /// Transport cache.
   TAO::Transport_Cache_Manager *transport_cache_;
