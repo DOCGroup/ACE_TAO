@@ -1,5 +1,8 @@
 #include "Offer_Importer.h"
 
+#include <cstdlib>
+#include <cstring>
+
 TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                                         CORBA::Boolean verbose)
   : verbose_ (verbose),
@@ -35,39 +38,40 @@ TAO_Offer_Importer::perform_directed_queries ()
 
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
-  CosTrading::Link_var link_if = this->lookup_->link_if ();
+  CosTrading::Link_var const link_if = this->lookup_->link_if ();
 
   if (this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
                   " linked to the root trader.\n"));
     }
-  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links ();
+  CosTrading::LinkNameSeq_var const link_name_seq = link_if->list_links ();
 
   if (link_name_seq->length () > 0)
     {
       if (this->verbose_)
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
-                      static_cast<const char*> (link_name_seq[0u])));
+                      static_cast<char const *> (link_name_seq[0u])));
         }
 
-      CosTrading::Link::LinkInfo_var link_info =
+      CosTrading::Link::LinkInfo_var const link_info =
         link_if->describe_link (link_name_seq[0u]);
 
-      CosTrading::Lookup_ptr lookup_if = link_info->target.in ();
-      CosTrading::Link_var link_if2 = lookup_if->link_if ();
+      CosTrading::Lookup_ptr const lookup_if = link_info->target.in ();
+      CosTrading::Link_var const link_if2 = lookup_if->link_if ();
 
-      CosTrading::LinkNameSeq_var link_name_seq2 = link_if2->list_links ();
+      CosTrading::LinkNameSeq_var const link_name_seq2 = link_if2->list_links ();
 
       if (link_name_seq2->length () > 0)
         {
-          CORBA::ULong i = 0;
-          CORBA::ULong length = link_name_seq2->length ();
-          for (i = 0; i < length; i++)
+          CORBA::ULong i {};
+          CORBA::ULong const length = link_name_seq2->length ();
+          while (i < length)
             {
-              if (ACE_OS::strcmp (link_name_seq2[i], "Bootstrap") != 0)
+              if (std::strcmp (link_name_seq2[i], "Bootstrap") != 0)
                 break;
+              ++i;
             }
 
           if (i < length)
@@ -76,8 +80,8 @@ TAO_Offer_Importer::perform_directed_queries ()
                 CosTrading::TraderName::allocbuf (2);
 
               ACE_DEBUG ((LM_DEBUG, "*** Query through %C to destination %C.\n",
-                          static_cast<const char*> (link_name_seq[0u]),
-                          static_cast<const char*> (link_name_seq2[i])));
+                          static_cast<char const *> (link_name_seq[0u]),
+                          static_cast<char const *> (link_name_seq2[i])));
 
               trader_name[0] = CORBA::string_dup (link_name_seq[0u]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
@@ -133,7 +137,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
 
           // Test with different how_many amount, both should work.
           // Initially try to get this amount in the sequence.
-          CORBA::ULong how_many = 8;
+          CORBA::ULong how_many {8};
           if (i&0x0001)
           {
             how_many=0; // 0: Don't retrieve in offers but all in iterator.
@@ -149,12 +153,12 @@ TAO_Offer_Importer::perform_queries_with_policies (
                                 offer_iterator.out(),
                                 limits_applied.out());
 
-          CORBA::ULong seqlen = (offer_seq.ptr() == 0 ? 0 :
-                                 offer_seq->length ());
-          CORBA::ULong itrlen = (CORBA::is_nil(offer_iterator.in()) ? 0 :
-                                 offer_iterator->max_left ());
-          CORBA::ULong total = seqlen + itrlen;
-          CORBA::ULong expected = ACE_OS::atoi (TT_Info::QUERIES[i][3]);
+          CORBA::ULong const seqlen = (offer_seq.ptr () == nullptr ? 0 :
+                                       offer_seq->length ());
+          CORBA::ULong const itrlen = (CORBA::is_nil (offer_iterator.in ()) ? 0 :
+                                       offer_iterator->max_left ());
+          CORBA::ULong const total = seqlen + itrlen;
+          CORBA::ULong const expected = std::atoi (TT_Info::QUERIES[i][3]);
 
           if (total != expected)
           {
@@ -191,14 +195,14 @@ TAO_Offer_Importer::perform_queries_with_policies (
 
               for (int length = limits_applied->length (), j = 0; j < length; j++)
                 {
-                  const char *policy_name = (*limits_applied.ptr())[j];
+                  char const *policy_name = (*limits_applied.ptr ())[j];
                   ACE_DEBUG ((LM_DEBUG, "%C\n",
-                              static_cast<const char*> (policy_name)));
+                              policy_name));
                 }
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Importer::perform_queries_with_policies");
       throw;
@@ -232,7 +236,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       if (! CORBA::is_nil (offer_iterator))
         {
-          CORBA::Boolean any_left = 0;
+          CORBA::Boolean any_left {};
           do
             {
               CosTrading::OfferSeq_var offers;
@@ -240,8 +244,8 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
               // recommended? (see p.879 Advanced CORBA programming book)
               // Howmany to process is a choice between next_n call 'dispatch
               // costs' and 'larges results marshalling bandwidth costs'.
-              CORBA::ULong how_many = 100;
-              any_left = offer_iterator->next_n (how_many, offers.out());
+              CORBA::ULong const how_many {100};
+              any_left = offer_iterator->next_n (how_many, offers.out ());
 
               for (CORBA::ULong i = 0; i < offers->length (); i++)
                 {
@@ -264,7 +268,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
           offer_iterator->destroy ();
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Importer::display_results");
       throw;
