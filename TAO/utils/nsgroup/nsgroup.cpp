@@ -16,9 +16,9 @@ show_help(int argc, ACE_TCHAR *argv[])
 {
   static const ACE_TCHAR options[] = ACE_TEXT("h");
   static constexpr int skip_args = 1;
-  static constexpr int report_errors = 0;
+  static constexpr int report_errors {};
   static constexpr int ordering = ACE_Get_Opt::RETURN_IN_ORDER;
-  static constexpr int long_only = 0;
+  static constexpr int long_only {};
 
   // Not enough arguments indicates help is required
   if( argc < 2 )
@@ -44,7 +44,7 @@ show_help(int argc, ACE_TCHAR *argv[])
                       true);
   }
 
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
   {
     switch (c)
@@ -136,7 +136,7 @@ private:
 int
 NSGROUP::start_orb ()
 {
-  constexpr int RC_SUCCESS = 0;
+  constexpr int RC_SUCCESS {};
   constexpr int RC_ERROR = -1;
 
   try
@@ -214,7 +214,7 @@ NSGROUP::run_cmd()
   constexpr int RC_ERROR = -1;
   constexpr int RC_BADARG = -2;
 
-  int rc = RC_ERROR;
+  int rc {RC_ERROR};
 
   switch( parse_command_line () )
   {
@@ -293,9 +293,9 @@ NSGROUP::parse_command_line ()
 
   static const ACE_TCHAR options[] = ACE_TEXT("g:p:t:l:i:n:h");
   static constexpr int skip_args = 1;
-  static constexpr int report_errors = 0;
+  static constexpr int report_errors {};
   static constexpr int ordering = ACE_Get_Opt::PERMUTE_ARGS;
-  static constexpr int long_only = 1;
+  static constexpr int long_only {1};
 
   ACE_Get_Opt get_opts (
     this->argc_,
@@ -352,7 +352,7 @@ NSGROUP::parse_command_line ()
                        ACE_TEXT ("Unable to add long option 'h'\n")),
                       NSGROUP_COMMAND::none);
 
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -376,10 +376,10 @@ NSGROUP::parse_command_line ()
       }
 
   // handle non-option arguments
-  int non_option_arg_count = 0;
-  for( int i = get_opts.opt_ind (); i < this->argc_; ++i)
+  int non_option_arg_count {};
+  for (int i {get_opts.opt_ind ()}; i < this->argc_; ++i)
   {
-    non_option_arg_count++;
+    ++non_option_arg_count;
 
 
     if( ACE_OS::strncmp (this->argv_[i],ACE_TEXT("group_create"),
@@ -452,7 +452,7 @@ NSGROUP::parse_command_line ()
 int
 NSGROUP::show_usage ()
 {
-  constexpr int RC_SUCCESS = 0;
+  constexpr int RC_SUCCESS {};
 
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("Usage:\n")
@@ -478,9 +478,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   constexpr int RC_ERROR = -1;
-  constexpr int RC_SUCCESS = 0;
+  constexpr int RC_SUCCESS {};
 
-  int rc = RC_ERROR;
+  int rc {RC_ERROR};
 
   try
     {
