@@ -78,7 +78,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
   RTCORBA::ProtocolList &protocols =
     server_protocol->protocols_rep ();
 
-  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+  for (CORBA::ULong j {}; j < protocols.length (); ++j)
     {
       bool found {};
       CORBA::ULong const protocol_type = protocols[j].protocol_type;
@@ -88,7 +88,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
           TAO_Thread_Lane **lanes =
             this->thread_pool_->lanes ();
 
-          for (CORBA::ULong i = 0;
+          for (CORBA::ULong i {};
                i != this->thread_pool_->number_of_lanes ();
                ++i)
             {
@@ -211,7 +211,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
         throw PortableServer::POA::InvalidPolicy ();
 
       // Checks 2.
-      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+      for (CORBA::ULong i {}; i < bands.length (); ++i)
         {
           //  2a. low is not < RTCORBA::minPriority
           //  2b. low is not > high
@@ -232,7 +232,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
         {
           bool match {};
-          for (CORBA::ULong i = 0; i < bands.length (); ++i)
+          for (CORBA::ULong i {}; i < bands.length (); ++i)
             {
               if (priority <= bands[i].high &&
                   priority >= bands[i].low)
@@ -263,12 +263,12 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       TAO_Thread_Lane **lanes =
         this->thread_pool_->lanes ();
 
-      for (CORBA::ULong band = 0;
+      for (CORBA::ULong band {};
            band < bands.length ();
            ++band)
         {
           bool match {};
-          for (CORBA::ULong lane = 0;
+          for (CORBA::ULong lane {};
                lane != this->thread_pool_->number_of_lanes () && !match;
                ++lane)
             {
@@ -307,7 +307,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
         this->thread_pool_->lanes ();
 
       bool match {};
-      for (CORBA::ULong lane = 0;
+      for (CORBA::ULong lane {};
            lane != this->thread_pool_->number_of_lanes () && !match;
            ++lane)
         {
@@ -404,7 +404,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
       TAO_Thread_Lane **lanes =
         thread_pool->lanes ();
 
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i != thread_pool->number_of_lanes ();
            ++i)
         {
@@ -460,7 +460,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
       // Make sure that this protocol is not already in the protocol
       // list.
       bool protocol_already_present {};
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < current_length && !protocol_already_present;
            ++i)
         {

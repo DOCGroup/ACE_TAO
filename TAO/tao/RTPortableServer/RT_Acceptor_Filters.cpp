@@ -23,7 +23,7 @@ TAO_Server_Protocol_Acceptor_Filter::fill_profile (
 {
   // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
   // which protocols get included into IOR and in what order.
-  for (CORBA::ULong j = 0; j < this->protocols_.length (); ++j)
+  for (CORBA::ULong j {}; j < this->protocols_.length (); ++j)
     {
       CORBA::ULong const protocol_type = this->protocols_[j].protocol_type;
 
@@ -42,7 +42,7 @@ int
 TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 {
   // Encode endpoints.
-  for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+  for (CORBA::ULong i {}; i < mprofile.profile_count (); ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
       if (profile->encode_endpoints () == -1)

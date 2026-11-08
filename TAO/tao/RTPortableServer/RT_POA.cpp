@@ -129,7 +129,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
     {
       TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
 
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i != this->thread_pool_->number_of_lanes ();
            ++i)
         {
@@ -161,7 +161,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
           RTCORBA::PriorityBands &bands =
             priority_bands_i->priority_bands_rep ();
 
-          for (CORBA::ULong i = 0;
+          for (CORBA::ULong i {};
                i < bands.length ();
                ++i)
             {
@@ -271,7 +271,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
       TAO_Thread_Lane **lanes =
         this->thread_pool_->lanes ();
 
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i != this->thread_pool_->number_of_lanes ();
            ++i)
         {
@@ -335,7 +335,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
 
   // Leave it to the filter to decide which acceptors/in which order
   // go into the mprofile.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->thread_pool_->number_of_lanes () &&
          !error;
        ++i)
@@ -390,7 +390,7 @@ TAO_RT_POA::endpoint_count ()
   TAO_Thread_Lane **lanes =
     this->thread_pool_->lanes ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->thread_pool_->number_of_lanes ();
        ++i)
     profile_count +=
@@ -409,7 +409,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
   RTCORBA::PriorityBands &bands =
     priority_bands->priority_bands_rep ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < bands.length ();
        ++i)
     {
