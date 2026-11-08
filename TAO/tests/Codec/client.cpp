@@ -3,7 +3,6 @@
 #include "tao/Codeset/Codeset.h"
 #include "testC.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
 #include <cstring>
@@ -65,7 +64,7 @@ verify_data (Foo::Bar const *const original, Foo::Bar const *const extracted)
       || original->B != extracted->B
       || original->C != extracted->C
       || (std::strcmp (original->D, extracted->D) != 0)
-      || (ACE_OS::strcmp (original->E, extracted->E) != 0))
+      || (std::wcscmp (original->E, extracted->E) != 0))
     return -1;
 
   return 0;
