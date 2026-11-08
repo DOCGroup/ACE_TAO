@@ -59,7 +59,7 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
   if (this->root_->async_available ())
     {
       // construct a callback handler
-      TAO_AMH_Locate_ResponseHandler_ptr rhp = nullptr;
+      TAO_AMH_Locate_ResponseHandler_ptr rhp {};
       ACE_NEW_RETURN (rhp,
                       TAO_AMH_Locate_ResponseHandler (request),
                       DS_MISMATCHED_KEY);
@@ -83,7 +83,7 @@ TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
 {
   CORBA::String_var object_key;
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
-  TAO_Async_IOR_Table_Impl * aroot =
+  TAO_Async_IOR_Table_Impl * const aroot =
     dynamic_cast<TAO_Async_IOR_Table_Impl *>(this->root_.ptr());
   if (aroot != nullptr)
     {
@@ -103,7 +103,7 @@ TAO_Async_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
   TAO_Adapter *ptr {};
   ACE_NEW_RETURN (ptr,
                  TAO_Async_Table_Adapter (*oc),
-                 0);
+                 nullptr);
   return ptr;
 }
 
