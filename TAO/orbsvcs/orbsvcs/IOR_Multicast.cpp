@@ -6,6 +6,7 @@
 #include "orbsvcs/Log_Macros.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,7 +60,7 @@ TAO_IOR_Multicast::init (char const *ior,
   char const *tmpnic = std::strchr (mcast_addr, '@');
 
   CORBA::String_var actual_mcast_addr;
-  CORBA::ULong length_addr;
+  CORBA::ULong length_addr {};
 
   if (tmpnic != nullptr)
     {
@@ -146,11 +147,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
     ORBSVCS_DEBUG ((LM_DEBUG, "Entered TAO_IOR_Multicast::handle_input\n"));
 
   // The length of the service name string that follows.
-  CORBA::Short header;
+  CORBA::Short header {};
   // Port to which to reply.
-  ACE_UINT16 remote_port;
+  ACE_UINT16 remote_port {};
   // Name of the service for which the client is looking.
-  char service_name[BUFSIZ];
+  char service_name[BUFSIZ] {};
 
   ACE_INET_Addr remote_addr;
 
@@ -171,7 +172,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                       0);
 
   // Receive full client multicast request.
-  int const iovcnt = 3;
+  constexpr int iovcnt { 3 };
   iovec iov[iovcnt];
 
   iov[0].iov_base = reinterpret_cast<char *> (&header);
@@ -235,9 +236,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       // connection using the IPv6 loopback address instead.
       ACE_INET_Addr peer_tmp (peer_addr);
       peer_tmp.set_port_number (static_cast<u_short> (0));
-      ACE_INET_Addr *tmp {};
-      size_t cnt = 0;
+      ACE_INET_Addr* tmp {};
+      size_t cnt {};
       int const err = ACE::get_ip_interfaces (cnt, tmp);
+      std::unique_ptr<ACE_INET_Addr[]> safe_tmp { tmp };
       if (err == 0)
         {
           for (size_t i = 0; i < cnt; ++i)
@@ -249,8 +251,6 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 break;
               }
           }
-
-          delete[] tmp;
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -275,7 +275,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
     ACE_HTONS (static_cast<CORBA::UShort> (this->ior_.length () + 1));
 
   // Vector to be sent.
-  int const cnt = 2;
+  constexpr int cnt { 2 };
   iovec iovp[cnt];
 
   // The length of ior to be sent.
