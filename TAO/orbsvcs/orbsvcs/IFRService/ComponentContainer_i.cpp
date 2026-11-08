@@ -447,7 +447,7 @@ TAO_ComponentContainer_i::create_event_i (
                                                          "count",
                                                          count);
 
-              for (CORBA::ULong j = 0; j < count; ++j)
+              for (CORBA::ULong j {}; j < count; ++j)
                 {
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (outer_key,
@@ -485,7 +485,7 @@ TAO_ComponentContainer_i::create_event_i (
                                                          "count",
                                                          count);
 
-              for (CORBA::ULong k = 0; k < count; ++k)
+              for (CORBA::ULong k {}; k < count; ++k)
                 {
                   this->repo_->config ()->get_string_value (
                       this->repo_->repo_ids_key (),

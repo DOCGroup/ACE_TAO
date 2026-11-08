@@ -37,7 +37,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
   ACE_Configuration_Section_Key special_key;
   ACE_TString holder;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       repo->config ()->open_section (sub_key,
@@ -80,7 +80,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
   ACE_Configuration_Section_Key params_key;
   ACE_Configuration_Section_Key arg_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (initializers_key,
@@ -103,7 +103,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                                      ACE_TEXT("count"),
                                      arg_count);
 
-          for (CORBA::ULong j = 0; j < arg_count; ++j)
+          for (CORBA::ULong j {}; j < arg_count; ++j)
             {
               ACE_TCHAR *stringified =
                 TAO_IFR_Service_Utils::int_to_string (j);
@@ -179,7 +179,7 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
   char *stringified {};
   ACE_TString holder;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->get_string_value (section_key,
@@ -219,7 +219,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
   char *stringified {};
   ACE_TString holder;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (sub_key,

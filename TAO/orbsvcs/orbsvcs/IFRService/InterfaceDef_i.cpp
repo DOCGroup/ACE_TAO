@@ -195,7 +195,7 @@ TAO_InterfaceDef_i::base_interfaces_i ()
   seq->length (size);
   CORBA::InterfaceDefSeq_var retval = seq;
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       kind_queue.pop_front ();
 
@@ -234,7 +234,7 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
     {
       CORBA::ULong length = base_interfaces.length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           def_kind = base_interfaces[i]->def_kind ();
 
@@ -264,7 +264,7 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
   PortableServer::ObjectId_var oid;
   ACE_Configuration_Section_Key base_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       inherited_path =
         TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
@@ -332,7 +332,7 @@ TAO_InterfaceDef_i::is_a_i (char const *interface_id)
   char *base_path {};
   ACE_Configuration_Section_Key base_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
@@ -1048,7 +1048,7 @@ TAO_InterfaceDef_i::inherited_attributes (
   ACE_TString path_name;
   u_int count = 0;
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       path_name = path_queue.front ();
       path_queue.pop_front ();
@@ -1070,7 +1070,7 @@ TAO_InterfaceDef_i::inherited_attributes (
                                                      "count",
                                                      count);
 
-          for (u_int j = 0; j < count; ++j)
+          for (u_int j {}; j < count; ++j)
             {
               char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (attrs_key,
@@ -1101,7 +1101,7 @@ TAO_InterfaceDef_i::inherited_operations (
   ACE_TString path_name;
   u_int count = 0;
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       path_name = path_queue.front ();
       path_queue.pop_front ();
@@ -1123,7 +1123,7 @@ TAO_InterfaceDef_i::inherited_operations (
                                                      "count",
                                                      count);
 
-          for (u_int j = 0; j < count; ++j)
+          for (u_int j {}; j < count; ++j)
             {
               char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (ops_key,
@@ -1159,7 +1159,7 @@ TAO_InterfaceDef_i::check_inherited (char const *name,
   ACE_Configuration_Section_Key inherited_key;
   ACE_TString inherited_name;
 
-  for (u_int i = 0; i < size; ++i)
+  for (u_int i {}; i < size; ++i)
     {
       inherited_key = key_queue.front ();
       key_queue.pop_front ();

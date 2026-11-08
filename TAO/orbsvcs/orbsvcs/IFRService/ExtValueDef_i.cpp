@@ -63,7 +63,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
@@ -92,7 +92,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
       retval[i].members.length (arg_count);
       CORBA::Object_var obj;
 
-      for (CORBA::ULong j = 0; j < arg_count; ++j)
+      for (CORBA::ULong j {}; j < arg_count; ++j)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
@@ -169,7 +169,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
                                             0,
                                             initializers_key);
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
@@ -810,7 +810,7 @@ TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
   ACE_TString holder;
   ACE_Configuration_Section_Key except_key;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (excepts_key,
@@ -867,7 +867,7 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
   char *stringified {};
   ACE_TString path;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
                                                 exceptions[i].id.in (),
@@ -903,7 +903,7 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
   char *stringified {};
   char *type_path {};
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       type_path =
         TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);

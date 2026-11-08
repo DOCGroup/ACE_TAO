@@ -192,7 +192,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
   ACE_TString holder;
   ACE_Configuration_Section_Key except_key;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (excepts_key,
@@ -245,7 +245,7 @@ TAO_ExtAttributeDef_i::exceptions (char const *sub_section,
   char *stringified {};
   ACE_TString path;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
                                                 exceptions[i].id.in (),

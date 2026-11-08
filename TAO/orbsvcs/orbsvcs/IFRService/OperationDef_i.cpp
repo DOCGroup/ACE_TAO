@@ -281,7 +281,7 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
                                              length);
   char *type_path {};
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       ACE_Configuration_Section_Key param_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -399,7 +399,7 @@ TAO_OperationDef_i::contexts_i ()
 
   ci_seq->length (size);
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       ACE_TString context_string;
       context_string = context_queue.front ();
@@ -439,7 +439,7 @@ TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
                                         1,
                                         contexts_key);
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (contexts_key,
@@ -507,7 +507,7 @@ TAO_OperationDef_i::exceptions_i ( )
 
   CORBA::ExceptionDefSeq_var retval = ed_seq;
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       ACE_TString path;
       path = path_queue.front ();
@@ -615,7 +615,7 @@ TAO_OperationDef_i::make_description (
 
       od.exceptions.length (size);
 
-      for (CORBA::ULong i = 0; i < size; ++i)
+      for (CORBA::ULong i {}; i < size; ++i)
         {
           ACE_TString type_path;
           type_path = path_queue.front ();

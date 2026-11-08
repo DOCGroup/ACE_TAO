@@ -244,7 +244,7 @@ TAO_AttributeDef_i::get_exceptions ()
   get_ed_seq->length (size);
   CORBA::ExceptionDefSeq_var retval = get_ed_seq;
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       ACE_TString path;
       path = path_queue.front ();
@@ -316,7 +316,7 @@ TAO_AttributeDef_i::put_exceptions ()
   put_ed_seq->length (size);
   CORBA::ExceptionDefSeq_var retval = put_ed_seq;
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       ACE_TString path;
       path = path_queue.front ();

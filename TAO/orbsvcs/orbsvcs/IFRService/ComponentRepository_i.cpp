@@ -100,7 +100,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
 
   CORBA::ULong length = policies.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy ();

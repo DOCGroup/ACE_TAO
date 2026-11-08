@@ -489,7 +489,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                                  "count",
                                                  count);
 
-      for (u_int i = 0; i < count; ++i)
+      for (u_int i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -569,7 +569,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
   CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
   retval->length (size);
 
-  for (CORBA::ULong j = 0; j < size; ++j)
+  for (CORBA::ULong j {}; j < size; ++j)
     {
       CORBA::DefinitionKind next_kind = CORBA::dk_none;
       next_kind = kind_queue.front ();
@@ -635,7 +635,7 @@ TAO_Container_i::lookup_name_i (char const *search_name,
   CORBA::ContainedSeq_var retval = holder;
   retval->length (size);
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       CORBA::DefinitionKind next_kind = CORBA::dk_none;
       next_kind = kind_queue.front ();
@@ -709,7 +709,7 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
   CORBA::String_var tmp;
   TAO_Contained_i *impl {};
 
-  for (CORBA::ULong i = 0; i < ret_len; ++i)
+  for (CORBA::ULong i {}; i < ret_len; ++i)
     {
       ACE_TString contained_path (
           TAO_IFR_Service_Utils::reference_to_path (contents[i])
@@ -926,7 +926,7 @@ TAO_Container_i::create_struct_i (char const *id,
 
   // Create a section for each member. We just store the
   // member name and the path to its database entry.
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -1035,7 +1035,7 @@ TAO_Container_i::create_union_i (char const *id,
 
   // Create a section for each member. We store the member
   // name, its label value, and the path to its database entry.
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -1123,7 +1123,7 @@ TAO_Container_i::create_enum_i (char const *id,
 
   // Create a section for each member, named for
   // its ordinal position in the enum,
-  for (CORBA::ULong i = 0; i < count; i++)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -1259,7 +1259,7 @@ TAO_Container_i::create_interface_i (char const *id,
       char *inherited_path {};
 
       // Store the path to each base interface.
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (
@@ -1459,7 +1459,7 @@ TAO_Container_i::create_exception_i (char const *id,
 
   // Create a section for each member. We just store the
   // member name and the path to its database entry.
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -1585,7 +1585,7 @@ TAO_Container_i::create_abstract_interface_i (
       char *inherited_path {};
 
       // Store the path to each base interface.
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
@@ -1660,7 +1660,7 @@ TAO_Container_i::create_local_interface_i (
       char *inherited_path {};
 
       // Store the path to each base interface.
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
@@ -1759,7 +1759,7 @@ TAO_Container_i::create_ext_value_i (
                                             0,
                                             initializers_key);
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
@@ -2415,7 +2415,7 @@ TAO_Container_i::create_value_common (
       char const *base_path {};
       char *stringified {};
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           base_path =
             TAO_IFR_Service_Utils::reference_to_path (
@@ -2466,7 +2466,7 @@ TAO_Container_i::create_value_common (
       bool concrete_seen = false;
       CORBA::DefinitionKind def_kind;
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           supported_path =
             TAO_IFR_Service_Utils::reference_to_path (

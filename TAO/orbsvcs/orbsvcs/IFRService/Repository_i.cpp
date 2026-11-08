@@ -578,7 +578,7 @@ TAO_Repository_i::create_sections ()
 
       u_int const num_pkinds = this->num_pkinds ();
 
-      for (u_int i = 0; i < num_pkinds; ++i)
+      for (u_int i {}; i < num_pkinds; ++i)
         {
           ACE_Configuration_Section_Key key;
           CORBA::PrimitiveKind pkind = static_cast<CORBA::PrimitiveKind> (i);
@@ -742,7 +742,7 @@ TAO_Repository_i::create_servants_and_poas ()
 
   CORBA::ULong length = policies.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy ();

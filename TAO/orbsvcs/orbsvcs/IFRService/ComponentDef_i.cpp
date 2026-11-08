@@ -342,7 +342,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
       ACE_TString path;
       CORBA::Object_var tmp;
 
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->get_string_value (supported_key,
@@ -392,7 +392,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
   char *supported_path {};
   ACE_Configuration_Section_Key supported_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       supported_path =
         TAO_IFR_Service_Utils::reference_to_path (

@@ -616,7 +616,7 @@ TAO_IFR_Service_Utils::name_exists (
                                           "count",
                                           count);
 
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key member_key;
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -653,7 +653,7 @@ TAO_IFR_Service_Utils::name_exists (
                                           "count",
                                           count);
 
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -752,7 +752,7 @@ TAO_IFR_Service_Utils::check_subsection (
   ACE_TString entry_name;
   char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (sub_key,
@@ -952,7 +952,7 @@ TAO_IFR_Service_Utils::set_exceptions (
 
   char *type_path {};
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       type_path =
         TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
@@ -1075,7 +1075,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
   ACE_TString holder;
   CORBA::ULong access = 0;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       repo->config ()->open_section (members_key,

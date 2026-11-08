@@ -154,7 +154,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
   ACE_TString holder;
   CORBA::Object_var obj;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
@@ -208,7 +208,7 @@ TAO_ValueDef_i::supported_interfaces_i (
   bool concrete_seen = false;
   CORBA::DefinitionKind def_kind;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
@@ -299,7 +299,7 @@ TAO_ValueDef_i::initializers_i ()
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
@@ -328,7 +328,7 @@ TAO_ValueDef_i::initializers_i ()
       retval[i].members.length (arg_count);
       CORBA::Object_var obj;
 
-      for (CORBA::ULong j = 0; j < arg_count; ++j)
+      for (CORBA::ULong j {}; j < arg_count; ++j)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
@@ -499,7 +499,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
   ACE_TString holder;
   CORBA::Object_var obj;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (bases_key,
@@ -556,7 +556,7 @@ TAO_ValueDef_i::abstract_base_values_i (
   char const *base_path {};
   char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       base_path =
         TAO_IFR_Service_Utils::reference_to_path (
@@ -774,7 +774,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
   ACE_Configuration_Section_Key base_key;
   bool success = false;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (bases_key,

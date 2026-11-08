@@ -123,7 +123,7 @@ TAO_StructDef_i::members_i ()
                                              "count",
                                              count);
 
-  for (u_int i = 0; i < count; ++i)
+  for (u_int i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -188,7 +188,7 @@ TAO_StructDef_i::members_i ()
   // Store to replace below.
   ACE_Configuration_Section_Key key_holder = this->section_key_;
 
-  for (CORBA::ULong k = 0; k < size; ++k)
+  for (CORBA::ULong k {}; k < size; ++k)
     {
       name = name_queue.front ();
       name_queue.pop_front ();
@@ -256,7 +256,7 @@ TAO_StructDef_i::members_i (CORBA::StructMemberSeq const &members)
 
   // Create a section for each new member. We just store the
   // member name and the path to its database entry.
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);

@@ -270,7 +270,7 @@ TAO_HomeDef_i::supported_interfaces_i (
   ACE_TString holder;
   CORBA::Object_var obj;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
@@ -320,7 +320,7 @@ TAO_HomeDef_i::supported_interfaces_i (
   char *stringified {};
   char *path {};
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       path =
@@ -668,7 +668,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
   ods.length (count);
   char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->fill_op_desc (sub_key,
@@ -748,7 +748,7 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
   pds.length (count);
   char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->fill_param_desc (params_key,
@@ -817,7 +817,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
   eds.length (count);
   char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->fill_exc_desc (excepts_key,
@@ -881,7 +881,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
   eads.length (count);
   char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->fill_attr_desc (attrs_key,
