@@ -38,9 +38,8 @@ public:
   Agent (char const* space_craft_name,
          char const* agent_name,
          EventChannel_ptr ch)
-      : space_craft_name_ (space_craft_name),
-        agent_name_ (agent_name),
-        counter_ (0)
+      : space_craft_name_ (space_craft_name)
+      , agent_name_ (agent_name)
   {
     // Obtain a proxy consumer.
     //
@@ -75,12 +74,17 @@ public:
   }
 
 private:
+  Agent (Agent const &) = delete;
+  Agent (Agent &&) = delete;
+  Agent &operator= (Agent const &) = delete;
+  Agent &operator= (Agent &&) = delete;
+
   static ACE_THR_FUNC_RETURN
   tracker_thunk (void* arg)
   {
-    Agent* a = reinterpret_cast<Agent*> (arg);
+    Agent * const a = static_cast<Agent *> (arg);
     a->tracker ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   void
@@ -139,29 +143,29 @@ private:
 private:
   // NotifyPublish interface.
   //
-  virtual void
+  void
   offer_change (EventTypeSeq const&,
-                EventTypeSeq const&)
+                EventTypeSeq const&) override
   {
     // We don't care.
   }
 
   // StructuredPushSupplier interface.
   //
-  virtual void
-  push_structured_event (StructuredEvent const& e)
+  void
+  push_structured_event (StructuredEvent const& e) override
   {
     // Extract space_craft_name and agent_name.
     //
-    Char const* space_craft_name = 0;
-    Char const* agent_name = 0;
+    Char const *space_craft_name {};
+    Char const *agent_name {};
 
     e.header.variable_header[0].value >>= space_craft_name;
     e.header.variable_header[1].value >>= agent_name;
 
     // Extract the counter value.
     //
-    CORBA::ULong counter;
+    CORBA::ULong counter {};
     e.filterable_data[0].value >>= counter;
 
     cerr << e.header.fixed_header.event_type.domain_name << "::"
@@ -172,8 +176,8 @@ private:
   }
 
 
-  virtual void
-  disconnect_structured_push_consumer ()
+  void
+  disconnect_structured_push_consumer () override
   {
     // We don't care.
   }
@@ -181,14 +185,14 @@ private:
 private:
   String_var space_craft_name_;
   String_var agent_name_;
-  ULong counter_;
+  ULong counter_ {};
 
-  ACE_thread_t thread_;
+  ACE_thread_t thread_ {};
 
-  ProxyID consumer_id_;
+  ProxyID consumer_id_ {};
   StructuredProxyPushConsumer_var consumer_;
 
-  ProxyID supplier_id_;
+  ProxyID supplier_id_ {};
   StructuredProxyPushSupplier_var supplier_;
 };
 
@@ -222,9 +226,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Initialize Notification Service.
     //
-    TAO_Notify_Service* ns = TAO_Notify_Service::load_default ();
+    TAO_Notify_Service * const ns = TAO_Notify_Service::load_default ();
 
-    if (ns == 0)
+    if (ns == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Notification Service not found! check svc.conf\n"));
@@ -257,7 +261,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Find which space craft we are on.
     //
     ACE_INET_Addr addr;
-    const ACE_TCHAR *space_craft_name = 0;
+    ACE_TCHAR const *space_craft_name {};
 
     if (argc < 3)
       space_craft_name = ACE_TEXT("a");  // Default to spacecraft "a".
@@ -305,12 +309,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const &ue)
   {
     ue._tao_print_exception ("User exception: ");
     return 1;
   }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
   {
     se._tao_print_exception ("System exception: ");
     return 1;
