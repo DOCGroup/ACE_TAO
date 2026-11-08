@@ -2,13 +2,11 @@
 #include "Service_Config_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
 static ACE_THR_FUNC_RETURN
 invoke_service_config (void *arg)
 {
-  const ACE_TCHAR *directive = reinterpret_cast<const ACE_TCHAR *> (arg);
-
+  ACE_TCHAR const *directive = static_cast<ACE_TCHAR const *> (arg);
 
   // Process a Service Configurator directive in the current thread.
   if (ACE_Service_Config::process_directive (directive) != 0)
@@ -18,14 +16,10 @@ invoke_service_config (void *arg)
                 ACE_TEXT ("\"%s\"\n"),
                 directive));
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-Service_Config_DLL::Service_Config_DLL ()
-{
-  ACE_OS::memset (this->directive_[0], 0, BUFSIZ * sizeof (ACE_TCHAR));
-  ACE_OS::memset (this->directive_[1], 0, BUFSIZ * sizeof (ACE_TCHAR));
-}
+Service_Config_DLL::Service_Config_DLL () = default;
 
 int
 Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
@@ -39,18 +33,30 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
 
       ACE_OS::sprintf (this->directive_[0],
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-                       ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_Dependent_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
+                       ACE_TEXT ("dynamic Test_Object_%s Service_Object * ")
+                       ACE_TEXT ("Service_Config_Dependent_DLL:_make_Service_Config_DLL() ")
+                       ACE_TEXT ("\"Test_Object_%s\""),
 #else
-                       ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' type='service_object'> <initializer init='_make_Service_Config_DLL' path='Service_Config_Dependent_DLL' params='Test_Object_%s'/> </dynamic>"),
+                       ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' ")
+                       ACE_TEXT ("type='service_object'> <initializer ")
+                       ACE_TEXT ("init='_make_Service_Config_DLL' ")
+                       ACE_TEXT ("path='Service_Config_Dependent_DLL' ")
+                       ACE_TEXT ("params='Test_Object_%s'/> </dynamic>"),
 #endif
                        argv[0],
                        argv[0]);
 
       ACE_OS::sprintf (this->directive_[1],
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-                       ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_Dependent_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
+                       ACE_TEXT ("dynamic Test_Object_%s Service_Object * ")
+                       ACE_TEXT ("Service_Config_Dependent_DLL:_make_Service_Config_DLL() ")
+                       ACE_TEXT ("\"Test_Object_%s\""),
 #else
-                       ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' type='service_object'> <initializer init='_make_Service_Config_DLL' path='Service_Config_Dependent_DLL' params='Test_Object_%s'/> </dynamic>"),
+                       ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' ")
+                       ACE_TEXT ("type='service_object'> <initializer ")
+                       ACE_TEXT ("init='_make_Service_Config_DLL' ")
+                       ACE_TEXT ("path='Service_Config_Dependent_DLL' ")
+                       ACE_TEXT ("params='Test_Object_%s'/> </dynamic>"),
 #endif
 
                        argv[1],

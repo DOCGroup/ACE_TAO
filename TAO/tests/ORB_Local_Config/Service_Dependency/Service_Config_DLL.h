@@ -36,23 +36,28 @@ public:
   /// Constructor.
   Service_Config_DLL ();
 
+  Service_Config_DLL (Service_Config_DLL const &) = delete;
+  Service_Config_DLL (Service_Config_DLL &&) = delete;
+  Service_Config_DLL &operator= (Service_Config_DLL const &) = delete;
+  Service_Config_DLL &operator= (Service_Config_DLL &&) = delete;
+
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Directives to be passed to be processed by the Service
   /// Configurator in separate threads.
-  ACE_TCHAR directive_[2][BUFSIZ];
+  ACE_TCHAR directive_[2][BUFSIZ] {};
 };
 
 
