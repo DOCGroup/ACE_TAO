@@ -1573,17 +1573,17 @@ TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 void
 TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory)
 {
-  if (TAO_TSS_Resources::instance ()->gui_resource_factory_ != nullptr)
+  TAO_TSS_Resources *resources = TAO_TSS_Resources::instance ();
+  if (resources->gui_resource_factory_)
     {
       if (TAO_debug_level > 2)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Deleting old gui_resource_factory.\n"));
         }
-      delete TAO_TSS_Resources::instance ()->gui_resource_factory_;
     }
 
-  TAO_TSS_Resources::instance ()->gui_resource_factory_ = gui_resource_factory;
+  resources->gui_resource_factory_.reset (gui_resource_factory);
 }
 
 void
@@ -1670,7 +1670,7 @@ TAO_ORB_Core::resource_factory ()
 TAO::GUIResource_Factory *
 TAO_ORB_Core::gui_resource_factory ()
 {
-  return TAO_TSS_Resources::instance ()->gui_resource_factory_;
+  return TAO_TSS_Resources::instance ()->gui_resource_factory_.get ();
 }
 
 

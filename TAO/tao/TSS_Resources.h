@@ -25,6 +25,8 @@
 
 #include "tao/Policy_Current_Impl.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
@@ -104,7 +106,7 @@ public:
    * @c GUIResource_Factory has to be stored in TSS, as GUIReactors
    * are operational only in within the context of GUI event loops.
    */
-  TAO::GUIResource_Factory * gui_resource_factory_;
+  std::unique_ptr<TAO::GUIResource_Factory> gui_resource_factory_;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 

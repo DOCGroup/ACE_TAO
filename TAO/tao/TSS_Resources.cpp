@@ -16,17 +16,13 @@ TAO_TSS_Resources::TAO_TSS_Resources ()
   , policy_current_ (&initial_policy_current_)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-  , gui_resource_factory_ (nullptr)
 #if (TAO_HAS_TRANSPORT_CURRENT == 1)
   , tsg_ (nullptr)
 #endif /* TAO_HAS_TRANSPORT_CURRENT */
 {
 }
 
-TAO_TSS_Resources::~TAO_TSS_Resources ()
-{
-  delete this->gui_resource_factory_;
-}
+TAO_TSS_Resources::~TAO_TSS_Resources () = default;
 
 TAO_TSS_Resources *
 TAO_TSS_Resources::instance ()
