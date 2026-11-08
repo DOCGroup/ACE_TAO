@@ -12,7 +12,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_C
   : implementation_ (implementation),
     delete_implementation_ (delete_implementation)
 {
-  if (this->implementation_ == 0)
+  if (this->implementation_ == nullptr)
     {
       ACE_NEW (this->implementation_,
                IMPLEMENTATION);
@@ -24,11 +24,7 @@ template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLI
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter ()
 {
   if (this->delete_implementation_)
-    {
-      delete this->implementation_;
-      this->delete_implementation_ = false;
-      this->implementation_ = nullptr;
-    }
+    delete this->implementation_;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE ATTRIBUTES

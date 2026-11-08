@@ -164,10 +164,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Implementation class.
+  // The implementation may be borrowed; delete_implementation_ controls ownership.
   IMPLEMENTATION *implementation_;
 
-  /// Do we need to delete the implementation?
   bool delete_implementation_;
 };
 
