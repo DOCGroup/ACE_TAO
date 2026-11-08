@@ -16,9 +16,9 @@ public:
   Quoter_Stock_i &operator= (Quoter_Stock_i const &) = delete;
   Quoter_Stock_i &operator= (Quoter_Stock_i &&) = delete;
 
-  char *symbol ();
-  char *full_name ();
-  CORBA::Double price ();
+  char *symbol () override;
+  char *full_name () override;
+  CORBA::Double price () override;
 
 private:
   std::string symbol_;
