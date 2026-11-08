@@ -414,9 +414,9 @@ TAO_Service_Type_Repository::
 validate_properties (Prop_Map &prop_map,
                      const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props)
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < props.length ();
-       i++)
+       ++i)
     {
       const char *n = props[i].name;
       if (TAO_Trader_Base::is_valid_property_name (n) == 0)
@@ -439,9 +439,9 @@ TAO_Service_Type_Repository::
 validate_supertypes (Service_Type_Map &super_map,
                      const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < super_types.length ();
-       i++)
+       ++i)
     {
       const char *type =
         super_types[i];
@@ -474,9 +474,9 @@ validate_inheritance (Prop_Map &prop_map,
 {
   CORBA::ULong num_super_types = super_types.length ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < num_super_types;
-       i++)
+       ++i)
     {
       Service_Type_Map::ENTRY* super_type_entry {};
       CORBA::String_var super_type (super_types[i]);
@@ -495,9 +495,9 @@ validate_inheritance (Prop_Map &prop_map,
 
       CORBA::ULong num_props = super_props.length ();
 
-      for (CORBA::ULong j = 0;
+      for (CORBA::ULong j {};
            j < num_props;
-           j++)
+           ++j)
         {
           Prop_Map::ENTRY* existing_prop {};
           CORBA::String_var prop_name (super_props[j].name);

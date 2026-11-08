@@ -280,9 +280,9 @@ lookup_all_subtypes (const char* type,
   // being considered, then perform a search on that type.
   CORBA::ULong num_types = all_types->length ();
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < num_types && offer_filter.ok_to_consider_more ();
-       i++)
+       ++i)
     {
       // Obtain a description of the prospective type.
       type_struct = rep->fully_describe_type (all_types[i]);
@@ -291,7 +291,7 @@ lookup_all_subtypes (const char* type,
         super_types = type_struct->super_types;
       CORBA::ULong num_super_types = super_types.length ();
 
-      for (CORBA::ULong j = 0; j < num_super_types; j++)
+      for (CORBA::ULong j {}; j < num_super_types; ++j)
         {
           if (std::strcmp (type_struct->super_types[j], type) == 0)
             {
@@ -1068,7 +1068,7 @@ validate_properties (const char* type,
   // Perform property validation
   length = prop_types.length ();
 
-  for (CORBA::ULong i = 0; i < length; i++)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       const CosTradingRepos::ServiceTypeRepository::PropStruct&
         prop_struct = prop_types[i];

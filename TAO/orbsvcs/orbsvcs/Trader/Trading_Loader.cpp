@@ -123,7 +123,7 @@ TAO_Trading_Loader::fini ()
           ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Unlinking from federated traders.\n"));
 
-          for (CORBA::ULong j = 0;
+          for (CORBA::ULong j {};
                j != link_name_seq->length ();
                ++j)
             {

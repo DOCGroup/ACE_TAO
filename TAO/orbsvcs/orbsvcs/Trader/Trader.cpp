@@ -83,7 +83,7 @@ TAO_Trader_Base::is_valid_property_name (const char* ident)
   if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
     {
       return_value = true;
-      for (size_t i = 0; i < length; i++)
+      for (size_t i {}; i < length; ++i)
         {
           if (! (ACE_OS::ace_isalnum (ident[i]) || ident[i] == '_'))
             {
@@ -126,7 +126,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
     if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
       {
         // First character must be alpha
-        for (size_t i = 0; i < length; ++i)
+        for (size_t i {}; i < length; ++i)
           {
             if (! (ACE_OS::ace_isalnum (ident[i])
                    || ident[i] == '_'))
@@ -604,7 +604,7 @@ operator== (const CosTrading::Admin::OctetSeq& left,
     {
       return_value = true;
 
-      for (CORBA::ULong i = 0; i < left_length; ++i)
+      for (CORBA::ULong i {}; i < left_length; ++i)
         {
           if (left[i] != right[i])
             {

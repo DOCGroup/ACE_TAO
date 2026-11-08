@@ -55,7 +55,7 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   offer_sequence->length (offers_in_sequence);
 
   // populate the sequence.
-  for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
+  for (CORBA::ULong i {}; i < offers_in_sequence; ++i)
     {
       CosTrading::Offer* source = this->offers_.front ();
       this->offers_.pop_front ();
@@ -210,7 +210,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   _ids->length(returnable_items);
 
   // Transfer OfferIds chunk.
-  for (CORBA::ULong i = 0; i < returnable_items; i++)
+  for (CORBA::ULong i {}; i < returnable_items; ++i)
     {
       std::string offer_id = this->ids_.front ();
       this->ids_.pop_front ();

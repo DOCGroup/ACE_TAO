@@ -12,7 +12,7 @@ TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
   int length = offer->properties.length ();
 
   // Create a map of property names to their values.
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
       CORBA::String_var name = (const char*) offer->properties[i].name;
       this->props_.bind (name, i);
@@ -59,7 +59,7 @@ TAO_Trader_Constraint_Validator
   int length = prop_seq.length ();
 
   // Create a map of the service type properties to their types.
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
       CORBA::TypeCode_ptr corba_type =
         CORBA::TypeCode::_duplicate (prop_seq[i].value_type.in ());

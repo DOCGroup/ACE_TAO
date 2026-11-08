@@ -43,7 +43,7 @@ TAO_Policy_Creator::TAO_Policy_Creator (int num_policies)
   : policies_ (num_policies),
     num_policies_ (0)
 {
-  for (int i = 0; i < TAO_Policies::REQUEST_ID + 1; i++)
+  for (int i {}; i < TAO_Policies::REQUEST_ID + 1; ++i)
     this->poltable_[i] = -1;
 }
 
@@ -185,7 +185,7 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
           // allocated slot.
           TAO_Policies::POLICY_TYPE occupying_policy =
             TAO_Policies::STARTING_TRADER;
-          for (CORBA::ULong i = 0; i < this->num_policies_ - 1; i++)
+          for (CORBA::ULong i {}; i < this->num_policies_ - 1; ++i)
             {
               if (this->poltable_[i] == 0)
                 {
@@ -344,7 +344,7 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
 {
   int length = this->props_.length();
 
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
       const CosTrading::Property& prop = this->props_[i];
 
@@ -364,7 +364,7 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 {
   int length = this->props_.length();
 
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
       CORBA::String_var prop_name = (const char*) this->props_[i].name;
       this->table_.bind (prop_name, i);
@@ -502,7 +502,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
                             const CosTrading::PolicySeq& policies)
   : trader_ (trader)
 {
-  for (CORBA::ULong j = 0; j < policies.length (); j++)
+  for (CORBA::ULong j {}; j < policies.length (); ++j)
     {
       char const* pol_name = (char const*) policies[j].name;
       size_t const length = (pol_name == nullptr) ? 0 : std::strlen (pol_name);
@@ -871,7 +871,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
   if (policy_buffer == nullptr)
     return;
 
-  for (int i = 0; i <= REQUEST_ID; i++)
+  for (int i {}; i <= REQUEST_ID; ++i)
     {
       CosTrading::Policy& new_policy = policy_buffer[counter];
 
@@ -924,7 +924,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
   if (policy_buffer == nullptr)
     return;
 
-  for (int i = 0; i <= REQUEST_ID; i++)
+  for (int i {}; i <= REQUEST_ID; ++i)
     {
       CosTrading::Policy& new_policy = policy_buffer[counter];
 
@@ -1362,7 +1362,7 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
         prop_seq = desired_props.prop_names ();
       int length = prop_seq.length ();
 
-      for (int i = 0; i < length; i++)
+      for (int i {}; i < length; ++i)
         {
           const char* pname = prop_seq[i];
 
@@ -1392,7 +1392,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
   destination.reference = CORBA::Object::_duplicate (source->reference.in ());
   if (this->policy_ == CosTrading::Lookup::some)
     {
-      for (CORBA::ULong i = 0; i < length; i++)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (this->policy_ == CosTrading::Lookup::all)
             prop_queue.push_back (&s_props[i]);
