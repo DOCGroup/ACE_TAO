@@ -20,20 +20,18 @@ class INS_i : public POA_INS
 {
 public:
   /// Constructor.
-  INS_i ();
+  INS_i () = default;
 
   /// Destructor.
-  ~INS_i ();
+  ~INS_i () override = default;
+
+  INS_i (INS_i const &) = delete;
+  INS_i &operator= (INS_i const &) = delete;
+  INS_i (INS_i &&) = delete;
+  INS_i &operator= (INS_i &&) = delete;
 
   /// test the INS.
-  char * test_ins ();
-
-  /// Set the ORB pointer.
-  void orb (CORBA::ORB_ptr o);
-
-private:
-  /// ORB pointer.
-  CORBA::ORB_var orb_;
+  char *test_ins () override;
 };
 
 #endif /* INS_I_H */

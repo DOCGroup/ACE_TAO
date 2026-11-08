@@ -8,57 +8,45 @@
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef SERVER_I_H
 #define SERVER_I_H
 
 #include "tao/Utils/ORB_Manager.h"
-#include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 #include "INS_i.h"
+
+#include <string>
 
 class Server_i
 {
 public:
   /// Constructor.
-  Server_i ();
+  Server_i () = default;
 
   /// Destructor.
-  ~Server_i ();
+  ~Server_i () = default;
+
+  Server_i (Server_i const &) = delete;
+  Server_i &operator= (Server_i const &) = delete;
+  Server_i (Server_i &&) = delete;
+  Server_i &operator= (Server_i &&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Add an IOR to the ORB-IOR table.
-  int add_IOR_to_table (CORBA::String_var ior);
+  int add_IOR_to_table (char const *ior, std::string const &ins);
 
   /// Run the orb.
   int run ();
 
-protected:
+private:
   /// Servant class
   INS_i servant_;
-
-  /// Parses the commandline arguments.
-  int parse_args ();
 
   /// The ORB manager - a helper class for accessing the POA and
   /// registering objects.
   TAO_ORB_Manager orb_manager_;
-
-  /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
-
-  /// Used test the INS.
-  char * ins_;
-
-  /// Number of command line arguments.
-  int argc_;
-
-  /// The command line arguments.
-  ACE_TCHAR **argv_;
 };
 
 #endif /* SERVER_I_H */
