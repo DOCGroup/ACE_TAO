@@ -322,7 +322,7 @@ public:
   int svc () override;
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, ACE_TCHAR **argv);
+  int init (int argc, ACE_TCHAR **argv) override;
 
   // = Symbolic ids.
   enum OBJ_ID
