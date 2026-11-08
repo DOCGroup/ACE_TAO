@@ -1374,7 +1374,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
   TAO::Transport_Queueing_Strategy *queue_strategy =
     stub->transport_queueing_strategy ();
 
-  bool constraints_reached = true;
+  bool constraints_reached {true};
 
   if (queue_strategy)
     {
@@ -1492,7 +1492,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 {
   // Let's figure out if the message should be queued without trying
   // to send first:
-  bool try_sending_first = true;
+  bool try_sending_first {true};
 
   bool const queue_empty = this->queue_is_empty_i ();
 

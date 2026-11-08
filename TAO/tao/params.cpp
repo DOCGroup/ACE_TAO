@@ -226,7 +226,7 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
   // treated as wildcards.
   bool expect_assign {};
   bool expect_comma {};
-  bool expect_wild = true;
+  bool expect_wild {true};
   bool found_remote {};
 
   for (const char *p = s; *p; ++p) switch (*p)

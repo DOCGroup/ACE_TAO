@@ -1029,7 +1029,7 @@ namespace
                           ACE_TCHAR **argv,
                           bool &skip_service_config_open)
   {
-    bool with_global_gestalt = true;
+    bool with_global_gestalt {true};
 
     ACE_Arg_Shifter arg_shifter (argc, argv);
 

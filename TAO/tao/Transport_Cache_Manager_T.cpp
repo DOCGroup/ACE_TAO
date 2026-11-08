@@ -298,7 +298,7 @@ namespace TAO
     // are holding our lock
     this->purging_strategy_->update_item (*(int_id.transport ()));
     int retval {};
-    bool more_to_do = true;
+    bool more_to_do {true};
     while (more_to_do)
       {
         if (this->cache_map_.current_size () >= cache_maximum_)

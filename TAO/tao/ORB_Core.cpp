@@ -351,7 +351,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // arguments and stash it for use initializing other components such
   // as the RootPOA.
 
-  bool use_ior = true;
+  bool use_ior {true};
   int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
 
   // The following things should be changed to use the ACE_Env_Value<>
