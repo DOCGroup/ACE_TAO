@@ -46,7 +46,7 @@ int
 ACE::HTBP::Session::find_session (ACE::HTBP::Session_Id_t const& sid,
                                   ACE::HTBP::Session *&out)
 {
-  ACE::HTBP::Session::Map_Entry *e = nullptr;
+  ACE::HTBP::Session::Map_Entry *e {};
   if (session_map_.find (sid,e) == -1)
     {
       out = nullptr;
@@ -230,8 +230,8 @@ ACE::HTBP::Session::flush_outbound_queue ()
   int result = 0;
   if (this->outbound_queue_.message_count() > 0)
     {
-      ACE_Message_Block *msg = nullptr;
-      iovec *iov = nullptr;
+      ACE_Message_Block *msg {};
+      iovec *iov {};
       ACE_NEW_RETURN (iov,
                       iovec[this->outbound_queue_.message_count()],
                       -1);

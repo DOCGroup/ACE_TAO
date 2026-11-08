@@ -20,7 +20,7 @@ ACE::HTBP::Filter_Factory::~Filter_Factory ()
 ACE::HTBP::Filter *
 ACE::HTBP::Filter_Factory::get_filter (bool inside)
 {
-  ACE::HTBP::Filter *filter = nullptr;
+  ACE::HTBP::Filter *filter {};
   if (inside)
     ACE_NEW_RETURN (filter,
                     ACE::HTBP::Inside_Squid_Filter (), nullptr);

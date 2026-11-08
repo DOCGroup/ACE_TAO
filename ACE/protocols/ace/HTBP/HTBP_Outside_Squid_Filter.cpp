@@ -121,7 +121,7 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
     }
   ch->leftovers().rd_ptr(header_end);
 
-  ACE::HTBP::Session *session = nullptr;
+  ACE::HTBP::Session *session {};
   if (ACE::HTBP::Session::find_session (session_id, session) == -1)
     {
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id), 0);
