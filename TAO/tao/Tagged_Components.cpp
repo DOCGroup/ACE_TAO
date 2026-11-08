@@ -172,7 +172,7 @@ TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropriate action.
-  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)
         {
@@ -187,7 +187,7 @@ TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 void
 TAO_Tagged_Components::set_component_i (IOP::TaggedComponent& component)
 {
-  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)
         {
@@ -262,7 +262,7 @@ TAO_Tagged_Components::remove_known_component_i (IOP::ComponentId tag)
 int
 TAO_Tagged_Components::remove_component_i (IOP::ComponentId tag)
 {
-  CORBA::ULong src = 0, dest = 0;
+  CORBA::ULong src {}, dest {};
   CORBA::ULong len = this->components_.length ();
 
   for (;src != len;++src)
@@ -281,7 +281,7 @@ TAO_Tagged_Components::remove_component_i (IOP::ComponentId tag)
 int
 TAO_Tagged_Components::get_component (IOP::TaggedComponent& component) const
 {
-  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)
         {
@@ -315,7 +315,7 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
 
   CORBA::ULong const l = this->components_.length ();
 
-  for (CORBA::ULong i = 0; i != l; ++i)
+  for (CORBA::ULong i {}; i != l; ++i)
     {
       const IOP::TaggedComponent &component = this->components_[i];
 
