@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    server_B.h
@@ -9,12 +8,11 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #ifndef _TRIANGLE_TEST_OBJECT_B_SERVER_H
 #define _TRIANGLE_TEST_OBJECT_B_SERVER_H
 
 #include "ace/Get_Opt.h"
+#include "IOR_File.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,10 +33,15 @@ class Object_B_Server
 {
 public:
   /// Default constructor
-  Object_B_Server ();
+  Object_B_Server () = default;
 
   /// Destructor
-  ~Object_B_Server ();
+  ~Object_B_Server () = default;
+
+  Object_B_Server (Object_B_Server const &) = delete;
+  Object_B_Server (Object_B_Server &&) = delete;
+  Object_B_Server &operator= (Object_B_Server const &) = delete;
+  Object_B_Server &operator= (Object_B_Server &&) = delete;
 
   /// Initialize the NestedUpCalls_Server state - parsing arguments and ...
   int init (int argc,
@@ -52,7 +55,7 @@ private:
   int parse_args ();
 
   /// File to output the IOR of the object A.
-  FILE* ior_output_file_;
+  IOR_File ior_output_file_ { nullptr, &ACE_OS::fclose };
 
   /// The ORB manager
   TAO_ORB_Manager orb_manager_;
@@ -61,10 +64,10 @@ private:
   Object_B_i object_B_i_;
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
   /// commandline arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 };
 
 #endif /* _TRIANGLE_TEST_OBJECT_B_SERVER_H */

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Object_A_i.h
@@ -9,8 +8,6 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #ifndef OBJECT_B_IMPL_H
 #  define OBJECT_B_IMPL_H
 
@@ -25,10 +22,15 @@ class Object_A_i : public POA_Object_A
 {
 public:
   /// Constructor.
-  Object_A_i ();
+  Object_A_i () = default;
 
   /// Destructor.
-  virtual ~Object_A_i ();
+  virtual ~Object_A_i () = default;
+
+  Object_A_i (Object_A_i const &) = delete;
+  Object_A_i (Object_A_i &&) = delete;
+  Object_A_i &operator= (Object_A_i const &) = delete;
+  Object_A_i &operator= (Object_A_i &&) = delete;
 
   virtual void foo (Initiator_ptr theInitiator_ptr);
 
@@ -36,7 +38,7 @@ public:
 
   virtual void shutdown ();
 
-  unsigned long finish_two_way_call_;
+  bool finish_two_way_call_ {};
 };
 
 #endif /* OBJECT_B_IMPL_H */

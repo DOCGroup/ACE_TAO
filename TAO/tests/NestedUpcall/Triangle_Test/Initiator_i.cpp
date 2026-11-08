@@ -15,14 +15,9 @@
 
 // CTOR
 Initiator_i::Initiator_i (Object_A_ptr object_A_ptr,
-                                Object_B_ptr object_B_ptr)
-: object_A_var_ (Object_A::_duplicate (object_A_ptr)),
-  object_B_var_ (Object_B::_duplicate (object_B_ptr))
-{
-}
-
-// DTOR
-Initiator_i::~Initiator_i ()
+                         Object_B_ptr object_B_ptr)
+  : object_A_var_ (Object_A::_duplicate (object_A_ptr)),
+    object_B_var_ (Object_B::_duplicate (object_B_ptr))
 {
 }
 
@@ -38,7 +33,7 @@ Initiator_i::foo_object_B ()
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Initiator_i::foo_object_B: Returned from call.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("calling the server");
     }

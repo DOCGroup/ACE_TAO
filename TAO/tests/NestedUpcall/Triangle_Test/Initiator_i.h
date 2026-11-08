@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Initiator_i.h
@@ -9,8 +8,6 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #ifndef INITIATOR_IMPL_H
 #  define INITIATOR_IMPL_H
 
@@ -29,7 +26,12 @@ public:
                   Object_B_ptr object_B_ptr);
 
   /// Destructor.
-  virtual ~Initiator_i ();
+  virtual ~Initiator_i () = default;
+
+  Initiator_i (Initiator_i const &) = delete;
+  Initiator_i (Initiator_i &&) = delete;
+  Initiator_i &operator= (Initiator_i const &) = delete;
+  Initiator_i &operator= (Initiator_i &&) = delete;
 
   virtual void foo_object_B ();
 

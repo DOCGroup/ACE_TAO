@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Object_B_i.h
@@ -9,8 +8,6 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #ifndef OBJECT_B_IMPL_H
 #  define OBJECT_B_IMPL_H
 
@@ -25,10 +22,15 @@ class Object_B_i : public POA_Object_B
 {
 public:
   /// Constructor.
-  Object_B_i ();
+  Object_B_i () = default;
 
   /// Destructor.
-  virtual ~Object_B_i ();
+  virtual ~Object_B_i () = default;
+
+  Object_B_i (Object_B_i const &) = delete;
+  Object_B_i (Object_B_i &&) = delete;
+  Object_B_i &operator= (Object_B_i const &) = delete;
+  Object_B_i &operator= (Object_B_i &&) = delete;
 
   virtual void foo(Object_A_ptr theObject_A_ptr);
 
