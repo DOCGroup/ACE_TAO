@@ -16,18 +16,18 @@ public:
 
   void get_price_and_names (CORBA::Double ami_return_val,
                             char const *symbol,
-                            char const *full_name);
+                            char const *full_name) override;
 
-  void get_price_and_names_excep (::Messaging::ExceptionHolder *);
+  void get_price_and_names_excep (::Messaging::ExceptionHolder *) override;
 
-  void get_symbol (char const *);
-  void get_symbol_excep (::Messaging::ExceptionHolder *);
+  void get_symbol (char const *) override;
+  void get_symbol_excep (::Messaging::ExceptionHolder *) override;
 
-  void get_full_name (char const *);
-  void get_full_name_excep (::Messaging::ExceptionHolder *);
+  void get_full_name (char const *) override;
+  void get_full_name_excep (::Messaging::ExceptionHolder *) override;
 
-  void price (double);
-  void price_excep (::Messaging::ExceptionHolder *);
+  void price (double) override;
+  void price_excep (::Messaging::ExceptionHolder *) override;
 
 private:
   int &response_count_;
