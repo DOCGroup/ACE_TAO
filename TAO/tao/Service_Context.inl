@@ -35,7 +35,7 @@ TAO_Service_Context::set_context (IOP::ServiceContext &context,
 ACE_INLINE bool
 TAO_Service_Context::is_service_id (IOP::ServiceId id)
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->service_context_.length ();
        ++i)
     {

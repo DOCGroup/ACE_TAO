@@ -60,7 +60,7 @@ int
 TAO_Service_Context::set_context (IOP::ServiceContext const &context,
                                   CORBA::Boolean replace)
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -85,7 +85,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext const &context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropriate action.
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -100,7 +100,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext const &context)
 void
 TAO_Service_Context::set_context_i (IOP::ServiceContext &context)
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -142,7 +142,7 @@ TAO_Service_Context::add_context_i (IOP::ServiceContext const &context)
 int
 TAO_Service_Context::get_context (IOP::ServiceContext &context) const
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -158,7 +158,7 @@ int
 TAO_Service_Context::get_context (IOP::ServiceId id,
                                   IOP::ServiceContext const **context) const
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (id == this->service_context_[i].context_id)
         {
@@ -176,7 +176,7 @@ TAO_Service_Context::get_context (IOP::ServiceId id,
 {
   CORBA::ULong const len = this->service_context_.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       if (id == this->service_context_[i].context_id)
         {
