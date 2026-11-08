@@ -89,10 +89,10 @@ public:
   virtual ~Client () = default;
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
   virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send the <buf> to the server.
@@ -468,10 +468,10 @@ public:
   virtual ~Server () = default;
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
   virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask) override;
 
 private:
   /// Receives datagrams.
