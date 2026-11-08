@@ -55,22 +55,11 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
   if (this->is_server_ < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) You must specify -c(lient) or -s(erver) argument. Aborting."), -1);
 
-  ACE_TCHAR **temp_argv = new ACE_TCHAR*[argc+1];
-  for (int i = 0; i < argc; i++)
-    {
-      temp_argv[i] = new ACE_TCHAR[ACE_OS::strlen(argv[i])+1];
-      ACE_OS::strcpy (temp_argv[i],argv[i]);
-    }
-  temp_argv[argc] = 0;
-
-  ACE_ARGV* tmp = 0;
-  ACE_NEW_RETURN (tmp, ACE_ARGV (temp_argv), -1);
+  ACE_ARGV* tmp {};
+  ACE_NEW_RETURN (tmp, ACE_ARGV (argc, argv), -1);
   this->argv_.reset (tmp);
-  for (int i = 0; i < argc; i++)
-    delete [] temp_argv[i];
-  delete [] temp_argv;
 
-  Abstract_Worker* worker = 0;
+  Abstract_Worker* worker {};
   if (this->is_server_)
   {
     ACE_NEW_RETURN (worker, Server_Worker, -1);
