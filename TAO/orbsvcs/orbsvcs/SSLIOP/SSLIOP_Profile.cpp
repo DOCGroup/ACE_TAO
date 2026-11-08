@@ -132,7 +132,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
           // make iiop endpoints accessable and usable. Since we've
           // already got one ssliop endpoint, only add the extra
           // endpoints (count_ - 1).
-          for (size_t i = 0;
+          for (size_t i {};
                i < this->count_ -1;
                ++i)
             {
@@ -221,7 +221,7 @@ TAO_SSLIOP_Profile::encode_endpoints ()
       endpoints.length (this->count_ - 1);
 
       TAO_SSLIOP_Endpoint const *endpoint = this->ssl_endpoint_.next_;
-      for (CORBA::ULong i = 0; i < this->count_ - 1; ++i)
+      for (CORBA::ULong i {}; i < this->count_ - 1; ++i)
         {
           endpoints[i] = endpoint->ssl_component ();
           endpoint = endpoint->next_;

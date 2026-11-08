@@ -61,7 +61,7 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
       else
         {
           t.time = 0;
-          for (int i = 0; i < exp->length; ++i)
+          for (int i {}; i < exp->length; ++i)
             {
               t.time <<= 8;
               t.time |= (unsigned char) exp->data[i];

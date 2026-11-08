@@ -291,7 +291,7 @@ TAO::SSLIOP::Transport::get_listen_point (
     }
 #endif /* ACE_HAS_IPV6 */
 
-  for (size_t index = 0; index < count; ++index)
+  for (size_t index {}; index < count; ++index)
     {
       // Make sure port numbers are equal so the following comparison
       // only concerns the IP(v4/v6) address.

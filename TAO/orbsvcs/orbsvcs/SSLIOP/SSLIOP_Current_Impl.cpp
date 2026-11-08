@@ -89,7 +89,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
 
   // Copy the peer certificate chain to the SSLIOP::SSL_Cert
   // sequence.
-  for (int i = 0; i < chain_length; ++i)
+  for (int i {}; i < chain_length; ++i)
     {
       // Extract the certificate from the OpenSSL X509 stack.
       ::X509 *x = sk_X509_value (certs, i);

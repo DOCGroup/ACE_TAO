@@ -126,7 +126,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
     return -1;
 
   // Create a profile for each acceptor endpoint.
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (size_t i {}; i < this->endpoint_count_; ++i)
     {
       TAO_SSLIOP_Profile *pfile {};
 
@@ -340,7 +340,7 @@ TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 
   TAO_IIOP_Endpoint const *iiop = endp->iiop_endpoint ();
 
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (size_t i {}; i < this->endpoint_count_; ++i)
     {
       if (iiop->port () == this->addrs_[i].get_port_number ()
           && std::strcmp (iiop->host (), this->hosts_[i]) == 0)
@@ -548,7 +548,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 
   if (TAO_debug_level > 5)
     {
-      for (size_t i = 0; i < this->endpoint_count_; ++i)
+      for (size_t i {}; i < this->endpoint_count_; ++i)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) ")

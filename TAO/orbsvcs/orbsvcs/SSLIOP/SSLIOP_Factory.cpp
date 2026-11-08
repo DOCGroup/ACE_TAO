@@ -348,7 +348,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     return -1;
   }
 
-  for (int curarg = 0; curarg != argc; ++curarg)
+  for (int curarg {}; curarg != argc; ++curarg)
     {
       if ((ACE_OS::strcasecmp (argv[curarg],
                                ACE_TEXT("-verbose")) == 0)
