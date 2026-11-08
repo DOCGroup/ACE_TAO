@@ -7,7 +7,7 @@ public:
             server_ptr s);
   // Constructor.
 
-  void ping (CORBA::UShort time_to_live);
+  void ping (CORBA::UShort time_to_live) override;
 
   client_i (client_i const &) = delete;
   client_i (client_i &&) = delete;

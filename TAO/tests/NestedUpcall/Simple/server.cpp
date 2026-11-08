@@ -19,7 +19,7 @@ class Server_Task : public ACE_Task_Base
 {
 public:
   explicit Server_Task (CORBA::ORB_ptr orb);
-  int svc ();
+  int svc () override;
 
   Server_Task (Server_Task const &) = delete;
   Server_Task (Server_Task &&) = delete;
