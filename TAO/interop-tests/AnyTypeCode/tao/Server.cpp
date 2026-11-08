@@ -7,14 +7,15 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -41,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
         {
@@ -49,31 +50,33 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::ValueFactoryBase_var vf = new Demo_BaseValueFactory();
-      CORBA::String_var repId = Demo::_tc_BaseValue->id();
-      orb->register_value_factory(repId.in(), vf.in());
+      CORBA::String_var repId = Demo::_tc_BaseValue->id ();
+      orb->register_value_factory (repId.in (), vf.in ());
 
       vf = new Demo_NestedValueFactory();
-      repId = Demo::_tc_NestedValue->id();
-      orb->register_value_factory(repId.in(), vf.in());
+      repId = Demo::_tc_NestedValue->id ();
+      orb->register_value_factory (repId.in (), vf.in ());
 
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
-      PortableServer::POAManager_var mgr = poa->the_POAManager ();
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POAManager_var const mgr = poa->the_POAManager ();
       mgr->activate ();
 
-      PortableServer::Servant_var<ATC_Test_i> servant = new ATC_Test_i ();
-      PortableServer::ObjectId_var oid = poa->activate_object (servant.in ());
+      PortableServer::Servant_var<ATC_Test_i> const servant = new ATC_Test_i;
+      PortableServer::ObjectId_var const oid = poa->activate_object (servant.in ());
       obj = poa->id_to_reference (oid.in ());
-      CORBA::String_var ior = orb->object_to_string (obj.in ());
+      CORBA::String_var const ior = orb->object_to_string (obj.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%P Cannot write IOR file: %s\n"),
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%P Cannot write IOR file: %s\n"),
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
       ACE_DEBUG  ( (LM_DEBUG,
                     ACE_TEXT  ("%P IOR written to file %C\n"),
                     ior_output_file));
@@ -82,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy ();
       return 0;
     }
-  catch  (CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%P Union test server caught %s.\n"), ex._name()),

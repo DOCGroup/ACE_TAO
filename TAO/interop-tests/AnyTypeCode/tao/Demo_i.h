@@ -35,19 +35,22 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  ATC_Test_i : public virtual POA_Demo::ATC_Test
+class ATC_Test_i : public virtual POA_Demo::ATC_Test
 {
 public:
-  ATC_Test_i ();
+  ATC_Test_i () = default;
 
-  virtual ~ATC_Test_i ();
+  ~ATC_Test_i () override = default;
+  ATC_Test_i (ATC_Test_i const &) = delete;
+  ATC_Test_i (ATC_Test_i &&) = delete;
+  ATC_Test_i &operator= (ATC_Test_i const &) = delete;
+  ATC_Test_i &operator= (ATC_Test_i &&) = delete;
 
-  virtual char * do_union (const ::CORBA::Any & a);
-  virtual char * do_struct (const ::CORBA::Any & a);
-  virtual char * do_value (const ::CORBA::Any & a);
+  char *do_union (::CORBA::Any const &a) override;
+  char *do_struct (::CORBA::Any const &a) override;
+  char *do_value (::CORBA::Any const &a) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 };
-
 
 #endif /* DEMOI_H_  */

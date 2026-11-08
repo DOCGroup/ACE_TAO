@@ -31,21 +31,11 @@
 #include "Demo_i.h"
 #include "ace/Log_Msg.h"
 
-// Implementation skeleton constructor
-ATC_Test_i::ATC_Test_i ()
-{
-}
-
-// Implementation skeleton destructor
-ATC_Test_i::~ATC_Test_i ()
-{
-}
-
 char *
-ATC_Test_i::do_union (const ::CORBA::Any & a)
+ATC_Test_i::do_union (::CORBA::Any const &a)
 {
-  const Demo::NestedUnion *any_union = 0;
-  const char *result = "do_union called";
+  Demo::NestedUnion const *any_union {};
+  char const *result = "do_union called";
   if (a >>= any_union)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P: a >>= any_union went well\n")));
@@ -56,7 +46,7 @@ ATC_Test_i::do_union (const ::CORBA::Any & a)
         {
         case 1:
           {
-            Demo::BaseUnion bar1 = any_union->bar1 ();
+            Demo::BaseUnion const bar1 = any_union->bar1 ();
             if (bar1._d () == 1)
               {
                 result = bar1.str ();
@@ -68,10 +58,10 @@ ATC_Test_i::do_union (const ::CORBA::Any & a)
           break;
         case 2:
           {
-            Demo::BaseUnion bar2 = any_union->bar2 ();
+            Demo::BaseUnion const bar2 = any_union->bar2 ();
             if (bar2._d () == 2)
               {
-                CORBA::Long l = bar2.l ();
+                CORBA::Long const l = bar2.l ();
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("%P: bar1 has l = %d\n"),
                             l));
@@ -81,10 +71,10 @@ ATC_Test_i::do_union (const ::CORBA::Any & a)
           break;
         default:
           {
-            Demo::BaseUnion defaultBar = any_union->defaultBar ();
+            Demo::BaseUnion const defaultBar = any_union->defaultBar ();
             if (defaultBar._d () != 1 && defaultBar._d () != 2)
               {
-                CORBA::Short s = defaultBar.s ();
+                CORBA::Short const s = defaultBar.s ();
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("%P: bar1 has s = %d\n"),
                             s));
@@ -102,17 +92,17 @@ ATC_Test_i::do_union (const ::CORBA::Any & a)
 }
 
 char *
-ATC_Test_i::do_struct (const ::CORBA::Any & a)
+ATC_Test_i::do_struct (::CORBA::Any const &a)
 {
-  const Demo::NestedStruct *bar = 0;
-  const char *result = "do_struct called";
+  Demo::NestedStruct const *bar {};
+  char const *result = "do_struct called";
   if (a >>= bar)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P: a >>= any_struct went well\n")));
-      Demo::BaseStruct foo1 = bar->foo1;
-      Demo::BaseStruct foo2 = bar->foo2;
-      Demo::BaseStruct foo3 = bar->foo3;
-      Demo::NestedSeq bars = bar->bars;
+      Demo::BaseStruct const foo1 = bar->foo1;
+      Demo::BaseStruct const foo2 = bar->foo2;
+      Demo::BaseStruct const foo3 = bar->foo3;
+      Demo::NestedSeq const bars = bar->bars;
       if (bars.length () > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -147,10 +137,10 @@ ATC_Test_i::do_struct (const ::CORBA::Any & a)
 }
 
 char *
-ATC_Test_i::do_value (const ::CORBA::Any & a)
+ATC_Test_i::do_value (::CORBA::Any const &a)
 {
-  Demo::NestedValue *bar;
-  const char *result = "do_value called";
+  Demo::NestedValue *bar {};
+  char const *result = "do_value called";
   if (a >>= bar)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P: a >>= any_value went well\n")));
@@ -168,10 +158,10 @@ ATC_Test_i::do_value (const ::CORBA::Any & a)
 void
 ATC_Test_i::shutdown ()
 {
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
+  int argc {};
+  ACE_TCHAR **argv {};
 
-  CORBA::ORB_var def_orb = CORBA::ORB_init (argc, argv);
+  CORBA::ORB_var const def_orb = CORBA::ORB_init (argc, argv);
   def_orb->shutdown (false);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%P: shutdown called \n")));
