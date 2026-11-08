@@ -1,4 +1,3 @@
-
 #include "Handler_i.h"
 #include "ace/streams.h"
 
@@ -37,13 +36,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       Quoter::Stock_Factory::_narrow (factory_object.in ());
 
     // Create and activate the handler...
-    int response_count = 0;
-    Single_Query_Stock_Handler_i handler_i (&response_count);
+    int response_count {};
+    Single_Query_Stock_Handler_i handler_i (response_count);
     Quoter::AMI_Single_Query_StockHandler_var handler =
       handler_i._this ();
 
     // Send all the requests, careful with error handling
-    int request_count = 0;
+    int request_count {};
     for (int i = 2; i != argc; ++i) {
       try {
         // Get the stock object
@@ -54,19 +53,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         if (CORBA::is_nil (stock.in ())) {
           cerr << "Cannot get single query interface for <"
                << argv[i] << ">" << endl;
+          continue;
         }
 
         stock->sendc_get_price_and_names (handler.in ());
         request_count++;
       }
-      catch (Quoter::Invalid_Stock_Symbol &) {
+      catch (Quoter::Invalid_Stock_Symbol const &) {
         cerr << "Invalid stock symbol <"
              << argv[i] << ">" << endl;
       }
     }
 
-    while (response_count < request_count
-           && orb->work_pending ()) {
+    while (response_count < request_count) {
       orb->perform_work ();
     }
 
@@ -74,7 +73,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;
