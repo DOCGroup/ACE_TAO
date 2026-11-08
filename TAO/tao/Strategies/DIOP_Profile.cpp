@@ -507,7 +507,7 @@ TAO_DIOP_Profile::encode_endpoints ()
   endpoints.length (this->count_);
 
   const TAO_DIOP_Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {

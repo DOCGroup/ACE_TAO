@@ -361,7 +361,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
   // Get the size of the list
   CORBA::ULong const len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i {}; i < len; ++ i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,

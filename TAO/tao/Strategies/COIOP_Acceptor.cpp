@@ -95,7 +95,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   TAO_COIOP_Profile *coiop_profile {};
 
   // First see if <mprofile> already contains a COIOP profile.
-  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+  for (TAO_PHandle i {}; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_COIOP_PROFILE)
@@ -286,7 +286,7 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       option_count++;
 
@@ -301,7 +301,7 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin {};
   ACE_CString::size_type end {};
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);

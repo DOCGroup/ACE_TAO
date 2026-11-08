@@ -346,7 +346,7 @@ TAO_UIOP_Profile::encode_endpoints ()
   endpoints.length (this->count_);
 
   TAO_UIOP_Endpoint *endpoint = &this->endpoint_;
-  for (size_t i = 0;
+  for (size_t i {};
        i < this->count_;
        ++i)
     {

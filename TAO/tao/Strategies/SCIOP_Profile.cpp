@@ -363,7 +363,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   strseq.length(this->count_);
 
   const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -402,7 +402,7 @@ TAO_SCIOP_Profile::encode_endpoints ()
   const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
 
   // Count the number of endpoints that needs to be encoded
-  for (CORBA::ULong c = 0;
+  for (CORBA::ULong c {};
        c != this->count_;
        ++c)
     {
@@ -424,7 +424,7 @@ TAO_SCIOP_Profile::encode_endpoints ()
 
   endpoint = &this->endpoint_;
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {

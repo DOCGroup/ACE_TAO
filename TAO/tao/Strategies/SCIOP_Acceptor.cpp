@@ -38,7 +38,7 @@ TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
   this->accept_strategy_.reset ();
 
   if (this->hosts_ != nullptr)
-    for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+    for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
       CORBA::string_free (this->hosts_[i]);
 }
 
@@ -79,7 +79,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
     return -1;
 
   // Create a profile for each acceptor endpoint.
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
       TAO_SCIOP_Profile *pfile {};
       ACE_NEW_RETURN (pfile,
@@ -175,7 +175,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == nullptr)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
       // compare the port and host name.  Please do *NOT* optimize
       // this code by comparing the IP address instead.  That would
@@ -579,7 +579,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
   u_short port = address.get_port_number ();
-  for (CORBA::ULong j = 0; j < this->endpoint_count_; ++j)
+  for (CORBA::ULong j {}; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
   (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
@@ -589,7 +589,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
 
   if (TAO_debug_level > 5)
     {
-      for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+      for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) SCIOP_Acceptor::open_i - ")
@@ -727,7 +727,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt {};  // Loopback interface count
-  for (size_t j = 0; j < if_cnt; ++j)
+  for (size_t j {}; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
       ++lo_cnt;
 
@@ -758,7 +758,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // count.
   size_t host_cnt {};
 
-  for (size_t i = 0; i < if_cnt; ++i)
+  for (size_t i {}; i < if_cnt; ++i)
     {
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
@@ -938,7 +938,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       ++option_count;
 
@@ -953,7 +953,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin {};
   ACE_CString::size_type end {};
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);

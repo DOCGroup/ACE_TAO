@@ -46,7 +46,7 @@ TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
                             const ACE_Time_Value *max_wait_time)
 {
   bytes_transferred = 0;
-  for (int i = 0; i < iovcnt; ++i)
+  for (int i {}; i < iovcnt; ++i)
     {
       ssize_t retval =
         this->connection_handler_->peer ().send (iov[i].iov_base,

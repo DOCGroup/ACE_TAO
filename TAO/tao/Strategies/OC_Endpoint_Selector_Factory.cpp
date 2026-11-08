@@ -18,7 +18,7 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Time_Value connect_timeout(0,0);
 
-  for (int count = 0; count < argc; count++)
+  for (int count {}; count < argc; count++)
     {
       if ((ACE_OS::strcasecmp (argv[count],
                                ACE_TEXT ("-connect_timeout")) == 0) &&

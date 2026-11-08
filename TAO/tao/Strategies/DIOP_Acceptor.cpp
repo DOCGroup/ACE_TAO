@@ -41,7 +41,7 @@ TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor ()
   this->close ();
 
   if (this->hosts_ != nullptr)
-    for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+    for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
       CORBA::string_free (this->hosts_[i]);
 }
 
@@ -78,7 +78,7 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
     return -1;
 
   // Create a profile for each acceptor endpoint.
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
       // Skip if the host name
       if (i > 0
@@ -130,7 +130,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   TAO_DIOP_Profile *diop_profile {};
 
   // First see if <mprofile> already contains a DIOP profile.
-  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+  for (TAO_PHandle i {}; i != mprofile.profile_count (); ++i)
     {
       TAO_Profile *pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_DIOP_PROFILE)
@@ -206,7 +206,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == nullptr)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
       // compare the port and host name.  Please do *NOT* optimize
       // this code by comparing the IP address instead.  That would
@@ -463,14 +463,14 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
   unsigned short port = address.get_port_number ();
-  for (CORBA::ULong j = 0; j < this->endpoint_count_; ++j)
+  for (CORBA::ULong j {}; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
   this->default_address_.set_port_number (port);
 
   if (TAO_debug_level > 5)
     {
-      for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+      for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
@@ -754,7 +754,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt {};  // Loopback interface count
-  for (size_t j = 0; j < if_cnt; ++j)
+  for (size_t j {}; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
       lo_cnt++;
 
@@ -765,7 +765,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   bool ipv6_non_ll {};
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
-  for (size_t j = 0; j < if_cnt; ++j)
+  for (size_t j {}; j < if_cnt; ++j)
     if (if_addrs[j].get_type () != AF_INET6 ||
         if_addrs[j].is_ipv4_mapped_ipv6 ())
       {
@@ -873,7 +873,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // count.
   size_t host_cnt {};
 
-  for (size_t i = 0; i < if_cnt; ++i)
+  for (size_t i {}; i < if_cnt; ++i)
     {
 #if defined (ACE_HAS_IPV6)
       // Ignore any loopback interface if there are other
@@ -1006,7 +1006,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       ++option_count;
 
@@ -1021,7 +1021,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin {};
   ACE_CString::size_type end {};
 
-  for (CORBA::ULong j = 0; j < option_count;)
+  for (CORBA::ULong j {}; j < option_count;)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);

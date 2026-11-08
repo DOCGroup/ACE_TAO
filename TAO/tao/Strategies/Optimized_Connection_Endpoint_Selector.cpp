@@ -61,7 +61,7 @@ TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
   r->profile(p);
   effective_endpoint = p->endpoint ();
   size_t endpoint_count = p->endpoint_count();
-  for (size_t i = 0; i < endpoint_count; ++i)
+  for (size_t i {}; i < endpoint_count; ++i)
     {
       TAO_Base_Transport_Property desc (effective_endpoint);
       if (r->find_transport(&desc))
@@ -94,7 +94,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
   TAO_MProfile const *profiles = stub->forward_profiles();
   if (profiles != nullptr)
     {
-      for (CORBA::ULong count = 0; count <  profiles->profile_count(); count++)
+      for (CORBA::ULong count {}; count <  profiles->profile_count(); count++)
         {
           p = const_cast<TAO_Profile *>(profiles->get_profile(count));
           if (this->check_profile (p, r) != 0)
@@ -141,7 +141,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
 
           TAO_Endpoint *ep = r->profile ()->endpoint ();
 
-          for (size_t i = 0; i < endpoint_count; ++i)
+          for (size_t i {}; i < endpoint_count; ++i)
             {
               TAO_Base_Transport_Property desc (ep);
               const bool retval = r->try_connect (&desc, max_wait_time);
