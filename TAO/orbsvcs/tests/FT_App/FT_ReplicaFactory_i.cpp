@@ -482,7 +482,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
   }
 
   // if we're testing.  Create a replica at startup time
-    if (this->test_output_file_ != nullptr)
+  if (this->test_output_file_ != nullptr)
   {
     // shouldn't be necessary, but create_replica assumes this
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 1);
