@@ -4,10 +4,14 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/Valuetype/ValueFactory.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c {};
@@ -16,8 +20,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-              ior_output_file = get_opts.optarg;
-              break;
+        options.ior_output_file = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -37,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Create and register factory for BaseNode.
       CORBA::ValueFactory_var bn_factory;
@@ -60,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->register_value_factory (StringNode::_tao_obv_static_repository_id (),
                                    sn_factory.in ());
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -70,44 +74,45 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
       passer_i servant (orb.in (), root_poa.in ());
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&servant);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      passer_var server =
+      passer_var const server =
         passer::_narrow (object.in ());
 
-      CORBA::String_var ior =
-              orb->object_to_string (server.in ());
+      CORBA::String_var const ior =
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Activated as <%C>\n",
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (options.ior_output_file != nullptr)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
 
           if (!output_file)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Can't open output file for writing IOR: %s",
-                                 ior_output_file),
+                                 options.ior_output_file),
                                 1);
             }
 

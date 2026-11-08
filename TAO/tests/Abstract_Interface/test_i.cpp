@@ -54,10 +54,10 @@ passer_i::pass_ops (base_out outarg)
   PortableServer::ServantBase_var servant;
   ACE_NEW (servant.inout (), foo_i);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     this->poa_->activate_object (servant.in ());
 
-  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+  CORBA::Object_var const object = this->poa_->id_to_reference (id.in ());
 
   outarg = foo::_narrow (object.in ());
 }

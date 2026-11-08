@@ -2,8 +2,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "tao/Valuetype/ValueFactory.h"
-ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
-bool debug {};
 
 enum class Test_Selection
 {
@@ -13,10 +11,15 @@ enum class Test_Selection
   All
 };
 
-Test_Selection which_test {Test_Selection::All};
+struct Options
+{
+  ACE_TCHAR const *ior_input_file {ACE_TEXT ("file://test.ior")};
+  bool debug {};
+  Test_Selection which_test {Test_Selection::All};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:dsoe"));
   int c {};
@@ -25,20 +28,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-              ior_input_file = get_opts.optarg;
-              break;
+        options.ior_input_file = get_opts.optarg;
+        break;
       case 'd':
-              debug = true;
-              break;
+        options.debug = true;
+        break;
       case 's':
-              which_test = Test_Selection::State;
-              break;
+        options.which_test = Test_Selection::State;
+        break;
       case 'o':
-              which_test = Test_Selection::Operation;
-              break;
+        options.which_test = Test_Selection::Operation;
+        break;
       case 'e':
-              which_test = Test_Selection::Exception;
-              break;
+        options.which_test = Test_Selection::Exception;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,16 +56,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-dump_node (BaseNode * const bn, int const indent)
+dump_node (BaseNode * const bn, int const indent, Options const &options)
 {
   if (bn == nullptr)
     {
       return;
     }
 
-  StringNode const *sn = StringNode::_downcast (bn);
+  StringNode const * const sn = StringNode::_downcast (bn);
 
-  if (debug)
+  if (options.debug)
     {
       // This is ugly I know
       for (int i {indent}; i != 0; --i)
@@ -85,15 +88,17 @@ dump_node (BaseNode * const bn, int const indent)
     }
 
   dump_node (bn->left (),
-             indent + 1);
+             indent + 1,
+             options);
   dump_node (bn->right (),
-             indent + 1);
+             indent + 1,
+             options);
 }
 
 void
-dump_tree (TreeController * const tc)
+dump_tree (TreeController * const tc, Options const &options)
 {
-  if (debug)
+  if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) start tree dump <%x>\n",
@@ -101,9 +106,10 @@ dump_tree (TreeController * const tc)
     }
 
   dump_node (tc->root (),
-             1);
+             1,
+             options);
 
-  if (debug)
+  if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) end tree dump <%x>\n",
@@ -112,32 +118,32 @@ dump_tree (TreeController * const tc)
 }
 
 void
-test_state (base_ptr abs)
+test_state (base_ptr abs, Options const &options)
 {
-  CORBA::ValueBase_var vbase = abs->_to_value ();
-  TreeController *tc = TreeController::_downcast (vbase.in ());
-  dump_tree (tc);
+  CORBA::ValueBase_var const vbase = abs->_to_value ();
+  TreeController * const tc = TreeController::_downcast (vbase.in ());
+  dump_tree (tc, options);
 }
 
 void
-test_operation (base_ptr abs)
+test_operation (base_ptr abs, Options const &options)
 {
   CORBA::String_var retval = abs->base_op ("base_op");
 
-  if (debug)
+  if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%C\n",
                   retval.in ()));
     }
 
-  CORBA::Object_var obj = abs->_to_object ();
+  CORBA::Object_var const obj = abs->_to_object ();
 
-  foo_var concrete = foo::_narrow (obj.in ());
+  foo_var const concrete = foo::_narrow (obj.in ());
 
   retval = concrete->foo_op ("foo_op");
 
-  if (debug)
+  if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%C\n",
@@ -146,7 +152,7 @@ test_operation (base_ptr abs)
 
   retval = concrete->base_op ("base_op");
 
-  if (debug)
+  if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%C\n",
@@ -155,13 +161,13 @@ test_operation (base_ptr abs)
 }
 
 void
-test_exception (base_ptr abs)
+test_exception (base_ptr abs, Options const &options)
 {
   try
     {
-      CORBA::String_var retval = abs->base_op ("bad_name");
+      CORBA::String_var const retval = abs->base_op ("bad_name");
 
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%C\n",
@@ -170,7 +176,7 @@ test_exception (base_ptr abs)
     }
   catch (BadInput const &ex)
     {
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%C\n",
@@ -186,15 +192,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
-      CORBA::Object_var obj =
-        orb->string_to_object (ior_input_file);
+      CORBA::Object_var const obj =
+        orb->string_to_object (options.ior_input_file);
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -203,7 +210,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      passer_var objref = passer::_narrow (obj.in ());
+      passer_var const objref = passer::_narrow (obj.in ());
 
       if (CORBA::is_nil (objref.in ()))
         {
@@ -214,8 +221,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       base_var package = base::_nil ();
 
-      if (which_test == Test_Selection::State ||
-          which_test == Test_Selection::All)
+      if (options.which_test == Test_Selection::State ||
+          options.which_test == Test_Selection::All)
         {
           // Create and register factory for BaseNode.
           CORBA::ValueFactory_var bn_factory;
@@ -247,10 +254,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 -1);
             }
 
-          test_state (package.in ());
+          test_state (package.in (), options);
         }
 
-      if (which_test != Test_Selection::State)
+      if (options.which_test != Test_Selection::State)
         {
           objref->pass_ops (package.out ());
 
@@ -262,19 +269,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      if (which_test == Test_Selection::Operation ||
-          which_test == Test_Selection::All)
+      if (options.which_test == Test_Selection::Operation ||
+          options.which_test == Test_Selection::All)
         {
-          test_operation (package.in ());
+          test_operation (package.in (), options);
         }
 
-      if (which_test == Test_Selection::Exception ||
-          which_test == Test_Selection::All)
+      if (options.which_test == Test_Selection::Exception ||
+          options.which_test == Test_Selection::All)
         {
-          test_exception (package.in ());
+          test_exception (package.in (), options);
         }
 
-      if (which_test == Test_Selection::All)
+      if (options.which_test == Test_Selection::All)
         {
           objref->pass_nil (package.out ());
 
