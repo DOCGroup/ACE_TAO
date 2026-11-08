@@ -15,6 +15,8 @@
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -75,29 +77,38 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   // the memory is allocated.
   if (len > 0 && len <= cdr.length())
     {
-      ACE_NEW_RETURN (x,
+      x = nullptr;
+      ACE_CDR::Char *buffer {};
+      ACE_NEW_RETURN (buffer,
                       ACE_CDR::Char [len],
                       0);
+      std::unique_ptr<ACE_CDR::Char[]> buffer_guard (buffer);
       // pos keeps track of the character position, it will never be
       // greater than len
       size_t pos = 0;
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
         {
-          incr = this->read_char_i(cdr,x[pos++]);
+          incr = this->read_char_i (cdr, buffer_guard[pos++]);
         }
       if (incr > 0)
-        return 1;
-      delete [] x;
+        {
+          x = buffer_guard.release ();
+          return 1;
+        }
     }
   else if (len == 0)
     {
       // Convert any null strings to empty strings since empty
       // strings can cause crashes. (See bug 58.)
-      ACE_NEW_RETURN (x,
+      x = nullptr;
+      ACE_CDR::Char *buffer {};
+      ACE_NEW_RETURN (buffer,
                       ACE_CDR::Char[1],
                       0);
-      x[0] = '\x00';
+      std::unique_ptr<ACE_CDR::Char[]> buffer_guard (buffer);
+      buffer_guard[0] = '\x00';
+      x = buffer_guard.release ();
       return 1;
     }
   x = nullptr;

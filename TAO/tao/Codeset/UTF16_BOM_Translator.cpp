@@ -16,6 +16,8 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 // ****************************************************************
 
 using ACE_UTF16_T = ACE_CDR::UShort;
@@ -117,43 +119,54 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
   // the memory is allocated.
   if (len > 0 && len <= cdr.length ())
     {
+      x = nullptr;
+      ACE_CDR::WChar *buffer {};
       if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
           && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
         {
           len /= ACE_UTF16_CODEPOINT_SIZE;
 
           //allocating one extra for the null character needed by applications
-          ACE_NEW_RETURN (x,
+          ACE_NEW_RETURN (buffer,
                           ACE_CDR::WChar [len + 1],
                           0);
+          std::unique_ptr<ACE_CDR::WChar[]> buffer_guard (buffer);
 
-          x[len] = L'\x00';
-          if (this->read_wchar_array_i (cdr, x, len, 1))
+          buffer_guard[len] = L'\x00';
+          if (this->read_wchar_array_i (cdr, buffer_guard.get (), len, 1))
             {
               // Since reading the array may have adjusted the length,
               // we simply rewrite the null terminator
-              x[len] = L'\x00';
+              buffer_guard[len] = L'\x00';
+              x = buffer_guard.release ();
               return 1;
             }
         }
       else
         {
-          ACE_NEW_RETURN (x,
+          ACE_NEW_RETURN (buffer,
                           ACE_CDR::WChar [len],
                           0);
-          if (this->read_wchar_array (cdr, x, len))
-            return 1;
+          std::unique_ptr<ACE_CDR::WChar[]> buffer_guard (buffer);
+          if (this->read_wchar_array (cdr, buffer_guard.get (), len))
+            {
+              x = buffer_guard.release ();
+              return 1;
+            }
         }
-      delete [] x;
     }
   else if (len == 0)
     {
       // Convert any null strings to empty strings since empty
       // strings can cause crashes. (See bug 58.)
-      ACE_NEW_RETURN (x,
+      x = nullptr;
+      ACE_CDR::WChar *buffer {};
+      ACE_NEW_RETURN (buffer,
                       ACE_CDR::WChar[1],
                       0);
-      x[0] = '\x00';
+      std::unique_ptr<ACE_CDR::WChar[]> buffer_guard (buffer);
+      buffer_guard[0] = '\x00';
+      x = buffer_guard.release ();
       return 1;
     }
   x = nullptr;
