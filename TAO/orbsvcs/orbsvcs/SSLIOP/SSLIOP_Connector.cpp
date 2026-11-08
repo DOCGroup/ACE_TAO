@@ -39,9 +39,11 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
   // handle non-blocking connections with protocols that have more
   // than one handshake, such as SSL, force blocking connections for
   // SSLIOP.  This deficiency will be addressed soon.
-  ACE_NEW_RETURN (this->active_connect_strategy_,
+  TAO_Connect_Strategy *connect_strategy {};
+  ACE_NEW_RETURN (connect_strategy,
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
+  this->active_connect_strategy_.reset (connect_strategy);
 
   if (this->TAO::IIOP_SSL_Connector::open (orb_core) == -1)
     return -1;

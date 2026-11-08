@@ -35,9 +35,11 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
   // The SHMIOP always uses a blocked connect strategy
   // @todo: There are better ways of doing this. Let it be like this
   // for the  present.
-  ACE_NEW_RETURN (this->active_connect_strategy_,
+  TAO_Connect_Strategy *connect_strategy {};
+  ACE_NEW_RETURN (connect_strategy,
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
+  this->active_connect_strategy_.reset (connect_strategy);
 
   // Our connect creation strategy
   TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};

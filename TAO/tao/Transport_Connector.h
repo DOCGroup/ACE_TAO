@@ -14,6 +14,7 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/Basic_Types.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,6 +61,11 @@ public:
 
   /// The destructor.
   virtual ~TAO_Connector ();
+
+  TAO_Connector (TAO_Connector const &) = delete;
+  TAO_Connector (TAO_Connector &&) = delete;
+  TAO_Connector &operator= (TAO_Connector const &) = delete;
+  TAO_Connector &operator= (TAO_Connector &&) = delete;
 
   /**
    * The tag identifying the specific ORB transport layer protocol.
@@ -206,7 +212,7 @@ protected:
 
 protected:
   /// The (a)synch connect strategy
-  TAO_Connect_Strategy *active_connect_strategy_;
+  std::unique_ptr<TAO_Connect_Strategy> active_connect_strategy_;
 
 private:
   /// IOP protocol tag.
