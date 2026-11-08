@@ -67,7 +67,7 @@ namespace XML
     if (this->initialized_)
       return;
 
-    bool runtime_started (false);
+    bool runtime_started {};
 
     try
     {
@@ -135,10 +135,10 @@ namespace XML
       throw std::logic_error ("XML_Helper is not initialized");
     return this->impl_->createDocumentType (XStr (qn), XStr (pid), XStr (sid));
   }
+
   template <typename Resolver, typename Error>
   XERCES_CPP_NAMESPACE::DOMDocument *XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *url) const
   {
-
     if (url == nullptr)
       return nullptr;
 
@@ -198,7 +198,7 @@ namespace XML
     }
     catch (const xercesc::DOMException &e)
     {
-      const unsigned int maxChars (2047);
+      unsigned int const maxChars (2047);
       XMLCh errText[maxChars + 1]{};
       std::string message;
 
@@ -226,8 +226,6 @@ namespace XML
       ACELIB_DEBUG ((LM_DEBUG, "(%P|%t) Caught an unknown exception\n"));
       throw;
     }
-
-    return nullptr;
   }
 
   template <typename Resolver, typename Error>
@@ -269,8 +267,6 @@ namespace XML
       ACELIB_DEBUG ((LM_DEBUG, "Caught an unknown exception while terminating XML parser\n"));
       throw;
     }
-
-    return;
   }
 
   template <typename Resolver, typename Error>
@@ -323,6 +319,9 @@ namespace XML
       if (!serializer)
         return false;
       XERCES_CPP_NAMESPACE::DOMConfiguration *const ser_config (serializer->getDomConfig ());
+      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target =
+        std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
+
       std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser> output (impl_->createLSOutput ());
       if (!output)
         return false;
@@ -330,14 +329,9 @@ namespace XML
       if (ser_config->canSetParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true))
         ser_config->setParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true);
 
-      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target =
-        std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
-
       output->setByteStream (format_target.get ());
 
-      bool const result (serializer->write (doc, output.get ()));
-      output.reset ();
-      return result;
+      return serializer->write (doc, output.get ());
     }
     catch (const xercesc::XMLException &e)
     {
