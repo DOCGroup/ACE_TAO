@@ -234,12 +234,12 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
     *serverCompressors->compressor_ids ();
 
   // For each CLIENT compressor (in priority order) check...
-  for (CORBA::ULong client = 0u; client < clientList.length (); ++client)
+  for (CORBA::ULong client {}; client < clientList.length (); ++client)
     {
       ::Compression::CompressorIdLevel_var clientEntry (clientList[client]);
 
       // ... which each SERVER compressor id if it is available to use.
-      for (CORBA::ULong server = 0u; server < serverList.length (); ++server)
+      for (CORBA::ULong server {}; server < serverList.length (); ++server)
         {
           ::Compression::CompressorIdLevel_var serverEntry (serverList[server]);
 

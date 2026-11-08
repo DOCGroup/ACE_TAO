@@ -756,12 +756,12 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
     *serverCompressors->compressor_ids ();
 
   // Check the whole server list (in priority order)
-  for (CORBA::ULong server = 0u; server < serverList.length (); ++server)
+  for (CORBA::ULong server {}; server < serverList.length (); ++server)
     {
       ::Compression::CompressorIdLevel_var serverEntry (serverList[server]);
 
       // ...for the first matching client compressor that is available
-      for (CORBA::ULong client = 0u; client < clientList.length (); ++client)
+      for (CORBA::ULong client {}; client < clientList.length (); ++client)
         {
           ::Compression::CompressorIdLevel_var clientEntry (clientList[client]);
           if (serverEntry->compressor_id == clientEntry->compressor_id)

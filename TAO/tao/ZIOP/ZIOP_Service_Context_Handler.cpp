@@ -30,7 +30,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
   // Create an input CDR from the context buffer
   TAO_InputCDR cdr (reinterpret_cast<const char*> (ctx.context_data.get_buffer ()),
                     ctx.context_data.length () );
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
   if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
     {
       return 0;
@@ -45,7 +45,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
     }
 
   // Extract each policy from the slots we received.
-  for (CORBA::ULong i = 0u; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
+  for (CORBA::ULong i {}; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
     {
       TAO_InputCDR policy_cdr (
         reinterpret_cast<const char*> (policy_value_seq[i].pvalue.get_buffer ()),

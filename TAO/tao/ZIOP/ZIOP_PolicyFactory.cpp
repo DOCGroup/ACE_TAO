@@ -18,7 +18,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
   {
     case ZIOP::COMPRESSION_ENABLING_POLICY_ID:
     {
-      ::CORBA::Boolean val;
+      ::CORBA::Boolean val {};
 
       // Extract the value from the any.
       if (!(value >>= CORBA::Any::to_boolean (val)))
@@ -58,7 +58,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID:
     {
-      ::CORBA::ULong val;
+      ::CORBA::ULong val {};
 
       // Extract the value from the any.
       if (!(value >>= val))
@@ -78,7 +78,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID:
     {
-      ::Compression::CompressionRatio val;
+      ::Compression::CompressionRatio val {};
 
       // Extract the value from the any.
       if (!(value >>= val))
