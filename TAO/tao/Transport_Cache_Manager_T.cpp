@@ -766,7 +766,7 @@ namespace TAO
 
           int count {};
 
-          for (int i = 0; count < amount && i < sorted_size; ++i)
+          for (int i {}; count < amount && i < sorted_size; ++i)
             {
               if (this->is_entry_purgable_i (*sorted_set[i]))
                 {
@@ -905,7 +905,7 @@ namespace TAO
 
             HASH_MAP_ITER iter = this->cache_map_.begin ();
 
-            for (int i = 0; i < current_size; ++i)
+            for (int i {}; i < current_size; ++i)
               {
                 sorted_set[i] = &(*iter);
                 ++iter;
