@@ -1,7 +1,6 @@
 #ifndef SERVICE_CONFIGURATION_PER_ORB_H
 #  define SERVICE_CONFIGURATION_PER_ORB_H
 
-
 #include "ace/Trace.h"
 #include "ace/Service_Config.h"
 
@@ -14,17 +13,22 @@
 class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
 {
  public:
-  ACE_Service_Gestalt_Test (size_t n)
+  explicit ACE_Service_Gestalt_Test (size_t n)
     : ACE_Service_Gestalt (n)
     , teardown_ (false)
     {
-    };
+    }
 
   ACE_Service_Gestalt_Test ()
     : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE)
     , teardown_ (true)
     {
-    };
+    }
+
+  ACE_Service_Gestalt_Test (ACE_Service_Gestalt_Test const &) = delete;
+  ACE_Service_Gestalt_Test (ACE_Service_Gestalt_Test &&) = delete;
+  ACE_Service_Gestalt_Test &operator= (ACE_Service_Gestalt_Test const &) = delete;
+  ACE_Service_Gestalt_Test &operator= (ACE_Service_Gestalt_Test &&) = delete;
 
   ~ACE_Service_Gestalt_Test ()
     {
@@ -38,30 +42,25 @@ class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
           // all ACE library services and singletons.
           ACE_Service_Config::close ();
         }
-    };
+    }
 
   size_t command_line_directives_count () const
-  {
-    return this->svc_queue_->size ();
-  };
+    {
+      return this->svc_queue_->size ();
+    }
 
   size_t service_config_files_count () const
-  {
-    return this->svc_conf_file_queue_->size ();
-  };
+    {
+      return this->svc_conf_file_queue_->size ();
+    }
 
   size_t services_count () const
-  {
-    return this->repo_->current_size ();
-  };
-
-  bool has_same_service_repository (ACE_Service_Gestalt_Test const * psg)
-  {
-    return (this->repo_ == psg->repo_);
-  }
+    {
+      return this->repo_->current_size ();
+    }
 
 private:
-  bool teardown_;
+  bool const teardown_;
 };
 
 
