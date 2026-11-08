@@ -3,9 +3,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Task.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
-// We can change this value if wanted..
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+  int thread_count {1};
+};
+
 CORBA::ULong constexpr data_size = 4000000;
 
 class OrbTask : public ACE_Task_Base
@@ -23,44 +27,39 @@ public:
 
   int svc () override
   {
-      try
-        {
-          this->orb_->run ();
-        }
-      catch (CORBA::Exception const &)
-        {
-        }
-      return 0;
+    try
+      {
+        this->orb_->run ();
+      }
+    catch (CORBA::Exception const &)
+      {
+      }
+    return 0;
   }
 
 private:
   CORBA::ORB_var orb_;
 };
 
-int n_threads {1};
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:t:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:t:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 't':
-        n_threads = ACE_OS::atoi(get_opts.opt_arg());
+        options.thread_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-i <no_iterations>"
-                           "\n",
+                           ACE_TEXT ("usage: %s [-o <iorfile>] [-t <thread_count>]\n"),
                            argv [0]),
                           -1);
       }
@@ -69,30 +68,29 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "Starting server\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting server\n")));
 
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object (
+        orb->resolve_initial_references ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa (
+        PortableServer::POA::_narrow (poa_object.in ()));
 
-      PortableServer::POAManager_var const poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager (root_poa->the_POAManager ());
 
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       Big_Reply_i *big_reply_gen {};
@@ -101,27 +99,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    data_size),
                       1);
 
-      PortableServer::ServantBase_var big_reply_owner_transfer (big_reply_gen);
+      PortableServer::ServantBase_var const big_reply_owner_transfer (big_reply_gen);
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (big_reply_gen);
+      PortableServer::ObjectId_var const id (root_poa->activate_object (big_reply_gen));
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object (root_poa->id_to_reference (id.in ()));
 
-      Test::Big_Reply_var big_reply =
-        Test::Big_Reply::_narrow (object.in ());
+      Test::Big_Reply_var const big_reply (Test::Big_Reply::_narrow (object.in ()));
 
-      CORBA::String_var ior =
-        orb->object_to_string (big_reply.in ());
+      CORBA::String_var const ior (orb->object_to_string (big_reply.in ()));
 
       // Write the IOR before activating the event loop.
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                             ior_output_file),
+                             options.ior_output_file),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -131,13 +126,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       OrbTask task (orb.in ());
 
       if (task.activate (THR_NEW_LWP | THR_JOINABLE,
-                         n_threads) != 0)
+                         options.thread_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate threads\n"),
                           1);
       task.wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("event loop finished\n")));
 
       root_poa->destroy (true, true);
     }
@@ -147,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Ending server\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending server\n")));
 
   return 0;
 }

@@ -29,7 +29,7 @@ public:
   Big_Reply_i &operator= (Big_Reply_i const &) = delete;
   Big_Reply_i &operator= (Big_Reply_i &&) = delete;
 
-  ///Destructor
+  /// Destructor
   ~Big_Reply_i () override = default;
 
   // = The skeleton methods
@@ -44,10 +44,7 @@ private:
   CORBA::ORB_ptr orb_;
 
   /// Length of the reply sequence
-  CORBA::ULong length_;
-
-  /// The reply message
-  Test::Octet_Seq_var reply_message_;
+  CORBA::ULong const length_;
 };
 
 #include /**/ "ace/post.h"
