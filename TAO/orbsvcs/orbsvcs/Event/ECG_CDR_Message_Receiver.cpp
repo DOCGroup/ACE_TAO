@@ -18,14 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
-TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry ()
-{
-  if (this->own_received_fragments_)
-    {
-      this->own_received_fragments_ = false;
-      delete[] this->received_fragments_;
-    }
-}
+TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry () = default;
 
 TAO_ECG_UDP_Request_Entry::
 TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
@@ -41,15 +34,16 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
   this->payload_.wr_ptr (request_size_);
 
   this->received_fragments_ = this->default_received_fragments_;
-  this->own_received_fragments_ = false;
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   this->received_fragments_size_ =
     this->fragment_count_ / bits_per_ulong + 1;
   if (this->received_fragments_size_ > ECG_DEFAULT_FRAGMENT_BUFSIZ)
     {
-      ACE_NEW (this->received_fragments_,
+      CORBA::ULong* received_fragments {};
+      ACE_NEW (received_fragments,
                CORBA::ULong[this->received_fragments_size_]);
-      this->own_received_fragments_ = true;
+      this->owned_received_fragments_.reset (received_fragments);
+      this->received_fragments_ = this->owned_received_fragments_.get ();
     }
 
   for (CORBA::ULong i {}; i < this->received_fragments_size_; ++i)
@@ -133,9 +127,11 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
   if (this->fragmented_requests_)
     return -1;
 
-  ACE_NEW_RETURN (this->fragmented_requests_,
-                  TAO_ECG_UDP_Request_Entry*[size],
+  TAO_ECG_UDP_Request_Entry** fragmented_requests {};
+  ACE_NEW_RETURN (fragmented_requests,
+                  TAO_ECG_UDP_Request_Entry* [size],
                   -1);
+  this->fragmented_requests_.reset (fragmented_requests);
 
   this->size_ = size;
   this->id_range_low_ = 0;
@@ -161,9 +157,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
         delete request;
     }
 
-  delete [] this->fragmented_requests_;
-
-  this->fragmented_requests_ = nullptr;
+  this->fragmented_requests_.reset ();
   this->size_ = 0;
   this->id_range_low_ = 0;
   this->id_range_high_ = 0;
@@ -205,7 +199,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
 
   // Return array location for <request_id>.
   int index = request_id % this->size_;
-  return this->fragmented_requests_ + index;
+  return this->fragmented_requests_.get () + index;
 }
 
 

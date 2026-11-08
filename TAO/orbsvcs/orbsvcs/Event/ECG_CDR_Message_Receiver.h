@@ -23,6 +23,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -100,8 +102,9 @@ private:
   ACE_Message_Block payload_;
 
   /// This is a bit vector, used to keep track of the received buffers.
+  std::unique_ptr<CORBA::ULong[]> owned_received_fragments_ {};
+  /// View of the inline storage or the owned dynamic storage above.
   CORBA::ULong* received_fragments_ {};
-  bool own_received_fragments_ {};
   CORBA::ULong received_fragments_size_ {};
   CORBA::ULong default_received_fragments_[ECG_DEFAULT_FRAGMENT_BUFSIZ];
 };
@@ -283,7 +286,9 @@ private:
   /// Array, used in a circular fashion, that stores partially received
   /// requests (and info on which requests have been fully received
   /// and processed) for a range of request ids.
-  TAO_ECG_UDP_Request_Entry** fragmented_requests_ {};
+  /// Non-sentinel slots own their request pointers; the raw slots also allow
+  /// get_request() to return the address of a slot.
+  std::unique_ptr<TAO_ECG_UDP_Request_Entry*[]> fragmented_requests_ {};
 
   /// Size of <fragmented_requests_> array.
   size_t size_ {};
