@@ -27,13 +27,13 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  Client_Task (Client_Task const&) = delete;
-  Client_Task (Client_Task&&) = delete;
-  Client_Task& operator= (Client_Task const&) = delete;
-  Client_Task& operator= (Client_Task&&) = delete;
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Constructor
-  Client_Task (int& argc, ACE_TCHAR **argv);
+  Client_Task (int &argc, ACE_TCHAR **argv);
 
   int parse_args ();
 
@@ -49,7 +49,7 @@ protected:
 
 private:
   /// Print Statistics
-  void accumulate_and_dump (ACE_Basic_Stats& totals,
+  void accumulate_and_dump (ACE_Basic_Stats &totals,
                             ACE_TCHAR const *msg,
                             ACE_High_Res_Timer::global_scale_factor_type gsf);
 
@@ -60,7 +60,7 @@ private:
   /// Keep track of the latency (minimum, average, maximum and jitter)
   ACE_Basic_Stats latency_;
 
-  int& argc_;
+  int &argc_;
   /// Borrowed from the process entry point; valid until the client tasks finish.
   ACE_TCHAR **argv_;
   std::basic_string<ACE_TCHAR> ior_;

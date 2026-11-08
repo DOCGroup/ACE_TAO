@@ -1,4 +1,3 @@
-
 #include "AMH_Servant.h"
 #include "Timer_Handler.h"
 
@@ -7,10 +6,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include <memory>
 
-
 AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
   : reactor_ (orb->orb_core ()->reactor ())
-  , sleep_time_ {}
 {
   // @@ Mayur, why do you obtain the reactor each time this method is
   //    called?  Why not just cache it once in the constructor.
@@ -76,8 +73,8 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
     {
       // The reactor owns the callback after scheduling it; it self-deletes
       // from handle_close when the timeout finishes.
-      std::unique_ptr<Timer_Handler> handler (
-        new Timer_Handler (_tao_rh, send_time));
+      std::unique_ptr<Timer_Handler> handler =
+        std::make_unique<Timer_Handler> (_tao_rh, send_time);
 
       // We assume the schedule_timer method is thread-safe
       long const timer_id = this->reactor_->schedule_timer (
@@ -94,7 +91,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
       handler.release ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in start_test\n");
     }
@@ -112,7 +109,7 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
     {
       _tao_rh->start_test ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in start_test\n");
     }
@@ -125,11 +122,10 @@ AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
     {
       _tao_rh->end_test ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in end_test\n");
     }
 }
 
-
-//Global Footnote: This whole class seems to be thread-safe (and look ma, no locks! :)
+// Global Footnote: This whole class seems to be thread-safe (and look ma, no locks! :)

@@ -18,39 +18,37 @@ Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
 int
 Client_Task::parse_args ()
 {
-    ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
-    int c {};
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
+  int c {};
 
-    while ((c = get_opts ()) != -1)
-      {
-        switch (c)
+  while ((c = get_opts ()) != -1)
+    {
+      switch (c)
+        {
+        case 'k':
+          this->ior_ = get_opts.opt_arg ();
+          break;
+        case 'n':
           {
-          case 'k':
-            {
-              this->ior_ = get_opts.opt_arg ();
-              break;
-            }
-          case 'n':
-            {
-              int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
-              if (iterations >= 0 )
-                this->iterations_ = iterations;
-              break;
-            }
-          case '?':
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %s "
-                               "-k <file that contains IOR> "
-                               "-n <iterations> "
-                               "\n",
-                               this->argv_ [0]),
-                              -1);
-          default:
+            int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
+            if (iterations >= 0)
+              this->iterations_ = iterations;
             break;
           }
-      }
-    // Indicates successful parsing of the command line
-    return 1;
+        case '?':
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <file that contains IOR> "
+                             "-n <iterations> "
+                             "\n",
+                             this->argv_ [0]),
+                            -1);
+        default:
+          break;
+        }
+    }
+  // Indicates successful parsing of the command line
+  return 1;
 }
 
 void
@@ -98,7 +96,7 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
                             0);
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught trying to narrow servant\n");
       return 0;
@@ -124,12 +122,10 @@ Client_Task::run_test ()
 
       test_end = ACE_OS::gethrtime ();
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
       return 0;
     }
-
-
   // High resolution timer calibration
   ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
@@ -162,7 +158,7 @@ Client_Task::svc ()
           this->latency_.sample (now - start);
         }
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
       return 0;
     }
@@ -170,7 +166,7 @@ Client_Task::svc ()
 }
 
 void
-Client_Task::accumulate_and_dump (ACE_Basic_Stats& totals,
+Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
                                   ACE_TCHAR const *msg,
                                   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {

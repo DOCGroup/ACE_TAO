@@ -28,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (::CORBA::Exception const& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR : Unexpected CORBA exception caugth :");
     }

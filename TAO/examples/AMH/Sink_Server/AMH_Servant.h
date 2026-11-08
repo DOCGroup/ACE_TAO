@@ -8,7 +8,6 @@
  */
 // =========================================================================
 
-
 #ifndef AMH_SERVANT_H
 #define AMH_SERVANT_H
 
@@ -22,17 +21,17 @@ class AMH_Servant
   : public virtual POA_Test::AMH_Roundtrip
 {
 public:
-  AMH_Servant (AMH_Servant const&) = delete;
-  AMH_Servant (AMH_Servant&&) = delete;
-  AMH_Servant& operator= (AMH_Servant const&) = delete;
-  AMH_Servant& operator= (AMH_Servant&&) = delete;
+  AMH_Servant (AMH_Servant const &) = delete;
+  AMH_Servant (AMH_Servant &&) = delete;
+  AMH_Servant &operator= (AMH_Servant const &) = delete;
+  AMH_Servant &operator= (AMH_Servant &&) = delete;
 
   explicit AMH_Servant (CORBA::ORB_ptr orb);
 
   ~AMH_Servant () override = default;
 
   /// parse arguments from command line for sleep time
-  int parse_args (int& argc, ACE_TCHAR **argv);
+  int parse_args (int &argc, ACE_TCHAR **argv);
 
   // = The skeleton methods
   void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;

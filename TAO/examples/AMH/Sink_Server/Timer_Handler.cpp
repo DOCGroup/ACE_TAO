@@ -20,14 +20,14 @@ Timer_Handler::Timer_Handler (Test::AMH_RoundtripResponseHandler_ptr rh,
 }
 
 int
-Timer_Handler::handle_timeout (ACE_Time_Value const&,
-                               void const*)
+Timer_Handler::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   try
     {
       this->rh_->test_method (this->send_time_);
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception in Timer_Handler::handle_timeout\n");
@@ -42,7 +42,6 @@ Timer_Handler::handle_timeout (ACE_Time_Value const&,
   // should looked here first.
   return -1;
 }
-
 
 int
 Timer_Handler::handle_close (ACE_HANDLE,

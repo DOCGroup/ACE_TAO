@@ -10,10 +10,8 @@
  */
 // =========================================================================
 
-
 #ifndef MT_AMH_SERVER_H
 #define MT_AMH_SERVER_H
-
 
 #include "Base_Server.h"
 #include "ace/Task.h"
@@ -23,12 +21,12 @@ class MT_AMH_Server
   , public ACE_Task_Base
 {
 public:
-  MT_AMH_Server (MT_AMH_Server const&) = delete;
-  MT_AMH_Server (MT_AMH_Server&&) = delete;
-  MT_AMH_Server& operator= (MT_AMH_Server const&) = delete;
-  MT_AMH_Server& operator= (MT_AMH_Server&&) = delete;
+  MT_AMH_Server (MT_AMH_Server const &) = delete;
+  MT_AMH_Server (MT_AMH_Server &&) = delete;
+  MT_AMH_Server &operator= (MT_AMH_Server const &) = delete;
+  MT_AMH_Server &operator= (MT_AMH_Server &&) = delete;
 
-  MT_AMH_Server (int& argc, ACE_TCHAR **argv);
+  MT_AMH_Server (int &argc, ACE_TCHAR **argv);
 
   ~MT_AMH_Server () override = default;
 

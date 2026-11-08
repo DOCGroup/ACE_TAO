@@ -27,7 +27,6 @@ MT_AMH_Server::usage (char const *message)
   ACE_ERROR ((LM_ERROR, "%C : %C", message, usage));
 }
 
-
 int
 MT_AMH_Server::parse_args ()
 {

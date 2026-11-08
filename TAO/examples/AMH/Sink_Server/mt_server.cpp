@@ -7,13 +7,13 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   MT_AMH_Server amh_server (argc, argv);
-  amh_server.try_RT_scheduling();
+  amh_server.try_RT_scheduling ();
   amh_server.start_orb_and_poa ();
 
   if (amh_server.parse_args () != 1)
     {
-        amh_server.usage ("");
-        ACE_OS::exit (1);
+      amh_server.usage ("");
+      ACE_OS::exit (1);
     }
 
   AMH_Servant servant (amh_server.orb ());

@@ -10,7 +10,6 @@
  */
 // =========================================================================
 
-
 #ifndef BASE_SERVER_H
 #define BASE_SERVER_H
 
@@ -34,12 +33,12 @@ class AMH_Servant;
 class Base_Server
 {
 public:
-  Base_Server (Base_Server const&) = delete;
-  Base_Server (Base_Server&&) = delete;
-  Base_Server& operator= (Base_Server const&) = delete;
-  Base_Server& operator= (Base_Server&&) = delete;
+  Base_Server (Base_Server const &) = delete;
+  Base_Server (Base_Server &&) = delete;
+  Base_Server &operator= (Base_Server const &) = delete;
+  Base_Server &operator= (Base_Server &&) = delete;
 
-  Base_Server (int& argc, ACE_TCHAR **argv);
+  Base_Server (int &argc, ACE_TCHAR **argv);
 
   //    Is there any reason to make the destructor virtual?  Will you
   //    ever be destroying a derived class through a pointer to
@@ -81,7 +80,7 @@ public:
   CORBA::ORB_ptr orb () const;
 
 protected:
-  int& argc_;
+  int &argc_;
   /// Borrowed from the process entry point; valid for this server's lifetime.
   ACE_TCHAR **argv_;
   std::basic_string<ACE_TCHAR> ior_output_file_;

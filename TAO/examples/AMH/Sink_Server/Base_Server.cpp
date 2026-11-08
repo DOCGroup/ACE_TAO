@@ -99,7 +99,7 @@ Base_Server::shutdown_orb_and_poa ()
       this->orb_->destroy ();
       this->orb_ = CORBA::ORB::_nil ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised shutting down ORB or POA");
       return -1;
@@ -117,7 +117,7 @@ Base_Server::start_orb_and_poa ()
     {
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -127,12 +127,12 @@ Base_Server::start_orb_and_poa ()
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         this->root_poa_->the_POAManager ();
 
       poa_manager->activate ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
@@ -148,20 +148,19 @@ Base_Server::register_servant (AMH_Servant *servant)
 {
   try
     {
-      Test::Roundtrip_var roundtrip =
+      Test::Roundtrip_var const roundtrip =
         servant->_this ();
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         this->orb_->object_to_string (roundtrip.in ());
 
       (void) this->write_ior_to_file (ior.in ());
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised while registering servant");
     }
 }
-
 
 void
 Base_Server::run_event_loop ()
@@ -183,7 +182,7 @@ Base_Server::run_event_loop ()
           this->orb_->perform_work (period);
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Caught exceptionin Base_Server::run_event_loop");
