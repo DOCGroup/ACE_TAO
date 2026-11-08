@@ -108,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
-      test_impl* test_i;
+      test_impl* test_i {};
       ACE_NEW_RETURN (test_i,
                       test_impl (orb.in (),
                       current.in ()),

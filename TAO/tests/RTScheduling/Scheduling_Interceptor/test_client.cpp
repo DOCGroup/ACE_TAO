@@ -75,9 +75,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
-          char const * const name = nullptr;
-          CORBA::Policy_ptr const sched_param = nullptr;
-          CORBA::Policy_ptr const implicit_sched_param = nullptr;
+          char const * const name {};
+          CORBA::Policy_ptr const sched_param {};
+          CORBA::Policy_ptr const implicit_sched_param {};
 
           current->begin_scheduling_segment (name,
                                             sched_param,
