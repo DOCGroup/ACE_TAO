@@ -159,7 +159,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
   //
   // @@ Now that the TypeCode implementation has been rewritten, do we
   // still need to iterate over the members twice?
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       CORBA::UnionMember const & member = members[i];
       char const * const member_name = member.name;
@@ -278,7 +278,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
   bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       CORBA::UnionMember const & member = members[index];
 
@@ -614,7 +614,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   std::vector<CORBA::String_var> enumerators (len);
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       ACE_CString ext_id (members[index]);
       int int_id {};
@@ -872,7 +872,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
     {
       success = true;
 
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i {}; i < len; ++i)
         {
           // This is the one we're trying to find a legal value for.
           if (i == skip_slot)
@@ -1190,7 +1190,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   CORBA::TypeCode_var recursive_tc;
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       // Valid member type?
       CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
@@ -1343,7 +1343,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
   bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       // Valid member type?
       CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
@@ -1540,7 +1540,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     {
       ACE_Bounded_Set<CORBA::Long> checker (length);
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (i == default_index_slot)
             {
@@ -1576,7 +1576,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     {
       ACE_Bounded_Set<CORBA::ULong> checker (length);
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (i == default_index_slot)
             {
@@ -1714,7 +1714,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         CORBA::ULong const nfields =
           unaliased_member->member_count ();
 
-        for (CORBA::ULong i = 0; i < nfields; ++i)
+        for (CORBA::ULong i {}; i < nfields; ++i)
           {
             CORBA::TypeCode_var member_tc =
               unaliased_member->member_type (i);
