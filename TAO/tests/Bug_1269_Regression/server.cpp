@@ -4,10 +4,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[], Options &options);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -34,7 +38,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       PortableServer::Servant_var<Echo_Caller> impl;
@@ -64,11 +69,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Write the IOR before activating the POA manager.
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             ior_output_file),
+                             options.ior_output_file),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -93,7 +98,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c {};
@@ -102,7 +107,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
