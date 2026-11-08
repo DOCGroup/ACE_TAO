@@ -22,14 +22,14 @@ TAO_Transport::orb_core () const
 ACE_INLINE TAO_Transport_Mux_Strategy *
 TAO_Transport::tms () const
 {
-  return tms_;
+  return this->tms_.get ();
 }
 
 // Return the Wait strategy used by the Transport.
 ACE_INLINE TAO_Wait_Strategy *
 TAO_Transport::wait_strategy () const
 {
-  return this->ws_;
+  return this->ws_.get ();
 }
 
 ACE_INLINE int
@@ -125,7 +125,7 @@ TAO_Transport::reset_flush_timer ()
 ACE_INLINE TAO_GIOP_Message_Base *
 TAO_Transport::messaging_object ()
 {
-  return this->messaging_object_;
+  return this->messaging_object_.get ();
 }
 
 //********************************************************************
@@ -207,7 +207,7 @@ TAO_Transport::sent_byte_count () const
 ACE_INLINE TAO::Transport::Stats*
 TAO_Transport::stats () const
 {
-  return this->stats_;
+  return this->stats_.get ();
 }
 
 ACE_INLINE

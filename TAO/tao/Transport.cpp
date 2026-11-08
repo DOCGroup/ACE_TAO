@@ -127,8 +127,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   : tag_ (tag)
   , orb_core_ (orb_core)
   , cache_map_entry_ (nullptr)
-  , tms_ (nullptr)
-  , ws_ (nullptr)
   , bidirectional_flag_ (-1)
   , opening_connection_role_ (TAO::TAO_UNSPECIFIED_ROLE)
   , head_ (nullptr)
@@ -144,12 +142,10 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , sent_byte_count_ (0)
   , is_connected_ (false)
   , connection_closed_on_read_ (false)
-  , messaging_object_ (nullptr)
   , char_translator_ (nullptr)
   , wchar_translator_ (nullptr)
   , tcs_set_ (0)
   , first_request_ (true)
-  , partial_message_ (nullptr)
 #if TAO_HAS_SENDFILE == 1
     // The ORB has been configured to use the MMAP allocator, meaning
     // we could/should use sendfile() to send data.  Cast once rather
@@ -160,30 +156,31 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
       dynamic_cast<TAO_MMAP_Allocator *> (
         orb_core->output_cdr_buffer_allocator ()))
 #endif  /* TAO_HAS_SENDFILE==1 */
-#if TAO_HAS_TRANSPORT_CURRENT == 1
-  , stats_ (nullptr)
-#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   , flush_in_post_open_ (false)
 {
-  ACE_NEW (this->messaging_object_,
+  TAO_GIOP_Message_Base *messaging_object {};
+  ACE_NEW (messaging_object,
             TAO_GIOP_Message_Base (orb_core,
                                    this,
                                    input_cdr_size));
+  this->messaging_object_.reset (messaging_object);
 
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
 
   // Create WS now.
-  this->ws_ = cf->create_wait_strategy (this);
+  this->ws_.reset (cf->create_wait_strategy (this));
 
   // Create TMS now.
-  this->tms_ = cf->create_transport_mux_strategy (this);
+  this->tms_.reset (cf->create_transport_mux_strategy (this));
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   // Allocate stats
-  ACE_NEW_THROW_EX (this->stats_,
+  TAO::Transport::Stats *stats {};
+  ACE_NEW_THROW_EX (stats,
                     TAO::Transport::Stats,
                     CORBA::NO_MEMORY ());
+  this->stats_.reset (stats);
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 }
 
@@ -195,13 +192,13 @@ TAO_Transport::~TAO_Transport ()
                   this->id_));
     }
 
-  delete this->messaging_object_;
+  this->messaging_object_.reset ();
 
-  delete this->ws_;
+  this->ws_.reset ();
 
-  delete this->tms_;
+  this->tms_.reset ();
 
-  delete this->handler_lock_;
+  this->handler_lock_.reset ();
 
   if (!this->is_connected_)
     {
@@ -212,7 +209,7 @@ TAO_Transport::~TAO_Transport ()
 
   // Release the partial message block, however we may
   // have never allocated one.
-  ACE_Message_Block::release (this->partial_message_);
+  this->partial_message_.reset ();
 
   // By the time the destructor is reached here all the connection stuff
   // *must* have been cleaned up.
@@ -223,7 +220,7 @@ TAO_Transport::~TAO_Transport ()
   ACE_ASSERT (this->cache_map_entry_ == nullptr);
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-  delete this->stats_;
+  this->stats_.reset ();
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   if (TAO_debug_level > 9)
     {
@@ -2932,8 +2929,10 @@ TAO_Transport::allocate_partial_message_block ()
        // + this->messaging_object ()->fragment_header_length ();
        // deprecated, conflicts with not-single_read_opt.
 
-      ACE_NEW (this->partial_message_,
+      ACE_Message_Block *partial_message {};
+      ACE_NEW (partial_message,
                ACE_Message_Block (partial_message_size));
+      this->partial_message_.reset (partial_message);
     }
 }
 

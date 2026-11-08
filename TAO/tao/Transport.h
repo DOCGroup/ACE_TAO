@@ -23,9 +23,11 @@
 #include "tao/Incoming_Message_Stack.h"
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
+#include "ace/Message_Block.h"
 #include "ace/Basic_Stats.h"
 #include <atomic>
 #include <cstdint>
+#include <memory>
 
 struct iovec;
 
@@ -1021,8 +1023,10 @@ protected:
   int notify_reactor_now ();
 
 private:
-  TAO_Transport (const TAO_Transport &) = delete;
-  TAO_Transport &operator= (const TAO_Transport &) = delete;
+  TAO_Transport (TAO_Transport const &) = delete;
+  TAO_Transport (TAO_Transport &&) = delete;
+  TAO_Transport &operator= (TAO_Transport const &) = delete;
+  TAO_Transport &operator= (TAO_Transport &&) = delete;
 
   /// Assume the lock is held
   void send_connection_closed_notifications_i ();
@@ -1058,10 +1062,10 @@ protected:
 
   /// Strategy to decide whether multiple requests can be sent over the
   /// same connection or the connection is exclusive for a request.
-  TAO_Transport_Mux_Strategy *tms_;
+  std::unique_ptr<TAO_Transport_Mux_Strategy> tms_;
 
   /// Strategy for waiting for the reply after sending the request.
-  TAO_Wait_Strategy *ws_;
+  std::unique_ptr<TAO_Wait_Strategy> ws_;
 
   /// Use to check if bidirectional info has been synchronized with
   /// the peer.
@@ -1122,7 +1126,7 @@ protected:
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
    */
-  mutable ACE_Lock *handler_lock_;
+  std::unique_ptr<ACE_Lock> handler_lock_;
 
   /// A unique identifier for the transport.
   /**
@@ -1204,7 +1208,7 @@ private:
 
 private:
   /// Our messaging object.
-  TAO_GIOP_Message_Base *messaging_object_;
+  std::unique_ptr<TAO_GIOP_Message_Base> messaging_object_;
 
   /// @@Phil, I think it would be nice if we could think of a way to
   /// do the following.
@@ -1234,7 +1238,7 @@ private:
   bool first_request_;
 
   /// Holds the partial GIOP message (if there is one)
-  ACE_Message_Block* partial_message_;
+  ACE_Message_Block_Unique_Ptr partial_message_;
 
 #if TAO_HAS_SENDFILE == 1
   /// mmap()-based allocator used to allocator output CDR buffers.
@@ -1247,7 +1251,7 @@ private:
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   /// Statistics
-  TAO::Transport::Stats* stats_;
+  std::unique_ptr<TAO::Transport::Stats> stats_;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /// Indicate that flushing needs to be done in post_open()
