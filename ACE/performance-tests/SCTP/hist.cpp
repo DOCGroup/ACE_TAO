@@ -23,10 +23,11 @@
 //
 */
 
+#include <cfloat>
+#include <cstring>
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
-#include <float.h>
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_math.h"
 #include "hist.h"
 namespace ACE_SCTP
@@ -44,7 +45,7 @@ hist_t *histogram(char *name, unsigned int num_bins, double first,
     ACE_OS::fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     ACE_OS::exit(-1);
   }
-  ACE_OS::memset(hist->hs, 0, sizeof(unsigned int) * (num_bins+2));
+  std::memset(hist->hs, 0, sizeof(unsigned int) * (num_bins+2));
   hist->name = name;
   hist->num_bins = num_bins;
   hist->first = first;
@@ -87,11 +88,11 @@ void add_field(char *key, char *value, hist_t *hist) {
 
      /* create and prepare nextoptheader */
   nextoptheader = (struct optheader *) ACE_OS::malloc(sizeof(struct optheader));
-  nextoptheader->key = (char *) ACE_OS::malloc(ACE_OS::strlen(key)+1);
-  nextoptheader->value = (char *) ACE_OS::malloc(ACE_OS::strlen(value)+1);
+  nextoptheader->key = (char *) ACE_OS::malloc(std::strlen(key)+1);
+  nextoptheader->value = (char *) ACE_OS::malloc(std::strlen(value)+1);
   nextoptheader->next = nullptr;
-  ACE_OS::strcpy(nextoptheader->key,key);
-  ACE_OS::strcpy(nextoptheader->value,value);
+  std::strcpy(nextoptheader->key,key);
+  std::strcpy(nextoptheader->value,value);
 
      /* tack nextoptheader onto end of optheader list */
   if (hist->firstoptheader == nullptr) {
