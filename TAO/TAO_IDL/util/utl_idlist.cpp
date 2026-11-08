@@ -241,7 +241,7 @@ void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
   bool first = true;
-  bool second = false;
+  bool second {};
 
   for (UTL_IdListActiveIterator i (this);
        !i.is_done ();
@@ -317,7 +317,7 @@ UTL_IdList::get_string_copy () const
   std::size_t const delimiter_start = is_absolute () ? 1 : 0;
 
   std::string result;
-  std::size_t n = 0;
+  std::size_t n {};
   UTL_IdList const *item_list = this;
   while (item_list != nullptr)
     {

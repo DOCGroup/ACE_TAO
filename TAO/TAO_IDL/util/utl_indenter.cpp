@@ -101,7 +101,7 @@ UTL_Indenter::decrease ()
 void
 UTL_Indenter::skip_to (ACE_OSTREAM_TYPE &o)
 {
-  for (long i = 0; i < this->pd_indent_level; ++i)
+  for (long i {}; i < this->pd_indent_level; ++i)
     {
       o << "  ";
     }
@@ -111,7 +111,7 @@ UTL_Indenter::skip_to (ACE_OSTREAM_TYPE &o)
 void
 UTL_Indenter::skip_to (FILE *fp)
 {
-  for (long i = 0; i < this->pd_indent_level; ++i)
+  for (long i {}; i < this->pd_indent_level; ++i)
     {
       std::fprintf (fp,
                     "  ");

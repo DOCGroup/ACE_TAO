@@ -470,7 +470,7 @@ IDL_GlobalData::set_indent (std::unique_ptr<UTL_Indenter> i)
 long
 IDL_GlobalData::seen_include_file_before (std::string const& filename)
 {
-  for (std::size_t i = 0; i < this->pd_include_file_names_.size (); ++i)
+  for (std::size_t i {}; i < this->pd_include_file_names_.size (); ++i)
     {
       if (filename == this->pd_include_file_names_[i])
         {

@@ -97,7 +97,7 @@ Identifier::replace_string (std::string const& s)
 void
 Identifier::preprocess_and_replace_string (std::string const& s)
 {
-  bool shift = false;
+  bool shift {};
 
   if (!s.empty () && s[0] == '_')
     {

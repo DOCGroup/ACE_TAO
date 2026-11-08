@@ -884,7 +884,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
 
   bool *seen {};
   std::string const& name = e->get_string ();
-  bool mixed_case = false;
+  bool mixed_case {};
   UTL_Scope *start_scope = idl_global->corba_module ();
 
   if (UTL_String::strcmp_caseless (name, "TypeCode", mixed_case)
@@ -1739,7 +1739,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
     }
 
   std::string const& name = e->first_component ()->get_string ();
-  unsigned long index = 0;
+  unsigned long index {};
 
   std::optional<UTL_StrList> const& for_new_holder =
     idl_global->for_new_holder ();

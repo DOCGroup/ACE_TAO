@@ -88,7 +88,7 @@ UTL_String::strcmp_caseless (
       return false;
     }
 
-  for (std::size_t i = 0; i < lhs.size (); ++i)
+  for (std::size_t i {}; i < lhs.size (); ++i)
     {
       if (lhs[i] != rhs[i])
         {
@@ -109,8 +109,8 @@ UTL_String::strcmp_caseless (
 bool
 UTL_String::compare (std::string const& lhs, std::string const& rhs)
 {
-  bool result= false;
-  bool mixed=  false;
+  bool result {};
+  bool mixed {};
 
   if (strcmp_caseless (lhs, rhs, mixed))
     {
@@ -137,8 +137,8 @@ UTL_String::compare (std::string const& lhs, std::string const& rhs)
 bool
 UTL_String::compare_quiet (std::string const& lhs, std::string const& rhs)
 {
-  bool result= false;
-  bool mixed=  false;
+  bool result {};
+  bool mixed {};
 
   if (strcmp_caseless (lhs, rhs, mixed))
     {
