@@ -101,7 +101,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 
   // OK, loop through supported interfaces.
 
-  for (std::size_t j = 0; j < supported.size (); ++j)
+  for (std::size_t j {}; j < supported.size (); ++j)
     {
       if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
@@ -180,7 +180,7 @@ AST_Component::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, "supports ");
 
-      for (long i = 0; i < this->pd_n_inherits; ++i)
+      for (long i {}; i < this->pd_n_inherits; ++i)
         {
           this->pd_inherits[i]->local_name ()->dump (o);
 

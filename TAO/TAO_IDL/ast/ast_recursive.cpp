@@ -143,8 +143,8 @@ AST_illegal_recursive_type (AST_Decl *t)
       return false;  // NOT ILLEGAL.
     }
 
-  bool check_for_struct = false;
-  bool check_for_union = false;
+  bool check_for_struct {};
+  bool check_for_union {};
   AST_Structure  *st1 {};
   AST_Union  *un1 {};
 

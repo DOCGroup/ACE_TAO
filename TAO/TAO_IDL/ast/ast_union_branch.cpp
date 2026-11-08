@@ -103,7 +103,7 @@ void
 AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 {
   std::size_t const l = this->label_list_length ();
-  for (std::size_t i = 0; i < l; ++i)
+  for (std::size_t i {}; i < l; ++i)
     {
       this->dump_i (o, "case ");
 
@@ -154,7 +154,7 @@ AST_UnionBranch::labels () const
 AST_UnionLabel *
 AST_UnionBranch::label (std::size_t index)
 {
-  std::size_t i = 0;
+  std::size_t i {};
 
   for (UTL_LabellistActiveIterator iter (this->pd_ll.get ());
        !iter.is_done ();
@@ -176,7 +176,7 @@ AST_UnionBranch::label (std::size_t index) const
 {
   UTL_LabelList const *labels = this->pd_ll.get ();
 
-  for (std::size_t i = 0; labels != nullptr; ++i)
+  for (std::size_t i {}; labels != nullptr; ++i)
     {
       if (i == index)
         {
@@ -252,7 +252,7 @@ AST_UnionBranch::add_labels (AST_Union *u)
 void
 AST_UnionBranch::coerce_labels (AST_Union *u)
 {
-  for (std::size_t i = 0; i < this->label_list_length (); ++i)
+  for (std::size_t i {}; i < this->label_list_length (); ++i)
     {
       AST_UnionLabel * const ul = this->label (i);
 

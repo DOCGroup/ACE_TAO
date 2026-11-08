@@ -382,7 +382,7 @@ AST_Decl::compute_full_name ()
 {
   std::string name;
   bool first = true;
-  bool second = false;
+  bool second {};
 
   for (UTL_IdListActiveIterator i (this->pd_name.get ());
        !i.is_done ();
@@ -426,7 +426,7 @@ AST_Decl::compute_repoID () const
     }
 
   bool first = true;
-  bool second = false;
+  bool second {};
   std::string prefix = this->prefix_;
   UTL_Scope *scope = this->defined_in ();
 
@@ -532,7 +532,7 @@ AST_Decl::compute_flat_name () const
 {
   std::string flat_name;
   bool first = true;
-  bool second = false;
+  bool second {};
 
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();

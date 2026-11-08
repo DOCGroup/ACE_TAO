@@ -1773,7 +1773,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
   pd_v2->set_ev (pd_v2->coerce (expr_type));
   retval->et = expr_type;
 
-  bool success = false;
+  bool success {};
   switch (expr_type)
     {
     case EV_int8:
@@ -1888,7 +1888,7 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
   pd_v2->set_ev (pd_v2->coerce (expr_type));
   retval->et = expr_type;
 
-  bool success = false;
+  bool success {};
   switch (expr_type)
     {
     case EV_int8:
@@ -2023,7 +2023,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
   pd_v2->set_ev (pd_v2->coerce (expr_type));
   retval->et = expr_type;
 
-  bool success = false;
+  bool success {};
   switch (expr_type)
     {
     case EV_int8:
@@ -2287,8 +2287,8 @@ AST_Expression::type_mismatch (AST_Expression::ExprType t)
       return incompatible_types (this->pd_ev->et, t);
     }
 
-  bool v1_mismatch = false;
-  bool v2_mismatch = false;
+  bool v1_mismatch {};
+  bool v2_mismatch {};
 
   if (this->pd_v1 != nullptr)
     {

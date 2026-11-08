@@ -181,7 +181,7 @@ AST_Operation::has_in_arguments ()
 int
 AST_Operation::count_arguments_with_direction (int direction_mask)
 {
-  int count = 0;
+  int count {};
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();

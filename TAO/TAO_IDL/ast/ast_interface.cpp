@@ -133,7 +133,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
   // to iterate over pd_inherits.
   // Also check for illegal reference to a template module
   // scope item.
-  for (long i = 0; i < nih; ++i)
+  for (long i {}; i < nih; ++i)
     {
       if (ih[i]->node_type () == AST_Decl::NT_param_holder)
         {
@@ -266,7 +266,7 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, ": ");
 
-      for (long i = 0; i < this->pd_n_inherits; ++i)
+      for (long i {}; i < this->pd_n_inherits; ++i)
         {
           this->pd_inherits[i]->local_name ()->dump (o);
 
@@ -395,7 +395,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
       AST_Type_List const& parents = i->inherits ();
       std::size_t const n_parents = parents.size ();
 
-      for (std::size_t j = 0; j < n_parents; ++j)
+      for (std::size_t j {}; j < n_parents; ++j)
         {
           this->redef_clash_populate_r (parents[j]);
         }
@@ -407,7 +407,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
       AST_Type_List const& supports = v->supports ();
       std::size_t const n_supports = supports.size ();
 
-      for (std::size_t i = 0; i < n_supports; ++i)
+      for (std::size_t i {}; i < n_supports; ++i)
         {
           this->redef_clash_populate_r (supports[i]);
         }
@@ -418,7 +418,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
       AST_Type_List const& supports = c->supports ();
       std::size_t const n_supports = supports.size ();
 
-      for (std::size_t j = 0; j < n_supports; ++j)
+      for (std::size_t j {}; j < n_supports; ++j)
         {
           this->redef_clash_populate_r (supports[j]);
         }
@@ -461,7 +461,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
   // supports list.
   if (f != nullptr)
     {
-      for (long i = 0; i < f->n_inherits (); ++i)
+      for (long i {}; i < f->n_inherits (); ++i)
         {
           // Retrieve the next parent from which
           // the dequeued element inherits.
@@ -579,7 +579,7 @@ AST_Interface::redef_clash ()
   AST_Decl *group2_member_item {};
 
   // Now compare all pairs.
-  for (std::size_t i = 0; i < this->insert_queue.size (); ++i)
+  for (std::size_t i {}; i < this->insert_queue.size (); ++i)
     {
       AST_Type *group1_member = this->insert_queue[i];
       UTL_Scope *s = DeclAsScope (group1_member);
@@ -696,7 +696,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (std::size_t j = 0; j < inherited.size (); ++j)
+  for (std::size_t j {}; j < inherited.size (); ++j)
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (inherited[j]);
 
@@ -762,7 +762,7 @@ AST_Interface::look_in_inherited_local (Identifier *e,
   AST_Type_List const& inherited = this->inherits ();
 
   /// OK, loop through inherited interfaces.
-  for (std::size_t j = 0; j < inherited.size (); ++j)
+  for (std::size_t j {}; j < inherited.size (); ++j)
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (inherited[j]);
 
@@ -812,7 +812,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
         }
     }
 
-  for (std::size_t j = 0; j < inherited.size (); ++j)
+  for (std::size_t j {}; j < inherited.size (); ++j)
     {
       prev = inherited[j]->lookup_by_name_local (id, false);
 
@@ -871,7 +871,7 @@ AST_Interface::analyze_parentage ()
       return;
     }
 
-  for (long i = 0; i < this->pd_n_inherits; ++i)
+  for (long i {}; i < this->pd_n_inherits; ++i)
     {
       AST_Interface *parent = dynamic_cast<AST_Interface*> (this->pd_inherits[i]);
 
@@ -892,7 +892,7 @@ AST_Interface::analyze_parentage ()
   // Must check if we are declared in a template module, in
   // which case no code will be generated, so we should not
   // be enqueued.
-  bool in_tmpl_module = false;
+  bool in_tmpl_module {};
   UTL_Scope *s = this->defined_in ();
 
   while (s != nullptr)

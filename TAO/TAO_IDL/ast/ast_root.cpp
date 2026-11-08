@@ -97,7 +97,7 @@ AST_Root::~AST_Root () = default;
 unsigned long
 AST_Root::nmembers () const
 {
-  unsigned long retval = 0;
+  unsigned long retval {};
 
   for (AST_Decl *decl : this->pd_decls)
     {

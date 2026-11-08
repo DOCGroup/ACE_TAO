@@ -596,7 +596,7 @@ AST_Structure::operator[] (std::size_t const index)
     {
       return nullptr;
     }
-  std::size_t i = 0;
+  std::size_t i {};
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
