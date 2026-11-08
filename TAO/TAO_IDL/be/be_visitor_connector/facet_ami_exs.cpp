@@ -461,7 +461,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
     }
 
   int const c = node->argument_count ();
-  bool is_excep = false;
+  bool is_excep {};
 
   if (c == 1)
     {

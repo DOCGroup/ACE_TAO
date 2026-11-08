@@ -214,7 +214,7 @@ TAO_OutStream::flush_pending_whitespace ()
 void
 TAO_OutStream::write_text (std::string const& text)
 {
-  std::size_t position = 0;
+  std::size_t position {};
 
   while (position < text.size ())
     {
@@ -363,7 +363,7 @@ TAO_OutStream::print (const char *format, ...)
     {
       this->flush_pending_whitespace ();
     }
-  int result = 0;
+  int result {};
   va_list ap;
   va_start (ap, format);
   ACE_OSCALL (::vfprintf (this->fp_,
@@ -547,7 +547,7 @@ TAO_OutStream &
 TAO_OutStream::print (UTL_IdList *idl)
 {
   bool first = true;
-  bool second = false;
+  bool second {};
   Identifier *id {};
 
   for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())

@@ -248,7 +248,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       << "strm << \"" << this->name () << "\";" <<  be_nl_2;
 
   std::size_t const ndims = this->n_dims ();
-  std::size_t i = 0;
+  std::size_t i {};
 
   for (i = 0; i < ndims; ++i)
     {

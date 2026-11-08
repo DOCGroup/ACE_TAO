@@ -247,7 +247,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
         }
 
       AST_Decl::NodeType const nt = d->node_type ();
-      int status = 0;
+      int status {};
 
       if (nt == AST_Decl::NT_attr)
         {

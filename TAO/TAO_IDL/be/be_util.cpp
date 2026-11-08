@@ -1011,8 +1011,8 @@ be_util::overwrite_ciao_exec_files ()
   bool overwrite = true;
   if (be_global->overwrite_not_exec())
     {
-      bool src_exist = false;
-      bool hdr_exist = false;
+  bool src_exist {};
+  bool hdr_exist {};
       std::string const fname_hdr = be_global->be_get_ciao_exec_hdr_fname (false);
       FILE* fp_hdr = ACE_OS::fopen(fname_hdr.c_str (), "r");
       if (fp_hdr)

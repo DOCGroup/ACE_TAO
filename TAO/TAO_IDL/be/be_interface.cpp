@@ -156,7 +156,7 @@ be_interface::compute_full_skel_name (std::string const& prefix) const
 {
   std::string skel_name (prefix);
   bool first = true;
-  bool second = false;
+  bool second {};
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();
        j.next ())
@@ -214,7 +214,7 @@ be_interface::compute_coll_names (int type) const
   char const* const collocated = collocated_names[type];
 
   // Only the first component get the "POA_" preffix.
-  bool poa_added = false;
+  bool poa_added {};
 
   // Iterate again.
   // Must advance the iterator explicitly inside the loop.
@@ -690,7 +690,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
   // to invoke these methods since an AMH class is generated twice:
   // once for AMH and once the 'normal' way.
 
-  bool amh = false;
+  bool amh {};
   if (skeleton_class_name.find ("AMH_") != std::string::npos)
     {
       amh = true;
@@ -1779,7 +1779,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
   // Set the handles now in the process options.
   process_options.set_handles (input, output);
 
-  int result = 0;
+  int result {};
 
   // Set the command line for the gperf program. Give the right
   // arguments for the operation lookup strategy that we are using.
@@ -2221,10 +2221,10 @@ be_interface::dds_connector_traits_done (bool val)
 void
 be_interface::gen_stub_inheritance (TAO_OutStream *os)
 {
-  std::size_t i = 0;
+  std::size_t i {};
   AST_Type_List const& parents = this->inherits ();
   std::size_t const nparents = parents.size ();
-  bool has_concrete_parent = false;
+  bool has_concrete_parent {};
   bool const i_am_abs = this->is_abstract ();
 
   // If node interface inherits from other interfaces.
@@ -2286,7 +2286,7 @@ be_interface::gen_skel_inheritance (TAO_OutStream *os)
   AST_Type_List const& parents = this->inherits ();
   std::size_t const n_parents = parents.size ();
   AST_Type *parent {};
-  bool has_concrete_parent = false;
+  bool has_concrete_parent {};
 
   for (std::size_t i = 0; i < n_parents; ++i)
     {

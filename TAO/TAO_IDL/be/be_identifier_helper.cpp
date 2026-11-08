@@ -111,7 +111,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 {
   std::string retval;
   bool first = true;
-  bool second = false;
+  bool second {};
 
   for (UTL_IdListActiveIterator i (sn); !i.is_done ();)
     {

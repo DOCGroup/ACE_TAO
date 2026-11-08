@@ -3283,7 +3283,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
       std::string const exec_idl_fname =
         be_global->be_get_ciao_exec_idl_fname (true);
 
-      bool skip_incl = false;
+      bool skip_incl {};
       // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
       std::size_t const base = exec_idl_fname.find ("E.idl");
       if (base != std::string::npos)

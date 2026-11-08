@@ -190,7 +190,7 @@ be_valuetype::determine_factory_style ()
 
   // Check whether we have at least one operation or not.
   bool const have_operation = this->have_operation ();
-  bool have_factory = false;
+  bool have_factory {};
 
   // Try only our own scope.
   if (this->nmembers () > 0)
@@ -245,7 +245,7 @@ be_valuetype::have_operation ()
 {
   // Check whatever scope we get for operations/attributes.
 
-  bool have_operation = false;
+  bool have_operation {};
 
   // Operations are either operations or attributes of:
   // -its own
@@ -324,7 +324,7 @@ be_valuetype::have_operation ()
 bool
 be_valuetype::have_supported_op (be_interface * node)
 {
-  bool have_supported_op = false;
+  bool have_supported_op {};
 
   if (node->nmembers () == 0)
     {
@@ -585,7 +585,7 @@ be_valuetype::destroy ()
 ACE_CDR::ULong
 be_valuetype::data_members_count (AST_Field::Visibility vis)
 {
-  ACE_CDR::ULong count = 0;
+  ACE_CDR::ULong count {};
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();

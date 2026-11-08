@@ -282,7 +282,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
           << (v == nullptr ? "_ptr" : "*") << ";";
     }
 
-  bool skip_varout = false;
+  bool skip_varout {};
   AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
 
   if (s != nullptr)

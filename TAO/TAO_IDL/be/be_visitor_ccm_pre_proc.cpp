@@ -1416,7 +1416,7 @@ be_visitor_ccm_pre_proc::lookup_cookie ()
 int
 be_visitor_ccm_pre_proc::lookup_exceptions ()
 {
-  int status = 0;
+  int status {};
 
   for (std::size_t i = 0; i < N_LW_EXCEPS; ++i)
     {

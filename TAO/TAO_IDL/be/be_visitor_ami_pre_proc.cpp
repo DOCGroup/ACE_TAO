@@ -868,7 +868,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
   // proceed if the number of members in our scope is greater than 0
   if (node->nmembers () > 0)
     {
-      int number_of_elements = 0;
+      int number_of_elements {};
 
       {
         // initialize an iterator to iterate thru our scope
@@ -887,7 +887,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
       std::unique_ptr<AST_Decl *[]> const elements (raw_elements);
 
       {
-        int position = 0;
+        int position {};
 
         // Initialize an iterator to iterate thru our scope.
         for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -898,7 +898,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           }
       }
 
-      int elem_number = 0;
+      int elem_number {};
 
       // Continue until each element is visited.
       while (elem_number < number_of_elements)
@@ -1047,7 +1047,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node)
   AST_Type_List const& parents = node->inherits ();
   std::size_t const n_parents = parents.size ();
   AST_Type *parent {};
-  std::size_t n_rh_parents = 0;
+  std::size_t n_rh_parents {};
 
   for (std::size_t i = 0; i < n_parents; ++i)
     {
@@ -1073,7 +1073,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node)
       std::string const prefix ("AMI_");
 
       std::string const suffix ("Handler");
-      std::size_t index = 0;
+      std::size_t index {};
 
       for (std::size_t j = 0; j < n_parents; ++j)
         {
