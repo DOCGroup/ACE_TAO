@@ -7,7 +7,7 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  char* host = 0;
+  char *host {};
   int nsamples = 10000;
   int c;
 
@@ -29,7 +29,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (host == 0)
+  if (host == nullptr)
     {
       ACE_DEBUG ((LM_DEBUG, "Usage: client -h host -i iterations\n"));
       return 1;
@@ -38,7 +38,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   CLIENT *cl =
     clnt_create (host, PINGPROG, PINGVERS, "tcp");
 
-  if (cl == 0)
+  if (cl == nullptr)
     {
       ACE_DEBUG ((LM_DEBUG, "Cannot create client handle\n"));
       return 1;
