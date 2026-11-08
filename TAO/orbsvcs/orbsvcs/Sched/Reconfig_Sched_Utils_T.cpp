@@ -45,7 +45,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
-  int result = 0;
+  int result {};
 
   /* WSOA merge - commented out
   // Call unconditional action method, which performs any necessary
@@ -88,7 +88,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
           // Iterate over the set of dependencies for the current entry.
           TAO_Reconfig_Scheduler_Entry * next_rse {};
           TAO_RT_Info_Ex *next_rt_info {};
-          for (u_int i = 0; i < dependency_set->length (); ++i)
+          for (u_int i {}; i < dependency_set->length (); ++i)
             {
               // Skip over disabled dependencies
               if ((*dependency_set) [i].enabled == RtecBase::DEPENDENCY_DISABLED)
@@ -783,7 +783,7 @@ TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
-  int result = 0;
+  int result {};
 #ifdef SCHEDULER_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG,
               "Priority_Visitor visiting %s[%d],crit=%d,period=%d\n",
@@ -832,7 +832,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
           result = 1;
 
           // Iterate back through and adjust the subpriority levels.
-          for (int i = 0; i <= subpriority_; ++i, ++first_subpriority_entry_)
+          for (int i {}; i <= subpriority_; ++i, ++first_subpriority_entry_)
             {
               (*first_subpriority_entry_)->actual_rt_info ()->
                   preemption_subpriority += subpriority_;
@@ -869,7 +869,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::finish ()
 {
   // Iterate back through and adjust the subpriority levels.
-  for (int i = 0; i <= subpriority_; ++i, ++first_subpriority_entry_)
+  for (int i {}; i <= subpriority_; ++i, ++first_subpriority_entry_)
     {
       (*first_subpriority_entry_)->actual_rt_info ()->
         preemption_subpriority += subpriority_;

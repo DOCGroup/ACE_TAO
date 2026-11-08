@@ -199,7 +199,7 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
                           info.threads,
                           number_of_dependencies(info));
 
-  for (int i = 0; i < number_of_dependencies(info); ++i)
+  for (int i {}; i < number_of_dependencies(info); ++i)
     {
       RT_Info tmp;
       // TODO: info.dependencies [i].rt_info >>= &tmp;

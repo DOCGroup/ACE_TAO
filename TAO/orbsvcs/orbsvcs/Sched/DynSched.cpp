@@ -452,7 +452,7 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
                           info.threads,
                           number_of_dependencies(info));
 
-  for (int i = 0; i < number_of_dependencies(info); ++i)
+  for (int i {}; i < number_of_dependencies(info); ++i)
     {
       RT_Info tmp;
       (void) std::fprintf (file, "%s, %d\n",
@@ -1218,7 +1218,7 @@ ACE_DynScheduler::calculate_utilization_params ()
   minimum_guaranteed_priority_queue_ = -1;
 
   // iterate through ordered task entries, calculating frame size, utilization
-  for (u_int i = 0; i < dispatch_entry_count_; ++i)
+  for (u_int i {}; i < dispatch_entry_count_; ++i)
   {
     // if we've just finished examining another priority level
     if (minimum_priority_queue_ != ordered_dispatch_entries_ [i]->priority ())
@@ -1298,7 +1298,7 @@ ACE_DynScheduler::setup_task_entries ()
   ACE_NEW_RETURN (ordered_task_entries_, Task_Entry *[task_count],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
   // Initialize the array with null pointers.
-  for (size_t j = 0; j != task_count; ++j)
+  for (size_t j {}; j != task_count; ++j)
     ordered_task_entries_[j] = nullptr;
 
   // allocate new unbounded set for pointers to
@@ -1320,7 +1320,7 @@ ACE_DynScheduler::setup_task_entries ()
   // set up links between rt_info_entries_, task_entries_,
   // and ordered_task_entries_ tables
   ACE_Unbounded_Set_Iterator <RT_Info *> iter (rt_info_entries_);
-  for (u_int i = 0; i < tasks (); ++i, iter.advance ())
+  for (u_int i {}; i < tasks (); ++i, iter.advance ())
   {
     RT_Info **info_entry;
 
@@ -1359,9 +1359,9 @@ ACE_DynScheduler::relate_task_entries ()
   // traversal of the graph during schedule sorting.  One useful side effect
   // of this traversal is that is produces a topological ordering of dependencies
   // in the traversal finishing times, which can be used to detect call cycles.
-  long time = 0;
+  long time {};
 
-  for (u_int i = 0; i < tasks (); ++i)
+  for (u_int i {}; i < tasks (); ++i)
   {
     if ((status = relate_task_entries_recurse (time, task_entries_[i]))
         != SUCCEEDED)
@@ -1394,7 +1394,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
   if (dependency_count > 0)
   {
     // traverse dependencies of underlying RT_Info
-    for (u_int i = 0; i < dependency_count; ++i)
+    for (u_int i {}; i < dependency_count; ++i)
     {
       // obtain a pointer to the corresponding Task_Entry for each dependency
 
@@ -1471,7 +1471,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
                              ? task_entries_ [i].rt_info ()->threads : 1;
         // Just use low 32 bits of effective_period.  This will
         // have to change when TimeBase.idl is finalized.
-        const TimeBase::TimeT zero = 0;
+        const TimeBase::TimeT zero {};
         for (j = 0; j < thread_count; j++)
         {
           Dispatch_Entry *dispatch_ptr;
@@ -1648,7 +1648,7 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
 
   // copy pointers to the thread delineators from the set to the array
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*thread_delineators_);
-  for (u_int i = 0; i < threads_; ++i, iter.advance ())
+  for (u_int i {}; i < threads_; ++i, iter.advance ())
   {
     Dispatch_Entry** dispatch_entry;
 
@@ -1686,7 +1686,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   std::fill_n (ordered_dispatch_entries_, dispatch_entry_count_, nullptr);
 
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
-  for (u_int i = 0; i < dispatch_entry_count_; ++i, iter.advance ())
+  for (u_int i {}; i < dispatch_entry_count_; ++i, iter.advance ())
   {
     Dispatch_Entry** dispatch_entry;
 
@@ -1711,7 +1711,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
 ACE_DynScheduler::status_t
 ACE_DynScheduler::store_assigned_info ()
 {
-  for  (u_int i = 0; i < dispatch_entry_count_; ++i)
+  for  (u_int i {}; i < dispatch_entry_count_; ++i)
     {
       if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
           (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
@@ -1755,7 +1755,7 @@ ACE_DynScheduler::create_timeline ()
   min_dispatch_id_ = ordered_dispatch_entries_[0]->dispatch_id ();
   max_dispatch_id_ = ordered_dispatch_entries_[0]->dispatch_id ();
 
-  for (u_long i = 0; i < dispatch_entry_count_; ++i)
+  for (u_long i {}; i < dispatch_entry_count_; ++i)
   {
     // update the minimal and maximal id values for the schedule
     if (ordered_dispatch_entries_[i]->dispatch_id () < min_dispatch_id_)
@@ -1804,7 +1804,7 @@ ACE_DynScheduler::create_timeline ()
 
     // Schedule additional dispatches of the entry
     // over the total frame size into the timeline.
-    u_long current_frame_offset = 0;
+    u_long current_frame_offset {};
     u_long task_period =
       ordered_dispatch_entries_[i]->task_entry ().effective_period ();
     for (current_frame_offset = task_period;
@@ -1897,8 +1897,8 @@ ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 {
-  u_long dispatch_count = 0;
-  u_long i = 0;
+  u_long dispatch_count {};
+  u_long i {};
   for (i = 0; i < dispatch_entry_count_; ++i)
   {
     dispatch_count +=
@@ -2214,10 +2214,10 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
   // iterate through timeline, picking out dispatches in chronological
   // order of operation completion time
   int entries_remain = 1;
-  Time accumulated_execution = 0;
-  Time current_accumulated_execution = 0;
-  Time last_completion = 0;
-  Time current_completion = 0;
+  Time accumulated_execution {};
+  Time current_accumulated_execution {};
+  Time last_completion {};
+  Time current_completion {};
   TimeLine_Entry *current_entry {};
   TimeLine_Entry *current_last_entry {};
 

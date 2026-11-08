@@ -238,7 +238,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
   RtecScheduler::Scheduling_Anomaly **anomaly {};
   char const *anomaly_severity_msg = "NONE";
-  CORBA::ULong anomaly_index = 0;
+  CORBA::ULong anomaly_index {};
   CORBA::ULong anomaly_set_size =
                     static_cast<CORBA::ULong> (anomaly_set.size ());
   if (anomalies.ptr () == nullptr)
@@ -384,7 +384,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
     }
   configs->length (impl->minimum_priority_queue () + 1);
-  for (RtecScheduler::Preemption_Priority_t priority = 0;
+  for (RtecScheduler::Preemption_Priority_t priority {};
        priority <=
          static_cast<RtecScheduler::Preemption_Priority_t> (impl->minimum_priority_queue ());
        ++priority)

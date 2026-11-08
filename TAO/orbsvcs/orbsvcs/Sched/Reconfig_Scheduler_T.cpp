@@ -170,8 +170,8 @@ init (int config_count,
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
-  int result = 0;
-  int i = 0;
+  int result {};
+  int i {};
 
 /* WSOA merge - commented out
   // Clear out the previous entries, if any.
@@ -251,7 +251,7 @@ init (int config_count,
 
   // Add RT_Infos to scheduler
   TAO_RT_Info_Ex* new_rt_info;
-  for (int num_rt_infos = 0; num_rt_infos < rt_info_count; ++num_rt_infos)
+  for (int num_rt_infos {}; num_rt_infos < rt_info_count; ++num_rt_infos)
     {
       new_rt_info = create_i (rt_info [num_rt_infos].entry_point,
                               rt_info [num_rt_infos].handle, 1);
@@ -635,7 +635,7 @@ set_seq (RtecScheduler::RT_Info_Set const & infos)
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
-  for (u_int i = 0; i < infos.length (); ++i)
+  for (u_int i {}; i < infos.length (); ++i)
     {
       // Look up the RT_Info by its handle, throw an exception if it's not there.
       TAO_RT_Info_Ex *rt_info_ptr {};
@@ -806,7 +806,7 @@ replace_seq (RtecScheduler::RT_Info_Set const & infos)
   std::fill_n (this->tuple_ptr_array_, this->tuple_ptr_array_size_, nullptr);
   this->rt_info_tuple_count_ = 0;
 
-  for (u_int i = 0; i < infos.length (); ++i)
+  for (u_int i {}; i < infos.length (); ++i)
     {
       // Look up the RT_Info by its handle, throw an exception if it's not there.
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
@@ -1013,7 +1013,7 @@ set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const & dependenc
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
   // Delegate to the internal method for each dependency in the sequence.
-  for (u_int i = 0; i < dependencies.length (); ++i)
+  for (u_int i {}; i < dependencies.length (); ++i)
     {
       set_dependency_enable_state_i (dependencies[i].rt_info,
                                      dependencies[i].rt_info_depended_on,
@@ -1072,7 +1072,7 @@ set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
-  for (u_int i = 0; i < pair_set.length (); ++i)
+  for (u_int i {}; i < pair_set.length (); ++i)
     {
       // Look up the RT_Info by its handle, throw an exception if it's not there.
       TAO_RT_Info_Ex *rt_info_ptr {};
@@ -1327,14 +1327,14 @@ get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
     }
   dependencies->length (this->dependency_count_);
   RtecScheduler::Dependency_Set *dependency_set {};
-  int i = 0;
+  int i {};
   for (typename DEPENDENCY_SET_MAP::iterator
          dependency_iter (this->called_dependency_set_map_);
        dependency_iter.done () == 0 && i < this->dependency_count_;
        ++dependency_iter)
     {
       dependency_set = (*dependency_iter).int_id_;
-      for (u_int j = 0;
+      for (u_int j {};
            j < dependency_set->length () && i < this->dependency_count_;
            ++i, ++j)
         {
@@ -1504,7 +1504,7 @@ create_i (char const *entry_point,
 
   TAO_RT_Info_Ex* new_rt_info {};
   TAO_Reconfig_Scheduler_Entry* new_sched_entry {};
-  int result = 0;
+  int result {};
 
   // If we're ignoring duplicates, check for and return the existing
   // entry if there is one.
@@ -2063,8 +2063,8 @@ unmap_dependency_i (RtecScheduler::handle_t key,
       if (dependency_set)
         {
           int prev_length =  dependency_set->length ();
-          int found = 0;
-          for (int i = 0; i < prev_length; ++i)
+          bool found {};
+          for (int i {}; i < prev_length; ++i)
             {
               if ((*dependency_set) [i].rt_info == handle
                   &&  (*dependency_set) [i].number_of_calls == number_of_calls
@@ -2072,7 +2072,7 @@ unmap_dependency_i (RtecScheduler::handle_t key,
                 {
                   // we found the dependency to delete: set our
                   // found flag to true and compact the array
-                  found = 1;
+                  found = true;
                   for (int j = i+1; j < prev_length; ++j)
                     {
                       (*dependency_set) [j - 1].rt_info = (*dependency_set) [j].rt_info;
@@ -2129,15 +2129,15 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
       if (dependency_set)
         {
           int set_length =  dependency_set->length ();
-          int found = 0;
-          for (int i = 0; i < set_length; ++i)
+          bool found {};
+          for (int i {}; i < set_length; ++i)
             {
               if ((*dependency_set) [i].rt_info == handle
                   &&  (*dependency_set) [i].number_of_calls == number_of_calls
                   &&  (*dependency_set) [i].dependency_type == dependency_type)
                 {
                   // we found the dependency to update
-                  found = 1;
+                  found = true;
                   (*dependency_set) [i].enabled = enabled;
                   break;
                 }
@@ -2223,7 +2223,7 @@ detect_cycles_i ()
   TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
     scc_visitor (this->called_dependency_set_map_,
                    this->rt_info_map_);
-  for (int i = 0; i < this->rt_info_count_; ++i)
+  for (int i {}; i < this->rt_info_count_; ++i)
     {
       // Each new top level entry marks a potential new cycle.
       scc_visitor.in_a_cycle (false);
@@ -2396,7 +2396,7 @@ propagate_characteristics_i ()
   TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
     prop_visitor (this->calling_dependency_set_map_,
                   this->rt_info_map_);
-  for (int i = 0; i < this->rt_info_count_; ++i)
+  for (int i {}; i < this->rt_info_count_; ++i)
     {
       if (prop_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
@@ -2577,7 +2577,7 @@ refresh_tuple_ptr_array_i ()
   std::fill_n (this->tuple_ptr_array_, this->tuple_ptr_array_size_, nullptr);
   this->rt_info_tuple_count_ = 0;
 
-  for (int i = 0; i < this->rt_info_count_; ++i)
+  for (int i {}; i < this->rt_info_count_; ++i)
     {
       if (entry_ptr_array_ [i]->register_tuples (this->tuple_ptr_array_,
                                                  this->rt_info_tuple_count_) < 0)
@@ -2794,7 +2794,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 compute_utilization_i ()
 {
   TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY> util_visitor;
-  for (int i = 0; i < this->rt_info_count_; ++i)
+  for (int i {}; i < this->rt_info_count_; ++i)
     {
       if (util_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {

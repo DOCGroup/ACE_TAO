@@ -69,7 +69,7 @@ ACE_Strategy_Scheduler::assign_priorities (
 
   // Start scheduler priority at 0 (highest priority queue number)
   // NOTE: 0 is highest for priority, lowest for dynamic and static subpriority.
-  Preemption_Priority current_scheduler_priority = 0;
+  Preemption_Priority current_scheduler_priority {};
 
   // Value the OS and scheduler priorities in 0th dispatch entry.
   dispatches[0]->OS_priority (current_OS_priority);
@@ -204,8 +204,8 @@ ACE_Strategy_Scheduler::assign_subpriorities (
 
   // Start subpriority levels and element counts at 1, set level values in
   // the first entry, increment the static subpriority level.
-  Sub_Priority dynamic_subpriority_level = 0;
-  Sub_Priority static_subpriority_level = 0;
+  Sub_Priority dynamic_subpriority_level {};
+  Sub_Priority static_subpriority_level {};
   u_int dynamic_subpriority_elements = 1;
   u_int static_subpriority_elements = 1;
   dispatches [0]->dynamic_subpriority (dynamic_subpriority_level);

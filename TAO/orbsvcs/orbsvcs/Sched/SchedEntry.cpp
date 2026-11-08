@@ -243,7 +243,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                                ACE_CString &unresolved_locals,
                                ACE_CString &unresolved_remotes)
 {
-  int result = 0;
+  int result {};
   char string_buffer [BUFSIZ];
 
   // Iterate over the dependencies, and determine the total frame
@@ -360,13 +360,13 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   // loop, adding conjunctive dispatches, until one of the conjunctive
   // dispatch sources runs out of entries over the total frame
   conj_set_iter.first ();
-  int more_dispatches = (conj_set_iter.done ()) ? 0 : 1;
+  bool more_dispatches { !conj_set_iter.done () };
   while (more_dispatches)
     {
-      Time arrival = 0;
-      Time deadline = 0;
-      Preemption_Priority priority = 0;
-      OS_Priority OS_priority = 0;
+      Time arrival {};
+      Time deadline {};
+      Preemption_Priority priority {};
+      OS_Priority OS_priority {};
 
       for (conj_set_iter.first ();
            conj_set_iter.done () == 0;
@@ -413,7 +413,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           (*proxy_iter)->advance ();
 
           if ((*proxy_iter)->done ())
-            more_dispatches = 0;
+            more_dispatches = false;
         }
 
       Dispatch_Entry *entry_ptr;
@@ -462,7 +462,7 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
                      ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                      u_long &set_period, u_long new_period)
 {
-  int result = 0;
+  int result {};
 
   // if the set period is zero, treat it as uninitialized,
   // and simply value the set period with the new period
@@ -529,7 +529,7 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
                           u_long number_of_calls,
                           u_long starting_dest_sub_frame)
 {
-  int status = 0;
+  int status {};
 
   // reframe dispatches in the destination set to the new frame size
   // (expands the destination set's period to be the new enclosing frame)
