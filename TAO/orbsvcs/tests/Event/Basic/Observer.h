@@ -14,6 +14,8 @@
 #include "Driver.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -104,7 +106,7 @@ private:
   unsigned int seed_;
   int id_;
 
-  TAO_EC_Gateway_IIOP *gwys_;
+  std::unique_ptr<TAO_EC_Gateway_IIOP[]> gwys_;
 
   /// lock internal state
   TAO_SYNCH_MUTEX lock_;

@@ -214,17 +214,13 @@ EC_Observer::EC_Observer (EC_Master *master,
   : master_ (master),
     seed_ (seed),
     id_ (id),
-    gwys_ (0)
+    gwys_ ()
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
 }
 
-EC_Observer::~EC_Observer ()
-{
-  if (this->gwys_ != 0)
-    delete[] this->gwys_;
-}
+EC_Observer::~EC_Observer () = default;
 
 void
 EC_Observer::initialize_orb_and_poa (int&, ACE_TCHAR*[])
@@ -253,7 +249,9 @@ void
 EC_Observer::execute_test ()
 {
   int peer_count = this->master_->channel_count ();
-  ACE_NEW (this->gwys_, TAO_EC_Gateway_IIOP[peer_count]);
+  TAO_EC_Gateway_IIOP *gateways {};
+  ACE_NEW (gateways, TAO_EC_Gateway_IIOP[peer_count]);
+  this->gwys_.reset (gateways);
 
   for (int i = 0; i != peer_count; ++i)
     {
