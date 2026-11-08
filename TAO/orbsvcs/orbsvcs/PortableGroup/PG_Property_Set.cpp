@@ -52,7 +52,7 @@ TAO::PG_Property_Set::decode (PortableGroup::Properties const & property_set)
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   CORBA::ULong const count = property_set.length ();
-  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
+  for (CORBA::ULong nItem {}; nItem < count; ++nItem)
   {
     PortableGroup::Property const & property = property_set[nItem];
     CosNaming::Name const & nsName = property.nam;
@@ -110,7 +110,7 @@ void TAO::PG_Property_Set::remove (PortableGroup::Properties const & property_se
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   CORBA::ULong const count = property_set.length ();
-  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
+  for (CORBA::ULong nItem {}; nItem < count; ++nItem)
   {
     PortableGroup::Property const & property = property_set[nItem];
     CosNaming::Name const & nsName = property.nam;

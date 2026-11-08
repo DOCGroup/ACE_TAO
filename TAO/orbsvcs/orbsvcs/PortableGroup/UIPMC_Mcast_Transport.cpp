@@ -25,9 +25,12 @@ TAO_UIPMC_Mcast_Transport::TAO_UIPMC_Mcast_Transport (
 {
   // Replace the default wait strategy with our own
   // since we don't support waiting on anything.
-  delete this->ws_;
-  ACE_NEW (this->ws_,
-           TAO_UIPMC_Wait_Never (this));
+  this->ws_.reset (new (std::nothrow) TAO_UIPMC_Wait_Never (this));
+  if (!this->ws_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 }
 
 TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport ()

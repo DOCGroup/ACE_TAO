@@ -11,7 +11,7 @@ TAO_PG_Location_Hash::operator() (
   CORBA::ULong const len = location.length ();
   CORBA::ULong hash {};
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     hash +=
       ACE::hash_pjw (location[i].id.in ()) +
       ACE::hash_pjw (location[i].kind.in ());

@@ -32,7 +32,7 @@ TAO_PG_PropertyManager::set_default_properties (
   factories[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
 
   CORBA::ULong const len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const property = props[i];
 
@@ -184,7 +184,7 @@ TAO_PG_PropertyManager::set_properties_dynamically (
     CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
 
   CORBA::ULong len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property property = props[i];
 
@@ -287,12 +287,12 @@ TAO_PG_PropertyManager::remove_properties (
   //    the default properties might be a good idea at some point in
   //    the future.
   CORBA::ULong n {};
-  for (CORBA::ULong i = 0; i < num_removed; ++i)
+  for (CORBA::ULong i {}; i < num_removed; ++i)
     {
       CORBA::ULong const old_n = n;
       PortableGroup::Property const & remove = to_be_removed[i];
 
-      for (CORBA::ULong j = 0; j < old_length; ++j)
+      for (CORBA::ULong j {}; j < old_length; ++j)
         if (remove.nam != properties[j].nam)
           new_properties[n++] = properties[j];
 

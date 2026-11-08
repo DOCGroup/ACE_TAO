@@ -396,7 +396,7 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       ++option_count;
 

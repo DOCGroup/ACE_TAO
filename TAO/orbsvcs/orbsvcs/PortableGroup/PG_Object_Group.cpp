@@ -690,7 +690,7 @@ TAO::PG_Object_Group::create_member (
 
       bool created {};
       CORBA::ULong const factory_count = factories->length ();
-      for (CORBA::ULong factory_pos = 0;
+      for (CORBA::ULong factory_pos {};
            ! created && factory_pos < factory_count;
            ++factory_pos)
         {

@@ -122,7 +122,7 @@ namespace TAO_PG
 
     HASH_MAP_ITER iter = packets.begin ();
 
-    for (int i = 0; i < current_size; ++i)
+    for (int i {}; i < current_size; ++i)
       {
         sorted_set[i] = &(*iter);
         ++iter;
@@ -133,7 +133,7 @@ namespace TAO_PG
 
     // Since started() can return ACE_Time_Value::zero (lowest possible value)
     // then those broken packets will in the beginning of the sorted_set.
-    for (int i = 0; i < current_size; ++i)
+    for (int i {}; i < current_size; ++i)
       {
         if (current_size - i <= this->bound_)
           break;
@@ -200,7 +200,7 @@ namespace TAO_PG
 
     iter = packets.begin ();
 
-    for (int i = 0; i < current_size; ++i)
+    for (int i {}; i < current_size; ++i)
       {
         sorted_set[i] = &(*iter);
         ++iter;
@@ -209,7 +209,7 @@ namespace TAO_PG
     sort_set (sorted_set, current_size);
 
     // We have to clean all those packets above bound.
-    for (int i = 0; i < current_size; ++i)
+    for (int i {}; i < current_size; ++i)
       {
         if (static_cast<int> (size) <= this->bound_)
           break;

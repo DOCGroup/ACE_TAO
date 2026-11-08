@@ -333,7 +333,7 @@ TAO_PG_ObjectGroupManager::groups_at_location (
 
       ogs->length (len);
 
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i {}; i < len; ++i)
         {
           object_groups[i] =
             PortableGroup::ObjectGroup::_duplicate (
@@ -506,7 +506,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
   CORBA::ULong len = the_criteria.length ();
   group_entry->properties.length (len);
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     group_entry->properties[i] = the_criteria[i];
 
   {
@@ -668,7 +668,7 @@ TAO_PG_ObjectGroupManager::member_already_present (
   // same location.  Iterate through the list to attempt to find a
   // match.
   size_t const len = groups.size ();
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     {
       // It should be enough just to compare the group_entry pointers,
       // but that seems brittle.  Better to check a controlled value,
@@ -695,7 +695,7 @@ TAO_PG_ObjectGroupManager::get_object_group_position (
   // same location.  Iterate through the list to attempt to find a
   // match.
   size_t const len = groups.size ();
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     {
       // It should be enough just to compare the group_entry pointers,
       // but that seems brittle.  Better to check a controlled value,
@@ -1025,7 +1025,7 @@ TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
                                 CORBA::ADD_OVERRIDE);
 
   // Clean up the policy that was allocated in the try/catch
-  for (CORBA::ULong i = 0; i < policy_list.length (); ++i)
+  for (CORBA::ULong i {}; i < policy_list.length (); ++i)
     policy_list[i]->destroy ();
 
   try {

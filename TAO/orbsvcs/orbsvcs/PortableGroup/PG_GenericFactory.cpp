@@ -221,7 +221,7 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set &factory_set,
   size_t const len = factory_set.size ();
 
   size_t ilen = len;
-  for (size_t i = 0; i != len; ++i)
+  for (size_t i {}; i != len; ++i)
     {
       // Destroy the object group member in reverse order in case the
       // array list is only partially destroyed and another call to
@@ -285,7 +285,7 @@ TAO_PG_GenericFactory::delete_member (
       //
       // @todo This is linear search.  Change to use a container with
       //       better search times.
-      for (size_t i = 0; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           TAO_PG_Factory_Node &node = factory_set[i];
           PortableGroup::FactoryInfo const &info = node.factory_info;
@@ -350,7 +350,7 @@ TAO_PG_GenericFactory::populate_object_group (
   CORBA::ULong const factory_infos_count = factory_infos.length ();
   factory_set.resize (factory_infos_count);
 
-  for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
+  for (CORBA::ULong j {}; j < factory_infos_count; ++j)
     {
       TAO_PG_Factory_Node &factory_node = factory_set[j];
 
@@ -601,7 +601,7 @@ TAO_PG_GenericFactory::check_minimum_number_members (
 
       static PortableGroup::GenericFactory::FactoryCreationId const * const nil_fcid {};
 
-      for (size_t i = 0; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           TAO_PG_Factory_Node &node = factory_set[i];
 

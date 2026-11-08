@@ -540,7 +540,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 
   // now remove any roles that became empty
 
-  for (size_t nRole = 0; nRole < emptyRoles.size(); ++nRole)
+  for (size_t nRole {}; nRole < emptyRoles.size(); ++nRole)
   {
     ORBSVCS_ERROR((LM_INFO,
       "%s: Remove role %s\n",

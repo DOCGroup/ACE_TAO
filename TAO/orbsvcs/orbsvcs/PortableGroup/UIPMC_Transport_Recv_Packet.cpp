@@ -87,7 +87,7 @@ namespace TAO_PG
 
     // Since fragments are enumerated from 0 to last_fragment_id_ this
     // is the heaviest but the most reliable check for packet completeness.
-    for (CORBA::ULong id2 = 0; id2 <= this->last_fragment_id_; ++id2)
+    for (CORBA::ULong id2 {}; id2 <= this->last_fragment_id_; ++id2)
       {
         if (this->fragments_.find (id2) == -1)
           {
@@ -115,7 +115,7 @@ namespace TAO_PG
   void
   UIPMC_Recv_Packet::copy_data (char *buf) const
   {
-    for (CORBA::ULong id = 0; id <= this->last_fragment_id_; ++id)
+    for (CORBA::ULong id {}; id <= this->last_fragment_id_; ++id)
       {
         Fragment f = { 0, 0 };
         this->fragments_.find (id, f);

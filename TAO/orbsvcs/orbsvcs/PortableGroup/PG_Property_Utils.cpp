@@ -9,7 +9,7 @@ TAO_PG::get_property_value (PortableGroup::Name const & property_name,
                             PortableGroup::Value & property_value)
 {
   CORBA::ULong const len = properties.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = properties[i];
       if (property.nam == property_name)
@@ -45,7 +45,7 @@ TAO_PG::override_properties (
   //    if the length of the property sequence must be increased
   //    on-the-fly due to the allocations and copies incurred by such
   //    an operation.
-  for (CORBA::ULong i = 0; i < num_overrides; ++i)
+  for (CORBA::ULong i {}; i < num_overrides; ++i)
     {
       PortableGroup::Property const & override = overrides[i];
 

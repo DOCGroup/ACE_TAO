@@ -20,7 +20,7 @@ TAO_PG_Default_Property_Validator::validate_property (
 {
   CORBA::ULong const len = props.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
 
@@ -46,7 +46,7 @@ TAO_PG_Default_Property_Validator::validate_property (
                   property.nam,
                   property.val);
 
-              for (CORBA::ULong j = 0; j < flen; ++j)
+              for (CORBA::ULong j {}; j < flen; ++j)
                 {
                   PortableGroup::FactoryInfo const & factory_info =
                     (*factories)[j];
@@ -76,7 +76,7 @@ TAO_PG_Default_Property_Validator::validate_criteria (
   /// The invalid criteria index.
   CORBA::ULong p {};
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
 
@@ -101,7 +101,7 @@ TAO_PG_Default_Property_Validator::validate_criteria (
                 invalid_criteria[p++] = property;
               else
                 {
-                  for (CORBA::ULong j = 0; j < flen; ++j)
+                  for (CORBA::ULong j {}; j < flen; ++j)
                     {
                       PortableGroup::FactoryInfo const & factory_info =
                         (*factories)[j];

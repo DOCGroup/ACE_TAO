@@ -216,7 +216,7 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
   stream >> size;
 
   PortableGroup::ObjectGroupId group_id {};
-  for (ACE_UINT64 i = 0; i < size; ++i)
+  for (ACE_UINT64 i {}; i < size; ++i)
     {
       stream >> group_id;
       group_ids_.insert (group_id);

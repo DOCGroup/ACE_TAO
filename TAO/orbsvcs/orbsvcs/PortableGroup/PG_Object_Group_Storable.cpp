@@ -496,7 +496,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
 
   this->clear_members_map ();
 
-  for (int i = 0; i < num_members; ++i)
+  for (int i {}; i < num_members; ++i)
     {
       ///// location used as members_ key /////
       PortableGroup::Location the_location;

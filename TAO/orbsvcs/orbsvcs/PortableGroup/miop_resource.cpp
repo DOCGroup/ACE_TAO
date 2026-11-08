@@ -32,7 +32,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("TAO_MIOP_Resource_Factory::init");
 
-  for (int curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT ("-ORBFragmentsCleanupStrategy")) == 0)

@@ -63,7 +63,7 @@ namespace TAO
       ior->_stubobj ()->base_profiles ().profile_count ();
 
     // Go through every profile and set the TaggedComponent field
-    for (CORBA::ULong p_idx = 0; p_idx < count ; ++p_idx)
+    for (CORBA::ULong p_idx {}; p_idx < count ; ++p_idx)
       {
         // Get the tagged components in the profile
         TAO_Tagged_Components &tag_comp =
@@ -96,7 +96,7 @@ namespace TAO
     CORBA::ULong count =
       mprofile.profile_count ();
 
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
          i < count;
          i++)
       {

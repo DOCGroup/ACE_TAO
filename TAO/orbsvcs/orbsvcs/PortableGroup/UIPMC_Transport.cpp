@@ -25,8 +25,12 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (
 {
   // Replace the default wait strategy with our own
   // since we don't support waiting on anything.
-  delete this->ws_;
-  ACE_NEW (this->ws_, TAO_UIPMC_Wait_Never (this));
+  this->ws_.reset (new (std::nothrow) TAO_UIPMC_Wait_Never (this));
+  if (!this->ws_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
@@ -192,7 +196,7 @@ TAO_UIPMC_Transport::send (
 
   // Calculate the total number of bytes being sent.
   u_long bytes_to_send {};
-  for (int i = 0; i < iovcnt; ++i)
+  for (int i {}; i < iovcnt; ++i)
     bytes_to_send += iov[i].iov_len;
   if (!bytes_to_send)
     return 0; // Nothing to send, we are done.
