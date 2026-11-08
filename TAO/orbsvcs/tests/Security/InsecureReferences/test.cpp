@@ -5,6 +5,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"
 
+#include <array>
 #include <memory>
 
 struct InsecureReferences_Options
@@ -40,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[], InsecureReferences_Options &options)
           else
             {
               ACE_TCHAR *end {};
-              const long port = ACE_OS::strtol (argv[++c], &end, 10);
+              long const port = ACE_OS::strtol (argv[++c], &end, 10);
               if (end == argv[c] || *end != ACE_TEXT ('\0') || port < 1 || port > 65525)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("Port must be between 1 and 65525\n")),
@@ -66,14 +67,14 @@ parse_args (int argc, ACE_TCHAR *argv[], InsecureReferences_Options &options)
 int
 gen_objref (ACE_TCHAR *argv[], InsecureReferences_Options const &options)
 {
-  ACE_TCHAR first_endpoint[100] {};
-  ACE_TCHAR second_endpoint[100] {};
-  ACE_OS::snprintf (first_endpoint,
-                    sizeof (first_endpoint) / sizeof (first_endpoint[0]),
+  std::array<ACE_TCHAR, 100> first_endpoint {};
+  std::array<ACE_TCHAR, 100> second_endpoint {};
+  ACE_OS::snprintf (first_endpoint.data (),
+                    first_endpoint.size (),
                     ACE_TEXT ("iiop://localhost:%d"),
                     options.endpoint_port);
-  ACE_OS::snprintf (second_endpoint,
-                    sizeof (second_endpoint) / sizeof (second_endpoint[0]),
+  ACE_OS::snprintf (second_endpoint.data (),
+                    second_endpoint.size (),
                     ACE_TEXT ("iiop://localhost:%d"),
                     options.endpoint_port + 10);
 
@@ -82,19 +83,18 @@ gen_objref (ACE_TCHAR *argv[], InsecureReferences_Options const &options)
   ACE_ARGV orb_argv {};
   if (orb_argv.add (argv) == -1 ||
       orb_argv.add (first_option) == -1 ||
-      orb_argv.add (first_endpoint) == -1 ||
+      orb_argv.add (first_endpoint.data ()) == -1 ||
       orb_argv.add (second_option) == -1 ||
-      orb_argv.add (second_endpoint) == -1)
+      orb_argv.add (second_endpoint.data ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to build ORB argument list\n")), 1);
 
   int orb_argc = orb_argv.argc ();
   CORBA::ORB_var orb {};
-  CORBA::Object_var obj {};
   PortableServer::POA_var root_poa {};
   try
     {
       orb = CORBA::ORB_init (orb_argc, orb_argv.argv ());
-      obj = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
       root_poa = PortableServer::POA::_narrow (obj.in ());
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -107,8 +107,8 @@ gen_objref (ACE_TCHAR *argv[], InsecureReferences_Options const &options)
       return 1;
     }
 
-  CORBA::Object_var object = root_poa->create_reference ("IDL:JustATest:1.0");
-  CORBA::String_var ior = orb->object_to_string (object.in ());
+  CORBA::Object_var const object = root_poa->create_reference ("IDL:JustATest:1.0");
+  CORBA::String_var const ior = orb->object_to_string (object.in ());
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
     ACE_OS::fopen (options.ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
@@ -123,12 +123,10 @@ gen_objref (ACE_TCHAR *argv[], InsecureReferences_Options const &options)
 int
 parse_objref (int argc, ACE_TCHAR *argv[], InsecureReferences_Options const &options)
 {
-  CORBA::ORB_var orb {};
-  CORBA::Object_var obj {};
   try
     {
-      orb = CORBA::ORB_init (argc, argv);
-      obj = orb->string_to_object (options.ior_string);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::Object_var const obj = orb->string_to_object (options.ior_string);
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
