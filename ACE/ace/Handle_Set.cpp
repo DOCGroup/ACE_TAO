@@ -44,10 +44,10 @@ ACE_Handle_Set::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n[ ")));
 
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-  for (size_t i = 0; i < (size_t) this->mask_.fd_count + 1; i++)
+  for (size_t i {}; i < (size_t) this->mask_.fd_count + 1; ++i)
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %x "), this->mask_.fd_array[i]));
 #else /* !ACE_HANDLE_SET_USES_FD_ARRAY */
-  for (ACE_HANDLE i = 0; i < this->max_handle_ + 1; i++)
+  for (ACE_HANDLE i {}; i < this->max_handle_ + 1; ++i)
     if (this->is_set (i))
       ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %d "), i));
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
@@ -119,7 +119,7 @@ ACE_Handle_Set::count_bits (u_long n)
 {
  ACE_TRACE ("ACE_Handle_Set::count_bits");
 #if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
-  int rval = 0;
+  int rval {};
 
   // Count the number of enabled bits in <n>.  This algorithm is very
   // fast, i.e., O(enabled bits in n).
@@ -127,7 +127,7 @@ ACE_Handle_Set::count_bits (u_long n)
   for (u_long m = n;
        m != 0;
        m &= m - 1)
-    rval++;
+    ++rval;
 
   return rval;
 #else
@@ -145,7 +145,7 @@ ACE_Handle_Set::count_bits (u_long n)
 int
 ACE_Handle_Set::bitpos (u_long bit)
 {
-  int l = 0;
+  int l {};
   u_long n = bit - 1;
 
   // This is a fast count method when have the most significative bit.
@@ -167,7 +167,7 @@ ACE_Handle_Set::bitpos (u_long bit)
   while (n != 0)
     {
       n &= n - 1;
-      l++;
+      ++l;
     }
   return l;
 }

@@ -138,7 +138,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
       // nonblocking argument (1)
       // blocking:            (0)
       {
-        int nonblock = 0;
+        int nonblock {};
 #     if defined (ACE_LACKS_IOCTL)
         int dev_info;
         return ACE_OS::posix_devctl (handle, FIONBIO, &nonblock,

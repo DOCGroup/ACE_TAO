@@ -251,7 +251,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler (SVC_HANDLER *s
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler");
   // No errors initially
-  bool error = false;
+  bool error {};
 
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
@@ -483,9 +483,9 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_n
  ACE_TCHAR *failed_svc_handlers,
  const ACE_Synch_Options &synch_options)
 {
-  int result = 0;
+  int result {};
 
-  for (size_t i = 0; i < n; i++)
+  for (size_t i {}; i < n; ++i)
     {
       if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
           && !(synch_options[ACE_Synch_Options::USE_REACTOR]

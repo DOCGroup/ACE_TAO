@@ -39,7 +39,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   // XXX Can we (should we) include the scope id for IPv6 addresses?
   char hoststr[MAXHOSTNAMELEN+1];
 
-  bool result = false;
+  bool result {};
   if (ipaddr_format == 0)
     result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
   else
