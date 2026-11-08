@@ -2,23 +2,27 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 
-bool call_shutdown = false;
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  bool call_shutdown {};
+};
 
-int parse_args (int argc, ACE_TCHAR* argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
   {
     switch (c)
     {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'x':
-        call_shutdown = true;
+        options.call_shutdown = true;
         break;
       case '?':
       default:
@@ -33,18 +37,19 @@ int parse_args (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-int ACE_TMAIN( int argc, ACE_TCHAR* argv[] )
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize the ORB.
     CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     // Parse arguments.
-    if (parse_args (argc, argv) != 0)
+    Options options;
+    if (parse_args (argc, argv, options) != 0)
       return 1;
 
     // Read and destringify the Messenger object's IOR.
-    CORBA::Object_var const obj = orb->string_to_object (ior);
+    CORBA::Object_var const obj = orb->string_to_object (options.ior);
     if (CORBA::is_nil (obj.in ())) {
       std::cerr << "Could not get Messenger IOR." << std::endl;
       return 1;
@@ -58,20 +63,20 @@ int ACE_TMAIN( int argc, ACE_TCHAR* argv[] )
     }
 
     // Send a message the the Messenger object.
-    CORBA::String_var message = CORBA::string_dup( "Hello!" );
-    messenger->send_message( "TAO User", "TAO Test", message.inout() );
+    CORBA::String_var message = CORBA::string_dup ("Hello!");
+    messenger->send_message ("TAO User", "TAO Test", message.inout ());
 
     // Print the Messenger's reply.
-    std::cout << "Reply: " << message.in() << std::endl;
+    std::cout << "Reply: " << message.in () << std::endl;
 
     // Shutdown server?
-    if (call_shutdown)
+    if (options.call_shutdown)
     {
-      messenger->shutdown();
-      orb->perform_work();
+      messenger->shutdown ();
+      orb->perform_work ();
     }
 
-    orb->destroy();
+    orb->destroy ();
   }
   catch (CORBA::Exception const &ex) {
     std::cerr << "CORBA exception: " << ex << std::endl;

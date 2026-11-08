@@ -7,15 +7,6 @@
 #include <iostream>
 #include <fstream>
 
-ACE_TString ior_output_file = ACE_TEXT ("test.ior");
-
-// By default, shutdown when client calls Messenger::shutdown().
-MessengerServer::ShutdownMethod s_method =
-  MessengerServer::ShutdownMethod::client_call;
-
-int loop_iterations = 0;
-int timeout = 0;
-
 // Constructor.
 MessengerServer::MessengerServer (CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
@@ -91,35 +82,35 @@ void MessengerServer::shutdown_on_console_input ()
 }
 
 // parse arguments
-int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
+int MessengerServer::parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xp:t:cr:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
   {
     switch (c)
     {
       case 'x':
-        s_method = MessengerServer::ShutdownMethod::client_call;
+        options.shutdown_method = Options::ShutdownMethod::client_call;
         break;
       case 'p':
-        s_method = MessengerServer::ShutdownMethod::polling_loop;
-        loop_iterations = ACE_OS::atoi(get_opts.opt_arg());
+        options.shutdown_method = Options::ShutdownMethod::polling_loop;
+        options.loop_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 't':
-        s_method = MessengerServer::ShutdownMethod::timer;
-        timeout = ACE_OS::atoi(get_opts.opt_arg());
+        options.shutdown_method = Options::ShutdownMethod::timer;
+        options.timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'c':
-        s_method = MessengerServer::ShutdownMethod::console_input;
+        options.shutdown_method = Options::ShutdownMethod::console_input;
         break;
       case 'o':
-        ior_output_file = get_opts.optarg;
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'r':
-        s_method = MessengerServer::ShutdownMethod::run_time_value;
-        timeout = ACE_OS::atoi(get_opts.opt_arg());
+        options.shutdown_method = Options::ShutdownMethod::run_time_value;
+        options.timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -138,7 +129,6 @@ int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 // ------------------------------------------------------------------
 // main
 // ------------------------------------------------------------------
@@ -154,7 +144,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::make_unique<MessengerServer> (orb.in ());
 
     // Parse arguments to determine how we should shutdown.
-    if (server->parse_args (argc, argv) != 0)
+    MessengerServer::Options options;
+    if (MessengerServer::parse_args (argc, argv, options) != 0)
       return 1;
 
     //Get reference to the RootPOA.
@@ -174,39 +165,39 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa->activate_object (&messenger_servant);
     CORBA::Object_var const messenger_obj = poa->id_to_reference (oid.in ());
     CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
-    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ()));
+    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));
     ior_file << str.in () << std::endl;
     std::cout << "IOR written to file " <<
-      ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ()) << std::endl;
+      ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()) << std::endl;
 
-    switch (s_method)
+    switch (options.shutdown_method)
     {
       // shutdown on client invocation
-      case MessengerServer::ShutdownMethod::client_call:
+      case MessengerServer::Options::ShutdownMethod::client_call:
         std::cout << "Will shutdown on client invocation." << std::endl;
         server->run ();
         break;
 
       // shutdown after some iterations through loop
-      case MessengerServer::ShutdownMethod::polling_loop:
-        server->poll (loop_iterations);
+      case MessengerServer::Options::ShutdownMethod::polling_loop:
+        server->poll (options.loop_iterations);
         break;
 
       // schedule a timer to shutdown
-      case MessengerServer::ShutdownMethod::timer:
-        server->schedule_shutdown_timer (timeout);
+      case MessengerServer::Options::ShutdownMethod::timer:
+        server->schedule_shutdown_timer (options.timeout);
         server->run ();
         break;
 
       // shutdown on console input
-      case MessengerServer::ShutdownMethod::console_input:
+      case MessengerServer::Options::ShutdownMethod::console_input:
         server->shutdown_on_console_input ();
         server->run ();
         break;
 
       // use CORBA::ORB::run() with time value
-      case MessengerServer::ShutdownMethod::run_time_value:
-        server->run (timeout);
+      case MessengerServer::Options::ShutdownMethod::run_time_value:
+        server->run (options.timeout);
         break;
     }
   }

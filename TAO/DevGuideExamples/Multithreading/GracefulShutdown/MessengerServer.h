@@ -14,6 +14,23 @@ class MessengerShutdownTimer;
 class MessengerServer
 {
 public:
+  struct Options
+  {
+    enum class ShutdownMethod
+    {
+      client_call,
+      polling_loop,
+      timer,
+      console_input,
+      run_time_value
+    };
+
+    ShutdownMethod shutdown_method {ShutdownMethod::client_call};
+    ACE_TString ior_output_file {ACE_TEXT ("test.ior")};
+    int loop_iterations {};
+    int timeout {};
+  };
+
   //Constructor
   explicit MessengerServer (CORBA::ORB_ptr orb);
 
@@ -25,8 +42,7 @@ public:
   MessengerServer &operator= (MessengerServer const &) = delete;
   MessengerServer &operator= (MessengerServer &&) = delete;
 
-  // parse arguments
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  static int parse_args (int argc, ACE_TCHAR *argv[], Options &options);
 
   // run the ORB's event loop continuously
   void run ();
@@ -43,14 +59,6 @@ public:
 
   // spawn thread to monitor console and shutdown on console input
   void shutdown_on_console_input ();
-
-  enum class ShutdownMethod {
-    client_call,     // shutdown on client invocation
-    polling_loop,    // shutdown after some iterations through loop
-    timer,           // schedule a timer to shutdown
-    console_input,   // shutdown on console input
-    run_time_value   // use CORBA::ORB::run() with time value
-  };
 
   // Task to monitor console input.
   class ConsoleMonitor : public ACE_Task_Base
