@@ -21,7 +21,7 @@ namespace TAO
 
     CORBA::ULong const plen = policies.length ();
 
-    for (CORBA::ULong i = 0; i < plen; ++i)
+    for (CORBA::ULong i {}; i < plen; ++i)
       {
         CORBA::Policy_var policy = CORBA::Policy::_duplicate (policies[i]);
 

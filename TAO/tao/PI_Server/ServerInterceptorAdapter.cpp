@@ -255,7 +255,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
     {
       bool const is_remote_request = !server_request.collocated ();
 
-      for (size_t i = 0; i < server_request.interceptor_count (); ++i)
+      for (size_t i {}; i < server_request.interceptor_count (); ++i)
         {
           ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
@@ -312,7 +312,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
 
   // Unwind the stack.
   size_t const len = server_request.interceptor_count ();
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
       // invoked.  This is necessary to prevent an interceptor already
@@ -363,7 +363,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
     {
       // Unwind the flow stack.
       size_t const len = server_request.interceptor_count ();
-      for (size_t i = 0; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
           // invoked.  This is necessary to prevent an interceptor
@@ -454,7 +454,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
     {
       // Unwind the flow stack.
       size_t const len = server_request.interceptor_count ();
-      for (size_t i = 0; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
           // invoked.  This is necessary to prevent an interceptor
