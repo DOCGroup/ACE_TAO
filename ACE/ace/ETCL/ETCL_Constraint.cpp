@@ -167,7 +167,7 @@ ETCL_Literal_Constraint::operator const char* () const
 bool
 ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
 {
-  bool return_value = false;
+  bool return_value {};
   Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -199,7 +199,7 @@ ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
 bool
 ETCL_Literal_Constraint::operator< (const ETCL_Literal_Constraint & rhs)
 {
-  bool return_value = false;
+  bool return_value {};
   Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -231,7 +231,7 @@ ETCL_Literal_Constraint::operator< (const ETCL_Literal_Constraint & rhs)
 bool
 ETCL_Literal_Constraint::operator> (const ETCL_Literal_Constraint & rhs)
 {
-  bool return_value = false;
+  bool return_value {};
   Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
