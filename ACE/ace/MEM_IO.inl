@@ -5,26 +5,10 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE
-ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
-{
-}
-
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
 ACE_INLINE
-ACE_MT_MEM_IO::Simple_Queue::Simple_Queue ()
-  : mq_ (nullptr),
-    malloc_ (nullptr)
-{
-}
-
-ACE_INLINE
-ACE_MT_MEM_IO::ACE_MT_MEM_IO () = default;
-
-ACE_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (MQ_Struct *mq)
-  : mq_ (mq),
-    malloc_ (nullptr)
+  : mq_ (mq)
 {
 }
 
@@ -53,7 +37,7 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
       return -1;
     }
 
-  ssize_t retv = 0;
+  ssize_t retv {};
 
   ACE_SEH_TRY
     {
@@ -70,22 +54,12 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 }
 
 // Send an n byte message to the connected socket.
-ACE_INLINE
-ACE_MEM_IO::ACE_MEM_IO ()
-  : deliver_strategy_ (nullptr),
-    recv_buffer_ (nullptr),
-    buf_size_ (0),
-    cur_offset_ (0)
-{
-  // ACE_TRACE ("ACE_MEM_IO::ACE_MEM_IO");
-}
-
 ACE_INLINE ssize_t
 ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
-  if (this->deliver_strategy_ == nullptr)
+  if (!this->deliver_strategy_)
     return -1;
 
   // This method can only be called when <buf_size_> == <cur_offset_>.
@@ -96,7 +70,7 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
     this->deliver_strategy_->release_buffer (this->recv_buffer_);
 
   this->cur_offset_ = 0;
-  ssize_t retv = 0;
+  ssize_t retv {};
 
   if ((retv = this->deliver_strategy_->recv_buf (this->recv_buffer_,
                                                  flag,
@@ -108,12 +82,6 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
   return retv;
 }
 
-ACE_INLINE
-ACE_MEM_IO::~ACE_MEM_IO ()
-{
-  delete this->deliver_strategy_;
-}
-
 ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
                   size_t len,
@@ -122,7 +90,7 @@ ACE_MEM_IO::send (const void *buf,
 {
   ACE_TRACE ("ACE_MEM_IO::send");
 
-  if (this->deliver_strategy_ == nullptr)
+  if (!this->deliver_strategy_)
     {
       return 0;
     }
@@ -155,7 +123,7 @@ ACE_MEM_IO::recv (void *buf,
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
 
-  size_t count = 0;
+  size_t count {};
 
   size_t buf_len = this->buf_size_ - this->cur_offset_;
 

@@ -82,7 +82,7 @@ public:
 
   /// Perform operations that must occur after <ACE_OS::accept> is
   /// called.
-  int shared_accept_finish (ACE_MEM_Stream new_stream,
+  int shared_accept_finish (const ACE_MEM_Stream &new_stream,
                             int in_blocking_mode,
                             bool reset_new_handle) const;
 

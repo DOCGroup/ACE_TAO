@@ -27,14 +27,19 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/Process_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
 public:
-  ACE_Reactive_MEM_IO ();
-
-  ~ACE_Reactive_MEM_IO () override;
+  ACE_Reactive_MEM_IO () = default;
+  ~ACE_Reactive_MEM_IO () override = default;
+  ACE_Reactive_MEM_IO (ACE_Reactive_MEM_IO const &) = delete;
+  ACE_Reactive_MEM_IO (ACE_Reactive_MEM_IO &&) = delete;
+  ACE_Reactive_MEM_IO &operator= (ACE_Reactive_MEM_IO const &) = delete;
+  ACE_Reactive_MEM_IO &operator= (ACE_Reactive_MEM_IO &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
@@ -85,7 +90,7 @@ public:
   class Simple_Queue
   {
   public:
-    Simple_Queue ();
+    Simple_Queue () = default;
     explicit Simple_Queue (MQ_Struct *mq);
 
     int init (MQ_Struct *mq, ACE_MEM_SAP::MALLOC_TYPE *malloc);
@@ -94,20 +99,24 @@ public:
 
     ACE_MEM_SAP_Node *read ();
   private:
-    MQ_Struct *mq_;
-    ACE_MEM_SAP::MALLOC_TYPE *malloc_;
+    /// Queue and allocator are owned by the shared-memory delivery strategy.
+    MQ_Struct *mq_ {};
+    ACE_MEM_SAP::MALLOC_TYPE *malloc_ {};
   };
 
   struct Channel
   {
-    ACE_SYNCH_PROCESS_SEMAPHORE *sema_;
-    ACE_SYNCH_PROCESS_MUTEX *lock_;
+    std::unique_ptr<ACE_SYNCH_PROCESS_SEMAPHORE> sema_ {};
+    std::unique_ptr<ACE_SYNCH_PROCESS_MUTEX> lock_ {};
     Simple_Queue queue_;
   };
 
-  ACE_MT_MEM_IO ();
-
-  ~ACE_MT_MEM_IO () override;
+  ACE_MT_MEM_IO () = default;
+  ~ACE_MT_MEM_IO () override = default;
+  ACE_MT_MEM_IO (ACE_MT_MEM_IO const &) = delete;
+  ACE_MT_MEM_IO (ACE_MT_MEM_IO &&) = delete;
+  ACE_MT_MEM_IO &operator= (ACE_MT_MEM_IO const &) = delete;
+  ACE_MT_MEM_IO &operator= (ACE_MT_MEM_IO &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
@@ -171,10 +180,12 @@ class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
   /// Constructor.
-  ACE_MEM_IO ();
-
-  /// Destructor.
-  ~ACE_MEM_IO ();
+  ACE_MEM_IO () = default;
+  ~ACE_MEM_IO () = default;
+  ACE_MEM_IO (ACE_MEM_IO const &) = delete;
+  ACE_MEM_IO (ACE_MEM_IO &&) = delete;
+  ACE_MEM_IO &operator= (ACE_MEM_IO const &) = delete;
+  ACE_MEM_IO &operator= (ACE_MEM_IO &&) = delete;
 
   using Signal_Strategy = enum
   {
@@ -285,16 +296,16 @@ private:
   ssize_t fetch_recv_buf (int flag, const ACE_Time_Value *timeout);
 
   /// Actual deliverying mechanism.
-  ACE_MEM_SAP *deliver_strategy_;
+  std::unique_ptr<ACE_MEM_SAP> deliver_strategy_ {};
 
-  /// Internal pointer for support recv/send.
-  ACE_MEM_SAP_Node *recv_buffer_;
+  /// Buffer currently leased from the delivery strategy; release it through that strategy.
+  ACE_MEM_SAP_Node *recv_buffer_ {};
 
   /// Record the current total buffer size of <recv_buffer_>.
-  ssize_t buf_size_;
+  ssize_t buf_size_ {};
 
   /// Record the current read pointer location in <recv_buffer_>.
-  ssize_t cur_offset_;
+  ssize_t cur_offset_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

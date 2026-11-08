@@ -225,7 +225,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 }
 
 int
-ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
+ACE_MEM_Acceptor::shared_accept_finish (const ACE_MEM_Stream &new_stream,
                                         int in_blocking_mode,
                                         bool reset_new_handle) const
 {
