@@ -31,13 +31,13 @@ public:
   ACE_Condition_Attributes &operator= (ACE_Condition_Attributes &&) = delete;
 
   /// Constructor
-  ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
+  explicit ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   /// Destructor
   ~ACE_Condition_Attributes ();
 
   /// Accessor for retrieving the current attributes
-  const ACE_condattr_t& attributes () const;
+  ACE_condattr_t const &attributes () const;
 
 protected:
   /// The attributes
@@ -54,7 +54,7 @@ public:
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
   /// Constructor
-  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
+  explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
     : ACE_Condition_Attributes (type)
   {}
 
@@ -75,7 +75,7 @@ public:
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
   /// Constructor
-  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
+  explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   /// Destructor
   ~ACE_Condition_Attributes_T () = default;

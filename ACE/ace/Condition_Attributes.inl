@@ -14,7 +14,7 @@ ACE_Condition_Attributes::~ACE_Condition_Attributes ()
 }
 
 ACE_INLINE
-const ACE_condattr_t&
+ACE_condattr_t const &
 ACE_Condition_Attributes::attributes () const
 {
   return this->attributes_;

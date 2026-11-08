@@ -42,11 +42,11 @@ public:
   ACE_Condition &operator= (ACE_Condition &&) = delete;
 
   /// Initialize the condition variable with a recursive mutex.
-  ACE_Condition (ACE_Recursive_Thread_Mutex &m);
+  explicit ACE_Condition (ACE_Recursive_Thread_Mutex &m);
 
   /// Initialize the condition variable.
   ACE_Condition (ACE_Recursive_Thread_Mutex &m,
-                 const ACE_Condition_Attributes &attributes);
+                 ACE_Condition_Attributes const &attributes);
 
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
@@ -64,7 +64,7 @@ public:
    * != 0 and the call times out before the condition is signaled
    * <wait> returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime = nullptr);
+  int wait (ACE_Time_Value const *abstime = nullptr);
 
   /**
    * Block on condition or until absolute time-of-day has passed.  If
@@ -75,7 +75,7 @@ public:
    * and sets errno to ETIME.
    */
   int wait (ACE_Recursive_Thread_Mutex &mutex,
-            const ACE_Time_Value *abstime = nullptr);
+            ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();

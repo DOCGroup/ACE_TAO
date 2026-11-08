@@ -57,14 +57,14 @@ public:
   ACE_Condition &operator= (ACE_Condition &&) = delete;
 
   /// Initialize the condition variable.
-  ACE_Condition (ACE_Thread_Mutex &m,
-                 const ACE_TCHAR *name = nullptr,
-                 void *arg = nullptr);
+  explicit ACE_Condition (ACE_Thread_Mutex &m,
+                          ACE_TCHAR const *name = nullptr,
+                          void *arg = nullptr);
 
   /// Initialize the condition variable.
   ACE_Condition (ACE_Thread_Mutex &m,
-                 const ACE_Condition_Attributes &attributes,
-                 const ACE_TCHAR *name = nullptr,
+                 ACE_Condition_Attributes const &attributes,
+                 ACE_TCHAR const *name = nullptr,
                  void *arg = nullptr);
 
   /// Implicitly destroy the condition variable.
@@ -83,7 +83,7 @@ public:
    * != 0 and the call times out before the condition is signaled
    * wait() returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime);
+  int wait (ACE_Time_Value const *abstime);
 
   /// Block on condition.
   int wait ();
@@ -96,7 +96,7 @@ public:
    * call times out before the condition is signaled <wait> returns -1
    * and sets errno to ETIME.
    */
-  int wait (ACE_Thread_Mutex &mutex, const ACE_Time_Value *abstime = nullptr);
+  int wait (ACE_Thread_Mutex &mutex, ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
