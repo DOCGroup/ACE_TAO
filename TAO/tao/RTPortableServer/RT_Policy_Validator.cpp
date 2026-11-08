@@ -80,7 +80,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
 
   for (CORBA::ULong j = 0; j < protocols.length (); ++j)
     {
-      bool found = false;
+      bool found {};
       CORBA::ULong const protocol_type = protocols[j].protocol_type;
 
       if (this->thread_pool_)
@@ -231,13 +231,13 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // Check 3.
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
         {
-          int match = 0;
+          bool match {};
           for (CORBA::ULong i = 0; i < bands.length (); ++i)
             {
               if (priority <= bands[i].high &&
                   priority >= bands[i].low)
                 {
-                  match = 1;
+                  match = true;
                   break;
                 }
             }
@@ -267,17 +267,17 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
            band < bands.length ();
            ++band)
         {
-          int match = 0;
+          bool match {};
           for (CORBA::ULong lane = 0;
                lane != this->thread_pool_->number_of_lanes () && !match;
                ++lane)
             {
-              CORBA::Short lane_priority =
+              CORBA::Short const lane_priority =
                 lanes[lane]->lane_priority ();
 
               if (lane_priority <= bands[band].high &&
                   lane_priority >= bands[band].low)
-                match = 1;
+                match = true;
             }
           if (!match)
             throw PortableServer::POA::InvalidPolicy ();
@@ -306,17 +306,17 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       TAO_Thread_Lane **lanes =
         this->thread_pool_->lanes ();
 
-      int match = 0;
+      bool match {};
       for (CORBA::ULong lane = 0;
            lane != this->thread_pool_->number_of_lanes () && !match;
            ++lane)
         {
-          CORBA::Short lane_priority =
+          CORBA::Short const lane_priority =
             lanes[lane]->lane_priority ();
 
           if (lane_priority <= priority &&
               lane_priority >= priority)
-            match = 1;
+            match = true;
         }
       if (!match)
         throw PortableServer::POA::InvalidPolicy ();
@@ -455,11 +455,11 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
       if (acceptor == nullptr)
         continue;
 
-      CORBA::ULong current_length = protocols.length ();
+      CORBA::ULong const current_length = protocols.length ();
 
       // Make sure that this protocol is not already in the protocol
       // list.
-      bool protocol_already_present = false;
+      bool protocol_already_present {};
       for (CORBA::ULong i = 0;
            i < current_length && !protocol_already_present;
            ++i)

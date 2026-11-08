@@ -313,7 +313,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
-  bool error = false;
+  bool error {};
 
   // Count the number of endpoints.
   size_t const profile_count = this->endpoint_count ();
@@ -359,7 +359,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   if (!error)
     result = filter->encode_endpoints (mprofile);
   if (result == -1)
-    error = 1;
+    error = true;
 
   if (error)
     throw ::CORBA::INTERNAL (
@@ -385,7 +385,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
 size_t
 TAO_RT_POA::endpoint_count ()
 {
-  size_t profile_count = 0;
+  size_t profile_count {};
 
   TAO_Thread_Lane **lanes =
     this->thread_pool_->lanes ();

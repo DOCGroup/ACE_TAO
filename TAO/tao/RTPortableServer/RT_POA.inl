@@ -49,7 +49,7 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
 
   while (true)
     {
-      bool wait_occurred_restart_call = false;
+      bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (0);
@@ -80,7 +80,7 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
 
   while (true)
     {
-      bool wait_occurred_restart_call = false;
+      bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD;
