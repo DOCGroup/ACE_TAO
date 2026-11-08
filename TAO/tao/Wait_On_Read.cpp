@@ -73,7 +73,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
   // Do the same sort of looping that is done in other wait
   // strategies.
-  int retval = 0;
+  int retval {};
   TAO_Resume_Handle rh;
   while (1)
     {

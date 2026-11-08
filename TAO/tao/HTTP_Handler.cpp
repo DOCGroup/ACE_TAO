@@ -95,10 +95,10 @@ TAO_HTTP_Reader::send_request ()
 int
 TAO_HTTP_Reader::receive_reply ()
 {
-  size_t num_recvd = 0;
+  size_t num_recvd {};
   char buf [MTU+1];
   char *buf_ptr {};
-  size_t bytes_read = 0;
+  size_t bytes_read {};
 
   // Receive the first MTU bytes and strip the header off.
   // Note that we assume that the header will fit into MTU bytes.

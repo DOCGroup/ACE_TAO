@@ -87,7 +87,7 @@ operator>> (istream &is, CORBA::WString_var &wsv)
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      CORBA::WChar wc = 0;
+      CORBA::WChar wc {};
 
       // Unformatted input is used to work around overloaded
       // extraction operator (>>) ambiguities on some platforms.
@@ -126,7 +126,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      CORBA::WChar wc = 0;
+      CORBA::WChar wc {};
 
       // Unformatted input is used to work around overloaded
       // extraction operator (>>) ambiguities on some platforms.

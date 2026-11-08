@@ -112,7 +112,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // point.
   TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
 
-  int result = 0;
+  int result {};
 
   // Do we need to create threads?
   if (f->activate_server_connections ())

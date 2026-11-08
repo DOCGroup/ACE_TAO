@@ -75,7 +75,7 @@ namespace TAO
           }
         else
           {
-            bool is_forwarded = false;
+            bool is_forwarded {};
 
             this->effective_target ()->_servant()->_collocated_dispatch (
                            this->effective_target (),

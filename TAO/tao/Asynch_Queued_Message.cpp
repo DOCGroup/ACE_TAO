@@ -35,7 +35,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   ACE_NEW (buffer, char[this->size_]);
   this->buffer_.reset (buffer);
 
-  size_t copy_offset = 0;
+  size_t copy_offset {};
   for (ACE_Message_Block const *i = contents;
        i != nullptr;
        i = i->cont ())

@@ -130,7 +130,7 @@ namespace TAO
   bool
   Invocation_Adapter::get_timeout (TAO_Stub *stub, ACE_Time_Value &timeout)
   {
-    bool has_timeout = false;
+    bool has_timeout {};
     this->target_->orb_core ()->call_timeout_hook (stub, has_timeout, timeout);
 
     return has_timeout;
@@ -204,7 +204,7 @@ namespace TAO
           // Grab the syncscope policy from the ORB.
           Messaging::SyncScope sync_scope;
 
-          bool has_synchronization = false;
+          bool has_synchronization {};
 
           stub->orb_core ()->call_sync_scope_hook (stub,
                                                    has_synchronization,
@@ -364,7 +364,7 @@ namespace TAO
     // in order to obtain the profiles.
     TAO_Stub *stubobj {};
 
-    bool nil_forward_ref = false;
+    bool nil_forward_ref {};
     if (CORBA::is_nil (effective_target.in ()))
       nil_forward_ref = true;
     else

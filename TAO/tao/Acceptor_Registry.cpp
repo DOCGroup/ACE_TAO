@@ -37,7 +37,7 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 size_t
 TAO_Acceptor_Registry::endpoint_count ()
 {
-  size_t count = 0;
+  size_t count {};
   for (std::unique_ptr<TAO_Acceptor> const& acceptor : this->acceptors_)
     {
       count += acceptor->endpoint_count ();
@@ -141,7 +141,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
   // Count the maximum number of endpoints in the set.  This will be
   // the maximum number of acceptors that need to be created.
-  size_t acceptor_count = 0;
+  size_t acceptor_count {};
   for (ACE_CString const& iop : endpoint_set)
     {
       // IOP://address1,address2
@@ -255,7 +255,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       TAO_ProtocolFactorySetItor const end =
         orb_core->protocol_factories ()->end ();
 
-      bool found = false;
+      bool found {};
       // If usable protocol (factory) is found then this will be
       // set equal to true.
 
@@ -314,7 +314,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 {
   // Flag that indicates at least one endpoint was opened.  If one
   // wasn't opened then there is a problem.
-  bool opened_endpoint = false;
+  bool opened_endpoint {};
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
   OSVERSIONINFO vinfo;
@@ -331,7 +331,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
 
       // Number of acceptors to set up
-      size_t acceptor_count = 0;
+      size_t acceptor_count {};
 
       TAO_ProtocolFactorySetItor const end = pfs->end ();
 

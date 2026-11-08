@@ -144,7 +144,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
 TAO_Profile *
 TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 {
-  CORBA::ULong tag = 0;
+  CORBA::ULong tag {};
 
   // If there is an error we abort.
   if (!(cdr >> tag))
@@ -205,7 +205,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 
   // ProfileData is encoded as a sequence of octet. So first get the
   // length of the sequence.
-  CORBA::ULong encap_len = 0;
+  CORBA::ULong encap_len {};
   if (!(cdr >> encap_len))
   {
     TAOLIB_ERROR ((LM_ERROR,

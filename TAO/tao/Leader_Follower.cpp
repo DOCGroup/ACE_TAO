@@ -90,7 +90,7 @@ TAO_Leader_Follower::elect_new_leader_i ()
 int
 TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
   TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   // Note that we are waiting.
@@ -264,7 +264,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // with debugging level on we are on a sticky wicket. Hopefully none
   // of our users should run TAO with debugging enabled like they did
   // in PathFinder
-  size_t t_id = 0;
+  size_t t_id {};
 
   if (TAO_debug_level && transport != nullptr)
   {

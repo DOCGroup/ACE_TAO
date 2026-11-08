@@ -419,7 +419,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
   // The outer loop steps through each preferred interface directive
   // and chains a new endpoint if the remote interface matches the
   // current endpoint.
-  ACE_CString::size_type index = 0;
+  ACE_CString::size_type index {};
   while (index < csv_preferred.length ())
     {
       ACE_CString::size_type comma = csv_preferred.find (',', index);

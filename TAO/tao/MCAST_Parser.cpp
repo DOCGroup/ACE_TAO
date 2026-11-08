@@ -113,7 +113,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
   ACE_SOCK_Stream stream;
   ACE_SOCK_Dgram dgram;
 
-  ssize_t result = 0;
+  ssize_t result {};
 
   // Bind listener to any port and then find out what the port was.
 #if defined (ACE_HAS_IPV6)
@@ -363,7 +363,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
 
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
 
   // Check if this is an mcast address containing a
   // decimal IPv6 address representation.

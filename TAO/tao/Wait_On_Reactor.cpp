@@ -29,7 +29,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
     this->transport_->orb_core ()->leader_follower ();
 
   // Do the event loop, till we fully receive a reply.
-  int result = 0;
+  int result {};
 
   while (1)
     {

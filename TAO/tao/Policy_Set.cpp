@@ -148,7 +148,7 @@ TAO_Policy_Set::set_policy_overrides (CORBA::PolicyList const &policies,
 
   // Flag, indicating whether we have already overridden
   // RTCORBA::ServerProtocolPolicy during this call.
-  bool server_protocol_set = false;
+  bool server_protocol_set {};
 
   CORBA::ULong const plen = policies.length ();
 
@@ -195,7 +195,7 @@ TAO_Policy_Set::set_policy (CORBA::Policy_ptr const policy)
 
   CORBA::Policy_var copy = policy->copy ();
 
-  CORBA::ULong j = 0;
+  CORBA::ULong j {};
   CORBA::ULong const length = this->policy_list_.length ();
 
   while (j != length)
@@ -257,7 +257,7 @@ TAO_Policy_Set::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 
   CORBA::PolicyList_var policy_list (policy_list_ptr);
   policy_list->length (slots);
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
   for (CORBA::ULong j = 0; j < slots; ++j)
     {

@@ -274,7 +274,7 @@ public:
       }
     else
       {
-        size_t offset = 0;
+        size_t offset {};
         for (const ACE_Message_Block *i = rhs.mb_; i != nullptr; i = i->cont ())
           {
             std::memcpy (tmp.buffer_ + offset,

@@ -66,7 +66,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
     {
       // The position of the seperator between the obj_addr and key
       // string
-      ACE_CString::size_type pos_seperator = 0;
+      ACE_CString::size_type pos_seperator {};
 
       ACE_CString corbaname_str (corbaname, nullptr, 1);
 

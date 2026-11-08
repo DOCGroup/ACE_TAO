@@ -38,7 +38,7 @@ TAO_Service_Context_Registry::generate_service_context (
   TAO_Target_Specification &spec,
   TAO_OutputCDR &msg)
 {
-  int result = 0;
+  int result {};
   for (Table::value_type const &entry : this->registry_)
     {
       if (entry.second->generate_service_context (

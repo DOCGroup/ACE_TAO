@@ -52,7 +52,7 @@ void
 TAO_Adapter_Registry::insert (TAO_Adapter *adapter)
 {
   int const priority = adapter->priority ();
-  adapter_container_type::difference_type insertion_offset = 0;
+  adapter_container_type::difference_type insertion_offset {};
   adapter_container_type::const_iterator position = this->adapters_.begin ();
   for (; position != this->adapters_.end (); ++position, ++insertion_offset)
     {

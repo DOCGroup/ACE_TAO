@@ -109,7 +109,7 @@ namespace TAO
   bool
   LocateRequest_Invocation_Adapter::get_timeout (ACE_Time_Value &timeout)
   {
-    bool has_timeout = false;
+    bool has_timeout {};
     this->target_->orb_core ()->call_timeout_hook (this->target_->_stubobj (),
                                                    has_timeout,
                                                    timeout);
@@ -127,7 +127,7 @@ namespace TAO
     // in order to obtain the profiles.
     TAO_Stub *stubobj {};
 
-    bool nil_forward_ref = false;
+    bool nil_forward_ref {};
     if (CORBA::is_nil (effective_target.in ()))
       nil_forward_ref = true;
     else

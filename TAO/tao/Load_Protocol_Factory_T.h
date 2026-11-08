@@ -40,7 +40,7 @@ namespace TAO
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the
       // TAO_Protocol_Item.
-      bool transfer_ownership = false;
+      bool transfer_ownership {};
 
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (

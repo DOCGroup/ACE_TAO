@@ -195,7 +195,7 @@ TAO::Storable_File_Guard::peer ()
 int
 TAO::Storable_File_Guard::load ()
 {
-  int result = 0;
+  int result {};
   if (!this->use_backup_)
     { // Not using a backup file. Just attempt to
       // load from the stream and return.

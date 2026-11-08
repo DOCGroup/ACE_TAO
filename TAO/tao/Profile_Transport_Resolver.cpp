@@ -187,7 +187,7 @@ namespace TAO
       {
         // Determine the sync scope (if any)
         Messaging::SyncScope sync_scope;
-        bool has_synchronization = false;
+        bool has_synchronization {};
         this->stub_->orb_core ()->call_sync_scope_hook (this->stub_,
                                                         has_synchronization,
                                                         sync_scope);
@@ -214,7 +214,7 @@ namespace TAO
   Profile_Transport_Resolver::get_connection_timeout (
     ACE_Time_Value &max_wait_time)
   {
-    bool is_conn_timeout = false;
+    bool is_conn_timeout {};
 
     // Check for the connection timout policy in the ORB
     this->stub_->orb_core ()->connection_timeout (this->stub_,

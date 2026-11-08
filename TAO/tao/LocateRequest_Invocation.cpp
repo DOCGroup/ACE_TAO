@@ -185,7 +185,7 @@ namespace TAO
           // We have received an exception with a request to change the
           // addressing mode. First let us read the mode that the
           // server/agent asks for.
-          CORBA::Short addr_mode = 0;
+          CORBA::Short addr_mode {};
 
           if (cdr.read_short (addr_mode) == 0)
             {

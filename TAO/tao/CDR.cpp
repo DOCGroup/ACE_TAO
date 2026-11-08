@@ -227,10 +227,10 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
 int
 TAO_OutputCDR::offset (char* pos)
 {
-  int offset = 0;
+  int offset {};
   const ACE_Message_Block * cur_mb = this->begin ();
   char* wr_ptr = this->current ()->wr_ptr ();
-  bool found = false;
+  bool found {};
 
   while (cur_mb != this->end ())
   {

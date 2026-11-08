@@ -177,7 +177,7 @@ int
 TAO::Storable_FlatFileStream::open()
 {
   // For now, three flags exist "r", "w",  and "c"
-  int flags = 0;
+  int flags {};
   const char *fdmode {};
   if( std::strchr(mode_.c_str(), 'r') )
     if( std::strchr(mode_.c_str(), 'w') )
@@ -248,7 +248,7 @@ TAO::Storable_FlatFileStream::close()
 int
 TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
 {
-  int result = 0;
+  int result {};
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (whence);
   ACE_UNUSED_ARG (start);
@@ -256,7 +256,7 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
 #else
   bool shared = std::strcmp(mode_.c_str(), "r") == 0;
   result = -1;
-  bool retry = false;
+  bool retry {};
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && result != 0;
        attempts--)
@@ -292,14 +292,14 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
 int
 TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
 {
-  int result = 0;
+  int result {};
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (whence);
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
   result = -1;
-  bool retry = false;
+  bool retry {};
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && result != 0;
        attempts--)
@@ -333,11 +333,11 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
 time_t
 TAO::Storable_FlatFileStream::last_changed ()
 {
-  time_t mtime = 0;
+  time_t mtime {};
   int result = -1;
   if (filelock_.handle_ != ACE_INVALID_HANDLE)
     {
-      bool retry = false;
+      bool retry {};
       result = -1;
       for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
            attempts > 0 && result != 0;
@@ -419,7 +419,7 @@ TAO::Storable_FlatFileStream::operator << (std::string const &str)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (std::string &str)
 {
-  int bufSize = 0;
+  int bufSize {};
   std::string::size_type const max_buf_len =
     ACE_Numeric_Limits<std::string::size_type>::max ();
   int const max_int = ACE_Numeric_Limits<int>::max ();
@@ -577,7 +577,7 @@ TAO::Storable_FlatFileStream::create_backup ()
       return 0;
     }
 
-  bool retry = false;
+  bool retry {};
   int result = -1;
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && result < 0;
@@ -700,7 +700,7 @@ TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (std::string const &dire
 bool
 TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
 {
-  bool ret = false;
+  bool ret {};
 #if defined (ACE_HAS_MNTENT)
   const char *dir = directory.c_str();
   char rpath [PATH_MAX];
@@ -735,7 +735,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
       std::strcpy (pos, directory.c_str ());
       dir = rpath;
     }
-  size_t match = 0;
+  size_t match {};
   size_t dirlen = std::strlen(dir);
   struct mntent *ent {};
   const char *fname = "/etc/mtab";
