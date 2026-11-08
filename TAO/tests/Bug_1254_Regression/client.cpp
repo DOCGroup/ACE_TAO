@@ -1,18 +1,22 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Client_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -32,27 +36,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var const orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Client_Options options;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var const tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object (orb->string_to_object (options.ior));
 
-      BlobServer_var const blob_server = BlobServer::_narrow (tmp.in ());
+      BlobServer_var const blob_server (BlobServer::_narrow (object.in ()));
       if (CORBA::is_nil (blob_server.in ()))
-      {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             ior),
-                            1);
-      }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Nil BlobServer reference <%s>\n"),
+                           options.ior),
+                          1);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test\n"));
 
-      BlobType1 blob1;
+      BlobType1 blob1 {};
 
       blob1.length (16384);
       for (CORBA::ULong i {}; i < blob1.length (); ++i)
@@ -60,7 +61,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           blob1[i] = static_cast<CORBA::Octet> (i & 0xff);
         }
 
-      BlobType2 blob2;
+      BlobType2 blob2 {};
 
       blob_server->test (blob1, blob2);
 
@@ -71,7 +72,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (blob1[i] != static_cast<CORBA::Octet> ('A' + i))
             {
               ACE_ERROR ((LM_ERROR,
-                         "Error invalid value detected on position <%d> in blob1\n",
+                         "Error invalid value detected on position <%u> in blob1\n",
                          i));
             }
         }
@@ -81,7 +82,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
          if (blob2[i] != static_cast<CORBA::Octet> ('A' + i))
            {
              ACE_ERROR ((LM_ERROR,
-                        "Error invalid value detected on position <%d> in blob2\n",
+                        "Error invalid value detected on position <%u> in blob2\n",
                         i));
            }
         }

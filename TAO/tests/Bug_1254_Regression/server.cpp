@@ -2,19 +2,23 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Server_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -34,8 +38,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var const orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -51,34 +54,32 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       BlobServerImpl *blob_impl {};
       ACE_NEW_RETURN (blob_impl,
                       BlobServerImpl (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer (blob_impl);
+      PortableServer::ServantBase_var const owner_transfer (blob_impl);
 
-      PortableServer::ObjectId_var const id =
-        root_poa->activate_object (blob_impl);
+      PortableServer::ObjectId_var const id (root_poa->activate_object (blob_impl));
 
-      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object (root_poa->id_to_reference (id.in ()));
 
-      BlobServer_var const blob =
-        BlobServer::_narrow (object.in ());
+      BlobServer_var const blob (BlobServer::_narrow (object.in ()));
 
-      CORBA::String_var const ior =
-        orb->object_to_string (blob.in ());
+      CORBA::String_var const ior (orb->object_to_string (blob.in ()));
 
       // Write the IOR before activating the POA manager.
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             ior_output_file),
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                             options.ior_output_file),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
