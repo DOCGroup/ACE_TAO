@@ -290,8 +290,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 
   RTScheduling::Current::IdType_var guid_var;
   char *name {};
-  CORBA::Policy_var sched_param = nullptr;
-  CORBA::Policy_var implicit_sched_param = nullptr;
+  CORBA::Policy_var sched_param {};
+  CORBA::Policy_var implicit_sched_param {};
 
   TAO_RTScheduler_Current_i *new_current {};
   ACE_NEW_THROW_EX (new_current,
