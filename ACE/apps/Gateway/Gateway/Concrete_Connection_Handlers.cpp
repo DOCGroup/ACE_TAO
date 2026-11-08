@@ -143,7 +143,7 @@ Consumer_Handler::send (ACE_Message_Block *event)
 int
 Consumer_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *event = nullptr;
+  ACE_Message_Block *event {};
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%t) Receiver signalled 'resume transmission' %d\n"),
@@ -485,7 +485,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 int
 Supplier_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_Message_Block *event_key = nullptr;
+  ACE_Message_Block *event_key {};
 
   switch (this->recv (event_key))
     {
@@ -649,7 +649,7 @@ Thr_Consumer_Handler::svc ()
       // Since this method runs in its own thread it is OK to block on
       // output.
 
-      for (ACE_Message_Block *mb = nullptr;
+      for (ACE_Message_Block *mb {};
            this->msg_queue ()->dequeue_head (mb) != -1;
            )
         if (this->send (mb) == -1)

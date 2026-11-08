@@ -26,7 +26,7 @@ Event_Forwarding_Discriminator::find (Event_Key event_addr,
 int
 Event_Forwarding_Discriminator::unbind (Event_Key event_addr)
 {
-  Consumer_Dispatch_Set *cds = nullptr;
+  Consumer_Dispatch_Set *cds {};
   int result = this->map_.unbind (event_addr, cds);
   delete cds;
   return result;

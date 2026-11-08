@@ -8,9 +8,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/os_include/os_fcntl.h"
 
-
 // Static initialization.
-Options *Options::instance_ = nullptr;
+Options *Options::instance_ {};
 
 // Let's have a usage prompt.
 void
