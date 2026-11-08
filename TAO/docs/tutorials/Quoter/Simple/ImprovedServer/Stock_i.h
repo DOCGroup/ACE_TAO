@@ -18,9 +18,9 @@ public:
                   char const *full_name,
                   CORBA::Double price);
 
-  char *symbol ();
-  char *full_name ();
-  CORBA::Double price ();
+  char *symbol () override;
+  char *full_name () override;
+  CORBA::Double price () override;
 
   Quoter_Stock_i (Quoter_Stock_i const &) = delete;
   Quoter_Stock_i (Quoter_Stock_i &&) = delete;
