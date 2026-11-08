@@ -24,8 +24,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // Determine how many profiles we have
   // Get an estimate of the size - pfile count could change since we
   // neither lock nor get a copy in this loop.
-  CORBA::ULong i, count=0;
-  for (i = 0; i < iors.length (); i++)
+  CORBA::ULong count {};
+  for (CORBA::ULong i {}; i < iors.length (); ++i)
     {
       count += iors[i]->_stubobj ()->base_profiles ().profile_count ();
     }
@@ -46,7 +46,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   CORBA::String_var id =
     CORBA::string_dup (iors[0]->_stubobj ()->type_id.in ());
 
-  for (i = 1; i < iors.length () ; i++)
+  for (CORBA::ULong i {1}; i < iors.length (); ++i)
     {
       // this gets a copy of the MProfile, hence the auto_ptr;
       tmp_pfiles.reset (iors[i]->_stubobj ()->make_profiles ());
