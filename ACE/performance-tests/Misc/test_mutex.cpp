@@ -93,23 +93,19 @@ Thread_Mutex::release ()
 class Mutex_Base
 {
 public:
-  virtual ~Mutex_Base ();
+  virtual ~Mutex_Base () = default;
   virtual int acquire () = 0;
   virtual int release () = 0;
 };
-
-Mutex_Base::~Mutex_Base ()
-{
-}
 
 // Subclass for threaded mutex, defines virtual functions.
 class Thread_Mutex_Derived : public Mutex_Base
 {
 public:
   Thread_Mutex_Derived ();
-  virtual ~Thread_Mutex_Derived ();
-  virtual int acquire ();
-  virtual int release ();
+  ~Thread_Mutex_Derived () override;
+  int acquire () override;
+  int release () override;
 
 private:
   ACE_mutex_t mutex_;

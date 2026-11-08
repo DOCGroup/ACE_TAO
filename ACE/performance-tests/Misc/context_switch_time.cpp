@@ -74,9 +74,9 @@ class Low_Priority_Null_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Low_Priority_Null_Task ();
-  virtual ~Low_Priority_Null_Task ();
+  ~Low_Priority_Null_Task () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   // Called by other task:  it returns when this task is ready to
   // continue.
@@ -112,10 +112,6 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
 #endif /* ACE_DEBUG_CST */
-}
-
-Low_Priority_Null_Task::~Low_Priority_Null_Task()
-{
 }
 
 int
@@ -160,9 +156,9 @@ class Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Suspend_Resume_Test (const ACE_UINT32 iterations);
-  virtual ~Suspend_Resume_Test ();
+  ~Suspend_Resume_Test () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
@@ -193,10 +189,6 @@ Suspend_Resume_Test::Suspend_Resume_Test (const ACE_UINT32 iterations) :
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
     ACE_OS::perror (ACE_TEXT("activate"));
-}
-
-Suspend_Resume_Test::~Suspend_Resume_Test()
-{
 }
 
 int
@@ -262,9 +254,9 @@ class High_Priority_Simple_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   High_Priority_Simple_Task ();
-  virtual ~High_Priority_Simple_Task ();
+  ~High_Priority_Simple_Task () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   // called by other task:  it returns when this task is ready to
   // continue
@@ -303,10 +295,6 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
 #endif /* ACE_DEBUG_CST */
-}
-
-High_Priority_Simple_Task::~High_Priority_Simple_Task()
-{
 }
 
 int
@@ -369,9 +357,9 @@ class Ping_Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Ping_Suspend_Resume_Test (const ACE_UINT32 iterations);
-  virtual ~Ping_Suspend_Resume_Test ();
+  ~Ping_Suspend_Resume_Test () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
@@ -404,10 +392,6 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
     ACE_OS::perror (ACE_TEXT("activate"));
-}
-
-Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
-{
 }
 
 int
@@ -496,9 +480,9 @@ class Yield_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Yield_Test (const ACE_UINT32 iterations);
-  virtual ~Yield_Test ();
+  ~Yield_Test () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
@@ -549,10 +533,6 @@ Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
 #endif /* ! VXWORKS */
 
   timer_.elapsed_microseconds (elapsed_time_);
-}
-
-Yield_Test::~Yield_Test()
-{
 }
 
 int
@@ -639,9 +619,9 @@ class Mutex_Acquire_Release_Test
 {
 public:
   Mutex_Acquire_Release_Test (const ACE_UINT32 iterations);
-  virtual ~Mutex_Acquire_Release_Test ();
+  ~Mutex_Acquire_Release_Test () = default;
 
-  virtual int svc ();
+  int svc ();
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
@@ -669,10 +649,6 @@ Mutex_Acquire_Release_Test::Mutex_Acquire_Release_Test (
   sem_ (),
   iterations_ (iterations),
   timer_ ()
-{
-}
-
-Mutex_Acquire_Release_Test::~Mutex_Acquire_Release_Test()
 {
 }
 
@@ -723,9 +699,9 @@ public:
   High_Priority_Synchronized_Task (ACE_Thread_Semaphore &sem,
                                    ACE_Thread_Mutex &mutex,
                                    ACE_High_Res_Timer &timer);
-  virtual ~High_Priority_Synchronized_Task ();
+  ~High_Priority_Synchronized_Task () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   /// Called by other task:  it returns when this task is ready to
   /// continue
@@ -786,10 +762,6 @@ High_Priority_Synchronized_Task::High_Priority_Synchronized_Task (
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor, activated\n"));
 #endif /* ACE_DEBUG_CST */
-}
-
-High_Priority_Synchronized_Task::~High_Priority_Synchronized_Task()
-{
 }
 
 int
@@ -892,9 +864,9 @@ class Synchronized_Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Synchronized_Suspend_Resume_Test (const ACE_UINT32 iterations);
-  virtual ~Synchronized_Suspend_Resume_Test ();
+  ~Synchronized_Suspend_Resume_Test () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   ACE_UINT32 average_context_switch_time ();
 
@@ -943,10 +915,6 @@ Synchronized_Suspend_Resume_Test::Synchronized_Suspend_Resume_Test (
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
     ACE_OS::perror (ACE_TEXT("activate"));
-}
-
-Synchronized_Suspend_Resume_Test::~Synchronized_Suspend_Resume_Test()
-{
 }
 
 int

@@ -76,13 +76,13 @@ class High_Priority_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   High_Priority_Task ();
-  ~High_Priority_Task () = default;
+  ~High_Priority_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void *);
+  int open (void *) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc ();
+  int svc () override;
   int done () const { return done_; }
   void print_times () const;
 
@@ -193,10 +193,10 @@ public:
   Low_Priority_Task (const High_Priority_Task &);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void *);
+  int open (void *) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc ();
+  int svc () override;
 
 private:
   int priority_;

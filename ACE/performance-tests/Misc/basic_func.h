@@ -54,7 +54,7 @@ class Foo
 class Foo_v
 {
   public:
-    virtual ~Foo_v ();
+    virtual ~Foo_v () = default;
     void inline_func () { DO_SOMETHING }
     void func ();
     virtual void v_func ();
@@ -65,7 +65,7 @@ class Foo_v
 class Foo_d_v : public Foo_v
 {
   public:
-    virtual void v_func ();
+    void v_func () override;
 };
 
 #endif /* BASIC_FUNC_H */

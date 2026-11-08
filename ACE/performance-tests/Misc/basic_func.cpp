@@ -15,12 +15,6 @@ Foo::func ()
   DO_SOMETHING
 }
 
-
-Foo_v::~Foo_v ()
-{
-}
-
-
 void
 Foo_v::func ()
 {

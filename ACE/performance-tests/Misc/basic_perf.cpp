@@ -140,9 +140,9 @@ class Empty_Iteration_Test : public Basic_Test
 {
 public:
   Empty_Iteration_Test (ACE_High_Res_Timer &timer) : Basic_Test (timer, 0) {}
-  virtual ~Empty_Iteration_Test () {};
+  ~Empty_Iteration_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
   ACE_hrtime_t empty_iteration_time () const
     {
@@ -182,9 +182,9 @@ public:
   Inline_Call_Test (ACE_High_Res_Timer &timer,
                     ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Call_Test () {};
+  ~Inline_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Inline_Call_Test () = delete;
@@ -217,9 +217,9 @@ public:
   Noninline_Call_Test (ACE_High_Res_Timer &timer,
                        ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Call_Test () {};
+  ~Noninline_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Noninline_Call_Test () = delete;
@@ -252,9 +252,9 @@ public:
   Inline_Member_Call_Test (ACE_High_Res_Timer &timer,
                            ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Member_Call_Test () {};
+  ~Inline_Member_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Inline_Member_Call_Test () = delete;
@@ -287,9 +287,9 @@ public:
   Noninline_Member_Call_Test (ACE_High_Res_Timer &timer,
                               ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Member_Call_Test () {};
+  ~Noninline_Member_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Noninline_Member_Call_Test () = delete;
@@ -322,9 +322,9 @@ public:
   Inline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
                                         ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Member_With_Virtual_Call_Test () {};
+  ~Inline_Member_With_Virtual_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Inline_Member_With_Virtual_Call_Test () = delete;
@@ -361,9 +361,9 @@ public:
   Noninline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
                                            ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Member_With_Virtual_Call_Test () {};
+  ~Noninline_Member_With_Virtual_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Noninline_Member_With_Virtual_Call_Test () = delete;
@@ -400,9 +400,9 @@ public:
   Virtual_Member_Optimizable_Call_Test (ACE_High_Res_Timer &timer,
                                         ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Virtual_Member_Optimizable_Call_Test () {};
+  ~Virtual_Member_Optimizable_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Virtual_Member_Optimizable_Call_Test () = delete;
@@ -441,9 +441,9 @@ public:
   Virtual_Member_Call_Test (ACE_High_Res_Timer &timer,
                             ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Virtual_Member_Call_Test () {};
+  ~Virtual_Member_Call_Test () override = default;
 
-  virtual void run ();
+  void run () override;
 
 private:
   Virtual_Member_Call_Test () = delete;
