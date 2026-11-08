@@ -112,7 +112,7 @@ Monitor_Impl::get_statistics (::Monitor::NameList const &names)
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  for (CORBA::ULong index = 0; index < names.length (); ++index)
+  for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       TAO_Monitor::Monitor_Point_Ptr monitor (
@@ -145,7 +145,7 @@ Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  for (CORBA::ULong index = 0; index < names.length (); ++index)
+  for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       TAO_Monitor::Monitor_Point_Ptr monitor (
@@ -186,7 +186,7 @@ TAO_Monitor::get_monitor_data (
       Monitor::NameList list (size);
       list.length (size);
 
-      for (CORBA::ULong i = 0; i < size; ++i)
+      for (CORBA::ULong i {}; i < size; ++i)
         {
           list[i] = CORBA::string_dup (slist[i].c_str ());
         }
@@ -245,7 +245,7 @@ Monitor_Impl::clear_statistics (::Monitor::NameList const &names)
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  for (CORBA::ULong index = 0; index < names.length (); ++index)
+  for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       TAO_Monitor::Monitor_Point_Ptr monitor (
@@ -279,7 +279,7 @@ Monitor_Impl::register_constraint (
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  for (CORBA::ULong index = 0; index < names.length (); ++index)
+  for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       TAO_Monitor::Monitor_Point_Ptr monitor (
@@ -307,7 +307,7 @@ Monitor_Impl::unregister_constraints (
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  for (CORBA::ULong index = 0; index < constraint.length (); ++index)
+  for (CORBA::ULong index {}; index < constraint.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       TAO_Monitor::Monitor_Point_Ptr monitor (
