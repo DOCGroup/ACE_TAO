@@ -301,7 +301,6 @@ TAO_Service_Offer_Iterator (const char* type,
                             TAO_Offer_Database<LOCK_TYPE>& offer_database)
   : stm_ (offer_database),
     lock_ (nullptr),
-    offer_iter_ (nullptr),
     type_ (type)
 {
   CORBA::String_var service_type (type);
@@ -318,8 +317,10 @@ TAO_Service_Offer_Iterator (const char* type,
       if (this->lock_->acquire_read () == -1)
         return;
 
-      ACE_NEW (offer_iter_,
+      TAO_Offer_Map::iterator* offer_iter {};
+      ACE_NEW (offer_iter,
                TAO_Offer_Map::iterator (*entry->offer_map_));
+      this->offer_iter_.reset (offer_iter);
     }
 }
 
@@ -331,7 +332,6 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator ()
   if (this->lock_ != nullptr)
     {
       this->lock_->release ();
-      delete this->offer_iter_;
     }
 }
 

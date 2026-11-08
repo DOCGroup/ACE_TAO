@@ -189,7 +189,7 @@ public:
   LOCK_TYPE* lock_;
 
   /// Iterator over the actual offer map.
-  TAO_Offer_Map::iterator* offer_iter_;
+  std::unique_ptr<TAO_Offer_Map::iterator> offer_iter_;
 
   /// The name of the type. Used for constructing offer ids.
   const char* type_;
