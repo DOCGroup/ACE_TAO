@@ -90,7 +90,7 @@ namespace TAO
   CORBA::Boolean
   Collocated_Object_Proxy_Broker::_non_existent (CORBA::Object_ptr target)
   {
-    CORBA::Boolean _tao_retval = true;
+    CORBA::Boolean _tao_retval {true};
 
     TAO_Stub *stub = target->_stubobj ();
 

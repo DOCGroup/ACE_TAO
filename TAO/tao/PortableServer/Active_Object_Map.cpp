@@ -348,7 +348,7 @@ TAO_Active_Object_Map::is_user_id_in_map (
   bool &deactivated)
 {
   TAO_Active_Object_Map_Entry *entry {};
-  bool result = false;
+  bool result {false};
   int const find_result = this->user_id_map_->find (user_id, entry);
 
   if (find_result == 0)

@@ -345,7 +345,7 @@ namespace TAO
       PortableServer::Servant servant,
       bool &wait_occurred_restart_call)
     {
-      bool deactivated = false;
+      bool deactivated {false};
       int servant_in_map =
         this->active_object_map_->is_servant_in_map (servant, deactivated);
 
@@ -389,7 +389,7 @@ namespace TAO
       bool &priorities_match,
       bool &wait_occurred_restart_call)
     {
-      bool deactivated = false;
+      bool deactivated {false};
       bool user_id_in_map =
         this->active_object_map_->is_user_id_in_map (id,
                                                       priority,
@@ -761,7 +761,7 @@ namespace TAO
       // If the CORBA object denoted by the Object Id value is already
       // active in this POA (there is a servant bound to it in the Active
       // Object Map), the ObjectAlreadyActive exception is raised.
-      bool priorities_match = true;
+      bool priorities_match {true};
       bool result =
         this->is_user_id_in_map (id,
                                  priority,

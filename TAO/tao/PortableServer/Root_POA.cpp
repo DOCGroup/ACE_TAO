@@ -617,7 +617,7 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
               // Check our state
               this->check_state ();
 
-              CORBA::Boolean success = false;
+              CORBA::Boolean success {false};
 
               {
                 // ATTENTION: Trick locking here, see class header for details
@@ -1055,7 +1055,7 @@ TAO_Root_POA::add_ior_component_to_profile (
 {
   // Add the given tagged component to all profiles matching the given
   // ProfileId.
-  bool found_profile = false;
+  bool found_profile {false};
 
   CORBA::ULong const profile_count = mprofile.profile_count ();
 
@@ -1108,7 +1108,7 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
 {
   while (1)
     {
-      bool wait_occurred_restart_call = false;
+      bool wait_occurred_restart_call {false};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (nullptr);
@@ -1134,7 +1134,7 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 {
   while (1)
     {
-      bool wait_occurred_restart_call = false;
+      bool wait_occurred_restart_call {false};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD;
@@ -1393,9 +1393,9 @@ TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
   TAO::ObjectKey_var key = reference->_key ();
 
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = false;
-  CORBA::Boolean is_persistent = false;
-  CORBA::Boolean is_system_id = false;
+  CORBA::Boolean is_root {false};
+  CORBA::Boolean is_persistent {false};
+  CORBA::Boolean is_system_id {false};
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int const result = this->parse_key (key.in (),
@@ -1867,9 +1867,9 @@ TAO_Root_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
                                    PortableServer::ObjectId &user_id)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = false;
-  CORBA::Boolean is_persistent = false;
-  CORBA::Boolean is_system_id = false;
+  CORBA::Boolean is_root {false};
+  CORBA::Boolean is_persistent {false};
+  CORBA::Boolean is_system_id {false};
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   return TAO_Root_POA::parse_key (object_key,
@@ -2078,7 +2078,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                   TAO_Acceptor_Filter *filter,
                                   TAO_Acceptor_Registry &acceptor_registry)
 {
-  bool error = false;
+  bool error {false};
 
   // Count the number of endpoints.
   std::size_t const profile_count = acceptor_registry.endpoint_count ();

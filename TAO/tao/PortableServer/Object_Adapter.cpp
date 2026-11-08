@@ -362,9 +362,9 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 TAO_Root_POA *&poa)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = false;
-  CORBA::Boolean is_persistent = false;
-  CORBA::Boolean is_system_id = false;
+  CORBA::Boolean is_root {false};
+  CORBA::Boolean is_persistent {false};
+  CORBA::Boolean is_system_id {false};
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int result = 0;
@@ -656,7 +656,7 @@ TAO_Object_Adapter::close (int wait_for_completion)
     this->poa_manager_factory_ = nullptr;
 #endif
   }
-  CORBA::Boolean etherealize_objects = true;
+  CORBA::Boolean const etherealize_objects {true};
   root->destroy (etherealize_objects, wait_for_completion);
   ::CORBA::release (root);
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)

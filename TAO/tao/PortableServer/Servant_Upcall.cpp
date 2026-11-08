@@ -39,7 +39,7 @@ namespace TAO
     {
       while (1)
         {
-          bool wait_occurred_restart_call = false;
+          bool wait_occurred_restart_call {false};
 
           int const result =
             this->prepare_for_upcall_i (key,
