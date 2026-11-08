@@ -7,12 +7,12 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_socket.h"
+#include <memory>
 
-const ssize_t Send_Size = 4*1024;
-const size_t Loops = 10;
-const size_t Total_Size = Send_Size * Loops;
-const ACE_TCHAR * remote_host = 0;
-const ACE_TCHAR * config_file = 0;
+constexpr ssize_t Send_Size = 4 * 1024;
+constexpr size_t Loops = 10;
+ACE_TCHAR const * remote_host {};
+ACE_TCHAR const * config_file {};
 unsigned remote_port = 8088;
 
 int
@@ -55,18 +55,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (parse_args(argc, argv) != 0)
     return 1;
-  if (remote_host == 0)
+  if (remote_host == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Client: No remote host specified\n")),1);
 
   ACE::HTBP::Environment env;
-  if (config_file != 0)
+  if (config_file != nullptr)
     env.import_config (config_file);
 
   ACE::HTBP::ID_Requestor req (&env);
   ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
 
-  unsigned proxy_port = 0;
+  unsigned proxy_port {};
   ACE_TString proxy_host;
 
   if (env.get_proxy_port(proxy_port) != 0 ||
@@ -88,13 +88,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE::HTBP::Session::next_session_id(),
                            &proxy);
 
-  ACE::HTBP::Stream *stream = new ACE::HTBP::Stream(&session);
+  std::unique_ptr<ACE::HTBP::Stream> stream =
+    std::make_unique<ACE::HTBP::Stream> (&session);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Client: ")
               ACE_TEXT("Sending message\n")));
   char buffer[Send_Size];
   ACE_OS::memset (buffer,'a',Send_Size);
-  ssize_t n = 0;
+  ssize_t n {};
   for (size_t i = 0; i < Loops ; ++i)
   {
     errno = 0;
