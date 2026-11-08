@@ -107,7 +107,7 @@ Transport::close (size_t offset, const ACE_CString &time)
 char *
 PeerProcess::nextIdent(bool is_server)
 {
-  static int count = 0;
+  static int count {};
   char *ident = new char[15];
   std::sprintf (ident, "%s_%d", (is_server ? "server" : "client"), count++);
   return ident;
@@ -391,7 +391,7 @@ PeerProcess::dump_object_detail (ostream &strm)
   else
     strm << "peer process " << this->ident_;
   strm << ":" << endl;
-  size_t count_inv = 0;
+  size_t count_inv {};
   for (ObjectByIndex::ITERATOR i = this->object_by_index_.begin();
        !i.done();
        i.advance())

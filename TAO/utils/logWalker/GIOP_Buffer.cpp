@@ -11,7 +11,7 @@ static size_t leadin_len_1_6 = 19;
 
 
 const char *GIOP_Buffer::size_leadin = nullptr;
-size_t GIOP_Buffer::leadin_len = 0;
+size_t GIOP_Buffer::leadin_len {};
 const size_t GIOP_Buffer::giop_header_len = 12;
 
 void
@@ -232,7 +232,7 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
 
   const char *c = text;
   char *err;
-  for (int count = 0;
+  for (int count {};
        count < 16 && this->cur_size() < this->buffer_size_;
        count++)
     {
@@ -245,7 +245,7 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
       c = err+1;
     }
   size_t cs = this->cur_size();
-  int rtn = 0;
+  int rtn {};
   if (!this->header_parsed_)
     {
       this->header_parsed_ = this->parse_header();

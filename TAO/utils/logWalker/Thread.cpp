@@ -306,7 +306,7 @@ Thread::get_summary (long &sent_reqs,
 void
 Thread::dump_invocations (ostream &strm)
 {
-  size_t total_request_bytes = 0;
+  size_t total_request_bytes {};
   strm << this->alias_ << " handled " << this->invocations_.size()
        << " invocations" << endl;
 
@@ -317,7 +317,7 @@ Thread::dump_invocations (ostream &strm)
     {
       Invocation *inv {};
       i.next(inv);
-      size_t level = 0;
+      size_t level {};
 
       while (!nested.empty ())
         {
@@ -394,7 +394,7 @@ Thread::count_nesting ()
     {
       Invocation *inv {};
       i.next(inv);
-      size_t level = 0;
+      size_t level {};
       while (!nested.empty ())
         {
           level = nested.size();

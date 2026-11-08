@@ -105,7 +105,7 @@ Session::default_service (const char *addrspec)
   ACE_CString name (addrspec,(equal - addrspec));
   Endpoint ep (equal+1);
 
-  static long next_def_pid = 0;
+  static long next_def_pid {};
   --next_def_pid;
   HostProcess *hp = new HostProcess ("defaulted",next_def_pid);
   hp->proc_name(name);

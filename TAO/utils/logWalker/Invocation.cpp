@@ -395,7 +395,7 @@ Invocation::dump_detail (ostream &strm,
   strm << " [" << opname << "]\t";
   ACE_Time_Value req_time;
   ACE_Time_Value rep_time;
-  size_t delta = 0;
+  size_t delta {};
   if (!this->is_oneway() && this->req_octets_ != nullptr)
     {
       req_time = this->req_octets_->time();
@@ -466,10 +466,10 @@ Invocation::dump_detail (ostream &strm,
 void
 Invocation::dump_special_details (ostream &strm, size_t indent, const char *opname)
 {
-  size_t rstat = 0;
+  size_t rstat {};
   if (this->repl_octets_ != nullptr && this->repl_octets_->has_octets())
     rstat = this->repl_octets_->reply_status();
-  int opid = 0;
+  int opid {};
   if (std::strcmp (opname, "_is_a") == 0)
     {
       opid = 1;

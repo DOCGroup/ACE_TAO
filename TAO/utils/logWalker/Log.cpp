@@ -39,7 +39,7 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
     }
 
   size_t remainder = mapsize;
-  size_t linelen = 0;
+  size_t linelen {};
   char *text;
   size_t maxline = 1000;
   std::unique_ptr<char[]> buffer = std::make_unique<char[]> (maxline);
@@ -95,7 +95,7 @@ Log::get_preamble ()
   if (pid == 0)
     return;
 
-  long tid = 0;
+  long tid {};
   if ( *t == '|' )
     tid = std::strtol(t + 1, nullptr, 10);
   else if ( *t != ')')
@@ -184,7 +184,7 @@ Log::handle_msg_octets ()
       Invocation *inv = this->dump_target_->owner();
       if (inv != nullptr)
         {
-          size_t len = 0;
+          size_t len {};
           const char *oid = this->dump_target_->target_oid(len);
           if (oid != nullptr)
             inv->set_target (oid, len);
@@ -533,7 +533,7 @@ Log::parse_cleanup_queue_i ()
           mtype = target->expected_type();
         }
       inv->set_octets (mtype == 0, target);
-      size_t len = 0;
+      size_t len {};
       const char *oid = target->target_oid(len);
       if (mtype == 0 && len > 0)
         inv->set_target (oid, len);

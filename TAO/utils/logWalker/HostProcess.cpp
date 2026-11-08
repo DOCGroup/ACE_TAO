@@ -232,7 +232,7 @@ HostProcess::dump_summary (ostream &strm)
   if (num > 0)
     {
       strm << "  listening on ";
-      size_t count = 0;
+      size_t count {};
       for (ACE_DLList_Iterator <Endpoint> t_iter (this->listen_endpoints_);
            !t_iter.done();
            t_iter.advance())
@@ -269,10 +269,10 @@ void
 HostProcess::dump_thread_summary (ostream &strm)
 {
   this->dump_ident (strm, "thread summary:");
-  long total_sent = 0;
-  long total_recv = 0;
-  size_t total_bytes_sent = 0;
-  size_t total_bytes_recv = 0;
+  long total_sent {};
+  long total_recv {};
+  size_t total_bytes_sent {};
+  size_t total_bytes_recv {};
   for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
        !t_iter.done();
        t_iter.advance())
@@ -328,7 +328,7 @@ HostProcess::iterate_peers (int group,
                             ostream *strm,
                             Session *session)
 {
-  bool first = true;
+  bool first {true};
   for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
     {
       PeerProcs::ENTRY *entry;
@@ -383,8 +383,8 @@ void
 HostProcess::dump_peer_summary (ostream &strm)
 {
   this->dump_ident (strm, "peer processes:");
-  size_t num_servers = 0;
-  size_t num_clients = 0;
+  size_t num_servers {};
+  size_t num_clients {};
   strm << " total peers: " << this->by_addr_.current_size() << endl;
   for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
     {
