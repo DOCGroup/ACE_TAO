@@ -14,7 +14,7 @@ null_cipher_test (CORBA::ORB_ptr orb,
                   CORBA::Object_ptr obj,
                   ACE_TCHAR const *ior)
 {
-  const Security::QOP qop = Security::SecQOPIntegrity;
+  Security::QOP const qop = Security::SecQOPIntegrity;
   CORBA::Any protection;
   protection <<= qop;
 
@@ -50,7 +50,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
