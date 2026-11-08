@@ -2,10 +2,9 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "tao/AnyTypeCode/Any.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c {};
@@ -38,7 +37,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       CORBA::Object_var const tmp =
