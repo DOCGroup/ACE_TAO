@@ -25,13 +25,18 @@ class MT_Object_i : public POA_MT_Object
 {
 public:
   /// Constructor.
-  MT_Object_i ();
+  MT_Object_i () = default;
 
   /// Destructor.
-  virtual ~MT_Object_i ();
+  virtual ~MT_Object_i () = default;
 
-  virtual CORBA::Long yadda (CORBA::Long hop_count,
-                             MT_Object_ptr partner);
+  MT_Object_i (MT_Object_i const &) = delete;
+  MT_Object_i (MT_Object_i &&) = delete;
+  MT_Object_i &operator= (MT_Object_i const &) = delete;
+  MT_Object_i &operator= (MT_Object_i &&) = delete;
+
+  CORBA::Long yadda (CORBA::Long hop_count,
+                     MT_Object_ptr partner);
 };
 
 #endif /* MT_OBJECT_IMPL_H */

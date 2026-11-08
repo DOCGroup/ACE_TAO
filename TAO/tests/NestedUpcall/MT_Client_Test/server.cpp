@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "server.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
@@ -21,7 +20,7 @@
 class TestShutdown : public ACE_Event_Handler
 {
 public:
-  TestShutdown (CORBA::ORB_ptr orb)
+  explicit TestShutdown (CORBA::ORB_ptr orb)
     : orb_(CORBA::ORB::_duplicate (orb))
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
@@ -52,12 +51,12 @@ private:
   CORBA::ORB_var orb_;
 
   ACE_Sig_Handler shutdown_;
-};
 
-MT_Object_Server::MT_Object_Server ()
-  : ior_output_file_ (0)
-{
-}
+  TestShutdown (TestShutdown const &) = delete;
+  TestShutdown (TestShutdown &&) = delete;
+  TestShutdown &operator= (TestShutdown const &) = delete;
+  TestShutdown &operator= (TestShutdown &&) = delete;
+};
 
 int
 MT_Object_Server::parse_args ()
@@ -72,10 +71,10 @@ MT_Object_Server::parse_args ()
         TAO_debug_level++;
         break;
       case 'o': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
+                             "Unable to open %s for writing\n",
                              get_opts.opt_arg ()), -1);
         break;
       case '?':
@@ -85,7 +84,7 @@ MT_Object_Server::parse_args ()
                            " [-d]"
                            " [-o] <ior_output_file>"
                            "\n",
-                           argv_ [0]),
+                           this->argv_[0]),
                           1);
       }
 
@@ -98,38 +97,26 @@ MT_Object_Server::init (int argc, ACE_TCHAR** argv)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
-  this->orb_manager_.init_child_poa (argc,
-                                     argv,
-                                     "child_poa");
+  if (this->orb_manager_.init_child_poa (argc, argv, "child_poa") == -1)
+    return -1;
 
   this->argc_ = argc;
   this->argv_ = argv;
 
-  this->parse_args ();
-  // ~~ check for the return value here
+  if (this->parse_args () == -1)
+    return -1;
 
   CORBA::String_var str;
   str = this->orb_manager_.activate_under_child_poa ("MT_Object",
                                                      &this->mT_Object_i_);
 
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
-              str.in ()));
-#endif /*if 0*/
-
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      ACE_OS::fprintf (this->ior_output_file_.get (), "%s", str.in ());
+      this->ior_output_file_.reset ();
     }
-
-
   return 0;
 }
-
 
 int
 MT_Object_Server::run ()
@@ -146,35 +133,28 @@ MT_Object_Server::run ()
   return 0;
 }
 
-MT_Object_Server::~MT_Object_Server ()
-{
-}
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object A Server \n\n"));
 
   try
     {
-      MT_Object_Server MT_Object_Server;
+      MT_Object_Server mt_object_server {};
 
-      int r = MT_Object_Server.init (argc,argv);
+      int const init_result = mt_object_server.init (argc, argv);
 
-      if (r == -1)
-        return 1;
-      else
-        {
-          MT_Object_Server.run ();
-        }
+      if (init_result == -1)
+        return init_result;
+      return mt_object_server.run ();
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

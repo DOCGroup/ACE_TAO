@@ -23,6 +23,9 @@
 #include "tao/ORB.h"
 #include "MT_Client_TestC.h"
 
+#include <string>
+#include <vector>
+
 /**
  * @class MT_Client
  *
@@ -35,8 +38,13 @@ class MT_Client
 {
 public:
   /// = Constructor and destructor.
-  MT_Client ();
-  ~MT_Client ();
+  MT_Client () = default;
+  ~MT_Client () = default;
+
+  MT_Client (MT_Client const &) = delete;
+  MT_Client (MT_Client &&) = delete;
+  MT_Client &operator= (MT_Client const &) = delete;
+  MT_Client &operator= (MT_Client &&) = delete;
 
   /// Execute client example code.
   int run ();
@@ -48,22 +56,19 @@ public:
 
 private:
   /// reading the IOR of object A in
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  std::vector<ACE_TCHAR *> argv_;
 
   /// Key of the object
-  char *object_key_;
-
-  /// Flag to tell server to shutdown.
-  int shutdown_;
+  std::string object_key_;
 
   /// Remember our orb.
   CORBA::ORB_var orb_var_;
@@ -72,10 +77,10 @@ private:
   MT_Object_var mT_Object_var_;
 
   /// This is used to choose the server...
-  int client_number_;
+  int client_number_ {};
 
   /// number of loops
-  unsigned long iterations_;
+  unsigned long iterations_ {1};
 };
 
 /**
@@ -92,13 +97,19 @@ public:
 
   virtual int svc ();
 
+  MT_Client_Task (MT_Client_Task const &) = delete;
+  MT_Client_Task (MT_Client_Task &&) = delete;
+  MT_Client_Task &operator= (MT_Client_Task const &) = delete;
+  MT_Client_Task &operator= (MT_Client_Task &&) = delete;
+
 private:
   MT_Client mT_Client_;
-  int argc_;
+  int argc_ {};
+  // The main thread keeps argv alive until the task manager joins this task.
   ACE_TCHAR **argv_;
 
   /// To determine if we use the first or the second server.
-  int client_number_;
+  int client_number_ {};
 };
 
 #endif /* MT_CLIENT_H */
