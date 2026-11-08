@@ -15,7 +15,7 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
   EndpointPolicy::EndpointList endpoints;
   TAO_Acceptor_Filter* filter {};
 
-  for (CORBA::ULong i = 0; i < policies.length(); ++i)
+  for (CORBA::ULong i {}; i < policies.length(); ++i)
     {
       if (policies[i]->policy_type() == EndpointPolicy::ENDPOINT_POLICY_TYPE)
         {
@@ -29,7 +29,7 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
           CORBA::ULong num_endpoints = endpoints.length ();
           endpoints.length (num_endpoints + cur_num_endpoints);
 
-          for (CORBA::ULong ii = 0; ii < cur_num_endpoints; ++ii)
+          for (CORBA::ULong ii {}; ii < cur_num_endpoints; ++ii)
             {
               endpoints[num_endpoints + ii] = cur_endpoints[ii];
             }

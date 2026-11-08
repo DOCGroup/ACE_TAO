@@ -65,7 +65,7 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
 
   ACE_INET_Addr const *eps = iacc->endpoints ();
   CORBA::ULong eps_count = iacc->endpoint_count ();
-  for (CORBA::ULong eps_idx = 0; eps_idx < eps_count; ++ eps_idx)
+  for (CORBA::ULong eps_idx {}; eps_idx < eps_count; ++ eps_idx)
     {
       char hostname[513];
       eps[eps_idx].get_host_name(hostname,512);
