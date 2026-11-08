@@ -1,10 +1,14 @@
 #include "Peer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c {};
@@ -13,7 +17,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -51,11 +55,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::Coordinator_var const coordinator =
         Test::Coordinator::_narrow (tmp.in ());
@@ -64,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil coordinator reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
