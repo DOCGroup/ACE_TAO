@@ -6,13 +6,13 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-static ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
+static ACE_TCHAR const *ior_output_file { ACE_TEXT ("Messenger.ior") };
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -41,31 +41,33 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
-        return 1;
+      return 1;
 
     // Get a reference to the POA
     CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in());
+    PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in ());
 
     // Active the POA Manager
     PortableServer::POAManager_var const mgr = root_poa->the_POAManager ();
-    mgr->activate();
+    mgr->activate ();
 
     // Create the policies and assign them for the child POA
-    CORBA::PolicyList policies(3);
-    policies.length(3);
+    CORBA::PolicyList policies (3);
+    policies.length (3);
 
     policies[0] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
     policies[1] = root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
     policies[2] = root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
     // Create the POA with these policies
-    PortableServer::POA_var const child_poa = root_poa->create_POA ("childPOA", mgr.in(), policies);
+    PortableServer::POA_var const child_poa = root_poa->create_POA (
+      "childPOA", mgr.in (), policies);
 
     // Destroy the policy objects
-    for (CORBA::ULong i = 0; i != policies.length(); ++i) {
-      policies[i]->destroy();
-    }
+    for (CORBA::ULong i {}; i != policies.length (); ++i)
+      {
+        policies[i]->destroy ();
+      }
 
     // Create our Messenger's ServantLocator.
     PortableServer::ServantLocator_var const locator = new Messenger_Locator_i;
@@ -102,14 +104,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         return 1;
       }
 
-    std::cout << "IOR written to the file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
+    std::cout << "IOR written to the file " << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
 
     // Accept requests from clients.
-    orb->run();
+    orb->run ();
 
     // Release resources
     root_poa->destroy (true, true);
-    orb->destroy();
+    orb->destroy ();
   }
   catch (CORBA::Exception const &ex) {
     std::cerr << "Server Caught a CORBA::Exception: " << ex << std::endl;
@@ -118,5 +120,4 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
   return 0;
 }
-
 

@@ -10,22 +10,21 @@ Messenger_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
                                 char const *,
                                 void *&cookie)
 {
+  cookie = nullptr;
+
   // Get the ObjectId in string format.
   CORBA::String_var const oid_str = PortableServer::ObjectId_to_string (oid);
 
   std::cout << "preinvoke called..." << oid_str << std::endl;
 
   // Check if the ObjectId is valid.
-  if (std::strcmp (oid_str.in (), "Messenger") == 0) {
-    // Create the required servant
-    PortableServer::ServantBase_var servant = new Messenger_i ();
-
-    // Keep the servant pointer as a marker so postinvoke() knows to delete
-    // this per-request servant.
-    cookie = servant.in ();
-
-    return servant._retn();
-  }
+  if (std::strcmp (oid_str.in (), "Messenger") == 0)
+    {
+      // Create the required servant.
+      PortableServer::ServantBase_var servant = new Messenger_i ();
+      cookie = servant.in ();
+      return servant._retn ();
+    }
   throw CORBA::OBJECT_NOT_EXIST ();
 }
 
