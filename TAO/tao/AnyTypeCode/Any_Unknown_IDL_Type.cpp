@@ -10,6 +10,7 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <cstddef>
 #include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -130,7 +131,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
   // can move the rd_ptr by up to the same amount. We accommodate
   // this by including 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional
   // space in the message block.
-  size_t const size = end - begin;
+  std::size_t const size = end - begin;
 
   ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
 
