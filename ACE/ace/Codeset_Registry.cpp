@@ -26,7 +26,7 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
                                             ACE_CDR::UShort **char_sets)
 {
   registry_entry const *element {};
-  for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
+  for (size_t i {}; element == nullptr && i < num_registry_entries_; ++i)
     if (std::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
       element = &registry_db_[i];
   if (element == nullptr)
@@ -54,7 +54,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                             ACE_CDR::UShort **char_sets)
 {
   registry_entry const *element {};
-  for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
+  for (size_t i {}; element == nullptr && i < num_registry_entries_; ++i)
     if (codeset_id == registry_db_[i].codeset_id_)
       element = &registry_db_[i];
   if (element == nullptr)
@@ -81,7 +81,7 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
 {
   registry_entry const *lhs {};
   registry_entry const *rhs {};
-  for (size_t i = 0; (lhs == nullptr || rhs == nullptr) && i < num_registry_entries_; i++)
+  for (size_t i {}; (lhs == nullptr || rhs == nullptr) && i < num_registry_entries_; ++i)
     {
       if (codeset_id == registry_db_[i].codeset_id_)
         lhs = &registry_db_[i];
@@ -92,8 +92,8 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
   if (lhs == nullptr || rhs == nullptr)
     return false;
 
-  for (ACE_CDR::UShort l = 0; l < lhs->num_sets_; l++)
-    for (ACE_CDR::UShort r = 0; r < rhs->num_sets_; r++)
+  for (ACE_CDR::UShort l {}; l < lhs->num_sets_; ++l)
+    for (ACE_CDR::UShort r {}; r < rhs->num_sets_; ++r)
       if (rhs->char_sets_[r] == lhs->char_sets_[l])
         return true;
   return false;
@@ -102,7 +102,7 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
 ACE_CDR::Short
 ACE_Codeset_Registry::get_max_bytes_i (ACE_CDR::ULong codeset_id)
 {
-  for (size_t i = 0; i < num_registry_entries_; i++)
+  for (size_t i {}; i < num_registry_entries_; ++i)
     if (codeset_id == registry_db_[i].codeset_id_)
       return registry_db_[i].max_bytes_;
   return 0;
