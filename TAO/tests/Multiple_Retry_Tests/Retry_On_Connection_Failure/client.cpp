@@ -1,24 +1,27 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-bool oneway_call = false;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  bool oneway_call {};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static bool
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'o':
-        oneway_call = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
+        options.oneway_call = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case '?':
@@ -29,10 +32,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-o <oneway flag> "
                            "\n",
                            argv [0]),
-                          -1);
+                          false);
       }
   // Indicates successful parsing of the command line
-  return 0;
+  return true;
 }
 
 int
@@ -41,32 +44,33 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Client_Options options;
 
-      if (parse_args (argc, argv) != 0)
+      if (!parse_args (argc, argv, options))
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var const tmp = orb->string_to_object (options.ior.c_str ());
 
-      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             options.ior.c_str ()),
                             1);
         }
 
-      if (oneway_call)
+      if (options.oneway_call)
         {
-          CORBA::String_var the_string = CORBA::string_dup( "Test");
+          CORBA::String_var const the_string = CORBA::string_dup ("Test");
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client sending string <%C> oneway\n",
                       the_string.in ()));
           hello->set_string (the_string);
         }
       else
         {
-          CORBA::String_var the_string = hello->get_string ();
+          CORBA::String_var const the_string = hello->get_string ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client getting string <%C>\n",
                       the_string.in ()));
         }
@@ -75,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
