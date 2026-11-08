@@ -43,11 +43,6 @@ TAO_Stub::TAO_Stub (char const *repository_id,
   , profile_in_use_ (nullptr)
   , profile_success_ (false)
   , refcount_ (1)
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-  , policies_ (nullptr)
-#endif
-  , ior_info_ (nullptr)
-  , forwarded_ior_info_ (nullptr)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
   , forwarded_on_exception_ (false)
 {
@@ -97,12 +92,10 @@ TAO_Stub::~TAO_Stub ()
     }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  delete this->policies_;
+  this->policies_.reset ();
 #endif
-
-  delete this->ior_info_;
-
-  delete this->forwarded_ior_info_;
+  this->ior_info_.reset ();
+  this->forwarded_ior_info_.reset ();
 }
 
 void
@@ -184,16 +177,12 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
                   this));
     }
 
-
-  IOP::IOR *tmp_info {};
-
   if (this->forward_profiles_ != nullptr)
     {
       if (this->forwarded_ior_info_ == nullptr)
         {
-          this->get_profile_ior_info (*this->forward_profiles_, tmp_info);
-
-          this->forwarded_ior_info_ = tmp_info;
+          this->get_profile_ior_info (*this->forward_profiles_,
+                                      this->forwarded_ior_info_);
         }
 
       // First we look at the forward profiles to see whether the
@@ -205,7 +194,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
           if (this->forward_profiles_->get_profile (i)
               == this->profile_in_use_)
             {
-              ior_info = this->forwarded_ior_info_;
+              ior_info = this->forwarded_ior_info_.get ();
               index = i;
               return 0;
             }
@@ -215,11 +204,8 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
   // Else we look at the base profiles
   if (this->ior_info_ == nullptr)
     {
-      this->get_profile_ior_info (this->base_profiles_, tmp_info);
-
-      this->ior_info_ = tmp_info;
+      this->get_profile_ior_info (this->base_profiles_, this->ior_info_);
     }
-
 
   for (CORBA::ULong ind = 0;
        ind < this->base_profiles_.profile_count ();
@@ -228,7 +214,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
       if (this->base_profiles_.get_profile (ind) == this->profile_in_use_)
         {
           index = ind;
-          ior_info = this->ior_info_;
+          ior_info = this->ior_info_.get ();
           return 0;
         }
     }
@@ -260,12 +246,16 @@ TAO_Stub::object_key () const
   return this->base_profiles_.get_profile (0)->object_key ();
 }
 
-int
-TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
+void
+TAO_Stub::get_profile_ior_info (
+  TAO_MProfile &profiles,
+  std::unique_ptr<IOP::IOR> &ior_info)
 {
-  ACE_NEW_THROW_EX (ior_info,
+  IOP::IOR *raw_ior_info {};
+  ACE_NEW_THROW_EX (raw_ior_info,
                     IOP::IOR (),
                     CORBA::NO_MEMORY ());
+  ior_info.reset (raw_ior_info);
 
   // Get the number of elements
   CORBA::ULong const count = profiles.profile_count ();
@@ -277,16 +267,14 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
   // profile and make the sequence
   for (CORBA::ULong index = 0; index < count; ++index)
     {
-      TAO_Profile *prof = profiles.get_profile (index);
+      TAO_Profile * const prof = profiles.get_profile (index);
 
-      IOP::TaggedProfile *tp = prof->create_tagged_profile ();
+      IOP::TaggedProfile * const tp = prof->create_tagged_profile ();
 
       if (tp == nullptr)
         throw ::CORBA::NO_MEMORY ();
       ior_info->profiles[index] = *tp;
     }
-
-  return 0;
 }
 
 void
@@ -478,7 +466,7 @@ TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
     }
   else
     {
-      policy_manager->copy_from (this->policies_);
+      policy_manager->copy_from (this->policies_.get ());
 
       policy_manager->set_policy_overrides (policies, set_add);
     }
@@ -486,7 +474,7 @@ TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
   TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
                                                  this->base_profiles_);
 
-  stub->policies_ = policy_manager.release ();
+  stub->policies_ = std::move (policy_manager);
 
   // Copy the servant ORB if it is present.
   stub->servant_orb (this->servant_orb_var ().in ());

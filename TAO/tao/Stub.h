@@ -23,6 +23,7 @@
 #include "tao/MProfile.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -299,7 +300,8 @@ private:
   TAO_Profile *next_forward_profile ();
 
   /// THREAD-SAFE Create the IOR info
-  int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
+  void get_profile_ior_info (TAO_MProfile &profile,
+                             std::unique_ptr<IOP::IOR> &ior_info);
 
 private:
   TAO_Stub (TAO_Stub const &) = delete;
@@ -379,7 +381,7 @@ protected:
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.
-  TAO_Policy_Set *policies_;
+  std::unique_ptr<TAO_Policy_Set> policies_;
 
   /**
    * The ior info. This is needed for GIOP 1.2, as the clients could
@@ -389,10 +391,10 @@ protected:
    * when they receive an exception. This info is for the base
    * profiles that this class stores
    */
-  IOP::IOR *ior_info_;
+  std::unique_ptr<IOP::IOR> ior_info_;
 
   /// Forwarded IOR info
-  IOP::IOR *forwarded_ior_info_;
+  std::unique_ptr<IOP::IOR> forwarded_ior_info_;
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
