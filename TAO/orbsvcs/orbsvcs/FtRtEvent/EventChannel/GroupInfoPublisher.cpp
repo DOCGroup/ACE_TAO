@@ -125,7 +125,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
   if (info->primary) {
     if (!info_->primary) {
       // now we become the primary, notify the subscribers
-      for (size_t i = 0; i < subscribers_.size(); ++i)
+      for (size_t i {}; i < subscribers_.size(); ++i)
         subscribers_[i]->become_primary();
     }
 

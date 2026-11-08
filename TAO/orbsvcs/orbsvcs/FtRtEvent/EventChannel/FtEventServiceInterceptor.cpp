@@ -68,7 +68,7 @@ CachedRequestTable::get_state (FtRtecEventChannelAdmin::CachedOptionResults &sta
 void
 CachedRequestTable::set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state)
 {
-  for (size_t i = 0; i < state.length(); ++i)
+  for (size_t i {}; i < state.length(); ++i)
   {
     table_.bind(state[i].client_id.in(), state[i].cached_result);
   }

@@ -118,7 +118,7 @@ void TAO_FTEC_Group_Manager::add_member (
   new_impl->my_position = impl_->my_position;
   size_t pos = impl_->info_list.length();
   new_impl->info_list.length(pos+1);
-  for (size_t i = 0; i < pos; ++i) {
+  for (size_t i {}; i < pos; ++i) {
     new_impl->info_list[i] = impl_->info_list[i];
   }
   new_impl->info_list[pos] = info;
@@ -183,7 +183,7 @@ void TAO_FTEC_Group_Manager::add_member (
 
       // Now copy over each byte.
       char* base = blk->data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i {}; i < length; ++i)
       {
         s[i] = base[i];
       }
@@ -202,7 +202,7 @@ void TAO_FTEC_Group_Manager::add_member (
 
       // Now copy over each byte.
       char* base = cdr.begin()->data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i {}; i < length; ++i)
       {
         s[i] = base[i];
       }
@@ -298,7 +298,7 @@ void TAO_FTEC_Group_Manager::connection_closed()
     try{
       TAO_IOP::TAO_IOR_Manipulation::IORList iors;
       iors.length(impl_->my_position-1);
-      for (size_t i = 0; i < impl_->my_position-1; ++i)
+      for (size_t i {}; i < impl_->my_position-1; ++i)
         iors[i] = CORBA::Object::_duplicate(impl_->info_list[i].ior.in());
 
       CORBA::Object_var obj =

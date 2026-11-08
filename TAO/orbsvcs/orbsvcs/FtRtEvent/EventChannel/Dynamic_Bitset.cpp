@@ -45,7 +45,7 @@ Dynamic_Bitset& Dynamic_Bitset::operator &= (Dynamic_Bitset const& other)
   size_type len = ceil(bit_size_,BITS_PER_BLOCK);
   //FUZZ: enable check_for_lack_ACE_OS/
 
-  for (size_type i = 0; i < len; ++i)
+  for (size_type i {}; i < len; ++i)
     buffer_[i] &= other.buffer_[i];
   return *this;
 }
@@ -75,7 +75,7 @@ void Dynamic_Bitset::flip()
   //FUZZ: enable check_for_lack_ACE_OS/
 
   block mask = static_cast<block> (-1);
-  for (size_type i = 0; i < len; ++i)
+  for (size_type i {}; i < len; ++i)
     buffer_[i] ^= mask;
 }
 

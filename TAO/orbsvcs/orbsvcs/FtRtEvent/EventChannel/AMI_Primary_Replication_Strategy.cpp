@@ -113,7 +113,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
    Request_Context_Repository().set_transaction_depth(0);
 
-   for (size_t i = 0; i < num_backups; ++i)  {
+   for (size_t i {}; i < num_backups; ++i)  {
       PortableServer::ObjectId oid;
       try{
           FTRT::AMI_UpdateableHandler_ptr handler = handler_.activate(manager, i, oid);
@@ -135,7 +135,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    event.wait();
 
    if (!success) { // replication failed, transaction depth too high
-     for (size_t i =0; i < num_backups; ++i)  {
+     for (size_t i {}; i < num_backups; ++i)  {
        try{
          FtRtecEventChannelAdmin::EventChannel_ptr ec = backups[i];
          (ec->*rollback)(oid);
@@ -172,7 +172,7 @@ AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
   FTRT::AMI_ObjectGroupManagerHandler_var handler =
     FTRT::AMI_ObjectGroupManagerHandler::_narrow(obj.in());
 
-  for (unsigned i = 0; i < num_backups; ++i) {
+  for (unsigned i {}; i < num_backups; ++i) {
     try{
       backups[i]->sendc_add_member(handler.in(),
                                    info,

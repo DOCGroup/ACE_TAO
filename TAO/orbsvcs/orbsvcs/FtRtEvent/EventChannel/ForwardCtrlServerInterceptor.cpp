@@ -173,7 +173,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 
       // Now copy over each byte.
       char* base = mb.data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i {}; i < length; ++i)
         {
           sc.context_data[i] = base[i];
         }

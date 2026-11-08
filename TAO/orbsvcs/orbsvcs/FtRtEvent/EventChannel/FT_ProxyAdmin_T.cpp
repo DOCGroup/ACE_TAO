@@ -90,7 +90,7 @@ template <class EC_PROXY_ADMIN, class Proxy,
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
   State const& state)
 {
-  for (size_t i = 0; i < state.proxies.length(); ++i)
+  for (size_t i {}; i < state.proxies.length(); ++i)
   {
     typename Proxy::State const& proxy_state
       = state.proxies[i];

@@ -66,7 +66,7 @@ int SCTP_Fault_Detector::parse_conf(int argc, ACE_TCHAR** argv)
 {
   ACE_TRACE ("SCTP_Fault_Detector::parse_conf");
 
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; ++curarg)
     if (ACE_OS::strcasecmp (argv[curarg],
       ACE_TEXT("-HeartBeat")) == 0)
     {
