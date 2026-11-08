@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/Valuetype/ValueFactory.h"
 ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
-bool debug = false;
+bool debug {};
 
 enum class Test_Selection
 {
@@ -13,13 +13,13 @@ enum class Test_Selection
   All
 };
 
-Test_Selection which_test = Test_Selection::All;
+Test_Selection which_test {Test_Selection::All};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:dsoe"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -53,19 +53,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-dump_node (BaseNode *bn, int indent)
+dump_node (BaseNode * const bn, int const indent)
 {
   if (bn == nullptr)
     {
       return;
     }
 
-  StringNode *sn = StringNode::_downcast (bn);
+  StringNode const *sn = StringNode::_downcast (bn);
 
   if (debug)
     {
       // This is ugly I know
-      for (int i = indent; i != 0; --i)
+      for (int i {indent}; i != 0; --i)
         {
           ACE_DEBUG ((LM_DEBUG, "  "));
         }
@@ -91,7 +91,7 @@ dump_node (BaseNode *bn, int indent)
 }
 
 void
-dump_tree (TreeController *tc)
+dump_tree (TreeController * const tc)
 {
   if (debug)
     {
