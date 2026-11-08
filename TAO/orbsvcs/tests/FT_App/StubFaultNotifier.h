@@ -66,7 +66,7 @@ public:
   int idle(int &result);
 
   // override virtuals
-::PortableServer::POA_ptr _default_POA ();
+  ::PortableServer::POA_ptr _default_POA () override;
 
   PortableServer::ObjectId objectId()const;
 
@@ -80,29 +80,29 @@ public:
   // CORBA interface FaultNotifier
 
 
-  virtual void push_structured_fault (
-      const CosNotification::StructuredEvent & event);
+  void push_structured_fault (
+    CosNotification::StructuredEvent const &event) override;
 
-  virtual void push_sequence_fault (
-    const CosNotification::EventBatch & events);
+  void push_sequence_fault (
+    CosNotification::EventBatch const &events) override;
 
-  virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
-    const char * constraint_grammar);
+  ::CosNotifyFilter::Filter_ptr create_subscription_filter (
+    char const *constraint_grammar) override;
 
-  virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
+  FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter);
+    CosNotifyFilter::Filter_ptr filter) override;
 
-  virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
+  FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter);
+    CosNotifyFilter::Filter_ptr filter) override;
 
-  virtual void disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection);
+  void disconnect_consumer (
+    FT::FaultNotifier::ConsumerId connection) override;
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
-  virtual CORBA::Boolean is_alive ();
+  CORBA::Boolean is_alive () override;
 
   /////////////////
   // Implementation

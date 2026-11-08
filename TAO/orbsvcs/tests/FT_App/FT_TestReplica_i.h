@@ -87,50 +87,50 @@ public:
 
   //////////////////////////////////////////
   // Override CORBA servant virtual methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
-  virtual void _remove_ref ();
+  void _remove_ref () override;
 
 private:
   ///////////////////////////
   // override Replica methods
-  virtual void set (CORBA::Long value);
+  void set (CORBA::Long value) override;
 
-  virtual CORBA::Long increment (CORBA::Long delta);
+  CORBA::Long increment (CORBA::Long delta) override;
 
-  virtual CORBA::Long get ();
+  CORBA::Long get () override;
 
-  virtual CORBA::Long counter ();
+  CORBA::Long counter () override;
 
-  virtual void counter (CORBA::Long counter);
+  void counter (CORBA::Long counter) override;
 
-  virtual void die (FT_TEST::TestReplica::Bane when);
+  void die (FT_TEST::TestReplica::Bane when) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive ();
+  CORBA::Boolean is_alive () override;
 
   ///////////////////////////
   // override Updatable
 
-  virtual ::FT::State * get_update ();
+  ::FT::State * get_update () override;
 
-  virtual void set_update (const FT::State & s);
+  void set_update (FT::State const &s) override;
 
-  virtual ::FT::State * get_state ();
+  ::FT::State * get_state () override;
 
-  virtual void set_state (const FT::State & s);
+  void set_state (FT::State const &s) override;
 
   ////////////////
   // Implement TAO_UpdateObjectGroup
 
-  virtual void tao_update_object_group (
-      const char * iogr,
-      PortableGroup::ObjectGroupRefVersion version,
-      CORBA::Boolean is_primary);
+  void tao_update_object_group (
+    char const *iogr,
+    PortableGroup::ObjectGroupRefVersion version,
+    CORBA::Boolean is_primary) override;
 
   /////////////////
   // implementation

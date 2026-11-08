@@ -36,7 +36,7 @@ public:
    */
   virtual ~StubBatchConsumer ();
 
-  ::PortableServer::POA_ptr _default_POA ();
+  ::PortableServer::POA_ptr _default_POA () override;
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -71,14 +71,14 @@ public:
     ////////////////
     // CORBA methods
 
-    virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications);
+  void push_structured_events (
+    CosNotification::EventBatch const &notifications) override;
 
-    virtual void disconnect_sequence_push_consumer ();
+  void disconnect_sequence_push_consumer () override;
 
-   virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void offer_change (
+    CosNotification::EventTypeSeq const &added,
+    CosNotification::EventTypeSeq const &removed) override;
 
   ////////////////////
   // Forbidden methods
