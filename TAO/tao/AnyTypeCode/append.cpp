@@ -82,7 +82,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
     case CORBA::tk_fixed:
       {
         CORBA::UShort const length = (tc->fixed_digits () + 2) / 2;
-        for (CORBA::UShort i = 0; i < length && continue_append; ++i)
+        for (CORBA::UShort i {}; i < length && continue_append; ++i)
           {
             ACE_CDR::Octet octet;
             continue_append = src->read_octet (octet)
@@ -336,7 +336,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
   CORBA::ULong const member_count =
     tc->member_count ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        ++i)
     {
@@ -453,7 +453,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < member_count && current_member == null_member;
        ++i)
     {
@@ -1066,7 +1066,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   CORBA::ULong const member_count =
     tc->member_count ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < member_count
          && retval == TAO::TRAVERSE_CONTINUE
          && continue_append == 1;
@@ -1199,7 +1199,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
           CORBA::ULong const member_count =
             tc->member_count ();
 
-          for (CORBA::ULong i = 0;
+          for (CORBA::ULong i {};
                i < member_count && retval == TAO::TRAVERSE_CONTINUE;
                ++i)
             {

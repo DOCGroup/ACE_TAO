@@ -26,7 +26,7 @@ TAO_NVList_Adapter_Impl::create_list (
     {
       new_list->max_ = static_cast<CORBA::ULong> (count);
 
-      for (CORBA::Long i = 0; i < count; ++i)
+      for (CORBA::Long i {}; i < count; ++i)
         {
           CORBA::NamedValue_ptr nv {};
           ACE_NEW_THROW_EX (nv,

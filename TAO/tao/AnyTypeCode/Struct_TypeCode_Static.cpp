@@ -54,7 +54,7 @@ TAO::TypeCode::Struct<char const *,
   if (!success)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Struct_Field<char const *, CORBA::TypeCode_ptr const *> const & field =
         this->fields_[i];
@@ -109,7 +109,7 @@ TAO::TypeCode::Struct<char const *,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Struct_Field<char const *, CORBA::TypeCode_ptr const *> const &
         lhs_field = this->fields_[i];
@@ -153,7 +153,7 @@ TAO::TypeCode::Struct<char const *,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       CORBA::TypeCode_ptr const lhs =
         Traits<char const *>::get_typecode (this->fields_[i].type);
@@ -187,7 +187,7 @@ TAO::TypeCode::Struct<char const *,
 
       static char const empty_name[] = "";
 
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+      for (CORBA::ULong i {}; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.

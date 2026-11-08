@@ -296,7 +296,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
   CORBA::ULong const member_count =
     tc->member_count ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        ++i)
     {
@@ -404,7 +404,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < member_count && current_member == null_member;
        ++i)
     {
@@ -802,7 +802,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   CORBA::ULong const member_count =
     tc->member_count ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        ++i)
     {
@@ -954,7 +954,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
           CORBA::ULong const member_count =
             tc->member_count ();
 
-          for (CORBA::ULong i = 0;
+          for (CORBA::ULong i {};
                i < member_count && retval == TAO::TRAVERSE_CONTINUE;
                ++i)
             {

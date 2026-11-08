@@ -60,7 +60,7 @@ TAO::TypeCode::Union<StringType,
       return false;
     }
 
-  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
       case_type const & c = *this->cases_[i];
 
@@ -149,7 +149,7 @@ TAO::TypeCode::Union<StringType,
   if (!equal_discriminators)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
       if (this->default_index_ > -1
           && static_cast<CORBA::ULong> (this->default_index_) == i)
@@ -203,7 +203,7 @@ TAO::TypeCode::Union<StringType,
   if (!equiv_discriminators)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
       if (this->default_index_ > -1
           && static_cast<CORBA::ULong> (this->default_index_) == i)

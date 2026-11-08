@@ -64,7 +64,7 @@ TAO::TypeCode::Value<StringType,
   if (!success)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & field = this->fields_[i];
 
@@ -170,7 +170,7 @@ TAO::TypeCode::Value<StringType,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -237,7 +237,7 @@ TAO::TypeCode::Value<StringType,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -285,7 +285,7 @@ TAO::TypeCode::Value<StringType,
 
       static char const empty_name[] = "";
 
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+      for (CORBA::ULong i {}; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.
