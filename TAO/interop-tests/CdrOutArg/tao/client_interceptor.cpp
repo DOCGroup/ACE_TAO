@@ -2,19 +2,15 @@
 #include "tao/OctetSeqC.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-const IOP::ServiceId service_id = 0xdeadbeef;
-const char *request_msg = "12345678";
+constexpr IOP::ServiceId service_id = 0xdeadbeef;
+constexpr char request_msg[] = "12345678";
 
 Echo_Client_Request_Interceptor::
-Echo_Client_Request_Interceptor (const char *id)
+Echo_Client_Request_Interceptor (char const *id)
   : myname_ ("Echo_Client_Interceptor"),
     orb_id_ (CORBA::string_dup (id))
-{
-}
-
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
@@ -41,8 +37,8 @@ Echo_Client_Request_Interceptor::send_request (
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
+      int argc {};
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
@@ -63,16 +59,15 @@ Echo_Client_Request_Interceptor::send_request (
               ior.in ()));
 #endif /*if 0*/
 
-
   // Populate target member of the ClientRequestInfo.
 
   // Make the context to send the context to the target
   IOP::ServiceContext sc;
   sc.context_id = ::service_id;
 
-  CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
+  CORBA::ULong const string_len = std::strlen (request_msg) + 1;
   CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-  ACE_OS::strcpy (reinterpret_cast<char *> (buf), request_msg);
+  std::strcpy (reinterpret_cast<char *> (buf), request_msg);
 
   sc.context_data.replace (string_len, string_len, buf, 1);
 
@@ -83,10 +78,10 @@ Echo_Client_Request_Interceptor::send_request (
   IOP::ServiceContext_var sc2 =
     ri->get_request_service_context (::service_id);
 
-  const char *buf2 =
-    reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
+  char const *buf2 =
+    reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, request_msg) != 0)
+  if (std::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Expected request service context to be: %C.\n"
