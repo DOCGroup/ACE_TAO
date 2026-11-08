@@ -1,54 +1,50 @@
 #include "ace/Get_Opt.h"
+#include "ace/OS_Memory.h"
 #include "test_i.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
-
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 
+#include <cstdlib>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-
-void do_nothing ()
+struct Client_Options
 {
-}
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-k <ior> ")
-                           ACE_TEXT ("\n"),
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
-      CORBA::Object_var poa_object =
+      Client_Options options;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -56,124 +52,89 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
-
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      // Policies for the childPOA to be created.
       CORBA::PolicyList policies (1);
       policies.length (1);
 
-      CORBA::Any pol;
-      pol <<= BiDirPolicy::BOTH;
+      CORBA::Any policy_value;
+      policy_value <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                            pol);
+                            policy_value);
 
-      // Create POA as child of RootPOA with the above policies.  This POA
-      // will receive request in the same connection in which it sent
-      // the request
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
                               policies);
 
-      // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0;
-           i < policies.length ();
-           ++i)
-        {
-          policies[i]->destroy ();
-        }
+      for (CORBA::ULong i {}; i < policies.length (); ++i)
+        policies[i]->destroy ();
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-
-      Simple_Server_var server =
-        Simple_Server::_narrow (object.in ());
+      CORBA::Object_var const object = orb->string_to_object (options.ior);
+      Simple_Server_var const server = Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             ior),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Object reference <%s> is nil\n",
+                           options.ior),
+                          1);
 
-
-      Callback_i *callback_impl = 0;
-      callback_impl = new Callback_i (orb.in ());
-      PortableServer::ServantBase_var safe (callback_impl);
-
-      PortableServer::ObjectId_var id =
+      Callback_i *callback_impl {};
+      ACE_NEW_RETURN (callback_impl, Callback_i (orb.in ()), 1);
+      // ServantBase_var owns the initial reference; the POA retains its activated reference.
+      PortableServer::ServantBase_var const callback_owner (callback_impl);
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("client_callback");
+      child_poa->activate_object_with_id (id.in (), callback_impl);
 
-      child_poa->activate_object_with_id (id.in (),
-                                          callback_impl);
-
-      CORBA::Object_var callback_object =
+      CORBA::Object_var const callback_object =
         child_poa->id_to_reference (id.in ());
-
-      Callback_var callback =
-        Callback::_narrow (callback_object.in ());
-
-
-      CORBA::String_var ior =
-        orb->object_to_string (callback.in ());
+      Callback_var const callback = Callback::_narrow (callback_object.in ());
+      CORBA::String_var const callback_ior = orb->object_to_string (callback.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) Client callback activated as <%C>\n"), ior.in ()));
+                  ACE_TEXT ("(%P|%t) Client callback activated as <%C>\n"),
+                  callback_ior.in ()));
 
-      // Send the callback object to the server
       server->callback_object (callback.in ());
 
-      // This is a non-portable, but the only currently available way of
-      // determining the number of currently open connections.
-      size_t pre_call_connections =
+      size_t const pre_call_connections =
         orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
+      CORBA::Long const result = server->test_method (true);
 
-      // A  method to kickstart callbacks from the server
-      CORBA::Long r =
-        server->test_method (1);
-
-      if (r != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) unexpected result = %d "),
-                      r));
-        }
+      if (result != 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) unexpected result = %d "),
+                    result));
 
       orb->run ();
 
-      // This is a non-portable, but the only currently available way of
-      // determining the number of currently open connections.
-      size_t cur_connections =
-        orb->orb_core()->lane_resources().transport_cache().current_size ();
+      size_t const cur_connections =
+        orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
       if (cur_connections > pre_call_connections)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Expected %d ")
-                      ACE_TEXT ("connections in the transport cache, but found ")
-                      ACE_TEXT ("%d instead.  Aborting.\n"),
+                      ACE_TEXT ("(%P|%t) Expected %B connections in the transport cache, ")
+                      ACE_TEXT ("but found %B instead.  Aborting.\n"),
                       pre_call_connections,
                       cur_connections));
-
-          ACE_OS::abort ();
+          std::abort ();
         }
 
       root_poa->destroy (true, true);
-
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
