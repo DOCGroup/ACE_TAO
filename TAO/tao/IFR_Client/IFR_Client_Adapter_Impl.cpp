@@ -116,7 +116,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 
   CORBA::ULong paramCount = params->length ();
 
-  for (CORBA::ULong i = 0; i < paramCount; ++i)
+  for (CORBA::ULong i {}; i < paramCount; ++i)
     {
       CORBA::Any value;
       TAO::Unknown_IDL_Type *unk {};
@@ -125,7 +125,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
       value.replace (unk);
 
       // Convert the parameter mode to an arg mode
-      CORBA::Flags flags = 0;
+      CORBA::Flags flags {};
       switch(params[i].mode)
         {
         case CORBA::PARAM_IN:
