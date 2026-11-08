@@ -9,28 +9,32 @@
  */
 //=============================================================================
 
-
 #include "timeout_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file {};
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {};
+  bool debug {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        ++TAO_debug_level;
+        options.debug = true;
         break;
       case '?':
       default:
@@ -50,10 +54,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -61,39 +65,43 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
+
+      if (options.debug)
+        ++TAO_debug_level;
 
       Timeout_i timeout_i (orb.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&timeout_i);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      TimeoutObj_var timeout_var =
+      TimeoutObj_var const timeout_var =
         TimeoutObj::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (timeout_var.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file)
+      if (options.ior_output_file != nullptr)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               ior_output_file),
+                               options.ior_output_file),
                               1);
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
@@ -108,7 +116,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          false);  // wait for completion
 
       orb->destroy ();
-
     }
   catch (CORBA::Exception const &ex)
     {

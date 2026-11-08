@@ -14,26 +14,31 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-unsigned int msec = 50;
+
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  unsigned int msec {50};
+  bool debug {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:t:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':
-        TAO_debug_level++;
+        options.debug = true;
         break;
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 't':
-        msec = ACE_OS::atoi (get_opts.opt_arg ());
+        options.msec = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -55,29 +60,33 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      if (options.debug)
+        ++TAO_debug_level;
 
-      TimeoutObj_var timeout_var =
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior);
+
+      TimeoutObj_var const timeout_var =
         TimeoutObj::_narrow (object.in ());
 
       if (CORBA::is_nil (timeout_var.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
       // Activate POA to handle the call back.
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -85,10 +94,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -96,12 +105,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&timeoutHandler_i);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      AMI_TimeoutObjHandler_var timeoutHandler_var =
+      AMI_TimeoutObjHandler_var const timeoutHandler_var =
         AMI_TimeoutObjHandler::_narrow (object_act.in ());
 
       // Instantiate client
@@ -109,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             timeout_var.in (),
                             timeoutHandler_var.in (),
                             timeoutHandler_i,
-                            msec);
+                            options.msec);
 
       client.activate ();
 
