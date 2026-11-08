@@ -51,7 +51,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
     }
   int const length = (digits + 2) / 2;
   ACE_CDR::Octet octets[16];
-  for (int i = 0; i < length; ++i)
+  for (int i {}; i < length; ++i)
     {
       if (!cdr.read_octet (octets[i]))
         {
@@ -90,7 +90,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
     {
       decimal += '-';
     }
-  for (int digit = 0; digit < digits; ++digit)
+  for (int digit {}; digit < digits; ++digit)
     {
       if (scale && digit == digits - scale)
         {
@@ -120,7 +120,7 @@ TAO_DynFixed_i::init (CORBA::Any const& any)
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
-  bool decoded = false;
+  bool decoded {};
 
   if (impl->encoded ())
     {
@@ -212,7 +212,7 @@ TAO_DynFixed_i::set_value (char const* value)
   CORBA::UShort const digits = tc->fixed_digits ();
   CORBA::UShort const scale = tc->fixed_scale ();
   std::string text (value);
-  std::string::size_type first = 0;
+  std::string::size_type first {};
   while (first < text.size () &&
          std::isspace (static_cast<unsigned char> (text[first])))
     {

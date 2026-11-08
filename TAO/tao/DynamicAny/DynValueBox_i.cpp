@@ -279,8 +279,8 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
   while (true)
     {
       TAO_InputCDR indrected_strm (static_cast<std::size_t> (0));
-      CORBA::Boolean is_indirected= false;
-      CORBA::Boolean is_null_object= false;
+      CORBA::Boolean is_indirected {};
+      CORBA::Boolean is_null_object {};
 
       // Read in the ValueBox header (to skip over it) and check
       // for the null type.
@@ -386,7 +386,7 @@ TAO_DynValueBox_i::to_any ()
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
                     CORBA::NO_MEMORY ());
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval, CORBA::Any, CORBA::NO_MEMORY ());
   retval->replace (unk);
   return retval;

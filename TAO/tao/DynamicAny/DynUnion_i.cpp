@@ -193,7 +193,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
 
   CORBA::ULong const count = unaliased->member_count ();
 
-  CORBA::Boolean match = false;
+  CORBA::Boolean match {};
   CORBA::ULong i;
 
   // Get the index.
@@ -324,7 +324,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::Boolean match = false;
+  CORBA::Boolean match {};
 
   for (i = 0; i < length; ++i)
     {
@@ -715,7 +715,7 @@ TAO_DynUnion_i::to_any ()
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());

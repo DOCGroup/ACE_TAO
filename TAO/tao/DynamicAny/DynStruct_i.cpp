@@ -100,7 +100,7 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
       in >> str.out ();
     }
 
-  for (CORBA::ULong i = 0; i < numfields; i++)
+  for (CORBA::ULong i {}; i < numfields; ++i)
     {
       CORBA::TypeCode_var field_tc =
         unaliased_tc->member_type (i);
@@ -146,7 +146,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
 
   CORBA::TypeCode_var mtype;
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       mtype = unaliased_tc->member_type (i);
 
@@ -266,7 +266,7 @@ TAO_DynStruct_i::get_members ()
     }
 
   // Assign name and value to each pearl on the string.
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
         CORBA::string_dup (unaliased_tc->member_name (i));
@@ -303,7 +303,7 @@ TAO_DynStruct_i::set_members (DynamicAny::NameValuePairSeq const& values)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check for type and name match.
       my_tc = unaliased_tc->member_type (i);
@@ -352,7 +352,7 @@ TAO_DynStruct_i::get_members_as_dyn_any ()
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   // Assign name and value to each pearl on the string.
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       safe_retval[i].id = CORBA::string_dup (unaliased_tc->member_name (i));
 
@@ -392,7 +392,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check for type and name match.
       my_tc = unaliased_tc->member_type (i);
@@ -467,7 +467,7 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
       CORBA::TypeCode_var unaliased =
         TAO::unaliased_typecode (this->type_.in ());
 
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+      for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
           field_tc = unaliased->member_type (i);
 
@@ -521,7 +521,7 @@ TAO_DynStruct_i::to_any ()
   TAO::Unknown_IDL_Type *field_unk {};
   TAO_InputCDR field_in_cdr (static_cast<ACE_Message_Block *> (nullptr));
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       CORBA::TypeCode_var field_tc =
         this->da_members_[i]->type ();
@@ -557,7 +557,7 @@ TAO_DynStruct_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
@@ -590,7 +590,7 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
   DynamicAny::DynAny_var tmp;
   CORBA::Boolean member_equal;
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       rhs->seek (static_cast <CORBA::Long> (i));
 
@@ -619,7 +619,7 @@ TAO_DynStruct_i::destroy ()
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
       // Do a deep destroy.
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+      for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
           this->set_flag (da_members_[i].in (), true);
 

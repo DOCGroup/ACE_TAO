@@ -77,7 +77,7 @@ TAO_DynSequence_i::init (CORBA::Any const& any)
   CORBA::TypeCode_var field_tc =
     this->get_element_type ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::Any field_any;
       TAO_InputCDR unk_in (cdr);
@@ -261,7 +261,7 @@ TAO_DynSequence_i::get_elements ()
   DynamicAny::AnySeq_var safe_retval = elements;
 
   // Initialize each Any.
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::Any_var tmp =
         this->da_members_[i]->to_any ();
@@ -312,7 +312,7 @@ TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const& value)
 
   CORBA::TypeCode_var value_tc;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check each arg element for type match.
       value_tc = value[i].type ();
@@ -371,7 +371,7 @@ TAO_DynSequence_i::get_elements_as_dyn_any ()
   retval->length (this->component_count_);
   DynamicAny::DynAnySeq_var safe_retval (retval);
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
@@ -416,7 +416,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   CORBA::TypeCode_var val_type;
   CORBA::Boolean equivalent;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       val_type = values[i]->type ();
 
@@ -509,7 +509,7 @@ TAO_DynSequence_i::from_any (CORBA::Any const& any)
       CORBA::TypeCode_var field_tc =
         this->get_element_type ();
 
-      for (CORBA::ULong i = 0; i < arg_length; ++i)
+      for (CORBA::ULong i {}; i < arg_length; ++i)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
@@ -571,7 +571,7 @@ TAO_DynSequence_i::to_any ()
   CORBA::TypeCode_var field_tc =
     this->get_element_type ();
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       // Recursive step
       CORBA::Any_var field_any =
@@ -605,7 +605,7 @@ TAO_DynSequence_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
@@ -645,7 +645,7 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs)
   DynamicAny::DynAny_var tmp;
   CORBA::Boolean member_equal;
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       rhs->seek (static_cast<CORBA::Long> (i));
 
@@ -674,7 +674,7 @@ TAO_DynSequence_i::destroy ()
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
       // Do a deep destroy.
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+      for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
           this->set_flag (da_members_[i].in (), 1);
 

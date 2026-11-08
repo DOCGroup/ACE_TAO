@@ -404,7 +404,7 @@ TAO_DynValue_i::set_members_as_dyn_any (
     }
 
   // Check each member typecodes match.
-  CORBA::ULong i = 0u;
+  CORBA::ULong i {};
   for (; i < length; ++i)
     {
       CORBA::TypeCode_var
@@ -640,7 +640,7 @@ TAO_DynValue_i::to_any ()
     unk,
     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
     CORBA::NO_MEMORY () );
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (
     retval,
     CORBA::Any,
@@ -769,7 +769,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
       // order. NOTE these type_ids are the real / full /
       // non-dealliased versions not the dealliased ones that
       // are stored in the da_base_types_[] list.
-      CORBA::ULong i= 0u;
+      CORBA::ULong i {};
       for (CORBA::TypeCode_var
              next (CORBA::TypeCode::_duplicate (this->type_.in ()));
            i < trunc_ids;
@@ -1009,7 +1009,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
 
       // Read the offset from the stream (should be negative to point
       // back to original)
-      CORBA::Long offset = 0;
+      CORBA::Long offset {};
       if (!strm.read_long (offset) ||  0 <= offset)
         {
           if (TAO_debug_level)
@@ -1076,7 +1076,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
 
   // Work out if the encoded valuetype inside the any is
   // required to be truncated into our DynValue.
-  CORBA::Boolean requires_truncation = false;
+  CORBA::Boolean requires_truncation {};
   char const* const our_id = this->da_base_types_[0]->id ();
   CORBA::ULong i;
   for (i= 0u; i < num_ids; ++i)
