@@ -2,16 +2,16 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
-static int shutdown_server = 0;
+static bool shutdown_server {};
 // Flag to tell server to shutdown.
 
-static CORBA::UShort call_count = 5;
+static CORBA::UShort call_count {5};
 // # of nested calls to be made.
 
-static int quiet = 0;
+static bool quiet {};
 // The test is quiet...
 
 class Client_Task
@@ -20,6 +20,11 @@ public:
   Client_Task (client_ptr c,
                server_ptr s);
   int svc ();
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
 private:
   client_var client_;
@@ -47,7 +52,7 @@ Client_Task::svc ()
       this->server_->start (this->client_.in (),
                             call_count);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_Task::svc");
       return -1;
@@ -66,11 +71,11 @@ parse_args (int argc,
     switch (c)
       {
       case 'q':
-        quiet = 1;
+        quiet = true;
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case 'n':
@@ -94,7 +99,7 @@ parse_args (int argc,
                           -1);
       }
 
-  if (ior == 0)
+  if (ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s: no nested up calls server ior specified\n",
                        argv[0]),
@@ -112,7 +117,7 @@ ACE_TMAIN (int argc,
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -153,7 +158,7 @@ ACE_TMAIN (int argc,
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client::main");
       return -1;
