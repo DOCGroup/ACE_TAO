@@ -51,11 +51,7 @@ TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*)
 
 // ****************************************************************
 
-TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy ()
-{
-  delete this->lock_;
-  this->lock_ = nullptr;
-}
+TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy () = default;
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Basic_ObserverStrategy::append_observer (

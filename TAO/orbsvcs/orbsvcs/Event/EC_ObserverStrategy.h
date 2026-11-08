@@ -27,6 +27,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
+#include <memory>
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
@@ -207,7 +208,7 @@ protected:
   TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The lock
-  ACE_Lock* lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /// The handles are generated in sequential order, but are opaque to
   /// the client.
