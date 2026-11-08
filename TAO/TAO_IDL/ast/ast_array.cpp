@@ -121,21 +121,22 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
   for (std::size_t i = 0;
        !iter.is_done () && i < nds;
-       iter.next (), i++)
+       iter.next (), ++i)
     {
-      AST_Expression *orig = iter.item ();
-      AST_Param_Holder *ph = orig->param_holder ();
+      AST_Expression * const orig = iter.item ();
+      AST_Param_Holder * const ph = orig->param_holder ();
 
       AST_Expression::ExprType const ex_type =
         (ph == nullptr ? orig->ev ()->et : ph->info ()->const_type_);
 
+      // ACE_NEW_RETURN requires a raw output pointer; own it before vector insertion.
       AST_Expression *copy {};
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
                                       ex_type),
                       std::vector<std::unique_ptr<AST_Expression>> ());
 
-      result.emplace_back (copy);
+      result.emplace_back (std::unique_ptr<AST_Expression> (copy));
     }
 
   return result;
@@ -175,7 +176,7 @@ AST_Array::compute_size_type ()
 {
   AST_Type * const type = this->base_type ();
 
-  if (!type)
+  if (type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_array::compute_size_type - "
