@@ -68,7 +68,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
   CORBA::ULong const length = policy_list->length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (policy_list[i]->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
             {
