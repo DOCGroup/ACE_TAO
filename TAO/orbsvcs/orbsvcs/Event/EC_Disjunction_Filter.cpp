@@ -19,29 +19,23 @@ TAO_EC_Disjunction_Filter::
 
 TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter ()
 {
-  TAO_EC_Filter** end = this->children_ + this->n_;
-  for (TAO_EC_Filter** i = this->children_;
-       i != end;
-       ++i)
+  for (size_t i {}; i != this->n_; ++i)
     {
-      delete *i;
-      *i = nullptr;
+      delete this->children_[i];
     }
-  delete[] this->children_;
-  this->children_ = nullptr;
   this->n_ = 0;
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Disjunction_Filter::begin () const
 {
-  return this->children_;
+  return this->children_.get ();
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Disjunction_Filter::end () const
 {
-  return this->children_ + this->n_;
+  return this->children_.get () + this->n_;
 }
 
 int

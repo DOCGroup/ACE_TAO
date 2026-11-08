@@ -17,6 +17,8 @@
 
 #include "orbsvcs/Event/EC_Filter.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -72,7 +74,7 @@ private:
 
 private:
   /// The children
-  TAO_EC_Filter** children_;
+  std::unique_ptr<TAO_EC_Filter*[]> children_;
 
   /// The number of children.
   size_t n_;

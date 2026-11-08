@@ -18,6 +18,8 @@
 #include "orbsvcs/Event/EC_Filter.h"
 #include /**/ "orbsvcs/Event/event_serv_export.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -79,7 +81,7 @@ private:
 
 private:
   /// The children
-  TAO_EC_Filter** children_;
+  std::unique_ptr<TAO_EC_Filter*[]> children_;
 
   /// The number of children.
   size_t n_;
@@ -96,7 +98,7 @@ private:
    * The bit vector to keep track of the children that have received
    * their events.
    */
-  Word* bitvec_;
+  std::unique_ptr<Word[]> bitvec_;
 
   /// The current child in the iteration, used in the push() method...
   ChildrenIterator current_child_;

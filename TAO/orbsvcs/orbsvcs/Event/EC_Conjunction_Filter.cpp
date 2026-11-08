@@ -8,7 +8,10 @@ TAO_EC_Conjunction_Filter::
     TAO_EC_Conjunction_Filter (TAO_EC_Filter* children[],
                                size_t n)
   :  children_ (children),
-     n_ (n)
+     n_ (n),
+     nwords_ (0),
+     bitvec_ {},
+     current_child_ {}
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -19,35 +22,28 @@ TAO_EC_Conjunction_Filter::
     }
 
   this->nwords_ = this->n_ / bits_per_word + 1;
-  ACE_NEW (this->bitvec_, Word[this->nwords_]);
+  Word* bitvec {};
+  ACE_NEW (bitvec, Word[this->nwords_]);
+  this->bitvec_.reset (bitvec);
 
   this->clear ();
 }
 
 TAO_EC_Conjunction_Filter::~TAO_EC_Conjunction_Filter ()
 {
-  TAO_EC_Filter** end = this->children_ + this->n_;
-  for (TAO_EC_Filter** i = this->children_;
-       i != end;
-       ++i)
+  for (size_t i {}; i != this->n_; ++i)
     {
-      delete *i;
-      *i = nullptr;
+      delete this->children_[i];
     }
-  delete[] this->children_;
-  this->children_ = nullptr;
   this->n_ = 0;
-
-  delete[] this->bitvec_;
-  this->bitvec_ = nullptr;
 }
 
 int
 TAO_EC_Conjunction_Filter::all_received () const
 {
-  Word* i = this->bitvec_;
+  Word* i = this->bitvec_.get ();
   for (;
-       i != this->bitvec_ + this->nwords_;
+       i != this->bitvec_.get () + this->nwords_;
        ++i)
     {
       if (*i != static_cast<Word> (~0))
@@ -59,13 +55,13 @@ TAO_EC_Conjunction_Filter::all_received () const
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Conjunction_Filter::begin () const
 {
-  return this->children_;
+  return this->children_.get ();
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Conjunction_Filter::end () const
 {
-  return this->children_ + this->n_;
+  return this->children_.get () + this->n_;
 }
 
 int
@@ -144,9 +140,9 @@ TAO_EC_Conjunction_Filter::clear ()
     {
       (*i)->clear ();
     }
-  Word* j = this->bitvec_;
+  Word* j = this->bitvec_.get ();
   for (;
-       j != this->bitvec_ + this->nwords_ - 1;
+       j != this->bitvec_.get () + this->nwords_ - 1;
        ++j)
     {
       *j = 0;
