@@ -824,7 +824,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Once we send the InputCDR stream we need to just forget about
   // the stream and never touch that again for anything. We basically
   // loose ownership of the data_block.
-  int retval = 0;
+  int retval {};
 
   switch (qd->msg_type ())
     {
@@ -947,8 +947,8 @@ TAO_GIOP_Message_Base::process_request (
                              transport,
                              this->orb_core_);
 
-  CORBA::ULong request_id = 0;
-  CORBA::Boolean response_required = false;
+  CORBA::ULong request_id {};
+  CORBA::Boolean response_required {};
 
   try
     {
@@ -1039,7 +1039,7 @@ TAO_GIOP_Message_Base::process_request (
   // Only CORBA exceptions are caught here.
   catch ( ::CORBA::Exception& ex)
     {
-      int result = 0;
+      int result {};
 
       if (response_required)
         {
@@ -1090,7 +1090,7 @@ TAO_GIOP_Message_Base::process_request (
       // we have native exceptions but no support for them in the ORB
       // we should still be able to catch it.  If we don't have native
       // exceptions it couldn't have been raised in the first place!
-      int result = 0;
+      int result {};
 
       if (response_required)
         {
@@ -1523,7 +1523,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     CORBA::Octet const minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
 
     // request/reply id.
-    CORBA::ULong tmp = 0;
+    CORBA::ULong tmp {};
     CORBA::ULong *id = std::addressof(tmp);
     char *tmp_id {};
 
@@ -1692,7 +1692,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Message_Block::Message_Flags flg = 0;
+  ACE_Message_Block::Message_Flags flg {};
   ACE_Data_Block *db {};
 
   // Get the flag in the message block
@@ -1863,7 +1863,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
     {
       // > GIOP-1.2
 
-      CORBA::ULong tmp_request_id = 0;
+      CORBA::ULong tmp_request_id {};
       if (this->parse_request_id (tail, tmp_request_id) == -1)
         {
           return -1;
@@ -1873,8 +1873,8 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 
       while (this->fragment_stack_.pop (head) != -1)
         {
-          CORBA::ULong head_request_id = 0;
-          int parse_status = 0;
+          CORBA::ULong head_request_id {};
+          int parse_status {};
 
           if (head->more_fragments () &&
               head->giop_version ().major_version () >= 1 &&
@@ -1949,7 +1949,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
       reverse_stack.push (head);
     }
 
-  bool discard_all_GIOP11_messages = false;
+  bool discard_all_GIOP11_messages {};
 
   // Now we are able to process message in order they have arrived.
   // If the cancel_request_id matches to GIOP-1.1 message, all succeeding

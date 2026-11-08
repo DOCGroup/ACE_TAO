@@ -463,7 +463,7 @@ TAO_IIOP_Acceptor::open_i (ACE_INET_Addr const &addr,
     {
       ACE_INET_Addr a(addr);
 
-      bool found_a_port = false;
+      bool found_a_port {};
       ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
@@ -650,7 +650,7 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
   if (def_type)
     *def_type = AF_UNSPEC;
 
@@ -727,7 +727,7 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
   if (host_defaulted)
     {
       // First convert the port into a usable form.
-      unsigned short portno = 0;
+      unsigned short portno {};
       if (port_separator_loc != nullptr)
         {
           portno =
@@ -775,7 +775,7 @@ int
 TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr const &addr,
                                            char *&host)
 {
-  int result = 0;
+  int result {};
   char const *tmp {};
 
   // If the IP address in the INET_Addr is the IN(6)ADDR_ANY address,
@@ -861,8 +861,8 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   size_t ipv4_cnt {};
   size_t ipv4_lo_cnt {};
   size_t ipv6_ll {};
-  bool ipv4_non_lo = false;
-  bool ipv6_non_ll = false;
+  bool ipv4_non_lo {};
+  bool ipv6_non_ll {};
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
   for (size_t j = 0; j < if_cnt; ++j)
@@ -1144,9 +1144,9 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
       return -1;
     }
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
-  int result = 0;
+  ACE_CString::size_type begin {};
+  ACE_CString::size_type end {};
+  int result {};
   for (int j = 0; j < argc; ++j)
     {
       if (j < argc - 1)
@@ -1195,7 +1195,7 @@ int
 TAO_IIOP_Acceptor::parse_options_i (int &argc,
                                     ACE_CString **argv)
 {
-  int i = 0;
+  int i {};
   while (i < argc)
     {
       ACE_CString::size_type const len  = argv[i]->length ();

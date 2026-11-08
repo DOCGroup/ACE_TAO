@@ -358,13 +358,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // template sometime.
 
   // Name Service port use for Multicast
-  unsigned short ns_port = 0;
+  unsigned short ns_port {};
 
   // Trading Service port used for Multicast
-  unsigned short ts_port = 0;
+  unsigned short ts_port {};
 
   // Implementation Repository Service port #.
-  unsigned short ir_port = 0;
+  unsigned short ir_port {};
 
   // Buffer sizes for kernel socket buffers
   // @@ should be a default defined for each protocol implementation?
@@ -377,10 +377,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   int nodelay = 1;
 
   // Use SO_KEEPALIVE (default 0).
-  int so_keepalive = 0;
+  int so_keepalive {};
 
   // Use SO_DONTROUTE (default 0)
-  int so_dontroute = 0;
+  int so_dontroute {};
 
   // Number of hops for a datagram sent through socket.
   int ip_hoplimit = -1;
@@ -395,16 +395,16 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 #if (TAO_USE_DOTTED_DECIMAL_ADDRESSES == 1)
   int dotted_decimal_addresses = 1;
 #else
-  int dotted_decimal_addresses = 0;
+  int dotted_decimal_addresses {};
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
   // Disable looking up the host name for incoming connections.
-  int no_server_side_name_lookups = 0;
+  int no_server_side_name_lookups {};
 
 #if defined (TAO_STD_PROFILE_COMPONENTS)
   bool std_profile_components = true;
 #else
-  bool std_profile_components = false;
+  bool std_profile_components {};
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
   int linger = TAO_SO_LINGER;
@@ -425,7 +425,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 #if (TAO_NEGOTIATE_CODESETS == 1)
   bool negotiate_codesets = true;
 #else
-  bool negotiate_codesets = false;
+  bool negotiate_codesets {};
 #endif /* TAO_NEGOTIATE_CODESETS */
 
   // Pick up the value of the use_implrepo_ flag from an environment variable
@@ -2067,7 +2067,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
   // but we are stuck in platforms without exceptions!
   TAO_ORB_Core_Auto_Ptr collocated_orb_core;
-  CORBA::Object_ptr x = nullptr;
+  CORBA::Object_ptr x {};
 
   {
     // Lock the ORB_Table against concurrent modification while we
@@ -2133,7 +2133,7 @@ CORBA::Long
 TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
 
 {
-  CORBA::Long retval = 0;
+  CORBA::Long retval {};
   TAO_ORB_Core_Auto_Ptr collocated_orb_core;
 
   {
@@ -2857,7 +2857,7 @@ TAO_ORB_Core::resolve_rir (const char *name)
     {
       static const char corbaloc_prefix[] = "corbaloc:";
       static const char mcast_prefix[] = "mcast:";
-      char object_key_delimiter = 0;
+      char object_key_delimiter {};
 
       ACE_CString list_of_profiles (default_init_ref.in ());
 
@@ -2922,7 +2922,7 @@ TAO_ORB_Core::list_initial_references ()
   CORBA::ORB::ObjectIdList_var list (tmp);
   list->length (static_cast<CORBA::ULong> (total_size));
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
   // Index for ObjectIdList members.
 
   // Iterate over the registered initial references.
@@ -3690,7 +3690,7 @@ TAO_ORB_Core_instance ()
 
           try
             {
-              int argc = 0;
+              int argc {};
               ACE_TCHAR **const argv {};
               CORBA::ORB_var orb =
                 CORBA::ORB_init (argc, argv);

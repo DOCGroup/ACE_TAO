@@ -275,7 +275,7 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
                                     const ACE_Message_Block *message_block,
                                     ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
 
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
@@ -627,7 +627,7 @@ TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
     return -1;
 
   // check the buffering constraints to see what must be done in post_open()
-  bool must_flush = false;
+  bool must_flush {};
   this->flush_in_post_open_ |=
     this->check_buffering_constraints_i (stub,
                                          must_flush);
@@ -1075,7 +1075,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
   // potentially long running system calls invoked from here.
   TAO::ORB_Countdown_Time countdown(dc.timeout());
 
-  size_t byte_count = 0;
+  size_t byte_count {};
 
   // ... send the message ...
   ssize_t retval = -1;
@@ -1159,7 +1159,7 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
-  int iovcnt = 0;
+  int iovcnt {};
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   iovec iov[ACE_IOV_MAX] = { { nullptr , 0 } };
 #else
@@ -1276,8 +1276,8 @@ TAO_Transport::cleanup_queue_i ()
          this->id ()));
     }
 
-  size_t byte_count = 0;
-  int msg_count = 0;
+  size_t byte_count {};
+  int msg_count {};
 
   // Cleanup all messages
   while (!this->queue_is_empty_i ())
@@ -1359,8 +1359,8 @@ bool
 TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
 {
   // First let's compute the size of the queue:
-  size_t msg_count = 0;
-  size_t total_bytes = 0;
+  size_t msg_count {};
+  size_t total_bytes {};
 
   for (TAO_Queued_Message *i = this->head_; i != nullptr; i = i->next ())
     {
@@ -1368,7 +1368,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
       total_bytes += i->message_length ();
     }
 
-  bool set_timer = false;
+  bool set_timer {};
   ACE_Time_Value new_deadline;
 
   TAO::Transport_Queueing_Strategy *queue_strategy =
@@ -1453,7 +1453,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
-  int ret = 0;
+  int ret {};
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   size_t const message_length = message_block->length ();
@@ -1511,16 +1511,16 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
         }
     }
 
-  bool partially_sent = false;
-  bool timeout_encountered = false;
+  bool partially_sent {};
+  bool timeout_encountered {};
 
   TAO::Transport::Drain_Constraints dc(
       max_wait_time, this->using_blocking_io_for_asynch_messages());
 
   if (try_sending_first)
     {
-      ssize_t n = 0;
-      size_t byte_count = 0;
+      ssize_t n {};
+      size_t byte_count {};
       // ... in this case we must try to send the message first ...
 
       size_t const total_length = message_block->total_length ();
@@ -1667,7 +1667,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       // We can't flush if we have already encountered a timeout
       // ... if the queue is full we need to activate the output on the
       // queue ...
-      bool must_flush = false;
+      bool must_flush {};
       const bool constraints_reached =
         this->check_buffering_constraints_i (stub,
                                              must_flush);
@@ -1700,7 +1700,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
             }
 
           size_t const sent_byte = sent_byte_count_;
-          int ret = 0;
+          int ret {};
           {
             using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
             TAO_REVERSE_LOCK reverse (*this->handler_lock_);
@@ -2065,7 +2065,7 @@ TAO_Transport::handle_input_parse_extra_messages (
   // store buffer status of last extraction: -1 parse error, 0
   // incomplete message header in buffer, 1 complete messages header
   // parsed
-  int buf_status = 0;
+  int buf_status {};
 
   TAO_Queued_Data *q_data {};     // init
 
@@ -2142,7 +2142,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
-  size_t recv_size = 0; // Note: unsigned integer
+  size_t recv_size {}; // Note: unsigned integer
 
   // Pointer to newly parsed message
   TAO_Queued_Data *q_data {};
