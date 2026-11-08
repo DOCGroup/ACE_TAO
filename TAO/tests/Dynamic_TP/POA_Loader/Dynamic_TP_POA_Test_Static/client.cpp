@@ -6,9 +6,9 @@
 
 struct Client_Options
 {
-  ACE_TString ior {ACE_TEXT("file://server.ior")};
+  ACE_TString ior {ACE_TEXT ("file://server.ior")};
   int client_num {1};
-  int report_exception {1};
+  bool report_exception {true};
   bool is_shutdown {};
   int num_threads {1};
   ACE_TString test {};
@@ -28,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
         options.client_num = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'e':
-        options.report_exception = ACE_OS::atoi (get_opts.opt_arg ());
+        options.report_exception = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case 'g':
         options.goal = ACE_OS::atoi (get_opts.opt_arg ());
@@ -100,23 +100,23 @@ int ClientTask::svc ()
     ndx = this->next_client_num_++;
   }
 
-  for (int i = 5; i > 0; i--)
+  for (int i = 5; i > 0; --i)
     {
       try
         {
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT("Client %d calling server\n"),
-                     ndx));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client %d calling server\n"),
+                      ndx));
           CORBA::String_var const the_string = target_->get_string (ndx);
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT("Client %d received return text of: [%s %d].\n"),
-                     ndx, the_string.in(), ndx));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client %d received return text of: [%s %d].\n"),
+                      ndx, the_string.in (), ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
             this->replies_++;
           }
         }
-      catch (const CORBA::NO_IMPLEMENT& )
+      catch (CORBA::NO_IMPLEMENT const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Client %d caught full queue exception.\n"),
@@ -126,14 +126,14 @@ int ClientTask::svc ()
             this->nis_++;
           }
         }
-      catch (const CORBA::TRANSIENT& )
+      catch (CORBA::TRANSIENT const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Client %d caught transent, retrying.\n"),
                       ndx));
           continue;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Client %d caught other exception. %s\n"),
@@ -157,7 +157,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Client_Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
@@ -177,11 +177,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      for (int i = 3; i > 0; i--)
+      for (int i = 3; i > 0; --i)
         {
           try
             {
-              if (hello->_non_existent())
+              if (hello->_non_existent ())
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      ACE_TEXT("Client: non_existent returns true\n")),
@@ -190,44 +190,39 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               else
                 break;
             }
-          catch (const CORBA::TRANSIENT &)
+          catch (CORBA::TRANSIENT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Client: got a transient exception with %d tries remaining\n"),
-                          i-1));
+                          i - 1));
             }
-        }
-
+      }
 
       if (options.is_shutdown)
-      {
-        hello->shutdown();
-      }
+        hello->shutdown ();
       else
-      {
-        ClientTask ct (hello.in (), options.client_num);
-        ct.activate (THR_NEW_LWP | THR_JOINABLE, options.num_threads);
-        ct.wait ();
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Client: replies = %d, NO_IMPL = %d, other ex = %d\n"),
-                    ct.replies_, ct.nis_, ct.exs_));
-        if (ct.exs_ > 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Client: ERROR: unexpected exception caught.\n")));
-            result = -1;
-          }
-        else if (ACE_OS::strcasecmp (options.test.c_str (), ACE_TEXT ("max_queue")) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Client: max_queue test, got %d overages, expected %d\n"),
-                        ct.nis_, options.goal));
-            if (ct.nis_ != options.goal)
-              {
+        {
+          ClientTask ct (hello.in (), options.client_num);
+          ct.activate (THR_NEW_LWP | THR_JOINABLE, options.num_threads);
+          ct.wait ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client: replies = %d, NO_IMPL = %d, other ex = %d\n"),
+                      ct.replies_, ct.nis_, ct.exs_));
+          if (ct.exs_ > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Client: ERROR: unexpected exception caught.\n")));
+              result = -1;
+            }
+          else if (ACE_OS::strcasecmp (options.test.c_str (), ACE_TEXT ("max_queue")) == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Client: max_queue test, got %d overages, expected %d\n"),
+                          ct.nis_, options.goal));
+              if (ct.nis_ != options.goal)
                 result = -1;
-              }
-          }
-      }
+            }
+        }
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

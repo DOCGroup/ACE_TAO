@@ -5,8 +5,14 @@
 #include "ace/Thread_Manager.h"
 #include <memory>
 
+struct Server_Options
+{
+  ACE_TString ior_output_file {ACE_TEXT ("server.ior")};
+  int sleep_sec {1};
+};
+
 int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file, int &sleep_sec)
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:"));
   int c {};
@@ -15,10 +21,10 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file, int &slee
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 's':
-        sleep_sec = static_cast<int> (ACE_OS::strtol (get_opts.opt_arg (), nullptr, 0));
+        options.sleep_sec = static_cast<int> (ACE_OS::strtol (get_opts.opt_arg (), nullptr, 0));
         break;
       case '?':
       default:
@@ -39,18 +45,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      ACE_TString ior_output_file (ACE_TEXT ("server.ior"));
-      int sleep_sec {1};
-      if (parse_args (argc, argv, ior_output_file, sleep_sec) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -58,13 +63,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList policies (0);
+      CORBA::PolicyList const policies (0);
 
-      PortableServer::POA_var mp2 = root_poa->create_POA ("MyPOA2", poa_manager.in(), policies);
-
+      PortableServer::POA_var const mp2 = root_poa->create_POA ("MyPOA2", poa_manager.in (), policies);
 
       std::unique_ptr<Hello> hello_impl = std::make_unique<Hello> (orb.in ());
       PortableServer::ServantBase_var owner_transfer (hello_impl.release ());
@@ -83,25 +87,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file %s for writing IOR: %C",
-                             ior_output_file.c_str (),
+                             options.ior_output_file.c_str (),
                              ior.in ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
-      ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
+      ACE_DEBUG ((LM_DEBUG, "Server calling poa_manager::activate()\n"));
       poa_manager->activate ();
 
-
-      ACE_DEBUG ((LM_DEBUG,"Server calling hello->sleep_sec()\n"));
+      ACE_DEBUG ((LM_DEBUG, "Server calling hello->sleep_sec()\n"));
       // Set the sleep time for the Hello object
-      hello->sleep_sec (sleep_sec);
+      hello->sleep_sec (options.sleep_sec);
 
-      ACE_DEBUG ((LM_DEBUG,"Server calling orb::run()\n"));
+      ACE_DEBUG ((LM_DEBUG, "Server calling orb::run()\n"));
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
@@ -112,7 +115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
