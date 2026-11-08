@@ -27,9 +27,9 @@ class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 public:
   TAO_Simple_Dynamic_Property (const T& dp);
 
-  virtual CORBA::Any* evalDP (const char* /* name */,
-                              CORBA::TypeCode_ptr /* returned_type */,
-                              const CORBA::Any&); /* extra_info */
+  CORBA::Any* evalDP (const char* /* name */,
+                      CORBA::TypeCode_ptr /* returned_type */,
+                      const CORBA::Any&) override; /* extra_info */
 
 private:
   T dp_;

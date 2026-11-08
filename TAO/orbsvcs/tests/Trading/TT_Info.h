@@ -33,7 +33,7 @@ public:
   public:
     Remote_Output () {}
 
-    virtual void confirm ()
+    void confirm () override
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -45,7 +45,7 @@ public:
   public:
     Printer () {}
 
-    virtual void confirm ()
+    void confirm () override
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -57,7 +57,7 @@ public:
   public:
     Plotter () {}
 
-    virtual void confirm ()
+    void confirm () override
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -69,7 +69,7 @@ public:
   public:
     File_System () {}
 
-    virtual void confirm ()
+    void confirm () override
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -81,7 +81,7 @@ public:
   public:
     PostScript_Printer () {}
 
-    virtual void confirm ()
+    void confirm () override
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
