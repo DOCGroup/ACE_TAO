@@ -7,6 +7,9 @@
 #include "ace/CDR_Stream.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+#include <new>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -61,20 +64,20 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
-    ACE_CDR::Octet * msgBuf = 0;
-    ACE_NEW_RETURN(msgBuf,
-                   ACE_CDR::Octet[msgBufSize],
-                   0);
+    std::unique_ptr<ACE_CDR::Octet[]> msgBuf (
+      new (std::nothrow) ACE_CDR::Octet[msgBufSize]);
+    if (!msgBuf)
+      {
+        errno = ENOMEM;
+        return 0;
+      }
 
     // read the buffer
-    if ((dataModeStream->recv_n(msgBuf, msgBufSize, 0, &bt)) == -1)
+    if ((dataModeStream->recv_n(msgBuf.get (), msgBufSize, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("recv_n")),
                        0);
-
-    // clean up the allocated buffer
-    delete[] msgBuf;
 
     // SEND A REPLY TO THE CLIENT
 
@@ -155,9 +158,10 @@ static void run_server (ACE_HANDLE handle)
   ACE_CDR::ULong hdrBufSize = 8;
   // allocate a raw buffer large enough to receive the header and be
   // properly aligned for the CDR decoding.
-  ACE_CDR::Char * hdrBuf= new ACE_CDR::Char[hdrBufSize+ACE_CDR::MAX_ALIGNMENT];
+  std::unique_ptr<ACE_CDR::Char[]> hdrBuf (
+    new ACE_CDR::Char[hdrBufSize + ACE_CDR::MAX_ALIGNMENT]);
   // align the raw buffer before reading data into it.
-  char * hdrBuf_a = ACE_ptr_align_binary(hdrBuf, ACE_CDR::MAX_ALIGNMENT);
+  char * hdrBuf_a = ACE_ptr_align_binary(hdrBuf.get (), ACE_CDR::MAX_ALIGNMENT);
 
   size_t bt;
   // read the header
@@ -193,9 +197,6 @@ static void run_server (ACE_HANDLE handle)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Test for %u iterations\n"),
               numIterations));
-
-  // deallocate the header buffer
-  delete[] hdrBuf;
 
   // bundle up the arguments
   ArgStruct * args = new ArgStruct;

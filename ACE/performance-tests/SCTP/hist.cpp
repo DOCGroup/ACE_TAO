@@ -36,11 +36,11 @@ hist_t *head_hist, *tail_hist;
 hist_t *histogram(char *name, unsigned int num_bins, double first,
                   double last) {
   ACE_SCTP::hist_t *hist;
-  if ((hist = (hist_t *)ACE_OS::malloc(sizeof(hist_t))) == 0) {
+  if ((hist = (hist_t *)ACE_OS::malloc(sizeof(hist_t))) == nullptr) {
     ACE_OS::fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     ACE_OS::exit(-1);
   }
-  if ((hist->hs = (unsigned int *)ACE_OS::malloc(sizeof(unsigned int) * (num_bins+2))) == 0){
+  if ((hist->hs = (unsigned int *)ACE_OS::malloc(sizeof(unsigned int) * (num_bins+2))) == nullptr){
     ACE_OS::fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     ACE_OS::exit(-1);
   }
@@ -57,11 +57,11 @@ hist_t *histogram(char *name, unsigned int num_bins, double first,
   hist->sum4 = 0.0;
   hist->max = DBL_MIN;
   hist->min = DBL_MAX;
-  hist->outer = 0;
-  hist->next = 0;
+  hist->outer = nullptr;
+  hist->next = nullptr;
   hist->skew = 0;
-  hist->firstoptheader = 0;
-  if(head_hist == 0)
+  hist->firstoptheader = nullptr;
+  if(head_hist == nullptr)
     head_hist = tail_hist = hist;
   else {
     tail_hist->next = hist;
@@ -89,16 +89,16 @@ void add_field(char *key, char *value, hist_t *hist) {
   nextoptheader = (struct optheader *) ACE_OS::malloc(sizeof(struct optheader));
   nextoptheader->key = (char *) ACE_OS::malloc(ACE_OS::strlen(key)+1);
   nextoptheader->value = (char *) ACE_OS::malloc(ACE_OS::strlen(value)+1);
-  nextoptheader->next = 0;
+  nextoptheader->next = nullptr;
   ACE_OS::strcpy(nextoptheader->key,key);
   ACE_OS::strcpy(nextoptheader->value,value);
 
      /* tack nextoptheader onto end of optheader list */
-  if (hist->firstoptheader == 0) {
+  if (hist->firstoptheader == nullptr) {
      hist->firstoptheader = nextoptheader;
   } else {
      trace = hist->firstoptheader;
-     while (trace->next != 0) {
+     while (trace->next != nullptr) {
         trace = trace->next;
      }
      trace->next = nextoptheader;
@@ -184,9 +184,9 @@ void report_to(FILE *strm, hist_t *hist) {
   }
   ACE_OS::fprintf(strm, "num_points: %u\n", hist->num_points);
   ACE_OS::fprintf(strm, "num_bins: %d %g %g\n", hist->num_bins,hist->first,hist->last);
-  if (hist->firstoptheader) {
+  if (hist->firstoptheader != nullptr) {
      trace = hist->firstoptheader;
-     while(trace->next != 0)
+     while(trace->next != nullptr)
      {
        ACE_OS::fprintf(strm, "%s: %s\n", trace->key, trace->value);
        trace = trace->next;

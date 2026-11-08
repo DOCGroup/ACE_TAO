@@ -5,6 +5,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
 // main() with an error message.
@@ -47,7 +49,7 @@ ACE_CDR::UShort Options_Manager::num_secondary_accept_addrs = 0;
 ACE_CDR::UShort Options_Manager::_usage = 0;
 ACE_CDR::UShort Options_Manager::_error = 0;
 ACE_TCHAR Options_Manager::__program_name[Options_Manager::string_len];
-ACE_CDR::Boolean Options_Manager::__initialized=0;
+ACE_CDR::Boolean Options_Manager::__initialized = false;
 const ACE_TCHAR* Options_Manager::_error_message;
 
 
@@ -67,9 +69,9 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
 
     // Declare options with ACE_Get_Opt
     int c;
-    ACE_Get_Opt * get_opt = 0;
+    std::unique_ptr<ACE_Get_Opt> get_opt;
     if (!ACE_OS::strcmp(ACE_TEXT ("client-opts"), opts_set)){
-      get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
+      get_opt.reset (new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h")));
 
       get_opt->long_option (ACE_TEXT ("test_iterations"),         'c',
                             ACE_Get_Opt::ARG_REQUIRED);
@@ -96,7 +98,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
                             ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("help"),                    'h');
     } else if (!ACE_OS::strcmp (ACE_TEXT ("server-opts"), opts_set)){
-      get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("nt:p:a:u"));
+      get_opt.reset (new ACE_Get_Opt(argc, argv, ACE_TEXT("nt:p:a:u")));
       get_opt->long_option (ACE_TEXT ("test_enable_nagle"),       'n');
       get_opt->long_option (ACE_TEXT ("test_transport_protocol"), 't',
                             ACE_Get_Opt::ARG_REQUIRED);
@@ -108,7 +110,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
     } else {
       _error = 1;
       _error_message = ACE_TEXT ("invalid options set specified");
-      delete get_opt;
       return;
     }
 
@@ -442,7 +443,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
 
     __initialized = 1;
 
-    delete get_opt;
   }
 }
 

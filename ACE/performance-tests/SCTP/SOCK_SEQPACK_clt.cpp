@@ -93,7 +93,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                       1);
 
   // run the test
-  ACE_SCTP::HIST testResultsHistogram = 0;
+  ACE_SCTP::HIST testResultsHistogram {};
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
@@ -101,7 +101,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // all histograms created are placed onto a linked list that report()
   // can access. So the histogram created in one of the *_test() functions
   // will be reported out by the report() call
-  if (testResultsHistogram)
+  if (testResultsHistogram != nullptr)
     ACE_SCTP::report();
 
   return 0;
@@ -204,9 +204,9 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
-  ACE_SCTP::HIST aceStream_hist = 0;
+  ACE_SCTP::HIST aceStream_hist {};
   aceStream_hist = createHistogram(msgLen);
-  if (0 == aceStream_hist)
+  if (aceStream_hist == nullptr)
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("histogram create failed")),
