@@ -10,10 +10,10 @@ Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb)
 }
 
 PortableServer::Servant
-Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
+Quoter_Stock_Factory_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
                                            PortableServer::POA_ptr,
-                                           const char *,
-                                           void * & cookie)
+                                           char const *,
+                                           void *&cookie)
 {
   // Check to see if the object ID is valid
   try {
@@ -35,16 +35,16 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
       throw CORBA::OBJECT_NOT_EXIST ();
     }
 
-  } catch (const CORBA::BAD_PARAM &) {
+  } catch (CORBA::BAD_PARAM const &) {
     throw CORBA::OBJECT_NOT_EXIST ();
   }
 }
 
 void
-Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
+Quoter_Stock_Factory_Locator_i::postinvoke (PortableServer::ObjectId const &,
                                             PortableServer::POA_ptr,
-                                            const char *,
-                                            void * cookie,
+                                            char const *,
+                                            void *cookie,
                                             PortableServer::Servant servant)
 {
   // Release the servant as it is no longer needed.
