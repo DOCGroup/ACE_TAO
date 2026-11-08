@@ -151,7 +151,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (std::size_t i = 0; i < initializer_count; ++i)
+      for (std::size_t i {}; i < initializer_count; ++i)
         {
           this->initializers_[i]->pre_init (orb_init_info_.in ());
         }
@@ -196,7 +196,7 @@ TAO::ORBInitializer_Registry::post_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (std::size_t i = 0; i < pre_init_count; ++i)
+      for (std::size_t i {}; i < pre_init_count; ++i)
         {
           this->initializers_[i]->post_init (orb_init_info_.in ());
         }

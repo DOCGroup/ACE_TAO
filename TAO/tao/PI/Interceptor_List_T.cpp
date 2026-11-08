@@ -67,7 +67,7 @@ namespace TAO
 
                 // Prevent interceptors with the same name from being
                 // registered.  Anonymous interceptors are okay.
-                for (std::size_t i = 0; i < old_len; ++i)
+                for (std::size_t i {}; i < old_len; ++i)
                   {
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
@@ -136,7 +136,7 @@ namespace TAO
 
                 // Prevent interceptors with the same name from being
                 // registered.  Anonymous interceptors are okay.
-                for (std::size_t i = 0; i < old_len; ++i)
+                for (std::size_t i {}; i < old_len; ++i)
                   {
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
@@ -186,7 +186,7 @@ namespace TAO
         std::size_t const len = this->interceptors_.size ();
         std::size_t ilen = len;
 
-        for (std::size_t k = 0; k < len; ++k)
+        for (std::size_t k {}; k < len; ++k)
           {
             // Destroy the interceptors in reverse order in case the
             // array list is only partially destroyed and another

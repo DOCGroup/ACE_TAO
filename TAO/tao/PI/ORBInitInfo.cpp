@@ -84,7 +84,7 @@ TAO_ORBInitInfo::arguments ()
   // Copy the argument vector to the string sequence.
 
   args->length (this->argc_);   // Not a problem if argc is zero.
-  for (int i = 0; i < this->argc_; ++i)
+  for (int i {}; i < this->argc_; ++i)
     (*args)[i] = CORBA::string_dup (this->argv_[i]);
 
   return safe_args._retn ();
@@ -313,7 +313,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 {
   this->check_validity ();
 
-  std::size_t slot_id = 0;
+  std::size_t slot_id {};
 
   const int result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
 

@@ -188,7 +188,7 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
   IOP::MultipleComponentProfile &components = ecs.components ();
 
   CORBA::ULong const len = components.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       if (components[i].tag == id)
         {
@@ -233,7 +233,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
   IOP::TaggedComponentSeq_var safe_tagged_components;
 
   const CORBA::ULong len = components.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       if (components[i].tag == id)
         {
@@ -334,7 +334,7 @@ TAO_ClientRequestInfo::request_id ()
   // dropping the lower 8 bits of the this Invocation object's 64 bit
   // address (i.e. 256 bytes) is not a problem.
 
-  CORBA::ULong id = 0;
+  CORBA::ULong id {};
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -464,7 +464,7 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
     {
       exception_list.length (this->invocation_->operation_details ().ex_count ());
 
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i != this->invocation_->operation_details ().ex_count ();
            ++i)
         {
@@ -501,7 +501,7 @@ TAO_ClientRequestInfo::result ()
   this->check_validity ();
 
   // Generate the result on demand.
-  static constexpr CORBA::Boolean tk_void_any = false;
+  static constexpr CORBA::Boolean tk_void_any {};
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any);
 
