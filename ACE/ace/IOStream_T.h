@@ -32,6 +32,8 @@
 #   include "ace/os_include/os_ctype.h"
 #  endif /**/
 
+#  include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
@@ -117,9 +119,13 @@ public:
    */
   ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
 
-  /// We have to get rid of the <streambuf_> ourselves since we gave it
-  /// to the <iostream> base class;
-  virtual ~ACE_IOStream ();
+  /// The streambuf is owned here; the iostream base class only borrows it.
+  ~ACE_IOStream () override = default;
+
+  ACE_IOStream (ACE_IOStream const &) = delete;
+  ACE_IOStream (ACE_IOStream &&) = delete;
+  ACE_IOStream &operator= (ACE_IOStream const &) = delete;
+  ACE_IOStream &operator= (ACE_IOStream &&) = delete;
 
   /// The only ambiguity in the multiple inheritance is the <close>
   /// function.
@@ -212,7 +218,7 @@ public:
 protected:
   /// This is where all of the action takes place.  The streambuf_ is
   /// the interface to the underlying STREAM.
-  ACE_Streambuf_T<STREAM> *streambuf_;
+  std::unique_ptr<ACE_Streambuf_T<STREAM>> streambuf_;
 
 private:
   // We move these into the private section so that they cannot be

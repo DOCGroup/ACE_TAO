@@ -101,32 +101,27 @@ ACE_Streambuf_T<STREAM>::get_handle ()
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
                                     u_int streambuf_size)
-  : iostream (0),
+  : iostream (nullptr),
     STREAM (stream)
 {
-  ACE_NEW (streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this,
+  ACE_Streambuf_T<STREAM> *streambuf {};
+  ACE_NEW (streambuf,
+           ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
                                     streambuf_size));
-  iostream::init (this->streambuf_);
+  this->streambuf_.reset (streambuf);
+  iostream::init (this->streambuf_.get ());
 }
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
-  : iostream (0)
+  : iostream (nullptr)
 {
-  ACE_NEW (this->streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this,
+  ACE_Streambuf_T<STREAM> *streambuf {};
+  ACE_NEW (streambuf,
+           ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
                                     streambuf_size));
-  iostream::init (this->streambuf_);
-}
-
-// We have to get rid of the streambuf_ ourselves since we gave it to
-// iostream ()
-
-template <class STREAM>
-ACE_IOStream<STREAM>::~ACE_IOStream ()
-{
-  delete this->streambuf_;
+  this->streambuf_.reset (streambuf);
+  iostream::init (this->streambuf_.get ());
 }
 
 // The only ambituity in the multiple inheritance is the close ()
