@@ -13,7 +13,7 @@ public:
   Quoter_Stock_Factory_i &operator= (Quoter_Stock_Factory_i const &) = delete;
   Quoter_Stock_Factory_i &operator= (Quoter_Stock_Factory_i &&) = delete;
 
-  Quoter::Stock_ptr get_stock (char const *symbol);
+  Quoter::Stock_ptr get_stock (char const *symbol) override;
 
 private:
   Quoter_Stock_i rhat_;
