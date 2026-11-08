@@ -12,9 +12,12 @@
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
-#include "ace/OS_NS_string.h"
-
 #include "test_macros.h"
+
+#include <cstring>
+#if defined(ACE_HAS_WCHAR)
+#  include <cwchar>
+#endif
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
@@ -55,7 +58,7 @@ struct helper <char>
   static bool
   equal (char const *lhs, char const *rhs)
   {
-    return ACE_OS::strcmp (lhs, rhs) == 0;
+    return std::strcmp (lhs, rhs) == 0;
   }
 };
 
@@ -91,7 +94,7 @@ struct helper <CORBA::WChar>
   static bool
   equal (CORBA::WChar const *lhs, CORBA::WChar const *rhs)
   {
-    return ACE_OS::strcmp (lhs, rhs) == 0;
+    return std::wcscmp (lhs, rhs) == 0;
   }
 };
 #endif
@@ -382,7 +385,7 @@ struct Tester
   int
   test_all ()
   {
-    int status = 0;
+    int status {};
     status += this->test_assignment_from_const_string ();
     status += this->test_assignment_from_element ();
     status += this->test_self_assignment ();
@@ -397,7 +400,7 @@ struct Tester
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   try
     {
@@ -406,7 +409,7 @@ int ACE_TMAIN (int, ACE_TCHAR*[])
       Tester <char> wchar_tester;
       status += wchar_tester.test_all ();
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
       ++status;
