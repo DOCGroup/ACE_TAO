@@ -105,7 +105,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
   // signals when SIGALRM is running.  Also, we always restart system
   // calls that are interrupted by the signals.
 
-  ACE_Sig_Action sa ((ACE_SignalHandler) nullptr,
+  ACE_Sig_Action sa (nullptr,
                      this->mask_,
                      SA_RESTART);
 
@@ -136,7 +136,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum, siginfo_t *,
 
         // @@ This code should also become smarter to avoid
         // unnecessary calls to ualarm().
-        if (this->timer_queue_.is_empty () == 0)
+        if (!this->timer_queue_.is_empty ())
           return this->schedule_ualarm ();
         else
           return 0;
@@ -163,9 +163,10 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::ACE_Thread_Timer_Queue_Adapter (ACE_Th
 {
   if (this->timer_queue_ == nullptr)
     {
-      ACE_NEW (this->timer_queue_,
-               TQ);
-      this->owned_timer_queue_.reset (this->timer_queue_);
+      TQ *timer_queue {};
+      ACE_NEW (timer_queue, TQ);
+      this->owned_timer_queue_.reset (timer_queue);
+      this->timer_queue_ = this->owned_timer_queue_.get ();
     }
 }
 
