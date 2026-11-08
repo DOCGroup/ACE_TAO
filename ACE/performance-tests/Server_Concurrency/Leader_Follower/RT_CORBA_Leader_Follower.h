@@ -90,7 +90,7 @@ public:
   int processed ();
 
   /// Method that is run by a daemon thread
-  int svc ();
+  int svc () override;
 
 private:
   /// Number of messages processed by this thread
