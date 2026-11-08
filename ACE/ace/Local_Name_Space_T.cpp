@@ -171,7 +171,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
           // <new_internal> with the same name.
           result = this->name_space_map_->bind (new_name,
                                                 new_internal,
-                                                this->allocator_);
+                                                this->allocator_.get ());
 
           if (result == 1)
             {
@@ -191,7 +191,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
 
           result = this->name_space_map_->rebind (new_name, new_internal,
                                                   old_name, old_internal,
-                                                  this->allocator_);
+                                                  this->allocator_.get ());
           if (result == 1)
             {
               // Free up the memory we allocated in shared_bind().
@@ -244,7 +244,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
   ACE_NS_Internal ns_internal;
   if (this->name_space_map_->unbind (ns_name,
                                      ns_internal,
-                                     this->allocator_) != 0)
+                                     this->allocator_.get ()) != 0)
     return -1;
 
   // Free up the memory we allocated in shared_bind().  Note that this
@@ -315,7 +315,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
 
   if (this->name_space_map_->find (ns_name,
                                    ns_internal,
-                                   this->allocator_) != 0)
+                                   this->allocator_.get ()) != 0)
     return -1;
 
   // Calls conversion operator and then calls the ACE_NS_WString
@@ -359,9 +359,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space ()
-  : allocator_ (0),
-    name_space_map_ (0),
-    name_options_ (nullptr)
+  : name_options_ (nullptr)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
 }
@@ -370,24 +368,11 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
   ACE_Naming_Context::Context_Scope_Type scope_in,
   ACE_Name_Options *name_options)
-  : allocator_ (0),
-    name_space_map_ (0),
-    name_options_ (name_options),
-    lock_ (0)
+  : name_options_ (name_options)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
-}
-
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space ()
-{
-  ACE_TRACE ("ACE_Local_Name_Space::~ACE_Local_Name_Space");
-
-  // Remove the map.
-  delete this->allocator_;
-  delete this->lock_;
 }
 
 ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Local_Name_Space)
@@ -469,19 +454,23 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
                    length - ACE_OS::strlen (ACE_TEXT ("backing_store_")));
 
   // Create the allocator with the appropriate options.
-  ACE_NEW_RETURN (this->allocator_,
+  ALLOCATOR *allocator {};
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (this->context_file_,
                              lock_name_for_backing_store,
                              &options), -1);
+  this->allocator_.reset (allocator);
 
   if (ACE_LOG_MSG->op_status ())
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Allocator::Allocator\n")),
                       -1);
 
-  ACE_NEW_RETURN (this->lock_,
+  ACE_LOCK *lock {};
+  ACE_NEW_RETURN (lock,
                   ACE_LOCK (lock_name_for_local_name_space),
                   -1);
+  this->lock_.reset (lock);
 
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully
@@ -527,7 +516,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 
           // Initialize the map into its memory location (e.g., shared memory).
           this->name_space_map_ =
-            new (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_);
+            new (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_.get ());
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
             ACELIB_ERROR_RETURN ((LM_ERROR,

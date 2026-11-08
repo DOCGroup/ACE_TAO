@@ -25,6 +25,8 @@
 #include "ace/Local_Name_Space.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// A short-hand name for our set of name/value/type tuples passed back
@@ -120,9 +122,8 @@ public:
    */
   int open (ACE_Naming_Context::Context_Scope_Type scope_in);
 
-  /// Destructor, do some cleanup :TBD: last dtor should "compress"
-  /// file
-  ~ACE_Local_Name_Space () override;
+  /// Release the owned allocator and lock.
+  ~ACE_Local_Name_Space () override = default;
 
   /// Bind a new name to a naming context (Wide character strings).
   int bind (const ACE_NS_WString &name,
@@ -231,15 +232,15 @@ private:
   int create_manager ();
   int create_manager_i ();
 
-  /// Pointer to the allocator
-  ALLOCATOR *allocator_;
+  /// Owns the process-local allocator used by the shared map proxy.
+  std::unique_ptr<ALLOCATOR> allocator_;
 
-  /// Pointer to the allocated map manager.
-  ACE_Name_Space_Map <ALLOCATOR> *name_space_map_;
+  /// Non-owning pointer to the map manager, which may reside in shared memory.
+  ACE_Name_Space_Map<ALLOCATOR> *name_space_map_ {};
 
   /// Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or
   /// NET_LOCAL).
-  ACE_Naming_Context::Context_Scope_Type ns_scope_;
+  ACE_Naming_Context::Context_Scope_Type ns_scope_ {};
 
   /// Keep track of the options such as database name etc
   ACE_Name_Options *name_options_;
@@ -248,7 +249,7 @@ private:
   ACE_TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
 
   /// Synchronization variable.
-  ACE_LOCK *lock_;
+  std::unique_ptr<ACE_LOCK> lock_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
