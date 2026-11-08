@@ -194,10 +194,10 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
   CORBA::ULong const count = unaliased->member_count ();
 
   CORBA::Boolean match {};
-  CORBA::ULong i;
+  CORBA::ULong i {};
 
   // Get the index.
-  for (i = 0; i < count; ++i)
+  for (; i < count; ++i)
     {
       CORBA::Any_var label_any = tc->member_label (i);
 
@@ -318,7 +318,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
     this->type_->member_count ();
 
   CORBA::Any_var label_any;
-  CORBA::ULong i;
+  CORBA::ULong i {};
 
   // member_label() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
@@ -326,7 +326,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
 
   CORBA::Boolean match {};
 
-  for (i = 0; i < length; ++i)
+  for (; i < length; ++i)
     {
       label_any = unaliased_tc->member_label (i);
 

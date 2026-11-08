@@ -116,10 +116,10 @@ TAO_DynEnum_i::set_as_string (char const* value_as_string)
 
   CORBA::ULong count = ct.in ()->member_count ();
 
-  CORBA::ULong i;
+  CORBA::ULong i {};
   char const* temp {};
 
-  for (i = 0; i < count; ++i)
+  for (; i < count; ++i)
     {
       temp = ct.in ()->member_name (i);
 

@@ -69,7 +69,7 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
   // within each any, indirection will occur if a DynValue
   // self references with one of its own members.
 
-  const CORBA::ULong length = values.length ();
+  CORBA::ULong const length = values.length ();
 
   DynamicAny::DynAnySeq_var retseq;
   ACE_NEW_THROW_EX (
@@ -78,7 +78,7 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
     CORBA::NO_MEMORY ());
   retseq->length (length);
 
-  for (CORBA::ULong i= 0u; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       retseq[i]=
         (allow_truncate ?
@@ -101,7 +101,7 @@ TAO_DynAnyFactory::create_multiple_anys (
   // within each any, indirection will occur if a DynValue
   // self references with one of its own members.
 
-  const CORBA::ULong length = values.length ();
+  CORBA::ULong const length = values.length ();
 
   DynamicAny::AnySeq_var retseq;
   ACE_NEW_THROW_EX (
@@ -110,7 +110,7 @@ TAO_DynAnyFactory::create_multiple_anys (
     CORBA::NO_MEMORY ());
   retseq->length (length);
 
-  for (CORBA::ULong i= 0u; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       retseq[i]= *values[i]->to_any ();
     }
