@@ -13,7 +13,7 @@ namespace TAO
   {
     // Compose the ExternId & Intid
     Cache_ExtId ext_id (prop);
-    int retval = 0;
+    int retval {};
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                                 guard,
@@ -41,7 +41,7 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry (HASH_MAP_ENTRY *&entry)
   {
-    int retval = 0;
+    int retval {};
 
     if (entry)
     {

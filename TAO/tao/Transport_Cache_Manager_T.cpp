@@ -297,7 +297,7 @@ namespace TAO
     // Update the purging strategy information while we
     // are holding our lock
     this->purging_strategy_->update_item (*(int_id.transport ()));
-    int retval = 0;
+    int retval {};
     bool more_to_do = true;
     while (more_to_do)
       {
@@ -452,7 +452,7 @@ namespace TAO
     Cache_ExtId key (prop);
     HASH_MAP_ENTRY *entry {};
     busy_count = 0;
-    int cache_status = 0;
+    int cache_status {};
     HASH_MAP_ENTRY *found_entry {};
 
     // loop until we find a usable transport, or until we've checked
@@ -741,7 +741,7 @@ namespace TAO
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
-      DESCRIPTOR_SET sorted_set = nullptr;
+      DESCRIPTOR_SET sorted_set {};
       int const sorted_size = this->fill_set_i (sorted_set);
 
       // Only call close_entries () if sorted_set != nullptr.  It takes
@@ -764,7 +764,7 @@ namespace TAO
                 sorted_size));
             }
 
-          int count = 0;
+          int count {};
 
           for (int i = 0; count < amount && i < sorted_size; ++i)
             {
@@ -880,7 +880,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     fill_set_i (DESCRIPTOR_SET& sorted_set)
   {
-    int current_size = 0;
+    int current_size {};
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
     // Set sorted_set to nullptr. This signifies nothing to purge.
