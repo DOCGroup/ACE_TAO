@@ -50,7 +50,7 @@ be_visitor_interface::visit_scope (be_scope *node)
       return 0;
     }
 
-  be_interface::tao_code_emitter helper = nullptr;
+  be_interface::tao_code_emitter helper {};
 
   switch (this->ctx_->state ())
     {

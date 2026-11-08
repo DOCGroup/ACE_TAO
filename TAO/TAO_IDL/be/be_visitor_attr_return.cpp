@@ -151,7 +151,7 @@ be_visitor_attr_return::visit_sequence (be_sequence *)
     }
 
   os_ << be_nl
-      << "::" << bt->full_name () << " * retval = nullptr;" << be_nl
+      << "::" << bt->full_name () << " * retval {};" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "retval," << be_nl
       << "::" << bt->full_name () << " (" << be_idt_nl
@@ -191,7 +191,7 @@ be_visitor_attr_return::visit_structure (be_structure *node)
     }
   else
     {
-      os_ << node->full_name () << " * retval = nullptr;" << be_nl
+      os_ << node->full_name () << " * retval {};" << be_nl
           << "ACE_NEW_RETURN (" << be_idt_nl
           << "retval," << be_nl
           << "::" << node->full_name () << "," << be_nl
@@ -239,7 +239,7 @@ be_visitor_attr_return::visit_union (be_union *node)
     }
   else
     {
-      os_ << node->full_name () << " * retval = nullptr;" << be_nl
+      os_ << node->full_name () << " * retval {};" << be_nl
           << "ACE_NEW_RETURN (" << be_idt_nl
           << "retval," << be_nl
           << "::" << node->full_name () << "," << be_nl

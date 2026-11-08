@@ -394,7 +394,7 @@ be_visitor_home_svs::gen_entrypoint ()
       << "_Container_ptr c," << be_nl
       << "char const * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::PortableServer::Servant retval = nullptr;" << be_nl
+      << "::PortableServer::Servant retval {};" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
