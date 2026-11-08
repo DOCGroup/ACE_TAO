@@ -180,7 +180,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 
           // @@ The MProfile should be locked during this iteration, is there
           // anyway to achieve that?
-          for (CORBA::ULong i = 0; i < profile_count; ++i)
+          for (CORBA::ULong i {}; i < profile_count; ++i)
             {
               const TAO_Profile *p = mprofile.get_profile (i);
 

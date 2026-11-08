@@ -867,7 +867,7 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
     {
 #endif  /* !TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
       // Marshal type information.
-      for (CORBA::Long i = 0; i < num_ids; ++i )
+      for (CORBA::Long i {}; i < num_ids; ++i )
         {
           if (! _tao_write_repository_id (strm, repository_ids[i]))
             {
@@ -1197,7 +1197,7 @@ CORBA::ValueBase::_tao_read_repository_id_list (TAO_InputCDR& strm,
     }
   else
     {
-      for (CORBA::Long i = 0; i < num_ids; ++i)
+      for (CORBA::Long i {}; i < num_ids; ++i)
         {
           ACE_CString id;
           if (!_tao_read_repository_id (strm, id))
