@@ -126,7 +126,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
   TAO_DIOP_Profile *diop_profile {};
 
   // First see if <mprofile> already contains a DIOP profile.
@@ -394,7 +394,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
   ACE_INET_Addr a(addr);
-  bool found_a_port = false;
+  bool found_a_port {};
   for (ACE_UINT32 p = requested_port; p <= last_port; p++)
     {
       ACE_NEW_RETURN (this->connection_handler_,
@@ -545,7 +545,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
   if (def_type)
     *def_type = AF_UNSPEC;
 
@@ -622,7 +622,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
   if (host_defaulted)
     {
       // First convert the port into a usable form.
-      unsigned short portno = 0;
+      unsigned short portno {};
       if (port_separator_loc != nullptr)
         {
           portno =
@@ -670,7 +670,7 @@ int
 TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                            char *&host)
 {
-  int result = 0;
+  int result {};
   char const *tmp {};
 
   // If the IP address in the INET_Addr is the IN(6)ADDR_ANY address,
@@ -718,7 +718,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // TAO_DIOP_Profile for each endpoint setup on the probed
   // network interfaces.
   ACE_INET_Addr *if_addrs {};
-  size_t if_cnt = 0;
+  size_t if_cnt {};
 
   int const interface_result = ACE::get_ip_interfaces (if_cnt, if_addrs);
   // The instantiation for this template is in tao/DIOP_Connector.cpp.
@@ -753,16 +753,16 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
+  size_t lo_cnt {};  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
       lo_cnt++;
 
 #if defined (ACE_HAS_IPV6)
-  size_t ipv4_cnt = 0;
-  size_t ipv4_lo_cnt = 0;
-  size_t ipv6_ll = 0;
-  bool ipv6_non_ll = false;
+  size_t ipv4_cnt {};
+  size_t ipv4_lo_cnt {};
+  size_t ipv6_ll {};
+  bool ipv6_non_ll {};
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
   for (size_t j = 0; j < if_cnt; ++j)
@@ -871,7 +871,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
   // count.
-  size_t host_cnt = 0;
+  size_t host_cnt {};
 
   for (size_t i = 0; i < if_cnt; ++i)
     {
@@ -942,8 +942,8 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -961,7 +961,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   }
 
   CORBA::String_var host;
-  CORBA::UShort port = 0;
+  CORBA::UShort port {};
 
   // Get host and port. No processing here too..
   if (cdr.read_string (host.out ()) == 0
@@ -1018,8 +1018,8 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
+  ACE_CString::size_type begin {};
+  ACE_CString::size_type end {};
 
   for (CORBA::ULong j = 0; j < option_count;)
     {

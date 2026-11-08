@@ -114,7 +114,7 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
   TAO_SCIOP_Profile *sciop_profile {};
 
   // Do not check <mprofile> for the presence of an existing
@@ -258,9 +258,9 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // If we've reached this point, then the address consists of one or
   // more hostnames, followed perhaps by a port.
 
-  u_short port_number = 0;
+  u_short port_number {};
   char *tmp_host {};
-  size_t hostname_length = 0;
+  size_t hostname_length {};
 
   if (port_separator_loc != nullptr) {
     // Port separator was found.  Check that the next character is
@@ -315,7 +315,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   }
 
   // Obtain the primary ip address.
-  ACE_UINT32 primary_ip_addr = 0;
+  ACE_UINT32 primary_ip_addr {};
   {
     // Obtain a char* for the primary hostname.
     ACE_CString & primary_hostname_obj = hostnames[0];
@@ -342,7 +342,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   }
 
   // Populate the array of secondary ip addresses
-  size_t i = 0;
+  size_t i {};
   ACE_INET_Addr temp_addr;
   while (i < num_secondary_ip_addrs) {
     // Obtain a char* for a single secondary hostname.
@@ -523,7 +523,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
     {
       ACE_Multihomed_INET_Addr a(addr);
 
-      bool found_a_port = false;
+      bool found_a_port {};
       ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
@@ -650,7 +650,7 @@ int
 TAO_SCIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                            char *&host)
 {
-  int result = 0;
+  int result {};
   char const *tmp {};
 
   // If the IP address in the INET_Addr is the INADDR_ANY address,
@@ -691,7 +691,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // TAO_SCIOP_Profile for each endpoint setup on the probed
   // network interfaces.
   ACE_INET_Addr *if_addrs {};
-  size_t if_cnt = 0;
+  size_t if_cnt {};
 
   int const interface_result = ACE::get_ip_interfaces (if_cnt, if_addrs);
   // The instantiation for this template is in tao/SCIOP_Connector.cpp.
@@ -726,7 +726,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
+  size_t lo_cnt {};  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
       ++lo_cnt;
@@ -756,7 +756,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
   // count.
-  size_t host_cnt = 0;
+  size_t host_cnt {};
 
   for (size_t i = 0; i < if_cnt; ++i)
     {
@@ -815,7 +815,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
   std::strncpy (hostnames_copy, hostnames, hostnames_string_length);
 
   // Count the number of hostnames separated by "+"
-  size_t num_hostnames = 0;
+  size_t num_hostnames {};
   char *last {};
   const char* hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
 
@@ -841,7 +841,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
   std::strncpy (hostnames_copy, hostnames, hostnames_string_length);
 
   // Iterate over the hostnames and stuff them into the array
-  size_t index = 0;
+  size_t index {};
   last = nullptr;
   hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
 
@@ -873,8 +873,8 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -892,7 +892,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     }
 
   CORBA::String_var host;
-  CORBA::UShort port = 0;
+  CORBA::UShort port {};
 
   // Get host and port. No processing here too..
   if (cdr.read_string (host.out ()) == 0
@@ -950,8 +950,8 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
+  ACE_CString::size_type begin {};
+  ACE_CString::size_type end {};
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {

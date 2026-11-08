@@ -124,7 +124,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  u_short port = 0;
+  u_short port {};
   const ACE_UINT32 ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr (port, ia_any);
 

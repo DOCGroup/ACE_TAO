@@ -126,12 +126,12 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
   const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
 
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // decimal IPv6 address representation.
@@ -311,7 +311,7 @@ CORBA::ULong
 TAO_DIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
+  CORBA::ULong hashval {};
   for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
        endp != nullptr;
        endp = endp->next_)

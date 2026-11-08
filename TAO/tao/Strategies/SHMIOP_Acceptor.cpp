@@ -345,8 +345,8 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -363,7 +363,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   }
 
   CORBA::String_var host;
-  CORBA::UShort port = 0;
+  CORBA::UShort port {};
 
   // Get host and port. No processing here too..
   if (cdr.read_string (host.out ()) == 0
@@ -424,7 +424,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
     if (options[i] == option_delimiter)
       ++option_count;
 
-  ACE_CString::size_type const begin = 0;
+  ACE_CString::size_type const begin {};
   ACE_CString::size_type const end = (option_count > 1) ? options.find (option_delimiter, begin) : len;
 
   if (end == begin)

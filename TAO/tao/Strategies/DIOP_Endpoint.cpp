@@ -235,7 +235,7 @@ TAO_DIOP_Endpoint::object_addr_i () const
   // We should have already held the lock
 
 #if defined (ACE_HAS_IPV6)
-  bool is_ipv4_decimal_ = false;
+  bool is_ipv4_decimal_ {};
   if (!this->is_ipv6_decimal_)
     is_ipv4_decimal_ =
       std::strspn (this->host_.in (), ".0123456789") ==

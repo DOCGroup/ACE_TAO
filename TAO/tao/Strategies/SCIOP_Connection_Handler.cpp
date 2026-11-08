@@ -133,7 +133,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
 
   if (protocol_properties.hop_limit_ >= 0)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)

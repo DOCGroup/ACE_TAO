@@ -65,9 +65,9 @@ TAO_SHMIOP_Transport::recv (char *buf,
                             size_t len,
                             const ACE_Time_Value *max_wait_time)
 {
-  ssize_t n = 0;
+  ssize_t n {};
 
-  int read_break = 0;
+  int read_break {};
 
   while (!read_break)
     {
@@ -151,7 +151,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
   // .. do a read on the socket again.
-  ssize_t bytes = 0;
+  ssize_t bytes {};
 
   // As this used for transports where things are available in one
   // shot this looping should not create any problems.
@@ -182,7 +182,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
     TAO_Queued_Data qd (&message_block);
-    size_t mesg_length = 0;
+    size_t mesg_length {};
 
     // Parse the incoming message for validity. The check needs to be
     // performed by the messaging objects.

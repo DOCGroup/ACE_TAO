@@ -197,7 +197,7 @@ CORBA::ULong
 TAO_UIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
+  CORBA::ULong hashval {};
   for (TAO_UIOP_Endpoint *endp = &this->endpoint_;
        endp != nullptr;
        endp = endp->next_)

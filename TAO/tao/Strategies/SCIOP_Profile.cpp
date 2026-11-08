@@ -148,7 +148,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
   const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 
@@ -257,7 +257,7 @@ CORBA::ULong
 TAO_SCIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
-  CORBA::ULong hashval = 0;
+  CORBA::ULong hashval {};
   for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
        endp != nullptr;
        endp = endp->next_)
@@ -397,7 +397,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_SCIOP_Profile::encode_endpoints ()
 {
-  CORBA::ULong actual_count = 0;
+  CORBA::ULong actual_count {};
 
   const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
 

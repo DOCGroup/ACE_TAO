@@ -251,13 +251,13 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   ACE_CString tmp (
     oc->orb_params ()->preferred_interfaces ());
 
-  ACE_CString::size_type pos = 0;
+  ACE_CString::size_type pos {};
 
   pos = tmp.find (this->host_.in ());
 
   TAO_SCIOP_Endpoint *latest = this;
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
 
   while (pos != ACE_CString::npos)
     {
@@ -265,7 +265,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       ACE_CString::size_type new_pos = tmp.find (",", pos + 1);
 
       // Length of the preferred path
-      ACE_CString::size_type length = 0;
+      ACE_CString::size_type length {};
 
       if (new_pos == ACE_CString::npos)
         length = tmp.length () - pos;

@@ -49,7 +49,7 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
 
-  ssize_t bytes_to_send = 0;
+  ssize_t bytes_to_send {};
   for (int i = 0; i < iovcnt; i++)
      bytes_to_send += iov[i].iov_len;
 
@@ -172,7 +172,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Make a node of the message block..
   TAO_Queued_Data qd (&message_block);
-  size_t mesg_length = 0;
+  size_t mesg_length {};
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
