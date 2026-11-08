@@ -15,6 +15,7 @@
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
+#include <cstddef>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -85,7 +86,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       std::unique_ptr<ACE_CDR::Char[]> buffer_guard (buffer);
       // pos keeps track of the character position, it will never be
       // greater than len
-      size_t pos = 0;
+      std::size_t pos {};
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
         {
@@ -134,14 +135,14 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
         {
           x.resize (len);
         }
-      catch (const std::bad_alloc&)
+      catch (std::bad_alloc const &)
         {
           return false;
         }
 
       // pos keeps track of the character position, it will never be
       // greater than len
-      size_t pos = 0;
+      std::size_t pos {};
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
         {
@@ -168,7 +169,7 @@ TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
   if (length == 0)
     return 1;
 
-  for (size_t i = 0; i < length; ++i)
+  for (std::size_t i = 0; i < length; ++i)
     if (!this->read_char(cdr,x[i]))
       return 0;
 
@@ -215,7 +216,7 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
                                      ACE_CDR::ULong len,
-                                     const ACE_CDR::Char *x)
+                                     ACE_CDR::Char const *x)
 {
   // we'll accept a null pointer but only for an empty string
   if (x == nullptr && len != 0)
@@ -235,7 +236,7 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
           if (this->write_char_i (cdr,x[i]) == 0)
             return 0;
         }
-      ACE_CDR::Octet s = 0;
+      ACE_CDR::Octet s {};
       return this->write_1 (cdr, &s);
     }
   return 0;
@@ -243,13 +244,13 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
-                                         const ACE_CDR::Char *x,
+                                         ACE_CDR::Char const *x,
                                          ACE_CDR::ULong length)
 {
   if (length == 0)
     return true;
 
-  for (size_t i = 0; i < length; ++i)
+  for (std::size_t i = 0; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
     if (this->write_char (cdr, x[i]) == 0)

@@ -16,15 +16,16 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
+#include <cstddef>
 #include <memory>
 
 // ****************************************************************
 
 using ACE_UTF16_T = ACE_CDR::UShort;
-static constexpr size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
+static constexpr std::size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
 static constexpr ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE = static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
-static constexpr unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
-static constexpr unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
+static constexpr ACE_CDR::UShort ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
+static constexpr ACE_CDR::UShort ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,7 +62,7 @@ TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
 
 #if defined (ACE_LITTLE_ENDIAN)
           ACE_CDR::Short ux;
-          ACE_CDR::swap_2 (reinterpret_cast<const char*> (&sx),
+          ACE_CDR::swap_2 (reinterpret_cast<char const *> (&sx),
                            reinterpret_cast<char *> (&ux));
           x = static_cast<ACE_CDR::WChar> (ux);
 #else
@@ -84,7 +85,7 @@ TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
           if (buf[0] == ACE_UNICODE_BOM_SWAPPED)
             {
               ACE_CDR::Short ux;
-              ACE_CDR::swap_2 (reinterpret_cast<const char*> (&buf[1]),
+              ACE_CDR::swap_2 (reinterpret_cast<char const *> (&buf[1]),
                                reinterpret_cast<char *> (&ux));
               x = static_cast<ACE_CDR::WChar> (ux);
             }
@@ -133,7 +134,7 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
           std::unique_ptr<ACE_CDR::WChar[]> buffer_guard (buffer);
 
           buffer_guard[len] = L'\x00';
-          if (this->read_wchar_array_i (cdr, buffer_guard.get (), len, 1))
+          if (this->read_wchar_array_i (cdr, buffer_guard.get (), len, true))
             {
               // Since reading the array may have adjusted the length,
               // we simply rewrite the null terminator
@@ -196,12 +197,12 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
             {
               x.resize (len);
             }
-          catch (const std::bad_alloc&)
+          catch (std::bad_alloc const &)
             {
               return false;
             }
 
-          if (this->read_wchar_array_i (cdr, &x[0], len, 1))
+          if (this->read_wchar_array_i (cdr, &x[0], len, true))
             {
               // Since reading the array may have adjusted the length,
               // shrink to fit
@@ -215,7 +216,7 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
             {
               x.resize (len);
             }
-          catch (const std::bad_alloc&)
+          catch (std::bad_alloc const &)
             {
               return false;
             }
@@ -241,12 +242,12 @@ ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
                                               ACE_CDR::WChar *x,
                                               ACE_CDR::ULong &length,
-                                              int adjust_len)
+                                              bool adjust_len)
 {
-  int has_bom = 0;
-  int must_swap = 0;
+  bool has_bom {};
+  bool must_swap {};
   char* buf;
-  static const size_t align = ACE_CDR::SHORT_ALIGN;
+  static constexpr std::size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf) == 0)
     {
       // check for byte order mark.  If found, honor it then discard it
@@ -254,12 +255,12 @@ TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
       if (*sb == ACE_UNICODE_BOM_CORRECT || *sb == ACE_UNICODE_BOM_SWAPPED)
         {
           must_swap = (*sb == ACE_UNICODE_BOM_SWAPPED);
-          has_bom = 1;
+          has_bom = true;
         }
       else
         {
 #if defined (ACE_LITTLE_ENDIAN)
-          must_swap = 1;
+          must_swap = true;
 #endif // ACE_LITTLE_ENDIAN
         }
 
@@ -272,7 +273,7 @@ TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
             length -= 1;
         }
 
-      for (size_t i = 0; i < length; ++i)
+      for (std::size_t i = 0; i < length; ++i)
 #if defined (ACE_DISABLE_SWAP_ON_READ)
         x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
 #else
@@ -308,7 +309,7 @@ TAO_UTF16_BOM_Translator::read_wchar_array (ACE_InputCDR & cdr,
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
-      for (size_t i = 0; i < length; ++i)
+      for (std::size_t i = 0; i < length; ++i)
         if (!this->read_wchar (cdr, x[i]))
           return 0;
 
@@ -333,7 +334,7 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
-      int len = 0;
+      ACE_CDR::Octet len {};
       ACE_CDR::UShort buffer[2];
 
       if( allow_BOM && cdr.byte_order())
@@ -344,7 +345,7 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
             {
               // force both the byte order mark and the data to Big Endian order
               buffer[0] = ACE_UNICODE_BOM_SWAPPED;
-              ACE_CDR::swap_2 (reinterpret_cast<const char *> (&x),
+              ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
                                reinterpret_cast<char *> (&buffer[1]));
             }
           else
@@ -361,14 +362,14 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
           // force it to be big endian w/o BOM
           len = 1;
           if (cdr.byte_order ())
-            ACE_CDR::swap_2 (reinterpret_cast<const char *> (&x),
+            ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
                              reinterpret_cast<char *> (buffer));
           else
             buffer[0] = static_cast<ACE_CDR::Short> (x);
         }
 
-      unsigned char tcsize =
-        static_cast<unsigned char> (len * ACE_UTF16_CODEPOINT_SIZE);
+      ACE_CDR::Octet tcsize =
+        static_cast<ACE_CDR::Octet> (len * ACE_UTF16_CODEPOINT_SIZE);
 
       if (this->write_1 (cdr, &tcsize))
         return this->write_array(cdr, &buffer, tcsize, 1, 1);
@@ -391,7 +392,7 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
                                          ACE_CDR::ULong len,
-                                         const ACE_CDR::WChar *x)
+                                         ACE_CDR::WChar const *x)
 {
   // we'll accept a null pointer but only for an empty string
   ACE_ASSERT ((x != nullptr || len == 0) &&
@@ -433,7 +434,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
             }
           else
             {
-              ACE_UTF16_T s = 0;
+              ACE_UTF16_T s {};
               return this->write_2 (cdr,&s);
             }
         }
@@ -444,13 +445,13 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::write_wchar_array (ACE_OutputCDR & cdr,
-                                             const ACE_CDR::WChar *x,
+                                             ACE_CDR::WChar const *x,
                                              ACE_CDR::ULong length)
 {
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
-      for (size_t i = 0; i < length; ++i)
+      for (std::size_t i = 0; i < length; ++i)
         if (this->write_wchar_i (cdr, x[i], false) == 0)
           return 0;
 
@@ -462,13 +463,13 @@ TAO_UTF16_BOM_Translator::write_wchar_array (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
-                                               const ACE_CDR::WChar *x,
+                                               ACE_CDR::WChar const *x,
                                                ACE_CDR::ULong length)
 {
   if (length == 0)
     return 1;
   char* buf;
-  static const size_t align = ACE_CDR::SHORT_ALIGN;
+  static constexpr std::size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf)
       != 0)
     {
@@ -477,7 +478,7 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
 
   ACE_UTF16_T *sb = reinterpret_cast<ACE_UTF16_T *> (buf);
 
-  for (size_t i = 0; i < length; ++i)
+  for (std::size_t i = 0; i < length; ++i)
     {
       sb[i] = static_cast<ACE_UTF16_T> (x[i]);
     }
@@ -486,13 +487,13 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
 
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
-                                                       const ACE_CDR::WChar *x,
+                                                       ACE_CDR::WChar const *x,
                                                        ACE_CDR::ULong length)
 {
   if (length == 0)
     return 1;
   char* buf;
-  static const size_t align = ACE_CDR::SHORT_ALIGN;
+  static constexpr std::size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf)
       != 0)
     {
@@ -501,9 +502,9 @@ TAO_UTF16_BOM_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
 
   ACE_UTF16_T *sb = reinterpret_cast<ACE_UTF16_T *> (buf);
 
-  for (size_t i = 0; i < length; ++i)
+  for (std::size_t i = 0; i < length; ++i)
     {
-      ACE_CDR::swap_2 (reinterpret_cast<const char*> (&x[i]),
+      ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x[i]),
                        reinterpret_cast<char *> (&sb[i]));
     }
   return 1;

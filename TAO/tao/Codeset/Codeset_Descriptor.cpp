@@ -27,7 +27,7 @@ TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
 void
 TAO_Codeset_Descriptor::ncs (ACE_TCHAR const *name)
 {
-  ACE_CDR::ULong n = 0;
+  ACE_CDR::ULong n {};
   if (ACE_Codeset_Registry::locale_to_registry
       (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
     {

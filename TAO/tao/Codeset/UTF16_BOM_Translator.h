@@ -74,15 +74,15 @@ private:
 
   ACE_CDR::Boolean read_wchar_array_i (ACE_InputCDR &,
                                        ACE_CDR::WChar *,
-                                       ACE_CDR::ULong&,
-                                       int adjust_len = 0);
+                                       ACE_CDR::ULong &,
+                                       bool adjust_len = false);
 
   ACE_CDR::Boolean write_wchar_array_i (ACE_OutputCDR &,
-                                        const ACE_CDR::WChar *,
+                                        ACE_CDR::WChar const *,
                                         ACE_CDR::ULong);
 
   ACE_CDR::Boolean write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
-                                            const ACE_CDR::WChar *x,
+                                            ACE_CDR::WChar const *x,
                                             ACE_CDR::ULong length);
 
 

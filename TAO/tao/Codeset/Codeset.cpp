@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Codeset_Initializer::init ()
 {
-  int result = 0;
+  int result {};
 
   result += ACE_Service_Config::process_directive (ace_svc_desc_TAO_UTF8_Latin1_Factory);
 
