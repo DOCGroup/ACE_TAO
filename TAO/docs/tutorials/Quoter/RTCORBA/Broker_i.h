@@ -42,28 +42,28 @@ public:
   Stock_StockBroker_i &operator= (Stock_StockBroker_i &&) = delete;
 
   /// Destructor
-  virtual ~Stock_StockBroker_i ();
+  ~Stock_StockBroker_i () override;
 
   /**
    * Return the StockNameConsumer object created by the Constructor.
    *
    * @return Returns a StockNameConsumer object reference.
    */
-  virtual ::Stock::StockNameConsumer_ptr get_consumer_notifier ();
+  ::Stock::StockNameConsumer_ptr get_consumer_notifier () override;
 
   /**
    * Duplicate a StockQuoter object using the StockQuoter object reference "c" in the argument.
    *
    * @param c A StockQuoter object reference.
    */
-  virtual void connect_quoter_info (::Stock::StockQuoter_ptr c);
+  void connect_quoter_info (::Stock::StockQuoter_ptr c) override;
 
   /**
    * Destroy the StockQuoter object and return it.
    *
    * @return Returns the destroyed StockQuoter object reference.
    */
-  virtual ::Stock::StockQuoter_ptr disconnect_quoter_info ();
+  ::Stock::StockQuoter_ptr disconnect_quoter_info () override;
 
   /**
    * Return the StockQuoter object.
@@ -71,12 +71,12 @@ public:
    * @return Returns the StockQuoter object reference that has been
    *         created by connect_quoter_info ().
    */
-  virtual ::Stock::StockQuoter_ptr get_connection_quoter_info ();
+  ::Stock::StockQuoter_ptr get_connection_quoter_info () override;
 
   /**
    * Shutdown the object and destroy the application.
    */
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   // Cached ORB pointer
@@ -119,19 +119,19 @@ public:
   Stock_StockBrokerHome_i &operator= (Stock_StockBrokerHome_i &&) = delete;
 
   /// Destructor
-  virtual ~Stock_StockBrokerHome_i ();
+  ~Stock_StockBrokerHome_i () override;
 
   /**
    * Return the StockBroker object created by the Constructor.
    *
    * @return The StockBroker object created by the Constructor.
    */
-  virtual ::Stock::StockBroker_ptr create (Stock::StockDistributor_ptr dist,
-                                           const char *stock_name);
+  ::Stock::StockBroker_ptr create (Stock::StockDistributor_ptr dist,
+                                   const char *stock_name) override;
 
-  virtual int handle_signal (int signum,
-                             siginfo_t * = nullptr,
-                             ucontext_t * = nullptr);
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
 
 private:
   /// The StockDistributor object created by its home.

@@ -91,7 +91,7 @@ public:
    * This function is used to calculate the new high, low and last values
    * for each stock in the stock database randomly.
    */
-  virtual int svc ();
+  int svc () override;
 
   /// Change the rate at which database updates are made
   void update_rate (u_int rate);
@@ -108,7 +108,7 @@ public:
   /// it is public only by necessity.
   int handle_signal (int signum,
                      siginfo_t * = nullptr,
-                     ucontext_t * = nullptr);
+                     ucontext_t * = nullptr) override;
 
   using Callback_Map = std::map<Cookie, CALLBACK_TYPE *>;
 

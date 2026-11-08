@@ -47,7 +47,7 @@ public:
                              char const *stock_name);
 
   /// Destructor.
-  virtual ~Stock_StockNameConsumer_i () = default;
+  ~Stock_StockNameConsumer_i () override = default;
 
   Stock_StockNameConsumer_i (Stock_StockNameConsumer_i const &) = delete;
   Stock_StockNameConsumer_i (Stock_StockNameConsumer_i &&) = delete;
@@ -59,21 +59,21 @@ public:
    *
    * @param the_stockname The name of the stock that will be provided to the context StockBroker object.
    */
-  virtual void push_StockName (::Stock::StockNames *the_stockname);
+  void push_StockName (::Stock::StockNames *the_stockname) override;
 
   /**
    * Get the cookie attribute.
    *
    * @return The cookie attribute.
    */
-  virtual ::Stock::Cookie * cookie_ ();
+  ::Stock::Cookie * cookie_ () override;
 
   /**
    * Set the cookie attribute.
    *
    * @param cookie The value of cookie attribute that need to be set.
    */
-  virtual void cookie_ (::Stock::Cookie *cookie);
+  void cookie_ (::Stock::Cookie *cookie) override;
 
 private:
   /// Context of the StockNameConsumer object.

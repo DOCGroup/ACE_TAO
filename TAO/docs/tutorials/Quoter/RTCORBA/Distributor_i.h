@@ -48,7 +48,7 @@ public:
   StockDistributor_i &operator= (StockDistributor_i &&) = delete;
 
   /// Destructor
-  virtual ~StockDistributor_i ();
+  ~StockDistributor_i () override;
 
   /**
    * Insert StockNameConsumer object and its priority into the StockDistributor
@@ -59,8 +59,8 @@ public:
    * @param priority The priority of the StockNameConsumer object.
    * @return A Cookie object that records this subscription.
    */
-  virtual ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c,
-                                                ::RTCORBA::Priority priority);
+  ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c,
+                                        ::RTCORBA::Priority priority) override;
 
   /**
    * Erase the StockNameConsumer object from the StockDistributor object's subscribers' map.
@@ -68,41 +68,41 @@ public:
    * @param ck The Cookie object that records the subscription.
    * @param The reference of the StockNameConsumer object that has been erased.
    */
-  virtual ::Stock::StockNameConsumer_ptr unsubscribe_notifier (::Stock::Cookie *ck);
+  ::Stock::StockNameConsumer_ptr unsubscribe_notifier (::Stock::Cookie *ck) override;
 
   /**
    * Return the StockQuoter object created by the Constructor.
    *
    * @return A StockQuoter object created by this StockDistributor object.
    */
-  virtual ::Stock::StockQuoter_ptr provide_quoter_info (::Stock::Cookie *ck);
+  ::Stock::StockQuoter_ptr provide_quoter_info (::Stock::Cookie *ck) override;
 
   /**
    * Get the notification_rate attribute.
    *
    * @return The notification_rate attribute.
    */
-  virtual ::CORBA::Long notification_rate ();
+  ::CORBA::Long notification_rate () override;
 
   /**
    * Set the notification_rate attribute.
    *
    * @param notification_rate The value of notification_rate attribute that need to be set.
    */
-  virtual void notification_rate (::CORBA::Long notification_rate);
+  void notification_rate (::CORBA::Long notification_rate) override;
 
   /**
    * Set the active state of the StockDistributor object to true and create a thread
    * to publish the stock information to the Stock Broker clients.
    */
-  virtual void start ();
+  void start () override;
 
   /**
    * Set the active state of StockDistributor object to false.
    */
-  virtual void stop ();
+  void stop () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Callback for stock database.
   void operator () (std::vector <std::string> &stocks);
@@ -145,7 +145,7 @@ public:
   StockQuoter_i () = default;
 
   /// Destructor.
-  virtual ~StockQuoter_i () = default;
+  ~StockQuoter_i () override = default;
 
   StockQuoter_i (StockQuoter_i const &) = delete;
   StockQuoter_i (StockQuoter_i &&) = delete;
@@ -158,7 +158,7 @@ public:
    * @param stock_name The name of the stock whose detailed info is needed.
    * @throw ::Stock::Invalid_Stock
    */
-  virtual ::Stock::StockInfo *get_stock_info (const char *stock_name);
+  ::Stock::StockInfo *get_stock_info (const char *stock_name) override;
 };
 
 /**
@@ -185,18 +185,18 @@ public:
   StockDistributorHome_i &operator= (StockDistributorHome_i &&) = delete;
 
   /// Destructor
-  virtual ~StockDistributorHome_i ();
+  ~StockDistributorHome_i () override;
 
   /**
    * Return the StockDistributor object created by the Constructor.
    *
    * @return The StockDistributor object created by the Constructor.
    */
-  virtual ::Stock::StockDistributor_ptr create ();
+  ::Stock::StockDistributor_ptr create () override;
 
-  virtual int handle_signal (int signum,
-                             siginfo_t * = nullptr,
-                             ucontext_t * = nullptr);
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
 private:
   void create_distributor ();
 
