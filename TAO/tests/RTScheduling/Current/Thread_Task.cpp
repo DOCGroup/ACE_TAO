@@ -35,9 +35,9 @@ Thread_Task::activate_task (int thr_count)
 
       this->current_ = RTScheduling::Current::_narrow (current_obj.in ());
 
-      char const * const name = nullptr;
-      CORBA::Policy_ptr const sched_param = nullptr;
-      CORBA::Policy_ptr const implicit_sched_param = nullptr;
+      char const * const name {};
+      CORBA::Policy_ptr const sched_param {};
+      CORBA::Policy_ptr const implicit_sched_param {};
 
       try
         {
@@ -96,9 +96,9 @@ Thread_Task::svc ()
 {
   try
     {
-      char const * const name = nullptr;
-      CORBA::Policy_ptr const sched_param = nullptr;
-      CORBA::Policy_ptr const implicit_sched_param = nullptr;
+      char const * const name {};
+      CORBA::Policy_ptr const sched_param {};
+      CORBA::Policy_ptr const implicit_sched_param {};
 
       this->current_->begin_scheduling_segment ("Fellowship of the Rings",
                                                 sched_param,
@@ -123,7 +123,6 @@ Thread_Task::svc ()
       this->current_->begin_scheduling_segment ("The Return of the King",
                                                 sched_param,
                                                 implicit_sched_param);
-
 
       RTScheduling::Current::NameList_var segment_name_list =
         this->current_->current_scheduling_segment_names ();
