@@ -43,15 +43,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Based_Pointer_Repository_Rep);
 ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository ()
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository");
-  ACE_NEW (this->rep_,
+  ACE_Based_Pointer_Repository_Rep *rep {};
+  ACE_NEW (rep,
            ACE_Based_Pointer_Repository_Rep);
+  this->rep_.reset (rep);
 }
 
-ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository ()
-{
-  ACE_TRACE ("ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository");
-  delete this->rep_;
-}
+ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository () = default;
 
 // Search for appropriate base address in repository
 
