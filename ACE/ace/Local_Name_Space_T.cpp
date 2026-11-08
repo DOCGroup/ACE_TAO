@@ -121,7 +121,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->shared_bind_i (name, value, type, rebind);
@@ -222,7 +222,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->unbind_i (name);
@@ -288,7 +288,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->resolve_i (name, value, type);
@@ -398,7 +398,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager ()
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->create_manager_i ();
@@ -851,7 +851,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_names_i (set, pattern);
@@ -870,7 +870,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_values_i (set, pattern);
@@ -889,7 +889,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_types_i (set, pattern);
@@ -908,7 +908,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_name_entries_i (set, pattern);
@@ -927,7 +927,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_value_entries_i (set, pattern);
@@ -946,7 +946,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_type_entries_i (set, pattern);
