@@ -6,7 +6,6 @@
 // ACE_Reactor, ACE_Acceptor, ACE_Singleton, and the ACE_Test_and_Set
 // components.
 
-#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/Null_Mutex.h"
@@ -20,6 +19,7 @@
 
 #include "ace/Log_Record.h"
 
+#include <cstring>
 #include <new>
 
 #include "server_loggerd.h"
@@ -187,9 +187,7 @@ Logging_Handler::open (void *)
     return -1;
   else
     {
-      ACE_OS::strncpy (this->peer_name_,
-                       addr.get_host_name (),
-                       MAXHOSTNAMELEN + 1);
+      std::strncpy (this->peer_name_, addr.get_host_name (), MAXHOSTNAMELEN + 1);
 
       if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

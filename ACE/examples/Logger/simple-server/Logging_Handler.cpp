@@ -1,10 +1,10 @@
+#include <cstring>
+#include <new>
+
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Record.h"
-#include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
-#include <new>
-#include <new>
 
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
@@ -152,9 +152,7 @@ Logging_Handler::open ()
     return -1;
   else
     {
-      ACE_OS::strncpy (this->host_name_,
-                       addr.get_host_name (),
-                       MAXHOSTNAMELEN + 1);
+      std::strncpy (this->host_name_, addr.get_host_name (), MAXHOSTNAMELEN + 1);
 
       if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
