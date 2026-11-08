@@ -11,15 +11,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ETCL_Parser_Export ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
 
-ETCL_Interpreter::ETCL_Interpreter ()
-  : root_ (nullptr)
-{
-}
+ETCL_Interpreter::ETCL_Interpreter () = default;
 
 ETCL_Interpreter::~ETCL_Interpreter ()
-{
-  delete this->root_;
-}
+= default;
 
 int
 ETCL_Interpreter::build_tree (const char* constraints)
@@ -36,11 +31,11 @@ ETCL_Interpreter::build_tree (const char* constraints)
 
   if (return_value == 0 && yyval.constraint != nullptr)
     {
-      this->root_ = yyval.constraint;
+      this->root_.reset (yyval.constraint);
     }
   else
     {
-      this->root_ = nullptr;
+      this->root_.reset ();
     }
 
   return return_value;

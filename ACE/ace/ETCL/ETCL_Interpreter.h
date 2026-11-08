@@ -15,6 +15,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <memory>
+
 #include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -49,6 +51,11 @@ protected:
   /// Destructor.
   virtual ~ETCL_Interpreter ();
 
+  ETCL_Interpreter (ETCL_Interpreter const&) = delete;
+  ETCL_Interpreter& operator = (ETCL_Interpreter const&) = delete;
+  ETCL_Interpreter (ETCL_Interpreter&&) = delete;
+  ETCL_Interpreter& operator = (ETCL_Interpreter&&) = delete;
+
   /// Using the Yacc generated parser, construct an expression tree
   /// representing @a constraints from the tokens returned by it.
   int build_tree (const char* constraints);
@@ -57,7 +64,7 @@ protected:
 
   /// The root of the expression tree, not equal to null if build_tree
   /// successfully builds a tree from the constraints.
-  ETCL_Constraint* root_;
+  std::unique_ptr<ETCL_Constraint> root_ {};
 private:
   /// This mutex protects the <build_tree> method from reentrance.
   static ACE_SYNCH_MUTEX parserMutex__;
