@@ -1,14 +1,19 @@
-int
-ACE_TMAIN(int, ACE_TCHAR *[])
-{
-  double sum = 0;
-  double count = 0;
-  int input;
-  char buf[BUFSIZ];
+#include <cstdlib>
 
-  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != 0)
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  double sum {};
+  double count {};
+  int input {};
+  char buf[BUFSIZ] {};
+
+  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != nullptr)
     {
-      input = ACE_OS::atoi (buf);
+      input = std::atoi (buf);
       sum += input;
       count++;
     }
