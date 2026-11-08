@@ -21,6 +21,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
+#include <cstring>
+
 static int
 test_std_string_bounds ()
 {
@@ -252,7 +254,7 @@ test_get (TAO_InputCDR &cdr, CDR_Test_Types const &test_types, int const n)
                            "read_string2[%d] failed\n",
                            i),
                           1);
-      if (ACE_OS::strcmp (xstr, test_types.str) != 0)
+      if (std::strcmp (xstr, test_types.str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "string[%d] differs\n",
                            i),
