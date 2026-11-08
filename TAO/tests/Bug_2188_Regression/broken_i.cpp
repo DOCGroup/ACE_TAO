@@ -46,8 +46,8 @@ ServerAdmin_i::target()
 void
 ServerAdmin_i::shutdown ()
 {
-  int argc = 0;
-  char ** argv = 0;
+  int argc {};
+  char ** argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
   orb->shutdown();
 }
