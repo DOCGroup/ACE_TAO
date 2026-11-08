@@ -91,9 +91,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
-  int curarg;
-
-  for (curarg = 0; curarg < argc && argv[curarg]; ++curarg)
+  for (int curarg {}; curarg < argc && argv[curarg]; ++curarg)
     if (ACE_OS::strcasecmp (argv[curarg],
                             ACE_TEXT("-ORBConcurrency")) == 0)
       {

@@ -200,9 +200,8 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 int
 TAO_MProfile::remove_profile (const TAO_Profile *pfile)
 {
-  TAO_PHandle h;
-  int found {};
-  for (h = 0; h < this->last_; ++h)
+  bool found {};
+  for (TAO_PHandle h {}; h < this->last_; ++h)
     {
       if (this->pfiles_[h]->is_equivalent (pfile))
         { // remove it!
@@ -218,11 +217,11 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
           // subtract 1 from last_ to indicate we have one fewer profiles
           this->last_--;
           this->pfiles_[this->last_] = nullptr;
-          found = 1;
+          found = true;
           break;
         }
     }
-  if ( found == 0)
+  if (!found)
     return -1; // profile not found.
   return 0;
 }

@@ -174,9 +174,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
   this->parser_names_count_ = 0;
 
-  int curarg {};
-
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
     // Parse thro' and find the number of Parsers to be loaded.
     if (ACE_OS::strcasecmp (argv[curarg],
@@ -201,7 +199,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       }
   }
 
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBReactorMaskSignals")) == 0)

@@ -2926,7 +2926,7 @@ TAO_ORB_Core::list_initial_references ()
   // Index for ObjectIdList members.
 
   // Iterate over the registered initial references.
-  for (index = 0; index < initial_services_size; ++index)
+  for (; index < initial_services_size; ++index)
     list[index] = initial_services[index];
 
   // Now iterate over the initial references created by the user and

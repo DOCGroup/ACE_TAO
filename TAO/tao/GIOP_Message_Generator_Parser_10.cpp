@@ -164,9 +164,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       CORBA::ULong count {};
       IOP::ServiceContextList &svc_ctx = reply.service_context_notowned ();
       CORBA::ULong const l = svc_ctx.length ();
-      CORBA::ULong i;
-
-      for (i = 0; i != l; ++i)
+      for (CORBA::ULong i {}; i != l; ++i)
         {
           if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
             {
@@ -183,7 +181,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       if (!(output << count))
         return false;
 
-      for (i = 0; i != l; ++i)
+      for (CORBA::ULong i {}; i != l; ++i)
         {
           if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
             {
