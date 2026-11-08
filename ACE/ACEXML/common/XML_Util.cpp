@@ -1,10 +1,10 @@
 #include "ACEXML/common/XML_Util.h"
 
-static const ACEXML_Char ESCAPED_AMP[] = ACE_TEXT("&amp;");
-static const ACEXML_Char ESCAPED_LESS[] = ACE_TEXT("&lt;");
-static const ACEXML_Char ESCAPED_GREATER[] = ACE_TEXT("&gt;");
-static const ACEXML_Char ESCAPED_APOS[] = ACE_TEXT("&apos;");
-static const ACEXML_Char ESCAPED_QUOTE[] = ACE_TEXT("&quot;");
+constexpr ACEXML_Char ESCAPED_AMP[] = ACE_TEXT("&amp;");
+constexpr ACEXML_Char ESCAPED_LESS[] = ACE_TEXT("&lt;");
+constexpr ACEXML_Char ESCAPED_GREATER[] = ACE_TEXT("&gt;");
+constexpr ACEXML_Char ESCAPED_APOS[] = ACE_TEXT("&apos;");
+constexpr ACEXML_Char ESCAPED_QUOTE[] = ACE_TEXT("&quot;");
 
 #define CSTRLEN(x) ((sizeof(x) / sizeof(ACEXML_Char)) - 1)
 

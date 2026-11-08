@@ -3,15 +3,15 @@
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ace/OS_NS_string.h"
 
-static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
+constexpr ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
 
-static const ACEXML_Char ACEXML_DEFAULT_NS_PREFIX[] = {0};
+constexpr ACEXML_Char ACEXML_DEFAULT_NS_PREFIX[] = {0};
 
-static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = ACE_TEXT ("xml");
+constexpr ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = ACE_TEXT ("xml");
 
-static const ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML/1998/namespace");
+constexpr ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML/1998/namespace");
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
 ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack ()
