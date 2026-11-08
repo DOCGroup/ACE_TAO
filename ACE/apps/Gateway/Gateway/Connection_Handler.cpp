@@ -1,6 +1,5 @@
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/OS_NS_string.h"
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
@@ -62,7 +61,7 @@ Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
     max_timeout_ (pci.max_retry_timeout_),
     event_channel_ (pci.event_channel_)
 {
-  if (ACE_OS::strlen (pci.host_) > 0)
+  if (pci.host_[0] != '\0')
     this->remote_addr_.set (pci.remote_port_, pci.host_);
   else
     this->remote_addr_.set (pci.remote_port_, ACE_DEFAULT_SERVER_HOST);
