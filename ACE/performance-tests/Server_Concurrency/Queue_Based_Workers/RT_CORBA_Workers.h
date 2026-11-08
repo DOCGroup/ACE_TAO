@@ -92,7 +92,7 @@ public:
               Synchronisers &synch);
 
   /// The thread runs inside this method..
-  int svc ();
+  int svc () override;
 
 private:
   Input_Task (Input_Task const &) = delete;
@@ -120,10 +120,10 @@ public:
               Synchronisers &synch);
 
   /// The thread runs inside this method..
-  int svc ();
+  int svc () override;
 
   /// Need to overload this method to do anything useful..
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = nullptr);
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 private:
   Output_Task (Output_Task const &) = delete;
@@ -152,7 +152,7 @@ public:
                Synchronisers &synch);
 
   /// Methods in which the threads run on
-  int svc ();
+  int svc () override;
 
   /// Processed messages
   int processed ();

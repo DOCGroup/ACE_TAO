@@ -56,7 +56,7 @@ class Worker_Task : public TASK
 {
 public:
   Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
-  int svc ();
+  int svc () override;
 
   size_t messages_dequeued_;
 
@@ -74,7 +74,7 @@ class IO_Task : public TASK
 {
 public:
   IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
-  int svc ();
+  int svc () override;
 
 private:
   IO_Task (IO_Task const &) = delete;
