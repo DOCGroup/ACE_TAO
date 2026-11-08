@@ -1,7 +1,8 @@
 #include "test_i.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, char const * key)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -35,7 +36,7 @@ Simple_Server_i::shutdown (char const * key)
   //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
-  if (!ACE_OS::strcmp (_key.in(), key))
+  if (std::strcmp (_key.in (), key) == 0)
     {
        this->orb_->shutdown (false);
        still_alive = 0;
@@ -56,7 +57,7 @@ Simple_Server_i::abort (char const * key)
   //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
-  if (!ACE_OS::strcmp (_key.in(), key))
+  if (std::strcmp (_key.in (), key) == 0)
     {
        ACE_OS::abort();
        still_alive = 0;
