@@ -86,7 +86,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
     // Write the IOR string to a file
     std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+    if (!ior_file)
+      {
+        std::cerr << "Cannot open IOR output file "
+                  << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
+        return 1;
+      }
+
     ior_file << str.in ();
+    ior_file.close ();
+    if (!ior_file)
+      {
+        std::cerr << "Cannot write IOR output file "
+                  << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
+        return 1;
+      }
 
     std::cout << "IOR written to the file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
 
