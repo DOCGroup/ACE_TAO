@@ -38,31 +38,28 @@ private:
   ::Monitor::Subscriber_var sub_;
 };
 
-namespace TAO_Monitor
+struct TAO_Monitor_Point_Deleter
 {
-  struct Monitor_Point_Deleter
+  void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
   {
-    void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
-    {
-      if (monitor != nullptr)
-        monitor->remove_ref ();
-    }
-  };
+    if (monitor != nullptr)
+      monitor->remove_ref ();
+  }
+};
 
-  struct Control_Action_Deleter
+struct TAO_Control_Action_Deleter
+{
+  void operator() (ACE::Monitor_Control::Control_Action *action) const
   {
-    void operator() (ACE::Monitor_Control::Control_Action *action) const
-    {
-      if (action != nullptr)
-        action->remove_ref ();
-    }
-  };
+    if (action != nullptr)
+      action->remove_ref ();
+  }
+};
 
-  using Monitor_Point_Ptr = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
-                                            Monitor_Point_Deleter>;
-  using Control_Action_Ptr = std::unique_ptr<ACE::Monitor_Control::Control_Action,
-                                              Control_Action_Deleter>;
-}
+using TAO_Monitor_Point_Ptr = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
+                                              TAO_Monitor_Point_Deleter>;
+using TAO_Control_Action_Ptr = std::unique_ptr<ACE::Monitor_Control::Control_Action,
+                                               TAO_Control_Action_Deleter>;
 
 Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -115,7 +112,7 @@ Monitor_Impl::get_statistics (::Monitor::NameList const &names)
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      TAO_Monitor::Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
@@ -148,7 +145,7 @@ Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      TAO_Monitor::Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
@@ -248,7 +245,7 @@ Monitor_Impl::clear_statistics (::Monitor::NameList const &names)
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      TAO_Monitor::Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
@@ -282,12 +279,12 @@ Monitor_Impl::register_constraint (
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      TAO_Monitor::Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
         {
-          TAO_Monitor::Control_Action_Ptr ca (new TAO_Control_Action (sub));
+          TAO_Control_Action_Ptr ca (new TAO_Control_Action (sub));
           long const id = monitor->add_constraint (cs, ca.get ());
           CORBA::ULong const length = constraintlist->length ();
           constraintlist->length (length + 1);
@@ -310,12 +307,12 @@ Monitor_Impl::unregister_constraints (
   for (CORBA::ULong index {}; index < constraint.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      TAO_Monitor::Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (constraint[index].itemname.in ()));
 
       if (monitor != nullptr)
         {
-          TAO_Monitor::Control_Action_Ptr action (
+          TAO_Control_Action_Ptr action (
             monitor->remove_constraint (constraint[index].id));
         }
     }
