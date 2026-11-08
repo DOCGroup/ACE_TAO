@@ -36,7 +36,7 @@ protected:
 
 private:
   unsigned int fail_pre_post_init_ { 3 };
-  std::unique_ptr<ACE_Thread_Barrier> barrier_ {};
+  std::unique_ptr<ACE_Thread_Barrier> barrier_;
   CORBA::ORB_var orb_ {};
   PortableServer::POA_var root_poa_ {};
   PortableServer::POAManager_var poa_manager_ {};
