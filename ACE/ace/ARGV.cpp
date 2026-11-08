@@ -43,9 +43,10 @@ ACE_ARGV_T<CHAR_TYPE>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("argc_ = %d"), this->argc_));
 
-  ACE_ARGV *this_obj = const_cast<ACE_ARGV *> (this);
+  ACE_ARGV_T<CHAR_TYPE> * const this_obj =
+    const_cast<ACE_ARGV_T<CHAR_TYPE> *> (this);
 
-  for (int i = 0; i < this->argc_; i++)
+  for (int i {}; i < this->argc_; ++i)
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nargv_[%i] = %s"),
                 i,
@@ -75,25 +76,21 @@ ACE_ARGV_T<CHAR_TYPE>::string_to_argv ()
 }
 
 template <typename CHAR_TYPE>
-ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (const CHAR_TYPE buf[],
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE const buf[],
                                    bool substitute_env_args)
-  : substitute_env_args_ (substitute_env_args),
-    iterative_ (false),
-    argc_ (0),
-    argv_ (0),
-    buf_ (0),
-    length_ (0),
-    queue_ ()
+  : substitute_env_args_ (substitute_env_args)
 {
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE[] to CHAR_TYPE *[]");
 
-  if (buf == 0 || buf[0] == 0)
+  if (buf == nullptr || buf[0] == '\0')
     return;
 
   // Make an internal copy of the string.
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_ALLOCATOR(this->buf_,
-                          static_cast<char*> (ACE_Allocator::instance()->malloc(sizeof (CHAR_TYPE) * (ACE_OS::strlen (buf) + 1))));
+  ACE_ALLOCATOR (this->buf_,
+                 static_cast<CHAR_TYPE *> (
+                   ACE_Allocator::instance()->malloc (
+                     sizeof (CHAR_TYPE) * (ACE_OS::strlen (buf) + 1))));
 #else
   ACE_NEW (this->buf_,
            CHAR_TYPE[ACE_OS::strlen (buf) + 1]);
@@ -112,17 +109,11 @@ template <typename CHAR_TYPE>
 ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *argv[],
                                    bool substitute_env_args,
                                    bool quote_arg)
-  : substitute_env_args_ (substitute_env_args),
-    iterative_ (false),
-    argc_ (0),
-    argv_ (0),
-    buf_ (0),
-    length_ (0),
-    queue_ ()
+  : substitute_env_args_ (substitute_env_args)
 {
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE*[] to CHAR_TYPE[]");
 
-  if (argv == 0 || argv[0] == 0)
+  if (argv == nullptr || argv[0] == nullptr)
     return;
 
   this->argc_ = ACE_OS::argv_to_string (argv,
@@ -136,13 +127,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (int argc,
                                    CHAR_TYPE *argv[],
                                    bool substitute_env_args,
                                    bool quote_arg)
-  : substitute_env_args_ (substitute_env_args),
-    iterative_ (false),
-    argc_ (0),
-    argv_ (0),
-    buf_ (0),
-    length_ (0),
-    queue_ ()
+  : substitute_env_args_ (substitute_env_args)
 {
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T int,CHAR_TYPE*[] to CHAR_TYPE[]");
 
@@ -159,25 +144,19 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
                                    CHAR_TYPE *second_argv[],
                                    bool substitute_env_args,
                                    bool quote_args)
-  : substitute_env_args_ (substitute_env_args),
-    iterative_ (false),
-    argc_ (0),
-    argv_ (0),
-    buf_ (0),
-    length_ (0),
-    queue_ ()
+  : substitute_env_args_ (substitute_env_args)
 {
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE*[] + CHAR_TYPE *[] to CHAR_TYPE[]");
 
-  int first_argc = 0;
-  int second_argc = 0;
+  int first_argc {};
+  int second_argc {};
 
   CHAR_TYPE *first_buf {};
   CHAR_TYPE *second_buf {};
-  size_t buf_len = 1;
+  size_t buf_len {1};
 
   // convert the first argv to a string
-  if (first_argv != 0 && first_argv[0] != 0)
+  if (first_argv != nullptr && first_argv[0] != nullptr)
     {
       first_argc = ACE_OS::argv_to_string (first_argv,
                                            first_buf,
@@ -187,7 +166,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
     }
 
   // convert the second argv to a string
-  if (second_argv != 0 && second_argv[0] != 0)
+  if (second_argv != nullptr && second_argv[0] != nullptr)
     {
       second_argc = ACE_OS::argv_to_string (second_argv,
                                             second_buf,
@@ -222,12 +201,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
 template <typename CHAR_TYPE>
 ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
-    iterative_ (true),
-    argc_ (0),
-    argv_ (0),
-    buf_ (0),
-    length_ (0),
-    queue_ ()
+    iterative_ (true)
 {
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T Iterative");
 
@@ -236,7 +210,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (bool substitute_env_args)
 
 template <typename CHAR_TYPE>
 int
-ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
+ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE const *next_arg, bool quote_arg)
 {
   // Only allow this to work in the "iterative" verion -- the
   // ACE_ARGVs created with the one argument constructor.
@@ -247,11 +221,11 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
     }
 
   this->length_ += ACE_OS::strlen (next_arg);
-  if (quote_arg && ACE_OS::strchr (next_arg, ' ') != 0)
+  if (quote_arg && ACE_OS::strchr (next_arg, ' ') != nullptr)
     {
       this->length_ += 2;
-      if (ACE_OS::strchr (next_arg, '"') != 0)
-        for (const CHAR_TYPE * p = next_arg; *p != '\0'; ++p)
+      if (ACE_OS::strchr (next_arg, '"') != nullptr)
+        for (CHAR_TYPE const *p = next_arg; *p != '\0'; ++p)
           if (*p == '"') ++this->length_;
     }
   else
@@ -269,10 +243,10 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
 
   // Wipe argv_ and buf_ away so that they will be recreated if the
   // user calls argv () or buf ().
-  if (this->argv_ != 0)
+  if (this->argv_ != nullptr)
     {
-      for (int i = 0; this->argv_[i] != 0; i++)
-        ACE_OS::free ((void *) this->argv_[i]);
+      for (int i {}; this->argv_[i] != nullptr; ++i)
+        ACE_OS::free (this->argv_[i]);
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance()->free (this->argv_);
@@ -296,7 +270,7 @@ template <typename CHAR_TYPE>
 int
 ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[], bool quote_args)
 {
-  for (int i = 0; argv[i] != 0; i++)
+  for (int i {}; argv[i] != nullptr; ++i)
     if (this->add (argv[i], quote_args) == -1)
       return -1;
 
@@ -309,12 +283,12 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
 {
   ACE_TRACE ("ACE_ARGV_T::~ACE_ARGV_T");
 
-  if (this->argv_ != 0)
-    for (int i = 0; this->argv_[i] != 0; i++)
+  if (this->argv_ != nullptr)
+    for (int i {}; this->argv_[i] != nullptr; ++i)
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free ((void *) this->argv_[i]);
+      ACE_Allocator::instance()->free (this->argv_[i]);
 #else
-      ACE_OS::free ((void *) this->argv_[i]);
+      ACE_OS::free (this->argv_[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 
@@ -348,7 +322,9 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (this->buf_,
-                        static_cast<char*> (ACE_Allocator::instance()->malloc(sizeof (CHAR_TYPE) * (this->length_ + this->argc_))),
+                        static_cast<CHAR_TYPE *> (
+                          ACE_Allocator::instance()->malloc (
+                            sizeof (CHAR_TYPE) * (this->length_ + this->argc_))),
                         -1);
 #else
   ACE_NEW_RETURN (this->buf_,
@@ -361,7 +337,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
 
   ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg {};
   CHAR_TYPE *ptr = this->buf_;
-  size_t len;
+  size_t len {};
 
   while (!iter.done ())
     {
@@ -372,10 +348,10 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
       if (arg->quote_arg_)
         {
           *ptr++ = '"';
-          if (ACE_OS::strchr (arg->arg_, '"') != 0)
+          if (ACE_OS::strchr (arg->arg_, '"') != nullptr)
             {
-              CHAR_TYPE prev = 0;
-              for (const CHAR_TYPE * p = arg->arg_; *p != '\0'; ++p)
+              CHAR_TYPE prev {};
+              for (CHAR_TYPE const *p = arg->arg_; *p != '\0'; ++p)
                 {
                   if (*p == '"' && prev != '\\') *ptr++ = '\\';
                   prev = *ptr++ = *p;
