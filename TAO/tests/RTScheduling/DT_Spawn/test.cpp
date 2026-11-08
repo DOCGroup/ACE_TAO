@@ -11,9 +11,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   CORBA::ORB_var orb;
   RTScheduling::Current_var current;
 
-  char const * const name = nullptr;
-  CORBA::Policy_ptr const sched_param = nullptr;
-  CORBA::Policy_ptr const implicit_sched_param = nullptr;
+  char const * const name {};
+  CORBA::Policy_ptr const sched_param {};
+  CORBA::Policy_ptr const implicit_sched_param {};
 
   Test_Thread_Action thread_action;
 
@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   count));
 
       //Initialize data to be passed to the Thread_Action::do method
-      Data spawn_data;
+      Data spawn_data {};
       spawn_data.data = "Harry Potter";
       spawn_data.current = RTScheduling::Current::_duplicate (current.in ());
 
