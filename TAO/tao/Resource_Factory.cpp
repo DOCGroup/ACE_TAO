@@ -10,11 +10,7 @@ TAO_Protocol_Item::TAO_Protocol_Item (std::string const &name)
 {
 }
 
-TAO_Protocol_Item::~TAO_Protocol_Item ()
-{
-  if (this->factory_owner_)
-    delete this->factory_;
-}
+TAO_Protocol_Item::~TAO_Protocol_Item () = default;
 
 std::string const &
 TAO_Protocol_Item::protocol_name () const
@@ -32,8 +28,17 @@ void
 TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
                             int owner)
 {
+  if (owner == 1)
+    {
+      if (this->owned_factory_.get () != factory)
+        this->owned_factory_.reset (factory);
+    }
+  else if (this->owned_factory_.get () != factory)
+    {
+      this->owned_factory_.reset ();
+    }
+
   this->factory_ = factory;
-  this->factory_owner_ = owner == 1;
 }
 
 // **********************************************************************

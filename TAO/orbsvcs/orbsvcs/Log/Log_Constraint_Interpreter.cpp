@@ -9,10 +9,11 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
 {
   if (ETCL_Interpreter::is_empty_string (constraints))
     {
-      // Root is deleted in the TAO_Interpreter's destructor.
-      ACE_NEW_THROW_EX (this->root_,
+      ETCL_Constraint *root {};
+      ACE_NEW_THROW_EX (root,
                         ETCL_Literal_Constraint (true),
                         CORBA::NO_MEMORY ());
+      this->root_.reset (root);
     }
   else
   {
@@ -32,7 +33,7 @@ TAO_Log_Constraint_Interpreter::evaluate (
   )
 {
   CORBA::Boolean const retval =
-    evaluator.evaluate_constraint (this->root_);
+    evaluator.evaluate_constraint (this->root_.get ());
 
   return retval;
 }

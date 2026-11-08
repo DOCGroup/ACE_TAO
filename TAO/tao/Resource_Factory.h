@@ -84,8 +84,8 @@ private:
   /// Pointer to factory object.
   TAO_Protocol_Factory *factory_ {};
 
-  /// Whether we own (and therefore have to delete) the factory object.
-  bool factory_owner_ {};
+  /// Own the factory object when ownership was transferred to this item.
+  std::unique_ptr<TAO_Protocol_Factory> owned_factory_ {};
 };
 
 // typedefs for containers containing the list of loaded protocol
