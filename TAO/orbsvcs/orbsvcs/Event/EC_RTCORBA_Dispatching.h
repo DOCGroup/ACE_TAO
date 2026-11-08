@@ -24,6 +24,8 @@
 #include "orbsvcs/Event/EC_Dispatching_Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -73,7 +75,7 @@ private:
   ACE_Thread_Manager thread_manager_;
 
   /// The dispatching task(s), one per lane
-  TAO_EC_Dispatching_Task *tasks_;
+  std::unique_ptr<TAO_EC_Dispatching_Task[]> tasks_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

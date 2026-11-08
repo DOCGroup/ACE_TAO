@@ -13,15 +13,14 @@ TAO_EC_RTCORBA_Dispatching::
     , current_ (RTCORBA::Current::_duplicate (current))
 {
   CORBA::ULong number_lanes = this->lanes_.length ();
-  ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task[number_lanes]);
+  TAO_EC_Dispatching_Task *tasks {};
+  ACE_NEW (tasks, TAO_EC_Dispatching_Task[number_lanes]);
+  this->tasks_.reset (tasks);
   for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     this->tasks_[i].thr_mgr (&this->thread_manager_);
 }
 
-TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching ()
-{
-  delete[] this->tasks_;
-}
+TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching () = default;
 
 void
 TAO_EC_RTCORBA_Dispatching::activate ()

@@ -13,8 +13,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint ()
 {
   this->dgram_.close ();
-
-  delete [] this->ifs_;
 }
 
 CORBA::Boolean
@@ -35,13 +33,17 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (ACE_INET_Addr const &from)
   if (from.get_port_number () != this->port_number_)
     return false;
 
-  if (this->ifs_ == nullptr)
+  if (!this->ifs_)
     {
-      ACE::get_ip_interfaces (this->if_count_, this->ifs_);
+      ACE_INET_Addr* ifs {};
+      int const status = ACE::get_ip_interfaces (this->if_count_, ifs);
+      this->ifs_.reset (ifs);
+      if (status != 0 || !this->ifs_)
+        return false;
     }
 
-  for (ACE_INET_Addr* i = this->ifs_;
-       i != this->ifs_ + this->if_count_;
+  for (ACE_INET_Addr const* i = this->ifs_.get ();
+       i != this->ifs_.get () + this->if_count_;
        ++i)
     {
       if (i->is_ip_equal(from))
@@ -58,16 +60,17 @@ TAO_ECG_UDP_Out_Endpoint::operator= (TAO_ECG_UDP_Out_Endpoint const &rhs)
       this->request_id_generator_.store (rhs.request_id_generator_.load ());
       this->dgram_ = rhs.dgram_;
       this->port_number_ = rhs.port_number_;
-      this->if_count_ = rhs.if_count_;
+      this->if_count_ = 0;
+      this->ifs_.reset ();
 
-      delete [] this->ifs_;
-      this->ifs_ = nullptr;
-
-      if (this->if_count_ != 0)
+      if (rhs.if_count_ != 0)
         {
-          ACE_NEW_RETURN (this->ifs_,
-                          ACE_INET_Addr [this->if_count_],
+          ACE_INET_Addr* ifs {};
+          ACE_NEW_RETURN (ifs,
+                          ACE_INET_Addr [rhs.if_count_],
                           *this);
+          this->ifs_.reset (ifs);
+          this->if_count_ = rhs.if_count_;
           for (size_t i {}; i < this->if_count_; ++i)
             this->ifs_[i] = rhs.ifs_[i];
         }

@@ -25,6 +25,7 @@
 #include "ace/SOCK_Dgram.h"
 
 #include <atomic>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
@@ -82,7 +83,7 @@ private:
   /// Keep the list of local interfaces, needed for the is_loopback
   /// method.
   size_t if_count_;
-  ACE_INET_Addr* ifs_;
+  std::unique_ptr<ACE_INET_Addr[]> ifs_;
 };
 
 /**
