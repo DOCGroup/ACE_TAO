@@ -18,6 +18,7 @@
 #include "Simple_Dynamic.h"
 #include "ttest_export.h"
 
+#include <memory>
 #include <vector>
 
 class TAO_TTest_Export TAO_Offer_Exporter
@@ -60,7 +61,7 @@ private:
   void export_to (CosTrading::Register_ptr reg);
   // Export the offers to the give Register interface.
 
-  using DP_Queue = std::vector<TAO_Dynamic_Property *>;
+  using DP_Queue = std::vector<std::unique_ptr<TAO_Dynamic_Property>>;
 
   CORBA::Boolean verbose_;
   // True if the user wants verbose output.

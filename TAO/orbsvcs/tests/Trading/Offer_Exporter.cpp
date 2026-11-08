@@ -1,6 +1,7 @@
 #include "Offer_Exporter.h"
 #include "ace/INET_Addr.h"
-#include "ace/OS_NS_stdio.h"
+
+#include <string>
 
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
@@ -17,11 +18,9 @@ TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter ()
 {
-  while (!this->clean_up_.empty ())
+  for (std::unique_ptr<TAO_Dynamic_Property> const &property : this->clean_up_)
     {
-      TAO_Dynamic_Property *dp = this->clean_up_.back ();
-      this->clean_up_.pop_back ();
-      dp->destroy ();
+      property->destroy ();
     }
 }
 
@@ -31,7 +30,7 @@ TAO_Offer_Exporter::export_offers ()
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting offers.\n"));
 
   // Set the PROPERTY_NAMES - TRADER_NAME.
-  for (int i = 0; i < NUM_OFFERS; i++)
+  for (int i {}; i < NUM_OFFERS; ++i)
     {
       this->props_plotters_[i][4].value <<= "Default";
       this->props_printers_[i][4].value <<= "Default";
@@ -46,11 +45,11 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
 {
   try
     {
-      for (int i = 0; i < NUM_OFFERS; i++)
+      for (int i {}; i < NUM_OFFERS; ++i)
         {
-          TAO_Trader_Test::Plotter_var pPlotter= this->plotter_[i]._this ();
+          TAO_Trader_Test::Plotter_var const plotter = this->plotter_[i]._this ();
           CosTrading::OfferId_var offer_id =
-            reg->_cxx_export (pPlotter.in(),
+            reg->_cxx_export (plotter.in (),
                               TT_Info::INTERFACE_NAMES[1],
                               this->props_plotters_[i]);
 
@@ -59,8 +58,8 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
               ACE_DEBUG ((LM_DEBUG, "Registered offer id: %C.\n", offer_id.in ()));
             }
 
-          TAO_Trader_Test::Printer_var pPrinter = this->printer_[i]._this ();
-          offer_id = reg->_cxx_export (pPrinter.in(),
+          TAO_Trader_Test::Printer_var const printer = this->printer_[i]._this ();
+          offer_id = reg->_cxx_export (printer.in (),
                                        TT_Info::INTERFACE_NAMES[2],
                                        this->props_printers_[i]);
 
@@ -69,8 +68,8 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
               ACE_DEBUG ((LM_DEBUG, "Registered offer id: %C.\n", offer_id.in ()));
             }
 
-          TAO_Trader_Test::File_System_var pFileSystem = this->fs_[i]._this ();
-          offer_id = reg->_cxx_export (pFileSystem.in(),
+          TAO_Trader_Test::File_System_var const file_system = this->fs_[i]._this ();
+          offer_id = reg->_cxx_export (file_system.in (),
                                        TT_Info::INTERFACE_NAMES[3],
                                        this->props_fs_[i]);
 
@@ -80,7 +79,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Exporter::export_to");
       throw;
@@ -97,7 +96,7 @@ TAO_Offer_Exporter::export_offers_to_all ()
       ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
     }
 
-  CosTrading::Link_var link_if = this->register_->link_if ();
+  CosTrading::Link_var const link_if = this->register_->link_if ();
 
   if (this->verbose_)
     {
@@ -105,7 +104,7 @@ TAO_Offer_Exporter::export_offers_to_all ()
                   " linked to the root trader.\n"));
     }
 
-  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links ();
+  CosTrading::LinkNameSeq_var const link_name_seq = link_if->list_links ();
 
   if (this->verbose_)
       {
@@ -113,21 +112,21 @@ TAO_Offer_Exporter::export_offers_to_all ()
                     " traders.\n"));
       }
 
-  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
+  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; --i)
     {
       try
         {
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
-                          static_cast<const char*> (link_name_seq[i])));
+                          static_cast<char const *> (link_name_seq[i])));
             }
 
-          CosTrading::Link::LinkInfo_var link_info =
+          CosTrading::Link::LinkInfo_var const link_info =
             link_if->describe_link (link_name_seq[i]);
 
           // Set the PROPERTY_NAMES - TRADER_NAME.
-          for (int j = 0; j < NUM_OFFERS; j++)
+          for (int j {}; j < NUM_OFFERS; ++j)
             {
               this->props_plotters_[j][4].value <<= link_name_seq[i];
               this->props_printers_[j][4].value <<= link_name_seq[i];
@@ -137,12 +136,12 @@ TAO_Offer_Exporter::export_offers_to_all ()
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Exporting offers to %C\n",
-                          static_cast<const char*> (link_name_seq[i])));
+                          static_cast<char const *> (link_name_seq[i])));
             }
 
           this->export_to (link_info->target_reg.in ());
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const &e)
         {
           e._tao_print_exception ("TAO_Offer_Exporter::export_offers_to_all");
           throw;
@@ -158,20 +157,18 @@ TAO_Offer_Exporter::withdraw_offers ()
 
   try
     {
-      CORBA::ULong length;
+      CosTrading::OfferIdSeq_var const offer_id_seq = this->grab_offerids ();
 
-      CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids ();
-
-      if (offer_id_seq.ptr () != 0)
+      if (offer_id_seq.ptr () != nullptr)
         {
-          length = offer_id_seq->length ();
-          for (CORBA::ULong i = 0; i < length; i++)
+          CORBA::ULong const length = offer_id_seq->length ();
+          for (CORBA::ULong i {}; i < length; ++i)
             {
               this->register_->withdraw (offer_id_seq[i]);
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Exporter::withdraw_offers");
       throw;
@@ -185,24 +182,24 @@ TAO_Offer_Exporter::describe_offers ()
 
   try
     {
-      CORBA::ULong length;
-      CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids ();
+      CosTrading::OfferIdSeq_var const offer_id_seq = this->grab_offerids ();
 
-      if (offer_id_seq.ptr () != 0)
+      if (offer_id_seq.ptr () != nullptr)
         {
-          length = offer_id_seq->length ();
+          CORBA::ULong const length = offer_id_seq->length ();
 
           if (this->verbose_)
             ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 
-          for (CORBA::ULong i = 0; i < length; i++)
+          for (CORBA::ULong i {}; i < length; ++i)
             {
               CosTrading::Register::OfferInfo_var offer_info =
                 this->register_->describe (offer_id_seq[i]);
 
               if (this->verbose_)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n", (const char *) offer_id_seq[i]));
+                  ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n",
+                              static_cast<char const *> (offer_id_seq[i])));
                   ACE_DEBUG ((LM_DEBUG, "Service Type: %C\n", offer_info->type.in ()));
                   TT_Info::dump_properties (offer_info->properties, 0);
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
@@ -210,7 +207,7 @@ TAO_Offer_Exporter::describe_offers ()
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Exporter::describe_offers");
       throw;
@@ -224,11 +221,11 @@ TAO_Offer_Exporter::modify_offers ()
 
   try
     {
-      CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids ();
+      CosTrading::OfferIdSeq_var const offer_id_seq = this->grab_offerids ();
 
-      if (offer_id_seq.ptr () != 0)
+      if (offer_id_seq.ptr () != nullptr)
         {
-          CORBA::ULong length = offer_id_seq->length ();
+          CORBA::ULong const length = offer_id_seq->length ();
           CosTrading::PropertyNameSeq del_list;
           CosTrading::PropertySeq modify_list;
 
@@ -240,7 +237,7 @@ TAO_Offer_Exporter::modify_offers ()
           modify_list[1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::MISCELLANEOUS];
           modify_list[1].value <<= "MODIFIED";
 
-          for (CORBA::ULong i = 0; i < length; i++)
+          for (CORBA::ULong i {}; i < length; ++i)
             {
               this->register_->modify (offer_id_seq[i],
                                        del_list,
@@ -248,7 +245,7 @@ TAO_Offer_Exporter::modify_offers ()
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Exporter::modify_offers");
       throw;
@@ -261,7 +258,7 @@ withdraw_offers_using_constraints ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing with constraint.\n"));
 
-  const char* constraint =
+  char const *const constraint =
     "(not exist Description) and (Location == 'MODIFIED') and (exist Name)";
 
   if (this->verbose_)
@@ -281,7 +278,7 @@ withdraw_offers_using_constraints ()
         withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::FILESYSTEM],
                                    constraint);
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Exporter::withdraw_offers_using_constraints");
       throw;
@@ -297,7 +294,7 @@ TAO_Offer_Exporter::grab_offerids ()
   CosTrading::OfferIdSeq_var offer_id_seq_result;
   try
     {
-      CORBA::ULong length = NUM_OFFERS;
+      CORBA::ULong const length = NUM_OFFERS;
       CosTrading::OfferIdIterator_var offer_id_iter;
 
       this->admin_->list_offers (NUM_OFFERS,
@@ -306,10 +303,10 @@ TAO_Offer_Exporter::grab_offerids ()
 
       // We might already have seq results but may have to process additional
       // iterator result fragments.
-      if (!CORBA::is_nil (offer_id_iter.in()))
+      if (!CORBA::is_nil (offer_id_iter.in ()))
         {
           CosTrading::OfferIdSeq_var offer_id_seq_remaining;
-          CORBA::Boolean any_left = 0;
+          CORBA::Boolean any_left {};
           do
             {
               any_left =
@@ -317,11 +314,11 @@ TAO_Offer_Exporter::grab_offerids ()
                                        offer_id_seq_remaining.out());
 
               // Grow our result sequence with the remaining fragments.
-              CORBA::ULong offers = offer_id_seq_remaining->length ();
-              CORBA::ULong old_length = offer_id_seq_result->length ();
+              CORBA::ULong const offers = offer_id_seq_remaining->length ();
+              CORBA::ULong const old_length = offer_id_seq_result->length ();
               offer_id_seq_result->length (old_length + offers);
 
-              for (CORBA::ULong i = 0; i < offers; i++)
+              for (CORBA::ULong i {}; i < offers; ++i)
                 {
                   offer_id_seq_result[i + old_length] = CORBA::string_dup (offer_id_seq_remaining[i].in ());
                 }
@@ -335,11 +332,11 @@ TAO_Offer_Exporter::grab_offerids ()
       if (this->verbose_)
         {
           ACE_DEBUG ((LM_DEBUG, "The following offer ids are registered:\n"));
-          for (CORBA::ULong i=0; i<offer_id_seq_result->length(); i++)
-            ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n", offer_id_seq_result[i].in()));
+          for (CORBA::ULong i {}; i < offer_id_seq_result->length (); ++i)
+            ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n", offer_id_seq_result[i].in ()));
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("TAO_Offer_Exporter::grab_offerids");
       throw;
@@ -353,73 +350,64 @@ void
 TAO_Offer_Exporter::create_offers ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Creating offers.\n"));
-  const int QUEUE_SIZE = 4;
+  constexpr int QUEUE_SIZE {4};
 
-  int counter = 0, i = 0;
-  char name[BUFSIZ];
-  char description[BUFSIZ];
-  CORBA::Any extra_info;
+  int counter {};
+  CORBA::Any const extra_info {};
   TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
   TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
 
-  CosTradingDynamic::DynamicProp* dp_user_queue;
-  CosTradingDynamic::DynamicProp* dp_file_queue;
-  CosTradingDynamic::DynamicProp* dp_space_left;
-
-  ACE_INET_Addr addr ((u_short) 0);
-  const char* hostname = addr.get_host_name ();
+  ACE_INET_Addr addr (u_short {});
+  char const *const hostname = addr.get_host_name ();
 
   // Initialize plotters
   string_seq.length (QUEUE_SIZE);
   ulong_seq.length (QUEUE_SIZE);
-  for (i = 0; i < NUM_OFFERS; i++)
+  for (int i {}; i < NUM_OFFERS; ++i)
     {
-      ACE_OS::sprintf (name, "Plotter #%d", i);
-      ACE_OS::sprintf (description,
-                       "%s is a plotter. It plots stuff.",
-                       name);
+      std::string const name = "Plotter #" + std::to_string (i);
+      std::string const description = name + " is a plotter. It plots stuff.";
 
-      for (int j = 0; j < QUEUE_SIZE; j++, counter = (counter + 1) % NUM_OFFERS)
+      for (int j {}; j < QUEUE_SIZE; ++j, counter = (counter + 1) % NUM_OFFERS)
         {
           string_seq[j] = TT_Info::USERS [counter];
           ulong_seq[j] = counter * 10000;
         }
 
-      TAO_Dynamic_Property* user_queue =
-        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq> (string_seq);
-      TAO_Dynamic_Property* file_sizes =
-        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (ulong_seq);
+      this->clean_up_.push_back (
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (string_seq));
+      TAO_Dynamic_Property *const user_queue = this->clean_up_.back ().get ();
+      this->clean_up_.push_back (
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (ulong_seq));
+      TAO_Dynamic_Property *const file_sizes = this->clean_up_.back ().get ();
 
-      this->clean_up_.push_back (user_queue);
-      this->clean_up_.push_back (file_sizes);
-
-      dp_user_queue = user_queue->construct_dynamic_prop
+      CosTradingDynamic::DynamicProp *const dp_user_queue = user_queue->construct_dynamic_prop
         (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
          TAO_Trader_Test::_tc_StringSeq,
          extra_info);
 
-      dp_file_queue = file_sizes->construct_dynamic_prop
+      CosTradingDynamic::DynamicProp *const dp_file_queue = file_sizes->construct_dynamic_prop
         (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
          TAO_Trader_Test::_tc_ULongSeq,
          extra_info);
 
       this->props_plotters_[i].length (11);
       this->props_plotters_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_plotters_[i][0].value <<= name;
+      this->props_plotters_[i][0].value <<= name.c_str ();
       this->props_plotters_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
       this->props_plotters_[i][1].value <<= TT_Info::LOCATIONS[i];
       this->props_plotters_[i][2].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
-      this->props_plotters_[i][2].value <<= description;
+      this->props_plotters_[i][2].value <<= description.c_str ();
       this->props_plotters_[i][3].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME];
       this->props_plotters_[i][3].value <<= hostname;
       this->props_plotters_[i][4].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::TRADER_NAME];
       this->props_plotters_[i][4].value <<= "Default";
       this->props_plotters_[i][5].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS];
-      this->props_plotters_[i][5].value <<= (CORBA::Long)(i * 2);
+      this->props_plotters_[i][5].value <<= static_cast<CORBA::Long> (i * 2);
       this->props_plotters_[i][6].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING];
-      this->props_plotters_[i][6].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
+      this->props_plotters_[i][6].value <<= CORBA::Any::from_boolean (i % 2 != 0);
       this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE];
-      this->props_plotters_[i][7].value <<= (CORBA::Float) i;
+      this->props_plotters_[i][7].value <<= static_cast<CORBA::Float> (i);
       this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER];
       this->props_plotters_[i][8].value <<= TT_Info::MODEL_NUMBERS[i];
       this->props_plotters_[i][9].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
@@ -430,54 +418,51 @@ TAO_Offer_Exporter::create_offers ()
     }
 
   // Initialize printers
-  for (i = 0; i < NUM_OFFERS; i++)
+  for (int i {}; i < NUM_OFFERS; ++i)
     {
-      ACE_OS::sprintf (name, "Printer #%d", i);
-      ACE_OS::sprintf (description,
-                       "%s is a printer. It prints stuff.",
-                       name);
+      std::string const name = "Printer #" + std::to_string (i);
+      std::string const description = name + " is a printer. It prints stuff.";
 
-      for (int j = 0; j < QUEUE_SIZE; j++, counter = (counter + 1) % NUM_OFFERS)
+      for (int j {}; j < QUEUE_SIZE; ++j, counter = (counter + 1) % NUM_OFFERS)
         {
           string_seq[j] = TT_Info::USERS [counter];
           ulong_seq[j] = counter * 10000;
         }
 
-      TAO_Dynamic_Property* user_queue =
-        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq> (string_seq);
-      TAO_Dynamic_Property* file_sizes =
-        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (ulong_seq);
+      this->clean_up_.push_back (
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (string_seq));
+      TAO_Dynamic_Property *const user_queue = this->clean_up_.back ().get ();
+      this->clean_up_.push_back (
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (ulong_seq));
+      TAO_Dynamic_Property *const file_sizes = this->clean_up_.back ().get ();
 
-      this->clean_up_.push_back (user_queue);
-      this->clean_up_.push_back (file_sizes);
-
-      dp_user_queue = user_queue->construct_dynamic_prop
+      CosTradingDynamic::DynamicProp *const dp_user_queue = user_queue->construct_dynamic_prop
         (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
          TAO_Trader_Test::_tc_StringSeq,
          extra_info);
 
-      dp_file_queue = file_sizes->construct_dynamic_prop
+      CosTradingDynamic::DynamicProp *const dp_file_queue = file_sizes->construct_dynamic_prop
         (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
          TAO_Trader_Test::_tc_ULongSeq,
          extra_info);
 
       this->props_printers_[i].length (12);
       this->props_printers_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_printers_[i][0].value <<= name;
+      this->props_printers_[i][0].value <<= name.c_str ();
       this->props_printers_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
       this->props_printers_[i][1].value <<= TT_Info::LOCATIONS[i];
       this->props_printers_[i][2].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
-      this->props_printers_[i][2].value <<= description;
+      this->props_printers_[i][2].value <<= description.c_str ();
       this->props_printers_[i][3].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME];
       this->props_printers_[i][3].value <<= hostname;
       this->props_printers_[i][4].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::TRADER_NAME];
       this->props_printers_[i][4].value <<= "Default";
       this->props_printers_[i][5].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR];
-      this->props_printers_[i][5].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
+      this->props_printers_[i][5].value <<= CORBA::Any::from_boolean (i % 2 != 0);
       this->props_printers_[i][6].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_DOUBLE_SIDED];
-      this->props_printers_[i][6].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) ((i + 1) % 2));
+      this->props_printers_[i][6].value <<= CORBA::Any::from_boolean ((i + 1) % 2 != 0);
       this->props_printers_[i][7].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COST_PER_PAGE];
-      this->props_printers_[i][7].value <<= (CORBA::Float) i;
+      this->props_printers_[i][7].value <<= static_cast<CORBA::Float> (i);
       this->props_printers_[i][8].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_MODEL_NUMBER];
       this->props_printers_[i][8].value <<= TT_Info::MODEL_NUMBERS[i];
       this->props_printers_[i][9].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC];
@@ -489,30 +474,27 @@ TAO_Offer_Exporter::create_offers ()
     }
 
   // Initialize FileSystem
-  for (i = 0; i < NUM_OFFERS; i++)
+  for (int i {}; i < NUM_OFFERS; ++i)
     {
-      ACE_OS::sprintf (name, "File System #%d", i);
-      ACE_OS::sprintf (description,
-                       "%s is a File System. It stores stuff.",
-                       name);
+      std::string const name = "File System #" + std::to_string (i);
+      std::string const description = name + " is a File System. It stores stuff.";
 
-      TAO_Dynamic_Property* space_left =
-        new TAO_Simple_Dynamic_Property<CORBA::ULong> (i * 4434343);
+      this->clean_up_.push_back (
+        std::make_unique<TAO_Simple_Dynamic_Property<CORBA::ULong>> (i * 4434343));
+      TAO_Dynamic_Property *const space_left = this->clean_up_.back ().get ();
 
-      this->clean_up_.push_back (space_left);
-
-      dp_space_left = space_left->construct_dynamic_prop
+      CosTradingDynamic::DynamicProp *const dp_space_left = space_left->construct_dynamic_prop
         (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],
          CORBA::_tc_ulong,
          extra_info);
 
       this->props_fs_[i].length (8);
       this->props_fs_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_fs_[i][0].value <<= name;
+      this->props_fs_[i][0].value <<= name.c_str ();
       this->props_fs_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
       this->props_fs_[i][1].value <<= TT_Info::LOCATIONS[i];
       this->props_fs_[i][2].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
-      this->props_fs_[i][2].value <<= description;
+      this->props_fs_[i][2].value <<= description.c_str ();
       this->props_fs_[i][3].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME];
       this->props_fs_[i][3].value <<= hostname;
       this->props_fs_[i][4].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::TRADER_NAME];
