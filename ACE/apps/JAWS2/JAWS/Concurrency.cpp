@@ -12,7 +12,7 @@
 JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
     mb_acquired_ (0),
-    mb_ (0),
+    mb_ (nullptr),
     reaper_ (std::make_unique<JAWS_Reaper> (this))
 {
 }
@@ -27,7 +27,7 @@ JAWS_Concurrency_Base::singleton_mb ()
 {
   if (this->mb_acquired_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, 0);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, nullptr);
 
       if (this->mb_acquired_ == 0)
         {
@@ -37,8 +37,8 @@ JAWS_Concurrency_Base::singleton_mb ()
           result = this->getq (mb);
           this->mb_acquired_ = 1;
 
-          if (result == -1 || mb == 0)
-            return 0;
+          if (result == -1 || mb == nullptr)
+            return nullptr;
 
           this->mb_ = mb;
         }
@@ -65,7 +65,7 @@ JAWS_Concurrency_Base::svc ()
 
   // A NULL data block indicates that the thread should shut
   // itself down
-  if (mb == 0)
+  if (mb == nullptr)
     {
       JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty message block");
       return -1;
@@ -85,28 +85,21 @@ JAWS_Concurrency_Base::svc_loop (JAWS_Data_Block *db)
 
   // Thread specific message block and data block
   ACE_DEBUG ((LM_DEBUG, "(%t) Creating DataBlock\n"));
-  JAWS_Data_Block *ts_db = new JAWS_Data_Block (*db);
-  if (ts_db == 0)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
-      return -1;
-    }
+  std::unique_ptr<JAWS_Data_Block> ts_db = std::make_unique<JAWS_Data_Block> (*db);
 
   for (;;)
     {
-      if (this->svc_hook (ts_db) != 0)
+      if (this->svc_hook (ts_db.get ()) != 0)
         break;
       ts_db->task (db->task ());
       ts_db->policy (db->policy ());
-      ts_db->payload (0);
-      ts_db->io_handler (0);
+      ts_db->payload (nullptr);
+      ts_db->io_handler (nullptr);
       ts_db->rd_ptr (ts_db->wr_ptr ());
       ts_db->crunch ();
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Deleting DataBlock\n"));
-  delete ts_db; // ts_db->release ();
-
   return 0;
 }
 
@@ -122,11 +115,11 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
   JAWS_Data_Block *mb {};     // The task message block
 
   task = ts_db->task ();
-  handler = 0;
+  handler = nullptr;
 
   // Get the waiter index
-  JAWS_Waiter *waiter = JAWS_Waiter_Singleton::instance ();
-  int waiter_index = waiter->index ();
+  JAWS_Waiter * const waiter = JAWS_Waiter_Singleton::instance ();
+  int const waiter_index = waiter->index ();
 
   mb = ts_db;
   do
@@ -134,14 +127,14 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
       JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, looping");
 
       // Use a NULL task to make the thread recycle now
-      if (task == 0)
+      if (task == nullptr)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
           if (handler)
             handler->done ();
-          handler = 0;
-          JAWS_IO_Handler **ioh = waiter->find_by_index (waiter_index);
-          *ioh = 0;
+          handler = nullptr;
+          JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
+          *ioh = nullptr;
           break;
         }
 
@@ -150,7 +143,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
       if (result == 0 || result == -3)
         handler = mb->io_handler ();
-      else handler = 0;
+      else handler = nullptr;
 
       if (result == 1 || result == 2)
         {
@@ -160,7 +153,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           // We need a way to destroy all the handlers created by the
           // Asynch_Acceptor.  Figure this out later.
           handler = waiter->wait_for_completion (waiter_index);
-          if (handler == 0)
+          if (handler == nullptr)
             {
               JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, bad proactor");
               // Proactor failed
@@ -178,17 +171,17 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           if (handler)
             handler->done ();
 
-          handler = 0;
+          handler = nullptr;
           if (result == -2)
             {
-              JAWS_IO_Handler **ioh = waiter->find_by_index (waiter_index);
-              *ioh = 0;
+              JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
+              *ioh = nullptr;
               result = 0;
             }
           break;
         }
 
-      if (handler == 0)
+      if (handler == nullptr)
         break;
 
       mb = handler->message_block ();
