@@ -69,7 +69,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
     }
 
   // Set the CSD Strategy_Base on the strategy proxy object owned by the POA.
-  bool strategy_set = false;
+  bool strategy_set {};
   try
     {
       poa_impl->set_csd_strategy (this);

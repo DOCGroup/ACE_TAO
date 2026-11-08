@@ -47,8 +47,8 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 
           if (this->request_->operation_details_->num_args_ > 0)
             {
-              for (CORBA::ULong i = 0;
-                   i < this->request_->operation_details_->num_args_; i++)
+              for (CORBA::ULong i {};
+                   i < this->request_->operation_details_->num_args_; ++i)
                 {
                   delete this->request_->operation_details_->args_[i];
                 }
@@ -324,7 +324,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   // idl with the clonable arguments option, great.  If not, then
   // use the marshaling technique to copy the arguments
   TAO::Argument **cloned_args {};
-  CORBA::ULong num_cloned_args = 0;
+  CORBA::ULong num_cloned_args {};
   if (from->num_args_ > 0)
     {
       TAO::Argument* retval = from->args_[0]->clone();
