@@ -940,7 +940,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 int
 TAO_Root_POA::delete_child (const TAO_Root_POA::String &child)
 {
-  int result = 0;
+  int result {};
 
   // If we are not closing down, we must remove this child from our
   // collection.
@@ -966,7 +966,7 @@ TAO_Root_POA::the_children_i ()
 
   children->length (child_current);
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator, ++index)
@@ -986,7 +986,7 @@ TAO_Root_POA::adapter_name_i ()
   // RootPOA is "RootPOA".
   PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
 
-  CORBA::ULong len = 0;
+  CORBA::ULong len {};
 
   // Find the length of the adapter name sequence by traversing the
   // POA hierarchy until the RootPOA is reached.  The RootPOA has no
@@ -1629,7 +1629,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
 #endif /* POA_NO_TIMESTAMP */
 
   // Calculate the size of the POA name.
-  CORBA::ULong poa_name_size = 0;
+  CORBA::ULong poa_name_size {};
   if (!is_persistent)
     {
       // Transient POAs have fixed size.
@@ -1714,7 +1714,7 @@ void
 TAO_Root_POA::set_id (TAO_Root_POA *parent)
 {
   // Calculate the prefix size.
-  CORBA::ULong prefix_size = 0;
+  CORBA::ULong prefix_size {};
   prefix_size += TAO_OBJECTKEY_PREFIX_SIZE;
 
   // If we are dealing with a persistent POA and user ids are being
@@ -1726,7 +1726,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
     !this->system_id ();
 
   // Size required by the POA name.
-  CORBA::ULong poa_name = 0;
+  CORBA::ULong poa_name {};
 
   // Calculate the space required for the POA name.
   CORBA::ULong poa_name_length = this->system_name_->length ();
@@ -1762,7 +1762,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   CORBA::Octet *buffer = &this->id_[0];
 
   // Keeps track of where the next infomation goes; start at 0 byte.
-  CORBA::ULong starting_at = 0;
+  CORBA::ULong starting_at {};
 
   // Add the object key prefix.
   std::memcpy (&buffer[starting_at],
@@ -1833,8 +1833,8 @@ TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 void
 TAO_Root_POA::set_folded_name (TAO_Root_POA *parent)
 {
-  std::size_t length = 0;
-  std::size_t parent_length = 0;
+  std::size_t length {};
+  std::size_t parent_length {};
 
   if (parent != nullptr)
     {
