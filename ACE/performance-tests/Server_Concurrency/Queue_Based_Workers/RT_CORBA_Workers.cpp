@@ -10,28 +10,29 @@
 #include "ace/Lock_Adapter_T.h"
 
 // The number of messages that is being processed
-static size_t number_of_messages = 100;
+static size_t number_of_messages {100};
 
 // The number of upcall threads
-static size_t number_of_workers = 2;
+static size_t number_of_workers {2};
 
 // The size of the message
-static size_t message_size = 100;
+static size_t message_size {100};
 
 // Number of threads that are ready to go
-static size_t ready_threads = 0;
+static size_t ready_threads {};
 
 // Number of input and output threads
-static size_t io_threads = 2; // 1 for output and 1 for input
+static size_t io_threads {2}; // 1 for output and 1 for input
 
 // High resolution test timer
 static ACE_High_Res_Timer test_timer;
 
 // Debugging condition
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
 
 // Data block used by the message blocks
-ACE_Data_Block *data_block = 0;
+// Keep its base reference until all queued messages have been released.
+ACE_Data_Block *data_block {};
 
 /*******************************************************************/
 // Constructor for Synchronisers
@@ -58,7 +59,7 @@ Synchronisers::start_synchronization ()
         // runs
         ready_threads = 0;
 
-        if (debug)
+        if (debug != DEBUGGING_RANGE::DEBUG_NONE)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) Ready to signal start\n"));
@@ -76,7 +77,7 @@ Synchronisers::start_synchronization ()
     // If we are not the last thread, let go off the lock
   }
 
-  if (debug)
+  if (debug != DEBUGGING_RANGE::DEBUG_NONE)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_DEBUG ((LM_DEBUG,
@@ -112,7 +113,7 @@ Synchronisers::end_synchronization ()
         // Signal all the threads
         this->event_.signal ();
 
-        if (debug)
+        if (debug != DEBUGGING_RANGE::DEBUG_NONE)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) Ended peacefully\n"));
@@ -126,7 +127,7 @@ Synchronisers::end_synchronization ()
     // If we are not the last thread, let go off the lock
   }
 
-  if (debug)
+  if (debug != DEBUGGING_RANGE::DEBUG_NONE)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Going to wait ..\n"));
@@ -142,7 +143,7 @@ Synchronisers::end_synchronization ()
 
 Worker_Task::Worker_Task (Message_Queue *mq,
                           Synchronisers &synch)
-  : ACE_Task<ACE_MT_SYNCH> (0, mq),
+  : ACE_Task<ACE_MT_SYNCH> (nullptr, mq),
   synch_ (synch),
   messages_processed_ (0)
 {
@@ -156,7 +157,7 @@ Worker_Task::svc ()
 
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
       int result = this->getq (mb);
       if (result == -1)
         {
@@ -171,28 +172,29 @@ Worker_Task::svc ()
         mb->self_flags ();
 
       // The stop flag
-      int stop_flag = 0;
+      bool stop_flag {};
 
       // Check for the stop flag
       if (ACE_BIT_ENABLED (flag,
                            Synchronisers::MB_STOP_FLAG))
         {
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) saw flag after [%d] messages\n",
                           this->messages_processed_));
             }
 
-          stop_flag = 1;
+          stop_flag = true;
         }
       // Release the message block
-      mb->release ();
+      ACE_Message_Block_Unique_Ptr input_owner {mb};
+      input_owner.reset ();
 
       // Counter.
       ++this->messages_processed_;
 
-      if (debug)
+      if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) dequeued my %d message\n",
@@ -212,14 +214,15 @@ Worker_Task::svc ()
         }
 
       // Make a message block for writing onto output queue
-      ACE_Message_Block *message_block = 0;
+      ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (data_block),
                       -1);
+      ACE_Message_Block_Unique_Ptr output_owner {message_block};
 
       // Put this message block into the next queue or the output
       // queue
-      result = this->put_next (message_block);
+      result = this->put_next (output_owner.get ());
 
       if (result == -1)
         {
@@ -227,12 +230,13 @@ Worker_Task::svc ()
                              "Input::svc (%t) -> %p\n",
                              "putq error"),
                             -1);
-                            }
+        }
+      output_owner.release ();
 
       // If the stop_flag is set just break and wait..
       if (stop_flag)
         {
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) Got stop message after [%d] messages\n",
                         this->messages_processed_));
@@ -255,7 +259,7 @@ Worker_Task::processed ()
 
 Input_Task::Input_Task (Message_Queue *mq,
                         Synchronisers &synch)
-  : ACE_Task<ACE_MT_SYNCH> (0, mq),
+  : ACE_Task<ACE_MT_SYNCH> (nullptr, mq),
     synch_ (synch)
 {
 }
@@ -273,12 +277,13 @@ Input_Task::svc ()
        ++i)
     {
       // Make a message block
-      ACE_Message_Block *message_block = 0;
+      ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (data_block),
                       -1);
 
-      int result = this->putq (message_block);
+      ACE_Message_Block_Unique_Ptr message_owner {message_block};
+      int result = this->putq (message_owner.get ());
 
       if (result == -1)
         {
@@ -287,8 +292,8 @@ Input_Task::svc ()
                              "putq error"),
                             -1);
         }
-
-      if (debug)
+      message_owner.release ();
+      if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) Input thread ->  Sent [%d] messages\n",
@@ -296,7 +301,7 @@ Input_Task::svc ()
         }
     }
 
-  if (debug)
+  if (debug != DEBUGGING_RANGE::DEBUG_NONE)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Sending close messages\n"));
@@ -309,15 +314,16 @@ Input_Task::svc ()
        ++i)
     {
       // Make a message block
-      ACE_Message_Block *message_block = 0;
+      ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (data_block),
                       -1);
+      ACE_Message_Block_Unique_Ptr message_owner {message_block};
 
       // Set the stop flag in the message block and not in the datablock
       message_block->set_self_flags (Synchronisers::MB_STOP_FLAG);
 
-      int result = this->putq (message_block);
+      int result = this->putq (message_owner.get ());
 
       if (result == -1)
         {
@@ -326,6 +332,7 @@ Input_Task::svc ()
                              "putq error"),
                             -1);
         }
+      message_owner.release ();
     }
 
 
@@ -337,7 +344,7 @@ Input_Task::svc ()
 
 Output_Task::Output_Task (Message_Queue *mq,
                           Synchronisers &synch)
-  : ACE_Task<ACE_MT_SYNCH> (0, mq),
+  : ACE_Task<ACE_MT_SYNCH> (nullptr, mq),
     synch_ (synch)
 {
 }
@@ -348,31 +355,29 @@ Output_Task::svc ()
   // Synchronise threads
   (void) this->synch_.start_synchronization ();
 
-
   for (size_t i = 0;
        i < number_of_messages;
        ++i)
     {
       // Get the message block from queue
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
       int result = this->getq (mb);
-
-      // delete the message block
-      mb->release ();
-
-      if (debug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Output thread ->  received [%d] message\n",
-                      i));
-                      }
 
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Input::svc (%t) -> %p\n",
-                             "putq error"),
+                             "Output::svc (%t) -> %p\n",
+                             "getq error"),
                             -1);
+        }
+
+      ACE_Message_Block_Unique_Ptr message_owner {mb};
+
+      if (debug != DEBUGGING_RANGE::DEBUG_NONE)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Output thread ->  received [%d] message\n",
+                      i));
         }
     }
 
@@ -470,7 +475,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Synchronisers synch;
 
   // Workers.
-  Worker_Task **workers = 0;
+  // Keep the task array manual: workers are activated into a fixed-size
+  // synchronization barrier and can still reference their task on failures.
+  Worker_Task **workers {};
   ACE_NEW_RETURN (workers,
                   Worker_Task *[number_of_workers],
                   -1);
@@ -543,7 +550,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   result = ACE_Thread_Manager::instance ()->wait ();
 
 
-  ACE_hrtime_t elapsed_time = 0;
+  ACE_hrtime_t elapsed_time {};
 
   test_timer.elapsed_time (elapsed_time);
 

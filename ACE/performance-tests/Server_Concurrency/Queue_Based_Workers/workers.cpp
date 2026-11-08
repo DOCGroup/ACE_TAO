@@ -9,22 +9,23 @@
 #include "ace/Lock_Adapter_T.h"
 #include "../Latency_Stats.h"
 
-static size_t number_of_messages = 100;
-static size_t message_size = 100;
-static size_t number_of_workers = 10;
-static size_t burst_size = 10;
-static size_t timeout_between_bursts = 1;
+static size_t number_of_messages {100};
+static size_t message_size {100};
+static size_t number_of_workers {10};
+static size_t burst_size {10};
+static size_t timeout_between_bursts {1};
 
-enum DEBUGGING_RANGE
+enum class DEBUGGING_RANGE
 {
-  DEBUG_NONE = 0,
-  DEFAULT = 1,
-  PRINT_INDIVIDUAL_LATENCY = 2
+  DEBUG_NONE,
+  DEFAULT,
+  PRINT_INDIVIDUAL_LATENCY
 };
 
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
 
-static ACE_Data_Block *data_block = 0;
+// Shared refcounted storage stays alive until all queued message blocks drain.
+static ACE_Data_Block *data_block {};
 
 class Message_Block : public ACE_Message_Block
 {
@@ -33,6 +34,12 @@ public:
                  ACE_hrtime_t start_of_burst);
 
   ACE_hrtime_t start_of_burst_;
+
+private:
+  Message_Block (Message_Block const &) = delete;
+  Message_Block &operator= (Message_Block const &) = delete;
+  Message_Block (Message_Block &&) = delete;
+  Message_Block &operator= (Message_Block &&) = delete;
 };
 
 Message_Block::Message_Block (ACE_Data_Block *data_block,
@@ -55,6 +62,12 @@ public:
 
   Latency_Stats latency_stats_;
   Throughput_Stats throughput_stats_;
+
+private:
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
 };
 
 class IO_Task : public TASK
@@ -62,10 +75,16 @@ class IO_Task : public TASK
 public:
   IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
   int svc ();
+
+private:
+  IO_Task (IO_Task const &) = delete;
+  IO_Task &operator= (IO_Task const &) = delete;
+  IO_Task (IO_Task &&) = delete;
+  IO_Task &operator= (IO_Task &&) = delete;
 };
 
 Worker_Task::Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
-  : TASK (0, mq),
+  : TASK (nullptr, mq),
     messages_dequeued_ (0)
 {
 }
@@ -75,7 +94,7 @@ Worker_Task::svc ()
 {
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
       int result = this->getq (mb);
       if (result == -1)
         {
@@ -85,20 +104,20 @@ Worker_Task::svc ()
                             -1);
         }
 
+      ACE_Message_Block_Unique_Ptr message_owner {mb};
       ACE_Message_Block::ACE_Message_Type message_type =
         mb->msg_type ();
 
       // If STOP message, break loop and end the task.
       if (message_type == ACE_Message_Block::MB_STOP)
         {
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%t) stop message dequeued after %d data messages\n",
                           this->messages_dequeued_));
             }
 
-          mb->release ();
           break;
         }
 
@@ -108,12 +127,12 @@ Worker_Task::svc ()
       ACE_hrtime_t start_of_burst_for_this_message_block =
         message_block->start_of_burst_;
 
-      mb->release ();
+      message_owner.reset ();
 
       // Counter.
       ++this->messages_dequeued_;
 
-      if (debug)
+      if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) dequeued its %d message\n",
@@ -141,7 +160,7 @@ Worker_Task::svc ()
 
       this->throughput_stats_.sample ();
 
-      if (debug >= PRINT_INDIVIDUAL_LATENCY)
+      if (debug >= DEBUGGING_RANGE::PRINT_INDIVIDUAL_LATENCY)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) latency from start of burst: %Q\n",
@@ -153,7 +172,7 @@ Worker_Task::svc ()
 }
 
 IO_Task::IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
-  : TASK (0, mq)
+  : TASK (nullptr, mq)
 {
 }
 
@@ -173,7 +192,7 @@ IO_Task::svc ()
            i <= burst_size && number_of_messages > 0;
            ++i, --number_of_messages, ++messages_queued)
         {
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%t) IO thread -> burst %d: message %d; overall message %d\n",
@@ -182,13 +201,14 @@ IO_Task::svc ()
                           messages_queued));
             }
 
-          Message_Block *message_block = 0;
+          Message_Block *message_block {};
           ACE_NEW_RETURN (message_block,
                           Message_Block (data_block,
                                          start_of_burst),
                           -1);
 
-          int result = this->putq (message_block);
+          ACE_Message_Block_Unique_Ptr message_owner {message_block};
+          int result = this->putq (message_owner.get ());
           if (result == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -196,6 +216,7 @@ IO_Task::svc ()
                                  "putq error"),
                                 -1);
             }
+          message_owner.release ();
         }
 
       ++burst;
@@ -206,13 +227,14 @@ IO_Task::svc ()
   // Terminate messages.
   for (i = 0; i < number_of_workers; ++i)
     {
-      ACE_Message_Block *message_block = 0;
+      ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block ((size_t)0,
                                          (int)ACE_Message_Block::MB_STOP),
                       -1);
 
-      int result = this->putq (message_block);
+      ACE_Message_Block_Unique_Ptr message_owner {message_block};
+      int result = this->putq (message_owner.get ());
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -220,6 +242,7 @@ IO_Task::svc ()
                              "putq error"),
                             -1);
         }
+      message_owner.release ();
     }
 
   return 0;
@@ -296,7 +319,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Message_Queue<ACE_SYNCH> message_queue;
 
   // Workers.
-  Worker_Task **workers = 0;
+  // Keep manual worker ownership: task creation is in the timed section, and
+  // already activated workers still refer to their task on early returns.
+  Worker_Task **workers {};
   ACE_NEW_RETURN (workers,
                   Worker_Task *[number_of_workers],
                   -1);
