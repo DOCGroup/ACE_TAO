@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_STRATEGIES_TEST_I_H
 #define TAO_STRATEGIES_TEST_I_H
 
@@ -23,8 +22,12 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
+
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   // = The Simple_Server methods.
   CORBA::Boolean print_status () override;
@@ -32,7 +35,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #if defined(__ACE_INLINE__)
