@@ -6,6 +6,32 @@
 #include "tao/ORB_Core.h"
 #include <memory>
 
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        options.ior_output_file = get_opts.opt_arg ();
+        break;
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("usage: %s [-o <iorfile>]\n"),
+                           argv [0]),
+                          -1);
+      }
+  return 0;
+}
+
 /***************************/
 /*** Servant Declaration ***/
 
@@ -30,7 +56,6 @@ protected:
   CORBA::ORB_var orb_;
 };
 
-
 /***************************/
 /*** Servant Definition ***/
 
@@ -44,8 +69,8 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp)
 {
   // Throw an overload exception
-  std::unique_ptr<Test::ServerOverload> exception =
-    std::make_unique<Test::ServerOverload> ();
+  std::unique_ptr<Test::ServerOverload> exception (
+    std::make_unique<Test::ServerOverload> ());
   Test::AMH_RoundtripExceptionHolder holder (exception.get ());
   // The exception holder takes ownership of the exception.
   exception.release ();
@@ -74,7 +99,7 @@ ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (int argc, ACE_TCHAR **argv);
+  ST_AMH_Server (int *argc, ACE_TCHAR **argv);
   ~ST_AMH_Server ();
   ST_AMH_Server (ST_AMH_Server const &) = delete;
   ST_AMH_Server &operator= (ST_AMH_Server const &) = delete;
@@ -85,52 +110,58 @@ public:
   int start_orb_and_poa ();
 
   /// register the servant with the poa
-  void register_servant (ST_AMH_Servant *servant);
+  int register_servant (ST_AMH_Servant *servant);
 
   /// orb-perform_work () abstraction
   void run_event_loop ();
 
-public:
+  /// Destroy the POA before the stack-allocated servant leaves scope.
+  void cleanup ();
+
   /// Accesor method (for servants) to the initialized ORB
   CORBA::ORB_ptr orb () const { return this->orb_.in (); }
 
 protected:
-  int argc_;
-  ACE_TCHAR **argv_;
-  ACE_TCHAR const* ior_output_file_ {ACE_TEXT ("test.ior")};
+  int * const argc_;
+  ACE_TCHAR ** const argv_;
+  Server_Options options_ {};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
 private:
   /// Write servant IOR to file specified with the '-o' option
-  int write_ior_to_file (CORBA::String_var const& ior);
+  int write_ior_to_file (CORBA::String_var const &ior);
 };
 
 /*** Server Declaration ***/
 
-ST_AMH_Server::ST_AMH_Server (int argc, ACE_TCHAR **argv)
+ST_AMH_Server::ST_AMH_Server (int *argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        this->ior_output_file_ = get_opts.opt_arg ();
-        break;
-      }
 }
 
 ST_AMH_Server::~ST_AMH_Server ()
 {
+  this->cleanup ();
+}
+
+void
+ST_AMH_Server::cleanup ()
+{
   try
     {
-      this->root_poa_->destroy (true, true);
+      if (!CORBA::is_nil (this->root_poa_.in ()))
+        {
+          this->root_poa_->destroy (true, true);
+          this->root_poa_ = PortableServer::POA::_nil ();
+        }
 
-      this->orb_->destroy ();
+      if (!CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->destroy ();
+          this->orb_ = CORBA::ORB::_nil ();
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -143,20 +174,22 @@ ST_AMH_Server::start_orb_and_poa ()
 {
   try
     {
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
+      this->orb_ = CORBA::ORB_init (*(this->argc_), this->argv_);
+      if (parse_args (*(this->argc_), this->argv_, this->options_) != 0)
+        return -1;
 
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object (
+        this->orb_->resolve_initial_references ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager (
+        this->root_poa_->the_POAManager ());
 
       poa_manager->activate ();
     }
@@ -169,33 +202,26 @@ ST_AMH_Server::start_orb_and_poa ()
   return 0;
 }
 
-void
+int
 ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
   try
     {
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+      PortableServer::ObjectId_var const id (
+        this->root_poa_->activate_object (servant));
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      CORBA::Object_var const object (this->root_poa_->id_to_reference (id.in ()));
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (servant);
+      Test::Roundtrip_var const roundtrip (Test::Roundtrip::_narrow (object.in ()));
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::String_var const ior (this->orb_->object_to_string (roundtrip.in ()));
 
-      Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in ());
-
-      CORBA::String_var ior =
-        this->orb_->object_to_string (roundtrip.in ());
-
-      (void) this->write_ior_to_file (ior);
+      return this->write_ior_to_file (ior);
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
+      return -1;
     }
 }
 
@@ -207,24 +233,25 @@ ST_AMH_Server::run_event_loop ()
       ACE_Time_Value period (0, 11000);
       while (!this->orb_->orb_core ()->has_shutdown ())
         {
-              this->orb_->perform_work (&period);
+          this->orb_->perform_work (&period);
         }
     }
   catch (CORBA::Exception const &)
-    {}
+    {
+    }
 }
 
 int
-ST_AMH_Server::write_ior_to_file (CORBA::String_var const& ior)
+ST_AMH_Server::write_ior_to_file (CORBA::String_var const &ior)
 {
   // If the ior_output_file exists, output the ior to it
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-    ACE_OS::fopen (ST_AMH_Server::ior_output_file_, "w"), ACE_OS::fclose);
+    ACE_OS::fopen (this->options_.ior_output_file, "w"), ACE_OS::fclose);
   if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR: %s",
-                  ST_AMH_Server::ior_output_file_));
+                  ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                  this->options_.ior_output_file));
       return -1;
     }
 
@@ -232,19 +259,24 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var const& ior)
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ST_AMH_Server amh_server (argc, argv);
+  ST_AMH_Server amh_server (&argc, argv);
 
-  amh_server.start_orb_and_poa ();
+  if (amh_server.start_orb_and_poa () != 0)
+    return 1;
 
   ST_AMH_Servant servant (amh_server.orb ());
 
-  amh_server.register_servant (&servant);
+  if (amh_server.register_servant (&servant) != 0)
+    {
+      amh_server.cleanup ();
+      return 1;
+    }
 
   amh_server.run_event_loop ();
+  amh_server.cleanup ();
 
   return 0;
 }
