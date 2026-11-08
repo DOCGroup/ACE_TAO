@@ -70,7 +70,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters ()
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
   , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
-  for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
+  for (int i {}; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
       this->service_port_[i] = 0;
     }
@@ -160,7 +160,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
     {
       int endpoints_count = 1;
 
-      for (size_t j = 0; j != length; ++j)
+      for (size_t j {}; j != length; ++j)
         {
           if (endpoints[j] == endpoints_delimiter)
             {
@@ -171,7 +171,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
       ssize_t begin {};
       ssize_t end = endpoints.find (endpoints_delimiter);
 
-      for (int i = 0; i < endpoints_count; ++i)
+      for (int i {}; i < endpoints_count; ++i)
         {
           if (end == 0)
             {

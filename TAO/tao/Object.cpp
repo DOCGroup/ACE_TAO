@@ -762,7 +762,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
       TAO_Connector_Registry *connector_registry =
         orb_core->connector_registry ();
 
-      for (CORBA::ULong i = 0; i != profile_count; ++i)
+      for (CORBA::ULong i {}; i != profile_count; ++i)
         {
           IOP::TaggedProfile &tpfile = obj->ior_->profiles[i];
 
@@ -902,7 +902,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
           TAO_Connector_Registry *connector_registry =
             orb_core2->connector_registry ();
 
-          for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
+          for (CORBA::ULong i {}; i != profile_count && cdr.good_bit (); ++i)
             {
               TAO_Profile *pfile = connector_registry->create_profile (cdr);
               if (pfile != nullptr)

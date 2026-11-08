@@ -2018,7 +2018,7 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
       TAO_Profile * profile {};
 
       CORBA::ULong const count = mprofile.profile_count ();
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           // Get the ith profile
           profile = mprofile.get_profile (i);

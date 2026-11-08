@@ -35,7 +35,7 @@ TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Set const &rhs)
 
   try
     {
-      for (CORBA::ULong i = 0; i < rhs.policy_list_.length (); ++i)
+      for (CORBA::ULong i {}; i < rhs.policy_list_.length (); ++i)
         {
           CORBA::Policy_ptr policy = rhs.policy_list_[i];
 
@@ -77,7 +77,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set const *source)
 
   this->cleanup_i ();
 
-  for (CORBA::ULong i = 0; i < source->policy_list_.length (); ++i)
+  for (CORBA::ULong i {}; i < source->policy_list_.length (); ++i)
     {
       CORBA::Policy_ptr policy = source->policy_list_[i];
 
@@ -115,7 +115,7 @@ TAO_Policy_Set::cleanup_i ()
 {
   CORBA::ULong const len = this->policy_list_.length ();
   // Cleanup the policy list.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       this->policy_list_[i]->destroy ();
       this->policy_list_[i] = CORBA::Policy::_nil ();
@@ -124,7 +124,7 @@ TAO_Policy_Set::cleanup_i ()
   this->policy_list_.length (0);
 
   // Cleanup the cache.
-  for (CORBA::ULong j = 0; j < TAO_CACHED_POLICY_MAX_CACHED; ++j)
+  for (CORBA::ULong j {}; j < TAO_CACHED_POLICY_MAX_CACHED; ++j)
     {
       this->cached_policies_[j] = nullptr;
     }
@@ -152,7 +152,7 @@ TAO_Policy_Set::set_policy_overrides (CORBA::PolicyList const &policies,
 
   CORBA::ULong const plen = policies.length ();
 
-  for (CORBA::ULong i = 0; i < plen; ++i)
+  for (CORBA::ULong i {}; i < plen; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
 
@@ -259,12 +259,12 @@ TAO_Policy_Set::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
   policy_list->length (slots);
   CORBA::ULong n {};
 
-  for (CORBA::ULong j = 0; j < slots; ++j)
+  for (CORBA::ULong j {}; j < slots; ++j)
     {
       CORBA::ULong const slot = types[j];
       CORBA::ULong const length = this->policy_list_.length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           CORBA::ULong const current =
             this->policy_list_[i]->policy_type ();
@@ -290,7 +290,7 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type)
 {
   CORBA::ULong const length = this->policy_list_.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::PolicyType const current = this->policy_list_[i]->policy_type ();
 

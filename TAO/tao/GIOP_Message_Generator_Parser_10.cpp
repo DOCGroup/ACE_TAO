@@ -252,7 +252,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
       output << pad;
 
-      for (CORBA::ULong j = 0; j != pad; ++j)
+      for (CORBA::ULong j {}; j != pad; ++j)
         {
           output << ACE_OutputCDR::from_octet(0);
         }

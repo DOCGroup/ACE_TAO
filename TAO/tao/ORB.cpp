@@ -1502,7 +1502,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       TAO_MProfile &mp = obj->_stubobj ()->base_profiles ();
 
       // Try the profiles until one returns a string
-      for (CORBA::ULong index = 0; index < mp.profile_count(); ++index)
+      for (CORBA::ULong index {}; index < mp.profile_count(); ++index)
         {
           char * result = mp.get_profile (index)->to_string();
           if (result)

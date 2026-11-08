@@ -21,7 +21,7 @@ TAO_MProfile::~TAO_MProfile ()
   if (this->policy_list_ != nullptr)
     {
       CORBA::ULong const len = this->policy_list_->length ();
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i {}; i < len; ++i)
         {
           try
             {
@@ -44,7 +44,7 @@ TAO_MProfile::~TAO_MProfile ()
 void
 TAO_MProfile::cleanup ()
 {
-  for (TAO_PHandle i = 0; i < this->last_; ++i)
+  for (TAO_PHandle i {}; i < this->last_; ++i)
     {
       if (this->pfiles_[i] != nullptr)
         this->pfiles_[i]->_decr_refcnt ();
@@ -108,7 +108,7 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
   // this->forward_from_ = 0;
 
   // Now reference all profiles.
-  for (TAO_PHandle h = 0; h < this->last_; ++h)
+  for (TAO_PHandle h {}; h < this->last_; ++h)
     {
       this->pfiles_[h] = mprofile.pfiles_[h];
       if (this->pfiles_[h] != nullptr)
@@ -177,7 +177,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
     }
 
   // copy over profiles
-  for (TAO_PHandle h = 0; h < pfiles->last_; ++h)
+  for (TAO_PHandle h {}; h < pfiles->last_; ++h)
     {
       if (this->add_profile (pfiles->pfiles_[h]) < 0)
         return -1;
@@ -230,7 +230,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
 int
 TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
 {
-  for (TAO_PHandle h = 0; h < pfiles->last_; ++h)
+  for (TAO_PHandle h {}; h < pfiles->last_; ++h)
     {
       if (this->remove_profile (pfiles->pfiles_[h]) < 0)
         return -1;
@@ -244,8 +244,8 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
   // Two profile lists are equivalent if at least one of the profiles
   // from the first list is_equivalent to at least one of the profiles
   // from the second list!!
-  for (TAO_PHandle h1 = 0; h1 < this->last_; ++h1)
-    for (TAO_PHandle h2 = 0; h2 < rhs->last_; ++h2)
+  for (TAO_PHandle h1 {}; h1 < this->last_; ++h1)
+    for (TAO_PHandle h2 {}; h2 < rhs->last_; ++h2)
       if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
         return 1;
 
@@ -260,7 +260,7 @@ TAO_MProfile::hash (CORBA::ULong max)
   if (this->last_ == 0)
     return 0;
 
-  for (TAO_PHandle h = 0; h < this->last_ ; ++h)
+  for (TAO_PHandle h {}; h < this->last_ ; ++h)
     {
       hashval += pfiles_[h]->hash (max);
     }
@@ -322,7 +322,7 @@ TAO_MProfile::policy_list ()
 int
 TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
 {
-  for (unsigned i = 0; i < this->last_; i++)
+  for (unsigned i {}; i < this->last_; i++)
     if (pfile->tag() == this->pfiles_[i]->tag() &&
         pfile->compare_key(this->pfiles_[i]))
       {

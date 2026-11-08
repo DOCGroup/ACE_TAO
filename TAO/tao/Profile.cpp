@@ -425,7 +425,7 @@ TAO_Profile::get_policies (CORBA::PolicyList &pl)
           // and we convert those into the proper CORBA::Policy
           CORBA::ULong const length = policy_value_seq.length ();
 
-          for (CORBA::ULong i = 0; i < length; ++i)
+          for (CORBA::ULong i {}; i < length; ++i)
             {
               try
                 {

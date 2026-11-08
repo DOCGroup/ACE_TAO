@@ -529,7 +529,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   // same transport so that rather than recaching, we simply add a
   // key.
   len = 1;
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
 

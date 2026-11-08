@@ -73,7 +73,7 @@ TAO_Acceptor_Registry::is_collocated (TAO_MProfile const &mprofile)
   // the acceptors, we are collocated.
   for (std::unique_ptr<TAO_Acceptor> const& acceptor : this->acceptors_)
     {
-      for (TAO_PHandle j = 0; j != count; ++j)
+      for (TAO_PHandle j {}; j != count; ++j)
         {
           TAO_Profile const *profile = mprofile.get_profile (j);
 

@@ -199,7 +199,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   // mix them together to get the mprofile.
   TAO_MProfile mprofile (ACE_Utils::truncate_cast<CORBA::ULong> (endpoints.size()));
 
-  for (size_t i = 0; i < endpoints.size(); i++)
+  for (size_t i {}; i < endpoints.size(); i++)
     {
       ACE_CString full_ep = endpoints[i].prot_addr_ +
         endpoints[i].obj_key_sep_ +

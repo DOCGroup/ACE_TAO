@@ -45,7 +45,7 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
       return -1;
     }
 
-  for (int i = 0; i != parser_count; ++i)
+  for (int i {}; i != parser_count; ++i)
     {
       TAO_IOR_Parser * const parser =
         ACE_Dynamic_Service<TAO_IOR_Parser>::instance (

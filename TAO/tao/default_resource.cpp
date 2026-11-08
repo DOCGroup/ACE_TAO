@@ -147,7 +147,7 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
 
   this->protocol_factories_.reset ();
 
-  for (int i = 0; i < this->parser_names_count_; ++i)
+  for (int i {}; i < this->parser_names_count_; ++i)
     CORBA::string_free (this->parser_names_[i]);
 
   delete [] this->parser_names_;
@@ -192,7 +192,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                         char *[this->parser_names_count_],
                         -1);
 
-        for (int i = 0;
+        for (int i {};
              i < this->parser_names_count_;
              ++i)
           this->parser_names_[i] = nullptr;

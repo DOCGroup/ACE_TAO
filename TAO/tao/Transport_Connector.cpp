@@ -201,7 +201,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
   ACE_CString::size_type end = ior_index - 1;
   // Initialize the end of the endpoint index
 
-  for (CORBA::ULong j = 0; j < profile_count; ++j)
+  for (CORBA::ULong j {}; j < profile_count; ++j)
     {
       begin = end + 1;
 

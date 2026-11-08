@@ -39,14 +39,14 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
 
   std::vector<std::string> names;
   names.reserve (n_threads);
-  for (int i = 0; i < n_threads; ++i)
+  for (int i {}; i < n_threads; ++i)
     {
       names.push_back ("TAO " + std::to_string (i));
     }
 
   std::vector<char const *> thread_names;
   thread_names.reserve (n_threads);
-  for (int i = 0; i < n_threads; ++i)
+  for (int i {}; i < n_threads; ++i)
     {
       thread_names.push_back (names[static_cast<size_t> (i)].c_str ());
     }

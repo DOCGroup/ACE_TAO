@@ -689,7 +689,7 @@ TAO_IIOP_Profile::encode_endpoints ()
   TAO_IIOP_Endpoint const *endpoint = &this->endpoint_;
 
   // Count the number of endpoints that needs to be encoded
-  for (CORBA::ULong c = 0;
+  for (CORBA::ULong c {};
        c != this->count_;
        ++c)
     {
@@ -711,7 +711,7 @@ TAO_IIOP_Profile::encode_endpoints ()
 
   endpoint = &this->endpoint_;
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < actual_count;
        ++i)
     {

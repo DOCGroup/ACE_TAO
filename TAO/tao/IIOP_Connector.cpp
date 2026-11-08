@@ -84,7 +84,7 @@ TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard
 TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guard ()
 {
   ACE_Errno_Guard eguard (errno);
-  for (unsigned i = 0; i < this->count_; ++i)
+  for (unsigned i {}; i < this->count_; ++i)
     this->handlers_[i]->remove_reference ();
 }
 
@@ -400,7 +400,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
 
   int result = -1;
   u_short const span = this->orb_core ()->orb_params ()->iiop_client_port_span ();
-  for (u_short offset = 0; offset <= span; ++offset)
+  for (u_short offset {}; offset <= span; ++offset)
     {
       local_addr.set_port_number (port + offset);
       if (TAO_debug_level > 0 && (port + offset) > 0 )
@@ -446,7 +446,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   TAO_Transport *transport {};
 
   //  populate the transport list
-  for (unsigned i = 0; i < count; i++)
+  for (unsigned i {}; i < count; i++)
     tlist[i] = sh_list[i]->transport();
 
   if (result != -1)
@@ -528,7 +528,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (transport != nullptr)
     {
-      for (unsigned i = 0; i < count; i++)
+      for (unsigned i {}; i < count; i++)
         {
           if (transport == tlist[i])
             {
@@ -544,7 +544,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
         {
-          for (unsigned i = 0; i < count; i++)
+          for (unsigned i {}; i < count; i++)
             {
               TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::complete_connection,")

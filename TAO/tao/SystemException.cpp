@@ -950,7 +950,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException *
 TAO::create_system_exception (const char *id)
 {
-  for (CORBA::ULong i = 0; i < array_sz; ++i)
+  for (CORBA::ULong i {}; i < array_sz; ++i)
     {
       if (std::strcmp (id, repo_id_array[i]) == 0)
         return (*(excp_array[i])) ();

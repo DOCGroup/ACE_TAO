@@ -37,7 +37,7 @@ TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
   ACE_ASSERT (len <= this->cleanup_funcs_.size ());
 
   /// Cleanup each TSS object.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     {
       ACE_CLEANUP_FUNC destructor = this->cleanup_funcs_[i];
       if (destructor != nullptr)

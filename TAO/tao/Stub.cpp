@@ -187,7 +187,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
 
       // First we look at the forward profiles to see whether the
       // profile_in_use is any of it.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < this->forward_profiles_->profile_count ();
            ++i)
         {
@@ -207,7 +207,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
       this->get_profile_ior_info (this->base_profiles_, this->ior_info_);
     }
 
-  for (CORBA::ULong ind = 0;
+  for (CORBA::ULong ind {};
        ind < this->base_profiles_.profile_count ();
        ++ind)
     {
@@ -265,7 +265,7 @@ TAO_Stub::get_profile_ior_info (
 
   // Call the create_tagged_profile one every member of the
   // profile and make the sequence
-  for (CORBA::ULong index = 0; index < count; ++index)
+  for (CORBA::ULong index {}; index < count; ++index)
     {
       TAO_Profile * const prof = profiles.get_profile (index);
 
@@ -520,7 +520,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
     // @@ The MProfile should be locked during this iteration, is there
     // anyway to achieve that?
-    for (CORBA::ULong i = 0; i < profile_count; ++i)
+    for (CORBA::ULong i {}; i < profile_count; ++i)
       {
         TAO_Profile const *p = mprofile.get_profile (i);
         if (p->encode (cdr) == 0)
@@ -557,7 +557,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
       // @@ The MProfile should be locked during this iteration, is there
       // anyway to achieve that?
-      for (CORBA::ULong i = 0; i < profile_count; ++i)
+      for (CORBA::ULong i {}; i < profile_count; ++i)
         {
           TAO_Profile const *p = mprofile.get_profile (i);
           if (p->encode (cdr) == 0)

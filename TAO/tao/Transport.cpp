@@ -55,7 +55,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               ACE_TEXT ("sending %d buffers\n"),
               id, location, iovcnt));
 
-  for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
+  for (int i {}; i != iovcnt && 0 < current_transfer; ++i)
     {
       size_t iov_len = iov[i].iov_len;
 
@@ -74,7 +74,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
 
       size_t len;
 
-      for (size_t offset = 0; offset < iov_len; offset += len)
+      for (size_t offset {}; offset < iov_len; offset += len)
         {
           ACE_TCHAR header[1024];
           ACE_OS::sprintf (header,

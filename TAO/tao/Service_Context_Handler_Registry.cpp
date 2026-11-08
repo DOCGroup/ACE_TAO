@@ -12,7 +12,7 @@ TAO_Service_Context_Registry::process_service_contexts (
   TAO_Transport& transport,
   TAO_ServerRequest *request)
 {
-  for (CORBA::ULong index = 0;
+  for (CORBA::ULong index {};
        index != sc.length ();
        ++index)
     {
