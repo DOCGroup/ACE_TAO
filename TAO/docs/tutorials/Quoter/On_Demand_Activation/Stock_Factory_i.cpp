@@ -2,12 +2,8 @@
 
 #include <cstring>
 
-Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
-{
-}
-
 Quoter::Stock_ptr
-Quoter_Stock_Factory_i::get_stock (char const* symbol)
+Quoter_Stock_Factory_i::get_stock (char const *symbol)
 {
   if (std::strcmp (symbol, "RHAT") == 0) {
     Quoter_Stock_i * const rhat = new Quoter_Stock_i ("RHAT", "RedHat, Inc.", 210);

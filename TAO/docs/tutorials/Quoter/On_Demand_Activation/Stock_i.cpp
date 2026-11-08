@@ -1,15 +1,14 @@
 
 #include "Stock_i.h"
 
-Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
-                                const char *full_name,
+Quoter_Stock_i::Quoter_Stock_i (char const *symbol,
+                                char const *full_name,
                                 CORBA::Double price)
-  :  symbol_ (symbol),
+  : symbol_ (symbol),
      full_name_ (full_name),
      price_ (price)
 {
 }
-
 char *
 Quoter_Stock_i::symbol ()
 {

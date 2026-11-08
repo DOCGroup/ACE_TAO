@@ -37,14 +37,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       Quoter::Stock_Factory::_narrow (factory_object.in ());
 
     // Create and activate the handler...
-    int response_count = 0;
+    int response_count {};
     Single_Query_Stock_Handler_i handler_i (&response_count);
     Quoter::AMI_Single_Query_StockHandler_var handler =
       handler_i._this ();
 
     // Send all the requests, careful with error handling
-    int request_count = 0;
-    for (int i = 2; i != argc; ++i) {
+    int request_count {};
+    for (int i {2}; i != argc; ++i) {
       try {
         // Get the stock object
         Quoter::Stock_var tmp =
@@ -65,8 +65,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
     }
 
-    while (response_count < request_count
-           && orb->work_pending ()) {
+    while (response_count < request_count) {
       orb->perform_work ();
     }
 
@@ -74,7 +73,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

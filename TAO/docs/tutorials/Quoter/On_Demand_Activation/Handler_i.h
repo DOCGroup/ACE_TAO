@@ -7,7 +7,7 @@
 class Single_Query_Stock_Handler_i : public POA_Quoter::AMI_Single_Query_StockHandler
 {
 public:
-  Single_Query_Stock_Handler_i (int *response_count);
+  explicit Single_Query_Stock_Handler_i (int *response_count);
 
   void get_price_and_names (CORBA::Double ami_return_val,
                            char const *symbol,
@@ -23,6 +23,11 @@ public:
 
   void price (double) override;
   void price_excep (::Messaging::ExceptionHolder *) override;
+
+  Single_Query_Stock_Handler_i (Single_Query_Stock_Handler_i const &) = delete;
+  Single_Query_Stock_Handler_i (Single_Query_Stock_Handler_i &&) = delete;
+  Single_Query_Stock_Handler_i &operator= (Single_Query_Stock_Handler_i const &) = delete;
+  Single_Query_Stock_Handler_i &operator= (Single_Query_Stock_Handler_i &&) = delete;
 
 private:
   int *response_count_;

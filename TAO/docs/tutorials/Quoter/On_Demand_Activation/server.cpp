@@ -37,7 +37,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                        policies);
 
     // Destroy the policy objects
-    for (CORBA::ULong i = 0; i != policies.length (); ++i) {
+    for (CORBA::ULong i {}; i != policies.length (); ++i) {
       policies[i]->destroy ();
     }
 
@@ -68,7 +68,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;
