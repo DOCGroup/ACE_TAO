@@ -3,10 +3,14 @@
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c {};
@@ -15,7 +19,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -79,7 +83,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       policies[0]->destroy ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       PortableServer::Servant_var<Echo> impl;
@@ -104,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Echo::_narrow (object_act.in ());
 
       CORBA::Object_var const tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::Echo_Caller_var const server =
         Test::Echo_Caller::_narrow (tmp.in ());
@@ -113,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo_Caller reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
