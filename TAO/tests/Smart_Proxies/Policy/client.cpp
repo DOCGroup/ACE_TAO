@@ -11,16 +11,18 @@
 
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 
-const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
-const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
-int one_shot_factory = 1;
+struct Options
+{
+  ACE_TCHAR const *ior1 {ACE_TEXT("file://test1.ior")};
+  ACE_TCHAR const *ior2 {ACE_TEXT("file://test2.ior")};
+  bool one_shot_factory {true};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (Options &options, int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:j:f:"));
   int c;
@@ -29,13 +31,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        ior1 = get_opts.opt_arg ();
+        options.ior1 = get_opts.opt_arg ();
         break;
       case 'j':
-        ior2 = get_opts.opt_arg ();
+        options.ior2 = get_opts.opt_arg ();
         break;
-       case 'f':
-        one_shot_factory = ACE_OS::atoi (get_opts.opt_arg ());
+      case 'f':
+        options.one_shot_factory = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case '?':
       default:
@@ -51,22 +53,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 run_test (CORBA::ORB_ptr orb_ptr,
-          int target)
+          ACE_TCHAR const *ior)
 {
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (orb_ptr);
-  CORBA::Object_var object;
   try
     {
-      if (target == 1)
-        {
-          object =
-            orb->string_to_object (ior1);
-        }
-      else
-        {
-          object =
-            orb->string_to_object (ior2);
-        }
+      CORBA::Object_var object = orb->string_to_object (ior);
 
       Test_var server =
         Test::_narrow (object.in ());
@@ -80,23 +72,24 @@ run_test (CORBA::ORB_ptr orb_ptr,
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client-side exception:");
     }
-return 0;
+  return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Options options;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (options, argc, argv) != 0)
         return 1;
 
       // To use the smart proxy it is necessary to allocate the
@@ -106,22 +99,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // doesnt have to make sure to destroy it and also for the smart
       // proxy designer who now can manage the lifetime of the object
       // much surely.
-      // By default this factory is permanent (i.e. registered for
-      // this interface) but if there is a need for flexibility per
-      // object instance then <one_shot_factory> needs to be set to 0.
-      Smart_Test_Factory *test_factory = 0;
+      // The default policy keeps the factory registered for this interface.
+      // Set -f 0 to create a separate smart proxy for each object instance.
+      Smart_Test_Factory *test_factory {};
       ACE_NEW_RETURN (test_factory,
-                      Smart_Test_Factory (one_shot_factory),
+                      Smart_Test_Factory (options.one_shot_factory),
                       -1);
 
       ACE_UNUSED_ARG (test_factory);
 
-      run_test (orb.in (), 1);
-      run_test (orb.in (), 2);
+      run_test (orb.in (), options.ior1);
+      run_test (orb.in (), options.ior2);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client-side exception:");
       return 1;
