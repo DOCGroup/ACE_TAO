@@ -8,6 +8,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -614,21 +615,22 @@ TAO_RTScheduler_Current_i::implicit_scheduling_parameter ()
 RTScheduling::Current::NameList *
 TAO_RTScheduler_Current_i::current_scheduling_segment_names ()
 {
-  RTScheduling::Current::NameList* name_list;
+  RTScheduling::Current::NameList* name_list {};
   ACE_NEW_RETURN (name_list,
                   RTScheduling::Current::NameList,
                   nullptr);
+  std::unique_ptr<RTScheduling::Current::NameList> name_list_owner {name_list};
 
-  TAO_RTScheduler_Current_i* current = this;
+  TAO_RTScheduler_Current_i* current {this};
 
-  for (int index = 0; current != nullptr; index++)
+  for (int index {}; current != nullptr; ++index)
     {
-      name_list->length (index+1);
-      (*name_list) [index] = current->name ();
+      name_list_owner->length (index + 1);
+      (*name_list_owner)[index] = current->name ();
       current = current->previous_current_;
     }
 
-  return name_list;
+  return name_list_owner.release ();
 }
 
 const char*
