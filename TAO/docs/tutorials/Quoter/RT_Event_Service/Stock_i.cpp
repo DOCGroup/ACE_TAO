@@ -2,16 +2,21 @@
 #include <orbsvcs/Event_Utilities.h>
 #include <atomic>
 
-///derive a class from the tie template class to release itself by ref_count
-class MyTieStock:public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
+/// Derive a tie class that releases itself when its CORBA reference count reaches zero.
+class MyTieStock : public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
 {
   friend class Quoter_Stock_i;
-  std::atomic<long> ref_count_ {0};
+  std::atomic<long> ref_count_ {};
 
 protected:
   MyTieStock (Quoter_Stock_i *tp,
               CORBA::Boolean release)
-    : POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> (tp,release) {}
+    : POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> (tp, release) {}
+
+  MyTieStock (MyTieStock const &) = delete;
+  MyTieStock (MyTieStock &&) = delete;
+  MyTieStock &operator= (MyTieStock const &) = delete;
+  MyTieStock &operator= (MyTieStock &&) = delete;
 
 public:
   void _add_ref () override
@@ -26,20 +31,20 @@ public:
   }
 };
 
-Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
-                                const char *full_name,
+Quoter_Stock_i::Quoter_Stock_i (std::string const &symbol,
+                                std::string const &full_name,
                                 CORBA::Double price)
-  : supplier_personality_ (*new MyTieStock (this, 0))
+  : supplier_personality_ (*new MyTieStock (this, false))
 {
-  this->data_.symbol = symbol;
-  this->data_.full_name = full_name;
+  this->data_.symbol = symbol.c_str ();
+  this->data_.full_name = full_name.c_str ();
   this->data_.price = price;
 }
 
 Quoter_Stock_i::~Quoter_Stock_i ()
 {
-  if (consumer_proxy_.in ())
-    consumer_proxy_->disconnect_push_consumer ();
+  if (!CORBA::is_nil (this->consumer_proxy_.in ()))
+    this->consumer_proxy_->disconnect_push_consumer ();
 }
 
 char *
@@ -73,11 +78,11 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
   RtecEventComm::Event &e = event[0];
 
   // Initialize the header
-  const char *symbol = this->data_.symbol;
-  e.header.type = int(symbol[0]) << 24;
-  e.header.type |= int(symbol[1]) << 16;
-  e.header.type |= int(symbol[2]) << 8;
-  e.header.type |= int(symbol[3]);
+  char const *symbol = this->data_.symbol;
+  e.header.type = static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[0])) << 24;
+  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[1])) << 16;
+  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[2])) << 8;
+  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[3]));
   e.header.source = 1;
 
   // Initialize the payload
@@ -91,29 +96,26 @@ void
 Quoter_Stock_i::disconnect_push_supplier ()
 {
   // Forget about the consumer it is not there anymore
-  this->consumer_proxy_ =
-    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+  this->consumer_proxy_ = RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
 Quoter_Stock_i::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
-  this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer ();
-  RtecEventComm::PushSupplier_var supplier =
-    this->supplier_personality_._this ();
+  this->consumer_proxy_ = supplier_admin->obtain_push_consumer ();
+  RtecEventComm::PushSupplier_var supplier (this->supplier_personality_._this ());
 
-   const char *symbol = this->data_.symbol;
-   CORBA::ULong type = int(symbol[0]) << 24;
-   type |= int(symbol[1]) << 16;
-   type |= int(symbol[2]) << 8;
-   type |= int(symbol[3]);
+  char const *symbol = this->data_.symbol;
+  CORBA::ULong const type =
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[0])) << 24 |
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[1])) << 16 |
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[2])) << 8 |
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[3]));
 
-   CORBA::ULong source = 1;
-   ACE_SupplierQOS_Factory publications;
-   publications.insert (source, type, 0, 1);
+  ACE_SupplierQOS_Factory publications;
+  publications.insert (1, type, 0, 1);
 
-   this->consumer_proxy_->connect_push_supplier (supplier.in (),
-                                                 publications.get_SupplierQOS ());
+  this->consumer_proxy_->connect_push_supplier (supplier.in (),
+                                                publications.get_SupplierQOS ());
 }
 

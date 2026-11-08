@@ -1,23 +1,20 @@
 
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
-#include "ace/streams.h"
 
-Stock_Consumer::Stock_Consumer ()
-{
-}
+#include <iostream>
 
 void
 Stock_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                         const RtecEventChannelAdmin::ConsumerQOS &subscriptions)
+                         RtecEventChannelAdmin::ConsumerQOS const &subscriptions)
 {
-  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    event_channel->for_consumers ();
+  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin (
+    event_channel->for_consumers ());
 
   this->supplier_proxy_ =
     consumer_admin->obtain_push_supplier ();
 
-  RtecEventComm::PushConsumer_var myself = this->_this ();
+  RtecEventComm::PushConsumer_var myself (this->_this ());
   this->supplier_proxy_->connect_push_consumer (myself.in (),
                                                 subscriptions);
 }
@@ -30,25 +27,25 @@ Stock_Consumer::disconnect ()
 }
 
 void
-Stock_Consumer::push (const RtecEventComm::EventSet &data)
+Stock_Consumer::push (RtecEventComm::EventSet const &data)
 {
-  for (CORBA::ULong i = 0; i != data.length (); ++i) {
-    const RtecEventComm::Event &e = data[i];
+  for (CORBA::ULong i = 0; i != data.length (); ++i)
+    {
+      RtecEventComm::Event const &e = data[i];
 
-    const Quoter::Event *event {};
-    if ((e.data.any_value >>= event) == 0)
-      continue; // Invalid event
+      Quoter::Event const *event {};
+      if ((e.data.any_value >>= event) == 0)
+        continue; // Invalid event
 
-    cout << "The new price for one stock in \""
-         << event->full_name.in ()
-         << "\" (" << event->symbol.in ()
-         << ") is " << event->price << endl;
-  }
+      std::cout << "The new price for one stock in \""
+                << event->full_name.in ()
+                << "\" (" << event->symbol.in ()
+                << ") is " << event->price << std::endl;
+    }
 }
 
 void
 Stock_Consumer::disconnect_push_consumer ()
 {
-  this->supplier_proxy_ =
-    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+  this->supplier_proxy_ = RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }

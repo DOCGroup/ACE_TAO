@@ -1,32 +1,32 @@
 
 #include "Stock_Factory_i.h"
 #include "Stock_i.h"
-#include "ace/streams.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 
-Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
-{
-}
+#include <iostream>
+#include <limits>
+#include <string>
 
 Quoter::Stock_ptr
-Quoter_Stock_Factory_i::get_stock (const char *symbol)
+Quoter_Stock_Factory_i::get_stock (char const *symbol)
 {
-  PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId (symbol);
+  PortableServer::ObjectId_var oid (PortableServer::string_to_ObjectId (symbol));
 
-  try {
-    CORBA::Object_var tmp =
-      this->stock_factory_poa_->id_to_reference (oid.in ());
-    return Quoter::Stock::_narrow (tmp.in ());
-  }
-  catch (PortableServer::POA::ObjectNotActive &) {
-    throw Quoter::Invalid_Stock_Symbol ();
-  }
+  try
+    {
+      CORBA::Object_var tmp (this->stock_factory_poa_->id_to_reference (oid.in ()));
+      return Quoter::Stock::_narrow (tmp.in ());
+    }
+  catch (PortableServer::POA::ObjectNotActive const &)
+    {
+      throw Quoter::Invalid_Stock_Symbol ();
+    }
 }
 
 void
 Quoter_Stock_Factory_i::destroy_stock_objects ()
 {
-  if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
+  if (CORBA::is_nil (this->stock_factory_poa_.in ()))
     return;
 
   this->stock_factory_poa_->destroy (1, 1);
@@ -35,14 +35,14 @@ Quoter_Stock_Factory_i::destroy_stock_objects ()
 
 void
 Quoter_Stock_Factory_i::load_stock_objects (
-      PortableServer::POA_ptr poa,
-      PortableServer::POAManager_ptr poa_manager,
-      RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
+  PortableServer::POA_ptr poa,
+  PortableServer::POAManager_ptr poa_manager,
+  RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
     return;
 
-  CORBA::PolicyList policies (2);
+  TAO::Utils::PolicyList_Destroyer policies (2);
   policies.length (2);
 
   policies[0] =
@@ -55,32 +55,25 @@ Quoter_Stock_Factory_i::load_stock_objects (
                      poa_manager,
                      policies);
 
-  for (CORBA::ULong i = 0; i != policies.length (); ++i) {
-    policies[i]->destroy ();
-  }
+  std::string symbol;
+  std::string full_name;
+  double price {};
+  while (std::getline (std::cin >> std::ws, symbol) &&
+         std::getline (std::cin, full_name) &&
+         std::cin >> price)
+    {
+      std::cin.ignore (std::numeric_limits<std::streamsize>::max (), '\n');
 
-  while (!cin.eof () && cin.peek () != EOF) {
-    const int max_symbol_length = 8;
-    char symbol[max_symbol_length];
-    const int max_full_name_length = 64;
-    char full_name[max_full_name_length];
-    double price;
+      Quoter_Stock_i *const stock = new Quoter_Stock_i (symbol,
+                                                        full_name,
+                                                        price);
+      // The POA servant var owns the stock until the POA takes its reference.
+      PortableServer::ServantBase_var servant (stock);
+      PortableServer::ObjectId_var oid (
+        PortableServer::string_to_ObjectId (symbol.c_str ()));
 
-    cin.getline (symbol, max_symbol_length, '\n');
-    cin.getline (full_name, max_full_name_length, '\n');
-    cin >> price;
-    cin.ignore (1, '\n');
-
-    Quoter_Stock_i *stock =
-      new Quoter_Stock_i (symbol, full_name, price);
-
-    PortableServer::ServantBase_var servant = stock;
-
-    PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId (symbol);
-
-    this->stock_factory_poa_->activate_object_with_id (oid.in (),
-                                                       servant.in ());
-    stock->connect (supplier_admin);
-  }
+      this->stock_factory_poa_->activate_object_with_id (oid.in (),
+                                                         servant.in ());
+      stock->connect (supplier_admin);
+    }
 }
