@@ -28,6 +28,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       TAO::Utils::PolicyList_Destroyer policies (2);
+      policies.length (2);
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID);
       policies[1] =
