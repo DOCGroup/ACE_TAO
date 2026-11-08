@@ -14,8 +14,8 @@
 #include "ace/HTBP/HTBP_ID_Requestor.h"
 #include "ace/HTBP/HTBP_Environment.h"
 
-const ACE_TCHAR * remote_host = 0;
-const ACE_TCHAR * config_file = 0;
+ACE_TCHAR const * remote_host {};
+ACE_TCHAR const * config_file {};
 unsigned int remote_port = 8088;
 
 int
@@ -62,19 +62,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (parse_args (argc, argv) != 0)
     return 1;
-  if (remote_host == 0)
+  if (remote_host == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Client: No remote host specified\n")),
                       1);
 
   ACE::HTBP::Environment env;
-  if (config_file != 0)
+  if (config_file != nullptr)
     env.import_config (config_file);
 
   ACE::HTBP::ID_Requestor req (&env);
   ACE::HTBP::Addr local (ACE_TEXT_ALWAYS_CHAR (req.get_HTID ()));
 
-  unsigned int proxy_port = 0;
+  unsigned int proxy_port {};
   ACE_TString proxy_host;
 
   if (env.get_proxy_port (proxy_port) != 0 ||
@@ -102,12 +102,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE::HTBP::Stream stream (&session);
 
   char buffer[1000];
-  ssize_t n = 0;
+  ssize_t n {};
   int retrycount = 10;
-  for (int i = 0; i < 3; i++)
+  for (int i {}; i < 3; i++)
     {
       ACE_OS::sprintf (buffer, "Do you hear me? %d", i);
-      ACE::HTBP::Channel *ob = session.outbound ();
+      ACE::HTBP::Channel * const ob = session.outbound ();
       n = stream.send (buffer, ACE_OS::strlen (buffer)+1);
       if (n == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -169,7 +169,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   buffer));
     }
 
-  ACE::HTBP::Channel *ob = session.outbound ();
+  ACE::HTBP::Channel * const ob = session.outbound ();
   n = stream.send ("goodbye", 7);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

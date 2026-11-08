@@ -16,7 +16,7 @@
 #include "ace/os_include/os_netdb.h"
 
 unsigned port = 8088;
-const ACE_TCHAR *notifier_file = 0;
+ACE_TCHAR const *notifier_file {};
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -49,7 +49,7 @@ int
 ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 {
   char buffer[1000];
-  ssize_t n = 0;
+  ssize_t n {};
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args(argc, argv) != 0)
@@ -69,10 +69,10 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server is ready on %s\n"),
               host));
-  if (notifier_file != 0)
+  if (notifier_file != nullptr)
     {
       FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
-      const char *msg = "server ready";
+      char const * const msg = "server ready";
       ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
       ACE_OS::fclose (f);
     }
@@ -88,7 +88,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
               ACE_TEXT ("(%P|%t) Server: ")
               ACE_TEXT ("Got sock[1], handle = %d\n"),
               sock[1].get_handle()));
-  int res = 0;
+  int res {};
   while ((res = channel1.pre_recv ()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -110,7 +110,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
       ACE_OS::sleep (1);
     }
 
-  ACE::HTBP::Session *session = channel1.session();
+  ACE::HTBP::Session * const session = channel1.session();
   ACE::HTBP::Stream stream (session);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -120,7 +120,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
               sock[1].get_handle(),
               session));
 
-  for (int i = 0; i >= 0; i++)
+  for (int i {}; i >= 0; i++)
     {
       int retrycount = 10;
       while ((n = stream.recv(buffer,1000)) == -1
@@ -143,7 +143,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) Server: ")
                   ACE_TEXT ("Got: \"%C\"\n"), buffer));
 
-      if (ACE_OS::strstr (buffer,"goodbye") != 0)
+      if (ACE_OS::strstr (buffer,"goodbye") != nullptr)
         break;
 
       ACE_OS::sprintf (buffer,"I hear you %d",i);
