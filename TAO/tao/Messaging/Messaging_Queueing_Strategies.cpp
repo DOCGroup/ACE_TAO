@@ -56,14 +56,13 @@ namespace TAO
         return true;
       }
 
-
     if (buffering_constraint.mode == TAO::BUFFER_FLUSH)
       {
         must_flush = true;
         return true;
       }
 
-    bool constraints_reached = false;
+    bool constraints_reached {};
 
     if (ACE_BIT_ENABLED (buffering_constraint.mode,
                          TAO::BUFFER_MESSAGE_COUNT)

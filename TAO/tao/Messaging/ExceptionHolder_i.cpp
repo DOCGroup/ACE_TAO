@@ -57,8 +57,8 @@ namespace TAO
 
       if (this->is_system_exception ())
         {
-          CORBA::ULong minor = 0;
-          CORBA::ULong completion = 0;
+          CORBA::ULong minor {};
+          CORBA::ULong completion {};
           if (!(_tao_in >> minor) ||
               !(_tao_in >> completion))
             {
@@ -87,7 +87,7 @@ namespace TAO
       // Match the exception interface repository id with the
       // exception in the exception list.
       // This is important to decode the exception.
-      for (CORBA::ULong i = 0; i != this->count_; ++i)
+      for (CORBA::ULong i {}; i != this->count_; ++i)
         {
           if (this->data_[i].id.compare(type_id.in ()) != 0)
             continue;
