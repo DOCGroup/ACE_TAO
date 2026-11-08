@@ -247,7 +247,7 @@ TAO::CSD::TP_Task::close(u_long flag)
       // threads in the pool. If it is then it should not wait itself.
       size_t const size = this->activated_threads_.size ();
 
-      for (size_t i = 0; i < size; i ++)
+      for (size_t i {}; i < size; ++i)
         {
           if (this->activated_threads_[i] == my_thr_id)
             {
