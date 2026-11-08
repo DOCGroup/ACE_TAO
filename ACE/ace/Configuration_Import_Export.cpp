@@ -325,7 +325,6 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       if (ACE_WRITE_STRING (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
-      int index = 0;
       ACE_TString name;
       ACE_Configuration::VALUETYPE type;
       ACE_TString line;
@@ -334,7 +333,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       void* binary_data;
       size_t binary_length;
       ACE_TString string_value;
-      while (!config_.enumerate_values (section, index, name, type))
+      for (int index {}; !config_.enumerate_values (section, index, name, type); ++index)
         {
           line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
           switch (type)
@@ -397,14 +396,12 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
           line += ACE_TEXT ("\n");
           if (ACE_WRITE_STRING (line.fast_rep (), out) < 0)
             return -4;
-          ++index;
         }
     }
   // Export all sub sections
-  int index = 0;
   ACE_TString name;
   ACE_Configuration_Section_Key sub_key;
-  while (!config_.enumerate_sections (section, index, name))
+  for (int index {}; !config_.enumerate_sections (section, index, name); ++index)
     {
       ACE_TString sub_section (path);
       if (path.length ())
@@ -414,7 +411,6 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
-      ++index;
     }
   return 0;
 }
@@ -606,7 +602,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       if (ACE_WRITE_STRING (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
-      int index = 0;
       ACE_TString name;
       ACE_Configuration::VALUETYPE type;
       ACE_TString line;
@@ -615,7 +610,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       void* binary_data;
       size_t binary_length;
       ACE_TString string_value;
-      while (!config_.enumerate_values (section, index, name, type))
+      for (int index {}; !config_.enumerate_values (section, index, name, type); ++index)
         {
           line = name + ACE_TEXT ("=");
           switch (type)
@@ -680,14 +675,12 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
           line += ACE_TEXT ("\n");
           if (ACE_WRITE_STRING (line.fast_rep (), out) < 0)
             return -4;
-          ++index;
         }// end while enumerating values
     }
   // Export all sub sections
-  int index = 0;
   ACE_TString name;
   ACE_Configuration_Section_Key sub_key;
-  while (!config_.enumerate_sections (section, index, name))
+  for (int index {}; !config_.enumerate_sections (section, index, name); ++index)
     {
       ACE_TString sub_section (path);
       if (path.length ())
@@ -697,7 +690,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
-      ++index;
     }
   return 0;
 }
