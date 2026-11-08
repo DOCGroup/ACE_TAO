@@ -32,16 +32,18 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 // FUZZ: disable check_for_math_include
 #include <math.h>
 
 // Global variables (evil).
-static const u_short DEFPORT = 5050;
-static const int MAXPKTSZ = 65536;
-static const int DEFPKTSZ = 64;
-static const int DEFITERATIONS = 1000;
-static const int DEFINTERVAL = 0;
-static const int DEFAULT_THRNO = 10;
+static constexpr u_short DEFPORT = 5050;
+static constexpr int MAXPKTSZ = 65536;
+static constexpr int DEFPKTSZ = 64;
+static constexpr int DEFITERATIONS = 1000;
+static constexpr int DEFINTERVAL = 0;
+static constexpr int DEFAULT_THRNO = 10;
 
 static char sbuf[MAXPKTSZ];
 static char rbuf[MAXPKTSZ];
@@ -92,9 +94,9 @@ usage ()
 class Client : public ACE_Event_Handler
 {
 public:
-  Client (const ACE_INET_Addr &remote_addr);
+  Client (ACE_INET_Addr const &remote_addr);
 
-  virtual ~Client ();
+  virtual ~Client () = default;
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -126,11 +128,13 @@ private:
   ACE_INET_Addr remote_addr_;
 
   Client () = delete;
-  Client (const Client &) = delete;
-  Client &operator= (const Client &) = delete;
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
 };
 
-Client::Client (const ACE_INET_Addr &remote_addr)
+Client::Client (ACE_INET_Addr const &remote_addr)
   : remote_addr_ (remote_addr)
 {
   ACE_SOCK_Connector connector;
@@ -147,10 +151,6 @@ Client::Client (const ACE_INET_Addr &remote_addr)
         ACE_ERROR ((LM_ERROR,
                     "ACE_Reactor::register_handler: Client\n"));
     }
-}
-
-Client::~Client ()
-{
 }
 
 ACE_HANDLE
@@ -290,7 +290,7 @@ Client::shutdown ()
 class Server : public ACE_Event_Handler
 {
 public:
-  Server (const ACE_INET_Addr &addr);
+  Server (ACE_INET_Addr const &addr);
 
   virtual ~Server ();
 
@@ -305,11 +305,13 @@ private:
   ACE_SOCK_Stream endpoint_;
 
   Server () = delete;
-  Server (const Server &) = delete;
-  Server &operator= (const Server &) = delete;
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 };
 
-Server::Server (const ACE_INET_Addr &addr)
+Server::Server (ACE_INET_Addr const &addr)
 {
   ACE_SOCK_Acceptor acceptor;
 
@@ -447,21 +449,15 @@ run_server (ACE_INET_Addr &addr)
 {
   if (use_reactor)
     {
-      ACE_Reactor *new_reactor = 0;
+      std::unique_ptr<ACE_Reactor_Impl> implementation;
 
       switch (use_reactor)
         {
         case SELECT:
-          {
-            ACE_Select_Reactor *sr = new ACE_Select_Reactor ();
-            new_reactor = new ACE_Reactor (sr, 1);
-          }
+          implementation = std::make_unique<ACE_Select_Reactor> ();
           break;
         case TP:
-          {
-            ACE_TP_Reactor *sr = new ACE_TP_Reactor ();
-            new_reactor = new ACE_Reactor (sr, 1);
-          }
+          implementation = std::make_unique<ACE_TP_Reactor> ();
           break;
         case WFMO:
 #if defined (ACE_WIN32)
@@ -472,7 +468,11 @@ run_server (ACE_INET_Addr &addr)
         default:
           ACE_ERROR_RETURN ((LM_ERROR, "Invalid reactor type selected\n"), -1);
         }
-      ACE_Reactor::instance (new_reactor, 1);
+
+      std::unique_ptr<ACE_Reactor> new_reactor =
+        std::make_unique<ACE_Reactor> (implementation.get (), true);
+      implementation.release ();
+      ACE_Reactor::instance (new_reactor.release (), true);
     }
 
   Server server (addr);
