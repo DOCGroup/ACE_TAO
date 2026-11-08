@@ -69,8 +69,8 @@ Middle_i::test_method (CORBA::Boolean do_callback,
   int i {};
   for (; i != 10; ++i)
     {
-      this->server_->test_method (0,
-                                  0,
+      this->server_->test_method (false,
+                                  false,
                                   callback);
     }
 
@@ -80,8 +80,8 @@ Middle_i::test_method (CORBA::Boolean do_callback,
 
   for (; i != 10; ++i)
     {
-      this->server_->test_method (0,
-                                  0,
+      this->server_->test_method (false,
+                                  false,
                                   callback);
     }
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   ping_i.h
@@ -6,7 +5,6 @@
  *  @author Carlos O'Ryan
  */
 //=============================================================================
-
 
 #ifndef TAO_PING_I_H
 #define TAO_PING_I_H
@@ -27,7 +25,7 @@ class PingObject_i : public POA_PingObject
 public:
   /// ctor
   explicit PingObject_i (CORBA::ORB_ptr orb,
-                PortableServer::POA_ptr the_poa);
+                         PortableServer::POA_ptr the_poa);
   PingObject_i (PingObject_i const &) = delete;
   PingObject_i (PingObject_i &&) = delete;
   PingObject_i &operator= (PingObject_i const &) = delete;

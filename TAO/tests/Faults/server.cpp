@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Server_Options options;
   try
@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var const poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,7 +63,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       Simple_Server_i server_impl (orb.in ());
-
 
       PortableServer::ObjectId_var const id =
         root_poa->activate_object (&server_impl);

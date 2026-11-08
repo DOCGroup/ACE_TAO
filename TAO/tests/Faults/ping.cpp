@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Ping_Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Ping_Options options;
   try
@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[1] =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
-      PortableServer::POA_var persistent_poa =
+      PortableServer::POA_var const persistent_poa =
         root_poa->create_POA ("persistent",
                              poa_manager.in (),
                              policies);

@@ -106,7 +106,7 @@ run_client (CORBA::ORB_ptr orb,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Pong_Options options;
   try
@@ -115,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var const poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -133,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[1] =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
-      PortableServer::POA_var persistent_poa =
+      PortableServer::POA_var const persistent_poa =
         root_poa->create_POA ("persistent",
                              poa_manager.in (),
                              policies);
