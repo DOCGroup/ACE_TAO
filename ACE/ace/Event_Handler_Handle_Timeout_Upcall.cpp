@@ -14,11 +14,11 @@ int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 timeout (ACE_Timer_Queue &timer_queue,
         ACE_Event_Handler *event_handler,
-        const void *act,
+        void const *act,
         int recurring_timer,
-        const ACE_Time_Value &cur_time)
+        ACE_Time_Value const &cur_time)
 {
-  bool requires_reference_counting = false;
+  bool requires_reference_counting {};
 
   if (!recurring_timer)
     {
@@ -67,9 +67,9 @@ int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 deletion (ACE_Timer_Queue &timer_queue,
           ACE_Event_Handler *event_handler,
-          const void *)
+          void const *)
 {
-  int requires_reference_counting = 0;
+  int requires_reference_counting {};
 
   this->cancel_type (timer_queue,
                      event_handler,

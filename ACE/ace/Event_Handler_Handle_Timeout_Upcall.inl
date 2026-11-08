@@ -6,7 +6,7 @@ ACE_INLINE int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 registration (ACE_Timer_Queue &,
               ACE_Event_Handler *event_handler,
-              const void *)
+              void const *)
 {
   event_handler->add_reference ();
   return 0;
@@ -16,10 +16,10 @@ ACE_INLINE int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 preinvoke (ACE_Timer_Queue &,
           ACE_Event_Handler *event_handler,
-          const void *,
+          void const *,
           int,
-          const ACE_Time_Value &,
-          const void * & upcall_act)
+          ACE_Time_Value const &,
+          void const *&upcall_act)
 {
   bool const requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
@@ -39,10 +39,10 @@ ACE_INLINE int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 postinvoke (ACE_Timer_Queue & /* timer_queue */,
             ACE_Event_Handler *event_handler,
-            const void * /* timer_act */,
+            void const * /* timer_act */,
             int /* recurring_timer */,
-            const ACE_Time_Value & /* cur_time */,
-            const void *upcall_act)
+            ACE_Time_Value const & /* cur_time */,
+            void const *upcall_act)
 {
   if (upcall_act == &this->requires_reference_counting_)
     {

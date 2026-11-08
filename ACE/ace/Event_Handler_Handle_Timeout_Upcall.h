@@ -37,30 +37,30 @@ public:
   /// This method is called when a timer is registered.
   int registration (ACE_Timer_Queue &timer_queue,
                     ACE_Event_Handler *handler,
-                    const void *arg);
+                    void const *arg);
 
   /// This method is called before the timer expires.
   int preinvoke (ACE_Timer_Queue &timer_queue,
                  ACE_Event_Handler *handler,
-                 const void *arg,
+                 void const *arg,
                  int recurring_timer,
-                 const ACE_Time_Value &cur_time,
-                 const void *&upcall_act);
+                 ACE_Time_Value const &cur_time,
+                 void const *&upcall_act);
 
   /// This method is called when the timer expires.
   int timeout (ACE_Timer_Queue &timer_queue,
                ACE_Event_Handler *handler,
-               const void *arg,
+               void const *arg,
                int recurring_timer,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
   /// This method is called after the timer expires.
   int postinvoke (ACE_Timer_Queue &timer_queue,
                   ACE_Event_Handler *handler,
-                  const void *arg,
+                  void const *arg,
                   int recurring_timer,
-                  const ACE_Time_Value &cur_time,
-                  const void *upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *upcall_act);
 
   /// This method is called when a handler is cancelled
   int cancel_type (ACE_Timer_Queue &timer_queue,
@@ -78,7 +78,7 @@ public:
   /// the timer is still contained in it
   int deletion (ACE_Timer_Queue &timer_queue,
                 ACE_Event_Handler *handler,
-                const void *arg);
+                void const *arg);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
