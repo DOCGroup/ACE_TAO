@@ -31,7 +31,7 @@ public:
 #endif
   }
 
-  ~TestShutdown ()
+  ~TestShutdown () override
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);
@@ -41,7 +41,7 @@ public:
 #endif
   }
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  int handle_signal (int, siginfo_t*, ucontext_t*) override
   {
     this->orb_->shutdown ();
     return 0;

@@ -106,7 +106,7 @@ public:
                   ACE_TCHAR **argv,
                   TAO_ORB_Manager *orb_manager_ptr);
 
-  virtual int svc ();
+  int svc () override;
 
   MT_Server_Task (MT_Server_Task const &) = delete;
   MT_Server_Task (MT_Server_Task &&) = delete;

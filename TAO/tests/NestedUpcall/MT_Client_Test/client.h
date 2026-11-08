@@ -95,7 +95,7 @@ class MT_Client_Task : public ACE_Task<ACE_SYNCH>
 public:
   MT_Client_Task (int argc, ACE_TCHAR **argv, int client_number);
 
-  virtual int svc ();
+  int svc () override;
 
   MT_Client_Task (MT_Client_Task const &) = delete;
   MT_Client_Task (MT_Client_Task &&) = delete;

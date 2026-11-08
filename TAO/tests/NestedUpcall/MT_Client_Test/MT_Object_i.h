@@ -28,7 +28,7 @@ public:
   MT_Object_i () = default;
 
   /// Destructor.
-  virtual ~MT_Object_i () = default;
+  ~MT_Object_i () override = default;
 
   MT_Object_i (MT_Object_i const &) = delete;
   MT_Object_i (MT_Object_i &&) = delete;
@@ -36,7 +36,7 @@ public:
   MT_Object_i &operator= (MT_Object_i &&) = delete;
 
   CORBA::Long yadda (CORBA::Long hop_count,
-                     MT_Object_ptr partner);
+                     MT_Object_ptr partner) override;
 };
 
 #endif /* MT_OBJECT_IMPL_H */
