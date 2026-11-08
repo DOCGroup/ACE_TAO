@@ -5,6 +5,8 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
+#include <cstring>
+
 FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy ()
 {
 }
@@ -348,7 +350,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceContext_var sc =

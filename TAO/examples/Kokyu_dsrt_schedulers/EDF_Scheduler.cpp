@@ -9,6 +9,7 @@
 #include "edf_sched_dsui_families.h"
 #include <dsui.h>
 
+#include <cstring>
 #include <iostream>
 using namespace std;
 
@@ -354,7 +355,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceContext_var sc =
