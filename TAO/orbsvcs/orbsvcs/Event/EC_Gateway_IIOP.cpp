@@ -19,7 +19,6 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
      consumer_is_active_ (false),
      supplier_ (this),
      supplier_is_active_ (false),
-     ec_control_ (nullptr),
      factory_ (nullptr),
      use_ttl_ (1),
      use_consumer_proxy_map_ (1)
@@ -45,11 +44,7 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
     }
 }
 
-TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP ()
-{
-   delete ec_control_;
-   ec_control_ = nullptr;
-}
+TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP () = default;
 
 int
 TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
@@ -73,7 +68,7 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
 
       if (ec_control_ == nullptr)
         {
-          ec_control_ = factory_->create_consumerec_control(this);
+          this->ec_control_.reset (this->factory_->create_consumerec_control (this));
           ec_control_->activate();
         }
 

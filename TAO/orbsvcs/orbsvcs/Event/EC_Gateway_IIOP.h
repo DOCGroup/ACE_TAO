@@ -27,6 +27,8 @@
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ECG_ConsumerEC_Control;
@@ -224,7 +226,7 @@ protected:
 
   /// The consumer ec control which controls the behaviour in case of a
   /// misbehaving consumer ec
-  TAO_ECG_ConsumerEC_Control* ec_control_;
+  std::unique_ptr<TAO_ECG_ConsumerEC_Control> ec_control_;
 
   /// The Gateway IIOP Factory for all the settings
   TAO_EC_Gateway_IIOP_Factory* factory_;
