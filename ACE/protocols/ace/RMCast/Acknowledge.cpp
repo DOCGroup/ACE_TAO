@@ -58,7 +58,7 @@ namespace ACE_RMCast
 
     for (;; ++sn)
     {
-      Queue::ENTRY* e = nullptr;
+      Queue::ENTRY* e {};
 
       if (q.find (sn, e) == -1 || e->int_id_.lost ()) break;
 
@@ -269,7 +269,7 @@ namespace ACE_RMCast
 
       u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
-      Map::ENTRY* e = nullptr;
+      Map::ENTRY* e {};
 
       if (hold_.find (from, e) == -1)
       {
