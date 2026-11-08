@@ -1,54 +1,69 @@
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/IORTable/IORTable.h"
 #include "test_i.h"
 #include "Server_Worker.h"
 
-const ACE_TCHAR *ior_output_file = 0;
-ACE_TCHAR *another_output_file = 0;
-ACE_CString ior_table_name = "";
-char *another_table_name = 0;
-int nthreads = 4;
+#include <memory>
+#include <string>
+
+struct Server_Options
+{
+  ACE_TString ior_output_file {};
+  ACE_TString another_output_file {};
+  std::string ior_table_name;
+  std::string another_table_name;
+  int nthreads {4};
+};
+
+static int
+write_ior (ACE_TCHAR const *filename, char const *ior)
+{
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!output_file)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                       filename),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Wrote IOR to %s\n"), filename));
+  ACE_OS::fprintf (output_file.get (), "%s", ior);
+  return 0;
+}
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:o:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
         {
-          ior_table_name = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
-          int len = ACE_OS::strlen(ior_table_name.c_str ()) + 1;
-          another_table_name = new char[len + 1];
-          ACE_OS::strcpy(another_table_name, ior_table_name.c_str ());
-          another_table_name[len-1] = '1';
-          another_table_name[len] = '\0';
+          options.ior_table_name = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          options.another_table_name = options.ior_table_name;
+          if (!options.another_table_name.empty ())
+            options.another_table_name.back () = '1';
           break;
         }
       case 'o':
         {
-          ior_output_file = get_opts.opt_arg ();
-          int len = ACE_OS::strlen(ior_output_file) + 1;
-          another_output_file = new ACE_TCHAR[len + 1];
-          ACE_OS::strcpy(another_output_file, ior_output_file);
-          another_output_file[len-1] = '1';
-          another_output_file[len] = '\0';
+          options.ior_output_file = get_opts.opt_arg ();
+          options.another_output_file = options.ior_output_file;
+          if (!options.another_output_file.empty ())
+            options.another_output_file[options.another_output_file.length () - 1] = '1';
           break;
         }
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-i <iortable name>]"
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage: %s [-i <iortable name>] -o <iorfile> -n <nthreads>\n"),
                            argv [0]),
                           -1);
       }
@@ -56,10 +71,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Server_Options options;
   try
     {
       // Initialize the ORB
@@ -67,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,11 +96,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       Simple_Server_i server_impl (orb.in ());
-      Another_One_i another_one_impl (orb.in());
+      Another_One_i another_one_impl (orb.in ());
 
       Simple_Server_var server =
         server_impl._this ();
@@ -104,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated another one as <%C>\n"),
                   another_ior.in ()));
 
-      if (ior_table_name.length () != 0)
+      if (!options.ior_table_name.empty ())
         {
           CORBA::Object_var table_object =
              orb->resolve_initial_references ("IORTable");
@@ -118,41 +133,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               return -1;
             }
 
-          adapter->bind ( ior_table_name.c_str (), ior.in ());
-          adapter->bind ( another_table_name, another_ior.in());
+          adapter->bind (options.ior_table_name.c_str (), ior.in ());
+          adapter->bind (options.another_table_name.c_str (), another_ior.in ());
         }
 
-
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (!options.ior_output_file.empty ())
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              1);
-          ACE_DEBUG ((LM_DEBUG,"Wrote ior to %s\n",
-                      ior_output_file));
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
-          output_file = ACE_OS::fopen (another_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               another_output_file),
-                              1);
-          ACE_DEBUG ((LM_DEBUG,"Wrote another ior to %s\n",
-                      another_output_file));
-          ACE_OS::fprintf (output_file, "%s", another_ior.in ());
-          ACE_OS::fclose (output_file);
+          if (write_ior (options.ior_output_file.c_str (), ior.in ()) != 0 ||
+              write_ior (options.another_output_file.c_str (), another_ior.in ()) != 0)
+            return 1;
         }
 
       poa_manager->activate ();
 
       Server_Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                            1);
@@ -163,7 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

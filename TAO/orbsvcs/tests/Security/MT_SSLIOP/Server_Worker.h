@@ -32,11 +32,14 @@ class Server_Worker : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Server_Worker (CORBA::ORB_ptr orb);
+  explicit Server_Worker (CORBA::ORB_ptr orb);
+  Server_Worker (Server_Worker const &) = delete;
+  Server_Worker (Server_Worker &&) = delete;
+  Server_Worker &operator= (Server_Worker const &) = delete;
+  Server_Worker &operator= (Server_Worker &&) = delete;
 
   /// The thread entry point.
-  virtual int svc ();
-
+  int svc () override;
 
 private:
   /// The ORB
