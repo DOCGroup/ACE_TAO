@@ -7,16 +7,16 @@
 
 ACE_TCHAR const *monitor_ior = ACE_TEXT ("file://monitor.ior");
 Monitor::NameList_var monitor_point;
-bool mp_clear = false;
-int n_iterations = 1;
-ACE_Time_Value sleep_time = ACE_Time_Value (1);
+bool mp_clear {};
+int n_iterations {1};
+ACE_Time_Value sleep_time {1};
 ACE_TCHAR const *filter = ACE_TEXT ("");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:p:ci:s:f:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (monitor_point.ptr () != nullptr)
         {
           /// Access the monitor's value a few times and watch it grow.
-          for (int i = 0; i < n_iterations; ++i)
+          for (int i {}; i < n_iterations; ++i)
             {
               Monitor::DataList_var data;
 
@@ -120,18 +120,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   data = monitor->get_statistics (*monitor_point);
                 }
 
-              for (CORBA::ULong index = 0; index < data->length (); ++index)
+              for (CORBA::ULong index {}; index < data->length (); ++index)
                 {
                   ACE_DEBUG ((LM_DEBUG, "MP <%C>:\n", data[index].itemname.in ()));
-                  Monitor::Data dlist = data[index];
+                  Monitor::Data const dlist {data[index]};
 
                   if (dlist.data_union._d() == Monitor::DATA_TEXT)
                   {
-                    for (CORBA::ULong valueindex = 0;
+                    for (CORBA::ULong valueindex {};
                          valueindex < dlist.data_union.num().dlist.length ();
                          ++valueindex)
                     {
-                      Monitor::DataValue d = dlist.data_union.num().dlist[valueindex];
+                      Monitor::DataValue const d {dlist.data_union.num().dlist[valueindex]};
                       ACE_DEBUG ((LM_DEBUG, "\t value <%A>:\n", d.value));
                     }
                   }
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           Monitor::NameList_var list = monitor->get_statistic_names (ACE_TEXT_ALWAYS_CHAR (filter));
 
-          for (CORBA::ULong index = 0; index < list->length (); ++index)
+          for (CORBA::ULong index {}; index < list->length (); ++index)
             {
               ACE_DEBUG ((LM_DEBUG, "MP: <%C>\n", list[index].in ()));
             }
