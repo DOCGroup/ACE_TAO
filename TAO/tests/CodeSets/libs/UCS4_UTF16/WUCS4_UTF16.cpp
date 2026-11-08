@@ -192,14 +192,17 @@ size_t count_potential_surrogates (
     ACE_CDR::ULong len)
 {
   size_t count = 0;
-  for (size_t i = 0; i < len; ++i)
+  if (buffer)
     {
-      // see comments above in encode_utf16().
-      unsigned long ul_value = static_cast<unsigned long>(buffer[i]);
-      if (ul_value >= ACE_UTF16_RAW_END &&
-          ul_value < ACE_UTF16_END)
+      for (size_t i = 0; i < len; ++i)
         {
-          count += 1;
+          // see comments above in encode_utf16().
+          unsigned long ul_value = static_cast<unsigned long>(buffer[i]);
+          if (ul_value >= ACE_UTF16_RAW_END &&
+              ul_value < ACE_UTF16_END)
+            {
+              count += 1;
+            }
         }
     }
   return count;
@@ -379,6 +382,11 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
       for (size_t xpos = 0; xpos < length; ++xpos)
         {
           x[xpos] = load_wchar (buf, bpos, length, byte_swap);
+          if ((x[xpos] == ACE_UNICODE_SUBSTITUTE_CHARACTER) && (bpos == length))
+            {
+              x[xpos] = 0;
+              break;
+            }
         }
 
       return 1;
@@ -486,9 +494,16 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       ACE_CDR::ULong length = len + count_potential_surrogates (x, len);
       ACE_CDR::ULong l = length * ACE_UTF16_CODEPOINT_SIZE;
 
+      if(!x)
+        {
+          l = 0;
+        }
+
       if (this->write_4 (cdr, &l) && x != 0)
         {
           this->write_2 (cdr, &bom);
+          --len;
+          --length;
           return this->write_measured_wchar_array (cdr, x, len, length);
         }
     }
