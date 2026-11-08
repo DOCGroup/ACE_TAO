@@ -19,17 +19,14 @@ TAO_EC_Kokyu_Filter::
      parent_info_ (parent_info),
      info_type_ (info_type)
 {
-  this->adopt_child (this->body_);
+  this->adopt_child (this->body_.get ());
 
 #if 1 //by VS
 this->rt_info_computed_ = true;
 #endif
 }
 
-TAO_EC_Kokyu_Filter::~TAO_EC_Kokyu_Filter ()
-{
-  delete this->body_;
-}
+TAO_EC_Kokyu_Filter::~TAO_EC_Kokyu_Filter () = default;
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Kokyu_Filter::begin () const

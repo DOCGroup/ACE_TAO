@@ -41,11 +41,11 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         this->consumer_ =
           RtecEventComm::PushConsumer::_duplicate (push_consumer);
         this->qos_ = qos;
-        this->child_ =
+        this->child_.reset (
           this->event_channel_->filter_builder ()->build (this,
-                                                          this->qos_);
+                                                          this->qos_));
 
-        this->adopt_child (this->child_);
+        this->adopt_child (this->child_.get ());
 
         TAO_EC_Unlock reverse_lock (*this->lock_);
 
@@ -88,11 +88,11 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
                 "Building filters for consumer <%x>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
-    this->child_ =
+    this->child_.reset (
       this->event_channel_->filter_builder ()->build (this,
-                                                      this->qos_);
+                                                      this->qos_));
 
-    this->adopt_child (this->child_);
+    this->adopt_child (this->child_.get ());
   }
 
   // Notify the event channel...

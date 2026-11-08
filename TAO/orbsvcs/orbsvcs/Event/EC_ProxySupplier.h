@@ -18,6 +18,7 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include "orbsvcs/Event/EC_Filter.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -181,7 +182,7 @@ protected:
   PortableServer::POA_var default_POA_;
 
   /// The filter object
-  TAO_EC_Filter* child_;
+  std::unique_ptr<TAO_EC_Filter> child_;
 
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;

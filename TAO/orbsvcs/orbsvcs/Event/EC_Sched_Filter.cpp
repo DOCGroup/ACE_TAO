@@ -22,13 +22,10 @@ TAO_EC_Sched_Filter::
      parent_info_ (parent_info),
      info_type_ (info_type)
 {
-  this->adopt_child (this->body_);
+  this->adopt_child (this->body_.get ());
 }
 
-TAO_EC_Sched_Filter::~TAO_EC_Sched_Filter ()
-{
-  delete this->body_;
-}
+TAO_EC_Sched_Filter::~TAO_EC_Sched_Filter () = default;
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Sched_Filter::begin () const

@@ -23,6 +23,7 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event/sched_event_export.h"
 #include "ace/SString.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -104,7 +105,7 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 
   /// The implementation
-  TAO_EC_Filter* body_;
+  std::unique_ptr<TAO_EC_Filter> body_;
 
   /// The RT_Info handle for the body
   RtecScheduler::handle_t body_info_;
