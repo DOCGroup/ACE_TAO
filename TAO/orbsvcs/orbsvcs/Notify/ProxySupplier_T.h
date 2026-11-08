@@ -42,8 +42,8 @@ public:
   ~TAO_Notify_ProxySupplier_T () override = default;
 
   /// Notification of subscriptions set at the admin.
-  virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed);
+  void admin_types_changed (const CosNotification::EventTypeSeq & added,
+                            const CosNotification::EventTypeSeq & removed) override;
 
   ///= POA_Notify_Internal methods
   /// POA_Notify_Internal::Event_Forwarder method

@@ -38,8 +38,8 @@ public:
   ~TAO_Notify_ProxyConsumer_T ();
 
   /// Notification of subscriptions set at the admin.
-  virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed);
+  void admin_types_changed (const CosNotification::EventTypeSeq & added,
+                            const CosNotification::EventTypeSeq & removed) override;
 
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin ();
 

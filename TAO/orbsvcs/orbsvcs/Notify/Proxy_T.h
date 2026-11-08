@@ -43,15 +43,15 @@ public:
   virtual PortableServer::Servant servant ();
 
   /// ServantBase refcount methods.
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  void _add_ref () override;
+  void _remove_ref () override;
 
   virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
   );
 
- virtual CosNotification::QoSProperties * get_qos (
+  virtual CosNotification::QoSProperties * get_qos (
   );
 
   virtual void set_qos (
