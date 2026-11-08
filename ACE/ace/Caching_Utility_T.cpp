@@ -16,24 +16,21 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                 bool delete_cleanup_strategy)
-  : cleanup_strategy_ (cleanup_strategy),
-    delete_cleanup_strategy_ (delete_cleanup_strategy)
+ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_Caching_Utility (
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
+  bool delete_cleanup_strategy)
+  : cleanup_strategy_ (cleanup_strategy)
 {
   if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->owned_cleanup_strategy_.reset (this->cleanup_strategy_);
     }
-}
-
-template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::~ACE_Pair_Caching_Utility ()
-{
-  if (this->delete_cleanup_strategy_)
-    delete this->cleanup_strategy_;
+  else if (delete_cleanup_strategy)
+    {
+      this->owned_cleanup_strategy_.reset (cleanup_strategy);
+    }
 }
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> int
@@ -114,24 +111,22 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                                             bool delete_cleanup_strategy)
-  : cleanup_strategy_ (cleanup_strategy),
-    delete_cleanup_strategy_ (delete_cleanup_strategy)
+ACE_Recyclable_Handler_Caching_Utility<
+  KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Recyclable_Handler_Caching_Utility (
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
+  bool delete_cleanup_strategy)
+  : cleanup_strategy_ (cleanup_strategy)
 {
   if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->owned_cleanup_strategy_.reset (this->cleanup_strategy_);
     }
-}
-
-template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::~ACE_Recyclable_Handler_Caching_Utility ()
-{
-  if (this->delete_cleanup_strategy_)
-    delete this->cleanup_strategy_;
+  else if (delete_cleanup_strategy)
+    {
+      this->owned_cleanup_strategy_.reset (cleanup_strategy);
+    }
 }
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> int
@@ -233,25 +228,24 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                                                                   bool delete_cleanup_strategy)
+ACE_Refcounted_Recyclable_Handler_Caching_Utility<
+  KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::
+ACE_Refcounted_Recyclable_Handler_Caching_Utility (
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
+  bool delete_cleanup_strategy)
   : cleanup_strategy_ (cleanup_strategy),
-    delete_cleanup_strategy_ (delete_cleanup_strategy),
     marked_as_closed_entries_ (0)
 {
   if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->owned_cleanup_strategy_.reset (this->cleanup_strategy_);
     }
-}
-
-template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::~ACE_Refcounted_Recyclable_Handler_Caching_Utility ()
-{
-  if (this->delete_cleanup_strategy_)
-    delete this->cleanup_strategy_;
+  else if (delete_cleanup_strategy)
+    {
+      this->owned_cleanup_strategy_.reset (cleanup_strategy);
+    }
 }
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> int
@@ -358,24 +352,21 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                       bool delete_cleanup_strategy)
-  : cleanup_strategy_ (cleanup_strategy),
-    delete_cleanup_strategy_ (delete_cleanup_strategy)
+ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Handler_Caching_Utility (
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
+  bool delete_cleanup_strategy)
+  : cleanup_strategy_ (cleanup_strategy)
 {
   if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->owned_cleanup_strategy_.reset (this->cleanup_strategy_);
     }
-}
-
-template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::~ACE_Handler_Caching_Utility ()
-{
-  if (this->delete_cleanup_strategy_)
-    delete this->cleanup_strategy_;
+  else if (delete_cleanup_strategy)
+    {
+      this->owned_cleanup_strategy_.reset (cleanup_strategy);
+    }
 }
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> int
@@ -451,24 +442,21 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimu
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                 bool delete_cleanup_strategy)
-  : cleanup_strategy_ (cleanup_strategy),
-    delete_cleanup_strategy_ (delete_cleanup_strategy)
+ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Null_Caching_Utility (
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
+  bool delete_cleanup_strategy)
+  : cleanup_strategy_ (cleanup_strategy)
 {
   if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->owned_cleanup_strategy_.reset (this->cleanup_strategy_);
     }
-}
-
-template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::~ACE_Null_Caching_Utility ()
-{
-  if (this->delete_cleanup_strategy_)
-    delete this->cleanup_strategy_;
+  else if (delete_cleanup_strategy)
+    {
+      this->owned_cleanup_strategy_.reset (cleanup_strategy);
+    }
 }
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> int

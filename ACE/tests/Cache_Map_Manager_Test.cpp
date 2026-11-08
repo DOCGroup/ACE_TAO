@@ -73,6 +73,17 @@ using MAP_NULL_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_NULL>;
 using HASH_MAP_CACHE = ACE_Hash_Cache_Map_Manager<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>;
 using MAP_CACHE = ACMM<KEY, VALUE, MAP_MANAGER, MAP_ITERATOR, MAP_REVERSE_ITERATOR, MAP_CACHING_STRATEGY, ATTR>;
 
+static int cleanup_strategy_destruction_count = 0;
+
+class Tracking_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, CACHE_VALUE, MAP_MANAGER>
+{
+public:
+  ~Tracking_Cleanup_Strategy () override
+  {
+    ++cleanup_strategy_destruction_count;
+  }
+};
+
 enum Caching_Strategy_Type
 {
   ACE_LFU,
@@ -89,6 +100,26 @@ static int purge_percent = 10;
 static int debug = 0;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 static KEY *lookup_array = nullptr;
+
+static void
+test_caching_utility_ownership ()
+{
+  int const initial_destruction_count = cleanup_strategy_destruction_count;
+  Tracking_Cleanup_Strategy borrowed_strategy;
+  {
+    MAP_CACHING_UTILITY utility (&borrowed_strategy, false);
+  }
+  ACE_TEST_ASSERT (cleanup_strategy_destruction_count == initial_destruction_count);
+
+  Tracking_Cleanup_Strategy *owned_strategy {};
+  ACE_NEW (owned_strategy,
+           Tracking_Cleanup_Strategy);
+  {
+    MAP_CACHING_UTILITY utility (owned_strategy, true);
+  }
+  ACE_TEST_ASSERT (cleanup_strategy_destruction_count == initial_destruction_count + 1);
+
+}
 
 static void
 run_iterator_cache (MAP_CACHE &cache)
@@ -502,6 +533,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Cache_Map_Manager_Test"));
+
+  test_caching_utility_ownership ();
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
