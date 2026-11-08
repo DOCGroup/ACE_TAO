@@ -48,7 +48,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
   // (dangling) references to instances of objects created by this
   // module and destroyed by this object when it is dynamically
   // unloaded.
-  int register_with_object_manager = 0;
+  int const register_with_object_manager {};
 
   if (TAO_Singleton_Manager::instance ()->init (
         register_with_object_manager) == -1)
@@ -57,7 +57,6 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                        "failed."),
                       -1);  // No CORBA exceptions available yet, so
                             // return an error status.
-
 
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO server-side ORB initialization code.
@@ -77,10 +76,8 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       new_argv[0] = CORBA::string_dup ("dummy");
 
       // Copy the remaining arguments into the new argument vector.
-      for (int i = new_argc - argc, j = 0;
-           j < argc;
-           ++i, ++j)
-        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (argv[j]));
+      for (int i = 1; i < new_argc; ++i)
+        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (argv[i - 1]));
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
@@ -156,8 +153,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 int
 Test_Server_Module::fini ()
 {
-  ACE_DEBUG ((LM_INFO,
-              "Server is being finalized.\n"));
+  ACE_DEBUG ((LM_INFO, "Server is being finalized.\n"));
 
   // ------------------------------------------------------------
   // Pre-Test_Server_Module termination steps.
@@ -198,7 +194,7 @@ Test_Server_Module::svc ()
           this->orb_->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::svc"));
       return -1;
@@ -206,7 +202,6 @@ Test_Server_Module::svc ()
 
   return 0;
 }
-
 
 ACE_STATIC_SVC_DEFINE (Test_Server_Module,
                        ACE_TEXT ("Test_Server_Module"),

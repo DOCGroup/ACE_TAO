@@ -27,7 +27,7 @@ class Test_i : public virtual POA_Test
 {
 public:
   /// Constructor.
-  Test_i ();
+  Test_i () = default;
   Test_i (Test_i const &) = delete;
   Test_i (Test_i &&) = delete;
   Test_i &operator= (Test_i const &) = delete;
