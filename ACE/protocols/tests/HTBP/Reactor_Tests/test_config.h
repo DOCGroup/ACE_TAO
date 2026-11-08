@@ -49,18 +49,18 @@
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 
-const size_t ACE_MAX_CLIENTS = 30;
-const size_t ACE_NS_MAX_ENTRIES = 1000;
-const size_t ACE_DEFAULT_USECS = 1000;
-const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_DELAY = 10;
-const size_t ACE_MAX_INTERVAL = 0;
-const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_THREADS = 4;
+constexpr size_t ACE_MAX_CLIENTS = 30;
+constexpr size_t ACE_NS_MAX_ENTRIES = 1000;
+constexpr size_t ACE_DEFAULT_USECS = 1000;
+constexpr size_t ACE_MAX_TIMERS = 4;
+constexpr size_t ACE_MAX_DELAY = 10;
+constexpr size_t ACE_MAX_INTERVAL {};
+constexpr size_t ACE_MAX_ITERATIONS = 10;
+constexpr size_t ACE_MAX_PROCESSES = 10;
+constexpr size_t ACE_MAX_THREADS = 4;
 
 #define ACE_START_TEST(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const * const program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
@@ -74,7 +74,7 @@ const size_t ACE_MAX_THREADS = 4;
 
 #if !defined (ACE_WIN32)
 #define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const * const program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   ace_file_stream::instance()->close (); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
@@ -82,7 +82,7 @@ const size_t ACE_MAX_THREADS = 4;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 #else /* ACE_WIN32 */
 #define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const * const program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
@@ -149,7 +149,7 @@ private:
 };
 
 inline ACE_Test_Output::ACE_Test_Output ()
-  : output_file_ (0)
+  : output_file_ {}
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_ = new OFSTREAM;
@@ -181,11 +181,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir {};
+  ACE_TCHAR const *test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
-  test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
-
-  if (test_dir == 0)
+  if (test_dir == nullptr)
     test_dir = ACE_TEXT ("");
 
   ACE_OS::sprintf (temp,
@@ -222,7 +220,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   if (this->output_file_->bad ())
     return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ACE_TCHAR *fmode = 0;
+  ACE_TCHAR const *fmode {};
   if (append)
     fmode = ACE_TEXT ("a");
   else
