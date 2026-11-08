@@ -47,7 +47,7 @@ int
 be_visitor_root_cnh::init ()
 {
   // First open the client-side header file for writing.
-  int status =
+  int const status =
     tao_cg->start_ciao_conn_header (
       be_global->be_get_ciao_conn_hdr_fname ());
 

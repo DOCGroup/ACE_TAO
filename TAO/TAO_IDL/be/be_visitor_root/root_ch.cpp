@@ -116,7 +116,7 @@ int
 be_visitor_root_ch::init ()
 {
   /// First open the client-side file for writing
-  int status =
+  int const status =
     tao_cg->start_client_header (
       be_global->be_get_client_hdr_fname ());
 

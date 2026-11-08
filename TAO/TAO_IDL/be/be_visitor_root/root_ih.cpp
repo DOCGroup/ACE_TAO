@@ -47,7 +47,7 @@ int
 be_visitor_root_ih::init ()
 {
   /// First open the implementation header file for writing.
-  int status =
+  int const status =
     tao_cg->start_implementation_header (
       be_global->be_get_implementation_hdr_fname ());
 

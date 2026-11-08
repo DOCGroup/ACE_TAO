@@ -47,7 +47,7 @@ int
 be_visitor_root_cns::init ()
 {
   // First open the client-side header file for writing.
-  int status =
+  int const status =
     tao_cg->start_ciao_conn_source (
       be_global->be_get_ciao_conn_src_fname ());
 

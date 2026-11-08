@@ -127,7 +127,7 @@ int
 be_visitor_root_sth::init ()
 {
   /// First open the server-side file for writing
-  int status =
+  int const status =
     tao_cg->start_server_template_header (
       be_global->be_get_server_template_hdr_fname ());
 

@@ -63,7 +63,7 @@ int
 be_visitor_root_sh::init ()
 {
   /// First open the server-side file for writing
-  int status =
+  int const status =
     tao_cg->start_server_header (
       be_global->be_get_server_hdr_fname ());
 
@@ -85,7 +85,7 @@ be_visitor_root_sh::gen_arg_traits (be_root *node)
 {
   be_visitor_context ctx = *this->ctx_;
   be_visitor_arg_traits arg_visitor ("S", &ctx);
-  int status = node->accept (&arg_visitor);
+  int const status = node->accept (&arg_visitor);
 
   if (status == -1)
     {

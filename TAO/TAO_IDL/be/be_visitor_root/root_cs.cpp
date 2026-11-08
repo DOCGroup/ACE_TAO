@@ -77,7 +77,7 @@ int
 be_visitor_root_cs::init ()
 {
   /// First open the client-side file for writing
-  int status =
+  int const status =
     tao_cg->start_client_stubs (
       be_global->be_get_client_stub_fname ());
 
