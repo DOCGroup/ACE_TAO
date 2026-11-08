@@ -12,7 +12,7 @@ template <class TIME_POLICY>
 ACE_Manual_Event_T<TIME_POLICY>::ACE_Manual_Event_T (
     int initial_state,
     int type,
-    const char *name,
+    char const *name,
     void *arg)
   : ACE_Event_T<TIME_POLICY> (1, initial_state, type, ACE_TEXT_CHAR_TO_TCHAR (name), arg)
 {
@@ -23,7 +23,7 @@ template <class TIME_POLICY>
 ACE_Manual_Event_T<TIME_POLICY>::ACE_Manual_Event_T (
     int initial_state,
     int type,
-    const wchar_t *name,
+    wchar_t const *name,
     void *arg)
   : ACE_Event_T<TIME_POLICY> (1, initial_state, type, ACE_TEXT_WCHAR_TO_TCHAR (name), arg)
 {

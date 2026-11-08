@@ -13,10 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Base)
 
-ACE_Event_Base::ACE_Event_Base ()
-  : removed_ (false)
-{
-}
+ACE_Event_Base::ACE_Event_Base () = default;
 
 ACE_Event_Base::~ACE_Event_Base ()
 {
@@ -26,7 +23,7 @@ ACE_Event_Base::~ACE_Event_Base ()
 int
 ACE_Event_Base::remove ()
 {
-  int result = 0;
+  int result {};
   if (!this->removed_)
     {
       this->removed_ = true;
@@ -42,7 +39,7 @@ ACE_Event_Base::wait ()
 }
 
 int
-ACE_Event_Base::wait (const ACE_Time_Value *abstime, int use_absolute_time)
+ACE_Event_Base::wait (ACE_Time_Value const *abstime, int use_absolute_time)
 {
   return ACE_OS::event_timedwait (&this->handle_,
                                   const_cast <ACE_Time_Value *> (abstime),

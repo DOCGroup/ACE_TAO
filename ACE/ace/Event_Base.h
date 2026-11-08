@@ -37,6 +37,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Event_Base
 {
 public:
+  ACE_Event_Base (ACE_Event_Base const &) = delete;
+  ACE_Event_Base (ACE_Event_Base &&) = delete;
+  ACE_Event_Base &operator= (ACE_Event_Base const &) = delete;
+  ACE_Event_Base &operator= (ACE_Event_Base &&) = delete;
+
   /// Implicitly destroy the event variable.
   virtual ~ACE_Event_Base ();
 
@@ -73,7 +78,7 @@ public:
   /// Same as wait() above, but this one can be timed
   /// @a abstime is absolute time-of-day if if @a use_absolute_time
   /// is non-0, else it is relative time.
-  int wait (const ACE_Time_Value *abstime,
+  int wait (ACE_Time_Value const *abstime,
             int use_absolute_time = 1);
 
   /**
@@ -110,7 +115,6 @@ protected:
   /// Only derived classes allowed to construct event.
   ACE_Event_Base ();
 
-
   /// The underlying handle.
   ACE_event_t handle_;
 
@@ -119,13 +123,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
-  bool removed_;
-
-private:
-  ACE_Event_Base (ACE_Event_Base const &) = delete;
-  ACE_Event_Base (ACE_Event_Base &&) = delete;
-  ACE_Event_Base &operator= (ACE_Event_Base const &) = delete;
-  ACE_Event_Base &operator= (ACE_Event_Base &&) = delete;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -36,17 +36,22 @@ template <class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Manual_Event_T : public ACE_Event_T<TIME_POLICY>
 {
 public:
+  ACE_Manual_Event_T (ACE_Manual_Event_T const &) = delete;
+  ACE_Manual_Event_T (ACE_Manual_Event_T &&) = delete;
+  ACE_Manual_Event_T &operator= (ACE_Manual_Event_T const &) = delete;
+  ACE_Manual_Event_T &operator= (ACE_Manual_Event_T &&) = delete;
+
   /// Constructor which will create manual event
   ACE_Manual_Event_T (int initial_state = 0,
                       int type = USYNC_THREAD,
-                      const char *name = nullptr,
+                      char const *name = nullptr,
                       void *arg = nullptr);
 
 #if defined (ACE_HAS_WCHAR)
   /// Constructor which will create manual event (wchar_t version)
   ACE_Manual_Event_T (int initial_state,
                       int type,
-                      const wchar_t *name,
+                      wchar_t const *name,
                       void *arg = nullptr);
 #endif /* ACE_HAS_WCHAR */
 
@@ -63,10 +68,15 @@ public:
 class ACE_Manual_Event : public ACE_Manual_Event_T<ACE_System_Time_Policy>
 {
 public:
+  ACE_Manual_Event (ACE_Manual_Event const &) = delete;
+  ACE_Manual_Event (ACE_Manual_Event &&) = delete;
+  ACE_Manual_Event &operator= (ACE_Manual_Event const &) = delete;
+  ACE_Manual_Event &operator= (ACE_Manual_Event &&) = delete;
+
   /// Constructor which will create auto event
   ACE_Manual_Event (int initial_state = 0,
                     int type = USYNC_THREAD,
-                    const char *name = nullptr,
+                    char const *name = nullptr,
                     void *arg = nullptr)
   : ACE_Manual_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
   {}
@@ -75,7 +85,7 @@ public:
   /// Constructor which will create auto event (wchar_t version)
   ACE_Manual_Event (int initial_state,
                     int type,
-                    const wchar_t *name,
+                    wchar_t const *name,
                     void *arg = nullptr)
   : ACE_Manual_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
   {}
