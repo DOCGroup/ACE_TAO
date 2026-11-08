@@ -19,9 +19,14 @@ class Foo_i : public virtual POA_Foo
 {
 public:
   /// Constructor.
-  Foo_i (CORBA::ORB_ptr);
+  explicit Foo_i (CORBA::ORB_ptr);
 
-  virtual void shutdown ();
+  void shutdown () override;
+
+  Foo_i (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 
 private:
   /// Reference to the ORB.
