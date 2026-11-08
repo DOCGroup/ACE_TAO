@@ -323,19 +323,15 @@ namespace ACE_Utils
 #endif // ACE_LACKS_SSCANF
 
   UUID_Generator::UUID_Generator ()
-    : time_last_ (0),
-      destroy_lock_ (true),
-      is_init_ (false)
   {
-    ACE_NEW (lock_, ACE_SYNCH_MUTEX);
+    ACE_SYNCH_MUTEX* lock {};
+    ACE_NEW (lock, ACE_SYNCH_MUTEX);
+    this->owned_lock_.reset (lock);
+    this->lock_ = this->owned_lock_.get ();
     this->init ();
   }
 
-  UUID_Generator::~UUID_Generator ()
-  {
-    if (destroy_lock_)
-      delete lock_;
-  }
+  UUID_Generator::~UUID_Generator () = default;
 
   void
   UUID_Generator::init ()
@@ -512,11 +508,17 @@ namespace ACE_Utils
   void
   UUID_Generator::lock (ACE_SYNCH_MUTEX* lock, bool release_lock)
   {
-    if (this->destroy_lock_)
-      delete this->lock_;
+    if (this->owned_lock_.get () == lock)
+      {
+        if (!release_lock)
+          this->owned_lock_.release ();
+      }
+    else if (release_lock)
+      this->owned_lock_.reset (lock);
+    else
+      this->owned_lock_.reset ();
 
     this->lock_ = lock;
-    this->destroy_lock_ = release_lock;
   }
 }
 
