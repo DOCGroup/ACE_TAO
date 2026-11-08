@@ -6,11 +6,15 @@
 #include "tao/ORBInitializer_Registry.h"
 
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
-ACE_TCHAR const *ior_input_file = ACE_TEXT("file://thr_server.ior");
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+  ACE_TCHAR const *ior_input_file {ACE_TEXT ("file://thr_server.ior")};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:o:"));
   int c {};
@@ -19,10 +23,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
         case 'i':
-          ior_input_file = get_opts.opt_arg ();
+          options.ior_input_file = get_opts.opt_arg ();
           break;
         case 'o':
-          ior_output_file = get_opts.opt_arg ();
+          options.ior_output_file = get_opts.opt_arg ();
           break;
         case '?':
         default:
@@ -77,7 +81,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
@@ -96,13 +101,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Pull in the ior from the remote server to use as the forward location.
-      CORBA::Object_var const forward_location = orb->string_to_object (ior_input_file);
+      CORBA::Object_var const forward_location = orb->string_to_object (options.ior_input_file);
 
       if (CORBA::is_nil (forward_location.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil\n",
-                             ior_input_file),
+                             options.ior_input_file),
                              1);
         }
 
@@ -123,15 +128,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       // Output the server IOR to a file
-      if (ior_output_file != nullptr)
+      if (options.ior_output_file != nullptr)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Cannot open output file for writing the "
-                                 "server IOR: %s", ior_output_file),
+                                 "server IOR: %s", options.ior_output_file),
                                  1);
             }
 
@@ -162,5 +167,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-
