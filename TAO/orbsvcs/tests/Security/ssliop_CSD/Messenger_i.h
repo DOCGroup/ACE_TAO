@@ -25,7 +25,7 @@ public:
   CORBA::Boolean send_message (
     char const *user_name,
     char const *subject,
-    char *& message);
+    char *& message) override;
 };
 
 
