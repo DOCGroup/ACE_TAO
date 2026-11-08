@@ -36,7 +36,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       policies[i]->destroy ();
     }
 
-    while (!cin.eof () && cin.peek () != EOF) {
+    while (cin >> std::ws && cin.peek () != EOF) {
       std::array<char, 8> symbol {};
       std::array<char, 64> full_name {};
       double price;
