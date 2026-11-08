@@ -391,7 +391,7 @@ ACE_Message_Block::replace_data_block (ACE_Data_Block *db)
   ACE_Data_Block *old = this->data_block_;
   this->data_block_ = db;
 
-  if (db != 0)
+  if (db != nullptr)
     {
       // Set the read and write pointers in the <Message_Block> to point
       // to the buffer in the ACE_Data_Block.
@@ -428,7 +428,7 @@ ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
   this->message_block_allocator_ =
     message_block_allocator;
 
-  if (this->cont () != 0)
+  if (this->cont () != nullptr)
     this->cont ()->reset_allocators (allocator_strategy,
                                      data_block_allocator,
                                      message_block_allocator);

@@ -271,7 +271,7 @@ ACE_Message_Block::total_size () const
 {
   ACE_TRACE ("ACE_Message_Block::total_size");
 
-  size_t size = 0;
+  size_t size {};
   for (const ACE_Message_Block *i = this;
        i != nullptr;
        i = i->cont ())
@@ -285,7 +285,7 @@ ACE_Message_Block::total_length () const
 {
   ACE_TRACE ("ACE_Message_Block::total_length");
 
-  size_t length = 0;
+  size_t length {};
   for (const ACE_Message_Block *i = this;
        i != nullptr;
        i = i->cont ())
@@ -299,7 +299,7 @@ ACE_Message_Block::total_capacity () const
 {
   ACE_TRACE ("ACE_Message_Block::total_capacity");
 
-  size_t size = 0;
+  size_t size {};
 
   for (const ACE_Message_Block *i = this;
        i != nullptr;
@@ -858,7 +858,7 @@ ACE_Message_Block::release ()
   ACE_Data_Block *tmp = this->data_block ();
 
   // This flag is set to 1 when we have to destroy the data_block
-  int destroy_dblock = 0;
+  int destroy_dblock {};
 
   ACE_Lock *lock {};
 
@@ -928,7 +928,7 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
       this->cont_ = nullptr;
     }
 
-  int result = 0;
+  int result {};
 
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE) &&
