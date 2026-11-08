@@ -3,7 +3,8 @@
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/ORB.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -133,7 +134,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       CORBA::NamedValue_ptr nv = opList->item( 0 ) ;
-      if(ACE_OS::strcmp( nv->name(), "p1") != 0 )
+      if (std::strcmp (nv->name (), "p1") != 0)
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong name\n"));
          failed = true;
@@ -154,7 +155,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       nv = opList->item( 1 ) ;
-      if(ACE_OS::strcmp( nv->name(), "p2") != 0 )
+      if (std::strcmp (nv->name (), "p2") != 0)
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong name\n"));
          failed = true;
@@ -175,7 +176,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       nv = opList->item( 2 ) ;
-      if(ACE_OS::strcmp( nv->name(), "p3") != 0 )
+      if (std::strcmp (nv->name (), "p3") != 0)
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong name\n"));
          failed = 1 ;
