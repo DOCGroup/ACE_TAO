@@ -20,7 +20,7 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
 CORBA::Policy_ptr
 Segment_Sched_Param_Policy::copy ()
 {
-  Segment_Sched_Param_Policy *copy = 0;
+  Segment_Sched_Param_Policy *copy {};
   ACE_NEW_THROW_EX (copy,
                     Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY ());
@@ -176,7 +176,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       DT_TEST::instance ()->dt_creator ()->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
-      RTScheduling::Current::IdType* guid = 0;
+      RTScheduling::Current::IdType *guid {};
       ACE_NEW (guid,
                RTScheduling::Current::IdType);
 

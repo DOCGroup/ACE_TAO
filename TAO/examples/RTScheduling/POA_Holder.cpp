@@ -18,7 +18,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
   ACE_DEBUG ((LM_DEBUG,
         "Init POA\n"));
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Read the name of the POA
   arg_shifter.consume_arg ();

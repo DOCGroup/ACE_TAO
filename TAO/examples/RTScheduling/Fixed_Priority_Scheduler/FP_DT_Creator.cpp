@@ -15,7 +15,7 @@ FP_DT_Creator::create_thr_task (int importance,
                                 int dist,
                                 char *job_name)
 {
-  FP_Task* task = 0;
+  FP_Task *task {};
   ACE_NEW_RETURN (task,
                   FP_Task (importance,
                            start_time,

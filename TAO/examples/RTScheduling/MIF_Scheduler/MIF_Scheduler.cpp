@@ -234,7 +234,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
   if (ready_que_.message_count () > 0)
     {
       DT* run_dt;
-      ACE_Message_Block* msg = 0;
+      ACE_Message_Block *msg {};
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       if ((desired_priority == 100) || run_dt->msg_priority () >= (unsigned int)desired_priority)

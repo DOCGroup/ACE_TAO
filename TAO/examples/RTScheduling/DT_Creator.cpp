@@ -18,9 +18,9 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   int load = 0;
   int iter = 0;
   int importance = 0;
-  char *job_name = 0;
+  char *job_name {};
   int dist = 0;
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Importance")) == 0)
     {
@@ -79,7 +79,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   dt_count_ = 0;
   poa_count_ = 0;
@@ -438,7 +438,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
   CORBA::Policy_var sched_param;
   sched_param = this->sched_param (100);
-  const char * name = 0;
+  char const *name {};
   current->begin_scheduling_segment (name,
               sched_param.in (),
               sched_param.in ());
