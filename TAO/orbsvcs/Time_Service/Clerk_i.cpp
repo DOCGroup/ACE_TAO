@@ -10,6 +10,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
 int
@@ -354,8 +356,8 @@ Clerk_i::register_clerk ()
       CosNaming::Name clerk_name;
       clerk_name.length (2);
 
-      ACE_OS::strcpy (clerk_mc_name, "Clerk:");
-      ACE_OS::strcat (clerk_mc_name, host_name);
+      std::strcpy (clerk_mc_name, "Clerk:");
+      std::strcat (clerk_mc_name, host_name);
 
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
       clerk_name[1].id = CORBA::string_dup (clerk_mc_name);
