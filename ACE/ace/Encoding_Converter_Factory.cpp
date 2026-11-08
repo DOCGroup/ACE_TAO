@@ -26,43 +26,43 @@ ACE_Encoding_Converter_Factory::create (
     case ACE_UTF_32BE:
       ACE_NEW_RETURN (converter,
                       ACE_UTF32_Encoding_Converter (!convert_for_bigendian),
-                      0);
+                      nullptr);
       break;
     case ACE_UTF_32LE:
       ACE_NEW_RETURN (converter,
                       ACE_UTF32_Encoding_Converter (convert_for_bigendian),
-                      0);
+                      nullptr);
       break;
     case ACE_UTF_16BE:
       ACE_NEW_RETURN (converter,
                       ACE_UTF16_Encoding_Converter (!convert_for_bigendian),
-                      0);
+                      nullptr);
       break;
     case ACE_UTF_16LE:
       ACE_NEW_RETURN (converter,
                       ACE_UTF16_Encoding_Converter (convert_for_bigendian),
-                      0);
+                      nullptr);
       break;
     case ACE_UTF_8:
       ACE_NEW_RETURN (converter,
                       ACE_UTF8_Encoding_Converter,
-                      0);
+                      nullptr);
       break;
     default:
       // First check for ASCII since much of ASCII text will appear to
       // convert from UTF-16 to UTF-8.
       converter = ACE_UTF8_Encoding_Converter::encoded (source, source_size);
-      if (converter != 0)
+      if (converter != nullptr)
         return converter;
 
       // Check for UTF-32
       converter = ACE_UTF32_Encoding_Converter::encoded (source, source_size);
-      if (converter != 0)
+      if (converter != nullptr)
         return converter;
 
       // Check for UTF-16
       converter = ACE_UTF16_Encoding_Converter::encoded (source, source_size);
-      if (converter != 0)
+      if (converter != nullptr)
         return converter;
     }
 
