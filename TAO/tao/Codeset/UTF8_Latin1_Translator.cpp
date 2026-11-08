@@ -88,7 +88,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       // greater than len
       std::size_t pos {};
       ACE_CDR::ULong incr = 1;
-      for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
+      for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
           incr = this->read_char_i (cdr, buffer_guard[pos++]);
         }
@@ -144,7 +144,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       // greater than len
       std::size_t pos {};
       ACE_CDR::ULong incr = 1;
-      for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
+      for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
           incr = this->read_char_i(cdr,x[pos++]);
         }
@@ -224,14 +224,14 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
 
   ACE_CDR::ULong l = len;
   // Compute the real buffer size by adding in multi-byte codepoints.
-  for (ACE_CDR::ULong i = 0; i < len; i++)
+  for (ACE_CDR::ULong i {}; i < len; i++)
     if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) l++;
 
   // Always add one for the nul
   l++;
   if (cdr.write_ulong (l))
     {
-      for (ACE_CDR::ULong i = 0; i < len; ++i)
+      for (ACE_CDR::ULong i {}; i < len; ++i)
         {
           if (this->write_char_i (cdr,x[i]) == 0)
             return 0;
