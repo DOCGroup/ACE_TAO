@@ -1,6 +1,7 @@
 #include "orbsvcs/Trader/Interpreter.h"
 #include "orbsvcs/Trader/Constraint_Visitors.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 template<class T> class Literal_Interpreter;
 
@@ -79,10 +80,10 @@ public:
   Literal_Interpreter ();
   virtual ~Literal_Interpreter ();
 
-  bool test (const char* str,
+  bool test (char const *str,
              T expected);
   void constraint (TAO_Literal_Constraint& constraint);
-  const TAO_Literal_Constraint& constraint () const;
+  TAO_Literal_Constraint const &constraint () const;
 
 private:
   bool compare (T expected) const;
@@ -101,11 +102,11 @@ Literal_Interpreter<T>::~Literal_Interpreter ()
 }
 
 template<class T> bool
-Literal_Interpreter<T>::test (const char* str,
+Literal_Interpreter<T>::test (char const *str,
                               T expected)
 {
   this->build_tree (str);
-  if (this->root_ == 0)
+  if (this->root_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR, "ERROR: Invalid interpreter string.\n"));
       return false;
@@ -114,14 +115,14 @@ Literal_Interpreter<T>::test (const char* str,
   Literal_Visitor<T> visitor (this);
   this->root_->accept (&visitor);
 
-  return this->compare(expected);
+  return this->compare (expected);
 }
 
 template<> bool
-Literal_Interpreter<const char*>::compare (const char* expected) const
+Literal_Interpreter<char const *>::compare (char const *expected) const
 {
-  return (ACE_OS::strcmp(static_cast<const char*> (this->constraint_),
-                         expected) == 0);
+  return std::strcmp (static_cast<char const *> (this->constraint_),
+                      expected) == 0;
 }
 
 template<class T> bool
@@ -136,7 +137,7 @@ Literal_Interpreter<T>::constraint (TAO_Literal_Constraint& constraint)
   this->constraint_ = constraint;
 }
 
-template<class T> const TAO_Literal_Constraint&
+template<class T> TAO_Literal_Constraint const &
 Literal_Interpreter<T>::constraint () const
 {
   return this->constraint_;
@@ -145,7 +146,7 @@ Literal_Interpreter<T>::constraint () const
 int
 ACE_TMAIN (int, ACE_TCHAR **)
 {
-  int status = 0;
+  int status {};
   {
     Literal_Interpreter<CORBA::ULongLong> u_interp;
     if (!u_interp.test ("993834343433882",
@@ -211,7 +212,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
       }
   }
   {
-    Literal_Interpreter<const char*> interp;
+    Literal_Interpreter<char const *> interp;
     if (!interp.test ("'This is a test'", "This is a test"))
       {
         status++;
