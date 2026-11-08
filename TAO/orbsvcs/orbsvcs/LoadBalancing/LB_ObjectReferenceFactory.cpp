@@ -53,7 +53,7 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
   if (!CORBA::is_nil (this->lm_.in ()))
     {
       const CORBA::ULong len = this->fcids_.size ();
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i {}; i < len; ++i)
         {
           try
             {

@@ -232,7 +232,7 @@ TAO_LB_LeastLoaded::analyze_loads (
 
   // Iterate through the entire location list to determine which
   // locations require load to be shed.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       try
         {
@@ -319,7 +319,7 @@ TAO_LB_LeastLoaded::get_location (
 
   // Iterate through the entire location list to find the least loaded
   // of them.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       try
         {
@@ -492,7 +492,7 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
   PortableGroup::Property const * ct {};  // critical threshold property
 
   CORBA::ULong const len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
       if (std::strcmp (property.nam[0].id.in (),

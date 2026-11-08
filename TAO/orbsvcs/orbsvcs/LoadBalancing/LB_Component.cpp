@@ -29,7 +29,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
   CORBA::ULong len = 0;
 
-  for (int i = 0; i < argc; ++i)
+  for (int i {}; i < argc; ++i)
     {
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) == 0)
         {

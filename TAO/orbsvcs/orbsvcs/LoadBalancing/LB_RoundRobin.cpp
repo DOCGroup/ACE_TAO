@@ -107,7 +107,7 @@ TAO_LB_RoundRobin::next_member (
 
       for (CORBA::ULong k = i; k > 0 && !found; --k)
       {
-        for (CORBA::ULong j = 0; j < len && !found; ++j)
+        for (CORBA::ULong j {}; j < len && !found; ++j)
         {
           if (std::strcmp (this->last_locations_[k][0].id.in (),
                               locations[j][0].id.in ()) == 0)
@@ -169,7 +169,7 @@ TAO_LB_RoundRobin::copy_locations (PortableGroup::Locations_var & locations)
 {
   this->last_locations_.clear ();
   CORBA::ULong len = locations->length ();
-  for (CORBA::ULong j = 0; j < len; ++j)
+  for (CORBA::ULong j {}; j < len; ++j)
     this->last_locations_.push_back (locations[j]);
 }
 

@@ -102,7 +102,7 @@ TAO_LB_LoadManager::push_loads (
 
   const CORBA::ULong len = groups->length ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::ObjectGroup_ptr object_group =
         groups[i];
@@ -644,7 +644,7 @@ TAO_LB_LoadManager::process_criteria (
 
   // Parse the criteria.
   CORBA::ULong criteria_count = the_criteria.length ();
-  for (CORBA::ULong i = 0; i < criteria_size; ++i)
+  for (CORBA::ULong i {}; i < criteria_size; ++i)
     {
       CORBA::UShort initial_number_replicas = 0;
       PortableGroup::FactoryInfos factory_infos;
@@ -912,7 +912,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
   // @@ This is slow.  Optimize this code.
 
   const CORBA::ULong len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property & property = props[i];
       if (property.nam == this->custom_balancing_strategy_name_)

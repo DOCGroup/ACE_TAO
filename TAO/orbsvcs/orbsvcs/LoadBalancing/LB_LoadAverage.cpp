@@ -208,7 +208,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the average load of all the locations
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       try
         {
@@ -253,7 +253,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the location where the load has to be shed.
-  for (CORBA::ULong j = 0; j < len; ++j)
+  for (CORBA::ULong j {}; j < len; ++j)
     {
       try
         {
@@ -336,7 +336,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
   CORBA::Float per_balance_load = TAO_LB::LA_DEFAULT_PER_BALANCE_LOAD;
 
   CORBA::ULong const len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
       if (std::strcmp (property.nam[0].id.in (),
