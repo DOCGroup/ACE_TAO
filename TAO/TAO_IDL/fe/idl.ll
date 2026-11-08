@@ -344,7 +344,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  TAO_IDL_CPP_Keyword_Entry const *entry = nullptr;
+  TAO_IDL_CPP_Keyword_Entry const *entry {};
   if (!idl_global->preserve_cpp_keywords())
     {
       // This check will ensure that escaped C++ keywords will be
@@ -1368,7 +1368,7 @@ static AST_Decl *
 idl_find_node (std::string const& s)
 {
   FE_Utils::Scoped_Name_Owner node = FE_Utils::string_to_scoped_name_owner (s);
-  AST_Decl * d = nullptr;
+  AST_Decl * d {};
 
   if (node != nullptr)
     {
