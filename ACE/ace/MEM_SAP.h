@@ -27,6 +27,8 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_MEM_SAP;
@@ -77,6 +79,11 @@ public:
 
   /// Destructor.
   virtual ~ACE_MEM_SAP ();
+
+  ACE_MEM_SAP (ACE_MEM_SAP const &) = delete;
+  ACE_MEM_SAP (ACE_MEM_SAP &&) = delete;
+  ACE_MEM_SAP &operator= (ACE_MEM_SAP const &) = delete;
+  ACE_MEM_SAP &operator= (ACE_MEM_SAP &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
@@ -140,8 +147,8 @@ protected:
 
   ACE_HANDLE handle_;
 
-  /// Data exchange channel.
-  MALLOC_TYPE *shm_malloc_;
+  /// Owns the shared-memory allocator backing the data exchange channel.
+  std::unique_ptr<MALLOC_TYPE> shm_malloc_;
 
   /// Constructor.  Prevent this class from being instantiated.
   ACE_MEM_SAP ();
