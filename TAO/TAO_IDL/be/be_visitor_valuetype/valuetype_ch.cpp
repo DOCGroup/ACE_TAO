@@ -243,7 +243,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "void _add_ref () override = 0;" << be_nl;
       *os << "void _remove_ref () override = 0;" << be_nl;
-      *os << "virtual ::CORBA::ValueBase *_tao_to_value ();";
+      *os << "::CORBA::ValueBase *_tao_to_value () override;";
     }
 
   // Generate the "protected" constructor so that users cannot
@@ -494,13 +494,14 @@ be_visitor_valuetype_ch::begin_private ()
 }
 
 int
-be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
+be_visitor_valuetype_ch::gen_supported_ops (be_interface *node,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
   AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
+  ctx.interface (node);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();

@@ -400,6 +400,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
   AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
+  ctx.interface (node);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();

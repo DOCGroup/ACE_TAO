@@ -141,8 +141,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           TAO_INSERT_COMMENT (os);
 
-          *os << be_nl_2 << "virtual void _add_ref ();" << be_nl;
-          *os << "virtual void _remove_ref ();";
+          *os << be_nl_2 << "void _add_ref () override;" << be_nl;
+          *os << "void _remove_ref () override;";
         }
 
       if (node->have_operation ())
