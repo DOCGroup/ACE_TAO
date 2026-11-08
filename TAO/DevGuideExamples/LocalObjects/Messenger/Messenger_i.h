@@ -14,7 +14,7 @@ class  Messenger_i : public virtual Messenger,
 {
 public:
   //Constructor
-  Messenger_i ();
+  Messenger_i () = default;
 
   //Destructor
   ~Messenger_i () override = default;
