@@ -1,6 +1,8 @@
 #include "ace/Event_Handler_T.h"
 #include "ace/Log_Msg.h"
 
+#include <type_traits>
+
 class ACE_Test_Sig_Handler
 {
 public:
@@ -24,6 +26,10 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   using EH_SH = ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
+  static_assert (!std::is_copy_constructible<EH_SH>::value);
+  static_assert (!std::is_copy_assignable<EH_SH>::value);
+  static_assert (!std::is_move_constructible<EH_SH>::value);
+  static_assert (!std::is_move_assignable<EH_SH>::value);
   ACE_Test_Sig_Handler handler;
 
   // Tie the ACE_Event_Handler_T together with the methods from ACE_Test_Sig_Handler.

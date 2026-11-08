@@ -91,6 +91,11 @@ public:
   /// Close down and delete the <op_handler>
   ~ACE_Event_Handler_T () override;
 
+  ACE_Event_Handler_T (ACE_Event_Handler_T const &) = delete;
+  ACE_Event_Handler_T &operator= (ACE_Event_Handler_T const &) = delete;
+  ACE_Event_Handler_T (ACE_Event_Handler_T &&) = delete;
+  ACE_Event_Handler_T &operator= (ACE_Event_Handler_T &&) = delete;
+
   // = Override all the ACE_Event_Handler methods.
 
   // These methods all delegate down to the <T> operations handler.
@@ -140,7 +145,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Pointer to the object that handles all the delegated operations.
+  /// This may be borrowed; delete_handler_ controls whether it is deleted.
   T *op_handler_;
 
   // = Handle input, output, and exception events.
@@ -157,8 +162,6 @@ protected:
   /// Handle signal events.
   SIG_HANDLER sig_handler_;
 
-  /// Keeps track of whether we need to delete the handler in the
-  /// destructor.
   bool delete_handler_;
 
   // = Get/set underlying handle.
