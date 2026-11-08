@@ -6,7 +6,7 @@
 class  Simple_i : public virtual POA_Simple
 {
 public:
-  Simple_i (CORBA::ORB_ptr orb, int iterations);
+  Simple_i (CORBA::ORB_ptr orb, int callback_count);
 
   ~Simple_i () override = default;
 
@@ -23,12 +23,12 @@ public:
 
   /// Not part of the CORBA interface. This method is called
   /// by our special orb event loop in server main().
-  int call_client();
+  bool call_client ();
 
 private:
   CORBA::ORB_var orb_;
-  int ready_for_callback_;
-  int callback_count_;
+  bool ready_for_callback_ {};
+  int const callback_count_;
   Callback_var callback_;
 };
 
