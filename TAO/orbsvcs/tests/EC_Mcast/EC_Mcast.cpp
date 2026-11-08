@@ -187,6 +187,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
 
       ec_impl.shutdown ();
+      root_poa->deactivate_object (id.in ());
     }
   catch (CORBA::SystemException const& sys_ex)
     {
