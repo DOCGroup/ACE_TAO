@@ -548,7 +548,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
                                                         TAO_InputCDR &indirected_strm)
 {
-  CORBA::Long offset = 0;
+  CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
     {
       return false;
@@ -579,7 +579,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
       throw CORBA::INTERNAL ();
     }
 
-  CORBA::Long offset = 0;
+  CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
   {
     return 0;
@@ -626,7 +626,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
                                                       ACE_CString& id)
 {
-  CORBA::Long offset = 0;
+  CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
   {
     return false;
@@ -657,7 +657,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
                                                            ACE_CString& codebase_url)
 {
-  CORBA::Long offset = 0;
+  CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
   {
     return false;
@@ -1183,7 +1183,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_read_repository_id_list (TAO_InputCDR& strm,
                                                 Repository_Id_List& ids)
 {
-  CORBA::Long num_ids = 0;
+  CORBA::Long num_ids {};
 
   if (!strm.read_long (num_ids))
     {
@@ -1215,7 +1215,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
                                            ACE_CString& id)
 {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
 
   std::size_t buffer_size = strm.length();
 
@@ -1305,7 +1305,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
                                           ACE_CString& codebase_url)
 {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
 
   std::size_t buffer_size = strm.length();
 
