@@ -5,14 +5,17 @@
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
-ACE_TCHAR const* server_ior = ACE_TEXT("file://server.ior");
-ACE_TCHAR const* admin_ior = ACE_TEXT("file://admin.ior");
-int iterations {20};
 
-bool run_message_count_test {};
-bool run_timeout_test {};
-bool run_timeout_reactive_test {};
-bool run_buffer_size_test {};
+struct Options
+{
+  ACE_TCHAR const *server_ior {ACE_TEXT ("file://server.ior")};
+  ACE_TCHAR const *admin_ior {ACE_TEXT ("file://admin.ior")};
+  int iterations {20};
+  bool run_message_count_test {};
+  bool run_timeout_test {};
+  bool run_timeout_reactive_test {};
+  bool run_buffer_size_test {};
+};
 
 constexpr int PAYLOAD_LENGTH = 1024;
 constexpr int BUFFERED_MESSAGES_COUNT = 10;
@@ -33,40 +36,40 @@ constexpr int LIVENESS_MAX_DEPTH = 256;
 constexpr double GIOP_OVERHEAD = 0.9;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:a:i:ctbr"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        server_ior = get_opts.opt_arg ();
+        options.server_ior = get_opts.opt_arg ();
         break;
 
       case 'a':
-        admin_ior = get_opts.opt_arg ();
+        options.admin_ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'c':
-        run_message_count_test = true;
+        options.run_message_count_test = true;
         break;
 
       case 't':
-        run_timeout_test = true;
+        options.run_timeout_test = true;
         break;
 
       case 'b':
-        run_buffer_size_test = true;
+        options.run_buffer_size_test = true;
         break;
 
       case 'r':
-        run_timeout_reactive_test = true;
+        options.run_timeout_reactive_test = true;
         break;
 
       case '?':
@@ -89,38 +92,42 @@ int
 run_message_count (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa,
                    Test::AMI_Buffering_ptr ami_buffering,
-                   Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
+                   Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+                   Options const &options);
 int
 run_timeout (CORBA::ORB_ptr orb,
              PortableServer::POA_ptr root_poa,
              Test::AMI_Buffering_ptr ami_buffering,
-             Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
+             Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+             Options const &options);
 
 int
 run_timeout_reactive (CORBA::ORB_ptr orb,
                       PortableServer::POA_ptr root_poa,
-                      Test::AMI_Buffering_ptr oneway_buffering,
-                      Test::AMI_Buffering_Admin_ptr oneway_buffering_admin);
+                      Test::AMI_Buffering_ptr ami_buffering,
+                      Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+                      Options const &options);
 
 int
 run_buffer_size (CORBA::ORB_ptr orb,
                  PortableServer::POA_ptr root_poa,
                  Test::AMI_Buffering_ptr ami_buffering,
-                 Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
+                 Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+                 Options const &options);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int test_failed = 0;
+  int test_failed {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -128,39 +135,40 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(server_ior);
+      CORBA::Object_var const server_object =
+        orb->string_to_object (options.server_ior);
 
-      Test::AMI_Buffering_var ami_buffering =
-        Test::AMI_Buffering::_narrow(tmp.in ());
+      Test::AMI_Buffering_var const ami_buffering =
+        Test::AMI_Buffering::_narrow (server_object.in ());
 
       if (CORBA::is_nil (ami_buffering.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::AMI_Buffering reference <%s>\n",
-                             server_ior),
+                             options.server_ior),
                             1);
         }
 
-      tmp =
-        orb->string_to_object(admin_ior);
+      CORBA::Object_var const admin_object =
+        orb->string_to_object (options.admin_ior);
 
-      Test::AMI_Buffering_Admin_var ami_buffering_admin =
-        Test::AMI_Buffering_Admin::_narrow(tmp.in ());
+      Test::AMI_Buffering_Admin_var const ami_buffering_admin =
+        Test::AMI_Buffering_Admin::_narrow (admin_object.in ());
 
       if (CORBA::is_nil (ami_buffering_admin.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::AMI_Buffering_Admin reference <%s>\n",
-                             admin_ior),
+                             options.admin_ior),
                             1);
         }
 
@@ -170,7 +178,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
 
-      if (run_message_count_test)
+      if (options.run_message_count_test)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Running message count flushing test\n"));
@@ -178,9 +186,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             run_message_count (orb.in (),
                                root_poa.in (),
                                ami_buffering.in (),
-                               ami_buffering_admin.in ());
+                               ami_buffering_admin.in (),
+                               options);
         }
-      else if (run_timeout_test)
+      else if (options.run_timeout_test)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Running timeout flushing test\n"));
@@ -188,9 +197,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             run_timeout (orb.in (),
                          root_poa.in (),
                          ami_buffering.in (),
-                         ami_buffering_admin.in ());
+                         ami_buffering_admin.in (),
+                         options);
         }
-      else if (run_timeout_reactive_test)
+      else if (options.run_timeout_reactive_test)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Running timeout (reactive) flushing test\n"));
@@ -198,9 +208,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             run_timeout_reactive (orb.in (),
                                   root_poa.in (),
                                   ami_buffering.in (),
-                                  ami_buffering_admin.in ());
+                                  ami_buffering_admin.in (),
+                                  options);
         }
-      else if (run_buffer_size_test)
+      else if (options.run_buffer_size_test)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Running buffer size flushing test\n"));
@@ -208,7 +219,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             run_buffer_size (orb.in (),
                              root_poa.in (),
                              ami_buffering.in (),
-                             ami_buffering_admin.in ());
+                             ami_buffering_admin.in (),
+                             options);
         }
       else
         {
@@ -316,7 +328,7 @@ run_liveness_test (CORBA::ORB_ptr orb,
                    Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
 {
   ACE_DEBUG ((LM_DEBUG, ".... checking for liveness\n"));
-  int test_failed = 0;
+  int test_failed {};
 
   // Get back in sync with the server...
   sync_server (orb, flusher);
@@ -324,23 +336,23 @@ run_liveness_test (CORBA::ORB_ptr orb,
   CORBA::ULong send_count =
     ami_buffering_admin->request_count ();
 
-  int liveness_test_iterations = int(send_count);
+  int const liveness_test_iterations = static_cast<int> (send_count);
   ACE_DEBUG ((LM_DEBUG, " liveness_test_iterations = %d\n",
               liveness_test_iterations));
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
-    payload[j] = CORBA::Octet(j % 256);
+    payload[j] = static_cast<CORBA::Octet> (j % 256);
 
-  int depth = 0;
+  int depth {};
   for (int i = 0; i != liveness_test_iterations; ++i)
     {
       ami_buffering->sendc_receive_data (reply_handler,
                                          payload);
       send_count++;
 
-      CORBA::ULong receive_count =
+      CORBA::ULong const receive_count =
         ami_buffering_admin->request_count ();
 
       ACE_Time_Value tv (0, 10 * 1000);
@@ -349,8 +361,8 @@ run_liveness_test (CORBA::ORB_ptr orb,
       // Once the system has sent enough messages we don't
       // expect it to fall too far behind, i.e. at least 90% of the
       // messages should be delivered....
-      CORBA::ULong expected =
-        CORBA::ULong (LIVENESS_TOLERANCE * send_count);
+      CORBA::ULong const expected =
+        static_cast<CORBA::ULong> (LIVENESS_TOLERANCE * send_count);
 
       if (receive_count < expected)
         {
@@ -379,7 +391,8 @@ int
 run_message_count (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa,
                    Test::AMI_Buffering_ptr ami_buffering,
-                   Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
+                   Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+                   Options const &options)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_MESSAGE_COUNT;
@@ -388,38 +401,41 @@ run_message_count (CORBA::ORB_ptr orb,
   buffering_constraint.timeout = 0;
 
   Test::AMI_Buffering_var flusher;
-  int test_failed =
+  int const policy_setup_failed =
     configure_policies (orb, buffering_constraint,
                         ami_buffering, flusher.out ());
 
-  if (test_failed != 0)
-    return test_failed;
+  if (policy_setup_failed != 0)
+    return policy_setup_failed;
+
+  int test_failed {};
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
-    payload[j] = CORBA::Octet(j % 256);
+    payload[j] = static_cast<CORBA::Octet> (j % 256);
 
+  // ACE_NEW_RETURN allocates the servant; owner_transfer adopts its reference.
   Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     root_poa->activate_object (reply_handler_impl);
 
-  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+  CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-  Test::AMI_AMI_BufferingHandler_var reply_handler =
+  Test::AMI_AMI_BufferingHandler_var const reply_handler =
     Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
-  CORBA::ULong send_count = 0;
-  for (int i = 0; i != iterations; ++i)
+  CORBA::ULong send_count {};
+  for (int i = 0; i != options.iterations; ++i)
     {
       sync_server (orb, flusher.in ());
 
-      CORBA::ULong initial_receive_count =
+      CORBA::ULong const initial_receive_count =
         ami_buffering_admin->request_count ();
 
       if (initial_receive_count != send_count)
@@ -436,17 +452,17 @@ run_message_count (CORBA::ORB_ptr orb,
                                              payload);
           send_count++;
 
-          CORBA::ULong receive_count =
+          CORBA::ULong const receive_count =
             ami_buffering_admin->request_count ();
 
           ACE_Time_Value tv (0, 10 * 1000);
           orb->run (tv);
 
-          CORBA::ULong iteration_count =
+          CORBA::ULong const iteration_count =
             send_count - initial_receive_count;
           if (receive_count != initial_receive_count)
             {
-              if (iteration_count < CORBA::ULong(BUFFERED_MESSAGES_COUNT))
+              if (iteration_count < static_cast<CORBA::ULong> (BUFFERED_MESSAGES_COUNT))
                 {
                   test_failed = 1;
                   ACE_DEBUG ((LM_DEBUG,
@@ -473,7 +489,7 @@ run_message_count (CORBA::ORB_ptr orb,
         }
     }
 
-  int liveness_test_failed =
+  int const liveness_test_failed =
     run_liveness_test (orb,
                        reply_handler.in (),
                        ami_buffering,
@@ -490,7 +506,8 @@ int
 run_timeout (CORBA::ORB_ptr orb,
              PortableServer::POA_ptr root_poa,
              Test::AMI_Buffering_ptr ami_buffering,
-             Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
+             Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+             Options const &options)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_TIMEOUT;
@@ -499,39 +516,42 @@ run_timeout (CORBA::ORB_ptr orb,
   buffering_constraint.timeout = TIMEOUT_MILLISECONDS * 10000;
 
   Test::AMI_Buffering_var flusher;
-  int test_failed =
+  int const policy_setup_failed =
     configure_policies (orb, buffering_constraint,
                         ami_buffering, flusher.out ());
 
-  if (test_failed != 0)
-    return test_failed;
+  if (policy_setup_failed != 0)
+    return policy_setup_failed;
+
+  int test_failed {};
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
-    payload[j] = CORBA::Octet(j % 256);
+    payload[j] = static_cast<CORBA::Octet> (j % 256);
 
+  // ACE_NEW_RETURN allocates the servant; owner_transfer adopts its reference.
   Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     root_poa->activate_object (reply_handler_impl);
 
-  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+  CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-  Test::AMI_AMI_BufferingHandler_var reply_handler =
+  Test::AMI_AMI_BufferingHandler_var const reply_handler =
     Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
-  CORBA::ULong send_count = 0;
-  int retry_attempt = 0;
-  for (int i = 0; i != iterations; ++i)
+  CORBA::ULong send_count {};
+  int retry_attempt {};
+  for (int i = 0; i != options.iterations; ++i)
     {
       sync_server (orb, flusher.in ());
 
-      CORBA::ULong initial_receive_count =
+      CORBA::ULong const initial_receive_count =
         ami_buffering_admin->request_count ();
 
       if (initial_receive_count != send_count)
@@ -542,20 +562,20 @@ run_timeout (CORBA::ORB_ptr orb,
                       i, initial_receive_count, send_count));
         }
 
-      ACE_Time_Value start = ACE_OS::gettimeofday ();
+      ACE_Time_Value const start = ACE_OS::gettimeofday ();
       while (1)
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
           ++send_count;
 
-          CORBA::ULong receive_count =
+          CORBA::ULong const receive_count =
             ami_buffering_admin->request_count ();
 
           ACE_Time_Value tv (0, 10 * 1000);
           orb->run (tv);
 
-          ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
+          ACE_Time_Value const elapsed = ACE_OS::gettimeofday () - start;
           if (receive_count != initial_receive_count)
             {
               if (elapsed.msec () < TIMEOUT_MILLISECONDS)
@@ -574,11 +594,13 @@ run_timeout (CORBA::ORB_ptr orb,
 
           if (elapsed.msec () > TIMEOUT_TOLERANCE)
             {
-              if (retry_attempt++ < 10) {
-                               ACE_DEBUG ((LM_DEBUG, "DEBUG: Retry attempt %d beyond TIMEOUT_TOLERANCE.\n",
-                                           retry_attempt));
-                               continue;
-              }
+              if (retry_attempt++ < 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DEBUG: Retry attempt %d beyond TIMEOUT_TOLERANCE.\n",
+                              retry_attempt));
+                  continue;
+                }
 
               test_failed = 1;
               ACE_DEBUG ((LM_DEBUG,
@@ -592,7 +614,7 @@ run_timeout (CORBA::ORB_ptr orb,
         }
     }
 
-  int liveness_test_failed =
+  int const liveness_test_failed =
     run_liveness_test (orb,
                        reply_handler.in (),
                        ami_buffering,
@@ -609,7 +631,8 @@ int
 run_timeout_reactive (CORBA::ORB_ptr orb,
                       PortableServer::POA_ptr root_poa,
                       Test::AMI_Buffering_ptr ami_buffering,
-                      Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
+                      Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+                      Options const &options)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_TIMEOUT;
@@ -618,39 +641,42 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   buffering_constraint.timeout = TIMEOUT_MILLISECONDS * 10000;
 
   Test::AMI_Buffering_var flusher;
-  int test_failed =
+  int const policy_setup_failed =
     configure_policies (orb, buffering_constraint,
                         ami_buffering, flusher.out ());
 
-  if (test_failed != 0)
-    return test_failed;
+  if (policy_setup_failed != 0)
+    return policy_setup_failed;
+
+  int test_failed {};
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
-    payload[j] = CORBA::Octet(j % 256);
+    payload[j] = static_cast<CORBA::Octet> (j % 256);
 
+  // ACE_NEW_RETURN allocates the servant; owner_transfer adopts its reference.
   Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     root_poa->activate_object (reply_handler_impl);
 
-  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+  CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-  Test::AMI_AMI_BufferingHandler_var reply_handler =
+  Test::AMI_AMI_BufferingHandler_var const reply_handler =
     Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
-  CORBA::ULong send_count = 0;
-  int retry_attempt = 0;
-  for (int i = 0; i != iterations; ++i)
+  CORBA::ULong send_count {};
+  int retry_attempt {};
+  for (int i = 0; i != options.iterations; ++i)
     {
       sync_server (orb, flusher.in ());
 
-      CORBA::ULong initial_receive_count =
+      CORBA::ULong const initial_receive_count =
         ami_buffering_admin->request_count ();
 
       if (initial_receive_count != send_count)
@@ -660,7 +686,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                       "DEBUG: Iteration %d message lost (%u != %u)\n",
                       i, initial_receive_count, send_count));
         }
-      ACE_Time_Value start = ACE_OS::gettimeofday ();
+      ACE_Time_Value const start = ACE_OS::gettimeofday ();
       for (int j = 0; j != 20; ++j)
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
@@ -669,13 +695,13 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
         }
       while (1)
         {
-          CORBA::ULong receive_count =
+          CORBA::ULong const receive_count =
             ami_buffering_admin->request_count ();
 
           ACE_Time_Value tv (0, 10 * 1000);
           orb->run (tv);
 
-          ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
+          ACE_Time_Value const elapsed = ACE_OS::gettimeofday () - start;
           if (receive_count != initial_receive_count)
             {
               if (elapsed.msec () < TIMEOUT_MILLISECONDS)
@@ -694,11 +720,13 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 
           if (elapsed.msec () > TIMEOUT_TOLERANCE)
             {
-              if (retry_attempt++ < 10) {
-                ACE_DEBUG ((LM_DEBUG, "DEBUG: Retry attempt %d beyond TIMEOUT_TOLERANCE.\n",
-                            retry_attempt));
-                continue;
-              }
+              if (retry_attempt++ < 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DEBUG: Retry attempt %d beyond TIMEOUT_TOLERANCE.\n",
+                              retry_attempt));
+                  continue;
+                }
 
               test_failed = 1;
               ACE_DEBUG ((LM_DEBUG,
@@ -713,7 +741,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
     }
 
 #if 0
-  int liveness_test_failed =
+  int const liveness_test_failed =
     run_liveness_test (orb,
                        reply_handler.in (),
                        ami_buffering,
@@ -724,7 +752,6 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
     test_failed = 1;
 #endif /* 0 */
 
-
   return test_failed;
 }
 
@@ -732,7 +759,8 @@ int
 run_buffer_size (CORBA::ORB_ptr orb,
                  PortableServer::POA_ptr root_poa,
                  Test::AMI_Buffering_ptr ami_buffering,
-                 Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
+                 Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
+                 Options const &options)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_MESSAGE_BYTES;
@@ -741,36 +769,39 @@ run_buffer_size (CORBA::ORB_ptr orb,
   buffering_constraint.timeout = 0;
 
   Test::AMI_Buffering_var flusher;
-  int test_failed =
+  int const policy_setup_failed =
     configure_policies (orb, buffering_constraint,
                         ami_buffering, flusher.out ());
 
-  if (test_failed != 0)
-    return test_failed;
+  if (policy_setup_failed != 0)
+    return policy_setup_failed;
+
+  int test_failed {};
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
 
+  // ACE_NEW_RETURN allocates the servant; owner_transfer adopts its reference.
   Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     root_poa->activate_object (reply_handler_impl);
 
-  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+  CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-  Test::AMI_AMI_BufferingHandler_var reply_handler =
+  Test::AMI_AMI_BufferingHandler_var const reply_handler =
     Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
-  CORBA::ULong bytes_sent = 0;
-  for (int i = 0; i != iterations; ++i)
+  CORBA::ULong bytes_sent {};
+  for (int i = 0; i != options.iterations; ++i)
     {
       sync_server (orb, flusher.in ());
 
-      CORBA::ULong initial_bytes_received =
+      CORBA::ULong const initial_bytes_received =
         ami_buffering_admin->bytes_received_count ();
 
       if (initial_bytes_received != bytes_sent)
@@ -787,13 +818,13 @@ run_buffer_size (CORBA::ORB_ptr orb,
                                              payload);
           bytes_sent += PAYLOAD_LENGTH;
 
-          CORBA::ULong bytes_received =
+          CORBA::ULong const bytes_received =
             ami_buffering_admin->bytes_received_count ();
 
           ACE_Time_Value tv (0, 10 * 1000);
           orb->run (tv);
 
-          CORBA::ULong payload_delta =
+          CORBA::ULong const payload_delta =
             bytes_sent - initial_bytes_received;
           if (bytes_received != initial_bytes_received)
             {
@@ -802,7 +833,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
               // the ORB counts the GIOP message overhead, in this
               // test we assume the overhead to be less than 10%
 
-              if (payload_delta < CORBA::ULong (GIOP_OVERHEAD * BUFFER_SIZE))
+              if (payload_delta < static_cast<CORBA::ULong> (GIOP_OVERHEAD * BUFFER_SIZE))
                 {
                   test_failed = 1;
                   ACE_DEBUG ((LM_DEBUG,
@@ -829,7 +860,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
         }
     }
 
-  int liveness_test_failed =
+  int const liveness_test_failed =
     run_liveness_test (orb,
                        reply_handler.in (),
                        ami_buffering,
