@@ -1,5 +1,5 @@
-
 #include "Client_Task.h"
+#include <cstring>
 
 Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
@@ -13,7 +13,7 @@ Client_Task::Client_Task (ACE_TCHAR const *ior,
 int
 Client_Task::svc ()
 {
-  int result = 0;
+  int result {};
   try
     {
       // All factories are kindly provided by
@@ -190,15 +190,15 @@ Client_Task::is_equal_tree (TreeController *tree1, TreeController *tree2)
 bool
 Client_Task::is_equal_node (BaseNode *node1, BaseNode *node2)
 {
-  bool ret_val = false;
+  bool ret_val {};
   if (node1 == nullptr && node2 == nullptr)
     return true;
   if (node1 != nullptr && node2 != nullptr)
     {
-      StringNode *sn1 = StringNode::_downcast (node1);
-      StringNode *sn2 = StringNode::_downcast (node2);
+      StringNode * const sn1 = StringNode::_downcast (node1);
+      StringNode * const sn2 = StringNode::_downcast (node2);
       if (sn1 && sn2)
-        if (!ACE_OS::strcmp (sn1->name (), sn2->name ()))
+        if (!std::strcmp (sn1->name (), sn2->name ()))
           ret_val = true;
       if (!(sn1 || sn2))
         ret_val = true;
@@ -222,7 +222,7 @@ Client_Task::dump_node (BaseNode *bn, int indent)
   int i = indent;
   for (; i != 0; i--) ACE_DEBUG ((LM_DEBUG, "  "));
 
-  StringNode *sn = StringNode::_downcast (bn);
+  StringNode * const sn = StringNode::_downcast (bn);
   if (sn != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",

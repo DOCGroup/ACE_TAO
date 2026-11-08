@@ -16,8 +16,8 @@ reflect_node (BaseNode *bn)
   reflect_node (bn->left ());
   reflect_node (bn->right ());
 
-  BaseNode *old_right = bn->right ();
-  BaseNode *old_left = bn->left ();
+  BaseNode * const old_right = bn->right ();
+  BaseNode * const old_left = bn->left ();
 
   CORBA::add_ref (old_right);
   CORBA::add_ref (old_left);
