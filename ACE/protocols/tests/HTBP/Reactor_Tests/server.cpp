@@ -56,7 +56,7 @@ class Accept_Handler : public ACE_Event_Handler
 public:
   Accept_Handler (ACE_SOCK_Acceptor& a);
   virtual ~Accept_Handler ();
-  virtual int handle_input (ACE_HANDLE );
+  int handle_input (ACE_HANDLE) override;
 private:
   ACE_SOCK_Acceptor& acceptor_;
   std::array<ACE::HTBP::Channel *, 2> channels_ {};
@@ -67,7 +67,7 @@ class Stream_Handler : public ACE_Event_Handler
 public:
   Stream_Handler (ACE::HTBP::Stream &s);
   virtual ~Stream_Handler ();
-  virtual int handle_input (ACE_HANDLE );
+  int handle_input (ACE_HANDLE) override;
 private:
   ACE::HTBP::Stream &stream_;
 };
