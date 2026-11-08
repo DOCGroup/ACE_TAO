@@ -11,15 +11,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-Send_Task::Send_Task ()
-  : iterations_ (0)
-  , period_in_usecs_ (0)
-  , startup_sleep_ (0)
-  , event_type_ (0)
-  , event_source_ (0)
-  , barrier_ (nullptr)
-{
-}
+Send_Task::Send_Task () = default;
 
 void
 Send_Task::init (int iterations,

@@ -52,19 +52,20 @@ public:
   void stop ();
 
 private:
-  int iterations_;
+  int iterations_ {};
 
-  int period_in_usecs_;
+  int period_in_usecs_ {};
 
-  int startup_sleep_;
+  int startup_sleep_ {};
 
-  int event_type_;
+  int event_type_ {};
 
-  int event_source_;
+  int event_source_ {};
 
   PortableServer::Servant_var<Supplier> supplier_;
 
-  ACE_Barrier *barrier_;
+  /// Borrowed barrier; its owner must outlive the active sender task.
+  ACE_Barrier *barrier_ {};
 
   TAO_SYNCH_MUTEX mutex_;
   bool stop_ {};

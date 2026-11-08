@@ -50,9 +50,9 @@ public:
                   int nthreads,
                   Task *task);
 
-  Task_Activator (const Task_Activator &) = delete;
+  Task_Activator (Task_Activator const &) = delete;
   Task_Activator (Task_Activator &&) = delete;
-  Task_Activator &operator= (const Task_Activator &) = delete;
+  Task_Activator &operator= (Task_Activator const &) = delete;
   Task_Activator &operator= (Task_Activator &&) = delete;
 
   /// Destructor
@@ -73,6 +73,7 @@ public:
   void release ();
 
 protected:
+  /// Borrowed task pointer; ownership remains with the caller.
   Task *task_;
 };
 
