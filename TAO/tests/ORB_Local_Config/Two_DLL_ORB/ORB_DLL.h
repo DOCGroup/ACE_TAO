@@ -45,9 +45,9 @@ class Server_Worker : public Abstract_Worker
 {
 public:
   Server_Worker ();
-  ~Server_Worker ();
-  int test_main (int argc, ACE_TCHAR *argv[]);
-  const ACE_TCHAR * kind () const;
+  ~Server_Worker () override;
+  int test_main (int argc, ACE_TCHAR *argv[]) override;
+  ACE_TCHAR const * kind () const override;
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -60,9 +60,9 @@ class Client_Worker : public Abstract_Worker
 {
 public:
   Client_Worker ();
-  ~Client_Worker ();
-  int test_main (int argc, ACE_TCHAR *argv[]);
-  const ACE_TCHAR * kind () const;
+  ~Client_Worker () override;
+  int test_main (int argc, ACE_TCHAR *argv[]) override;
+  ACE_TCHAR const * kind () const override;
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -80,17 +80,17 @@ class Service_Config_ORB_DLL_Export Service_Config_ORB_DLL
 public:
   /// Constructor.
   Service_Config_ORB_DLL ();
-  ~Service_Config_ORB_DLL ();
+  ~Service_Config_ORB_DLL () override;
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc ();
+  int svc () override;
 
 private:
   signed char is_server_;
