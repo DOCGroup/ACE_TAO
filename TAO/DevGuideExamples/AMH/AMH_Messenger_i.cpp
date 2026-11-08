@@ -10,10 +10,6 @@
 
 #include "AMH_Messenger_i.h"
 #include <iostream>
-// Implementation skeleton constructor
-AMH_Messenger_i::AMH_Messenger_i ()
-{
-}
 
 void
 AMH_Messenger_i::send_message (
@@ -26,9 +22,8 @@ AMH_Messenger_i::send_message (
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;
-  CORBA::String_var inout_message_arg =
-    CORBA::string_dup("Thanks for the message.");
+  CORBA::String_var response (CORBA::string_dup ("Thanks for the message."));
   CORBA::Boolean const result = true;
 
-  _tao_rh->send_message(result,inout_message_arg.inout ());
+  _tao_rh->send_message (result, response.inout ());
 }

@@ -1,72 +1,70 @@
 #include "amh_pch.h"
+#include "MessengerC.h"
 
 #include "ace/Get_Opt.h"
-#include "MessengerC.h"
+
 #include <iostream>
 
-ACE_TString ior = ACE_TEXT ("file://test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Client_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-  {
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option;
+
+  while ((option = get_opts ()) != -1)
+    switch (option)
+      {
       case 'k':
-        ior = get_opts.optarg;
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         std::cerr << "usage: " << argv[0] << " -k <ior>" << std::endl;
         return -1;
-        break;
-  }
+      }
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+  try
+    {
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
 
-    if (parse_args(argc, argv) != 0) {
+      CORBA::Object_var const object (orb->string_to_object (options.ior.c_str ()));
+      if (CORBA::is_nil (object.in ()))
+        {
+          std::cerr << "Could not get Messenger IOR." << std::endl;
+          return 1;
+        }
+
+      DevGuide::Messenger_var const messenger (
+        DevGuide::Messenger::_narrow (object.in ()));
+      if (CORBA::is_nil (messenger.in ()))
+        {
+          std::cerr << "IOR was not a Messenger object reference." << std::endl;
+          return 1;
+        }
+
+      CORBA::String_var message (CORBA::string_dup ("Hello!"));
+      messenger->send_message ("TAO User", "TAO Test", message.inout ());
+      std::cout << "Reply: " << message.in () << std::endl;
+      orb->destroy ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "CORBA exception: " << ex << std::endl;
       return 1;
     }
 
-    // Read and destringify the Messenger object's IOR.
-    CORBA::Object_var obj = orb->string_to_object(ior.c_str());
-    if( CORBA::is_nil( obj.in() ) ) {
-      std::cerr << "Could not get Messenger IOR." << std::endl;
-      return 1;
-    }
-
-    // Narrow the IOR to a Messenger object reference.
-    DevGuide::Messenger_var messenger =
-      DevGuide::Messenger::_narrow( obj.in() );
-    if( CORBA::is_nil( messenger.in() ) ) {
-      std::cerr << "IOR was not a Messenger object reference." << std::endl;
-      return 1;
-    }
-
-    // Send a message the the Messenger object.
-    CORBA::String_var msg = CORBA::string_dup( "Hello!" );
-    messenger->send_message( "TAO User", "TAO Test", msg.inout() );
-
-    // Print the Messenger's reply.
-    std::cout << "Reply: " << msg.in() << std::endl;
-
-    orb->destroy();
-
-    return 0;
-  }
-  catch (CORBA::Exception const &ex) {
-    std::cerr << "CORBA exception: " << ex << std::endl;
-  }
-
-  return 1;
+  return 0;
 }

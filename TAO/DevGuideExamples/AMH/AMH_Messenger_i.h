@@ -20,8 +20,7 @@
 class  AMH_Messenger_i : public virtual POA_DevGuide::AMH_Messenger
 {
 public:
-  //Constructor
-  AMH_Messenger_i ();
+  AMH_Messenger_i () = default;
 
   //Destructor
   ~AMH_Messenger_i () override = default;
