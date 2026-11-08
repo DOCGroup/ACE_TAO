@@ -147,8 +147,8 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
   for (int length = prop_seq.length (), k = 0; k < length; k++)
     {
       CORBA::ULong seq_length = 0, i= 0;
-      CORBA::Any* value = 0;
-      CORBA::TypeCode_ptr tc = 0;
+      CORBA::Any* value {};
+      CORBA::TypeCode_ptr tc {};
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       try
         {
@@ -171,13 +171,13 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
         }
 
-      if (tc == 0)
+      if (tc == nullptr)
         continue;
       int check = tc->equal (TAO_Trader_Test::_tc_StringSeq);
 
       if (check)
         {
-          const TAO_Trader_Test::StringSeq* str_seq = 0;
+          TAO_Trader_Test::StringSeq const *str_seq {};
           (*value) >>= str_seq;
 
           for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
@@ -191,7 +191,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
           if (check)
             {
-              const TAO_Trader_Test::ULongSeq* ulong_seq = 0;
+              TAO_Trader_Test::ULongSeq const *ulong_seq {};
               (*value) >>= ulong_seq;
 
               for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
@@ -286,14 +286,14 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
                ACE_OS::strcmp (current_arg, ACE_TEXT("-iorfile")) == 0)
         {
           arg_shifter.consume_arg ();
-          FILE* ior_file = 0;
+          FILE* ior_file {};
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* file_name = arg_shifter.get_current ();
               ior_file = ACE_OS::fopen (file_name, "r");
 
-              if (ior_file == 0)
+              if (ior_file == nullptr)
                 ACE_ERROR ((LM_ERROR,
                             "Unable to open %s for reading: %p\n",
                             file_name));
@@ -303,7 +303,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
           else
             ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
 
-          if (ior_file != 0)
+          if (ior_file != nullptr)
             {
               ACE_Read_Buffer read_buffer (ior_file, 1);
               this->ior_ = read_buffer.read ();

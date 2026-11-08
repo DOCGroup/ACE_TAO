@@ -15,8 +15,8 @@ TAO_Simple_Dynamic_Property<T>::evalDP (const char*,
                                         CORBA::TypeCode_ptr,
                                         const CORBA::Any&)
 {
-  CORBA::Any* return_value = 0;
-  ACE_NEW_RETURN (return_value, CORBA::Any, 0);
+  CORBA::Any* return_value {};
+  ACE_NEW_RETURN (return_value, CORBA::Any, nullptr);
 
   (*return_value) <<= this->dp_;
   return return_value;
