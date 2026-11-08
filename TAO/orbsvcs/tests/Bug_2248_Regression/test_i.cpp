@@ -1,7 +1,9 @@
 #include "test_i.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
+
+#include <cstring>
+#include <string>
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, char const * key)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -19,11 +21,11 @@ Simple_Server_i::remote_call ()
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing remote_call()\n", _key.in()));
 
-  char buf[256];
-  ACE_OS::sprintf (buf, "remote_call() completed by %s", _key.in());
+  std::string message = "remote_call() completed by ";
+  message += this->_key.in ();
 
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in(), buf));
-  return CORBA::string_dup (buf);
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in (), message.c_str ()));
+  return CORBA::string_dup (message.c_str ());
 }
 
 
@@ -35,17 +37,18 @@ Simple_Server_i::shutdown (char const * key)
   //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
-  if (!ACE_OS::strcmp (_key.in(), key))
+  if (std::strcmp (this->_key.in (), key) == 0)
     {
        this->orb_->shutdown (false);
        still_alive = 0;
     }
 
-  char buf[256];
-  ACE_OS::sprintf (buf, "shutdown() completed by %s, still_alive=%d",
-                   _key.in(), still_alive);
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in(), buf));
-  return CORBA::string_dup (buf);
+  std::string message = "shutdown() completed by ";
+  message += this->_key.in ();
+  message += ", still_alive=";
+  message += std::to_string (still_alive);
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in (), message.c_str ()));
+  return CORBA::string_dup (message.c_str ());
 }
 
 char *
@@ -56,15 +59,16 @@ Simple_Server_i::abort (char const * key)
   //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
-  if (!ACE_OS::strcmp (_key.in(), key))
+  if (std::strcmp (this->_key.in (), key) == 0)
     {
        ACE_OS::abort();
        still_alive = 0;
     }
 
-  char buf[256];
-  ACE_OS::sprintf (buf, "abort() completed by %s, still_alive=%d",
-                   _key.in(), still_alive);
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in(), buf));
-  return CORBA::string_dup (buf);
+  std::string message = "abort() completed by ";
+  message += this->_key.in ();
+  message += ", still_alive=";
+  message += std::to_string (still_alive);
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in (), message.c_str ()));
+  return CORBA::string_dup (message.c_str ());
 }

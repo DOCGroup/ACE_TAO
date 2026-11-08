@@ -12,6 +12,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <string>
+
 // Files which have the IOR
 ACE_TCHAR const *first_ior {};
 ACE_TCHAR const *first_key {};
@@ -320,50 +322,44 @@ Client_i::Client_i (CORBA::ORB_ptr orb)
 
 int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
 {
-  char expected[1024], received[1024];
+  std::string expected;
   if (execute_key)
     {
-      ACE_OS::sprintf (expected,
-                       "remote_call() completed by %s", ACE_TEXT_ALWAYS_CHAR (execute_key));
+      expected = "remote_call() completed by ";
+      expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
     }
   else
     {
-      ACE_OS::strcpy (expected, "CORBA::TRANSIENT");
+      expected = "CORBA::TRANSIENT";
     }
 
+  std::string received;
   try
     {
       // Make a remote call
       CORBA::String_var s =
         server->remote_call ();
 
-      if (!s.in())
-        {
-          ACE_OS::strcpy (received, "(null)");
-        }
-      else
-        {
-          ACE_OS::strcpy (received, s.in());
-        }
+      received = s.in () == nullptr ? "(null)" : s.in ();
     }
   catch (const CORBA::TRANSIENT&)
     {
-      ACE_OS::strcpy (received, "CORBA::TRANSIENT");
+      received = "CORBA::TRANSIENT";
     }
   catch (const CORBA::COMM_FAILURE&)
     {
-      ACE_OS::strcpy (received, "CORBA::COMM_FAILURE");
+      received = "CORBA::COMM_FAILURE";
     }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("CLIENT> REMOTE   expected: '%C'"),
-              expected));
-  if (ACE_OS::strcmp (expected, received))
+              expected.c_str ()));
+  if (expected != received)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("... FAIL\n")
                   ACE_TEXT ("CLIENT>          received: '%C'\n"),
-                  received));
+                  received.c_str ()));
       return -1;
     }
 
@@ -375,50 +371,44 @@ int run_abort_test (Simple_Server_ptr server,
                     const ACE_TCHAR* request_key,
                     const ACE_TCHAR* execute_key)
 {
-  char expected[1024], received[1024];
+  std::string expected;
   if (execute_key)
     {
-      ACE_OS::sprintf (expected,
-                       "abort() completed by %s, still_alive=1",
-                       ACE_TEXT_ALWAYS_CHAR (execute_key));
+      expected = "abort() completed by ";
+      expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
+      expected += ", still_alive=1";
     }
   else
     {
-      ACE_OS::strcpy (expected, "CORBA::TRANSIENT");
+      expected = "CORBA::TRANSIENT";
     }
 
+  std::string received;
   try
     {
       CORBA::String_var s = server->abort (ACE_TEXT_ALWAYS_CHAR (request_key));
 
-      if (!s.in())
-        {
-          ACE_OS::strcpy (received, "(null)");
-        }
-      else
-        {
-          ACE_OS::strcpy (received, s.in());
-        }
+      received = s.in () == nullptr ? "(null)" : s.in ();
     }
   catch (const CORBA::TRANSIENT&)
     {
-      ACE_OS::strcpy (received, "CORBA::TRANSIENT");
+      received = "CORBA::TRANSIENT";
     }
   catch (const CORBA::COMM_FAILURE&)
     {
-      ACE_OS::strcpy (received, "CORBA::COMM_FAILURE");
+      received = "CORBA::COMM_FAILURE";
     }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("CLIENT> ABORT    expected: '%C'"),
-              expected));
+              expected.c_str ()));
 
-  if (ACE_OS::strcmp (expected, received))
+  if (expected != received)
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("... FAIL\n")
                 ACE_TEXT ("CLIENT>          received: '%C'\n"),
-                received));
+                received.c_str ()));
     return -1;
   }
 
