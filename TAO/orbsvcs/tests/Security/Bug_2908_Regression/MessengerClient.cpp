@@ -1,27 +1,28 @@
 #include "MessengerC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://server.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -30,44 +31,45 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    Client_Options options;
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (argc, argv, options) != 0)
       return 1;
 
-    CORBA::Object_var obj =
-      orb->string_to_object (ior);
+    CORBA::Object_var obj = orb->string_to_object (options.ior.c_str ());
 
     // Narrow the Messenger object reference
-    Messenger_var messenger = Messenger::_narrow(obj.in());
-    if (CORBA::is_nil(messenger.in())) {
-      ACE_ERROR((LM_ERROR, " ERROR: Client cannot get a Messenger reference\n"));
+    Messenger_var messenger = Messenger::_narrow (obj.in ());
+    if (CORBA::is_nil (messenger.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, " ERROR: Client cannot get a Messenger reference\n"));
       return 1;
     }
 
-    CORBA::String_var message = CORBA::string_dup("Hello!");
+    CORBA::String_var message = CORBA::string_dup ("Hello!");
 
-    ACE_DEBUG((LM_DEBUG, "CLIENT: Start sending message\n"));
+    ACE_DEBUG ((LM_DEBUG, "CLIENT: Start sending message\n"));
 
     // Send a message
-    messenger->send_message("user", "TAO Test", message.inout());
+    messenger->send_message ("user", "TAO Test", message.inout ());
 
-    ACE_DEBUG((LM_DEBUG, "CLIENT: Message was sent\n"));
+    ACE_DEBUG ((LM_DEBUG, "CLIENT: Message was sent\n"));
 
     messenger->shutdown ();
 
-    orb->destroy();
+    orb->destroy ();
   }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Caught exception:");
-      return 1;
-    }
+  catch (CORBA::Exception const &ex)
+  {
+    ex._tao_print_exception ("Caught exception:");
+    return 1;
+  }
 
   return 0;
 }

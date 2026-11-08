@@ -16,16 +16,20 @@ public:
   // Constructor
   Messenger_i (CORBA::ORB_var orb);
 
-  // Destructor
-  virtual ~Messenger_i ();
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
-  virtual CORBA::Boolean send_message ( const char * user_name,
-                                        const char * subject,
-                                        char *& message);
+  ~Messenger_i () override = default;
 
-  virtual CORBA::Boolean call_message (const char * user_name);
+  CORBA::Boolean send_message (char const *user_name,
+                               char const *subject,
+                               char *&message) override;
 
-  virtual void shutdown ();
+  CORBA::Boolean call_message (char const *user_name) override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

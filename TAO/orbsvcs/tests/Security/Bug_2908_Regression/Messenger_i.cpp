@@ -9,26 +9,20 @@ Messenger_i::Messenger_i (CORBA::ORB_var orb)
 {
 }
 
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
 CORBA::Boolean
-Messenger_i::send_message (const char *, const char *, char *&)
+Messenger_i::send_message (char const *, char const *, char *&)
 {
-  ACE_DEBUG((LM_DEBUG, "Inside send_message()....\n"));
-  const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
-  CORBA::Object_var obj =
-    orb_->string_to_object (ior);
+  ACE_DEBUG ((LM_DEBUG, "Inside send_message()....\n"));
+  ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
+  CORBA::Object_var obj = this->orb_->string_to_object (ior);
 
   // Narrow the Messenger object reference
-  Messenger_var messenger = Messenger::_narrow(obj.in());
-  if (CORBA::is_nil(messenger.in()))
-  {
-    ACE_ERROR((LM_ERROR, "ERROR: Not a Messenger reference\n"));
-    return 1;
-  }
+  Messenger_var messenger = Messenger::_narrow (obj.in ());
+  if (CORBA::is_nil (messenger.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: Not a Messenger reference\n"));
+      return 1;
+    }
 
   Client_Task client_task (orb_.in (),
                            messenger.in (),
@@ -48,11 +42,11 @@ Messenger_i::send_message (const char *, const char *, char *&)
 }
 
 CORBA::Boolean
-Messenger_i::call_message (const char * user_name)
+Messenger_i::call_message (char const *user_name)
 {
-    ACE_DEBUG((LM_DEBUG, "Inside call_message()....\n"));
-    ACE_DEBUG((LM_DEBUG, "Message from: %s\n", user_name));
-    return true;
+  ACE_DEBUG ((LM_DEBUG, "Inside call_message()....\n"));
+  ACE_DEBUG ((LM_DEBUG, "Message from: %s\n", user_name));
+  return true;
 }
 
 void
