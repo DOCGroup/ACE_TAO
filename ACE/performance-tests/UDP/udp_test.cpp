@@ -25,33 +25,35 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <vector>
+
 // FUZZ: disable check_for_math_include
 #include <math.h>
 
 // Global variables (evil).
-static const u_short DEFPORT = 5050;
-static const int MAXPKTSZ = 65536;
-static const int DEFPKTSZ = 64;
-static const int DEFITERATIONS = 1000;
-static const int DEFINTERVAL = 1000; // 1000 usecs.
-static const int DEFWINDOWSZ = 10; // 10 microsecond.
+static constexpr u_short DEFPORT = 5050;
+static constexpr int MAXPKTSZ = 65536;
+static constexpr int DEFPKTSZ = 64;
+static constexpr int DEFITERATIONS = 1000;
+static constexpr int DEFINTERVAL = 1000; // 1000 usecs.
+static constexpr int DEFWINDOWSZ = 10; // 10 microsecond.
 static char SendBuf[MAXPKTSZ];
 static char RxBuf[MAXPKTSZ];
-static ACE_TCHAR **cmd;
+static ACE_TCHAR *const *cmd {};
 static ACE_TCHAR datafile[MAXHOSTNAMELEN];
 
 static ACE_UINT32 nsamples = DEFITERATIONS;
 static int usdelay = DEFINTERVAL;
 static int bufsz = DEFPKTSZ;
 static int window = DEFWINDOWSZ;
-static int VERBOSE = 0;
-static int logfile = 0;
-static int server = 0;
-static int client = 0;
-static u_int use_reactor = 0;
-ACE_hrtime_t max_allow = 0;
-ACE_hrtime_t total_ltime;
-ACE_hrtime_t ltime;
+static bool VERBOSE {};
+static bool logfile {};
+static bool server {};
+static bool client {};
+static bool use_reactor {};
+ACE_hrtime_t max_allow {};
+ACE_hrtime_t total_ltime {};
+ACE_hrtime_t ltime {};
 
 static void
 usage ()
@@ -74,8 +76,6 @@ usage ()
               *cmd));
 }
 
-static ACE_hrtime_t *Samples;
-static u_int *Dist;
 static ACE_TCHAR sumfile[30];
 static ACE_TCHAR distfile[30];
 static ACE_TCHAR sampfile[30];
@@ -83,10 +83,10 @@ static ACE_TCHAR sampfile[30];
 class Client : public ACE_Event_Handler
 {
 public:
-  Client (const ACE_INET_Addr &addr,
-          const ACE_INET_Addr &remote_addr);
+  Client (ACE_INET_Addr const &addr,
+          ACE_INET_Addr const &remote_addr);
 
-  virtual ~Client ();
+  virtual ~Client () = default;
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -118,12 +118,14 @@ private:
   ACE_INET_Addr remote_addr_;
 
   Client () = delete;
-  Client (const Client &) = delete;
-  Client &operator= (const Client &) = delete;
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
 };
 
-Client::Client (const ACE_INET_Addr &addr,
-                const ACE_INET_Addr &remote_addr)
+Client::Client (ACE_INET_Addr const &addr,
+                ACE_INET_Addr const &remote_addr)
   : endpoint_ (addr),
     remote_addr_ (remote_addr)
 {
@@ -134,10 +136,6 @@ Client::Client (const ACE_INET_Addr &addr,
         ACE_ERROR ((LM_ERROR,
                     "ACE_Reactor::register_handler: Client\n"));
     }
-}
-
-Client::~Client ()
-{
 }
 
 ACE_HANDLE
@@ -198,8 +196,8 @@ Client::run ()
   int n;
   int maxindx = 0;
   int minindx = 0;
-  char *sbuf = SendBuf;
-  char *rbuf = RxBuf;
+  char *const sbuf = SendBuf;
+  char *const rbuf = RxBuf;
 
   ACE_High_Res_Timer timer;
   ACE_hrtime_t sample;
@@ -209,15 +207,15 @@ Client::run ()
   double std_err = 0.0;
   double sample_mean = 0.0;
 
-  int                tracking_last_over = 0;
+  bool tracking_last_over {};
   ACE_High_Res_Timer since_over;
   ACE_hrtime_t psum = 0;
   ACE_hrtime_t sum = 0;
   ACE_hrtime_t max = 0;
   ACE_hrtime_t min = (ACE_hrtime_t) (u_int) -1;
-  FILE *sumfp = 0;
-  FILE *distfp = 0;
-  FILE *sampfp = 0;
+  FILE *sumfp {};
+  FILE *distfp {};
+  FILE *sampfp {};
   pid_t *pid = (pid_t *) sbuf;
   int *seq = (int *) (sbuf + sizeof (int));
 
@@ -233,8 +231,7 @@ Client::run ()
               *seq));
 
   // Allocate memory to hold samples.
-  Samples = (ACE_hrtime_t *) ACE_OS::calloc (nsamples,
-                                             sizeof (ACE_hrtime_t));
+  std::vector<ACE_hrtime_t> samples (nsamples);
 
   for (i = -1, *seq = 0, j = 0;
        i < (ACE_INT32) nsamples;
@@ -282,13 +279,13 @@ Client::run ()
               since_over.reset ();
             }
 
-          tracking_last_over = 1;
+          tracking_last_over = true;
           since_over.start ();
           i--;
           continue;
         }
 
-      Samples[i] = sample;
+      samples[i] = sample;
       sum += sample;
 
       if (min == (ACE_hrtime_t) (u_int) -1)
@@ -330,41 +327,40 @@ Client::run ()
       ACE_OS::sprintf (distfile, ACE_TEXT("%s.dist"), datafile);
       ACE_OS::sprintf (sampfile, ACE_TEXT("%s.samp"), datafile);
 
-      distfp = ACE_OS::fopen(distfile, ACE_TEXT("w"));
+      distfp = ACE_OS::fopen (distfile, ACE_TEXT("w"));
 
-      if (distfp == 0)
+      if (distfp == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Unable to open dist file!\n\n"));
-          logfile = 0;
+          logfile = false;
         }
-      if (logfile && (sampfp = ACE_OS::fopen (sampfile, ACE_TEXT("w"))) == 0)
+      if (logfile && (sampfp = ACE_OS::fopen (sampfile, ACE_TEXT("w"))) == nullptr)
         {
           ACE_OS::fclose (distfp);
           ACE_DEBUG ((LM_DEBUG,
                       "Unable to open sample file!\n\n"));
-          logfile = 0;
+          logfile = false;
         }
-      if (logfile && (sumfp = ACE_OS::fopen (sumfile, ACE_TEXT("w"))) == 0)
+      if (logfile && (sumfp = ACE_OS::fopen (sumfile, ACE_TEXT("w"))) == nullptr)
         {
           ACE_OS::fclose (distfp);
           ACE_OS::fclose (sampfp);
           ACE_DEBUG ((LM_DEBUG,
                       "Unable to open sample file!\n\n"));
-          logfile = 0;
+          logfile = false;
         }
     }
 
   window = window * 1000; // convert to nsec.
   ndist = (int)((max-min) / window) + 1;
-  Dist = (u_int *) ACE_OS::calloc (ndist,
-                                   sizeof (u_int));
+  std::vector<u_int> dist (ndist);
 
   for (i = 0; i < (ACE_INT32) nsamples; i++)
     {
-      std_dev += ((double) ACE_U64_TO_U32 (Samples[i]) - sample_mean) *
-        ((double) ACE_U64_TO_U32 (Samples[i]) - sample_mean);
-      d = (int)((Samples[i] - min)/window);
+      std_dev += ((double) ACE_U64_TO_U32 (samples[i]) - sample_mean) *
+        ((double) ACE_U64_TO_U32 (samples[i]) - sample_mean);
+      d = (int)((samples[i] - min)/window);
 
       if (d < 0 || d > ndist)
         {
@@ -374,11 +370,11 @@ Client::run ()
                       ndist));
           ACE_OS::exit (1);
         }
-      Dist[d] += 1;
+      dist[d] += 1;
       if (logfile)
         ACE_OS::fprintf (sampfp,
                          "%u\n",
-                         ACE_U64_TO_U32 (Samples[i]));
+                         ACE_U64_TO_U32 (samples[i]));
     }
 
   if (logfile)
@@ -391,7 +387,7 @@ Client::run ()
           ACE_OS::fprintf (distfp,
                            "%u %d\n",
                            (ACE_UINT32) (tmp / (ACE_UINT32) 1000),
-                           Dist[i]);
+                           dist[i]);
           tmp += window;
         }
     }
@@ -419,10 +415,10 @@ Client::run ()
     {
       ACE_OS::fprintf (sumfp,
                        "Command executed:\n");
-      for (; *cmd; cmd++)
+      for (ACE_TCHAR *const *arg = cmd; *arg; ++arg)
         ACE_OS::fprintf (sumfp,
                          "%s ",
-                         ACE_TEXT_ALWAYS_CHAR (*cmd));
+                         ACE_TEXT_ALWAYS_CHAR (*arg));
       ACE_OS::fprintf (sumfp,
                        "\n");
 
@@ -467,9 +463,9 @@ Client::shutdown ()
 class Server : public ACE_Event_Handler
 {
 public:
-  Server (const ACE_INET_Addr &addr);
+  Server (ACE_INET_Addr const &addr);
 
-  virtual ~Server ();
+  virtual ~Server () = default;
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -482,11 +478,13 @@ private:
   ACE_SOCK_Dgram endpoint_;
 
   Server () = delete;
-  Server (const Server &) = delete;
-  Server &operator= (const Server &) = delete;
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 };
 
-Server::Server (const ACE_INET_Addr &addr)
+Server::Server (ACE_INET_Addr const &addr)
   :  endpoint_ (addr)
 {
   if (use_reactor)
@@ -497,10 +495,6 @@ Server::Server (const ACE_INET_Addr &addr)
         ACE_ERROR ((LM_ERROR,
                     "ACE_Reactor::register_handler: Server\n"));
     }
-}
-
-Server::~Server ()
-{
 }
 
 ACE_HANDLE
@@ -592,10 +586,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
         case 'f':
           ACE_OS::strcpy (datafile, getopt.opt_arg ());
-          logfile = 1;
+          logfile = true;
           break;
         case 'v':
-          VERBOSE = 1;
+          VERBOSE = true;
           break;
         case 'b':
           bufsz = ACE_OS::atoi (getopt.opt_arg ());
@@ -613,7 +607,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
           break;
         case 'a':
-          use_reactor = 1;
+          use_reactor = true;
           break;
         case 's':
           so_bufsz = ACE_OS::atoi (getopt.opt_arg ());
@@ -641,12 +635,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
           break;
         case 't':
-          server = 0;
-          client = 1;
+          server = false;
+          client = true;
           break;
         case 'r':
-          client = 0;
-          server = 1;
+          client = false;
+          server = true;
           break;
         default:
           usage ();
@@ -654,7 +648,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if ((getopt.opt_ind () >= argc && client != 0) || argc == 1)
+  if ((getopt.opt_ind () >= argc && client) || argc == 1)
     {
       usage ();
       return 1;
