@@ -11,11 +11,11 @@ public:
                   const char *full_name,
                   CORBA::Double price);
 
-  char *symbol ();
-  char *full_name ();
-  CORBA::Double price ();
+  char *symbol () override;
+  char *full_name () override;
+  CORBA::Double price () override;
   CORBA::Double get_price_and_names (CORBA::String_out symbol,
-                                     CORBA::String_out full_name);
+                                     CORBA::String_out full_name) override;
 
 private:
   std::string symbol_;
