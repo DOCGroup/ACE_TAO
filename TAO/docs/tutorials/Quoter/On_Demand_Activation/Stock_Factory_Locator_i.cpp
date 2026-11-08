@@ -24,11 +24,12 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
     // Check if the ObjectId is valid
     if (std::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
       // Create the required servant
-      PortableServer::Servant servant =
+      PortableServer::ServantBase_var servant_owner =
         new Quoter_Stock_Factory_i ();
+      PortableServer::Servant servant = servant_owner.in ();
       cookie = servant;
 
-      return servant;
+      return servant_owner._retn ();
     }
     else {
       throw CORBA::OBJECT_NOT_EXIST ();
@@ -46,8 +47,9 @@ Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
                                             void * cookie,
                                             PortableServer::Servant servant)
 {
-  // Delete the servant as it is no longer needed.
-  PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
-  if (servant == my_servant)
-    delete servant;
+  // Release the servant as it is no longer needed.
+  if (servant == cookie)
+    {
+      PortableServer::ServantBase_var servant_owner (servant);
+    }
 }
