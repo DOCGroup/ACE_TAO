@@ -6,7 +6,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Manual_Event.h"
 
-Server_Task::Server_Task (Sender_i *sender,
+Server_Task::Server_Task (Sender_i &sender,
                           ACE_Manual_Event &event,
                           int no_iterations,
                           CORBA::ORB_ptr orb,
@@ -24,14 +24,10 @@ Server_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Wait for the Event\n"));
 
-  /// Wait on the event
-  /// Yes, wait on event twice. One for making sure that we have got
-  /// all the clients  come and register with us.
+  // Wait on the event to ensure that all clients have registered.
   this->event_.wait ();
 
-
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start doing some work....\n"));
-
 
   try
     {
@@ -41,10 +37,10 @@ Server_Task::svc ()
 
       for (int i = 0; i != this->no_iterations_; ++i)
         {
-          if (i%50 == 0)
+          if (i % 50 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sending message ....\n"));
 
-          this->sender_->send_message ();
+          this->sender_.send_message ();
 
           // Sanity check for connections..
           if (connection_no <
@@ -59,10 +55,9 @@ Server_Task::svc ()
                           "(%P|%t) ERROR: We will crash now...\n"));
               ACE_OS::abort ();
             }
-
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in iteration.\n");
     }

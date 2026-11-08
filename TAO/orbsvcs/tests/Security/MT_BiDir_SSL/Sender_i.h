@@ -4,6 +4,7 @@
 #include /**/ "ace/pre.h"
 
 #include "SenderS.h"
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
@@ -19,11 +20,15 @@ public:
   /// Constructor
   Sender_i (CORBA::ULong no_clients,
             ACE_Manual_Event &event);
+  Sender_i (Sender_i const &) = delete;
+  Sender_i (Sender_i &&) = delete;
+  Sender_i &operator= (Sender_i const &) = delete;
+  Sender_i &operator= (Sender_i &&) = delete;
 
-  virtual ~Sender_i ();
+  ~Sender_i () override = default;
 
   // = The skeleton methods
-  virtual CORBA::Long receiver_object (Receiver *recv);
+  CORBA::Long receiver_object (Receiver *recv) override;
 
   /// Public method defined locally
   void send_message ();
@@ -35,11 +40,11 @@ private:
   /// An event for waking other threads
   ACE_Manual_Event &event_;
 
-  /// An array of receiver pointers
-  Receiver_var *receivers_;
+  /// Receivers registered by the clients
+  std::vector<Receiver_var> receivers_;
 
-  /// Size of the <this->receivers_> array
-  CORBA::ULong no_clients_;
+  /// Number of client receivers expected
+  CORBA::ULong const no_clients_;
 
   /// Receiver index
   CORBA::ULong last_index_;
