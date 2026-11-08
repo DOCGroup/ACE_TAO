@@ -210,7 +210,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
       if (this->shm_malloc_->bind ("to_client", mymq + 1) == -1)
         return -1;
 
-      this->recv_channel_.queue_.init (mymq, this->shm_malloc_);
+      this->recv_channel_.queue_.init (mymq, this->shm_malloc_.get ());
       ACE_NEW_RETURN (this->recv_channel_.sema_,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, server_sema),
                       -1);
@@ -218,7 +218,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
                       ACE_SYNCH_PROCESS_MUTEX (server_lock),
                       -1);
 
-      this->send_channel_.queue_.init (mymq + 1, this->shm_malloc_);
+      this->send_channel_.queue_.init (mymq + 1, this->shm_malloc_.get ());
       ACE_NEW_RETURN (this->send_channel_.sema_,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, client_sema),
                       -1);
@@ -230,7 +230,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
     {
       // we are client.
       MQ_Struct *mymq = reinterpret_cast<MQ_Struct *> (to_server_ptr);
-      this->recv_channel_.queue_.init (mymq +1, this->shm_malloc_);
+      this->recv_channel_.queue_.init (mymq +1, this->shm_malloc_.get ());
       ACE_NEW_RETURN (this->recv_channel_.sema_,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, client_sema),
                       -1);
@@ -238,7 +238,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
                       ACE_SYNCH_PROCESS_MUTEX (client_lock),
                       -1);
 
-      this->send_channel_.queue_.init (mymq, this->shm_malloc_);
+      this->send_channel_.queue_.init (mymq, this->shm_malloc_.get ());
       ACE_NEW_RETURN (this->send_channel_.sema_,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, server_sema),
                       -1);

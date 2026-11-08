@@ -8,6 +8,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface () = default;
+
 TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (
   TAO_Endpoint *endpoint,
   CORBA::Boolean take_ownership)
