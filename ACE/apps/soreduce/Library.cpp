@@ -10,7 +10,6 @@
 
 #include "ace/OS_NS_dirent.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
@@ -210,13 +209,13 @@ extern "C" {
 static int
 selector (const dirent *d)
 {
-  return ACE_OS::strstr (d->d_name, ACE_TEXT (".o")) != nullptr;
+  return std::strstr (d->d_name, ".o") != nullptr;
 }
 
 static int
 comparator (const dirent **d1, const dirent **d2)
 {
-  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return std::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
 
 } /* extern "C" */
