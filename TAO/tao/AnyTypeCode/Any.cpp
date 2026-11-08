@@ -125,7 +125,7 @@ CORBA::Any::_tao_byte_order () const
 void
 CORBA::Any::type (CORBA::TypeCode_ptr tc)
 {
-  CORBA::Boolean equiv = false;
+  CORBA::Boolean equiv {false};
 
   if (this->impl_)
     {

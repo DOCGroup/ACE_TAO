@@ -30,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::traverse_status
 TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // Status of skip operation.
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
@@ -109,7 +109,7 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 TAO::traverse_status
 TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // Typecode kind.
   CORBA::ULong kind;
@@ -205,7 +205,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 TAO::traverse_status
 TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // specifies the number of bytes in the Principal
   CORBA::ULong len;
@@ -232,7 +232,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 TAO::traverse_status
 TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // return status
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
@@ -325,14 +325,14 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
     discrim_tc->kind ();
 
   // Save the discriminator value in a temporary variable...
-  CORBA::Short short_v = CORBA::Short();
-  CORBA::UShort ushort_v = CORBA::UShort();
-  CORBA::Long long_v = CORBA::Long();
-  CORBA::ULong ulong_v = CORBA::ULong();
-  CORBA::ULong enum_v = CORBA::ULong();
-  CORBA::Char char_v = CORBA::Char();
-  CORBA::WChar wchar_v = CORBA::WChar();
-  CORBA::Boolean boolean_v = false;
+  CORBA::Short short_v {};
+  CORBA::UShort ushort_v {};
+  CORBA::Long long_v {};
+  CORBA::ULong ulong_v {};
+  CORBA::ULong enum_v {};
+  CORBA::Char char_v {};
+  CORBA::WChar wchar_v {};
+  CORBA::Boolean boolean_v {false};
 
   switch (kind)
     {
@@ -550,7 +550,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 TAO::traverse_status
 TAO_Marshal_String::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // On decode, omit the check against specified string bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
@@ -582,8 +582,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  CORBA::Boolean continue_skipping =
-    stream->read_ulong (bounds);
+  CORBA::Boolean continue_skipping {stream->read_ulong (bounds)};
 
   if (!continue_skipping)
     {
@@ -673,7 +672,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 TAO::traverse_status
 TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // retrieve the bounds of the array
   CORBA::ULong bounds = tc->length ();
@@ -759,7 +758,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // Status of decode operation.
   TAO::traverse_status retval =
@@ -826,7 +825,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 TAO::traverse_status
 TAO_Marshal_WString::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
-  CORBA::Boolean continue_skipping = true;
+  CORBA::Boolean continue_skipping {true};
 
   // On decode, omit the check against specified wstring bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire

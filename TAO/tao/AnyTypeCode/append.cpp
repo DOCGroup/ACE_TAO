@@ -25,6 +25,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Encode instances of arbitrary data types based only on typecode.
@@ -38,7 +40,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
                                TAO_InputCDR *src,
                                TAO_OutputCDR *dest)
 {
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE; // status of encode operation
 
@@ -140,7 +142,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                               TAO_InputCDR *src,
                               TAO_OutputCDR *dest)
 {
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
   CORBA::ULong kind;
@@ -257,7 +259,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest)
 {
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
 
   // First, append the type hint. This will be the type_id encoded in an
   // object reference.
@@ -303,11 +305,11 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
       ACE_NEW_RETURN (body,
                       CORBA::Octet[length],
                       TAO::TRAVERSE_STOP);
+      std::unique_ptr<CORBA::Octet[]> const body_guard (body);
       continue_append =
-        (CORBA::Boolean) (src->read_octet_array (body, length)
-                          ? dest->write_octet_array (body, length)
+        (CORBA::Boolean) (src->read_octet_array (body_guard.get (), length)
+                          ? dest->write_octet_array (body_guard.get (), length)
                           : 0);
-      delete [] body;
     }
 
   if (continue_append == 1)
@@ -364,14 +366,14 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
   CORBA::ULong kind = discrim_tc->kind ();
 
   // Save the discriminator value in a temporary variable...
-  CORBA::Short short_v = CORBA::Short();
-  CORBA::UShort ushort_v = CORBA::UShort();
-  CORBA::Long long_v = CORBA::Long();
-  CORBA::ULong ulong_v = CORBA::ULong();
-  CORBA::ULong enum_v = CORBA::ULong();
-  CORBA::Char char_v = CORBA::Char();
-  CORBA::WChar wchar_v = CORBA::WChar();
-  CORBA::Boolean boolean_v = false;
+  CORBA::Short short_v {};
+  CORBA::UShort ushort_v {};
+  CORBA::Long long_v {};
+  CORBA::ULong ulong_v {};
+  CORBA::ULong enum_v {};
+  CORBA::Char char_v {};
+  CORBA::WChar wchar_v {};
+  CORBA::Boolean boolean_v {false};
 
   switch (kind)
     {
@@ -603,7 +605,7 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest)
 {
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
 
   // On decode, omit the check against specified string bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
@@ -636,10 +638,10 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  CORBA::Boolean continue_append =
+  CORBA::Boolean continue_append {
     (CORBA::Boolean) (src->read_ulong (bounds)
                       ? dest->write_ulong (bounds)
-                      : 0);
+                      : 0)};
 
   if (!continue_append)
     {
@@ -1020,7 +1022,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
 
   // Status of decode operation.
   TAO::traverse_status retval =
@@ -1054,7 +1056,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
   CORBA::TypeCode_var param;
 
   // first append the RepositoryID
@@ -1093,7 +1095,7 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
                              TAO_InputCDR *src,
                              TAO_OutputCDR *dest)
 {
-  CORBA::Boolean continue_append = true;
+  CORBA::Boolean continue_append {true};
 
   // On decode, omit the check against specified wstring bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
