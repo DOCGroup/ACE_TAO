@@ -22,11 +22,15 @@ public:
   /// Constructor.
   Foo_i (CORBA::ORB_ptr,
          SecurityLevel3::SecurityCurrent_ptr);
+  Foo_i (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 
   /// Test method.
-  virtual void baz ();
+  void baz () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Reference to the ORB.

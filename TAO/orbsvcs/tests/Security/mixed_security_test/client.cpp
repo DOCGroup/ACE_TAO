@@ -5,22 +5,19 @@
 #include "FooC.h"
 #include "constants.h"
 
-bool shutdown_server = true;
+constexpr bool shutdown_server {true};
 
 class ClientTest
 {
 public:
   struct Results
   {
-    bool secure;
-    bool non_secure;
-    bool successful; // set by "run" if actual meets expected
-
-    Results(bool sec = false, bool nsec = false)
-      : secure(sec), non_secure(nsec), successful(false) { }
+    bool secure {};
+    bool non_secure {};
+    bool successful {}; // set by "run" if actual meets expected
   };
 
-  ClientTest (CORBA::ORB_ptr orb, const ACE_TCHAR* ior);
+  ClientTest (CORBA::ORB_ptr orb, ACE_TCHAR const *ior);
 
   /*!
    * Creates a Security::QOPPolicy with the Quality-of-Protection set
@@ -31,32 +28,28 @@ public:
   bool non_secure_invocation ();
   bool secure_invocation ();
 
-  Results run(const Results& expected_results);
+  Results run (Results const &expected_results);
 
 private:
   CORBA::ORB_var orb_;
   Foo::Bar_var obj_;
 };
 
-ClientTest::ClientTest (CORBA::ORB_ptr orb, const ACE_TCHAR* ior)
-  : orb_(CORBA::ORB::_duplicate (orb))
+ClientTest::ClientTest (CORBA::ORB_ptr orb, ACE_TCHAR const *ior)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
   CORBA::Object_var o = this->orb_->string_to_object (ior);
-  if (CORBA::is_nil (o.in()))
+  if (CORBA::is_nil (o.in ()))
     throw CORBA::INTERNAL ();
 
   this->obj_ = Foo::Bar::_narrow (o.in ());
 }
 
 ClientTest::Results
-ClientTest::run (const ClientTest::Results& expected)
+ClientTest::run (ClientTest::Results const &expected)
 {
   Results actual;
-#if 1
   actual.non_secure = this->non_secure_invocation ();
-#else
-  actual.non_secure = true;
-#endif
   actual.secure = this->secure_invocation ();
 
   actual.successful = (expected.secure == actual.secure
@@ -111,7 +104,7 @@ ClientTest::non_secure_invocation ()
       server->baz ();
       ACE_DEBUG ((LM_DEBUG, "mixed_security/client: non-secured invocation succeeded\n"));
     }
-  catch (const CORBA::NO_PERMISSION& )
+  catch (CORBA::NO_PERMISSION const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ClientTest::non_secure_invocation: got NO_PERMISSION\n"));
@@ -134,7 +127,7 @@ ClientTest::secure_invocation ()
       this->obj_->baz ();
       ACE_DEBUG ((LM_DEBUG, "mixed_security/client: secured invocation succeeded\n"));
     }
-  catch (const CORBA::NO_PERMISSION&)
+  catch (CORBA::NO_PERMISSION const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ClientTest::secure_invocation: got NO_PERMISSION\n"));
@@ -162,7 +155,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Run the restricted test
       ClientTest::Results restricted_results =
-        restricted.run (ClientTest::Results(true, false));
+        restricted.run (ClientTest::Results {true, false});
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("===> Restricted test %C: secure=%d, non-secure=%d\n"),
                   restricted_results.successful ? "PASSED" : "FAILED",
@@ -176,7 +169,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("mixed_security/client: running permitted test\n")));
       ClientTest::Results permitted_results =
-        permitted.run (ClientTest::Results(true, true));
+        permitted.run (ClientTest::Results {true, true});
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("===> Permitted test %C: secure=%d, non-secure=%d\n"),
                   permitted_results.successful ? "PASSED" : "FAILED",
@@ -188,14 +181,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (shutdown_server)
         {
           CORBA::Object_var o =
-          orb->string_to_object (TAO_Mixed_Security_Test::permitted_ior);
-          Foo::Bar_var foo = Foo::Bar::_narrow (o.in());
+            orb->string_to_object (TAO_Mixed_Security_Test::permitted_ior);
+          Foo::Bar_var foo = Foo::Bar::_narrow (o.in ());
           foo->shutdown ();
         }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception
         (ACE_TEXT ("mixed_security/client: caught unexpected exception "));
