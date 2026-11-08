@@ -25,6 +25,7 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+#include <memory>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -182,7 +183,7 @@ protected:
 protected:
   /// Stores the policy list for the profile of this MProfile.
   friend class TAO_Profile;
-  CORBA::PolicyList *policy_list_;
+  std::unique_ptr<CORBA::PolicyList> policy_list_;
 
   CORBA::Boolean is_policy_list_initialized_;
 

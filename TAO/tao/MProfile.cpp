@@ -34,8 +34,6 @@ TAO_MProfile::~TAO_MProfile ()
               // destroyed.
             }
         }
-
-      delete this->policy_list_;
     }
 
   this->cleanup ();
@@ -274,10 +272,12 @@ TAO_MProfile::hash (CORBA::ULong max)
 void
 TAO_MProfile::create_policy_list ()
 {
-  ACE_NEW_THROW_EX (this->policy_list_,
+  CORBA::PolicyList *policy_list {};
+  ACE_NEW_THROW_EX (policy_list,
                     CORBA::PolicyList,
                     CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_NO));
+  this->policy_list_.reset (policy_list);
 }
 
 void
@@ -316,6 +316,13 @@ TAO_MProfile::policy_list ()
                                       CORBA::COMPLETED_NO));
 
   return ret_val;
+}
+
+void
+TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
+{
+  if (this->policy_list_.get () != policy_list)
+    this->policy_list_.reset (policy_list);
 }
 
 int
