@@ -93,7 +93,7 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
 
   data->length (length);
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       this->get_data (registry, names[i], (*data)[i]);
     }
@@ -115,7 +115,7 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
   CORBA::ULong length = names.length();
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       Monitor_Base* statistic = registry->get (names[i].in ());
 
@@ -144,7 +144,7 @@ NotificationServiceMonitor_i::clear_statistics (
 
   CORBA::ULong const length = names.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       Monitor_Base* statistic = registry->get (names[i].in ());
 
@@ -255,7 +255,7 @@ NotificationServiceMonitor_i::get_invalid_names (
   CORBA::ULong ilength = 0;
   CORBA::ULong const length  = names.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       if (registry->get (names[i].in ()) == nullptr)
         {

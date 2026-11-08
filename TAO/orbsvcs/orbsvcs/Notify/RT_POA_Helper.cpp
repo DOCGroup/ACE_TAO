@@ -94,7 +94,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
   RTCORBA::ThreadpoolLanes lanes (tpl_params.lanes.length ());
   lanes.length (tpl_params.lanes.length ());
 
-  for (CORBA::ULong index = 0; index < tpl_params.lanes.length (); ++index)
+  for (CORBA::ULong index {}; index < tpl_params.lanes.length (); ++index)
     {
       if (TAO_debug_level > 0)
             {

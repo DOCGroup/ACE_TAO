@@ -15,7 +15,7 @@ TAO_Notify_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
 {
   ACE_CString name;
 
-  for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+  for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
     {
       name = prop_seq[i].name.in ();
 

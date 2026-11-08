@@ -272,7 +272,7 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
       size_t queue_size = this->block_queue_.size();
-      for (size_t idx = 0; !cached && (idx < queue_size); ++idx)
+      for (size_t idx {}; !cached && (idx < queue_size); ++idx)
       {
         // We want to start at the end of the queue and work backwards...
         size_t actual_block = (queue_size - idx) - 1;

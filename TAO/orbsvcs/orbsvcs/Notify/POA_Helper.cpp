@@ -111,7 +111,7 @@ TAO_Notify_POA_Helper::create_i (
 
   /*
   // Destroy the policies
-  for (CORBA::ULong index = 0; index < policy_list.length (); ++index)
+  for (CORBA::ULong index {}; index < policy_list.length (); ++index)
     {
       policy_list[index]->destroy ();
     }

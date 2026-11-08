@@ -53,7 +53,7 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
       throw CosEventComm::Disconnected ();
     }
 
-  for (CORBA::ULong i = 0; i < event_batch.length (); ++i)
+  for (CORBA::ULong i {}; i < event_batch.length (); ++i)
     {
       const CosNotification::StructuredEvent& notification = event_batch[i];
 

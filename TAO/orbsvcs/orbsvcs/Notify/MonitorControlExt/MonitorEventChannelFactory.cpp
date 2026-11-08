@@ -159,7 +159,7 @@ TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory ()
   Monitor_Point_Registry* instance = Monitor_Point_Registry::instance ();
   size_t size = this->stat_names_.size ();
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       instance->remove (this->stat_names_[i].c_str ());
     }
@@ -294,7 +294,7 @@ TAO_MonitorEventChannelFactory::get_suppliers (
         ec->get_all_supplieradmins ();
       CORBA::ULong length = supadmin_ids->length ();
 
-      for (CORBA::ULong j = 0; j < length; ++j)
+      for (CORBA::ULong j {}; j < length; ++j)
         {
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             ec->get_supplieradmin (supadmin_ids[j]);
@@ -325,7 +325,7 @@ TAO_MonitorEventChannelFactory::get_consumers (
         ec->get_all_consumeradmins ();
       CORBA::ULong length = conadmin_ids->length ();
 
-      for (CORBA::ULong j = 0; j < length; ++j)
+      for (CORBA::ULong j {}; j < length; ++j)
         {
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
             ec->get_consumeradmin (conadmin_ids[j]);
@@ -352,7 +352,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
 
   CORBA::ULong total = ids->length ();
 
-  for (CORBA::ULong i = 0; i < total; ++i)
+  for (CORBA::ULong i {}; i < total; ++i)
     {
       CosNotifyChannelAdmin::ChannelID id = ids[i];
       bool want_event_channel = !active;

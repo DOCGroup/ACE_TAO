@@ -27,7 +27,7 @@ TAO_Notify_Constraint_Expr::save_persistent (
 {
   CosNotification::EventTypeSeq& event_types = this->constr_expr.event_types;
   CORBA::ULong len = event_types.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
   {
     TAO_Notify::NVPList attrs;
     bool changed = true;
@@ -131,7 +131,7 @@ void
 TAO_Notify_ETCL_Filter::add_constraints_i (
   const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq)
 {
-  for (CORBA::ULong index = 0; index < constraint_info_seq.length (); ++index)
+  for (CORBA::ULong index {}; index < constraint_info_seq.length (); ++index)
     {
       this->add_constraint_i (constraint_info_seq[index]);
     }
@@ -227,7 +227,7 @@ TAO_Notify_ETCL_Filter::add_constraints (
   infoseq->length (constraint_length);
 
   // Populate infoseq.
-  for (CORBA::ULong pop_index = 0; pop_index < constraint_length; ++pop_index)
+  for (CORBA::ULong pop_index {}; pop_index < constraint_length; ++pop_index)
     {
       infoseq[pop_index].constraint_expression =
         constraint_list [pop_index];
@@ -345,7 +345,7 @@ TAO_Notify_ETCL_Filter::get_constraints (
 
   TAO_Notify_Constraint_Expr *notify_constr_expr {};
 
-  for (CORBA::ULong index = 0; index < id_list.length (); ++index)
+  for (CORBA::ULong index {}; index < id_list.length (); ++index)
     {
       if (this->constraint_expr_list_.find (id_list[index],
                                             notify_constr_expr) == -1)
@@ -383,7 +383,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints ()
   CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
   CONSTRAINT_EXPR_LIST::ENTRY *entry;
 
-  for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
+  for (u_int index {}; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {
@@ -416,7 +416,7 @@ TAO_Notify_ETCL_Filter::remove_all_constraints_i ()
   CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
   CONSTRAINT_EXPR_LIST::ENTRY *entry;
 
-  for (CORBA::ULong index = 0; iter.done () == 0; iter.advance (), ++index)
+  for (CORBA::ULong index {}; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {

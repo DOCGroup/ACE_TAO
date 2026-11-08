@@ -140,7 +140,7 @@ TAO_Notify_EventTypeSeq::insert_seq (const CosNotification::EventTypeSeq& event_
 {
   TAO_Notify_EventType event_type;
 
-  for (CORBA::ULong i = 0; i < event_type_seq.length (); ++i)
+  for (CORBA::ULong i {}; i < event_type_seq.length (); ++i)
     {
       event_type = event_type_seq[i];
       this->add (event_type);
@@ -152,7 +152,7 @@ TAO_Notify_EventTypeSeq::remove_seq (const CosNotification::EventTypeSeq& event_
 {
   TAO_Notify_EventType event_type;
 
-  for (CORBA::ULong i = 0; i < event_type_seq.length (); ++i)
+  for (CORBA::ULong i {}; i < event_type_seq.length (); ++i)
     {
       event_type = event_type_seq[i];
       this->erase (event_type);

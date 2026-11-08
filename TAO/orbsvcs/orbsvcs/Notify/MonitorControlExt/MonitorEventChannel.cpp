@@ -306,7 +306,7 @@ TAO_MonitorEventChannel::~TAO_MonitorEventChannel ()
   Monitor_Point_Registry* instance = Monitor_Point_Registry::instance ();
   size_t size = this->stat_names_.size ();
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       instance->remove (this->stat_names_[i].c_str ());
     }
@@ -314,7 +314,7 @@ TAO_MonitorEventChannel::~TAO_MonitorEventChannel ()
   TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
   size = this->control_names_.size ();
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       cinstance->remove (this->control_names_[i]);
     }
@@ -986,7 +986,7 @@ TAO_MonitorEventChannel::get_consumers (
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       CosNotifyChannelAdmin::ConsumerAdmin_var admin =
         this->get_consumeradmin (conadmin_ids[j]);
@@ -1004,7 +1004,7 @@ TAO_MonitorEventChannel::get_consumers (
                                      this->supplier_mutex_,
                                      0);
 
-              for (CORBA::ULong i = 0; i < plen; ++i)
+              for (CORBA::ULong i {}; i < plen; ++i)
                 {
                   if (names == nullptr)
                     {
@@ -1055,7 +1055,7 @@ TAO_MonitorEventChannel::get_suppliers (
     this->get_all_supplieradmins ();
   CORBA::ULong length = supadmin_ids->length ();
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
         this->get_supplieradmin (supadmin_ids[j]);
@@ -1073,7 +1073,7 @@ TAO_MonitorEventChannel::get_suppliers (
                                      this->consumer_mutex_,
                                      0);
 
-              for (CORBA::ULong i = 0; i < plen; ++i)
+              for (CORBA::ULong i {}; i < plen; ++i)
                 {
                   if (names == nullptr)
                     {
@@ -1143,7 +1143,7 @@ TAO_MonitorEventChannel::get_admins (
   size_t count = 0;
   CORBA::ULong length = admin_ids.length ();
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       if (names == nullptr)
         {
@@ -1200,7 +1200,7 @@ TAO_MonitorEventChannel::calculate_queue_size (bool count)
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
 
-  for (CORBA::ULong j = 0; j < length; j++)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
@@ -1239,7 +1239,7 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
@@ -1274,7 +1274,7 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
                               guard,
                               this->supplier_mutex_);
 
-              for (CORBA::ULong i = 0; i < plen; ++i)
+              for (CORBA::ULong i {}; i < plen; ++i)
                 {
                   ACE_CString name;
 
@@ -1305,7 +1305,7 @@ TAO_MonitorEventChannel::get_oldest_event ()
   // buffering strategy give us the time of the oldest event.
   ACE_Time_Value tv (ACE_Time_Value::max_time);
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
@@ -1361,7 +1361,7 @@ TAO_MonitorEventChannel::remove_list_name (
 {
   size_t size = list.size ();
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       if (list[i] == name)
         {
@@ -1394,7 +1394,7 @@ TAO_MonitorEventChannel::destroy_consumer (
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       CosNotifyChannelAdmin::ConsumerAdmin_var admin =
         this->get_consumeradmin (conadmin_ids[j]);
@@ -1437,7 +1437,7 @@ TAO_MonitorEventChannel::destroy_supplier (
     this->get_all_supplieradmins ();
   CORBA::ULong length = supadmin_ids->length ();
 
-  for (CORBA::ULong j = 0; j < length; ++j)
+  for (CORBA::ULong j {}; j < length; ++j)
     {
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
         this->get_supplieradmin (supadmin_ids[j]);

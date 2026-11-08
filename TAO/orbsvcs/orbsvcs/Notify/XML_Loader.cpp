@@ -33,7 +33,7 @@ namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
     CORBA::Long id = 0;
-    for (size_t i = 0; i < attrs->getLength (); ++i)
+  for (size_t i {}; i < attrs->getLength (); ++i)
     {
       ACE_CString name = ACE_TEXT_ALWAYS_CHAR(attrs->getQName (i));
       ACE_CString value = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (i));

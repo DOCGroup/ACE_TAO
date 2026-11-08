@@ -1250,7 +1250,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 
     CORBA::ULong length = any_seq->length ();
 
-    for (CORBA::ULong i = 0; i < length; ++i)
+    for (CORBA::ULong i {}; i < length; ++i)
       {
         TAO_ETCL_Literal_Constraint element (&any_seq[i]);
 
@@ -1297,7 +1297,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 
     CORBA::ULong length = any_seq->length ();
 
-    for (CORBA::ULong i = 0; i < length; ++i)
+    for (CORBA::ULong i {}; i < length; ++i)
       {
         TAO_ETCL_Literal_Constraint element (&any_seq[i]);
 
@@ -1333,7 +1333,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
     CORBA::TypeCode_var tc;
     CORBA::TCKind kind;
 
-    for (CORBA::ULong i = 0; i < length; ++i)
+    for (CORBA::ULong i {}; i < length; ++i)
       {
         tc = members[i].value.type ();
         kind = TAO_DynAnyFactory::unalias (tc.in ());

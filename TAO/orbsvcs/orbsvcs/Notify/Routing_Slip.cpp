@@ -832,7 +832,7 @@ Routing_Slip::marshal (TAO_OutputCDR & cdr)
   size_t request_count = this->delivery_requests_.size();
   cdr.write_ulong (
     ACE_Utils::truncate_cast<CORBA::ULong> (request_count - this->complete_requests_));
-  for (size_t nreq = 0; nreq < request_count; ++nreq)
+  for (size_t nreq {}; nreq < request_count; ++nreq)
   {
     Delivery_Request * request = this->delivery_requests_[nreq].get ();
     if (request != nullptr)
@@ -847,7 +847,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
 {
   CORBA::ULong count = 0;
   cdr.read_ulong (count);
-  for (size_t nreq = 0; nreq < count; ++nreq)
+  for (size_t nreq {}; nreq < count; ++nreq)
   {
     ACE_CDR::Octet code = 0;
     while (cdr.read_octet(code))
@@ -906,7 +906,7 @@ Routing_Slip::reconnect ()
 
   //@@todo is there a worker_task available to do this?
   size_t const count = this->delivery_methods_.size ();
-  for (size_t nmethod = 0; nmethod < count; ++nmethod)
+  for (size_t nmethod {}; nmethod < count; ++nmethod)
   {
     this->delivery_methods_[nmethod]->execute ();
   }

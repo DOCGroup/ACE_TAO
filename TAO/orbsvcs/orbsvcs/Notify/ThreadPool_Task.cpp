@@ -61,7 +61,7 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
   // Guards the thread for auto-deletion; paired with close.
   // This is done in the originating thread before the spawn to
   // avoid any race conditions.
-  for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
+  for ( CORBA::ULong i {}; i < tp_params.static_threads; ++i )
     {
       this->_incr_refcnt();
     }
@@ -73,7 +73,7 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
                                                  ACE_THR_PRI_OTHER_DEF) == -1)
     {
       // Undo the ref counts on error
-      for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
+      for ( CORBA::ULong i {}; i < tp_params.static_threads; ++i )
         {
           this->_decr_refcnt();
         }

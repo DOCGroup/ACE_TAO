@@ -14,7 +14,7 @@ TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (const Co
 {
   const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
 
-  for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+  for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
     {
       if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
         this->priority_.set (prop_seq[i].value);

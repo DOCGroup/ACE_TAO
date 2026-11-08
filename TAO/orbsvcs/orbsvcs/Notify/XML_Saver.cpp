@@ -169,7 +169,7 @@ namespace TAO_Notify
 
     ACE_TString::size_type const BUF_SIZE = 512;
     ACE_TString tmp(BUF_SIZE);
-    for (size_t idx = 0; idx < attrs.size(); ++idx)
+    for (size_t idx {}; idx < attrs.size(); ++idx)
     {
       ACE_TString valuetmp (ACE_TEXT_CHAR_TO_TCHAR (attrs[idx].value.c_str()));
       ACEXML_escape_string(valuetmp, tmp);

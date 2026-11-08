@@ -42,7 +42,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 
   bool has_et_exp = false;
 
-  for (CORBA::ULong ii = 0; ii < len; ++ii)
+  for (CORBA::ULong ii {}; ii < len; ++ii)
   {
     TAO_Notify_EventType et;
     bool const d = et.domain_is_wildcard (exp.event_types [ii].domain_name.in ());

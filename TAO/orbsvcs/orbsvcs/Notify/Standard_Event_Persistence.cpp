@@ -47,7 +47,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   bool verbose = false;
-  for (int narg = 0; narg < argc; ++narg)
+  for (int narg {}; narg < argc; ++narg)
   {
     ACE_TCHAR * av = argv[narg];
     if (ACE_OS::strcasecmp (av, ACE_TEXT ("-v")) == 0)

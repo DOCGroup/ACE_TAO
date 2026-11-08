@@ -114,7 +114,7 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
   {
     TAO_Notify::IdVec id_path;
     id_path.reserve (count);
-    for (size_t nid = 0; ok && nid < count; ++nid)
+    for (size_t nid {}; ok && nid < count; ++nid)
     {
       TAO_Notify_Object::ID id = 0;
       if ( cdr.read_long (id))

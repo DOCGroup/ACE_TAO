@@ -64,7 +64,7 @@ Delivery_Request::marshal (TAO_OutputCDR & cdr)
     CORBA::ULong dest_count =
       ACE_Utils::truncate_cast<CORBA::ULong> (this->destination_id_.size ());
     cdr.write_ulong (dest_count);
-    for (size_t ndest = 0; ndest < dest_count; ++ ndest)
+    for (size_t ndest {}; ndest < dest_count; ++ ndest)
     {
       cdr.write_ulong (this->destination_id_ [ndest]);
     }

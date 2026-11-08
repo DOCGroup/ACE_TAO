@@ -17,7 +17,7 @@ namespace
       return 0;
 
     ACE_UINT64 t = 0;
-    for (size_t i = 0; i < len; ++i)
+    for (size_t i {}; i < len; ++i)
     {
       if (ACE_OS::ace_isdigit(s[i]) == 0)
       {
@@ -92,7 +92,7 @@ namespace TAO_Notify
 
   bool NVPList::find (const char * name, ACE_CString& val) const
   {
-    for (size_t i = 0; i < list_.size(); ++i)
+    for (size_t i {}; i < list_.size(); ++i)
     {
       if (list_[i].name == name)
       {
@@ -105,7 +105,7 @@ namespace TAO_Notify
 
   bool NVPList::find (const char * name, const char *& val) const
   {
-    for (size_t i = 0; i < list_.size(); ++i)
+    for (size_t i {}; i < list_.size(); ++i)
     {
       if (list_[i].name == name)
       {
@@ -177,7 +177,7 @@ namespace TAO_Notify
 
   void NVPList::push_back(const NVP& v)
   {
-    for (size_t i = 0; i < list_.size(); ++i)
+    for (size_t i {}; i < list_.size(); ++i)
     {
       if (list_[i].name == v.name)
       {

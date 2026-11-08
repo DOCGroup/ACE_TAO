@@ -782,7 +782,7 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
                                           CORBA::ADD_OVERRIDE);
 
         // Clean up the policy that was allocated in the try/catch
-        for (CORBA::ULong i = 0; i < policy_list.length (); i++)
+        for (CORBA::ULong i {}; i < policy_list.length (); ++i)
           policy_list[i]->destroy ();
 
         do_liveliness_check

@@ -358,7 +358,7 @@ TAO_CosNotify_Service::finalize_service (
   CosNotifyChannelAdmin::ChannelIDSeq_var channels =
     ecf->get_all_channels ();
   CORBA::ULong length = channels->length ();
-  for(CORBA::ULong i = 0; i < length; i++)
+  for(CORBA::ULong i {}; i < length; ++i)
     {
       try
         {
