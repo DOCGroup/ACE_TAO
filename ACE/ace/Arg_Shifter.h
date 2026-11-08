@@ -72,7 +72,8 @@ public:
    *    the specified @a argv vector is consumed. The vector must not
    *    be modified while this object exists. If this argument is 0
    *    (the default) the object will allocate and free the temporary
-   *    vector transparently.
+   *    vector transparently. A caller-provided vector is borrowed and is
+   *    not freed by this object.
    */
   ACE_Arg_Shifter_T (int &argc,
                      CHAR_TYPE const **argv,
@@ -87,8 +88,13 @@ public:
   /// Destructor.
   ~ACE_Arg_Shifter_T ();
 
+  ACE_Arg_Shifter_T (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T (ACE_Arg_Shifter_T &&) = delete;
+  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T &&) = delete;
+
   /// Get the current head of the vector.
-  const CHAR_TYPE *get_current () const;
+  CHAR_TYPE const *get_current () const;
 
   /**
    * If the @a flag matches the current_arg of arg shifter
@@ -186,14 +192,6 @@ public:
   int num_ignored_args () const;
 
 private:
-  /// Copy Constructor should not be used.
-  ACE_Arg_Shifter_T (ACE_Arg_Shifter_T const &) = delete;
-  ACE_Arg_Shifter_T (ACE_Arg_Shifter_T &&) = delete;
-
-  /// Assignment '=' operator should not be used.
-  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T const &) = delete;
-  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T &&) = delete;
-
   /// Refactor the constructor logic.
   void init ();
 
@@ -206,11 +204,14 @@ private:
   /// The temporary array over which we traverse.
   CHAR_TYPE **temp_;
 
+  /// Whether this object allocated temp_.
+  bool owns_temp_ {};
+
   /// The array in which the arguments are reordered.
   CHAR_TYPE **argv_;
 
   /// The element in <temp_> we're currently examining.
-  int current_index_;
+  int current_index_ {};
 
   /// The index of <argv_> in which we'll stick the next unknown
   /// argument.
@@ -221,7 +222,7 @@ private:
   /** This is not really the "front" at all.  It's the point after
    * which the unknown arguments end and at which the known arguments begin.
    */
-  int front_;
+  int front_ {};
 };
 
 using ACE_Arg_Shifter = ACE_Arg_Shifter_T<ACE_TCHAR>;
