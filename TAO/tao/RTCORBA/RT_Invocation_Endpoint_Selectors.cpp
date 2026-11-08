@@ -145,7 +145,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     ACE_Time_Value *val)
 {
   // Narrow to the RT Stub.
-  TAO_RT_Stub *rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub * const rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
   if (!rt_stub)
     throw CORBA::INTERNAL ();
@@ -162,9 +162,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   bool all_endpoints_are_valid {};
   bool match_priority {};
   bool match_bands {};
-  CORBA::Short client_thread_priority = 0;
-  CORBA::Short min_priority = 0;
-  CORBA::Short max_priority = 0;
+  CORBA::Short client_thread_priority {};
+  CORBA::Short min_priority {};
+  CORBA::Short max_priority {};
 
   // If the priority model policy is not set.
   if (CORBA::is_nil (priority_model_policy.in ()))
@@ -172,7 +172,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
       // Bands without priority model do not make sense.
       if (!CORBA::is_nil (bands_policy.in ()))
         {
-          CORBA::PolicyList *p = r.inconsistent_policies ();
+          CORBA::PolicyList * const p = r.inconsistent_policies ();
           if (p)
             {
               p->length (1);
@@ -190,12 +190,12 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   else
     {
       // Get the protocol hooks.
-      TAO_Protocols_Hooks *protocol_hooks =
+      TAO_Protocols_Hooks * const protocol_hooks =
         r.stub ()->orb_core ()->get_protocols_hooks ();
 
       if (protocol_hooks != nullptr)
         {
-          CORBA::Short server_priority = 0;
+          CORBA::Short server_priority {};
           CORBA::Boolean is_client_propagated {};
 
           // Check the priority model policy to see if it is client
@@ -250,7 +250,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                   // If priority doesn't fall into any of the bands.
                   if (!in_range)
                     {
-                      CORBA::PolicyList *p = r.inconsistent_policies ();
+                      CORBA::PolicyList * const p = r.inconsistent_policies ();
                       if (p)
                         {
                           p->length (2);
@@ -276,7 +276,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   while (ep != nullptr)
     {
       // Get the priority of the endpoint.
-      CORBA::Short endpoint_priority = ep->priority ();
+      CORBA::Short const endpoint_priority = ep->priority ();
 
       // If <all_endpoints_are_valid> or match the priority of the
       // client thread or match the priority of the band or
