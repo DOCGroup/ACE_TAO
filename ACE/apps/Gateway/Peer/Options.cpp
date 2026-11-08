@@ -9,7 +9,7 @@
 #include "Options.h"
 
 // Static initialization.
-Options *Options::instance_ = nullptr;
+Options *Options::instance_ {};
 
 void
 Options::print_usage_and_die ()
