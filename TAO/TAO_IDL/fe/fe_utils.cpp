@@ -171,7 +171,7 @@ UTL_ScopedName *
 FE_Utils::string_to_scoped_name (std::string const& name)
 {
   Scoped_Name_Owner retval;
-  std::string::size_type start = 0;
+  std::string::size_type start {};
 
   try
     {
@@ -315,7 +315,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 
   (void) c->fe_add_structure (connection);
 
-  ACE_CDR::ULong const bound = 0;
+  ACE_CDR::ULong const bound {};
   AST_Expression *bound_expr =
     idl_global->gen ()->create_expr (bound,
                                      AST_Expression::EV_ulong);

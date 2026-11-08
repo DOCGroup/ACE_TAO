@@ -440,7 +440,7 @@ FE_extract_env_include_paths (std::vector<std::string> &list)
       constexpr char separator = ':';
 #endif
       std::string const paths (env_paths);
-      std::string::size_type start = 0;
+      std::string::size_type start {};
 
       do
         {
