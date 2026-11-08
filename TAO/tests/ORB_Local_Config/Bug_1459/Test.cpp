@@ -42,7 +42,8 @@ testBug1459 (int, ACE_TCHAR *[])
 
   try
     {
-      int n, error = 0;
+      int n;
+      int error {};
 
       ACE_ARGV argM (argStrM);
       n = argM.argc ();
@@ -134,9 +135,9 @@ testBug1459 (int, ACE_TCHAR *[])
 
 #if TAO_HAS_UIOP == 1
       // UIOP
-      ACE_Service_Object *uiop_so =
+      ACE_Service_Object * const uiop_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIOP_Factory");
-      if (uiop_so != 0)
+      if (uiop_so != nullptr)
         {
           ++error;
           ACE_ERROR ((LM_DEBUG,
@@ -147,9 +148,9 @@ testBug1459 (int, ACE_TCHAR *[])
 
 #if defined (DO_1459_SSLIOP_TEST)
       // SSLIOP
-      ACE_Service_Object *ssliop_so =
+      ACE_Service_Object * const ssliop_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
-      if (ssliop_so != 0)
+      if (ssliop_so != nullptr)
         {
           ++error;
           ACE_ERROR ((LM_DEBUG,
@@ -159,9 +160,9 @@ testBug1459 (int, ACE_TCHAR *[])
 #endif
 
       // MIOP
-      ACE_Service_Object *uipmc_so =
+      ACE_Service_Object * const uipmc_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
-      if (uipmc_so != 0)
+      if (uipmc_so != nullptr)
         {
           ++error;
           ACE_ERROR ((LM_DEBUG,
@@ -170,9 +171,9 @@ testBug1459 (int, ACE_TCHAR *[])
         }
 
       // DIOP
-      ACE_Service_Object *diop_so =
+      ACE_Service_Object * const diop_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("DIOP_Factory");
-      if (diop_so != 0)
+      if (diop_so != nullptr)
         {
           ++error;
           ACE_ERROR ((LM_DEBUG,
