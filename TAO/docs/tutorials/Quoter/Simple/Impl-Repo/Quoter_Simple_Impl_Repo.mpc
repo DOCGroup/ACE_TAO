@@ -10,7 +10,7 @@ project(*client) : taoexe, portableserver, rtevent, naming  {
   }
 }
 
-project(*server) : taoserver, rtevent, naming, iortable {
+project(*server) : taoserver, rtevent, naming, iortable, utils {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
