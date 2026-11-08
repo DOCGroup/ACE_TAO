@@ -1,16 +1,15 @@
 // file      : Receiver.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-#include "ace/Vector_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+
+#include <vector>
 
 #include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
 
-typedef
-ACE_Vector<unsigned char, ACE_VECTOR_DEFAULT_SIZE>
-Status_List;
+using Status_List = std::vector<unsigned char>;
 
 class args {};
 
@@ -30,35 +29,16 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     //FUZZ: enable check_for_lack_ACE_OS
 
 
-    Message expected_msg;
-    expected_msg.sn = 0;
+    Message expected_msg {};
 
-    // VC6 does not know about the new rules.
-    //
-    {
-      for (unsigned short i = 0; i < payload_size; i++)
-      {
-        expected_msg.payload[i] = i;
-      }
-    }
+    for (unsigned short i = 0; i < payload_size; ++i)
+      expected_msg.payload[i] = i;
 
-    Status_List received (message_count);
-    Status_List damaged (message_count);
-    Status_List duplicate (message_count);
+    Status_List received (message_count, 0);
+    Status_List damaged (message_count, 0);
+    Status_List duplicate (message_count, 0);
 
-    // VC6 does not know about new rules.
-    //
-    {
-      for (unsigned long i = 0; i < message_count; ++i)
-      {
-        received.push_back (0);
-        damaged.push_back (0);
-        duplicate.push_back (0);
-      }
-    }
-
-
-    Message msg;
+    Message msg {};
 
     while (true)
     {
@@ -110,37 +90,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
 
-    {
-      for (Status_List::Iterator i (received); !i.done (); i.advance ())
-      {
-        unsigned char* e;
-        i.next (e);
+    for (unsigned char const e : received)
+      if (e == 0) ++lost_count;
 
-        if (*e == 0) ++lost_count;
-      }
-    }
+    for (unsigned char const e : damaged)
+      if (e == 1) ++damaged_count;
 
-
-    {
-      for (Status_List::Iterator i (damaged); !i.done (); i.advance ())
-      {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 1) ++damaged_count;
-      }
-    }
-
-
-    {
-      for (Status_List::Iterator i (duplicate); !i.done (); i.advance ())
-      {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 1) ++duplicate_count;
-      }
-    }
+    for (unsigned char const e : duplicate)
+      if (e == 1) ++duplicate_count;
 
     ACE_DEBUG ((LM_DEBUG,
                 "lost      : %d\n"
@@ -159,12 +116,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       //
       unsigned long count (0);
 
-      for (Status_List::Iterator i (received); !i.done (); i.advance ())
+      for (unsigned char const e : received)
       {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 0)
+        if (e == 0)
           ++count;
         else
           break; // Seen first ok message.

@@ -24,8 +24,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     ACE_RMCast::Socket socket (addr, false, true);
     //FUZZ: enable check_for_lack_ACE_OS
 
-    Message msg;
-    msg.sn = 0;
+    Message msg {};
 
     for (unsigned short i = 0; i < payload_size; i++)
     {
