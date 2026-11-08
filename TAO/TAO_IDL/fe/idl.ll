@@ -197,8 +197,6 @@ enum {
   IDL_MAP = tao_yy::parser::token::IDL_MAP,
 };
 
-#include <string_view>
-
 static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
 static ACE_CDR::Char        idl_escape_reader (char *);
 static ACE_CDR::Double      idl_atof (char const *);
