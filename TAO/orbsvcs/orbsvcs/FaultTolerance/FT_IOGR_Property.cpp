@@ -52,7 +52,7 @@ TAO_FT_IOGR_Property::set_property (
   IOP::TaggedComponent const &tmp_tc = tagged_components;
 
   // Go through every profile and set the TaggedComponent field
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       // Get the tagged components in the profile
       TAO_Tagged_Components &tag_comp =
@@ -153,7 +153,7 @@ TAO_FT_IOGR_Property::set_primary (
   TAO_MProfile &mprofile =
     ior2->_stubobj ()->base_profiles ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < mprofile.profile_count ();
        ++i)
     {
@@ -177,7 +177,7 @@ TAO_FT_IOGR_Property::set_primary (
     ior2->_stubobj ()->base_profiles ().profile_count ();
 
 
-  for (CORBA::ULong ctr = 0;
+  for (CORBA::ULong ctr {};
        ctr < count;
        ++ctr)
     {
@@ -294,7 +294,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
   IOP::TaggedComponent tagged_components;
   tagged_components.tag = IOP::TAG_FT_PRIMARY;
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < mprofile.profile_count ();
        ++i)
     {
@@ -332,7 +332,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < mprofile.profile_count ();
        ++i)
     {
@@ -370,7 +370,7 @@ TAO_FT_IOGR_Property::remove_primary_tag (
   TAO_MProfile &mprofile =
     iogr->_stubobj ()->base_profiles ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < mprofile.profile_count ();
        ++i)
     {

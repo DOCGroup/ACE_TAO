@@ -70,7 +70,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != sz;
        ++i)
     {
@@ -126,7 +126,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
 
   CORBA::ULong const sz = prof_list->size ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != sz;
        ++i)
     {
@@ -166,7 +166,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
   TAO_Endpoint *ep =
     r->profile ()->endpoint ();
 
-  for (size_t i = 0; i < endpoint_count; ++i)
+  for (size_t i {}; i < endpoint_count; ++i)
     {
       TAO_Base_Transport_Property desc (ep);
 

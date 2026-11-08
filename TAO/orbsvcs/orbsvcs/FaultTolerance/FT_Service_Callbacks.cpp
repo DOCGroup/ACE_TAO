@@ -31,7 +31,7 @@ TAO_FT_Service_Callbacks::select_profile (TAO_MProfile const& mprofile,
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != size;
        ++i)
     {
@@ -67,7 +67,7 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr const obj)
     return true;
 
   // Otherwise, check whether any profile is not nil.
-  for (CORBA::ULong cnt = 0;
+  for (CORBA::ULong cnt {};
        cnt < count;
        ++cnt)
     {
@@ -294,7 +294,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
       == 1)
     {
       // Look for the FT_REQUEST context id
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < service_list.length ();
            ++i)
         {
