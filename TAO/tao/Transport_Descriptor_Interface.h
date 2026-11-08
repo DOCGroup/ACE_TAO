@@ -21,6 +21,8 @@
 
 #include "tao/Basic_Types.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
@@ -83,12 +85,11 @@ protected:
   /// The base property of the connection ie. the peer's endpoint
   TAO_Endpoint *endpoint_ {};
 
+  /// Own the endpoint when ownership was transferred to this descriptor.
+  std::unique_ptr<TAO_Endpoint> owned_endpoint_ {};
+
   /// Should the endpoint be used in either direction?
   CORBA::Boolean bidir_flag_ {};
-
-  /// Is the endpoint allocated on the heap? If so, we will have to
-  /// delete it when we destruct ourselves.
-  CORBA::Boolean release_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
