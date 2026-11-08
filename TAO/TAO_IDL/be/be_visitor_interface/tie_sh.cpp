@@ -90,7 +90,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA () override;";
 
-  int status =
+  int const status =
     node->traverse_inheritance_graph (
               be_visitor_interface_tie_sh::method_helper,
               os

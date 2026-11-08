@@ -57,7 +57,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (!node->is_local ())
     {
-      bool abs = node->is_abstract ();
+      bool const abs = node->is_abstract ();
 
       *os << be_nl
           << "friend class TAO::"
@@ -342,7 +342,7 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
     dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
-  int status = this->visit_scope (node->port_type ());
+  int const status = this->visit_scope (node->port_type ());
 
   if (status == -1)
     {
@@ -371,7 +371,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
     dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
-  int status = this->visit_scope (node->port_type ());
+  int const status = this->visit_scope (node->port_type ());
 
   if (status == -1)
     {

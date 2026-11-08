@@ -68,7 +68,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       UTL_ScopedName *item_new_name {};
       UTL_ScopedName *new_name {};

@@ -31,7 +31,7 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
       << "ReplyHandler" << be_idt_nl
       << ": ";
 
-  long n_parents = node->n_inherits ();
+  long const n_parents = node->n_inherits ();
 
   if (n_parents == 0)
     {
@@ -52,7 +52,7 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
 
           AST_Decl *d = ScopeAsDecl (parent->defined_in ());
 
-          bool global = (d->node_type () == AST_Decl::NT_root);
+          bool const global = (d->node_type () == AST_Decl::NT_root);
 
           os_ << (global ? "" : "::") << d->full_name ()
               << "::AMI4CCM_" << parent->original_local_name ()
@@ -170,7 +170,7 @@ be_visitor_ami4ccm_rh_ex_idl::visit_string (be_string *node)
 {
   os_ << (node->width () > 1 ? "w" : "") << "string";
 
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
 
   if (bound > 0)
     {
@@ -208,7 +208,7 @@ be_visitor_ami4ccm_rh_ex_idl::pre_process (be_decl *node)
       return 0;
     }
 
-  bool void_ret_type = op->void_return_type ();
+  bool const void_ret_type = op->void_return_type ();
 
   be_argument *arg = dynamic_cast<be_argument*> (node);
 

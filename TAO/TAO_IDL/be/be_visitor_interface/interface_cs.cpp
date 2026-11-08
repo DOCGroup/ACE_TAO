@@ -196,7 +196,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "}" << be_nl;
     }
 
-  bool gen_any_destructor =
+  bool const gen_any_destructor =
     be_global->any_support ()
     && (!node->is_local ()
         || be_global->gen_local_iface_anyops ());
@@ -283,7 +283,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl
       << "if (" << be_idt;
 
-  int status = node->gen_is_a_ancestors (os);
+  int const status = node->gen_is_a_ancestors (os);
 
   if (status == -1)
     {
@@ -430,7 +430,7 @@ be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      std::string narrow_call = node->full_name () + " *proxy = TAO::Narrow_Utils<"
+      std::string const narrow_call = node->full_name () + " *proxy = TAO::Narrow_Utils<"
         + node->local_name () + ">::" + pre + " (_tao_objref, \""
         + node->repoID () + "\");";
 
@@ -519,7 +519,7 @@ be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
     dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
-  int status = this->visit_scope (node->port_type ());
+  int const status = this->visit_scope (node->port_type ());
 
   if (status == -1)
     {
@@ -548,7 +548,7 @@ be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
     dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
-  int status = this->visit_scope (node->port_type ());
+  int const status = this->visit_scope (node->port_type ());
 
   if (status == -1)
     {

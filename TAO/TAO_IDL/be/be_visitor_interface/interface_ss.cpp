@@ -48,13 +48,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       return -1;
     }
-  std::string full_skel_name =
+  std::string const full_skel_name =
     this->generate_full_skel_name (node);
 
-  std::string flat_name =
+  std::string const flat_name =
     this->generate_flat_name (node);
 
-  int status =
+  int const status =
     node->gen_operation_table (flat_name,
                                full_skel_name);
 
@@ -245,7 +245,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       UTL_ScopedName *item_new_name {};
       UTL_ScopedName *new_name {};
