@@ -7,19 +7,18 @@ Smart_Test_Factory::Smart_Test_Factory ()
 
 Test_ptr
 Smart_Test_Factory::create_proxy (Test_ptr proxy)
- {
-   ACE_DEBUG ((LM_DEBUG,
-               "create_smart_proxy\n"));
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "create_smart_proxy\n"));
 
-   if (CORBA::is_nil (proxy) == 0)
-       ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
+  if (!CORBA::is_nil (proxy))
+    ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), nullptr);
 
-   return proxy;
- }
+  return proxy;
+}
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
-  : TAO_Smart_Proxy_Base (proxy),
-    price_ (0)
+  : TAO_Smart_Proxy_Base (proxy)
 {
 }
 
