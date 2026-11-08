@@ -439,8 +439,7 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
   ACE_NEW_RETURN (stack_size_array,
                   size_t[number_of_threads],
                   -1);
-  size_t index;
-  for (index = 0;
+  for (size_t index {};
        index != number_of_threads;
        ++index)
     stack_size_array[index] =
