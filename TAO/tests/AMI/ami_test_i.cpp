@@ -33,17 +33,16 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 {
   out_l = 931233;
 
-  //if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:(%P:%t):AMI_Test_i::foo:  %d %C\n",
+              ACE_TEXT ("%N:%l:(%P:%t):AMI_Test_i::foo:  %d %C\n"),
               in_l,
               in_str));
 
   if (in_l == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Throwing Exception: A::DidTheRightThing\n"));
-      throw A::DidTheRightThing(42, "Hello world");
+                  ACE_TEXT ("Throwing Exception: A::DidTheRightThing\n")));
+      throw A::DidTheRightThing (42, "Hello world");
     }
 
   if (check_params_)
@@ -51,7 +50,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
       if (in_l_ != in_l || std::strcmp (in_str_.in (), in_str) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "ERROR: Parameter corruption on in parameters: %d %d %C %C.\n",
+                      ACE_TEXT ("ERROR: Parameter corruption on in parameters: %d %d %C %C.\n"),
                       in_l_, in_l, in_str_.in (), in_str));
           return 0;
         }
@@ -70,16 +69,16 @@ CORBA::Long
 AMI_Test_i::yadda ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
-  return yadda_;
+              ACE_TEXT ("%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n")));
+  return this->yadda_;
 }
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n"));
-  yadda_ = yadda;
+              ACE_TEXT ("%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n")));
+  this->yadda_ = yadda;
 }
 
 void

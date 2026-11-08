@@ -15,55 +15,58 @@
 #include "ace/Task.h"
 #include "ami_test_i.h"
 #include <atomic>
-ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
-int nthreads = 5;
-int niterations = 5;
-bool debug = false;
-bool shutdown_flag = false;
-bool perform_work_flag = true;
-std::atomic<int> number_of_replies {};
 
-CORBA::Long in_number = 931232;
-char const* const in_str = "Let's talk AMI.";
-std::atomic<bool> parameter_corruption {};
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Client_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:n:i:xw"));
-  int c;
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int thread_count {5};
+  int iteration_count {5};
+  bool debug {};
+  bool shutdown {};
+  bool perform_work {true};
+};
+
+struct Client_State
+{
+  std::atomic<int> number_of_replies {};
+  std::atomic<bool> parameter_corruption {};
+};
+
+CORBA::Long constexpr in_number = 931232;
+char constexpr in_str[] = "Let's talk AMI.";
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dk:n:i:xw"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':
-        debug = true;
+        options.debug = true;
         break;
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.thread_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iteration_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_flag = true;
+        options.shutdown = true;
         break;
       case 'w':
-        perform_work_flag = false;
+        options.perform_work = false;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-d "
-                           "-k <ior> "
-                           "-n <nthreads> "
-                           "-i <niterations> "
-                           "-x"
-                           "\n",
+                           ACE_TEXT ("usage: %s [-d] [-k <ior>] [-n <threads>] "
+                                     "[-i <iterations>] [-x] [-w]\n"),
                            argv [0]),
                           -1);
       }
@@ -79,11 +82,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
  *
  * Use the ACE_Task_Base class to run the client threads.
  */
+class Handler;
+
 class Client : public ACE_Task_Base
 {
 public:
   /// ctor
-  Client (A::AMI_Test_ptr server, int niterations);
+  Client (A::AMI_Test_ptr server,
+          int niterations,
+          bool debug,
+          Handler &handler);
   Client (Client const &) = delete;
   Client &operator= (Client const &) = delete;
   Client (Client &&) = delete;
@@ -92,21 +100,28 @@ public:
   /// The thread entry point.
   int svc () override;
 
-  // private:
+private:
   /// Var for the AMI_Test object.
   A::AMI_Test_var ami_test_var_;
 
   /// The number of iterations on each client thread.
-  int niterations_;
+  int const niterations_;
+
+  bool const debug_;
 
   /// Var for AMI_AMI_Test_ReplyHandler object.
-  A::AMI_AMI_TestHandler_var the_handler_var_;
+  A::AMI_AMI_TestHandler_var const the_handler_var_;
 };
 
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler () = default;
+  Handler (Client_Options const &options, Client_State &state)
+    : options_ (options)
+    , state_ (state)
+  {
+  }
+
   ~Handler () override = default;
   Handler (Handler const &) = delete;
   Handler &operator= (Handler const &) = delete;
@@ -118,25 +133,27 @@ public:
     {
       if (result == 0)
         {
-          ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption.store (true);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ERROR: Callback method detected parameter corruption.\n")));
+          this->state_.parameter_corruption.store (true);
         }
 
-      if (debug)
+      if (this->options_.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P | %t) : Callback method called: result <%d>, out_arg <%d>\n",
+                      ACE_TEXT ("(%P | %t) : Callback method called: result <%d>, "
+                                "out_arg <%d>\n"),
                       result,
                       out_l));
         }
 
-      number_of_replies.fetch_sub (1);
-    };
+      this->state_.number_of_replies.fetch_sub (1);
+    }
 
   void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called:\n"));
+                  ACE_TEXT ("Callback method <foo_excep> called:\n")));
       try
         {
           excep_holder->raise_exception ();
@@ -145,116 +162,115 @@ public:
         {
           ex._tao_print_exception ("Caught exception:");
         }
-    };
+    }
 
   void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <get_yadda> called: result <%d>\n",
+                  ACE_TEXT ("Callback method <get_yadda> called: result <%d>\n"),
                   result));
-    };
+    }
 
   void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <get_yadda_excep> called:\n"));
-    };
+                  ACE_TEXT ("Callback method <get_yadda_excep> called:\n")));
+    }
 
   void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <set_yadda> called:\n"));
-    };
+                  ACE_TEXT ("Callback method <set_yadda> called:\n")));
+    }
 
   void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <set_yadda_excep> called:\n"));
-    };
+                  ACE_TEXT ("Callback method <set_yadda_excep> called:\n")));
+    }
   void inout_arg_test (char const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Callback method <set_yadda_excep> called:\n"));
+                ACE_TEXT ("Callback method <inout_arg_test> called:\n")));
   }
 
   void inout_arg_test_excep (::Messaging::ExceptionHolder *) override
   {
   }
+
+private:
+  Client_Options const &options_;
+  Client_State &state_;
 };
 
-// ReplyHandler.
-Handler handler;
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_State state {};
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Client_Options options {};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      A::AMI_Test_var server;
-
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-      server =  A::AMI_Test::_narrow (object.in ());
+      CORBA::Object_var const object (orb->string_to_object (options.ior));
+      A::AMI_Test_var const server (A::AMI_Test::_narrow (object.in ()));
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior),
                             1);
         }
 
       // Activate POA to handle the call back.
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object (
+        orb->resolve_initial_references ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa (
+        PortableServer::POA::_narrow (poa_object.in ()));
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager (root_poa->the_POAManager ());
 
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
 
-      Client client (server.in (), niterations);
+      Handler handler (options, state);
+      Client client (server.in (), options.iteration_count, options.debug, handler);
+      state.number_of_replies.store (options.thread_count * options.iteration_count);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.thread_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
+                           ACE_TEXT ("Cannot activate client threads\n")),
                           1);
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies.store (nthreads * niterations);
-
-      if (perform_work_flag)
+      if (options.perform_work)
         {
-          if (debug)
+          if (options.debug)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                          number_of_replies.load ()));
+                          ACE_TEXT ("(%P|%t) : Entering perform_work loop to receive "
+                                    "<%d> replies\n"),
+                          state.number_of_replies.load ()));
             }
 
           // ORB loop.
 
-          while (number_of_replies.load () > 0)
+          while (state.number_of_replies.load () > 0)
             {
-              CORBA::Boolean pending = orb->work_pending();
+              bool const pending (orb->work_pending ());
 
               if (pending)
                 {
@@ -262,25 +278,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 }
             }
 
-          if (debug)
+          if (options.debug)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) : Exited perform_work loop\n"));
+                          ACE_TEXT ("(%P|%t) : Exited perform_work loop\n")));
             }
         }
 
       client.thr_mgr ()->wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("threads finished\n")));
 
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) : Received <%d> replies\n",
-                      (nthreads * niterations) - number_of_replies.load ()));
+                      ACE_TEXT ("(%P|%t) : Received <%d> replies\n"),
+                      (options.thread_count * options.iteration_count)
+                        - state.number_of_replies.load ()));
         }
 
-      if (shutdown_flag)
+      if (options.shutdown)
         {
           server->shutdown ();
         }
@@ -296,17 +313,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return parameter_corruption.load ();
+  return state.parameter_corruption.load ();
 }
 
 // ****************************************************************
 
 Client::Client (A::AMI_Test_ptr server,
-                int niterations)
-  : ami_test_var_ (A::AMI_Test::_duplicate (server)),
-    niterations_ (niterations)
+                int niterations,
+                bool debug,
+                Handler &handler)
+  : ami_test_var_ (A::AMI_Test::_duplicate (server))
+  , niterations_ (niterations)
+  , debug_ (debug)
+  , the_handler_var_ (handler._this ())
 {
-  the_handler_var_ = handler._this (/* */);
 }
 
 int
@@ -314,15 +334,15 @@ Client::svc ()
 {
   try
     {
-      for (int i = 0; i < this->niterations_; ++i)
+      for (int i {}; i < this->niterations_; ++i)
         {
-          ami_test_var_->sendc_foo (the_handler_var_.in (), in_number, in_str);
+          this->ami_test_var_->sendc_foo (this->the_handler_var_.in (), in_number, in_str);
         }
-      if (debug)
+      if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P | %t):<%d> Asynchronous methods issued\n",
-                      niterations));
+                      ACE_TEXT ("(%P | %t):<%d> Asynchronous methods issued\n"),
+                      this->niterations_));
         }
     }
   catch (CORBA::Exception const &ex)
