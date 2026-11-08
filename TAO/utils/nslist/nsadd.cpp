@@ -23,7 +23,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   CORBA::ORB_var orb;
   ACE_TCHAR const *ior {};
 
-  int err = 0;
+  int err {};
 
   try
     {
@@ -280,7 +280,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           CosNaming::Name fullName (the_name);
           int
-            index,
+            index {},
             found= the_name.length() - nf.rest_of_name.length(),
             &limit= found;
           if (quiet)

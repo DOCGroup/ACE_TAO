@@ -60,7 +60,7 @@ namespace
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int err = 0;
+  int err {};
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
 

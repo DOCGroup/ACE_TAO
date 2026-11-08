@@ -35,14 +35,14 @@ namespace
 {
   CORBA::ORB_var orb;
   bool
-    showIOR = false,    // Default decodes endpoints
-    showCtxIOR = false, // Default no displaying naming context ior
-    noLoops = false;    // Default draw loopback arrows
+    showIOR {},    // Default decodes endpoints
+    showCtxIOR {}, // Default no displaying naming context ior
+    noLoops {};    // Default draw loopback arrows
   char const *myTree = "|"; // Default string to draw tree "tram-lines"
   char const *myNode = "+"; // Default string to draw tree node end-points
   size_t sizeMyTree; // Initialized by main to strlen (myTree)
   size_t sizeMyNode; // Initialized by main to strlen (myNode)
-  size_t maxDepth= 0;      // Limit to display depth (default unlimited)
+  size_t maxDepth {};      // Limit to display depth (default unlimited)
   ACE_Time_Value
     rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
 
@@ -162,20 +162,19 @@ namespace
     get_tag_name (tag, tag_name);
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    size_t count;
-    for (count= 0; count < level; ++count)
+    for (size_t count {}; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-    for (count= 0; count < sizeMyNode; ++count)
+    for (size_t count {}; count < sizeMyNode; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
     ACE_DEBUG ((LM_DEBUG, " Protocol: %C\n",
                tag_name.c_str()));
 
     // Display Endpoint
-    for (count= 0; count < level; ++count)
+    for (size_t count {}; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-    for (count= 0; count < sizeMyNode; ++count)
+    for (size_t count {}; count < sizeMyNode; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
-    char buf[256]= {'\0'};
+    char buf[256] {};
     if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
       std::strcpy (buf, "{Endpoint too long}");
     ACE_DEBUG ((LM_DEBUG, " Endpoint: %C\n", buf));
@@ -188,12 +187,11 @@ namespace
               const CosNaming::BindingList &bl,
               size_t level)
   {
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
          i < bl.length ();
          ++i)
       {
-        size_t count;
-        for (count= 0; count < level-1; ++count)
+        for (size_t count {}; count < level-1; ++count)
           ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
         ACE_DEBUG ((LM_DEBUG, "%C %C", myNode,
                    bl[i].binding_name[0].id.in ()));
@@ -245,15 +243,14 @@ namespace
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
                 if (!noLoops)
                   {
-                    size_t count_binding;
-                    for (count_binding= 0; count_binding < (level - backwards); ++count_binding)
+                    size_t count_binding {};
+                    for (; count_binding < (level - backwards); ++count_binding)
                       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
-                    size_t chars;
                     while (++count_binding < level)
-                      for (chars= 0; chars <= sizeMyTree; ++chars)
+                      for (size_t chars {}; chars <= sizeMyTree; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
-                    for (chars= 0; chars < sizeMyNode; ++chars)
+                    for (size_t chars {}; chars < sizeMyNode; ++chars)
                       ACE_DEBUG ((LM_DEBUG, "-"));
                     ACE_DEBUG ((LM_DEBUG, "^\n"));
                   }
