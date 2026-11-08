@@ -172,7 +172,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
     (new ACE_UINT32[entry->num_local_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_local_sec_addr ();
-  for (int i = 0; i < entry->num_local_sec_addrs (); i++)
+  for (int i {}; i < entry->num_local_sec_addrs (); ++i)
     {
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
@@ -488,7 +488,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
     (new ACE_UINT32[entry->num_peer_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_peer_sec_addr ();
-  for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
+  for (int i {}; i < entry->num_peer_sec_addrs (); ++i)
     {
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
@@ -528,7 +528,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
       ACE_INET_Addr *peer_addrs {};
       ACE_NEW_RETURN (peer_addrs,ACE_INET_Addr [size], -1);
       handler->peer ().get_local_addrs (peer_addrs, size);
-      for (unsigned int i=0; i < size;i++)
+      for (unsigned int i {}; i < size; ++i)
         {
           peer_addrs [i].addr_to_string (buf,
                                          BUFSIZ);
@@ -543,7 +543,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 
       size = BUFSIZ;
       handler->peer ().get_remote_addrs (peer_addrs, size);
-      for (unsigned int i=0; i < size;i++)
+      for (unsigned int i {}; i < size; ++i)
         {
           peer_addrs [i].addr_to_string (buf,
                                          BUFSIZ);

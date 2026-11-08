@@ -148,7 +148,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
 
             bye.ssrc_list(&ssrc_list, length);
 
-            for (int i=0; i<length; i++)
+            for (int i {}; i < length; ++i)
               {
                 RTCP_Channel_In *c {};
 

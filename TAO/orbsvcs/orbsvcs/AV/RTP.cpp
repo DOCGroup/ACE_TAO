@@ -55,7 +55,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
 
   std::memcpy(this->packet_, buffer, length);
 
-  for (int j=0; j<(int)this->cc(); j++)
+  for (int j {}; j < (int)this->cc(); ++j)
     {
       this->host_byte_order_csrc_list_[j] = ntohl(*(ACE_UINT32*)&buffer[index]);
       index+=4;
@@ -83,14 +83,14 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
       (this->pt() == RTP_PT_L16_STEREO) ||
       (this->pt() == RTP_PT_L16_MONO))
     {
-      for (int i=0; i < payload_size_; i+=2)
+      for (int i {}; i < payload_size_; i += 2)
         {
           *(ACE_UINT16*)&this->host_byte_order_payload_[i] = ntohs(*(ACE_UINT16*)&this->packet_[index]);
           index+=2;
         }
     }
   else
-    for (int i=0; i<this->payload_size_; i++)
+    for (int i {}; i < this->payload_size_; ++i)
       {
         this->host_byte_order_payload_[i] = this->packet_[index];
         index++;
@@ -122,7 +122,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
     csrc_count = 15; // Only 15 contributing sources can be specified.
 
   if (csrc_list != nullptr)
-    for (unsigned char i=0; i<csrc_count; i++)
+    for (unsigned char i {}; i < csrc_count; ++i)
       {
         size+=4;
         this->host_byte_order_csrc_list_[i] = csrc_list[i];
@@ -147,7 +147,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   *((ACE_UINT32*)&this->packet_[index]) = htonl(ssrc);
   index+=4;
 
-  for (int i=0; i<csrc_count; i++)
+  for (int i {}; i < csrc_count; ++i)
     {
       *((ACE_UINT32*)&this->packet_[index]) = htonl(this->host_byte_order_csrc_list_[i]);
       index+=4;
@@ -162,14 +162,14 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       (this->pt() == RTP_PT_L16_STEREO) ||
       (this->pt() == RTP_PT_L16_MONO))
     {
-      for (int i=0; i<this->payload_size_; i+=2)
+      for (int i {}; i < this->payload_size_; i += 2)
         {
           *(ACE_UINT16*)&this->packet_[index] = htons(*(ACE_UINT16*)&data[i]);
           index+=2;
         }
     }
   else
-    for (int i=0; i<this->payload_size_; i++)
+    for (int i {}; i < this->payload_size_; ++i)
       {
         this->packet_[index] = data[i];
         index++;
@@ -657,7 +657,7 @@ TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
   CORBA::ULong const num_policies = this->policy_list_.length ();
   TAO_AV_Policy *policy {};
 
-  for (u_int i=0; i< num_policies;i++)
+  for (u_int i {}; i < num_policies; ++i)
     {
       policy = this->policy_list_ [i];
       switch (policy->type ())

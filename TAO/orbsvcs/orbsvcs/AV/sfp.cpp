@@ -819,7 +819,7 @@ TAO_SFP_Base::dump_buf (char *buffer,int size)
 {
   char *buf = buffer;
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"\n========================================\n"));
-  for (int i=0;i<size;i++)
+  for (int i {}; i < size; ++i)
     if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"%d ",buf[i]));
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"\n========================================\n"));
 }
@@ -1080,7 +1080,7 @@ int
 TAO_SFP_Object::set_policies (TAO_AV_PolicyList const &policies)
 {
   TAO_AV_Policy *policy {};
-  for (CORBA::ULong i=0;i<policies.length ();i++)
+  for (CORBA::ULong i {}; i < policies.length (); ++i)
     {
       policy = policies[i];
       switch (policies[i]->type ())

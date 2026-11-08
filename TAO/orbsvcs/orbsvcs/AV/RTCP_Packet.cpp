@@ -85,7 +85,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
 
       this->ssrc_list_length_ = length;
 
-      for (int i=0; i<length; i++)
+      for (int i {}; i < length; ++i)
         this->ssrc_list_[i] = ssrc_list[i];
     }
 
@@ -242,7 +242,7 @@ RTCP_BYE_Packet::dump ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_BYE_Packet:: from ssrc(s) "));
-  for (int i=0; i< this->ssrc_list_length_; i++)
+  for (int i {}; i < this->ssrc_list_length_; ++i)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "%u ",
                 this->ssrc_list_[i]));
@@ -291,7 +291,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   i=4;
   this->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  for (unsigned int j=0; j<this->chd_.count_; j++)
+  for (unsigned int j {}; j < this->chd_.count_; ++j)
     {
       if (j==0)
         {
@@ -454,7 +454,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
   // in the parent. It is 4 bytes long.
 
   i=4;
-  for (unsigned int j=0; j<this->chd_.count_; j++)
+  for (unsigned int j {}; j < this->chd_.count_; ++j)
     {
       if (j==0)
         {
@@ -1024,7 +1024,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
   i+=4;
   this->osent_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  for (unsigned int j=0; j<this->chd_.count_; j++)
+  for (unsigned int j {}; j < this->chd_.count_; ++j)
     {
       if (j==0)
         {

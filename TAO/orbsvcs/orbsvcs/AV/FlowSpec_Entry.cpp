@@ -582,7 +582,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
-          for (int i = 0; i < this->num_local_sec_addrs_; i++)
+          for (int i {}; i < this->num_local_sec_addrs_; ++i)
             {
               address_str += ";";
               address_str += this->local_sec_addr_ [i];
@@ -666,7 +666,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
-              for (int i = 0; i < this->num_peer_sec_addrs_; i++)
+              for (int i {}; i < this->num_peer_sec_addrs_; ++i)
                 {
                   peer_address_str += ";";
                   peer_address_str += this->peer_sec_addr_ [i];
@@ -851,7 +851,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
-          for (int i = 0; i < this->num_local_sec_addrs_; i++)
+          for (int i {}; i < this->num_local_sec_addrs_; ++i)
             {
               address_str += ";";
               address_str += this->local_sec_addr_ [i];

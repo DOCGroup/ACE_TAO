@@ -208,9 +208,9 @@ int
 TAO_AV_UDP_QoS_Flow_Handler::translate (CosPropertyService::Properties &qos_params,
                                         ACE_Flow_Spec *ace_flow_spec)
 {
-  for (unsigned int i = 0;
+  for (unsigned int i {};
        i < qos_params.length ();
-       i++)
+       ++i)
     {
       if (std::strcmp (qos_params [i].property_name, "Service_Type") == 0)
         {
