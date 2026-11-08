@@ -159,24 +159,28 @@ private:
  * which point the object's fini() hook is called and the
  * service_object_ gets deleted.
  *
- * This class is similar to the Standard C++ Library class
- * auto_ptr. It is used in conjunction with statically linked
- * ACE_Service_Objects, as shown in the ./netsvcs/server/main.cpp example.
+ * This scoped owner calls fini() and deletes the service object on
+ * destruction. Ownership cannot be copied or moved.
  */
 class ACE_Export ACE_Service_Object_Ptr
 {
 public:
   /// Acquire ownership of the @a so.
-  ACE_Service_Object_Ptr (ACE_Service_Object *so);
+  explicit ACE_Service_Object_Ptr (ACE_Service_Object *so);
 
   /// Release the held ACE_Service_Object by calling its fini() hook.
   ~ACE_Service_Object_Ptr ();
+
+  ACE_Service_Object_Ptr (ACE_Service_Object_Ptr const &) = delete;
+  ACE_Service_Object_Ptr &operator= (ACE_Service_Object_Ptr const &) = delete;
+  ACE_Service_Object_Ptr (ACE_Service_Object_Ptr &&) = delete;
+  ACE_Service_Object_Ptr &operator= (ACE_Service_Object_Ptr &&) = delete;
 
   /// Smart pointer to access the underlying ACE_Service_Object.
   ACE_Service_Object *operator-> ();
 
 private:
-  /// Holds the service object until we're done.
+  /// Owns the service object until the scope ends.
   ACE_Service_Object *service_object_;
 };
 

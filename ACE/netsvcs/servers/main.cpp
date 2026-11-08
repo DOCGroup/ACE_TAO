@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           l_argv[0] = name_port;
           l_argv[1] = nullptr;
-          ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
+          ACE_Service_Object_Ptr sp_1 (ACE_SVC_INVOKE (ACE_Name_Acceptor));
 
           if (sp_1->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TIME_SERVER_PORT_STR);
           l_argv[0] = time_port;
           l_argv[1] = nullptr;
-          ACE_Service_Object_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
+          ACE_Service_Object_Ptr sp_2 (ACE_SVC_INVOKE (ACE_TS_Server_Acceptor));
 
           if (sp_2->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           l_argv[0] = argv[0];
           l_argv[1] = clerk_port;
           l_argv[2] = nullptr;
-          ACE_Service_Object_Ptr sp_3 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
+          ACE_Service_Object_Ptr sp_3 (ACE_SVC_INVOKE (ACE_TS_Clerk_Processor));
 
           if (sp_3->init (2, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TOKEN_SERVER_PORT_STR);
           l_argv[0] = token_port;
           l_argv[1] = nullptr;
-          ACE_Service_Object_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
+          ACE_Service_Object_Ptr sp_4 (ACE_SVC_INVOKE (ACE_Token_Acceptor));
 
           if (sp_4->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -101,8 +101,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR);
           l_argv[0] = thr_logging_port;
           l_argv[1] = nullptr;
-          ACE_Service_Object_Ptr sp_5 =
-            ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
+          ACE_Service_Object_Ptr sp_5 (
+            ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor));
 
           if (sp_5->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -114,8 +114,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_LOGGING_SERVER_PORT_STR);
           l_argv[0] = logging_port;
           l_argv[1] = nullptr;
-          ACE_Service_Object_Ptr sp_6 =
-            ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
+          ACE_Service_Object_Ptr sp_6 (
+            ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor));
 
           if (sp_6->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -125,8 +125,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           l_argv[0] = logging_port;
           l_argv[1] = nullptr;
-          ACE_Service_Object_Ptr sp_7 =
-            ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
+          ACE_Service_Object_Ptr sp_7 (
+            ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor));
 
           if (sp_7->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
