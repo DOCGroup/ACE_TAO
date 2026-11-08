@@ -5,10 +5,9 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior);
 
 class Crasher : public ACE_Event_Handler
 {
@@ -30,6 +29,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
+
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -69,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       policies[0]->destroy ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       PortableServer::Servant_var<Echo> impl;
@@ -144,7 +145,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c {};

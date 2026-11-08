@@ -3,10 +3,9 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file);
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -15,6 +14,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
+
+      ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -33,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
       PortableServer::Servant_var<Server> impl;
@@ -95,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c {};
