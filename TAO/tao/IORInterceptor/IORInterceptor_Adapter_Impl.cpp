@@ -56,7 +56,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
   TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
   ACE_UNUSED_ARG (non_servant_upcall);
 
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t i {}; i < interceptor_count; ++i)
     {
       try
         {
@@ -112,7 +112,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
   // All the establish_components() interception points have been
   // invoked. Now call the components_established() interception point
   // on all the IORInterceptors.
-  for (size_t j = 0; j < interceptor_count; ++j)
+  for (size_t j {}; j < interceptor_count; ++j)
     {
       try
         {
@@ -149,7 +149,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
   seq_obj_ref_template.length (
     static_cast<CORBA::ULong> (array_obj_ref_template.size()));
 
-  for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
+  for (size_t counter {}; counter < array_obj_ref_template.size(); ++counter)
     {
       PortableInterceptor::ObjectReferenceTemplate *const member =
         array_obj_ref_template[counter];
@@ -159,7 +159,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
       seq_obj_ref_template[static_cast<CORBA::ULong> (counter)] = member;
     }
 
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t i {}; i < interceptor_count; ++i)
     {
       PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
         this->ior_interceptor_list_.interceptor (i);
@@ -186,7 +186,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
   if (interceptor_count == 0)
     return;
 
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t i {}; i < interceptor_count; ++i)
     {
       PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
         this->ior_interceptor_list_.interceptor (i);
