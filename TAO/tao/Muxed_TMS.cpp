@@ -114,8 +114,8 @@ TAO_Muxed_TMS::has_request ()
 int
 TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  int result = 0;
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
+  int result {};
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   // Grab the reply dispatcher for this id.
   {
@@ -126,26 +126,26 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     result = this->dispatcher_table_.unbind (params.request_id_, rd);
   }
 
-    if (result == 0 && rd)
-      {
-        if (TAO_debug_level > 8)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("id [%d]\n"),
-                      params.request_id_));
+  if (result == 0 && rd)
+    {
+      if (TAO_debug_level > 8)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                    ACE_TEXT ("id [%d]\n"),
+                    params.request_id_));
 
-        // Dispatch the reply.
-        // They return 1 on success, and -1 on failure.
-        result = rd->dispatch_reply (params);
-      }
-    else
-      {
-        if (TAO_debug_level > 0)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
-                      params.request_id_,
-                      result));
+      // Dispatch the reply.
+      // They return 1 on success, and -1 on failure.
+      result = rd->dispatch_reply (params);
+    }
+  else
+    {
+      if (TAO_debug_level > 0)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                    ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
+                    params.request_id_,
+                    result));
 
       // Result = 0 means that the mux strategy was not able
       // to find a registered reply handler, either because the reply
@@ -154,15 +154,14 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       result = 0;
     }
 
-
   return result;
 }
 
 int
 TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
 {
-  int result = 0;
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
+  int result {};
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   // Grab the reply dispatcher for this id.
   {
@@ -237,7 +236,7 @@ TAO_Muxed_TMS::connection_closed ()
              ace_mon,
              *this->lock_);
 
-  int retval = 0;
+  int retval {};
   do
     {
       retval = this->clear_cache_i ();
