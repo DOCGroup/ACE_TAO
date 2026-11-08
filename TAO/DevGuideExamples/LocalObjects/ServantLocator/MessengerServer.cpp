@@ -6,7 +6,7 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

@@ -30,7 +30,7 @@ class  Messenger_i : public virtual POA_Messenger
 {
 public:
   //Constructor
-  Messenger_i ();
+  Messenger_i () = default;
 
   //Destructor
   ~Messenger_i () override = default;

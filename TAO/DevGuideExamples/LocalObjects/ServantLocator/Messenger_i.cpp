@@ -18,10 +18,6 @@
 
 #include "Messenger_i.h"
 #include <iostream>
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-  {
-  }
 
 CORBA::Boolean
 Messenger_i::send_message (

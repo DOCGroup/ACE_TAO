@@ -1,8 +1,8 @@
 #include "MessengerLocator_i.h"
 #include "Messenger_i.h"
 
+#include <cstring>
 #include <iostream>
-#include <string>
 
 PortableServer::Servant
 Messenger_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
@@ -16,8 +16,7 @@ Messenger_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
   std::cout << "preinvoke called..." << oid_str << std::endl;
 
   // Check if the ObjectId is valid.
-  std::string const object_id (oid_str.in ());
-  if (object_id == "Messenger") {
+  if (std::strcmp (oid_str.in (), "Messenger") == 0) {
     // Create the required servant
     PortableServer::ServantBase_var servant = new Messenger_i ();
 
@@ -27,10 +26,7 @@ Messenger_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
 
     return servant._retn();
   }
-  else
-    {
-      throw CORBA::OBJECT_NOT_EXIST ();
-    }
+  throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void
@@ -45,6 +41,6 @@ Messenger_Locator_i::postinvoke (PortableServer::ObjectId const &,
   // Release the servant as it is no longer needed.
   if (cookie != nullptr)
     {
-      PortableServer::ServantBase_var servant_guard (servant);
+      PortableServer::ServantBase_var const servant_guard (servant);
     }
 }
