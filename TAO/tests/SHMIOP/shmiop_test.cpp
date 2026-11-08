@@ -4,123 +4,183 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/SString.h"
 #include "ace/Task.h"
 
-struct Servant : virtual POA_Test::Hello
-{
-  explicit Servant (const CORBA::ORB_var &orb)
-    : orb_ (orb)
-  {}
+#include <memory>
+#include <string>
 
-  char *get_string ()
+struct Options
+{
+  ACE_TCHAR const *server_ior_file {};
+  ACE_TCHAR const *client_ior_file {};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
+{
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT ("s:c:"));
+  int option {};
+
+  while ((option = opts ()) != -1)
+    switch (option)
+      {
+      case 's':
+        options.server_ior_file = opts.opt_arg ();
+        break;
+      case 'c':
+        options.client_ior_file = opts.opt_arg ();
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("usage: %s [-s <server IOR file>] "
+                                     "[-c <client IOR file>]\n"),
+                           argv [0]),
+                          -1);
+      }
+
+  return 0;
+}
+
+class Servant : public virtual POA_Test::Hello
+{
+public:
+  explicit Servant (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
+
+  Servant (Servant const &) = delete;
+  Servant &operator= (Servant const &) = delete;
+  Servant (Servant &&) = delete;
+  Servant &operator= (Servant &&) = delete;
+
+  char *get_string () override
   {
     CORBA::String_var str ("hello");
     return str._retn ();
   }
 
-  void shutdown ()
+  void shutdown () override
   {
     this->orb_->shutdown (false);
   }
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
 };
 
-struct ORBTask : ACE_Task_Base
+class ORB_Task : public ACE_Task_Base
 {
-  explicit ORBTask (const CORBA::ORB_var &orb)
-    : orb_ (orb)
-  {}
+public:
+  explicit ORB_Task (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
 
-  int svc ()
+  ORB_Task (ORB_Task const &) = delete;
+  ORB_Task &operator= (ORB_Task const &) = delete;
+  ORB_Task (ORB_Task &&) = delete;
+  ORB_Task &operator= (ORB_Task &&) = delete;
+
+  int svc () override
   {
     try
       {
         this->orb_->run ();
         return 0;
       }
-    catch (const CORBA::Exception &e)
+    catch (CORBA::Exception const &ex)
       {
-        e._tao_print_exception ("Exception caught from ORB::run:");
+        ex._tao_print_exception ("Exception caught from ORB::run:");
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR unknown exception caught ")
-                              ACE_TEXT ("from ORB::run\n")));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR unknown exception caught from ORB::run\n")));
       }
     return 1;
   }
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
 };
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Options options {};
 
-      ACE_Get_Opt opts (argc, argv, ACE_TEXT ("s:c:"));
-      const ACE_TCHAR *server = 0, *client = 0;
-      for (int o; (o = opts ()) != -1;)
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
+
+      Servant servant (orb.in ());
+      ORB_Task task (orb.in ());
+
+      if (options.server_ior_file != nullptr)
         {
-          switch (o)
-            {
-            case 's':
-              server = opts.opt_arg ();
-              break;
-            case 'c':
-              client = opts.opt_arg ();
-              break;
-            }
+          CORBA::Object_var const object (
+            orb->resolve_initial_references ("RootPOA"));
+          PortableServer::POA_var const poa (
+            PortableServer::POA::_narrow (object.in ()));
+          PortableServer::POAManager_var const manager (poa->the_POAManager ());
+          manager->activate ();
+
+          Test::Hello_var const servant_object (servant._this ());
+          CORBA::String_var const ior (orb->object_to_string (servant_object.in ()));
+          std::unique_ptr<FILE, int (*) (FILE *)> ior_file (
+            ACE_OS::fopen (options.server_ior_file, ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!ior_file)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open server IOR file %s: %p\n"),
+                               options.server_ior_file),
+                              1);
+          if (ACE_OS::fputs (ior.in (), ior_file.get ()) == EOF)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot write server IOR file %s: %p\n"),
+                               options.server_ior_file),
+                              1);
+
+          if (options.client_ior_file == nullptr &&
+              task.activate (THR_NEW_LWP | THR_JOINABLE) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot activate ORB task\n")),
+                              1);
         }
 
-      Servant srv (orb);
-      ORBTask task (orb);
-
-      if (server)
+      if (options.client_ior_file != nullptr)
         {
-          CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-          PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
-          PortableServer::POAManager_var pm = poa->the_POAManager ();
-          pm->activate ();
-          Test::Hello_var srv_obj = srv._this ();
-          CORBA::String_var srv_str = orb->object_to_string (srv_obj);
-          FILE *f = ACE_OS::fopen (server, "w");
-          ACE_OS::fputs (srv_str, f);
-          ACE_OS::fclose (f);
-          if (!client)
-            task.activate();
-        }
-
-      if (client)
-        {
-          ACE_CString ior ("file://");
-          ior += ACE_TEXT_ALWAYS_CHAR (client);
-          CORBA::Object_var obj = orb->string_to_object (ior.c_str ());
-          Test::Hello_var hello = Test::Hello::_narrow (obj);
-          CORBA::String_var str = hello->get_string ();
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) - returned <%C>\n"),
-                      str.in ()));
+          std::string ior ("file://");
+          ior += ACE_TEXT_ALWAYS_CHAR (options.client_ior_file);
+          CORBA::Object_var const object (orb->string_to_object (ior.c_str ()));
+          Test::Hello_var const hello (Test::Hello::_narrow (object.in ()));
+          CORBA::String_var const result (hello->get_string ());
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) - returned <%C>\n"),
+                      result.in ()));
           hello->shutdown ();
         }
-      else if (server)
+      else if (options.server_ior_file != nullptr)
         {
-          task.wait ();
+          if (task.wait () != 0)
+            return 1;
         }
 
       orb->destroy ();
       return 0;
     }
-  catch (const CORBA::Exception &e)
+  catch (CORBA::Exception const &ex)
     {
-      e._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR unknown exception ")
-                            ACE_TEXT ("caught in main\n")));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ERROR unknown exception caught in main\n")));
     }
   return 1;
 }
