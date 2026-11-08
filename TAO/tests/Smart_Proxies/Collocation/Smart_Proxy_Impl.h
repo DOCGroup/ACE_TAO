@@ -5,10 +5,15 @@
 #include "DiamondC.h"
 #include "stub_export.h"
 
-class MY_Stub_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
+class MY_Stub_Export Smart_Diamond_Top_Factory
+  : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
 {
 public:
   Smart_Diamond_Top_Factory ();
+  Smart_Diamond_Top_Factory (Smart_Diamond_Top_Factory const &) = delete;
+  Smart_Diamond_Top_Factory (Smart_Diamond_Top_Factory &&) = delete;
+  Smart_Diamond_Top_Factory &operator= (Smart_Diamond_Top_Factory const &) = delete;
+  Smart_Diamond_Top_Factory &operator= (Smart_Diamond_Top_Factory &&) = delete;
 
   Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy) override;
 
@@ -16,10 +21,15 @@ public:
 };
 
 
-class MY_Stub_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamond_Top_Smart_Proxy_Base
+class MY_Stub_Export Smart_Diamond_Top_Proxy
+  : public virtual Diamond::TAO_Diamond_Top_Smart_Proxy_Base
 {
 public:
-  Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy);
+  explicit Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy);
+  Smart_Diamond_Top_Proxy (Smart_Diamond_Top_Proxy const &) = delete;
+  Smart_Diamond_Top_Proxy (Smart_Diamond_Top_Proxy &&) = delete;
+  Smart_Diamond_Top_Proxy &operator= (Smart_Diamond_Top_Proxy const &) = delete;
+  Smart_Diamond_Top_Proxy &operator= (Smart_Diamond_Top_Proxy &&) = delete;
 
   char * shape () override;
   // Smartify the method call!
