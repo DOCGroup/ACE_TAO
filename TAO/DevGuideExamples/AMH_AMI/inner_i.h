@@ -31,7 +31,7 @@ public:
   Inner_i &operator= (Inner_i &&) = delete;
 
 private:
-  int divisor_;
+  int const divisor_;
 };
 
 

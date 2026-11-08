@@ -46,7 +46,7 @@ public:
   Middle_i &operator= (Middle_i &&) = delete;
 
 private:
-  PortableServer::POA_var poa_;
+  // The synchronous servant does not create or activate callback servants.
   Inner_var inner_;
 };
 

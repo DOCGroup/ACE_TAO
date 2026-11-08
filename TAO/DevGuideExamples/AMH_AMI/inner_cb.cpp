@@ -1,10 +1,11 @@
 #include "amh_ami_pch.h"
 #include "inner_cb.h"
 #include <iostream>
+
 // Implementation skeleton constructor
 Inner_callback_i::Inner_callback_i (PortableServer::POA_ptr p,
                                     AMH_MiddleResponseHandler_ptr rh)
-  : poa_(PortableServer::POA::_duplicate (p)),
+  : poa_ (PortableServer::POA::_duplicate (p)),
     response_handler_ (AMH_MiddleResponseHandler::_duplicate (rh))
 {
 }
@@ -23,8 +24,8 @@ Inner_callback_i::answer (char const *ami_return_val)
   this->response_handler_->get_the_answer (ami_return_val);
 
   std::cout << "inner_callback_i deactivating self" << std::endl;
-  PortableServer::ObjectId_var const oid = this->poa_->servant_to_id(this);
-  this->poa_->deactivate_object (oid.in());
+  PortableServer::ObjectId_var const oid (this->poa_->servant_to_id (this));
+  this->poa_->deactivate_object (oid.in ());
 }
 
 void
@@ -34,11 +35,11 @@ Inner_callback_i::answer_excep (Messaging::ExceptionHolder *excep_holder)
   // it in another so the AMH response handler may forward it on.
   try
     {
-      excep_holder->raise_exception();
+      excep_holder->raise_exception ();
     }
   catch (CORBA::Exception const &ex)
     {
-      CORBA::Exception *const local_ex = ex._tao_duplicate ();
+      CORBA::Exception * const local_ex = ex._tao_duplicate ();
       AMH_MiddleExceptionHolder amh_excep_holder (local_ex);
       this->response_handler_->get_the_answer_excep (&amh_excep_holder);
     }
@@ -48,12 +49,12 @@ Inner_callback_i::answer_excep (Messaging::ExceptionHolder *excep_holder)
         << "inner_callback_i::answer_excep got an unknown exception"
         << std::endl;
 
-      CORBA::Exception *const unknown_ex = new CORBA::UNKNOWN;
+      CORBA::Exception * const unknown_ex = new CORBA::UNKNOWN;
       AMH_MiddleExceptionHolder amh_excep_holder (unknown_ex);
       this->response_handler_->get_the_answer_excep (&amh_excep_holder);
     }
 
   std::cout << "inner_callback_i deactivating self" << std::endl;
-  PortableServer::ObjectId_var const oid = this->poa_->servant_to_id(this);
-  this->poa_->deactivate_object (oid.in());
+  PortableServer::ObjectId_var const oid (this->poa_->servant_to_id (this));
+  this->poa_->deactivate_object (oid.in ());
 }
