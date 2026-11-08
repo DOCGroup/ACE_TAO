@@ -49,7 +49,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   // is 0 (wait as long as it takes) then don't worry about the blocking
   // status; we'll block in SSL_connect if the socket is blocking, and
   // block in ACE::select if not.
-  bool reset_blocking_mode = false;
+  bool reset_blocking_mode {};
   if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
@@ -152,7 +152,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
           // Block indefinitely if timeout pointer is zero.
-          int select_width = 0;
+          int select_width {};
 #if !defined (ACE_WIN32)
           select_width = handle + 1;
 #endif /* ACE_WIN32 */
@@ -218,7 +218,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                               flags,
                               perms);
 
-  int error = 0;
+  int error {};
   if (result == -1)
     error = errno;  // Save us some TSS accesses.
 
@@ -288,7 +288,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                          reuse_addr,
                                          perms);
 
-  int error = 0;
+  int error {};
   if (result == -1)
     error = errno;  // Save us some TSS accesses.
 

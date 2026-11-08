@@ -105,11 +105,11 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
   // NOTE: Caller must provide thread-synchronization.
-  int bytes_read = 0;
+  int bytes_read {};
   ACE_HANDLE const handle = this->get_handle ();
 
   // Value for current I/O mode (blocking/non-blocking)
-  int val = 0;
+  int val {};
 
   if (timeout != nullptr)
     ACE::record_and_set_non_blocking_mode (handle,
@@ -119,8 +119,8 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   // has been consumed. If there is remaining data in the SSL buffers
   // the socket won't "select" even though SSL_read would complete.
   // See "SSL and TLS" by Rescorla section 8.9 for more info.
-  bool peeking = false;
-  bool retry = false;
+  bool peeking {};
+  bool retry {};
   if (flags)
     {
       if (ACE_BIT_ENABLED (flags, MSG_PEEK))
@@ -150,7 +150,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
         }
 
       int const status = ::SSL_get_error (this->ssl_, bytes_read);
-      int substat = 0;
+      int substat {};
       switch (status)
         {
         case SSL_ERROR_NONE:

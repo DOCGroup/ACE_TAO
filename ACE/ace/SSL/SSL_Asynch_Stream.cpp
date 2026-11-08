@@ -1061,7 +1061,7 @@ ACE_SSL_Asynch_Stream::handle_wakeup ()
 int
 ACE_SSL_Asynch_Stream::pending_BIO_count ()
 {
-  int ret = 0;
+  int ret {};
 
   if (this->bio_inp_flag_ & BF_AIO)
     ++ret;

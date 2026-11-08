@@ -293,8 +293,8 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
 
   ACE_CString vlist = versionlist;
   ACE_CString seplist = " ,;";
-  ACE_CString::size_type pos = 0;
-  bool match = false;
+  ACE_CString::size_type pos {};
+  bool match {};
 
   for (; pos < vlist.length (); pos++)
     {
@@ -482,7 +482,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // one.
       if (ca_file)
         {
-          bool error = false;
+          bool error {};
           if (cert_names == nullptr)
             {
               if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != nullptr)

@@ -61,7 +61,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   // (sendv()) are not possible to retain with the emulation in this
   // method.
 
-  ssize_t bytes_sent = 0;
+  ssize_t bytes_sent {};
 
   ACE_Time_Value t;
   ACE_Time_Value *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
@@ -77,7 +77,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   // Take into account the time between each send.
   ACE_Countdown_Time countdown (timeout);
 
-  for (size_t i = 0; i < n; ++i)
+  for (size_t i {}; i < n; ++i)
     {
       ssize_t const result = this->send (iov[i].iov_base,
                                          iov[i].iov_len,
@@ -127,7 +127,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 
   io_vec->iov_base = nullptr;
 
-  int select_width = 0;
+  int select_width {};
 #if !defined (ACE_WIN32)
   select_width = this->get_handle () + 1;
 #endif /* ACE_WIN32 */
@@ -188,7 +188,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   if (timeout == nullptr || ::SSL_pending (this->ssl_))
     return this->send (buf, len, flags);
 
-  int val = 0;
+  int val {};
   if (ACE::enter_send_timedwait (this->get_handle (),
                                  timeout,
                                  val) == -1)
@@ -223,14 +223,14 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
   va_list argp;
   va_start (argp, n);
 
-  ssize_t bytes_sent = 0;
+  ssize_t bytes_sent {};
 
   // NOTE: This method used to fill an IO vector (e.g. iovec) and then
   //       send it using a scatter write (sendv()).  However, it is
   //       not possible to emulate a non-blocking scatter write over
   //       SSL.  As such, there is no point in attempting to use
   //       scatter writes over SSL.
-  for (size_t i = 0; i < total_tuples; ++i)
+  for (size_t i {}; i < total_tuples; ++i)
     {
       ssize_t const data_len = va_arg (argp, ssize_t);
       ssize_t const result = this->send (va_arg (argp, char *), data_len);
@@ -279,9 +279,9 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
   va_list argp;
   va_start (argp, n);
 
-  ssize_t bytes_recv = 0;
+  ssize_t bytes_recv {};
 
-  for (size_t i = 0; i < total_tuples; ++i)
+  for (size_t i {}; i < total_tuples; ++i)
     {
       ssize_t const data_len = va_arg (argp, ssize_t);
       ssize_t const result = this->recv (va_arg (argp, char *), data_len);
@@ -341,11 +341,11 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 
   /* This code mimics ACE::send_n */
   // Total number of bytes written.
-  size_t temp = 0;
+  size_t temp {};
   size_t &bytes_transferred = ((bt == nullptr) ? temp : *bt);
 
   // Actual number of bytes written in each <send> attempt
-  ssize_t n = 0;
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -395,10 +395,10 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
         }
     }
 
-  size_t temp = 0;
+  size_t temp {};
   size_t &bytes_transferred = ((bt == nullptr) ? temp : *bt);
 
-  ssize_t n = 0;
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -431,8 +431,8 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
         }
     }
 
-  ssize_t bytes_transferred = 0;
-  ssize_t n = 0;
+  ssize_t bytes_transferred {};
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -463,8 +463,8 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
     }
 
   /*  The following code mimics <ACE::send_n> */
-  size_t bytes_transferred = 0;
-  ssize_t n = 0;
+  size_t bytes_transferred {};
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < static_cast<size_t> (len);
@@ -487,9 +487,9 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::sendv_n");
 
-  ssize_t bytes_sent = 0;
+  ssize_t bytes_sent {};
 
-  for (size_t i = 0; i < iovcnt; ++i)
+  for (size_t i {}; i < iovcnt; ++i)
     {
       ssize_t result = this->send_n (iov[i].iov_base,
                                      iov[i].iov_len);
@@ -525,9 +525,9 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recvv_n");
 
-  ssize_t bytes_read = 0;
+  ssize_t bytes_read {};
 
-  for (size_t i = 0; i < iovcnt; ++i)
+  for (size_t i {}; i < iovcnt; ++i)
     {
       ssize_t const result = this->recv_n (iov[i].iov_base,
                                            iov[i].iov_len);
