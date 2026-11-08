@@ -9,6 +9,7 @@
 #include "ace/OS_NS_errno.h"
 #include <cstring>
 #include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -466,14 +467,15 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
                   TAO_RTScheduler_Current_i (this->orb_,
                                              this->dt_hash_),
                   nullptr);
+  std::unique_ptr<TAO_RTScheduler_Current_i> current_owner (new_current);
 
-  new_current->DT (dt.in ());
+  current_owner->DT (dt.in ());
 
   ACE_NEW_RETURN (dttask,
                   DTTask (//thread_manager_,
                           this->orb_,
                           this->dt_hash_,
-                          new_current,
+                          std::move (current_owner),
                           start,
                           data,
                           name,
@@ -542,7 +544,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
 
 DTTask::DTTask (TAO_ORB_Core *orb,
                 DT_Hash_Map *,
-                TAO_RTScheduler_Current_i* new_current,
+                std::unique_ptr<TAO_RTScheduler_Current_i> new_current,
                 RTScheduling::ThreadAction_ptr start,
                 CORBA::VoidData data,
                 const char *name,
@@ -550,7 +552,7 @@ DTTask::DTTask (TAO_ORB_Core *orb,
                 CORBA::Policy_ptr implicit_sched_param)
   :orb_ (orb),
    // dt_hash_ (dt_hash),
-   current_ (new_current),
+   current_ (std::move (new_current)),
    start_ (RTScheduling::ThreadAction::_duplicate (start)),
    data_ (data),
    name_ (CORBA::string_dup (name)),
@@ -559,10 +561,7 @@ DTTask::DTTask (TAO_ORB_Core *orb,
 {
 }
 
-DTTask::~DTTask ()
-{
-  delete this->current_;
-}
+DTTask::~DTTask () = default;
 
 int
 DTTask::svc ()
@@ -572,7 +571,7 @@ DTTask::svc ()
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
-      tss->rtscheduler_current_impl_ = this->current_;
+      tss->rtscheduler_current_impl_ = this->current_.get ();
 
       this->current_->begin_scheduling_segment (this->name_.in (),
                                                 this->sched_param_.in (),

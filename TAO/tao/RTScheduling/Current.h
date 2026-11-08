@@ -22,6 +22,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -292,7 +293,7 @@ class DTTask : public ACE_Task <ACE_SYNCH>
 public:
   DTTask (TAO_ORB_Core* orb,
           DT_Hash_Map* ,
-          TAO_RTScheduler_Current_i*,
+          std::unique_ptr<TAO_RTScheduler_Current_i> current,
           RTScheduling::ThreadAction_ptr start,
           CORBA::VoidData data,
           const char* name,
@@ -313,7 +314,7 @@ private:
   DTTask &operator= (DTTask &&) = delete;
 
   TAO_ORB_Core* orb_ {};
-  TAO_RTScheduler_Current_i* current_ {};
+  std::unique_ptr<TAO_RTScheduler_Current_i> current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_ {};
   RTScheduling::Current::IdType guid_ {};
