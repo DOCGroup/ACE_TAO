@@ -115,10 +115,10 @@ TAO::Invocation_Retry_State::forward_on_exception_increment (int const ef)
   if (!this->forward_on_exception_limit_used_)
     return false;
 
-  int count = this->ex_count_map_[ef];
-  Invocation_Retry_Params::exception_limit_map_type::const_iterator i =
+  int const count { this->ex_count_map_[ef] };
+  Invocation_Retry_Params::exception_limit_map_type::const_iterator const i =
     this->retry_params_.forward_on_exception_limit_.find (ef);
-  int limit = i->second;
+  int const limit { i->second };
   if (count < limit)
     {
       this->ex_count_map_[ef] = count + 1;
