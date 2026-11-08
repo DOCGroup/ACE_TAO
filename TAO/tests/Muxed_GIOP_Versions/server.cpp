@@ -1,57 +1,61 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = 0;
-const ACE_TCHAR *corbaloc_arg = ACE_TEXT("corbaloc:iiop:1.0@localhost:12000/ObjectName");
-int niterations = 5;
+#include <memory>
 
-int nthreads = 4;
-int nclient_threads = nthreads;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Server_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:l:i:o:n:"));
-  int c;
+  ACE_TCHAR const *ior_output_file {};
+  ACE_TCHAR const *corbaloc {ACE_TEXT ("corbaloc:iiop:1.0@localhost:12000/ObjectName")};
+  int iterations {5};
+  int client_threads {4};
+  int server_threads {4};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("c:l:i:o:n:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'c':
-        nclient_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.client_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'l':
-        corbaloc_arg = get_opts.opt_arg ();
+        options.corbaloc = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.server_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-c <# client threads> "
-                           "-i <# iterations> "
-                           "-l <corba loc> "
-                           "-n <# server threads> "
-                           "-o <iorfile> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s "
+                                     "-c <# client threads> "
+                                     "-i <# iterations> "
+                                     "-l <corba loc> "
+                                     "-n <# server threads> "
+                                     "-o <iorfile> "
+                                     "\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -65,15 +69,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  /// ctor
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
 
-  /// The thread entry point.
-  virtual int svc ();
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  int svc () override;
 
 private:
   /// The orb
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 /*****************************************************/
@@ -86,112 +93,113 @@ private:
 class SelfClient : public ACE_Task_Base
 {
 public:
-  SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server, int niterations);
-  // ctor
+  SelfClient (CORBA::ORB_ptr orb,
+              Simple_Server_ptr server,
+              Server_Options const &options);
 
-  virtual int svc ();
-  // The thread entry point.
+  SelfClient (SelfClient const &) = delete;
+  SelfClient (SelfClient &&) = delete;
+  SelfClient &operator= (SelfClient const &) = delete;
+  SelfClient &operator= (SelfClient &&) = delete;
+
+  int svc () override;
 
 private:
   void validate_connection ();
-  // Validate the connection
 
-private:
-  /// The server.
-  Simple_Server_var server_;
-
-  CORBA::ORB_var orb_;
-
-  /// The number of iterations on each client thread.
-  int niterations_;
-
-
-  TAO_SYNCH_MUTEX mutex_;
+  Simple_Server_var server_ {};
+  CORBA::ORB_var orb_ {};
+  ACE_TString corbaloc_;
+  int const iterations_;
+  TAO_SYNCH_MUTEX mutex_ {};
 };
 
 /***************************************************/
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Server_Options options {};
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      Simple_Server_i *server_impl = 0;
+      Simple_Server_i *server_impl {};
       ACE_NEW_RETURN (server_impl,
                       Simple_Server_i (orb.in ()),
                       -1);
 
-      PortableServer::ServantBase_var owner_transfer(server_impl);
+      // ServantBase_var owns this TAO servant through its reference count.
+      PortableServer::ServantBase_var const owner_transfer (server_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (server_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ACE_TEXT ("(%P|%t) Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();
 
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.server_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Cannot activate client threads\n"),
+                           ACE_TEXT ("(%P|%t) Cannot activate server threads\n")),
                           1);
 
-      SelfClient selfabuse (orb.in(), server.in(), niterations);
+      SelfClient selfabuse (orb.in (), server.in (), options);
       if (selfabuse.activate (THR_NEW_LWP | THR_JOINABLE,
-                              nclient_threads) != 0)
+                              options.client_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Cannot activate abusive threads\n"),
+                           ACE_TEXT ("(%P|%t) Cannot activate self-client threads\n")),
                           1);
 
-      selfabuse.thr_mgr()->wait();
+      selfabuse.thr_mgr ()->wait ();
 
       worker.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) event loop finished\n"));
+                  ACE_TEXT ("(%P|%t) event loop finished\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -200,10 +208,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// ****************************************************************
-
 Worker::Worker (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -215,19 +221,19 @@ Worker::svc ()
       ACE_Time_Value tv (140, 0);
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;
 }
 
-// ****************************************************************
-
-SelfClient::SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server,
-                int niterations)
-  :  server_ (Simple_Server::_duplicate (server)),
-         orb_ (CORBA::ORB::_duplicate (orb)),
-     niterations_ (niterations)
+SelfClient::SelfClient (CORBA::ORB_ptr orb,
+                        Simple_Server_ptr server,
+                        Server_Options const &options)
+  : server_ (Simple_Server::_duplicate (server)),
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    corbaloc_ (options.corbaloc),
+    iterations_ (options.iterations)
 {
 }
 
@@ -239,13 +245,15 @@ SelfClient::validate_connection ()
   // run on minimum CORBA builds too!
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, mutex_);
 
-  for (int j = 0; j != 100; ++j)
+  for (int j {}; j != 100; ++j)
     {
       try
         {
           this->server_->test_method (j);
         }
-      catch (const CORBA::Exception&){}
+      catch (CORBA::Exception const &)
+        {
+        }
     }
 }
 
@@ -256,38 +264,37 @@ SelfClient::svc ()
     {
       this->validate_connection ();
 
-      for (int i = 0; i < this->niterations_; ++i)
+      for (int i {}; i < this->iterations_; ++i)
         {
           try
             {
-              CORBA::Object_var probably_not_exist =
-                orb_->string_to_object (corbaloc_arg);
+              CORBA::Object_var const probably_not_exist =
+                this->orb_->string_to_object (this->corbaloc_.c_str ());
 
-
-              if (CORBA::is_nil (probably_not_exist.in()))
+              if (CORBA::is_nil (probably_not_exist.in ()))
                 {
-                  ACE_DEBUG ((LM_DEBUG, "not found\n", corbaloc_arg));
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("not found\n")));
                 }
               else
                 {
-                  Simple_Server_var newserver =
+                  Simple_Server_var const new_server =
                     Simple_Server::_narrow (probably_not_exist.in ());
 
                   // should throw an exception
-                  if (CORBA::is_nil (newserver.in()))
+                  if (CORBA::is_nil (new_server.in ()))
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t)  Not found it\n"));
+                                  ACE_TEXT ("(%P|%t) Not found it\n")));
                     }
                   else
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t) Found it\n"));
+                                  ACE_TEXT ("(%P|%t) Found it\n")));
                     }
                 }
 
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const &ex)
             {
               ex._tao_print_exception ("MT_SelfClient: exception raised");
             }
@@ -296,7 +303,7 @@ SelfClient::svc ()
           this->server_->test_method (i);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_SelfClient: exception raised");
     }
