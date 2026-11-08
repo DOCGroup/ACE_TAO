@@ -26,6 +26,7 @@
 #include "ace/Thread_Mutex.h"
 
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -276,7 +277,7 @@ namespace CORBA
      * store the CDR buffer and perform lazy evaluation to compute the
      * Anys.
      */
-    TAO_InputCDR *incoming_ {};
+    std::unique_ptr<TAO_InputCDR> incoming_ {};
 
     /// The flags used to check which parameters are actually extracted
     /// from the <incoming_> buffer

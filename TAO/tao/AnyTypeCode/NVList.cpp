@@ -80,9 +80,6 @@ CORBA::NVList::~NVList ()
     }
 
   this->max_ = 0;
-
-  // Remove the CDR stream if it is present.
-  delete this->incoming_;
 }
 
 // add an element and just initialize its flags
@@ -264,13 +261,10 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->incoming_ != nullptr)
-    {
-      delete this->incoming_;
-      this->incoming_ = nullptr;
-    }
-
-  ACE_NEW (this->incoming_, TAO_InputCDR (cdr));
+  this->incoming_.reset ();
+  TAO_InputCDR *incoming {};
+  ACE_NEW (incoming, TAO_InputCDR (cdr));
+  this->incoming_.reset (incoming);
   this->incoming_flag_ = flag;
 }
 
@@ -322,12 +316,11 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
             }
           CORBA::TypeCode_ptr tc = nv->value ()->_tao_get_typecode ();
           (void) TAO_Marshal_Object::perform_append (tc,
-                                                     this->incoming_,
+                                                     this->incoming_.get (),
                                                      &cdr);
         }
 
-      delete this->incoming_;
-      this->incoming_ = nullptr;
+      this->incoming_.reset ();
       return;
     }
 
@@ -420,8 +413,8 @@ CORBA::NVList::evaluate ()
 
   if (this->incoming_ != nullptr)
     {
-      std::unique_ptr<TAO_InputCDR> incoming (this->incoming_);
-      this->incoming_ = nullptr;
+      std::unique_ptr<TAO_InputCDR> incoming {};
+      incoming.swap (this->incoming_);
 
       this->_tao_decode (*(incoming.get ()), this->incoming_flag_);
     }
