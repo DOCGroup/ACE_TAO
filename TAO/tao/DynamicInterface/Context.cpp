@@ -76,7 +76,7 @@ CORBA::Context::get_values (char const* /* start_scope */,
 
 CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
 {
-  for (CORBA::ULong i=0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       this->add (ctx_list [i]);
     }

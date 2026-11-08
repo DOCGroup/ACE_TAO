@@ -57,7 +57,7 @@ namespace TAO
                       TAO::Exception_Data[ex_count],
                       CORBA::NO_MEMORY ());
     std::unique_ptr<TAO::Exception_Data[]> ex_data (exception_data);
-    for (unsigned long l=0; l<ex_count ;++l)
+    for (unsigned long l {}; l < ex_count; ++l)
     {
       CORBA::TypeCode_var xtc = this->exception_list_->item (l);
       ex_data[l].id = xtc->id ();
