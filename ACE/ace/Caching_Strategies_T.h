@@ -115,6 +115,11 @@ public:
   /// Destructor.
   ~ACE_Caching_Strategy_Adapter ();
 
+  ACE_Caching_Strategy_Adapter (ACE_Caching_Strategy_Adapter const &) = delete;
+  ACE_Caching_Strategy_Adapter &operator= (ACE_Caching_Strategy_Adapter const &) = delete;
+  ACE_Caching_Strategy_Adapter (ACE_Caching_Strategy_Adapter &&) = delete;
+  ACE_Caching_Strategy_Adapter &operator= (ACE_Caching_Strategy_Adapter &&) = delete;
+
   /// Accessor method for the timer attributes.
   ATTRIBUTES attributes () override;
 
