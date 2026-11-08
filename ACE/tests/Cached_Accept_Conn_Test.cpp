@@ -32,6 +32,43 @@
 
 int connection_accepted = 0;
 int debug = 0;
+static int caching_strategy_destruction_count = 0;
+
+class Tracking_Null_Caching_Strategy : public NULL_CACHING_STRATEGY
+{
+public:
+  ~Tracking_Null_Caching_Strategy ()
+  {
+    ++caching_strategy_destruction_count;
+  }
+};
+
+using TRACKING_CACHING_STRATEGY_ADAPTER =
+  ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, Tracking_Null_Caching_Strategy>;
+
+void
+test_caching_strategy_ownership ()
+{
+  int const initial_destruction_count = caching_strategy_destruction_count;
+  Tracking_Null_Caching_Strategy borrowed_implementation;
+  {
+    TRACKING_CACHING_STRATEGY_ADAPTER adapter (&borrowed_implementation, false);
+  }
+  ACE_TEST_ASSERT (caching_strategy_destruction_count == initial_destruction_count);
+
+  Tracking_Null_Caching_Strategy *owned_implementation {};
+  ACE_NEW (owned_implementation,
+           Tracking_Null_Caching_Strategy);
+  {
+    TRACKING_CACHING_STRATEGY_ADAPTER adapter (owned_implementation, true);
+  }
+  ACE_TEST_ASSERT (caching_strategy_destruction_count == initial_destruction_count + 1);
+
+  {
+    TRACKING_CACHING_STRATEGY_ADAPTER adapter;
+  }
+  ACE_TEST_ASSERT (caching_strategy_destruction_count == initial_destruction_count + 2);
+}
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
@@ -438,6 +475,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Cached_Accept_Conn_Test"));
+
+  test_caching_strategy_ownership ();
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);

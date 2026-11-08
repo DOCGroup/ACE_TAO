@@ -16,6 +16,8 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Caching_Utility_T.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -109,11 +111,12 @@ class ACE_Caching_Strategy_Adapter
 {
 public:
   /// Constructor.
+  /// When @a implementation is non-null, @a delete_implementation controls ownership.
   ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = nullptr,
                                 bool delete_implementation = false);
 
   /// Destructor.
-  ~ACE_Caching_Strategy_Adapter ();
+  ~ACE_Caching_Strategy_Adapter () override = default;
 
   ACE_Caching_Strategy_Adapter (ACE_Caching_Strategy_Adapter const &) = delete;
   ACE_Caching_Strategy_Adapter &operator= (ACE_Caching_Strategy_Adapter const &) = delete;
@@ -169,10 +172,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  // The implementation may be borrowed; delete_implementation_ controls ownership.
-  IMPLEMENTATION *implementation_;
+  /// Owns the implementation when this adapter created or was given it.
+  std::unique_ptr<IMPLEMENTATION> owned_implementation_ {};
 
-  bool delete_implementation_;
+  /// Views the implementation, which may be borrowed.
+  IMPLEMENTATION *implementation_ {};
 };
 
 //////////////////////////////////////////////////////////////////////////
