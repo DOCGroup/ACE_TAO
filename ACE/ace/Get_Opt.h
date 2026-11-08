@@ -16,6 +16,8 @@
 #include "ace/SStringfwd.h"
 #include "ace/Containers.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -169,7 +171,7 @@ public:
 #ifndef ACE_USES_WCHAR
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring = ACE_TEXT (""),
+               ACE_TCHAR const *optstring = ACE_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
@@ -181,14 +183,14 @@ private:
 public:
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring = ACE_TEXT (""),
+               ACE_TCHAR const *optstring = ACE_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const char *optstring,
+               char const *optstring,
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
@@ -196,6 +198,11 @@ public:
 #endif
   /// Default dtor.
   ~ACE_Get_Opt ();
+
+  ACE_Get_Opt (ACE_Get_Opt const &) = delete;
+  ACE_Get_Opt (ACE_Get_Opt &&) = delete;
+  ACE_Get_Opt &operator= (ACE_Get_Opt const &) = delete;
+  ACE_Get_Opt &operator= (ACE_Get_Opt &&) = delete;
 
   /**
    * Scan elements of @a argv (whose length is @a argc) for short option
@@ -275,7 +282,7 @@ public:
    * @retval 0  Success
    * @retval -1 The long option can not be added.
    */
-  int long_option (const ACE_TCHAR *name,
+  int long_option (ACE_TCHAR const *name,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Adds a long option with a corresponding short option.
@@ -292,13 +299,13 @@ public:
    * @retval 0  Success
    * @retval -1 The long option can not be added.
    */
-  int long_option (const ACE_TCHAR *name,
+  int long_option (ACE_TCHAR const *name,
                    int short_option,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Returns the name of the long option found on the last call to
   /// @c operator() or 0 if none was found.
-  const ACE_TCHAR *long_option () const;
+  ACE_TCHAR const *long_option () const;
 
   /// The number of arguments in the internal @c argv_.
   int argc () const;
@@ -310,14 +317,14 @@ public:
   /// applications to know if the found option was a short or long
   /// option, and is especially useful in cases where it was invalid
   /// and the caller wants to print out the invalid value.
-  const ACE_TCHAR *last_option () const;
+  ACE_TCHAR const *last_option () const;
 
   /// Dump the state of an object.
   void dump () const;
 
   /// Return the @a optstring.  This is handy to verify that calls to
   /// long_option added short options as expected.
-  const ACE_TCHAR *optstring () const;
+  ACE_TCHAR const *optstring () const;
 
 public:
   /*
@@ -382,17 +389,18 @@ private:
   {
   public:
     /// ctor
-    ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
+    ACE_Get_Opt_Long_Option (ACE_TCHAR const *name,
                              int has_arg,
                              int val = 0);
 
     /// Dtor.
     ~ACE_Get_Opt_Long_Option ();
 
-    bool operator < (const ACE_Get_Opt_Long_Option &rhs);
+    bool operator < (ACE_Get_Opt_Long_Option const &rhs);
 
     /// Long option name.
-    const ACE_TCHAR *name_;
+    /// Owned string allocated with ACE::strnew and released with matching allocator semantics.
+    ACE_TCHAR const *name_;
 
     /// Contains value for <OPTION_ARG_MODE>.
     int has_arg_;
@@ -426,16 +434,11 @@ private:
   int permute ();
 
   /// Set last_option.
-  void last_option (const ACE_TString &s);
-
-  ACE_Get_Opt (const ACE_Get_Opt &) = delete;
-  ACE_Get_Opt &operator= (const ACE_Get_Opt &) = delete;
-  ACE_Get_Opt (ACE_Get_Opt &&) = delete;
-  ACE_Get_Opt &operator= (ACE_Get_Opt &&) = delete;
+  void last_option (ACE_TString const &s);
 
 private:
   /// Holds the option string.
-  ACE_TString *optstring_;
+  std::unique_ptr<ACE_TString> optstring_;
 
   /// Treat all options as long options.
   bool long_only_;
@@ -447,7 +450,7 @@ private:
 
   /// This is the last option, short or long, that was processed.  This
   /// is handy to have in cases where the option passed was invalid.
-  ACE_TString *last_option_;
+  std::unique_ptr<ACE_TString> last_option_;
 
   /**
    * The next char to be scanned in the option-element in which the
@@ -476,6 +479,7 @@ private:
   ACE_Get_Opt_Long_Option *long_option_;
 
   /// Array of long options.
+  /// Owns each option object; ACE_Array retains raw pointers to preserve its allocation behavior.
   ACE_Array<ACE_Get_Opt_Long_Option*> long_opts_;
 
   /// Declare the dynamic allocation hooks.
