@@ -92,7 +92,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_buckets (size_t size)
 {
   size_t bytes = size * sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>);
-  void *ptr;
+  void *ptr {};
 
   ACE_ALLOCATOR_RETURN (ptr,
                         this->table_allocator_->malloc (bytes),
@@ -105,7 +105,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cr
   // Initialize each entry in the hash table to be a circular linked
   // list with the dummy node in the front serving as the anchor of
   // the list.
-  for (size_t i = 0; i < size; i++)
+  for (size_t i {}; i < size; ++i)
     new (&this->table_[i]) ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> (&this->table_[i],
                                                                      &this->table_[i]);
   return 0;
@@ -153,7 +153,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cl
       this->unbind_all_i ();
 
       // Iterate through the buckets cleaning up the sentinels.
-      for (size_t i = 0; i < this->total_size_; i++)
+      for (size_t i {}; i < this->total_size_; ++i)
         {
           // Destroy the dummy entry.
           ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *entry = &this->table_[i];
@@ -182,7 +182,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
 {
   // Iterate through the entire map calling the destuctor of each
   // <ACE_Hash_Multi_Map_Entry>.
-  for (size_t i = 0; i < this->total_size_; i++)
+  for (size_t i {}; i < this->total_size_; ++i)
     {
       for (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i].next_;
            temp_ptr != &this->table_[i];
@@ -217,7 +217,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
   ACE_Unbounded_Set<INT_ID> int_id_set;
   if (result == -1)
     {
-      void *ptr;
+      void *ptr {};
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>)),
@@ -231,7 +231,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
                                                                   &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else
@@ -258,7 +258,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
 
   if (result == -1)
     {
-      void *ptr;
+      void *ptr {};
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>)),
@@ -270,7 +270,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
                                                                   &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else
@@ -288,7 +288,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::tr
   if (result == -1)
     {
       // Not found.
-      void *ptr;
+      void *ptr {};
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
@@ -299,7 +299,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::tr
                                                                   &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else

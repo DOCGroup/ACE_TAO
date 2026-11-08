@@ -122,7 +122,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::creat
   // Initialize each entry in the hash table to be a circular linked
   // list with the dummy node in the front serving as the anchor of
   // the list.
-  for (size_t i = 0; i < size; i++)
+  for (size_t i {}; i < size; ++i)
     new (&this->table_[i]) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (&this->table_[i],
                                                                &this->table_[i]);
   return 0;
@@ -170,7 +170,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
       this->unbind_all_i ();
 
       // Iterate through the buckets cleaning up the sentinels.
-      for (size_t i = 0; i < this->total_size_; i++)
+      for (size_t i {}; i < this->total_size_; ++i)
         {
           // Destroy the dummy entry.
           ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &this->table_[i];
@@ -199,7 +199,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 {
   // Iterate through the entire map calling the destuctor of each
   // <ACE_Hash_Map_Entry>.
-  for (size_t i = 0; i < this->total_size_; i++)
+  for (size_t i {}; i < this->total_size_; ++i)
     {
       for (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i].next_;
            temp_ptr != &this->table_[i];
@@ -228,7 +228,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
                                                                                    const INT_ID &int_id,
                                                                                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc = 0;
+  size_t loc {};
   if (this->shared_find (ext_id, entry, loc) == -1)
     {
       void *ptr {};
@@ -255,7 +255,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
                                                                                       INT_ID &int_id,
                                                                                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc = 0;
+  size_t loc {};
   if (this->shared_find (ext_id, entry, loc) == -1)
     {
       // Not found.
@@ -283,7 +283,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp {};
 
-  size_t loc = 0;
+  size_t loc {};
   if (this->shared_find (ext_id, temp, loc) == -1)
     {
       errno = ENOENT;
@@ -344,7 +344,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      const INT_ID &int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy = 0;
+  size_t dummy {};
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -361,7 +361,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy = 0;
+  size_t dummy {};
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -380,7 +380,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy = 0;
+  size_t dummy {};
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
