@@ -264,8 +264,8 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     TAO_AMH_DSI_Exception_Holder *&new_object)
 {
   ::CORBA::ValueBase *base {};
-  ::CORBA::Boolean is_indirected = false;
-  ::CORBA::Boolean is_null_object = false;
+  ::CORBA::Boolean is_indirected {};
+  ::CORBA::Boolean is_null_object {};
   ::CORBA::Boolean const retval =
     ::CORBA::ValueBase::_tao_unmarshal_pre (
         strm,

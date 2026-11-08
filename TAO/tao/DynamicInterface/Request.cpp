@@ -197,7 +197,7 @@ CORBA::Request::send_deferred ()
     &_tao_in_list
   };
 
-  size_t number_args = 0;
+  size_t number_args {};
 
   if (argument_flag)
     number_args = 2;
@@ -300,7 +300,7 @@ CORBA::Request::get_response ()
 CORBA::Boolean
 CORBA::Request::poll_response ()
 {
-  CORBA::Boolean response_received = false;
+  CORBA::Boolean response_received {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,

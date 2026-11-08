@@ -98,7 +98,7 @@ namespace TAO
         throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
       }
 
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
          this->excp_list_ != nullptr && i < this->excp_list_->count ();
          i++)
       {

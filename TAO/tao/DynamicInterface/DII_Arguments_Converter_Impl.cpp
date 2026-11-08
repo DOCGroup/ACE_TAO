@@ -42,7 +42,7 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
   // marshal the arguments in the NVList into an output cdr and then
   // demarshal them into the TAO::Argument array.
   TAO_OutputCDR output;
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       CORBA::NamedValue_ptr theitem = lst->item (i);
 
@@ -53,7 +53,7 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
     }
 
   TAO_InputCDR input (output);
-  for (CORBA::ULong j = 0; j < sz; ++j)
+  for (CORBA::ULong j {}; j < sz; ++j)
     {
       if (!(args[j + 1]->demarshal (input)))
         {
@@ -94,7 +94,7 @@ TAO_DII_Arguments_Converter_Impl::convert_reply (
 {
   TAO_OutputCDR output;
   errno = 0;
-  for (CORBA::ULong j = 0; j < nargs; ++j)
+  for (CORBA::ULong j {}; j < nargs; ++j)
     {
       if (!(args[j]->marshal (output)))
         {
