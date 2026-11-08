@@ -15,6 +15,7 @@
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
 #include <memory>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,7 +57,7 @@ private:
 
   /// The driver programs
   int n_channels_;
-  EC_Observer** channels_;
+  std::vector<std::unique_ptr<EC_Observer>> channels_;
 
   /// The ORB
   CORBA::ORB_var orb_;

@@ -19,19 +19,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 EC_Master::EC_Master ()
   :  seed_ (0),
      n_channels_ (4),
-     channels_ (0)
+     channels_ ()
 {
 }
 
-EC_Master::~EC_Master ()
-{
-  if (this->channels_ != 0)
-    {
-      for (int i = 0; i < this->n_channels_; ++i)
-        delete this->channels_[i];
-      delete[] this->channels_;
-    }
-}
+EC_Master::~EC_Master () = default;
 
 int
 EC_Master::run (int argc, ACE_TCHAR* argv[])
@@ -52,36 +44,40 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "The seed value is %d\n", this->seed_));
 
-      ACE_NEW_RETURN (this->channels_,
-                      EC_Observer*[this->n_channels_],
-                      1);
+      if (this->n_channels_ < 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "EC_Master: negative channel count\n"), 1);
+
+      this->channels_.reserve (static_cast<size_t> (this->n_channels_));
 
       {
         for (int i = 0; i != this->n_channels_; ++i)
           {
             ACE_OS::rand_r (&this->seed_);
-            ACE_NEW_RETURN (this->channels_[i],
+            EC_Observer *channel {};
+            ACE_NEW_RETURN (channel,
                             EC_Observer (this,
                                          this->seed_,
                                          this->orb_.in (),
                                          this->root_poa_.in (),
                                          i),
                             1);
+            this->channels_.emplace_back (channel);
           }
       }
 
       {
-        ACE_TCHAR** targv;
-        ACE_NEW_RETURN (targv, ACE_TCHAR*[argc], 1);
+        std::unique_ptr<ACE_TCHAR *[]> targv;
+        ACE_TCHAR **raw_targv {};
+        ACE_NEW_RETURN (raw_targv, ACE_TCHAR*[argc], 1);
+        targv.reset (raw_targv);
 
         for (int i = 0; i != this->n_channels_; ++i)
           {
             int targc = argc;
             for (int j = 0; j < targc; ++j)
               targv[j] = argv[j];
-            this->channels_[i]->run_init (targc, targv);
+            this->channels_[i]->run_init (targc, targv.get ());
           }
-        delete[] targv;
       }
 
       {
@@ -201,7 +197,7 @@ EC_Master::channel_count () const
 EC_Observer*
 EC_Master::channel (int i) const
 {
-  return this->channels_[i];
+  return this->channels_[i].get ();
 }
 
 // ****************************************************************
