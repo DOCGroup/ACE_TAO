@@ -60,7 +60,7 @@ public:
 
   ~TAO_Offer_Database ();
 
-  /// Add an offer of type @ type and generate a CosTrading::OfferId
+  /// Take ownership of an offer of type @ type and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);

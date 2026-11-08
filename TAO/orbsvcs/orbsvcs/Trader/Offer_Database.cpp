@@ -24,7 +24,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database ()
        ! type_iter.done ();
        type_iter++)
     {
-      Offer_Map_Entry* offer_map_entry = (*type_iter).int_id_;
+      std::unique_ptr<Offer_Map_Entry> offer_map_entry ((*type_iter).int_id_);
 
       {
         // Artificial scope, so the guard will release the lock before
@@ -36,12 +36,9 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database ()
              offer_iter++)
           {
             // Delete all the offers in the offer map.
-            CosTrading::Offer* offer = (*offer_iter).int_id_;
-            delete offer;
+            std::unique_ptr<CosTrading::Offer> offer ((*offer_iter).int_id_);
           }
       }
-
-      delete offer_map_entry;
     }
 }
 
@@ -50,6 +47,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 insert_offer (const char* type, CosTrading::Offer* offer)
 {
   CosTrading::OfferId return_value = 0;
+  std::unique_ptr<CosTrading::Offer> offer_owner (offer);
   typename Offer_Database::ENTRY* database_entry {};
   CORBA::String_var service_type (type);
 
@@ -92,8 +90,11 @@ insert_offer (const char* type, CosTrading::Offer* offer)
   ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon2, offer_map_entry->lock_, 0);
 
   // Add the offer to the service offer table for this service type.
-  offer_map_entry->offer_map_->bind (offer_map_entry->counter_,
-                                     offer);
+  if (offer_map_entry->offer_map_->bind (offer_map_entry->counter_,
+                                         offer_owner.get ()) != 0)
+    return 0;
+
+  offer_owner.release ();
   return_value = this->generate_offer_id (type,
                                           offer_map_entry->counter_);
   offer_map_entry->counter_++;
@@ -120,7 +121,7 @@ remove_offer (const char* type, CORBA::ULong id)
         return -1;
 
       return_value = offer_map_entry->offer_map_->unbind (id, offer);
-      delete offer;
+      std::unique_ptr<CosTrading::Offer> offer_owner (offer);
 
       // If the service type has no more offers, free the map, lest
       // the memory forever persist.
