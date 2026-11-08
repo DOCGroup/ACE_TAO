@@ -10,6 +10,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include <cstring>
+#include <memory>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -85,20 +86,19 @@ namespace
       key_str_ (key_str),
       type_id_ (type_id),
       objs_ (base_profiles.profile_count()),
-      list_buffer_ (new CORBA::Object_ptr[base_profiles.profile_count()]),
+      list_buffer_ (std::make_unique<CORBA::Object_ptr[]> (
+                      base_profiles.profile_count ())),
       ior_list_ (base_profiles.profile_count (),
                  base_profiles.profile_count (),
-                 list_buffer_,
+                 list_buffer_.get (),
                  0)
     {
     }
 
-    ~ImRifyProfiles () { delete [] list_buffer_; }
-
     CORBA::Object_ptr combined_ior ()
     {
       const CORBA::ULong pcount = base_profiles_.profile_count ();
-      for (CORBA::ULong i = 0; i < pcount; ++i)
+      for (CORBA::ULong i {}; i < pcount; ++i)
         {
           if (!combine_profile (i))
             {
@@ -164,7 +164,7 @@ namespace
 
       // identify the profile in use to see if we can default to
       // that profiles partial ImR-ification
-      for (CORBA::ULong i = 0; i < pcount; ++i)
+      for (CORBA::ULong i {}; i < pcount; ++i)
         {
           if (profile_in_use_ == base_profiles_.get_profile (i))
             {
@@ -204,7 +204,7 @@ namespace
     const char* const key_str_;
     const char* const type_id_;
     std::vector<CORBA::Object_var> objs_;
-    CORBA::Object_ptr* const list_buffer_;
+    std::unique_ptr<CORBA::Object_ptr[]> list_buffer_;
     TAO_IOP::TAO_IOR_Manipulation::IORList ior_list_;
   };
 }
@@ -282,7 +282,7 @@ namespace TAO
       // Since this method is called from the POA constructor, there
       // shouldn't be any waiting required.  Therefore,
       // <wait_occurred_restart_call_ignored> can be ignored.
-      bool wait_occurred_restart_call_ignored = false;
+      bool wait_occurred_restart_call_ignored {};
 
       // Activate the servant in the root poa.
       PortableServer::ObjectId_var id =
