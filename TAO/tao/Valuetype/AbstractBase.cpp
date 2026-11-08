@@ -140,7 +140,7 @@ CORBA::AbstractBase::_tao_obv_repository_id () const
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 {
-  CORBA::Boolean discriminator = true;
+  CORBA::Boolean discriminator {true};
 
   // We marshal a null abstract interface ptr as a discriminator
   // plus null object reference (see CORBA::Object::marshal()
@@ -223,7 +223,7 @@ CORBA::Boolean
 operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
   abs = nullptr;
-  CORBA::Boolean discriminator = false;
+  CORBA::Boolean discriminator {false};
   ACE_InputCDR::to_boolean tb (discriminator);
   TAO_ORB_Core *orb_core {};
 

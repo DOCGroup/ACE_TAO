@@ -226,7 +226,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (
   //    from the <value-tag>, then use the repository id parameter
   //    (it _must_ be right).
 
-  CORBA::Boolean is_chunked = false;
+  CORBA::Boolean is_chunked {false};
 
   // Save the position of the start of the ValueType
   // to allow caching for later indirection.
@@ -387,7 +387,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   // from the ORB, its reference count is increased.
 
   CORBA::ValueFactory_var factory;
-  CORBA::Boolean requires_truncation = false;
+  CORBA::Boolean requires_truncation {false};
   std::size_t const num_ids = ids.size ();
   const char *id = (num_ids) ? ids[0].c_str () : "{Null}";
   for (std::size_t i = 0u; i < num_ids; ++i)
@@ -823,7 +823,7 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
   // support unmarshaling of valuetypes that did not explicitly
   // marshal the type id. At least it is benign to always encode the
   // typecode value, even if it can be a little verbose.
-  CORBA::Boolean const is_formal_type = 0;
+  CORBA::Boolean const is_formal_type {};
   ACE_UNUSED_ARG (formal_type_id);
 #endif /* TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING */
 

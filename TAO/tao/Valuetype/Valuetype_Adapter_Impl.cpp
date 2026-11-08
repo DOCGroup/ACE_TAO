@@ -71,9 +71,8 @@ TAO_Valuetype_Adapter_Impl::vf_map_rebind (const char *repo_id,
 
 int
 TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
-
 {
-  CORBA::ValueFactory factory = nullptr;
+  CORBA::ValueFactory factory {};
   int const result = map_.unbind (repo_id, factory);
   if (!result)
     {
@@ -86,7 +85,7 @@ TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
 CORBA::ValueFactory
 TAO_Valuetype_Adapter_Impl::vf_map_find (const char *repo_id)
 {
-  CORBA::ValueFactory factory = nullptr;
+  CORBA::ValueFactory factory {};
   (void) map_.find (repo_id, factory);
   return factory;
 }
