@@ -99,7 +99,7 @@ constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
 
 static std::basic_string<ACE_TCHAR> output_arg_format;
-static std::size_t output_arg_index = 0;
+static std::size_t output_arg_index {};
 
 constexpr ACE_TCHAR TCHAR_DIR_DOT[] = ACE_TEXT(".");
 
@@ -112,9 +112,9 @@ constexpr char DIR_DOT_DOT[] = "..";
 #endif /* ACE_HAS_TCHAR_DIRENT */
 
 #if defined (ACE_CC_PREPROCESSOR_DIRECT_INPUT)
-static constexpr bool copy_input_file = false;
+static constexpr bool copy_input_file {};
 #else
-static constexpr bool copy_input_file = true;
+static constexpr bool copy_input_file {true};
 #endif
 
 // Lines can be 1024 chars long intially -
@@ -206,7 +206,7 @@ DRV_cpp_expand_output_arg (std::string const& filename)
 unsigned int
 DRV_cpp_calc_total_argsize()
 {
-  unsigned long size = 0;
+  unsigned long size {};
   for (std::basic_string<ACE_TCHAR> const &argument : DRV_arglist)
     {
       size += ACE_Utils::truncate_cast<unsigned long> (argument.size () + 1);
@@ -286,7 +286,7 @@ DRV_cpp_init ()
   ACE_ARGV direct_input_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS));
 
-  for (std::size_t i = 0;
+  for (std::size_t i {};
        i < static_cast<std::size_t> (direct_input_arglist.argc ());
        ++i)
     {
@@ -378,7 +378,7 @@ DRV_cpp_init ()
   ACE_ARGV platform_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (platform_cpp_args.c_str ()));
 
-  for (std::size_t i = 0;
+  for (std::size_t i {};
        i < static_cast<std::size_t> (platform_arglist.argc ());
        ++i)
     {
@@ -418,7 +418,7 @@ DRV_sweep_dirs (std::string const& rel_path,
       bname += "/";
     }
   bname += rel_path;
-  bool include_added = false;
+  bool include_added {};
   char abspath[MAXPATHLEN] {};
   for (ACE_DIRENT *dir_entry; (dir_entry = dir.read ()) != nullptr;)
     {
@@ -444,7 +444,7 @@ DRV_sweep_dirs (std::string const& rel_path,
                             -1);
         }
 
-      std::size_t len = 0;
+      std::size_t len {};
 
       switch (stat_buf.st_mode & S_IFMT)
         {
