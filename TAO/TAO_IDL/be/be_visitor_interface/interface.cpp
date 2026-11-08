@@ -156,7 +156,7 @@ be_visitor_interface::visit_constant (be_constant *node)
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -195,7 +195,7 @@ be_visitor_interface::visit_native (be_native *node)
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -228,7 +228,7 @@ be_visitor_interface::visit_enum (be_enum *node)
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -292,7 +292,7 @@ be_visitor_interface::visit_exception (be_exception *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -502,7 +502,7 @@ be_visitor_interface::visit_structure (be_structure *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -571,7 +571,7 @@ be_visitor_interface::visit_structure_fwd (be_structure_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -604,7 +604,7 @@ be_visitor_interface::visit_union (be_union *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -673,7 +673,7 @@ be_visitor_interface::visit_union_fwd (be_union_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -706,7 +706,7 @@ be_visitor_interface::visit_typedef (be_typedef *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
