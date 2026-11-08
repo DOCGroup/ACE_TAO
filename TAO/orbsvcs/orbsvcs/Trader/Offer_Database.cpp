@@ -137,15 +137,21 @@ remove_offer (const char* type, CORBA::ULong id)
                 return -1;
 
               // Unbind the service type from the database.
-              this->offer_db_.unbind (service_type);
+              if (this->offer_db_.unbind (service_type) != 0)
+                {
+                  offer_map_entry->lock_.release ();
+                  return -1;
+                }
+
+              std::unique_ptr<Offer_Map_Entry> offer_map_entry_owner (offer_map_entry);
 
               // Now that the type has been removed, we can release
               // its lock.
               if (offer_map_entry->lock_.release () == -1)
-                return -1;
-
-              // Delete the database resources for this type.
-              delete offer_map_entry;
+                {
+                  offer_map_entry_owner.release ();
+                  return -1;
+                }
             }
         }
       else if (offer_map_entry->lock_.release () == -1)
