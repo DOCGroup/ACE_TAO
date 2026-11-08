@@ -9,7 +9,7 @@ struct Options
   ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
@@ -36,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -61,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::PolicyList policies (1);
       policies.length (1);
 
-      CORBA::Any pol;
+      CORBA::Any pol {};
       pol <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               policies);
 
       // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
@@ -104,6 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       Callback_i *callback_impl {};
+      // ServantBase_var takes ownership through the servant reference count.
       ACE_NEW_THROW_EX (callback_impl,
                         Callback_i (orb.in ()),
                         CORBA::NO_MEMORY ());
@@ -123,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Call the client that will make remote calls
 
-      CORBA::Long r =
+      CORBA::Long const r =
         server->test_method (1);
 
       if (r != 0)

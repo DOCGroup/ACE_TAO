@@ -6,8 +6,6 @@
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
 
@@ -39,7 +37,7 @@ public:
 
 private:
   /// The orb
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 /**
@@ -68,13 +66,13 @@ public:
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Callback Object
   Callback_var callback_ {};
 
   /// Number of times the callback needs to be called
-  int no_iterations_;
+  int no_iterations_ {};
 };
 
 #if defined(__ACE_INLINE__)

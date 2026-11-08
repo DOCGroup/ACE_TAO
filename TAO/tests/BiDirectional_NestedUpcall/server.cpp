@@ -11,7 +11,7 @@ struct Options
   int iterations {10};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:"));
@@ -41,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -66,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::PolicyList policies (1);
       policies.length (1);
 
-      CORBA::Any pol;
+      CORBA::Any pol {};
       pol <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
@@ -81,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               policies);
 
       // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
@@ -96,6 +96,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Simple_Server_i *server_impl {};
 
+      // ServantBase_var takes ownership through the servant reference count.
       ACE_NEW_THROW_EX (server_impl,
                         Simple_Server_i (orb.in (),
                                          options.iterations),

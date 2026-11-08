@@ -21,8 +21,6 @@ Callback_i::callback_method ()
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
-
-
 // ****************************************************************
 
 CORBA::Long
@@ -34,7 +32,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("About to make a remote call in the Upcall\n")));
 
-      for (int times = 0;
+      for (int times {};
            times < this->no_iterations_;
            ++times)
         {
@@ -59,8 +57,6 @@ Simple_Server_i::callback_object (Callback_ptr callback)
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
 }
-
-
 void
 Simple_Server_i::shutdown ()
 {
