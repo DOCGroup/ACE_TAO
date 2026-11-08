@@ -21,13 +21,15 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
+#include <cstring>
+
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -56,14 +58,13 @@ make_wstring (char const *str)
   if (str == nullptr)
     return nullptr;
 
-  size_t len = ACE_OS::strlen (str) + 1;
-  wchar_t *wstr = new wchar_t[len];
+  size_t const len = std::strlen (str) + 1;
+  wchar_t *wstr = new wchar_t[len] {};
   ACE_DEBUG ((LM_DEBUG,
               "make_wstring: str = %C\n", str));
   for (size_t i = 0; i < len; i++)
     {
-      char *t = const_cast<char *> (str);
-      wstr[i] = static_cast<wchar_t> (*(t + i));
+      wstr[i] = static_cast<wchar_t> (str[i]);
       ACE_DEBUG ((LM_DEBUG,
                   "wstr[%d] = %d\n", i, (short)wstr[i]));
     }
@@ -75,12 +76,12 @@ make_wstring (char const *str)
 // ------------------------------------------------------------
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int error_count = 0;
+  int error_count {};
 
   try
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Get IOR from command line (or file)
       if (parse_args (argc, argv) != 0)
@@ -91,7 +92,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->string_to_object (ior);
 
       // Get the server
-      simple_var server = simple::_narrow (object.in ());
+      simple_var const server = simple::_narrow (object.in ());
 
       char const *bare_string = "Hello World";
 
@@ -106,13 +107,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      inarg,
                      outarg.out ());
 
-      char const *any_reply;
+      char const *any_reply {};
       outarg >>= any_reply;
 
       ACE_DEBUG ((LM_DEBUG,
                  "Client sent %C, got %C\n", bare_string, reply.in ()));
 
-      if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
+      if (std::strcmp (bare_string, reply.in ()) != 0)
         {
           ++error_count;
         }
@@ -120,7 +121,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                  "Client sent %C, got %C\n", any_string, any_reply));
 
-      if (ACE_OS::strcmp (any_string, any_reply) != 0)
+      if (std::strcmp (any_string, any_reply) != 0)
         {
           ++error_count;
         }
