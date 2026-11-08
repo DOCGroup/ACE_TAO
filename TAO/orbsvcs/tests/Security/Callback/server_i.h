@@ -19,24 +19,28 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class server_i
   : public virtual POA_server
 {
 public:
-  server_i (CORBA::ORB_ptr orb);
-  virtual ~server_i ();
+  explicit server_i (CORBA::ORB_ptr orb);
+  ~server_i () override = default;
 
-  virtual void set_client (client_ptr c);
+  server_i (server_i const &) = delete;
+  server_i (server_i &&) = delete;
+  server_i &operator= (server_i const &) = delete;
+  server_i &operator= (server_i &&) = delete;
 
-  virtual void test_request (const char *msg);
+  void set_client (client_ptr c) override;
 
-  virtual void shutdown ();
+  void test_request (char const *msg) override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
 
-  client_var client_;
+  client_var client_ {};
 };
 
 #endif  /* SERVER_I_H */
