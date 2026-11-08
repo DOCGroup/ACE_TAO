@@ -23,8 +23,12 @@
 class TX_Object_i : public virtual POA_TX_Object
 {
 public:
-  // Constructor
-  TX_Object_i (CORBA::ORB_ptr orb);
+  explicit TX_Object_i (CORBA::ORB_ptr orb);
+
+  TX_Object_i (TX_Object_i const &) = delete;
+  TX_Object_i (TX_Object_i &&) = delete;
+  TX_Object_i &operator= (TX_Object_i const &) = delete;
+  TX_Object_i &operator= (TX_Object_i &&) = delete;
 
   // Destructor
   ~TX_Object_i () override = default;
@@ -37,7 +41,7 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  DataSeq data_;
+  DataSeq data_ {};
 };
 
 #endif  /* TX_OBJECT_I_H */
