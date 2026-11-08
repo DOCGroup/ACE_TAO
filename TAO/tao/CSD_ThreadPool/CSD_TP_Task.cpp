@@ -239,7 +239,7 @@ TAO::CSD::TP_Task::close(u_long flag)
       // Signal all worker threads waiting on the work_available_ condition.
       this->work_available_.broadcast();
 
-      bool calling_thread_in_tp = false;
+      bool calling_thread_in_tp {};
 
       ACE_thread_t my_thr_id = ACE_OS::thr_self ();
 

@@ -56,7 +56,7 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
       // request be (surgically) removed from the queue.  The visitor also
       // gets to decide, via its return value, whether or not visitation
       // should continue (or cease to continue).
-      bool remove_from_queue = false;
+      bool remove_from_queue {};
 
       bool continue_visitation = visitor.visit_request(cur,remove_from_queue);
 

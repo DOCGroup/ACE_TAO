@@ -48,7 +48,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
   repo->init(0,0);
 
   // Parse any service configurator parameters.
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; curarg++)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT("-CSDtp")) == 0)
