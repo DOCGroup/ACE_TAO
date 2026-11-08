@@ -324,7 +324,7 @@ TAO_Thread_Lane::open ()
   // Get the endpoints for this lane.
   params->get_endpoint_set (pool_lane_id, endpoint_set);
 
-  bool ignore_address = false;
+  bool ignore_address {};
 
   if (endpoint_set.empty ())
     {

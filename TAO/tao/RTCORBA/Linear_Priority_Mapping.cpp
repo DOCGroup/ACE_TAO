@@ -82,7 +82,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   // of native priority values for the current platform.
 
   int total;
-  int native_priority_index = 0;
+  int native_priority_index {};
   int current_priority = this->min_;
   for (total = 1; ; ++total)
     {
@@ -108,7 +108,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
       div_t corba_offset = div (numerator, delta);
 
-      int rounding = 0;
+      int rounding {};
 
       if (corba_offset.rem)
         {
@@ -151,7 +151,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
       div_t corba_offset = div (numerator, delta);
 
-      int rounding = 0;
+      int rounding {};
 
       if (corba_offset.rem)
         {

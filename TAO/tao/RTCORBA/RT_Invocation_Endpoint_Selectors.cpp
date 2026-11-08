@@ -80,7 +80,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     RTCORBA::ProtocolList &client_protocols,
     ACE_Time_Value *val)
 {
-  CORBA::Boolean valid_profile_found = false;
+  CORBA::Boolean valid_profile_found {};
 
   // Even though cycling through all the protocols is the correct
   // things to do to find a match, starting from the start of the
@@ -159,9 +159,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     TAO_RT_Endpoint_Utils::policy (
       TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION, r);
 
-  bool all_endpoints_are_valid = false;
-  bool match_priority = false;
-  bool match_bands = false;
+  bool all_endpoints_are_valid {};
+  bool match_priority {};
+  bool match_bands {};
   CORBA::Short client_thread_priority = 0;
   CORBA::Short min_priority = 0;
   CORBA::Short max_priority = 0;
@@ -196,7 +196,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
       if (protocol_hooks != nullptr)
         {
           CORBA::Short server_priority = 0;
-          CORBA::Boolean is_client_propagated = false;
+          CORBA::Boolean is_client_propagated {};
 
           // Check the priority model policy to see if it is client
           // propagated.
@@ -239,7 +239,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               else
                 {
                   // Check which band range we fall in.
-                  bool in_range = false;
+                  bool in_range {};
                   protocol_hooks->get_selector_bands_policy_hook (
                     bands_policy.in (),
                     client_thread_priority,

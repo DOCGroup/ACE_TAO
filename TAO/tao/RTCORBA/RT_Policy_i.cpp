@@ -1134,7 +1134,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = orb_core ? orb_core->orb_params ()->sock_keepalive () : true;
       CORBA::Boolean dont_route = orb_core ? orb_core->orb_params ()->sock_dontroute () : false;
-      CORBA::Boolean enable_network_priority = false;
+      CORBA::Boolean enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_TCP_Protocol_Properties (send_buffer_size,
@@ -1152,7 +1152,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route = false;
+      CORBA::Boolean dont_route {};
       CORBA::Long preallocate_buffer_size = false;
       char const *mmap_filename = "";
       char const *mmap_lockname = "";
@@ -1184,7 +1184,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
     {
       int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
-      CORBA::Boolean enable_network_priority = false;
+      CORBA::Boolean enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_UserDatagram_Protocol_Properties (send_buffer_size,
@@ -1199,8 +1199,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route = false;
-      CORBA::Boolean enable_network_priority = false;
+      CORBA::Boolean dont_route {};
+      CORBA::Boolean enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_StreamControl_Protocol_Properties (send_buffer_size,

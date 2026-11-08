@@ -47,7 +47,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   int ace_sched_policy = ACE_SCHED_OTHER;
   long sched_policy = THR_SCHED_DEFAULT;
   long scope_policy = THR_SCOPE_PROCESS;
-  int curarg = 0;
+  int curarg {};
   ACE_Time_Value dynamic_thread_time;
   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_INFINITIVE;
 

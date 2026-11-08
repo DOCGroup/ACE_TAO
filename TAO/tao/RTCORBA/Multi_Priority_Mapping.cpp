@@ -109,7 +109,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
            if (base_corba_priority_ >= --last_priority) break;
         }
 
-        int priority_ndx = 0;
+        int priority_ndx {};
         while (true)
         {
            if (last_priority == RTCORBA::minPriority) break;
@@ -119,7 +119,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
 
         // Start at the max priority and search until we reach the base priority
         last_priority = this->base_native_priority_;
-        for (int current_ndx = 0; current_ndx < priority_ndx; current_ndx++)
+        for (int current_ndx {}; current_ndx < priority_ndx; current_ndx++)
         {
            native_priority = static_cast<RTCORBA::NativePriority>
              (ACE_Sched_Params::previous_priority (this->policy_,
