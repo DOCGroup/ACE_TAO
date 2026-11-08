@@ -175,7 +175,7 @@ namespace ACE_RMCast
     //
     while (i != e)
     {
-      std::unique_ptr<NAK> nak (new NAK (addr));
+      std::unique_ptr<NAK> nak = std::make_unique<NAK> (addr);
 
       // Inner loop that fills NAK profile with up to max_elem elements.
       //
@@ -349,7 +349,7 @@ namespace ACE_RMCast
   {
     // Prepare NRTM.
     //
-    std::unique_ptr<NRTM> nrtm (new NRTM ());
+    std::unique_ptr<NRTM> nrtm = std::make_unique<NRTM> ();
 
     // Gather the information.
     //

@@ -184,7 +184,8 @@ namespace ACE_RMCast
   {
     size_t max_packet_size (params_.max_packet_size ());
 
-    std::unique_ptr<char[]> holder (new char[max_packet_size + ACE_CDR::MAX_ALIGNMENT]);
+    std::unique_ptr<char[]> holder =
+      std::make_unique<char[]> (max_packet_size + ACE_CDR::MAX_ALIGNMENT);
 
     char* data = ACE_ptr_align_binary (holder.get (), ACE_CDR::MAX_ALIGNMENT);
 

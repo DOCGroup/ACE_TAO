@@ -87,12 +87,12 @@ namespace ACE_RMCast
         params_ (params),
         cond_ (mutex_)
   {
-    fragment_.reset (new Fragment (params_));
-    reassemble_.reset (new Reassemble (params_));
-    acknowledge_.reset (new Acknowledge (params_));
-    retransmit_.reset (new Retransmit (params_));
-    flow_.reset (new Flow (params_));
-    link_.reset (new Link (a, params_));
+    fragment_ = std::make_unique<Fragment> (params_);
+    reassemble_ = std::make_unique<Reassemble> (params_);
+    acknowledge_ = std::make_unique<Acknowledge> (params_);
+    retransmit_ = std::make_unique<Retransmit> (params_);
+    flow_ = std::make_unique<Flow> (params_);
+    link_ = std::make_unique<Link> (a, params_);
 
     // Start IN stack from top to bottom.
     //
