@@ -67,7 +67,7 @@
 #endif
 
 size_t MULTIPLY_FACTOR = 10;
-typedef double (*Profiler)(size_t);
+using Profiler = double (*) (size_t);
 static bool do_exec_after_fork = false;
 
 /// do nothing thread function
@@ -185,12 +185,12 @@ prof_native_thread (size_t iteration)
           for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
             {
 #if defined (ACE_HAS_WTHREADS)
-              if (::CreateThread (0,
+              if (::CreateThread (nullptr,
                                   0,
                                   LPTHREAD_START_ROUTINE (ace_empty),
-                                  0,
+                                  nullptr,
                                   CREATE_SUSPENDED,
-                                  0) == 0)
+                                  nullptr) == nullptr)
 #endif
                   ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
                 //FUZZ: enable check_for_lack_ACE_OS
@@ -227,9 +227,9 @@ prof_ace_os_thread (size_t iteration)
 
           for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
             if (ACE_OS::thr_create ((ACE_THR_FUNC) ace_empty,
-                                    0,
+                                    nullptr,
                                     THR_SUSPENDED,
-                                    0) == -1)
+                                    nullptr) == -1)
               ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
 
           ptimer.stop ();
@@ -264,7 +264,7 @@ prof_tm_thread (size_t iteration)
 
           if (ACE_Thread_Manager::instance ()->spawn_n (MULTIPLY_FACTOR,
                                                         (ACE_THR_FUNC) ace_empty,
-                                                        0,
+                                                        nullptr,
                                                         THR_SUSPENDED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
 
@@ -326,8 +326,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:l:pftahmxe"));
   int c;
   size_t iteration = 10;
-  Profiler profiler = 0;
-  const char *profile_name = 0;
+  Profiler profiler {};
+  char const *profile_name {};
 
   while ((c=get_opt ()) != -1)
     {
@@ -374,7 +374,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (profiler == 0)
+  if (profiler == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a|-m|-x} [-n ###] [-L ###] [-h] [-e]\n"), 1);
   else
     {

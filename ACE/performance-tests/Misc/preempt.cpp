@@ -34,6 +34,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
+#include <new>
 
 #if defined (ACE_HAS_THREADS) || ! defined (ACE_LACKS_FORK)
 
@@ -49,16 +51,16 @@ static const char usage [] = "[-? |\n"
 
 // Configuration options.
 #if defined (ACE_HAS_THREADS)
-u_int use_fork = 0;
+bool use_fork = false;
 #else  /* ! ACE_HAS_THREADS */
-u_int use_fork = 1;
+bool use_fork = true;
 #endif /* ! ACE_HAS_THREADS */
 u_int high_iterations = 10;
 u_int high_priority_tasks = 1;
 u_int low_iterations = 25000;  /* Big enough to keep the low priority task
                                   cranking for a while */
 u_long read_period = 500000; /* usec */
-u_int low_yield = 0;
+bool low_yield = false;
 
 // To permit calculation of relative times.
 ACE_hrtime_t starttime;
@@ -74,7 +76,7 @@ class High_Priority_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   High_Priority_Task ();
-  ~High_Priority_Task ();
+  ~High_Priority_Task () = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *);
@@ -86,8 +88,12 @@ public:
 
 private:
   int priority_;
-  int done_;
-  u_long *time_;
+  bool done_;
+  std::unique_ptr<u_long[]> time_;
+  High_Priority_Task (High_Priority_Task const &) = delete;
+  High_Priority_Task &operator= (High_Priority_Task const &) = delete;
+  High_Priority_Task (High_Priority_Task &&) = delete;
+  High_Priority_Task &operator= (High_Priority_Task &&) = delete;
 };
 
 High_Priority_Task::High_Priority_Task ()
@@ -97,21 +103,20 @@ High_Priority_Task::High_Priority_Task ()
                  ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                                  ACE_SCOPE_THREAD),
                  ACE_SCOPE_THREAD)),
-    done_ (0)
+    done_ (false),
+    time_ (new (std::nothrow) u_long[high_iterations])
 {
-  ACE_NEW (time_, u_long[high_iterations]);
-}
-
-High_Priority_Task::~High_Priority_Task ()
-{
-  delete [] time_;
-  time_ = 0;
+  if (!this->time_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 }
 
 int
 High_Priority_Task::open (void *)
 {
-  if (use_fork == 1)
+  if (use_fork)
     {
       ACE_hthread_t thr_handle;
       ACE_Thread::self (thr_handle);
@@ -157,7 +162,7 @@ High_Priority_Task::svc ()
     {
       time_ [i] = (u_long) ((ACE_OS::gethrtime () - starttime)/
                             (ACE_UINT32) 1000000u);
-      ACE_OS::select (0, 0, 0, 0, &pause);
+      ACE_OS::select (0, nullptr, nullptr, nullptr, &pause);
     }
 
   done_ = 1;
@@ -196,6 +201,10 @@ public:
 private:
   int priority_;
   const High_Priority_Task &high_priority_task_;
+  Low_Priority_Task (Low_Priority_Task const &) = delete;
+  Low_Priority_Task &operator= (Low_Priority_Task const &) = delete;
+  Low_Priority_Task (Low_Priority_Task &&) = delete;
+  Low_Priority_Task &operator= (Low_Priority_Task &&) = delete;
 };
 
 Low_Priority_Task::Low_Priority_Task (
@@ -210,7 +219,7 @@ Low_Priority_Task::Low_Priority_Task (
 int
 Low_Priority_Task::open (void *)
 {
-  if (use_fork == 1)
+  if (use_fork)
     {
       ACE_hthread_t thr_handle;
       ACE_Thread::self (thr_handle);
@@ -284,7 +293,7 @@ get_options (int argc, ACE_TCHAR *argv[])
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {
     case 'f':
-      use_fork = 1;
+      use_fork = true;
       break;
     case 'h':
       if (ACE_OS::atoi (get_opt.opt_arg ()) >= 2)
@@ -313,7 +322,7 @@ get_options (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), -1);
       break;
     case 'y':
-      low_yield = 1;
+      low_yield = true;
       break;
     case '?':
       ACE_DEBUG ((LM_ERROR, "usage: %n %s\n%a", usage, 0));
@@ -374,9 +383,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           -1);
     }
 
-  High_Priority_Task *high_priority_task;
-  ACE_NEW_RETURN (high_priority_task, High_Priority_Task [high_priority_tasks],
-                  1);
+  std::unique_ptr<High_Priority_Task[]> high_priority_task (
+    new (std::nothrow) High_Priority_Task[high_priority_tasks]);
+  if (!high_priority_task)
+    {
+      errno = ENOMEM;
+      return 1;
+    }
 
   Low_Priority_Task low_priority_task (high_priority_task[0]);
 
@@ -391,7 +404,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Spawn the threads/processes . . .
   pid_t child = 0;
-  if (use_fork == 1)
+  if (use_fork)
     {
       switch ((child = ACE_OS::fork (ACE_TEXT("preempt-low_priority_process"))))
         {
@@ -434,8 +447,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           high_priority_task[i].print_times ();
         }
     }
-
-  delete [] high_priority_task;
 
 #else  /* ! ACE_HAS_THREADS && ACE_LACKS_FORK */
   ACE_UNUSED_ARG (argc);

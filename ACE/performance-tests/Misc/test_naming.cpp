@@ -19,6 +19,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
+#include <memory>
+
 #define ACE_NS_MAX_ENTRIES 4000
 
 static char name[BUFSIZ];
@@ -94,7 +97,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       ACE_NS_WString w_name (name);
 
       ACE_NS_WString w_value;
-      char *type_out;
+      char *raw_type_out {};
 
       if (sign == 1)
         {
@@ -109,7 +112,8 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
 
       ACE_NS_WString val (temp_val);
 
-      int resolve_result = ns_context->resolve (w_name, w_value, type_out);
+      int resolve_result = ns_context->resolve (w_name, w_value, raw_type_out);
+      std::unique_ptr<char[]> type_out (raw_type_out);
       if (resolve_result != result) {
         ACE_ERROR ((LM_ERROR, "resolved failed!"));
       }
@@ -120,12 +124,11 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       if (w_value.char_rep ())
         {
           ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
-                      name, w_value.char_rep (), type_out));
+                      name, w_value.char_rep (), type_out.get ()));
           ACE_ASSERT (w_value == val);
           if (type_out)
             {
-              ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
-              delete[] type_out;
+              ACE_ASSERT (std::strcmp (type_out.get (), temp_type) == 0);
             }
         }
     }

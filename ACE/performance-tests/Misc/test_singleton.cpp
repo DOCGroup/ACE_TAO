@@ -34,6 +34,8 @@
 
 #include "test_singleton.h"
 
+#include <new>
+
 #if defined (ACE_HAS_THREADS)
 
 static const int DEFAULT_ITERATIONS = 100000000;
@@ -41,49 +43,63 @@ static const int DEFAULT_ITERATIONS = 100000000;
 class Mutex_Singleton
 {
 public:
-  Mutex_Singleton () {}
+  Mutex_Singleton () = default;
   void svc () {}
   static Mutex_Singleton *instance ();
 
 private:
   static ACE_SYNCH_MUTEX lock_;
-  static Mutex_Singleton *instance_;
+  static std::unique_ptr<Mutex_Singleton> instance_;
 };
 
 ACE_SYNCH_MUTEX Mutex_Singleton::lock_;
 
-Mutex_Singleton *Mutex_Singleton::instance_;
+std::unique_ptr<Mutex_Singleton> Mutex_Singleton::instance_ {};
 
 Mutex_Singleton *
 Mutex_Singleton::instance ()
 {
   // Acquire the lock every time in.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, Mutex_Singleton::lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, Mutex_Singleton::lock_, nullptr);
 
-  if (Mutex_Singleton::instance_ == 0)
-    ACE_NEW_RETURN (Mutex_Singleton::instance_, Mutex_Singleton, 0);
+  if (!Mutex_Singleton::instance_)
+    {
+      Mutex_Singleton::instance_.reset (new (std::nothrow) Mutex_Singleton);
+      if (!Mutex_Singleton::instance_)
+        {
+          errno = ENOMEM;
+          return nullptr;
+        }
+    }
 
-  return Mutex_Singleton::instance_;
+  return Mutex_Singleton::instance_.get ();
 }
 
 ACE_SYNCH_MUTEX DC_Singleton::lock_;
 
-DC_Singleton *DC_Singleton::instance_;
+std::unique_ptr<DC_Singleton> DC_Singleton::instance_ {};
 
 DC_Singleton *
 DC_Singleton::instance ()
 {
-  if (DC_Singleton::instance_ == 0)
+  if (!DC_Singleton::instance_)
     {
-      // Only lock if instance_ isn't 0.
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, DC_Singleton::lock_, 0);
+      // Only lock if instance_ is empty.
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, DC_Singleton::lock_, nullptr);
 
       // Perform the Double-Check.
-      if (DC_Singleton::instance_ == 0)
-        ACE_NEW_RETURN (DC_Singleton::instance_, DC_Singleton, 0);
+      if (!DC_Singleton::instance_)
+        {
+          DC_Singleton::instance_.reset (new (std::nothrow) DC_Singleton);
+          if (!DC_Singleton::instance_)
+            {
+              errno = ENOMEM;
+              return nullptr;
+            }
+        }
     }
 
-  return DC_Singleton::instance_;
+  return DC_Singleton::instance_.get ();
 }
 
 using My_Singleton = ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>;

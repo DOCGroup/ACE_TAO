@@ -21,6 +21,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_utsname.h"
 
+#include <memory>
+
 static const char usage [] = "[-? |\n"
                              "            [-i <iterations> [1000000]]";
 
@@ -70,7 +72,7 @@ class Basic_Test
 public:
   Basic_Test (ACE_High_Res_Timer &timer,
               ACE_hrtime_t empty_iteration_time);
-  virtual ~Basic_Test ();
+  virtual ~Basic_Test () = default;
 
   virtual void run () = 0;
 
@@ -97,12 +99,11 @@ private:
   ACE_High_Res_Timer &timer_;
   ACE_hrtime_t empty_iteration_time_;
 
-  // Require the timer reference.
-  Basic_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Basic_Test (const Basic_Test &);
-  Basic_Test &operator= (const Basic_Test &);
+  Basic_Test () = delete;
+  Basic_Test (Basic_Test const &) = delete;
+  Basic_Test &operator= (Basic_Test const &) = delete;
+  Basic_Test (Basic_Test &&) = delete;
+  Basic_Test &operator= (Basic_Test &&) = delete;
 };
 
 Basic_Test::Basic_Test (ACE_High_Res_Timer &timer,
@@ -110,10 +111,6 @@ Basic_Test::Basic_Test (ACE_High_Res_Timer &timer,
   : elapsed_time_ (0),
     timer_ (timer),
     empty_iteration_time_ (empty_iteration_time)
-{
-}
-
-Basic_Test::~Basic_Test ()
 {
 }
 
@@ -153,12 +150,11 @@ public:
     }
 
 private:
-  // Require the timer reference.
-  Empty_Iteration_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Empty_Iteration_Test (const Empty_Iteration_Test &);
-  Empty_Iteration_Test &operator= (const Empty_Iteration_Test &);
+  Empty_Iteration_Test () = delete;
+  Empty_Iteration_Test (Empty_Iteration_Test const &) = delete;
+  Empty_Iteration_Test &operator= (Empty_Iteration_Test const &) = delete;
+  Empty_Iteration_Test (Empty_Iteration_Test &&) = delete;
+  Empty_Iteration_Test &operator= (Empty_Iteration_Test &&) = delete;
 };
 
 void
@@ -191,12 +187,11 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Inline_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Inline_Call_Test (const Inline_Call_Test &);
-  Inline_Call_Test &operator= (const Inline_Call_Test &);
+  Inline_Call_Test () = delete;
+  Inline_Call_Test (Inline_Call_Test const &) = delete;
+  Inline_Call_Test &operator= (Inline_Call_Test const &) = delete;
+  Inline_Call_Test (Inline_Call_Test &&) = delete;
+  Inline_Call_Test &operator= (Inline_Call_Test &&) = delete;
 };
 
 void
@@ -227,12 +222,11 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Noninline_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Noninline_Call_Test (const Noninline_Call_Test &);
-  Noninline_Call_Test &operator= (const Noninline_Call_Test &);
+  Noninline_Call_Test () = delete;
+  Noninline_Call_Test (Noninline_Call_Test const &) = delete;
+  Noninline_Call_Test &operator= (Noninline_Call_Test const &) = delete;
+  Noninline_Call_Test (Noninline_Call_Test &&) = delete;
+  Noninline_Call_Test &operator= (Noninline_Call_Test &&) = delete;
 };
 
 void
@@ -263,12 +257,11 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Inline_Member_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Inline_Member_Call_Test (const Inline_Member_Call_Test &);
-  Inline_Member_Call_Test &operator= (const Inline_Member_Call_Test &);
+  Inline_Member_Call_Test () = delete;
+  Inline_Member_Call_Test (Inline_Member_Call_Test const &) = delete;
+  Inline_Member_Call_Test &operator= (Inline_Member_Call_Test const &) = delete;
+  Inline_Member_Call_Test (Inline_Member_Call_Test &&) = delete;
+  Inline_Member_Call_Test &operator= (Inline_Member_Call_Test &&) = delete;
 };
 
 void
@@ -299,12 +292,11 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Noninline_Member_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Noninline_Member_Call_Test (const Noninline_Member_Call_Test &);
-  Noninline_Member_Call_Test &operator= (const Noninline_Member_Call_Test &);
+  Noninline_Member_Call_Test () = delete;
+  Noninline_Member_Call_Test (Noninline_Member_Call_Test const &) = delete;
+  Noninline_Member_Call_Test &operator= (Noninline_Member_Call_Test const &) = delete;
+  Noninline_Member_Call_Test (Noninline_Member_Call_Test &&) = delete;
+  Noninline_Member_Call_Test &operator= (Noninline_Member_Call_Test &&) = delete;
 };
 
 void
@@ -335,14 +327,15 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Inline_Member_With_Virtual_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
+  Inline_Member_With_Virtual_Call_Test () = delete;
   Inline_Member_With_Virtual_Call_Test (
-    const Inline_Member_With_Virtual_Call_Test &);
+    Inline_Member_With_Virtual_Call_Test const &) = delete;
   Inline_Member_With_Virtual_Call_Test &operator= (
-    const Inline_Member_With_Virtual_Call_Test &);
+    Inline_Member_With_Virtual_Call_Test const &) = delete;
+  Inline_Member_With_Virtual_Call_Test (
+    Inline_Member_With_Virtual_Call_Test &&) = delete;
+  Inline_Member_With_Virtual_Call_Test &operator= (
+    Inline_Member_With_Virtual_Call_Test &&) = delete;
 };
 
 void
@@ -373,14 +366,15 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Noninline_Member_With_Virtual_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Noninline_Member_With_Virtual_Call_Test
-    (const Noninline_Member_With_Virtual_Call_Test &);
-  Noninline_Member_With_Virtual_Call_Test &operator=
-    (const Noninline_Member_With_Virtual_Call_Test &);
+  Noninline_Member_With_Virtual_Call_Test () = delete;
+  Noninline_Member_With_Virtual_Call_Test (
+    Noninline_Member_With_Virtual_Call_Test const &) = delete;
+  Noninline_Member_With_Virtual_Call_Test &operator= (
+    Noninline_Member_With_Virtual_Call_Test const &) = delete;
+  Noninline_Member_With_Virtual_Call_Test (
+    Noninline_Member_With_Virtual_Call_Test &&) = delete;
+  Noninline_Member_With_Virtual_Call_Test &operator= (
+    Noninline_Member_With_Virtual_Call_Test &&) = delete;
 };
 
 void
@@ -411,14 +405,15 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Virtual_Member_Optimizable_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
+  Virtual_Member_Optimizable_Call_Test () = delete;
   Virtual_Member_Optimizable_Call_Test (
-    const Virtual_Member_Optimizable_Call_Test &);
+    Virtual_Member_Optimizable_Call_Test const &) = delete;
   Virtual_Member_Optimizable_Call_Test &operator= (
-    const Virtual_Member_Optimizable_Call_Test &);
+    Virtual_Member_Optimizable_Call_Test const &) = delete;
+  Virtual_Member_Optimizable_Call_Test (
+    Virtual_Member_Optimizable_Call_Test &&) = delete;
+  Virtual_Member_Optimizable_Call_Test &operator= (
+    Virtual_Member_Optimizable_Call_Test &&) = delete;
 };
 
 void
@@ -451,23 +446,22 @@ public:
   virtual void run ();
 
 private:
-  // Require the timer reference.
-  Virtual_Member_Call_Test ();
-
-  // Force construction of independent instances by prohibiting copying.
-  Virtual_Member_Call_Test (const Virtual_Member_Call_Test &);
-  Virtual_Member_Call_Test &operator= (const Virtual_Member_Call_Test &);
+  Virtual_Member_Call_Test () = delete;
+  Virtual_Member_Call_Test (Virtual_Member_Call_Test const &) = delete;
+  Virtual_Member_Call_Test &operator= (Virtual_Member_Call_Test const &) = delete;
+  Virtual_Member_Call_Test (Virtual_Member_Call_Test &&) = delete;
+  Virtual_Member_Call_Test &operator= (Virtual_Member_Call_Test &&) = delete;
 };
 
 void
 Virtual_Member_Call_Test::run ()
 {
-  Foo_v *fv;
+  std::unique_ptr<Foo_v> fv;
 
   if (iterations < 2)
-    fv = new Foo_v;
+    fv = std::make_unique<Foo_v> ();
   else
-    fv = new Foo_d_v;
+    fv = std::make_unique<Foo_d_v> ();
 
   this->start_timing ();
 
@@ -476,8 +470,6 @@ Virtual_Member_Call_Test::run ()
 
   this->stop_timing ();
 
-  delete fv;
-  fv = 0;
 }
 
 

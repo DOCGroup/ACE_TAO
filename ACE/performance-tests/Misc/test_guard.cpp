@@ -18,7 +18,7 @@ enum
 };
 
 ACE_Thread_Mutex lock_;
-typedef void (*guard_func)();
+using guard_func = void (*) ();
 int test_type = TEST_GUARD;
 int dummy = 0;
 
