@@ -27,6 +27,7 @@
 #include "orbsvcs/Event/EC_Defaults.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -280,10 +281,8 @@ protected:
    * compose an event channel, the event channel simply acts as a
    * Mediator among them.
    */
+  std::unique_ptr<TAO_EC_Factory> owned_factory_;
   TAO_EC_Factory *factory_;
-
-  /// Flag that indicates if we own the factory.
-  bool own_factory_;
 
   /// The dispatching "module"
   TAO_EC_Dispatching *dispatching_;

@@ -24,11 +24,19 @@ ACE_INLINE void
 TAO_EC_Event_Channel_Base::factory (TAO_EC_Factory* factory,
                                     int own_factory)
 {
-  if (this->own_factory_)
-    delete this->factory_;
+  if (this->factory_ == factory)
+    {
+      if (own_factory != 0 && this->owned_factory_.get () != factory)
+        this->owned_factory_.reset (factory);
+      else if (own_factory == 0 && this->owned_factory_.get () == factory)
+        this->owned_factory_.release ();
+      return;
+    }
 
+  this->owned_factory_.reset ();
+  if (own_factory != 0)
+    this->owned_factory_.reset (factory);
   this->factory_ = factory;
-  this->own_factory_ = own_factory != 0;
 }
 
 ACE_INLINE TAO_EC_Dispatching*

@@ -20,8 +20,8 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
                            int own_factory)
   : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),
     consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
+    owned_factory_ (own_factory != 0 ? factory : nullptr),
     factory_ (factory),
-    own_factory_ (own_factory != 0),
     dispatching_ (nullptr),
     filter_builder_ (nullptr),
     supplier_filter_builder_ (nullptr),
@@ -73,7 +73,7 @@ TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base ()
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = nullptr;
 
-  this->factory (nullptr, this->own_factory_);
+  this->factory (nullptr, false);
 }
 
 void
