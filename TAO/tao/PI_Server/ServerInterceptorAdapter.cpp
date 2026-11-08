@@ -41,7 +41,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
                                           exceptions,
                                           nexceptions);
 
-      for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
+      for (size_t i {}; i < this->interceptor_list_.size(); ++i)
         {
           ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
@@ -125,7 +125,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
                                            exceptions,
                                            nexceptions);
 
-      for (size_t i = 0 ; i < server_request.interceptor_count (); ++i)
+      for (size_t i {}; i < server_request.interceptor_count (); ++i)
         {
           ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
@@ -186,7 +186,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
                                            exceptions,
                                            nexceptions);
 
-      for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
+      for (size_t i {}; i < this->interceptor_list_.size(); ++i)
         {
           ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
