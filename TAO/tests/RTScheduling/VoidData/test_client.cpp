@@ -12,7 +12,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              argv);
 
       test_impl foo_i;
-      int something = 28;
+      int something {28};
       foo_i.bar (&something);
 
       orb->destroy ();
