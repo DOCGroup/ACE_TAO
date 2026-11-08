@@ -1,4 +1,3 @@
-
 #include "Stock_Factory_i.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/streams.h"
@@ -65,10 +64,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           Quoter::Stock_var stock =
             stock_factory->get_stock (ACE_TEXT_ALWAYS_CHAR (argv[i]));
 
-          CORBA::String_var full_name = stock->full_name ();
+          CORBA::String_var full_name (stock->full_name ());
 
           // Get the price
-          CORBA::Double price = stock->price ();
+          CORBA::Double const price = stock->price ();
 
           Quoter::Modify_Stock_var modify_stock =
             Quoter::Modify_Stock::_narrow (stock.in ());
@@ -78,9 +77,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                << full_name.in ()
                << " to " << price + 1 << endl;
         }
-        catch (Quoter::Invalid_Stock_Symbol &) {
+        catch (Quoter::Invalid_Stock_Symbol const &) {
           cerr << "Invalid stock symbol <"
-                    << argv[i] << ">" << endl;
+               << argv[i] << ">" << endl;
         }
         ACE_Time_Value tv (0, 500000);
         ACE_OS::sleep (tv);
@@ -93,7 +92,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

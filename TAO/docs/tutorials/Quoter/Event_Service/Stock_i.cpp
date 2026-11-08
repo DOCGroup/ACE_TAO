@@ -1,10 +1,9 @@
-
 #include "Stock_i.h"
 
-Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
-                                const char *full_name,
+Quoter_Stock_i::Quoter_Stock_i (char const *symbol,
+                                char const *full_name,
                                 CORBA::Double price)
-  :  supplier_personality_ (this)
+  : supplier_personality_ (this)
 {
   this->data_.symbol = symbol;
   this->data_.full_name = full_name;

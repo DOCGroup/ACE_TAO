@@ -1,14 +1,11 @@
-
 #include "Stock_Factory_i.h"
 #include "Stock_i.h"
 #include "ace/streams.h"
-
-Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
-{
-}
+#include <limits>
+#include <string>
 
 Quoter::Stock_ptr
-Quoter_Stock_Factory_i::get_stock (const char *symbol)
+Quoter_Stock_Factory_i::get_stock (char const *symbol)
 {
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (symbol);
@@ -18,7 +15,7 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
       this->stock_factory_poa_->id_to_reference (oid.in ());
     return Quoter::Stock::_narrow (tmp.in ());
   }
-  catch (PortableServer::POA::ObjectNotActive &) {
+  catch (PortableServer::POA::ObjectNotActive const &) {
     throw Quoter::Invalid_Stock_Symbol ();
   }
 }
@@ -35,9 +32,9 @@ Quoter_Stock_Factory_i::destroy_stock_objects ()
 
 void
 Quoter_Stock_Factory_i::load_stock_objects (
-      PortableServer::POA_ptr poa,
-      PortableServer::POAManager_ptr poa_manager,
-      CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
+  PortableServer::POA_ptr poa,
+  PortableServer::POAManager_ptr poa_manager,
+  CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
     return;
@@ -59,25 +56,26 @@ Quoter_Stock_Factory_i::load_stock_objects (
     policies[i]->destroy ();
   }
 
-  while (!cin.eof () && cin.peek () != EOF) {
-    const int max_symbol_length = 8;
-    char symbol[max_symbol_length];
-    const int max_full_name_length = 64;
-    char full_name[max_full_name_length];
-    double price;
+  std::string symbol;
+  std::string full_name;
+  CORBA::Double price {};
 
-    cin.getline (symbol, max_symbol_length, '\n');
-    cin.getline (full_name, max_full_name_length, '\n');
-    cin >> price;
-    cin.ignore (1, '\n');
+  while (std::getline (std::cin >> std::ws, symbol) &&
+         std::getline (std::cin, full_name) &&
+         (std::cin >> price))
+    {
+      std::cin.ignore (std::numeric_limits<std::streamsize>::max (), '\n');
 
-    Quoter_Stock_i *stock = new Quoter_Stock_i (symbol, full_name, price);
+      Quoter_Stock_i *const stock = new Quoter_Stock_i (
+        symbol.c_str (), full_name.c_str (), price);
 
-    PortableServer::ServantBase_var servant = stock;
+      // The typed pointer is non-owning; servant keeps this servant alive.
+      PortableServer::ServantBase_var servant = stock;
 
-    PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (symbol);
+      PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (
+        symbol.c_str ());
 
-    this->stock_factory_poa_->activate_object_with_id (oid.in (), servant.in ());
-    stock->connect (supplier_admin);
-  }
+      this->stock_factory_poa_->activate_object_with_id (oid.in (), servant.in ());
+      stock->connect (supplier_admin);
+    }
 }
