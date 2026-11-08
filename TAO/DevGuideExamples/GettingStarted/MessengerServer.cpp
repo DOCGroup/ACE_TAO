@@ -1,23 +1,26 @@
 #include "started_pch.h"
-
 #include "Messenger_i.h"
-#include <iostream>
-#include <fstream>
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
+#include <fstream>
+#include <iostream>
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Server_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("Messenger.ior")};
+};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option;
+
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -35,42 +38,47 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    // Initialize the ORB.
-    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
-
-    if (parse_args (argc, argv) != 0)
+  try
+    {
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-    //Get reference to the RootPOA.
-    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
+      CORBA::Object_var const root_object (
+        orb->resolve_initial_references ("RootPOA"));
+      PortableServer::POA_var const poa (
+        PortableServer::POA::_narrow (root_object.in ()));
+      PortableServer::POAManager_var const manager (poa->the_POAManager ());
+      manager->activate ();
 
-    // Activate the POAManager.
-    PortableServer::POAManager_var const mgr = poa->the_POAManager ();
-    mgr->activate();
+      PortableServer::Servant_var<Messenger_i> const servant (new Messenger_i);
+      PortableServer::ObjectId_var const oid (poa->activate_object (servant.in ()));
+      CORBA::Object_var const object (poa->id_to_reference (oid.in ()));
+      CORBA::String_var const ior (orb->object_to_string (object.in ()));
+      std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file));
+      if (!ior_file)
+        {
+          std::cerr << "Cannot open IOR output file." << std::endl;
+          return 1;
+        }
+      ior_file << ior.in () << std::endl;
+      if (!ior_file)
+        {
+          std::cerr << "Cannot write IOR output file." << std::endl;
+          return 1;
+        }
+      std::cout << "IOR written to file "
+                << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file) << std::endl;
 
-    // Create a servant.
-    PortableServer::Servant_var<Messenger_i> servant = new Messenger_i();
+      orb->run ();
+      orb->destroy ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "CORBA exception: " << ex << std::endl;
+      return 1;
+    }
 
-    // Register the servant with the RootPOA, obtain its object
-    // reference, stringify it, and write it to a file.
-    PortableServer::ObjectId_var const oid = poa->activate_object (servant.in ());
-    obj = poa->id_to_reference( oid.in() );
-    CORBA::String_var const str = orb->object_to_string (obj.in ());
-    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
-    ior_file << str.in () << std::endl;
-    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
-
-    // Accept requests from clients.
-    orb->run();
-    orb->destroy();
-
-    return 0;
-  }
-  catch (CORBA::Exception const &ex) {
-    std::cerr << "CORBA exception: " << ex << std::endl;
-  }
-
-  return 1;
+  return 0;
 }

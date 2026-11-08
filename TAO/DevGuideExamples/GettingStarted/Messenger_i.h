@@ -17,13 +17,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 //Class Messenger_i
-class  Messenger_i : public virtual POA_Messenger
+class Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
-  Messenger_i ();
+  Messenger_i () = default;
 
-  //Destructor
   ~Messenger_i () override = default;
 
   CORBA::Boolean send_message (
@@ -36,6 +34,5 @@ public:
   Messenger_i &operator= (Messenger_i const &) = delete;
   Messenger_i &operator= (Messenger_i &&) = delete;
 };
-
 
 #endif /* MESSENGERI_H_  */
