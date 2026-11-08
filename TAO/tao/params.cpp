@@ -153,7 +153,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
       // (e.g. ";uiop://foo;iiop://1.3@bar")
     }
 
-  int status = 0;
+  int status {};
   // Return code:  0 = success,  -1 = failure
 
   if (length > 0)
@@ -168,7 +168,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
             }
         }
 
-      ssize_t begin = 0;
+      ssize_t begin {};
       ssize_t end = endpoints.find (endpoints_delimiter);
 
       for (int i = 0; i < endpoints_count; ++i)
@@ -224,10 +224,10 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
   // assignment separator ('=' or ':')
   // Any other char is legal, although '*' and '?' will be
   // treated as wildcards.
-  bool expect_assign = false;
-  bool expect_comma = false;
+  bool expect_assign {};
+  bool expect_comma {};
   bool expect_wild = true;
-  bool found_remote = false;
+  bool found_remote {};
 
   for (const char *p = s; *p; ++p) switch (*p)
     {

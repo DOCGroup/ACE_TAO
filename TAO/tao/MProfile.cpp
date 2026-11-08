@@ -201,7 +201,7 @@ int
 TAO_MProfile::remove_profile (const TAO_Profile *pfile)
 {
   TAO_PHandle h;
-  int found = 0;
+  int found {};
   for (h = 0; h < this->last_; ++h)
     {
       if (this->pfiles_[h]->is_equivalent (pfile))
@@ -255,7 +255,7 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 CORBA::ULong
 TAO_MProfile::hash (CORBA::ULong max)
 {
-  CORBA::ULong hashval = 0;
+  CORBA::ULong hashval {};
 
   if (this->last_ == 0)
     return 0;

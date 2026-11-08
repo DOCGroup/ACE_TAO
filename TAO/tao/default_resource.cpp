@@ -174,7 +174,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
   this->parser_names_count_ = 0;
 
-  int curarg = 0;
+  int curarg {};
 
   for (curarg = 0; curarg < argc; ++curarg)
     {
@@ -551,7 +551,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
                   char *[this->parser_names_count_],
                   -1);
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
 
 #if (TAO_HAS_DDL_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");

@@ -478,7 +478,7 @@ CORBA::Object::_non_existent ()
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
-  CORBA::Boolean retval = false;
+  CORBA::Boolean retval {};
 
   try
     {
@@ -838,7 +838,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 CORBA::Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 {
-  bool lazy_strategy = false;
+  bool lazy_strategy {};
   TAO_ORB_Core *orb_core = cdr.orb_core ();
 
   if (orb_core == nullptr)

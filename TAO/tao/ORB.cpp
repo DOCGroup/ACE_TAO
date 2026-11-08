@@ -1088,7 +1088,7 @@ namespace TAO
 
     size_t opt_len = ACE_OS::strlen (orb_opt);
 
-    bool found = false;
+    bool found {};
     while (arg_shifter.is_anything_left ())
       {
         const ACE_TCHAR *current_arg = arg_shifter.get_current ();
@@ -1341,8 +1341,8 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   TAO::ORBInitializer_Registry_Adapter * orbinitializer_registry =
     oc.get ()->orbinitializer_registry ();
 
-  PortableInterceptor::SlotId slotid = 0;
-  size_t pre_init_count = 0;
+  PortableInterceptor::SlotId slotid {};
+  size_t pre_init_count {};
 
   if (orbinitializer_registry != nullptr)
     {
@@ -1624,7 +1624,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
 
   char *buffer = mb.rd_ptr ();
   const char *tmp = str;
-  size_t len = 0;
+  size_t len {};
 
   while (tmp [0] && tmp [1])
     {

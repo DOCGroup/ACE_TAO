@@ -101,7 +101,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
 int
 TAO_Connection_Handler::svc_i ()
 {
-  int result = 0;
+  int result {};
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -191,7 +191,7 @@ TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
   // resume the handle once data is written..
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
-  int return_value = 0;
+  int return_value {};
   this->pre_io_hook (return_value);
   if (return_value != 0)
     {
@@ -279,7 +279,7 @@ TAO_Connection_Handler::handle_input_internal (
 
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
-  int return_value = 0;
+  int return_value {};
 
   this->pre_io_hook (return_value);
 

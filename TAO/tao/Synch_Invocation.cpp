@@ -490,7 +490,7 @@ namespace TAO
           // We have received a message with a request to change the
           // addressing mode. First let us read the mode that the
           // server/agent asks for.
-          CORBA::Short addr_mode = 0;
+          CORBA::Short addr_mode {};
 
           if (cdr.read_short (addr_mode) == 0)
             {
@@ -606,16 +606,16 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    CORBA::ULong minor = 0;
-    CORBA::ULong completion = 0;
+    CORBA::ULong minor {};
+    CORBA::ULong completion {};
 
     if (!(cdr >> minor) || !(cdr >> completion))
       {
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    bool retry_on_exception = false;
-    bool do_forward = false;
+    bool retry_on_exception {};
+    bool do_forward {};
 
     const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
 

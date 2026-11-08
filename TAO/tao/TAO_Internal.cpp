@@ -156,7 +156,7 @@ namespace
    *
    * @note In/decrement operations are atomic.
    */
-  long service_open_count = 0;
+  long service_open_count {};
 
   /**
    * Part of a condition variable, which helps to ensure non-default
@@ -165,7 +165,7 @@ namespace
    * ORB. Usually, the first ORB to be created is designated the
    * default ORB (reference the CORBA spec)
    */
-  bool is_ubergestalt_ready = false;
+  bool is_ubergestalt_ready {};
 
   char const * resource_factory_args =
     TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
@@ -177,7 +177,7 @@ namespace
 #if (TAO_NEGOTIATE_CODESETS == 1)
   bool negotiate_codesets = true;
 #else
-  bool negotiate_codesets = false;
+  bool negotiate_codesets {};
 #endif /* TAO_NEGOTIATE_CODESETS */
 } // anonymous namespace
 
@@ -217,7 +217,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 {
   {
     // Count of the number of (times we did this for all) ORBs.
-    static int orb_init_count = 0;
+    static int orb_init_count {};
 
     // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
     // from being called within a static object CTOR.
@@ -283,7 +283,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
          true) == -1)
     return -1;
 
-  bool skip_service_config_open = false; // by default we shouldn't
+  bool skip_service_config_open {}; // by default we shouldn't
 
   if (using_global_gestalt_i (tmpargc,
                               tmpargv,
@@ -295,7 +295,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
         return -1;
     }
 
-  bool ignore_default_svc_conf_file = false;
+  bool ignore_default_svc_conf_file {};
 
   if (parse_private_args_i (tmpargc,
           tmpargv,
@@ -433,8 +433,8 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Should we skip the ACE_Service_Config::open() method?,
   // e.g., because of -ORBSkipServiceConfigOpen
-  bool skip_service_config_open = false;
-  bool ignore_default_svc_conf_file = false;
+  bool skip_service_config_open {};
+  bool ignore_default_svc_conf_file {};
 
   // Extract any ORB options from the argument vector.
   if (parse_private_args_i (argc,
@@ -529,7 +529,7 @@ TAO::ORB::close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg)
                             -1));
   --service_open_count;
 
-  int result = 0;
+  int result {};
 
   if (pcfg != ACE_Service_Config::global())
     {

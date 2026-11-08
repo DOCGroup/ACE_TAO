@@ -286,8 +286,8 @@ TAO_IIOP_Connector::make_parallel_connection (
     }
 
   TAO_LF_Multi_Event mev;
-  int result = 0;
-  unsigned count = 0;
+  int result {};
+  unsigned count {};
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
@@ -605,7 +605,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   struct timespec ts = udelay;
   ACE_OS::nanosleep (&ts);
 #endif // INDUCE_BUG_2654_C
-  int retval = 0;
+  int retval {};
 
   // Only for parallel connect, update the cache to show this in idle state
   if (count > 1 && desc.reset_endpoint (iiop_endpoint))
