@@ -332,7 +332,7 @@ ACE_Data_Block::ACE_Data_Block ()
 
 ACE_Data_Block::ACE_Data_Block (size_t size,
                                 ACE_Message_Block::ACE_Message_Type msg_type,
-                                const char *msg_data,
+                                char const *msg_data,
                                 ACE_Allocator *allocator_strategy,
                                 ACE_Lock *locking_strategy,
                                 ACE_Message_Block::Message_Flags flags,
@@ -383,7 +383,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
   this->cur_size_ = this->max_size_ = size;
 }
 
-ACE_Message_Block::ACE_Message_Block (const char *data,
+ACE_Message_Block::ACE_Message_Block (char const *data,
                                       size_t size,
                                       unsigned long priority)
   : flags_ (0),
@@ -434,12 +434,12 @@ ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
 ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Message_Type msg_type,
                                       ACE_Message_Block *msg_cont,
-                                      const char *msg_data,
+                                      char const *msg_data,
                                       ACE_Allocator *allocator_strategy,
                                       ACE_Lock *locking_strategy,
                                       unsigned long priority,
-                                      const ACE_Time_Value &execution_time,
-                                      const ACE_Time_Value &deadline_time,
+                                      ACE_Time_Value const &execution_time,
+                                      ACE_Time_Value const &deadline_time,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
   :flags_ (0),
@@ -468,12 +468,12 @@ int
 ACE_Message_Block::init (size_t size,
                          ACE_Message_Type msg_type,
                          ACE_Message_Block *msg_cont,
-                         const char *msg_data,
+                         char const *msg_data,
                          ACE_Allocator *allocator_strategy,
                          ACE_Lock *locking_strategy,
                          unsigned long priority,
-                         const ACE_Time_Value &execution_time,
-                         const ACE_Time_Value &deadline_time,
+                         ACE_Time_Value const &execution_time,
+                         ACE_Time_Value const &deadline_time,
                          ACE_Allocator *data_block_allocator,
                          ACE_Allocator *message_block_allocator)
 {
@@ -495,7 +495,7 @@ ACE_Message_Block::init (size_t size,
 }
 
 int
-ACE_Message_Block::init (const char *data, size_t size)
+ACE_Message_Block::init (char const *data, size_t size)
 {
   ACE_TRACE ("ACE_Message_Block::init");
   // Should we also initialize all the other fields, as well?
@@ -518,13 +518,13 @@ ACE_Message_Block::init (const char *data, size_t size)
 ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Message_Type msg_type,
                                       ACE_Message_Block *msg_cont,
-                                      const char *msg_data,
+                                      char const *msg_data,
                                       ACE_Allocator *allocator_strategy,
                                       ACE_Lock *locking_strategy,
                                       Message_Flags flags,
                                       unsigned long priority,
-                                      const ACE_Time_Value &execution_time,
-                                      const ACE_Time_Value &deadline_time,
+                                      ACE_Time_Value const &execution_time,
+                                      ACE_Time_Value const &deadline_time,
                                       ACE_Data_Block *db,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
@@ -575,7 +575,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
-ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
+ACE_Message_Block::ACE_Message_Block (ACE_Message_Block const &mb,
                                       size_t align)
   :flags_ (0),
    data_block_ (nullptr)
@@ -670,13 +670,13 @@ int
 ACE_Message_Block::init_i (size_t size,
                            ACE_Message_Type msg_type,
                            ACE_Message_Block *msg_cont,
-                           const char *msg_data,
+                           char const *msg_data,
                            ACE_Allocator *allocator_strategy,
                            ACE_Lock *locking_strategy,
                            Message_Flags flags,
                            unsigned long priority,
-                           const ACE_Time_Value &execution_time,
-                           const ACE_Time_Value &deadline_time,
+                           ACE_Time_Value const &execution_time,
+                           ACE_Time_Value const &deadline_time,
                            ACE_Data_Block *db,
                            ACE_Allocator *data_block_allocator,
                            ACE_Allocator *message_block_allocator)
@@ -1261,14 +1261,6 @@ ACE_Message_Block::clone (Message_Flags mask) const
   while (old_message_block != nullptr);
 
   return new_root_message_block;
-}
-
-// This is private.
-ACE_Message_Block &
-ACE_Message_Block::operator= (const ACE_Message_Block &)
-{
-  ACE_TRACE ("ACE_Message_Block::operator=");
-  return *this;
 }
 
 void
