@@ -175,7 +175,7 @@ namespace
     TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 
 #if (TAO_NEGOTIATE_CODESETS == 1)
-  bool negotiate_codesets = true;
+  bool negotiate_codesets {true};
 #else
   bool negotiate_codesets {};
 #endif /* TAO_NEGOTIATE_CODESETS */

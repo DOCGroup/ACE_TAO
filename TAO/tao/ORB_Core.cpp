@@ -402,7 +402,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   int no_server_side_name_lookups {};
 
 #if defined (TAO_STD_PROFILE_COMPONENTS)
-  bool std_profile_components = true;
+  bool std_profile_components {true};
 #else
   bool std_profile_components {};
 #endif /* TAO_STD_PROFILE_COMPONENTS */
@@ -423,7 +423,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                     -1);
 
 #if (TAO_NEGOTIATE_CODESETS == 1)
-  bool negotiate_codesets = true;
+  bool negotiate_codesets {true};
 #else
   bool negotiate_codesets {};
 #endif /* TAO_NEGOTIATE_CODESETS */

@@ -9,9 +9,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Export unsigned int TAO_debug_level = 0;
+TAO_Export unsigned int TAO_debug_level {};
 
-TAO_Export unsigned int TAO_orbdebug = 0;
+TAO_Export unsigned int TAO_orbdebug {};
 
 TAO_Export ACE_Log_Category TAO_log_category("TAO");
 
