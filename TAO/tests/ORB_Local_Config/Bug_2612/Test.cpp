@@ -21,25 +21,25 @@ ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllO
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_DEBUG ((LM_DEBUG,"\nbefore first load process directive\n"));
-  if (0 > ACE_Service_Config::process_directive (scpc_loadOrb))
+  ACE_DEBUG ((LM_DEBUG, "\nbefore first load process directive\n"));
+  if (ACE_Service_Config::process_directive (scpc_loadOrb) < 0)
     return -1;
 
-  ACE_OS::sleep(2);
+  ACE_OS::sleep (2);
 
-  ACE_DEBUG ((LM_DEBUG,"\nbefore first unload process directive\n"));
-  if (0 > ACE_Service_Config::process_directive (scpc_unloadOrb))
+  ACE_DEBUG ((LM_DEBUG, "\nbefore first unload process directive\n"));
+  if (ACE_Service_Config::process_directive (scpc_unloadOrb) < 0)
     return -1;
 
-  ACE_OS::sleep(2);
+  ACE_OS::sleep (2);
   ACE_DEBUG ((LM_DEBUG, "\nMAIN (%P|%t) Lather, Rince, Repeat ...\n"));
 
-  if (0 > ACE_Service_Config::process_directive (scpc_loadOrb))
+  if (ACE_Service_Config::process_directive (scpc_loadOrb) < 0)
     return -1;
 
-  ACE_OS::sleep(2);
+  ACE_OS::sleep (2);
 
-  if (0 > ACE_Service_Config::process_directive (scpc_unloadOrb))
+  if (ACE_Service_Config::process_directive (scpc_unloadOrb) < 0)
     return -1;
 
   return 0;

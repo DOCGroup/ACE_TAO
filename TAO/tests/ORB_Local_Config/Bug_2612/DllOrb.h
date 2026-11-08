@@ -14,43 +14,45 @@
 
 #include "DllOrb_Export.h"
 
+#include <memory>
+
 /** The CORBA ORB as a dynamic loadable module.
   *
   */
 class DllOrb_Export DllOrb
-:
-  public ACE_Task_Base
+  : public ACE_Task_Base
 {
-  public:
-    /// Default constructor.
-    DllOrb (int nthreads = 1);
+public:
+  /// Default constructor.
+  explicit DllOrb (int nthreads = 1);
 
-    /// Destructor.
-    ~DllOrb () noexcept;
+  /// Destructor.
+  ~DllOrb () noexcept;
 
-    CORBA::ORB_ptr orb () const;
+  DllOrb (DllOrb const &) = delete;
+  DllOrb (DllOrb &&) = delete;
+  DllOrb &operator= (DllOrb const &) = delete;
+  DllOrb &operator= (DllOrb &&) = delete;
 
-    virtual int init (int argc, ACE_TCHAR *argv[]);
+  CORBA::ORB_ptr orb () const;
 
-    virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 
-  // protected types and methods
-  protected:
-    virtual int svc ();
+protected:
+  int svc () override;
 
-  // private methods and instance variables
-  private:
-    int                            m_nthreads_;
-    unsigned int                   m_failPrePostInit;
+private:
+  int const m_nthreads_;
 
 #if defined (ACE_HAS_THREADS)
-    ACE_Thread_Barrier *           mp_barrier;
+  std::unique_ptr<ACE_Thread_Barrier> mp_barrier_ {};
 #endif
 
-    CORBA::ORB_var                 mv_orb;
-    PortableServer::POA_var        mv_rootPOA;
-    PortableServer::POAManager_var mv_poaManager;
-}; /* end of DllOrb */
+  CORBA::ORB_var mv_orb_ {};
+  PortableServer::POA_var mv_root_poa_ {};
+  PortableServer::POAManager_var mv_poa_manager_ {};
+};
 
 ACE_FACTORY_DECLARE (DllOrb, DllOrb)
 
