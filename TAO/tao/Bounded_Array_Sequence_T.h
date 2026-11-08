@@ -98,7 +98,7 @@ namespace TAO
     using forany = TAO_Array_Forany_T<T_array, T_slice, T_tag>;
     using array_traits = TAO::Array_Traits<forany>;
 
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
     if (!(strm >> new_length))
       {
         return false;
@@ -110,7 +110,7 @@ namespace TAO
     sequence tmp;
     tmp.length (new_length);
     typename sequence::value_type *const buffer = tmp.get_buffer ();
-    for (CORBA::ULong i = 0; i < new_length; ++i)
+    for (CORBA::ULong i {}; i < new_length; ++i)
       {
         forany wrapper (array_traits::alloc ());
         bool const _tao_marshal_flag = strm >> wrapper;
@@ -137,7 +137,7 @@ namespace TAO
     if (length > source.maximum () || !(strm << length)) {
       return false;
     }
-    for(CORBA::ULong i = 0; i < length; ++i) {
+    for(CORBA::ULong i {}; i < length; ++i) {
       fixed_array tmp_array = array_traits::dup (source[i]);
       forany tmp (tmp_array.inout ());
       if (!(strm << tmp)) {
