@@ -20,9 +20,11 @@ namespace ACE
       if (ETCL_Interpreter::is_empty_string (constraints))
         {
           /// Root is deleted in the interpreter's destructor.
-          ACE_NEW_RETURN (this->root_,
+          ETCL_Literal_Constraint* root {};
+          ACE_NEW_RETURN (root,
                           ETCL_Literal_Constraint (true),
                           -1);
+          this->root_.reset (root);
         }
       else
         {
@@ -42,7 +44,7 @@ namespace ACE
     ACE_CDR::Boolean
     Constraint_Interpreter::evaluate (Constraint_Visitor &evaluator)
     {
-      return evaluator.evaluate_constraint (this->root_);
+      return evaluator.evaluate_constraint (this->root_.get ());
     }
   }
 }
