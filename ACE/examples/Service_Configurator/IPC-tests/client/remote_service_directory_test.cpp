@@ -13,10 +13,10 @@
 static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
 
 // Name of remote host.
-static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *host_name = ACE_DEFAULT_SERVER_HOST;
 
 // Trigger a remote reconfiguration.
-static bool remote_reconfigure = false;
+static bool remote_reconfigure {};
 
 static void
 print_usage_and_die ()

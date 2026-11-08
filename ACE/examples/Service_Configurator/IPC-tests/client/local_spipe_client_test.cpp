@@ -9,15 +9,15 @@
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-static ACE_TCHAR *program_name = nullptr;
+static ACE_TCHAR const * program_name {};
 
 // debug state on or off
-static bool debug = false;
+static bool debug {};
 
-static const ACE_TCHAR *rendezvous_spipe = ACE_TEXT ("/tmp/foo_spipe");
+static ACE_TCHAR const *rendezvous_spipe = ACE_TEXT ("/tmp/foo_spipe");
 
 // Name of file to send.
-static const ACE_TCHAR *file_name = ACE_TEXT ("./local_data");
+static ACE_TCHAR const *file_name = ACE_TEXT ("./local_data");
 
 static void
 print_usage_and_die ()
@@ -72,7 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
-  void *cp;
+  void *cp {};
 
   if (mmap (cp) == -1)
   //FUZZ: enable check_for_lack_ACE_OS

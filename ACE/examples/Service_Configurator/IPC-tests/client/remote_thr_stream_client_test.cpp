@@ -12,16 +12,16 @@
 #if defined (ACE_HAS_TLI)
 
 // Name of the program.
-static const ACE_TCHAR *program_name = nullptr;
+static ACE_TCHAR const * program_name {};
 
 // Port number to use.
 static u_short port_number = ACE_DEFAULT_THR_PORT;
 
 // Name of remote host.
-static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *host_name = ACE_DEFAULT_SERVER_HOST;
 
 // Name of file to send.
-static const ACE_TCHAR *file_name = ACE_TEXT ("./remote_data");
+static ACE_TCHAR const *file_name = ACE_TEXT ("./remote_data");
 
 static void print_usage_and_die ()
 {
@@ -59,7 +59,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
-  void *cp;
+  void *cp {};
   char buf[BUFSIZ];
   ACE_TLI_Stream sc;
   ACE_TLI_Connector con;

@@ -10,13 +10,13 @@
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // Name of the program.
-static ACE_TCHAR *program_name = nullptr;
+static ACE_TCHAR const * program_name {};
 
 // Name of rendezvous point.
-static const ACE_TCHAR *rendezvous = ACE_TEXT ("/tmp/foo_stream");
+static ACE_TCHAR const *rendezvous = ACE_TEXT ("/tmp/foo_stream");
 
 // Name of file to send.
-static const ACE_TCHAR *file_name = ACE_TEXT ("local_data");
+static ACE_TCHAR const *file_name = ACE_TEXT ("local_data");
 
 static void
 print_usage_and_die ()
