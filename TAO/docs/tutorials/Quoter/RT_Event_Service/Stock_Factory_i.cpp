@@ -26,10 +26,11 @@ Quoter_Stock_Factory_i::get_stock (char const *symbol)
 void
 Quoter_Stock_Factory_i::destroy_stock_objects ()
 {
-  if (CORBA::is_nil (this->stock_factory_poa_.in ()))
+  PortableServer::POA_ptr const poa = this->stock_factory_poa_.in ();
+  if (CORBA::is_nil (poa))
     return;
 
-  this->stock_factory_poa_->destroy (1, 1);
+  poa->destroy (1, 1);
   this->stock_factory_poa_ = PortableServer::POA::_nil ();
 }
 
