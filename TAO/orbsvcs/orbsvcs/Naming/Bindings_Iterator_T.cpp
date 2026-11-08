@@ -3,6 +3,8 @@
 
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 
+#include <utility>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -12,11 +14,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
   TAO_Hash_Naming_Context *context,
-  ITERATOR *hash_iter,
+  std::unique_ptr<ITERATOR> hash_iter,
   PortableServer::POA_ptr poa)
   : destroyed_ (false),
     context_ (context),
-    hash_iter_ (hash_iter),
+    hash_iter_ (std::move (hash_iter)),
     poa_ (PortableServer::POA::_duplicate (poa))
 
 {
@@ -25,7 +27,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
 template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator ()
 {
-  delete hash_iter_;
+  this->hash_iter_.reset ();
 
   // Since we are going away, decrement the reference count on the
   // Naming Context we were iterating over.

@@ -24,6 +24,8 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
@@ -55,7 +57,7 @@ public:
 protected:
   /// TODO: Need to set up service configurator to initialize the naming server
   /// Instance of the TAO_Naming_Server
-  TAO_Naming_Server *naming_server_;
+  std::unique_ptr<TAO_Naming_Server> naming_server_;
 
 private:
   TAO_Naming_Loader (TAO_Naming_Loader const &) = delete;

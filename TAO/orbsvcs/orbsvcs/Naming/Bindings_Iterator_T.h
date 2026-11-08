@@ -14,6 +14,8 @@
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -49,12 +51,10 @@ class TAO_Bindings_Iterator : public virtual POA_CosNaming::BindingIterator
 public:
   // = Intialization and termination methods.
   /**
-   * Constructor expects a pointer to a
-   * dynamically allocated hash map iterator (destructor
-   * deallocates hash map iterator).
+   * Constructor takes ownership of a dynamically allocated hash map iterator.
    */
   TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
-                         ITERATOR *hash_iter,
+                         std::unique_ptr<ITERATOR> hash_iter,
                          PortableServer::POA_ptr poa);
 
   /// Destructor.
@@ -113,8 +113,8 @@ private:
    */
   TAO_Hash_Naming_Context *context_;
 
-  /// A pointer to the hash map iterator.
-  ITERATOR *hash_iter_;
+  /// Owned hash map iterator.
+  std::unique_ptr<ITERATOR> hash_iter_;
 
   /// Implement a different _default_POA().
   PortableServer::POA_var poa_;

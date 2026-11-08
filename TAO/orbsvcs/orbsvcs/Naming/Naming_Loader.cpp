@@ -18,24 +18,22 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Loader::TAO_Naming_Loader (TAO_Naming_Server *server)
-: naming_server_(server)
+  : naming_server_ (server)
 {
   // Constructor
 
   // If no server was provided, then we will construct one of the
   // base class type.
   if (naming_server_ == nullptr)
-    ACE_NEW (naming_server_, TAO_Naming_Server);
+    naming_server_.reset (new (std::nothrow) TAO_Naming_Server);
 }
 
-TAO_Naming_Loader::~TAO_Naming_Loader ()
-{
-  // Destroy the naming server that was created
-  delete naming_server_;
-}
+TAO_Naming_Loader::~TAO_Naming_Loader () = default;
 
 int
 TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])

@@ -5,6 +5,7 @@
 
 #include <cstring>
 #include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -451,12 +452,10 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
+                        ITER_SERVANT (this, std::move (temp), this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from unique pointer, and start using the
-      // reference counting to control our servant.
-      temp.release ();
+      // Start using reference counting to control our servant.
       PortableServer::ServantBase_var iter = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get

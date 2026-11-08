@@ -10,6 +10,7 @@
 #include "tao/Storable_Factory.h"
 
 #include <memory>
+#include <utility>
 #include <cstring>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
@@ -1002,12 +1003,10 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
+                        ITER_SERVANT (this, std::move (temp), this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from unique pointer, and start using
-      // reference counting to control our servant.
-      temp.release ();
+      // Start using reference counting to control our servant.
       PortableServer::ServantBase_var iter = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get
