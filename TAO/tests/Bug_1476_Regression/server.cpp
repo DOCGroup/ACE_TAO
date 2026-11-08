@@ -4,23 +4,27 @@
 #include "ace/Get_Opt.h"
 
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
-int number_of_oneways = 10;
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+  int number_of_oneways {10};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'n' :
-        number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
+        options.number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -58,7 +62,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       Sender_i *sender_impl {};
@@ -82,11 +87,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the ior to it
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
-                             ior_output_file),
+                             options.ior_output_file),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -106,11 +111,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ULong const active_objects = sender_impl->get_active_objects ();
       CORBA::ULong const number_received = sender_impl->get_number_received ();
-      if (((number_of_oneways * active_objects) !=
+      if (((options.number_of_oneways * active_objects) !=
             number_received) && active_objects != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error, expected %d oneways, received %d\n",
-                      number_of_oneways,
+                      options.number_of_oneways,
                       number_received));
         }
       else

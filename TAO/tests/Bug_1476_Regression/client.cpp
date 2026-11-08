@@ -8,12 +8,16 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-int number_of_oneways = 10;
-int number_of_client_tasks = 2;
+
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int number_of_oneways {10};
+  int number_of_client_tasks {2};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:c:"));
   int c {};
@@ -22,13 +26,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'n' :
-        number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
+        options.number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'c' :
-        number_of_client_tasks = ACE_OS::atoi (get_opts.opt_arg ());
+        options.number_of_client_tasks = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -90,12 +94,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       policies[0]->destroy ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // Get the sender reference..
       CORBA::Object_var const tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::Sender_var const sender =
         Test::Sender::_narrow (tmp.in ());
@@ -104,14 +109,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil coordinator reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
       Client_Task client_task (orb.in (),
                                sender.in (),
                                ACE_Thread_Manager::instance (),
-                               number_of_oneways);
+                               options.number_of_oneways);
 
       Server_Task server_task (orb.in (),
                                ACE_Thread_Manager::instance ());
@@ -120,7 +125,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // will have two threads that would make invocations..
       // this is the first oneway we do, so after this we would have a queue
       // on one of the transports
-      sender->active_objects (static_cast<CORBA::Short> (number_of_client_tasks));
+      sender->active_objects (
+        static_cast<CORBA::Short> (options.number_of_client_tasks));
 
       TAO::Transport_Cache_Manager &manager =
         orb->orb_core ()->lane_resources ().transport_cache ();
@@ -155,7 +161,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }
 
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, number_of_client_tasks, 1) == -1)
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
+                                options.number_of_client_tasks,
+                                1) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
