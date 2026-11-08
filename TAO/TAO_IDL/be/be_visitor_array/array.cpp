@@ -123,7 +123,7 @@ be_visitor_array::visit_typedef (be_typedef *node)
   AST_Type *pbt = node->primitive_base_type ();
   AST_Decl::NodeType const nt = pbt->node_type ();
   AST_PredefinedType::PredefinedType pt = AST_PredefinedType:: PT_void;
-  int result = 0;
+  int result {};
 
   // We check for these first, because in these cases, we replace the
   // entire slice type with one of the strings below, instead of using
