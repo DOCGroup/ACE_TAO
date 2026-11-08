@@ -804,6 +804,7 @@ public:
   bool vt_seq_seen_ {};
   bool wchar_seq_seen_ {};
   bool wstring_seq_seen_ {};
+  bool wstring_seen_ {};
   bool dds_connector_seen_ {};
   bool ami_connector_seen_ {};
   ///}

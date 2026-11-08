@@ -45,6 +45,11 @@ be_string::be_string (AST_Decl::NodeType nt,
     {
       idl_global->string_seen_ = true;
 
+      if (this->width () != 1)
+        {
+          idl_global->wstring_seen_ = true;
+        }
+
       if (v->ev ()->u.ulval != 0)
         {
           idl_global->bd_string_seen_ = true;
@@ -80,7 +85,7 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
   else
     {
       *os << "\"[\";" << be_nl_2
-          << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
+          << "for (std::size_t i = 0; i < " << "std::wcslen ("
           << instance_name
           << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl
           << "{" << be_idt_nl

@@ -2532,6 +2532,11 @@ TAO_CodeGen::gen_stub_src_includes ()
       this->gen_system_include (this->client_stubs_, "cstring");
     }
 
+  if (be_global->gen_ostream_operators () && idl_global->wstring_seen_)
+    {
+      this->gen_system_include (this->client_stubs_, "cwchar");
+    }
+
   this->gen_system_include (this->client_stubs_, "memory");
 
   if (idl_global->union_seen_)

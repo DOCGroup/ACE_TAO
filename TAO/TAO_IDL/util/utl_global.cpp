@@ -202,6 +202,7 @@ IDL_GlobalData::reset_flag_seen ()
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
+  wstring_seen_ = false;
   dds_connector_seen_ = false;
   ami_connector_seen_ = false;
 
