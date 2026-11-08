@@ -479,7 +479,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   /// that may not be remapped. May decide later to regnerate
   /// ORB code for alt mapping as well.
   std::string const& repo_id = scope->repoID ();
-  bool sys_val = (repo_id == "IDL:repository_id:1.0");
+  bool const sys_val = (repo_id == "IDL:repository_id:1.0");
 
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.

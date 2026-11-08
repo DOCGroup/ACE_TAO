@@ -458,7 +458,7 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   // Check what is the code generations substate. Are we generating code for
   // the in/out operators for our parent or for us?

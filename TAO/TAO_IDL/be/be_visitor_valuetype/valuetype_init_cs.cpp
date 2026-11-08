@@ -42,7 +42,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // (3) There is at least one operation and at least one initializer.
   //     In this case we need to generate abstract factory class.
 
-  be_valuetype::FactoryStyle factory_style =
+  be_valuetype::FactoryStyle const factory_style =
     node->determine_factory_style ();
 
   if (factory_style == be_valuetype::FS_NO_FACTORY)

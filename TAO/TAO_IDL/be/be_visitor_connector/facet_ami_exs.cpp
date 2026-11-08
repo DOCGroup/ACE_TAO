@@ -246,7 +246,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
   std::string const scope_name = scope->full_name ();
-  bool global = (scope->node_type () == AST_Decl::NT_root);
+  bool const global = (scope->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = global ? "" : "::";
   std::string const iface_name = this->iface_->local_name ();
 
@@ -369,7 +369,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
     sync_iface->get_insert_queue ().push_back (sync_iface);
 
     Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
-    int status =
+    int const status =
            sync_iface->traverse_inheritance_graph(
                op_attr_gen,
                &os_,
@@ -407,7 +407,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
       << "}";
 
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
-  bool is_global =
+  bool const is_global =
    (s->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = is_global ? "" : "::";
 
@@ -554,7 +554,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
     }
 
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
-  bool global = (scope->node_type () == AST_Decl::NT_root);
+  bool const global = (scope->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = global ? "" : "::";
 
   std::string const iface_name = this->iface_->local_name ();
@@ -683,7 +683,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
     }
 
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
-  bool global = (scope->node_type () == AST_Decl::NT_root);
+  bool const global = (scope->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = global ? "" : "::";
 
   std::string const orig_iface_name = this->iface_->local_name ();

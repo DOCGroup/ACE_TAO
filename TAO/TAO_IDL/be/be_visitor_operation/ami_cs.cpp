@@ -101,9 +101,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   if (node->has_native ()) // native exists => no stub
     {
-      be_predefined_type bpt (AST_PredefinedType::PT_void,
-                              nullptr);
-
       int const status = this->gen_raise_exception ("::CORBA::MARSHAL",
                                                     "");
 

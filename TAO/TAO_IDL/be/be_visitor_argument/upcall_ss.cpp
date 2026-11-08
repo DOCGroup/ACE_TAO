@@ -157,7 +157,7 @@ int be_visitor_args_upcall_ss::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
     {

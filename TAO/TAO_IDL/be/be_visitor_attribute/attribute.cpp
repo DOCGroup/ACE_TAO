@@ -97,7 +97,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                        nullptr,
                        node->is_local (),
                        node->is_abstract ());
-  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> get_op_owner (&get_op);
+  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> const get_op_owner (&get_op);
 
   get_op.set_defined_in (s);
   get_op.set_name (op_sn.get ());
@@ -251,7 +251,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // The return type  is "void".
   be_predefined_type rt (AST_PredefinedType::PT_void,
                          &sn);
-  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> rt_owner (&rt);
+  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> const rt_owner (&rt);
 
   // Argument type is the same as the attribute type.
   AST_Argument *arg =
@@ -271,7 +271,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                        nullptr,
                        node->is_local (),
                        node->is_abstract ());
-  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> set_op_owner (&set_op);
+  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> const set_op_owner (&set_op);
   set_op.set_defined_in (node->defined_in ());
   FE_Utils::Scoped_Name_Owner set_op_name (
     static_cast<UTL_ScopedName *> (get_op.name ()->copy ()));

@@ -792,7 +792,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       Identifier id {arg_name};
       UTL_ScopedName sn (&id, nullptr);
       be_type *ft = dynamic_cast<be_type*> (f->field_type ());
-      bool seen = ft->seen_in_operation ();
+      bool const seen = ft->seen_in_operation ();
 
       // This sets ft->seen_in_operation (true), so we have to
       // restore the original value below.

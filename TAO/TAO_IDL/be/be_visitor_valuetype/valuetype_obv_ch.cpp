@@ -283,7 +283,7 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 void
 be_visitor_valuetype_obv_ch::begin_public ()
 {
-  AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
+  AST_Decl::NodeType const nt = this->ctx_->node ()->node_type ();
 
   // These types are skipped in the OBV class.
   if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)

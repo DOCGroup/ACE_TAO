@@ -67,7 +67,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   long i;  // loop index
   be_valuetype *inherited {};
-  long n_inherits = node->n_inherits ();
+  long const n_inherits = node->n_inherits ();
   bool inherits_eventtype = false;
 
   if (n_inherits > 0)
@@ -125,7 +125,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   /****************************************************************/
   // 1) Find out if the ValueType is an AMH_*ExceptionHolder
-  bool is_an_amh_exception_holder = this->is_amh_exception_holder (node);
+  bool const is_an_amh_exception_holder = this->is_amh_exception_holder (node);
 
   if (is_an_amh_exception_holder)
     {
@@ -517,7 +517,7 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
       be_visitor_valuetype_ch visitor (&ctx);
 
       if (nt == AST_Decl::NT_op)

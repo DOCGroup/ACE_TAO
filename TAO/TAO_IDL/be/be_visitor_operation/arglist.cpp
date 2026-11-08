@@ -117,7 +117,7 @@ int
 be_visitor_operation_arglist::visit_factory (be_factory *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
-  bool has_args = node->argument_count () > 0;
+  bool const has_args = node->argument_count () > 0;
 
   *os << " (";
 

@@ -575,8 +575,8 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
   this->op_name (bu, os);
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
-  bool is_object = (pt == AST_PredefinedType::PT_object
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
+  bool const is_object = (pt == AST_PredefinedType::PT_object
                     || pt == AST_PredefinedType::PT_pseudo);
 
   // IN parameter semantics call for 'const' qualifier except

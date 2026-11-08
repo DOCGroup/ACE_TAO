@@ -75,7 +75,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
   if (!node->void_return_type () || node->nmembers () > 0)
     {
       // The arguments parameter is named only when the operation uses it.
-      std::string signature = operation_name
+      std::string const signature = operation_name
         + " (TAO_Abstract_ServantBase *servant, TAO::Argument **args)";
 
       *os << "void" << be_nl;
@@ -92,7 +92,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     }
   else
     {
-      std::string signature = operation_name
+      std::string const signature = operation_name
         + " (TAO_Abstract_ServantBase *servant, TAO::Argument **)";
 
       *os << "void" << be_nl;
