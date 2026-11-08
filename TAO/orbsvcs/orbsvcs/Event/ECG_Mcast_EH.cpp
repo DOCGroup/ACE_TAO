@@ -102,9 +102,8 @@ TAO_ECG_Mcast_EH::shutdown ()
                                this->subscriptions_[i].dgram->get_handle (),
                                ACE_Event_Handler::READ_MASK);
       (void) this->subscriptions_[i].dgram->close();
-      delete this->subscriptions_[i].dgram;
     }
-  this->subscriptions_.size (0);
+  this->subscriptions_.clear ();
 
   return 0;
 }
@@ -115,7 +114,7 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i {}; i != subscriptions_size; ++i)
     {
-      ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
+      ACE_SOCK_Dgram_Mcast * const socket = this->subscriptions_[i].dgram.get ();
       if (socket->get_handle () == fd)
         {
           return this->receiver_->handle_input (*socket);
@@ -194,29 +193,29 @@ int
 TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
     Address_Set& multicast_addresses)
 {
-  for (size_t i {}; i < this->subscriptions_.size (); ++i)
+  for (size_t i {}; i < this->subscriptions_.size ();)
     {
-      ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
+      ACE_INET_Addr const multicast_group = this->subscriptions_[i].mcast_addr;
       if (multicast_addresses.find (multicast_group))
         {
           // Remove from the list of subscriptions to be added,
           // because we already subscribe to it...
           (void) multicast_addresses.remove (multicast_group);
+          ++i;
           continue;
         }
 
-      // This subscription is no longer needed - remove from reactor,
-      // close and delete the socket.
-      ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
+      // This subscription is no longer needed - remove from reactor and close
+      // the socket.
+      ACE_SOCK_Dgram_Mcast * const socket = this->subscriptions_[i].dgram.get ();
       (void) this->reactor ()->remove_handler (socket->get_handle (),
                                                ACE_Event_Handler::READ_MASK);
       (void) socket->close();
-      delete socket;
       // Move the last subscription into the removed subscription's place.
-      this->subscriptions_[i] =
-        this->subscriptions_[this->subscriptions_.size () - 1];
-      this->subscriptions_.size (this->subscriptions_.size () - 1);
-      --i;
+      size_t const last = this->subscriptions_.size () - 1;
+      if (i != last)
+        this->subscriptions_[i] = std::move (this->subscriptions_[last]);
+      this->subscriptions_.pop_back ();
     }
 
     return 0;
@@ -232,17 +231,17 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
     {
       Subscription new_subscription;
       new_subscription.mcast_addr = *k;
-      ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
+      ACE_SOCK_Dgram_Mcast *dgram {};
+      ACE_NEW (dgram, ACE_SOCK_Dgram_Mcast);
+      new_subscription.dgram.reset (dgram);
+      this->subscriptions_.push_back (std::move (new_subscription));
 
-      size_t const subscriptions_size = this->subscriptions_.size ();
-      this->subscriptions_.size (subscriptions_size + 1);
-      this->subscriptions_[subscriptions_size] = new_subscription;
-
-      ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
+      ACE_SOCK_Dgram_Mcast * const socket = this->subscriptions_.back ().dgram.get ();
+      ACE_INET_Addr const &multicast_addr = this->subscriptions_.back ().mcast_addr;
 
       ACE_TCHAR const *net_if = this->net_if_ ? this->net_if_->c_str () : nullptr;
 
-      if (socket->open (new_subscription.mcast_addr, net_if, 1) == -1) {
+      if (socket->open (multicast_addr, net_if, 1) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to open multicast socket\n",
                     ACE_ERRNO_GET));
@@ -254,7 +253,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
                     ACE_ERRNO_GET));
       }
 
-      if (socket->join (new_subscription.mcast_addr, 1, net_if) == -1) {
+      if (socket->join (multicast_addr, 1, net_if) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to join multicast group\n",
                     ACE_ERRNO_GET));
