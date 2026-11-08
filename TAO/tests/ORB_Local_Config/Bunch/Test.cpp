@@ -26,7 +26,7 @@ testCompatibility (int , ACE_TCHAR *[])
      (ace_svc_desc_TAO_CORBALOC_Parser))
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Failed to process %s\n"), ace_svc_desc_TAO_CORBALOC_Parser), -1);
 
-  const ACE_TCHAR * svcname = 0;
+  ACE_TCHAR const *svcname {};
 
   {
     // This uses the same default ACE_Service_Repository
@@ -34,15 +34,15 @@ testCompatibility (int , ACE_TCHAR *[])
 
     svcname = ACE_TEXT ("CORBANAME_Parser");
 
-    ACE_Service_Object* p20 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
-    if (p20 == 0)
+    ACE_Service_Object* const p20 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
+    if (p20 == nullptr)
       ACE_ERROR_RETURN ((LM_DEBUG,
                          ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
     svcname = ACE_TEXT ("CORBALOC_Parser");
 
-    ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
-    if (p21 == 0)
+    ACE_Service_Object* const p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
+    if (p21 == nullptr)
       ACE_ERROR_RETURN ((LM_DEBUG,
                          ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
@@ -51,15 +51,15 @@ testCompatibility (int , ACE_TCHAR *[])
 
   svcname = ACE_TEXT ("CORBANAME_Parser");
 
-  ACE_Service_Object* p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
-  if ((p20 != 0))
+  ACE_Service_Object* const p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
+  if (p20 != nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
   svcname = ACE_TEXT ("CORBALOC_Parser");
 
-  ACE_Service_Object* p21 = ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
-  if ((p21 != 0))
+  ACE_Service_Object* const p21 = ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
+  if (p21 != nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
