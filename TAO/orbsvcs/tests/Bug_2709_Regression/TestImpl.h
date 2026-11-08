@@ -5,7 +5,7 @@ class TestImpl
   : public virtual POA_Test
 {
 public:
-  TestImpl (CORBA::ORB_ptr orb);
+  explicit TestImpl (CORBA::ORB_ptr orb);
 
   TestImpl (TestImpl const &) = delete;
   TestImpl (TestImpl &&) = delete;

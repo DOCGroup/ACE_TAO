@@ -4,13 +4,13 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-ACE_TString file_prefix(ACE_TEXT("file://"));
+ACE_TString const file_prefix {ACE_TEXT ("file://")};
 
 /// Constructor
 Client_Task::Client_Task (CORBA::ORB_ptr corb,
-  ACE_Thread_Manager *thr_mgr,
-  const ACE_TString& collocated_ior_file,
-  const ACE_TString& server_ior_file)
+                          ACE_Thread_Manager *thr_mgr,
+                          ACE_TString const &collocated_ior_file,
+                          ACE_TString const &server_ior_file)
   : ACE_Task_Base (thr_mgr)
   , corb_ (CORBA::ORB::_duplicate (corb))
   , collocated_ior_file_(collocated_ior_file)
@@ -19,10 +19,13 @@ Client_Task::Client_Task (CORBA::ORB_ptr corb,
 }
 
 CORBA::Object_ptr
-Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version)
+Client_Task::make_iogr (char const *domain_id,
+                        CORBA::ULongLong group_id,
+                        CORBA::ULong group_version)
 {
-  CORBA::Object_var remote_server(
-    corb_->string_to_object (ACE_TString(file_prefix + this->server_ior_file_).c_str()));
+  CORBA::Object_var remote_server (
+    corb_->string_to_object (
+      ACE_TString (file_prefix + this->server_ior_file_).c_str ()));
 
   if (CORBA::is_nil (remote_server.in ()))
     {
@@ -30,8 +33,9 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
       throw CORBA::INTERNAL ();
     }
 
-  CORBA::Object_var collocated_server(
-    corb_->string_to_object (ACE_TString(file_prefix + this->collocated_ior_file_).c_str()));
+  CORBA::Object_var collocated_server (
+    corb_->string_to_object (
+      ACE_TString (file_prefix + this->collocated_ior_file_).c_str ()));
 
   if (CORBA::is_nil (collocated_server.in ()))
     {
@@ -42,7 +46,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
   // Create the list
-  TAO_IOP::TAO_IOR_Manipulation::IORList iors (1);
+  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
   iors.length (2);
   iors [0] = CORBA::Object::_duplicate (remote_server.ptr());
   iors [1] = CORBA::Object::_duplicate (collocated_server.ptr());
@@ -53,8 +57,8 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   // Property values
 
   // Major and Minor revision numbers
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
   // Domain id
   ft_tag_component.group_domain_id = domain_id;
@@ -69,16 +73,13 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
   // Set the property
-  CORBA::Boolean retval = this->iorm_->set_property (&iogr_prop,
-                                              new_ref.in ());
+  this->iorm_->set_property (&iogr_prop, new_ref.in ());
 
   // Set the primary
   // See we are setting the second ior as the primary
-  retval = this->iorm_->set_primary (&iogr_prop,
-                              remote_server.in (),
-                              new_ref.in ());
-
-  ACE_UNUSED_ARG (retval);
+  this->iorm_->set_primary (&iogr_prop,
+                            remote_server.in (),
+                            new_ref.in ());
 
   return new_ref._retn ();
 }
@@ -89,24 +90,20 @@ int Client_Task::svc ()
   try
     {
       // Get a ref to the IORManipulation object
-      CORBA::Object_var IORM =
-        corb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-        0);
+      CORBA::Object_var iorm_obj (
+        corb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION));
 
       // Narrow
       this->iorm_ =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_obj.in ());
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1);
+      CORBA::Object_var iogr (make_iogr ("Domain_1", 1, 1));
 
-      CORBA::String_var iorgr_string =
-        corb_->object_to_string (iogr.in ());
+      CORBA::String_var iorgr_string (corb_->object_to_string (iogr.in ()));
 
-      CORBA::Object_var object =
-        corb_->string_to_object (iorgr_string.in ());
+      CORBA::Object_var object (corb_->string_to_object (iorgr_string.in ()));
 
-      Test_var server =
-        Test::_narrow (object.in ());
+      Test_var server (Test::_narrow (object.in ()));
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -114,19 +111,19 @@ int Client_Task::svc ()
             "Object reference <%s> is nil\n", iorgr_string.in()), 1);
         }
 
-      CORBA::Object_var remote_server(
-        corb_->string_to_object (ACE_TString(file_prefix + this->server_ior_file_).c_str()));
+      CORBA::Object_var remote_server (
+        corb_->string_to_object (
+          ACE_TString (file_prefix + this->server_ior_file_).c_str ()));
 
-      Test_var remote_server_as_test =
-        Test::_narrow (remote_server.in ());
+      Test_var remote_server_as_test (Test::_narrow (remote_server.in ()));
 
-      CORBA::Object_var collocated_server(
-        corb_->string_to_object (ACE_TString(file_prefix + this->collocated_ior_file_).c_str()));
+      CORBA::Object_var collocated_server (
+        corb_->string_to_object (
+          ACE_TString (file_prefix + this->collocated_ior_file_).c_str ()));
 
-      Test_var collocated_server_as_test =
-        Test::_narrow (collocated_server.in ());
+      Test_var collocated_server_as_test (Test::_narrow (collocated_server.in ()));
 
-      if (!collocated_server->_is_collocated())
+      if (!collocated_server->_is_collocated ())
         { // Collocation is disabled, just skip the test - it has no sense.
           ACE_DEBUG ((LM_ERROR, "Test has no sense, because collocation is disabled.\n"));
         }
@@ -141,7 +138,7 @@ int Client_Task::svc ()
             // This wouldn't work with 'direct' collocation strategy but the default is 'through poa'.
             server->myMethod ();
           }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const &ex)
           {
             ex._tao_print_exception ("Exception caught in client task:");
           }
@@ -151,7 +148,7 @@ int Client_Task::svc ()
 
       collocated_server_as_test->shutdown();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client task:");
       return 1;
