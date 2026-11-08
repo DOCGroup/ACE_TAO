@@ -26,7 +26,11 @@
 # include <taskLib.h>
 #endif
 
+#include <cstring>
+#include <cwchar>
 #include <memory>
+#include <utility>
+#include <vector>
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
@@ -685,7 +689,7 @@ ACE_Process::convert_env_buffer (const char* env) const
 
   // Convert each individual character string to the equivalent wide
   // character string.
-  ACE_Vector<wchar_t*> buffer;
+  std::vector<std::unique_ptr<wchar_t[]>> buffer;
   size_t start = 0;
   size_t i = 0;
   while (true)
@@ -693,36 +697,34 @@ ACE_Process::convert_env_buffer (const char* env) const
       if (env[i] == '\0')
         {
           // Convert the char string to wchar_t
-          wchar_t* str = ACE_Ascii_To_Wide::convert (env + start);
+          std::unique_ptr<wchar_t[]> str (ACE_Ascii_To_Wide::convert (env + start));
 
           // Add the length of the string plus the nul terminator
-          total += ACE_OS::strlen (str) + 1;
+          total += std::wcslen (str.get ()) + 1;
 
           // Save it and set up for the next string
-          buffer.push_back (str);
+          buffer.push_back (std::move (str));
           start = ++i;
           if (env[start] == '\0')
             break;
         }
       else
         {
-          i += ACE_OS::strlen (env + i);
+          i += std::strlen (env + i);
         }
     }
 
   // Copy each string into the buffer leaving a nul terminator between
   // each string and adding a second nul terminator at the end
   start = 0;
-  wchar_t* wenv = new wchar_t[total];
-  size_t length = buffer.size ();
-  for (i = 0; i < length; ++i)
+  std::unique_ptr<wchar_t[]> wenv (new wchar_t[total]);
+  for (i = 0; i < buffer.size (); ++i)
     {
-      ACE_OS::strcpy(wenv + start, buffer[i]);
-      start += ACE_OS::strlen (buffer[i]) + 1;
-      delete [] buffer[i];
+      std::wcscpy (wenv.get () + start, buffer[i].get ());
+      start += std::wcslen (buffer[i].get ()) + 1;
     }
-  wenv[start] = 0;
-  return wenv;
+  wenv[start] = L'\0';
+  return wenv.release ();
 }
 #endif
 
@@ -829,10 +831,10 @@ ACE_Process_Options::inherit_environment ()
       for (WCHAR *iter = existing_wide_env; *iter; ++iter)
         {
           ACE_Wide_To_Ascii wta (iter);
-          size_t const len = ACE_OS::strlen (wta.char_rep ());
+          size_t const len = std::strlen (wta.char_rep ());
           size_t const idx = temp_narrow_env.size ();
           temp_narrow_env.resize (idx + len + 1, 0);
-          ACE_OS::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
+          std::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
           iter += len;
         }
       temp_narrow_env.push_back (0);
@@ -1028,9 +1030,9 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
     return -1;
 
   // Copy the new environment string.
-  ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
-                  assignment,
-                  len * sizeof (ACE_TCHAR));
+  std::memcpy (environment_buf_ + environment_buf_index_,
+               assignment,
+               len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] = environment_buf_ + environment_buf_index_;
