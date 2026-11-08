@@ -9,6 +9,10 @@ class ACE_Svc_Export Smart_Test_Factory
 {
 public:
   Smart_Test_Factory ();
+  Smart_Test_Factory (Smart_Test_Factory const &) = delete;
+  Smart_Test_Factory (Smart_Test_Factory &&) = delete;
+  Smart_Test_Factory &operator= (Smart_Test_Factory const &) = delete;
+  Smart_Test_Factory &operator= (Smart_Test_Factory &&) = delete;
 
   // This method will create the smart_proxy.
   Test_ptr create_proxy (Test_ptr proxy) override;
