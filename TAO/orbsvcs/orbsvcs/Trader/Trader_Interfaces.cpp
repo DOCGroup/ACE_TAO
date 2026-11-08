@@ -10,6 +10,7 @@
 
 #include <cstring>
 #include <new>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,10 +29,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup ()
 {
   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-  for (CosTrading::Admin::OctetSeq const * old_seq : this->request_ids_)
-    {
-      delete old_seq;
-    }
+  this->request_ids_.clear ();
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> void
@@ -731,6 +729,7 @@ seen_request_id (TAO_Policies& policies,
                  const CosTrading::Admin::OctetSeq*& seq)
 {
   CORBA::Boolean return_value = false;
+  std::unique_ptr<CosTrading::Admin::OctetSeq const> request_id;
 
   seq = policies.request_id ();
 
@@ -739,6 +738,7 @@ seen_request_id (TAO_Policies& policies,
       CosTrading::Admin_ptr admin_if =
         this->trader_.trading_components ().admin_if ();
       seq = admin_if->request_id_stem ();
+      request_id.reset (seq);
     }
   else
     {
@@ -747,11 +747,12 @@ seen_request_id (TAO_Policies& policies,
       ACE_NEW_THROW_EX (seq,
                         CosTrading::Admin::OctetSeq (*seq),
                         CORBA::NO_MEMORY ());
+      request_id.reset (seq);
     }
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
 
-  for (CosTrading::Admin::OctetSeq const * old_seq : this->request_ids_)
+  for (std::unique_ptr<CosTrading::Admin::OctetSeq const> const &old_seq : this->request_ids_)
     {
       if (*old_seq == *seq)
         {
@@ -764,20 +765,16 @@ seen_request_id (TAO_Policies& policies,
     {
       try
         {
-          this->request_ids_.push_back (seq);
+          this->request_ids_.push_back (std::move (request_id));
         }
       catch (std::bad_alloc const&)
         {
-          delete seq;
           throw CORBA::NO_MEMORY ();
         }
 
       if (this->request_ids_.size () > IDS_SAVED)
         {
-          CosTrading::Admin::OctetSeq const * octet_seq =
-            this->request_ids_.front ();
           this->request_ids_.pop_front ();
-          delete octet_seq;
         }
     }
 

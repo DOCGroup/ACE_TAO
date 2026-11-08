@@ -20,6 +20,7 @@
 #include "orbsvcs/Trader/Offer_Iterators_T.h"
 
 #include <deque>
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -249,7 +250,7 @@ private:
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
-  using Request_Ids = std::deque<CosTrading::Admin::OctetSeq const*>;
+  using Request_Ids = std::deque<std::unique_ptr<CosTrading::Admin::OctetSeq const>>;
 
   /// A list of recent request_id_stems
   Request_Ids request_ids_;
