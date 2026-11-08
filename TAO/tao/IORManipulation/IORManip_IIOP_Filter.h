@@ -67,12 +67,12 @@ protected:
 
 private:
   /// Fill in the Profile_Info with information from the profile.
-  int fill_profile_info (TAO_Profile* profile,
-                         TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
+  void fill_profile_info (TAO_Profile* profile,
+                          TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
 
   /// Get the endpoint sequence from the profile.
-  int get_endpoints (TAO_Profile* profile,
-                     TAO::IIOPEndpointSequence& endpoints);
+  void get_endpoints (TAO_Profile* profile,
+                      TAO::IIOPEndpointSequence& endpoints);
 
   /// Allocate a new IIOP Profile based on the profile passed in.
   TAO_IIOP_Profile* create_profile (TAO_Profile* profile);

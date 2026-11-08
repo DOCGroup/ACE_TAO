@@ -50,7 +50,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
   this->get_endpoints (profile, endpoints);
   if (endpoints.length () == 0)
     {
-      CORBA::Boolean matches = false;
+      CORBA::Boolean matches {};
       this->fill_profile_info (profile, pinfo);
 
       if (guideline == nullptr)
@@ -75,7 +75,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
     {
       // Create a new profile with just the
       // components we are looking for
-      TAO_IIOP_Profile* new_profile =
+      TAO_IIOP_Profile* const new_profile =
           this->create_profile (profile);
 
       // Set pinfo to match the current profile
@@ -89,7 +89,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
         pinfo.host_name_ = endpoints[i].host.in ();
         pinfo.port_ = endpoints[i].port;
 
-        CORBA::Boolean matches = false;
+        CORBA::Boolean matches {};
         if (guideline == nullptr)
           {
             matches = this->profile_info_matches (pinfo);
@@ -105,8 +105,8 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
             // Set the main endpoint on the profile
             if (i == 0)
               {
-                TAO_IIOP_Endpoint* ep = dynamic_cast<TAO_IIOP_Endpoint*> (
-                                          new_profile->endpoint ());
+                TAO_IIOP_Endpoint* const ep = dynamic_cast<TAO_IIOP_Endpoint*> (
+                  new_profile->endpoint ());
                 if (ep == nullptr)
                   {
                     new_profile->_decr_refcnt ();
@@ -121,7 +121,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
               }
             else
               {
-                TAO_IIOP_Endpoint *endpoint =
+                TAO_IIOP_Endpoint* const endpoint =
                   new (std::nothrow) TAO_IIOP_Endpoint (endpoints[i].host,
                                                         endpoints[i].port,
                                                         endpoints[i].priority);
@@ -150,36 +150,32 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
 }
 
 
-int
+void
 TAO_IORManip_IIOP_Filter::fill_profile_info (
                              TAO_Profile* profile,
                              TAO_IORManip_IIOP_Filter::Profile_Info& pinfo)
 {
   static constexpr int host_length = 384;
-  int status = 0;
   if (profile != nullptr)
     {
-      char host[host_length] = "";
+      char host[host_length] {};
       if (profile->endpoint ()->addr_to_string (host, host_length) != -1)
         {
-          char* delim = std::strchr (host, ':');
+          char* const delim = std::strchr (host, ':');
           if (delim != nullptr)
             {
               *delim = '\0';
               pinfo.port_ = static_cast<CORBA::UShort> (std::atoi (delim + 1));
-              status = 1;
             }
         }
 
       pinfo.host_name_ = host;
       pinfo.version_ = profile->version ();
     }
-
-  return status;
 }
 
 
-int
+void
 TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
                                          TAO::IIOPEndpointSequence& endpoints)
 {
@@ -194,7 +190,7 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
   if (comps.get_component (tagged_component))
     {
       // Prepare the CDR for endpoint extraction
-      const CORBA::Octet *buf =
+      const CORBA::Octet* const buf =
         tagged_component.component_data.get_buffer ();
 
       TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
@@ -203,20 +199,18 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
       // Extract the Byte Order.
       CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-        return 0;
+        return;
 
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       if (!(in_cdr >> endpoints))
-        return 0;
+        return;
     }
   else
     {
-      return 0;
+      return;
     }
-
-  return 1;
 }
 
 
