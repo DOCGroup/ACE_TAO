@@ -1,8 +1,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Log_Macros.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
+#include <cstdio>
 #include <cstring>
 
 #if !defined (__ACE_INLINE__)
@@ -16,7 +15,7 @@ ACE_ConsumerQOS_Factory::
                              CORBA::ULong qos_max_len)
   : event_initializer_ (initializer)
 {
-  qos_.is_gateway = 0;
+  qos_.is_gateway = false;
 
   // Allocate the space requested by the application....
   qos_.dependencies.length (qos_max_len);
@@ -31,7 +30,7 @@ ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory () = default;
 int
 ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
 {
-  int l = qos_.dependencies.length ();
+  int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
@@ -45,7 +44,7 @@ ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
 int
 ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
 {
-  int l = qos_.dependencies.length ();
+  int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
@@ -59,7 +58,7 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
 int
 ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 {
-  int l = qos_.dependencies.length ();
+  int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
@@ -73,7 +72,7 @@ ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 int
 ACE_ConsumerQOS_Factory::start_negation ()
 {
-  int l = qos_.dependencies.length ();
+  int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
     (*this->event_initializer_) (qos_.dependencies[l].event);
@@ -87,7 +86,7 @@ int
 ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
                                         CORBA::ULong type_mask)
 {
-  int l = qos_.dependencies.length ();
+  int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 2);
   if (this->event_initializer_ != nullptr)
     {
@@ -111,7 +110,7 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
   // Make sure that a designator is first.
   if (!designator_set_)
     {
-      int l = qos_.dependencies.length ();
+      int const l = qos_.dependencies.length ();
       qos_.dependencies.length (l + 1);
       if (this->event_initializer_ != nullptr)
         (*this->event_initializer_) (qos_.dependencies[l].event);
@@ -121,16 +120,16 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
       this->designator_set_ = true;
     }
 
-  int l = qos_.dependencies.length ();
+  int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   qos_.dependencies[l] = subscribe;
   return 0;
 }
 
-void event_debug (const char* p,
-                  const RtecEventComm::Event& event)
+void event_debug (char const* p,
+                  RtecEventComm::Event const& event)
 {
-  size_t l = std::strlen (p);
+  size_t const l = std::strlen (p);
   ORBSVCS_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",
@@ -144,10 +143,10 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
   ORBSVCS_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
   ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
-  for (u_int i = 0; i < qos.dependencies.length (); ++i)
+  for (u_int i {}; i < qos.dependencies.length (); ++i)
     {
-      char buf[128];
-      ACE_OS::sprintf (buf, " dep[%d]", i);
+      char buf[128] {};
+      std::snprintf (buf, sizeof (buf), " dep[%u]", i);
       event_debug (buf, qos.dependencies[i].event);
       ORBSVCS_DEBUG ((LM_DEBUG, "%s  rt_info: %d\n",
                   buf, qos.dependencies[i].rt_info));
@@ -161,7 +160,7 @@ ACE_SupplierQOS_Factory::
                              CORBA::ULong qos_max_len)
   : event_initializer_ (initializer)
 {
-  qos_.is_gateway = 0;
+  qos_.is_gateway = false;
 
   // Allocate the space requested by the application....
   qos_.publications.length (qos_max_len);
@@ -177,7 +176,7 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  RtecBase::handle_t rt_info,
                                  u_int ncalls)
 {
-  CORBA::ULong l = this->qos_.publications.length ();
+  CORBA::ULong const l = this->qos_.publications.length ();
 
   // @@ TODO We may want to consider more efficient growing
   // strategies here, for example, duplicating the size of the
@@ -202,10 +201,10 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
   ORBSVCS_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
   ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
-  for (u_int i = 0; i < qos.publications.length (); ++i)
+  for (u_int i {}; i < qos.publications.length (); ++i)
     {
-      char buf[128] = { 0 };
-      ACE_OS::sprintf (buf, " publications[%d]", i);
+      char buf[128] {};
+      std::snprintf (buf, sizeof (buf), " publications[%u]", i);
       event_debug (buf, qos.publications[i].event);
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "%s   dependency_info.rt_info: %d\n"
