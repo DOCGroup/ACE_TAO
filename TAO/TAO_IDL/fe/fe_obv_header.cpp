@@ -171,7 +171,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
   UTL_ScopedName *item {};
   AST_Interface *iface {};
   AST_Type *t {};
-  std::size_t i = 0;
+  std::size_t i {};
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
     {
@@ -297,7 +297,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
   AST_Type *concrete {};
   AST_Interface *ancestor {};
 
-  for (std::size_t i = 0; i < this->iseen_.size (); ++i)
+  for (std::size_t i {}; i < this->iseen_.size (); ++i)
     {
       vt = dynamic_cast<AST_ValueType*> (this->iseen_[i]);
       concrete = vt->supports_concrete ();
@@ -312,7 +312,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
           return true;
         }
 
-      for (std::size_t j = 0; j < d->n_inherits_flat (); ++j)
+      for (std::size_t j {}; j < d->n_inherits_flat (); ++j)
         {
           ancestor = d->inherits_flat ()[j];
 

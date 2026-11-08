@@ -33,7 +33,7 @@
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
-  for (std::size_t cur_pos = 0; cur_pos < params->size (); ++cur_pos)
+  for (std::size_t cur_pos {}; cur_pos < params->size (); ++cur_pos)
     {
       FE_Utils::T_Param_Info const& this_one = (*params)[cur_pos];
 
@@ -452,7 +452,7 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   std::string retval;
   std::string const pattern ("sequence<");
   std::size_t const len = pattern.length ();
-  for (std::size_t index = 0; index < list->size (); ++index)
+  for (std::size_t index {}; index < list->size (); ++index)
     {
       FE_Utils::T_Param_Info const& param = (*list)[index];
 
@@ -543,7 +543,7 @@ void
 FE_Utils::validate_included_idl_files ()
 {
   // Flag to make sure we don't repeat things.
-  static bool already_done = false;
+  static bool already_done {};
 
   if (already_done)
     {
@@ -580,7 +580,7 @@ FE_Utils::validate_included_idl_files ()
               // Check this name with the name that we got from the
               // preprocessor.
 
-              bool valid_file = false;
+              bool valid_file {};
               if (ACE_OS::realpath (pre_preproc_includes [j].c_str (),
                                     pre_abspath) != nullptr &&
                   FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
@@ -862,7 +862,7 @@ FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   std::string const &param_id,
                                   std::size_t index)
 {
-  for (std::size_t local_index = 0; local_index < index; ++local_index)
+  for (std::size_t local_index {}; local_index < index; ++local_index)
     {
       if ((*list)[local_index].name_ == param_id)
         {

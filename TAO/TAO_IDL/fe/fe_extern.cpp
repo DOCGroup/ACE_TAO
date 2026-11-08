@@ -82,8 +82,8 @@ extern int tao_yyparse ();
 
 #ifdef USE_MCPP_BUFFER_LEXING
 char *tao_preproc_buffer {};
-int tao_preproc_buffer_length = 0;
-int tao_preproc_buffer_pos = 0;
+int tao_preproc_buffer_length {};
+int tao_preproc_buffer_pos {};
 #else
 extern FILE *tao_yyin;
 #endif /* USE_MCPP_BUFFER_LEXING */
