@@ -88,7 +88,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //     whatever there is.
       //
 
-      int i = 0;
+      int i {};
       AST_Type *inherited {};
 
       for (; i < node->n_inherits (); ++i)

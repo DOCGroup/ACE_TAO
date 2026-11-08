@@ -164,7 +164,7 @@ be_visitor_valuetype::visit_constant (be_constant *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -220,7 +220,7 @@ be_visitor_valuetype::visit_enum (be_enum *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -294,7 +294,7 @@ be_visitor_valuetype::visit_exception (be_exception *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -361,7 +361,7 @@ be_visitor_valuetype::visit_structure (be_structure *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -430,7 +430,7 @@ be_visitor_valuetype::visit_structure_fwd (be_structure_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -461,7 +461,7 @@ be_visitor_valuetype::visit_union (be_union *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -544,7 +544,7 @@ be_visitor_valuetype::visit_union_fwd (be_union_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -575,7 +575,7 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

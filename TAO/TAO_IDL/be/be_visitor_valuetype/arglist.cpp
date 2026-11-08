@@ -167,7 +167,7 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

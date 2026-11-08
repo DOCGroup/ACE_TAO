@@ -44,7 +44,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   node->gen_var_out_seq_decls ();
 
   TAO_OutStream *os = this->ctx_->stream ();
-  int status = 0;
+  int status {};
 
   TAO_INSERT_COMMENT (os);
 
@@ -68,7 +68,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   long i;  // loop index
   be_valuetype *inherited {};
   long const n_inherits = node->n_inherits ();
-  bool inherits_eventtype = false;
+  bool inherits_eventtype {};
 
   if (n_inherits > 0)
     {
