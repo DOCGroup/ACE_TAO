@@ -63,10 +63,10 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
           if (ACE_OS::ace_isdigit(*buf))
             {
               // @@ UNICODE Does this work with unicode?
-              int oc = 0;
-              for (int i = 0;
+              int oc {};
+              for (int i {};
                    i < 3 && *buf && ACE_OS::ace_isdigit (*buf);
-                   i++)
+                   ++i)
                 oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
 
               cap += (ACE_TCHAR) oc;
@@ -81,7 +81,7 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
 const ACE_TCHAR *
 ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 {
-  int n = 0;
+  int n {};
 
   while (*buf && ACE_OS::ace_isdigit (*buf))
     n = n * 10 + (*buf++ - ACE_TEXT ('0'));
@@ -308,7 +308,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
                        fname),
                       -1);
 
-  bool done = false;
+  bool done {};
   ACE_TString line;
 
   while (!(done = (this->getline (fp, line) == -1))
