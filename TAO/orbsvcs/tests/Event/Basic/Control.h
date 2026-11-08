@@ -31,7 +31,7 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events);
+  void push (const RtecEventComm::EventSet& events) override;
 
 private:
   /// After this number of events the consumer disconnects from the

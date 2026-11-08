@@ -34,16 +34,16 @@ public:
 
   // = The EC_Driver methods
   /// Don't run the suppliers just create the EC and then destroy it.
-  void execute_test ();
+  void execute_test () override;
 
   /// Don't dump the EC_Driver results, they are meaningless.
-  void dump_results ();
+  void dump_results () override;
 
   /// One of the consumers in the test has been disconnected from the EC
-  virtual void consumer_disconnect (void* consumer_cookie);
+  void consumer_disconnect (void* consumer_cookie) override;
 
   /// One of the suppliers in the test has been disconnected from the EC
-  virtual void supplier_disconnect (void* supplier_cookie);
+  void supplier_disconnect (void* supplier_cookie) override;
 
 
 private:

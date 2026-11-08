@@ -26,7 +26,7 @@ public:
         int use_callbacks);
 
   // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   /// Run a single iteration of the test
   void run_iteration ();

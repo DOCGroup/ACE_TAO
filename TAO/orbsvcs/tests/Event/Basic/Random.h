@@ -31,8 +31,8 @@ public:
   /// Constructor
   RND_Consumer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event);
-  void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet &event) override;
+  void disconnect_push_consumer () override;
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
@@ -62,7 +62,7 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event);
+  void push (const RtecEventComm::EventSet &event) override;
 };
 
 inline
@@ -92,10 +92,10 @@ public:
   void push_new_event ();
   void push (RtecEventComm::EventSet &event);
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Active method
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The supplier.
