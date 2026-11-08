@@ -49,8 +49,8 @@ Test_ECG::Test_ECG ()
     lps_event_b_ (0),
     lpc_event_a_ (0),
     lpc_event_b_ (0),
-    schedule_file_ (nullptr),
-    pid_file_name_ (nullptr),
+    schedule_file_ {},
+    pid_file_name_ {},
     stats_ {},
     ready_ (0),
     ready_cnd_ (ready_mtx_),
@@ -1031,7 +1031,7 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
 
         case 'i':
           {
-            char* aux = nullptr;
+            char* aux {};
             char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
             this->consumer_disconnects_ = ACE_OS::atoi (arg);
             arg = ACE_OS::strtok_r (nullptr, ",", &aux);
@@ -1041,50 +1041,50 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
 
         case 'h':
           {
-            char* aux = nullptr;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->hp_suppliers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_consumers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_workload_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_interval_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_message_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hps_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hps_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hpc_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hpc_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
 
         case 'w':
           {
-            char* aux = nullptr;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->lp_suppliers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_consumers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_workload_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_interval_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_message_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lps_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lps_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lpc_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lpc_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
