@@ -61,7 +61,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
   KEY *key_to_remove {};
   VALUE *value_to_remove {};
 
-  for (size_t i = 0; i < entries_to_remove ; ++i)
+  for (size_t i {}; i < entries_to_remove ; ++i)
     {
       this->minimum (container,
                      key_to_remove,
@@ -161,7 +161,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   KEY *key_to_remove {};
   VALUE *value_to_remove {};
 
-  for (size_t i = 0; i < entries_to_remove ; ++i)
+  for (size_t i {}; i < entries_to_remove ; ++i)
     {
       this->minimum (container,
                      key_to_remove,
@@ -195,7 +195,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   key_to_remove = nullptr;
   value_to_remove = nullptr;
   // Found the minimum entry to be purged?
-  bool found = false;
+  bool found {};
 
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
@@ -284,7 +284,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   KEY *key_to_remove {};
   VALUE *value_to_remove {};
 
-  for (size_t i = 0; i < entries_to_remove ; ++i)
+  for (size_t i {}; i < entries_to_remove ; ++i)
     {
       this->minimum (container,
                      key_to_remove,
@@ -320,7 +320,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   key_to_remove = nullptr;
   value_to_remove = nullptr;
   // Found the minimum entry to be purged?
-  bool found = false;
+  bool found {};
 
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
@@ -404,7 +404,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
   KEY *key_to_remove {};
   VALUE *value_to_remove {};
 
-  for (size_t i = 0; i < entries_to_remove ; ++i)
+  for (size_t i {}; i < entries_to_remove ; ++i)
     {
       this->minimum (container,
                      key_to_remove,
