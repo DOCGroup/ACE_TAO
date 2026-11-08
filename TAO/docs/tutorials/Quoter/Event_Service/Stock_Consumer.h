@@ -15,8 +15,8 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (CORBA::Any const &data);
-  void disconnect_push_consumer ();
+  void push (CORBA::Any const &data) override;
+  void disconnect_push_consumer () override;
 
   Stock_Consumer (Stock_Consumer const &) = delete;
   Stock_Consumer (Stock_Consumer &&) = delete;

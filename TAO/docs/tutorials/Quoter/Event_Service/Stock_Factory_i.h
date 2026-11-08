@@ -14,7 +14,7 @@ public:
                            CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void destroy_stock_objects ();
 
-  Quoter::Stock_ptr get_stock (char const *symbol);
+  Quoter::Stock_ptr get_stock (char const *symbol) override;
 
   Quoter_Stock_Factory_i (Quoter_Stock_Factory_i const &) = delete;
   Quoter_Stock_Factory_i (Quoter_Stock_Factory_i &&) = delete;
