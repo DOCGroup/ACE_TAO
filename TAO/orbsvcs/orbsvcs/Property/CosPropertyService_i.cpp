@@ -181,9 +181,9 @@ TAO_PropertySetFactory::create_initial_propertyset (
 TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory ()
 {
   // Release all the new'ed products.
-  for (CORBA::ULong pi = 0;
+  for (CORBA::ULong pi {};
        pi < this->propertysetdef_products_.length ();
-       pi++)
+       ++pi)
     delete this->propertysetdef_products_[pi];
 }
 
@@ -315,9 +315,9 @@ TAO_PropertySet::TAO_PropertySet (CosPropertyService::PropertyTypes const &allow
   this->allowed_property_names_.length (allowed_properties.length ());
 
   // Keep the allowed property names in the sequence..
-  for (CORBA::ULong ni = 0;
+  for (CORBA::ULong ni {};
        ni < allowed_properties.length ();
-       ni++)
+       ++ni)
     this->allowed_property_names_[ni] =
       allowed_properties[ni].property_name;
 
@@ -458,9 +458,9 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type) const
 
   // Check in the allowed_property_types sequence.
   CORBA::Boolean ret_val = false;
-  for (CORBA::ULong ti = 0;
+  for (CORBA::ULong ti {};
        ti < this->allowed_property_types_.length ();
-       ti++)
+       ++ti)
     {
       try
         {
@@ -490,9 +490,9 @@ TAO_PropertySet::is_property_allowed (char const *property_name) const
     return true;
 
   // Check in the allowed_property_names.
-  for (CORBA::ULong ni = 0;
+  for (CORBA::ULong ni {};
        ni < this->allowed_property_names_.length ();
-       ni++)
+       ++ni)
     if (std::strcmp (this->allowed_property_names_[ni].in (),
                      property_name) == 0)
       return true;
@@ -516,7 +516,7 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
   // Define multiple exceptions object.
   CosPropertyService::MultipleExceptions multi_ex;
 
-  for (CORBA::ULong pi = 0; pi < sequence_length; pi++)
+  for (CORBA::ULong pi {}; pi < sequence_length; ++pi)
     {
       try
         {
@@ -629,9 +629,9 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
   COSPROPERTY_HASH_ITERATOR iterator (this->hash_table_);
 
-  for (CORBA::ULong ni = 0;
+  for (CORBA::ULong ni {};
        ni < sequence_length;
-       ni++, iterator.advance ())
+       ++ni, iterator.advance ())
     if (iterator.next (entry_ptr) != 0)
       property_names [ni] =
         CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
@@ -730,7 +730,7 @@ TAO_PropertySet::get_properties (CosPropertyService::PropertyNames const &proper
   CORBA::Any_var any_ptr = nullptr;
   CORBA::Boolean ret_val = true;
 
-  for (CORBA::ULong i = 0; i < n; i++)
+  for (CORBA::ULong i {}; i < n; ++i)
     {
       any_ptr = get_property_value (property_names [i]);
 
@@ -795,9 +795,9 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
   COSPROPERTY_HASH_ITERATOR iterator (this->hash_table_);
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < sequence_length;
-       i++, iterator.advance ())
+       ++i, iterator.advance ())
     if (iterator.next (entry_ptr) != 0)
       {
         nproperties[i].property_name =
@@ -896,7 +896,7 @@ TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &pro
   // Declare multiple exceptions' object.
   CosPropertyService::MultipleExceptions multi_ex;
 
-  for (CORBA::ULong pi = 0; pi < sequence_length; pi++)
+  for (CORBA::ULong pi {}; pi < sequence_length; ++pi)
     {
       try
         {
@@ -1006,7 +1006,7 @@ TAO_PropertySetDef::TAO_PropertySetDef (CosPropertyService::PropertyTypes const 
   this->allowed_property_names_.length (allowed_property_defs.length ());
 
   // Copy the allowed properties' names to the sequence.
-  for (CORBA::ULong ni = 0; ni < allowed_property_defs.length (); ni++)
+  for (CORBA::ULong ni {}; ni < allowed_property_defs.length (); ++ni)
     this->allowed_property_names_[ni] =
       allowed_property_defs[ni].property_name;
 
@@ -1144,7 +1144,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
   CosPropertyService::MultipleExceptions multi_ex;
 
   // Try defining the propdefs one by one.
-  for (CORBA::ULong i = 0; i < sequence_length; i++)
+  for (CORBA::ULong i {}; i < sequence_length; ++i)
     {
       try
         {
@@ -1274,7 +1274,7 @@ TAO_PropertySetDef::get_property_modes (CosPropertyService::PropertyNames const 
 
   // Invoking get_property_mode for each name.
   CosPropertyService::PropertyModeType mode;
-  for (CORBA::ULong i = 0; i < sequence_length; i++)
+  for (CORBA::ULong i {}; i < sequence_length; ++i)
     {
       try
         {
@@ -1405,7 +1405,7 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
   CosPropertyService::MultipleExceptions multi_ex;
 
   // Set  modes one by one.
-  for (CORBA::ULong i = 0; i < sequence_length; i++)
+  for (CORBA::ULong i {}; i < sequence_length; ++i)
     {
       try
         {
@@ -1515,9 +1515,9 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
     len = size;
   property_names->length (len);
 
-  for (CORBA::ULong ni = 0;
+  for (CORBA::ULong ni {};
        ni < property_names->length ();
-       ni++, this->iterator_.advance ())
+       ++ni, this->iterator_.advance ())
     if (this->iterator_.next (entry_ptr) != 0)
       property_names [ni] =
         CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
@@ -1595,9 +1595,9 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
     len = size;
   nproperties->length (len);
 
-  for (CORBA::ULong ni = 0;
+  for (CORBA::ULong ni {};
        ni < nproperties->length ();
-       ni++,
+       ++ni,
          this->iterator_.advance ())
     {
       if (this->iterator_.next (entry_ptr) != 0)
