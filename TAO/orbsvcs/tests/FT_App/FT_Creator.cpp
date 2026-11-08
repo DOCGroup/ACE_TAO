@@ -21,7 +21,7 @@
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()
   , orb_ (CORBA::ORB::_nil ())
-  , registry_ior_(0)
+  , registry_ior_ (nullptr)
   , replication_manager_ (::FT::ReplicationManager::_nil ())
   , have_replication_manager_ (0)
   , write_iors_ (0)
@@ -135,7 +135,7 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // if a factory IOR was specified on command line
-  if ( this->registry_ior_ != 0)
+  if (this->registry_ior_ != nullptr)
   {
     CORBA::Object_var registry_obj
       = this->orb_->string_to_object (this->registry_ior_);
@@ -195,7 +195,7 @@ int FTAPP::FT_Creator::run ()
         role,
         this->iogr_seq_);
       FILE * iogr_file = ACE_OS::fopen (iogr_filename, "w");
-      if (iogr_file != 0)
+      if (iogr_file != nullptr)
       {
         char const * siogr = static_cast<const char *> (iogr.in ());
         ACE_OS::fwrite (siogr, 1, ACE_OS::strlen(siogr), iogr_file);

@@ -45,7 +45,7 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
     {
       case 'r':
       {
-        if (this->replicaIorBuffer_ == 0)
+        if (this->replicaIorBuffer_ == nullptr)
         {
           const char * repNames = get_opts.opt_arg ();
           size_t repNameLen = ACE_OS::strlen(repNames);
@@ -53,20 +53,20 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
           // make a working copy of the string
           ACE_NEW_NORETURN(this->replicaIorBuffer_,
             char[repNameLen + 1]);
-          if ( this->replicaIorBuffer_ != 0)
+          if (this->replicaIorBuffer_ != nullptr)
           {
             ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
             char * pos = this->replicaIorBuffer_;
-            while (pos != 0)
+            while (pos != nullptr)
             {
               this->iorReplicaFiles_.push_back(pos);
               // find a comma delimiter, and
               // chop the string there.
               pos = ACE_OS::strchr (pos, ',');
-              if (pos != 0)
+              if (pos != nullptr)
               {
                 *pos = '\0';
                 pos += 1;
@@ -117,14 +117,14 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 
   if(! optionError)
   {
-    if (0 == this->replicaIorBuffer_)
+    if (this->replicaIorBuffer_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->iorDetectorFile_)
+    if (this->iorDetectorFile_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"

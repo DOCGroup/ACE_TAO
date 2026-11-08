@@ -161,7 +161,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr () == 0)
+        if (criteria.ptr () == nullptr)
         {
           ACE_ERROR ( (LM_ERROR,
             "%T %n (%P|%t)Object_Group_Creater: Error cannot allocate criteria.\n"

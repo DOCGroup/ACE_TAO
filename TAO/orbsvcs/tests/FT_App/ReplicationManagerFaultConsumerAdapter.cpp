@@ -10,12 +10,12 @@
 ReplicationManagerFaultConsumerAdapter::ReplicationManagerFaultConsumerAdapter()
   : orb_(CORBA::ORB::_nil())
   , quit_(0)
-  , readyFile_(0)
-  , detector_ior_(0)
+  , readyFile_ (nullptr)
+  , detector_ior_ (nullptr)
   , factory_(FT::FaultDetectorFactory::_nil())
-  , notifier_ior_(0)
+  , notifier_ior_ (nullptr)
   , notifier_(FT::FaultNotifier::_nil())
-  , p_fault_consumer_(0)
+  , p_fault_consumer_ (nullptr)
   , consumer_servant_(0)
 {
 }
@@ -80,7 +80,7 @@ int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, ACE_TCHAR * ar
         ));
       optionError = -1;
     }
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -174,7 +174,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
   ));
 
   ACE_NEW_RETURN (this->p_fault_consumer_, TAO::FT_FaultConsumer (), -1);
-  if (this->p_fault_consumer_ != 0)
+  if (this->p_fault_consumer_ != nullptr)
   {
     this->consumer_servant_ = this->p_fault_consumer_;
   }
@@ -293,7 +293,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR_RETURN ((
             LM_ERROR,
@@ -315,7 +315,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     }
 
     // Signal that we are ready to go.
-    if (result == 0 && this->readyFile_ != 0)
+    if (result == 0 && this->readyFile_ != nullptr)
     {
       FILE* ready = ACE_OS::fopen (this->readyFile_, "w");
       if (ready)

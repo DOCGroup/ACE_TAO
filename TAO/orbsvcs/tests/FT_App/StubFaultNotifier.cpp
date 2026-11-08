@@ -7,8 +7,8 @@
 #include "ace/streams.h"
 
 StubFaultNotifier::StubFaultNotifier ()
-  : ior_output_file_(0)
-  , detector_ior_(0)
+  : ior_output_file_ (nullptr)
+  , detector_ior_ (nullptr)
   , ns_name_("")
 {
 }
@@ -77,7 +77,7 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
         ));
       optionError = -1;
     }
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -240,7 +240,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR((LM_ERROR,
             "Error cannot allocate criteria.\n"
@@ -260,7 +260,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
       }
     }
 
-    if (this->ior_output_file_ != 0)
+    if (this->ior_output_file_ != nullptr)
     {
       this->identity_ = ACE_TEXT("file:");
       this->identity_ += this->ior_output_file_;

@@ -72,7 +72,7 @@ private:
 
 
 FTClientMain::FTClientMain ()
-  : inFile_(0)
+  : inFile_ (nullptr)
   , commandIn_(stdin)
   , verbose_(NORMAL)
   , replica_pos_(0)
@@ -85,7 +85,7 @@ FTClientMain::~FTClientMain ()
   if (this->inFile_)
   {
     ACE_OS::fclose (this->inFile_);
-    this->inFile_ = 0;
+    this->inFile_ = nullptr;
   }
 }
 

@@ -7,9 +7,9 @@
 #include "ace/OS_NS_stdio.h"
 
 StubFaultAnalyzer::StubFaultAnalyzer ()
-  : readyFile_(0)
-  , detector_ior_(0)
-  , notifier_ior_(0)
+  : readyFile_ (nullptr)
+  , detector_ior_ (nullptr)
+  , notifier_ior_ (nullptr)
 {
 }
 
@@ -68,14 +68,14 @@ int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
       optionError = -1;
     }
 
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->notifier_ior_)
+    if (this->notifier_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-n option is required.\n"
@@ -196,7 +196,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR((LM_ERROR,
             "Error cannot allocate criteria.\n"
@@ -219,7 +219,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
       }
     }
 
-    if (result == 0 && this->readyFile_ != 0)
+    if (result == 0 && this->readyFile_ != nullptr)
     {
       FILE *ready = ACE_OS::fopen (this->readyFile_, "w");
       if ( ready )

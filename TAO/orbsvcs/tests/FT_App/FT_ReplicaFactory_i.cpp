@@ -52,14 +52,14 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , poa_ (PortableServer::POA::_nil ())
   , object_id_ ()
   , ior_ ()
-  , ior_output_file_ (0)
+  , ior_output_file_ (nullptr)
   , identity_ ()
   , have_replication_manager_(0)
   , replication_manager_(0)
-  , factory_registry_ior_(0)
+  , factory_registry_ior_ (nullptr)
   , factory_registry_ (0)
   , registered_(0)
-  , test_output_file_(0)
+  , test_output_file_ (nullptr)
   , ns_name_("")
   , naming_context_ (CosNaming::NamingContext::_nil ())
   , this_name_ ()
@@ -107,7 +107,7 @@ CORBA::ULong FT_ReplicaFactory_i::allocate_id()
   {
     for(CORBA::ULong pos = 0; pos < id; ++pos)
     {
-      if (this->replicas_[pos] == 0)
+      if (this->replicas_[pos] == nullptr)
       {
         id = pos;
       }
@@ -115,7 +115,7 @@ CORBA::ULong FT_ReplicaFactory_i::allocate_id()
   }
   else
   {
-    this->replicas_.push_back(0);
+    this->replicas_.push_back (nullptr);
     this->empty_slots_ += 1;
   }
   return id;
@@ -127,7 +127,7 @@ void FT_ReplicaFactory_i::shutdown_i()
   for (size_t nReplica = 0; nReplica < this->replicas_.size(); ++nReplica)
   {
     FT_TestReplica_i * replica = this->replicas_[nReplica];
-    if (replica != 0)
+    if (replica != nullptr)
     {
       replica->request_quit();
     }
@@ -254,7 +254,7 @@ int FT_ReplicaFactory_i::idle (int & result)
     for (size_t nReplica = 0; result == 0 && nReplica < replicaCount; ++nReplica)
     {
       FT_TestReplica_i * replica = this->replicas_[nReplica];
-      if (replica != 0)
+      if (replica != nullptr)
       {
         // give the replica's idle processing a change
         // ignore the return status (the replica should shut itself down
@@ -329,7 +329,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 
   this->ior_ = this->orb_->object_to_string (this_obj.in ());
 
-  if (this->factory_registry_ior_ != 0)
+  if (this->factory_registry_ior_ != nullptr)
   {
     if (ACE_OS::strcmp (this->factory_registry_ior_, ACE_TEXT("none")) != 0)
     {
@@ -379,7 +379,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
     }
     catch (const CORBA::Exception& ex)
     {
-      if (this->test_output_file_ == 0) // ignore if this is a test run
+      if (this->test_output_file_ == nullptr) // ignore if this is a test run
       {
         ex._tao_print_exception (
           "ReplicaFactory: Exception resolving ReplicationManager. Factory will not be registered.\n");
@@ -434,7 +434,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
     identified = 1;
   }
 
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
   {
     if (!identified)
     {
@@ -482,7 +482,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
   }
 
   // if we're testing.  Create a replica at startup time
-  if (this->test_output_file_ != 0)
+    if (this->test_output_file_ != nullptr)
   {
     // shouldn't be necessary, but create_replica assumes this
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 1);
@@ -499,10 +499,10 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 
 int FT_ReplicaFactory_i::fini ()
 {
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
   {
     ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = 0;
+    this->ior_output_file_ = nullptr;
   }
   if (this->ns_name_.length () != 0)
   {
@@ -563,7 +563,7 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
     {
       replica->fini();
       delete replica;
-      this->replicas_[id] = 0;
+      this->replicas_[id] = nullptr;
       this->empty_slots_ += 1;
     }
     else
@@ -631,7 +631,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   }
 
   FT_TestReplica_i * replica = create_replica(role);
-  if (replica == 0)
+  if (replica == nullptr)
   {
     ACE_ERROR ((LM_ERROR,
       "New Replica_i returned NULL.  Throwing ObjectNotCreated.\n"
@@ -686,7 +686,7 @@ void FT_ReplicaFactory_i::delete_object (
   factory_creation_id >>= factoryId;
   if (factoryId < this->replicas_.size())
   {
-    if(this->replicas_[factoryId] != 0)
+    if (this->replicas_[factoryId] != nullptr)
     {
       this->replicas_[factoryId]->request_quit();
     }
