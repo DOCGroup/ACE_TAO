@@ -4,14 +4,18 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include <memory>
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
-CORBA::ULong peer_count {4};
-CORBA::ULong payload_size {1024};
-CORBA::ULong message_count {1000};
-CORBA::ULong thread_count {4};
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+  CORBA::ULong peer_count {4};
+  CORBA::ULong payload_size {1024};
+  CORBA::ULong message_count {1000};
+  CORBA::ULong thread_count {4};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:b:i:n:"));
   int c {};
@@ -20,23 +24,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'p':
-        peer_count  = ACE_OS::atoi (get_opts.opt_arg ());
+        options.peer_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        payload_size  = ACE_OS::atoi (get_opts.opt_arg ());
+        options.payload_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        message_count = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':
-        thread_count = ACE_OS::atoi (get_opts.opt_arg ());
+        options.thread_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -78,12 +82,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       Coordinator *coordinator_impl {};
       ACE_NEW_RETURN (coordinator_impl,
-                      Coordinator (peer_count),
+                      Coordinator (options.peer_count),
                       1);
       PortableServer::ServantBase_var coordinator_owner (coordinator_impl);
 
@@ -103,11 +108,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the ior to it
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             ior_output_file),
+                             options.ior_output_file),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -133,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Session_Control *session_control_impl {};
       ACE_NEW_RETURN (session_control_impl,
-                      Session_Control (peer_count),
+                      Session_Control (options.peer_count),
                       1);
       PortableServer::ServantBase_var session_control_owner (session_control_impl);
 
@@ -147,24 +152,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),
-                                             payload_size,
-                                             thread_count,
-                                             message_count,
+                                             options.payload_size,
+                                             options.thread_count,
+                                             options.message_count,
                                              session_list);
 
-      ACE_ASSERT (session_list.length () == peer_count);
+      ACE_ASSERT (session_list.length () == options.peer_count);
 
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
       ACE_DEBUG ((LM_DEBUG, "Giving start signal . . . "));
 
       CORBA::ULong j {};
-      for (j = 0; j != peer_count; ++j)
+      for (j = 0; j != options.peer_count; ++j)
         {
           // Make a copy of the sessions, excluding the j-th element
-          Test::Session_List other_sessions (peer_count - 1);
-          other_sessions.length (peer_count - 1);
+          Test::Session_List other_sessions (options.peer_count - 1);
+          other_sessions.length (options.peer_count - 1);
           CORBA::ULong count {};
-          for (CORBA::ULong k = 0; k != peer_count; ++k)
+          for (CORBA::ULong k = 0; k != options.peer_count; ++k)
             {
               if (k == j)
                 continue;
@@ -194,7 +199,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "All sessions finished, destroy session list . . .\n"));
 
-      for (j = 0; j != peer_count; ++j)
+      for (j = 0; j != options.peer_count; ++j)
         {
           session_list[j]->destroy ();
         }
