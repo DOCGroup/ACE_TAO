@@ -1,7 +1,7 @@
 #include "Server_Worker.h"
 
 Server_Worker::Server_Worker (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -12,7 +12,7 @@ Server_Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;
