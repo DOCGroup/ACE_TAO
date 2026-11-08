@@ -89,7 +89,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
   // problems with the profile management in TAO which are documented
   // in bugzilla bugs 1237, 1238, and 1239.  Once the above problems
   // are fixed, this behavior should be fixed to do the right thing.
-  for (CORBA::ULong protocol_index = 0;
+  for (CORBA::ULong protocol_index {};
        protocol_index < client_protocols.length ();
        ++protocol_index)
     {
@@ -98,7 +98,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
       TAO_MProfile &mprofile = (r.stub ()->forward_profiles() == nullptr) ?
         r.stub ()->base_profiles () : *r.stub ()->forward_profiles();
 
-      for (TAO_PHandle i = 0;
+      for (TAO_PHandle i {};
            i < mprofile.profile_count ();
            ++i)
         {

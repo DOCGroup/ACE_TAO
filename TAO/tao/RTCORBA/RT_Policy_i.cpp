@@ -552,7 +552,7 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
   CORBA::Boolean is_write_ok = out_cdr << this->protocols_.length ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        (i < this->protocols_.length ()) && is_write_ok;
        i++)
     {
@@ -575,7 +575,7 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 
   this->protocols_.length (length);
 
-  for (CORBA::ULong i = 0; (i < length) && is_read_ok; i++)
+  for (CORBA::ULong i {}; (i < length) && is_read_ok; i++)
     {
       is_read_ok = in_cdr >> this->protocols_[i].protocol_type;
 
@@ -1153,7 +1153,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = true;
       CORBA::Boolean dont_route {};
-      CORBA::Long preallocate_buffer_size = false;
+      CORBA::Long preallocate_buffer_size {};
       char const *mmap_filename = "";
       char const *mmap_lockname = "";
 

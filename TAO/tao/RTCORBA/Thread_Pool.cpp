@@ -549,7 +549,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
   ACE_NEW (lane_array,
            TAO_Thread_Lane *[this->number_of_lanes_] ());
   this->lanes_.reset (lane_array);
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     ACE_NEW (this->lanes_[i],
@@ -566,7 +566,7 @@ void
 TAO_Thread_Pool::open ()
 {
   // Open all the lanes.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     {
@@ -579,7 +579,7 @@ TAO_Thread_Pool::~TAO_Thread_Pool ()
   if (this->lanes_)
     {
       // Delete all the lanes.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i != this->number_of_lanes_;
            ++i)
         delete this->lanes_[i];
@@ -590,7 +590,7 @@ void
 TAO_Thread_Pool::finalize ()
 {
   // Finalize all the lanes.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     this->lanes_[i]->finalize ();
@@ -600,7 +600,7 @@ void
 TAO_Thread_Pool::shutdown_reactor ()
 {
   // Finalize all the lanes.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     this->lanes_[i]->shutdown_reactor ();
@@ -610,7 +610,7 @@ void
 TAO_Thread_Pool::shutting_down ()
 {
   // Finalize all the lanes.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     this->lanes_[i]->shutting_down ();
@@ -621,7 +621,7 @@ void
 TAO_Thread_Pool::wait ()
 {
   // Finalize all the lanes.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     this->lanes_[i]->wait ();
@@ -631,7 +631,7 @@ bool
 TAO_Thread_Pool::is_collocated (TAO_MProfile const &mprofile)
 {
   // Finalize all the lanes.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     {
@@ -648,7 +648,7 @@ TAO_Thread_Pool::is_collocated (TAO_MProfile const &mprofile)
 int
 TAO_Thread_Pool::create_static_threads ()
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->number_of_lanes_;
        ++i)
     {
