@@ -8,12 +8,12 @@
 int
 testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+  CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
   if (orb.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to create orb\n")), -1);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     orb->resolve_initial_references ("TAO::Transport::Current");
 
   if (obj.in () == nullptr)
@@ -28,7 +28,7 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 int
 testCurrentLoader (int, char *[])
 {
-  ACE_Service_Object *factory = nullptr;
+  ACE_Service_Object *factory {};
 
   factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
     (ACE_TEXT ("TAO_Transport_Current_Loader"));
