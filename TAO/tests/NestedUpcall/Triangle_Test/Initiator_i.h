@@ -26,14 +26,14 @@ public:
                   Object_B_ptr object_B_ptr);
 
   /// Destructor.
-  virtual ~Initiator_i () = default;
+  ~Initiator_i () override = default;
 
   Initiator_i (Initiator_i const &) = delete;
   Initiator_i (Initiator_i &&) = delete;
   Initiator_i &operator= (Initiator_i const &) = delete;
   Initiator_i &operator= (Initiator_i &&) = delete;
 
-  virtual void foo_object_B ();
+  void foo_object_B () override;
 
 private:
   /// reference to object A

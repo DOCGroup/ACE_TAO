@@ -25,18 +25,18 @@ public:
   Object_A_i () = default;
 
   /// Destructor.
-  virtual ~Object_A_i () = default;
+  ~Object_A_i () override = default;
 
   Object_A_i (Object_A_i const &) = delete;
   Object_A_i (Object_A_i &&) = delete;
   Object_A_i &operator= (Object_A_i const &) = delete;
   Object_A_i &operator= (Object_A_i &&) = delete;
 
-  virtual void foo (Initiator_ptr theInitiator_ptr);
+  void foo (Initiator_ptr theInitiator_ptr) override;
 
-  virtual void finish ();
+  void finish () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   bool finish_two_way_call_ {};
 };
