@@ -16,6 +16,8 @@
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
@@ -45,7 +47,7 @@ protected:
 
   /// The root of the expression tree, not equal to null if build_tree
   /// successfully builds a tree from the constraints.
-  TAO_Constraint* root_;
+  std::unique_ptr<TAO_Constraint> root_;
 private:
   TAO_Interpreter (TAO_Interpreter const&) = delete;
   TAO_Interpreter& operator= (TAO_Interpreter const&) = delete;

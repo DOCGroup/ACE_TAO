@@ -37,11 +37,7 @@ TAO_Binary_Constraint (TAO_Expression_Type op_type,
 {
 }
 
-TAO_Binary_Constraint::~TAO_Binary_Constraint ()
-{
-  delete left_;
-  delete right_;
-}
+TAO_Binary_Constraint::~TAO_Binary_Constraint () = default;
 
 // Dispatch table for the accept method
 static int (*dispatch_table[]) (TAO_Constraint_Visitor*,
@@ -196,13 +192,13 @@ visit_in (TAO_Constraint_Visitor* visitor,
 TAO_Constraint*
 TAO_Binary_Constraint::left_operand () const
 {
-  return this->left_;
+  return this->left_.get ();
 }
 
 TAO_Constraint*
 TAO_Binary_Constraint::right_operand () const
 {
-  return this->right_;
+  return this->right_.get ();
 }
 
 TAO_Unary_Constraint::
@@ -213,10 +209,7 @@ TAO_Unary_Constraint (TAO_Expression_Type op_type,
 {
 }
 
-TAO_Unary_Constraint::~TAO_Unary_Constraint ()
-{
-  delete operand_;
-}
+TAO_Unary_Constraint::~TAO_Unary_Constraint () = default;
 
 
 int
@@ -256,7 +249,7 @@ TAO_Unary_Constraint::accept (TAO_Constraint_Visitor* visitor)
 TAO_Constraint*
 TAO_Unary_Constraint::operand ()
 {
-  return this->operand_;
+  return this->operand_.get ();
 }
 
 TAO_Property_Constraint::

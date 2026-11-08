@@ -17,16 +17,18 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
 
   if (TAO_Interpreter::is_empty_string (constraints))
     {
-      ACE_NEW_THROW_EX (this->root_,
+      TAO_Constraint* root {};
+      ACE_NEW_THROW_EX (root,
                         TAO_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
+      this->root_.reset (root);
     }
   else
     {
       if (this->build_tree (constraints) != 0)
         throw CosTrading::IllegalConstraint (constraints);
 
-      if (type_checker.validate (this->root_) == -1)
+      if (type_checker.validate (this->root_.get ()) == -1)
         throw CosTrading::IllegalConstraint (constraints);
     }
 }
@@ -37,16 +39,18 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
 {
   if (TAO_Interpreter::is_empty_string (constraints))
     {
-      ACE_NEW_THROW_EX (this->root_,
+      TAO_Constraint* root {};
+      ACE_NEW_THROW_EX (root,
                         TAO_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
+      this->root_.reset (root);
     }
   else
     {
       if (this->build_tree (constraints) != 0)
         throw CosTrading::IllegalConstraint (constraints);
 
-      if (validator.validate (this->root_) == -1)
+      if (validator.validate (this->root_.get ()) == -1)
         throw CosTrading::IllegalConstraint (constraints);
     }
 }
@@ -57,13 +61,13 @@ CORBA::Boolean
 TAO_Constraint_Interpreter::evaluate (CosTrading::Offer* offer)
 {
   TAO_Trader_Constraint_Evaluator evaluator (offer);
-  return evaluator.evaluate_constraint (this->root_);
+  return evaluator.evaluate_constraint (this->root_.get ());
 }
 
 CORBA::Boolean
 TAO_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
 {
-  return evaluator.evaluate_constraint (this->root_);
+  return evaluator.evaluate_constraint (this->root_.get ());
 }
 
 TAO_Preference_Interpreter::TAO_Preference_Interpreter (
@@ -75,16 +79,18 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
 
   if (TAO_Interpreter::is_empty_string (preference))
     {
-      ACE_NEW_THROW_EX (this->root_,
+      TAO_Constraint* root {};
+      ACE_NEW_THROW_EX (root,
                         TAO_Noop_Constraint (TAO_FIRST),
                         CORBA::NO_MEMORY ());
+      this->root_.reset (root);
     }
   else
     {
       if (this->build_tree (preference) != 0)
         throw CosTrading::Lookup::IllegalPreference (preference);
 
-      if (type_checker.validate (this->root_) == -1)
+      if (type_checker.validate (this->root_.get ()) == -1)
         throw CosTrading::Lookup::IllegalPreference (preference);
     }
 }
@@ -96,16 +102,18 @@ TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
 {
   if (TAO_Interpreter::is_empty_string (preference))
     {
-      ACE_NEW_THROW_EX (this->root_,
+      TAO_Constraint* root {};
+      ACE_NEW_THROW_EX (root,
                         TAO_Noop_Constraint (TAO_FIRST),
                         CORBA::NO_MEMORY ());
+      this->root_.reset (root);
     }
   else
     {
       if (this->build_tree (preference) != 0)
         throw CosTrading::Lookup::IllegalPreference (preference);
 
-      if (validator.validate (this->root_) == -1)
+      if (validator.validate (this->root_.get ()) == -1)
         throw CosTrading::Lookup::IllegalPreference (preference);
     }
 }
@@ -135,7 +143,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
       pref_info.offer_id_ = offer_id;
       pref_info.evaluated_ = true;
 
-      if (evaluator.evaluate_preference (this->root_, pref_info.value_) == 0)
+      if (evaluator.evaluate_preference (this->root_.get (), pref_info.value_) == 0)
         {
           // If the evaluation succeeds, insert the node into the
           // correct place in the queue.

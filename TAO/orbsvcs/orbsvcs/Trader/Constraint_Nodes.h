@@ -18,6 +18,8 @@
 
 #include "orbsvcs/Trader/trading_serv_export.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning (disable:4250)
@@ -140,8 +142,8 @@ private:
   TAO_Expression_Type op_;
 
   /// The operands of the expression
-  TAO_Constraint* left_;
-  TAO_Constraint* right_;
+  std::unique_ptr<TAO_Constraint> left_;
+  std::unique_ptr<TAO_Constraint> right_;
 };
 
 /**
@@ -175,7 +177,7 @@ private:
   TAO_Expression_Type op_;
 
   /// The operand of the expression
-  TAO_Constraint* operand_;
+  std::unique_ptr<TAO_Constraint> operand_;
 };
 
 /**

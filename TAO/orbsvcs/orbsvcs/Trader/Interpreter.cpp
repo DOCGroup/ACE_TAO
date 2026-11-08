@@ -6,15 +6,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
-TAO_Interpreter::TAO_Interpreter ()
-  : root_ (nullptr)
-{
-}
+TAO_Interpreter::TAO_Interpreter () = default;
 
-TAO_Interpreter::~TAO_Interpreter ()
-{
-  delete root_;
-}
+TAO_Interpreter::~TAO_Interpreter () = default;
 
 int
 TAO_Interpreter::build_tree (const char* constraints)
@@ -31,12 +25,12 @@ TAO_Interpreter::build_tree (const char* constraints)
   return_value = ::yyparse ();
 
   if (return_value == 0 && yyval.constraint_ != nullptr)
-    this->root_ = yyval.constraint_;
+    this->root_.reset (yyval.constraint_);
   else
     {
       while (yylex () > 0)
         continue;
-      this->root_ = nullptr;
+      this->root_.reset ();
     }
 
   return return_value;
