@@ -8,18 +8,18 @@
 #include "ace/Profile_Timer.h"
 #include "../Latency_Stats.h"
 
-static size_t number_of_messages = 100;
-static size_t message_size = 100;
-static size_t number_of_threads = 10;
-static size_t burst_size = 10;
-static size_t timeout_between_bursts = 1;
+static size_t number_of_messages {100};
+static size_t message_size {100};
+static size_t number_of_threads {10};
+static size_t burst_size {10};
+static size_t timeout_between_bursts {1};
 
-static size_t leader_available = 0;
-static size_t messages_in_this_burst = 0;
-static size_t total_messages_consumed = 0;
-static size_t burst = 1;
+static bool leader_available {};
+static size_t messages_in_this_burst {};
+static size_t total_messages_consumed {};
+static size_t burst {1};
 
-static ACE_hrtime_t start_of_burst;
+static ACE_hrtime_t start_of_burst {};
 
 enum DEBUGGING_RANGE
 {
@@ -28,7 +28,7 @@ enum DEBUGGING_RANGE
   PRINT_INDIVIDUAL_LATENCY = 2
 };
 
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUG_NONE};
 
 using TASK = ACE_Task<ACE_SYNCH>;
 
@@ -45,6 +45,12 @@ public:
 
   Latency_Stats latency_stats_;
   Throughput_Stats throughput_stats_;
+
+private:
+  Leader_Follower_Task (Leader_Follower_Task const &) = delete;
+  Leader_Follower_Task &operator= (Leader_Follower_Task const &) = delete;
+  Leader_Follower_Task (Leader_Follower_Task &&) = delete;
+  Leader_Follower_Task &operator= (Leader_Follower_Task &&) = delete;
 };
 
 Leader_Follower_Task::Leader_Follower_Task (ACE_SYNCH_MUTEX &mutex,
@@ -77,7 +83,7 @@ Leader_Follower_Task::svc ()
           }
 
         // I am the leader.
-        leader_available = 1;
+        leader_available = true;
 
         //
         // We are letting go of the leader follower lock before going
@@ -90,10 +96,10 @@ Leader_Follower_Task::svc ()
       // since we are the only leader.
       //
 
-      int exit_loop = 0;
+      bool exit_loop {};
       if (number_of_messages == 0)
         {
-          exit_loop = 1;
+          exit_loop = true;
         }
       else
         {
@@ -136,7 +142,7 @@ Leader_Follower_Task::svc ()
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
         // I am no longer the leader.
-        leader_available = 0;
+        leader_available = false;
 
         // Wake up a follower.
         this->condition_.signal ();
@@ -242,7 +248,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SYNCH_CONDITION condition (mutex);
 
   // Leader Followers.
-  Leader_Follower_Task **leader_followers = 0;
+  // Keep task construction inside the timed section; this benchmark measures
+  // task creation and activation as well as message handling.
+  Leader_Follower_Task **leader_followers {};
   ACE_NEW_RETURN (leader_followers,
                   Leader_Follower_Task *[number_of_threads],
                   -1);

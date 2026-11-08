@@ -12,30 +12,28 @@
 #include "ace/Profile_Timer.h"
 
 // Number of messages that are used in this experiment
-static size_t number_of_messages = 1000;
+static size_t number_of_messages {1000};
 
 // Number of messages that are used in this experiment
-static size_t number_of_messages_left = 0;
+static size_t number_of_messages_left {};
 
 // Number of threads used in this experiment
-static size_t number_of_threads = 2;
+static size_t number_of_threads {2};
 
 // Global variable for the availability of the leader
-static size_t leader_available = 0;
+static bool leader_available {};
 
 // Number of threads that are ready to go/dispatch
-static size_t ready_threads = 0;
+static size_t ready_threads {};
 
 // Work in the upcall
-static size_t message_size = 100;
+static size_t message_size {100};
 
 // Debugging condition
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUG_NONE};
 
 // Timer for the test
 ACE_High_Res_Timer test_timer;
-
-
 
 /*******************************************************************/
 // Constructor for Synchronisers
@@ -169,7 +167,7 @@ Leader_Follower_Task::svc ()
           }
 
         // I am the leader.
-        leader_available = 1;
+        leader_available = true;
 
         //
         // We are letting go of the leader follower lock before going
@@ -182,10 +180,10 @@ Leader_Follower_Task::svc ()
       // since we are the only leader.
       //
 
-      int exit_loop = 0;
+      bool exit_loop {};
       if (number_of_messages_left == 0)
         {
-          exit_loop = 1;
+          exit_loop = true;
         }
       else
         {
@@ -206,7 +204,7 @@ Leader_Follower_Task::svc ()
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->synch_.mutex_, -1);
 
         // I am no longer the leader.
-        leader_available = 0;
+        leader_available = false;
 
         // Wake up a follower.
         this->synch_.condition_.signal ();
@@ -295,7 +293,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_High_Res_Timer::calibrate ();
 
   // Leader Followers.
-  Leader_Follower_Task **leader_followers = 0;
+  // Keep task ownership explicit: failed activation can leave workers waiting
+  // at the fixed-size startup barrier, so this path returns without deleting
+  // task objects still referenced by those workers.
+  Leader_Follower_Task **leader_followers {};
   ACE_NEW_RETURN (leader_followers,
                   Leader_Follower_Task *[number_of_threads],
                   -1);
@@ -352,7 +353,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_hrtime_t elapsed_time = 0;
+  ACE_hrtime_t elapsed_time {};
 
   test_timer.elapsed_time (elapsed_time);
 

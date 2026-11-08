@@ -53,6 +53,11 @@ public:
   int  end_synchronization ();
 
 private:
+  Synchronisers (Synchronisers const &) = delete;
+  Synchronisers &operator= (Synchronisers const &) = delete;
+  Synchronisers (Synchronisers &&) = delete;
+  Synchronisers &operator= (Synchronisers &&) = delete;
+
   /// The mutex and condition variable that is used for
   /// synchronisation.
   ACE_SYNCH_MUTEX mutex_;
@@ -79,7 +84,7 @@ class Leader_Follower_Task : public ACE_Task_Base
 {
 public:
   /// Ctor with a mutex and a condition variable
-  Leader_Follower_Task (Synchronisers &synch);
+  explicit Leader_Follower_Task (Synchronisers &synch);
 
   /// Messages consumed
   int processed ();
@@ -93,6 +98,11 @@ private:
 
   /// Our reference to the synchroniser
   Synchronisers &synch_;
+
+  Leader_Follower_Task (Leader_Follower_Task const &) = delete;
+  Leader_Follower_Task &operator= (Leader_Follower_Task const &) = delete;
+  Leader_Follower_Task (Leader_Follower_Task &&) = delete;
+  Leader_Follower_Task &operator= (Leader_Follower_Task &&) = delete;
 };
 
 #endif /*ACE_HAS_THREADS*/
