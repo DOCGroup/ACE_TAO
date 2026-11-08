@@ -33,7 +33,7 @@
 #include "ace/os_include/os_netdb.h"
 
 // Change to non-zero if test fails
-static int Test_Result = 0;
+static int Test_Result {};
 
 // In test 3, a large amount of data is sent. The purpose is to overflow the
 // TCP send window, causing the sender to block (it's a send_n). This value
@@ -46,7 +46,7 @@ const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 unsigned port = 8088;
-const ACE_TCHAR *notifier_file = 0;
+const ACE_TCHAR *notifier_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -111,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
               server_addr.get_port_number ()));
 
-  if (notifier_file != 0)
+  if (notifier_file != nullptr)
     {
       FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
       const char *msg = "server ready";
@@ -149,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) Got sock_stream[1], handle = %d\n"),
               sock_stream[1].get_handle()));
-  int res = 0;
+  int res {};
   while ((res = channel1.pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,

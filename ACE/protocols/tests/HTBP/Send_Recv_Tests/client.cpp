@@ -31,14 +31,14 @@
 #include "ace/OS_NS_sys_socket.h"
 
 // Change to non-zero if test fails
-static int Test_Result = 0;
+static int Test_Result {};
 
 const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
-const ACE_TCHAR * remote_host = 0;
-const ACE_TCHAR * config_file = 0;
+const ACE_TCHAR * remote_host {};
+const ACE_TCHAR * config_file {};
 unsigned remote_port = 8088;
 
 int
@@ -81,18 +81,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (parse_args(argc, argv) != 0)
     return 1;
-  if (remote_host == 0)
+  if (remote_host == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Client: No remote host specified\n")),1);
 
   ACE::HTBP::Environment env;
-  if (config_file != 0)
+  if (config_file != nullptr)
     env.import_config (config_file);
 
   ACE::HTBP::ID_Requestor req (&env);
   ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
 
-  unsigned proxy_port = 0;
+  unsigned proxy_port {};
   ACE_TString proxy_host;
 
   if (env.get_proxy_port(proxy_port) != 0 ||
@@ -187,7 +187,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   u_char buffer2[255];
 
-  ssize_t total = 0;
+  ssize_t total {};
   do {
     len = stream.recv (buffer2+total, 145 - total);
     ACE_DEBUG ((LM_DEBUG,
