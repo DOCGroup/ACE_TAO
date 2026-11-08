@@ -100,7 +100,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
     {
       this->orb_ = CORBA::ORB::_duplicate (orb);
     }
-  for (size_t i = 0; i < bundle_size_; i++ )
+  for (size_t i {}; i < bundle_size_; ++i)
     {
       this->iors_[i].ref_ = CORBA::Object::_nil();
     }
@@ -361,7 +361,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       // destroyed and there will be hell to pay in memory leaks!
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
@@ -752,7 +752,7 @@ TAO_Naming_Server::fini ()
       this->ior_multicast_ = nullptr;
     }
 
-  for (size_t i = 0; i < bundle_size_; i++ )
+  for (size_t i {}; i < bundle_size_; ++i)
     {
       this->iors_[i].ref_ = CORBA::Object::_nil();
     }

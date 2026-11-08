@@ -432,7 +432,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                              this->lock_,
                              CORBA::INTERNAL ());
 
-    for (CORBA::ULong i = 0; i < n; i++)
+    for (CORBA::ULong i {}; i < n; ++i)
       {
         hash_iter->next (hash_entry);
         hash_iter->advance ();

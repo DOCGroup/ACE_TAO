@@ -137,7 +137,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
       TABLE_ENTRY *hash_entry {};
 
       // Iterate and populate the BindingList.
-      for (CORBA::ULong i = 0; i < how_many; i++)
+      for (CORBA::ULong i {}; i < how_many; ++i)
         {
           hash_iter_->next (hash_entry);
 
