@@ -26,7 +26,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
 
   for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptors)
     {
-      bool tagfound = false;
+      bool tagfound {};
       for (CORBA::ULong epx = 0; !tagfound && epx < num_endpoints; epx++)
         {
           tagfound = acceptor->tag () == endpoints_[epx]->protocol_tag();
@@ -66,9 +66,8 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
         {
           // Iterate the endpoints in the endpoint policy to see if the endpoint
           // in the profile matches.
-          CORBA::ULong ep_ndx = 0;
-          bool epmatch = false;
-          for (ep_ndx = 0; !epmatch && ep_ndx < num_endpoints; ++ep_ndx)
+          bool epmatch {};
+          for (CORBA::ULong ep_ndx {}; !epmatch && ep_ndx < num_endpoints; ++ep_ndx)
             {
               if (endpoints_[ep_ndx]->protocol_tag() != pfile->tag())
                 continue;
@@ -76,7 +75,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
               EndpointPolicy::EndpointValueBase_ptr const evb =
                 endpoints_[ep_ndx];
 
-              TAO_Endpoint_Value_Impl const* evi =
+              TAO_Endpoint_Value_Impl const* const evi =
                 dynamic_cast<TAO_Endpoint_Value_Impl const*> (evb);
 
               epmatch = evi->is_equivalent(ep_in_pfile);
@@ -87,7 +86,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
           if (!epmatch)
             {
               //Get next endpoint before removing current one.
-              TAO_Endpoint * next = ep_in_pfile->next ();
+              TAO_Endpoint * const next = ep_in_pfile->next ();
               if (TAO_debug_level > 2)
                 TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%P|%t) EndpointPolicy filter ")

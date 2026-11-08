@@ -43,7 +43,7 @@ TAO_EndpointPolicy_Factory::create_policy (
       // there are more than one protocol available to the ORB.
 
       CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
-      int prot_count = 0;
+      int prot_count {};
       for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
         {
           if (acceptor->tag () != last_known_prot)
@@ -58,12 +58,12 @@ TAO_EndpointPolicy_Factory::create_policy (
       // at least one endpoint in the list matches an endpoint the
       // ORB is listening on.
 
-      bool found_one = false;
+      bool found_one {};
       for (CORBA::ULong idx = 0; !found_one && idx < num_eps; ++idx)
         {
-          CORBA::ULong prot_tag = (*endpoint_list)[idx]->protocol_tag();
+          CORBA::ULong const prot_tag = (*endpoint_list)[idx]->protocol_tag();
 
-          TAO_Endpoint_Value_Impl const * const evi =
+          TAO_Endpoint_Value_Impl const* const evi =
             dynamic_cast <TAO_Endpoint_Value_Impl const *> (
               (*endpoint_list)[idx].in ());
 
