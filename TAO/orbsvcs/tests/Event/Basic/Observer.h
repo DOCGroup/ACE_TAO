@@ -81,25 +81,25 @@ public:
                int id);
 
   /// Destructor
-  ~EC_Observer ();
+  ~EC_Observer () override;
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable observerions
-  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
-  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args () const;
-  virtual void print_usage ();
+  void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]) override;
+  int parse_args (int& argc, ACE_TCHAR* argv[]) override;
+  void print_args () const override;
+  void print_usage () override;
 
   /// Run the suppliers, using the <thread_manager> parameter
-  void execute_test ();
-  void run_cleanup ();
+  void execute_test () override;
+  void run_cleanup () override;
 
-  void dump_results ();
+  void dump_results () override;
   void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i);
+    int i) override;
   void consumer_push (void*,
-                      const RtecEventComm::EventSet&);
+                      const RtecEventComm::EventSet&) override;
 
 private:
   EC_Master *master_;
