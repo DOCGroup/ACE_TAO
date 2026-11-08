@@ -320,7 +320,7 @@ AsyncAccessManager::notify_waiters ()
       this->report ("notify_waiters");
     }
 
-  for (size_t i = 0; i < this->rh_list_.size(); i++)
+  for (size_t i {}; i < this->rh_list_.size(); ++i)
     {
       // Sending the IOR through to the response handler could trigger
       // an exception which we should catch here and log. This way when

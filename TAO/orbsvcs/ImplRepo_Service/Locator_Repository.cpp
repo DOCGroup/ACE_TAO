@@ -268,7 +268,7 @@ ACE_CString
 Locator_Repository::lcase (const ACE_CString& s)
 {
   ACE_CString ret(s);
-  for (size_t i = 0; i < ret.length (); ++i)
+  for (size_t i {}; i < ret.length (); ++i)
     {
       ret[i] = static_cast<char> (ACE_OS::ace_tolower (s[i]));
     }
@@ -539,7 +539,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
     {
       // name is a peer to another and must be removed from other list
       bool found = false;
-      for (CORBA::ULong i = 0; i < si->alt_info_->peers.length(); i++)
+      for (CORBA::ULong i {}; i < si->alt_info_->peers.length(); ++i)
         {
           if (!found && si->poa_name == si->alt_info_->peers[i])
             {
@@ -555,7 +555,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
     }
   else if (si->peers.length () > 0)
     {
-      for (CORBA::ULong i = 0; i < si->peers.length(); i++)
+      for (CORBA::ULong i {}; i < si->peers.length(); ++i)
         {
           ACE_CString key;
           ACE_CString const peer (si->peers[i]);
@@ -578,7 +578,7 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   sync_load ();
   CORBA::ULong const len = base->peers.length();
   base->peers.length (len + p.length());
-  for (CORBA::ULong i = 0; i < p.length(); i++)
+  for (CORBA::ULong i {}; i < p.length(); ++i)
     {
       base->peers[len + i] =  p[i];
       Server_Info *si {};

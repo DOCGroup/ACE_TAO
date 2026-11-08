@@ -187,7 +187,7 @@ Replicator::handle_exception (ACE_HANDLE )
       ImplementationRepository::UpdateInfoSeq payload (len);
       payload.length (len);
       CORBA::Long p = 0;
-      for (CORBA::Long l = 0; l < len; l++)
+      for (CORBA::Long l {}; l < len; ++l)
         {
           if (this->to_send_[l].action._d () != ImplementationRepository::access ||
               this->to_send_[l].action.state () != ImplementationRepository::AAM_UPDATE_FAILED)
@@ -230,7 +230,7 @@ Replicator::send_access_state (const char *name, ImplementationRepository::AAM_S
 
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
-  for (CORBA::Long i = 0; !found && i < len; i++)
+  for (CORBA::Long i {}; !found && i < len; ++i)
     {
       if (this->to_send_[i].action._d () == ImplementationRepository::access &&
           std::strcmp (this->to_send_[i].name, name) == 0)
@@ -262,7 +262,7 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
-  for (CORBA::Long i = 0; !found && i < len; i++)
+  for (CORBA::Long i {}; !found && i < len; ++i)
     {
       if (std::strcmp (this->to_send_[i].name, info.name) == 0)
         {

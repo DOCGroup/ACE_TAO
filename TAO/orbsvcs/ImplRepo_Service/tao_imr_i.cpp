@@ -246,7 +246,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG, "  Number of retries: %d\n%C", limit - 1, locked_out));
 
 
-  for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
+  for (CORBA::ULong i {}; i < info.startup.environment.length (); ++i)
     ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %C=%C\n",
     info.startup.environment[i].name.in (),
     info.startup.environment[i].value.in ()));
@@ -926,7 +926,7 @@ TAO_IMR_Op_Autostart::run ()
       ACE_ASSERT(CORBA::is_nil (server_iter.in ()));
 
       CORBA::ULong len = server_list->length ();
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i {}; i < len; ++i)
         {
           try
             {
@@ -1154,7 +1154,7 @@ TAO_IMR_Op_List::run ()
             return TAO_IMR_Op::NORMAL;
           }
 
-          for (CORBA::ULong i = 0; i < server_list->length (); i++)
+          for (CORBA::ULong i {}; i < server_list->length (); ++i)
             this->display_server_information (server_list[i]);
 
           if (!CORBA::is_nil (server_iter.in ()))
@@ -1163,7 +1163,7 @@ TAO_IMR_Op_List::run ()
               for (bool done = false; !done; )
                 {
                   done = server_iter->next_n (this->how_many_, server_list.out());
-                  for (CORBA::ULong i = 0; i < server_list->length (); i++)
+                  for (CORBA::ULong i {}; i < server_list->length (); ++i)
                     this->display_server_information (server_list[i]);
                 }
               server_iter->destroy ();

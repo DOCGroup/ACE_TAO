@@ -572,7 +572,7 @@ ImR_Activator_i::start_server(const char* name,
                         ACE_TEXT("%") ACE_TEXT_PRIs, ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
     }
 
-  for (CORBA::ULong i = 0; i < env.length (); ++i)
+  for (CORBA::ULong i {}; i < env.length (); ++i)
     {
       proc_opts.setenv (ACE_TEXT_CHAR_TO_TCHAR (env[i].name.in ()),
                         ACE_TEXT("%") ACE_TEXT_PRIs, ACE_TEXT_CHAR_TO_TCHAR (env[i].value.in ()));

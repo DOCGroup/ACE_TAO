@@ -351,7 +351,7 @@ Options::init (int argc, ACE_TCHAR *argv[])
       return result;
     }
 
-  for (int i = 0; i < argc; ++i)
+  for (int i {}; i < argc; ++i)
     {
       this->cmdline_ += ACE_CString (ACE_TEXT_ALWAYS_CHAR(argv[i])) + ACE_CString (" ");
     }

@@ -303,7 +303,7 @@ ImR_Locator_i::shutdown
 
       int shutdown_errs = 0;
 
-      for (size_t i = 0; i < acts.size (); ++i)
+      for (size_t i {}; i < acts.size (); ++i)
         {
           try
             {
@@ -792,7 +792,7 @@ ImR_Locator_i::add_or_update_server
                       options.start_limit
                       ));
 
-      for (CORBA::ULong i = 0; i < options.environment.length (); ++i)
+      for (CORBA::ULong i {}; i < options.environment.length (); ++i)
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Environment variable <%C>=<%C>\n"),
                         options.environment[i].name.in (),
                         options.environment[i].value.in ()));
@@ -827,7 +827,7 @@ ImR_Locator_i::link_servers
       return;
     }
 
-  for (CORBA::ULong i = 0; i < peers.length(); i++)
+  for (CORBA::ULong i {}; i < peers.length(); ++i)
     {
       ACE_CString peer(peers[i]);
       Server_Info_Ptr si = this->repository_->get_active_server (peer);

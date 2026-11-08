@@ -614,7 +614,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
         {
           const ACE_Vector<ACE_TString>& filenames = listings->filenames();
           size_t const sz = filenames.size ();
-          for (CORBA::ULong i = 0; i < sz; ++i)
+          for (CORBA::ULong i {}; i < sz; ++i)
             {
               if (this->opts_.debug() > 9)
                 {
@@ -667,7 +667,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) persistent_load %d files\n"), sz));
     }
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       const ACE_TString& fname = filenames[i];
       Lockable_File file(fname, O_RDONLY);
@@ -989,7 +989,7 @@ Shared_Backing_Store::updates_available
   if (seq_gap)
     {
       bool found = false;
-      for (CORBA::Long i = 0; !found && i < len; i++)
+      for (CORBA::Long i {}; !found && i < len; ++i)
         {
           if (this->updates_[i].action._d () == ImplementationRepository::repo_update)
             {
@@ -1007,7 +1007,7 @@ Shared_Backing_Store::updates_available
           this->updates_[len++].action.info (rinfo);
         }
     }
-  for (CORBA::ULong i = 0; i < info.length (); i++)
+  for (CORBA::ULong i {}; i < info.length (); ++i)
     {
       if (info[i].action._d () == ImplementationRepository::access || !seq_gap)
         {
@@ -1035,7 +1035,7 @@ Shared_Backing_Store::process_updates ()
   //  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->sync_lock_);
   this->notified_ = false;
   this->sync_needed_ = NO_SYNC;
-  for (CORBA::ULong i = 0; i < this->updates_.length (); i++)
+  for (CORBA::ULong i {}; i < this->updates_.length (); ++i)
     {
       ImplementationRepository::UpdateInfo &entity = this->updates_[i];
       switch (entity.action._d ())

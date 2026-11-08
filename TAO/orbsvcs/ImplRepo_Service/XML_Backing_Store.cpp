@@ -146,7 +146,7 @@ XML_Backing_Store::persist (FILE* fp,
   if (elen + plen > 0)
     {
       ACE_OS::fprintf (fp,">\n");
-      for (CORBA::ULong i = 0; i < elen; ++i)
+      for (CORBA::ULong i {}; i < elen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::ENVIRONMENT_TAG);
@@ -155,7 +155,7 @@ XML_Backing_Store::persist (FILE* fp,
           ACE_OS::fprintf (fp," value=\"%s\"", val.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
-      for (CORBA::ULong i = 0; i < plen; ++i)
+      for (CORBA::ULong i {}; i < plen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::PEER_TAG);

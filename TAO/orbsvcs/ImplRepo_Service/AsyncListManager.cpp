@@ -50,7 +50,7 @@ AsyncListManager::init_list ()
   Locator_Repository::SIMap::CONST_ITERATOR it (this->repo_->servers ());
   this->server_list_.length (len);
   this->waiters_ = 0;
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       it.next (entry);
       it.advance ();
@@ -168,7 +168,7 @@ AsyncListManager::final_state ()
   if (this->first_ > 0 || this->how_many_ < len)
     {
       alt_list.length (this->how_many_);
-      for (CORBA::ULong i = 0; i < this->how_many_; i++)
+      for (CORBA::ULong i {}; i < this->how_many_; ++i)
         {
           alt_list[i] = this->server_list_[i + this->first_];
         }

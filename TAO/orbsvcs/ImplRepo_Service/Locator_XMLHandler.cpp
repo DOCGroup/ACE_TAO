@@ -41,7 +41,7 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i].name = ACE_TEXT_ALWAYS_CHAR (in[i].name.c_str ());
       out[i].value = ACE_TEXT_ALWAYS_CHAR (in[i].value.c_str ());
@@ -53,7 +53,7 @@ static void convertPeerList (const Locator_XMLHandler::PeerList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i] = in[i].c_str ();
     }
