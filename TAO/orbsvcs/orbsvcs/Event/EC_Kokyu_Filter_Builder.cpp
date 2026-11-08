@@ -200,7 +200,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
-      for (CORBA::ULong i = 0; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
@@ -242,7 +242,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
-      for (CORBA::ULong i = 0; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
@@ -385,7 +385,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
       pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
-      for (CORBA::ULong i = 0; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           ACE_CString child_name;
           this->recursive_name (qos, pos,
@@ -407,7 +407,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
       pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
-      for (CORBA::ULong i = 0; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           ACE_CString child_name;
 

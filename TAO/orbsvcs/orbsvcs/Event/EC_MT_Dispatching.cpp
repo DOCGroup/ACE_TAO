@@ -54,7 +54,7 @@ TAO_EC_MT_Dispatching::shutdown ()
   if (!this->active_)
     return;
 
-  for (int i = 0; i < this->nthreads_; ++i)
+  for (int i {}; i < this->nthreads_; ++i)
     {
       this->task_.putq (new TAO_EC_Shutdown_Task_Command);
     }

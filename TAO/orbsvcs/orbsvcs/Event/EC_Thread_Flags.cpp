@@ -76,7 +76,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
       else
         {
           int found = 0;
-          for (size_t i = 0; !found && i < num_flags; ++i)
+          for (size_t i {}; !found && i < num_flags; ++i)
             {
               if (ACE_OS::strcasecmp (tok, supported_flags_[i].n) == 0)
                 {

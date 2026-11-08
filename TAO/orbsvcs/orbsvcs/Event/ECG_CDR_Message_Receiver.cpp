@@ -52,7 +52,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
       this->own_received_fragments_ = true;
     }
 
-  for (CORBA::ULong i = 0; i < this->received_fragments_size_; ++i)
+  for (CORBA::ULong i {}; i < this->received_fragments_size_; ++i)
     this->received_fragments_[i] = 0;
   CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
   CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
@@ -108,7 +108,7 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
 int
 TAO_ECG_UDP_Request_Entry::complete () const
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->received_fragments_size_;
        ++i)
     {
@@ -142,7 +142,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
   this->id_range_high_ = size - 1;
   this->min_purge_count_ = min_purge_count;
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       this->fragmented_requests_[i] = nullptr;
     }
@@ -152,7 +152,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
 
 TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
 {
-  for (size_t i = 0; i < this->size_; ++i)
+  for (size_t i {}; i < this->size_; ++i)
     {
       TAO_ECG_UDP_Request_Entry* request =
         this->fragmented_requests_[i];
@@ -570,7 +570,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
 
       unsigned char *crcparts = (unsigned char *)(&this->crc);
 
-      for (int cnt=0; cnt != 4; ++cnt)
+      for (int cnt {}; cnt != 4; ++cnt)
         {
           crcparts[cnt] = padding[cnt];
         }

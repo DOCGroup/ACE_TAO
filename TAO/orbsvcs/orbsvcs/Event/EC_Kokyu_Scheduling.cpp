@@ -18,7 +18,7 @@ TAO_EC_Kokyu_Scheduling::add_proxy_supplier_dependencies (
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
 
-  for (CORBA::ULong i = 0; i < qos.publications.length (); ++i)
+  for (CORBA::ULong i {}; i < qos.publications.length (); ++i)
     {
       const RtecEventComm::EventHeader &header =
         qos.publications[i].event.header;
@@ -46,7 +46,7 @@ TAO_EC_Kokyu_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
   RtecEventChannelAdmin::SupplierQOS qos =
     consumer->publications ();
 
-  for (CORBA::ULong j = 0; j != event.length (); ++j)
+  for (CORBA::ULong j {}; j != event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
@@ -55,7 +55,7 @@ TAO_EC_Kokyu_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
 
       TAO_EC_QOS_Info qos_info;
 
-      for (CORBA::ULong i = 0; i != qos.publications.length (); ++i)
+      for (CORBA::ULong i {}; i != qos.publications.length (); ++i)
         {
           const RtecEventComm::EventHeader &qos_header =
             qos.publications[i].event.header;

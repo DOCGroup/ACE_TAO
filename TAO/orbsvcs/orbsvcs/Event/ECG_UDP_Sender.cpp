@@ -164,7 +164,7 @@ TAO_ECG_UDP_Sender::push (RtecEventComm::EventSet const &events)
   // Send each event in a separate message.
   // @@ TODO It is interesting to group events destined to the
   // same mcast group in a single message.
-  for (u_int i = 0; i < events.length (); ++i)
+  for (u_int i {}; i < events.length (); ++i)
     {
       // To avoid loops we keep a TTL field on the events and skip the
       // events with TTL <= 0

@@ -215,14 +215,14 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
          crc = ACE::crc32 (iov, iovcnt);
          crc = ACE_HTONL (crc);
        }
-     for (int cnt=0; cnt<4; ++cnt)
+     for (int cnt {}; cnt<4; ++cnt)
        {
          padding[cnt] = crc_parts[cnt];
        }
    }
    else
    {
-     for (int cnt=0; cnt<4; ++cnt)
+     for (int cnt {}; cnt<4; ++cnt)
      {
        padding[cnt] = 0;
      }
@@ -237,7 +237,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
                                    iovcnt,
                                    addr);
   size_t expected_n = 0;
-  for (int i = 0; i < iovcnt; ++i)
+  for (int i {}; i < iovcnt; ++i)
     expected_n += iov[i].iov_len;
   if (n > 0 && size_t(n) != expected_n)
     {

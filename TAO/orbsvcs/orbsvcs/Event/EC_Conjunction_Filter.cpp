@@ -119,7 +119,7 @@ TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
   CORBA::ULong n = event.length ();
   CORBA::ULong l = this->event_.length ();
   this->event_.length (l + n);
-  for (CORBA::ULong i = 0; i != n; ++i)
+  for (CORBA::ULong i {}; i != n; ++i)
     {
       this->event_[l + i] = event[i];
     }

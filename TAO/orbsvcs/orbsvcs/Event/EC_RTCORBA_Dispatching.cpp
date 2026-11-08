@@ -14,7 +14,7 @@ TAO_EC_RTCORBA_Dispatching::
 {
   CORBA::ULong number_lanes = this->lanes_.length ();
   ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task[number_lanes]);
-  for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     this->tasks_[i].thr_mgr (&this->thread_manager_);
 }
 
@@ -26,7 +26,7 @@ TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching ()
 void
 TAO_EC_RTCORBA_Dispatching::activate ()
 {
-  for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     {
       CORBA::ULong nthreads = this->lanes_[i].static_threads;
       if (nthreads == 0)
@@ -49,13 +49,13 @@ TAO_EC_RTCORBA_Dispatching::activate ()
 void
 TAO_EC_RTCORBA_Dispatching::shutdown ()
 {
-  for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     {
       int nthreads =
         this->thread_manager_.num_threads_in_task (&this->tasks_[i]);
       if (nthreads <= 0)
         continue;
-      for (int j = 0; j != nthreads; ++j)
+      for (int j {}; j != nthreads; ++j)
         {
           this->tasks_[i].putq (new TAO_EC_Shutdown_Task_Command);
         }
@@ -82,7 +82,7 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   RTCORBA::Priority current_priority =
     this->current_->the_priority ();
 
-  for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     {
       if (this->lanes_[i].lane_priority != current_priority)
         continue;

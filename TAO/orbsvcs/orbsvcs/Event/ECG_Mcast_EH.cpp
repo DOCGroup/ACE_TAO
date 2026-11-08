@@ -96,7 +96,7 @@ TAO_ECG_Mcast_EH::shutdown ()
 
   // Deregister from reactor, close and clean up sockets.
   size_t const subscriptions_size = this->subscriptions_.size ();
-  for (size_t i = 0; i != subscriptions_size; ++i)
+  for (size_t i {}; i != subscriptions_size; ++i)
     {
       (void) this->reactor ()->remove_handler (
                                this->subscriptions_[i].dgram->get_handle (),
@@ -113,7 +113,7 @@ int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
   size_t const subscriptions_size = this->subscriptions_.size ();
-  for (size_t i = 0; i != subscriptions_size; ++i)
+  for (size_t i {}; i != subscriptions_size; ++i)
     {
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
       if (socket->get_handle () == fd)
@@ -144,7 +144,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
     Address_Set& multicast_addresses)
 {
   CORBA::ULong count = sub.dependencies.length ();
-  for (CORBA::ULong i = 0; i != count; ++i)
+  for (CORBA::ULong i {}; i != count; ++i)
     {
       RtecEventComm::EventHeader const &header =
                            sub.dependencies[i].event.header;
@@ -194,7 +194,7 @@ int
 TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
     Address_Set& multicast_addresses)
 {
-  for (size_t i = 0; i < this->subscriptions_.size (); ++i)
+  for (size_t i {}; i < this->subscriptions_.size (); ++i)
     {
       ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
       if (multicast_addresses.find (multicast_group))

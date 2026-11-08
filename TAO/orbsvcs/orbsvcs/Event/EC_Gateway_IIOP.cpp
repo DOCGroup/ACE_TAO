@@ -255,7 +255,7 @@ TAO_EC_Gateway_IIOP::open_i (
   // Change the RT_Info in the consumer QoS.
   // On the same loop we discover the subscriptions by event source,
   // and fill the consumer proxy map if we have to use this map.
-  for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
+  for (CORBA::ULong i {}; i < sub.dependencies.length (); ++i)
     {
       sub.dependencies[i].rt_info = this->supplier_info_;
 
@@ -313,7 +313,7 @@ TAO_EC_Gateway_IIOP::open_i (
           int c = 0;
 
           RtecEventComm::EventSourceID sid = (*j).ext_id_;
-          for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
+          for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
             {
               RtecEventComm::EventHeader const &h =
                 sub.dependencies[k].event.header;
@@ -350,7 +350,7 @@ TAO_EC_Gateway_IIOP::open_i (
   pub.publications.length (sub.dependencies.length () + 1);
   pub.is_gateway = true;
   int c = 0;
-  for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
+  for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
     {
       RtecEventComm::EventHeader const &h =
         sub.dependencies[k].event.header;
@@ -455,7 +455,7 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
   // modification without it and only compact the necessary events.
   RtecEventComm::EventSet out (1);
   out.length (1);
-  for (CORBA::ULong i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       if (this->use_ttl_ == 1)
         {

@@ -154,7 +154,7 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
   int size = this->create_observer_list (tmp);
   std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
-  for (int i = 0; i != size; ++i)
+  for (int i {}; i != size; ++i)
     {
       try
         {
@@ -196,7 +196,7 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
   int size = this->create_observer_list (tmp);
   std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
-  for (int i = 0; i != size; ++i)
+  for (int i {}; i != size; ++i)
     {
       try
         {
@@ -386,7 +386,7 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
     supplier->subscriptions ();
   if (sub.is_gateway)
     return;
-  for (CORBA::ULong j = 0; j < sub.dependencies.length (); ++j)
+  for (CORBA::ULong j {}; j < sub.dependencies.length (); ++j)
     {
       const RtecEventComm::Event& event =
         sub.dependencies[j].event;
@@ -407,7 +407,7 @@ TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer)
     consumer->publications ();
   if (pub.is_gateway)
     return;
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+  for (CORBA::ULong j {}; j < pub.publications.length (); ++j)
     {
       const RtecEventComm::Event& event =
         pub.publications[j].event;

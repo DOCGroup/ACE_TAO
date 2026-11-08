@@ -40,7 +40,7 @@ TAO_EC_Priority_Dispatching::activate ()
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
-  for (int i = 0; i < this->ntasks_; ++i)
+  for (int i {}; i < this->ntasks_; ++i)
     {
       try
         {
@@ -91,7 +91,7 @@ TAO_EC_Priority_Dispatching::shutdown ()
   if (this->tasks_.empty ())
     return;
 
-  for (int i = 0; i < this->ntasks_; ++i)
+  for (int i {}; i < this->ntasks_; ++i)
     this->tasks_[i]->putq (new TAO_EC_Shutdown_Task_Command);
 
   this->thread_manager_.wait ();

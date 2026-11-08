@@ -19,7 +19,7 @@ TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                         TAO_EC_ProxyPushConsumer *,
                                         TAO_EC_Supplier_Filter *filter)
 {
-  for (CORBA::ULong j = 0; j < event.length (); ++j)
+  for (CORBA::ULong j {}; j < event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =

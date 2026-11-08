@@ -125,7 +125,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i {}; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
