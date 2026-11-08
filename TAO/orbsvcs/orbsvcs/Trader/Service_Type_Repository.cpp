@@ -25,8 +25,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository ()
          service_map_iterator.done () == 0;
          service_map_iterator++)
       {
-        Type_Info* type_info = (*service_map_iterator).int_id_;
-        delete type_info;
+        std::unique_ptr<Type_Info> type_info ((*service_map_iterator).int_id_);
       }
   }
 }
@@ -141,7 +140,7 @@ TAO_Service_Type_Repository::remove_type (const char *name)
 
   // Remove the type from the map.
   this->type_map_.unbind (type_entry);
-  delete type_info;
+  std::unique_ptr<Type_Info> type_info_owner (type_info);
 }
 
 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
@@ -566,6 +565,7 @@ update_type_map (const char *name,
   Type_Info* type {};
   ACE_NEW (type,
            Type_Info);
+  std::unique_ptr<Type_Info> type_owner (type);
 
   type->type_struct_.props = props;
   type->type_struct_.if_name = if_name;
@@ -588,7 +588,13 @@ update_type_map (const char *name,
                                     1);
   */
   CORBA::String_var type_name (name);
-  this->type_map_.bind (type_name, type);
+  int const bind_result = this->type_map_.bind (type_name, type_owner.get ());
+  if (bind_result == -1)
+    throw CORBA::NO_MEMORY ();
+  else if (bind_result != 0)
+    throw CORBA::INTERNAL ();
+
+  type_owner.release ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
