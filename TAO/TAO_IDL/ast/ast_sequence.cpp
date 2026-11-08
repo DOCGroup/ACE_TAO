@@ -111,7 +111,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   if (bnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (bt);
+      AST_Param_Holder * const ph = dynamic_cast<AST_Param_Holder*> (bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -174,7 +174,7 @@ AST_Sequence::in_recursion (std::vector<AST_Type *> &list)
 
   if (nt == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
+      AST_Typedef * const td = dynamic_cast<AST_Typedef*> (type);
       type = td->primitive_base_type ();
       nt = type->node_type ();
     }
@@ -212,11 +212,11 @@ void
 AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "sequence <");
-  AST_Annotation_Appls::iterator i,
-    finished = base_type_annotations ().end ();
+  AST_Annotation_Appls::iterator i;
+  AST_Annotation_Appls::iterator const finished = base_type_annotations ().end ();
   for (i = base_type_annotations ().begin (); i != finished; ++i)
     {
-      AST_Annotation_Appl *a = i->get ();
+      AST_Annotation_Appl * const a = i->get ();
       a->dump (o);
       dump_i (o, " ");
     }
@@ -252,8 +252,8 @@ AST_Sequence::primitive_base_type () const
   AST_Type *type_node = base_type ();
   if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
     {
-      AST_Typedef *const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
-      if (!typedef_node) return nullptr;
+      AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
+      if (typedef_node == nullptr) return nullptr;
       type_node = typedef_node->primitive_base_type ();
     }
   return type_node;

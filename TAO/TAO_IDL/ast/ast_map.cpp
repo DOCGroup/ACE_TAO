@@ -115,7 +115,7 @@ AST_Map::AST_Map (AST_Expression *ms,
 
   if (knt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder *> (key_bt);
+      AST_Param_Holder * const ph = dynamic_cast<AST_Param_Holder *> (key_bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -133,7 +133,7 @@ AST_Map::AST_Map (AST_Expression *ms,
 
   if (vnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (val_bt);
+      AST_Param_Holder * const ph = dynamic_cast<AST_Param_Holder*> (val_bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -211,14 +211,14 @@ AST_Map::in_recursion (std::vector<AST_Type *> &list)
 
   if (kt == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = dynamic_cast<AST_Typedef*> (key_type);
+      AST_Typedef * const td = dynamic_cast<AST_Typedef*> (key_type);
       key_type = td->primitive_base_type ();
       kt = key_type->node_type ();
     }
 
   if (vt == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = dynamic_cast<AST_Typedef*>(val_type);
+      AST_Typedef * const td = dynamic_cast<AST_Typedef*>(val_type);
       val_type = td->primitive_base_type();
       vt = val_type->node_type();
     }
@@ -264,7 +264,7 @@ AST_Map::dump (ACE_OSTREAM_TYPE &o)
     finished = key_type_annotations ().end ();
   for (i = key_type_annotations ().begin (); i != finished; ++i)
     {
-      AST_Annotation_Appl *a = i->get ();
+      AST_Annotation_Appl * const a = i->get ();
       a->dump (o);
       dump_i (o, " ");
     }
@@ -274,7 +274,7 @@ AST_Map::dump (ACE_OSTREAM_TYPE &o)
   finished = value_type_annotations ().end ();
   for (i = value_type_annotations ().begin (); i != finished; ++i)
     {
-      AST_Annotation_Appl *a = i->get ();
+      AST_Annotation_Appl * const a = i->get ();
       a->dump (o);
       dump_i (o, " ");
     }
@@ -316,8 +316,8 @@ AST_Map::primitive_key_type () const
   AST_Type *type_node = key_type ();
   if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
     {
-      AST_Typedef *const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
-      if (!typedef_node) return nullptr;
+      AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
+      if (typedef_node == nullptr) return nullptr;
       type_node = typedef_node->primitive_base_type ();
     }
   return type_node;
@@ -330,7 +330,7 @@ AST_Map::primitive_value_type () const
   if (type_node && type_node->node_type() == AST_Decl::NT_typedef)
     {
       AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef*>(type_node);
-      if (!typedef_node) return nullptr;
+      if (typedef_node == nullptr) return nullptr;
       type_node = typedef_node->primitive_base_type();
     }
   return type_node;
