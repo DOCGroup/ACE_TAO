@@ -12,6 +12,7 @@
 #include "ace/Configuration.h"
 #include "ace/Configuration_Import_Export.h"
 #include "ace/Singleton.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -96,7 +97,7 @@ namespace ACE
       ACE_Configuration_Section_Key htbp_key_;
 
       /// the wrapper used to import or export initialization values
-      ACE_Ini_ImpExp *imp_exp_;
+      std::unique_ptr<ACE_Ini_ImpExp> imp_exp_ {};
 
       /// We created the config instance, so we must clean it up
       bool own_config_;

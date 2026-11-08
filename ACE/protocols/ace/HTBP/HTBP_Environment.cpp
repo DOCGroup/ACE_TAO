@@ -6,7 +6,6 @@ ACE::HTBP::Environment::Environment (ACE_Configuration *config,
                                      bool using_registry,
                                      ACE_TCHAR const* persistent_file)
   : config_ (config),
-    imp_exp_ (nullptr),
     own_config_ (config != nullptr)
 {
   initialize (using_registry,
@@ -20,7 +19,6 @@ ACE::HTBP::Environment::~Environment ()
   else
     delete this->config_;
 
-  delete this->imp_exp_;
 }
 
 void
@@ -54,9 +52,11 @@ ACE::HTBP::Environment::initialize (bool use_registry,
     }
 
 
-  ACE_NEW_RETURN (this->imp_exp_,
+  ACE_Ini_ImpExp *imp_exp {};
+  ACE_NEW_RETURN (imp_exp,
                   ACE_Ini_ImpExp (*this->config_),
                   -1);
+  this->imp_exp_.reset (imp_exp);
 
   if (this->config_->open_section (config_->root_section (),
                                    ACE_TEXT("htbp"), 1,
