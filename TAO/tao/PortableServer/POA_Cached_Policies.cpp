@@ -21,7 +21,7 @@ namespace TAO
     void
     Cached_Policies::update (TAO_POA_Policy_Set &policy_set)
     {
-      for (CORBA::ULong i = 0; i < policy_set.num_policies (); i++)
+      for (CORBA::ULong i {}; i < policy_set.num_policies (); i++)
         {
           CORBA::Policy_var policy = policy_set.get_policy_by_index (i);
 

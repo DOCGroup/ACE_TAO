@@ -27,7 +27,7 @@ TAO_POA_Policy_Set::add_client_exposed_fixed_policies (
 {
   CORBA::ULong cep_index = client_exposed_policies->length ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->num_policies ();
        ++i)
     {
@@ -56,7 +56,7 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
 
   // Verify that all policies are legal for the currently loaded
   // POA extensions.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->impl_.num_policies ();
        i++)
     {

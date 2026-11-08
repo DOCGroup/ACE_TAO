@@ -885,7 +885,7 @@ TAO_Object_Adapter::release_poa_manager_factory (
 TAO_ServantBase *
 TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 {
-  for (TAO_PHandle j = 0;
+  for (TAO_PHandle j {};
        j != mp.profile_count ();
        ++j)
     {

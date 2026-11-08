@@ -28,7 +28,7 @@ TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 {
   // if -ORBUseSharedProfile is set, there may be multiple endpoints
   // per profile, even without priority.
-  for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+  for (CORBA::ULong i {}; i < mprofile.profile_count (); ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
       if (profile->encode_alternate_endpoints () == -1)

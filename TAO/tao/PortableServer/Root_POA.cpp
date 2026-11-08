@@ -1039,7 +1039,7 @@ TAO_Root_POA::add_ior_component (TAO_MProfile & mprofile,
   // Add the given tagged component to all profiles.
   const CORBA::ULong profile_count = mprofile.profile_count ();
 
-  for (CORBA::ULong i = 0; i < profile_count; ++i)
+  for (CORBA::ULong i {}; i < profile_count; ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
 
@@ -1059,7 +1059,7 @@ TAO_Root_POA::add_ior_component_to_profile (
 
   CORBA::ULong const profile_count = mprofile.profile_count ();
 
-  for (CORBA::ULong i = 0; i < profile_count; ++i)
+  for (CORBA::ULong i {}; i < profile_count; ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
 
@@ -2132,14 +2132,14 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
 
   // Add the saved tagged components methods to the profiles.
   CORBA::ULong len = this->tagged_component_.length ();
-  for (CORBA::ULong i = 0; i != len; ++i)
+  for (CORBA::ULong i {}; i != len; ++i)
     {
       this->add_ior_component (mprofile, this->tagged_component_[i]);
     }
 
   len = this->tagged_component_id_.length ();
 
-  for (CORBA::ULong k = 0; k != len; ++k)
+  for (CORBA::ULong k {}; k != len; ++k)
     {
       this->add_ior_component_to_profile (mprofile,
                                           this->tagged_component_id_[k],
