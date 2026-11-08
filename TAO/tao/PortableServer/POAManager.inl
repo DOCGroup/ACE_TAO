@@ -83,7 +83,7 @@ TAO_POA_Manager::generate_manager_id () const
   // shifting of 64 bit addresses is performed since the
   // TAO_POA_Manager object is not large enough to allow that trick.
 
-  CORBA::Long id = 0;
+  CORBA::Long id {};
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large

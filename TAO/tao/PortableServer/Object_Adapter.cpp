@@ -362,12 +362,12 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 TAO_Root_POA *&poa)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root {false};
-  CORBA::Boolean is_persistent {false};
-  CORBA::Boolean is_system_id {false};
+  CORBA::Boolean is_root {};
+  CORBA::Boolean is_persistent {};
+  CORBA::Boolean is_system_id {};
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
-  int result = 0;
+  int result {};
 
   {
     ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
@@ -450,7 +450,7 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                                         TAO_Root_POA *&poa)
 {
-  int result = 0;
+  int result {};
 
   if (root)
     {
@@ -690,7 +690,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
 
-  int result = 0;
+  int result {};
 
 #if TAO_HAS_INTERCEPTORS == 1
   TAO::ServerRequestInterceptor_Adapter *sri_adapter =

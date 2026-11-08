@@ -87,7 +87,7 @@ TAO_POAManager_Factory::list ()
 
   poamanagers->length (number_of_poamanagers);
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
        iterator != this->poamanager_set_.end ();
        ++iterator, ++index)

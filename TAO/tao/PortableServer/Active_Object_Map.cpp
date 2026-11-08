@@ -54,7 +54,7 @@ TAO_Active_Object_Map::set_system_id_size (
               break;
             }
 
-          std::size_t hint_size = 0;
+          std::size_t hint_size {};
 
           if (creation_parameters.use_active_hint_in_ids_)
             hint_size = ACE_Active_Map_Manager_Key::size ();
