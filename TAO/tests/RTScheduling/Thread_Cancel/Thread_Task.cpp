@@ -51,9 +51,9 @@ Thread_Task::svc ()
 {
   try
     {
-      char const * name = nullptr;
-      CORBA::Policy_ptr sched_param = nullptr;
-      CORBA::Policy_ptr implicit_sched_param = nullptr;
+      char const * name {};
+      CORBA::Policy_ptr sched_param {};
+      CORBA::Policy_ptr implicit_sched_param {};
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Chamber of Secrets",
