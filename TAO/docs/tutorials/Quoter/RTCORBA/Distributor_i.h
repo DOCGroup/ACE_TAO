@@ -40,7 +40,12 @@ public:
    * @param orb
    * @param policy_list The policy list use to create StockQuoter_POA.
    */
-  StockDistributor_i (RTPortableServer::POA_ptr poa);
+  explicit StockDistributor_i (RTPortableServer::POA_ptr poa);
+
+  StockDistributor_i (StockDistributor_i const &) = delete;
+  StockDistributor_i (StockDistributor_i &&) = delete;
+  StockDistributor_i &operator= (StockDistributor_i const &) = delete;
+  StockDistributor_i &operator= (StockDistributor_i &&) = delete;
 
   /// Destructor
   virtual ~StockDistributor_i ();
@@ -105,9 +110,9 @@ public:
   int svn ();
 
   /// The map that stores the subscribed StockNameConsumer object.
-  typedef std::map <std::string,
-                    std::pair <Stock::StockNameConsumer_var,
-                               RTCORBA::Priority> > CookieMap;
+  using CookieMap = std::map<std::string,
+                             std::pair<Stock::StockNameConsumer_var,
+                                       RTCORBA::Priority>>;
 
 private:
   /// Notification rate for distributor in seconds.
@@ -119,7 +124,7 @@ private:
   ACE_RW_Thread_Mutex lock_;
 
   /// The active state of the  StockDistributor object.
-  bool active_;
+  bool active_ {};
 
   /// Cache a copy of the RTCORBA::POA.
   RTPortableServer::POA_var rt_poa_;
@@ -137,10 +142,15 @@ class  StockQuoter_i
 {
 public:
   /// Constructor.
-  StockQuoter_i ();
+  StockQuoter_i () = default;
 
   /// Destructor.
-  virtual ~StockQuoter_i ();
+  virtual ~StockQuoter_i () = default;
+
+  StockQuoter_i (StockQuoter_i const &) = delete;
+  StockQuoter_i (StockQuoter_i &&) = delete;
+  StockQuoter_i &operator= (StockQuoter_i const &) = delete;
+  StockQuoter_i &operator= (StockQuoter_i &&) = delete;
 
   /**
    * Get detailed stock information.
@@ -167,7 +177,12 @@ public:
    *
    * @param orb
    */
-  StockDistributorHome_i (CORBA::ORB_ptr orb);
+  explicit StockDistributorHome_i (CORBA::ORB_ptr orb);
+
+  StockDistributorHome_i (StockDistributorHome_i const &) = delete;
+  StockDistributorHome_i (StockDistributorHome_i &&) = delete;
+  StockDistributorHome_i &operator= (StockDistributorHome_i const &) = delete;
+  StockDistributorHome_i &operator= (StockDistributorHome_i &&) = delete;
 
   /// Destructor
   virtual ~StockDistributorHome_i ();
@@ -180,8 +195,8 @@ public:
   virtual ::Stock::StockDistributor_ptr create ();
 
   virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+                             siginfo_t * = nullptr,
+                             ucontext_t * = nullptr);
 private:
   void create_distributor ();
 
@@ -197,7 +212,8 @@ private:
 
 
 // Define typedefs for our version of the stock database.
-typedef ACE_Singleton<Stock_Database<StockDistributor_i>, TAO_SYNCH_MUTEX> Stock_Database_Singleton;
+using Stock_Database_Singleton = ACE_Singleton<Stock_Database<StockDistributor_i>,
+                                               TAO_SYNCH_MUTEX>;
 #define STOCK_DATABASE Stock_Database_Singleton::instance()
 
 #endif /* DISTRIBUTORI_H_  */

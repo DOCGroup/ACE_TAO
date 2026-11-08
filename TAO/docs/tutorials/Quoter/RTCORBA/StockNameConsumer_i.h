@@ -43,11 +43,16 @@ public:
    * @param parent The parent StockBroker object reference of the StockNameConsumer object.
    * @param stock_name The name of the stock that the parent StockBroker object need to listen to.
    */
-  Stock_StockNameConsumer_i (Stock_StockBroker_i  &context,
-                                    char const* stock_name);
+  Stock_StockNameConsumer_i (Stock_StockBroker_i &context,
+                             char const *stock_name);
 
   /// Destructor.
-  virtual ~Stock_StockNameConsumer_i ();
+  virtual ~Stock_StockNameConsumer_i () = default;
+
+  Stock_StockNameConsumer_i (Stock_StockNameConsumer_i const &) = delete;
+  Stock_StockNameConsumer_i (Stock_StockNameConsumer_i &&) = delete;
+  Stock_StockNameConsumer_i &operator= (Stock_StockNameConsumer_i const &) = delete;
+  Stock_StockNameConsumer_i &operator= (Stock_StockNameConsumer_i &&) = delete;
 
   /**
    * Push an event to the consumer.
@@ -75,9 +80,9 @@ private:
   Stock_StockBroker_i &context_;
 
   /// Name of the stock to listen to.
-  CORBA::String_var stock_name_;
+  std::string stock_name_;
 
-  Stock::Cookie_var cookie__;
+  Stock::Cookie_var cookie_value_;
 };
 
 #endif /*  STOCKNAMECONSUMER_I_H_ */

@@ -34,7 +34,12 @@ public:
    */
   Stock_StockBroker_i (CORBA::ORB_ptr orb,
                        Stock::StockDistributor_ptr dist,
-                       const char *stock_name);
+                       char const *stock_name);
+
+  Stock_StockBroker_i (Stock_StockBroker_i const &) = delete;
+  Stock_StockBroker_i (Stock_StockBroker_i &&) = delete;
+  Stock_StockBroker_i &operator= (Stock_StockBroker_i const &) = delete;
+  Stock_StockBroker_i &operator= (Stock_StockBroker_i &&) = delete;
 
   /// Destructor
   virtual ~Stock_StockBroker_i ();
@@ -83,7 +88,8 @@ private:
 
   /// A StockNameConsumer servant that is used to get notification of
   /// updates.
-  Stock_StockNameConsumer_i *consumer_;
+  /// Non-owning pointer; the consumer's lifetime is managed by its child POA.
+  Stock_StockNameConsumer_i *consumer_ {};
 
   /// The distributor that we are registered with, useful for shutdown.
   Stock::StockDistributor_var distributor_;
@@ -105,7 +111,12 @@ public:
    *
    * @param orb
    */
-  Stock_StockBrokerHome_i (CORBA::ORB_ptr orb);
+  explicit Stock_StockBrokerHome_i (CORBA::ORB_ptr orb);
+
+  Stock_StockBrokerHome_i (Stock_StockBrokerHome_i const &) = delete;
+  Stock_StockBrokerHome_i (Stock_StockBrokerHome_i &&) = delete;
+  Stock_StockBrokerHome_i &operator= (Stock_StockBrokerHome_i const &) = delete;
+  Stock_StockBrokerHome_i &operator= (Stock_StockBrokerHome_i &&) = delete;
 
   /// Destructor
   virtual ~Stock_StockBrokerHome_i ();
@@ -119,12 +130,12 @@ public:
                                            const char *stock_name);
 
   virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+                             siginfo_t * = nullptr,
+                             ucontext_t * = nullptr);
 
 private:
   /// The StockDistributor object created by its home.
-  Stock::StockBroker_var broker_;
+  Stock::StockBroker_var broker_ {};
 
   /// Cache a reference to the ORB.
   CORBA::ORB_var orb_;

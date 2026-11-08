@@ -2,18 +2,11 @@
 #include "StockNameConsumer_i.h"
 #include "Broker_i.h"
 
-#include <cstring>
-
 // Implementation skeleton constructor
 Stock_StockNameConsumer_i::Stock_StockNameConsumer_i (Stock_StockBroker_i &context,
-                                                      char const* stock_name)
+                                                      char const *stock_name)
   : context_ (context),
     stock_name_ (stock_name)
-{
-}
-
-// Implementation skeleton destructor
-Stock_StockNameConsumer_i::~Stock_StockNameConsumer_i ()
 {
 }
 
@@ -23,8 +16,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
        i < the_stockname->names ().length ();
        ++i)
     {
-      if (std::strcmp (this->stock_name_.in (),
-                       the_stockname->names ()[i]) == 0)
+      if (this->stock_name_ == the_stockname->names ()[i].in ())
         {
           // Get the quoter for the connection from the <context_>.
           ACE_DEBUG ((LM_DEBUG,
@@ -50,9 +42,9 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
             {
               e._tao_print_exception ("Stock exception: invalid stock name: ");
             }
-          catch (const CORBA::Exception &ex)
+          catch (CORBA::Exception const &ex)
             {
-      ex._tao_print_exception ("Stock_StockNameConsumer_i::push_StockName: ");
+              ex._tao_print_exception ("Stock_StockNameConsumer_i::push_StockName: ");
             }
         }
     }
@@ -61,13 +53,13 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
 ::Stock::Cookie *
 Stock_StockNameConsumer_i::cookie_ ()
 {
-  return this->cookie__.in ();
+  return this->cookie_value_.in ();
 }
 
 void
 Stock_StockNameConsumer_i::cookie_ (::Stock::Cookie *cookie)
 {
-  this->cookie__ = cookie;
+  this->cookie_value_ = cookie;
   cookie->_add_ref ();
 }
 

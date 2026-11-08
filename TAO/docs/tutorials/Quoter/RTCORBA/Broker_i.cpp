@@ -12,10 +12,9 @@
 // Implementation skeleton constructor
 Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
                                           Stock::StockDistributor_ptr dist,
-                                          const char *stock_name)
+                                          char const *stock_name)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    quoter_ (Stock::StockQuoter::_nil()),
-    consumer_ (0),
+    quoter_ (Stock::StockQuoter::_nil ()),
     distributor_ (Stock::StockDistributor::_duplicate (dist))
 {
   // Get a reference to the <RTORB>.
@@ -27,7 +26,7 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   consumer_policies.length (1);
 
   // Create a <CLIENT_PROPAGATED> priority model policy.
-    consumer_policies[0] =
+  consumer_policies[0] =
       rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                             Stock::Priority_Mapping::MEDIUM);
 
@@ -39,7 +38,7 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   // Stock_StockNameConsumer_i will be activated under this POA.
   PortableServer::POA_var child_poa =
     poa->create_POA ("StockNameConsumer_POA",
-                     poa_mgr. in(),
+                     poa_mgr.in (),
                      consumer_policies);
 
   // Narrow the POA to a <RTPortableServer::POA>.
@@ -49,20 +48,18 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   // Create and activate the <consumer_>.
   this->consumer_ =
     new Stock_StockNameConsumer_i (*this, stock_name);
-  PortableServer::ServantBase_var nameconsumer_owner_transfer =
-    this->consumer_;
+  PortableServer::ServantBase_var nameconsumer_owner_transfer (this->consumer_);
   rt_poa->activate_object (this->consumer_);
 }
 
 // Implementation skeleton destructor
-Stock_StockBroker_i::~Stock_StockBroker_i ()
-{
-}
+Stock_StockBroker_i::~Stock_StockBroker_i () = default;
 
-::Stock::StockNameConsumer_ptr Stock_StockBroker_i::get_consumer_notifier ()
+::Stock::StockNameConsumer_ptr
+Stock_StockBroker_i::get_consumer_notifier ()
 {
-  Stock::StockNameConsumer_var consumer = this->consumer_->_this ();
-  return consumer._retn();
+  Stock::StockNameConsumer_var consumer (this->consumer_->_this ());
+  return consumer._retn ();
 }
 
 void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
@@ -72,7 +69,7 @@ void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
 
 ::Stock::StockQuoter_ptr Stock_StockBroker_i::disconnect_quoter_info ()
 {
-  Stock::StockQuoter_var old_quoter = this->quoter_;
+  Stock::StockQuoter_var old_quoter (this->quoter_);
   this->quoter_ = Stock::StockQuoter::_nil();
   return old_quoter._retn ();
 }
@@ -100,8 +97,7 @@ Stock_StockBroker_i::shutdown ()
 
 // Implementation skeleton constructor
 Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
-  : broker_ (0),
-    orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // Register the necessary factories and mappings with the specified
   // <orb>. If we neglect to perform these registrations then the app
@@ -126,9 +122,7 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
 }
 
 // Implementation skeleton destructor
-Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i ()
-{
-}
+Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i () = default;
 
 ::Stock::StockBroker_ptr
 Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
@@ -139,10 +133,9 @@ Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
       // Since the broker has nothing to do with any of the RTCORBA
       // mechanisms, we can activate it under the <default_POA>, which
       // is the <RootPOA>.
-      Stock_StockBroker_i *broker =
+      Stock_StockBroker_i *const broker =
         new Stock_StockBroker_i (orb_.in (), dist, stock_name);
-      PortableServer::ServantBase_var owner_transfer
-        = broker;
+      PortableServer::ServantBase_var owner_transfer (broker);
       this->broker_ = broker->_this ();
     }
 

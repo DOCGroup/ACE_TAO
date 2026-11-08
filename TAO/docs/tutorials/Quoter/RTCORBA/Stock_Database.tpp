@@ -12,14 +12,14 @@
 template <typename CALLBACK_TYPE>
 struct Map_Init
 {
-  Map_Init (typename Stock_Database<CALLBACK_TYPE>::Stock_Map &map)
+  explicit Map_Init (typename Stock_Database<CALLBACK_TYPE>::Stock_Map &map)
     : map_ (map)
   {
   }
 
-  void operator () (const typename Stock_Database<CALLBACK_TYPE>::Init_Map::value_type &item)
+  void operator () (typename Stock_Database<CALLBACK_TYPE>::Init_Map::value_type const &item)
   {
-    typename Stock_Database<CALLBACK_TYPE>::StockInfo stock_info (item.first.c_str ());
+    typename Stock_Database<CALLBACK_TYPE>::StockInfo stock_info (item.first);
 
     // If the initial value is nonzero, use that - otherwise, use a number
     // between 0 and 100
@@ -36,13 +36,13 @@ struct Map_Init
 // Stock_Database
 template <typename CALLBACK_TYPE>
 Stock_Database<CALLBACK_TYPE>::Stock_Database (u_int rate)
-  : rate_ (rate),
-    active_ (false)
+  : rate_ (rate)
 {
-  Init_Map map;
-  map["IBM"] = 0;
-  map["MSFT"] = 0;
-  map["INTEL"] = 0;
+  Init_Map const map {
+    {"IBM", 0},
+    {"MSFT", 0},
+    {"INTEL", 0}
+  };
 
   std::for_each (map.begin (),
                  map.end (),
@@ -50,19 +50,17 @@ Stock_Database<CALLBACK_TYPE>::Stock_Database (u_int rate)
 }
 
 template <typename CALLBACK_TYPE>
-Stock_Database<CALLBACK_TYPE>::Stock_Database (const char *file, u_int rate)
+Stock_Database<CALLBACK_TYPE>::Stock_Database (std::string const &file, u_int rate)
   : filename_ (file),
-    rate_ (rate),
-    active_ (false)
+    rate_ (rate)
 {
-  this->handle_signal (0, 0, 0);
+  this->handle_signal (0);
 }
 
 template <typename CALLBACK_TYPE>
-Stock_Database<CALLBACK_TYPE>::Stock_Database (const Init_Map &stockmap,
+Stock_Database<CALLBACK_TYPE>::Stock_Database (Init_Map const &stockmap,
                                                u_int rate)
-  : rate_ (rate),
-    active_ (false)
+  : rate_ (rate)
 {
   std::for_each (stockmap.begin (),
                  stockmap.end (),
@@ -72,7 +70,7 @@ Stock_Database<CALLBACK_TYPE>::Stock_Database (const Init_Map &stockmap,
 // get_stock_info
 template <typename CALLBACK_TYPE>
 typename Stock_Database<CALLBACK_TYPE>::StockInfo
-Stock_Database<CALLBACK_TYPE>::get_stock_info(const char *name)
+Stock_Database<CALLBACK_TYPE>::get_stock_info (std::string const &name)
 {
   ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex,
                          guard,
@@ -83,7 +81,7 @@ Stock_Database<CALLBACK_TYPE>::get_stock_info(const char *name)
   ACE_DEBUG ((LM_DEBUG,
               "*** message: searching the stock_map_ for the stock_name\n"));
 
-  typename Stock_Map::iterator iter = this->stock_map_.find (std::string (name));
+  typename Stock_Map::const_iterator iter = this->stock_map_.find (name);
 
   if (iter == this->stock_map_.end ())
     throw Invalid_Stock ();
@@ -100,9 +98,9 @@ Stock_Database<CALLBACK_TYPE>::register_callback (CALLBACK_TYPE &obj)
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
-  this->callbacks_[uuid.to_string ()->c_str ()] = &obj;
-
-  return uuid.to_string ()->c_str ();
+  Cookie const cookie (uuid.to_string ()->c_str ());
+  this->callbacks_[cookie] = &obj;
+  return cookie;
 }
 
 template <typename CALLBACK_TYPE>
@@ -134,8 +132,8 @@ void
 Stock_Database<CALLBACK_TYPE>::stop ()
 {
   ACE_WRITE_GUARD (ACE_RW_Thread_Mutex,
-                          guard,
-                          this->lock_);
+                   guard,
+                   this->lock_);
 
   this->active_ = false;
 }
@@ -154,14 +152,12 @@ Stock_Database<CALLBACK_TYPE>::handle_signal (int,
   std::ifstream input (this->filename_.c_str ());
 
   std::string name;
-  u_int value = 0;
+  u_int value {};
 
   typename Stock_Database<CALLBACK_TYPE>::Init_Map map;
 
-  while (input.good ())
+  while (input >> name >> value)
     {
-      input >> name;
-      input >> value;
       map[name] = value;
     }
 
