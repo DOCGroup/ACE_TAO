@@ -1,10 +1,14 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
-bool shutdown_server {};
+
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens")};
+  bool shutdown_server {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("sk:"));
   int c {};
@@ -13,10 +17,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 's':
-        shutdown_server = true;
+        options.shutdown_server = true;
         break;
       case '?':
       default:
@@ -40,11 +44,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test_var const server =
         Test::_narrow (tmp.in ());
@@ -53,14 +58,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Server reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
       server->test_method ();
       result = 0;
 
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           server->shutdown ();
         }
