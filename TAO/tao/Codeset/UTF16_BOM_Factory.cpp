@@ -36,7 +36,7 @@ TAO_UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   TAO_Codeset_Translator_Factory::init (argc, argv);
 
-  for (int narg = 0; narg < argc;)
+  for (int narg {}; narg < argc;)
   {
     int consumed = parse_one_arg (argc - narg, &argv[narg]);
     if (consumed > 0)

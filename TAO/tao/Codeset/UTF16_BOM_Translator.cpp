@@ -273,7 +273,7 @@ TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
             length -= 1;
         }
 
-      for (std::size_t i = 0; i < length; ++i)
+      for (std::size_t i {}; i < length; ++i)
 #if defined (ACE_DISABLE_SWAP_ON_READ)
         x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
 #else
@@ -309,7 +309,7 @@ TAO_UTF16_BOM_Translator::read_wchar_array (ACE_InputCDR & cdr,
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
-      for (std::size_t i = 0; i < length; ++i)
+      for (std::size_t i {}; i < length; ++i)
         if (!this->read_wchar (cdr, x[i]))
           return 0;
 
@@ -451,7 +451,7 @@ TAO_UTF16_BOM_Translator::write_wchar_array (ACE_OutputCDR & cdr,
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
-      for (std::size_t i = 0; i < length; ++i)
+      for (std::size_t i {}; i < length; ++i)
         if (this->write_wchar_i (cdr, x[i], false) == 0)
           return 0;
 
@@ -478,7 +478,7 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
 
   ACE_UTF16_T *sb = reinterpret_cast<ACE_UTF16_T *> (buf);
 
-  for (std::size_t i = 0; i < length; ++i)
+  for (std::size_t i {}; i < length; ++i)
     {
       sb[i] = static_cast<ACE_UTF16_T> (x[i]);
     }
@@ -502,7 +502,7 @@ TAO_UTF16_BOM_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
 
   ACE_UTF16_T *sb = reinterpret_cast<ACE_UTF16_T *> (buf);
 
-  for (std::size_t i = 0; i < length; ++i)
+  for (std::size_t i {}; i < length; ++i)
     {
       ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x[i]),
                        reinterpret_cast<char *> (&sb[i]));

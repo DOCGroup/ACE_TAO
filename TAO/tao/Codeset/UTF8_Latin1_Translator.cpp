@@ -169,7 +169,7 @@ TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
   if (length == 0)
     return 1;
 
-  for (std::size_t i = 0; i < length; ++i)
+  for (std::size_t i {}; i < length; ++i)
     if (!this->read_char(cdr,x[i]))
       return 0;
 
@@ -250,7 +250,7 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
   if (length == 0)
     return true;
 
-  for (std::size_t i = 0; i < length; ++i)
+  for (std::size_t i {}; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
     if (this->write_char (cdr, x[i]) == 0)
