@@ -47,7 +47,7 @@ TAO::HTIOP::Acceptor::~Acceptor ()
   this->close ();
 
   if (this->hosts_ != nullptr)
-    for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+    for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
       CORBA::string_free (this->hosts_[i]);
 }
 
@@ -89,7 +89,7 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
     return -1;
 
   // Create a profile for each acceptor endpoint.
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
       TAO::HTIOP::Profile *pfile {};
       ACE_NEW_RETURN (pfile,
@@ -132,12 +132,12 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
   TAO_Profile *pfile {};
   TAO::HTIOP::Profile *htiop_profile {};
 
   // First see if <mprofile> already contains a TAO_HTIOP profile.
-  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+  for (TAO_PHandle i {}; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == OCI_TAG_HTIOP_PROFILE)
@@ -213,7 +213,7 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == nullptr)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
       // compare the port and host name.  Please do *NOT* optimize
       // this code by comparing the IP address instead.  That would
@@ -266,7 +266,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
     }
 
   ACE_CString proxy_host;
-  unsigned proxy_port = 0;
+  unsigned proxy_port {};
 
   int rp = this->ht_env_->get_proxy_port(proxy_port);
   if (rp == 0 && proxy_port != 0)
@@ -431,7 +431,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
     return -1;
 
 
-  unsigned proxy_port = 0;
+  unsigned proxy_port {};
   if (this->inside_ == 1 ||
       (this->inside_ == -1 &&
        this->ht_env_->get_proxy_port(proxy_port) == 0 &&
@@ -534,7 +534,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
   // to work.
   u_short port = address.get_port_number ();
 
-  for (CORBA::ULong j = 0; j < this->endpoint_count_; ++j)
+  for (CORBA::ULong j {}; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
   (void) this->accept_strategy_->acceptor().enable (ACE_CLOEXEC);
@@ -545,7 +545,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
 
   if (TAO_debug_level > 5)
     {
-      for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+      for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
@@ -599,8 +599,8 @@ int
 TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                             char *&host)
 {
-  int result = 0;
-  const char *tmp {};
+  int result {};
+  char const* tmp {};
 
   // If the IP address in the INET_Addr is the INADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -642,13 +642,15 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // it.  The hostnames will then be used when creating a
   // TAO::HTIOP::Profile for each endpoint setup on the probed
   // network interfaces.
-  size_t if_cnt = 0;
+  size_t if_cnt {};
 
   ACE_INET_Addr *inet_addrs {};
 
-  if (ACE::get_ip_interfaces (if_cnt,
-                              inet_addrs) != 0
-      && errno != ENOTSUP)
+  int const result = ACE::get_ip_interfaces (if_cnt,
+                                             inet_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs { inet_addrs };
+
+  if (result != 0 && errno != ENOTSUP)
     {
       // In the case where errno == ENOTSUP, if_cnt and if_addrs will
       // not be modified, and will each remain equal to zero.  This
@@ -666,22 +668,20 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
         }
 
       if_cnt = 1; // Force the network interface count to be one.
-      delete [] inet_addrs;
+      safe_if_addrs.reset ();
+      inet_addrs = nullptr;
       ACE_NEW_RETURN (inet_addrs,
                       ACE_INET_Addr[if_cnt],
                       -1);
+      safe_if_addrs.reset (inet_addrs);
     }
 
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
-  for (size_t j = 0; j < if_cnt; ++j)
+  size_t lo_cnt {};  // Loopback interface count
+  for (size_t j {}; j < if_cnt; ++j)
     if (inet_addrs[j].is_loopback ())
       lo_cnt++;
-
-  // The instantiation for this template is in
-  // HTIOP/HTIOP_Connector.cpp.
-  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (inet_addrs);
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -708,9 +708,9 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
   // count.
-  size_t host_cnt = 0;
+  size_t host_cnt {};
 
-  for (size_t i = 0; i < if_cnt; ++i)
+  for (size_t i {}; i < if_cnt; ++i)
     {
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
@@ -789,7 +789,7 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
     }
 
   CORBA::String_var host;
-  CORBA::UShort port = 0;
+  CORBA::UShort port {};
 
   // Get host and port. No processing here too..
   if (cdr.read_string (host.out ()) == 0
@@ -829,12 +829,12 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   const char option_delimiter = '&';
 
   // Count the number of options.
-  CORBA::ULong option_count = 1;
+  CORBA::ULong option_count { 1 };
   // Number of endpoints in the string  (initialized to 1).
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       option_count++;
 
@@ -846,10 +846,10 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
+  ACE_CString::size_type begin {};
+  ACE_CString::size_type end {};
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);

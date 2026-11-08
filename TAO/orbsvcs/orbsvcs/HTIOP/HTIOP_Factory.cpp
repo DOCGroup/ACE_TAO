@@ -47,13 +47,13 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 {
   const ACE_TCHAR * config_file {};
   const ACE_TCHAR * persist_file {};
-  unsigned proxy_port = 0;
+  unsigned proxy_port {};
   const ACE_TCHAR * proxy_host {};
 
   ACE_stat statbuf;
-  int use_registry = 0;
+  bool use_registry {};
 
-  for (int i = 0; i < argc; i++)
+  for (int i {}; i < argc; i++)
     {
       if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-config")) == 0)
         {
@@ -69,7 +69,7 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-win32_reg")) == 0)
         {
-          use_registry = 1;
+          use_registry = true;
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-inside")) == 0)
         {

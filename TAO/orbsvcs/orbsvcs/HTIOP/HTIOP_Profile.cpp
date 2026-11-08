@@ -128,7 +128,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
   const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 
@@ -234,7 +234,7 @@ CORBA::ULong
 TAO::HTIOP::Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
+  CORBA::ULong hashval {};
   for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
        endp != nullptr;
        endp = endp->next_)
@@ -370,7 +370,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
   endpoints.length (this->count_);
 
   const TAO::HTIOP::Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {

@@ -312,7 +312,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
                             -1);
         }
 
-      for (size_t index = 0;
+      for (size_t index {};
            index != count;
            index++)
         {
