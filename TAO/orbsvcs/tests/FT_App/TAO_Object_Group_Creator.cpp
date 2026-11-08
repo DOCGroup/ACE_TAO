@@ -296,7 +296,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       creation_id >>= group_id;
     }
 
-    const PortableGroup::Location * first_location = 0;
+    PortableGroup::Location const *first_location {};
 
     for (CORBA::ULong nFact = 0; nFact < count; ++nFact)
     {
@@ -392,7 +392,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       }
     }
 
-    if (first_location != 0 && this->have_replication_manager_)
+    if (first_location != nullptr && this->have_replication_manager_)
     {
       group = this->replication_manager_->set_primary_member (group.in (), * first_location);
     }

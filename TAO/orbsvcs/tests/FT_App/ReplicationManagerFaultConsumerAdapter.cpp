@@ -193,7 +193,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     poa_obj.in());
 
   // Create a fault analyzer.
-  TAO::FT_FaultAnalyzer * analyzer = 0;
+  TAO::FT_FaultAnalyzer *analyzer {};
   ACE_NEW_RETURN (analyzer, TAO::FT_DefaultFaultAnalyzer (), -1);
 
   // Initialize the FaultConsumer.

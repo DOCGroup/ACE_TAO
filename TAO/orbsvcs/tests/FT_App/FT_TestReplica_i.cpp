@@ -18,6 +18,8 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <array>
+
 //////////////////
 // TestReplica_i
 
@@ -417,34 +419,31 @@ void FT_TestReplica_i::request_quit()
 
 void FT_TestReplica_i::store(long counter)
 {
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage, "w");
-  if(f != 0)
+  FILE *f = ACE_OS::fopen(this->name_persistent_storage, "w");
+  if (f != nullptr)
   {
-    unsigned char* buffer = 0;
-    ACE_NEW (buffer, unsigned char [sizeof(long)]);
+    std::array<unsigned char, sizeof (long)> buffer {};
     storeLong(buffer, 0, counter);
-    ACE_OS::fwrite(buffer, 1, sizeof(long), f);
+    ACE_OS::fwrite(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
       ACE_OS::fprintf (stdout, "%s@%s#%lu :%ld\n",
                        name_.c_str(), this->factory_->location(), this->factory_id_, counter);
     }
-    delete[] buffer;
-    buffer = 0;
   }
 }
 
 long FT_TestReplica_i::load ()
 {
   long counter = 0;
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage,"r");
-  if(f != 0)
+  FILE *f = ACE_OS::fopen(this->name_persistent_storage, "r");
+  if (f != nullptr)
   {
-    unsigned char buffer[sizeof(long)];
-    ACE_OS::fread(buffer, 1, sizeof(long), f);
+    std::array<unsigned char, sizeof (long)> buffer {};
+    ACE_OS::fread(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
-    counter = loadLong<unsigned char *>(buffer, 0);
+    counter = loadLong (buffer, 0);
   }
   return counter;
 }
