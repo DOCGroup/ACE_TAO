@@ -39,7 +39,7 @@ TAO_ZIOP_Stub::parse_policies ()
   CORBA::ULong const length = policy_list->length ();
 
   // Cache away the policies that we'll need later.
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       switch (policy_list[i]->policy_type ())
         {

@@ -432,7 +432,7 @@ TAO_ZIOP_Loader::get_compression_details(
                         Compression::CompressorId &compressor_id,
                         Compression::CompressionLevel &compression_level)
 {
-  bool use_ziop = false;
+  bool use_ziop {};
   if (!CORBA::is_nil (compression_enabling_policy))
     {
       ZIOP::CompressionEnablingPolicy_var srp =

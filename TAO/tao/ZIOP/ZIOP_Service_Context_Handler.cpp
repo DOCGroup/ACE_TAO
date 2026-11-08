@@ -115,8 +115,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
       // Put these into a sequence of policy values.
       Messaging::PolicyValueSeq policy_value_seq;
       policy_value_seq.length (0);
-      CORBA::ULong i = 0;
-      size_t length = 0;
+      CORBA::ULong i {};
+      size_t length {};
 
       // If we do have an COMPRESSION_ID_LEVEL_LIST_POLICY, place it in a slot
       if (!CORBA::is_nil (idpolicyp.in ()))
