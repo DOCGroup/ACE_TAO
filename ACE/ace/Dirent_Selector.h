@@ -36,6 +36,10 @@ class ACE_Export ACE_Dirent_Selector
 public:
   /// Constructor
   ACE_Dirent_Selector () = default;
+  ACE_Dirent_Selector (ACE_Dirent_Selector const &) = delete;
+  ACE_Dirent_Selector (ACE_Dirent_Selector &&) = delete;
+  ACE_Dirent_Selector &operator= (ACE_Dirent_Selector const &) = delete;
+  ACE_Dirent_Selector &operator= (ACE_Dirent_Selector &&) = delete;
 
   /// Destructor.
   virtual ~ACE_Dirent_Selector ();
@@ -51,12 +55,12 @@ public:
 
   /// Open the directory @a dir and populate the current list of names with
   /// directory entries that match the @a selector and @a comparator.
-  int open (const ACE_TCHAR *dir,
+  int open (ACE_TCHAR const *dir,
             ACE_SCANDIR_SELECTOR selector = nullptr,
             ACE_SCANDIR_COMPARATOR comparator = nullptr);
 
 protected:
-  /// Ptr to the namelist array.
+  /// Owns the scandir namelist and entries, released with ACE_OS allocator semantics in close().
   ACE_DIRENT **namelist_ {};
 
   /// Number of entries in the array.
