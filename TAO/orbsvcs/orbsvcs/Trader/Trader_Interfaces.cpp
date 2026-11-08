@@ -1411,6 +1411,7 @@ list_offers (CORBA::ULong how_many,
 
   TAO_Offer_Database<MAP_LOCK_TYPE>& type_map = this->trader_.offer_database ();
   TAO_Offer_Id_Iterator* offer_id_iter = type_map.retrieve_all_offer_ids ();
+  PortableServer::ServantBase_var offer_id_iter_owner = offer_id_iter;
 
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
@@ -1420,10 +1421,7 @@ list_offers (CORBA::ULong how_many,
       if (check == 1)
         {
           id_itr = offer_id_iter->_this ();
-          offer_id_iter->_remove_ref ();
         }
-      else
-        delete offer_id_iter;
     }
   else
     ids = new CosTrading::OfferIdSeq (0);
