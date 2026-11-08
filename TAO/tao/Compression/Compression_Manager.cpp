@@ -21,7 +21,7 @@ namespace TAO
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
         CORBA::ULong const length = this->factories_.length ();
 
-        for (CORBA::ULong i = 0u; i < length; ++i)
+        for (CORBA::ULong i {}; i < length; ++i)
           {
             ::Compression::CompressorId const current =
               this->factories_[i]->compressor_id ();
@@ -49,7 +49,7 @@ namespace TAO
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     CORBA::ULong const length = this->factories_.length ();
 
-    for (CORBA::ULong i = 0u; i < length; ++i)
+    for (CORBA::ULong i {}; i < length; ++i)
       {
         ::Compression::CompressorId const current =
           this->factories_[i]->compressor_id ();
@@ -79,7 +79,7 @@ namespace TAO
 
     CORBA::ULong const length = this->factories_.length ();
 
-    for (CORBA::ULong i = 0u; i < length; ++i)
+    for (CORBA::ULong i {}; i < length; ++i)
       {
         ::Compression::CompressorId const current =
           this->factories_[i]->compressor_id ();
