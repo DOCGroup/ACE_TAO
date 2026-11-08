@@ -36,7 +36,7 @@ public:
    * iterator interface to include an "initialize" and "next"
    * function!
    */
-  virtual Protocol_Record *get_next_entry () override;
+  Protocol_Record *get_next_entry () override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -45,7 +45,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry () override;
+  Protocol_Record *get_each_entry () override;
 
   /**
    * This function is used to merge the <key_name> from server

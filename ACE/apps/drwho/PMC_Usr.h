@@ -23,11 +23,11 @@ class PMC_Usr : public PM_Client
 {
 public:
   explicit PMC_Usr (char *usr_name);
-  virtual void process () override;
+  void process () override;
 
 protected:
-  virtual int encode (char *packet, int &total_bytes) override;
-  virtual int decode (char *packet, int &total_bytes) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 
 private:
   char *usr_name;

@@ -23,12 +23,12 @@ class PMC_Flo : public PM_Client
 {
 public:
   PMC_Flo ();
-  virtual void process () override;
+  void process () override;
 
 protected:
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
-  virtual int encode (char *packet, int &total_bytes) override;
-  virtual int decode (char *packet, int &total_bytes) override;
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 };
 
 #endif /* _PMC_FLO_H */

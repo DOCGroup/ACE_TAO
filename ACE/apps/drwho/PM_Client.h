@@ -25,8 +25,8 @@ public:
   PM_Client ();
   virtual ~PM_Client ();
 
-  virtual int encode (char *packet, int &total_bytes) override = 0;
-  virtual int decode (char *packet, int &total_bytes) override = 0;
+  int encode (char *packet, int &total_bytes) override = 0;
+  int decode (char *packet, int &total_bytes) override = 0;
   virtual void process ();
 
 protected:
@@ -36,7 +36,7 @@ protected:
                                          const char *key_name1,
                                          const char *key_name2 = nullptr);
 
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
 };
 
 #endif /* _PM_CLIENT_H */

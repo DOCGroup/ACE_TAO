@@ -23,15 +23,15 @@ class PMC_Ruser : public PM_Client
 {
 public:
   PMC_Ruser ();
-  virtual void process () override;
+  void process () override;
 
 protected:
   char *handle_protocol_entries (const char *cp,
                                  const char *host_name,
                                  const char * = nullptr) override;
   Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
-  virtual int encode (char *packet, int &total_bytes) override;
-  virtual int decode (char *packet, int &total_bytes) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 };
 
 #endif /* _PMC_RUSER_H */

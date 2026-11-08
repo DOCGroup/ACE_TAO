@@ -27,11 +27,11 @@ public:
   CM_Server ();
   virtual ~CM_Server ();
 
-  virtual int open (short port_number) override;
-  virtual int receive (int timeout = 0) override;
-  virtual int send () override;
-  virtual int mux (char *packet, int &packet_length) override = 0;
-  virtual int demux (char *packet, int &packet_length) override = 0;
+  int open (short port_number) override;
+  int receive (int timeout = 0) override;
+  int send () override;
+  int mux (char *packet, int &packet_length) override = 0;
+  int demux (char *packet, int &packet_length) override = 0;
 };
 
 #endif /* _CM_SERVER_H */

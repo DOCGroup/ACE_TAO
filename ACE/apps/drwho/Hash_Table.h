@@ -26,8 +26,8 @@ public:
   virtual ~Hash_Table ();
   virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) override = 0;
-  virtual Protocol_Record *get_next_entry () override;
-  virtual Protocol_Record *get_each_entry () override;
+  Protocol_Record *get_next_entry () override;
+  Protocol_Record *get_each_entry () override;
 
 protected:
   enum

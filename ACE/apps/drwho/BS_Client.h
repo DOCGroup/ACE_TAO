@@ -42,7 +42,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry () override;
+  Protocol_Record *get_each_entry () override;
 };
 
 #endif /* _BS_CLIENT_H */

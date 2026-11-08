@@ -22,13 +22,13 @@
 class PMC_All : public PM_Client
 {
 protected:
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
-  virtual int encode (char *packet, int &total_bytes) override;
-  virtual int decode (char *packet, int &total_bytes) override;
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 
 public:
   PMC_All ();
-  virtual void process () override;
+  void process () override;
 };
 
 #endif /* _PMC_ALL_H */
