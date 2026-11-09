@@ -50,15 +50,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// constructor
-Driver::Driver ()
-{
-}
-
-Driver::~Driver ()
-{
-}
-
 // initialize the driver
 int
 Driver::init (int argc, ACE_TCHAR **argv)
