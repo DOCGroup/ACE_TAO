@@ -51,7 +51,6 @@ namespace CORBA
   class TAO_Valuetype_Export AbstractBase
   {
   public:
-    /// Constructor.
     /**
      * This constructor is only meant to be called by the
      * corresponding CDR stream extraction operator or during
