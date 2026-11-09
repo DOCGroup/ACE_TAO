@@ -23,21 +23,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Retrieve the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       // **********************************************************************
 
       // Get an object reference for the ORBs IORManipulation object!
-      CORBA::Object_var iorm_object =
+      CORBA::Object_var const iorm_object =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
-      TAO_IOP::TAO_IOR_Manipulation_var iorm =
+      TAO_IOP::TAO_IOR_Manipulation_var const iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
       // **********************************************************************
 
       // Create a few fictitious IORs
-      CORBA::Object_var name1 =
+      CORBA::Object_var const name1 =
         orb->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz");
-      CORBA::Object_var name2 =
+      CORBA::Object_var const name2 =
         orb->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz");
 
       // **********************************************************************
@@ -48,7 +48,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       iors [1] = name2;
       // **********************************************************************
 
-      CORBA::Object_var merged = iorm->merge_iors (iors);
+      CORBA::Object_var const merged = iorm->merge_iors (iors);
 
       // Check for set and get primaries
       // Make a dummy property set
@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Get the primary
-      CORBA::Object_var prim = iorm->get_primary (&prop, merged.in ());
+      CORBA::Object_var const prim = iorm->get_primary (&prop, merged.in ());
 
       // Check whether we got back the right primary
       if (prim->_is_equivalent (name2.in ()))
@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
       // Domain id
-      char const* id = "iogr_regression";
+      char const * const id = "iogr_regression";
       ft_tag_component.group_domain_id = id;
 
       // Object group id
@@ -127,7 +127,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       retval = iorm->set_property (&prop, merged.in ());
 
       /// Extract the property
-      FT::TagFTGroupTaggedComponent ftc;
+      FT::TagFTGroupTaggedComponent ftc {};
       TAO_FT_IOGR_Property tmp_prop;
 
       retval = tmp_prop.get_tagged_component (merged.in (), ftc);
@@ -147,28 +147,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (TAO_IOP::NotFound const& userex)
+  catch (TAO_IOP::NotFound const &userex)
     {
       userex._tao_print_exception (
         ACE_TEXT ("Unexpected NotFound Exception!\n"));
       return -1;
     }
-  catch (TAO_IOP::Duplicate const& userex)
+  catch (TAO_IOP::Duplicate const &userex)
     {
       userex._tao_print_exception ("Unexpected Duplicate Exception!\n");
       return -1;
     }
-  catch (TAO_IOP::Invalid_IOR const& userex)
+  catch (TAO_IOP::Invalid_IOR const &userex)
     {
       userex._tao_print_exception ("Unexpected Invalid_IOR Exception!\n");
       return -1;
     }
-  catch (CORBA::SystemException const& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("Unexpected system Exception!!\n");
       return -1;
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected CORBA Exception!\n");
       return -1;
