@@ -37,7 +37,6 @@ public:
     CCS::LocType location () override;
     void location (char const *loc) override;
 
-    // Constructor and destructor
     Thermometer_impl (CCS::AssetType anum, char const *location);
     ~Thermometer_impl () override;
 
@@ -62,7 +61,6 @@ public:
     CCS::TempType get_nominal () override;
     CCS::TempType set_nominal (CCS::TempType new_temp) override;
 
-    // Constructor and destructor
     Thermostat_impl(
         CCS::AssetType  anum,
         char const *    location,
@@ -89,7 +87,6 @@ public:
     void change (CCS::Controller::ThermostatSeq const& tlist,
                  CORBA::Short delta) override;
 
-    // Constructor and destructor
     Controller_impl () = default;
     ~Controller_impl () override = default;
 
