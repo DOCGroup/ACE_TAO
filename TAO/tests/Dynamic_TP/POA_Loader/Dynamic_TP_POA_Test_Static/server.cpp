@@ -8,9 +8,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
+
 #include <memory>
 
-ACE_TCHAR const default_parms[] = ACE_TEXT ("{-1,1,-1,0,60,0}");
+constexpr ACE_TCHAR default_parms[] = ACE_TEXT ("{-1,1,-1,0,60,0}");
 
 struct Server_Options
 {
@@ -22,7 +23,7 @@ struct Server_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:p:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:p:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -40,11 +41,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-p (parm array)"
-                           "-s (# sec to sleep)"
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-o <iorfile> ")
+                           ACE_TEXT ("-p (parm array) ")
+                           ACE_TEXT ("-s (# sec to sleep)\n"),
                            argv [0]),
                           -1);
       }
@@ -96,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var const poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -109,16 +109,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      TAO_DTP_Definition dtp_config;
+      TAO_DTP_Definition dtp_config {};
 
       set_parms (dtp_config, options.parms);
-
-      //dtp_config.min_threads_ = -1;
-      //dtp_config.init_threads_ = 5;
-      //dtp_config.max_threads_ = -1;
-      //dtp_config.stack_size_ = (40 * 1024);
-      //dtp_config.timeout_.set(10,0);
-      //dtp_config.queue_depth_ = 10;
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("TAO (%P|%t) - Server : min_threads_ = %d\n"),
@@ -130,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("TAO (%P|%t) - Server : max_threads_ = %d\n"),
                   dtp_config.max_threads_));
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("TAO (%P|%t) - Server : stack_size_ = %d\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Server : stack_size_ = %B\n"),
                   dtp_config.stack_size_));
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("TAO (%P|%t) - Server : timeout_ = %d\n"),
@@ -143,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   options.sleep_sec));
 
       // Create the thread pool servant dispatching strategy object.
-      TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy> csd_strategy =
+      TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy> const csd_strategy =
         new TAO_DTP_POA_Strategy (&dtp_config, false);
 
       // Tell the strategy to apply itself to the child POA.
@@ -153,10 +146,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      std::unique_ptr<Hello> hello_impl = std::make_unique<Hello> (orb.in ());
+      std::unique_ptr<Hello> hello_impl {std::make_unique<Hello> (orb.in ())};
       PortableServer::ServantBase_var owner_transfer (hello_impl.release ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (owner_transfer.in ());
 
       CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
@@ -167,30 +160,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const ior =
         orb->object_to_string (hello.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Server calling poa_manager::activate()\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server calling poa_manager::activate()\n")));
       poa_manager->activate ();
 
       // Output the IOR to the <ior_output_file>
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file %s for writing IOR: %C",
+                             ACE_TEXT ("Cannot open output file %s for writing IOR: %C"),
                              options.ior_output_file.c_str (),
                              ior.in ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
-      ACE_DEBUG ((LM_DEBUG, "Server calling hello->sleep_sec()\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server calling hello->sleep_sec()\n")));
       // Set the sleep time for the Hello object
       hello->sleep_sec (options.sleep_sec);
 
-      ACE_DEBUG ((LM_DEBUG, "Server calling orb::run()\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server calling orb::run()\n")));
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) server - event loop finished\n")));
       // Wait for all CSD task threads exit.
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -200,7 +193,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception (ACE_TEXT ("Exception caught:"));
       return 1;
     }
 
