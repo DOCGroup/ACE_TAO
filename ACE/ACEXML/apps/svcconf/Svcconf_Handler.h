@@ -11,14 +11,15 @@
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ace/Service_Types.h"
+#include <memory>
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
 class ACE_Parsed_Info
 {
 public:
-  ACE_Parsed_Info ();
-  ~ACE_Parsed_Info ();
+  ACE_Parsed_Info () = default;
+  ~ACE_Parsed_Info () = default;
   ACE_Parsed_Info (ACE_Parsed_Info const &) = delete;
   ACE_Parsed_Info (ACE_Parsed_Info &&) = delete;
   ACE_Parsed_Info &operator= (ACE_Parsed_Info const &) = delete;
@@ -66,13 +67,12 @@ public:
   void reset ();
 
 protected:
-  // Owning buffers allocated by ACE::strnew; freed by the destructor and reset().
-  ACEXML_Char *name_;
-  int service_type_;
-  bool active_;
-  ACEXML_Char *path_;
-  ACEXML_Char *init_func_;
-  ACEXML_Char *init_params_;
+  std::unique_ptr<ACEXML_Char[]> name_ {};
+  int service_type_ {ACE_Service_Type::INVALID_TYPE};
+  bool active_ {true};
+  std::unique_ptr<ACEXML_Char[]> path_ {};
+  std::unique_ptr<ACEXML_Char[]> init_func_ {};
+  std::unique_ptr<ACEXML_Char[]> init_params_ {};
 };
 
 /**
@@ -89,7 +89,7 @@ public:
   /*
    * Default constructor.
    */
-  ACEXML_Svcconf_Handler ();
+  ACEXML_Svcconf_Handler () = default;
 
   /*
    * Default destructor.
@@ -238,14 +238,14 @@ protected:
 
 private:
   /// We are parsing a stream definition
-  bool in_stream_def_;
+  bool in_stream_def_ {};
 
   /// We are defining a steam module
-  bool in_module_;
+  bool in_module_ {};
 
   /// Non-owning; the service repository owns this record and manages stream_'s lifetime.
-  ACE_Service_Type *stream_svc_type_;
-  ACE_Stream_Type *stream_;
+  ACE_Service_Type *stream_svc_type_ {};
+  ACE_Stream_Type *stream_ {};
 
   //ACE_SHLIB_HANDLE dll_handle_;
 
@@ -253,7 +253,7 @@ private:
 
   ACE_Parsed_Info stream_info_;
 
-  ACEXML_Locator* locator_; // Non-owning; the parser owns the locator.
+  ACEXML_Locator *locator_ {}; // Non-owning; the parser owns the locator.
 };
 
 #if defined (__ACEXML_INLINE__)

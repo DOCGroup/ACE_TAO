@@ -17,15 +17,6 @@
 # include "Svcconf_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler ()
-  : in_stream_def_ (false),
-    in_module_ (false),
-    stream_svc_type_ (nullptr),
-    stream_ (nullptr),
-    locator_ (nullptr)
-{
-}
-
 void
 ACEXML_Svcconf_Handler::characters (ACEXML_Char const *,
                                     int,
