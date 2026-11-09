@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IORManip_Export TAO_IORManip_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_IORManip_Loader ();
 
   /// Creates a IORManip factory and returns it.

@@ -37,7 +37,6 @@ class TAO_IOR_Manipulation_impl
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   TAO_IOR_Manipulation_impl ();
 
   CORBA::Object_ptr merge_iors (
@@ -76,7 +75,6 @@ public:
   CORBA::ULong get_profile_count (CORBA::Object_ptr group) override;
 
 protected:
-  /// Destructor
   ~TAO_IOR_Manipulation_impl () override = default;
 
 private:

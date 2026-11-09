@@ -37,10 +37,8 @@ namespace CORBA
 class TAO_IORManip_Export TAO_IORManip_Filter
 {
 public:
-  /// Constructor.
   TAO_IORManip_Filter ();
 
-  /// Destructor.
   virtual ~TAO_IORManip_Filter ();
 
   /// Perform filtering using the profile passed in as a guide.
