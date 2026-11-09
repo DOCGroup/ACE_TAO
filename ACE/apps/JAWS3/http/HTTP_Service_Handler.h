@@ -6,6 +6,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/svc_export.h"
 
 #include "jaws3/Protocol_Handler.h"
 
@@ -28,9 +29,9 @@ class JAWS_HTTP_Service_Handler
 public:
   JAWS_HTTP_Service_Handler ();
 
-  int open (void *);
+  int open (void *) override;
 
-  int close (unsigned long);
+  int close (unsigned long) override;
 
 private:
   JAWS_HTTP_Data data_;
@@ -49,7 +50,7 @@ class ACE_Svc_Export JAWS_HTTP_Acceptor
 //     is created.
 {
 public:
-  int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 };
 
 ACE_SVC_FACTORY_DECLARE (JAWS_HTTP_Acceptor)

@@ -5,43 +5,34 @@
 #include "ace/Singleton.h"
 
 #include "jaws3/Protocol_Handler.h"
+#include "HTTP_Data.h"
 
-#define JAWS_HTTP_STATE_MACRO(JAWS_HTTP_STATE_NAME)              \
-                                                                 \
-class JAWS_HTTP_STATE_NAME : protected JAWS_Protocol_State       \
-{                                                                \
-public:                                                          \
-                                                                 \
-  int service (JAWS_Event_Completer *, JAWS_HTTP_Data *);        \
-                                                                 \
-  JAWS_Protocol_State * transition ( const JAWS_Event_Result &   \
-                                   , JAWS_HTTP_Data *            \
-                                   , void *                      \
-                                   );                            \
-                                                                 \
-  static JAWS_Protocol_State * instance ()                       \
-  {                                                              \
-    return ACE_Singleton<JAWS_HTTP_STATE_NAME, ACE_SYNCH_MUTEX>  \
-           ::instance ();                                        \
-  }                                                              \
-                                                                 \
-private:                                                         \
-                                                                 \
-  int service (JAWS_Event_Completer *ec, void *d)                \
-  {                                                              \
-    JAWS_HTTP_Data *hd = static_cast<JAWS_HTTP_Data *> (d);  \
-    return this->service (ec, hd);                               \
-  }                                                              \
-                                                                 \
-  JAWS_Protocol_State * transition ( const JAWS_Event_Result &r  \
-                                   , void d*                     \
-                                   , void a*                     \
-                                   )                             \
-  {                                                              \
-    JAWS_HTTP_Data *hd = static_cast<JAWS_HTTP_Data *> (d);  \
-    return this->transition (r, hd, a);                          \
-  }                                                              \
-                                                                 \
+#define JAWS_HTTP_STATE_MACRO(JAWS_HTTP_STATE_NAME)                           \
+class JAWS_HTTP_STATE_NAME : protected JAWS_Protocol_State                    \
+{                                                                             \
+public:                                                                       \
+  int service (JAWS_Event_Completer *, JAWS_HTTP_Data *);                      \
+  JAWS_Protocol_State *transition (JAWS_Event_Result const &,                  \
+                                   JAWS_HTTP_Data *,                           \
+                                   void *);                                     \
+  static JAWS_Protocol_State *instance ()                                      \
+  {                                                                           \
+    return ACE_Singleton<JAWS_HTTP_STATE_NAME, ACE_SYNCH_MUTEX>::instance (); \
+  }                                                                           \
+                                                                              \
+private:                                                                      \
+  int service (JAWS_Event_Completer *ec, void *d) override                     \
+  {                                                                           \
+    JAWS_HTTP_Data * const hd = static_cast<JAWS_HTTP_Data *> (d);            \
+    return this->service (ec, hd);                                            \
+  }                                                                           \
+  JAWS_Protocol_State *transition (JAWS_Event_Result const &r,                 \
+                                   void *d,                                    \
+                                   void *a) override                           \
+  {                                                                           \
+    JAWS_HTTP_Data * const hd = static_cast<JAWS_HTTP_Data *> (d);            \
+    return this->transition (r, hd, a);                                       \
+  }                                                                           \
 }
 
 JAWS_HTTP_STATE_MACRO (JAWS_HTTP_Read_Request);

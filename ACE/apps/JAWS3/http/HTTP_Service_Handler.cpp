@@ -6,7 +6,6 @@
 
 #include "HTTP_Service_Handler.h"
 #include "HTTP_States.h"
-#include "HTTP_Data.h"
 
 JAWS_HTTP_Service_Handler::JAWS_HTTP_Service_Handler ()
   : JAWS_Protocol_Handler (JAWS_HTTP_Read_Request::instance (), & this->data_)
@@ -17,7 +16,7 @@ JAWS_HTTP_Service_Handler::JAWS_HTTP_Service_Handler ()
 int
 JAWS_HTTP_Service_Handler::open (void *)
 {
-  int result = JAWS_Concurrency::instance ()->putq (this);
+  int const result = JAWS_Concurrency::instance ()->putq (this);
   if (result < 0)
     return -1;
 
@@ -27,6 +26,7 @@ JAWS_HTTP_Service_Handler::open (void *)
 int
 JAWS_HTTP_Service_Handler::close (unsigned long)
 {
+  // ACE calls this hook to dispose of the dynamically allocated service handler.
   delete this;
   return 0;
 }
@@ -36,14 +36,14 @@ JAWS_HTTP_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opt (argc, argv, ACE_TEXT("p:"));
 
-  unsigned short p = 0;
+  unsigned short p {};
 
   int c;
   while ((c = opt ()) != -1)
     switch (c)
       {
       case 'p':
-        p = (unsigned short) ACE_OS::atoi (opt.optarg);
+        p = static_cast<unsigned short> (ACE_OS::atoi (opt.optarg));
         break;
       default:
         break;
