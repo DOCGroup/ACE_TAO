@@ -44,13 +44,11 @@
 class Bool_Array
 {
 public:
-  /// Constructor
   Bool_Array ();
 
   /// Initialize the array (requires O(n) time).
   int open (u_long);
 
-  /// Destructor.
   ~Bool_Array ();
 
   /// Locate the @a value in the array (requires O(1) time).
