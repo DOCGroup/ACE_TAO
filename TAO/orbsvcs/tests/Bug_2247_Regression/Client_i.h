@@ -13,7 +13,6 @@ class Client_i
 {
 public:
   Client_i (CORBA::ORB_ptr orb, Test_Options const &options);
-  // Our constructor
 
   Client_i (Client_i const &) = delete;
   Client_i (Client_i &&) = delete;

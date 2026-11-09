@@ -1,6 +1,8 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+
+#include <cstdio>
 #include <memory>
 
 struct Server_Options
@@ -12,30 +14,28 @@ struct Server_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
-      case 'k':
-        options.key = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'o':
+          options.ior_output_file = get_opts.opt_arg ();
+          break;
+        case 'k':
+          options.key = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-k <key>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -o <iorfile> -k <key>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
@@ -47,9 +47,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      Server_Options options;
+      Server_Options options {};
 
-      // We do the command line parsing first
       if (parse_args (argc, argv, options) != 0
           || options.ior_output_file == nullptr
           || options.key == nullptr)
@@ -86,7 +85,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           policies[i]->destroy ();
         }
 
-      // Instantiate the LCD_Display implementation class
       Simple_Server_i display_impl (orb.in (), ACE_TEXT_ALWAYS_CHAR (options.key));
       PortableServer::ObjectId_var const id =
           PortableServer::string_to_ObjectId ("IOGR_OID");
@@ -101,18 +99,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
-      if (options.ior_output_file != nullptr)
-        {
-          std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
-          if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ACE_TEXT_ALWAYS_CHAR (options.ior_output_file)),
-                              1);
-          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
-        }
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), std::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                             options.ior_output_file),
+                            1);
+        if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+      }
 
       poa_manager->activate ();
 
