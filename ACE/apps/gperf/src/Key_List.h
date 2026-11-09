@@ -29,6 +29,7 @@
 #include "List_Node.h"
 #include "Vectors.h"
 
+#include <array>
 #include <string>
 
 /**
@@ -179,7 +180,7 @@ private:
 
   /// Sets the slot location for all keysig characters that are now
   /// determined.
-  static int determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
+  static std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> determined_;
 };
 
 #endif /* KEY_LIST_H */

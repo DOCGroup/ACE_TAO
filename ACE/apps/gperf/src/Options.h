@@ -26,6 +26,7 @@
 
 #include "ace/Log_Msg.h"
 
+#include <array>
 #include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -170,7 +171,7 @@ private:
   static std::string delimiters_;
 
   /// Contains user-specified key choices.
-  static char key_positions_[MAX_KEY_POS];
+  static std::array<char, MAX_KEY_POS> key_positions_;
 
   /// Sorts key positions in REVERSE order.
   static int key_sort (char *base, int len);

@@ -94,7 +94,7 @@ int Options::initial_asso_value_;
 int Options::argc_;
 ACE_TCHAR **Options::argv_;
 int Options::iterations_;
-char Options::key_positions_[MAX_KEY_POS];
+std::array<char, MAX_KEY_POS> Options::key_positions_;
 
 /// Prints program usage to standard error stream.
 void
@@ -251,7 +251,7 @@ Options::~Options ()
                        "maximum keysig size = %d\nkey positions are:\n",
                        total_keysig_size_);
 
-      for (ptr = key_positions_; *ptr != EOS; ptr++)
+      for (ptr = key_positions_.data (); *ptr != EOS; ptr++)
         if (*ptr == WORD_END)
           ACE_OS::fprintf (stderr, "$\n");
         else
@@ -526,7 +526,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
               {
                 char *l_key_pos;
 
-                for (l_key_pos = key_positions_;
+                for (l_key_pos = key_positions_.data ();
                      (value = expand ()) != EOS;
                      l_key_pos++)
                   if (value == BAD_VALUE)
@@ -540,13 +540,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
                 *l_key_pos = EOS;
 
-                total_keysig_size_ = ACE_Utils::truncate_cast<u_int> (l_key_pos - key_positions_);
+                total_keysig_size_ = ACE_Utils::truncate_cast<u_int> (l_key_pos - key_positions_.data ());
                 if (total_keysig_size_ == 0)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "No keys selected.\n%r",
                                      &Options::usage),
                                     -1);
-                else if (key_sort (key_positions_, total_keysig_size_) == 0)
+                else if (key_sort (key_positions_.data (), total_keysig_size_) == 0)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "Duplicate keys selected\n%r",
                                      &Options::usage),

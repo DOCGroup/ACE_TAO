@@ -27,6 +27,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Malloc_Base.h"
+#include <array>
 #include <cctype>
 #include <cstdio>
 #include <cstring>
@@ -114,7 +115,7 @@ output_return_type (char const *type, bool const is_const)
 /// How wide the printed field width must be to contain the maximum
 /// hash value.
 int Key_List::field_width = 0;
-int Key_List::determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
+std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> Key_List::determined_;
 
 /// Destructor dumps diagnostics during debugging.
 Key_List::~Key_List ()
@@ -612,8 +613,7 @@ Key_List::output_switch (int use_keyword_table)
         output_keyword_table ();
     }
 
-  std::unique_ptr<char[]> safe_comp_buffer;
-  char * comp_buffer;
+  std::string comp_buffer;
 
   List_Node *curr = head;
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
@@ -622,38 +622,30 @@ Key_List::output_switch (int use_keyword_table)
 
   if (pointer_and_type_enabled)
     {
-      // Keep track of the longest string we'll need!
-      char const *s = "charmap[*str] == *resword->%s && !%sstrncasecmp (str + 1, resword->%s + 1, len - 1)";
-
-      char * const tmp =
-        new char[std::strlen (s)
-                 + std::strlen ("ACE_OS::")
-                 + 2 * std::strlen (option.key_name ().c_str ()) + 1];
-      safe_comp_buffer.reset (tmp);
-
-      comp_buffer = safe_comp_buffer.get ();
-
+      std::string const compare_first_character = option[STRCASECMP]
+        ? "charmap[*str]"
+        : "*str";
+      std::string const key_name = option.key_name ();
+      std::string const comparison_function = option[STRCASECMP]
+        ? (option[COMP] ? "strncasecmp" : "strcasecmp")
+        : (option[COMP] ? "strncmp" : "strcmp");
+      comp_buffer = compare_first_character + " == *resword->" + key_name
+        + " && !" + string_compare_prefix (option[STRCASECMP])
+        + comparison_function + " (str + 1, resword->" + key_name + " + 1";
       if (option[COMP])
-        std::sprintf (comp_buffer, "%s == *resword->%s && !%s%s (str + 1, resword->%s + 1, len - 1)",
-                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
-                         string_compare_prefix (option[STRCASECMP]),
-                         option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ().c_str ());
-      else
-        std::sprintf (comp_buffer, "%s == *resword->%s && !%s%s (str + 1, resword->%s + 1)",
-                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
-                         string_compare_prefix (option[STRCASECMP]),
-                         option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ().c_str ());
+        comp_buffer += ", len - 1";
+      comp_buffer += ")";
     }
   else
     {
       if (option[COMP])
         comp_buffer = option[STRCASECMP]
-          ? (char *) "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
-          : (char *) "*str == *resword && !std::strncmp (str + 1, resword + 1, len - 1)";
+          ? "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
+          : "*str == *resword && !std::strncmp (str + 1, resword + 1, len - 1)";
       else
         comp_buffer = option[STRCASECMP]
-          ? (char *) "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
-          : (char *) "*str == *resword && !std::strcmp (str + 1, resword + 1)";
+          ? "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
+          : "*str == *resword && !std::strcmp (str + 1, resword + 1)";
     }
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
@@ -737,7 +729,7 @@ Key_List::output_switch (int use_keyword_table)
                         ACE_OS::printf ("                  resword = wordlist[%d];\n", links->slot);
                       else
                         ACE_OS::printf ("                  resword = \"%s\";\n", links->key.c_str ());
-                      ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer);
+                      ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer.c_str ());
                     }
                 }
 
@@ -757,7 +749,7 @@ Key_List::output_switch (int use_keyword_table)
                         ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                       else
                         ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
-                      ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer);
+                      ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer.c_str ());
                     }
                   if (pointer_and_type_enabled)
                     ACE_OS::printf ("                  resword = %swordlist[%d]%s;\n",
@@ -768,7 +760,7 @@ Key_List::output_switch (int use_keyword_table)
                   else
                     ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
                   ACE_OS::printf ("                  return %s ? resword : %s;\n",
-                                  comp_buffer, generated_null_pointer ());
+                                  comp_buffer.c_str (), generated_null_pointer ());
                 }
               else if (temp->link)
                 ACE_OS::printf ("                  return %s;\n", generated_null_pointer ());
@@ -795,7 +787,7 @@ Key_List::output_switch (int use_keyword_table)
             {
               ACE_OS::printf (option[LENTABLE] && !option[DUP]
                       ? "              if (len == key_len && %s)\n                return resword;\n"
-                      : "              if (%s)\n                return resword;\n", comp_buffer);
+                      : "              if (%s)\n                return resword;\n", comp_buffer.c_str ());
               ACE_OS::printf ("              return %s;\n", generated_null_pointer ());
             }
           ACE_OS::printf ("            }\n");
@@ -1226,8 +1218,7 @@ Key_List::output_hash_function ()
     0x97, 0x98, 0x99, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6,
     0xA7, 0xA8, 0xA9, 0xC0, 0x6A, 0xD0, 0xA1, 0x07};
 
-   int ebcdic_to_ascii[ACE_EBCDIC_SIZE];
-   int target;
+  int target;
 #endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
 
   // Calculate maximum number of digits required for MAX_HASH_VALUE.

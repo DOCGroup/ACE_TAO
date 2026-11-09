@@ -30,6 +30,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <array>
+
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
 #define ACE_EBCDIC_SIZE 256
@@ -50,10 +52,10 @@ class Vectors
 {
 public:
   /// Counts occurrences of each key set character.
-  static int occurrences[ACE_STANDARD_CHARACTER_SET_SIZE];
+  static std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> occurrences;
 
   /// Value associated with each character.
-  static int asso_values[ACE_STANDARD_CHARACTER_SET_SIZE];
+  static std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> asso_values;
 };
 
 #endif /* VECTORS_H */
