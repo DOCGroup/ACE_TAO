@@ -34,10 +34,8 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
   Server ();
 
-  /// Destructor.
   ~Server () = default;
 
   Server (Server const &) = delete;
@@ -47,20 +45,20 @@ public:
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
-  int init (const char *servant_name,
+  int init (char const *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
 
   /// After calling <init>, this method will register the server with
   /// the TAO Naming Service using the name passed to this method.
-  int register_name (const char *name);
+  int register_name (char const *name);
 
   /// Run the orb.
   int run ();
 
   /// Ignore this method if you are not testing the InterOperable
   /// Naming Service.
-  int test_for_ins (const char *ior);
+  int test_for_ins (char const *ior);
 
 private:
   /// Parses the commandline arguments.
@@ -106,10 +104,8 @@ template <class ServerInterface>
 class Client
 {
 public:
-  /// Constructor.
   Client () = default;
 
-  /// Destructor.
   ~Client ();
 
   Client (Client const &) = delete;
@@ -118,7 +114,7 @@ public:
   Client &operator= (Client &&) = delete;
 
   /// Initialize the client communication endpoint with server.
-  int init (const char *name, int argc, ACE_TCHAR *argv[]);
+  int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
   ServerInterface *operator-> () { return server_.in (); }
@@ -130,7 +126,7 @@ public:
   void do_shutdown (int);
 
   /// Initialize naming service
-  int obtain_initial_references (const char *name);
+  int obtain_initial_references (char const *name);
 
   CORBA::ORB_ptr orb ()
     {

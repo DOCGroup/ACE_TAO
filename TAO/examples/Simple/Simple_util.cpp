@@ -9,7 +9,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-// Constructor.
 template <class Servant>
 Server<Servant>::Server ()
 {
@@ -66,7 +65,7 @@ Server<Servant>::parse_args ()
 // the ORB. Ignore this method if you are not testing for
 // the InterOperable Naming Service.
 template <class Servant> int
-Server<Servant>::test_for_ins (const char *ior)
+Server<Servant>::test_for_ins (char const *ior)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -92,7 +91,7 @@ Server<Servant>::test_for_ins (const char *ior)
 
       adapter->bind (ACE_TEXT_ALWAYS_CHAR (this->ins_), ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR: test_for_ins failed\n");
       return -1;
@@ -103,7 +102,7 @@ Server<Servant>::test_for_ins (const char *ior)
 
 // Initialize the server.
 template <class Servant> int
-Server<Servant>::init (const char *servant_name,
+Server<Servant>::init (char const *servant_name,
                        int argc,
                        ACE_TCHAR *argv[])
 {
@@ -172,7 +171,7 @@ Server<Servant>::init (const char *servant_name,
           ACE_OS::fclose (fh);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException in activation of POA");
       return -1;
@@ -194,7 +193,7 @@ Server<Servant>::run ()
 }
 
 template <class Servant> int
-Server<Servant>::register_name (const char *name)
+Server<Servant>::register_name (char const *name)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -227,7 +226,7 @@ Server<Servant>::register_name (const char *name)
                               -1);
         }
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to bind %C\n"),
@@ -238,7 +237,6 @@ Server<Servant>::register_name (const char *name)
   return 0;
 }
 
-// Constructor.
 // Reads the Server ior from a file
 template <class ServerInterface> int
 Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
@@ -329,7 +327,7 @@ Client<ServerInterface>::~Client ()
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::init (const char *name,
+Client<ServerInterface>::init (char const *name,
                                int argc,
                                ACE_TCHAR **argv)
 {
@@ -377,7 +375,7 @@ Client<ServerInterface>::init (const char *name,
                            ACE_TEXT ("no ior or naming options  specified\n")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_i::init");
       return -1;
@@ -387,7 +385,7 @@ Client<ServerInterface>::init (const char *name,
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::obtain_initial_references (const char *name)
+Client<ServerInterface>::obtain_initial_references (char const *name)
 {
   try
     {
@@ -413,7 +411,7 @@ Client<ServerInterface>::obtain_initial_references (const char *name)
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client::obtain_initial_references");
       return -1;
