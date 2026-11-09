@@ -167,10 +167,8 @@ public:
   using counter_sig = long;
 #endif
 
-  // Constructor.
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());
 
-  // Destructor.
   virtual ~Stop_Handler ();
 
   // Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
@@ -217,10 +215,8 @@ private:
 class Repeats_Handler : public ACE_Event_Handler
 {
 public:
-  // Constructor.
   Repeats_Handler ();
 
-  // Destructor.
   virtual ~Repeats_Handler ();
 
   // Initialization.
