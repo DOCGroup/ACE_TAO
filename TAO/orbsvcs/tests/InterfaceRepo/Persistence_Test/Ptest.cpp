@@ -13,7 +13,9 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
       int const retval = this->parse_args (argc, argv);
 
       if (retval != 0)
-        return retval;
+        {
+          return retval;
+        }
 
       CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("InterfaceRepository");
@@ -34,7 +36,7 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
                             -1);
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Ptest::init");
       return -1;
@@ -54,7 +56,7 @@ Ptest::shutdown ()
 
       this->orb_ = CORBA::ORB::_nil ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Ptest::init");
       return -1;
@@ -76,7 +78,7 @@ Ptest::run ()
           this->populate ();
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Ptest::run");
       return -1;
@@ -162,7 +164,7 @@ Ptest::query ()
         ));
     }
 
-  char const* const members[] =
+  char const *const members[] =
   {
     "long_mem",
     "array_mem",
@@ -206,7 +208,7 @@ Ptest::query ()
                         -1);
     }
 
-  for (CORBA::ULong i = 0; i < member_count; ++i)
+  for (CORBA::ULong i {}; i < member_count; ++i)
     {
       if (this->debug_)
         {

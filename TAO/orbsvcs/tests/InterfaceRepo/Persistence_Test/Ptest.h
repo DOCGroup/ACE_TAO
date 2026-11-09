@@ -69,10 +69,10 @@ private:
   bool query_ {};
 
   /// Storage of the ORB reference.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Storage of the IFR reference.
-  CORBA::Repository_var repo_;
+  CORBA::Repository_var repo_ {};
 };
 
 #endif /* PTEST_H */
