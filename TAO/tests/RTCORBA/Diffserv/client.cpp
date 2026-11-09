@@ -7,12 +7,17 @@
 #include "tao/Policy_ManagerC.h"
 #include "tao/Policy_CurrentC.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT("file://simple_servant.ior");
-static int iterations = 1;
-static int corba_priority = RTCORBA::minPriority;
-static int shutdown_server = 0;
+#include <memory>
 
-enum Priority_Level
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://simple_servant.ior")};
+  int iterations {1};
+  RTCORBA::Priority corba_priority {RTCORBA::minPriority};
+  bool shutdown_server {};
+};
+
+enum class Priority_Level
 {
   OBJECT,
   THREAD,
@@ -20,8 +25,8 @@ enum Priority_Level
 };
 
 void
-change_network_priority (int enable_network_priority,
-                         Priority_Level level,
+change_network_priority (bool const enable_network_priority,
+                         Priority_Level const level,
                          Test_var &server,
                          CORBA::ORB_ptr orb)
 {
@@ -30,11 +35,11 @@ change_network_priority (int enable_network_priority,
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       // Set the tcp protocol properties
-      RTCORBA::TCPProtocolProperties_var tcp_properties =
+      RTCORBA::TCPProtocolProperties_var const tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 1,
@@ -58,11 +63,11 @@ change_network_priority (int enable_network_priority,
       switch (level)
         {
           // Change policy at ORB level
-        case ORB:
+        case Priority_Level::ORB:
           {
             object = orb->resolve_initial_references ("ORBPolicyManager");
 
-            CORBA::PolicyManager_var policy_manager =
+            CORBA::PolicyManager_var const policy_manager =
               CORBA::PolicyManager::_narrow (object.in ());
 
             policy_manager->set_policy_overrides (policy_list,
@@ -72,12 +77,12 @@ change_network_priority (int enable_network_priority,
           }
 
           // Change policy at THREAD level
-        case THREAD:
+        case Priority_Level::THREAD:
           {
             object =
               orb->resolve_initial_references ("PolicyCurrent");
 
-            CORBA::PolicyCurrent_var policy_current =
+            CORBA::PolicyCurrent_var const policy_current =
               CORBA::PolicyCurrent::_narrow (object.in ());
 
             policy_current->set_policy_overrides (policy_list,
@@ -87,10 +92,11 @@ change_network_priority (int enable_network_priority,
           }
 
           // Change policy at OBJECT level
-        case OBJECT:
+        case Priority_Level::OBJECT:
           {
-            CORBA::Object_var object = server->_set_policy_overrides (policy_list,
-                                                                      CORBA::SET_OVERRIDE);
+            CORBA::Object_var const object = server->_set_policy_overrides (
+              policy_list,
+              CORBA::SET_OVERRIDE);
 
             server = Test::_narrow (object.in ());
 
@@ -98,38 +104,38 @@ change_network_priority (int enable_network_priority,
           }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:p:x:"));
-  int c;
+  int option;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
-        // number of itarations
+        // number of iterations
       case 'n':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
         // corba priority
       case 'p':
-        corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
+        options.corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
         // shutdown server
       case 'x':
-        shutdown_server = ACE_OS::atoi (get_opts.opt_arg ());
+        options.shutdown_server = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       default:
@@ -141,22 +147,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\t-x <shutdown server> [defaults to %d]\n"
                            "\n",
                            argv [0],
-                           ior,
-                           iterations,
-                           corba_priority,
-                           shutdown_server),
+                           options.ior,
+                           options.iterations,
+                           options.corba_priority,
+                           static_cast<int> (options.shutdown_server)),
                           -1);
       }
 
   return 0;
-}
-
-void
-toggle (int &i)
-{
-  if (i == 0)
-    i = 1;
-  else i = 0;
 }
 
 int
@@ -164,59 +162,72 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // Initialize and obtain reference to the Test object.
-      CORBA::Object_var client_object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const client_object =
+        orb->string_to_object (options.ior);
 
       Test_var server =
         Test::_narrow (client_object.in ());
 
       // Resolve the Network priority Mapping Manager
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("NetworkPriorityMappingManager");
 
-      RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
+      RTCORBA::NetworkPriorityMappingManager_var const mapping_manager =
         RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
       // Initialize the custom priority mapping
-      Custom_Network_Priority_Mapping *cnpm {};
-      ACE_NEW_RETURN  (cnpm,
+      Custom_Network_Priority_Mapping *raw_mapping {};
+      ACE_NEW_RETURN (raw_mapping,
                        Custom_Network_Priority_Mapping,
                        -1);
 
+      std::unique_ptr<Custom_Network_Priority_Mapping> cnpm {raw_mapping};
+
       // Set the desired corba priority on the network mapping manager
-      cnpm->corba_priority (corba_priority);
+      cnpm->corba_priority (options.corba_priority);
 
       // Load the custom network priority mapping object in the
       // network priority mapping manager. The user can thus add his
       // own priority mapping.
-      mapping_manager->mapping (cnpm);
+      // The manager takes ownership of the custom mapping.
+      mapping_manager->mapping (cnpm.release ());
 
-      int enable_network_priority = 1;
+      bool enable_network_priority = true;
 
       // Make several invocation,
-      for (int i = 0; i < iterations; ++i)
+      for (int i = 0; i < options.iterations; ++i)
         {
-          toggle (enable_network_priority);
+          enable_network_priority = !enable_network_priority;
 
           switch (i)
             {
             case 0:
             case 1:
-              change_network_priority (enable_network_priority, ORB, server, orb.in ());
+              change_network_priority (enable_network_priority,
+                                       Priority_Level::ORB,
+                                       server,
+                                       orb.in ());
               break;
             case 2:
             case 3:
-              change_network_priority (enable_network_priority, THREAD, server, orb.in ());
+              change_network_priority (enable_network_priority,
+                                       Priority_Level::THREAD,
+                                       server,
+                                       orb.in ());
               break;
             default:
-              change_network_priority (enable_network_priority, OBJECT, server, orb.in ());
+              change_network_priority (enable_network_priority,
+                                       Priority_Level::OBJECT,
+                                       server,
+                                       orb.in ());
               break;
             }
 
@@ -224,12 +235,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Shut down Server ORB.
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           server->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
