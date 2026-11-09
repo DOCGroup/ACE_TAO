@@ -15,26 +15,16 @@ void
 Options::print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
+              ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] "
+                        "[-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
   ACE_OS::exit (1);
 }
 
 Options::Options ()
-  : options_ (0),
-    supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
-    supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
-    connector_host_ (ACE_DEFAULT_SERVER_HOST),
-    timeout_ (0),
-    max_queue_size_ (MAX_QUEUE_SIZE),
-    connection_id_ (0)
 {
-  char *timeout = ACE_OS::getenv ("TIMEOUT");
+  char * const timeout = ACE_OS::getenv ("TIMEOUT");
 
-  if (timeout == nullptr)
-    this->timeout_ = Options::DEFAULT_TIMEOUT;
-  else
+  if (timeout != nullptr)
     this->timeout_ = ACE_OS::atoi (timeout);
 }
 
@@ -89,7 +79,7 @@ Options::supplier_connector_port () const
   return this->supplier_connector_port_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::connector_host () const
 {
   return this->connector_host_;

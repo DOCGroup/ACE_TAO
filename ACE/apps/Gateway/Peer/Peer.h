@@ -96,8 +96,8 @@ public:
   int handle_output (ACE_HANDLE) override;
 
   /// Periodically send events via <ACE_Reactor> timer mechanism.
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *arg) override;
 
   /// Perform object termination.
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -136,22 +136,22 @@ protected:
 
   /// Pointer-to-member-function for the current action to run in this
   /// state.  This points to one of the preceding 3 methods.
-  int (Peer_Handler::*do_action_)();
+  int (Peer_Handler::*do_action_)() {};
 
   /// Connection ID of the peer, which is obtained from the gatewayd.
-  CONNECTION_ID connection_id_;
+  CONNECTION_ID connection_id_ {-1};
 
   /// Keep track of event fragments that arrive in non-blocking recv's
   /// from the gatewayd.
   /// This handler owns the fragment until it is released or passed on.
-  ACE_Message_Block *msg_frag_;
+  ACE_Message_Block *msg_frag_ {};
 
   /// The total number of bytes sent/received to the gatewayd thus far.
-  size_t total_bytes_;
+  size_t total_bytes_ {};
 
   /// Used to call register_stdin_handle only once.  Otherwise, thread
   /// leak will occur on Win32.
-  bool first_time_;
+  bool first_time_ {true};
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
@@ -189,7 +189,7 @@ private:
   int open_acceptor (u_short port);
 
   /// Pointer to <Peer_Handler> allocated once and destroyed by ACE_Acceptor.
-  Peer_Handler *peer_handler_;
+  Peer_Handler *peer_handler_ {};
 
   /// Our acceptor addr.
   ACE_INET_Addr addr_;
@@ -230,10 +230,10 @@ private:
   int open_connector (Peer_Handler *&ph, u_short port);
 
   /// Consumer <Peer_Handler> that is connected to a gatewayd.
-  Peer_Handler *consumer_peer_handler_;
+  Peer_Handler *consumer_peer_handler_ {};
 
   /// Supplier <Peer_Handler> that is connected to a gatewayd.
-  Peer_Handler *supplier_peer_handler_;
+  Peer_Handler *supplier_peer_handler_ {};
 };
 
 /**

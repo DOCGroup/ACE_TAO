@@ -7,10 +7,6 @@
 #include "Peer.h"
 
 Peer_Handler::Peer_Handler ()
-  : connection_id_ (-1),  // Maybe it's better than 0.
-    msg_frag_ (nullptr),
-    total_bytes_ (0),
-    first_time_ (true)
 {
   // Set the high water mark of the <ACE_Message_Queue>.  This is used
   // to exert flow control.
@@ -612,8 +608,8 @@ Peer_Handler::await_events ()
 // Periodically send events via ACE_Reactor timer mechanism.
 
 int
-Peer_Handler::handle_timeout (const ACE_Time_Value &,
-                              const void *)
+Peer_Handler::handle_timeout (ACE_Time_Value const &,
+                              void const *)
 {
   // Shut down the handler.
   return this->handle_close ();
@@ -692,10 +688,7 @@ Peer_Acceptor::start (u_short port)
   return 0;
 }
 
-Peer_Acceptor::Peer_Acceptor ()
-  : peer_handler_ (nullptr)
-{
-}
+Peer_Acceptor::Peer_Acceptor () = default;
 
 int
 Peer_Acceptor::close ()
