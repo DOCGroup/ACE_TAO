@@ -279,6 +279,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   if (node->full_name () == "CORBA::InvalidPolicies"
       || node->full_name () == "CORBA::PolicyError")
     {
+      // TAOLIB_ERROR_RETURN takes an int status value here, so emit 0 rather than nullptr.
       *os << "// TAO extension - the virtual _type method." << be_nl
           << "::CORBA::TypeCode_ptr " << node->name ()
           << "::_tao_type () const" << be_nl
@@ -293,7 +294,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           // FUZZ: enable check_for_ace_log_categories
           << "ACE_TEXT (\"TAO \")," << be_nl
           << "ACE_TEXT (\"Unable to find the \")" << be_nl
-          << "ACE_TEXT (\"AnyTypeCode Adapter instance\")), nullptr);" << be_uidt << be_uidt_nl
+          << "ACE_TEXT (\"AnyTypeCode Adapter instance\")), 0);" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl
           << "return adapter->_tao_type_" << node->local_name () <<  "();" << be_uidt_nl
           << "}";

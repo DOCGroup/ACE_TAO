@@ -28,8 +28,6 @@ AST_Finder::destroy ()
 void
 AST_Finder::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d {};
-
   this->dump_i (o, "finder ");
   this->local_name ()->dump (o);
   this->dump_i (o, "(");
@@ -38,7 +36,7 @@ AST_Finder::dump (ACE_OSTREAM_TYPE &o)
   for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();)
     {
-      d = i.item ();
+      AST_Decl * const d = i.item ();
       d->dump (o);
       i.next ();
 

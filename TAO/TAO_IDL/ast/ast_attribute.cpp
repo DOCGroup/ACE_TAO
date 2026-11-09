@@ -186,19 +186,15 @@ AST_Attribute::get_set_exceptions () const
 UTL_NameList *
 AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n {};
-  AST_Type *fe {};
-  AST_Decl *d {};
-
   this->pd_get_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t);
        !nl_i.is_done ();
        nl_i.next ())
     {
-      nl_n = nl_i.item ();
+      UTL_ScopedName * const nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n, true);
+      AST_Decl * const d = this->defined_in ()->lookup_by_name (nl_n, true);
 
       if (d == nullptr)
         {
@@ -216,7 +212,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      fe = dynamic_cast<AST_Type*> (d);
+      AST_Type * const fe = dynamic_cast<AST_Type*> (d);
 
       UTL_ExceptList *el {};
       ACE_NEW_RETURN (el,
@@ -241,17 +237,13 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 UTL_NameList *
 AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n {};
-  AST_Type *fe {};
-  AST_Decl *d {};
-
   this->pd_set_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
-      nl_n = nl_i.item ();
+      UTL_ScopedName * const nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n, true);
+      AST_Decl * const d = this->defined_in ()->lookup_by_name (nl_n, true);
 
       if (d == nullptr)
         {
@@ -269,7 +261,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      fe = dynamic_cast<AST_Type*> (d);
+      AST_Type * const fe = dynamic_cast<AST_Type*> (d);
 
       UTL_ExceptList *el {};
       ACE_NEW_RETURN (el,

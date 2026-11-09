@@ -123,8 +123,6 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_flags (fl),
     pd_exceptions (nullptr)
 {
-  AST_PredefinedType *pdt {};
-
   // Check that if the operation is oneway, the return type must be void.
   if (rt != nullptr && pd_flags == OP_oneway)
     {
@@ -135,7 +133,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
         }
       else
         {
-          pdt = dynamic_cast<AST_PredefinedType*> (rt);
+          AST_PredefinedType * const pdt = dynamic_cast<AST_PredefinedType*> (rt);
 
           if (pdt == nullptr || pdt->pt () != AST_PredefinedType::PT_void)
             {
@@ -244,10 +242,6 @@ AST_Operation::compute_argument_attr ()
       return 0;
     }
 
-  AST_Decl *d {};
-  AST_Type *type {};
-  AST_Argument *arg {};
-
   this->argument_count_ = 0;
 
   // If there are elements in this scope.
@@ -259,13 +253,13 @@ AST_Operation::compute_argument_attr ()
            si.next ())
         {
           // Get the next AST decl node.
-          d = si.item ();
+          AST_Decl * const d = si.item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
               this->argument_count_++;
 
-              arg = dynamic_cast<AST_Argument*> (d);
+              AST_Argument * const arg = dynamic_cast<AST_Argument*> (d);
 
               if (arg->direction() == AST_Argument::dir_IN ||
                   arg->direction() == AST_Argument::dir_INOUT)
@@ -274,7 +268,7 @@ AST_Operation::compute_argument_attr ()
                 }
 
 
-              type = dynamic_cast<AST_Type*> (arg->field_type ());
+              AST_Type * const type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -284,9 +278,9 @@ AST_Operation::compute_argument_attr ()
         }
     }
 
-  type = dynamic_cast<AST_Type*> (this->return_type ());
+  AST_Type * const return_type = dynamic_cast<AST_Type*> (this->return_type ());
 
-  if (type->node_type () == AST_Decl::NT_native)
+  if (return_type->node_type () == AST_Decl::NT_native)
     {
       this->has_native_ = true;
     }
@@ -318,16 +312,12 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
   std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> const t_owner (t);
 
-  UTL_ScopedName *nl_n {};
-  AST_Type *fe {};
-  AST_Decl *d {};
-
   this->pd_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
-      nl_n = nl_i.item ();
-      d = this->lookup_by_name (nl_n, true);
+      UTL_ScopedName * const nl_n = nl_i.item ();
+      AST_Decl * const d = this->lookup_by_name (nl_n, true);
 
       if (d == nullptr)
         {
@@ -412,7 +402,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       bool const oneway_op =
         (this->flags () == AST_Operation::OP_oneway);
 
-      fe = dynamic_cast<AST_Type*> (d);
+      AST_Type * const fe = dynamic_cast<AST_Type*> (d);
 
       if (oneway_op && fe != nullptr)
         {

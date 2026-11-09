@@ -133,8 +133,6 @@ FE_Declarator::compose (AST_Decl *d)
         }
     }
 
-  AST_Array *arr {};
-
   // All uses of forward declared types must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
@@ -188,7 +186,7 @@ FE_Declarator::compose (AST_Decl *d)
 
   if (this->pd_complex_part->node_type () == AST_Decl::NT_array)
     {
-      arr = dynamic_cast<AST_Array*> (this->pd_complex_part);
+      AST_Array * const arr = dynamic_cast<AST_Array*> (this->pd_complex_part);
 
       // The base type of an array isn't set until after the array
       // has been created, so the check below gets done at this point.

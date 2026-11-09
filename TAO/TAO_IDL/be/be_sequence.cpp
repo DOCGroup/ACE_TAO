@@ -216,10 +216,6 @@ int
 be_sequence::create_name (be_typedef *node)
 {
   std::string namebuf;
-  UTL_ScopedName *n {};
-
-  // Scope in which we are defined.
-  be_decl *scope {};
 
   // If there is a typedef node, we use its name as our name.
   if (node)
@@ -240,12 +236,13 @@ be_sequence::create_name (be_typedef *node)
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
 
-      scope = dynamic_cast<be_scope*> (us)->decl ();
+      be_decl * const scope = dynamic_cast<be_scope*> (us)->decl ();
 
       if (scope != nullptr)
         {
           // Make a copy of the enclosing scope's name.
-          n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
+          UTL_ScopedName * const n =
+            static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
           Identifier *id {};
           ACE_NEW_RETURN (id,

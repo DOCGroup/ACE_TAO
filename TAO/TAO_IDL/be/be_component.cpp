@@ -307,11 +307,10 @@ be_component::gen_skel_inheritance (TAO_OutStream *os)
 
   AST_Type_List const& supports = this->supports ();
   std::size_t const nsupports = supports.size ();
-  AST_Type *supported {};
 
   for (std::size_t i = 0; i < nsupports; ++i)
     {
-      supported = supports[i];
+      AST_Type * const supported = supports[i];
 
       if (supported->is_abstract ())
         {
