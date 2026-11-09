@@ -5,30 +5,33 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
 
-static const ACE_TCHAR *ior = 0;
-static int iterations = 5;
-static int shutdown_server = 0;
-static RTCORBA::Priority default_thread_priority;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {};
+  int iterations {5};
+  bool shutdown_server {};
+  RTCORBA::Priority default_thread_priority {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case '?':
@@ -43,7 +46,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (ior == 0)
+  if (options.ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "An IOR must be specified\n"),
                       -1);
@@ -55,16 +58,25 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
 
-  int svc ();
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
+  int svc () override;
+
+  Client_Options options_;
   CORBA::ORB_var orb_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
+    options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -80,18 +92,18 @@ Task::svc ()
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ());
 
-      default_thread_priority =
+      this->options_.default_thread_priority =
         get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (this->options_.ior);
 
       test_var test =
         test::_narrow (object.in ());
 
-      for (int i = 0; i < iterations; i++)
+      for (int i {}; i < this->options_.iterations; ++i)
         {
-          current->the_priority (default_thread_priority);
+          current->the_priority (this->options_.default_thread_priority);
 
           CORBA::Short priority =
             test->method ();
@@ -104,12 +116,12 @@ Task::svc ()
             }
         }
 
-      if (shutdown_server)
+      if (this->options_.shutdown_server)
         {
           test->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception!");
       return -1;
@@ -126,8 +138,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      Client_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -148,7 +160,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
       long flags =
@@ -182,7 +195,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception!");
       return -1;
