@@ -6,16 +6,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ior_mcast_Client_i client;
 
-      int status = client.init (argc, argv);
-      ACE_UNUSED_ARG (status);
-
-      return 0;
+      return client.init (argc, argv);
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
       // Ignore
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
     }
