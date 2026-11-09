@@ -44,10 +44,9 @@ public:
 private:
   struct File_Closer
   {
-    void operator() (FILE *file) const
+    void operator() (FILE *file) const noexcept
     {
-      if (file != nullptr)
-        std::fclose (file);
+      std::fclose (file);
     }
   };
 
@@ -347,7 +346,7 @@ csdb_generator::fini_output (char const *tgt)
           fname = target + "." + std::string (suffix.size () < 3 ? 3 - suffix.size () : 0, '0') + suffix;
         }
       while (ACE_OS::stat (fname.c_str (), &buf) == 0);
-      const std::string backup_suffix = fname.substr (target.size ());
+      std::string const backup_suffix = fname.substr (target.size ());
       ACE_DEBUG ((LM_DEBUG, "Moving $ACE_ROOT/ace/%s to $ACE_ROOT/ace%s\n",
                   tgt, backup_suffix.c_str ()));
       if (ACE_OS::rename (target.c_str (), fname.c_str ()) == -1)
