@@ -14,14 +14,13 @@
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
 
+#include <fstream>
+#include <string>
+
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_stat.h"
-
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
 
 #if defined (ACE_WIN32)
 
@@ -72,16 +71,6 @@ do {\
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
   ace_file_stream.close ();
 
-#define ACE_INIT_LOG(NAME) \
-  char temp[BUFSIZ]; \
-  ACE_OS::sprintf (temp, "%s%s%s", \
-                   ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY), \
-                   ACE_TEXT_ALWAYS_CHAR (ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR)), \
-                   ".log"); \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting old log file %C (if any)\n\n"), temp)); \
-  ACE_OS::unlink (temp);
-
-
 class ACE_Test_Output
 {
 public:
@@ -92,11 +81,11 @@ public:
   ACE_Test_Output &operator= (ACE_Test_Output const &) = delete;
   ACE_Test_Output &operator= (ACE_Test_Output &&) = delete;
   int set_output (ACE_TCHAR const *filename, bool append = false);
-  ofstream *output_file ();
+  std::ofstream *output_file ();
   void close ();
 
 private:
-  ofstream output_file_;
+  std::ofstream output_file_;
 };
 
 static ACE_Test_Output ace_file_stream;
@@ -104,15 +93,13 @@ static ACE_Test_Output ace_file_stream;
 int
 ACE_Test_Output::set_output (ACE_TCHAR const *filename, bool append)
 {
-  char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
   ACE_OS::mkdir (ACE_LOG_DIRECTORY);
-  ACE_OS::sprintf (temp, "%s%s%s",
-                   ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY),
-                   ACE_TEXT_ALWAYS_CHAR (ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR)),
-                   ".log");
+  std::string const temp = std::string (ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY)) +
+    ACE_TEXT_ALWAYS_CHAR (ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR)) + ".log";
 
-  this->output_file_.open (temp, ios::out | (append ? ios::app : ios::trunc));
+  this->output_file_.open (temp,
+                           std::ios::out | (append ? std::ios::app : std::ios::trunc));
   if (this->output_file_.bad ())
     return -1;
 
@@ -123,7 +110,7 @@ ACE_Test_Output::set_output (ACE_TCHAR const *filename, bool append)
   return 0;
 }
 
-ofstream *
+std::ofstream *
 ACE_Test_Output::output_file ()
 {
   return &this->output_file_;

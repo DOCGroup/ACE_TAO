@@ -34,6 +34,7 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 #include <cstring>
+#include <iostream>
 
 #include "ace/OS_main.h"
 #include "asnmp/ctr64.h"
@@ -78,9 +79,9 @@ static void TestCounter64()
   constexpr ULLONG ull = static_cast<ULLONG> (0xffffffffffffffffULL);
   constexpr long double ld = static_cast<long double> (ll);
 
-  cerr << "max unsigned long long is " << ull << endl;
-  cerr << "max long long is " << ll << endl;
-  cerr << "min long long is " << mll << endl;
+  std::cerr << "max unsigned long long is " << ull << std::endl;
+  std::cerr << "max long long is " << ll << std::endl;
+  std::cerr << "min long long is " << mll << std::endl;
 
   Counter64  c1;
   ACE_ASSERT(c1.valid() == 1);

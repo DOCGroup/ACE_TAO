@@ -48,8 +48,8 @@ static void TestAddressIter ()
   ACE_ASSERT(expected_count > 0);
 
   IpAddress address;
-  int addresses_read = 0;
-  int result = 0;
+  int addresses_read {};
+  int result {};
   do
     {
       result = iter.next (address);
