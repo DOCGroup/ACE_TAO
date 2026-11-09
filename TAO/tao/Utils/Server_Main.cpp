@@ -25,7 +25,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename SERVANT>
-TAO::Utils::Server_Main<SERVANT>::Server_Main (char const * name)
+TAO::Utils::Server_Main<SERVANT>::Server_Main (std::string const &name)
   : name_(name)
 {
 }
@@ -41,7 +41,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
     // Initialize the orb
 
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv, name_);
+      CORBA::ORB_init (argc, argv, this->name_.c_str ());
 
     if (! ::CORBA::is_nil(orb.in ()))
     {
@@ -58,7 +58,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
         if (result == 0)
         {
           TAOLIB_ERROR ((LM_INFO,
-            "%T %C (%P|%t) Ready %C\n", name_, servant.identity ()));
+            "%T %C (%P|%t) Ready %C\n", this->name_.c_str (), servant.identity ()));
 
           //////////////////////////////////
           // Run the event loop for the ORB.
@@ -80,27 +80,27 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 
           TAOLIB_ERROR ((LM_INFO,
                       "%T %C (%P|%t) Terminated normally. %C\n",
-                      name_,
+                      this->name_.c_str (),
                       servant.identity ()));
         }
         else
         {
           TAOLIB_ERROR ((LM_ERROR,
-            "%T %C (%P|%t) Registration failed: %m\n", name_));
+            "%T %C (%P|%t) Registration failed: %m\n", this->name_.c_str ()));
           result = -1;
         }
       }
       else
       {
         TAOLIB_ERROR ((LM_ERROR,
-          "%T %C (%P|%t) ORB manager init failed\n", name_));
+          "%T %C (%P|%t) ORB manager init failed\n", this->name_.c_str ()));
         result = -1;
       }
     }
   }
   catch (::CORBA::Exception const &ex)
   {
-    ex._tao_print_exception (name_);
+    ex._tao_print_exception (this->name_.c_str ());
     result = -1;
   }
   return result;

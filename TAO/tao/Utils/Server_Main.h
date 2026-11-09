@@ -56,6 +56,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,17 +68,17 @@ namespace TAO
     class Server_Main
     {
     public:
-      explicit Server_Main (char const *name);
+      explicit Server_Main (std::string const &name);
       Server_Main (Server_Main const &) = delete;
       Server_Main (Server_Main &&) = delete;
       Server_Main &operator= (Server_Main const &) = delete;
       Server_Main &operator= (Server_Main &&) = delete;
-      ~Server_Main() = default;
+      ~Server_Main () = default;
 
       int run (int argc, ACE_TCHAR *argv[]);
 
     private:
-      char const *name_;
+      std::string name_;
     };
   } // namespace UTILS
 } // namespace TAO
