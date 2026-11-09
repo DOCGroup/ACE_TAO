@@ -22,10 +22,8 @@ class Consumer_Entry
 public:
   Consumer_Entry (Event_Comm::Consumer *consumer,
                  char const *filtering_criteria);
-  // Constructor.
 
   ~Consumer_Entry ();
-  // Descriptor.
 
   Consumer_Entry (Consumer_Entry const &) = delete;
   Consumer_Entry &operator= (Consumer_Entry const &) = delete;

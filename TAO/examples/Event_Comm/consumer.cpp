@@ -11,7 +11,6 @@ class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
 public:
   Consumer () = default;
-  // Constructor.
 
   ~Consumer () override = default;
 
@@ -19,7 +18,6 @@ public:
   Consumer &operator= (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;
   Consumer &operator= (Consumer &&) = delete;
-  // Destructor.
 
   int initialize (int argc, ACE_TCHAR *argv[]);
   // Initialization method.
