@@ -16,14 +16,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Messenger_i
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   Messenger_i ();
 
-  //Destructor
   virtual ~Messenger_i ();
 
 virtual CORBA::Boolean send_message (

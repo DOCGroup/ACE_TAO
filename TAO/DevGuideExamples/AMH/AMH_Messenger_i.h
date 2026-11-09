@@ -16,13 +16,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class AMH_Messenger_i
 class  AMH_Messenger_i : public virtual POA_DevGuide::AMH_Messenger
 {
 public:
   AMH_Messenger_i () = default;
 
-  //Destructor
   ~AMH_Messenger_i () override = default;
 
   AMH_Messenger_i (AMH_Messenger_i const &) = delete;
