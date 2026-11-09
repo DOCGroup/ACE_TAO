@@ -46,7 +46,6 @@ class TAO_CDR_Encaps_Codec
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_CDR_Encaps_Codec (CORBA::Octet major,
                         CORBA::Octet minor,
                         TAO_ORB_Core * orb_core,
@@ -71,7 +70,6 @@ public:
                              CORBA::TypeCode_ptr tc) override;
 
 protected:
-  /// Destructor.
   /**
    * Only allow this class to be instantiated on the heap since it is
    * reference counted.

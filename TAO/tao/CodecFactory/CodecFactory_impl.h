@@ -45,7 +45,6 @@ class TAO_CodecFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   explicit TAO_CodecFactory (TAO_ORB_Core * orb_core);
 
   /// Create a Coder/Decoder for the given type of encoding.
