@@ -40,7 +40,7 @@ public:
   Sig_List & imports();
 
   // Returns the name of the object module.
-  ACE_CString &name();
+  ACE_CString const &name() const;
 
   // Add_source invokes GNU nm on the supplied file and parses the output to
   // build the list of imported and exported signatures.  When replacing GNU
@@ -51,13 +51,10 @@ public:
   // Get the number of external references to this object module. At the end
   // of processing, if the number of external references is 0, the module is
   // not included in the final library.
-  int extref ();
+  int extref () const;
 
   // add a new external reference to this module.
   void add_extref ();
-
-  // remove an exterenal reference. Currently, this function is not used.
-  void remove_extref();
 
 private:
   void populate_sig_list (Sig_List &, int, ACE_Message_Block *);
@@ -66,7 +63,7 @@ private:
   ACE_CString name_;
   Sig_List imports_;
   Sig_List exports_;
-  int extrefs_;
+  int extrefs_ {};
 };
 
 #endif /* _OBJ_MODULE_H_ */

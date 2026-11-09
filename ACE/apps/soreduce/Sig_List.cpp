@@ -3,27 +3,13 @@
 // Author: Phil Mesnier
 
 #include "Sig_List.h"
-#include <cstring>
-#include <utility>
+#include <algorithm>
 
 //-----------------------------------------------------------------------------
 
 Sig_List::Sig_List (int cap)
-  : size_(0),
-    capacity_(cap),
-    index_(0),
-    has_nulls_ (0),
-    modified_ (false),
-    array_ (nullptr)
 {
-  array_.reset (new Signature*[capacity_] ());
-}
-
-Sig_List::~Sig_List ()
-{
-  for (int i = 0; i < size_; i++)
-    if (array_[i] != nullptr)
-      array_[i]->release ();
+  this->array_.reserve (cap);
 }
 
 void
@@ -33,44 +19,30 @@ Sig_List::add (ACE_CString const &s)
     return;
   modified_ = true;
   if (has_nulls_)
-    for (int i = 0; i < size_; i++)
-      if (array_[i] == nullptr) {
-        array_[i] = new Signature (s);
+    for (int i = 0; i < static_cast<int> (array_.size ()); i++)
+      if (!array_[i]) {
+        array_[i] = std::make_shared<Signature> (s);
         has_nulls_ --;
         return;
       }
-  if (size_ == capacity_) {
-    int ncap = capacity_ * 2;
-    std::unique_ptr<Signature *[]> narray (new Signature *[ncap]);
-    std::memcpy (narray.get (), array_.get (), capacity_ * sizeof (Signature *));
-    array_ = std::move (narray);
-    capacity_ = ncap;
-  }
-  array_[size_++] = new Signature(s);
+  array_.push_back (std::make_shared<Signature> (s));
 }
 
 void
 Sig_List::add (Sig_List const &other)
 {
-  if (capacity_ < size_ + other.capacity_) {
-    int ncap = size_ + other.capacity_ + 50;
-    std::unique_ptr<Signature *[]> narray (new Signature *[ncap]);
-    std::memcpy (narray.get (), array_.get (), capacity_ * sizeof (Signature *));
-    array_ = std::move (narray);
-    capacity_ = ncap;
-  }
   modified_ = true;
-  for (int i = 0; i < other.size_; i++)
-    if (other.array_[i] != nullptr &&
-        this->index_of (other.array_[i]->name()) == -1)
+  for (int i = 0; i < static_cast<int> (other.array_.size ()); i++)
+    if (other.array_[i] &&
+        this->index_of (other.array_[i]->name ()) == -1)
       {
         if (!has_nulls_)
-          array_[size_++] = other.array_[i]->dup();
+          array_.push_back (other.array_[i]);
         else
-          for (int i = 0; i < size_; i++)
-            if (array_[i] == nullptr)
+          for (int j = 0; j < static_cast<int> (array_.size ()); j++)
+            if (!array_[j])
               {
-                array_[i] = other.array_[i]->dup();
+                array_[j] = other.array_[i];
                 has_nulls_ --;
                 break;
               }
@@ -78,30 +50,12 @@ Sig_List::add (Sig_List const &other)
 }
 
 void
-Sig_List::remove (Signature const &s)
-{
-  for (int i = 0; i < size_; i++)
-    if (array_[i] != nullptr && array_[i]->name() == s.name())
-      {
-        array_[i]->release ();
-        array_[i] = nullptr;
-        modified_ = true;
-        if (i == size_ - 1)
-          size_--;
-        else
-          has_nulls_++;
-        break;
-      }
-}
-
-void
 Sig_List::remove_current ()
 {
-  array_[index_]->release();
-  array_[index_] = nullptr;
+  array_[index_].reset ();
   modified_ = true;
-  if (index_ == size_ - 1)
-    size_--;
+  if (index_ == static_cast<int> (array_.size ()) - 1)
+    array_.pop_back ();
   else
     has_nulls_++;
 }
@@ -109,8 +63,8 @@ Sig_List::remove_current ()
 int
 Sig_List::index_of (Signature const *s)
 {
-  for (int i = 0; i < size_; i++)
-    if (array_[i] != nullptr && array_[i]->name() == s->name()) {
+  for (int i = 0; i < static_cast<int> (array_.size ()); i++)
+    if (array_[i] && array_[i]->name () == s->name ()) {
       array_[i]->used();
       return i;
     }
@@ -118,63 +72,55 @@ Sig_List::index_of (Signature const *s)
 }
 
 int
-Sig_List::index_of (ACE_CString const &s)
+Sig_List::index_of (ACE_CString const &s) const
 {
-  for (int i = 0; i < size_; i++)
-    if (array_[i] != nullptr && array_[i]->name() == s) {
+  for (int i = 0; i < static_cast<int> (array_.size ()); i++)
+    if (array_[i] && array_[i]->name () == s) {
       return i;
     }
   return -1;
 }
 
-
 Signature const *
-Sig_List::first()
+Sig_List::first ()
 {
-  for (index_ = 0; index_ < size_; index_++)
-    if (array_[index_] != nullptr)
-      return array_[index_];
+  for (index_ = 0; index_ < static_cast<int> (array_.size ()); index_++)
+    if (array_[index_])
+      return array_[index_].get ();
   return nullptr;
 }
 
 Signature const *
-Sig_List::next()
+Sig_List::next ()
 {
-  for (++index_; index_ < size_; index_++)
-    if (array_[index_] != nullptr)
-      return array_[index_];
+  for (++index_; index_ < static_cast<int> (array_.size ()); index_++)
+    if (array_[index_])
+      return array_[index_].get ();
   return nullptr;
 }
 
 bool
-Sig_List::hasmore ()
+Sig_List::hasmore () const
 {
-  return index_ < size_;
+  return index_ < static_cast<int> (array_.size ());
 }
 
 int
-Sig_List::size()
+Sig_List::size () const
 {
-  return size_;
+  return static_cast<int> (array_.size ());
 }
 
 bool
 Sig_List::modified()
 {
-  bool rtn = modified_;
+  bool const rtn = modified_;
   modified_ = false;
-  int insert = 0;
-  if (has_nulls_) {
-    for (int i = 0; i < size_; i++)
-      if (array_[i] != nullptr) {
-        if (i != insert) {
-          array_[insert] = array_[i];
-          array_[i] = nullptr;
-        }
-        insert++;
-      }
-    size_ = insert+1;
-    has_nulls_ = 0;
-  }
+  if (has_nulls_)
+    {
+      array_.erase (std::remove (array_.begin (), array_.end (), nullptr), array_.end ());
+      array_.push_back (nullptr);
+      has_nulls_ = 0;
+    }
   return rtn;
 }

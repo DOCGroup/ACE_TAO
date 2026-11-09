@@ -3,7 +3,6 @@
 
 // Author: Phil Mesnier
 
-
 #ifndef _SIG_LIST_H_
 #define _SIG_LIST_H_
 
@@ -16,37 +15,33 @@
 
 #include "Signature.h"
 #include <memory>
+#include <vector>
 
 class Sig_List {
 public:
   explicit Sig_List (int cap = 500);
-  ~Sig_List ();
   Sig_List (Sig_List const &) = delete;
   Sig_List (Sig_List &&) = delete;
   Sig_List &operator= (Sig_List const &) = delete;
   Sig_List &operator= (Sig_List &&) = delete;
   void add (ACE_CString const &s);
   void add (Sig_List const &other);
-  void remove (Signature const &s);
   void remove_current ();
 
   int index_of (Signature const *s);
-  int index_of (ACE_CString const &s);
-  bool hasmore ();
+  int index_of (ACE_CString const &s) const;
+  bool hasmore () const;
   Signature const *first();
   Signature const *next();
 
   bool modified ();
-  int size();
+  int size() const;
 
 private:
-  int size_;
-  int capacity_;
-  int index_;
-  int has_nulls_;
-  bool modified_;
-  std::unique_ptr<Signature *[]> array_;
+  int index_ {};
+  int has_nulls_ {};
+  bool modified_ {};
+  std::vector<std::shared_ptr<Signature>> array_;
 };
-
 
 #endif /* _SIG_LIST_H_ */

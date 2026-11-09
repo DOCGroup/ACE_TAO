@@ -13,12 +13,9 @@
 
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
-    undefs_ (undef_wrapper_.imports()),
-    num_libs_ (0)
+    undefs_ (undef_wrapper_.imports())
 {
 }
-
-SO_Group::~SO_Group () = default;
 
 void
 SO_Group::add_executable (char const *path)
@@ -31,7 +28,7 @@ SO_Group::add_executable (char const *path)
 
   opts.set_handles (ACE_STDIN,pipe[1]);
 
-  int result = opts.command_line ("ldd %s",path);
+  int const result = opts.command_line ("ldd %s",path);
   // Prevent compiler warning about "unused variable" if ACE_ASSERT is
   // an empty macro.
   ACE_UNUSED_ARG (result);
@@ -42,7 +39,7 @@ SO_Group::add_executable (char const *path)
     ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
   opts.release_handles();
 
-  const int max_line_length = 1000;
+  int constexpr max_line_length = 1000;
   char line[max_line_length];
 
   while (true)
@@ -83,14 +80,14 @@ SO_Group::add_executable (char const *path)
       }
 
     line[len] = '\0';
-    char *dot = std::strchr (line, '.');
+    char * const dot = std::strchr (line, '.');
 
     if (dot != nullptr)
       {
         *dot = '\0';
       }
 
-    char * libname = line + 3; // skip over "lib"
+    char * const libname = line + 3; // skip over "lib"
 
     // check to see if this is a new library
     bool found = false;
@@ -203,8 +200,3 @@ SO_Group::list_libs ()
       }
   }
 }
-
-
-
-
-

@@ -20,13 +20,12 @@
 Obj_Module::Obj_Module (ACE_CString const &name, int cap)
   : name_ (name),
     imports_(cap),
-    exports_(cap),
-    extrefs_(0)
+    exports_(cap)
 {
 }
 
-ACE_CString &
-Obj_Module::name()
+ACE_CString const &
+Obj_Module::name() const
 {
   return name_;
 }
@@ -44,7 +43,7 @@ Obj_Module::imports()
 }
 
 int
-Obj_Module::extref()
+Obj_Module::extref() const
 {
   return extrefs_;
 }
@@ -53,12 +52,6 @@ void
 Obj_Module::add_extref()
 {
   extrefs_ ++;
-}
-
-void
-Obj_Module::remove_extref()
-{
-  extrefs_ --;
 }
 
 int
@@ -90,9 +83,9 @@ Obj_Module::add_source(char const *p, bool imports_only)
 {
   ACE_Process nmproc;
   ACE_Process_Options nm_opts;
-  ACE_CString path (p);
+  ACE_CString const path (p);
 
-  ACE_CString::size_type pathsep = path.rfind('/');
+  ACE_CString::size_type const pathsep = path.rfind('/');
 
   ACE_CString src_name;
   ACE_CString workpath;
@@ -113,7 +106,7 @@ Obj_Module::add_source(char const *p, bool imports_only)
 
   // Options for the command line shown here are for the GNU nm 2.9.5
 
-  int result = nm_opts.command_line ("nm -C %s",src_name.c_str());
+  int const result = nm_opts.command_line ("nm -C %s",src_name.c_str());
   // Prevent compiler warning about "unused variable" if ACE_ASSERT is
   // an empty macro.
   ACE_UNUSED_ARG (result);

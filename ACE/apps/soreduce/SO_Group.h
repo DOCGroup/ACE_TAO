@@ -18,7 +18,7 @@ class SO_Group
 {
 public:
   SO_Group ();
-  ~SO_Group ();
+  ~SO_Group () = default;
   SO_Group (SO_Group const &) = delete;
   SO_Group (SO_Group &&) = delete;
   SO_Group &operator= (SO_Group const &) = delete;
@@ -45,7 +45,7 @@ private:
   Obj_Module undef_wrapper_;
   Sig_List &undefs_;
   std::vector<std::unique_ptr<Library>> libs_;
-  int num_libs_;
+  int num_libs_ {};
 };
 
 #endif //_SO_GROUP_H_

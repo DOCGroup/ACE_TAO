@@ -52,6 +52,10 @@ class MPC_ACE_Dep_Lib : public MPC_Generator
 {
 public:
   explicit MPC_ACE_Dep_Lib (ACE_CString const &libname);
+  MPC_ACE_Dep_Lib (MPC_ACE_Dep_Lib const &) = delete;
+  MPC_ACE_Dep_Lib (MPC_ACE_Dep_Lib &&) = delete;
+  MPC_ACE_Dep_Lib &operator= (MPC_ACE_Dep_Lib const &) = delete;
+  MPC_ACE_Dep_Lib &operator= (MPC_ACE_Dep_Lib &&) = delete;
 
 protected:
   void write_baseprojects () override;
@@ -63,6 +67,10 @@ class MPC_TAO_Lib : public MPC_ACE_Dep_Lib
 {
 public:
   explicit MPC_TAO_Lib (ACE_CString const &libname);
+  MPC_TAO_Lib (MPC_TAO_Lib const &) = delete;
+  MPC_TAO_Lib (MPC_TAO_Lib &&) = delete;
+  MPC_TAO_Lib &operator= (MPC_TAO_Lib const &) = delete;
+  MPC_TAO_Lib &operator= (MPC_TAO_Lib &&) = delete;
 
 protected:
   void write_baseprojects () override;
@@ -75,6 +83,10 @@ class MPC_TAO_Dep_Lib : public MPC_TAO_Lib
 {
 public:
   explicit MPC_TAO_Dep_Lib (ACE_CString const &);
+  MPC_TAO_Dep_Lib (MPC_TAO_Dep_Lib const &) = delete;
+  MPC_TAO_Dep_Lib (MPC_TAO_Dep_Lib &&) = delete;
+  MPC_TAO_Dep_Lib &operator= (MPC_TAO_Dep_Lib const &) = delete;
+  MPC_TAO_Dep_Lib &operator= (MPC_TAO_Dep_Lib &&) = delete;
 
 protected:
   void write_baseprojects () override;
@@ -89,7 +101,7 @@ public:
   explicit Library (ACE_TCHAR const *name = nullptr);
   /// Constructor is responsible for loading all of the modules related to the
   /// library
-  ~Library ();
+  ~Library () = default;
   Library (Library const &) = delete;
   Library (Library &&) = delete;
   Library &operator= (Library const &) = delete;
@@ -123,8 +135,8 @@ private:
   ACE_CString name_;
   ACE_CString path_;
 
-  int num_modules_;
-  int num_extrefs_;
+  int num_modules_ {};
+  int num_extrefs_ {};
 
   std::vector<std::unique_ptr<Obj_Module>> modules_;
   Sig_List exported_;

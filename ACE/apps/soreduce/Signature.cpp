@@ -1,9 +1,7 @@
 #include "Signature.h"
 
 Signature::Signature (ACE_CString const &name)
-  :name_(name),
-   ref_count_ (1),
-   used_ (0)
+  : name_ (name)
 {
 }
 
@@ -24,18 +22,3 @@ Signature::name() const
 {
   return name_;
 }
-
-Signature *
-Signature::dup()
-{
-  ref_count_++;
-  return this;
-}
-
-void
-Signature::release()
-{
-  if (--ref_count_ == 0)
-    delete this;
-}
-
