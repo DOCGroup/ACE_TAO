@@ -133,7 +133,6 @@ ACE_SOCK_Dgram_Mcast::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Constructor.
 ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   (ACE_SOCK_Dgram_Mcast::options opts)
  : send_addr_ ()
@@ -142,7 +141,6 @@ ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast");
 }
 
-// Destructor.
 ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast");

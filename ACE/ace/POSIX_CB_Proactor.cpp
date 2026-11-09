@@ -20,7 +20,6 @@ ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
   this->get_asynch_pseudo_task ().start ();
 }
 
-// Destructor.
 ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor ()
 {
   this->close ();

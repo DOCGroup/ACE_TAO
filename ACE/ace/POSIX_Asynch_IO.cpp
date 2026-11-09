@@ -1765,7 +1765,6 @@ protected:
 
 // ************************************************************
 
-// Constructor.
 ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
       (ACE_POSIX_Proactor *posix_proactor,
        ACE_POSIX_Asynch_Transmit_File_Result *result)
@@ -1788,13 +1787,11 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
   file_size_ = ACE_OS::filesize (this->result_->file ());
 }
 
-// Destructor.
 ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler ()
 {
   delete result_;
   mb_->release ();
 }
-
 
 // Do the transmission.
 // Initiate transmitting the header. When that completes

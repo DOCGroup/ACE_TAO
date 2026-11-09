@@ -755,7 +755,6 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
   // provide correct calls for virtual functions !!!
 }
 
-// Destructor.
 ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor ()
 {
   this->close();

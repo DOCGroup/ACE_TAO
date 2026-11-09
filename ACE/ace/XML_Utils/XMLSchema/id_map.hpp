@@ -67,10 +67,8 @@ class ID_Map
   };
 
   //Only a default constructor and destructor are needed
-  //Constructor
   ID_Map () = default;
 
-  //Destructor
   ~ID_Map () = default;
 
   // Add an ID to the ID map

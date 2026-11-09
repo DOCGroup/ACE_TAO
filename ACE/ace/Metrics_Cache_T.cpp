@@ -158,9 +158,6 @@ flush_ACE_Metrics_Timeprobe ()
 // Class ACE_Metrics_Cache //
 /////////////////////////////
 
-
-// Constructor.
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::
 ACE_Metrics_Cache (u_long table_size,

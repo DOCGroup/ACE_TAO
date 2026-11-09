@@ -23,7 +23,6 @@ ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Command_Callback)
 // GOF Command Pattern Templates //
 ///////////////////////////////////
 
-// Constructor.
 template <class RECEIVER, class ACTION>
 ACE_Command_Callback<RECEIVER, ACTION>::ACE_Command_Callback (RECEIVER &recvr,
                                     ACTION action)
