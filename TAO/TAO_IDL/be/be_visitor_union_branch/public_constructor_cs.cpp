@@ -18,14 +18,12 @@
 //  the copy ctor and assignment operator
 // **********************************************
 
-// constructor
 be_visitor_union_branch_public_constructor_cs::
 be_visitor_union_branch_public_constructor_cs (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-// destructor
 be_visitor_union_branch_public_constructor_cs::
 ~be_visitor_union_branch_public_constructor_cs () = default;
 
