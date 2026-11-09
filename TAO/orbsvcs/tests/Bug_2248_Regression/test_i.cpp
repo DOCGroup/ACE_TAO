@@ -1,7 +1,6 @@
 #include "test_i.h"
 
-#include "ace/OS_NS_stdlib.h"
-
+#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -11,15 +10,10 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, char const * key)
 {
 }
 
-Simple_Server_i::Simple_Server_i ()
-  : orb_ (nullptr)
-{
-}
-
 char *
 Simple_Server_i::remote_call ()
 {
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing remote_call()\n", _key.in()));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing remote_call()\n", _key.in ()));
 
   std::string message = "remote_call() completed by ";
   message += this->_key.in ();
@@ -27,8 +21,6 @@ Simple_Server_i::remote_call ()
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in (), message.c_str ()));
   return CORBA::string_dup (message.c_str ());
 }
-
-
 char *
 Simple_Server_i::shutdown (char const * key)
 {
@@ -36,11 +28,11 @@ Simple_Server_i::shutdown (char const * key)
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing shutdown()\n", _key.in()));
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int still_alive = 1;
+  bool still_alive {true};
   if (std::strcmp (this->_key.in (), key) == 0)
     {
-       this->orb_->shutdown (false);
-       still_alive = 0;
+      this->orb_->shutdown (false);
+      still_alive = false;
     }
 
   std::string message = "shutdown() completed by ";
@@ -58,17 +50,14 @@ Simple_Server_i::abort (char const * key)
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing abort()\n", _key.in()));
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int still_alive = 1;
   if (std::strcmp (this->_key.in (), key) == 0)
     {
-       ACE_OS::abort();
-       still_alive = 0;
+      std::abort ();
     }
 
   std::string message = "abort() completed by ";
   message += this->_key.in ();
-  message += ", still_alive=";
-  message += std::to_string (still_alive);
+  message += ", still_alive=1";
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in (), message.c_str ()));
   return CORBA::string_dup (message.c_str ());
 }
