@@ -66,10 +66,8 @@ class ACE_Svc_Export Custom_Handler_Upcall
     public:
         using TTimerQueue = ACE_Timer_Queue_T<Custom_Handler *, Custom_Handler_Upcall, ACE_Null_Mutex>;
 
-        // Default constructor
         Custom_Handler_Upcall () = default;
 
-        // Destructor.
         ~Custom_Handler_Upcall () = default;
 
         Custom_Handler_Upcall (Custom_Handler_Upcall const &) = delete;
