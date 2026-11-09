@@ -17,15 +17,10 @@
 #include "ace/OS_NS_sys_time.h"
 #include "BPR_Drivers.h"
 
-
-// Constructor.
-
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
   : ACE_Task_Base (input_task_mgr)
 {
 }
-
-// Destructor.
 
 Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base () = default;
 
@@ -170,8 +165,6 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
     }
 }
 
-// Constructor.
-
 Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                                             Input_Device_Wrapper_Base *input_wrapper,
                                             Output_Device_Wrapper_Base *output_wrapper)
@@ -184,8 +177,6 @@ Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
   if (input_task_mgr_ == nullptr)
     input_task_mgr_ = ACE_Thread_Manager::instance ();
 }
-
-// Destructor.
 
 Bounded_Packet_Relay::~Bounded_Packet_Relay ()
 {

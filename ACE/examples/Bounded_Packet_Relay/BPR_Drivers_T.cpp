@@ -23,9 +23,6 @@
 #include <cstring>
 #include "ace/OS_NS_unistd.h"
 
-
-// Constructor.
-
 // Parse the input and execute the corresponding command.
 
 template <class TQ> int

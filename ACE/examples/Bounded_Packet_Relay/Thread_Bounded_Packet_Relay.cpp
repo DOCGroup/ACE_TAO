@@ -25,9 +25,6 @@ using DRIVER_CMD = Thread_Bounded_Packet_Relay_Driver::MYCOMMAND;
 using HANDLER_CMD = ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION>;
 using SEND_HANDLER_CMD = ACE_Command_Callback<Send_Handler, Send_Handler::ACTION>;
 
-
-// Constructor.
-
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                                                       std::string const &text,
                                                       int logging)
@@ -98,8 +95,6 @@ Text_Input_Device_Wrapper::create_input_message ()
   return mb.release ();
 }
 
-// Constructor.
-
 Text_Output_Device_Wrapper::Text_Output_Device_Wrapper (int logging)
   : logging_ (logging)
 {
@@ -148,8 +143,6 @@ Text_Output_Device_Wrapper::modify_device_settings (void *logging)
   return 0;
 }
 
-// Constructor.
-
 User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
                                   Thread_Timer_Queue *queue,
                                   Thread_Bounded_Packet_Relay_Driver &tbprd)
@@ -159,8 +152,6 @@ User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
     driver_ (tbprd)
 {
 }
-
-// Destructor.
 
 User_Input_Task::~User_Input_Task ()
 {
@@ -449,8 +440,6 @@ User_Input_Task::clear_all_timers ()
   return 0;
 }
 
-// Constructor.
-
 BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay &relay,
                                     Thread_Timer_Queue &queue)
   : relay_ (relay),
@@ -476,8 +465,6 @@ BPR_Handler_Base::clear_all_timers (void *)
 
   return 0;
 }
-
-// Constructor.
 
 Send_Handler::Send_Handler (u_long send_count,
                             ACE_Time_Value const &duration,
@@ -573,9 +560,6 @@ Send_Handler::reregister (void *)
   return 0;
 }
 
-
-// Constructor.
-
 Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
                                           Thread_Timer_Queue &queue,
                                           Thread_Bounded_Packet_Relay_Driver &driver)
@@ -619,8 +603,6 @@ Termination_Handler::cancelled ()
   delete this;
   return 0;
 }
-
-// Constructor.
 
 Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay)
   : input_task_ (relay, &timer_queue_, *this)
