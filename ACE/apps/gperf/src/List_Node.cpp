@@ -49,43 +49,36 @@ List_Node::sort (char *base, int len)
     }
 }
 
-/// Initializes a List_Node.  This requires obtaining memory for the
-/// CHAR_SET initializing them using the information stored in the
+/// Initializes a List_Node, copying the input keyword and fields and
+/// building its key signature using the information stored in the
 /// KEY_POSITIONS array in Options, and checking for simple errors.
-/// It's important to note that KEY and REST are both pointers to the
-/// different offsets into the same block of dynamic memory pointed to
-/// by parameter K. The data member REST is used to store any
-/// additional fields of the input file (it is set to the "" string if
-/// Option[TYPE] is not enabled).  This is useful if the user wishes to
-/// incorporate a lookup structure, rather than just an array of keys.
+/// The data member REST stores any additional fields of the input file
+/// (it is empty if Option[TYPE] is not enabled). This is useful if the
+/// user wishes to incorporate a lookup structure, rather than just an
+/// array of keys.
 /// Finally, KEY_NUMBER contains a count of the total number of keys
 /// seen so far.  This is used to initialize the INDEX field to some
 /// useful value.
-List_Node::List_Node (char *k, int len)
-  : link (nullptr),
-    next (nullptr),
-    key (k),
-    rest (option[TYPE] ? k + len + 1 : const_cast<char*> ("")),
+List_Node::List_Node (char const *input, int len)
+  : link {},
+    next {},
+    key (input, static_cast<size_t> (len)),
+    rest (option[TYPE] ? input + len + 1 : ""),
+    keysig {},
     length (len),
     slot (0)
 {
-  char *ptr = new char[(option[ALLCHARS] ?
-                        static_cast<u_int>(len) :
-                        option.max_keysig_size ()) + 1];
-  keysig = ptr;
-  k[len] = '\0';             // Null terminate KEY to separate it from REST.
-
   // Lower case if STRCASECMP option is enabled.
   if (option[STRCASECMP])
-    for (char *p = k; *p; p++)
-      if (ACE_OS::ace_isupper (*p))
-        *p = static_cast<char> (ACE_OS::ace_tolower (*p));
+    for (char& ch : this->key)
+      if (ACE_OS::ace_isupper (ch))
+        ch = static_cast<char> (ACE_OS::ace_tolower (ch));
 
   if (option[ALLCHARS])         // Use all the character position in the KEY.
-    for (; *k; k++, ptr++)
+    for (char const ch : this->key)
       {
-        *ptr = *k;
-        int i = (int) *ptr;
+        this->keysig.push_back (ch);
+        int const i = static_cast<int> (ch);
         ++Vectors::occurrences[i];
       }
   else
@@ -97,33 +90,27 @@ List_Node::List_Node (char *k, int len)
       // occurrences table and keysig (via char * pointer ptr).
       for (int i; (i = option.get ()) != EOS; )
         {
+          char ch;
           if (i == WORD_END) // Special notation for last KEY position, i.e. '$'.
-            *ptr = key[len - 1];
+            ch = this->key[len - 1];
           else if (i <= len) // Within range of KEY length, so we'll keep it.
-            *ptr = key[i - 1];
+            ch = this->key[i - 1];
           else // Out of range of KEY length, so we'll just skip it.
             continue;
-          ++Vectors::occurrences[(int) *ptr++];
+          this->keysig.push_back (ch);
+          ++Vectors::occurrences[static_cast<int> (ch)];
         }
 
       // Didn't get any hits and user doesn't want to consider the
       // keylength, so there are essentially no usable hash positions!
-      if (ptr == keysig && option[NOLENGTH])
+      if (this->keysig.empty () && option[NOLENGTH])
         ACE_ERROR ((LM_ERROR,
                     "Can't hash keyword %s with chosen key positions.\n%a",
-                    key,
+                    this->key.c_str (),
                     1));
     }
-  // Terminate this string.
-  *ptr = '\0';
 
   // Sort the KEYSIG items alphabetically.
-  sort (keysig, ACE_Utils::truncate_cast<int> (ptr - keysig));
-}
-
-List_Node::~List_Node ()
-{
-  delete [] this->key;
-  delete [] this->keysig;
+  sort (this->keysig.data (), ACE_Utils::truncate_cast<int> (this->keysig.size ()));
 }
 

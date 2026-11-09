@@ -32,6 +32,8 @@
 
 #include "Options.h"
 
+#include <string>
+
 /**
  * Data and function members for defining values and operations of
  * a list node.
@@ -40,7 +42,7 @@ class List_Node
 {
 public:
   /// Constructor.
-  List_Node (char *key, int len);
+  List_Node (char const *input, int len);
 
   List_Node (List_Node const &) = delete;
   List_Node (List_Node &&) = delete;
@@ -48,7 +50,7 @@ public:
   List_Node &operator= (List_Node &&) = delete;
 
   /// Destructor.
-  ~List_Node ();
+  ~List_Node () = default;
 
   static void sort (char *base, int len);
 
@@ -59,13 +61,13 @@ public:
   List_Node *next;
 
   /// Each keyword string stored here.
-  char *key;
+  std::string key;
 
   /// Additional information for building hash function.
-  char *rest;
+  std::string rest;
 
   /// Set of characters to hash, specified by user.
-  char *keysig;
+  std::string keysig;
 
   /// Length of the key.
   int length;

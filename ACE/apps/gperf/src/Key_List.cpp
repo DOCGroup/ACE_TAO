@@ -26,6 +26,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Malloc_Base.h"
 #include <cctype>
 #include <cstdio>
 #include <cstring>
@@ -34,6 +35,16 @@
 /// Default type for generated code.
 namespace
 {
+struct Read_Buffer_Deleter
+{
+  ACE_Allocator *allocator;
+
+  void operator() (char *buffer) const
+  {
+    this->allocator->free (buffer);
+  }
+};
+
 char const *
 string_compare_prefix (bool const case_insensitive)
 {
@@ -269,7 +280,8 @@ Key_List::read_keys ()
     {
       ACE_Read_Buffer input (stdin);
 
-      char *buffer = input.read ('\n');
+      std::unique_ptr<char, Read_Buffer_Deleter> buffer (
+        input.read ('\n'), Read_Buffer_Deleter {input.alloc ()});
 
       if (buffer == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -281,27 +293,27 @@ Key_List::read_keys ()
         {
           List_Node *temp {};
           std::string const& delimiter = option.delimiter ();
+          int const first_key_length = static_cast<int> (std::strcspn (buffer.get (),
+                                                                       delimiter.c_str ()));
           ACE_NEW_RETURN (this->head,
-                          List_Node (buffer,
-                                     static_cast<int> (std::strcspn (buffer,
-                                                        delimiter.c_str ()))),
+                          List_Node (buffer.get (), first_key_length),
                           -1);
           for (temp = this->head;
-               (nullptr != (buffer = input.read ('\n')))
-                 && std::strcmp (buffer, "%%");
+               (buffer.reset (input.read ('\n')), buffer != nullptr)
+                 && std::strcmp (buffer.get (), "%%");
                temp = temp->next)
             {
+              int const key_length = static_cast<int> (std::strcspn (buffer.get (),
+                                                                     delimiter.c_str ()));
               ACE_NEW_RETURN (temp->next,
-                              List_Node (buffer,
-                                         static_cast<int> (std::strcspn (buffer,
-                                                            delimiter.c_str ()))),
+                              List_Node (buffer.get (), key_length),
                               -1);
               ++this->total_keys;
             }
 
           // See if any additional source code is included at end of
           // this file.
-          if (buffer)
+          if (buffer != nullptr)
             additional_code = 1;
 
           this->list_len = this->total_keys;
@@ -341,9 +353,9 @@ Key_List::read_keys ()
                   if (!option[DUP] || option[DEBUGGING])
                     ACE_ERROR ((LM_ERROR,
                                 "Static key link: \"%C\" = \"%C\", with key set \"%C\".\n",
-                                temp->key,
-                                ptr->key,
-                                temp->keysig));
+                                temp->key.c_str (),
+                                ptr->key.c_str (),
+                                temp->keysig.c_str ()));
                 }
 
               // Update minimum and maximum keyword length, if needed.
@@ -397,7 +409,7 @@ Key_List::merge (List_Node *list1, List_Node *list2)
     }
   else if ((occurrence_sort && list1->occurrence < list2->occurrence)
            || (hash_sort && list1->hash_value > list2->hash_value)
-           || (key_sort && std::strcmp (list1->key, list2->key) >= 0))
+           || (key_sort && list1->key >= list2->key))
     {
       list2->next = merge (list2->next, list1);
       return list2;
@@ -441,8 +453,8 @@ Key_List::occurrence (List_Node *ptr)
 {
   int value = 0;
 
-  for (char *temp = ptr->keysig; *temp; temp++)
-    value += Vectors::occurrences[(int) *temp];
+  for (char const temp : ptr->keysig)
+    value += Vectors::occurrences[static_cast<int> (temp)];
 
   return value;
 }
@@ -452,8 +464,8 @@ Key_List::occurrence (List_Node *ptr)
 inline void
 Key_List::determined (List_Node *ptr)
 {
-  for (char *temp = ptr->keysig; *temp; temp++)
-    Key_List::determined_[(int) *temp] = 1;
+  for (char const temp : ptr->keysig)
+    Key_List::determined_[static_cast<int> (temp)] = 1;
 }
 
 // Returns TRUE if PTR's key set is already completely determined.
@@ -462,8 +474,9 @@ Key_List::already_determined (List_Node *ptr)
 {
   int is_determined = 1;
 
-  for (char *temp = ptr->keysig; is_determined && *temp; temp++)
-    is_determined = determined_[(int) *temp];
+  for (char const temp : ptr->keysig)
+    if (is_determined)
+      is_determined = determined_[static_cast<int> (temp)];
 
   return is_determined;
 }
@@ -704,7 +717,7 @@ Key_List::output_switch (int use_keyword_table)
                   if (option[DEBUGGING])
                     ACE_OS::printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
                             temp->hash_value,
-                            temp->key);
+                            temp->key.c_str ());
                 }
               else
                 {
@@ -715,7 +728,7 @@ Key_List::output_switch (int use_keyword_table)
                       if (option[DEBUGGING])
                         ACE_OS::printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
                                 temp->hash_value,
-                                links->key);
+                                links->key.c_str ());
                       if (pointer_and_type_enabled)
                         ACE_OS::printf ("                  resword = %swordlist[%d]%s;\n",
                                         generated_address_prefix (), links->slot,
@@ -723,7 +736,7 @@ Key_List::output_switch (int use_keyword_table)
                       else if (use_keyword_table)
                         ACE_OS::printf ("                  resword = wordlist[%d];\n", links->slot);
                       else
-                        ACE_OS::printf ("                  resword = \"%s\";\n", links->key);
+                        ACE_OS::printf ("                  resword = \"%s\";\n", links->key.c_str ());
                       ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                 }
@@ -743,7 +756,7 @@ Key_List::output_switch (int use_keyword_table)
                       else if (use_keyword_table)
                         ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                       else
-                        ACE_OS::printf ("                  resword = \"%s\";\n", temp->key);
+                        ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
                       ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                   if (pointer_and_type_enabled)
@@ -753,7 +766,7 @@ Key_List::output_switch (int use_keyword_table)
                   else if (use_keyword_table)
                     ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                   else
-                    ACE_OS::printf ("                  resword = \"%s\";\n", temp->key);
+                    ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
                   ACE_OS::printf ("                  return %s ? resword : %s;\n",
                                   comp_buffer, generated_null_pointer ());
                 }
@@ -768,7 +781,7 @@ Key_List::output_switch (int use_keyword_table)
                   else if (use_keyword_table)
                     ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                   else
-                    ACE_OS::printf ("                  resword = \"%s\";", temp->key);
+                    ACE_OS::printf ("                  resword = \"%s\";", temp->key.c_str ());
                   if (option[LENTABLE] && !option[DUP])
                     ACE_OS::printf (" key_len = %d;", temp->length);
                   ACE_OS::printf (" break;\n");
@@ -800,13 +813,13 @@ Key_List::output_switch (int use_keyword_table)
                       Key_List::field_width,
                       temp->hash_value - lowest_case_value,
                       temp->length,
-                      temp->key,
+                      temp->key.c_str (),
                       generated_null_pointer ());
             else
               ACE_OS::printf ("                case %*d: s = \"%s\"; break;\n",
                       Key_List::field_width,
                       temp->hash_value - lowest_case_value,
-                      temp->key);
+                      temp->key.c_str ());
 
           ACE_OS::printf ("                default: return %s;\n                }\n              ",
                           generated_null_pointer ());
@@ -872,8 +885,8 @@ Key_List::output_keylength_table ()
 void
 Key_List::output_keyword_table ()
 {
-  char const *l_brace = *head->rest ? "{" : "";
-  char const *r_brace = *head->rest ? "}," : "";
+  char const *l_brace = head->rest.empty () ? "" : "{";
+  char const *r_brace = head->rest.empty () ? "" : "},";
   char const *indent = option[GLOBAL] ? "" : "  ";
   int slot = 0;
   List_Node *temp;
@@ -951,7 +964,8 @@ Key_List::output_keyword_table ()
             ACE_OS::printf ("\n");
           else
             {
-              ACE_OS::printf ("%s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
+              ACE_OS::printf ("%s\"%s\", %s%s", l_brace, temp->key.c_str (),
+                              temp->rest.c_str (), r_brace);
               if (option[DEBUGGING])
                 ACE_OS::printf (" /* hash value = %d, slot = %d */",
                         temp->hash_value,
@@ -961,7 +975,8 @@ Key_List::output_keyword_table ()
             }
         }
 
-      ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
+      ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, temp->key.c_str (),
+                      temp->rest.c_str (), r_brace);
       if (option[DEBUGGING])
         ACE_OS::printf (" /* hash value = %d, slot = %d */",
                 temp->hash_value,
@@ -973,7 +988,8 @@ Key_List::output_keyword_table ()
         for (List_Node *links = temp->link; links; links = links->link)
           {
             links->slot = ++slot;
-            ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, links->key, links->rest, r_brace);
+            ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, links->key.c_str (),
+                            links->rest.c_str (), r_brace);
             if (option[DEBUGGING])
               ACE_OS::printf (" /* hash value = %d, slot = %d */",
                       links->hash_value,
@@ -1400,7 +1416,7 @@ Key_List::count_duplicates (List_Node *link,
         ACE_DEBUG ((LM_DEBUG,
                     "%s linked keyword = %s, slot = %d, hash_value = %d\n",
                     type,
-                    ptr->key,
+                    ptr->key.c_str (),
                     ptr->slot,
                     ptr->hash_value));
     }
@@ -1464,7 +1480,7 @@ Key_List::output_lookup_array ()
           if (option[DEBUGGING])
             ACE_DEBUG ((LM_DEBUG,
                         "keyword = %s, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
-                        temp->key,
+                        temp->key.c_str (),
                         temp->slot,
                         temp->hash_value,
                         lookup_array[temp->hash_value]));
@@ -2073,9 +2089,9 @@ Key_List::dump ()
                   ptr->length,
                   ptr->slot,
                   keysig_width,
-                  ptr->keysig,
+                  ptr->keysig.c_str (),
                   keyword_width,
-                  ptr->key));
+                  ptr->key.c_str ()));
 
       List_Node *dup = ptr->link;
       if (dup)
@@ -2085,7 +2101,7 @@ Key_List::dump ()
                dup = dup->link)
             ACE_DEBUG ((LM_DEBUG,
                         " %s",
-                        dup->key));
+                        dup->key.c_str ()));
         }
       ACE_DEBUG ((LM_DEBUG,
                   "\n"));

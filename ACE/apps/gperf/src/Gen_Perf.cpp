@@ -108,8 +108,8 @@ Gen_Perf::hash (List_Node *key_node)
 {
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
-  for (char *ptr = key_node->keysig; *ptr; ptr++)
-      sum += Vectors::asso_values[(int) *ptr];
+  for (char const ptr : key_node->keysig)
+      sum += Vectors::asso_values[static_cast<int> (ptr)];
 
   key_node->hash_value = sum;
   return sum;
@@ -191,12 +191,12 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
     ACE_DEBUG ((LM_DEBUG,
                 "collision on keyword #%d, prior = \"%C\", curr = \"%C\" hash = %d\n",
                 num_done,
-                prior->key,
-                curr->key,
+                prior->key.c_str (),
+                curr->key.c_str (),
                 curr->hash_value));
   Gen_Perf::sort_set (this->union_set.get (),
-                      compute_disjoint_union (prior->keysig,
-                                              curr->keysig,
+                      compute_disjoint_union (prior->keysig.data (),
+                                              curr->keysig.data (),
                                               this->union_set.get ()));
 
   // Try changing some values, if change doesn't alter other values

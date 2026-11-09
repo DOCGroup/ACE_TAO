@@ -68,8 +68,8 @@ Hash_Table::~Hash_Table ()
                       "%8d, %*s, %s\n",
                       i,
                       keysig_width,
-                      this->table_[i]->keysig,
-                      this->table_[i]->key));
+                      this->table_[i]->keysig.c_str (),
+                      this->table_[i]->key.c_str ()));
       ACE_DEBUG ((LM_DEBUG,
                   "end dumping hash table\n\n"));
     }
@@ -84,7 +84,7 @@ List_Node *
 Hash_Table::find (List_Node *item,
                   int ignore_length)
 {
-  size_t hash_val = ACE::hash_pjw (item->keysig);
+  size_t hash_val = ACE::hash_pjw (item->keysig.c_str ());
   // The following works since the hash table size_ is always a power
   // of 2...
   size_t size = this->size_ - 1;
@@ -93,7 +93,7 @@ Hash_Table::find (List_Node *item,
 
   for (probe = hash_val & size;
        this->table_[probe]
-         && (std::strcmp (this->table_[probe]->keysig, item->keysig) != 0
+         && (this->table_[probe]->keysig != item->keysig
              || (ignore_length == 0 && this->table_[probe]->length != item->length));
        probe = (probe + increment) & size)
     {
