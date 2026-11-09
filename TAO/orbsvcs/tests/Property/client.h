@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef PROPERTY_CLIENT_H
 #define PROPERTY_CLIENT_H
 
@@ -95,7 +94,7 @@ protected:
   TAO_Naming_Client my_name_client_;
 
   /// To test propertySetDef interface.
-  CosPropertyService::PropertySetDef_var propsetdef_;
+  CosPropertyService::PropertySetDef_var propsetdef_ {};
 };
 
 #endif /* COSPROPERTYSERVICE_CLIENT_H */

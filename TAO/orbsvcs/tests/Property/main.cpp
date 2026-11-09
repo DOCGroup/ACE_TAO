@@ -16,7 +16,6 @@
 #include "orbsvcs/CosPropertyS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
-
 class TAO_PropertySet_Tester
 {
   // = TITLE
@@ -108,7 +107,6 @@ private:
   // Our names iterator.
 };
 
-
 // Defines a char, a short, a long, a float and a string.
 int
 TAO_PropertySet_Tester::test_define_property ()
@@ -139,7 +137,6 @@ TAO_PropertySet_Tester::test_define_property ()
               s));
   property_set_.define_property ("short_property",
                                  anyval);
-
 
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
@@ -356,7 +353,7 @@ TAO_PropertySet_Tester::test_delete_all_properties ()
   // Deleting all the properties
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_all_properties\n"));
-  int ret = property_set_.delete_all_properties ();
+  int const ret = property_set_.delete_all_properties ();
   if (ret == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "All properties deleted, I guess\n"));
@@ -417,7 +414,7 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n)
                   "Iterator has no more items\n"));
       return 0;
     }
-  for (size_t i = 0; i < pnames_var.in ().length (); i++)
+  for (size_t i {}; i < pnames_var.in ().length (); ++i)
     ACE_DEBUG ((LM_DEBUG,
                 "str %s\n",
                 static_cast<char const*> (pnames_var[i])));
@@ -425,11 +422,11 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb_var = CORBA::ORB_init (argc,
+      CORBA::ORB_var const orb_var = CORBA::ORB_init (argc,
                                                 argv,
                                                 "internet");
 
@@ -507,12 +504,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Try next_n without resetting.
       names_iterator_tester.test_next_n (6);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;
