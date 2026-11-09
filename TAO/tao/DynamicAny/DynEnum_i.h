@@ -41,10 +41,8 @@ class TAO_DynamicAny_Export TAO_DynEnum_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
 
-  /// Destructor.
   ~TAO_DynEnum_i () = default;
 
   /// Initialize using just a TypeCode.

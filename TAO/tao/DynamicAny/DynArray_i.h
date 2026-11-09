@@ -42,10 +42,8 @@ class TAO_DynamicAny_Export TAO_DynArray_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_DynArray_i (CORBA::Boolean allow_truncation=true);
 
-  /// Destructor.
   ~TAO_DynArray_i ();
 
   /// Initialize using just a TypeCode.

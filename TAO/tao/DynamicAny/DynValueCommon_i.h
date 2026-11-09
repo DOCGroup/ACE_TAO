@@ -35,10 +35,8 @@ class TAO_DynamicAny_Export TAO_DynValueCommon_i
     public virtual TAO_DynAny_i
 {
 public:
-  /// Constructor.
   explicit TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
   ~TAO_DynValueCommon_i () = default;
 
   // = LocalObject methods.

@@ -38,7 +38,6 @@ class TAO_DynamicAny_Export TAO_DynAnyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_DynAnyFactory () = default;
 
   // = The DynamicAnyFactory methods.

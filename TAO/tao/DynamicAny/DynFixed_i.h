@@ -40,7 +40,6 @@ class TAO_DynamicAny_Export TAO_DynFixed_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_DynFixed_i (CORBA::Boolean allow_truncation = true);
 
   /// Initialize from an Any or a TypeCode.

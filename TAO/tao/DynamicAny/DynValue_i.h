@@ -37,10 +37,8 @@ class TAO_DynamicAny_Export TAO_DynValue_i
     public virtual TAO_DynValueCommon_i
 {
 public:
-  /// Constructor.
   explicit TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
   ~TAO_DynValue_i () = default;
 
   /// Initialize using an Any.

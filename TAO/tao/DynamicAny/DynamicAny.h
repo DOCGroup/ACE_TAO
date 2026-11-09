@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_DynamicAny_Loader ();
 
   /// Creates a DynamicAny factory and returns it.

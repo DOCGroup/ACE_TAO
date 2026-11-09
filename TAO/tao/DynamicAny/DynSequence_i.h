@@ -41,10 +41,8 @@ class TAO_DynamicAny_Export TAO_DynSequence_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_DynSequence_i (CORBA::Boolean allow_truncation=true);
 
-  /// Destructor.
   ~TAO_DynSequence_i () = default;
 
   /// Initialize using just a TypeCode.

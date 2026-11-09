@@ -35,10 +35,8 @@ class TAO_DynamicAny_Export TAO_DynValueBox_i
     public virtual TAO_DynValueCommon_i
 {
 public:
-  /// Constructor.
   explicit TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
 
-  /// Destructor.
   ~TAO_DynValueBox_i () = default;
 
   /// Initialize using just a TypeCode.

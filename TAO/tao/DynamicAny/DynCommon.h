@@ -31,10 +31,8 @@ class TAO_DynamicAny_Export TAO_DynCommon
   : public virtual DynamicAny::DynAny
 {
 public:
-  /// Constructor.
   explicit TAO_DynCommon (CORBA::Boolean allow_truncation);
 
-  /// Destructor.
   ~TAO_DynCommon () override = default;
 
   // = Some functions common to all Dynamic Any types.
