@@ -461,8 +461,6 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d {};
-  AST_Type *e {};
   if (this->pd_flags == OP_oneway)
     {
       this->dump_i (o, "oneway ");
@@ -480,7 +478,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
   // Must advance the iterator explicity inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done ();)
     {
-      d = i.item ();
+      AST_Decl * const d = i.item ();
       d->dump (o);
       i.next ();
 
@@ -500,7 +498,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions.get ());
            !ei.is_done ();)
         {
-          e = ei.item ();
+          AST_Type * const e = ei.item ();
           ei.next ();
           e->local_name ()->dump (o);
 
