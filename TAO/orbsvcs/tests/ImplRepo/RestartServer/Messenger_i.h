@@ -21,14 +21,14 @@ public:
   //Destructor
   virtual ~Messenger_i ();
 
-  virtual CORBA::Boolean send_message (
+  CORBA::Boolean send_message (
     const char * user_name,
     const char * subject,
-    char *& message);
+    char *& message) override;
 
-  virtual void abort (CORBA::Short delay_secs);
+  void abort (CORBA::Short delay_secs) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.

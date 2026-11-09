@@ -5,7 +5,7 @@
 class Terminator : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int open(void*);
-  virtual int svc();
+  int open (void *) override;
+  int svc () override;
 };
 

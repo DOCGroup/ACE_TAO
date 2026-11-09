@@ -18,7 +18,7 @@ public:
   //Destructor
   virtual ~Test_i ();
 
-  virtual void contact ();
+  void contact () override;
 
 private:
 };

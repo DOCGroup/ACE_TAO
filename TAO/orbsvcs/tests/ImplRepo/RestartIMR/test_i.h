@@ -18,7 +18,7 @@ public:
   // Destructor
   virtual ~Test_Dummy_i ();
 
-  virtual  char * getMessage ();
+  char * getMessage () override;
 };
 
 class  Test_Time_i
@@ -31,9 +31,9 @@ public:
   // Destructor
   virtual ~Test_Time_i ();
 
-  virtual ::CORBA::Long current_time ();
+  ::CORBA::Long current_time () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 };
 
 
