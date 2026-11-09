@@ -42,10 +42,8 @@ class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushSupplier
 {
   friend class TAO_Notify_Builder;
 public:
-  /// Constructor
   TAO_Notify_CosEC_ProxyPushSupplier ();
 
-  /// Destructor
   ~TAO_Notify_CosEC_ProxyPushSupplier () override = default;
 
   TAO_Notify_CosEC_ProxyPushSupplier (TAO_Notify_CosEC_ProxyPushSupplier const &) = delete;

@@ -31,7 +31,6 @@ class TAO_Notify_StructuredEvent;
 class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Notify_Event
 {
 public:
-  /// Constructor
   explicit TAO_Notify_StructuredEvent_No_Copy (
     CosNotification::StructuredEvent const &notification);
 
@@ -40,7 +39,6 @@ public:
   TAO_Notify_StructuredEvent_No_Copy &operator= (TAO_Notify_StructuredEvent_No_Copy const &) = delete;
   TAO_Notify_StructuredEvent_No_Copy &operator= (TAO_Notify_StructuredEvent_No_Copy &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_StructuredEvent_No_Copy () override = default;
 
   /// marshal this event into a CDR buffer (for persistence)
@@ -94,10 +92,8 @@ protected:
 class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent : public TAO_Notify_StructuredEvent_No_Copy
 {
 public:
-  /// Constructor
   explicit TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
 
-  /// Destructor
   ~TAO_Notify_StructuredEvent () override = default;
 
 

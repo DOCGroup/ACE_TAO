@@ -37,10 +37,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
 {
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>;
-  /// Constructor
   TAO_Notify_ProxyConsumer ();
 
-  /// Destructor
   ~TAO_Notify_ProxyConsumer () override;
 
   TAO_Notify_ProxyConsumer (TAO_Notify_ProxyConsumer const &) = delete;

@@ -38,10 +38,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notif
 
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier>;
-  /// Constructor
   TAO_Notify_ProxySupplier ();
 
-  /// Destructor
   ~TAO_Notify_ProxySupplier () override;
 
   TAO_Notify_ProxySupplier (TAO_Notify_ProxySupplier const &) = delete;

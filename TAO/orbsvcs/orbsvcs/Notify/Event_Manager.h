@@ -51,10 +51,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Event_Manager : public TAO_Notify_Refcou
 {
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager >;
-  /// Constructor
   TAO_Notify_Event_Manager ();
 
-  /// Destructor
   virtual ~TAO_Notify_Event_Manager ();
 
   void release() override;

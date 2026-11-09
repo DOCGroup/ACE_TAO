@@ -28,10 +28,8 @@ class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier :
   public virtual TAO_Notify_StructuredProxyPushSupplier
 {
 public:
-  /// Constructor
   TAO_Notify_RT_StructuredProxyPushSupplier ();
 
-  /// Destructor
   ~TAO_Notify_RT_StructuredProxyPushSupplier () override = default;
 
   TAO_Notify_RT_StructuredProxyPushSupplier (TAO_Notify_RT_StructuredProxyPushSupplier const &) = delete;

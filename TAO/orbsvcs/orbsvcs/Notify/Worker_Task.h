@@ -40,7 +40,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Worker_Task : public TAO_Notify_Refcount
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Worker_Task >;
 
-  /// Constructor
   TAO_Notify_Worker_Task ();
 
   TAO_Notify_Worker_Task (TAO_Notify_Worker_Task const &) = delete;
@@ -63,7 +62,6 @@ public:
 
 
 protected:
-  /// Destructor
   ~TAO_Notify_Worker_Task () override;
 };
 

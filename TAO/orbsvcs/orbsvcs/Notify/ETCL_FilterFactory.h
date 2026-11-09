@@ -41,10 +41,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory :
   public virtual TAO_Notify_FilterFactory
 {
 public:
-  /// Constructor
   TAO_Notify_ETCL_FilterFactory ();
 
-  /// Destructor
   ~TAO_Notify_ETCL_FilterFactory () override;
 
   TAO_Notify_ETCL_FilterFactory (TAO_Notify_ETCL_FilterFactory const &) = delete;

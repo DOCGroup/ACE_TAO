@@ -28,10 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
 {
 public:
-  /// Constructor
   explicit TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
 
-  /// Destructor
   ~TAO_Notify_PushConsumer () override = default;
 
   TAO_Notify_PushConsumer (TAO_Notify_PushConsumer const &) = delete;

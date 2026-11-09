@@ -55,7 +55,6 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Topology_Savable
   {
    public:
-    /// Destructor.
     virtual ~Topology_Savable ();
 
     /// Save our state to a Topology_Saver.

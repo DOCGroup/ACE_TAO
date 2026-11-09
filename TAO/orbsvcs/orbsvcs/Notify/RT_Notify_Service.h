@@ -28,10 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
 {
 public:
-  /// Constructor
   TAO_RT_Notify_Service ();
 
-  /// Destructor
   ~TAO_RT_Notify_Service () override;
 
   TAO_RT_Notify_Service (TAO_RT_Notify_Service const &) = delete;

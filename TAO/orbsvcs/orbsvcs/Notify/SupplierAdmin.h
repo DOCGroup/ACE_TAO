@@ -41,10 +41,8 @@ class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_SupplierAdmin >;
 
-  /// Constructor
   TAO_Notify_SupplierAdmin ();
 
-  /// Destructor
   ~TAO_Notify_SupplierAdmin () override;
 
   TAO_Notify_SupplierAdmin (TAO_Notify_SupplierAdmin const &) = delete;

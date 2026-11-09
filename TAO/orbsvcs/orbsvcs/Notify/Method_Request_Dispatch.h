@@ -62,7 +62,6 @@ public:
     bool filtering);
 
 public:
-  /// Destructor
   ~TAO_Notify_Method_Request_Dispatch () override;
 
   /// Static method used to reconstruct a Method Request Dispatch
@@ -111,7 +110,6 @@ public:
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Destructor
   ~TAO_Notify_Method_Request_Dispatch_Queueable () override = default;
 
   /// Execute the Request
@@ -140,7 +138,6 @@ public:
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Destructor
   ~TAO_Notify_Method_Request_Dispatch_No_Copy () override = default;
 
   /// Execute the Request

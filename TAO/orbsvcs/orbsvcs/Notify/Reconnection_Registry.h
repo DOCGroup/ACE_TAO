@@ -49,10 +49,8 @@ namespace TAO_Notify
                               ACE_SYNCH_NULL_MUTEX>;
 
   public:
-    /// Constructor
     explicit Reconnection_Registry (Topology_Parent & parent);
 
-    /// Destructor
     ~Reconnection_Registry () override;
 
     //////////////////////////

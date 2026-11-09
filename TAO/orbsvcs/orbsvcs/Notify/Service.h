@@ -51,7 +51,6 @@ namespace CORBA
 class TAO_Notify_Serv_Export TAO_Notify_Service : public ACE_Service_Object
 {
 public:
-  /// Destructor.
   virtual ~TAO_Notify_Service ();
 
   /// Load an implementation of the TAO_Notify_Service based on which

@@ -32,10 +32,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_QoSProperties : public TAO_Notify_PropertySeq
 {
 public:
-  /// Constructor
   TAO_Notify_QoSProperties ();
 
-  /// Destructor
   virtual ~TAO_Notify_QoSProperties ();
 
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.

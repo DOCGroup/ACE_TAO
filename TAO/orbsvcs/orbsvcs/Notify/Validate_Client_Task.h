@@ -56,7 +56,6 @@ public:
   TAO_Notify_validate_client_Task &operator= (TAO_Notify_validate_client_Task const &) = delete;
   TAO_Notify_validate_client_Task &operator= (TAO_Notify_validate_client_Task &&) = delete;
 
-  /// destructor...
   ~TAO_Notify_validate_client_Task () override;
 
   int svc () override;

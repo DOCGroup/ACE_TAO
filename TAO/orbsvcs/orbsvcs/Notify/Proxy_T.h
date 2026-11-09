@@ -33,10 +33,8 @@ template <class SERVANT_TYPE>
 class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 {
 public:
-  /// Constructor
   TAO_Notify_Proxy_T ();
 
-  /// Destructor
   ~TAO_Notify_Proxy_T ();
 
   /// Implements TAO_Notify_Object::servant method.

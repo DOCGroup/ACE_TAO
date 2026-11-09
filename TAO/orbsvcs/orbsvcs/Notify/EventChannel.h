@@ -53,10 +53,8 @@ public:
   using SEQ = CosNotifyChannelAdmin::ChannelIDSeq;
   using SEQ_VAR = CosNotifyChannelAdmin::ChannelIDSeq_var;
 
-  /// Constructor
   TAO_Notify_EventChannel ();
 
-  /// Destructor
   ~TAO_Notify_EventChannel () override;
 
   TAO_Notify_EventChannel (TAO_Notify_EventChannel const &) = delete;

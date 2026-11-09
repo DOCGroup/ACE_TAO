@@ -55,13 +55,11 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory >;
 
-  /// Constructor
   TAO_Notify_EventChannelFactory ();
 
   /// Init the factory
   void init (PortableServer::POA_ptr poa);
 
-  /// Destructor
   ~TAO_Notify_EventChannelFactory () override;
 
   TAO_Notify_EventChannelFactory (TAO_Notify_EventChannelFactory const &) = delete;

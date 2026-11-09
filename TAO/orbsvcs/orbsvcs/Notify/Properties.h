@@ -38,10 +38,8 @@ class TAO_Notify_Builder;
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
 public:
-  /// Constructor
   TAO_Notify_Properties ();
 
-  /// Destructor
   ~TAO_Notify_Properties ();
 
   /// Return a singleton instance of this class.

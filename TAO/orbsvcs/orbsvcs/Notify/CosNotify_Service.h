@@ -32,10 +32,8 @@ class TAO_Notify_EventChannelFactory;
 class TAO_Notify_Serv_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {
 public:
-  /// Constructor
   TAO_CosNotify_Service ();
 
-  /// Destructor
   ~TAO_CosNotify_Service () override;
 
   TAO_CosNotify_Service (TAO_CosNotify_Service const &) = delete;

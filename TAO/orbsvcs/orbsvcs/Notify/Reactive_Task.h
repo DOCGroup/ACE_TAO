@@ -33,10 +33,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
   : public TAO_Notify_Worker_Task
 {
 public:
-  /// Constructor
   TAO_Notify_Reactive_Task ();
 
-  /// Destructor
   virtual ~TAO_Notify_Reactive_Task ();
 
   /// Init the reactive task.

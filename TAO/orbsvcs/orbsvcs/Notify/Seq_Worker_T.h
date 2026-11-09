@@ -37,7 +37,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Seq_Worker_T
   using SEQ_VAR = typename TYPE::SEQ_VAR;
 
 public:
-  /// Constructor
   TAO_Notify_Seq_Worker_T ();
 
   /// Create a SEQ

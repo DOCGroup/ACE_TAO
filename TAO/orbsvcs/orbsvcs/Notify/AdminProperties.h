@@ -38,10 +38,8 @@ class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
 {
 public:
   using Ptr = ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>;
-  /// Constructor
   TAO_Notify_AdminProperties ();
 
-  /// Destructor
   virtual ~TAO_Notify_AdminProperties ();
 
   TAO_Notify_AdminProperties (TAO_Notify_AdminProperties const &) = delete;

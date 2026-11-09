@@ -44,10 +44,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushSupplier
   using SuperClass = TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier>;
   friend class TAO_Notify_Builder;
 public:
-  /// Constructor
   TAO_Notify_ProxyPushSupplier ();
 
-  /// Destructor
   ~TAO_Notify_ProxyPushSupplier () override = default;
 
   TAO_Notify_ProxyPushSupplier (TAO_Notify_ProxyPushSupplier const &) = delete;

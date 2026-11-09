@@ -39,10 +39,8 @@ public:
   using SEQ = CosNotifyChannelAdmin::AdminIDSeq;
   using SEQ_VAR = CosNotifyChannelAdmin::AdminIDSeq_var;
 
-  /// Constructor
   TAO_Notify_Admin ();
 
-  /// Destructor
   ~TAO_Notify_Admin () override;
 
   TAO_Notify_Admin (TAO_Notify_Admin const &) = delete;

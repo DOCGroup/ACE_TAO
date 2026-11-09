@@ -30,7 +30,6 @@ template <class SERVANT_TYPE>
 class TAO_Notify_ProxySupplier_T : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>, public virtual TAO_Notify_ProxySupplier
 {
 public:
-  /// Constructor
   TAO_Notify_ProxySupplier_T () = default;
 
   TAO_Notify_ProxySupplier_T (TAO_Notify_ProxySupplier_T const &) = delete;
@@ -38,7 +37,6 @@ public:
   TAO_Notify_ProxySupplier_T &operator= (TAO_Notify_ProxySupplier_T const &) = delete;
   TAO_Notify_ProxySupplier_T &operator= (TAO_Notify_ProxySupplier_T &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_ProxySupplier_T () override = default;
 
   /// Notification of subscriptions set at the admin.

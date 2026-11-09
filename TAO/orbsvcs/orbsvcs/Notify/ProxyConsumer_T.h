@@ -31,10 +31,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
     public virtual TAO_Notify_ProxyConsumer
 {
 public:
-  /// Constructor
   TAO_Notify_ProxyConsumer_T ();
 
-  /// Destructor
   ~TAO_Notify_ProxyConsumer_T ();
 
   /// Notification of subscriptions set at the admin.

@@ -38,10 +38,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushConsumer
   using SuperClass = TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer>;
  friend class TAO_Notify_Builder;
 public:
-  /// Constructor
   TAO_Notify_ProxyPushConsumer ();
 
-  /// Destructor
   ~TAO_Notify_ProxyPushConsumer () override = default;
 
   TAO_Notify_ProxyPushConsumer (TAO_Notify_ProxyPushConsumer const &) = delete;

@@ -46,7 +46,6 @@ public:
     const TAO_Notify_Event * event);
 
 public:
-  /// Destructor
   virtual ~TAO_Notify_Method_Request_Event ();
 
   const TAO_Notify_Event * event() const;
@@ -74,7 +73,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Queueable
   , public TAO_Notify_Method_Request_Event
 {
 public:
-  /// Constructor
   /// Not the event_var is passed as a separate parameter to avoid throwing
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
@@ -84,7 +82,6 @@ public:
   explicit TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);
 
-  /// Destructor
   ~TAO_Notify_Method_Request_Event_Queueable () override = default;
 
   /// satisfy the pure virtual method.  Should never be called.

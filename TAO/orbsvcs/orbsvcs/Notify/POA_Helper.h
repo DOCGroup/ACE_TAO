@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_POA_Helper
 {
 public:
-  /// Default Constructor
   TAO_Notify_POA_Helper ();
 
   TAO_Notify_POA_Helper (const TAO_Notify_POA_Helper &) = delete;
@@ -51,7 +50,6 @@ public:
   /// Create a new PortableServer::POA. The name is chosen at random.
   void init (PortableServer::POA_ptr parent_poa);
 
-  /// Destructor
   virtual ~TAO_Notify_POA_Helper ();
 
   /// Get underlying POA

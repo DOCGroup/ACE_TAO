@@ -34,7 +34,6 @@ class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
 public:
   using const_iterator = Storage::const_iterator;
 
-  /// Constructor
   TAO_Notify_EventTypeSeq ();
   explicit TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
   TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs);

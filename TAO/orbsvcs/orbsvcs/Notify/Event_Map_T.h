@@ -35,10 +35,8 @@ class TAO_Notify_Event_Map_T
 public:
   using ENTRY = TAO_Notify_Event_Map_Entry_T<PROXY>;
 
-  /// Constructor
   TAO_Notify_Event_Map_T ();
 
-  /// Destructor
   ~TAO_Notify_Event_Map_T ();
 
   TAO_Notify_Event_Map_T (TAO_Notify_Event_Map_T const &) = delete;

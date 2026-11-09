@@ -42,10 +42,8 @@ public:
   using SEQ = CosNotifyChannelAdmin::ProxyIDSeq;
   using SEQ_VAR = CosNotifyChannelAdmin::ProxyIDSeq_var;
 
-  /// Constructor
   TAO_Notify_Proxy ();
 
-  /// Destructor
   ~TAO_Notify_Proxy () override;
 
   TAO_Notify_Proxy (TAO_Notify_Proxy const &) = delete;

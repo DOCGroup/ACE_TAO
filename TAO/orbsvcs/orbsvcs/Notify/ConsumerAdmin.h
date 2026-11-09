@@ -40,10 +40,8 @@ class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin :
 {
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin >;
-  /// Constructor
   TAO_Notify_ConsumerAdmin ();
 
-  /// Destructor
   ~TAO_Notify_ConsumerAdmin () override;
 
   TAO_Notify_ConsumerAdmin (TAO_Notify_ConsumerAdmin const &) = delete;

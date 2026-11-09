@@ -42,7 +42,6 @@ public:
   /// an arbitrary code (Octet) to identify this type of request in persistent storage
   static constexpr int persistence_code = 2;
 
-  /// Destructor
   ~TAO_Notify_Method_Request_Lookup () override = default;
 
   /// Static method used to reconstruct a Method Request Dispatch
@@ -52,10 +51,8 @@ public:
     TAO_InputCDR & cdr);
 
 protected:
-  /// Constructor
   TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
 
-  /// Constructor
   TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
 
   /// Execute the dispatch operation.
@@ -91,7 +88,6 @@ public:
     TAO_Notify::Delivery_Request_Ptr & request,
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
-  /// Destructor
   ~TAO_Notify_Method_Request_Lookup_Queueable () override = default;
 
   /// Execute the Request
@@ -114,12 +110,10 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
   , public TAO_Notify_Method_Request
 {
 public:
-  /// Constructor
   TAO_Notify_Method_Request_Lookup_No_Copy (
     const TAO_Notify_Event* event,
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
-  /// Destructor
   ~TAO_Notify_Method_Request_Lookup_No_Copy () override = default;
 
   /// Execute the Request

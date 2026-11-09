@@ -48,7 +48,6 @@ public:
   /// Id for Objects.
   using ID = CORBA::Long;
 
-  /// Destructor
   virtual ~TAO_Notify_Object ();
 
   /// This Object's ID
@@ -100,7 +99,6 @@ public:
   TAO_Notify_Worker_Task* get_worker_task ();
 
 protected:
-  /// Constructor
   TAO_Notify_Object ();
 
   /// Init this object with data from <rhs>.

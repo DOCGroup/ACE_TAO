@@ -56,7 +56,6 @@ public:
 public:
 using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
 
-  /// Constructor
   explicit TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
   TAO_Notify_Consumer (TAO_Notify_Consumer const &) = delete;
@@ -64,7 +63,6 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   TAO_Notify_Consumer &operator= (TAO_Notify_Consumer const &) = delete;
   TAO_Notify_Consumer &operator= (TAO_Notify_Consumer &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_Consumer () override;
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy

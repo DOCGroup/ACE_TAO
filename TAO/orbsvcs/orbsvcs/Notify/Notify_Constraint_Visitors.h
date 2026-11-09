@@ -38,7 +38,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Visitor
   : public ETCL_Constraint_Visitor
 {
 public:
-  /// Constructor.
   TAO_Notify_Constraint_Visitor ();
 
   TAO_Notify_Constraint_Visitor (const TAO_Notify_Constraint_Visitor&) = delete;

@@ -34,7 +34,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Find_Worker_T : public TAO_ESF_Worker<TY
   using COLLECTION = TAO_ESF_Proxy_Collection<TYPE>;
 
 public:
-  /// Constructor
   TAO_Notify_Find_Worker_T ();
 
   TAO_Notify_Find_Worker_T (TAO_Notify_Find_Worker_T const &) = delete;

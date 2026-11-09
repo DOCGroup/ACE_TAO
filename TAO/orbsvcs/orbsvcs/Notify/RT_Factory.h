@@ -28,10 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_Notify_RT_Factory : public TAO_Notify_Default_Factory
 {
 public:
-  /// Constructor
   TAO_Notify_RT_Factory ();
 
-  /// Destructor
   ~TAO_Notify_RT_Factory () override;
 
   /// Instruct the compiler that we want the create

@@ -82,12 +82,10 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
     public TAO_Notify::Topology_Object
 {
 public:
-  /// Constructor
   TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
                           const char *constraint_grammar,
                           const TAO_Notify_Object::ID& id);
 
-  /// Destructor
   ~TAO_Notify_ETCL_Filter () override;
 
   TAO_Notify_ETCL_Filter (TAO_Notify_ETCL_Filter const &) = delete;

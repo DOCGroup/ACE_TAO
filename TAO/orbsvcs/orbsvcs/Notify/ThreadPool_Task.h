@@ -43,7 +43,6 @@ class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
   friend class TAO_Notify_Method_Request_Shutdown;
 
 public:
-  /// Constructor
   TAO_Notify_ThreadPool_Task ();
 
   TAO_Notify_ThreadPool_Task (TAO_Notify_ThreadPool_Task const &) = delete;
@@ -51,7 +50,6 @@ public:
   TAO_Notify_ThreadPool_Task &operator= (TAO_Notify_ThreadPool_Task const &) = delete;
   TAO_Notify_ThreadPool_Task &operator= (TAO_Notify_ThreadPool_Task &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_ThreadPool_Task () override;
 
   /// Call the base class init

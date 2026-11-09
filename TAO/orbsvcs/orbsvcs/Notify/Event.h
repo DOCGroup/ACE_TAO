@@ -45,7 +45,6 @@ public:
   static constexpr int MARSHAL_ANY = 1;
   static constexpr int MARSHAL_STRUCTURED = 2;
 
-  /// Constructor
   TAO_Notify_Event ();
 
   TAO_Notify_Event (const TAO_Notify_Event &) = delete;
@@ -53,7 +52,6 @@ public:
   TAO_Notify_Event &operator= (const TAO_Notify_Event &) = delete;
   TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_Event () override;
 
   /// Translate Any to Structured

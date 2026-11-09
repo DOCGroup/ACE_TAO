@@ -33,10 +33,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
 {
   using COLLECTION = TAO_ESF_Proxy_Collection<TYPE>;
  public:
-  /// Constructor
   TAO_Notify_Container_T ();
 
-  /// Destructor
   virtual ~TAO_Notify_Container_T ();
 
   TAO_Notify_Container_T (TAO_Notify_Container_T const &) = delete;

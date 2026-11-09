@@ -39,7 +39,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter
 public:
   TAO_Notify_Constraint_Interpreter ();
 
-  /// Destructor
   ~TAO_Notify_Constraint_Interpreter () override;
 
   TAO_Notify_Constraint_Interpreter (const TAO_Notify_Constraint_Interpreter&) = delete;

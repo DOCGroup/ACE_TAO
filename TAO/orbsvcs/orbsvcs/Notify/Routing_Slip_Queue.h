@@ -54,7 +54,6 @@ namespace TAO_Notify
      */
     explicit Routing_Slip_Queue (size_t allowed = 1);
 
-    /// Destructor.
     ~Routing_Slip_Queue () = default;
 
     Routing_Slip_Queue (Routing_Slip_Queue const &) = delete;

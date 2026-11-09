@@ -32,10 +32,8 @@ class TAO_Notify_ProxyConsumer;
 class TAO_Notify_Serv_Export TAO_Notify_Supplier : public TAO_Notify_Peer
 {
 public:
-  /// Constructor
   explicit TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy);
 
-  /// Destructor
   ~TAO_Notify_Supplier () override;
 
   TAO_Notify_Supplier (TAO_Notify_Supplier const &) = delete;

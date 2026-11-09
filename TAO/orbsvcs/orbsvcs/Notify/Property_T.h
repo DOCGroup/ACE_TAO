@@ -34,16 +34,12 @@ template <class TYPE>
 class TAO_Notify_PropertyBase_T
 {
 public:
-  /// Constructor
   TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
 
-  /// Constructor
   explicit TAO_Notify_PropertyBase_T (const char* name);
 
-  /// Copy Constructor
   TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
 
-  /// Destructor
   ~TAO_Notify_PropertyBase_T () = default;
 
   /// Equality comparison operator.
@@ -92,10 +88,8 @@ template <class TYPE>
 class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
 {
 public:
-  /// Constructor
   TAO_Notify_Property_T (const char* name, const TYPE& initial);
 
-  /// Constructor
   explicit TAO_Notify_Property_T (const char* name);
 
   /// Init this Property from the sequence.
@@ -117,10 +111,8 @@ template <class TYPE>
 class TAO_Notify_StructProperty_T
 {
 public:
-  /// Constructor
   TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
 
-  /// Constructor
   explicit TAO_Notify_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.

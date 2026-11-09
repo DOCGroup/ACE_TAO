@@ -29,7 +29,6 @@ namespace TAO_Notify
   class Validate_Worker : public TAO_ESF_Worker<TOPOOBJ>
   {
   public:
-    /// Constructor
     Validate_Worker();
 
     // override virtual ESF_Worker method

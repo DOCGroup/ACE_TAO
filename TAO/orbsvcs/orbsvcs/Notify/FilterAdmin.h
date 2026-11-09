@@ -37,10 +37,8 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   : public TAO_Notify::Topology_Object
 {
  public:
-  /// Constructor
   TAO_Notify_FilterAdmin ();
 
-  /// Destructor
   ~TAO_Notify_FilterAdmin () override;
 
   TAO_Notify_FilterAdmin (TAO_Notify_FilterAdmin const &) = delete;

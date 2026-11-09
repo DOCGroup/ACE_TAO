@@ -39,10 +39,8 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushConsumer
   friend class TAO_Notify_Builder;
 
 public:
-  /// Constructor
   TAO_Notify_StructuredProxyPushConsumer ();
 
-  /// Destructor
   ~TAO_Notify_StructuredProxyPushConsumer () override = default;
 
   TAO_Notify_StructuredProxyPushConsumer (TAO_Notify_StructuredProxyPushConsumer const &) = delete;

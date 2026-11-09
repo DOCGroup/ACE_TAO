@@ -30,13 +30,11 @@ class TAO_Notify_ProxySupplier;
 class TAO_Notify_Serv_Export TAO_Notify_StructuredPushConsumer : public TAO_Notify_Consumer
 {
 public:
-  /// Constructor
   explicit TAO_Notify_StructuredPushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Init the Consumer
   void init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer);
 
-  /// Destructor
   ~TAO_Notify_StructuredPushConsumer () override = default;
 
   TAO_Notify_StructuredPushConsumer (TAO_Notify_StructuredPushConsumer const &) = delete;

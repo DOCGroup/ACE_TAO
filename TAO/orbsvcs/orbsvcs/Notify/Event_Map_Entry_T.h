@@ -39,7 +39,6 @@ class TAO_Notify_Event_Map_Entry_T
 public:
   using COLLECTION = TAO_ESF_Proxy_Collection<PROXY>;
 
-  /// Constructor
   TAO_Notify_Event_Map_Entry_T ();
 
   TAO_Notify_Event_Map_Entry_T (const TAO_Notify_Event_Map_Entry_T &) = delete;
@@ -47,7 +46,6 @@ public:
   TAO_Notify_Event_Map_Entry_T &operator= (const TAO_Notify_Event_Map_Entry_T &) = delete;
   TAO_Notify_Event_Map_Entry_T &operator= (TAO_Notify_Event_Map_Entry_T &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_Event_Map_Entry_T ();
 
   /// Init - Allocates collection

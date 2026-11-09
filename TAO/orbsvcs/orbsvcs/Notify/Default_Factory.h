@@ -27,10 +27,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Default_Factory : public TAO_Notify_Factory
 {
 public:
-  /// Constructor
   TAO_Notify_Default_Factory ();
 
-  /// Destructor
   ~TAO_Notify_Default_Factory () override;
 
   TAO_Notify_Default_Factory (TAO_Notify_Default_Factory const &) = delete;

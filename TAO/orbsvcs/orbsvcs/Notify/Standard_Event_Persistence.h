@@ -39,9 +39,7 @@ namespace TAO_Notify
     public Event_Persistence_Factory
   {
   public:
-    /// Constructor
     Standard_Event_Persistence_Factory ();
-    /// Destructor
     ~Standard_Event_Persistence_Factory() override;
 
     Standard_Event_Persistence_Factory (Standard_Event_Persistence_Factory const &) = delete;
@@ -106,9 +104,7 @@ namespace TAO_Notify
     public Event_Persistence_Strategy
   {
   public :
-    /// Constructor.
     Standard_Event_Persistence ();
-    /// Destructor.
     ~Standard_Event_Persistence () override;
 
     Standard_Event_Persistence (Standard_Event_Persistence const &) = delete;

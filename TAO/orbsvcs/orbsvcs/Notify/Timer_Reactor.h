@@ -34,10 +34,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Timer_Reactor : public TAO_Notify_Timer
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor >;
 
-  /// Constructor
   TAO_Notify_Timer_Reactor ();
 
-  /// Destructor
   ~TAO_Notify_Timer_Reactor () override;
 
   TAO_Notify_Timer_Reactor (TAO_Notify_Timer_Reactor const &) = delete;

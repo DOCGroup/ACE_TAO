@@ -44,10 +44,8 @@ class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushSupplier
   friend class TAO_Notify_Builder;
 
 public:
-  /// Constructor
   TAO_Notify_SequenceProxyPushSupplier ();
 
-  /// Destructor
   ~TAO_Notify_SequenceProxyPushSupplier () override = default;
 
   TAO_Notify_SequenceProxyPushSupplier (TAO_Notify_SequenceProxyPushSupplier const &) = delete;

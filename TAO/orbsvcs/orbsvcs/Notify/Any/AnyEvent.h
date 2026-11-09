@@ -35,7 +35,6 @@ class TAO_Notify_Serv_Export TAO_Notify_AnyEvent_No_Copy : public TAO_Notify_Eve
 {
   friend class TAO_Notify_Builder;
 public:
-  /// Constructor
   explicit TAO_Notify_AnyEvent_No_Copy (CORBA::Any const &event);
 
   TAO_Notify_AnyEvent_No_Copy (TAO_Notify_AnyEvent_No_Copy const &) = delete;
@@ -43,7 +42,6 @@ public:
   TAO_Notify_AnyEvent_No_Copy &operator= (TAO_Notify_AnyEvent_No_Copy const &) = delete;
   TAO_Notify_AnyEvent_No_Copy &operator= (TAO_Notify_AnyEvent_No_Copy &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_AnyEvent_No_Copy () override = default;
 
   /// Get the event type.
@@ -100,10 +98,8 @@ protected:
 class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No_Copy
 {
 public:
-  /// Constructor
   explicit TAO_Notify_AnyEvent (const CORBA::Any &event);
 
-  /// Destructor
   ~TAO_Notify_AnyEvent () override = default;
 
 protected:
