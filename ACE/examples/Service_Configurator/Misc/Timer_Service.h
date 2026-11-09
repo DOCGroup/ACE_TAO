@@ -17,7 +17,6 @@ class ACE_Svc_Export Timer_Service_1 : public ACE_Service_Object
   //   statically.
 public:
   Timer_Service_1 ();
-  // Default constructor.
 
   int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
@@ -51,14 +50,12 @@ class ACE_Svc_Export Timer_Service_2 : public Timer_Service_1
 {
 public:
   Timer_Service_2 ();
-  // Default constructor.
 };
 
 class ACE_Svc_Export Timer_Service_3 : public Timer_Service_1
 {
 public:
   Timer_Service_3 ();
-  // Default constructor.
 };
 
 // Declare both static and dynamic services.
