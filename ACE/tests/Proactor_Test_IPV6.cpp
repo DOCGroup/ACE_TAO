@@ -12,6 +12,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
@@ -1213,7 +1214,7 @@ Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
     {
       if (nullptr != addr.get_host_addr (my_name, sizeof (my_name)))
         {
-          if (0 != ACE_OS::strncmp (peer_name, my_name, sizeof (my_name)))
+          if (0 != std::strncmp (peer_name, my_name, sizeof (my_name)))
             {
               ACE_ERROR
                 ((LM_ERROR,

@@ -30,6 +30,7 @@
 //=============================================================================
 
 #include "test_config.h"
+#include <cstring>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Acceptor.h"
@@ -382,12 +383,10 @@ Counting_Service::handle_input (ACE_HANDLE)
                   bytes,
                   ACE_TEXT_CHAR_TO_TCHAR (buf)));
       // Read and return the current value in the file.
-      if (ACE_OS::strncmp (buf,
-                           "read",
-                           4) == 0)
+      if (std::strncmp (buf, "read", 4) == 0)
         return this->read ();
       // Increment the current value in the file.
-      else if (ACE_OS::strncmp (buf, "inc", 3) == 0)
+      else if (std::strncmp (buf, "inc", 3) == 0)
         return this->inc ();
       else
         ACE_DEBUG ((LM_DEBUG,
