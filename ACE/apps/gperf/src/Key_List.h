@@ -29,6 +29,8 @@
 #include "List_Node.h"
 #include "Vectors.h"
 
+#include <string>
+
 /**
  * Describes a duplicate entry.
  *
@@ -112,9 +114,9 @@ private:
   void output_strcasecmp ();
   int output_types ();
   void dump ();
-  char *array_type ();
-  char *save_include_src ();
-  char *special_input (char delimiter);
+  bool array_type (std::string& result);
+  bool save_include_src (std::string& result);
+  bool special_input (char delimiter, std::string& result);
   List_Node *merge (List_Node *list1, List_Node *list2);
   List_Node *merge_sort (List_Node *head);
   int count_duplicates (List_Node *link, char const *type);
@@ -124,16 +126,16 @@ private:
                             Duplicate_Entry *dup_ptr,
                             int value);
   /// Pointer to the type for word list.
-  char *array_type_;
+  std::string array_type_;
 
   // Pointer to return type for lookup function.
-  char *return_type;
+  std::string return_type;
 
   /// Shorthand for user-defined struct tag type.
-  char *struct_tag;
+  std::string struct_tag;
 
   /// C source code to be included verbatim.
-  char *include_src;
+  std::string include_src;
 
   /// Maximum length of the longest keyword.
   int max_key_len;

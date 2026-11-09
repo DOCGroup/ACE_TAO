@@ -98,18 +98,6 @@ output_return_type (char const *type, bool const is_const)
     }
 }
 
-char *
-dup_string (char const *const str)
-{
-  char *buf {};
-  ACE_NEW_RETURN (buf,
-                  char [std::strlen (str) + 1],
-                  nullptr);
-  std::strcpy (buf, str);
-
-  return buf;
-}
-
 } // unnamed namespace
 
 /// How wide the printed field width must be to contain the maximum
@@ -142,9 +130,6 @@ Key_List::~Key_List ()
       this->head = temp;
     }
 
-  delete [] this->array_type_;
-  delete [] this->return_type;
-  delete [] this->struct_tag;
 }
 
 /// Gathers the input stream into a buffer until one of two things occur:
@@ -161,90 +146,74 @@ Key_List::~Key_List ()
 /// starting in the first column. The code below uses an expandible
 /// buffer to scan off and return a pointer to all the code (if any)
 /// appearing before the delimiter.
-char *
-Key_List::special_input (char delimiter)
+bool
+Key_List::special_input (char delimiter, std::string& result)
 {
-  int size = 80;
-  char *buf {};
-  ACE_NEW_RETURN (buf,
-                  char[size],
-                  nullptr);
+  result.clear ();
   int c;
 
-  for (int i = 0; (c = getchar ()) != EOF; i++)
+  while ((c = getchar ()) != EOF)
     {
       if (c == '%')
         {
           c = getchar ();
           if (c == delimiter)
             {
-              // Discard newline...
-              while ((c = getchar ()) != '\n')
+              // Discard the rest of the delimiter line.
+              while ((c = getchar ()) != '\n' && c != EOF)
                 continue;
 
-              if (i == 0)
-                {
-                  buf[0] = '\0';
-                  return buf;
-                }
-              else
-                {
-                  buf[delimiter == '%' && buf[i - 2] == ';'
-                     ? i - 2
-                     : i - 1] = '\0';
-                  return buf;
-                }
+              if (!result.empty () && result.back () == '\n')
+                result.pop_back ();
+              if (delimiter == '%' && !result.empty () && result.back () == ';')
+                result.pop_back ();
+              return true;
             }
           else
-            buf[i++] = '%';
+            {
+              if (c == EOF)
+                return false;
+              result.push_back ('%');
+            }
         }
-      else if (i >= size)
-        {
-          // Yikes, time to grow the buffer!
-
-          char *temp {};
-          ACE_NEW_RETURN (temp,
-                          char[size *= 2],
-                          nullptr);
-          for (int j = 0; j < i; j++)
-            temp[j] = buf[j];
-
-          delete [] buf;
-          buf = temp;
-        }
-      buf[i] = static_cast<char> (c);
+      result.push_back (static_cast<char> (c));
     }
 
-  delete [] buf;
-  return nullptr;
+  return false;
 }
 
 /// Stores any C/C++ source code that must be included verbatim into
 /// the generated code output.
-char *
-Key_List::save_include_src ()
+bool
+Key_List::save_include_src (std::string& result)
 {
   int c = getchar ();
 
   if (c != '%')
-    ACE_OS::ungetc (c, stdin);
+    {
+      if (c != EOF)
+        ACE_OS::ungetc (c, stdin);
+      result.clear ();
+      return true;
+    }
   else if ((c = getchar ()) != '{')
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "internal error, %c != '{' on line %l in file %N",
-                       c),
-                       0);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "internal error, %c != '{' on line %l in file %N",
+                  c));
+      return false;
+    }
   else
-    return special_input ('}');
-  return (char *) "";
+    return special_input ('}', result);
 }
 
 /// Determines from the input file whether the user wants to build a
 /// table from a user-defined struct, or whether the user is content to
 /// simply use the default array of keys.
-char *
-Key_List::array_type ()
+bool
+Key_List::array_type (std::string& result)
 {
-  return special_input ('%');
+  return special_input ('%', result);
 }
 
 /// Sets up the Return_Type, the Struct_Tag type and the Array_Type
@@ -254,48 +223,33 @@ Key_List::output_types ()
 {
   if (option[TYPE])
     {
-      delete [] array_type_;
-      array_type_ = array_type ();
-      if (array_type_ == nullptr)
-        // Something's wrong, but we'll catch it later on....
+      if (!this->array_type (this->array_type_))
         return -1;
       else
         {
+          if (this->array_type_.empty ())
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "empty type definition in input\n"),
+                              -1);
+
           // Yow, we've got a user-defined type...
-          size_t struct_tag_length = std::strcspn (array_type_,
-                                                      "{\n\0");
+          size_t struct_tag_length = this->array_type_.find_first_of ("{\n");
+          if (struct_tag_length == std::string::npos)
+            struct_tag_length = this->array_type_.size ();
           if (option[POINTER])      // And it must return a pointer...
             {
-              delete [] return_type;
-              ACE_NEW_RETURN (return_type,
-                              char[struct_tag_length + 2],
-                              -1);
-              std::strncpy (return_type,
-                               array_type_,
-                               struct_tag_length);
-              return_type[struct_tag_length] = '*';
-              return_type[struct_tag_length + 1] = '\0';
+              this->return_type.assign (this->array_type_, 0, struct_tag_length);
+              this->return_type.push_back ('*');
             }
 
-          delete [] struct_tag;
-          ACE_NEW_RETURN (struct_tag,
-                          char[struct_tag_length + 2],
-                          -1);
-          std::strncpy (struct_tag,
-                           array_type_,
-                           struct_tag_length);
-          if (struct_tag[struct_tag_length - 1] != ' ')
-            {
-              struct_tag[struct_tag_length] = ' ';
-              ++struct_tag_length;
-            }
-          struct_tag[struct_tag_length] = '\0';
+          this->struct_tag.assign (this->array_type_, 0, struct_tag_length);
+          if (!this->struct_tag.empty () && this->struct_tag.back () != ' ')
+            this->struct_tag.push_back (' ');
         }
     }
   else if (option[POINTER])     // Return a char *.
     {
-      delete [] return_type;
-      return_type = dup_string (Key_List::default_array_type);
+      this->return_type = Key_List::default_array_type;
     }
   return 0;
 }
@@ -307,8 +261,7 @@ Key_List::output_types ()
 int
 Key_List::read_keys ()
 {
-  this->include_src = this->save_include_src ();
-  if (this->include_src == nullptr)
+  if (!this->save_include_src (this->include_src))
     return -1;
   else if (this->output_types () == -1)
     return -1;
@@ -727,7 +680,7 @@ Key_List::output_switch (int use_keyword_table)
 
           ACE_OS::printf ("              %s%s *resword;%s\n\n",
                   option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
-                  pointer_and_type_enabled ? struct_tag : "char",
+                  pointer_and_type_enabled ? struct_tag.c_str () : "char",
                   option[LENTABLE] && !option[DUP] ? " unsigned int key_len;" : "");
           if (total_switches == 1)
             {
@@ -938,9 +891,9 @@ Key_List::output_keyword_table ()
   int wordlist_size = wordlist_slot;
 
   char const *const qualifier = option[CONSTANT] ? "constexpr " : "";
-  size_t element_type_length = std::strlen (struct_tag);
+  size_t element_type_length = this->struct_tag.size ();
   while (element_type_length > 0
-         && std::isspace (static_cast<unsigned char> (struct_tag[element_type_length - 1])))
+         && std::isspace (static_cast<unsigned char> (this->struct_tag[element_type_length - 1])))
     --element_type_length;
 
   ACE_OS::printf (option[TYPE]
@@ -949,7 +902,7 @@ Key_List::output_keyword_table ()
                   indent,
                   qualifier,
                   static_cast<int> (element_type_length),
-                  struct_tag,
+                  this->struct_tag.c_str (),
                   wordlist_size,
                   indent,
                   indent);
@@ -1040,7 +993,7 @@ Key_List::output_keyword_table ()
 int
 Key_List::output_binary_search_function ()
 {
-  ACE_OS::printf ("%s\n", include_src);
+  ACE_OS::printf ("%s\n", this->include_src.c_str ());
 
   // Get prototype for strncmp() and strcmp().
   if (!option[SKIPSTDCSTRING])
@@ -1053,7 +1006,7 @@ Key_List::output_binary_search_function ()
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
     ACE_OS::printf ("%s;\n",
-            array_type_);
+            this->array_type_.c_str ());
 
   output_min_max ();
 
@@ -1064,7 +1017,7 @@ Key_List::output_binary_search_function ()
   if (!option[SKIPCLASS])
     {
       ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ().c_str ());
-      output_return_type (return_type, option[CONSTANT]);
+      output_return_type (this->return_type.c_str (), option[CONSTANT]);
       ACE_OS::printf (" %s (char const *str);\n};\n\n",
                       option.function_name ().c_str ());
     }
@@ -1073,7 +1026,7 @@ Key_List::output_binary_search_function ()
   if (option[INLINE])
     ACE_OS::printf ("inline\n");
 
-  output_return_type (return_type, option[CONSTANT]);
+  output_return_type (this->return_type.c_str (), option[CONSTANT]);
   ACE_OS::printf ("\n");
   ACE_OS::printf ("%s::", option.class_name ().c_str ());
 
@@ -1101,7 +1054,7 @@ Key_List::output_binary_search_function ()
 
   if (option[DUP] && total_duplicates > 0)
     {
-      ACE_OS::printf ("%s*base = 0;\n",struct_tag);
+      ACE_OS::printf ("%s*base = 0;\n", this->struct_tag.c_str ());
     }
 
   ACE_OS::printf ("\nlast = %d;\n",total_keys - 1);
@@ -1142,7 +1095,7 @@ Key_List::output_binary_search_function ()
 int
 Key_List::output_linear_search_function ()
 {
-  ACE_OS::printf ("%s\n", include_src);
+  ACE_OS::printf ("%s\n", this->include_src.c_str ());
 
   // Get prototype for strncmp() and strcmp().
   if (!option[SKIPSTDCSTRING])
@@ -1155,7 +1108,7 @@ Key_List::output_linear_search_function ()
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
     ACE_OS::printf ("%s;\n",
-            array_type_);
+            this->array_type_.c_str ());
 
   output_min_max ();
 
@@ -1166,7 +1119,7 @@ Key_List::output_linear_search_function ()
   if (!option[SKIPCLASS])
     {
       ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ().c_str ());
-      output_return_type (return_type, option[CONSTANT]);
+      output_return_type (this->return_type.c_str (), option[CONSTANT]);
       ACE_OS::printf (" %s (char const *str);\n};\n\n",
                       option.function_name ().c_str ());
     }
@@ -1175,7 +1128,7 @@ Key_List::output_linear_search_function ()
   if (option[INLINE])
     ACE_OS::printf ("inline\n");
 
-  output_return_type (return_type, option[CONSTANT]);
+  output_return_type (this->return_type.c_str (), option[CONSTANT]);
   ACE_OS::printf ("\n");
   ACE_OS::printf ("%s::", option.class_name ().c_str ());
 
@@ -1685,7 +1638,7 @@ Key_List::output_lookup_function ()
                           "              %s *s = wordlist[slot]",
                           option[CONSTANT] || pointer_and_type_enabled == 0
                             ? "char const" : "char");
-          if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
+          if (this->array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ().c_str ());
 
           ACE_OS::printf (";\n\n              if (%s%s == *s && !%s%s)\n"
@@ -1707,7 +1660,7 @@ Key_List::output_lookup_function ()
       ACE_OS::printf ("              std::size_t const offset = slot > 0\n"
                       "                ? key + static_cast<std::size_t> (slot) - MAX_HASH_VALUE\n"
                       "                : key + MAX_HASH_VALUE - static_cast<std::size_t> (-slot);\n");
-      if (std::strcmp (array_type_, Key_List::default_array_type) == 0)
+      if (this->array_type_ == Key_List::default_array_type)
         {
           char const *base_type = option[CONSTANT]
             ? "char const * const * const"
@@ -1730,14 +1683,14 @@ Key_List::output_lookup_function ()
           ACE_OS::printf ("              %s%s* const base = %swordlist[-lookup[offset]]%s;\n"
                           "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
                           "              while (--ptr >= base)\n                ",
-                          struct_tag,
+                          this->struct_tag.c_str (),
                           element_const,
                           generated_address_prefix (),
                           generated_address_suffix (),
-                          struct_tag,
+                          this->struct_tag.c_str (),
                           element_const);
         }
-      if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
+      if (this->array_type_ != Key_List::default_array_type)
         {
           if (option[COMP])
               ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1, len - 1",
@@ -1759,8 +1712,8 @@ Key_List::output_lookup_function ()
                   : "strncmp (str + 1, *ptr + 1, len - 1")
                 : (option[STRCASECMP] ? "strcasecmp (str + 1, *ptr + 1" : "strcmp (str + 1, *ptr + 1"));
       ACE_OS::printf ("))\n                  return %sptr;"
-              "\n            }\n        }\n    %s\n}\n", std::strcmp (array_type_,
-              Key_List::default_array_type) == 0 ? "*" : "",
+              "\n            }\n        }\n    %s\n}\n", this->array_type_ ==
+              Key_List::default_array_type ? "*" : "",
               option[OPTIMIZE] ? "" : generated_null_return ());
     }
   else
@@ -1777,7 +1730,7 @@ Key_List::output_lookup_function ()
                           option[CONSTANT] || pointer_and_type_enabled == 0
                             ? "char const" : "char");
 
-          if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
+          if (this->array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ().c_str ());
 
           ACE_OS::printf (";\n\n          if (%s%s == *s && !%s%s)\n            return %s%s%s",
@@ -1869,7 +1822,7 @@ Key_List::output ()
   else
     {
       // Generate the usual GPERF things.
-      ACE_OS::printf ("%s\n", include_src);
+      ACE_OS::printf ("%s\n", this->include_src.c_str ());
 
       // Get prototype for strncmp() and strcmp().
       if (!option[SKIPSTDCSTRING])
@@ -1882,7 +1835,7 @@ Key_List::output ()
       // Output type declaration now, reference it later on....
       if (option[TYPE] && !option[NOTYPE])
         ACE_OS::printf ("%s;\n",
-                array_type_);
+                this->array_type_.c_str ());
 
       output_min_max ();
 
@@ -1899,7 +1852,7 @@ Key_List::output ()
                           generated_size_type (),
                           option.hash_name ().c_str (),
                           generated_size_type ());
-          output_return_type (return_type,
+          output_return_type (this->return_type.c_str (),
                               option[CONSTANT] || !(option[POINTER] && option[TYPE]));
           ACE_OS::printf (" %s (char const *str, %s len);\n};\n\n",
                           option.function_name ().c_str (),
@@ -1951,12 +1904,12 @@ Key_List::output ()
 
       if (option[CONSTANT] || pointer_and_type_enabled == 0)
         {
-          output_return_type (return_type,
+          output_return_type (this->return_type.c_str (),
                               option[CONSTANT] || pointer_and_type_enabled == 0);
         }
       else
         {
-          ACE_OS::printf ("%s", return_type);
+          ACE_OS::printf ("%s", this->return_type.c_str ());
         }
       ACE_OS::printf ("\n");
       ACE_OS::printf ("%s::", option.class_name ().c_str ());
@@ -2146,9 +2099,9 @@ Key_List::dump ()
 Key_List::Key_List ()
   : head (nullptr),
     total_duplicates (0),
-    array_type_ (dup_string (Key_List::default_array_type)),
-    return_type (dup_string (Key_List::default_return_type)),
-    struct_tag (dup_string (Key_List::default_array_type)),
+    array_type_ (Key_List::default_array_type),
+    return_type (Key_List::default_return_type),
+    struct_tag (Key_List::default_array_type),
     max_key_len (INT_MIN),
     min_key_len (INT_MAX),
     key_sort (0),
