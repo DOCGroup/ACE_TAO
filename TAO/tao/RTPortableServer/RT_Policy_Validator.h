@@ -38,10 +38,8 @@ class TAO_RTPortableServer_Export TAO_POA_RT_Policy_Validator
   : public TAO_Policy_Validator
 {
 public:
-  /// Constructor.
   TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_POA_RT_Policy_Validator () override = default;
 
   static RTCORBA::ServerProtocolPolicy_ptr server_protocol_policy_from_thread_pool (TAO_Thread_Pool *thread_pool,

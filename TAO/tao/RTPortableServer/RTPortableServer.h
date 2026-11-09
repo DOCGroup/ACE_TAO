@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTPortableServer_Export TAO_RTPortableServer_Initializer
 {
 public:
-  /// Constructor.
   TAO_RTPortableServer_Initializer ();
 };
 
