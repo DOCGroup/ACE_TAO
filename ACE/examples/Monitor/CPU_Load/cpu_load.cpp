@@ -3,6 +3,7 @@
 #include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"
+#include <cstddef>
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -21,18 +22,18 @@ public:
   int svc () override
   {
     /// Get an instance of the MC service singleton.
-    MC_ADMINMANAGER* mgr =
+    MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::Monitor_Control::Monitor_Base *cpu_monitor =
+    ACE::Monitor_Control::Monitor_Base * const cpu_monitor =
       mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
     if (cpu_monitor != nullptr)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i = 0; i < 10; ++i)
+        for (std::size_t i {}; i < 10; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -59,12 +60,12 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   /// passing a vanilla reactor to show how it works, but in real
   /// life it could be some specialized reactor.
   ACE_Reactor new_reactor;
-  MC_ADMINMANAGER* mgr =
+  MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   mgr->admin ().reactor (&new_reactor);
 
   /// Set the timer for CPU load check at 2 sec.
-  Monitor_Base *cpu_monitor =
+  Monitor_Base * const cpu_monitor =
     create_os_monitor<CPU_LOAD_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
@@ -72,13 +73,13 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   START_PERIODIC_MONITORS;
 
   /// Run the monitor checker in a separate thread.
-  Monitor_Checker monitor_checker;
+  Monitor_Checker monitor_checker {};
   monitor_checker.activate ();
 
   /// Make sure the monitor checker is spawned before doing anything.
   ACE_OS::sleep (1);
 
-  for (int i = 0; i < 10; ++i)
+  for (std::size_t i {}; i < 10; ++i)
     {
       /// Alternate between letting the CPU sleep and keeping it
       /// busy.
@@ -88,7 +89,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
         }
       else
         {
-          for (unsigned long j = 0; j < 5050505; j++)
+          for (std::size_t j {}; j < 5050505; ++j)
             {
               (void) ACE::gcd (2419233733UL, 567715713UL);
             }
