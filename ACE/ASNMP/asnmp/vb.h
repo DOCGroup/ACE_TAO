@@ -78,7 +78,6 @@ public:
   /// makes a vb with oid portion and value portion initialized, (valid)
   Vb (Oid const &vb, SnmpSyntax const &val, SmiUINT32 status = SNMP_CLASS_SUCCESS);
 
-  /// copy constructor
   Vb (Vb const &vb);
   Vb (Vb &&) = delete;
   Vb &operator= (Vb &&) = delete;

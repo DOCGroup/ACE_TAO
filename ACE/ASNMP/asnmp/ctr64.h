@@ -52,7 +52,6 @@ public:
   /// constructor with values
   Counter64 (unsigned long hiparm, unsigned long loparm);
 
-  /// copy constructor
   Counter64 (Counter64 const &ctr64);
   Counter64 (Counter64 &&) = delete;
   Counter64 &operator= (Counter64 &&) = delete;

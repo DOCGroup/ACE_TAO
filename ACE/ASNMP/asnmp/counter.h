@@ -51,7 +51,6 @@ public:
   /// constructor with a value
   explicit Counter32 (unsigned long i = 0);
 
-  /// copy constructor
   Counter32 (Counter32 const &c);
   Counter32 (Counter32 &&) = delete;
   Counter32 &operator= (Counter32 &&) = delete;

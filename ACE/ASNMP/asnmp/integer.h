@@ -48,7 +48,6 @@ public:
   /// default constructor
   explicit SnmpUInt32 (unsigned long const i = 0);
 
-  /// copy constructor
   SnmpUInt32 (SnmpUInt32 const &c);
   SnmpUInt32 (SnmpUInt32 &&) = delete;
 

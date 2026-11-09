@@ -386,7 +386,7 @@ IpAddress& IpAddress::operator=( const IpAddress &ipaddress)
 //--------[ create a new instance of this Value ]-----------------------
 SnmpSyntax *IpAddress::clone() const
 {
-  return (SnmpSyntax *) new IpAddress(*this);
+  return new IpAddress(*this);
 }
 
 //-------[ return the Fully Qualified Domain Name ]----------------------
@@ -874,7 +874,7 @@ int UdpAddress::parse_address( const char *inaddr)
 //----------[ create a new instance of this Value ]------------------------
 SnmpSyntax *UdpAddress::clone() const
 {
-  return (SnmpSyntax *) new UdpAddress(*this);
+  return new UdpAddress(*this);
 }
 
 //--------[ set the port number ]---------------------------------------
@@ -1109,7 +1109,7 @@ SnmpSyntax& NetbiosAddress::operator=( SnmpSyntax &val)
 
 SnmpSyntax *NetbiosAddress::clone() const
 {
-  return (SnmpSyntax *) new NetbiosAddress(*this);
+  return new NetbiosAddress(*this);
 }
 
 SmiUINT32 NetbiosAddress::get_syntax()
@@ -1251,7 +1251,7 @@ IpxAddress& IpxAddress::operator=( const IpxAddress &ipxaddress)
 // create a new instance of this Value
 SnmpSyntax *IpxAddress::clone() const
 {
-  return (SnmpSyntax *) new IpxAddress(*this);
+  return new IpxAddress(*this);
 }
 
 //-----[ IPX Address parse Address ]-----------------------------------
@@ -1622,7 +1622,7 @@ IpxSockAddress& IpxSockAddress::operator=( const IpxSockAddress &ipxaddr)
 //----------[ create a new instance of this Value ]------------------------
 SnmpSyntax *IpxSockAddress::clone() const
 {
-  return (SnmpSyntax *) new IpxSockAddress(*this);
+  return new IpxSockAddress(*this);
 }
 
 //----[ IPXSock address char * cast ]--------------------------------------
@@ -1789,7 +1789,7 @@ MacAddress::~MacAddress()
 //---------[ MacAddress clone ]-------------------------------------------
 SnmpSyntax *MacAddress::clone() const
 {
-  return (SnmpSyntax *) new MacAddress(*this);
+  return new MacAddress(*this);
 }
 
 //------[ assignment to another ipaddress object overloaded ]--------------
@@ -2093,7 +2093,7 @@ GenAddress::~GenAddress() = default;
 //----------[ create a new instance of this Value ]------------------------
 SnmpSyntax *GenAddress::clone() const
 {
-  return (SnmpSyntax *) new GenAddress(*this);
+  return new GenAddress(*this);
 }
 
 //------[ assignment GenAddress = GenAddress ]-----------------------------
@@ -2475,7 +2475,7 @@ SnmpSyntax& DecNetAddress::operator=( SnmpSyntax &val)
 
 SnmpSyntax *DecNetAddress::clone() const
 {
-  return (SnmpSyntax *) new DecNetAddress(*this);
+  return new DecNetAddress(*this);
 }
 
 addr_type DecNetAddress::get_type() const
@@ -2611,7 +2611,7 @@ SnmpSyntax& AppleTalkAddress::operator=( SnmpSyntax &val)
 
 SnmpSyntax *AppleTalkAddress::clone() const
 {
-  return (SnmpSyntax *) new AppleTalkAddress(*this);
+  return new AppleTalkAddress(*this);
 }
 
 addr_type AppleTalkAddress::get_type() const

@@ -802,5 +802,5 @@ unsigned long& Oid::operator[](size_t position)
 //================[ clone ]===========================================
 SnmpSyntax *Oid::clone() const
 {
-  return (SnmpSyntax *) new Oid(*this);
+  return new Oid(*this);
 }

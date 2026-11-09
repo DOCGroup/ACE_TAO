@@ -34,7 +34,6 @@ Counter32::Counter32 (unsigned long i)
   smival.syntax = sNMP_SYNTAX_CNTR32;
 }
 
-// copy constructor
 Counter32::Counter32 (Counter32 const &c)
   : SnmpUInt32 (c)
 {
@@ -96,5 +95,5 @@ Counter32::operator unsigned long() const
 // clone
 SnmpSyntax * Counter32::clone() const
 {
-  return ( SnmpSyntax *) new Counter32(*this);
+  return new Counter32(*this);
 }

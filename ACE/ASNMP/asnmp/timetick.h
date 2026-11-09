@@ -46,7 +46,6 @@ class ASNMP_Export TimeTicks : public SnmpUInt32
 public:
   explicit TimeTicks (unsigned long const i = 0);
 
-  /// copy constructor
   TimeTicks (TimeTicks const &t);
   TimeTicks (TimeTicks &&) = delete;
 

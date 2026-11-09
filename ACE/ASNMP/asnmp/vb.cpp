@@ -63,7 +63,6 @@ Vb::Vb (Oid const &oid, SnmpSyntax const &val, SmiUINT32 status)
 }
 
 //---------------[ Vb::Vb( const Vb &vb) ]-----------------------------
-// copy constructor
 Vb::Vb (Vb const &vb)
 {
    *this = vb;

@@ -37,7 +37,6 @@ SnmpUInt32::SnmpUInt32 (unsigned long const i)
   valid_flag = true;
 }
 
-// copy constructor
 SnmpUInt32::SnmpUInt32 (SnmpUInt32 const &c)
   : SnmpSyntax (c)
 {

@@ -175,7 +175,7 @@ Counter64::operator ACE_UINT64() const
 // create a new instance of this Value
 SnmpSyntax* Counter64::clone() const
 {
-  return ( SnmpSyntax *) new Counter64(*this);
+  return new Counter64(*this);
 }
 
 //----------------[ Counter64::valid() ]-------------------------------------

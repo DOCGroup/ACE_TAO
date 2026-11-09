@@ -35,7 +35,6 @@ TimeTicks::TimeTicks (unsigned long const i)
   smival.syntax = sNMP_SYNTAX_TIMETICKS;
 }
 
-// copy constructor
 TimeTicks::TimeTicks (TimeTicks const &t)
   : SnmpUInt32 (t)
 {

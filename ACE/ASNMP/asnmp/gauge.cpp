@@ -35,7 +35,6 @@ Gauge32::Gauge32 (unsigned long i)
   smival.syntax = sNMP_SYNTAX_GAUGE32;
 }
 
-// copy constructor
 Gauge32::Gauge32 (Gauge32 const &g)
   : SnmpUInt32 (g)
 {
@@ -99,5 +98,5 @@ Gauge32::operator unsigned long() const
 // clone - create a new instance of this Value
 SnmpSyntax* Gauge32::clone() const
 {
-  return ( SnmpSyntax *) new Gauge32(*this);
+  return new Gauge32(*this);
 }

@@ -479,7 +479,6 @@ public:
    /// set name and service type
    NetbiosAddress( const char *inaddr, nb_service svc);
 
-   /// copy constructor
    NetbiosAddress( const NetbiosAddress& nbaddr);
 
    /// construct with a GenAddress
@@ -537,7 +536,6 @@ public:
   /// default constructor with string arg
   explicit DecNetAddress( const char *inaddr = "");
 
-  /// copy constructor
   DecNetAddress( const DecNetAddress& decaddr);
 
   /// construct with a GenAddress
@@ -586,7 +584,6 @@ public:
   /// default constructor with string arg
   explicit AppleTalkAddress( const char *inaddr = "");
 
-  /// copy constructor
   AppleTalkAddress( const AppleTalkAddress& atkaddr);
 
   /// construct with a GenAddress
