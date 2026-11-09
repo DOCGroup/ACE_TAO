@@ -20,9 +20,9 @@ Messenger_i::send_message (
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;
-  char * const reply = CORBA::string_dup ("Thanks for the message.");
+  CORBA::String_var reply (CORBA::string_dup ("Thanks for the message."));
   CORBA::string_free (message);
-  message = reply;
+  message = reply._retn ();
   return true;
 }
 

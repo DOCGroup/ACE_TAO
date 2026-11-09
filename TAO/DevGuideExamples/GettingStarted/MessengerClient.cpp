@@ -3,17 +3,18 @@
 #include "ace/Get_Opt.h"
 
 #include <iostream>
+#include <string>
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior {ACE_TEXT ("file://Messenger.ior")};
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://Messenger.ior")};
 };
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int option;
+  int option {};
 
   while ((option = get_opts ()) != -1)
     switch (option)
@@ -44,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var const obj (orb->string_to_object (options.ior));
+      CORBA::Object_var const obj (orb->string_to_object (options.ior.c_str ()));
       if (CORBA::is_nil (obj.in ()))
         {
           std::cerr << "Could not get Messenger IOR." << std::endl;

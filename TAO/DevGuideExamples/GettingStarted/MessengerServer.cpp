@@ -4,17 +4,18 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
 
 struct Server_Options
 {
-  ACE_TCHAR const *ior_output_file {ACE_TEXT ("Messenger.ior")};
+  std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("Messenger.ior")};
 };
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int option;
+  int option {};
 
   while ((option = get_opts ()) != -1)
     switch (option)
@@ -56,7 +57,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var const oid (poa->activate_object (servant.in ()));
       CORBA::Object_var const object (poa->id_to_reference (oid.in ()));
       CORBA::String_var const ior (orb->object_to_string (object.in ()));
-      std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file));
+      std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));
       if (!ior_file)
         {
           std::cerr << "Cannot open IOR output file." << std::endl;
@@ -69,7 +70,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
       std::cout << "IOR written to file "
-                << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file) << std::endl;
+                << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()) << std::endl;
 
       orb->run ();
       orb->destroy ();

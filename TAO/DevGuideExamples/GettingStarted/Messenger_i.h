@@ -16,7 +16,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Messenger_i
 class Messenger_i : public virtual POA_Messenger
 {
 public:
