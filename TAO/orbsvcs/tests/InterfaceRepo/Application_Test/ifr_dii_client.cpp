@@ -1,20 +1,7 @@
 // -*- C++ -*-
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
-
-IFR_DII_Client::IFR_DII_Client ()
-  : namespace_name (CORBA::string_dup ("warehouse")),
-    interface_name (CORBA::string_dup ("inventory")),
-    op_name (CORBA::string_dup ("getCDinfo")),
-    lookup_by_name_ (false),
-    debug_ (false),
-    ior_output_file_(ACE_TEXT("file://iorfile"))
-{
-}
-
-IFR_DII_Client::~IFR_DII_Client ()
-{
-}
+#include <cstring>
 
 int
 IFR_DII_Client::init (int argc,
@@ -23,9 +10,9 @@ IFR_DII_Client::init (int argc,
   this->orb_ = CORBA::ORB_init (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)
-  {
-        return -1;
-  }
+    {
+      return -1;
+    }
   // In a reall application, we would get the scoped or
   // local name from the Interface Repository and use that
   // to get the object reference of the target via the Naming
@@ -34,12 +21,10 @@ IFR_DII_Client::init (int argc,
   this->target_ = this->orb_->string_to_object (ior_output_file_);
 
   if (CORBA::is_nil (this->target_.in ()))
-  {
-     ACE_ERROR_RETURN ((
-        LM_ERROR,
-        "Unable to find interface repository in: %s\n", ior_output_file_),
-        -1);
-  }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to find interface repository in: %s\n",
+                       this->ior_output_file_),
+                      -1);
 
   return 0;
 }
@@ -47,25 +32,16 @@ IFR_DII_Client::init (int argc,
 int
 IFR_DII_Client::run ()
 {
-  int result = 0;
-
   if (this->lookup_by_name_)
     {
-      result = this->lookup_interface_def ();
-
-      if (result == -1)
+      if (this->lookup_interface_def () == -1)
         {
           return -1;
         }
     }
-  else
+  else if (this->find_interface_def () == -1)
     {
-      result = this->find_interface_def ();
-
-      if (result == -1)
-        {
-          return (-1);
-        }
+      return -1;
     }
 
   this->get_operation_def ();
@@ -81,7 +57,7 @@ int
 IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("k:nd"));
-  int c;
+  int c {};
 
   while ((c = opts ()) != -1)
     switch (c)
@@ -128,7 +104,7 @@ IFR_DII_Client::find_interface_def ()
 int
 IFR_DII_Client::lookup_interface_def ()
 {
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->orb_->resolve_initial_references ("InterfaceRepository");
 
   this->repo_ = CORBA::Repository::_narrow (obj.in ());
@@ -141,11 +117,9 @@ IFR_DII_Client::lookup_interface_def ()
                               CORBA::dk_all, // Any type of contained object.
                               1);              // Exclude parents of interfaces.
 
-  CORBA::ULong length = candidates->length ();
-  CORBA::Container_var candidate;
-  CORBA::ContainedSeq_var interfaces;
-  CORBA::ULong n_interfaces = 0;
-  CORBA::String_var name;
+  CORBA::ULong const length = candidates->length ();
+  CORBA::ContainedSeq_var interfaces {};
+  CORBA::ULong n_interfaces {};
 
   // No point continuing; theres nothing to look at.
   if (length == 0)
@@ -155,9 +129,9 @@ IFR_DII_Client::lookup_interface_def ()
 
   // The length is 1 in this case, but in general, it could
   // be any length.
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
-      candidate =
+      CORBA::Container_var const candidate =
         CORBA::Container::_narrow (candidates[i]);
 
       // Is this contained item itself a container?
@@ -165,7 +139,7 @@ IFR_DII_Client::lookup_interface_def ()
         {
           // Does this container contain any interfaces?
           interfaces = candidate->contents (CORBA::dk_Interface,
-                                            1);     // Exclude parents.
+                                            1); // Exclude parents.
 
           n_interfaces = interfaces->length ();
 
@@ -183,11 +157,11 @@ IFR_DII_Client::lookup_interface_def ()
 
   // The length is 1 in this case, but in general, it could
   // be any length.
-  for (CORBA::ULong j = 0; j < n_interfaces  ; ++j)
+  for (CORBA::ULong j {}; j < n_interfaces; ++j)
     {
-      name = interfaces[j]->name ();
+      CORBA::String_var const name = interfaces[j]->name ();
 
-      if (!ACE_OS::strcmp (name.in (), this->interface_name.in ()))
+      if (std::strcmp (name.in (), this->interface_name.in ()) == 0)
         {
           this->target_def_ =
             CORBA::InterfaceDef::_narrow (interfaces[j]);
@@ -204,16 +178,15 @@ IFR_DII_Client::get_operation_def ()
     this->target_def_->contents (CORBA::dk_Operation,
                                  0);  // Do not exclude inherited operations.
 
-  CORBA::ULong n_operations = operations->length ();
-  CORBA::String_var operation_name;
+  CORBA::ULong const n_operations = operations->length ();
 
   // The length is 1 in this case, but in general, it could
   // be any length.
-  for (CORBA::ULong i = 0; i < n_operations; ++i)
+  for (CORBA::ULong i {}; i < n_operations; ++i)
     {
-      operation_name = operations[i]->name ();
+      CORBA::String_var const operation_name = operations[i]->name ();
 
-      if (!ACE_OS::strcmp (operation_name.in (), this->op_name.in ()))
+      if (std::strcmp (operation_name.in (), this->op_name.in ()) == 0)
         {
           this->op_ =
             CORBA::OperationDef::_narrow (operations[i]);
@@ -235,13 +208,13 @@ IFR_DII_Client::create_dii_request ()
   CORBA::ParDescriptionSeq_var params =
     this->op_->params ();
 
-  CORBA::ULong length = params->length ();
+  CORBA::ULong const length = params->length ();
 
   // This example of the discovery of parameter information is
   // purposely contrived for the sake of brevity. A real
   // application would have more versatile code here, and much
   // more of it.
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::TCKind const kind =
         params[i].type->kind ();
@@ -250,7 +223,7 @@ IFR_DII_Client::create_dii_request ()
       {
         case CORBA::PARAM_IN:
           if (kind == CORBA::tk_string
-              && ACE_OS::strcmp (params[i].name.in (), "artist") == 0)
+              && std::strcmp (params[i].name.in (), "artist") == 0)
             {
               // The servant will match the substring 'Beatles'.
               this->req_->add_in_arg (params[i].name.in ()) <<= "the Beatles";
@@ -259,7 +232,7 @@ IFR_DII_Client::create_dii_request ()
           break;
         case CORBA::PARAM_INOUT:
           if (kind == CORBA::tk_string
-              && ACE_OS::strcmp (params[i].name.in (), "title") == 0)
+              && std::strcmp (params[i].name.in (), "title") == 0)
             {
               // This isn't the exact title, but the servant will find the
               // partial match, and return the full, correct title.
@@ -270,10 +243,10 @@ IFR_DII_Client::create_dii_request ()
         case CORBA::PARAM_OUT:
           {
             if (kind == CORBA::tk_float
-                && ACE_OS::strcmp (params[i].name.in (), "price") == 0)
+                && std::strcmp (params[i].name.in (), "price") == 0)
               {
-                CORBA::Float tmp = -1.0f;
-                CORBA::Any any;
+                CORBA::Float const tmp {-1.0f};
+                CORBA::Any any {};
                 any <<= tmp;
 
                 // The servant will return 0.0 if the title is not found.
@@ -293,29 +266,27 @@ IFR_DII_Client::invoke_and_display ()
 {
   this->req_->invoke ();
 
-  CORBA::TypeCode_var tc = this->req_->return_value ().type ();
+  CORBA::TypeCode_var const tc = this->req_->return_value ().type ();
 
   CORBA::TCKind const kind = tc->kind ();
 
   if (kind == CORBA::tk_boolean)
     {
-      CORBA::NVList_ptr args = this->req_->arguments ();
+      CORBA::NVList_ptr const args = this->req_->arguments ();
 
-      char const* artist = nullptr;
+      char const *artist {};
 
       ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
 
-      ACE_ASSERT (ACE_OS::strcmp (artist, "the Beatles") == 0);
+      ACE_ASSERT (std::strcmp (artist, "the Beatles") == 0);
 
-      char const* title = nullptr;
+      char const *title {};
 
       ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
 
-      char const* correct = "Sgt. Pepper's Lonely Hearts Club Band";
-      ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
-      ACE_UNUSED_ARG (correct);
+      ACE_ASSERT (std::strcmp (title, "Sgt. Pepper's Lonely Hearts Club Band") == 0);
 
-      CORBA::Float price = 0.0f;
+      CORBA::Float price {};
 
       ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
 
@@ -335,9 +306,9 @@ IFR_DII_Client::invoke_and_display ()
                       price));
         }
 
-      CORBA::Boolean in_stock = false;
+      CORBA::Boolean in_stock {};
 
-      CORBA::Boolean ret_status =
+      CORBA::Boolean const ret_status =
         (this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock));
       ACE_UNUSED_ARG (ret_status);
 

@@ -3,15 +3,15 @@
 #include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
-
-static ACE_TCHAR const* ior_output_file = ACE_TEXT("iorfile");
+static ACE_TCHAR const *ior_output_file {ACE_TEXT ("iorfile")};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -36,12 +36,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Service_Shutdown_Functor : public Shutdown_Functor
 {
 public:
-  Service_Shutdown_Functor (CORBA::ORB_ptr orb)
-    : orb_(CORBA::ORB::_duplicate (orb))
+  explicit Service_Shutdown_Functor (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
 
-  void operator() (int which_signal)
+  void operator() (int which_signal) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "shutting down on signal %d\n", which_signal));
@@ -49,15 +49,16 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 static int
 write_ior_to_file (char const* ior)
 {
-  FILE* output_file = ACE_OS::fopen (ior_output_file, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
 
-  if (output_file == nullptr)
+  if (!output_file)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Cannot open output files for writing IOR: %s\n",
@@ -65,7 +66,7 @@ write_ior_to_file (char const* ior)
                         -1);
     }
 
-  int result = ACE_OS::fprintf (output_file,
+  int const result = ACE_OS::fprintf (output_file.get (),
                                 "%s",
                                 ior);
   if (result < 0)
@@ -77,8 +78,6 @@ write_ior_to_file (char const* ior)
                         -1);
     }
 
-  ACE_OS::fclose (output_file);
-
   return 0;
 }
 
@@ -87,34 +86,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-              return 1;
+        return 1;
 
       Service_Shutdown_Functor killer (orb.in ());
       Service_Shutdown kill_contractor (killer);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
       inventory_i servant_impl;
 
-      warehouse::inventory_var servant =
+      warehouse::inventory_var const servant =
         servant_impl._this ();
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (servant.in ());
 
-      int write_result = write_ior_to_file (ior.in ());
+      int const write_result = write_ior_to_file (ior.in ());
 
       if (write_result != 0)
         {
@@ -130,7 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server exception:");
       return 1;

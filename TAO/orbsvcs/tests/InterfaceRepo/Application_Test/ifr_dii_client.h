@@ -13,8 +13,7 @@
 class IFR_DII_Client
 {
 public:
-  IFR_DII_Client ();
-  ~IFR_DII_Client ();
+  IFR_DII_Client () = default;
 
   IFR_DII_Client (IFR_DII_Client const&) = delete;
   IFR_DII_Client (IFR_DII_Client&&) = delete;
@@ -49,41 +48,41 @@ private:
   void invoke_and_display ();
   // Do the invocation and display the results.
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // Reference to our ORB.
 
-  CORBA::Repository_var repo_;
+  CORBA::Repository_var repo_ {};
   // Reference to the Interface Repository.
 
-  CORBA::Object_var target_;
+  CORBA::Object_var target_ {};
   // Reference to the target object.
 
-  CORBA::InterfaceDef_var target_def_;
+  CORBA::InterfaceDef_var target_def_ {};
   // Repository entry corresponding to target_.
 
-  CORBA::OperationDef_var op_;
+  CORBA::OperationDef_var op_ {};
   // Reference to the discovered operation.
 
-  CORBA::TypeCode_var result_;
+  CORBA::TypeCode_var result_ {};
   // Type of the return value, if any.
 
-  CORBA::Request_var req_;
+  CORBA::Request_var req_ {};
   // DII request holder.
 
-  CORBA::String_var namespace_name;
-  CORBA::String_var interface_name;
-  CORBA::String_var op_name;
+  CORBA::String_var namespace_name {CORBA::string_dup ("warehouse")};
+  CORBA::String_var interface_name {CORBA::string_dup ("inventory")};
+  CORBA::String_var op_name {CORBA::string_dup ("getCDinfo")};
   // Things that we will be searching for in the repository.
 
-  bool lookup_by_name_;
+  bool lookup_by_name_ {};
   // Are we looking up info on the target object by querying the
   // IFR directly with the target's name, or indirectly
   // by calling _get_interface() on the target object?
 
-  bool debug_;
+  bool debug_ {};
   // Display results and debugging info?
 
-  ACE_TCHAR const* ior_output_file_;
+  ACE_TCHAR const *ior_output_file_ {ACE_TEXT ("file://iorfile")};
 };
 
 #endif /* IFR_DII_CLIENT_H */
