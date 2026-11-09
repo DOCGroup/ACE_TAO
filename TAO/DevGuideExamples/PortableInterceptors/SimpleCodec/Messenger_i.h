@@ -7,7 +7,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Messenger_i
 class  Messenger_i : public virtual POA_Messenger
 {
  public:
@@ -16,12 +15,9 @@ class  Messenger_i : public virtual POA_Messenger
   Messenger_i &operator= (Messenger_i const &) = delete;
   Messenger_i &operator= (Messenger_i &&) = delete;
 
-  //Constructor
   Messenger_i () = default;
 
-  //Destructor
   ~Messenger_i () override = default;
-
 
   void send_message (CORBA::OctetSeq const& user_name) override;
 };
