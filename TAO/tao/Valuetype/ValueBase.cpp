@@ -88,7 +88,7 @@ CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
 void
 CORBA::ValueBase::_tao_any_destructor (void *x)
 {
-  CORBA::ValueBase *tmp = static_cast<CORBA::ValueBase *> (x);
+  CORBA::ValueBase * const tmp = static_cast<CORBA::ValueBase *> (x);
   CORBA::remove_ref (tmp);
 }
 
@@ -237,7 +237,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (
   char *const start_of_valuetype = strm.rd_ptr();
 
   Repository_Id_List ids;
-  CORBA::Boolean result =
+  CORBA::Boolean const result =
     CORBA::ValueBase::_tao_unmarshal_header (
       strm, fallback_repo_id, ids,
       is_null_object, is_indirected, is_chunked);
@@ -271,7 +271,7 @@ CORBA::ValueBase::_tao_unmarshal_header (
   is_null_object = false;
   is_chunked = false;
 
-  CORBA::Long valuetag;
+  CORBA::Long valuetag {};
   if (!strm.read_long (valuetag))
     {
       return false;
@@ -468,7 +468,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
                                           CORBA::Boolean & null_object,
                                           CORBA::Boolean & is_indirected)
 {
-  CORBA::Long value_tag;
+  CORBA::Long value_tag {};
   null_object = false;
   is_indirected = false;
 
@@ -1083,7 +1083,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
     }
 
   //Safty check if reading is out of range of current chunk.
-  if (this->chunk_octets_end_pos_ != 0
+  if (this->chunk_octets_end_pos_ != nullptr
       && the_rd_ptr > this->chunk_octets_end_pos_)
     {
       return 0;
@@ -1091,7 +1091,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
 
   // Read a long value that might be an endtag, the chunk size or the value tag
   // of the nested valuetype.
-  CORBA::Long tag;
+  CORBA::Long tag {};
 
   if (!strm.read_long (tag))
     {
@@ -1151,7 +1151,7 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
   // This function is called after reading data of the truncated parent and
   // skips the remaining chunks until the outmost endtag (-1).
   // The tag read here is suppoused to be an endtag.
-  CORBA::Long tag;
+  CORBA::Long tag {};
   if (!strm.read_long(tag))
     {
       return 0;
@@ -1217,7 +1217,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 {
   CORBA::ULong length {};
 
-  std::size_t buffer_size = strm.length();
+  std::size_t const buffer_size = strm.length();
 
   if (!strm.read_ulong (length))
     {
@@ -1307,7 +1307,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
 {
   CORBA::ULong length {};
 
-  std::size_t buffer_size = strm.length();
+  std::size_t const buffer_size = strm.length();
 
   if (!strm.read_ulong (length))
     {

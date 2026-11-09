@@ -70,7 +70,7 @@ TAO_ValueFactory_Map::unbind (char const *repo_id,
     {
       // set factory to the previous factory,
       factory = prev_entry->int_id_;
-      char *temp = const_cast<char *> (prev_entry->ext_id_);
+      char * const temp = const_cast<char *> (prev_entry->ext_id_);
       ret = this->map_.unbind (prev_entry);
 
       if (ret == 0)

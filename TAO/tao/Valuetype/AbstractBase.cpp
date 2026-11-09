@@ -78,7 +78,7 @@ CORBA::AbstractBase::_remove_ref ()
 void
 CORBA::AbstractBase::_tao_any_destructor (void *x)
 {
-  CORBA::AbstractBase_ptr tmp = static_cast<CORBA::AbstractBase_ptr> (x);
+  CORBA::AbstractBase_ptr const tmp = static_cast<CORBA::AbstractBase_ptr> (x);
   ::CORBA::release (tmp);
 }
 
@@ -101,7 +101,7 @@ CORBA::AbstractBase::_to_value ()
       return nullptr;
     }
 
-  CORBA::ValueBase *retval = this->_tao_to_value ();
+  CORBA::ValueBase * const retval = this->_tao_to_value ();
 
   if (retval != nullptr)
     {
@@ -156,7 +156,7 @@ operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
     {
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
-          TAO_Stub *stubobj = abs->_stubobj ();
+          TAO_Stub * const stubobj = abs->_stubobj ();
 
           if (stubobj == nullptr)
             {
@@ -199,8 +199,8 @@ operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
 
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
-          CORBA::ULong value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
-                                   | TAO_OBV_GIOP_Flags::Type_info_single;
+          CORBA::ULong const value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
+                                         | TAO_OBV_GIOP_Flags::Type_info_single;
 
           if ((strm.write_ulong (value_tag)) == 0)
             {
@@ -231,7 +231,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
     {
       if (!discriminator)
         {
-          CORBA::ULong value_tag;
+          CORBA::ULong value_tag {};
 
           if (!strm.read_ulong (value_tag))
             {
@@ -277,7 +277,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
                 }
             }
 
-          CORBA::ValueFactory_var factory =
+          CORBA::ValueFactory_var const factory =
             orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
 
           // We should throw an exception, if there were an appropriate one.
@@ -307,7 +307,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
                   return true;
                 }
 
-              TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
+              TAO_Stub * const concrete_stubobj = generic_objref->_stubobj ();
 
               bool const collocated =
                 !CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ())
