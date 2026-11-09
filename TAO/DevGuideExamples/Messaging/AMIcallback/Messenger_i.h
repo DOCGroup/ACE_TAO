@@ -20,11 +20,9 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   explicit Messenger_i (unsigned int seconds_to_wait = 0,
                         CORBA::Boolean throw_exception = false);
 
-  //Destructor
   ~Messenger_i () override = default;
 
   CORBA::Boolean send_message (

@@ -6,10 +6,8 @@
 class  MessengerHandler : public virtual POA_AMI_MessengerHandler
 {
 public:
-  //Constructor
   explicit MessengerHandler (CORBA::ORB_ptr orb);
 
-  //Destructor
   ~MessengerHandler () override = default;
 
   void send_message (

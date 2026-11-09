@@ -11,7 +11,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 #include <iostream>
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (unsigned int seconds_to_wait,
                           CORBA::Boolean throw_exception)
   : seconds_to_wait_(seconds_to_wait)

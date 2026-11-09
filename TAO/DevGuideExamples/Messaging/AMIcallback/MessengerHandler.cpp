@@ -2,7 +2,6 @@
 #include "ace/OS_NS_time.h"
 #include <iostream>
 
-// Implementation skeleton constructor
 MessengerHandler::MessengerHandler (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
