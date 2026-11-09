@@ -9,67 +9,67 @@ template<class T>
 class Literal_Visitor: public TAO_Constraint_Visitor
 {
 public:
-  Literal_Visitor (Literal_Interpreter<T>* interp);
-  virtual ~Literal_Visitor ();
+  explicit Literal_Visitor (Literal_Interpreter<T> * const interp);
+  ~Literal_Visitor () override = default;
 
-  int visit_constraint (TAO_Unary_Constraint*) override;
+  Literal_Visitor (Literal_Visitor const &) = delete;
+  Literal_Visitor (Literal_Visitor &&) = delete;
+  Literal_Visitor &operator= (Literal_Visitor const &) = delete;
+  Literal_Visitor &operator= (Literal_Visitor &&) = delete;
 
-  int visit_with (TAO_Unary_Constraint*) override { return 1; }
-  int visit_min (TAO_Unary_Constraint*) override { return 1; }
-  int visit_max (TAO_Unary_Constraint*) override { return 1; }
-  int visit_first (TAO_Noop_Constraint*) override { return 1; }
-  int visit_random (TAO_Noop_Constraint*) override { return 1; }
+  int visit_constraint (TAO_Unary_Constraint *) override;
 
-  int visit_and (TAO_Binary_Constraint*) override { return 1; }
-  int visit_or (TAO_Binary_Constraint*) override { return 1; }
-  int visit_not (TAO_Unary_Constraint*) override { return 1; }
+  int visit_with (TAO_Unary_Constraint *) override { return 1; }
+  int visit_min (TAO_Unary_Constraint *) override { return 1; }
+  int visit_max (TAO_Unary_Constraint *) override { return 1; }
+  int visit_first (TAO_Noop_Constraint *) override { return 1; }
+  int visit_random (TAO_Noop_Constraint *) override { return 1; }
 
-  int visit_exist (TAO_Unary_Constraint*) override { return 1; }
-  int visit_unary_minus (TAO_Unary_Constraint*) override { return 1; }
+  int visit_and (TAO_Binary_Constraint *) override { return 1; }
+  int visit_or (TAO_Binary_Constraint *) override { return 1; }
+  int visit_not (TAO_Unary_Constraint *) override { return 1; }
 
-  int visit_add (TAO_Binary_Constraint*) override { return 1; }
-  int visit_sub (TAO_Binary_Constraint*) override { return 1; }
-  int visit_mult (TAO_Binary_Constraint*) override { return 1; }
-  int visit_div (TAO_Binary_Constraint*) override { return 1; }
+  int visit_exist (TAO_Unary_Constraint *) override { return 1; }
+  int visit_unary_minus (TAO_Unary_Constraint *) override { return 1; }
 
-  int visit_twiddle (TAO_Binary_Constraint*) override { return 1; }
-  int visit_in (TAO_Binary_Constraint*) override { return 1; }
+  int visit_add (TAO_Binary_Constraint *) override { return 1; }
+  int visit_sub (TAO_Binary_Constraint *) override { return 1; }
+  int visit_mult (TAO_Binary_Constraint *) override { return 1; }
+  int visit_div (TAO_Binary_Constraint *) override { return 1; }
 
-  int visit_less_than (TAO_Binary_Constraint*) override { return 1; }
-  int visit_less_than_equal (TAO_Binary_Constraint*) override { return 1; }
-  int visit_greater_than (TAO_Binary_Constraint*) override { return 1; }
-  int visit_greater_than_equal (TAO_Binary_Constraint*) override { return 1; }
-  int visit_equal (TAO_Binary_Constraint*) override { return 1; }
-  int visit_not_equal (TAO_Binary_Constraint*) override { return 1; }
+  int visit_twiddle (TAO_Binary_Constraint *) override { return 1; }
+  int visit_in (TAO_Binary_Constraint *) override { return 1; }
 
-  int visit_literal (TAO_Literal_Constraint*) override;
-  int visit_property (TAO_Property_Constraint*) override { return 1; }
+  int visit_less_than (TAO_Binary_Constraint *) override { return 1; }
+  int visit_less_than_equal (TAO_Binary_Constraint *) override { return 1; }
+  int visit_greater_than (TAO_Binary_Constraint *) override { return 1; }
+  int visit_greater_than_equal (TAO_Binary_Constraint *) override { return 1; }
+  int visit_equal (TAO_Binary_Constraint *) override { return 1; }
+  int visit_not_equal (TAO_Binary_Constraint *) override { return 1; }
+
+  int visit_literal (TAO_Literal_Constraint *) override;
+  int visit_property (TAO_Property_Constraint *) override { return 1; }
 
 private:
-  Literal_Interpreter<T>* interp_;
+  Literal_Interpreter<T> *interp_ {};
 };
 
 template<class T>
-Literal_Visitor<T>::Literal_Visitor (Literal_Interpreter<T>* interp)
- : interp_ (interp)
-{
-}
-
-template<class T>
-Literal_Visitor<T>::~Literal_Visitor ()
+Literal_Visitor<T>::Literal_Visitor (Literal_Interpreter<T> * const interp)
+  : interp_ (interp)
 {
 }
 
 template<class T> int
-Literal_Visitor<T>::visit_constraint (TAO_Unary_Constraint* c)
+Literal_Visitor<T>::visit_constraint (TAO_Unary_Constraint *c)
 {
   return c->operand ()->accept (this);
 }
 
 template<class T> int
-Literal_Visitor<T>::visit_literal (TAO_Literal_Constraint* literal)
+Literal_Visitor<T>::visit_literal (TAO_Literal_Constraint *literal)
 {
-  this->interp_->constraint(*literal);
+  this->interp_->constraint (*literal);
   return 1;
 }
 
@@ -77,12 +77,17 @@ template<class T>
 class Literal_Interpreter: public TAO_Interpreter
 {
 public:
-  Literal_Interpreter ();
-  virtual ~Literal_Interpreter ();
+  Literal_Interpreter () = default;
+  ~Literal_Interpreter () = default;
+
+  Literal_Interpreter (Literal_Interpreter const &) = delete;
+  Literal_Interpreter (Literal_Interpreter &&) = delete;
+  Literal_Interpreter &operator= (Literal_Interpreter const &) = delete;
+  Literal_Interpreter &operator= (Literal_Interpreter &&) = delete;
 
   bool test (char const *str,
              T expected);
-  void constraint (TAO_Literal_Constraint& constraint);
+  void constraint (TAO_Literal_Constraint const &constraint);
   TAO_Literal_Constraint const &constraint () const;
 
 private:
@@ -90,16 +95,6 @@ private:
 
   TAO_Literal_Constraint constraint_;
 };
-
-template<class T>
-Literal_Interpreter<T>::Literal_Interpreter ()
-{
-}
-
-template<class T>
-Literal_Interpreter<T>::~Literal_Interpreter ()
-{
-}
 
 template<class T> bool
 Literal_Interpreter<T>::test (char const *str,
@@ -132,7 +127,7 @@ Literal_Interpreter<T>::compare (T expected) const
 }
 
 template<class T> void
-Literal_Interpreter<T>::constraint (TAO_Literal_Constraint& constraint)
+Literal_Interpreter<T>::constraint (TAO_Literal_Constraint const &constraint)
 {
   this->constraint_ = constraint;
 }
