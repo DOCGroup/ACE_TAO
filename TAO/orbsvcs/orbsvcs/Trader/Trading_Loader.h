@@ -32,10 +32,8 @@
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_Trading_Loader ();
 
-  /// Destructor
   ~TAO_Trading_Loader () = default;
 
   /// Called by the Service Configurator framework to initialize the

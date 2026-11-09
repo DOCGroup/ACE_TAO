@@ -55,7 +55,6 @@ public:
   // Traits
   using offer_iterator = TAO_Service_Offer_Iterator<LOCK_TYPE>;
 
-  /// No arg constructor.
   TAO_Offer_Database ();
 
   ~TAO_Offer_Database ();

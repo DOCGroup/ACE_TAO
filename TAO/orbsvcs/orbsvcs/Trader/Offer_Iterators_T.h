@@ -44,7 +44,6 @@ public:
   TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE>& db,
                                TAO_Property_Filter const& pfilter);
 
-  /// Destructor.
   ~TAO_Register_Offer_Iterator () override;
 
   /// Deposit at maximum n offers into the return sequence and return 1,

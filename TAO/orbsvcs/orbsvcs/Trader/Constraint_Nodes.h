@@ -221,8 +221,6 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 public:
   TAO_Literal_Constraint ();
 
-  // = Constructors for each of the various types of literals.
-
   TAO_Literal_Constraint (CORBA::Any* any);
   TAO_Literal_Constraint (CORBA::ULongLong uinteger);
   TAO_Literal_Constraint (CORBA::LongLong integer);
@@ -230,10 +228,8 @@ public:
   TAO_Literal_Constraint (CORBA::Double doub);
   TAO_Literal_Constraint (const char* str);
 
-  /// Copy constructor
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
 
-  /// Destructor.
   ~TAO_Literal_Constraint () override;
 
   /// Visitor accept methods.
@@ -242,7 +238,6 @@ public:
   TAO_Expression_Type expr_type () const override
     { return type_; }
 
-  /// Assignment operator.
   void operator= (const TAO_Literal_Constraint& co);
 
   // Conversion routines.

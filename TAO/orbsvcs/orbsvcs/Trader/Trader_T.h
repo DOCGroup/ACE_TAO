@@ -69,7 +69,6 @@ public:
    */
   TAO_Trader (Trader_Components components = LOOKUP);
 
-  /// Destructor.
   ~TAO_Trader () override;
 
   /// Accessor for the structure with all the service offers.

@@ -168,8 +168,6 @@ class TAO_Offer_Iterator_Collection :
 //   the trader graph is deep enough.
 {
 public:
-  // = Constructors.
-
   TAO_Offer_Iterator_Collection () = default;
 
   ~TAO_Offer_Iterator_Collection () override;
@@ -220,7 +218,6 @@ class TAO_Offer_Id_Iterator :
 //   END SPEC
 {
  public:
-  /// No op constructor
   TAO_Offer_Id_Iterator () = default;
 
   ~TAO_Offer_Id_Iterator () override = default;

@@ -212,8 +212,6 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
   return this->policies_[index];
 }
 
-// Constructor
-
 TAO_Property_Evaluator::
 TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
                        CORBA::Boolean supports_dp)
@@ -222,7 +220,6 @@ TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
     dp_cache_ (std::make_unique<std::unique_ptr<CORBA::Any>[]> (props.length ()))
 {
 }
-
 
 TAO_Property_Evaluator::
 TAO_Property_Evaluator(CosTrading::Offer& offer,
@@ -679,7 +676,6 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
   return return_value;
 }
 
-
 CORBA::Boolean
 TAO_Policies::use_modifiable_properties () const
 {
@@ -703,7 +699,6 @@ TAO_Policies::exact_type_match () const
 {
   return this->boolean_prop (EXACT_TYPE_MATCH);
 }
-
 
 const CosTrading::TraderName*
 TAO_Policies::starting_trader () const

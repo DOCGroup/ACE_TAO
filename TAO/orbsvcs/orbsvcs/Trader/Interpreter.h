@@ -33,10 +33,8 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Interpreter
 {
 protected:
-  /// Constructor.
   TAO_Interpreter ();
 
-  /// Destructor.
   ~TAO_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree

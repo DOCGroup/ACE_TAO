@@ -114,10 +114,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
 public:
-  /// Constructor.
   TAO_Constraint_Validator ();
 
-  /// Destructor.
   ~TAO_Constraint_Validator () override;
 
   /**
@@ -224,7 +222,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
-  /// Constructor.
   TAO_Constraint_Evaluator ();
 
   /**

@@ -35,14 +35,12 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
   TAO_Trader_Constraint_Validator (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
                                    type_struct);
 
-  /// Desctructor.
   ~TAO_Trader_Constraint_Validator () override;
 };
 
 class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
 {
  public:
-  /// Constructor.
   TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
                                    CORBA::Boolean supports_dynamic_properties = true);
 

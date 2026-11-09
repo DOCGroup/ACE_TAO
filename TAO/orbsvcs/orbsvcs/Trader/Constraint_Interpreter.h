@@ -57,7 +57,6 @@ public:
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                               const char* constraints);
 
-  /// Destructor
   ~TAO_Constraint_Interpreter ();
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
@@ -96,7 +95,6 @@ public:
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                               const char* preference);
 
-  /// Destructor
   ~TAO_Preference_Interpreter ();
 
   void order_offer (CosTrading::Offer* offer,
