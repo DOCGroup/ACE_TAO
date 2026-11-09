@@ -7,11 +7,11 @@
 //the README.
 // #define TEST_WITH_SSLIOP
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 config_file_name ()
 {
   // ASCII (UTF-8) encoded Service Configurator file.
-  static const ACE_TCHAR svc_conf[] =
+  static constexpr ACE_TCHAR svc_conf[] =
 #ifdef TEST_WITH_SSLIOP
     ACE_TEXT ("primary-ssl")
 #else
@@ -22,12 +22,11 @@ config_file_name ()
   return svc_conf;
 }
 
-
-// @brief Loading a dynamic services in a local repository, which
+// Load dynamic services in a local repository, which
 // initializes its own ORB
 
 int
-testLoadingTwoOrbs (int , ACE_TCHAR *argv[])
+testLoadingTwoOrbs (int, ACE_TCHAR *argv[])
 {
   ACE_ARGV new_argv;
 
@@ -40,12 +39,12 @@ testLoadingTwoOrbs (int , ACE_TCHAR *argv[])
       || new_argv.add (ACE_TEXT ("-f")) == -1
       || new_argv.add (config_file_name ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT("ARGV initialization failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ARGV initialization failed\n")));
       return -1;
     }
 
-  if (ACE_Service_Config::instance() ->open (new_argv.argc (),
-                                             new_argv.argv ()) == -1)
+  if (ACE_Service_Config::instance ()->open (new_argv.argc (),
+                                              new_argv.argv ()) == -1)
     {
       if (errno == ENOENT)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("No service config file found\n")));

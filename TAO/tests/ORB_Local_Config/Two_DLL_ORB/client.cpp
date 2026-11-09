@@ -2,7 +2,6 @@
 #include "ORB_DLL.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 Client_Worker::Client_Worker ()
@@ -11,7 +10,7 @@ Client_Worker::Client_Worker ()
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %@ Client::<ctor>\n", this));
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Client_Worker::kind () const
 {
   return ACE_TEXT ("Client");
@@ -25,15 +24,12 @@ Client_Worker::~Client_Worker ()
 int
 Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"),0);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"), 0);
 
-  for( int c = 0; ((c = get_opts ()) != -1); )
-    switch (c)
-    {
-    case 'k':
+  int option {};
+  while ((option = get_opts ()) != -1)
+    if (option == 'k')
       this->ior_file_ = get_opts.opt_arg ();
-      break;
-    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -44,15 +40,14 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (this->parse_args (argc, argv) != 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
+                           ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
                           1);
 
       // Doing this dance to allow the server some time to come up.
-      CORBA::Object_ptr co = 0;
       for (int attempts_left = 5; attempts_left > 0; --attempts_left)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -61,31 +56,29 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 
           try
             {
-              co = orb->string_to_object (ior_file_.c_str ());
+              CORBA::Object_var const object = orb->string_to_object (this->ior_file_.c_str ());
 
-              if (co == 0)
+              if (CORBA::is_nil (object.in ()))
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) Unable to obtain object reference yet. Retrying.\n")));
                   continue;
                 }
-              CORBA::Object_var tmp (co);
-
-              Test::Hello_var hello =
-                Test::Hello::_narrow(tmp.in ());
+              Test::Hello_var const hello =
+                Test::Hello::_narrow (object.in ());
 
               if (CORBA::is_nil (hello.in ()))
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) Nil Test::Hello reference <%s>. Retrying.\n"),
-                              ior_file_.c_str ()));
+                              this->ior_file_.c_str ()));
                   continue;
                 }
 
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Successfuly narrowed the Hello interface\n")));
+                          ACE_TEXT ("(%P|%t) Successfully narrowed the Hello interface\n")));
 
-              CORBA::String_var the_string =
+              CORBA::String_var const the_string =
                 hello->get_string ();
 
               ACE_DEBUG ((LM_DEBUG,
@@ -97,7 +90,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
               attempts_left = 0; // We're done here!
 
             }
-          catch (const CORBA::TRANSIENT& ex)
+          catch (CORBA::TRANSIENT const& ex)
             {
               if (!attempts_left)
                 throw;
@@ -109,9 +102,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("while the server gets ready.\n")));
               ACE_OS::sleep (5);
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const& ex)
             {
-              ex._tao_print_exception("Unexpected CORBA exception caught");
+              ex._tao_print_exception ("Unexpected CORBA exception caught");
 
               if (!attempts_left)
                 throw;
@@ -126,9 +119,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const ::CORBA::Exception &e)
+  catch (CORBA::Exception const& ex)
     {
-      e._tao_print_exception("Client_Worker::test_main");
+      ex._tao_print_exception ("Client_Worker::test_main");
       return 1;
     }
 

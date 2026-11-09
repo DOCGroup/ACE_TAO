@@ -11,10 +11,10 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  char * get_string () override;
+  char *get_string () override;
 
   void shutdown () override;
 
