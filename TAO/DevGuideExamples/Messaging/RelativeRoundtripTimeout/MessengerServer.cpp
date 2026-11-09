@@ -1,15 +1,14 @@
 #include "Messenger_i.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("MessengerServer.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,8 +36,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   try {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("MessengerServer.ior")};
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (argc, argv, ior_output_file) != 0)
       return 1;
 
     // Get reference to Root POA.
@@ -58,9 +58,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     obj = poa->id_to_reference (oid.in ());
     Messenger_var messenger = Messenger::_narrow (obj.in ());
     CORBA::String_var str = orb->object_to_string (messenger.in ());
-    std::ofstream fout (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+    std::ofstream fout (ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ()));
     fout << str.in() << std::endl;
-    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
+    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ())
+              << std::endl;
 
     // Accept requests
     orb->run();
