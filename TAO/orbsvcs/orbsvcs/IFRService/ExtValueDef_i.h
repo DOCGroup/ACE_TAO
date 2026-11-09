@@ -40,10 +40,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_ExtValueDef_i : public virtual TAO_ValueDef_i
 {
 public:
-  /// Constructor
   explicit TAO_ExtValueDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ExtValueDef_i () override;
 
   virtual CORBA::ExtInitializerSeq *ext_initializers ();

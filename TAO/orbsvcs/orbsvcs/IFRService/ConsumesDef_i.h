@@ -37,10 +37,8 @@ class TAO_IFRService_Export TAO_ConsumesDef_i
   : public virtual TAO_EventPortDef_i
 {
 public:
-  /// Constructor
     explicit TAO_ConsumesDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ConsumesDef_i () override;
 
   /// Return our definition kind.

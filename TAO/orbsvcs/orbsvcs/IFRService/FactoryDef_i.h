@@ -39,10 +39,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_FactoryDef_i : public virtual TAO_OperationDef_i
 {
 public:
-  /// Constructor
   explicit TAO_FactoryDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_FactoryDef_i () override;
 
   /// Return our definition kind.

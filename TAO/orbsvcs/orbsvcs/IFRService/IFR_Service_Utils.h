@@ -60,7 +60,6 @@ public:
   /// Destroy the child POA created in init_with_poa().
   int fini ();
 
-  /// Destructor.
   ~TAO_IFR_Server ();
 
 protected:

@@ -37,10 +37,8 @@ class TAO_IFRService_Export TAO_ComponentModuleDef_i
   : public virtual TAO_ComponentContainer_i
 {
 public:
-  /// Constructor
   explicit TAO_ComponentModuleDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ComponentModuleDef_i () override;
 };
 

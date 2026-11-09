@@ -42,10 +42,8 @@ class TAO_IFRService_Export TAO_ValueDef_i : public virtual TAO_Container_i,
   //    Represents a valuetype definition.
   //
 public:
-  /// Constructor
   explicit TAO_ValueDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ValueDef_i () override;
 
   /// Return our definition kind.

@@ -40,10 +40,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_Contained_i : public virtual TAO_IRObject_i
 {
 public:
-  /// Constructor.
   explicit TAO_Contained_i (TAO_Repository_i *repo);
 
-  /// Destructor.
   ~TAO_Contained_i () override;
 
   /// Remove the repository entry.

@@ -47,10 +47,8 @@ public:
 //  template<typename T>
 //  friend class TAO_Port_Utils;
 
-  /// Constructor.
   explicit TAO_Container_i (TAO_Repository_i *repo);
 
-  /// Destructor.
   ~TAO_Container_i () override;
 
   /// Remove our contents.

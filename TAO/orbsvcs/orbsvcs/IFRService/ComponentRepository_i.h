@@ -54,12 +54,10 @@ class TAO_IFRService_Export TAO_ComponentRepository_i
     public virtual TAO_ComponentContainer_i
 {
 public:
-  /// Constructor.
   TAO_ComponentRepository_i (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa,
                              ACE_Configuration *config);
 
-  /// Destructor.
   ~TAO_ComponentRepository_i () override;
 
   /// We create a default servant servant for each IR Object

@@ -38,10 +38,8 @@ class TAO_IFRService_Export TAO_InterfaceAttrExtension_i
   //    IDL3 attribute extension mixin class.
   //
 public:
-  /// Constructor
   explicit TAO_InterfaceAttrExtension_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_InterfaceAttrExtension_i () override;
 
   virtual
