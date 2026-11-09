@@ -2104,16 +2104,11 @@ Key_List::dump ()
 // Simple-minded constructor action here...
 
 Key_List::Key_List ()
-  : head (nullptr),
-    total_duplicates (0),
-    array_type_ (Key_List::default_array_type),
+  : array_type_ (Key_List::default_array_type),
     return_type (Key_List::default_return_type),
     struct_tag (Key_List::default_array_type),
     max_key_len (INT_MIN),
-    min_key_len (INT_MAX),
-    key_sort (0),
-    additional_code (0),
-    total_keys (1)
+    min_key_len (INT_MAX)
 {
 }
 

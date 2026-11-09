@@ -73,10 +73,10 @@ public:
   int length;
 
   /// Hash value for the key.
-  int hash_value;
+  int hash_value {};
 
   /// A metric for frequency of key set occurrences.
-  int occurrence;
+  int occurrence {};
 
   /// Position of this node relative to other nodes.
   int slot;

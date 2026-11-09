@@ -48,13 +48,13 @@ public:
   ~Duplicate_Entry () = default;
 
   /// Hash value for this particular duplicate set.
-  int hash_value;
+  int hash_value {};
 
   /// Slot into the main keyword storage array.
-  int slot;
+  int slot {};
 
   /// Number of consecutive duplicates at this slot.
-  int count;
+  int count {};
 };
 
 /**
@@ -83,10 +83,10 @@ public:
   int output ();
 
   /// Points to the head of the linked list.
-  List_Node *head;
+  List_Node *head {};
 
   /// Total number of duplicate hash values.
-  int total_duplicates;
+  int total_duplicates {};
 
 private:
   // = Make hash table 10 times larger than # of keyword entries.
@@ -145,28 +145,28 @@ private:
   int min_key_len;
 
   /// Minimum hash value for all keywords.
-  int min_hash_value;
+  int min_hash_value {};
 
   /// Maximum hash value for all keywords.
-  int max_hash_value;
+  int max_hash_value {};
 
   /// True if sorting by occurrence.
-  int occurrence_sort;
+  int occurrence_sort {};
 
   /// True if sorting by hash value.
-  int hash_sort;
+  int hash_sort {};
 
   /// True if sorting by key value.
-  int key_sort;
+  int key_sort {};
 
   /// True if any additional C code is included.
-  int additional_code;
+  int additional_code {};
 
   /// Length of head's Key_List, not counting duplicates.
-  int list_len;
+  int list_len {};
 
   /// Total number of keys, counting duplicates.
-  int total_keys;
+  int total_keys {1};
 
   /// Default type for generated code.
   static constexpr char const *default_array_type = "char const *";
