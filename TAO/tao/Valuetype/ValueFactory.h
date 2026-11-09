@@ -118,13 +118,12 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY, VALUETYPE) \
-  { CORBA::ValueFactory factory = new FACTORY; \
-    CORBA::ValueFactory prev_factory = \
-    TAO_ORB_Core_instance ()->orb ()->register_value_factory (\
+  { CORBA::ValueFactory_var factory (new FACTORY); \
+    CORBA::ValueFactory prev_factory {}; \
+    prev_factory = TAO_ORB_Core_instance ()->orb ()->register_value_factory ( \
       VALUETYPE::_tao_obv_static_repository_id (),\
-                                   factory); \
-    if (prev_factory) prev_factory->_remove_ref (); \
-    factory->_remove_ref (); }
+                                   factory.in ()); \
+    if (prev_factory != nullptr) prev_factory->_remove_ref (); }
 
 
 #include /**/ "ace/post.h"
