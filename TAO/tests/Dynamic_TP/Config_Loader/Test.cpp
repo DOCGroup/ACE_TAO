@@ -2,10 +2,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
+
+#include <array>
 #include <cstddef>
+#include <string>
 
 void
-show_tp_config (ACE_CString const &name, TAO_DTP_Definition const &entry)
+show_tp_config (std::string const &name, TAO_DTP_Definition const &entry)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config set for %C:\n"), name.c_str()));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Initial threads: %d:\n"), entry.init_threads_));
@@ -29,54 +32,44 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (registry == nullptr)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unable to load configuration\n")));
       return -1;
     }
 
-  TAO_DTP_Definition entry;
+  TAO_DTP_Definition entry {};
 
-  ACE_TCHAR const * const name_list [] =
-    { ACE_TEXT ("ORB"),
-      ACE_TEXT ("bogus"),
-      ACE_TEXT ("POA1"),
-      ACE_TEXT ("defaults"),
-      ACE_TEXT ("m1"),
-      ACE_TEXT ("m2"),
-      ACE_TEXT ("m3"),
-      ACE_TEXT ("m4"),
-      ACE_TEXT ("m5"),
-      ACE_TEXT ("m6"),
-      ACE_TEXT ("m7"),
-      nullptr
-    };
+  std::array<ACE_TCHAR const *, 11> const name_list {{
+    ACE_TEXT ("ORB"),
+    ACE_TEXT ("bogus"),
+    ACE_TEXT ("POA1"),
+    ACE_TEXT ("defaults"),
+    ACE_TEXT ("m1"),
+    ACE_TEXT ("m2"),
+    ACE_TEXT ("m3"),
+    ACE_TEXT ("m4"),
+    ACE_TEXT ("m5"),
+    ACE_TEXT ("m6"),
+    ACE_TEXT ("m7")
+  }};
 
-  for (std::size_t i = 0; name_list[i] != nullptr; ++i)
+  for (std::size_t i {}; i < name_list.size (); ++i)
     {
-      bool const found = registry->find (ACE_TEXT_ALWAYS_CHAR (name_list[i]), entry);
-      if (!found && (i != 1))
+      ACE_TCHAR const * const name = name_list[i];
+      std::string const name_string (ACE_TEXT_ALWAYS_CHAR (name));
+      bool const found = registry->find (name_string, entry);
+      bool const should_find = i != 1;
+
+      if (found != should_find)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Cannot find TP Config definition for %C\n"),
-                      name_list[i]));
+                      ACE_TEXT ("Unexpected lookup result for TP Config definition %C\n"),
+                      name));
           return -1;
         }
-      if (i == 1)
+
+      if (found)
         {
-          if (found)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Found TP Config definition for %C which should have failed\n"),
-                          name_list[i]));
-              return -1;
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TP definition for %C not found as expected\n"), name_list[i]));
-            }
-        }
-      else
-        {
-          show_tp_config (ACE_TEXT_ALWAYS_CHAR (name_list[i]), entry);
+          show_tp_config (name_string, entry);
         }
     }
   return 0;
