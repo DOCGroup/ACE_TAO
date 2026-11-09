@@ -54,7 +54,6 @@ namespace TAO
       public virtual CORBA::DefaultValueRefCountBase
   {
   public:
-    /// Constructor
     ObjectReferenceTemplate (std::string const& server_id,
                              std::string const& orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
@@ -88,7 +87,6 @@ namespace TAO
     //@}
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management via
      * reference counting.
