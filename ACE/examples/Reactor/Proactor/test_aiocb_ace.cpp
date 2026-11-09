@@ -43,7 +43,6 @@ public:
   /// Doing the testing stuff.
   int do_aio ();
 
-  /// Destructor.
   ~Test_Aio ();
 private:
   /// Output file descriptor.

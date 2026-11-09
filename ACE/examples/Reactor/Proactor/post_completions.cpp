@@ -112,10 +112,8 @@ private:
 class My_Handler : public  ACE_Handler
 {
 public:
-  /// Constructor.
   My_Handler () = default;
 
-  /// Destructor.
   ~My_Handler () override = default;
 };
 
@@ -128,10 +126,8 @@ public:
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   My_Task () = default;
 
-  /// Destructor.
   ~My_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
