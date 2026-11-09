@@ -45,7 +45,6 @@ class TAO_IORInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_IORInfo (TAO_Root_POA *poa);
 
   /**
