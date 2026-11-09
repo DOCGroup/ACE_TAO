@@ -3,8 +3,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
+#include "ace/Malloc_Base.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
 // Ensure that the PI library is linked in when building statically
@@ -13,54 +12,50 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
 #include <string>
 
-// Files which have the IOR
-const ACE_TCHAR *first_ior = 0;
-const ACE_TCHAR *first_key = 0;
-const ACE_TCHAR *second_ior = 0;
-const ACE_TCHAR *second_key = 0;
-const ACE_TCHAR *ior_output_file = 0;
-int shutdown_test = 0;
-int merged_test = 0;
+struct Read_Buffer_Deleter
+{
+  ACE_Allocator *allocator {};
 
-// Objects
-CORBA::Object_var object_primary = 0;
-CORBA::Object_var object_secondary = 0;
-
-// Reference to the IOR manipulator
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
+  void operator() (char *buffer) const
+  {
+    if (buffer != nullptr)
+      this->allocator->free (buffer);
+  }
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+Manager::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:k:b:l:c:sm"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        first_ior = get_opts.opt_arg ();
+        this->options_.first_ior = get_opts.opt_arg ();
         break;
       case 'k':
-    first_key = get_opts.opt_arg ();
-    break;
+        this->options_.first_key = get_opts.opt_arg ();
+        break;
       case 'b':
-        second_ior = get_opts.opt_arg ();
+        this->options_.second_ior = get_opts.opt_arg ();
         break;
       case 'l':
-    second_key = get_opts.opt_arg ();
-    break;
+        this->options_.second_key = get_opts.opt_arg ();
+        break;
       case 'c':
-        ior_output_file = get_opts.opt_arg ();
+        this->options_.ior_output_file = get_opts.opt_arg ();
         break;
       case 's':
-    shutdown_test = 1;
-    break;
+        this->options_.shutdown_test = true;
+        break;
       case 'm':
-    merged_test = 1;
-    break;
+        this->options_.merged_test = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,30 +67,36 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+
+  if (this->options_.first_ior == nullptr
+      || this->options_.first_key == nullptr
+      || this->options_.second_ior == nullptr
+      || this->options_.second_key == nullptr
+      || this->options_.ior_output_file == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "All IOR files, keys, and output file are required\n"), -1);
+
   // Indicates successful parsing of the command line
   return 0;
 }
 
-
 int
-ACE_TMAIN (int argc,
-      ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Manager manager;
 
   try
     {
-      // Initilaize the ORB, POA etc.
+      // Initialize the ORB, POA etc.
       manager.init (argc, argv);
 
       // the command line arguments
-      if (parse_args (argc, argv) == -1)
+      if (manager.parse_args (argc, argv) == -1)
         return -1;
 
       // Merge the different IORS
       manager.make_merged_iors ();
 
-      if (merged_test)
+      if (manager.options ().merged_test)
         {
           // Set properties. This is the most important portion of the
           // test
@@ -107,23 +108,15 @@ ACE_TMAIN (int argc,
 
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
-      Client_i client_imp (manager.orb ());
+      Client_i client_imp (manager.orb (), manager.options ());
       return client_imp.init ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught");
       return -1;
     }
 
-  return 0;
-}
-
-Manager::Manager ()
-  :orb_ (0),
-   merged_set_ (0)
-{
-  //no-op
 }
 
 void
@@ -133,55 +126,60 @@ Manager::init (int argc,
   this->orb_ = CORBA::ORB_init (argc, argv);
 
   // Obtain the RootPOA.
-  CORBA::Object_var obj_var =
+  CORBA::Object_var const obj_var =
     this->orb_->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
-  PortableServer::POA_var root_poa_var =
+  PortableServer::POA_var const root_poa_var =
     PortableServer::POA::_narrow (obj_var.in ());
 
   // Get the POAManager of the RootPOA.
-  PortableServer::POAManager_var poa_manager_var =
+  PortableServer::POAManager_var const poa_manager_var =
     root_poa_var->the_POAManager ();
 
   poa_manager_var->activate ();
+}
+
+Test_Options const &
+Manager::options () const
+{
+  return this->options_;
 }
 
 int
 Manager::make_merged_iors ()
 {
   // First  server
-  object_primary =
-    this->orb_->string_to_object (first_ior);
+  this->object_primary_ =
+    this->orb_->string_to_object (this->options_.first_ior);
 
-  if (merged_test)
+  if (this->options_.merged_test)
     {
       //Second server
-      object_secondary =
-        this->orb_->string_to_object (second_ior);
+      this->object_secondary_ =
+        this->orb_->string_to_object (this->options_.second_ior);
 
       // Get an object reference for the ORBs IORManipultion object!
-      CORBA::Object_var IORM =
+      CORBA::Object_var const iorm_object =
         this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                              0);
+                                                0);
 
-      iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
-
+      this->iorm_ =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
       // Create the list
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
-      iors.length(2);
-      iors [0] = CORBA::Object::_duplicate (object_primary.in ());
-      iors [1] = CORBA::Object::_duplicate (object_secondary.in ());
+      iors.length (2);
+      iors[0] = CORBA::Object::_duplicate (this->object_primary_.in ());
+      iors[1] = CORBA::Object::_duplicate (this->object_secondary_.in ());
 
       // Create a merged set 1;
       merged_set_ =
-        iorm->merge_iors (iors);
+        this->iorm_->merge_iors (iors);
     }
   else
     {
-      merged_set_ = object_primary;
+      merged_set_ = this->object_primary_;
     }
 
   return 0;
@@ -192,55 +190,32 @@ Manager::set_properties ()
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
-  // Property values
-
   // Major and Minor revision numbers
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
   // Domain id
-  const char *id = "iogr_testing";
+  char const * const id = "iogr_testing";
   ft_tag_component.group_domain_id = id;
 
   // Object group id
-  ft_tag_component.object_group_id =
-    (CORBA::ULongLong) 10;
+  ft_tag_component.object_group_id = static_cast<CORBA::ULongLong> (10);
 
   // Version
-  ft_tag_component.object_group_ref_version =
-    (CORBA::ULong) 5;
+  ft_tag_component.object_group_ref_version = static_cast<CORBA::ULong> (5);
 
   // Construct the IOGR Property class
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
-  // Set the property
-      CORBA::Boolean retval = iorm->set_primary (&iogr_prop,
-                                  object_secondary.in (),
-                                  this->merged_set_.in ());
+  CORBA::Boolean const retval = this->iorm_->set_primary (&iogr_prop,
+                                                           this->object_secondary_.in (),
+                                                           this->merged_set_.in ());
 
   // Set the primary
   // See we are setting the second ior as the primary
-  if (retval != 0)
+  if (retval)
     {
-      retval = iorm->set_property (&iogr_prop,
-                           this->merged_set_.in ());
-    }
-
-  return 0;
-}
-
-int
-Manager::run ()
-{
-  try
-    {
-      this->orb_->run ();
-    }
-  catch (const CORBA::Exception&)
-    {
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Error in run\n"),
-                        -1);
+      this->iorm_->set_property (&iogr_prop, this->merged_set_.in ());
     }
 
   return 0;
@@ -249,37 +224,40 @@ Manager::run ()
 int
 Manager::write_to_file ()
 {
-  //
-  CORBA::String_var iorref =
+  CORBA::String_var const iorref =
     this->orb_->object_to_string (this->merged_set_.in ());
 
-  if (ior_output_file != 0)
+  if (this->options_.ior_output_file != nullptr)
     {
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+        ACE_OS::fopen (this->options_.ior_output_file, "w"), ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ACE_TEXT_ALWAYS_CHAR (this->options_.ior_output_file)),
                           1);
-      ACE_OS::fprintf (output_file, "%s", iorref.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", iorref.in ());
     }
 
   return 0;
 }
 
 CORBA::ORB_ptr
-Manager::orb ()
+Manager::orb () const
 {
   return this->orb_.in ();
 }
 
-Client_i::Client_i (CORBA::ORB_ptr orb)
-  :orb_ (CORBA::ORB::_duplicate (orb))
+Client_i::Client_i (CORBA::ORB_ptr orb, Test_Options const &options)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
-int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
+int
+run_remote_test (Simple_Server_ptr server,
+                 Test_Options const &options,
+                 ACE_TCHAR const *execute_key)
 {
   std::string expected;
   if (execute_key)
@@ -287,7 +265,7 @@ int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
       expected = "remote_call() completed by ";
       expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
     }
-  else if (shutdown_test && !merged_test)
+  else if (options.shutdown_test && !options.merged_test)
     {
       expected = "CORBA::COMM_FAILURE";
     }
@@ -301,38 +279,41 @@ int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
     {
       // Make a remote call
       CORBA::String_var s =
-          server->remote_call ();
+        server->remote_call ();
 
       received = s.in () == nullptr ? "(null)" : s.in ();
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       received = "CORBA::TRANSIENT";
     }
-  catch (const CORBA::COMM_FAILURE&)
+  catch (CORBA::COMM_FAILURE const &)
     {
       received = "CORBA::COMM_FAILURE";
     }
 
   ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT("CLIENT> REMOTE   expected: '%C'"),
+          ACE_TEXT ("CLIENT> REMOTE   expected: '%C'"),
                expected.c_str ()));
 
   if (expected != received)
-  {
+    {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n")
-              ACE_TEXT ("CLIENT>          received: '%C'\n"),
-              received.c_str ()));
+                  ACE_TEXT ("... FAIL\n")
+                  ACE_TEXT ("CLIENT>          received: '%C'\n"),
+                  received.c_str ()));
       return -1;
-  }
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("... OK\n")));
   return 0;
 }
 
-int run_abort_test (Simple_Server_ptr server,
-            const ACE_TCHAR* request_key, const ACE_TCHAR* execute_key)
+int
+run_abort_test (Simple_Server_ptr server,
+                Test_Options const &options,
+                ACE_TCHAR const *request_key,
+                ACE_TCHAR const *execute_key)
 {
   std::string expected;
   if (execute_key)
@@ -341,7 +322,7 @@ int run_abort_test (Simple_Server_ptr server,
       expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
       expected += ", still_alive=1";
     }
-  else if (merged_test)
+  else if (options.merged_test)
     {
       expected = "CORBA::TRANSIENT";
     }
@@ -357,18 +338,18 @@ int run_abort_test (Simple_Server_ptr server,
 
       received = s.in () == nullptr ? "(null)" : s.in ();
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       received = "CORBA::TRANSIENT";
     }
-  catch (const CORBA::COMM_FAILURE&)
+  catch (CORBA::COMM_FAILURE const &)
     {
       received = "CORBA::COMM_FAILURE";
     }
 
   ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT("CLIENT> ABORT    expected: '%C'"),
-               expected.c_str ()));
+              ACE_TEXT ("CLIENT> ABORT    expected: '%C'"),
+              expected.c_str ()));
   if (expected != received)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -382,8 +363,10 @@ int run_abort_test (Simple_Server_ptr server,
   return 0;
 }
 
-int run_shutdown_test (Simple_Server_ptr server,
-            const ACE_TCHAR* request_key, const ACE_TCHAR* execute_key)
+int
+run_shutdown_test (Simple_Server_ptr server,
+                   ACE_TCHAR const *request_key,
+                   ACE_TCHAR const *execute_key)
 {
   std::string expected;
   if (execute_key)
@@ -404,14 +387,14 @@ int run_shutdown_test (Simple_Server_ptr server,
 
       received = s.in () == nullptr ? "(null)" : s.in ();
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       received = "CORBA::TRANSIENT";
     }
 
   ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT("CLIENT> SHUTDOWN expected: '%C'"),
-               expected.c_str ()));
+              ACE_TEXT ("CLIENT> SHUTDOWN expected: '%C'"),
+              expected.c_str ()));
   if (expected != received)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -425,33 +408,34 @@ int run_shutdown_test (Simple_Server_ptr server,
   return 0;
 }
 
-int run_full_abort_test (Simple_Server_ptr server)
+int
+run_full_abort_test (Simple_Server_ptr server, Test_Options const &options)
 {
-  int rv = run_remote_test (server, second_key);
+  int rv = run_remote_test (server, options, options.second_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_abort_test (server, second_key, first_key);
+  rv = run_abort_test (server, options, options.second_key, options.first_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_remote_test (server, first_key);
+  rv = run_remote_test (server, options, options.first_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_abort_test (server, first_key, 0);
+  rv = run_abort_test (server, options, options.first_key, nullptr);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_remote_test (server, 0);
+  rv = run_remote_test (server, options, nullptr);
   if (rv)
     {
       return rv;
@@ -460,33 +444,34 @@ int run_full_abort_test (Simple_Server_ptr server)
   return 0;
 }
 
-int run_full_shutdown_test (Simple_Server_ptr server)
+int
+run_full_shutdown_test (Simple_Server_ptr server, Test_Options const &options)
 {
-  int rv = run_remote_test (server, second_key);
+  int rv = run_remote_test (server, options, options.second_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_shutdown_test (server, second_key, second_key);
+  rv = run_shutdown_test (server, options.second_key, options.second_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_remote_test (server, first_key);
+  rv = run_remote_test (server, options, options.first_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_shutdown_test (server, first_key, first_key);
+  rv = run_shutdown_test (server, options.first_key, options.first_key);
   if (rv)
     {
       return rv;
     }
 
-  rv = run_remote_test (server, 0);
+  rv = run_remote_test (server, options, nullptr);
   if (rv)
     {
       return rv;
@@ -498,70 +483,52 @@ int run_full_shutdown_test (Simple_Server_ptr server)
 int
 Client_i::init ()
 {
-  // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (ior_output_file,
-                                      0);
+  FILE * const ior_file = ACE_OS::fopen (this->options_.ior_output_file, "r");
+  if (ior_file == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unable to open %s for reading\n"),
+                       ACE_TEXT_ALWAYS_CHAR (this->options_.ior_output_file)),
+                      -1);
 
-  if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("Unable to open %s for writing (%p)\n"),
-                ACE_TEXT("open"),
-                ior_output_file));
+  ACE_Read_Buffer ior_buffer (ior_file, true);
+  std::unique_ptr<char, Read_Buffer_Deleter> const data (
+    ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  if (!data)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to read IOR file\n"), -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-
-  char *data = ior_buffer.read ();
-
-  if (data == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Unable to read ior: %p\n"));
-
-
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
-  this->orb_ = CORBA::ORB_init (argc, argv);
-
-  CORBA::Object_var object =
-    this->orb_->string_to_object (data);
+  CORBA::Object_var const object = this->orb_->string_to_object (data.get ());
 
   // Combined IOR stuff
-  Simple_Server_var server =
+  Simple_Server_var const server =
     Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
     {
-      ACE_ERROR ((LM_ERROR,
-                  "Object reference <%C> is nil\n",
-                  data));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Object reference <%C> is nil\n",
+                         data.get ()),
+                        -1);
     }
 
-  int rv;
-  if (!merged_test)
+  if (!this->options_.merged_test)
     {
-      if (shutdown_test)
+      int const rv = this->options_.shutdown_test
+        ? run_shutdown_test (server.in (), this->options_.first_key,
+                             this->options_.first_key)
+        : run_abort_test (server.in (), this->options_, this->options_.first_key, nullptr);
+
+      if (rv != 0)
         {
-          rv = run_shutdown_test (server.in(), first_key, first_key);
-        }
-      else
-        {
-          rv = run_abort_test (server.in(), first_key, 0);
+          return rv;
         }
 
-      if (!rv)
-        {
-          rv = run_remote_test (server.in(), 0);
-        }
-    }
-  else if (shutdown_test)
-    {
-      rv = run_full_shutdown_test (server.in ());
-    }
-  else
-    {
-      rv = run_full_abort_test (server.in ());
+      return run_remote_test (server.in (), this->options_, nullptr);
     }
 
-  ior_buffer.alloc ()->free (data);
-  ACE_OS::close (f_handle);
-  return rv;
+  if (this->options_.shutdown_test)
+    {
+      return run_full_shutdown_test (server.in (), this->options_);
+    }
+
+  return run_full_abort_test (server.in (), this->options_);
 }

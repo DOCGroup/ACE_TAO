@@ -3,7 +3,7 @@
 #define BUG_2247_REGRESSION_CLIENT_I_H
 
 #include /**/ "ace/pre.h"
-#include "tao/ORB.h"
+#include "Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -12,7 +12,7 @@
 class Client_i
 {
 public:
-  Client_i (CORBA::ORB_ptr orb);
+  Client_i (CORBA::ORB_ptr orb, Test_Options const &options);
   // Our constructor
 
   Client_i (Client_i const &) = delete;
@@ -24,7 +24,8 @@ public:
   // Initialize the ORB etc.
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
+  Test_Options options_ {};
 };
 
 #include /**/ "ace/post.h"

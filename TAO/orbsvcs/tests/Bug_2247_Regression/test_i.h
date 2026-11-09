@@ -15,7 +15,7 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb, char const * key);
   // ctor
 
-  Simple_Server_i ();
+  Simple_Server_i () = default;
   // ctor
 
   Simple_Server_i (Simple_Server_i const &) = delete;
@@ -31,8 +31,8 @@ public:
   char * abort (char const * key) override;
 
 private:
-  CORBA::ORB_var orb_;
-  CORBA::String_var _key;
+  CORBA::ORB_var orb_ {};
+  CORBA::String_var _key {};
 };
 
 #endif /* BUG_2247_REGRESSION_TEST_I_H */
