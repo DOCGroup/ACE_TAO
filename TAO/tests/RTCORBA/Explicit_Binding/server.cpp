@@ -22,10 +22,10 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method ();
+  void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
