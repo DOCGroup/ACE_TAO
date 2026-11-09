@@ -10,12 +10,6 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id
 {
 }
 
-char *
-Hello::get_string ()
-{
-  return CORBA::string_dup ("Hello there!");
-}
-
 void
 Hello::shutdown ()
 {

@@ -2,25 +2,16 @@
 #include "ServerRequest_Interceptor2.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
-#include "tao/ORB_Constants.h"
-#include "tao/AnyTypeCode/DynamicC.h"
-#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CDR.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "Hello.h"
 #include "ace/OS_NS_sys_time.h"
 
-TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 ()
-  : orb_ (nullptr)
-  , client_id_ (0)
-{
-}
+#include <memory>
+#include <cstring>
 
-TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 () = default;
-
+using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
 char *
 TAO249_ServerRequest_Interceptor2::name ()
@@ -43,149 +34,150 @@ void
 TAO249_ServerRequest_Interceptor2::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "drop_down_dead"))
-  {
-    // bail if not the op we are interested in -
-    // avoid excess spurious error clutter when client calls ::shutdown
+  if (std::strcmp (op.in (), "drop_down_dead") != 0)
     return;
-  }
 
   try
-  {
-    IOP::ServiceContext_var sc =
-      ri->get_request_service_context (IOP::FT_REQUEST);
+    {
+      IOP::ServiceContext_var const sc =
+        ri->get_request_service_context (IOP::FT_REQUEST);
 
-    TAO_InputCDR cdr (reinterpret_cast <const char*>
-                                       (sc->context_data.get_buffer ()
-                                        ),
-                                       sc->context_data.length ());
+      TAO_InputCDR cdr (reinterpret_cast<char const *> (
+                          sc->context_data.get_buffer ()),
+                        sc->context_data.length ());
 
-    CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
 
-    if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-      {
+      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
-      }
 
-    cdr.reset_byte_order (static_cast <int>(byte_order));
+      cdr.reset_byte_order (static_cast<int> (byte_order));
 
-    FT::FTRequestServiceContext ftrsc;
+      FT::FTRequestServiceContext ftrsc;
 
-    if ((cdr >> ftrsc) == 0)
-      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+      if ((cdr >> ftrsc) == 0)
+        throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
-    FILE* last_exp_time_file = ACE_OS::fopen ("last_expiration_time", "r+");
-    TimeBase::TimeT last_exp_time = 0;
+      File_Ptr last_exp_time_file (
+        ACE_OS::fopen ("last_expiration_time", "r+"), ACE_OS::fclose);
+      TimeBase::TimeT last_exp_time {};
 
-    if (!last_exp_time_file)
-      {
-        // file does not exist ... we're the first server
-        // create new file for the expiration time
-        last_exp_time_file = ACE_OS::fopen ("last_expiration_time", "w+");
-        last_exp_time = ftrsc.expiration_time;
-      }
-    else
-      {
-        // We're a subsequent server... read in the previous server's expiration time
-        ACE_OS::fread (&last_exp_time,
-                       1,
-                       sizeof (TimeBase::TimeT),
-                       last_exp_time_file);
-        ACE_OS::sleep (1);
-      }
+      if (!last_exp_time_file)
+        {
+          // The first server creates the file containing the expiration time.
+          last_exp_time_file.reset (ACE_OS::fopen ("last_expiration_time", "w+"));
+          if (!last_exp_time_file)
+            throw CORBA::NO_RESOURCES ();
+          last_exp_time = ftrsc.expiration_time;
+        }
+      else
+        {
+          // Subsequent servers read the previous server's expiration time.
+          ACE_OS::fread (&last_exp_time,
+                         1,
+                         sizeof (TimeBase::TimeT),
+                         last_exp_time_file.get ());
+          ACE_OS::sleep (1);
+        }
 
-    if (last_exp_time != ftrsc.expiration_time)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Test Failed - REGRESSION !!! Different expiration times used on consecutive retries of the same op!!\n"));
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Previous expiration: %Q\n"), last_exp_time));
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Current expiration : %Q\n"), ftrsc.expiration_time));
-        return;
-      }
+      if (last_exp_time != ftrsc.expiration_time)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Test Failed - REGRESSION !!! Different expiration times used on consecutive "
+                      "retries of the same op!!\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Previous expiration: %Q\n"), last_exp_time));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Current expiration : %Q\n"), ftrsc.expiration_time));
+          return;
+        }
 
+      // A value below this UTC offset indicates that POSIX time was used.
+      TimeBase::TimeT const the_seventies = ACE_UINT64_LITERAL (0x1B21DD213814000);
 
-    // This is the offset from UTC to posix - a value less than than this will
-    // indicate posix is (mistakenly) being used
-    TimeBase::TimeT the_seventies = ACE_UINT64_LITERAL (0x1B21DD213814000);
+      // @warning This test is fragile and will need updating in 2358 A.D.
+      if (last_exp_time <= the_seventies)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "Test Failed - REGRESSION !!! Expiration time is before 1970 A.D.\n"));
+          ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
+          ACE_DEBUG ((LM_DEBUG, "1970 A.D.      : %Q\n", the_seventies));
+          return;
+        }
+      else if (last_exp_time > the_seventies * 2)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "Test Failed - REGRESSION !!! Expiration time is after 2358 A.D.\n"));
+          ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
+          ACE_DEBUG ((LM_DEBUG, "2358 A.D.      : %Q\n", the_seventies * 2));
+          return;
+        }
 
-    // @warning - this test is fragile. It will break in 2358 A.D. :-)
-    if (last_exp_time <= the_seventies)
-      {
-        ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Expiration time is in wrong format - it is before 1970 A.D. !!\n"));
-        ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
-        ACE_DEBUG ((LM_DEBUG, "1970 A.D.      : %Q\n", the_seventies));
-        return;
-      }
-    else if ( last_exp_time > (the_seventies * 2))
-      {
-        ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Expiration time is garbage - it is after 2358 A.D. !!\n"));
-        ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
-        ACE_DEBUG ((LM_DEBUG, "2358 A.D.      : %Q\n", (the_seventies * 2)));
-        return;
-      }
+      TimeBase::TimeT const now = this->get_now ();
 
-    TimeBase::TimeT now = get_now ();
+      if (now > last_exp_time)
+        {
+          // No retries should be received after the expiration time.
+          File_Ptr no_more_retries (
+            ACE_OS::fopen ("no_more_retries", "r+"), ACE_OS::fclose);
+          if (no_more_retries)
+            {
+              TimeBase::TimeT last_expired_attempt {};
+              ACE_OS::fread (&last_expired_attempt,
+                             1,
+                             sizeof (TimeBase::TimeT),
+                             no_more_retries.get ());
 
-    if (now > last_exp_time)
-      {
-        // We have passed the exp time... there should be no more retries received after this point...
-        FILE* no_more_retries = ACE_OS::fopen ("no_more_retries", "r+");
-        if (no_more_retries)
-          {
-            TimeBase::TimeT last_expired_attempt = 0;
-            ACE_OS::fread (&last_expired_attempt, 1, sizeof (TimeBase::TimeT), no_more_retries);
-            ACE_OS::fclose (no_more_retries);
+              ACE_DEBUG ((LM_ERROR,
+                          "Test Failed - REGRESSION !!! Client ORB is still retrying after "
+                          "the expiration time!!\n"));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), last_exp_time));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Previous attempt : %Q\n"), last_expired_attempt));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
+              return;
+            }
+          else
+            {
+              no_more_retries.reset (ACE_OS::fopen ("no_more_retries", "w+"));
+              if (!no_more_retries)
+                throw CORBA::NO_RESOURCES ();
 
-            // There has already been an attempt after the last server passed the expiration time
-            ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Client ORB is still retrying after the expiration time!!\n"));
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), last_exp_time));
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Previous attempt : %Q\n"), last_expired_attempt));
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
-            return;
+              ACE_OS::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries.get ());
+              ACE_OS::fflush (no_more_retries.get ());
+            }
           }
-        else
-          {
-            // Tell the next server we've passed the point of no return
-            no_more_retries = ACE_OS::fopen ("no_more_retries", "w+");
-            ACE_OS::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries);
-            ACE_OS::fflush (no_more_retries);
-            ACE_OS::fclose (no_more_retries);
-          }
-      }
 
-    // Everthing is fine so far. Write out the expiration time for the next server to check
-    ACE_OS::fwrite (&ftrsc.expiration_time, 1, sizeof (TimeBase::TimeT), last_exp_time_file);
-    ACE_OS::fflush (last_exp_time_file);
-    ACE_OS::fclose (last_exp_time_file);
+      // Write the expiration time for the next server to check.
+      ACE_OS::fwrite (&ftrsc.expiration_time,
+                      1,
+                      sizeof (TimeBase::TimeT),
+                      last_exp_time_file.get ());
+      ACE_OS::fflush (last_exp_time_file.get ());
+      last_exp_time_file.reset ();
 
-    // Goodbye cruel world !!
-    ACE_OS::abort ();
-  }
-catch (const CORBA::Exception& ex)
-  {
-    ACE_DEBUG ((LM_ERROR, "Unexpected (non regression problem) error - test failed\n"));
-    ex._tao_print_exception (
-      "Exception in TAO249_ServerRequest_Interceptor2::receive_request\n");
-    throw;
-  }
-
+      ACE_OS::abort ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ACE_DEBUG ((LM_ERROR, "Unexpected (non regression problem) error - test failed\n"));
+      ex._tao_print_exception (
+        "Exception in TAO249_ServerRequest_Interceptor2::receive_request\n");
+      throw;
+    }
 }
 
 TimeBase::TimeT
 TAO249_ServerRequest_Interceptor2::get_now ()
 {
   // 1582...
-  const TimeBase::TimeT timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);
+  TimeBase::TimeT const time_offset = ACE_UINT64_LITERAL (0x1B21DD213814000);
 
   // Now in posix
-  ACE_Time_Value time_value = ACE_OS::gettimeofday ();
+  ACE_Time_Value const time_value = ACE_OS::gettimeofday ();
 
-  TimeBase::TimeT sec_part  = time_value.sec ();
-  sec_part = sec_part  * 10000000;
-  TimeBase::TimeT usec_part = time_value.usec ();
-  usec_part = usec_part * 10;
-  return (sec_part + usec_part + timeOffset);
+  TimeBase::TimeT const sec_part = time_value.sec () * 10000000;
+  TimeBase::TimeT const usec_part = time_value.usec () * 10;
+  return sec_part + usec_part + time_offset;
 }
 
 void
