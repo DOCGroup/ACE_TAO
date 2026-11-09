@@ -4,9 +4,10 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <string>
 
 BasicLog_Test::~BasicLog_Test ()
 {
@@ -259,15 +260,12 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
     {
         DsLogAdmin::Anys record;
         record.length(1);
-        ACE_CString str ("For the test of log "
-                         "full action, writing test record, ");
-        char number[32] {};
-        ACE_OS::sprintf (number, "%d.", i);
-        str += number;
+        std::string const str = "For the test of log "
+                                "full action, writing test record, " + std::to_string (i) + ".";
         l += str.length ();
         // record owns internal os string
         ++i;
-        CORBA::String_var t(str.c_str ());
+        CORBA::String_var t (CORBA::string_dup (str.c_str ()));
         record[0] <<= t.in ();
         basicLog_->write_records(record);
         if (l == 0)
@@ -280,15 +278,12 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
     {
         DsLogAdmin::Anys record;
         record.length(1);
-        ACE_CString str ("For the test of log "
-                         "full action, writing test record, ");
-        char number[32] {};
-        ACE_OS::sprintf (number, "%d.", i);
-        str += number;
+        std::string const str = "For the test of log "
+                                "full action, writing test record, " + std::to_string (i) + ".";
         l += str.length ();
         // record owns internal os string
         ++i;
-        CORBA::String_var t(str.c_str ());
+        CORBA::String_var t (CORBA::string_dup (str.c_str ()));
         record[0] <<= t.in ();
         basicLog_->write_records(record);
       }
@@ -579,11 +574,11 @@ BasicLog_Test::test_week_mask ()
 
   masks[0].intervals.length(1);
 
-  masks[0].intervals[0].start.hour = (CORBA::Short) 13;
+  masks[0].intervals[0].start.hour = static_cast<CORBA::Short> (13);
 
-  masks[0].intervals[0].start.minute = (CORBA::Short) 30;
-  masks[0].intervals[0].stop.hour = (CORBA::Short) 14;
-  masks[0].intervals[0].stop.minute = (CORBA::Short) 30;
+  masks[0].intervals[0].start.minute = static_cast<CORBA::Short> (30);
+  masks[0].intervals[0].stop.hour = static_cast<CORBA::Short> (14);
+  masks[0].intervals[0].stop.minute = static_cast<CORBA::Short> (30);
 
   this->basicLog_->set_week_mask (masks);
 

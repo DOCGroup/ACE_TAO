@@ -37,7 +37,7 @@ class BasicLog_Test
   BasicLog_Test &operator= (BasicLog_Test const &) = delete;
   BasicLog_Test &operator= (BasicLog_Test &&) = delete;
 
-  int init(int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   int
   test_CreateLog(CORBA::ULongLong maxSize = MAX_LOG_SIZE);
@@ -125,16 +125,16 @@ private:
     destroy_log();
   // destroys the is log is it exists
 
-  DsLogAdmin::BasicLog_var basicLog_;
+  DsLogAdmin::BasicLog_var basicLog_ {};
   // the log used for all of the test
 
-  DsLogAdmin::BasicLogFactory_var factory_;
+  DsLogAdmin::BasicLogFactory_var factory_ {};
   // pointer to logging factory
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // pointer to the ORB
 
-  CosNaming::NamingContext_var naming_context_;
+  CosNaming::NamingContext_var naming_context_ {};
   // naming context
 
   static constexpr char basic_log_factory_name_[] = "BasicLogFactory";
