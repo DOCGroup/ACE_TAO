@@ -36,7 +36,6 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Translator
   : public ACE_WChar_Codeset_Translator
 {
 public:
-  /// Constructor
   /// @param forceBE: true forces all wchar, warray, and wstrings to big-endian byte order
   explicit TAO_UTF16_BOM_Translator (bool forceBE);
 

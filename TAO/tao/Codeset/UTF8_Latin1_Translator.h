@@ -45,7 +45,6 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Translator
   : public ACE_Char_Codeset_Translator
 {
 public:
-  /// constructor
   TAO_UTF8_Latin1_Translator () = default;
 
   /// Virtual destruction
