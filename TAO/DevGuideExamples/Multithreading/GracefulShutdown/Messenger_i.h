@@ -19,7 +19,6 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   explicit Messenger_i (CORBA::ORB_ptr orb);
 
   ~Messenger_i () override = default;
