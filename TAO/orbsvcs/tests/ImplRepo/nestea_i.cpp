@@ -1,32 +1,21 @@
 #include "nestea_i.h"
 #include "tao/debug.h"
-#include "ace/ACE.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-const size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 is 8589934591 + NUL is 11 characters
+constexpr size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 decimal value plus NUL.
 
-
-Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename)
-: cans_ (0)
+Nestea_i::Nestea_i (CORBA::ORB_ptr orb, ACE_TCHAR const *filename)
+  : data_filename_ (filename)
 {
-  orb_ = CORBA::ORB::_duplicate(orb);
-
-  this->data_filename_ = ACE::strnew (filename);
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // @@ This should probably be called from somewhere else
   this->load_data ();
 }
-
-
-Nestea_i::~Nestea_i ()
-{
-  delete [] this->data_filename_;
-}
-
 
 // Add <cans> number of cans to the bookshelf.
 
@@ -40,7 +29,6 @@ Nestea_i::drink (CORBA::Long cans)
 
   this->save_data ();
 }
-
 
 // Removes <cans> number of cans from the bookshelf.
 
@@ -57,7 +45,6 @@ Nestea_i::crush (CORBA::Long cans)
 
   this->save_data ();
 }
-
 
 // Returns the number of cans in the bookshelf.
 
@@ -96,7 +83,7 @@ Nestea_i::shutdown ()
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::shutdown\n"));
 
-  orb_->shutdown(0);
+  this->orb_->shutdown (false);
 }
 
 // Saves bookshelf data to a file.
@@ -108,22 +95,21 @@ Nestea_i::save_data ()
   ACE_FILE_Connector connector;
 
   if (connector.connect (file,
-                         ACE_FILE_Addr (this->data_filename_),
+                         ACE_FILE_Addr (this->data_filename_.c_str ()),
                          0,
                          ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n to %s",
                        "connect",
-                       this->data_filename_),
+                       this->data_filename_.c_str ()),
                       -1);
 
   char str[MAX_UINT32_STR_LEN];
 
-  ACE_OS::sprintf (str, "%d", this->cans_);
+  ACE_OS::snprintf (str, sizeof str, "%u", static_cast<unsigned int> (this->cans_));
 
   return file.send_n (str, ACE_OS::strlen (str) + 1);
 }
-
 
 // Loads bookshelf data from a file.
 
@@ -134,22 +120,24 @@ Nestea_i::load_data ()
   ACE_FILE_Connector connector;
 
   if (connector.connect (file,
-                         ACE_FILE_Addr (this->data_filename_),
+                         ACE_FILE_Addr (this->data_filename_.c_str ()),
                          0,
                          ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n to %s",
                        "connect",
-                       this->data_filename_),
+                       this->data_filename_.c_str ()),
                       -1);
 
-  char str[MAX_UINT32_STR_LEN];
+  char str[MAX_UINT32_STR_LEN + 1] {};
 
-  int len = file.recv (str, MAX_UINT32_STR_LEN);
-  str[len] = 0;
+  int const len = file.recv (str, MAX_UINT32_STR_LEN);
 
   if (len > 0)
-    this->cans_ = ACE_OS::atoi (str);
+    {
+      str[len] = '\0';
+      this->cans_ = static_cast<ACE_UINT32> (ACE_OS::atoi (str));
+    }
   else
     this->cans_ = 0;
   return 0;

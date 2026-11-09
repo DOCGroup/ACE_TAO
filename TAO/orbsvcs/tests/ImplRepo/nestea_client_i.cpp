@@ -1,20 +1,6 @@
 #include "nestea_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
-#include "ace/ACE.h"
-
-
-// Constructor.
-Nestea_Client_i::Nestea_Client_i ()
-  : argc_ (0)
-  , argv_ (0)
-  , server_key_ (ACE::strnew (ACE_TEXT("key0")))
-  , server_ (Nestea_Bookshelf::_nil ())
-  , shutdown_server_(false)
-{
-}
-
 
 // Parses the command line arguments and returns an error status.
 
@@ -22,7 +8,7 @@ int
 Nestea_Client_i::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dsn:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -31,8 +17,7 @@ Nestea_Client_i::parse_args ()
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        delete [] this->server_key_;
-        this->server_key_ = ACE::strnew (get_opts.opt_arg ());
+        this->server_key_ = get_opts.opt_arg ();
         break;
       case 's': // shutdown server before exiting
         this->shutdown_server_ = true;
@@ -77,20 +62,11 @@ Nestea_Client_i::run ()
                         this->server_->bookshelf_size (),
                         praise.in ()));
 
-  if (shutdown_server_)
-    server_->shutdown();
+  if (this->shutdown_server_)
+    this->server_->shutdown ();
 
   return 0;
 }
-
-Nestea_Client_i::~Nestea_Client_i ()
-{
-  // Free resources
-  CORBA::release (this->server_);
-
-  delete [] this->server_key_;
-}
-
 
 int
 Nestea_Client_i::init (int argc, ACE_TCHAR **argv)
@@ -109,22 +85,16 @@ Nestea_Client_i::init (int argc, ACE_TCHAR **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->server_key_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: no server key specified\n",
-                           this->argv_[0]),
-                          -1);
-
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_);
+        this->orb_->string_to_object (this->server_key_.c_str ());
 
-      this->server_ = Nestea_Bookshelf::_narrow (server_object.in());
+      this->server_ = Nestea_Bookshelf::_narrow (server_object.in ());
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-          "Error: invalid server key <%s>\n", this->server_key_), -1);
+          "Error: invalid server key <%s>\n", this->server_key_.c_str ()), -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Nestea_Client_i::init");
       return -1;

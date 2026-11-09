@@ -11,11 +11,11 @@
  */
 //=============================================================================
 
-
 #if !defined (NESTEA_CLIENT_I_H)
 #define NESTEA_CLIENT_I_H
 
 #include "NesteaC.h"
+#include "ace/SString.h"
 
 /**
  * @class Nestea_Client_i
@@ -29,8 +29,13 @@ class Nestea_Client_i
 {
 public:
   // = Constructor and destructor.
-  Nestea_Client_i ();
-  ~Nestea_Client_i ();
+  Nestea_Client_i () = default;
+  ~Nestea_Client_i () = default;
+
+  Nestea_Client_i (Nestea_Client_i const &) = delete;
+  Nestea_Client_i &operator= (Nestea_Client_i const &) = delete;
+  Nestea_Client_i (Nestea_Client_i &&) = delete;
+  Nestea_Client_i &operator= (Nestea_Client_i &&) = delete;
 
   /// Execute client example code.
   int run ();
@@ -43,21 +48,21 @@ private:
   int parse_args ();
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// Key of the obj ref of the server.
-  ACE_TCHAR *server_key_;
+  ACE_TString server_key_ {ACE_TEXT ("key0")};
 
   /// Server object ptr.
-  Nestea_Bookshelf_ptr server_;
+  Nestea_Bookshelf_var server_ {};
 
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  bool shutdown_server_;
+  bool shutdown_server_ {};
 };
 
 #endif /* NESTEA_CLIENT_I_H */

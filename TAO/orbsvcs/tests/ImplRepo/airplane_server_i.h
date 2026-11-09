@@ -16,6 +16,10 @@
 
 #include "airplane_i.h"
 
+#include "ace/OS_NS_stdio.h"
+
+#include <memory>
+
 /**
  * @class Airplane_Server_i
  *
@@ -28,10 +32,15 @@ class Airplane_Server_i
 {
 public:
   /// Default constructor
-  Airplane_Server_i ();
+  Airplane_Server_i () = default;
 
   /// Destructor
-  ~Airplane_Server_i ();
+  ~Airplane_Server_i () = default;
+
+  Airplane_Server_i (Airplane_Server_i const &) = delete;
+  Airplane_Server_i &operator= (Airplane_Server_i const &) = delete;
+  Airplane_Server_i (Airplane_Server_i &&) = delete;
+  Airplane_Server_i &operator= (Airplane_Server_i &&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting
   int init (int argc, ACE_TCHAR **argv);
@@ -44,33 +53,34 @@ private:
   int parse_args ();
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// The ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var root_poa_ {};
 
   /// The POA for the Airplane Server.
-  PortableServer::POA_var airplane_poa_;
+  PortableServer::POA_var airplane_poa_ {};
 
   /// The POA manager.
-  PortableServer::POAManager_var poa_manager_;
+  PortableServer::POAManager_var poa_manager_ {};
 
   /// The Paper Airplane Server Implementation.
-  Airplane_i *server_impl_;
+  PortableServer::ServantBase_var server_impl_ {};
 
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// File where the pid of the server is stored.
-  FILE *pid_output_file_;
+  File_Handle pid_output_file_ {nullptr, ACE_OS::fclose};
 
   /// The server name
-  ACE_CString server_name_;
+  ACE_CString server_name_ {"airplane_server"};
 };
 
 #endif /* AIRPLANE_SERVER_I_H */

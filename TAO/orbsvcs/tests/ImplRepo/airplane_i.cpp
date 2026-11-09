@@ -7,17 +7,8 @@
 Airplane_i::Airplane_i ()
 {
   // Seed the random number generator
-  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0L)));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (nullptr)));
 }
-
-
-// Destructor
-
-Airplane_i::~Airplane_i ()
-{
-  // Nothing
-}
-
 
 // Returns a random plane and page number
 
@@ -79,5 +70,5 @@ Airplane_i::get_plane ()
       return CORBA::string_dup ("Tumbler, page 138");
     }
 
-  return 0;
+  return nullptr;
 }

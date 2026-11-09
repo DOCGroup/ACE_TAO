@@ -10,18 +10,11 @@
  */
 //=============================================================================
 
-
 #if !defined (NESTEA_I_H)
 #define NESTEA_I_H
 
 #include "NesteaS.h"
-
-// Forward declarations.
-class Nestea_i;
-
-// Typedefs.
-typedef Nestea_i *Nestea_i_ptr;
-typedef Nestea_i_ptr Nestea_i_ref;
+#include "ace/SString.h"
 
 /**
  * @class Nestea_i:
@@ -36,24 +29,29 @@ class Nestea_i: public POA_Nestea_Bookshelf
 {
 public:
   /// Constructor
-  Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename = ACE_TEXT("nestea.dat"));
+  explicit Nestea_i (CORBA::ORB_ptr orb, ACE_TCHAR const *filename = ACE_TEXT ("nestea.dat"));
 
   /// Destructor
-  virtual ~Nestea_i ();
+  ~Nestea_i () override = default;
+
+  Nestea_i (Nestea_i const &) = delete;
+  Nestea_i &operator= (Nestea_i const &) = delete;
+  Nestea_i (Nestea_i &&) = delete;
+  Nestea_i &operator= (Nestea_i &&) = delete;
 
   /// Add <cans> number of cans to the bookshelf.
-  virtual void drink (CORBA::Long cans);
+  void drink (CORBA::Long cans) override;
 
   /// Removes <cans> number of cans from the bookshelf.
-  virtual void crush (CORBA::Long cans);
+  void crush (CORBA::Long cans) override;
 
   /// Returns the number of cans in the bookshelf.
-  virtual CORBA::Long bookshelf_size ();
+  CORBA::Long bookshelf_size () override;
 
   /// Returns comments about your collection.
-  virtual char *get_praise ();
+  char *get_praise () override;
 
-  virtual void shutdown();
+  void shutdown () override;
 private:
   /// Saves bookshelf data to a file.
   int save_data ();
@@ -62,12 +60,12 @@ private:
   int load_data ();
 
   /// The name of the file to store the data in.
-  ACE_TCHAR *data_filename_;
+  ACE_TString data_filename_ {};
 
   /// Number of cans in the bookshelf.
-  ACE_UINT32 cans_;
+  ACE_UINT32 cans_ {};
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* NESTEA_I_H */

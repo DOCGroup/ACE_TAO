@@ -6,34 +6,15 @@
 #include "tao/PortableServer/Root_POA.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
-
-// The server name of the Aiprlane Server
-const char SERVER_NAME[] = "airplane_server";
-
-Airplane_Server_i::Airplane_Server_i ()
-  : argc_ (0),
-    argv_ (0),
-    orb_ (),
-    root_poa_ (),
-    airplane_poa_ (),
-    poa_manager_ (),
-    server_impl_ (0),
-    ior_output_file_ (0),
-    pid_output_file_ (0),
-    server_name_(SERVER_NAME)
-{
-  // Nothing
-}
 
 int
 Airplane_Server_i::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:s:p:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -42,15 +23,15 @@ Airplane_Server_i::parse_args ()
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
         break;
       case 'p':  // output the pid to a file.
-        this->pid_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->pid_output_file_ == 0)
+        this->pid_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->pid_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -67,7 +48,7 @@ Airplane_Server_i::parse_args ()
                            " [-p <pid_output_file>]"
                            " [-s <the server name>]"
                            "\n",
-                           argv_ [0]),
+                           this->argv_ [0]),
                           1);
       }
 
@@ -88,7 +69,7 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       this->argv_ = argv;
 
       // Now check the arguments for our options
-      int retval = this->parse_args ();
+      int const retval = this->parse_args ();
 
       if (retval != 0)
         return retval;
@@ -119,7 +100,7 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       // Since the Implementation Repository keys off of the POA name, we need
       // to use the server_name_ as the POA's name.
       this->airplane_poa_ =
-        this->root_poa_->create_POA (this->server_name_.c_str(),
+        this->root_poa_->create_POA (this->server_name_.c_str (),
                                      this->poa_manager_.in (),
                                      policies);
 
@@ -130,23 +111,23 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
           policy->destroy ();
         }
 
-      ACE_NEW_RETURN (this->server_impl_, Airplane_i, -1);
+      this->server_impl_ = new Airplane_i;
 
       PortableServer::ObjectId_var server_id =
         PortableServer::string_to_ObjectId ("server");
 
       this->airplane_poa_->activate_object_with_id (server_id.in (),
-                                                    this->server_impl_);
+                                                    this->server_impl_.in ());
 
       obj = this->airplane_poa_->id_to_reference (server_id.in ());
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%C>\n", ior.in ()));
 
-      TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(airplane_poa_.in());
+      TAO_Root_POA * const tmp_poa = dynamic_cast<TAO_Root_POA *> (airplane_poa_.in ());
       obj = tmp_poa->id_to_reference_i (server_id.in (), false);
-      CORBA::String_var plain_ior =
+      CORBA::String_var const plain_ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%C>\n", plain_ior.in ()));
@@ -156,27 +137,27 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       // like "corbaloc::localhost:8888/airplane_server".
       obj = this->orb_->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var adapter =
+      IORTable::Table_var const adapter =
         IORTable::Table::_narrow (obj.in ());
       ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
-      adapter->bind (this->server_name_.c_str(), plain_ior.in ());
+      adapter->bind (this->server_name_.c_str (), plain_ior.in ());
 
       this->poa_manager_->activate ();
 
       if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (this->ior_output_file_, "%s", ior.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          ACE_OS::fprintf (this->ior_output_file_.get (), "%s", ior.in ());
+          this->ior_output_file_.reset ();
         }
 
       if (this->pid_output_file_)
         {
-          int pid = static_cast<int> (ACE_OS::getpid ());
-          ACE_OS::fprintf (this->pid_output_file_, "%d\n", pid);
-          ACE_OS::fclose (this->pid_output_file_);
+          int const pid = static_cast<int> (ACE_OS::getpid ());
+          ACE_OS::fprintf (this->pid_output_file_.get (), "%d\n", pid);
+          this->pid_output_file_.reset ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Airplane_Server_i::init");
       throw;
@@ -190,30 +171,24 @@ Airplane_Server_i::run ()
 {
   try
     {
-      ACE_Time_Value tv(60);
-      ACE_Time_Value tvStart = ACE_OS::gettimeofday();
+      ACE_Time_Value tv (60);
+      ACE_Time_Value const tv_start = ACE_OS::gettimeofday ();
 
       this->orb_->run (tv);
 
-      ACE_Time_Value tvEnd = ACE_OS::gettimeofday();
+      ACE_Time_Value const tv_end = ACE_OS::gettimeofday ();
 
-      this->root_poa_->destroy(1, 1);
-      this->orb_->destroy();
+      this->root_poa_->destroy (1, 1);
+      this->orb_->destroy ();
 
-      if (tvEnd - tvStart > tv - ACE_Time_Value(5))
+      if (tv_end - tv_start > tv - ACE_Time_Value (5))
         return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Airplane_Server_i::run");
       throw;
     }
 
-
   return 0;
-}
-
-Airplane_Server_i::~Airplane_Server_i ()
-{
-  delete this->server_impl_;
 }
