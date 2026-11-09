@@ -25,7 +25,6 @@ class Monitor_Impl
   : public virtual POA_Monitor::MC
 {
 public:
-  /// Constructor
   explicit Monitor_Impl (CORBA::ORB_ptr orb);
 
   ::Monitor::NameList * get_statistic_names (char const *filter) override;
