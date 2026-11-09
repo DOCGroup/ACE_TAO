@@ -4,32 +4,34 @@
 #include "tao/ORB_Core.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
- #include "../check_supported_priorities.cpp"
+#include "../check_supported_priorities.cpp"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://ior_1");
-int iterations = 6;
-int shutdown_server = 0;
-bool decreased = false;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://ior_1")};
+  int iterations {6};
+  bool shutdown_server {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:i:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -44,7 +46,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -52,17 +53,28 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
+  bool decreased () const;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
+  Client_Options const options_;
+  bool decreased_ {};
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -71,75 +83,56 @@ Task::svc ()
 {
   try
     {
-      CORBA::Object_var object =
-        this->orb_->string_to_object (ior);
+      CORBA::Object_var object = this->orb_->string_to_object (this->options_.ior);
+      test_var const test = test::_narrow (object.in ());
+      pid_t const pid = ACE_OS::getpid ();
 
-      test_var test =
-        test::_narrow (object.in ());
-
-      pid_t pid =
-        ACE_OS::getpid ();
-
-      object =
-        this->orb_->resolve_initial_references ("RTCurrent");
-
-      RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ());
-
-      // We need to set the client thread CORBA priority
+      object = this->orb_->resolve_initial_references ("RTCurrent");
+      RTCORBA::Current_var const current = RTCORBA::Current::_narrow (object.in ());
       current->the_priority (get_implicit_thread_CORBA_priority (this->orb_.in ()));
 
-      CORBA::Long tc = 0;
-
-      for (int i = 0; i != iterations; ++i)
+      CORBA::Long thread_count {};
+      for (int i {}; i != this->options_.iterations; ++i)
         {
-          CORBA::Long mtc = 0;
-          CORBA::Long r =
-            test->method (pid,
-                          i,
-                          mtc);
+          CORBA::Long current_thread_count {};
+          CORBA::Long const result = test->method (pid, i, current_thread_count);
 
-          // Each 2 iterations sleep 5 seconds
           if (i % 2 == 0)
             ACE_OS::sleep (5);
 
-          ACE_ASSERT (r == i);
-          // Assert disappears on with optimizations on.
-          ACE_UNUSED_ARG (r);
+          ACE_ASSERT (result == i);
+          ACE_UNUSED_ARG (result);
 
-          if (mtc > tc)
+          if (current_thread_count > thread_count)
             {
-              // Number of threads increased, so store this.
-              ACE_DEBUG ((LM_DEBUG, "Thread count increased to %d\n", mtc));
-              tc = mtc;
+              ACE_DEBUG ((LM_DEBUG,
+                          "Thread count increased to %d\n",
+                          current_thread_count));
+              thread_count = current_thread_count;
             }
-          else if (mtc < tc)
+          else if (current_thread_count < thread_count)
             {
-              // Number of threads decreased!
-              ACE_DEBUG ((LM_DEBUG, "Thread count decreased to %d\n", mtc));
-              decreased = true;
-              tc = mtc;
+              ACE_DEBUG ((LM_DEBUG,
+                          "Thread count decreased to %d\n",
+                          current_thread_count));
+              this->decreased_ = true;
+              thread_count = current_thread_count;
             }
         }
 
       ACE_OS::sleep (20);
 
-      CORBA::Long end = 0;
-      CORBA::Long re =
-        test->method (pid,
-                      0,
-                      end);
+      CORBA::Long final_thread_count {};
+      CORBA::Long const result = test->method (pid, 0, final_thread_count);
+      ACE_ASSERT (result == 0);
+      ACE_UNUSED_ARG (result);
 
-      ACE_ASSERT (re == 0);
-      // Assert disappears on with optimizations on.
-      ACE_UNUSED_ARG (re);
-
-      if (end != 0)
-        {
-          ACE_ERROR ((LM_ERROR, "Dynamic thread count should be 0, not %d\n", end));
-        }
+      if (final_thread_count != 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Dynamic thread count should be 0, not %d\n",
+                    final_thread_count));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -148,75 +141,60 @@ Task::svc ()
   return 0;
 }
 
+bool
+Task::decreased () const
+{
+  return this->decreased_;
+}
+
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
-      int result =
-        parse_args (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      Client_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
-          CORBA::Object_var object =
-            orb->string_to_object (ior);
-
-          test_var test =
-            test::_narrow (object.in ());
-
+          CORBA::Object_var const object = orb->string_to_object (options.ior);
+          test_var const test = test::_narrow (object.in ());
           test->shutdown ();
         }
       else
-      {
-        // Thread Manager for managing task.
-        ACE_Thread_Manager thread_manager;
+        {
+          ACE_Thread_Manager thread_manager;
+          Task task (thread_manager, orb.in (), options);
+          long const flags = THR_NEW_LWP |
+                             THR_JOINABLE |
+                             orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
-        // Create task.
-        Task task (thread_manager,
-                   orb.in ());
-
-        // Task activation flags.
-        long flags =
-          THR_NEW_LWP |
-          THR_JOINABLE |
-          orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
-        // Activate task.
-        result =
-          task.activate (flags);
-        if (result == -1)
-          {
-            if (errno == EPERM)
-              {
+          result = task.activate (flags);
+          if (result == -1)
+            {
+              if (errno == EPERM)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "Cannot create thread with scheduling policy %s\n"
-                                   "because the user does not have the appropriate privileges, terminating program....\n"
+                                   "because the user does not have the appropriate privileges, "
+                                   "terminating program....\n"
                                    "Check svc.conf options and/or run as root\n",
                                    sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
                                   2);
-              }
-            else
-              // Unexpected error.
-              ACE_ASSERT (0);
-          }
+              else
+                ACE_ASSERT (0);
+            }
 
-        // Wait for task to exit.
-        result =
-          thread_manager.wait ();
-        ACE_ASSERT (result != -1);
+          result = thread_manager.wait ();
+          ACE_ASSERT (result != -1);
 
-        if (decreased == false)
-          {
+          if (!task.decreased ())
             ACE_ERROR_RETURN ((LM_ERROR, "ERROR: Number of threads didn't decrease\n"), -1);
-          }
-      }
+        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;
