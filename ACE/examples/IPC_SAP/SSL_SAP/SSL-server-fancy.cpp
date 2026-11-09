@@ -23,10 +23,8 @@ class Handler_Factory
   //   Creates the oneway or twoway handlers.
 public:
   Handler_Factory ();
-  // Constructor.
 
   ~Handler_Factory ();
-  // Destructor.
 
   int handle_events ();
   // Run the main event loop.
@@ -74,7 +72,6 @@ public:
 
 protected:
   Handler (ACE_SSL_SOCK_Stream *ssl_stream);
-  // Constructor.
 
   int parse_header_and_allocate_buffer (char *&buf,
                                         ACE_INT32 *len);
@@ -111,7 +108,6 @@ class Twoway_Handler : public Handler
   //   Performs the twoway protocol.
 public:
   Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
-  // Constructor.
 
 private:
   int run () override;
@@ -123,7 +119,6 @@ class Oneway_Handler : public Handler
   // = TITLE
 public:
   Oneway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
-  // Constructor.
 
 private:
   int run () override;

@@ -11,10 +11,8 @@ class Options
 {
 public:
   Options ();
-  // Constructor.
 
   ~Options ();
-  // Destructor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
