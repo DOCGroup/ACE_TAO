@@ -45,10 +45,8 @@ class TAO_MMAP_Allocator
   : public TAO_MMAP_Allocator_Base
 {
 public:
-  /// Constructor
   TAO_MMAP_Allocator ();
 
-  /// Destructor.
   ~TAO_MMAP_Allocator () override;
 
   /// Return backing store handle.

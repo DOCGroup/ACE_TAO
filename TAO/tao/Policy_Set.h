@@ -46,7 +46,6 @@ public:
   /// Copy constructor.
   TAO_Policy_Set (TAO_Policy_Set const &rhs);
 
-  /// Destructor
   ~TAO_Policy_Set ();
 
   /// Copy the state from @a source, it uses the copy() operator to

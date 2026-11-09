@@ -36,10 +36,8 @@ class TAO_Export TAO_Default_Client_Strategy_Factory
   : public TAO_Client_Strategy_Factory
 {
 public:
-  /// Constructor.
   TAO_Default_Client_Strategy_Factory ();
 
-  /// Destructor.
   ~TAO_Default_Client_Strategy_Factory () override;
 
   // = Service Configurator hooks.

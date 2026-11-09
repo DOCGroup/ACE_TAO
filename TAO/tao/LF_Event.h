@@ -49,10 +49,8 @@ class TAO_Export TAO_LF_Event
 public:
   friend class TAO_Leader_Follower;
 
-  /// Constructor
   TAO_LF_Event ();
 
-  /// Destructor
   virtual ~TAO_LF_Event ();
 
   /// Bind a follower

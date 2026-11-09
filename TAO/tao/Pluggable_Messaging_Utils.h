@@ -40,7 +40,6 @@ class TAO_Transport;
 class TAO_Export TAO_Pluggable_Reply_Params_Base
 {
 public:
-  /// Constructor.
   TAO_Pluggable_Reply_Params_Base ();
 
   /// The IOP service context list.
@@ -99,7 +98,6 @@ class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base
 {
 public:
-  /// Constructor.
   explicit TAO_Pluggable_Reply_Params (TAO_Transport *t);
 
   /// The stream with the non-demarshaled reply. This stream will be

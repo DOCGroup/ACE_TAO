@@ -109,7 +109,6 @@ namespace TAO
       int idle_timeout,
       int idle_scan_interval);
 
-    /// Destructor
     ~Transport_Cache_Manager_T ();
 
     Transport_Cache_Manager_T (Transport_Cache_Manager_T const &) = delete;

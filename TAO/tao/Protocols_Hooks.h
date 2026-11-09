@@ -104,7 +104,6 @@ public:
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
-  /// Destructor
   ~TAO_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.

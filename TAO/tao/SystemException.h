@@ -91,7 +91,6 @@ namespace CORBA
      */
     SystemException (const SystemException & src);
 
-    /// Destructor.
     ~SystemException () override = default;
 
     /// Get the minor status.

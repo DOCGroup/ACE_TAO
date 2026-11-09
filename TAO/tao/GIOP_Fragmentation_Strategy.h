@@ -37,10 +37,8 @@ class TAO_OutputCDR;
 class TAO_Export TAO_GIOP_Fragmentation_Strategy
 {
 public:
-  /// Constructor
   TAO_GIOP_Fragmentation_Strategy () = default;
 
-  /// Destructor.
   virtual ~TAO_GIOP_Fragmentation_Strategy ();
 
   /// Fragment the (potentially partially) encoded GIOP message.

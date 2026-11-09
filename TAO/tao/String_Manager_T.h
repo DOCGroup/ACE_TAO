@@ -57,7 +57,6 @@ public:
   {
   }
 
-  /// Destructor
   inline ~String_Manager_T () {
     s_traits::release (this->ptr_);
   }

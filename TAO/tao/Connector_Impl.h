@@ -44,7 +44,6 @@ template <class SVC_HANDLER>
 class TAO_Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = nullptr,
                                  TAO_ORB_Core* orb_core = nullptr);
 
@@ -72,7 +71,6 @@ class TAO_Connect_Concurrency_Strategy :
   public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
   explicit TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
 

@@ -49,12 +49,10 @@ class TAO_Resource_Factory;
 class TAO_Export TAO_Thread_Lane_Resources
 {
 public:
-  /// Constructor.
   TAO_Thread_Lane_Resources (
       TAO_ORB_Core &orb_core,
       TAO_New_Leader_Generator *new_leader_generator = nullptr);
 
-  /// Destructor.
   ~TAO_Thread_Lane_Resources ();
 
   /// Does @a mprofile belong to us?

@@ -99,7 +99,6 @@ namespace TAO
     {
     }
 
-    /// Constructor
     Drain_Constraints(
         ACE_Time_Value * timeout,
         bool block_on_io)
@@ -309,7 +308,6 @@ public:
                  TAO_ORB_Core *orb_core,
                  size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Destructor
   virtual ~TAO_Transport ();
 
   /// Return the protocol tag.

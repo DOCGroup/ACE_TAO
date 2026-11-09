@@ -53,10 +53,8 @@ class TAO_Export TAO_Default_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-  /// Constructor.
   TAO_Default_Endpoint_Selector_Factory ();
 
-  /// Destructor.
   ~TAO_Default_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and

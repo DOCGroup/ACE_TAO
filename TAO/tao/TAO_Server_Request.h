@@ -123,7 +123,6 @@ public:
                      TAO_Operation_Details const & details,
                      CORBA::Object_ptr target);
 
-  /// Destructor.
   ~TAO_ServerRequest ();
 
   /**

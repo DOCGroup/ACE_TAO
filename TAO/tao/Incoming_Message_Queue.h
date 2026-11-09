@@ -50,10 +50,8 @@ class TAO_Transport;
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
-  /// Constructor.
   explicit TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_Incoming_Message_Queue ();
 
   /// Adding and deleting a node from the queue.

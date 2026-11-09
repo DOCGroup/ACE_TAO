@@ -515,7 +515,6 @@ namespace CORBA
     // We must be created via the @c CORBA::ORB_init() function.
     ORB (TAO_ORB_Core *orb_core);
 
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.

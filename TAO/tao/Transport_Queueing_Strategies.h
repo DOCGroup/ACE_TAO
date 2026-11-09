@@ -47,7 +47,6 @@ namespace TAO
   class TAO_Export Transport_Queueing_Strategy
   {
   public:
-    /// Destructor
     virtual ~Transport_Queueing_Strategy ();
 
     /// Return true if a message must be queued

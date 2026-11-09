@@ -35,7 +35,6 @@ class TAO_Export TAO_Service_Context_Registry
   public:
     TAO_Service_Context_Registry () = default;
 
-    /// Destructor
 
     ~TAO_Service_Context_Registry ();
 

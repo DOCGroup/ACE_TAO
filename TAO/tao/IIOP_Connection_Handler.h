@@ -63,10 +63,8 @@ public:
 
   explicit TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
 
-  /// Constructor.
   explicit TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_IIOP_Connection_Handler () override;
 
   /// Called by the @c Strategy_Acceptor when the handler is completely

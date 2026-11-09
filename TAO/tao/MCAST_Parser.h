@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_MCAST_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
   TAO_MCAST_Parser ();
 
   /// The destructor

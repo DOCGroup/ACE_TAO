@@ -55,7 +55,6 @@ constexpr CORBA::ULong TAO_TAG_ENDPOINTS = 0x54414f02U;
 class TAO_Export TAO_Tagged_Components
 {
 public:
-  /// Constructor
   TAO_Tagged_Components ();
 
   // = Standard OMG that require fast access.

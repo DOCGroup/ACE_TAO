@@ -39,10 +39,8 @@ class TAO_ORB_Core;
 class TAO_Export TAO_ORB_Core_TSS_Resources
 {
 public:
-  /// Constructor
   TAO_ORB_Core_TSS_Resources ();
 
-  /// destructor
   ~TAO_ORB_Core_TSS_Resources ();
 
   /// Cleans TSS resources.

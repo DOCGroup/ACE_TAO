@@ -36,7 +36,6 @@ class TAO_Policy_Manager
   , public ::CORBA::LocalObject
 {
 public:
-  /// constructor
   TAO_Policy_Manager () = default;
 
   /// Obtain a single policy.

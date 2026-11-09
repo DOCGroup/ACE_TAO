@@ -48,10 +48,8 @@ class TAO_Reply_Dispatcher;
 class TAO_Export TAO_Muxed_TMS : public TAO_Transport_Mux_Strategy
 {
 public:
-  /// Constructor.
   explicit TAO_Muxed_TMS (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Muxed_TMS () override;
 
   /// Generate and return an unique request id for the current

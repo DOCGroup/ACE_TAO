@@ -49,12 +49,10 @@ class TAO_ServerRequest;
 class TAO_Export TAO_GIOP_Message_Base
 {
 public:
-  /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                          TAO_Transport * transport,
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Destructor
   ~TAO_GIOP_Message_Base ();
 
   /// Initialize the underlying state object based on the @a major and

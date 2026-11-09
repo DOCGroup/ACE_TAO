@@ -40,10 +40,8 @@ namespace TAO
   class Wait_On_LF_No_Upcall : public TAO_Wait_On_Leader_Follower
   {
   public:
-     /// Constructor.
     explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
-    /// Destructor.
     ~Wait_On_LF_No_Upcall () override = default;
 
     /*! @copydoc TAO_Wait_Strategy::wait() */

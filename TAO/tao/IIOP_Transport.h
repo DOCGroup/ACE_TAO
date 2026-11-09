@@ -50,12 +50,10 @@ class TAO_Adapter;
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.

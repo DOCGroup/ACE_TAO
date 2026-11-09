@@ -56,7 +56,6 @@ namespace Messaging
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
 {
 public:
-  /// Destructor
   ~TAO_Client_Strategy_Factory () override;
 
   /// Create the correct client request muxing strategy.

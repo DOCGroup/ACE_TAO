@@ -9,7 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {

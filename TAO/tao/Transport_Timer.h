@@ -33,7 +33,6 @@ namespace TAO
   class Transport_Timer : public ACE_Event_Handler
   {
   public:
-    /// Constructor
     /**
     * @param transport The adaptee
     */

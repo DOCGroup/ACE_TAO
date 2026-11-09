@@ -47,7 +47,6 @@ class TAO_Endpoint;
 class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Destructor
   virtual ~TAO_Transport_Descriptor_Interface ();
 
   /// This call allocates and copies the contents of this class and
@@ -78,7 +77,6 @@ protected:
   /// Default Constructor
   TAO_Transport_Descriptor_Interface ();
 
-  /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,
                                       CORBA::Boolean take_ownership = false);
 

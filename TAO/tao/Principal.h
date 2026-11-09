@@ -74,7 +74,6 @@ namespace CORBA
     using _var_type = Principal_var;
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.

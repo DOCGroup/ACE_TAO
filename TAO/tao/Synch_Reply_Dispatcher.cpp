@@ -5,7 +5,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     TAO_ORB_Core *orb_core,
     IOP::ServiceContextList &sc
@@ -30,7 +29,6 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
   this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
 }
 
-// Destructor.
 TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher () = default;
 
 TAO_InputCDR &

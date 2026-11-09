@@ -178,7 +178,6 @@ public:
                  ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
-  /// Destructor.
   ~TAO_OutputCDR ();
 
   // @todo do we want a special method to write an array of
@@ -426,7 +425,6 @@ public:
 
   TAO_InputCDR& operator= (const TAO_InputCDR&) = default;
 
-  /// Destructor
   virtual ~TAO_InputCDR ();
 
   // = TAO specific methods.

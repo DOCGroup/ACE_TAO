@@ -60,7 +60,6 @@ template <class SVC_HANDLER>
 class TAO_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
   explicit TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
   /**
@@ -79,7 +78,6 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  /// Constructor.
   explicit TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
 
   /// Initialize the <peer_acceptor_> with @a local_addr.  If the

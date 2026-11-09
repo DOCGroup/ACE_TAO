@@ -45,11 +45,9 @@ class TAO_ORB_Core;
 class TAO_Export TAO_Endpoint
 {
 public:
-  /// Constructor.
   explicit TAO_Endpoint (CORBA::ULong tag,
                          CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Destructor.
   virtual ~TAO_Endpoint () = default;
 
   /// IOP protocol tag accessor.

@@ -32,10 +32,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Follower_Auto_Ptr
 {
 public:
-  /// Constructor
   TAO_LF_Follower_Auto_Ptr (TAO_Leader_Follower &);
 
-  /// Destructor
   ~TAO_LF_Follower_Auto_Ptr ();
 
   /// Implement the smart pointer methods

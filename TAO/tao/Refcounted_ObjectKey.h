@@ -38,7 +38,6 @@ namespace TAO
   class TAO_Export Refcounted_ObjectKey
   {
   public:
-    /// Constructor
     Refcounted_ObjectKey (ObjectKey const &ref);
 
     /// Accessor for the underlying ObjectKey.

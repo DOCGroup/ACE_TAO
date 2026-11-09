@@ -164,7 +164,6 @@ class TAO_Export TAO_ORB_Core
                                          ACE_TCHAR *argv[],
                                          const char *);
 public:
-  /// Constructor.
   TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
 
   /// Accessor for the ORB parameters.
@@ -1362,7 +1361,6 @@ public:
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
 //private:
-  /// Constructor.
   TAO_ORB_Core_Static_Resources ();
   TAO_ORB_Core_Static_Resources& operator= (const TAO_ORB_Core_Static_Resources&);
 

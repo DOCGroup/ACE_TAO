@@ -48,7 +48,6 @@ public:
   /// Default Constructor
   explicit TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
 
-  /// Constructor.
   explicit TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.

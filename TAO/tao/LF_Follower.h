@@ -43,10 +43,8 @@ class TAO_Export TAO_LF_Follower
   : public ACE_Intrusive_List_Node<TAO_LF_Follower>
 {
 public:
-  /// Constructor
   explicit TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
 
-  /// Destructor
   ~TAO_LF_Follower ();
 
   /// Access the leader follower that owns this follower

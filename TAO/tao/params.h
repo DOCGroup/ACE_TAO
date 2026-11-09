@@ -48,7 +48,6 @@ class TAO_Export TAO_ORB_Parameters
 public:
   using endpoints_map_type = ACE_Array_Map<ACE_CString, ACE_CString>;
 
-  /// Constructor.
   TAO_ORB_Parameters ();
 
   /// Specifies the endpoints on which this server is willing to

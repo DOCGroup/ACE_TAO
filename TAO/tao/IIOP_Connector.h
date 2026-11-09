@@ -50,10 +50,8 @@ class TAO_IIOP_Endpoint;
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_IIOP_Connector ();
 
-  /// Destructor.
   ~TAO_IIOP_Connector () override;
 
   // = The TAO_Connector methods, please check the documentation on

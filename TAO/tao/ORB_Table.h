@@ -61,7 +61,6 @@ namespace TAO
   class TAO_Export ORB_Table
   {
   public:
-    /// Constructor
     /**
      * @note See the note in the class description for an explanation
      *       of why this constructor is not protected.
@@ -155,13 +154,10 @@ namespace TAO
   class ORB_Core_Ref_Counter
   {
   public:
-    /// Constructor.
     ORB_Core_Ref_Counter () = default;
 
-    /// Constructor.
     explicit ORB_Core_Ref_Counter (::TAO_ORB_Core *core);
 
-    /// Destructor.
     ~ORB_Core_Ref_Counter ();
 
     /// Copy constructor.

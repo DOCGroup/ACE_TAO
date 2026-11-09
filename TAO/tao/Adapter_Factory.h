@@ -34,7 +34,6 @@ class TAO_Export TAO_Adapter_Factory : public ACE_Service_Object
 public:
   TAO_Adapter_Factory () = default;
 
-  /// Destructor
   ~TAO_Adapter_Factory () override;
 
   /// Create a new adapter

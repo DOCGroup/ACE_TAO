@@ -48,11 +48,9 @@ class TAO_ORB_Core_TSS_Resources;
 class TAO_Export TAO_Leader_Follower
 {
 public:
-  /// Constructor
   TAO_Leader_Follower (TAO_ORB_Core *orb_core,
                        TAO_New_Leader_Generator *new_leader_generator = nullptr);
 
-  /// Destructor
   ~TAO_Leader_Follower ();
 
   /// The current thread has become a server thread (i.e. called
@@ -302,10 +300,8 @@ private:
 class TAO_Export TAO_LF_Client_Thread_Helper
 {
 public:
-  /// Constructor
   explicit TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
-  /// Destructor
   ~TAO_LF_Client_Thread_Helper ();
 
 private:
@@ -316,10 +312,8 @@ private:
 class TAO_Export TAO_LF_Client_Leader_Thread_Helper
 {
 public:
-  /// Constructor
   explicit TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
-  /// Destructor
   ~TAO_LF_Client_Leader_Thread_Helper ();
 
 private:

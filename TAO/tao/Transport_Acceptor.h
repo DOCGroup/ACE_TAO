@@ -75,7 +75,6 @@ class TAO_Export TAO_Acceptor
 public:
   explicit TAO_Acceptor (CORBA::ULong tag);
 
-  /// Destructor
   virtual ~TAO_Acceptor ();
 
   /// The tag, each concrete class will have a specific tag value.

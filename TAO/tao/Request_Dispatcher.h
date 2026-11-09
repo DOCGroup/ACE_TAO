@@ -45,7 +45,6 @@ namespace CORBA
 class TAO_Export TAO_Request_Dispatcher
 {
 public:
-  /// Destructor.
   virtual ~TAO_Request_Dispatcher ();
 
   /**

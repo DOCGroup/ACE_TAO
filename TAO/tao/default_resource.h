@@ -123,10 +123,8 @@ class TAO_Export TAO_Default_Resource_Factory
   : public TAO_Resource_Factory
 {
 public:
-  /// Constructor.
   TAO_Default_Resource_Factory ();
 
-  /// Destructor.
   virtual ~TAO_Default_Resource_Factory ();
 
   /**

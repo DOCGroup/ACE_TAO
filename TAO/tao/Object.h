@@ -91,7 +91,6 @@ namespace CORBA
   class TAO_Export Object
   {
   public:
-    /// Destructor.
     virtual ~Object ();
 
     /**
@@ -264,7 +263,6 @@ namespace CORBA
     /// return value when finished with it.
     virtual TAO::ObjectKey *_key ();
 
-    /// Constructor
     Object (TAO_Stub *p,
             CORBA::Boolean collocated = false,
             TAO_Abstract_ServantBase *servant = nullptr,

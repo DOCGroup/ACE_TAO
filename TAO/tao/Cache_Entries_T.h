@@ -64,16 +64,13 @@ namespace TAO
   public:
     using transport_type = TRANSPORT_TYPE;
 
-    /// Constructor.
     Cache_IntId_T ();
 
-    /// Constructor.
     explicit Cache_IntId_T (transport_type *transport);
 
     /// Copy constructor.
     Cache_IntId_T (const Cache_IntId_T & rhs);
 
-    /// Destructor.
     ~Cache_IntId_T ();
 
     /// Assignment operator (does copy memory).
@@ -143,16 +140,13 @@ namespace TAO
   public:
     using transport_descriptor_type = TRANSPORT_DESCRIPTOR_TYPE;
 
-    /// Constructor.
     Cache_ExtId_T ();
 
-    /// Constructor.
     explicit Cache_ExtId_T (transport_descriptor_type *prop);
 
     /// Copy constructor.
     Cache_ExtId_T (const Cache_ExtId_T & rhs);
 
-    /// Destructor.
     ~Cache_ExtId_T ();
 
     // = Assignment and comparison operators.

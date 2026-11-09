@@ -55,7 +55,6 @@ public:
 
   using iterator = Table::iterator;
 
-  /// Constructor
   TAO_Object_Ref_Table ();
 
   /**

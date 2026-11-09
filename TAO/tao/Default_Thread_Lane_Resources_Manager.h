@@ -36,10 +36,8 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager
   : public TAO_Thread_Lane_Resources_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager () override;
 
   /// Finalize resources.
@@ -103,7 +101,6 @@ public:
   TAO_Default_Thread_Lane_Resources_Manager_Factory &operator= (
     TAO_Default_Thread_Lane_Resources_Manager_Factory &&) = delete;
 
-  /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager_Factory () override;
 
   /// Factory method.

@@ -39,7 +39,6 @@ class TAO_Export TAO_Cleanup_Func_Registry
   friend class TAO_ORB_Core;
 
 public:
-  /// Constructor.
   TAO_Cleanup_Func_Registry () = default;
 
   /// Return the number of registered cleanup functions.

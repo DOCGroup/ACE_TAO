@@ -38,11 +38,9 @@ public:
   /// Default constructor
   TAO_Base_Transport_Property () = default;
 
-  /// Constructor
   TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
                                CORBA::Boolean flag = false);
 
-  /// Destructor
   ~TAO_Base_Transport_Property () override = default;
 
   /// The copy constructor.

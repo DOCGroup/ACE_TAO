@@ -39,7 +39,6 @@ class TAO_Transport;
 class TAO_On_Demand_Fragmentation_Strategy : public TAO_GIOP_Fragmentation_Strategy
 {
 public:
-  /// Constructor.
   TAO_On_Demand_Fragmentation_Strategy (TAO_Transport *transport,
                                         ACE_CDR::ULong max_message_size);
 

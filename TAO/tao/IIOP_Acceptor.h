@@ -47,10 +47,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_IIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_IIOP_Acceptor () override;
 
   /// @@ Helper method for the implementation repository, should go

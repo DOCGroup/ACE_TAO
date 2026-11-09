@@ -42,7 +42,6 @@ class TAO_Leader_Follower;
 class TAO_Export TAO_LF_Strategy
 {
 public:
-  /// Destructor
   virtual ~TAO_LF_Strategy ();
 
   /// The current thread will handle an upcall

@@ -62,7 +62,6 @@ namespace TAO
   class TAO_Export Profile_Transport_Resolver
   {
   public:
-    /// Constructor
     /**
      * With @a block we tell whether this resolved should always deliver
      * a connection by blocking or unblock before the connection is

@@ -58,7 +58,6 @@ class TAO_Export TAO_Endpoint_Selector_Factory
   : public ACE_Service_Object
 {
 public:
-  /// Destructor.
   ~TAO_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and

@@ -52,10 +52,8 @@ namespace CORBA
 class TAO_Export TAO_Policy_Validator
 {
 public:
-  /// Constructor.
   explicit TAO_Policy_Validator (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   virtual ~TAO_Policy_Validator ();
 
   /**

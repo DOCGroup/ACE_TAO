@@ -42,7 +42,6 @@ namespace CORBA
     /// Copy constructor.
     UserException (UserException const &rhs);
 
-    /// Destructor.
     ~UserException () override = default;
 
     /// Assignment operator.

@@ -44,7 +44,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Synch_Queued_Message : public TAO_Queued_Message
 {
 public:
-  /// Constructor
   /**
    * @param contents The message block chain that must be sent.
    *
@@ -56,7 +55,6 @@ public:
                             ACE_Allocator *alloc = nullptr,
                             bool is_heap_allocated = false);
 
-  /// Destructor
   ~TAO_Synch_Queued_Message () override;
 
   ACE_Message_Block const *current_block () const;

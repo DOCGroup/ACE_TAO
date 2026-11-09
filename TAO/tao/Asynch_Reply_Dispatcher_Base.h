@@ -75,7 +75,6 @@ public:
   bool try_dispatch_reply ();
 
 protected:
-  /// Destructor.
   ~TAO_Asynch_Reply_Dispatcher_Base () override;
 
 private:

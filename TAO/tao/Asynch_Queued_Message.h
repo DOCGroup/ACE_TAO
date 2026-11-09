@@ -37,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Asynch_Queued_Message : public TAO_Queued_Message
 {
 public:
-  /// Constructor
   /**
    * @param contents The message block chain that must be sent.
    *
@@ -58,7 +57,6 @@ public:
                              bool is_heap_allocated);
 
 
-  /// Destructor
   ~TAO_Asynch_Queued_Message () override;
 
   /**
@@ -78,7 +76,6 @@ public:
   //@}
 
 protected:
-  /// Constructor
   /**
    * @param buf The buffer that needs to be sent on the wire. The
    *            buffer will be owned by this class. The buffer will be

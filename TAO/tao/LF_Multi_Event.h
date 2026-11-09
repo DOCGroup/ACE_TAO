@@ -39,10 +39,8 @@ class TAO_Transport;
 class TAO_Export TAO_LF_Multi_Event: public TAO_LF_Event
 {
 public:
-  /// Constructor
   TAO_LF_Multi_Event ();
 
-  /// Destructor
   ~TAO_LF_Multi_Event () override;
 
   /// Propagate the follower to all the events in the collection.

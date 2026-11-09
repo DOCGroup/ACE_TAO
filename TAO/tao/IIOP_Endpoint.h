@@ -59,7 +59,6 @@ public:
                      ACE_INET_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Constructor.
   TAO_IIOP_Endpoint (ACE_INET_Addr const &addr,
                      int use_dotted_decimal_addresses);
 
@@ -68,7 +67,6 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  /// Destructor.
   ~TAO_IIOP_Endpoint () override = default;
 
   // = Implementation of abstract TAO_Endpoint methods.  See

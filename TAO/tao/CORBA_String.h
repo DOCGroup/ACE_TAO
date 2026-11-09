@@ -71,7 +71,6 @@ namespace TAO
     {
     }
 
-    /// Destructor.
     inline ~String_var ()
     {
       s_traits::release (this->ptr_);

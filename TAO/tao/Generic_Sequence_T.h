@@ -138,7 +138,6 @@ public:
     return * this;
   }
 
-  /// Destructor.
   ~generic_sequence()
   {
     if (release_)

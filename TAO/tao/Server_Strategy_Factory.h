@@ -47,7 +47,6 @@ class TAO_Export TAO_Server_Strategy_Factory : public ACE_Service_Object
 public:
   struct Active_Object_Map_Creation_Parameters
   {
-    /// Constructor.
     Active_Object_Map_Creation_Parameters ();
 
     /// Default size of object lookup table.
@@ -83,10 +82,8 @@ public:
     bool use_active_hint_in_poa_names_ { true };
   };
 
-  /// Constructor.
   TAO_Server_Strategy_Factory ();
 
-  /// Destructor.
   ~TAO_Server_Strategy_Factory () override;
 
   /**

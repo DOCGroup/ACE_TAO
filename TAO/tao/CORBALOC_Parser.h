@@ -44,7 +44,6 @@ class TAO_MProfile;
 class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
   TAO_CORBALOC_Parser () = default;
 
   /// The destructor

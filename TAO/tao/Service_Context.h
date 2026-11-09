@@ -63,7 +63,6 @@ public:
   /// clone the TAO_Service_Context data member in TAO_ServerRequest.
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
-  /// Constructor
   TAO_Service_Context ();
 
   /// = Generic components

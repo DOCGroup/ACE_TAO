@@ -40,10 +40,8 @@ class TAO_MProfile;
 class TAO_Export TAO_Thread_Lane_Resources_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   virtual ~TAO_Thread_Lane_Resources_Manager ();
 
   /// Finalize resources.

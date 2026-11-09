@@ -107,7 +107,6 @@ namespace CORBA
      */
     Exception (const Exception &src);
 
-    /// Destructor.
     virtual ~Exception () = default;
 
     // = To throw the exception (when using the standard mapping).
