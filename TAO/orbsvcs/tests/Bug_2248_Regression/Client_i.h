@@ -34,7 +34,7 @@ public:
   int init (Client_Options const &options);
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #include /**/ "ace/post.h"

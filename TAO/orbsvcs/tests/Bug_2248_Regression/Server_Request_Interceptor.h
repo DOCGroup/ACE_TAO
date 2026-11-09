@@ -79,7 +79,7 @@ public:
 
 private:
   /// IOR of the forwarding target.
-  CORBA::String_var iorstr_;
+  CORBA::String_var iorstr_ {};
   /// Prevent concurrent requests from forwarding more than once.
   std::atomic<bool> request_forwarded_ {};
 };

@@ -26,6 +26,11 @@ class Manager
 public:
   Manager () = default;
 
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
+
   void init (int& argc,
              ACE_TCHAR *argv[]);
 
@@ -33,19 +38,19 @@ public:
 
   int write_to_files (Client_Options const &options);
 
-  CORBA::ORB_ptr orb ();
+  CORBA::ORB_ptr orb () const;
 
 private:
   int write_to_file (CORBA::Object_ptr ior, ACE_TCHAR const *ior_output_file);
 
   int set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
                       CORBA::Object_ptr merged_set,
-                      CORBA::Object_ptr primary, CORBA::ULong version);
+                      CORBA::Object_ptr primary, CORBA::ULong const version);
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  CORBA::Object_var merged_set_10_;
-  CORBA::Object_var merged_set_11_;
+  CORBA::Object_var merged_set_10_ {};
+  CORBA::Object_var merged_set_11_ {};
 };
 
 #endif /* BUG_2248_REGRESSION_CLIENT_H */

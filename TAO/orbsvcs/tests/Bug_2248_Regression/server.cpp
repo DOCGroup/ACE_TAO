@@ -6,6 +6,7 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "tao/ORBInitializer_Registry.h"
 
+#include <cstdio>
 #include <memory>
 
 struct Server_Options
@@ -18,8 +19,8 @@ struct Server_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:k:f:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:k:f:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,12 +38,8 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-k <key> "
-                           "-f merged_iorstr"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -o <iorfile> -k <key> -f <merged ior>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -50,41 +47,42 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Server_Options options;
+      Server_Options options {};
       Server_ORBInitializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
+      // orb_initializer owns the initializer; temp_initializer is a borrowed pointer below.
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // We do the command line parsing first
       if (parse_args (argc, argv, options) != 0)
         return -1;
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           -1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList policies;
+      CORBA::PolicyList policies {};
       policies.length (3);
       policies[0] = root_poa->create_id_assignment_policy (
           PortableServer::USER_ID);
@@ -93,52 +91,53 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[2] = root_poa->create_lifespan_policy (
           PortableServer::PERSISTENT);
 
-      PortableServer::POA_var poa = root_poa->create_POA (
+      PortableServer::POA_var const poa = root_poa->create_POA (
           "PERS_POA", poa_manager.in (), policies);
 
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
+      for (CORBA::ULong i {}; i < policies.length (); ++i)
         {
           policies[i]->destroy ();
         }
 
       Simple_Server_i display_impl (orb.in (), ACE_TEXT_ALWAYS_CHAR (options.key));
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("IOGR_OID");
 
       poa->activate_object_with_id (id.in (), &display_impl);
 
-      CORBA::Object_var server =
+      CORBA::Object_var const server =
           poa->id_to_reference (id.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
       if (options.ior_output_file != nullptr)
         {
-          std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> output_file (
-            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+          std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> const output_file (
+            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
           if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                options.ior_output_file),
                               -1);
-          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+          if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);
         }
 
       // Set the forward references in the server request interceptor.
-      PortableInterceptor::ServerRequestInterceptor_var
-        server_interceptor = temp_initializer->server_interceptor ();
+      PortableInterceptor::ServerRequestInterceptor_var const server_interceptor =
+        temp_initializer->server_interceptor ();
 
-      Simple_ServerRequestInterceptor_var interceptor =
+      Simple_ServerRequestInterceptor_var const interceptor =
         Simple_ServerRequestInterceptor::_narrow (
            server_interceptor.in ());
 
       if (CORBA::is_nil (interceptor.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Could not obtain reference to "
-                           "server request interceptor.\n"),
+                           ACE_TEXT ("(%P|%t) Could not obtain reference to "
+                                     "server request interceptor.\n")),
                           -1);
 
       interceptor->forward_reference (ACE_TEXT_ALWAYS_CHAR (options.merged_iorstr));

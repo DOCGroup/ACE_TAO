@@ -26,8 +26,8 @@ public:
   char * abort (char const * key) override;
 
 private:
-  CORBA::ORB_var orb_;
-  CORBA::String_var _key;
+  CORBA::ORB_var orb_ {};
+  CORBA::String_var _key {};
 };
 
 #endif /* BUG_2248_REGRESSION_TEST_I_H */

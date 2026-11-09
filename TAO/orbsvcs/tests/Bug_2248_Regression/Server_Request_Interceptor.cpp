@@ -41,7 +41,7 @@ Server_Request_Interceptor::receive_request (
   TAO_InputCDR cdr (reinterpret_cast<char const *> (svc->context_data.get_buffer ()),
                     svc->context_data.length ());
 
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
@@ -58,12 +58,12 @@ Server_Request_Interceptor::receive_request (
     {
       if (!this->request_forwarded_.load ())
         {
-          int argc = 0;
+          int argc {};
           ACE_TCHAR **argv {};
-          CORBA::String_var orb_id = ri->orb_id ();
-          CORBA::ORB_var orb = CORBA::ORB_init(argc,argv,orb_id.in ());
+          CORBA::String_var const orb_id = ri->orb_id ();
+          CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, orb_id.in ());
 
-          CORBA::Object_var obj = orb->string_to_object (iorstr_.in());
+          CORBA::Object_var const obj = orb->string_to_object (this->iorstr_.in ());
 
           bool expected_forwarded {};
           if (this->request_forwarded_.compare_exchange_strong (
