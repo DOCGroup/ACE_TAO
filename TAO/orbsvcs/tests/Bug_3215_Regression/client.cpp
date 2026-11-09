@@ -5,28 +5,28 @@
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT ("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -37,29 +37,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::Boolean result = 0;
+  bool result {};
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
-
-      if (parse_args (argc, argv) != 0)
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
-
+        orb->string_to_object (options.ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
-
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello "
+                                       "reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
@@ -70,37 +67,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           hello->throw_location_forward ();
 
-
-          ACE_DEBUG ((LM_ERROR, "REGRESSION - Test has failed !!!\n"));
+          ACE_DEBUG ((LM_ERROR, ACE_TEXT ("REGRESSION - Test has failed !!!\n")));
           result = 1;
         }
-      catch (const CORBA::TRANSIENT& my_ex)
+      catch (CORBA::TRANSIENT const &)
         {
-          ACE_UNUSED_ARG (my_ex);
-          ACE_DEBUG ((LM_DEBUG, "Client catches a TRANSIENT, as expected. No problem !\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client catches a TRANSIENT, as expected. No problem!\n")));
         }
 
-
       hello->shutdown ();
-
-
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
-                           "Test failed (Not regression) because unexpected exception caught:");
+        "Test failed (Not regression) because unexpected exception caught:");
       return 1;
     }
 
-
   if (result)
     {
-      ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified!!!\n"));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Error: REGRESSION identified!!!\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "Test passed !!!\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed !!!\n")));
     }
   return result;
 }
