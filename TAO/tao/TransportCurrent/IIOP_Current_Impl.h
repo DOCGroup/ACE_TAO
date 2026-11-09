@@ -47,7 +47,6 @@ namespace TAO
       , public virtual Current_Impl
     {
     public:
-      /// Constructor.
       IIOP_Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
 
       //@{
@@ -65,7 +64,6 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
         * Protected destructor to enforce the fact this class is reference
         * counted, and should not be destroyed using delete() by anything

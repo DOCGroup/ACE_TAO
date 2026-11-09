@@ -39,7 +39,6 @@ namespace TAO
       , public virtual ::CORBA::LocalObject
       {
       public:
-        /// Constructor.
         Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
 
         /**
