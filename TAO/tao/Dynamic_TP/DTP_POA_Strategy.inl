@@ -4,7 +4,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-/// Constructor.
 TAO_DTP_POA_Strategy::TAO_DTP_POA_Strategy (std::string tp_config_name,
                                             bool ss)
   : serialize_servants_ (ss),

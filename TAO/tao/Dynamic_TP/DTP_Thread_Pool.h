@@ -48,7 +48,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-  /// Constructor.
   explicit TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
   /// Leader/Follower class uses this method to notify the system that
@@ -77,7 +76,6 @@ private:
 class TAO_DTP_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   explicit TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
@@ -111,7 +109,6 @@ protected:
 class TAO_DTP_Termination_Waiter : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   explicit TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
@@ -148,7 +145,6 @@ public:
                        CORBA::ULong id,
                        TAO_DTP_Definition &definition);
 
-  /// Destructor.
   ~TAO_DTP_Thread_Pool ();
 
   /// Open the pool.
@@ -238,10 +234,8 @@ private:
 class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_DTP_Thread_Pool_Manager ();
 
   /// Wait for threads to exit.

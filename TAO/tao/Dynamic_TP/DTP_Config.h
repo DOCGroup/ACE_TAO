@@ -86,10 +86,8 @@ public:
 class TAO_Dynamic_TP_Export TAO_DTP_Config : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_DTP_Config ();
 
-  /// Destructor.
   ~TAO_DTP_Config () override;
 
   /// Read a definition parameter set from the supplied args.
