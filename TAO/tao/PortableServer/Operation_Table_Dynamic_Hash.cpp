@@ -25,7 +25,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
   TAO_operation_db_entry const * db,
   CORBA::ULong dbsize,

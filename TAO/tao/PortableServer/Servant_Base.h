@@ -65,7 +65,6 @@ public:
   using _stub_ptr_type = CORBA::Object_ptr;
   using _stub_var_type = CORBA::Object_var;
 
-  /// Destructor.
   ~TAO_ServantBase () override = default;
 
   static void _is_a_skel (TAO_ServerRequest & req,

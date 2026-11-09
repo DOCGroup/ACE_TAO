@@ -33,7 +33,6 @@ class TAO_PortableServer_Export TAO_Linear_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Destructor.
   ~TAO_Linear_Search_OpTable () override = default;
 
   /// See the documentation in the base class for details.

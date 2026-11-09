@@ -49,14 +49,12 @@ struct TAO_Active_Object_Map_Entry;
 class TAO_Active_Object_Map
 {
 public:
-  /// Constructor.
   TAO_Active_Object_Map (
     int user_id_policy,
     int unique_id_policy,
     int persistent_id_policy,
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
-  /// Destructor.
   ~TAO_Active_Object_Map ();
 
   /// Must be used with UNIQUE_ID policy.

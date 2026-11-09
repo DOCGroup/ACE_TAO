@@ -80,11 +80,9 @@ public:
   using poa_name_var = PortableServer::ObjectId_var;
   using poa_name_out = PortableServer::ObjectId_out;
 
-  /// Constructor.
   TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
                       TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_Object_Adapter ();
 
   int dispatch_servant (const TAO::ObjectKey &key,
@@ -377,7 +375,6 @@ public:
   class poa_name_iterator
   {
   public:
-    /// Constructor.
     poa_name_iterator (int begin,
                        CORBA::ULong size,
                        const CORBA::Octet *folded_buffer);

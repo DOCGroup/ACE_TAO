@@ -48,10 +48,8 @@ namespace TAO
     class TAO_PortableServer_Export Non_Servant_Upcall
     {
     public:
-      /// Constructor.
       explicit Non_Servant_Upcall (::TAO_Root_POA &poa);
 
-      /// Destructor.
       ~Non_Servant_Upcall ();
 
       ::TAO_Root_POA &poa () const;

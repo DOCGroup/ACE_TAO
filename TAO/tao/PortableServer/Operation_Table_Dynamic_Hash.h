@@ -48,7 +48,6 @@ public:
                             CORBA::ULong hashtblsize,
                             ACE_Allocator *alloc);
 
-  /// Destructor
   ~TAO_Dynamic_Hash_OpTable () override;
 
   TAO_Dynamic_Hash_OpTable (TAO_Dynamic_Hash_OpTable const &) = delete;

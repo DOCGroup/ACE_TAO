@@ -74,7 +74,6 @@ namespace TAO
   class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
-    /// Constructor.
     Inout_Fixed_Size_SArgument_T ();
 
     /**
@@ -111,7 +110,6 @@ namespace TAO
   class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
-    /// Constructor.
     Out_Fixed_Size_SArgument_T ();
 
     /**
@@ -147,7 +145,6 @@ namespace TAO
   class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
-    /// Constructor.
     Ret_Fixed_Size_SArgument_T ();
 
     /**

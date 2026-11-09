@@ -40,7 +40,6 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Command
   {
   public:
-    /// Destructor.
     virtual ~Upcall_Command ();
 
     /// Execute the upcall.

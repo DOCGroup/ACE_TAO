@@ -818,7 +818,6 @@ public:
    */
   std::string imr_client_adapter_name_;
 private:
-  /// Constructor.
   TAO_POA_Static_Resources ();
 
 private:

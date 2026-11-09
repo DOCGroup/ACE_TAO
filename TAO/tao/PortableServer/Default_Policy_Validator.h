@@ -30,10 +30,8 @@ class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
   : public TAO_Policy_Validator
 {
 public:
-  /// Constructor.
   explicit TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_POA_Default_Policy_Validator () override = default;
 
 protected:

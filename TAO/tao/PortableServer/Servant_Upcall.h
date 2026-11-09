@@ -69,7 +69,6 @@ namespace TAO
       class Pre_Invoke_State
       {
       public:
-        /// Constructor.
         Pre_Invoke_State ();
 
         enum State
@@ -89,10 +88,8 @@ namespace TAO
         CORBA::Short original_CORBA_priority_ {};
       };
 
-      /// Constructor.
       explicit Servant_Upcall (TAO_ORB_Core *orb_core);
 
-      /// Destructor.
       ~Servant_Upcall ();
 
       /// Locate POA and servant.
