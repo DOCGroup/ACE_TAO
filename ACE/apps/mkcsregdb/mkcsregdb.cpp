@@ -25,7 +25,6 @@
 #include <fstream>
 #include <memory>
 #include <string>
-#include <vector>
 
 class csdb_generator : public ACE_Codeset_Registry
 {
@@ -35,13 +34,13 @@ public:
   csdb_generator (csdb_generator &&) = delete;
   csdb_generator &operator= (csdb_generator const &) = delete;
   csdb_generator &operator= (csdb_generator &&) = delete;
-  int read_from (const char *source);
-  int init_output (const char *srcfile);
+  int read_from (char const *source);
+  int init_output (char const *srcfile);
   int write_entry ();
-  int fini_output (const char *target);
+  int fini_output (char const *target);
   int read_line ();
-  void write_dummy_entry();
-  void fail(const char *msg);
+  void write_dummy_entry ();
+  void fail (char const *msg);
 private:
   struct File_Closer
   {
@@ -52,16 +51,24 @@ private:
     }
   };
 
-  static const char * tags_[];
+  static constexpr std::array<char const *, 7> tags_ = {
+    "start",
+    "end",
+    "description ",
+    "loc_name ",
+    "rgy_value ",
+    "char_values ",
+    "max_bytes "
+  };
   static constexpr int max_line_ = 1024;
-  int count_;
-  bool in_entry_;
-  bool have_description_;
-  bool have_loc_name_;
-  registry_entry entry_;
-  int linecounter_;
-  std::array<char, max_line_> source_line_;
-  char *line_data_; // Non-owning pointer into source_line_ for the current parsed line.
+  int count_ {};
+  bool in_entry_ {};
+  bool have_description_ {};
+  bool have_loc_name_ {};
+  registry_entry entry_ {};
+  int linecounter_ {};
+  std::array<char, max_line_> source_line_ {};
+  char *line_data_ {}; // Non-owning pointer into source_line_ for the current parsed line.
   std::ifstream inf_;
   std::unique_ptr<FILE, File_Closer> outf_;
   std::string tempfilename_;
@@ -70,41 +77,24 @@ private:
   std::string loc_name_;
 };
 
-const char * csdb_generator::tags_[] = {
-  "start",
-  "end",
-  "description ",
-  "loc_name ",
-  "rgy_value ",
-  "char_values ",
-  "max_bytes ",
-  nullptr
-};
-
 csdb_generator::csdb_generator ()
-  : count_ (0),
-    in_entry_ (false),
-    have_description_ (false),
-    have_loc_name_ (false),
-    linecounter_ (0),
-    line_data_ (nullptr)
 {
-  const char *ace_root = ACE_OS::getenv ("ACE_ROOT");
+  char const * const ace_root = ACE_OS::getenv ("ACE_ROOT");
   if (ace_root != nullptr)
     this->ace_src_ = ace_root;
 }
 
 void
-csdb_generator::fail (const char *msg)
+csdb_generator::fail (char const *msg)
 {
-  ACE_ERROR ((LM_ERROR,"Error, line %d: %s\n",linecounter_,msg));
+  ACE_ERROR ((LM_ERROR, "Error, line %d: %s\n", this->linecounter_, msg));
   this->outf_.reset ();
   ACE_OS::unlink (this->tempfilename_.c_str ());
   ACE_OS::exit (-1);
 }
 
 int
-csdb_generator::read_line()
+csdb_generator::read_line ()
 {
   this->inf_.getline (this->source_line_.data (), max_line_);
   this->line_data_ = nullptr;
@@ -115,7 +105,7 @@ csdb_generator::read_line()
   *cpos = 0;
   if (cpos == this->source_line_.data ())
     return 0;
-  for (int i = 0; tags_[i]; i++)
+  for (std::size_t i = 0; i < tags_.size (); ++i)
     {
       cpos = std::strstr (this->source_line_.data (), tags_[i]);
       if (cpos == nullptr) // not found
@@ -147,7 +137,7 @@ csdb_generator::read_line()
 }
 
 int
-csdb_generator::read_from (const char *srcfile)
+csdb_generator::read_from (char const *srcfile)
 {
   this->inf_.open (srcfile);
   if (!this->inf_)
@@ -257,7 +247,7 @@ csdb_generator::read_from (const char *srcfile)
 }
 
 int
-csdb_generator::init_output (const char *srcfile)
+csdb_generator::init_output (char const *srcfile)
 {
   ACE_stat buf;
   if (ACE_OS::stat (srcfile,&buf) != 0)
@@ -266,17 +256,15 @@ csdb_generator::init_output (const char *srcfile)
   if (this->ace_src_.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,"You must first set $ACE_ROOT\n"),-1);
 
-  time_t now = ACE_OS::time();
+  time_t const now = ACE_OS::time ();
   std::string temp_template = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "csdbXXXXXX";
-  std::vector<char> temp_template_buffer (temp_template.begin (), temp_template.end ());
-  temp_template_buffer.push_back ('\0');
-  ACE_HANDLE fd = ACE_OS::mkstemp (temp_template_buffer.data ());
+  ACE_HANDLE const fd = ACE_OS::mkstemp (temp_template.data ());
   if (fd == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open output file, %p\n",
-                       temp_template_buffer.data ()),
+                       temp_template.c_str ()),
                       -1);
-  this->tempfilename_ = temp_template_buffer.data ();
+  this->tempfilename_ = temp_template;
   this->outf_.reset (ACE_OS::fdopen (fd, "w"));
   if (!this->outf_)
     {
@@ -325,7 +313,7 @@ csdb_generator::write_entry ()
 }
 
 void
-csdb_generator::write_dummy_entry()
+csdb_generator::write_dummy_entry ()
 {
   entry_.desc_ = "No codesets defined";
   entry_.loc_name_ = "NONE";
@@ -337,9 +325,9 @@ csdb_generator::write_dummy_entry()
 }
 
 int
-csdb_generator::fini_output (const char *tgt)
+csdb_generator::fini_output (char const *tgt)
 {
-  std::string target = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "ace"
+  std::string const target = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "ace"
     + ACE_DIRECTORY_SEPARATOR_STR + tgt;
   if (count_ == 0)
     write_dummy_entry();
@@ -355,7 +343,7 @@ csdb_generator::fini_output (const char *tgt)
       std::string fname;
       do
         {
-          const std::string suffix = std::to_string (index++);
+          std::string const suffix = std::to_string (index++);
           fname = target + "." + std::string (suffix.size () < 3 ? 3 - suffix.size () : 0, '0') + suffix;
         }
       while (ACE_OS::stat (fname.c_str (), &buf) == 0);
