@@ -25,7 +25,7 @@ class Server_ORBInitializer2 :
   public virtual ::CORBA::LocalObject
 {
 public:
-  Server_ORBInitializer2 ();
+  Server_ORBInitializer2 () = default;
 
   Server_ORBInitializer2 (Server_ORBInitializer2 const &) = delete;
   Server_ORBInitializer2 (Server_ORBInitializer2 &&) = delete;
@@ -42,8 +42,8 @@ private:
   /// Register the necessary interceptors.
   void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
 
-  // Private temporary pointer
-  TAO249_ServerRequest_Interceptor2 *sri_;
+  // Non-owning; the ORB and the local interceptor var manage the references.
+  TAO249_ServerRequest_Interceptor2 *sri_ {};
 };
 
 #include /**/ "ace/post.h"
