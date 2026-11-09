@@ -42,7 +42,6 @@ class TAO_BidirectionalPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_BidirectionalPolicy (BiDirPolicy::BidirectionalPolicyValue val);
 
   /// Copy constructor.

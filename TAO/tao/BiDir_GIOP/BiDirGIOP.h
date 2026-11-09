@@ -38,10 +38,8 @@ class TAO_BiDirPolicy_Validator;
 class TAO_BIDIRGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
-  /// Constructor
   TAO_BiDirGIOP_Loader () = default;
 
-  /// Destructor
   ~TAO_BiDirGIOP_Loader () override = default;
 
   /// Initialize the BiDIR loader hooks.
