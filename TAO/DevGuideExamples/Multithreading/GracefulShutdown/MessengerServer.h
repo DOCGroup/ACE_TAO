@@ -10,7 +10,6 @@
 
 class MessengerShutdownTimer;
 
-//Class MessengerServer
 class MessengerServer
 {
 public:
@@ -31,10 +30,8 @@ public:
     int timeout {};
   };
 
-  //Constructor
   explicit MessengerServer (CORBA::ORB_ptr orb);
 
-  //Destructor
   ~MessengerServer ();
 
   MessengerServer (MessengerServer const &) = delete;

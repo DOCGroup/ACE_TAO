@@ -9,7 +9,6 @@
 class MessengerShutdownTimer : public ACE_Event_Handler
 {
 public:
-  // Constructor
   explicit MessengerShutdownTimer (CORBA::ORB_ptr orb);
 
   int handle_timeout (

@@ -7,13 +7,11 @@
 #include <iostream>
 #include <fstream>
 
-// Constructor.
 MessengerServer::MessengerServer (CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {
 }
 
-// Destructor.
 MessengerServer::~MessengerServer ()
 {
   monitor_.reset ();
