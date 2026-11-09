@@ -197,7 +197,6 @@ struct Netlink_Request
 class Secondary_Ipaddr_Handler : public ACE_Event_Handler
 {
 public:
-  // Default constructor
   Secondary_Ipaddr_Handler ();
 
   ~Secondary_Ipaddr_Handler () override;
