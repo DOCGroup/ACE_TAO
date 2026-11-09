@@ -34,7 +34,6 @@
 class AC_CLD_Acceptor
   : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR> {
 public:
-  // Constructor.
   explicit AC_CLD_Acceptor (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler), input_handler_ (handler) {}
 
@@ -60,7 +59,6 @@ class AC_CLD_Connector
 public:
   using PARENT = ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR>;
 
-  // Constructor.
   explicit AC_CLD_Connector (AC_Output_Handler *handler = nullptr)
     : handler_ (handler), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
@@ -122,7 +120,6 @@ protected:
   AC_Output_Handler output_handler_;
 
 public:
-  // Constructor.
   AC_Client_Logging_Daemon ()
     : acceptor_ (&output_handler_),
       connector_ (&output_handler_) {}

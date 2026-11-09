@@ -95,7 +95,6 @@ class AIO_CLD_Connector
 public:
   enum { INITIAL_RETRY_DELAY = 3, MAX_RETRY_DELAY = 60 };
 
-  // Constructor.
   AIO_CLD_Connector ()
     : retry_delay_ (INITIAL_RETRY_DELAY), ssl_ctx_ (nullptr), ssl_ (nullptr)
   { open (); }
