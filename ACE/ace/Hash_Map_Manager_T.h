@@ -34,17 +34,14 @@ template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
 {
 public:
-  /// Constructor.
   ACE_Hash_Map_Entry (const EXT_ID &ext_id,
                       const INT_ID &int_id,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
 
-  /// Constructor.
   ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
 
-  /// Destructor.
   ~ACE_Hash_Map_Entry ();
 
   /// Key accessor.
@@ -589,7 +586,6 @@ public:
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
 
-  /// Constructor.
   /**
    *  If @a head != @c false, the iterator constructed is positioned
    *  at the head of the map.  It is positioned at the end otherwise.
@@ -603,7 +599,6 @@ public:
     ACE_LOCK> &mm,
     bool head);
 
-  /// Constructor.
   /**
    * This constructor positions the iterator to the given @a entry.
    */
@@ -769,7 +764,6 @@ public:
   ACE_Hash_Map_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                             int tail = 0);
 
-  /// Constructor.
   /**
    * This constructor positions the iterator to the given @a entry.
    */

@@ -64,7 +64,6 @@ ACE_Thread_Exit::instance ()
 }
 
 // Grab hold of the Task * so that we can close() it in the
-// destructor.
 
 ACE_Thread_Exit::ACE_Thread_Exit ()
 {

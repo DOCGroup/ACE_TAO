@@ -43,10 +43,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Method_Request
 {
 public:
-  /// Constructor.
   explicit ACE_Method_Request (unsigned long priority = 0);
 
-  /// Destructor.
   virtual ~ACE_Method_Request () = default;
 
   ACE_Method_Request (ACE_Method_Request const &) = delete;

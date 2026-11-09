@@ -92,7 +92,6 @@ public:
   /// Default constructor.
   ACE_Event_Tuple ();
 
-  /// Constructor.
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
 
   /// Equality operator.
@@ -127,10 +126,8 @@ public:
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor.
   ACE_Select_Reactor_Notify ();
 
-  /// Destructor.
   ~ACE_Select_Reactor_Notify () override;
 
   /// Initialize.
@@ -459,7 +456,6 @@ public:
   /// Default size of the Select_Reactor's handle table.
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE;
 
-  /// Constructor.
   ACE_Select_Reactor_Impl (bool mask_signals = true);
 
   friend class ACE_Select_Reactor_Notify;

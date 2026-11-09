@@ -256,7 +256,6 @@ public:
    */
   ACE_Unbounded_Set_Ex<T, C> & operator= (ACE_Unbounded_Set_Ex<T, C> const &);
 
-  /// Destructor.
   /**
    * Destroy the nodes of the set.
    */

@@ -49,7 +49,6 @@ public:
   ACE_Timer_Node_T &operator= (ACE_Timer_Node_T const &) = delete;
   ACE_Timer_Node_T &operator= (ACE_Timer_Node_T &&) = delete;
 
-  /// Destructor
   ~ACE_Timer_Node_T ();
 
   /// Useful typedef ..
@@ -167,7 +166,6 @@ template <class TYPE>
 class ACE_Timer_Queue_Iterator_T
 {
 public:
-  /// Constructor.
   ACE_Timer_Queue_Iterator_T () = default;
 
   ACE_Timer_Queue_Iterator_T (ACE_Timer_Queue_Iterator_T const &) = delete;
@@ -175,7 +173,6 @@ public:
   ACE_Timer_Queue_Iterator_T &operator= (ACE_Timer_Queue_Iterator_T const &) = delete;
   ACE_Timer_Queue_Iterator_T &operator= (ACE_Timer_Queue_Iterator_T &&) = delete;
 
-  /// Destructor.
   virtual ~ACE_Timer_Queue_Iterator_T ();
 
   /// Positions the iterator at the earliest node in the Timer Queue

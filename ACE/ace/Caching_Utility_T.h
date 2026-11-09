@@ -47,12 +47,10 @@ public:
   using CLEANUP_STRATEGY = ACLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
   ACE_Pair_Caching_Utility (
     ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
     bool delete_cleanup_strategy = false);
 
-  /// Destructor.
   ~ACE_Pair_Caching_Utility () = default;
 
   ACE_Pair_Caching_Utility (ACE_Pair_Caching_Utility const&) = delete;
@@ -100,12 +98,10 @@ public:
   using CLEANUP_STRATEGY = ARHCLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
   ACE_Recyclable_Handler_Caching_Utility (
     ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
     bool delete_cleanup_strategy = false);
 
-  /// Destructor.
   ~ACE_Recyclable_Handler_Caching_Utility () = default;
 
   ACE_Recyclable_Handler_Caching_Utility (ACE_Recyclable_Handler_Caching_Utility const&) = delete;
@@ -156,12 +152,10 @@ public:
   using CLEANUP_STRATEGY = ARRHCLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
   ACE_Refcounted_Recyclable_Handler_Caching_Utility (
     ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
     bool delete_cleanup_strategy = false);
 
-  /// Destructor.
   ~ACE_Refcounted_Recyclable_Handler_Caching_Utility () = default;
 
   ACE_Refcounted_Recyclable_Handler_Caching_Utility (
@@ -223,7 +217,6 @@ public:
   using CLEANUP_STRATEGY = ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
   ACE_Handler_Caching_Utility (
     ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
     bool delete_cleanup_strategy = false);
@@ -233,7 +226,6 @@ public:
   ACE_Handler_Caching_Utility (ACE_Handler_Caching_Utility&&) = delete;
   ACE_Handler_Caching_Utility& operator= (ACE_Handler_Caching_Utility&&) = delete;
 
-  /// Destructor.
   ~ACE_Handler_Caching_Utility () = default;
 
   /**
@@ -283,7 +275,6 @@ public:
   using CLEANUP_STRATEGY = ANCLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
   ACE_Null_Caching_Utility (
     ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
     bool delete_cleanup_strategy = false);
@@ -293,7 +284,6 @@ public:
   ACE_Null_Caching_Utility (ACE_Null_Caching_Utility&&) = delete;
   ACE_Null_Caching_Utility& operator= (ACE_Null_Caching_Utility&&) = delete;
 
-  /// Destructor.
   ~ACE_Null_Caching_Utility () = default;
 
   /**

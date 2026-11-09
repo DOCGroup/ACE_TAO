@@ -104,7 +104,6 @@ private:
   FILE *stream_;
 
   /// Keeps track of whether we should close the FILE in the
-  /// destructor.
   bool const close_on_delete_;
 
   /// Pointer to the allocator.

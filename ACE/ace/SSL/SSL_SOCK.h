@@ -64,7 +64,6 @@ protected:
   /// from being defined.
   ACE_SSL_SOCK ();
 
-  /// Destructor
   /**
    * Not a virtual destructor.  Protected destructor to prevent
    * operator delete() from being called through a base class

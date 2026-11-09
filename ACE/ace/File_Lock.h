@@ -154,7 +154,6 @@ protected:
   bool removed_;
 
   /// Keeps track of whether to unlink the underlying file in the
-  /// destructor.
   bool const unlink_in_destructor_;
 };
 

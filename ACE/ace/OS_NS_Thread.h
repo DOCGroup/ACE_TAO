@@ -955,7 +955,6 @@ private:
 class ACE_TSS_Ref
 {
 public:
-  /// Constructor
   ACE_TSS_Ref (ACE_thread_t id);
 
   /// Default constructor
@@ -985,7 +984,6 @@ public:
   /// Declare pointer to function to destroy tss object.
   using Destructor = void (*)(void *);
 
-  /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
                 Destructor dest = nullptr);
 

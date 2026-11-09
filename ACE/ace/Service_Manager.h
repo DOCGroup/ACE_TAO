@@ -50,10 +50,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   ACE_Service_Manager ();
 
-  /// Destructor.
   ~ACE_Service_Manager () override;
 
   /// Declare the dynamic allocation hooks.

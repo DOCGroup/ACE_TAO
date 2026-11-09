@@ -45,10 +45,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ETCL_Parser_Export ETCL_Interpreter
 {
 protected:
-  /// Constructor.
   ETCL_Interpreter ();
 
-  /// Destructor.
   virtual ~ETCL_Interpreter ();
 
   ETCL_Interpreter (ETCL_Interpreter const&) = delete;

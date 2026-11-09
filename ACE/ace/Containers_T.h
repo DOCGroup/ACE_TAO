@@ -582,7 +582,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Constructor
   ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
   /// Copy constructor.
@@ -841,7 +840,6 @@ public:
    */
   void operator= (const ACE_Double_Linked_List<T> &);
 
-  /// Destructor.
   /**
    * Clean up the memory allocated for the nodes of the list.
    */
@@ -1391,7 +1389,6 @@ public:
    */
   void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
-  /// Destructor.
   /**
    * Destroys a set.
    */
@@ -1590,7 +1587,6 @@ public:
    */
   void operator= (const ACE_Bounded_Set<T> &);
 
-  /// Destructor
   /**
    * Clean up the underlying dynamically allocated memory that is used by
    * the Bounded_Set.
@@ -1787,7 +1783,6 @@ public:
    */
   ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
 
-  /// Destructor.
   /**
    * Delete the nodes of the set.
    */

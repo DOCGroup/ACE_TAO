@@ -74,12 +74,10 @@ public:
     /// Empty (default) constructor
     Binding ();
 
-    /// Constructor
     /// (Name version)
     Binding (const Name &binding_name,
              Binding_Type binding_type);
 
-    /// Constructor
     /// (String version)
     Binding (const ACE_TString &binding_name,
              Binding_Type binding_type);
@@ -452,10 +450,8 @@ public:
     class ACE_Export Iteration_State
       {
       public:
-        /// Constructor
         Iteration_State ();
 
-        /// Destructor
         virtual ~Iteration_State ();
 
         /// Set the iterator reference.

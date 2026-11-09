@@ -58,7 +58,6 @@ public:
   /// Default constructor.
   ACE_DLL_Handle ();
 
-  /// Destructor.
   ~ACE_DLL_Handle ();
 
   /// Returns the name of the shared library (without prefixes or suffixes).
@@ -267,7 +266,6 @@ protected:
   /// Default constructor.
   ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
-  /// Destructor.
   ~ACE_DLL_Manager ();
 
   /// Allocate handle_vector_.

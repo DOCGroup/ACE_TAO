@@ -162,7 +162,6 @@ public:
       ST_SERVER = 0x0002
     };
 
-  /// Constructor.
   /**
    * @arg context  Pointer to an ACE_SSL_Context instance containing
    *               the OpenSSL information to be associated with this
@@ -175,7 +174,6 @@ public:
   ACE_SSL_Asynch_Stream (Stream_Type s_type = ST_SERVER,
                          ACE_SSL_Context * context = nullptr);
 
-  /// Destructor
   ~ACE_SSL_Asynch_Stream () override;
 
   int cancel ();

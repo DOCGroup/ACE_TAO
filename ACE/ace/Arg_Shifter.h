@@ -85,7 +85,6 @@ public:
                      CHAR_TYPE **argv,
                      CHAR_TYPE **temp = nullptr);
 
-  /// Destructor.
   ~ACE_Arg_Shifter_T ();
 
   ACE_Arg_Shifter_T (ACE_Arg_Shifter_T const &) = delete;

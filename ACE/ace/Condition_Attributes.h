@@ -30,10 +30,8 @@ public:
   ACE_Condition_Attributes &operator= (ACE_Condition_Attributes const &) = delete;
   ACE_Condition_Attributes &operator= (ACE_Condition_Attributes &&) = delete;
 
-  /// Constructor
   explicit ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
 
-  /// Destructor
   ~ACE_Condition_Attributes ();
 
   /// Accessor for retrieving the current attributes
@@ -53,12 +51,10 @@ public:
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T const &) = delete;
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
-  /// Constructor
   explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
     : ACE_Condition_Attributes (type)
   {}
 
-  /// Destructor
   ~ACE_Condition_Attributes_T () = default;
 };
 
@@ -74,10 +70,8 @@ public:
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T const &) = delete;
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
-  /// Constructor
   explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
 
-  /// Destructor
   ~ACE_Condition_Attributes_T () = default;
 };
 

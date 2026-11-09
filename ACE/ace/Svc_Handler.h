@@ -82,7 +82,6 @@ public:
                    ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Destructor.
   virtual ~ACE_Svc_Handler ();
 
   /// Activate the client handler.  This is typically called by the

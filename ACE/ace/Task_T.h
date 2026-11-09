@@ -58,7 +58,6 @@ public:
   ACE_Task &operator= (ACE_Task const &) = delete;
   ACE_Task &operator= (ACE_Task &&) = delete;
 
-  /// Destructor.
   ~ACE_Task () override;
 
   /// Gets the message queue associated with this task.

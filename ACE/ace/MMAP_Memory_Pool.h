@@ -61,7 +61,6 @@ public:
     NEVER_FIXED = 2
   };
 
-  /// Constructor
   ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = ALWAYS_FIXED,
                                 bool write_each_page = true,
@@ -141,7 +140,6 @@ public:
   ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
                         const OPTIONS *options = nullptr);
 
-  /// Destructor.
   ~ACE_MMAP_Memory_Pool () override;
 
   /// Ask system for initial chunk of shared memory.
@@ -321,7 +319,6 @@ public:
   ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
                              const OPTIONS *options = nullptr);
 
-  /// Destructor.
   ~ACE_Lite_MMAP_Memory_Pool () override;
 
   /// Overwrite the default sync behavior with no-op

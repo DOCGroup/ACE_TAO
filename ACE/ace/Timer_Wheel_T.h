@@ -43,10 +43,8 @@ public:
   using Wheel = ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   using Node = ACE_Timer_Node_T<TYPE>;
 
-  /// Constructor
   explicit ACE_Timer_Wheel_Iterator_T (Wheel &);
 
-  /// Destructor
   ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T const &) = delete;
   ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T &&) = delete;
   ACE_Timer_Wheel_Iterator_T &operator= (ACE_Timer_Wheel_Iterator_T const &) = delete;
@@ -119,7 +117,6 @@ public:
                      FreeList *freelist = nullptr,
                      TIME_POLICY const &time_policy = TIME_POLICY());
 
-  /// Destructor
   ACE_Timer_Wheel_T (ACE_Timer_Wheel_T const &) = delete;
   ACE_Timer_Wheel_T (ACE_Timer_Wheel_T &&) = delete;
   ACE_Timer_Wheel_T &operator= (ACE_Timer_Wheel_T const &) = delete;

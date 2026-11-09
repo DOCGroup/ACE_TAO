@@ -88,7 +88,6 @@ protected:
   /// Default constructor.
   ACE_TLI ();
 
-  /// Destructor.
   ~ACE_TLI ();
 
   /// Initialize a TLI endpoint.

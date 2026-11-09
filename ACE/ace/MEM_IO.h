@@ -179,7 +179,6 @@ private:
 class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
-  /// Constructor.
   ACE_MEM_IO () = default;
   ~ACE_MEM_IO () = default;
   ACE_MEM_IO (ACE_MEM_IO const &) = delete;

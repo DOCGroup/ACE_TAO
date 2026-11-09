@@ -76,7 +76,6 @@ public:
   ACE_Metrics_Timeprobe (ACE_Metrics_Timeprobe &&) = delete;
   ACE_Metrics_Timeprobe &operator= (ACE_Metrics_Timeprobe &&) = delete;
 
-  /// Destructor.
   virtual ~ACE_Metrics_Timeprobe ();
 
   /// Returns true if a timeprobe event matches the passed id.
@@ -125,7 +124,6 @@ public:
                        = METRICS_DEFAULT_TIMEPROBE_COUNT,
                      ALLOCATOR * allocatorPtr = (ALLOCATOR*)ALLOCATOR::instance());
 
-  /// Destructor.
   ~ACE_Metrics_Cache () = default;
 
   ACE_Metrics_Cache (ACE_Metrics_Cache const &) = delete;

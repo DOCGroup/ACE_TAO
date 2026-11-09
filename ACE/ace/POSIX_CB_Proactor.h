@@ -36,7 +36,6 @@ class ACE_Export ACE_POSIX_CB_Proactor : public ACE_POSIX_AIOCB_Proactor
 public:
   Proactor_Type get_impl_type () override;
 
-  /// Destructor.
   ~ACE_POSIX_CB_Proactor () override;
 
   /// Constructor defines max number asynchronous operations that can

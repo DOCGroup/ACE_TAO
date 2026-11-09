@@ -36,7 +36,6 @@ class ACE_Timer_List_Iterator_T
 {
 public:
   using List = ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
-  /// Constructor.
   explicit ACE_Timer_List_Iterator_T (List &lst);
 
   ACE_Timer_List_Iterator_T (ACE_Timer_List_Iterator_T const &) = delete;
@@ -44,7 +43,6 @@ public:
   ACE_Timer_List_Iterator_T &operator= (ACE_Timer_List_Iterator_T const &) = delete;
   ACE_Timer_List_Iterator_T &operator= (ACE_Timer_List_Iterator_T &&) = delete;
 
-  /// Destructor.
   ~ACE_Timer_List_Iterator_T () override;
 
   /// Positions the iterator at the earliest node in the Timer Queue
@@ -113,7 +111,6 @@ public:
   ACE_Timer_List_T &operator= (ACE_Timer_List_T const &) = delete;
   ACE_Timer_List_T &operator= (ACE_Timer_List_T &&) = delete;
 
-  /// Destructor
   ~ACE_Timer_List_T () override;
 
   /// True if queue is empty, else false.

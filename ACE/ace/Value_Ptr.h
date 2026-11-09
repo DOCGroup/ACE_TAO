@@ -65,10 +65,8 @@ namespace ACE
   class Value_Ptr
   {
   public:
-    /// Constructor.
     explicit Value_Ptr (T * p = nullptr) : p_ (p) {}
 
-    /// Destructor.
     ~Value_Ptr () { delete this->p_; }
 
     /// Deference operator.

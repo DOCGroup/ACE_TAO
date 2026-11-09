@@ -43,7 +43,6 @@ template <class T>
 class ACE_Future_Set : public ACE_Future_Observer<T>
 {
 public:
-  /// Constructor.
   explicit ACE_Future_Set (
     ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
 
@@ -52,7 +51,6 @@ public:
   ACE_Future_Set &operator= (const ACE_Future_Set &) = delete;
   ACE_Future_Set &operator= (ACE_Future_Set &&) = delete;
 
-  /// Destructor.
   ~ACE_Future_Set ();
 
   /**

@@ -77,7 +77,6 @@ public:
   /// Create Timeprobes with @a size slots
   ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
-  /// Destructor.
   ~ACE_Timeprobe_Ex ();
 
   /// Record a time. @a event is used to describe this time probe.
@@ -185,10 +184,8 @@ template <class Timeprobe>
 class ACE_Function_Timeprobe
 {
 public:
-  /// Constructor.
   ACE_Function_Timeprobe (Timeprobe &timeprobe, u_long event);
 
-  /// Destructor.
   ~ACE_Function_Timeprobe ();
 
 protected:

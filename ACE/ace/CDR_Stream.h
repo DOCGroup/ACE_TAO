@@ -168,7 +168,6 @@ public:
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
-  /// destructor
   ~ACE_OutputCDR ();
 
   /**
@@ -783,7 +782,6 @@ public:
   /// Transfer the contents from @a rhs to a new CDR
   ACE_InputCDR (Transfer_Contents rhs);
 
-  /// Destructor
   virtual ~ACE_InputCDR ();
 
   /// Disambiguate overloading when extracting octets, chars,

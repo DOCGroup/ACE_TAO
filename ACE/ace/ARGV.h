@@ -193,7 +193,6 @@ public:
    */
   explicit ACE_ARGV_T (bool substitute_env_args = true);
 
-  /// Destructor.
   ~ACE_ARGV_T ();
 
   ACE_ARGV_T (ACE_ARGV_T const &) = delete;

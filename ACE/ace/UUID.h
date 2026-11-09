@@ -202,7 +202,6 @@ namespace ACE_Utils
     /// Default constructor.
     UUID_Generator();
 
-    /// Destructor.
     ~UUID_Generator();
 
     UUID_Generator (UUID_Generator const&) = delete;

@@ -52,10 +52,8 @@ template <class EXT_ID, class INT_ID>
 class ACE_RB_Tree_Node : public ACE_RB_Tree_Node_Base
 {
 public:
-  /// Constructor.
   ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
 
-  /// Destructor.
   ~ACE_RB_Tree_Node ();
 
   /// Key accessor.
@@ -195,7 +193,6 @@ public:
   using iterator = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
-  /// Constructor.
   ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
@@ -208,7 +205,6 @@ public:
   /// resources.
   int close ();
 
-  /// Destructor.
   virtual ~ACE_RB_Tree ();
 
   // = insertion, removal, and search methods.
@@ -642,7 +638,6 @@ protected:
   ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Iterator_Base ();
 
   // = Internal methods
@@ -705,7 +700,6 @@ public:
   ACE_RB_Tree_Iterator (const EXT_ID &key,
                         ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Iterator ();
 
   // = ACE-style iteration methods.
@@ -820,7 +814,6 @@ public:
   ACE_RB_Tree_Reverse_Iterator (const EXT_ID &key,
                                 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Reverse_Iterator ();
 
   // = ACE-style iteration methods.

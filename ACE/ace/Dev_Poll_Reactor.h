@@ -66,7 +66,6 @@ class ACE_Dev_Poll_Reactor;
 class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor
   ACE_Dev_Poll_Reactor_Notify ();
 
   /**
@@ -313,7 +312,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   class Handler_Repository
   {
   public:
-    /// Constructor.
     Handler_Repository ();
 
     /// Initialize a repository that can map handles up to the value @a size.
@@ -1146,7 +1144,6 @@ protected:
 class ACE_Dev_Poll_Handler_Guard
 {
 public:
-  /// Constructor
   /**
    * The constructor checks to see if @a eh is a reference-counted handler and
    * remember that for later. If @a eh is reference counted, its reference
@@ -1157,7 +1154,6 @@ public:
    */
   ACE_Dev_Poll_Handler_Guard (ACE_Event_Handler *eh, bool do_incr = true);
 
-  /// Destructor
   /**
    * The destructor decrements the reference count on the event
    * handler corresponding to the given handle.

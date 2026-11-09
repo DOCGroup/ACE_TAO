@@ -48,7 +48,6 @@ public:
   /// Assignment operator.
   const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 
-  /// Destructor.
   ~ACE_Name_Binding ();
 
   /// Test for equality.

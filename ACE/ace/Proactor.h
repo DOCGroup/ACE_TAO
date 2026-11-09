@@ -58,7 +58,6 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
   friend class ACE_Proactor;
 
 public:
-  /// Constructor.
   ACE_Proactor_Handle_Timeout_Upcall ();
 
   /// This method is called when a timer is registered.

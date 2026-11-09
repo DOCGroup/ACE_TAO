@@ -100,7 +100,6 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    /// Constructor.
     ACE_Name_Node (const char *name,
                    char *name_ptr,
                    char *pointer,
@@ -111,10 +110,8 @@ public:
     ACE_Name_Node &operator= (ACE_Name_Node const &) = delete;
     ACE_Name_Node &operator= (ACE_Name_Node &&) = delete;
 
-    /// Constructor.
     ACE_Name_Node ();
 
-    /// Constructor.
     ~ACE_Name_Node ();
 
     /// Initialize a name node pointer.

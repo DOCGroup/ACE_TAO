@@ -29,14 +29,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
 public:
-  /// Constructor.
   ACE_POSIX_Wakeup_Completion (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                const void *act = nullptr,
                                ACE_HANDLE event = ACE_INVALID_HANDLE,
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
 
-  /// Destructor.
   ~ACE_POSIX_Wakeup_Completion () override;
 
 
@@ -563,7 +561,6 @@ public:
   /// <application_specific_code>
   ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
-  /// Destructor.
   ~ACE_AIOCB_Notify_Pipe_Manager () override;
 
   /// Send the result pointer through the notification pipe.

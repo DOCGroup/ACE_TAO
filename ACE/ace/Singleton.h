@@ -317,7 +317,6 @@ protected:
   ACE_DLL_Singleton_T &operator= (ACE_DLL_Singleton_T const &) = delete;
   ACE_DLL_Singleton_T &operator= (ACE_DLL_Singleton_T &&) = delete;
 
-  /// Destructor.
   ~ACE_DLL_Singleton_T ();
 
   /// Contained instance.

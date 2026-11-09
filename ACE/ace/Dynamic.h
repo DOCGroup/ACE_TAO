@@ -32,10 +32,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dynamic
 {
 public:
-  /// Constructor.
   ACE_Dynamic ();
 
-  /// Destructor.
   ~ACE_Dynamic () = default;
 
   /**

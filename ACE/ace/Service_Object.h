@@ -44,10 +44,8 @@ class ACE_Export ACE_Service_Object
     public ACE_Shared_Object
 {
 public:
-  /// Constructor.
   ACE_Service_Object (ACE_Reactor * = nullptr);
 
-  /// Destructor.
   ~ACE_Service_Object () override;
 
   /// Temporarily disable a service without removing it completely.

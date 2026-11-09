@@ -37,7 +37,6 @@ public:
   using first_type = T1;
   using second_type = T2;
 
-  /// Constructor.
   ACE_Reference_Pair (T1 &t1, T2 &t2);
 
   /// Access first.

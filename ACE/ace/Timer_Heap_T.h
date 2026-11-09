@@ -41,7 +41,6 @@ class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE>
 {
 public:
   using Heap = ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
-  /// Constructor.
   explicit ACE_Timer_Heap_Iterator_T (Heap &);
 
   ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_Iterator_T const &) = delete;
@@ -49,7 +48,6 @@ public:
   ACE_Timer_Heap_Iterator_T &operator= (ACE_Timer_Heap_Iterator_T const &) = delete;
   ACE_Timer_Heap_Iterator_T &operator= (ACE_Timer_Heap_Iterator_T &&) = delete;
 
-  /// Destructor.
   ~ACE_Timer_Heap_Iterator_T () override = default;
 
   /// Positions the iterator at the earliest node in the Timer Queue
@@ -134,7 +132,6 @@ public:
   ACE_Timer_Heap_T &operator= (ACE_Timer_Heap_T const &) = delete;
   ACE_Timer_Heap_T &operator= (ACE_Timer_Heap_T &&) = delete;
 
-  /// Destructor.
   ~ACE_Timer_Heap_T () override;
 
   /// True if heap is empty, else false.

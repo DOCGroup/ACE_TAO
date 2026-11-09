@@ -85,10 +85,8 @@ public:
     LIFO = 0
   };
 
-  /// Constructor
   ACE_Token (const ACE_TCHAR *name = nullptr, void * = nullptr);
 
-  /// Destructor
   virtual ~ACE_Token ();
 
   // = Strategies
@@ -215,7 +213,6 @@ public:
   /// that are asleep waiting to obtain the token.
   struct ACE_Token_Queue_Entry
   {
-    /// Constructor
     ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                            ACE_thread_t t_id);
 
@@ -257,7 +254,6 @@ private:
 
   struct ACE_Token_Queue
   {
-    /// Constructor
     ACE_Token_Queue ();
 
     /// Remove a waiter from the queue.

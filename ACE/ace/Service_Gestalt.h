@@ -383,7 +383,6 @@ protected:
 
   /// Performs the common initialization tasks for a new or previously
   /// closed instance. Must not be virtual, as it is called from the
-  /// constructor.
   int init_i ();
 
 protected:

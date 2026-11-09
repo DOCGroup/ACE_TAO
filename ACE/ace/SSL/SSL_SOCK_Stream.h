@@ -65,7 +65,6 @@ public:
   ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream const &) = delete;
   ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream &&) = delete;
 
-  /// Constructor
   /**
    * @param context Pointer to @c ACE_SSL_Context instance containing
    *                the OpenSSL @c SSL data structure to be associated
@@ -76,7 +75,6 @@ public:
   explicit ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
                                 ACE_SSL_Context::instance ());
 
-  /// Destructor
   ~ACE_SSL_SOCK_Stream ();
 
   /// Send an @a n byte buffer to the ssl socket using the semantics of

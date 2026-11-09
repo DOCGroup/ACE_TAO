@@ -247,7 +247,6 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Constructor
   ACE_Concurrency_Strategy (int flags = 0);
 
   // = Factory method.
@@ -305,7 +304,6 @@ public:
                     ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
                     int flags = 0);
 
-  /// Destructor.
   virtual ~ACE_Reactive_Strategy ();
 
   // = Factory method.
@@ -618,10 +616,8 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Constructor
   ACE_Scheduling_Strategy (SVC_HANDLER * = nullptr);
 
-  /// Destructor
   virtual ~ACE_Scheduling_Strategy ();
 
   // = Scheduling methods
@@ -653,7 +649,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
-  /// Constructor
   ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
   // = Scheduling methods
@@ -689,7 +684,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
-  /// Constructor
   ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
   // = Scheduling methods
@@ -764,12 +758,10 @@ public:
   /// Default constructor.
   ACE_Refcounted_Hash_Recyclable ();
 
-  /// Constructor.
   ACE_Refcounted_Hash_Recyclable (const T &t,
                                   long refcount = 0,
                                   ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
 
-  /// Destructor
   ~ACE_Refcounted_Hash_Recyclable () override;
 
   /// Compares two instances.
@@ -819,14 +811,12 @@ public:
 
   using SELF = ACE_Cached_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR, MUTEX>;
 
-  /// Constructor
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
                                ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = nullptr,
                                ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = nullptr,
                                MUTEX *mutex = nullptr,
                                bool delete_lock = false);
 
-  /// Destructor
   ~ACE_Cached_Connect_Strategy () override;
 
   /// This methods allow you to change the strategies used by the

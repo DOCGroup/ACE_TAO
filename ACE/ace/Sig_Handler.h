@@ -44,7 +44,6 @@ public:
   /// Default constructor.
   ACE_Sig_Handler ();
 
-  /// Destructor
   virtual ~ACE_Sig_Handler ();
 
   // = Registration and removal methods.

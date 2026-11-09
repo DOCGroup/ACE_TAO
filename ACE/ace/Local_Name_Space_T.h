@@ -59,7 +59,6 @@ template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
 {
 public:
-  /// Constructor.
   ACE_Name_Space_Map (ALLOCATOR *alloc);
 
   // = The following methods are Proxies to the underlying methods

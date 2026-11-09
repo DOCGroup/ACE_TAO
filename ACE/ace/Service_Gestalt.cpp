@@ -65,7 +65,6 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 }
 
 
-/// Destructor
 ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 {
   const ACE_Service_Type *tmp = nullptr;

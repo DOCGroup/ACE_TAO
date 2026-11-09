@@ -34,14 +34,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dirent_Selector
 {
 public:
-  /// Constructor
   ACE_Dirent_Selector () = default;
   ACE_Dirent_Selector (ACE_Dirent_Selector const &) = delete;
   ACE_Dirent_Selector (ACE_Dirent_Selector &&) = delete;
   ACE_Dirent_Selector &operator= (ACE_Dirent_Selector const &) = delete;
   ACE_Dirent_Selector &operator= (ACE_Dirent_Selector &&) = delete;
 
-  /// Destructor.
   virtual ~ACE_Dirent_Selector ();
 
   /// Return the length of the list of matching directory entries.

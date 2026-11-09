@@ -164,7 +164,6 @@ public:
   int signal_number () const;
 
 
-  /// Destructor.
   virtual ~ACE_Asynch_Result ();
 
 protected:
@@ -251,11 +250,9 @@ public:
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
 
-  /// Destructor.
   virtual ~ACE_Asynch_Operation () = default;
 
 protected:
-  /// Constructor.
   ACE_Asynch_Operation () = default;
 
   /// Return the underlying implementation class.
@@ -294,7 +291,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Read_Stream ();
 
-  /// Destructor
   ~ACE_Asynch_Read_Stream () override;
 
   /**
@@ -400,10 +396,8 @@ public:
     ACE_Asynch_Read_Stream_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
     Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -438,7 +432,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Write_Stream ();
 
-  /// Destructor.
   ~ACE_Asynch_Write_Stream () override;
 
   /**
@@ -556,10 +549,8 @@ public:
     ACE_Asynch_Write_Stream_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
     Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
@@ -597,7 +588,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Read_File ();
 
-  /// Destructor.
   ~ACE_Asynch_Read_File () override;
 
   /**
@@ -705,7 +695,6 @@ public:
     /// Constructor. This implementation will not be deleted.
     Result (ACE_Asynch_Read_File_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -748,7 +737,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Write_File ();
 
-  /// Destructor.
   ~ACE_Asynch_Write_File () override;
 
   /**
@@ -841,7 +829,6 @@ public:
     /// Constructor. This implementation will not be deleted.
     Result (ACE_Asynch_Write_File_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -882,7 +869,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Accept ();
 
-  /// Destructor.
   ~ACE_Asynch_Accept () override;
 
   /**
@@ -986,7 +972,6 @@ public:
     /// Constructor. Implementation will not be deleted.
     Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
@@ -1019,7 +1004,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Connect ();
 
-  /// Destructor.
   ~ACE_Asynch_Connect () override;
 
   /**
@@ -1082,7 +1066,6 @@ public:
     /// Constructor. Implementation will not be deleted.
     Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
@@ -1126,7 +1109,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Transmit_File ();
 
-  /// Destructor.
   ~ACE_Asynch_Transmit_File () override;
 
   /**
@@ -1221,10 +1203,8 @@ public:
     ACE_Asynch_Transmit_File_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
     Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -1243,13 +1223,11 @@ public:
   class ACE_Export Header_And_Trailer
   {
   public:
-    /// Constructor.
     Header_And_Trailer (ACE_Message_Block *header = nullptr,
                         size_t header_bytes = 0,
                         ACE_Message_Block *trailer = nullptr,
                         size_t trailer_bytes = 0);
 
-    /// Destructor
     virtual ~Header_And_Trailer ();
 
     /// This method allows all the member to be set in one fell swoop.
@@ -1333,7 +1311,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Read_Dgram ();
 
-  /// Destructor
   ~ACE_Asynch_Read_Dgram () override;
 
   /**
@@ -1429,10 +1406,8 @@ public:
     ACE_Asynch_Read_Dgram_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
     Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -1468,7 +1443,6 @@ public:
   /// A do nothing constructor.
   ACE_Asynch_Write_Dgram ();
 
-  /// Destructor.
   ~ACE_Asynch_Write_Dgram () override;
 
   /**
@@ -1561,10 +1535,8 @@ public:
     ACE_Asynch_Write_Dgram_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
     Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.

@@ -44,7 +44,6 @@ class ACE_Thread_Descriptor;
 class ACE_Export ACE_Thread_Adapter : public ACE_Base_Thread_Adapter
 {
 public:
-  /// Constructor.
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,

@@ -50,7 +50,6 @@ class ACE_Method_Request;
 class ACE_Export ACE_Activation_Queue
 {
 public:
-  /// Constructor.
   /**
    * Initializes a new activation queue.
    *
@@ -76,7 +75,6 @@ public:
                                  ACE_Allocator *alloc = nullptr,
                                  ACE_Allocator *db_alloc = nullptr);
 
-  /// Destructor.
   virtual ~ACE_Activation_Queue ();
 
   ACE_Activation_Queue (ACE_Activation_Queue const &) = delete;

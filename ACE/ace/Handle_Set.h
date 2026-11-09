@@ -176,7 +176,6 @@ private:
 class ACE_Export ACE_Handle_Set_Iterator
 {
 public:
-  /// Constructor.
   ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
   ACE_Handle_Set_Iterator () = delete;
   ~ACE_Handle_Set_Iterator () = default;

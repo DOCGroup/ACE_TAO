@@ -54,10 +54,8 @@ bool ACE_Proactor::delete_proactor_ = false;
 class ACE_Proactor_Timer_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   explicit ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
 
-  /// Destructor.
   ~ACE_Proactor_Timer_Handler () override;
 
   /// Proactor calls this to shut down the timer handler

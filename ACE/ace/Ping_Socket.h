@@ -46,7 +46,6 @@ public:
                    int protocol    = IPPROTO_ICMP,
                    int reuse_addr  = 0);
 
-  /// Destructor.
   ~ACE_Ping_Socket ();
 
   /// Wrapper around the BSD-style @c socket system call (no QoS).

@@ -299,16 +299,13 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    /// Constructor.
     ACE_Name_Node (const char *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
 
-    /// Constructor.
     ACE_Name_Node ();
 
-    /// Constructor.
     ~ACE_Name_Node ();
 
     /// Initialize a name node pointer.

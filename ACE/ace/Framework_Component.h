@@ -60,7 +60,6 @@ class ACE_Export ACE_Framework_Component
 public:
   friend class ACE_Framework_Repository;
 
-  /// Constructor.
   ACE_Framework_Component (void *_this,
                            const ACE_TCHAR *dll_name = nullptr,
                            const ACE_TCHAR *name = nullptr);
@@ -74,7 +73,6 @@ public:
   virtual void close_singleton () = 0;
 
 protected:
-  /// Destructor.
   virtual ~ACE_Framework_Component ();
 
 private:

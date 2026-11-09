@@ -35,7 +35,6 @@ public:
    using scale_factor_type = ACE_UINT64;
 #endif
 
-  /// Constructor
   /**
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.

@@ -28,7 +28,6 @@ template <class ACE_LOCK>
 class ACE_Refcountable_T
 {
 public:
-  /// Destructor.
   virtual ~ACE_Refcountable_T () = default;
 
   ACE_Refcountable_T (ACE_Refcountable_T const &) = default;

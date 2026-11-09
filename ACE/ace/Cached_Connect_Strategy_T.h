@@ -47,7 +47,6 @@ class ACE_Cached_Connect_Strategy_Ex
  : public ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
 public:
-  /// Constructor
   ACE_Cached_Connect_Strategy_Ex (
     CACHING_STRATEGY &caching_s,
     ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
@@ -56,7 +55,6 @@ public:
     MUTEX *lock = nullptr,
     int delete_lock = 0);
 
-  /// Destructor
   virtual ~ACE_Cached_Connect_Strategy_Ex ();
 
   /// Explicit purging of connection entries from the connection cache.
@@ -196,7 +194,6 @@ class ACE_Bounded_Cached_Connect_Strategy
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
 
 public:
-  /// Constructor
   ACE_Bounded_Cached_Connect_Strategy (size_t  max_size,
                                        CACHING_STRATEGY &caching_s,
                                        ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
@@ -205,7 +202,6 @@ public:
                                        MUTEX *lock = nullptr,
                                        int delete_lock = 0);
 
-  /// Destructor
   virtual ~ACE_Bounded_Cached_Connect_Strategy () = default;
 
   /// Declare the dynamic allocation hooks.

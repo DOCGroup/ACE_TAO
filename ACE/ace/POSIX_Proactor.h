@@ -268,7 +268,6 @@ public:
                          int signal_number = ACE_SIGRTMIN) override;
 
 protected:
-  /// Constructor.
   ACE_POSIX_Proactor ();
 
   /**
@@ -330,7 +329,6 @@ public:
 
   Proactor_Type  get_impl_type () override;
 
-  /// Destructor.
   ~ACE_POSIX_AIOCB_Proactor () override;
 
   /// Close down the Proactor.
@@ -518,7 +516,6 @@ public:
   ACE_POSIX_SIG_Proactor (const sigset_t mask_set,
                           size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  /// Destructor.
   ~ACE_POSIX_SIG_Proactor () override;
 
   /**
@@ -611,7 +608,6 @@ class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 #endif
 
 protected:
-  /// Constructor.
   ACE_POSIX_Asynch_Timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
                           const void *act,
                           const ACE_Time_Value &tv,
@@ -619,7 +615,6 @@ protected:
                           int priority = 0,
                           int signal_number = ACE_SIGRTMIN);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Timer () override = default;
 
   /// This method calls the handler's handle_timeout method.

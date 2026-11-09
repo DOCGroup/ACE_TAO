@@ -76,13 +76,11 @@ class ACE_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
 {
 public:
   // Initialization and termination methods.
-  /// Constructor.
   ACE_SOCK_SEQPACK_Association ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
   ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
 
-  /// Destructor.
   ~ACE_SOCK_SEQPACK_Association ();
 
   /**

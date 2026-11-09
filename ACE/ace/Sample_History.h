@@ -40,7 +40,6 @@ public:
    using scale_factor_type = ACE_UINT64;
 #endif
 
-  /// Constructor
   /**
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
@@ -51,7 +50,6 @@ public:
   ACE_Sample_History &operator= (ACE_Sample_History const &) = delete;
   ACE_Sample_History &operator= (ACE_Sample_History &&) = delete;
 
-  /// Destructor
   ~ACE_Sample_History ();
 
   /// Record one sample.

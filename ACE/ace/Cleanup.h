@@ -46,7 +46,6 @@ public:
   /// No-op constructor.
   ACE_Cleanup ();
 
-  /// Destructor.
   virtual ~ACE_Cleanup () = default;
 
   /// Cleanup method that, by default, simply deletes itself.
@@ -119,7 +118,6 @@ public:
   /// Default constructor.
   ACE_OS_Exit_Info () = default;
 
-  /// Destructor.
   ~ACE_OS_Exit_Info () = default;
 
   /// Use to register a cleanup hook.

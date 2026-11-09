@@ -55,7 +55,6 @@ class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
 public:
   using TIMER_QUEUE = TQ;
 
-  /// Constructor
   /**
    * Register the SIGALRM handler.  If @a mask == 0 then block all
    * signals when @c SIGALRM is run.  Otherwise, just block the signals
@@ -150,7 +149,6 @@ public:
   ACE_Thread_Timer_Queue_Adapter &operator= (ACE_Thread_Timer_Queue_Adapter const &) = delete;
   ACE_Thread_Timer_Queue_Adapter &operator= (ACE_Thread_Timer_Queue_Adapter &&) = delete;
 
-  /// Destructor.
   ~ACE_Thread_Timer_Queue_Adapter () override;
 
   /// Schedule the timer according to the semantics of the <TQ>; wakes

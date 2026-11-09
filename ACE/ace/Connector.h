@@ -58,12 +58,10 @@ template <class SVC_HANDLER>
 class ACE_NonBlocking_Connect_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   ACE_NonBlocking_Connect_Handler (ACE_Connector_Base<SVC_HANDLER> &connector,
                                    SVC_HANDLER *,
                                    long timer_id);
 
-  /// Destructor.
   ~ACE_NonBlocking_Connect_Handler () override;
 
   /// Close up and return underlying SVC_HANDLER through @c sh.

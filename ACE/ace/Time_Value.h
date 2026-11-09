@@ -64,7 +64,6 @@ public:
   /// Default Constructor.
   ACE_Time_Value ();
 
-  /// Constructor.
   explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
 
   // = Methods for converting to/from various time formats.
@@ -85,7 +84,6 @@ public:
     this->set (duration);
   }
 
-  /// Destructor
   virtual ~ACE_Time_Value () = default;
 
   /// Declare the dynamic allocation hooks.

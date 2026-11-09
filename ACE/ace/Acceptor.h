@@ -537,7 +537,6 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Constructor.
   ACE_Oneshot_Acceptor ();
 
   /**

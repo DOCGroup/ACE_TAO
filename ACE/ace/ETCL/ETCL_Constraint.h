@@ -71,7 +71,6 @@ public:
   /// Copy constructor
   ETCL_Literal_Constraint (const ETCL_Literal_Constraint& lit);
 
-  /// Destructor.
   ~ETCL_Literal_Constraint() override;
 
   /// Visitor accept method.

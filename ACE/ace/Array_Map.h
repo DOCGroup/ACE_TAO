@@ -119,7 +119,6 @@ public:
   ACE_Array_Map (ACE_Array_Map const & map);
   ACE_Array_Map & operator= (ACE_Array_Map const & map);
 
-  /// Destructor.
   ~ACE_Array_Map ();
 
   /**

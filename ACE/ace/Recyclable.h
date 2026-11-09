@@ -47,7 +47,6 @@ enum ACE_Recyclable_State
 class ACE_Export ACE_Recyclable
 {
 public:
-  /// Destructor.
   virtual ~ACE_Recyclable () = default;
 
   /// Get the recyclable bit
@@ -57,7 +56,6 @@ public:
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
-  /// Constructor.
   ACE_Recyclable (ACE_Recyclable_State initial_state);
 
   /// Our state.

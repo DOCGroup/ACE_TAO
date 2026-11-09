@@ -468,10 +468,8 @@ ACE_OS_Object_Manager::shutting_down ()
 class ACE_OS_Object_Manager_Manager
 {
 public:
-  /// Constructor.
   ACE_OS_Object_Manager_Manager ();
 
-  /// Destructor.
   ~ACE_OS_Object_Manager_Manager ();
 
 private:

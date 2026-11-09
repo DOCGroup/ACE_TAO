@@ -83,7 +83,6 @@ class ACE_Export ACE_Noop_Command
   : public ACE_Command_Base
 {
 public:
-  /// Constructor
   ACE_Noop_Command() = default;
 
   /// Implement the empty execute() member function

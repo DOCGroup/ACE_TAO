@@ -78,7 +78,6 @@ public:
                        size_t max_env_args = MAX_ENVIRONMENT_ARGS,
                        size_t max_cmdline_args = MAX_COMMAND_LINE_OPTIONS);
 
-  /// Destructor.
   ~ACE_Process_Options ();
 
   // = Methods to set process creation options portably.
@@ -507,7 +506,6 @@ public:
   /// Default construction.  Use ACE_Process::spawn() to start a process.
   ACE_Process ();
 
-  /// Destructor.
   virtual ~ACE_Process ();
 
   /**

@@ -142,7 +142,6 @@ public:
     INVALID
   };
 
-  /// Destructor
   virtual ~ACE_Configuration () = default;
 
   /// Obtain a reference to the root section of this configuration.
@@ -453,7 +452,6 @@ public:
   explicit ACE_Configuration_Win32Registry (HKEY hKey,
                                             u_long security_access = KEY_ALL_ACCESS);
 
-  /// Destructor
   virtual ~ACE_Configuration_Win32Registry () = default;
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
@@ -560,7 +558,6 @@ public:
   /// Copy ctor
   ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
 
-  /// destructor
   ~ACE_Configuration_ExtId () = default;
 
   /// Assignment operator
@@ -616,7 +613,6 @@ public:
   /// Copy ctor
   ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
 
-  /// Destructor
   ~ACE_Configuration_Value_IntId () = default;
 
   /// Assignment operator
@@ -665,7 +661,6 @@ public:
   /// Copy ctor
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
 
-  /// Destructor
   ~ACE_Configuration_Section_IntId () = default;
 
   /// Assignment operator
@@ -744,7 +739,6 @@ public:
   /// Default ctor
   ACE_Configuration_Heap ();
 
-  /// Destructor
   ~ACE_Configuration_Heap () override;
 
   /**

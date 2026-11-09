@@ -173,7 +173,6 @@ public:
    */
   void operator= (ACE_Unbounded_Queue<T> const &);
 
-  /// Destructor.
   /**
    * Clean up the memory for the queue.
    */

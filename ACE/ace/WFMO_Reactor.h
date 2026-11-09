@@ -293,10 +293,8 @@ public:
     void dump () const;
   };
 
-  /// Constructor.
   ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor);
 
-  /// Destructor.
   virtual ~ACE_WFMO_Reactor_Handler_Repository ();
 
   /// Initialize the repository of the appropriate @a size.
@@ -489,7 +487,6 @@ protected:
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor
   ACE_WFMO_Reactor_Notify (size_t max_notifies = 1024);
 
   /// Initialization. @a timer_queue is stored to call gettimeofday().

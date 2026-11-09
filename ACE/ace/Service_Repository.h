@@ -232,7 +232,6 @@ public:
   ACE_Service_Repository_Iterator (ACE_Service_Repository_Iterator &&) = delete;
   ACE_Service_Repository_Iterator &operator= (ACE_Service_Repository_Iterator &&) = delete;
 
-  /// Destructor.
   ~ACE_Service_Repository_Iterator ();
 
 

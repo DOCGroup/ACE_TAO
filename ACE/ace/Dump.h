@@ -68,7 +68,6 @@ public:
   friend class ACE_ODB;
   friend class ACE_Dumpable_Ptr;
 
-  /// Constructor.
   ACE_Dumpable (const void *);
 
   /// This pure virtual method must be filled in by a subclass.

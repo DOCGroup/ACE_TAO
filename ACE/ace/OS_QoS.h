@@ -269,7 +269,6 @@ class ACE_Export ACE_QoS
 #endif /* ACE_HAS_WINSOCK2 */
 {
 public:
-  /// Constructor
   ACE_QoS ();
 
   /// Get the flow spec for data sending.

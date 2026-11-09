@@ -53,7 +53,6 @@ template <class T>
 class ACE_Incremental_Key_Generator
 {
 public:
-  /// Constructor.
   ACE_Incremental_Key_Generator () = default;
 
   /// Functor method: generates a new key.
@@ -78,7 +77,6 @@ template <class T>
 class ACE_Iterator_Impl
 {
 public:
-  /// Destructor.
   virtual ~ACE_Iterator_Impl () = default;
 
   /// Clone.
@@ -108,7 +106,6 @@ template <class T>
 class ACE_Reverse_Iterator_Impl
 {
 public:
-  /// Destructor.
   virtual ~ACE_Reverse_Iterator_Impl () = default;
 
   /// Clone.
@@ -142,13 +139,11 @@ public:
   using value_type = T;
   using implementation = ACE_Iterator_Impl<T>;
 
-  /// Constructor.
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
 
   /// Copy constructor.
   ACE_Iterator (const ACE_Iterator<T> &rhs);
 
-  /// Destructor.
   ~ACE_Iterator ();
 
   /// Assignment operator.
@@ -196,13 +191,11 @@ public:
   using value_type = T;
   using implementation = ACE_Reverse_Iterator_Impl<T>;
 
-  /// Constructor.
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
 
   /// Copy constructor.
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
 
-  /// Destructor.
   ~ACE_Reverse_Iterator ();
 
   /// Assignment operator.
@@ -437,10 +430,8 @@ public:
   // = Traits.
   using implementation = IMPLEMENTATION;
 
-  /// Constructor.
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Impl_Iterator_Adapter () = default;
 
   /// Clone.
@@ -480,10 +471,8 @@ public:
   // = Traits.
   using implementation = IMPLEMENTATION;
 
-  /// Constructor.
   ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter ();
 
   /// Clone.
@@ -705,10 +694,8 @@ public:
   // = Traits.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::iterator;
 
-  /// Constructor.
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
 
-  /// Destructor.
   virtual ~ACE_Active_Map_Manager_Iterator_Adapter () = default;
 
   /// Clone.
@@ -748,10 +735,8 @@ public:
   // = Traits.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::reverse_iterator;
 
-  /// Constructor.
   ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
 
-  /// Destructor.
   virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter ();
 
   /// Clone.
@@ -986,10 +971,8 @@ public:
   // = Traits.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator;
 
-  /// Constructor.
   ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
 
-  /// Destructor.
   virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter ();
 
   /// Clone.
@@ -1029,10 +1012,8 @@ public:
   // = Traits.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator;
 
-  /// Constructor.
   ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
 
-  /// Destructor.
   virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter ();
 
   /// Clone.
@@ -1259,10 +1240,8 @@ public:
   // = Traits.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator;
 
-  /// Constructor.
   ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Manager_Iterator_Adapter ();
 
   /// Clone.
@@ -1302,10 +1281,8 @@ public:
   // = Traits.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator;
 
-  /// Constructor.
   ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter ();
 
   /// Clone.

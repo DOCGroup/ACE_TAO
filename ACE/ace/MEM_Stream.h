@@ -58,13 +58,11 @@ public:
   friend class ACE_MEM_Connector;
 
   // Initialization and termination methods.
-  /// Constructor.
   ACE_MEM_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
   explicit ACE_MEM_Stream (ACE_HANDLE h);
 
-  /// Destructor.
   ~ACE_MEM_Stream ();
 
   //= The following two methods use write and read system calls.

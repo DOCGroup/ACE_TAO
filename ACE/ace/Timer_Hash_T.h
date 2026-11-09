@@ -120,7 +120,6 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
-  /// Constructor.
   using Hash = ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
   explicit ACE_Timer_Hash_Iterator_T (Hash &);
 
@@ -206,7 +205,6 @@ public:
   ACE_Timer_Hash_T &operator= (ACE_Timer_Hash_T const &) = delete;
   ACE_Timer_Hash_T &operator= (ACE_Timer_Hash_T &&) = delete;
 
-  /// Destructor
   ~ACE_Timer_Hash_T () override;
 
   /// True if queue is empty, else false.

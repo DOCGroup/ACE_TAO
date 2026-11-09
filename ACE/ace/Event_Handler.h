@@ -319,7 +319,6 @@ public:
   /// Copy constructor.
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 
-  /// Destructor.
   ~ACE_Event_Handler_var ();
 
   /// Assignment to a handler.

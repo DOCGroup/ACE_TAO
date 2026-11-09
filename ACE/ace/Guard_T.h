@@ -74,7 +74,6 @@ public:
   /// @a become_owner parameter indicates whether the guard should release
   /// the lock implicitly on destruction. The @a block parameter is
   /// ignored and is used here to disambiguate with the preceding
-  /// constructor.
   ACE_Guard (ACE_LOCK &l, bool block, int become_owner);
 
   /// Implicitly release the lock.

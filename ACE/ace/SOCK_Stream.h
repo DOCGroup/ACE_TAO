@@ -39,13 +39,11 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
 {
 public:
   // Initialization and termination methods.
-  /// Constructor.
   ACE_SOCK_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with @a h).
   ACE_SOCK_Stream (ACE_HANDLE h);
 
-  /// Destructor.
   ~ACE_SOCK_Stream ();
 
   /** @name Counted send/receive methods

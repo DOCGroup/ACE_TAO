@@ -43,13 +43,10 @@ class ACE_QoS_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 {
 public:
   // Initialization and termination methods.
-  /// Constructor.
   ACE_QoS_Decorator_Base () = default;
 
-  /// Constructor.
   explicit ACE_QoS_Decorator_Base (ACE_Event_Handler *event_handler);
 
-  /// Destructor.
   ~ACE_QoS_Decorator_Base () override;
 
   /// Forwards the request to its event_handler_ component.
@@ -81,7 +78,6 @@ struct ACE_QoS_Event_Handler_Deleter;
 
 class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
 {
-  /// Destructor.
   ~ACE_QoS_Event_Handler () override;
 
   /// Returns the RAPI file descriptor for receiving QoS events.
@@ -133,15 +129,12 @@ class ACE_QoS_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 {
 public:
   // Initialization and termination methods.
-  /// Constructor.
   ACE_QoS_Decorator () = default;
 
-  /// Constructor.
   ACE_QoS_Decorator (ACE_Event_Handler *event_handler,
                      ACE_QoS_Session *qos_session,
                      ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Destructor.
   ~ACE_QoS_Decorator () override;
 
   /// Calls the base class get_handle ().

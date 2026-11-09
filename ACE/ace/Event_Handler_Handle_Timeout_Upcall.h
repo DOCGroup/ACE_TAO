@@ -31,7 +31,6 @@ class ACE_Export ACE_Event_Handler_Handle_Timeout_Upcall
 public:
   ACE_Event_Handler_Handle_Timeout_Upcall () = default;
 
-  /// Destructor.
   ~ACE_Event_Handler_Handle_Timeout_Upcall () = default;
 
   /// This method is called when a timer is registered.

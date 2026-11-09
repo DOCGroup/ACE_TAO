@@ -336,7 +336,6 @@ protected:
 class ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_Result_Impl
 {
 public:
-  /// Destructor.
   ~ACE_Asynch_Read_File_Result_Impl () override = default;
 
 protected:

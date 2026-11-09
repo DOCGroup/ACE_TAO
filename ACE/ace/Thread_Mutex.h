@@ -51,7 +51,6 @@ public:
   ACE_Thread_Mutex &operator= (ACE_Thread_Mutex const &) = delete;
   ACE_Thread_Mutex &operator= (ACE_Thread_Mutex &&) = delete;
 
-  /// Constructor.
   ACE_Thread_Mutex (const ACE_TCHAR *name = nullptr,
                     ACE_mutexattr_t *attributes = nullptr);
 

@@ -44,7 +44,6 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Caching_Strategy
 {
 public:
-  /// Destructor.
   virtual ~ACE_Caching_Strategy ();
 
   /// Accessor method for the timer attributes.
@@ -110,12 +109,10 @@ class ACE_Caching_Strategy_Adapter
   : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 {
 public:
-  /// Constructor.
   /// When @a implementation is non-null, @a delete_implementation controls ownership.
   ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = nullptr,
                                 bool delete_implementation = false);
 
-  /// Destructor.
   ~ACE_Caching_Strategy_Adapter () override = default;
 
   ACE_Caching_Strategy_Adapter (ACE_Caching_Strategy_Adapter const &) = delete;

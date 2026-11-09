@@ -51,7 +51,6 @@ public:
   //@}
 
 protected:
-  /// Constructor
   /**
    * The constructor is protected, because only derived classes should
    * be instantiated.

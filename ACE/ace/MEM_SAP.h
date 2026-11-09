@@ -77,7 +77,6 @@ public:
   using MALLOC_TYPE = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
   using MALLOC_OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
-  /// Destructor.
   virtual ~ACE_MEM_SAP ();
 
   ACE_MEM_SAP (ACE_MEM_SAP const &) = delete;

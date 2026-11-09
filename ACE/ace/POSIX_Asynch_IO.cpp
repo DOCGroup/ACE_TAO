@@ -1707,7 +1707,6 @@ public:
   ACE_POSIX_Asynch_Transmit_Handler (ACE_POSIX_Proactor *posix_proactor,
                                      ACE_POSIX_Asynch_Transmit_File_Result *result);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Transmit_Handler () override;
 
   /// Do the transmission. All the info to do the transmission is in

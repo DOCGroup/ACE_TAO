@@ -626,7 +626,6 @@ public:
    */
   ACE_String_Base_Iterator (const ACE_String_Base_Iterator <ACE_CHAR_T> & iter);
 
-  /// Destructor.
   ~ACE_String_Base_Iterator ();
 
   /**
@@ -753,7 +752,6 @@ public:
    */
   ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & iter);
 
-  /// Destructor.
   ~ACE_String_Base_Const_Iterator ();
 
   /**

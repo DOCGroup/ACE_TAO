@@ -85,7 +85,6 @@ public:
                     | ACE_FLAG_MULTIPOINT_D_ROOT, // connector by default
                   int reuse_addr = 0);
 
-  /// Destructor.
   ~ACE_ATM_Params ();
 
   /// Get protocol family.

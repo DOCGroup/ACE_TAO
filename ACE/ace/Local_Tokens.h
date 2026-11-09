@@ -111,14 +111,12 @@ public:
   /// Null constructor.
   ACE_TPQ_Entry ();
 
-  /// Constructor.
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
                  const ACE_TCHAR *client_id);
 
   /// Copy constructor.
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
-  /// Destructor.
   ~ACE_TPQ_Entry ();
 
   /// Copy operator use by the queue.
@@ -220,7 +218,6 @@ public:
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
                      const ACE_TCHAR *client_id);
 
-  /// Destructor.
   virtual ~ACE_TSS_TPQ_Entry () = default;
 
   /// Allows us to pass args to the construction of the TSS object.
@@ -263,10 +260,8 @@ class ACE_Token_Proxy_Queue;
 class ACE_Export ACE_TPQ_Iterator
 {
 public:
-  /// Constructor.
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
 
-  /// Destructor.
   ~ACE_TPQ_Iterator () = default;
 
   /// Pass back the @a next_item.
@@ -305,10 +300,8 @@ class ACE_Export ACE_Token_Proxy_Queue
 public:
   friend class ACE_TPQ_Iterator;
 
-  /// Constructor.
   ACE_Token_Proxy_Queue ();
 
-  /// Destructor.
   ~ACE_Token_Proxy_Queue () = default;
 
   /**
@@ -373,7 +366,6 @@ public:
   /// Null constructor.
   ACE_Tokens ();
 
-  /// Destructor
   virtual ~ACE_Tokens () = default;
 
   /// No implementation.
@@ -495,10 +487,8 @@ class ACE_Local_Mutex;
 class ACE_Export ACE_Mutex_Token : public ACE_Tokens
 {
 public:
-  /// Constructor
   explicit ACE_Mutex_Token (const ACE_TCHAR* name);
 
-  /// Destructor
   virtual ~ACE_Mutex_Token ();
 
   // = Synchronization operations.
@@ -590,10 +580,8 @@ private:
 class ACE_Export ACE_RW_Token : public ACE_Tokens
 {
 public:
-  /// Constructor.
   explicit ACE_RW_Token (const ACE_TCHAR* name);
 
-  /// Destructor.
   virtual ~ACE_RW_Token ();
 
   // = Synchronization operations.
@@ -696,7 +684,6 @@ public:
   /// Copy construction.
   ACE_Token_Name (const ACE_Token_Name &rhs);
 
-  /// Destructor.
   virtual ~ACE_Token_Name ();
 
   /// Copy.
@@ -755,7 +742,6 @@ public:
   /// Construction.
   ACE_Token_Proxy ();
 
-  /// Destructor.
   virtual ~ACE_Token_Proxy ();
 
   /**
@@ -909,7 +895,6 @@ public:
   /// Construction.
   ACE_Null_Token () = default;
 
-  /// Destructor.
   ~ACE_Null_Token () override = default;
 
   /// Acquire.
@@ -976,7 +961,6 @@ public:
                    int ignore_deadlock = 0,
                    int debug = 0);
 
-  /// Destructor
   ~ACE_Local_Mutex () override;
 
   /// Dump the state of the class.
@@ -1028,7 +1012,6 @@ public:
                    int ignore_deadlock = 0,
                    int debug = 0);
 
-  /// Destructor
   ~ACE_Local_RLock () override;
 
   /// Dump the state of the class.
@@ -1083,7 +1066,6 @@ public:
                    int ignore_deadlock = 0,
                    int debug = 0);
 
-  /// Destructor
   ~ACE_Local_WLock () override;
 
   /// Dump the state of the class.

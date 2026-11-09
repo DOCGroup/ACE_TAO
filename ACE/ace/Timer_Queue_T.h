@@ -47,7 +47,6 @@ public:
   ACE_Timer_Queue_Upcall_Base &operator= (ACE_Timer_Queue_Upcall_Base const &) = delete;
   ACE_Timer_Queue_Upcall_Base &operator= (ACE_Timer_Queue_Upcall_Base &&) = delete;
 
-  /// Destructor
   ~ACE_Timer_Queue_Upcall_Base () override;
 
   /// Accessor to the upcall functor
@@ -93,7 +92,6 @@ public:
   ACE_Timer_Queue_T &operator= (ACE_Timer_Queue_T const &) = delete;
   ACE_Timer_Queue_T &operator= (ACE_Timer_Queue_T &&) = delete;
 
-  /// Destructor.
   ~ACE_Timer_Queue_T () override;
 
   /**

@@ -59,7 +59,6 @@ public:
   /// if specified.
   ACE_Intrusive_List () = default;
 
-  /// Destructor.
   ~ACE_Intrusive_List () = default;
 
   ACE_Intrusive_List (ACE_Intrusive_List const &) = delete;

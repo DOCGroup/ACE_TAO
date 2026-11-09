@@ -43,7 +43,6 @@ public:
   ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue const &) = delete;
   ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue &&) = delete;
 
-  /// Destructor
   virtual ~ACE_Abstract_Timer_Queue () = 0;
 
   /// True if queue is empty, else false.

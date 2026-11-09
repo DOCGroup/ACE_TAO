@@ -115,10 +115,8 @@ public:
     SSLv23
   };
 
-  /// Constructor
   ACE_SSL_Context ();
 
-  /// Destructor
   ~ACE_SSL_Context ();
 
   /// The Singleton context, the SSL components use the singleton if

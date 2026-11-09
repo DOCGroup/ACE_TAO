@@ -46,7 +46,6 @@ public:
   ACE_OS_Log_Msg_Attributes &operator= (ACE_OS_Log_Msg_Attributes const &) = delete;
   ACE_OS_Log_Msg_Attributes &operator= (ACE_OS_Log_Msg_Attributes &&) = delete;
 
-  /// Constructor
   ACE_OS_Log_Msg_Attributes ();
 
 protected:

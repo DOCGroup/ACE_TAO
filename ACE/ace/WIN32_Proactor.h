@@ -298,7 +298,6 @@ class ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
   friend class ACE_WIN32_Proactor;
 
 protected:
-  /// Constructor.
   ACE_WIN32_Asynch_Timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
                           const void *act,
                           const ACE_Time_Value &tv,
