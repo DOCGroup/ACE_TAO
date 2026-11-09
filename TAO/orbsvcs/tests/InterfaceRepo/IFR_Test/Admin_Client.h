@@ -12,14 +12,16 @@
  */
 //=============================================================================
 
-
 #if !defined (ADMIN_CLIENT_H)
 #define ADMIN_CLIENT_H
+
+#include <array>
+#include <cstddef>
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 
-constexpr CORBA::ULong NUMBER_OF_TESTS = 11;
+constexpr std::size_t NUMBER_OF_TESTS = 11;
 
 /**
  * @class Admin_Client
@@ -32,11 +34,8 @@ constexpr CORBA::ULong NUMBER_OF_TESTS = 11;
 class Admin_Client
 {
 public:
-  /// Constructor
-  Admin_Client ();
-
-  /// Destructor
-  ~Admin_Client ();
+  Admin_Client () = default;
+  ~Admin_Client () = default;
 
   Admin_Client (Admin_Client const&) = delete;
   Admin_Client (Admin_Client&&) = delete;
@@ -69,28 +68,52 @@ private:
                   ACE_TCHAR *argv[]);
 
   /// Array of pointers to the test functions.
-  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])();
+  std::array<void (Admin_Client::*)(), NUMBER_OF_TESTS> test_array_ {{
+    &Admin_Client::array_test,
+    &Admin_Client::enum_test,
+    &Admin_Client::alias_test,
+    &Admin_Client::native_test,
+    &Admin_Client::struct_test,
+    &Admin_Client::union_test,
+    &Admin_Client::exception_test,
+    &Admin_Client::constant_test,
+    &Admin_Client::interface_test,
+    &Admin_Client::move_test,
+    &Admin_Client::module_test
+  }};
 
   /// Array of test names used in selection of one test.
-  static char const* test_names_[];
+  static constexpr std::array<char const*, NUMBER_OF_TESTS> test_names_ {{
+    "array",
+    "enum",
+    "alias",
+    "native",
+    "struct",
+    "union",
+    "exception",
+    "constant",
+    "interface",
+    "move",
+    "module"
+  }};
 
   /// Flag to output results of IFR queries.
-  CORBA::Boolean debug_;
+  bool debug_ {};
 
   /// Are we running all the tests or just one?
-  CORBA::Boolean all_tests_;
+  bool all_tests_ {true};
 
   /// Array index of the selected test function.
-  CORBA::ULong which_test_;
+  std::size_t which_test_ {};
 
   /// # of times to run each test.
-  CORBA::ULong iterations_;
+  CORBA::ULong iterations_ {1};
 
   /// Storage of the ORB reference.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Storage of the IFR reference.
-  CORBA::Repository_var repo_;
+  CORBA::Repository_var repo_ {};
 };
 
 #endif /* ADMIN_CLIENT_H */
