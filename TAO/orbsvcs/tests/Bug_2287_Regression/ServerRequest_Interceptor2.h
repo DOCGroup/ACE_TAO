@@ -64,7 +64,7 @@ public:
   CORBA::Object_var server_iogr_ {};
 
 protected:
-  TimeBase::TimeT get_now ();
+  static TimeBase::TimeT get_now ();
 
 private:
   bool expired_ {};

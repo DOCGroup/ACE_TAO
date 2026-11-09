@@ -59,7 +59,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   if ((cdr >> ftrsc) == 0)
     throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
-  TimeBase::TimeT const now = this->get_now ();
+  TimeBase::TimeT const now = get_now ();
 
   if (now > ftrsc.expiration_time)
     {
@@ -70,8 +70,8 @@ TAO249_ServerRequest_Interceptor2::receive_request (
           ACE_DEBUG ((LM_ERROR,
                       "Test Failed - REGRESSION !!! Client ORB is still retrying LOCATION_FORWARDs "
                       "after the expiration time!!\n"));
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), ftrsc.expiration_time));
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expiration time  : %Q\n"), ftrsc.expiration_time));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Time now         : %Q\n"), now));
 
           // Let the request 'succeed' rather than throwing a forward exception.
           return;
@@ -82,9 +82,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
           // This could legitimately happen - it is only definitely a problem if
           // the client keeps on retrying after now. We set a flag so we can check for this.
           this->expired_ = true;
-          ACE_DEBUG ((LM_DEBUG, "The expiration time has now passed !!\n"));
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), ftrsc.expiration_time));
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The expiration time has now passed !!\n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expiration time  : %Q\n"), ftrsc.expiration_time));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Time now         : %Q\n"), now));
         }
     }
 

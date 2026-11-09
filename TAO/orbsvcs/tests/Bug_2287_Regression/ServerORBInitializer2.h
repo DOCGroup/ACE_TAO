@@ -42,7 +42,7 @@ private:
   /// Register the necessary interceptors.
   void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
 
-  // Non-owning; the ORB and the local interceptor var manage the references.
+  // Non-owning; ORBInitInfo and the local interceptor var manage the references.
   TAO249_ServerRequest_Interceptor2 *sri_ {};
 };
 

@@ -11,17 +11,20 @@
 // Make sure this file is included to avoid permanent forward problems in win32.
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
+#include <cstdio>
 #include <memory>
+
+using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
 struct Options
 {
-  ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
+  ACE_TCHAR const *ior_output_file { ACE_TEXT ("test.ior") };
 };
 
 int
 parse_args (Options &options, int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -34,13 +37,10 @@ parse_args (Options &options, int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                             ACE_TEXT ("usage: %s -o <iorfile>\n"),
                            argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -77,14 +77,10 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
   // Set the property
-  CORBA::Boolean retval = iorm->set_property (&iogr_prop, new_ref.in ());
+  CORBA::Boolean const has_property = iorm->set_property (&iogr_prop, new_ref.in ());
 
-  // Set the primary
-  // See we are setting the second ior as the primary
-  if (retval)
-    {
-      retval = iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
-    }
+  if (has_property)
+    iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
 
   return new_ref._retn ();
 }
@@ -99,6 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer2,
                       -1);  // No exceptions yet!
+      // The ORBInitializer_var adopts the ACE_NEW_RETURN allocation.
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
@@ -108,14 +105,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var const poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
+                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                           1);
 
       PortableServer::POAManager_var const poa_manager =
@@ -149,6 +146,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
+      // The ServantBase_var adopts the servant's initial reference.
       PortableServer::ServantBase_var owner (hello_impl);
 
       PortableServer::ObjectId_var const server_id =
@@ -165,7 +163,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var const iorm_object =
-        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
       TAO_IOP::TAO_IOR_Manipulation_var const iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
@@ -183,14 +181,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the <ior_output_file>
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+        File_Ptr output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
                              options.ior_output_file),
                             1);
-        ACE_OS::fprintf (output_file.get (), "%s", iorgr_string.in ());
+        if (std::fprintf (output_file.get (), "%s", iorgr_string.in ()) < 0)
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
       }
 
       temp_initializer->set_server_iogr (iogr.in ());
@@ -199,7 +198,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) server - event loop finished\n")));
 
       root_poa->destroy (true, true);
 
