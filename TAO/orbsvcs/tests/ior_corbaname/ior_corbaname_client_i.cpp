@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    ior_corbaname_client_i.cpp
@@ -13,19 +12,8 @@
 
 
 #include "ior_corbaname_client_i.h"
-#include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
-#include "ace/SString.h"
 
-// Constructor
-IOR_corbaname_Client_i::IOR_corbaname_Client_i ()
-{
-}
-
-// Destructor
-IOR_corbaname_Client_i::~IOR_corbaname_Client_i ()
-{
-}
+#include <string>
 
 int
 IOR_corbaname_Client_i::run ()
@@ -45,7 +33,7 @@ IOR_corbaname_Client_i::run ()
       // <name>. "#" refers to the seperator between the host and the
       // entry.
 
-      ACE_CString corbaname_url (ACE_TEXT_ALWAYS_CHAR (this->argv_[1]), 0, 1);
+      std::string corbaname_url (ACE_TEXT_ALWAYS_CHAR (this->name_service_address_.c_str ()));
 
       // Append the seperator '#' to the host.
       corbaname_url += "#";
@@ -54,18 +42,18 @@ IOR_corbaname_Client_i::run ()
       corbaname_url += "STATUS";
 
       // Resolve the stringified name.
-      CORBA::Object_var factory_object =
+      CORBA::Object_var const factory_object =
         this->orb_->string_to_object (corbaname_url.c_str ());
 
       // Narrow
-      corbaname::Status_var factory =
+      corbaname::Status_var const factory =
         corbaname::Status::_narrow (factory_object.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             this->argv_[1]),
+                             ACE_TEXT ("Object reference <%s> is nil\n"),
+                             this->name_service_address_.c_str ()),
                             1);
         }
 
@@ -75,22 +63,21 @@ IOR_corbaname_Client_i::run ()
       if (!ret_value)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "The server has been successfully contacted.\n",
-                      0));
+                      ACE_TEXT ("The server has been successfully contacted.\n")));
         }
     }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const &ex)
     {
-      ex._tao_print_exception ("CosNaming::NamingContext::NotFound");
+      ex._tao_print_exception (ACE_TEXT ("CosNaming::NamingContext::NotFound"));
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const &ex)
     {
-      ex._tao_print_exception ("A system exception on client side");
+      ex._tao_print_exception (ACE_TEXT ("A system exception on client side"));
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("client");
+      ex._tao_print_exception (ACE_TEXT ("client"));
       return -1;
     }
 
@@ -100,25 +87,23 @@ IOR_corbaname_Client_i::run ()
 int
 IOR_corbaname_Client_i::init (int argc, ACE_TCHAR **argv)
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   try
     {
       // First initialize the ORB, that will remove some arguments...
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
       // There must be at least one argument, the file that has to be
       // retrieved
-      if (this->argc_ < 2)
+      if (argc < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: Address of naming context not specified\n",
-                           this->argv_[0]),
+                           ACE_TEXT ("%s: Address of naming context not specified\n"),
+                           argv[0]),
                            -1);
+      this->name_service_address_ = argv[1];
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("client");
+      ex._tao_print_exception (ACE_TEXT ("client"));
       return 1;
     }
 

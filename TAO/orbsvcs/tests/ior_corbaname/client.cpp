@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    client.cpp
@@ -21,14 +20,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (client.init (argc, argv) == -1)
         return 1;
-      else
-        {
-          return client.run ();
-        }
+      return client.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("client");
+      ex._tao_print_exception (ACE_TEXT ("client"));
     }
   return 1;
 }
