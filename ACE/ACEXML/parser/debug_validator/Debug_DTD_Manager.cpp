@@ -5,13 +5,7 @@
 #include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
 #include "ACEXML/parser/debug_validator/Debug_Attributes_Builder.h"
 
-ACEXML_Debug_DTD_Manager::ACEXML_Debug_DTD_Manager ()
-{
-}
-
-ACEXML_Debug_DTD_Manager::~ACEXML_Debug_DTD_Manager ()
-{
-}
+ACEXML_Debug_DTD_Manager::~ACEXML_Debug_DTD_Manager () = default;
 
 ACEXML_Element_Def_Builder *
 ACEXML_Debug_DTD_Manager::getElement_Def_Builder ()

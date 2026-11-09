@@ -22,7 +22,7 @@
 class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_DTD_Manager : public ACEXML_DTD_Manager
 {
 public:
-  ACEXML_Debug_DTD_Manager ();
+  ACEXML_Debug_DTD_Manager () = default;
 
   ~ACEXML_Debug_DTD_Manager () override;
   ACEXML_Debug_DTD_Manager (ACEXML_Debug_DTD_Manager const &) = delete;

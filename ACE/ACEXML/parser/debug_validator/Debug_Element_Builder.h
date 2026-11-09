@@ -32,7 +32,7 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Element_Builder
   : public ACEXML_Element_Def_Builder
 {
 public:
-  ACEXML_Debug_Element_Builder ();
+  ACEXML_Debug_Element_Builder () = default;
 
   ACEXML_Debug_Element_Builder (ACEXML_Debug_Element_Builder const &) = delete;
   ACEXML_Debug_Element_Builder (ACEXML_Debug_Element_Builder &&) = delete;
@@ -108,11 +108,11 @@ public:
    */
   void dump () override;
 private:
-  CONTENT_TYPE type_;
+  CONTENT_TYPE type_ {CONTENT_TYPE::UNDEFINED};
 
   ACEXML_String element_;
 
-  std::unique_ptr<ACEXML_Element_Tree_List_Node> root_;
+  std::unique_ptr<ACEXML_Element_Tree_List_Node> root_ {};
 
   /// Non-owning stack of list nodes owned by root_.
   ACEXML_Element_Tree_List_Stack active_list_;

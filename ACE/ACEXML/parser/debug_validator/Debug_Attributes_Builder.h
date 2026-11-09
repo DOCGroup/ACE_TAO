@@ -33,9 +33,11 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Attribute_Builder
   : public ACEXML_Attribute_Def_Builder
 {
 public:
-  ACEXML_Debug_Attribute_Builder ();
+  ACEXML_Debug_Attribute_Builder () = default;
 
   ACEXML_Debug_Attribute_Builder (ACEXML_Debug_Attribute_Builder const &rhs);
+  ACEXML_Debug_Attribute_Builder (ACEXML_Debug_Attribute_Builder &&) = delete;
+  ACEXML_Debug_Attribute_Builder &operator= (ACEXML_Debug_Attribute_Builder &&) = delete;
 
   ~ACEXML_Debug_Attribute_Builder () override;
 
@@ -77,10 +79,10 @@ private:
   ACEXML_String name_;
 
   /// Type of attribute.
-  ATT_TYPE type_;
+  ATT_TYPE type_ {ERROR_TYPE};
 
   /// Default value type.
-  DEFAULT_DECL default_decl_;
+  DEFAULT_DECL default_decl_ {INVALID};
 
   /// Default attribute value.
   ACEXML_String default_value_;
@@ -119,7 +121,7 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Attributes_Builder
   : public ACEXML_Attributes_Def_Builder
 {
 public:
-  ACEXML_Debug_Attributes_Builder ();
+  ACEXML_Debug_Attributes_Builder () = default;
 
   ~ACEXML_Debug_Attributes_Builder () override;
   ACEXML_Debug_Attributes_Builder (ACEXML_Debug_Attributes_Builder const &) = delete;

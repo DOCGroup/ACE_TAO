@@ -1,12 +1,6 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
 
-ACEXML_Debug_Element_Builder::ACEXML_Debug_Element_Builder ()
-  : type_ (CONTENT_TYPE::UNDEFINED),
-    root_ ()
-{
-}
-
 ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder () = default;
 
 int

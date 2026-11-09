@@ -1,19 +1,13 @@
-ACEXML_INLINE
-ACEXML_Element_Tree_Node::ACEXML_Element_Tree_Node ()
-  : next_ (nullptr)
-{
-}
-
 ACEXML_INLINE ACEXML_Element_Tree_Node *
 ACEXML_Element_Tree_Node::next () const
 {
-  return this->next_;
+  return this->next_.get ();
 }
 
 ACEXML_INLINE void
 ACEXML_Element_Tree_Node::next (ACEXML_Element_Tree_Node * n)
 {
-  this->next_ = n;
+  this->next_.reset (n);
 }
 
 ACEXML_INLINE
@@ -32,10 +26,7 @@ ACEXML_Element_Tree_Name_Node::set (ACEXML_Char const *name,
 
 ACEXML_INLINE
 ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node ()
-  : type_ (LIST_TYPE::SEQUENCE),
-    head_ (nullptr),
-    tail_ (nullptr),
-    pop_next_ (nullptr)
+  : type_ (LIST_TYPE::SEQUENCE)
 {
 }
 
@@ -50,12 +41,6 @@ ACEXML_Element_Tree_List_Node::set (ACEXML_Element_Tree_List_Node::LIST_TYPE typ
 {
   this->type_ = type;
   return 0;
-}
-
-ACEXML_INLINE
-ACEXML_Element_Tree_List_Stack::ACEXML_Element_Tree_List_Stack ()
-  : top_ (nullptr)
-{
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node *

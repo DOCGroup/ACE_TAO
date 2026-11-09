@@ -1,12 +1,6 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Attributes_Builder.h"
 
-ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder ()
-  : type_ (ERROR_TYPE),
-    default_decl_ (INVALID)
-{
-}
-
 ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder (
   ACEXML_Debug_Attribute_Builder const &rhs)
   : name_ (rhs.name_),
@@ -17,9 +11,7 @@ ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder (
 {
 }
 
-ACEXML_Debug_Attribute_Builder::~ACEXML_Debug_Attribute_Builder ()
-{
-}
+ACEXML_Debug_Attribute_Builder::~ACEXML_Debug_Attribute_Builder () = default;
 
 int
 ACEXML_Debug_Attribute_Builder::setName (ACEXML_Char const *n)
@@ -35,7 +27,7 @@ ACEXML_Debug_Attribute_Builder::getName ()
 }
 
 int
-ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type)
+ACEXML_Debug_Attribute_Builder::setAttType (ATT_TYPE type)
 {
   if (this->type_ == ERROR_TYPE)
     {
@@ -143,13 +135,7 @@ ACEXML_Debug_Attribute_Builder::dump ()
 }
 // ========================================
 
-ACEXML_Debug_Attributes_Builder::ACEXML_Debug_Attributes_Builder ()
-{
-}
-
-ACEXML_Debug_Attributes_Builder::~ACEXML_Debug_Attributes_Builder ()
-{
-}
+ACEXML_Debug_Attributes_Builder::~ACEXML_Debug_Attributes_Builder () = default;
 
 int
 ACEXML_Debug_Attributes_Builder::setElement (ACEXML_Char const *,
