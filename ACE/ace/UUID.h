@@ -85,7 +85,6 @@ namespace ACE_Utils
     /// The size of a binary UUID.
     static constexpr int BINARY_SIZE = 16;
 
-    /// Constructor
     UUID ();
 
 #ifndef ACE_LACKS_SSCANF
@@ -95,7 +94,6 @@ namespace ACE_Utils
 
     UUID (const UUID &right);
 
-    // Destructor
     ~UUID () = default;
 
     ACE_UINT32 time_low () const;
