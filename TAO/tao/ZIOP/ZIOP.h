@@ -39,10 +39,8 @@ class TAO_ServerRequest;
 class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
-  /// Constructor
   TAO_ZIOP_Loader () = default;
 
-  /// Destructor
   ~TAO_ZIOP_Loader () override;
 
   bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core) override;
