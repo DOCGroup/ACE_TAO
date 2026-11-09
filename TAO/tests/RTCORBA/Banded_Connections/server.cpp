@@ -5,28 +5,37 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
+#include <cstdio>
+#include <cstring>
+#include <memory>
+
 class Test_i : public POA_Test
 {
 public:
   Test_i (CORBA::ORB_ptr orb,
-          RTCORBA::PriorityBands &bands);
+          RTCORBA::PriorityBands const &bands);
 
   void test_method (CORBA::Boolean client_propagated,
-                    CORBA::Short priority);
+                    CORBA::Short priority) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
+  Test_i (Test_i const &) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i &&) = delete;
+
   CORBA::ORB_var orb_;
-  RTCORBA::PriorityBands &bands_;
+  RTCORBA::PriorityBands const &bands_;
   RTCORBA::Current_var rt_current_;
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb,
-                RTCORBA::PriorityBands &bands)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
+                RTCORBA::PriorityBands const &bands)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
      bands_ (bands),
      rt_current_ ()
 {
@@ -43,7 +52,7 @@ Test_i::test_method (CORBA::Boolean client_propagated,
                      CORBA::Short client_priority)
 {
   // Get the upcall thread's priority.
-  CORBA::Short server_priority =
+  CORBA::Short const server_priority =
     this->rt_current_->the_priority ();
 
   // Check which policy we are dealing with.
@@ -68,7 +77,7 @@ Test_i::test_method (CORBA::Boolean client_propagated,
       // using thread pools with lanes.
       //
       // Print out the bands.
-      int index = -1;
+      CORBA::ULong index {};
       ACE_DEBUG ((LM_DEBUG,
                   "\nPriority Bands:\n"));
       for (CORBA::ULong i = 0; i < this->bands_.length (); ++i)
@@ -93,13 +102,13 @@ Test_i::test_method (CORBA::Boolean client_propagated,
                   client_priority,
                   server_priority));
 
-      if (index == -1)
+      if (index == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "ERROR: object and thread priorities do not "
                     "match the same band.\n"));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "Band %d was used for this invocation\n", index));
+                    "Band %u was used for this invocation\n", index));
     }
 }
 
@@ -111,30 +120,33 @@ Test_i::shutdown ()
 
 //*************************************************************************
 
-const ACE_TCHAR *bands_file = ACE_TEXT("bands");
-const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
-const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
+struct Server_Options
+{
+  ACE_TCHAR const *bands_file {ACE_TEXT("bands")};
+  ACE_TCHAR const *client_propagated_ior {ACE_TEXT("test1.ior")};
+  ACE_TCHAR const *server_declared_ior {ACE_TEXT("test2.ior")};
+};
 
 // Parse command-line arguments.
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:o:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'n':
-        ior_output_file1 = get_opts.opt_arg ();
+        options.client_propagated_ior = get_opts.opt_arg ();
         break;
 
       case 'o':
-        ior_output_file2 = get_opts.opt_arg ();
+        options.server_declared_ior = get_opts.opt_arg ();
         break;
 
       case 'b':
-        bands_file = get_opts.opt_arg ();
+        options.bands_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -153,49 +165,56 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-get_priority_bands (RTCORBA::PriorityBands &bands)
+get_priority_bands (RTCORBA::PriorityBands &bands,
+                    ACE_TCHAR const *bands_file)
 {
   //
   // Read bands from a file.
   //
-  FILE* file =
+  FILE *file =
     ACE_OS::fopen (bands_file, "r");
 
-  if (file == 0)
+  if (file == nullptr)
     return -1;
 
   ACE_Read_Buffer reader (file, 1);
 
-  char *string =
-    reader.read (EOF, ' ', '\0');
+  struct Read_Buffer_Deleter
+  {
+    ACE_Allocator *allocator;
 
-  if (string == 0)
+    void operator() (char *buffer) const
+    {
+      this->allocator->free (buffer);
+    }
+  };
+
+  std::unique_ptr<char, Read_Buffer_Deleter> string (
+    reader.read (EOF, ' ', '\0'), Read_Buffer_Deleter {reader.alloc ()});
+
+  if (!string)
     return -1;
 
-  CORBA::ULong bands_length =
+  CORBA::ULong const bands_length =
     (reader.replaced () + 1) / 2;
   bands.length (bands_length);
 
   int result = 1;
-  char* working_string = string;
+  char *working_string = string.get ();
   for (CORBA::ULong i = 0; i < bands_length; ++i)
     {
-      result = ::sscanf (working_string,
-                         "%hd",
-                         &bands[i].low);
+      result = std::sscanf (working_string, "%hd", &bands[i].low);
       if (result == 0 || result == EOF)
         break;
 
-      working_string += ACE_OS::strlen (working_string);
+      working_string += std::strlen (working_string);
       working_string += 1;
 
-      result = ::sscanf (working_string,
-                         "%hd",
-                         &bands[i].high);
+      result = std::sscanf (working_string, "%hd", &bands[i].high);
       if (result == 0 || result == EOF)
         break;
 
-      working_string += ACE_OS::strlen (working_string);
+      working_string += std::strlen (working_string);
       working_string += 1;
 
       if (bands[i].low > bands[i].high)
@@ -204,8 +223,6 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
           break;
         }
     }
-
-  reader.alloc ()->free (string);
 
   if (result == 0 || result == EOF)
     return -1;
@@ -216,8 +233,8 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
 int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
-               Test_i *server_impl,
-               const ACE_TCHAR *filename)
+               Test_i * const server_impl,
+               ACE_TCHAR const *filename)
 {
   // Register servant with the POA.
   PortableServer::ObjectId_var id;
@@ -232,19 +249,18 @@ create_object (PortableServer::POA_ptr poa,
     orb->object_to_string (server.in ());
 
   // Print ior to the file.
-  if (filename != 0)
+  if (filename != nullptr)
     {
-      FILE *output_file =
-        ACE_OS::fopen (filename, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            filename),
                           -1);
-      ACE_OS::fprintf (output_file,
+      ACE_OS::fprintf (output_file.get (),
                        "%s",
                        ior.in ());
-      ACE_OS::fclose (output_file);
     }
 
   return 0;
@@ -252,7 +268,7 @@ create_object (PortableServer::POA_ptr poa,
 
 void
 object_activation_exception_test (RTPortableServer::POA_ptr poa,
-                                  Test_i *server_impl,
+                                  Test_i * const server_impl,
                                   CORBA::Short priority)
 {
   try
@@ -283,7 +299,7 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
 void
 poa_creation_exception_test (PortableServer::POA_ptr root_poa,
                              PortableServer::POAManager_ptr manager,
-                             CORBA::PolicyList &policies)
+                             CORBA::PolicyList const &policies)
 {
   try
     {
@@ -324,9 +340,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          argv);
 
       // Parse arguments.
+      Server_Options options;
       int result =
-        parse_args (argc,
-                    argv);
+        parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -339,37 +355,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       // Get the RootPOA.
       object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
       // Get the POA Manager.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Obtain priority bands to be used in this test from the file
       // specified by the user.
       RTCORBA::PriorityBands bands;
-      result = get_priority_bands (bands);
+      result = get_priority_bands (bands, options.bands_file);
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error reading priority bands from file\n"),
                           result);
 
       // Create a thread-pool.
-      CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
-      CORBA::ULong max_buffered_requests = 0;
-      CORBA::ULong max_request_buffer_size = 0;
-      CORBA::Boolean allow_borrowing = 0;
-      CORBA::ULong static_threads = 1;
-      CORBA::ULong dynamic_threads = 0;
+      CORBA::ULong const stacksize {};
+      CORBA::Boolean const allow_request_buffering {};
+      CORBA::ULong const max_buffered_requests {};
+      CORBA::ULong const max_request_buffer_size {};
+      CORBA::Boolean const allow_borrowing {};
+      CORBA::ULong const static_threads {1};
+      CORBA::ULong const dynamic_threads {};
 
       // The lanes in the pool should match the bands.
       RTCORBA::ThreadpoolLanes lanes;
@@ -389,7 +405,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Create the thread-pool.
-      RTCORBA::ThreadpoolId threadpool_id =
+      RTCORBA::ThreadpoolId const threadpool_id =
         rt_orb->create_threadpool_with_lanes (stacksize,
                                               lanes,
                                               allow_borrowing,
@@ -438,7 +454,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create POA with CLIENT_PROPAGATED priority model, with lanes
       // but no bands.
-      PortableServer::POA_var client_propagated_poa =
+      PortableServer::POA_var const client_propagated_poa =
         root_poa->create_POA ("client_propagated_poa",
                               poa_manager.in (),
                               poa_policy_list);
@@ -447,7 +463,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_policy_list.length (3);
 
       // Default POA priority comes from the 'middle' lane's priority.
-      CORBA::Short poa_priority =
+      CORBA::Short const poa_priority =
         lanes[lanes.length () / 2].lane_priority;
 
       // Create a priority model policy.
@@ -465,7 +481,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create POA with SERVER_DECLARED priority model, with bands
       // and lanes.
-      PortableServer::POA_var server_declared_poa =
+      PortableServer::POA_var const server_declared_poa =
         root_poa->create_POA ("server_declared_poa",
                               poa_manager.in (),
                               poa_policy_list);
@@ -475,13 +491,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n<---Test--->: Servant priority does not match lanes\n\n"));
 
-      RTPortableServer::POA_var rt_server_declared_poa =
+      RTPortableServer::POA_var const rt_server_declared_poa =
         RTPortableServer::POA::_narrow (server_declared_poa.in ());
 
       // Activation with incorrect priority should fail.
-      CORBA::Short wrong_priority = 10000;
+      CORBA::Short const wrong_priority {10000};
       object_activation_exception_test (rt_server_declared_poa.in (),
-                                        0,
+                                        nullptr,
                                         wrong_priority);
 
       // Create first servant and register with <client_propagated_poa>.
@@ -490,7 +506,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = create_object (client_propagated_poa.in (),
                               orb.in (),
                               &server_impl,
-                              ior_output_file1);
+                              options.client_propagated_ior);
       if (result != 0)
         return result;
 
@@ -500,7 +516,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = create_object (server_declared_poa.in (),
                               orb.in (),
                               &server_impl2,
-                              ior_output_file2);
+                              options.server_declared_ior);
       if (result != 0)
         return result;
 

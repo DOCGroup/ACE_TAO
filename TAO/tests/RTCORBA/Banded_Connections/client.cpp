@@ -5,24 +5,26 @@
 #include "tao/ORB_Core.h"
 #include "../check_supported_priorities.cpp"
 
-// Default IOR files.
-const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
-const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *client_propagated_ior {ACE_TEXT("file://test1.ior")};
+  ACE_TCHAR const *server_declared_ior {ACE_TEXT("file://test2.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'n':
-        ior1 = get_opts.opt_arg ();
+        options.client_propagated_ior = get_opts.opt_arg ();
         break;
       case 'o':
-        ior2 = get_opts.opt_arg ();
+        options.server_declared_ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -43,15 +45,15 @@ CORBA::Short
 get_server_priority (Test_ptr server)
 {
   // Get the Priority Model Policy from the stub.
-  CORBA::Policy_var policy =
+  CORBA::Policy_var const policy =
     server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
   // Narrow down to correct type.
-  RTCORBA::PriorityModelPolicy_var priority_policy =
+  RTCORBA::PriorityModelPolicy_var const priority_policy =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
   // Make sure that we have the SERVER_DECLARED priority model.
-  RTCORBA::PriorityModel priority_model =
+  RTCORBA::PriorityModel const priority_model =
     priority_policy->priority_model ();
   if (priority_model != RTCORBA::SERVER_DECLARED)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,18 +96,27 @@ invocation_exception_test (Test_ptr obj,
 class Task : public ACE_Task_Base
 {
 public:
-  Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+  Task (ACE_Thread_Manager &thread_manager, CORBA::ORB_ptr orb,
+        Client_Options const &options);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
+  Client_Options const options_;
+
+private:
+  Task (Task const &) = delete;
+  Task &operator= (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task &&) = delete;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -118,14 +129,14 @@ Task::svc ()
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       // Get the RTCurrent.
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
 
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
 
       // We need to set the client thread CORBA priority
@@ -133,13 +144,13 @@ Task::svc ()
 
       // Test object 1 (with CLIENT_PROPAGATED priority model).
       object =
-        this->orb_->string_to_object (ior1);
+        this->orb_->string_to_object (this->options_.client_propagated_ior);
 
       Test_var client_propagated_obj =
         Test::_narrow (object.in ());
 
       // Test object 2 (with SERVER_DECLARED priority model).
-      object = this->orb_->string_to_object (ior2);
+      object = this->orb_->string_to_object (this->options_.server_declared_ior);
 
       Test_var server_declared_obj =
         Test::_narrow (object.in ());
@@ -180,10 +191,10 @@ Task::svc ()
       policies[0] =
         server_declared_obj->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
 
-      RTCORBA::PriorityBandedConnectionPolicy_var bands_policy =
+      RTCORBA::PriorityBandedConnectionPolicy_var const bands_policy =
         RTCORBA::PriorityBandedConnectionPolicy::_narrow (policies[0]);
 
-      RTCORBA::PriorityBands_var bands =
+      RTCORBA::PriorityBands_var const bands =
         bands_policy->priority_bands ();
 
       // Set the proper bands at the object level.  Note that a new
@@ -204,7 +215,7 @@ Task::svc ()
 
       // Choose a priority one higher than the high priority of the
       // highest band.
-      CORBA::Short client_priority =
+      CORBA::Short const client_priority =
         bands[bands->length () - 1].high + 1;
 
       // Reset the current thread's priority.
@@ -225,7 +236,7 @@ Task::svc ()
            ++i)
         {
           // Select a priority in the middle of the band.
-          CORBA::Short client_priority =
+          CORBA::Short const client_priority =
             (bands[i].low + bands[i].high) / 2;
 
           // Reset the current thread's priority.
@@ -242,7 +253,7 @@ Task::svc ()
                   "\n<---Test--->: Invoking on server declared object\n\n"));
 
       // Get the <server_priority> from the stub.
-      CORBA::Short server_priority =
+      CORBA::Short const server_priority =
         get_server_priority (server_declared_obj.in ());
 
       // Invoke test method on server.
@@ -271,7 +282,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      int result = parse_args (argc, argv);
+      Client_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -284,11 +296,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager thread_manager;
 
       // Create task.
-      Task task (thread_manager,
-                 orb.in ());
+      Task task (thread_manager, orb.in (), options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
