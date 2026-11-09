@@ -18,7 +18,7 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:e:g:k:n:st:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("c:e:g:k:n:st:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -48,13 +48,13 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage:  %C ")
-                           ACE_TEXT("[-c <client #>] ")
-                           ACE_TEXT("[-e (show exception) <0|1>] ")
-                           ACE_TEXT("[-k <ior>] ")
-                           ACE_TEXT("[-s (shutdownE)] ")
-                           ACE_TEXT("[-t <test> <goal>] ")
-                           ACE_TEXT("\n"),
+                           ACE_TEXT ("usage:  %C ")
+                           ACE_TEXT ("[-c <client #>] ")
+                           ACE_TEXT ("[-e (show exception) <0|1>] ")
+                           ACE_TEXT ("[-k <ior>] ")
+                           ACE_TEXT ("[-s (shutdownE)] ")
+                           ACE_TEXT ("[-t <test> <goal>] ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -119,7 +119,7 @@ int ClientTask::svc ()
       catch (CORBA::NO_IMPLEMENT const &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Client %d caught full queue exception.\n"),
+                      ACE_TEXT ("Client %d caught full queue exception.\n"),
                       ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
@@ -129,14 +129,14 @@ int ClientTask::svc ()
       catch (CORBA::TRANSIENT const &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Client %d caught transent, retrying.\n"),
+                      ACE_TEXT ("Client %d caught transient, retrying.\n"),
                       ndx));
           continue;
         }
       catch (CORBA::Exception const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Client %d caught other exception. %s\n"),
+                      ACE_TEXT ("Client %d caught other exception. %C\n"),
                       ndx, ex._name()));
 
           {
@@ -172,7 +172,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Client: Nil Test::Hello reference <%s>\n",
+                             ACE_TEXT ("Client: Nil Test::Hello reference <%s>\n"),
                              options.ior.c_str ()),
                             -1);
         }
@@ -184,7 +184,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               if (hello->_non_existent ())
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT("Client: non_existent returns true\n")),
+                                     ACE_TEXT ("Client: non_existent returns true\n")),
                                     -1);
                 }
               else
@@ -193,7 +193,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           catch (CORBA::TRANSIENT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("Client: got a transient exception with %d tries remaining\n"),
+                          ACE_TEXT ("Client: got a transient exception with %d tries remaining\n"),
                           i - 1));
             }
       }
@@ -228,7 +228,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception const &ex)
     {
       if (options.report_exception)
-        ex._tao_print_exception (ACE_TEXT("Exception caught:"));
+        ex._tao_print_exception (ACE_TEXT ("Exception caught:"));
       return -1;
     }
 

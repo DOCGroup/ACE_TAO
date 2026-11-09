@@ -23,12 +23,12 @@ char *
 Hello::get_string (CORBA::Long client_num)
 {
   ACE_DEBUG ((LM_INFO,
-    ACE_TEXT ("TAO (%P|%t) - Server: Sleeping for client->%d....\n "),
+              ACE_TEXT ("TAO (%P|%t) - Server: Sleeping for client->%d....\n "),
               client_num));
 
   ACE_OS::sleep (this->sleep_sec_);
   ACE_DEBUG ((LM_INFO,
-    ACE_TEXT ("TAO (%P|%t) - Server: Returning for client->%d....\n "),
+              ACE_TEXT ("TAO (%P|%t) - Server: Returning for client->%d....\n "),
               client_num));
   return CORBA::string_dup ("Hello there!");
 }
