@@ -1,16 +1,19 @@
 #include "ace/Get_Opt.h"
-#include <memory>
-#include "ace/OS_NS_errno.h"
 #include "ace/INet/FTP_URL.h"
 #include "ace/INet/FTP_ClientRequestHandler.h"
+#include <array>
+#include <cstddef>
 #include <iostream>
 #include <fstream>
 
-ACE_CString url;
-ACE_CString outfile;
-bool do_login = false;
-ACE_CString password;
-bool do_active = false;
+struct FTP_Options
+{
+  ACE_CString url;
+  ACE_CString outfile;
+  ACE_CString password;
+  bool do_login {};
+  bool do_active {};
+};
 
 void
 usage ()
@@ -24,34 +27,33 @@ usage ()
 }
 
 bool
-parse_args (int argc, ACE_TCHAR *argv [])
+parse_args (int argc, ACE_TCHAR *argv [], FTP_Options &options)
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("ao:lp:h"), 0, 0, ACE_Get_Opt::RETURN_IN_ORDER);
 
-  int c;
-  ACE_CString s;
+  int c {};
   while ((c = get_opt ()) != EOF)
     {
       switch (c)
         {
         case 1:
-          url = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.url = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'a':
-          do_active = true;
+          options.do_active = true;
           break;
 
         case 'o':
-          outfile = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.outfile = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'l':
-          do_login = true;
+          options.do_login = true;
           break;
 
         case 'p':
-          password = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.password = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'h':
@@ -68,119 +70,144 @@ class My_Authenticator
   : public ACE::INet::AuthenticatorBase
 {
   public:
-    My_Authenticator () {}
-    ~My_Authenticator () {}
+    explicit My_Authenticator (FTP_Options const &options)
+      : options_ (options)
+    {
+    }
 
-    virtual bool authenticate(ACE::INet::AuthenticationBase& auth) const
+    My_Authenticator (My_Authenticator const &) = delete;
+    My_Authenticator (My_Authenticator &&) = delete;
+    My_Authenticator &operator= (My_Authenticator const &) = delete;
+    My_Authenticator &operator= (My_Authenticator &&) = delete;
+
+    bool authenticate (ACE::INet::AuthenticationBase &auth) const override
       {
-        if (!password.empty ()) auth.password (password);
-        if (do_login)
+        if (!this->options_.password.empty ())
           {
-            std::cout << "Authentication (" << auth.scheme() << ") required." << std::endl;
+            auth.password (this->options_.password);
+          }
+        if (this->options_.do_login)
+          {
+            std::cout << "Authentication (" << auth.scheme () << ") required." << std::endl;
             std::cout << "Realm : " << auth.realm () << std::endl
-                      << "User: " << auth.user() << std::endl
+                      << "User: " << auth.user () << std::endl
                       << "Password: \t\t\t (Enter password or press enter for default)\rPassword: ";
-            char buf[80] = {0};
-            u_int n = 0;
-            int ch = 0;
-            while (n < (sizeof(buf)-1) && (ch = std::cin.get ()) != '\n' && ch != std::char_traits<char>::eof ())
+            std::array<char, 80> buf {};
+            std::size_t n {};
+            int ch {};
+            while (n < buf.size () - 1 &&
+                   (ch = std::cin.get ()) != '\n' &&
+                   ch != std::char_traits<char>::eof ())
               {
-                buf[n++] = char(ch);
+                buf[n++] = static_cast<char> (ch);
               }
-            if (n>0)
-              auth.password (buf);
+            if (n > 0)
+              auth.password (buf.data ());
           }
         return true;
       }
+
+  private:
+    FTP_Options options_;
 };
 
 class My_FTP_RequestHandler
   : public ACE::FTP::ClientRequestHandler
 {
   public:
-    My_FTP_RequestHandler () : read_length_ (0) {}
-    virtual ~My_FTP_RequestHandler () {}
+    My_FTP_RequestHandler () = default;
+    ~My_FTP_RequestHandler () override = default;
+
+    My_FTP_RequestHandler (My_FTP_RequestHandler const &) = delete;
+    My_FTP_RequestHandler (My_FTP_RequestHandler &&) = delete;
+    My_FTP_RequestHandler &operator= (My_FTP_RequestHandler const &) = delete;
+    My_FTP_RequestHandler &operator= (My_FTP_RequestHandler &&) = delete;
 
   protected:
-    virtual void handle_request_error (const ACE::FTP::URL& url)
+    void handle_request_error (ACE::FTP::URL const &url) override
       {
         std::cout << "ERROR" << std::endl;
         std::cerr << "Failed to handle download for " << url.to_string ().c_str () << std::endl;
       }
 
-    virtual void handle_connection_error (const ACE::FTP::URL& url)
+    void handle_connection_error (ACE::FTP::URL const &url) override
       {
         std::cout << "ERROR" << std::endl;
         std::cerr << "Failed to set up connection for " << url.to_string ().c_str () << std::endl;
       }
 
-    virtual void after_read (const char_type* /*buffer*/, int length_read)
+    void after_read (char_type const * /*buffer*/, int length_read) override
       {
-        this->read_length_ += length_read;
+        this->read_length_ += static_cast<std::size_t> (length_read);
         std::cout << "\r [" << this->read_length_ << "/???]";
       }
 
-    virtual void on_eof ()
+    void on_eof () override
       {
         ACE::FTP::ClientRequestHandler::on_eof ();
         std::cout << std::endl;
       }
 
   private:
-    int read_length_;
+    std::size_t read_length_ {};
 };
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  std::unique_ptr<std::ofstream> fout;
-  std::ostream* sout = &std::cout;
+  FTP_Options options {};
+  std::ofstream fout;
+  std::ostream *sout = &std::cout;
 
-  if (!parse_args (argc, argv))
+  if (!parse_args (argc, argv, options))
     {
       return 1;
     }
 
-  ACE::INet::URL_INetAuthBase::add_authenticator ("my_auth",
-                                                  new My_Authenticator);
+  ACE::INet::URL_INetAuthBase::add_authenticator (
+    "my_auth",
+    new My_Authenticator (options));
 
   std::cout << "Starting..." << std::endl;
 
-  if (!url.empty ())
+  if (!options.url.empty ())
     {
-      if (!outfile.empty ())
+      if (!options.outfile.empty ())
         {
-          fout.reset (new std::ofstream (outfile.c_str (), std::ios_base::binary|std::ios_base::out));
+          fout.open (options.outfile.c_str (), std::ios_base::binary | std::ios_base::out);
 
-          if (!*fout)
+          if (!fout)
             {
-              std::cerr << "Failed to open output file : " << outfile.c_str () << std::endl;
+              std::cerr << "Failed to open output file : " << options.outfile.c_str () << std::endl;
               return 1;
             }
 
-          sout = fout.get ();
+          sout = &fout;
         }
 
       ACE::FTP::URL ftp_url;
 
-      std::cout << "Parsing url [" << url.c_str () << "]" << std::endl;
+      std::cout << "Parsing url [" << options.url.c_str () << "]" << std::endl;
 
-      if (!ftp_url.parse (url))
+      if (!ftp_url.parse (options.url))
         {
-          std::cerr << "Failed parsing url [" << url << "]" << std::endl;
+          std::cerr << "Failed parsing url [" << options.url << "]" << std::endl;
           std::cerr << "\tresult = " << ftp_url.to_string ().c_str ();
           return 1;
         }
 
       std::cout << "Opening url..." << std::endl;
       My_FTP_RequestHandler my_rh;
-      if (do_active)  my_rh.use_active_mode ();
+      if (options.do_active)
+        {
+          my_rh.use_active_mode ();
+        }
       ACE::INet::URLStream urlin = ftp_url.open (my_rh);
       if (urlin)
         {
           std::cout << "Saving to: ";
-          if (!outfile.empty ())
-            std::cout << '\'' << outfile.c_str () << '\'' << std::endl;
+          if (!options.outfile.empty ())
+            std::cout << '\'' << options.outfile.c_str () << '\'' << std::endl;
           else
             std::cout << "(stdout)" << std::endl;
 
