@@ -4,22 +4,15 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
-#include <iostream>
 #include "tao/debug.h"
-#include <cstddef>
 
-void
-show_tp_config (ACE_CString const &name, TAO_DTP_Definition const &entry)
+#include <array>
+
+struct Expected_POA_Config
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config set for %C:\n"), name.c_str()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Initial threads: %d:\n"), entry.init_threads_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Min threads: %d:\n"), entry.min_threads_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Max threads: %d:\n"), entry.max_threads_));
-  if (entry.min_threads_ > -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Idle Timeout: %d (sec)\n"), entry.timeout_.sec()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Stack Size: %d:\n"), entry.stack_size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Request queue max depth: %d\n"), entry.queue_depth_));
-}
+  ACE_TCHAR const *name;
+  bool expected;
+};
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -35,50 +28,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (dtp_poa_strat_repo == nullptr)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Unable to load configuration\n")));
       return -1;
     }
-  else
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO_CSD_Strategy_Repository found\n")));
+
+  // Check that configured POA names exist and unconfigured names do not.
+  std::array<Expected_POA_Config, 4> const poa_list {{
+    {ACE_TEXT ("MyPOA"), true},
+    {ACE_TEXT ("POA2"), false},
+    {ACE_TEXT ("MyPOA3"), true},
+    {ACE_TEXT ("MyPOA1"), false}
+  }};
+
+  for (Expected_POA_Config const &config : poa_list)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_CSD_Strategy_Repository found\n")));
-    }
-
-
-  // Now iterate through the repository and attempt to find sample POA configurations
-
-  ACE_TCHAR const * const poa_list [] =
-    { ACE_TEXT ("MyPOA"),  // should find this one
-      ACE_TEXT ("POA2"),  // shouldn't find this one
-      ACE_TEXT ("MyPOA3"),  // should find this one
-      ACE_TEXT ("MyPOA1"), // should find this one
-      nullptr
-    };
-
-  for (std::size_t i = 0; poa_list[i] != nullptr; ++i)
-    {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT("Config definition for %C\n"), poa_list[i]));
-      TAO_DTP_POA_Strategy * const found_strategy = dynamic_cast <TAO_DTP_POA_Strategy *>
-        (dtp_poa_strat_repo->find (ACE_TEXT_ALWAYS_CHAR (poa_list[i])));
-      if ((found_strategy == nullptr) && (i != 1) && (i != 3))
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Config definition for %C\n"), config.name));
+      TAO_DTP_POA_Strategy const * const found_strategy =
+        dynamic_cast<TAO_DTP_POA_Strategy const *> (
+          dtp_poa_strat_repo->find (ACE_TEXT_ALWAYS_CHAR (config.name)));
+      if ((found_strategy != nullptr) != config.expected)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Cannot find TP Config definition for %C\n"), poa_list[i]));
-          continue;
-        }
-      if (i == 1 || i == 3)
-        {
-          if (found_strategy != nullptr)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Found TP Config definition for %C which should have failed\n"),
-                          poa_list[i]));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Config definition for %C not found as expected\n"), poa_list[i]));
-            }
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Unexpected lookup result for POA configuration %C\n"),
+                      config.name));
+          return -1;
         }
     }
-
 
   return 0;
 }
