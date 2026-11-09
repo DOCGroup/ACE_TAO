@@ -76,7 +76,6 @@ struct Queue_Wrapper
     : q_ (nullptr), send_block_ (nullptr)
   {
   }
-  // Default constructor.
 };
 
 // For the message counting test, there are two tasks, producer and consumer.
