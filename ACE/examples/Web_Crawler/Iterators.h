@@ -52,7 +52,6 @@ protected:
 class HTML_Body_Iterator : public URL_Iterator
 {
 public:
-  /// Constructor.
   HTML_Body_Iterator (URL &url);
 
   // = Iterator methods.
@@ -76,7 +75,6 @@ private:
 class HTTP_Header_Iterator : public URL_Iterator
 {
 public:
-  /// Constructor.
   HTTP_Header_Iterator (URL &url);
 
   // = Iterator methods.
@@ -106,7 +104,6 @@ private:
 class URL_Download_Iterator : public URL_Iterator
 {
 public:
-  /// Constructor.
   URL_Download_Iterator (URL &url);
 
   // = Iterator methods.

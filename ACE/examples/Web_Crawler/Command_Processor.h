@@ -50,7 +50,6 @@ public:
 class URL_Command : public Command
 {
 public:
-  /// Constructor.
   explicit URL_Command (URL *);
 
   /// Execute the URL command.

@@ -36,10 +36,8 @@ class URL_Visitor_Factory;
 class Web_Crawler
 {
 public:
-  /// Constructor.
   Web_Crawler ();
 
-  /// Destructor.
   ~Web_Crawler ();
 
   /// Parses the command-line options and initializes the

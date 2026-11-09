@@ -61,7 +61,6 @@ public:
   virtual int open (STRAT_CONNECTOR *connector,
                     const ACE_INET_Addr &);
 
-  /// Destructor.
   virtual ~Mem_Map_Stream ();
 
   // = Accessor.

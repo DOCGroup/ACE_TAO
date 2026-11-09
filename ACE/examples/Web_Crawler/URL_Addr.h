@@ -29,7 +29,6 @@
 class ACE_URL_Addr : public ACE_INET_Addr
 {
 public:
-  /// Constructor.
   ACE_URL_Addr ();
 
   ACE_URL_Addr (const ACE_TCHAR *host_name,
@@ -81,7 +80,6 @@ public:
   /// Assignment operator.
   void operator= (const ACE_URL_Addr &addr);
 
-  /// Destructor.
   ~ACE_URL_Addr ();
 
   /**

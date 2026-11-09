@@ -37,7 +37,6 @@ class URL_Visitor;
 class URL
 {
 public:
-  /// Destructor.
   virtual ~URL ();
 
   /**

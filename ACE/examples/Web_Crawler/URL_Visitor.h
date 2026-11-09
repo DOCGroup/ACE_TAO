@@ -38,7 +38,6 @@ class URL_Validation_Visitor;
 class URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   URL_Processing_Strategy (URL &,
                            URL_Iterator &);
 
@@ -67,7 +66,6 @@ protected:
 class HTTP_Header_Processing_Strategy : public URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   HTTP_Header_Processing_Strategy (URL &,
                                    URL_Iterator &);
 
@@ -86,7 +84,6 @@ public:
 class HTML_Body_Validation_Strategy : public URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   HTML_Body_Validation_Strategy (URL &,
                                  URL_Iterator &,
                                  URL_Validation_Visitor &);
@@ -113,7 +110,6 @@ private:
 class URL_Download_Strategy : public URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   URL_Download_Strategy (URL &,
                          URL_Iterator &);
 
@@ -131,7 +127,6 @@ class URL_Visitation_Strategy_Factory
 public:
   URL_Visitation_Strategy_Factory (URL *);
 
-  /// Destructor.
   virtual ~URL_Visitation_Strategy_Factory ();
 
   // = Factory Methods.
@@ -163,7 +158,6 @@ protected:
 class URL_Download_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {
 public:
-  /// Constructor.
   URL_Download_Visitation_Strategy_Factory (URL *);
 
   // = Factory Methods.
@@ -191,7 +185,6 @@ public:
 class URL_Validation_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {
 public:
-  /// Constructor.
   URL_Validation_Visitation_Strategy_Factory (URL *,
                                               URL_Validation_Visitor &);
 
