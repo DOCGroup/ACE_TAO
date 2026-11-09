@@ -1,5 +1,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Task.h"
 
 class MT_Requestor : public virtual ACE_Task_Base
@@ -12,15 +13,15 @@ public:
   MT_Requestor &operator= (MT_Requestor &&) = delete;
 
   int svc () override;
+
 private:
   Test::Middle_var const middle_;
-  CORBA::Short seconds_;
+  CORBA::Short const seconds_;
 };
 
 MT_Requestor::MT_Requestor (Test::Middle_ptr m, CORBA::Short sec)
   : middle_ (Test::Middle::_duplicate (m)),
     seconds_ (sec)
-
 {
 }
 
@@ -35,16 +36,16 @@ MT_Requestor::svc ()
                   retries));
       try
         {
-          this->middle_->call_delay(seconds_);
+          this->middle_->call_delay (this->seconds_);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client thread %t delay succeeded\n")));
           break;
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Client thread %t caught %s\n"),
-                      ex._name()));
+                      ACE_TEXT ("Client thread %t caught %C\n"),
+                      ex._name ()));
         }
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %t done\n")));
@@ -53,16 +54,16 @@ MT_Requestor::svc ()
 
 struct Client_Options
 {
-  ACE_TString ior {ACE_TEXT("file://middle.ior")};
+  ACE_TString ior {ACE_TEXT ("file://middle.ior")};
   bool do_shutdown {};
   CORBA::Short seconds {2};
   int num_threads {1};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:s:x"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:n:s:x"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -83,25 +84,20 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-n <threads> "
-                           "-x "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior> -n <threads> -x\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Client_Options options;
+  Client_Options options {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
@@ -116,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (middle.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Middle reference <%s>\n",
+                             ACE_TEXT ("Nil Test::Middle reference <%s>\n"),
                              options.ior.c_str ()),
                             1);
         }
@@ -126,13 +122,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       requestor.wait ();
 
       if (options.do_shutdown)
-      {
-        middle->shutdown();
-      }
+        middle->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client main exception caught:");
       return 1;
