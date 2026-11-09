@@ -156,7 +156,7 @@ Manager::make_merged_iors ()
 
       CORBA::Object_var const iorm_object =
         this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                                0);
+                                                nullptr);
 
       this->iorm_ =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
@@ -246,7 +246,7 @@ run_remote_test (Simple_Server_ptr server,
                  ACE_TCHAR const *execute_key)
 {
   std::string expected {};
-  if (execute_key)
+  if (execute_key != nullptr)
     {
       expected = "remote_call() completed by ";
       expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
@@ -302,7 +302,7 @@ run_abort_test (Simple_Server_ptr server,
                 ACE_TCHAR const *execute_key)
 {
   std::string expected {};
-  if (execute_key)
+  if (execute_key != nullptr)
     {
       expected = "abort() completed by ";
       expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
@@ -355,7 +355,7 @@ run_shutdown_test (Simple_Server_ptr server,
                    ACE_TCHAR const *execute_key)
 {
   std::string expected {};
-  if (execute_key)
+  if (execute_key != nullptr)
     {
       expected = "shutdown() completed by ";
       expected += ACE_TEXT_ALWAYS_CHAR (execute_key);
