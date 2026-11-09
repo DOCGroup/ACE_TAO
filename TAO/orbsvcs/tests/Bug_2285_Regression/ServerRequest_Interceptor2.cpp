@@ -8,6 +8,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstdio>
+#include <cstdlib>
 #include <memory>
 #include <cstring>
 
@@ -61,13 +63,13 @@ TAO249_ServerRequest_Interceptor2::receive_request (
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
       File_Ptr last_exp_time_file (
-        ACE_OS::fopen ("last_expiration_time", "r+"), ACE_OS::fclose);
+        std::fopen ("last_expiration_time", "r+"), std::fclose);
       TimeBase::TimeT last_exp_time {};
 
       if (!last_exp_time_file)
         {
           // The first server creates the file containing the expiration time.
-          last_exp_time_file.reset (ACE_OS::fopen ("last_expiration_time", "w+"));
+          last_exp_time_file.reset (std::fopen ("last_expiration_time", "w+"));
           if (!last_exp_time_file)
             throw CORBA::NO_RESOURCES ();
           last_exp_time = ftrsc.expiration_time;
@@ -75,20 +77,20 @@ TAO249_ServerRequest_Interceptor2::receive_request (
       else
         {
           // Subsequent servers read the previous server's expiration time.
-          ACE_OS::fread (&last_exp_time,
-                         1,
-                         sizeof (TimeBase::TimeT),
-                         last_exp_time_file.get ());
+          std::fread (&last_exp_time,
+                      1,
+                      sizeof (TimeBase::TimeT),
+                      last_exp_time_file.get ());
           ACE_OS::sleep (1);
         }
 
       if (last_exp_time != ftrsc.expiration_time)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Test Failed - REGRESSION !!! Different expiration times used on consecutive "
-                      "retries of the same op!!\n"));
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Previous expiration: %Q\n"), last_exp_time));
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Current expiration : %Q\n"), ftrsc.expiration_time));
+                      ACE_TEXT ("Test Failed - REGRESSION !!! Different expiration times used on consecutive "
+                                "retries of the same op!!\n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Previous expiration: %Q\n"), last_exp_time));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Current expiration : %Q\n"), ftrsc.expiration_time));
           return;
         }
 
@@ -99,17 +101,17 @@ TAO249_ServerRequest_Interceptor2::receive_request (
       if (last_exp_time <= the_seventies)
         {
           ACE_DEBUG ((LM_ERROR,
-                      "Test Failed - REGRESSION !!! Expiration time is before 1970 A.D.\n"));
-          ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
-          ACE_DEBUG ((LM_DEBUG, "1970 A.D.      : %Q\n", the_seventies));
+                      ACE_TEXT ("Test Failed - REGRESSION !!! Expiration time is before 1970 A.D.\n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expiration time: %Q\n"), last_exp_time));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("1970 A.D.      : %Q\n"), the_seventies));
           return;
         }
       else if (last_exp_time > the_seventies * 2)
         {
           ACE_DEBUG ((LM_ERROR,
-                      "Test Failed - REGRESSION !!! Expiration time is after 2358 A.D.\n"));
-          ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
-          ACE_DEBUG ((LM_DEBUG, "2358 A.D.      : %Q\n", the_seventies * 2));
+                      ACE_TEXT ("Test Failed - REGRESSION !!! Expiration time is after 2358 A.D.\n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expiration time: %Q\n"), last_exp_time));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("2358 A.D.      : %Q\n"), the_seventies * 2));
           return;
         }
 
@@ -119,47 +121,47 @@ TAO249_ServerRequest_Interceptor2::receive_request (
         {
           // No retries should be received after the expiration time.
           File_Ptr no_more_retries (
-            ACE_OS::fopen ("no_more_retries", "r+"), ACE_OS::fclose);
+            std::fopen ("no_more_retries", "r+"), std::fclose);
           if (no_more_retries)
             {
               TimeBase::TimeT last_expired_attempt {};
-              ACE_OS::fread (&last_expired_attempt,
-                             1,
-                             sizeof (TimeBase::TimeT),
-                             no_more_retries.get ());
+              std::fread (&last_expired_attempt,
+                          1,
+                          sizeof (TimeBase::TimeT),
+                          no_more_retries.get ());
 
               ACE_DEBUG ((LM_ERROR,
-                          "Test Failed - REGRESSION !!! Client ORB is still retrying after "
-                          "the expiration time!!\n"));
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), last_exp_time));
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Previous attempt : %Q\n"), last_expired_attempt));
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
+                          ACE_TEXT ("Test Failed - REGRESSION !!! Client ORB is still retrying after "
+                                    "the expiration time!!\n")));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expiration time  : %Q\n"), last_exp_time));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Previous attempt : %Q\n"), last_expired_attempt));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Time now         : %Q\n"), now));
               return;
             }
           else
             {
-              no_more_retries.reset (ACE_OS::fopen ("no_more_retries", "w+"));
+              no_more_retries.reset (std::fopen ("no_more_retries", "w+"));
               if (!no_more_retries)
                 throw CORBA::NO_RESOURCES ();
 
-              ACE_OS::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries.get ());
-              ACE_OS::fflush (no_more_retries.get ());
+              std::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries.get ());
+              std::fflush (no_more_retries.get ());
             }
           }
 
       // Write the expiration time for the next server to check.
-      ACE_OS::fwrite (&ftrsc.expiration_time,
-                      1,
-                      sizeof (TimeBase::TimeT),
-                      last_exp_time_file.get ());
-      ACE_OS::fflush (last_exp_time_file.get ());
+      std::fwrite (&ftrsc.expiration_time,
+                   1,
+                   sizeof (TimeBase::TimeT),
+                   last_exp_time_file.get ());
+      std::fflush (last_exp_time_file.get ());
       last_exp_time_file.reset ();
 
-      ACE_OS::abort ();
+      std::abort ();
     }
   catch (CORBA::Exception const &ex)
     {
-      ACE_DEBUG ((LM_ERROR, "Unexpected (non regression problem) error - test failed\n"));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Unexpected (non regression problem) error - test failed\n")));
       ex._tao_print_exception (
         "Exception in TAO249_ServerRequest_Interceptor2::receive_request\n");
       throw;

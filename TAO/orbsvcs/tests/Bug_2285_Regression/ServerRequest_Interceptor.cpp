@@ -51,8 +51,8 @@ TAO249_ServerRequest_Interceptor::receive_request (
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO249_ServerRequest_Interceptor::receive_request (%P|%t) called for method: %s ... "
-                  "client retention id is: %d\n",
+                  ACE_TEXT ("TAO249_ServerRequest_Interceptor::receive_request (%P|%t) called for method: %C ... "
+                            "client retention id is: %d\n"),
                   op.in (),
                   ftrsc.retention_id));
 
@@ -63,14 +63,14 @@ TAO249_ServerRequest_Interceptor::receive_request (
       else
         {
           ACE_DEBUG ((LM_ERROR,
-                      "Test Failed - REGRESSION !!! Same client retention id has been used for "
-                      "TWO consecutive independent invocations!!\n"));
+                      ACE_TEXT ("Test Failed - REGRESSION !!! Same client retention id has been used for "
+                                "TWO consecutive independent invocations!!\n")));
           Hello::ids_differ_ = false;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Unexpected (non regression) error - test failed\n")));
       ex._tao_print_exception (
         "Exception in TAO249_ServerRequest_Interceptor::receive_request\n");
       throw;

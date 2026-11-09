@@ -29,6 +29,7 @@ Server_ORBInitializer::register_server_request_interceptors (
                     TAO249_ServerRequest_Interceptor,
                     CORBA::NO_MEMORY ());
 
+  // The ServerRequestInterceptor_var adopts the ACE_NEW_THROW_EX allocation.
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = sri;
 

@@ -22,7 +22,6 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
   void shutdown () override;
 
   void throw_exception () override;

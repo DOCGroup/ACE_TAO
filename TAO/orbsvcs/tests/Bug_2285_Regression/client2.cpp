@@ -16,25 +16,24 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("n:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'n':
-        options.number_of_servers = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-n <number of servers> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
+    {
+      switch (c)
+        {
+        case 'n':
+          options.number_of_servers = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -n <number of servers>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
@@ -50,7 +49,7 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (number_of_servers);
   iors.length (number_of_servers);
-  for (CORBA::ULong i = 0; i < number_of_servers; ++i)
+  for (CORBA::ULong i {}; i < number_of_servers; ++i)
     {
       iors [i] = CORBA::Object::_duplicate (refs[i].in ());
     }
@@ -65,7 +64,6 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   ft_tag_component.component_version.minor = (CORBA::Octet) 0;
 
   // Domain id
-  //const char *id = "iogr_testing";
   ft_tag_component.group_domain_id = domain_id;
 
   // Object group id
@@ -96,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   CORBA::Boolean result {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       Client_Options options;
@@ -104,29 +102,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Get a ref to the IORManipulation object
-      CORBA::Object_var iorm_object =
+      CORBA::Object_var const iorm_object =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0);
 
       // Narrow
-      TAO_IOP::TAO_IOR_Manipulation_var iorm =
+      TAO_IOP::TAO_IOR_Manipulation_var const iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
       Test::Hello_var *servers {};
       ACE_NEW_RETURN (servers,
                       Test::Hello_var [options.number_of_servers],
                       -1);
+      // ACE_NEW_RETURN needs a raw pointer; unique_ptr owns the allocated array.
       std::unique_ptr<Test::Hello_var[]> owner (servers);
 
-      for (CORBA::ULong i = 0; i < options.number_of_servers; ++i)
+      for (CORBA::ULong i {}; i < options.number_of_servers; ++i)
         {
-          char buf[4] {};
-          char const *number = ACE_OS::itoa (static_cast<int> (i), buf, 10);
-          std::string ior_file ("file://n");
-          ior_file += number;
-          ior_file += ".ior";
+          std::string const ior_file =
+            "file://n" + std::to_string (i) + ".ior";
 
-          CORBA::Object_var tmp =
+          CORBA::Object_var const tmp =
             orb->string_to_object (ior_file.c_str ());
 
           servers[i] =
@@ -135,16 +131,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (CORBA::is_nil (servers[i].in ()))
             {
               ACE_ERROR_RETURN ((LM_DEBUG,
-                                  "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
+                                  ACE_TEXT ("Test failed - Not regression - Unexpected Nil "
+                                            "Test::Hello reference <%s>\n"),
                                   ior_file.c_str ()),
-                                  1);
+                                1);
             }
         }
 
-      CORBA::Object_var iogr = make_iogr (
+      CORBA::Object_var const iogr = make_iogr (
         iorm.in (), "Domain_1", 1, 1, servers, options.number_of_servers);
 
-      Test::Hello_var hello_iogr = Test::Hello::_narrow (iogr.in ());
+      Test::Hello_var const hello_iogr = Test::Hello::_narrow (iogr.in ());
 
       CORBA::ULong last_server {};
 
@@ -152,15 +149,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           last_server = hello_iogr->drop_down_dead ();
           // If the call 'succeeds' the server has identified a regression.
-          result = 1;
-          ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified by server %u. Test Failed !!\n", last_server));
+          result = true;
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("Error: REGRESSION identified by server %u. Test Failed !!\n"),
+                      static_cast<unsigned int> (last_server)));
         }
       catch (CORBA::COMM_FAILURE const &)
         {
           // We can't use the word exception for fear of upsetting the build log parser
-          ACE_DEBUG ((LM_DEBUG, "Client caught one of those things that is normally used to indicate a problem ("
-                      "although it doesn't in this case) and which we cannot name because the autobuild "
-                      "script will think we have a problem if we do mention the word. No problem !\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client caught one of those things that is normally used to indicate a problem ("
+                                "although it doesn't in this case) and which we cannot name because the autobuild "
+                                "script will think we have a problem if we do mention the word. No problem !\n")));
         }
 
       for (CORBA::ULong j = last_server; j < options.number_of_servers; ++j)
@@ -186,11 +186,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (result)
     {
-      ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified!!!\n"));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Error: REGRESSION identified!!!\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "Test passed !!!\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed !!!\n")));
     }
   return result;
 }
