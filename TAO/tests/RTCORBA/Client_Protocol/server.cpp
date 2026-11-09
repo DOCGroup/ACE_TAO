@@ -17,10 +17,10 @@ public:
   explicit Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual void test_method ();
+  void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
