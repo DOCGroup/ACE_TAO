@@ -1,34 +1,37 @@
 #include "ace/Get_Opt.h"
-#include "testC.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/ORB_Core.h"
-#include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
- #include "../check_supported_priorities.cpp"
+#include "ace/Task.h"
+#include "tao/ORB_Core.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "testC.h"
+#include "../check_supported_priorities.cpp"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://ior_1");
-int iterations = 6;
-int shutdown_server = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT ("file://ior_1") };
+  int iterations { 6 };
+  bool shutdown_server {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -51,17 +54,26 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
+  Client_Options const options_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -70,27 +82,26 @@ Task::svc ()
 {
   try
     {
-      CORBA::Object_var object =
-        this->orb_->string_to_object (ior);
+      CORBA::Object_var object = this->orb_->string_to_object (this->options_.ior);
 
-      test_var test =
+      test_var const test =
         test::_narrow (object.in ());
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
 
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
 
       // We need to set the client thread CORBA priority
       current->the_priority (get_implicit_thread_CORBA_priority (this->orb_.in ()));
 
-      pid_t pid =
+      pid_t const pid =
         ACE_OS::getpid ();
 
-      for (int i = 0; i != iterations; ++i)
+      for (int i = 0; i != this->options_.iterations; ++i)
         {
-          CORBA::Long r =
+          CORBA::Long const r =
             test->method (pid,
                           i);
 
@@ -99,12 +110,12 @@ Task::svc ()
           ACE_UNUSED_ARG (r);
         }
 
-      if (shutdown_server)
+      if (this->options_.shutdown_server)
         {
           test->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -114,35 +125,35 @@ Task::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Client_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
+      int const parse_args_result = parse_args (argc, argv, options);
+      if (parse_args_result != 0)
+        return parse_args_result;
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
       // Activate task.
-      result =
-        task.activate (flags);
-      if (result == -1)
+      int const activate_result = task.activate (flags);
+      if (activate_result == -1)
         {
           if (errno == EPERM)
             {
@@ -159,11 +170,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for task to exit.
-      result =
-        thread_manager.wait ();
-      ACE_ASSERT (result != -1);
+      int const wait_result = thread_manager.wait ();
+      ACE_ASSERT (wait_result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;
