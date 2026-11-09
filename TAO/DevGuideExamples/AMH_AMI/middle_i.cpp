@@ -12,7 +12,6 @@
 #include "inner_cb.h"
 
 #include <iostream>
-// Implementation skeleton constructor
 Asynch_Middle_i::Asynch_Middle_i (PortableServer::POA_ptr poa,
                                   Inner_ptr inner)
   : poa_ (PortableServer::POA::_duplicate (poa)),
@@ -46,7 +45,6 @@ Asynch_Middle_i::get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
 
 //------------------------------------------------------------------------
 
-// Implementation skeleton constructor
 Middle_i::Middle_i (Inner_ptr inner)
   : inner_ (Inner::_duplicate (inner))
 {

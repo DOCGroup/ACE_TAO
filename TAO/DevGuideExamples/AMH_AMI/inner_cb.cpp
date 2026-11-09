@@ -2,7 +2,6 @@
 #include "inner_cb.h"
 #include <iostream>
 
-// Implementation skeleton constructor
 Inner_callback_i::Inner_callback_i (PortableServer::POA_ptr p,
                                     AMH_MiddleResponseHandler_ptr rh)
   : poa_ (PortableServer::POA::_duplicate (p)),
@@ -10,7 +9,6 @@ Inner_callback_i::Inner_callback_i (PortableServer::POA_ptr p,
 {
 }
 
-// Implementation skeleton destructor
 Inner_callback_i::~Inner_callback_i ()
 {
   std::cout << "Inner_callback_i destroying" << std::endl;

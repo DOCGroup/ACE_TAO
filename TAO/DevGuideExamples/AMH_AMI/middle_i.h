@@ -13,7 +13,6 @@
 class  Asynch_Middle_i : public virtual POA_AMH_Middle
 {
 public:
-  //Constructor
   Asynch_Middle_i (PortableServer::POA_ptr poa, Inner_ptr inner);
 
   void get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
@@ -35,7 +34,6 @@ private:
 class  Middle_i : public virtual POA_Middle
 {
 public:
-  //Constructor
   explicit Middle_i (Inner_ptr inner);
 
   char *get_the_answer (char const *question) override;

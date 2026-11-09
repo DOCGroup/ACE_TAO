@@ -8,11 +8,9 @@
 class  Inner_callback_i : public virtual POA_AMI_InnerHandler
 {
 public:
-  //Constructor
   Inner_callback_i (PortableServer::POA_ptr p,
                     AMH_MiddleResponseHandler_ptr rh);
 
-  //Destructor
   ~Inner_callback_i () override;
 
   void answer (char const *ami_return_val) override;
