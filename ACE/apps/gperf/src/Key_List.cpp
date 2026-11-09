@@ -1477,17 +1477,20 @@ Key_List::output_lookup_array ()
     {
       int const DEFAULT_VALUE = -1;
 
-      Duplicate_Entry *duplicates {};
-      ACE_NEW_RETURN (duplicates,
+      Duplicate_Entry *duplicates_array {};
+      ACE_NEW_RETURN (duplicates_array,
                       Duplicate_Entry[total_duplicates],
                       -1);
+      std::unique_ptr<Duplicate_Entry[]> duplicates (duplicates_array);
 
-      int *lookup_array {};
-      ACE_NEW_RETURN (lookup_array,
+      int *lookup_array_storage {};
+      ACE_NEW_RETURN (lookup_array_storage,
                       int[max_hash_value + 1],
                       -1);
+      std::unique_ptr<int[]> lookup_array_owner (lookup_array_storage);
+      int * const lookup_array = lookup_array_owner.get ();
 
-      Duplicate_Entry *dup_ptr = duplicates;
+      Duplicate_Entry *dup_ptr = duplicates.get ();
       int *lookup_ptr = lookup_array + max_hash_value + 1;
 
       // Initialize the lookup array to the DEFAULT_VALUE (-1).
@@ -1544,12 +1547,12 @@ Key_List::output_lookup_array ()
         }
 
       // Compute the values in the lookup array.
-      while (--dup_ptr >= duplicates)
+      while (--dup_ptr >= duplicates.get ())
         {
           if (option[DEBUGGING])
             ACE_DEBUG ((LM_DEBUG,
                         "dup_ptr[%d]: hash_value = %d, slot = %d, count = %d\n",
-                        dup_ptr - duplicates,
+                        dup_ptr - duplicates.get (),
                         dup_ptr->hash_value,
                         dup_ptr->slot,
                         dup_ptr->count));
@@ -1592,8 +1595,6 @@ Key_List::output_lookup_array ()
                   // we need to use it!
                   this->output_switch (1);
 
-                  delete [] duplicates;
-                  delete [] lookup_array;
                   return 1; // 1 indicates that we've changed our mind...
                 }
             }
@@ -1651,9 +1652,6 @@ Key_List::output_lookup_array ()
             }
         }
       ACE_OS::printf ("%s%s%s};\n\n", option[DEBUGGING] ? "" : "\n", indent, indent);
-
-      delete [] duplicates;
-      delete [] lookup_array;
     }
   return 0;
 }
