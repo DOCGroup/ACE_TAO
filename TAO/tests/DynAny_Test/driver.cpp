@@ -57,7 +57,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return error_count;
 }
 
-// destructor
 Driver::~Driver ()
 {
   if (!CORBA::is_nil (this->orb_.in ()))
