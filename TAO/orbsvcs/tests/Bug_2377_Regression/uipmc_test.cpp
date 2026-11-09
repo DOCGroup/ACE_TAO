@@ -1,4 +1,3 @@
-
 #include "ace/Task.h"
 #include "ace/Mutex.h"
 #include "Hello_Impl.h"
@@ -18,7 +17,7 @@ struct Client_Options
 };
 
 void
-test_sleep (int microsec)
+test_sleep (int const microsec)
 {
   ACE_Time_Value const tv (microsec / 1000000, microsec % 1000000);
 
@@ -28,22 +27,22 @@ test_sleep (int microsec)
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("u:c:"));
-  constexpr unsigned char full_success = 0x03;
-  unsigned char success {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("u:c:"));
+  bool has_uipmc_url {};
+  bool has_client_uipmc_url {};
 
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
         case 'u':
           options.uipmc_url = get_opts.opt_arg ();
-          success |= 0x01;
+          has_uipmc_url = true;
           break;
         case 'c':
           options.client_uipmc_url = get_opts.opt_arg ();
-          success |= 0x02;
+          has_client_uipmc_url = true;
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,13 +52,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
         }
     }
 
-  if (success != full_success)
+  if (!has_uipmc_url || !has_client_uipmc_url)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("usage:  %s -u <url> -c <client_url>\n"),
                        argv [0]),
                       -1);
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -96,7 +94,7 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   ACE_Manual_Event &me_;
 };
 
@@ -150,9 +148,9 @@ public:
 
 private:
   ACE_Mutex mutex_;
-  Test::Hello_var hello_;
+  Test::Hello_var const hello_;
   MessageLog &logger_;
-  int call_count_;
+  int const call_count_;
   int count_;
 };
 
@@ -163,13 +161,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableGroup::GOA_var root_poa =
+      PortableGroup::GOA_var const root_poa =
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -177,13 +175,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                            1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       Hello_Impl *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       Hello_Impl (orb.in (), logger),
                       1);
+      // The ServantBase_var adopts the servant's initial reference.
       PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       Client_Options options;
@@ -191,17 +190,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 2;
 
       // create UIPMC reference
-      CORBA::Object_var miop_ref =
+      CORBA::Object_var const miop_ref =
         orb->string_to_object (options.uipmc_url.c_str ());
 
       // create UIPMC reference for client access
-      CORBA::Object_var client_miop_ref =
+      CORBA::Object_var const client_miop_ref =
         orb->string_to_object (options.client_uipmc_url.c_str ());
 
       // create ids
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->create_id_for_reference (miop_ref.in ());
-      PortableServer::ObjectId_var client_id =
+      // This association lets the client-side group reference dispatch to this ORB.
+      PortableServer::ObjectId_var const client_id =
         root_poa->create_id_for_reference (client_miop_ref.in ());
 
       // activate Hello Object
@@ -209,19 +209,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                          hello_impl);
 
       // create Hello reference
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         Test::Hello::_unchecked_narrow (client_miop_ref.in ());
 
       poa_manager->activate ();
 
       {
-        // start orb thread
         ACE_Manual_Event me;
         ORBThread orb_thr (orb.in (), me, ACE_Thread_Manager::instance ());
         orb_thr.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1);
         me.wait ();
 
-        // start clients
         ClientThread cln_thr (hello.in (), logger, hello_call_number);
         cln_thr.activate (THR_NEW_LWP | THR_JOINABLE, client_thread_number);
         cln_thr.wait ();

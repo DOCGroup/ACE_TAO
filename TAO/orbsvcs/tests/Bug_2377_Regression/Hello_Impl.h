@@ -37,13 +37,12 @@ public:
   Hello_Impl &operator= (Hello_Impl const &) = delete;
   Hello_Impl &operator= (Hello_Impl &&) = delete;
 
-  // The skeleton methods
   void say_hello (CORBA::Short count) override;
 
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   MessageLog &logger_;
 };
