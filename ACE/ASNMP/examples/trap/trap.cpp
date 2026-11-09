@@ -63,12 +63,13 @@ private:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
-  trapapp get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid ())
-     return get.run ();
-  else
-    trapapp::usage();
-  return 1;
+  trapapp app (atc.get_argc (), atc.get_ASCII_argv ());
+  if (!app.valid ())
+    {
+      trapapp::usage ();
+      return 1;
+    }
+  return app.run ();
 }
 
 bool trapapp::valid () const
@@ -80,15 +81,16 @@ trapapp::trapapp (int argc, char *argv[])
    Oid const def_ent_oid ("1.3.6.1.2.1.1.1.2.0.1"); // default enterprise OID
    Oid ent {}, trap {}; // user-specified values
 
-   if ( argc < 2)  // hostname mandatory
+   if (argc < 2) // hostname mandatory
      return;
 
    address_ = argv[argc - 1];
-   if (!address_.valid ()) {
-      cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc - 1] << "\n";
-      return;
-   }
+   if (!address_.valid ())
+     {
+       cout << "ERROR: Invalid IPv4 address or DNS hostname: "
+            << argv[argc - 1] << "\n";
+       return;
+     }
 
    ACE_Argv_Type_Converter to_tchar (argc, argv);
    ACE_Get_Opt get_opt (argc,
@@ -115,22 +117,22 @@ trapapp::trapapp (int argc, char *argv[])
        }
 
    if (ent.valid ())
-      pdu_.set_notify_enterprise (ent); // set up the enterprise of the trap
+     pdu_.set_notify_enterprise (ent); // set up the enterprise of the trap
    else
-      pdu_.set_notify_enterprise (def_ent_oid);
+     pdu_.set_notify_enterprise (def_ent_oid);
 
-  if (trap.valid ())
+   if (trap.valid ())
      pdu_.set_notify_id (trap); // set the id of the trap
-  else
+   else
      pdu_.set_notify_id (coldStart); // set the id of the trap
 
-  Oid const detail_oid ("1.3.6.1.4.1.11.2.16.2");
-  OctetStr const detail_value ("SNMP++ Trap Send Test");
-  Vb vb (detail_oid, detail_value);
-  pdu_ += vb;
+   Oid const detail_oid ("1.3.6.1.4.1.11.2.16.2");
+   OctetStr const detail_value ("SNMP++ Trap Send Test");
+   Vb vb (detail_oid, detail_value);
+   pdu_ += vb;
 
-  pdu_.get_notify_id (oid_); // store for later use
-  this->valid_ = true;
+   pdu_.get_notify_id (oid_); // store for later use
+   this->valid_ = true;
 }
 
 void trapapp::usage ()
@@ -138,10 +140,8 @@ void trapapp::usage ()
   cout << "Usage:\n";
   cout << "trap [options] dotted-quad | DNSName[:port]\n";
   cout << "      -c Community_name, default is 'public'\n";
-  cout << "      -r N  retries default is N = 1 retry\n";
-  cout << "      -t N  timeout in seconds default is 1 second" << endl;
   cout << "      -e oid  enterprise oid default is 1.3.6.1.2.1.1.1.2.0.1\n";
-  cout << "      -t oid  trap id default is coldStart 1.3.6.1.6.3.1.1.5.1\n";
+  cout << "      -t oid  trap id default is coldStart 1.3.6.1.6.3.1.1.5.1" << endl;
 }
 
 int trapapp::run ()
@@ -157,8 +157,8 @@ int trapapp::run ()
    target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1) << \
-       " TRAP GENERATOR SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
+   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1)
+        << " TRAP GENERATOR SAMPLE PROGRAM \nOID: " << oid_.to_string () << "\n";
    target_.get_address (address_); // target updates port used
    int rc {};
    char const * const name = address_.resolve_hostname (rc);
@@ -169,7 +169,7 @@ int trapapp::run ()
    cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
    //FUZZ: enable check_for_lack_ACE_OS
 
-   cout << "[ Community=" <<  community_.to_string() << " ]"<< endl;
+   cout << "[ Community=" << community_.to_string () << " ]" << endl;
 
    if (snmp_.trap (pdu_, target_) == SNMP_CLASS_SUCCESS) {
      cout << "Trap was written to network...\n";
