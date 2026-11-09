@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "Foo_B_ClientEngine.h"
 #include "Callback_i.h"
 #include "Foo_B_Statistics.h"
@@ -84,7 +86,7 @@ Foo_B_ClientEngine::execute()
   ACE_OS::sprintf (buffer, "%d %s %d:%d:%d", this->client_id_, ONEWAY_ARG_TEST_STR,
     t.hour, t.minute, t.second);
 
-  if (ACE_OS::strncmp (message.in (), buffer, ACE_OS::strlen (buffer)) != 0)
+  if (std::strncmp (message.in (), buffer, std::strlen (buffer)) != 0)
     {
       check_validity = false;
     }
