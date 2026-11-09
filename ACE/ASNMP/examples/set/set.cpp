@@ -61,12 +61,13 @@ private:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
-  set get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid ())
-     return get.run ();
-  else
-    set::usage();
-  return 1;
+  set app (atc.get_argc (), atc.get_ASCII_argv ());
+  if (!app.valid ())
+    {
+      set::usage ();
+      return 1;
+    }
+  return app.run ();
 }
 
 bool
@@ -79,15 +80,16 @@ set::set (int argc, char *argv[])
 {
    Vb vb {}; // construct a Vb object
    Oid req {};
-   if ( argc < 2)
+   if (argc < 2)
      return;
-   target_.get_write_community(community_);
+   target_.get_write_community (community_);
    address_ = argv[argc - 1];
-   if (!address_.valid ()) {
-      cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc - 1] << "\n";
-      return;
-   }
+   if (!address_.valid ())
+     {
+       cout << "ERROR: Invalid IPv4 address or DNS hostname: "
+            << argv[argc - 1] << "\n";
+       return;
+     }
 
    ACE_Argv_Type_Converter to_tchar (argc, argv);
    ACE_Get_Opt get_opt (argc,
@@ -97,11 +99,13 @@ set::set (int argc, char *argv[])
      switch (option)
        {
        case 'o':
-         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
-         if (req.valid () == 0)
-         cout << "ERROR: oid value: "
-              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ())
-              << "is not valid. using default.\n";
+         {
+           char const * const oid_arg = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+           req = oid_arg;
+           if (!req.valid ())
+             cout << "ERROR: oid value: " << oid_arg
+                  << " is not valid. using default.\n";
+         }
          break;
 
        case 'c':
@@ -119,64 +123,64 @@ set::set (int argc, char *argv[])
 
        case 'I': // Integer32
          {
-         SnmpInt32 o (ACE_OS::atoi (get_opt.opt_arg ()));
-         vb.set_value (o);
-         pdu_ += vb;
+           SnmpInt32 const value (ACE_OS::atoi (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
-        break;
+         break;
 
        case 'U': // Unsigned32
          {
-         SnmpUInt32 o (ACE_OS::atoi (get_opt.opt_arg ()));
-         vb.set_value (o);
-         pdu_ += vb;
+           SnmpUInt32 const value (ACE_OS::atoi (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
-        break;
+         break;
 
        case 'C': // Counter32
          {
-         Counter32 o (ACE_OS::atoi (get_opt.opt_arg ()));
-         vb.set_value (o);
-         pdu_ += vb;
+           Counter32 const value (ACE_OS::atoi (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
          break;
 
        case 'G': // Gauge32
-        {
-         Gauge32 o (ACE_OS::atoi (get_opt.opt_arg ()));
-         vb.set_value (o);
-         pdu_ += vb;
+         {
+           Gauge32 const value (ACE_OS::atoi (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
-        break;
+         break;
 
        case 'T': // TimeTicks
-        {
-         TimeTicks o (ACE_OS::atoi (get_opt.opt_arg ()));
-         vb.set_value (o);
-         pdu_ += vb;
+         {
+           TimeTicks const value (ACE_OS::atoi (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
-        break;
+         break;
 
        case 'O': // Oid as a variable identifier
-        {
-         oid_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
-         vb.set_oid (oid_); // when value is set, pdu updated
+         {
+           oid_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+           vb.set_oid (oid_); // when value is set, pdu updated
          }
          break;
 
        case 'S': // Octet String
          {
-         OctetStr o (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
-         vb.set_value (o); // set the Oid portion of the Vb
-         pdu_ += vb;
+           OctetStr const value (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
          break;
 
        case 'P': // Oid String as a value
          {
-         Oid o (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
-         vb.set_value (o); // set the Oid portion of the Vb
-         pdu_ += vb;
+           Oid const value (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+           vb.set_value (value);
+           pdu_ += vb;
          }
          break;
 
@@ -185,15 +189,16 @@ set::set (int argc, char *argv[])
        }
 
   // if user didn't set anything use defaults
-  if (pdu_.get_vb_count () == 0) {
-   Oid const def_oid ("1.3.6.1.2.1.1.4.0"); // default is sysName
-   OctetStr def_value ("sysName.0 updated by ASNMP set command");
-   vb.set_oid (def_oid);
-   vb.set_value (def_value);
-   pdu_ += vb;
-   cout << "INFO: using defaults, setting sysName to : " <<  \
-        def_value.to_string() << endl;
-  }
+  if (pdu_.get_vb_count () == 0)
+    {
+      Oid const def_oid ("1.3.6.1.2.1.1.4.0"); // default is sysName
+      OctetStr def_value ("sysName.0 updated by ASNMP set command");
+      vb.set_oid (def_oid);
+      vb.set_value (def_value);
+      pdu_ += vb;
+      cout << "INFO: using defaults, setting sysName to : "
+           << def_value.to_string () << endl;
+    }
 
   valid_ = true;
 }
@@ -225,8 +230,8 @@ int set::run ()
    target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1) << \
-       " SET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
+   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1)
+        << " SET SAMPLE PROGRAM \nOID: " << oid_.to_string () << "\n";
    target_.get_address (address_); // target updates port used
    int rc {};
    char const * const name = address_.resolve_hostname (rc);
@@ -237,9 +242,9 @@ int set::run ()
    cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
    //FUZZ: enable check_for_lack_ACE_OS
 
-   cout << "[ Retries=" << target_.get_retry() << " \
-        Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
-         community_.to_string() << " ]"<< endl;
+   cout << "[ Retries=" << target_.get_retry ()
+        << " Timeout=" << target_.get_timeout () << " ms Community="
+        << community_.to_string () << " ]" << endl;
 
    if (snmp_.set (pdu_, target_) == SNMP_CLASS_SUCCESS) {
        Vb vb {};
