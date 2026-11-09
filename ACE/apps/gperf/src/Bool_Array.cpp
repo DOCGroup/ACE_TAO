@@ -34,9 +34,9 @@ Bool_Array::~Bool_Array ()
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "\ndumping boolean array information\n"
-                "size = %u\niteration number = %u\nend of array dump\n",
-                size_,
-                generation_number_));
+                "size = %B\niteration number = %B\nend of array dump\n",
+                static_cast<size_t> (size_),
+                static_cast<size_t> (generation_number_)));
 }
 
 Bool_Array::Bool_Array ()
@@ -61,9 +61,9 @@ Bool_Array::open (u_long s)
 
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
-                "\nbool array size = %u, total bytes = %u\n",
-                size_,
-                size_ * (int) sizeof (unsigned long)));
+                "\nbool array size = %B, total bytes = %B\n",
+                static_cast<size_t> (size_),
+                static_cast<size_t> (size_) * sizeof (unsigned long)));
   return 0;
 }
 

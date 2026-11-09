@@ -70,13 +70,10 @@ enum Option_Type
 // g++ doesn't seem to do the right thing with them at the
 // moment... ;-(
 
-enum
-{
-  MAX_KEY_POS = 128 - 1,    /**< Max size of each word's key set. */
-  WORD_START = 1,           /**< Signals the start of a word. */
-  WORD_END = 0,             /**< Signals the end of a word. */
-  EOS = MAX_KEY_POS         /**< Signals end of the key list. */
-};
+constexpr int MAX_KEY_POS {128 - 1}; /**< Max size of each word's key set. */
+constexpr int WORD_START {1};        /**< Signals the start of a word. */
+constexpr int WORD_END {};           /**< Signals the end of a word. */
+constexpr int EOS {MAX_KEY_POS};     /**< Signals end of the key list. */
 
 /*
  * This class provides a uniform interface to the various options

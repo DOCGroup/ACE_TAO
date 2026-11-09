@@ -49,15 +49,15 @@ Hash_Table::~Hash_Table ()
 {
   if (option[DEBUGGING])
     {
-      size_t keysig_width = option.max_keysig_size () > std::strlen ("keysig")
-        ? option.max_keysig_size ()
-        : std::strlen ("keysig");
+      int const keysig_width = option.max_keysig_size () > std::strlen ("keysig")
+        ? static_cast<int> (option.max_keysig_size ())
+        : static_cast<int> (std::strlen ("keysig"));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
+                  "\ndumping the hash table\ntotal available table slots = %B, total bytes = %B, total collisions = %d\n"
                   "location, %*s, keyword\n",
                   this->size_,
-                  this->size_ * (int) sizeof *this->table_.get (),
+                  this->size_ * sizeof *this->table_.get (),
                   this->collisions_,
                   keysig_width,
                   "keysig"));

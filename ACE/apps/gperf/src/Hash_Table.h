@@ -48,7 +48,7 @@ class Hash_Table
 {
 public:
   /// Constructor
-  Hash_Table (size_t s);
+  explicit Hash_Table (size_t s);
 
   Hash_Table (Hash_Table const &) = delete;
   Hash_Table (Hash_Table &&) = delete;
