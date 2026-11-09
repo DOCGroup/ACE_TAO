@@ -24,6 +24,7 @@
 
 
 #include "../test_config.h"
+#include <cstring>
 #include "ace/Default_Constants.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
@@ -372,7 +373,7 @@ Server_Handler::handle_read_stream
   size_t test_string_len = ACE_OS::strlen (test_string);
   while (b.length () >= test_string_len)
     {
-      if (0 != ACE_OS::strncmp (b.rd_ptr (), test_string, test_string_len))
+      if (0 != std::strncmp (b.rd_ptr (), test_string, test_string_len))
         ACE_ERROR_BREAK ((LM_ERROR,
                           ACE_TEXT ("(%t) Read string: %C; expected: %C\n"),
                           b.rd_ptr (),
