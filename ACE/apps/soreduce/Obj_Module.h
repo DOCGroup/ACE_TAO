@@ -57,8 +57,10 @@ public:
   void add_extref ();
 
 private:
-  void populate_sig_list (Sig_List &, int, ACE_Message_Block *);
-  int read_line (ACE_HANDLE src, ACE_Message_Block **buf);
+  // The message block is borrowed; its chain owns any heap continuations.
+  void populate_sig_list (Sig_List &, int, ACE_Message_Block &);
+  // buf is a borrowed cursor; a null value tells read_line to discard input.
+  int read_line (ACE_HANDLE src, ACE_Message_Block *&buf);
 
   ACE_CString name_;
   Sig_List imports_;

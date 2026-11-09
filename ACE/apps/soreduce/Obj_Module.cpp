@@ -55,11 +55,11 @@ Obj_Module::add_extref()
 }
 
 int
-Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
+Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block *&buf)
 {
   int eoln = 0;
   //  ACE_Time_Value timeout (1,0);
-  if (buf == nullptr || *buf == nullptr) {
+  if (buf == nullptr) {
     char dummy;
     while (!eoln && ACE_OS::read(src,&dummy,1) == 1) {
       eoln = (dummy == '\n');
@@ -67,12 +67,13 @@ Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
     return eoln;
   }
   //  while (!eoln && ACE::recv(src,buf->wr_ptr(),1,&timeout) == 1) {
-  while (!eoln && ACE_OS::read(src,(*buf)->wr_ptr(),1) == 1) {
-    eoln = (*(*buf)->wr_ptr() == '\n');
-    (*buf)->wr_ptr(1);
-    if ((*buf)->space() == 0) {
-      (*buf)->cont(new ACE_Message_Block(102400));
-      *buf = (*buf)->cont();
+  while (!eoln && ACE_OS::read(src,buf->wr_ptr(),1) == 1) {
+    eoln = (*buf->wr_ptr() == '\n');
+    buf->wr_ptr(1);
+    if (buf->space() == 0) {
+      // The root message block owns this continuation; buf is only a cursor.
+      buf->cont(new ACE_Message_Block(102400));
+      buf = buf->cont();
     }
   }
   return eoln;
@@ -123,6 +124,7 @@ Obj_Module::add_source(char const *p, bool imports_only)
   ACE_Message_Block ex_buffer (102400);
   ACE_Message_Block *im_buf_cur = &im_buffer;
   ACE_Message_Block *ex_buf_cur = &ex_buffer;
+  ACE_Message_Block *discarded_buf {};
   char dummy;
   int eoln = 1;
   //  ACE_Time_Value timeout (1,0);
@@ -145,8 +147,9 @@ Obj_Module::add_source(char const *p, bool imports_only)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)
       break;
 
-    eoln = this->read_line (pipe[0], is_import ? &im_buf_cur :
-                            (is_export ? &ex_buf_cur : nullptr));
+    ACE_Message_Block *&buffer_cursor = is_import ? im_buf_cur :
+      (is_export ? ex_buf_cur : discarded_buf);
+    eoln = this->read_line (pipe[0], buffer_cursor);
     import_lines += is_import;
     export_lines += is_export;
   }
@@ -156,16 +159,17 @@ Obj_Module::add_source(char const *p, bool imports_only)
   nmproc.wait ();
   ACE_OS::close (pipe[0]);
 
-  this->populate_sig_list (imports_,import_lines,&im_buffer);
+  this->populate_sig_list (imports_, import_lines, im_buffer);
   if (!imports_only)
-    this->populate_sig_list (exports_,export_lines,&ex_buffer);
+    this->populate_sig_list (exports_, export_lines, ex_buffer);
 }
 
 void
 Obj_Module::populate_sig_list (Sig_List &siglist,
                                int lines,
-                               ACE_Message_Block *buf)
+                               ACE_Message_Block &buffer)
 {
+  ACE_Message_Block *buf = &buffer;
   char *c;
   ACE_CString temp;
 
