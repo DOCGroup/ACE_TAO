@@ -28,10 +28,8 @@
 class Time_Date_Client_i
 {
 public:
-  /// Constructor
   Time_Date_Client_i () = default;
 
-  /// Destructor
   ~Time_Date_Client_i () = default;
 
   Time_Date_Client_i (Time_Date_Client_i const &) = delete;

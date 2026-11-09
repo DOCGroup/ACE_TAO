@@ -79,7 +79,6 @@ public:
 class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   Time_Date_Servant () = default;
 
   Time_Date_Servant (Time_Date_Servant const &) = delete;
