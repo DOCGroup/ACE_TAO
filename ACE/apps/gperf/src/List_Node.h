@@ -42,9 +42,9 @@ public:
   /// Constructor.
   List_Node (char *key, int len);
 
-  List_Node (const List_Node &) = delete;
+  List_Node (List_Node const &) = delete;
   List_Node (List_Node &&) = delete;
-  List_Node &operator= (const List_Node &) = delete;
+  List_Node &operator= (List_Node const &) = delete;
   List_Node &operator= (List_Node &&) = delete;
 
   /// Destructor.

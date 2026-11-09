@@ -39,9 +39,10 @@ Hash_Table::Hash_Table (size_t s)
 {
   if (this->size_ == 0)
     this->size_ = 1;
-  ACE_NEW (this->table_,
-           List_Node*[this->size_]);
-  std::fill_n (this->table_, this->size_, nullptr);
+  List_Node **table {};
+  ACE_NEW (table, List_Node*[this->size_]);
+  this->table_.reset (table);
+  std::fill_n (this->table_.get (), this->size_, nullptr);
 }
 
 Hash_Table::~Hash_Table ()
@@ -56,7 +57,7 @@ Hash_Table::~Hash_Table ()
                   "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
                   "location, %*s, keyword\n",
                   this->size_,
-                  this->size_ * (int) sizeof *this->table_,
+                  this->size_ * (int) sizeof *this->table_.get (),
                   this->collisions_,
                   keysig_width,
                   "keysig"));
@@ -73,7 +74,6 @@ Hash_Table::~Hash_Table ()
                   "end dumping hash table\n\n"));
     }
 
-  delete [] this->table_;
 }
 
 // If the ITEM is already in the hash table return the item found in

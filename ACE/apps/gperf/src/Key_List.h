@@ -38,9 +38,9 @@ class Duplicate_Entry
 {
 public:
   Duplicate_Entry () = default;
-  Duplicate_Entry (const Duplicate_Entry &) = delete;
+  Duplicate_Entry (Duplicate_Entry const &) = delete;
   Duplicate_Entry (Duplicate_Entry &&) = delete;
-  Duplicate_Entry &operator= (const Duplicate_Entry &) = delete;
+  Duplicate_Entry &operator= (Duplicate_Entry const &) = delete;
   Duplicate_Entry &operator= (Duplicate_Entry &&) = delete;
   ~Duplicate_Entry () = default;
 
@@ -66,9 +66,9 @@ class Key_List
 {
 public:
   Key_List ();
-  Key_List (const Key_List &) = delete;
+  Key_List (Key_List const &) = delete;
   Key_List (Key_List &&) = delete;
-  Key_List &operator= (const Key_List &) = delete;
+  Key_List &operator= (Key_List const &) = delete;
   Key_List &operator= (Key_List &&) = delete;
   ~Key_List ();
   int keyword_list_length ();
@@ -117,7 +117,7 @@ private:
   char *special_input (char delimiter);
   List_Node *merge (List_Node *list1, List_Node *list2);
   List_Node *merge_sort (List_Node *head);
-  int count_duplicates (List_Node *link, const char *type);
+  int count_duplicates (List_Node *link, char const *type);
   void update_lookup_array (int lookup_array[],
                             int i1,
                             int i2,
@@ -166,10 +166,10 @@ private:
   int total_keys;
 
   /// Default type for generated code.
-  static const char *const default_array_type;
+  static constexpr char const *default_array_type = "char const *";
 
   /// in_word_set return type, by default.
-  static const char *const default_return_type;
+  static constexpr char const *default_return_type = "char const *";
 
   /// How wide the printed field width must be to contain the maximum
   /// hash value.

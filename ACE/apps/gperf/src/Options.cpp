@@ -49,15 +49,13 @@ namespace
   }
 }
 
-/// These need to appear before the global class instantiation, since
-/// they are static members with a default constructor that initializes
-/// an ACE_Allocator needed in the Options class constructor.
-ACE_CString Options::function_name_;
-ACE_CString Options::fill_default_;
-ACE_CString Options::key_name_;
-ACE_CString Options::class_name_;
-ACE_CString Options::hash_name_;
-ACE_CString Options::delimiters_;
+/// Define option strings before the global Options object that initializes them.
+std::string Options::function_name_;
+std::string Options::fill_default_;
+std::string Options::key_name_;
+std::string Options::class_name_;
+std::string Options::hash_name_;
+std::string Options::delimiters_;
 
 /// Global option coordinator for the entire program.
 Options option;
@@ -69,22 +67,22 @@ extern char const *version_string;
 static constexpr int DEFAULT_JUMP_VALUE = 5;
 
 /// Default name for generated lookup function.
-static const char *const DEFAULT_NAME = "in_word_set";
+static constexpr char const *DEFAULT_NAME = "in_word_set";
 
 /// Default filler for keyword table.
-static const char *const DEFAULT_FILL = "";
+static constexpr char const *DEFAULT_FILL = "";
 
 /// Default name for the key component.
-static const char *const DEFAULT_KEY = "name";
+static constexpr char const *DEFAULT_KEY = "name";
 
 /// Default name for the generated class.
-static const char *const DEFAULT_CLASS_NAME = "Perfect_Hash";
+static constexpr char const *DEFAULT_CLASS_NAME = "Perfect_Hash";
 
 /// Default name for generated hash function.
-static const char *const DEFAULT_HASH_NAME = "hash";
+static constexpr char const *DEFAULT_HASH_NAME = "hash";
 
 /// Default delimiters that separate keywords from their attributes.
-static const char *const DEFAULT_DELIMITERS = ",\n";
+static constexpr char const *DEFAULT_DELIMITERS = ",\n";
 
 int Options::option_word_;
 int Options::total_switches_;
@@ -512,7 +510,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Sets key positions used for hash function.
         case 'k':
           {
-            const int BAD_VALUE = -1;
+            int const BAD_VALUE = -1;
             int value;
             Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
                              1,
@@ -783,38 +781,38 @@ Options::jump ()
 }
 
 /// Returns the generated function name.
-const char *
+std::string const&
 Options::function_name ()
 {
-  return function_name_.c_str ();
+  return function_name_;
 }
 
 /// Returns the fill default
-const char *
+std::string const&
 Options::fill_default ()
 {
-  return fill_default_.c_str ();
+  return fill_default_;
 }
 
 /// Returns the keyword key name.
-const char *
+std::string const&
 Options::key_name ()
 {
-  return key_name_.c_str ();
+  return key_name_;
 }
 
 /// Returns the hash function name.
-const char *
+std::string const&
 Options::hash_name ()
 {
-  return hash_name_.c_str ();
+  return hash_name_;
 }
 
 /// Returns the generated class name.
-const char *
+std::string const&
 Options::class_name ()
 {
-  return class_name_.c_str ();
+  return class_name_;
 }
 
 /// Returns the initial associated character value.
@@ -832,10 +830,10 @@ Options::iterations ()
 }
 
 /// Returns the string used to delimit keywords from other attributes.
-const char *
+std::string const&
 Options::delimiter ()
 {
-  return delimiters_.c_str ();
+  return delimiters_;
 }
 
 /// Gets the total number of switch statements to generate.

@@ -3,19 +3,19 @@
 @include version.texi
 
 @c %**start of header
-@settitle User's Guide to @code{gperf}
-@setfilename gperf.info
+@settitle User's Guide to ACE @code{gperf}
+@setfilename ace_gperf.info
 @c %**end of header
 
 @ifinfo
 @dircategory GNU programming tools
 @direntry
-* Gperf: (ace_gperf).                Perfect Hash Function Generator.
+* ACE gperf: (ace_gperf).            C++17 Perfect Hash Function Generator.
 @end direntry
 @end ifinfo
 
 @ifinfo
-This file documents the features of the GNU Perfect Hash Function Generator
+This file documents ACE's C++17 adaptation of the GNU Perfect Hash Function Generator.
 
 Copyright (C) 1989 Free Software Foundation, Inc.
 
@@ -48,10 +48,10 @@ Free Software Foundation instead of in the original English.
 @setchapternewpage odd
 
 @titlepage
-@title GNU GPERF Utility
+@title ACE GPERF Utility
 @subtitle User's Guide
 @subtitle Last updated @value{UPDATED}
-@subtitle For GPERF version @value{VERSION}
+@subtitle C++17 output; ACE version @value{VERSION}
 @author Douglas C. Schmidt
 
 @c  The following two commands
@@ -452,16 +452,8 @@ pair of C++ functions.  These functions determine whether a given
 character string @emph{s} occurs in @emph{W}, using at most one probe
 into the lookup table.
 
-@code{gperf} currently generates the reserved keyword recognizer for
-lexical analyzers in several production and research compilers and
-language processing tools, including GNU C, GNU C++, GNU Pascal, GNU
-Modula 3, and GNU indent.  Complete C++ source code for @code{gperf} is
-available via anonymous ftp from ics.uci.edu.  @code{gperf} also is
-distributed along with the GNU libg++ library.  A highly portable,
-functionally equivalent K&R C version of @code{gperf} is archived in
-comp.sources.unix, volume 20.  Finally, a paper describing
-@code{gperf}'s design and implementation in greater detail is available
-in the Second USENIX C++ Conference proceedings.
+ACE gperf is used by TAO's IDL compiler to generate operation-dispatch
+tables. It emits C++17 code and reports the ACE version used to build it.
 
 @node Search Structures, Description, Motivation, Top
 @chapter Static search structures and ACE @code{gperf}

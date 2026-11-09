@@ -25,7 +25,8 @@
 #define OPTIONS_H
 
 #include "ace/Log_Msg.h"
-#include "ace/SString.h"
+
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -92,9 +93,9 @@ class Options
 {
 public:
   Options ();
-  Options (const Options &) = delete;
+  Options (Options const &) = delete;
   Options (Options &&) = delete;
-  Options &operator= (const Options &) = delete;
+  Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
   ~Options ();
   int operator[] (Option_Type option);
@@ -112,12 +113,12 @@ public:
   static int jump ();
   static int initial_value ();
   static int total_switches ();
-  static const char *function_name ();
-  static const char *fill_default ();
-  static const char *key_name ();
-  static const char *class_name ();
-  static const char *hash_name ();
-  static const char *delimiter ();
+  static std::string const& function_name ();
+  static std::string const& fill_default ();
+  static std::string const& key_name ();
+  static std::string const& class_name ();
+  static std::string const& hash_name ();
+  static std::string const& delimiter ();
 
 private:
   /// Holds the user-specified Options.
@@ -151,22 +152,22 @@ private:
   static ACE_TCHAR **argv_;
 
   /// Names used for generated lookup function.
-  static ACE_CString function_name_;
+  static std::string function_name_;
 
   /// Expression used to assign default values in keyword table.
-  static ACE_CString fill_default_;
+  static std::string fill_default_;
 
   /// Name used for keyword key.
-  static ACE_CString key_name_;
+  static std::string key_name_;
 
   /// Name used for generated C++ class.
-  static ACE_CString class_name_;
+  static std::string class_name_;
 
   /// Name used for generated hash function.
-  static ACE_CString hash_name_;
+  static std::string hash_name_;
 
   /// Separates keywords from other attributes.
-  static ACE_CString delimiters_;
+  static std::string delimiters_;
 
   /// Contains user-specified key choices.
   static char key_positions_[MAX_KEY_POS];

@@ -32,11 +32,6 @@
 #include <memory>
 
 /// Default type for generated code.
-const char *const Key_List::default_array_type = "char const *";
-
-/// in_word_set return type, by default.
-const char *const Key_List::default_return_type = "char const *";
-
 namespace
 {
 char const *
@@ -104,7 +99,7 @@ output_return_type (char const *type, bool const is_const)
 }
 
 char *
-dup_string (const char *const str)
+dup_string (char const *const str)
 {
   char *buf {};
   ACE_NEW_RETURN (buf,
@@ -332,11 +327,11 @@ Key_List::read_keys ()
       else
         {
           List_Node *temp {};
-          const char *delimiter = option.delimiter ();
+          std::string const& delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
                                      static_cast<int> (std::strcspn (buffer,
-                                                        delimiter))),
+                                                        delimiter.c_str ()))),
                           -1);
           for (temp = this->head;
                (nullptr != (buffer = input.read ('\n')))
@@ -346,7 +341,7 @@ Key_List::read_keys ()
               ACE_NEW_RETURN (temp->next,
                               List_Node (buffer,
                                          static_cast<int> (std::strcspn (buffer,
-                                                            delimiter))),
+                                                            delimiter.c_str ()))),
                               -1);
               ++this->total_keys;
             }
@@ -662,26 +657,26 @@ Key_List::output_switch (int use_keyword_table)
   if (pointer_and_type_enabled)
     {
       // Keep track of the longest string we'll need!
-      const char *s = "charmap[*str] == *resword->%s && !%sstrncasecmp (str + 1, resword->%s + 1, len - 1)";
+      char const *s = "charmap[*str] == *resword->%s && !%sstrncasecmp (str + 1, resword->%s + 1, len - 1)";
 
       char * const tmp =
         new char[std::strlen (s)
                  + std::strlen ("ACE_OS::")
-                 + 2 * std::strlen (option.key_name ()) + 1];
+                 + 2 * std::strlen (option.key_name ().c_str ()) + 1];
       safe_comp_buffer.reset (tmp);
 
       comp_buffer = safe_comp_buffer.get ();
 
       if (option[COMP])
         std::sprintf (comp_buffer, "%s == *resword->%s && !%s%s (str + 1, resword->%s + 1, len - 1)",
-                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
                          string_compare_prefix (option[STRCASECMP]),
-                         option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
+                         option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ().c_str ());
       else
         std::sprintf (comp_buffer, "%s == *resword->%s && !%s%s (str + 1, resword->%s + 1)",
-                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
                          string_compare_prefix (option[STRCASECMP]),
-                         option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
+                         option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ().c_str ());
     }
   else
     {
@@ -697,7 +692,7 @@ Key_List::output_switch (int use_keyword_table)
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
   ACE_OS::printf ("      %s const key = %s (str, len);\n\n",
-                  generated_size_type (), option.hash_name ());
+                  generated_size_type (), option.hash_name ().c_str ());
   if (!option[OPTIMIZE])
     ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
 
@@ -884,10 +879,10 @@ Key_List::output_switch (int use_keyword_table)
 void
 Key_List::output_keylength_table ()
 {
-  const int max_column = 15;
+  int const max_column = 15;
   int slot = 0;
   int column = 0;
-  const char *indent = option[GLOBAL] ? "" : "  ";
+  char const *indent = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
 
   if (!option[DUP] && !option[SWITCH])
@@ -924,9 +919,9 @@ Key_List::output_keylength_table ()
 void
 Key_List::output_keyword_table ()
 {
-  const char *l_brace = *head->rest ? "{" : "";
-  const char *r_brace = *head->rest ? "}," : "";
-  const char *indent = option[GLOBAL] ? "" : "  ";
+  char const *l_brace = *head->rest ? "{" : "";
+  char const *r_brace = *head->rest ? "}," : "";
+  char const *indent = option[GLOBAL] ? "" : "  ";
   int slot = 0;
   List_Node *temp;
 
@@ -971,7 +966,7 @@ Key_List::output_keyword_table ()
     {
       ACE_OS::printf ("%s\"\",%s%s%s",
                       l_brace,
-                      option.fill_default (),
+                      option.fill_default ().c_str (),
                       r_brace,
                       column_defaults % 9 ? "" : "\n      ");
       slot++;
@@ -995,7 +990,7 @@ Key_List::output_keyword_table ()
           for (column = 1; slot < temp->hash_value; slot++, column++)
             ACE_OS::printf ("%s\"\",%s%s%s",
                             l_brace,
-                            option.fill_default (),
+                            option.fill_default ().c_str (),
                             r_brace,
                             column % 9 ? "" : "\n      ");
 
@@ -1068,10 +1063,10 @@ Key_List::output_binary_search_function ()
   // Class definition if -M is *not* enabled.
   if (!option[SKIPCLASS])
     {
-      ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ());
+      ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ().c_str ());
       output_return_type (return_type, option[CONSTANT]);
       ACE_OS::printf (" %s (char const *str);\n};\n\n",
-                      option.function_name ());
+                      option.function_name ().c_str ());
     }
 
   // Use the inline keyword to remove function overhead.
@@ -1080,9 +1075,9 @@ Key_List::output_binary_search_function ()
 
   output_return_type (return_type, option[CONSTANT]);
   ACE_OS::printf ("\n");
-  ACE_OS::printf ("%s::", option.class_name ());
+  ACE_OS::printf ("%s::", option.class_name ().c_str ());
 
-  ACE_OS::printf ("%s (char const *str)\n{\n", option.function_name ());
+  ACE_OS::printf ("%s (char const *str)\n{\n", option.function_name ().c_str ());
 
 // Use the switch in place of lookup table.
 
@@ -1114,9 +1109,9 @@ Key_List::output_binary_search_function ()
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   middle = (last + first) / 2;\n");
   ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) == 0)\n      break;\n",
-                  string_compare_prefix (false), option.key_name ());
+                  string_compare_prefix (false), option.key_name ().c_str ());
   ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) < 0)\n      first = middle + 1;\n",
-                  string_compare_prefix (false), option.key_name ());
+                  string_compare_prefix (false), option.key_name ().c_str ());
   ACE_OS::printf ("\t   else last = middle - 1;\n");
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("if (last < first)\n  return %s;\n", generated_null_pointer ());
@@ -1170,10 +1165,10 @@ Key_List::output_linear_search_function ()
   // Class definition if -M is *not* enabled.
   if (!option[SKIPCLASS])
     {
-      ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ());
+      ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ().c_str ());
       output_return_type (return_type, option[CONSTANT]);
       ACE_OS::printf (" %s (char const *str);\n};\n\n",
-                      option.function_name ());
+                      option.function_name ().c_str ());
     }
 
   // Use the inline keyword to remove function overhead.
@@ -1182,9 +1177,9 @@ Key_List::output_linear_search_function ()
 
   output_return_type (return_type, option[CONSTANT]);
   ACE_OS::printf ("\n");
-  ACE_OS::printf ("%s::", option.class_name ());
+  ACE_OS::printf ("%s::", option.class_name ().c_str ());
 
-  ACE_OS::printf ("%s (char const *str)\n{\n", option.function_name ());
+  ACE_OS::printf ("%s (char const *str)\n{\n", option.function_name ().c_str ());
 
   // Use the switch in place of lookup table.
 
@@ -1206,7 +1201,7 @@ Key_List::output_linear_search_function ()
   ACE_OS::printf ("for (int i=0; i<=%d; i++)",total_keys-1);
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   if (%sstrcmp (wordlist[i].%s, str) == 0)\n",
-                  string_compare_prefix (false), option.key_name ());
+                  string_compare_prefix (false), option.key_name ().c_str ());
   ACE_OS::printf ("\t        return %swordlist[i]%s;\n",
                   generated_address_prefix (), generated_address_suffix ());
   ACE_OS::printf ("\t}\n");
@@ -1235,12 +1230,12 @@ Key_List::output_linear_search_function ()
 void
 Key_List::output_hash_function ()
 {
-  const int max_column = 10;
+  int const max_column = 10;
   int count = max_hash_value;
 
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
   // Lookup table for converting ASCII to EBCDIC.
-  static const int ascii_to_ebcdic[ACE_ASCII_SIZE] =
+  static int const ascii_to_ebcdic[ACE_ASCII_SIZE] =
   {
     0x00, 0x01, 0x02, 0x03, 0x37, 0x2D, 0x2E, 0x2F,
     0x16, 0x05, 0x15, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
@@ -1277,10 +1272,10 @@ Key_List::output_hash_function ()
     ACE_OS::printf ("inline\n");
 
   ACE_OS::printf ("%s\n", generated_size_type ());
-  ACE_OS::printf ("%s::", option.class_name ());
+  ACE_OS::printf ("%s::", option.class_name ().c_str ());
 
   ACE_OS::printf ("%s (char const *str, %s len)\n{\n",
-                  option.hash_name (), generated_size_type ());
+                  option.hash_name ().c_str (), generated_size_type ());
 
   // Generate the asso_values table.
   char const *const asso_type = max_hash_value < UCHAR_MAX ? "char" :
@@ -1437,7 +1432,7 @@ Key_List::output_hash_function ()
 
 int
 Key_List::count_duplicates (List_Node *link,
-                            const char *type)
+                            char const *type)
 {
   int count = 0;
 
@@ -1480,7 +1475,7 @@ Key_List::output_lookup_array ()
 {
   if (total_duplicates > 0)
     {
-      const int DEFAULT_VALUE = -1;
+      int const DEFAULT_VALUE = -1;
 
       Duplicate_Entry *duplicates {};
       ACE_NEW_RETURN (duplicates,
@@ -1614,7 +1609,7 @@ Key_List::output_lookup_array ()
             max = val;
         }
 
-      const char *indent = option[GLOBAL] ? "" : "  ";
+      char const *indent = option[GLOBAL] ? "" : "  ";
 
       char const *const lookup_type = max <= SCHAR_MAX ? "char" :
         max <= SHRT_MAX ? "short" : "int";
@@ -1634,7 +1629,7 @@ Key_List::output_lookup_array ()
       for (Key_List::field_width = 2; (count /= 10) > 0; Key_List::field_width++)
         continue;
 
-      const int max_column = 15;
+      int const max_column = 15;
       int column = 0;
 
       for (lookup_ptr = lookup_array;
@@ -1671,7 +1666,7 @@ Key_List::output_lookup_function ()
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
   ACE_OS::printf ("      %s const key = %s (str, len);\n\n",
-                  generated_size_type (), option.hash_name ());
+                  generated_size_type (), option.hash_name ().c_str ());
   if (!option[OPTIMIZE])
     ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
   ACE_OS::printf ("        {\n");
@@ -1693,7 +1688,7 @@ Key_List::output_lookup_function ()
                           option[CONSTANT] || pointer_and_type_enabled == 0
                             ? "char const" : "char");
           if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
-            ACE_OS::printf (".%s", option.key_name ());
+            ACE_OS::printf (".%s", option.key_name ().c_str ());
 
           ACE_OS::printf (";\n\n              if (%s%s == *s && !%s%s)\n"
                          "                return %s%s%s;\n            }\n",
@@ -1748,14 +1743,14 @@ Key_List::output_lookup_function ()
         {
           if (option[COMP])
               ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1, len - 1",
-                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
                       string_compare_prefix (option[STRCASECMP]),
-                      option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
+                      option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ().c_str ());
           else
               ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1",
-                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
                       string_compare_prefix (option[STRCASECMP]),
-                      option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
+                      option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ().c_str ());
         }
       else
         ACE_OS::printf (option[STRCASECMP] ? "if (charmap[*str] == **ptr && !ACE_OS::%s" :
@@ -1785,7 +1780,7 @@ Key_List::output_lookup_function ()
                             ? "char const" : "char");
 
           if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
-            ACE_OS::printf (".%s", option.key_name ());
+            ACE_OS::printf (".%s", option.key_name ().c_str ());
 
           ACE_OS::printf (";\n\n          if (%s%s == *s && !%s%s)\n            return %s%s%s",
                   option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
@@ -1902,14 +1897,14 @@ Key_List::output ()
           ACE_OS::printf ("class %s\n{\nprivate:\n"
                           "  static %s %s (char const *str, %s len);\npublic:\n"
                           "  static ",
-                          option.class_name (),
+                          option.class_name ().c_str (),
                           generated_size_type (),
-                          option.hash_name (),
+                          option.hash_name ().c_str (),
                           generated_size_type ());
           output_return_type (return_type,
                               option[CONSTANT] || !(option[POINTER] && option[TYPE]));
           ACE_OS::printf (" %s (char const *str, %s len);\n};\n\n",
-                          option.function_name (),
+                          option.function_name ().c_str (),
                           generated_size_type ());
         }
 
@@ -1966,10 +1961,10 @@ Key_List::output ()
           ACE_OS::printf ("%s", return_type);
         }
       ACE_OS::printf ("\n");
-      ACE_OS::printf ("%s::", option.class_name ());
+      ACE_OS::printf ("%s::", option.class_name ().c_str ());
 
       ACE_OS::printf ("%s (char const *str, %s len)\n{\n",
-                      option.function_name (), generated_size_type ());
+                      option.function_name ().c_str (), generated_size_type ());
 
       if (option[ENUM] && !option[GLOBAL])
         {
