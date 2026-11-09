@@ -45,7 +45,7 @@ public:
         CORBA::ORB_ptr orb,
         Client_Options const &options);
 
-  int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;

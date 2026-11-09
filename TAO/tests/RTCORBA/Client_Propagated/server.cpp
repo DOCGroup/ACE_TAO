@@ -19,10 +19,10 @@ public:
   // ctor
 
   // = The Test methods.
-  virtual void test_method (CORBA::Short priority);
+  void test_method (CORBA::Short priority) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -117,7 +117,7 @@ public:
         CORBA::ORB_ptr orb,
         Server_Options const &options);
 
-  int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;
