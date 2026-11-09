@@ -181,7 +181,7 @@ DRV_parse_args (long ac, char **av)
   long i;
 
   // After -- process all arguments as files
-  bool just_files = false;
+  bool just_files {};
 
   FE_store_env_include_paths ();
   DRV_cpp_init ();

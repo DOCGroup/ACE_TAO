@@ -86,7 +86,7 @@ bool
 AST_illegal_interface_recursion (AST_Decl *t)
 {
   // Can't be 0 since we know we have an interface or valuetype.
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   // If we encounter the argument in an enclosing scope, it's illegal.
   for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
@@ -143,10 +143,10 @@ AST_illegal_recursive_type (AST_Decl *t)
       return false;  // NOT ILLEGAL.
     }
 
-  bool check_for_struct = false;
-  bool check_for_union = false;
-  AST_Structure  *st1 = nullptr;
-  AST_Union  *un1 = nullptr;
+  bool check_for_struct {};
+  bool check_for_union {};
+  AST_Structure  *st1 {};
+  AST_Union  *un1 {};
 
   // Narrow the type appropriately so comparison will work.
   if (t->node_type () == AST_Decl::NT_struct)
@@ -170,9 +170,9 @@ AST_illegal_recursive_type (AST_Decl *t)
         }
     }
 
-  UTL_Scope  *s = nullptr;
-  AST_Structure *st2 = nullptr;
-  AST_Union *un2 = nullptr;
+  UTL_Scope  *s {};
+  AST_Structure *st2 {};
+  AST_Union *un2 {};
 
   // OK, iterate up the stack.
   for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());

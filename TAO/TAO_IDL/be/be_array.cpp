@@ -58,8 +58,8 @@ int
 be_array::create_name ()
 {
   std::size_t i;
-  UTL_ScopedName *n = nullptr;
-  be_decl *scope = nullptr;
+  UTL_ScopedName *n {};
+  be_decl *scope {};
 
   // Retrieve the base type.
   // The name always starts this way.
@@ -112,14 +112,14 @@ be_array::create_name ()
   if (scope)
     {
       // Make a copy of the enclosing scope's  name.
-      n = (UTL_ScopedName *)scope->name ()->copy ();
+      n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
-      Identifier *id = nullptr;
+      Identifier *id {};
       ACE_NEW_RETURN (id,
                       Identifier (namebuf),
                       -1);
 
-      UTL_ScopedName *sn = nullptr;
+      UTL_ScopedName *sn {};
       ACE_NEW_RETURN (sn,
                       UTL_ScopedName (id,
                                       nullptr),
@@ -148,7 +148,7 @@ be_array::compute_tc_name ()
   // TypeCode.  Generate a TypeCode name that is meant for internal
   // use alone.
 
-  Identifier * tao_id = nullptr;
+  Identifier * tao_id {};
   ACE_NEW (tao_id,
            Identifier ("TAO"));
 
@@ -159,22 +159,22 @@ be_array::compute_tc_name ()
   std::string local_tc_name ("tc_");
   local_tc_name += this->flat_name ();
 
-  Identifier * typecode_scope = nullptr;
+  Identifier * typecode_scope {};
   ACE_NEW (typecode_scope,
            Identifier ("TypeCode"));
 
-  UTL_ScopedName * tc_scope_conc_name = nullptr;
+  UTL_ScopedName * tc_scope_conc_name {};
   ACE_NEW (tc_scope_conc_name,
            UTL_ScopedName (typecode_scope,
                            nullptr));
 
   this->tc_name_->nconc (tc_scope_conc_name);
 
-  Identifier * id = nullptr;
+  Identifier * id {};
   ACE_NEW (id,
            Identifier (local_tc_name));
 
-  UTL_ScopedName * conc_name = nullptr;
+  UTL_ScopedName * conc_name {};
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
                            nullptr));
@@ -248,7 +248,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       << "strm << \"" << this->name () << "\";" <<  be_nl_2;
 
   std::size_t const ndims = this->n_dims ();
-  std::size_t i = 0;
+  std::size_t i {};
 
   for (i = 0; i < ndims; ++i)
     {

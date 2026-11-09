@@ -28,6 +28,8 @@
 #include "Key_List.h"
 #include "Bool_Array.h"
 
+#include <memory>
+
 /*
  * Provides high-level routines to manipulate the keyword list
  * structures the code generation output.
@@ -38,9 +40,9 @@ public:
   /// Constructor.
   Gen_Perf ();
 
-  Gen_Perf (const Gen_Perf &) = delete;
+  Gen_Perf (Gen_Perf const &) = delete;
   Gen_Perf (Gen_Perf &&) = delete;
-  Gen_Perf &operator= (const Gen_Perf &) = delete;
+  Gen_Perf &operator= (Gen_Perf const &) = delete;
   Gen_Perf &operator= (Gen_Perf &&) = delete;
 
   /// Destructor
@@ -70,7 +72,7 @@ private:
   int num_done;
 
   /// Disjoint union.
-  char *union_set;
+  std::unique_ptr<char[]> union_set;
 
   /// List of the keys we're trying to map into a perfect hash
   /// function.

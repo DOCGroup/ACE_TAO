@@ -59,7 +59,7 @@ be_visitor_valuetype_field_ci::visit_array (be_array *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -106,7 +106,7 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -153,7 +153,7 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())

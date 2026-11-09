@@ -147,7 +147,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       be_visitor_operation_ami_handler_reply_stub_operation_cs v (
         this->ctx_);
 
-      int status = v.visit_operation (node);
+      int const status = v.visit_operation (node);
 
       if (status == -1)
         {

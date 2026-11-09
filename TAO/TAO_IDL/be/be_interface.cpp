@@ -156,7 +156,7 @@ be_interface::compute_full_skel_name (std::string const& prefix) const
 {
   std::string skel_name (prefix);
   bool first = true;
-  bool second = false;
+  bool second {};
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();
        j.next ())
@@ -214,7 +214,7 @@ be_interface::compute_coll_names (int type) const
   char const* const collocated = collocated_names[type];
 
   // Only the first component get the "POA_" preffix.
-  bool poa_added = false;
+  bool poa_added {};
 
   // Iterate again.
   // Must advance the iterator explicitly inside the loop.
@@ -426,12 +426,11 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "ACE_INLINE" << be_nl;
       *os << this->name () << "::"
           << this->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "TAO_Stub *objref," << be_nl
-          << "::CORBA::Boolean _tao_collocated," << be_nl
-          << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *" << (abstract ? "" : "oc") << ")"
-          << be_uidt_nl
+          << be_idt_nl
+          << "TAO_Stub *objref, ::CORBA::Boolean _tao_collocated, "
+          << "TAO_Abstract_ServantBase *servant, TAO_ORB_Core *"
+          << (abstract ? "" : "oc") << ")"
+          << be_nl
           << ": ";
 
       bool const the_check =
@@ -650,7 +649,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
       return 0;
     }
 
-  be_decl *d = nullptr;
+  be_decl *d {};
 
   for (UTL_ScopeActiveIterator si (base_interface, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -691,7 +690,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
   // to invoke these methods since an AMH class is generated twice:
   // once for AMH and once the 'normal' way.
 
-  bool amh = false;
+  bool amh {};
   if (skeleton_class_name.find ("AMH_") != std::string::npos)
     {
       amh = true;
@@ -892,7 +891,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
 
         // Make a new outstream to hold the gperf_temp_file for this
         // interface.
-        TAO_OutStream *os = nullptr;
+        TAO_OutStream *os {};
         ACE_NEW_NORETURN (os, TAO_OutStream);
 
         if (os == nullptr)
@@ -1496,7 +1495,7 @@ be_interface::traverse_inheritance_graph (
   bool abstract_paths_only,
   bool add_ccm_object)
 {
-  AST_Type *intf = nullptr;  // element inside the queue
+  AST_Type *intf {};  // element inside the queue
 
   if (!this->insert_queue.empty ())
     {
@@ -1780,7 +1779,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
   // Set the handles now in the process options.
   process_options.set_handles (input, output);
 
-  int result = 0;
+  int result {};
 
   // Set the command line for the gperf program. Give the right
   // arguments for the operation lookup strategy that we are using.
@@ -1790,15 +1789,15 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
     case BE_GlobalData::TAO_PERFECT_HASH:
       process_options.command_line (ACE_TEXT ("%s")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-m -M -J -Q -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -R -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT ("-o -t -p -K")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++17")
+                                    ACE_TEXT ("opname")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-Z TAO_%s_Perfect_Hash_OpTable")
                                     ACE_TEXT (" ")
@@ -1813,15 +1812,15 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-B")
                                     ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -Q -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -R -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT ("-o -t -p -K")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++17")
+                                    ACE_TEXT ("opname")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-Z TAO_%s_Binary_Search_OpTable")
                                     ACE_TEXT (" ")
@@ -1836,15 +1835,15 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-b")
                                     ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -Q -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -R -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT ("-o -t -p -K")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++17")
+                                    ACE_TEXT ("opname")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-Z TAO_%s_Linear_Search_OpTable")
                                     ACE_TEXT (" ")
@@ -2222,10 +2221,10 @@ be_interface::dds_connector_traits_done (bool val)
 void
 be_interface::gen_stub_inheritance (TAO_OutStream *os)
 {
-  std::size_t i = 0;
+  std::size_t i {};
   AST_Type_List const& parents = this->inherits ();
   std::size_t const nparents = parents.size ();
-  bool has_concrete_parent = false;
+  bool has_concrete_parent {};
   bool const i_am_abs = this->is_abstract ();
 
   // If node interface inherits from other interfaces.
@@ -2254,7 +2253,7 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
 
       if (has_concrete_parent || i_am_abs)
         {
-          *os << be_uidt << be_uidt_nl;
+          *os << be_uidt << be_uidt;
         }
       else if (! i_am_abs)
         {
@@ -2265,7 +2264,7 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
   if (i_am_abs && nparents == 0)
     {
       *os << "public virtual ::CORBA::AbstractBase"
-          << be_uidt_nl;
+          << be_uidt;
     }
 
   if (! has_concrete_parent && ! i_am_abs)
@@ -2286,8 +2285,8 @@ be_interface::gen_skel_inheritance (TAO_OutStream *os)
 {
   AST_Type_List const& parents = this->inherits ();
   std::size_t const n_parents = parents.size ();
-  AST_Type *parent = nullptr;
-  bool has_concrete_parent = false;
+  AST_Type *parent {};
+  bool has_concrete_parent {};
 
   for (std::size_t i = 0; i < n_parents; ++i)
     {

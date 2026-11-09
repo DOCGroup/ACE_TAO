@@ -106,7 +106,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                    local,
                    abstract)
 {
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
 
   if (dt == nullptr)
     {
@@ -345,7 +345,7 @@ AST_Union::compute_default_value ()
   // In the case of a (unsigned) long long discriminant being fully used
   // the total case count would actually overflow back to zero.
   // This is 'end of days' programming but what the heck. We're here now.
-  bool first_case_found = false;
+  bool first_case_found {};
 
   // Instantiate a scope iterator.
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -358,7 +358,7 @@ AST_Union::compute_default_value ()
       if (ub != nullptr)
         {
           // If the label is a case label, increment by 1.
-          for (std::size_t i = 0; i < ub->label_list_length (); ++i)
+          for (std::size_t i {}; i < ub->label_list_length (); ++i)
             {
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
@@ -523,7 +523,7 @@ AST_Union::compute_default_value ()
   // Proceed until we have found the appropriate default value.
   while (this->default_value_.computed_ == -2)
     {
-      int break_loop = 0;
+      int break_loop {};
 
       // Instantiate a scope iterator.
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -535,7 +535,7 @@ AST_Union::compute_default_value ()
 
           if (ub != nullptr)
             {
-              for (std::size_t i = 0;
+              for (std::size_t i {};
                    i < ub->label_list_length () && !break_loop;
                    ++i)
                 {
@@ -685,9 +685,9 @@ AST_Union::compute_default_value ()
 int
 AST_Union::compute_default_index ()
 {
-  AST_Decl *d = nullptr;
-  AST_UnionBranch *ub = nullptr;
-  int i = 0;
+  AST_Decl *d {};
+  AST_UnionBranch *ub {};
+  int i {};
 
   // If default case does not exist, it will have a value of -1 according to
   // the spec.
@@ -715,7 +715,7 @@ AST_Union::compute_default_index ()
             {
               ub = dynamic_cast<AST_UnionBranch*> (d);
 
-              for (std::size_t j = 0; j < ub->label_list_length (); ++j)
+              for (std::size_t j {}; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
                   AST_UnionLabel::UnionLabel const ulk = ub->label (j)->label_kind ();
@@ -750,9 +750,9 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
       return nullptr;
     }
 
-  bool duplicate_label = false;
+  bool duplicate_label {};
 
-  for (std::size_t i = 0;
+  for (std::size_t i {};
        i < branch->label_list_length () && !duplicate_label;
        ++i)
     {
@@ -774,7 +774,7 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
             ? i
             : other_branch->label_list_length ();
 
-          for (std::size_t j = 0; j < other_label_count; ++j)
+          for (std::size_t j {}; j < other_label_count; ++j)
             {
               AST_UnionLabel *other_label = other_branch->label (j);
               bool const both_default =

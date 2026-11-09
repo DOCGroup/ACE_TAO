@@ -186,9 +186,9 @@ AST_Attribute::get_set_exceptions () const
 UTL_NameList *
 AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  UTL_ScopedName *nl_n {};
+  AST_Type *fe {};
+  AST_Decl *d {};
 
   this->pd_get_exceptions.reset ();
 
@@ -206,7 +206,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
           && nt != AST_Decl::NT_param_holder)
@@ -218,7 +218,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 
       fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = nullptr;
+      UTL_ExceptList *el {};
       ACE_NEW_RETURN (el,
                       UTL_ExceptList (fe, nullptr),
                       nullptr);
@@ -241,9 +241,9 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 UTL_NameList *
 AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  UTL_ScopedName *nl_n {};
+  AST_Type *fe {};
+  AST_Decl *d {};
 
   this->pd_set_exceptions.reset ();
 
@@ -259,7 +259,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
           && nt != AST_Decl::NT_param_holder)
@@ -271,7 +271,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 
       fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = nullptr;
+      UTL_ExceptList *el {};
       ACE_NEW_RETURN (el,
                       UTL_ExceptList (fe, nullptr),
                       nullptr);

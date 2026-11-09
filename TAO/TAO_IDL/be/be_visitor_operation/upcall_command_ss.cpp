@@ -142,17 +142,15 @@ be_visitor_operation_upcall_command_ss::visit (
   if (!node->void_return_type ())
     {
       os << "TAO::SArg_Traits<";
-
-
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
                                          &os);
 
-      os << ">::ret_arg_type retval =" << be_idt_nl;
+      os << ">::ret_arg_type retval =";
 
       if (be_global->gen_thru_poa_collocation ())
         {
-          os << "TAO::Portable_Server::get_ret_arg<";
+          os << " TAO::Portable_Server::get_ret_arg<";
 
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
@@ -164,7 +162,7 @@ be_visitor_operation_upcall_command_ss::visit (
         }
       else
         {
-          os << "static_cast<TAO::SArg_Traits<";
+          os << be_idt_nl << "static_cast<TAO::SArg_Traits<";
 
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
@@ -173,7 +171,14 @@ be_visitor_operation_upcall_command_ss::visit (
           os << ">::ret_val *> (this->args_[0])->arg ();";
         }
 
-      os << be_uidt_nl << be_nl;
+      if (be_global->gen_thru_poa_collocation ())
+        {
+          os << be_nl;
+        }
+      else
+        {
+          os << be_uidt_nl << be_nl;
+        }
     }
 
   if (this->gen_upcall (node) == -1)
@@ -365,15 +370,22 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
          << be_nl;
     }
 
+  std::size_t const count = node->argument_count ();
   if (!node->void_return_type ())
     {
-      os << "retval =" << be_idt_nl;
+      os << "retval =";
+      if (count > 0)
+        {
+          os << be_idt_nl;
+        }
+      else
+        {
+          os << " ";
+        }
     }
 
   os << "this->servant_->" << node->local_name () << " ("
      << be_idt;
-
-  std::size_t const count = node->argument_count ();
 
   for (unsigned int i {}; i < count; ++i)
     {
@@ -383,13 +395,12 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
 
   os << ");";
 
-  if (!node->void_return_type ())
+  os << be_uidt;
+  if (!node->void_return_type () && count > 0)
     {
       os << be_uidt;
     }
-
-  os << be_uidt
-     << be_uidt_nl;
+  os << be_uidt_nl;
 
   return 0;
 }

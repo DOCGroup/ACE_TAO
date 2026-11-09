@@ -5,6 +5,9 @@
 
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+#include <new>
+
 void
 be_util::prep_be_arg (std::string const& /*arg*/)
 {
@@ -20,10 +23,8 @@ be_util::usage ()
 {
 }
 
-AST_Generator *
+std::unique_ptr<AST_Generator>
 be_util::generator_init ()
 {
-  AST_Generator *gen = 0;
-  ACE_NEW_RETURN(gen, AST_Generator, 0);
-  return gen;
+  return std::unique_ptr<AST_Generator> (new (std::nothrow) AST_Generator);
 }

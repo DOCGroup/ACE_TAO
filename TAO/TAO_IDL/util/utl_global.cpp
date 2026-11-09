@@ -202,6 +202,7 @@ IDL_GlobalData::reset_flag_seen ()
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
+  wstring_seen_ = false;
   dds_connector_seen_ = false;
   ami_connector_seen_ = false;
 
@@ -469,7 +470,7 @@ IDL_GlobalData::set_indent (std::unique_ptr<UTL_Indenter> i)
 long
 IDL_GlobalData::seen_include_file_before (std::string const& filename)
 {
-  for (std::size_t i = 0; i < this->pd_include_file_names_.size (); ++i)
+  for (std::size_t i {}; i < this->pd_include_file_names_.size (); ++i)
     {
       if (filename == this->pd_include_file_names_[i])
         {
@@ -724,7 +725,7 @@ IDL_GlobalData::update_prefix (std::string const& filename)
 
   std::string const& main_filename = this->pd_main_filename;
 
-  File_Prefix_Map::iterator entry = this->file_prefixes_.find (filename);
+  File_Prefix_Map::iterator const entry = this->file_prefixes_.find (filename);
 
   if (entry != this->file_prefixes_.end ())
     {
@@ -752,7 +753,7 @@ IDL_GlobalData::update_prefix (std::string const& filename)
     {
       if (!this->pd_in_main_file)
         {
-          std::string current_filename (this->pd_filename);
+          std::string const current_filename (this->pd_filename);
           File_Prefix_Map::const_iterator const prefix_entry =
             this->file_prefixes_.find (current_filename);
 
@@ -1562,7 +1563,7 @@ namespace
 void
 IDL_GlobalData::eval (char const *string, bool disable_output)
 {
-  OldState old (disable_output);
+  OldState const old (disable_output);
 
   // Set up Flex to read from string
   tao_yy_scan_string (string);

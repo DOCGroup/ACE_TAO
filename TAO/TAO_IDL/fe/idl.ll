@@ -197,8 +197,6 @@ enum {
   IDL_MAP = tao_yy::parser::token::IDL_MAP,
 };
 
-#include <string_view>
-
 static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
 static ACE_CDR::Char        idl_escape_reader (char *);
 static ACE_CDR::Double      idl_atof (char const *);
@@ -344,7 +342,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  TAO_IDL_CPP_Keyword_Entry const *entry = nullptr;
+  TAO_IDL_CPP_Keyword_Entry const *entry {};
   if (!idl_global->preserve_cpp_keywords())
     {
       // This check will ensure that escaped C++ keywords will be
@@ -551,8 +549,8 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
 static bool
 same_file (std::string const& path1, std::string const& path2)
 {
-  char fullpath1 [MAXPATHLEN + 1] = {};
-  char fullpath2 [MAXPATHLEN + 1] = {};
+  char fullpath1 [MAXPATHLEN + 1] {};
+  char fullpath2 [MAXPATHLEN + 1] {};
 
   char *fp1 = ACE_OS::realpath (path1.c_str (), fullpath1);
   char *fp2 = ACE_OS::realpath (path2.c_str (), fullpath2);
@@ -1368,7 +1366,7 @@ static AST_Decl *
 idl_find_node (std::string const& s)
 {
   FE_Utils::Scoped_Name_Owner node = FE_Utils::string_to_scoped_name_owner (s);
-  AST_Decl * d = nullptr;
+  AST_Decl * d {};
 
   if (node != nullptr)
     {

@@ -88,6 +88,9 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
         }
 
       break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SMART_PROXY_CH:
+      *os << " override";
+      break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       break;
     case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
@@ -114,7 +117,7 @@ int
 be_visitor_operation_arglist::visit_factory (be_factory *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
-  bool has_args = node->argument_count () > 0;
+  bool const has_args = node->argument_count () > 0;
 
   *os << " (";
 

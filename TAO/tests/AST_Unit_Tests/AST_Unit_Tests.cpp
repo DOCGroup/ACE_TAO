@@ -8,7 +8,8 @@
 #include <cstdlib>
 #include <memory>
 
-int test_fixed_typedef ()
+int
+test_fixed_typedef ()
 {
   Identifier id_fixed ("fixed");
   UTL_ScopedName name_fixed (&id_fixed, 0);
@@ -31,7 +32,7 @@ int test_fixed_typedef ()
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   FE_init ();
-  int status = EXIT_SUCCESS;
+  int status {EXIT_SUCCESS};
   status += test_fixed_typedef ();
   return status;
 }

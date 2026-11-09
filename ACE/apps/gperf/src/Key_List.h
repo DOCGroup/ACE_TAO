@@ -29,6 +29,9 @@
 #include "List_Node.h"
 #include "Vectors.h"
 
+#include <array>
+#include <string>
+
 /**
  * Describes a duplicate entry.
  *
@@ -38,20 +41,20 @@ class Duplicate_Entry
 {
 public:
   Duplicate_Entry () = default;
-  Duplicate_Entry (const Duplicate_Entry &) = delete;
+  Duplicate_Entry (Duplicate_Entry const &) = delete;
   Duplicate_Entry (Duplicate_Entry &&) = delete;
-  Duplicate_Entry &operator= (const Duplicate_Entry &) = delete;
+  Duplicate_Entry &operator= (Duplicate_Entry const &) = delete;
   Duplicate_Entry &operator= (Duplicate_Entry &&) = delete;
   ~Duplicate_Entry () = default;
 
   /// Hash value for this particular duplicate set.
-  int hash_value;
+  int hash_value {};
 
   /// Slot into the main keyword storage array.
-  int slot;
+  int slot {};
 
   /// Number of consecutive duplicates at this slot.
-  int count;
+  int count {};
 };
 
 /**
@@ -66,9 +69,9 @@ class Key_List
 {
 public:
   Key_List ();
-  Key_List (const Key_List &) = delete;
+  Key_List (Key_List const &) = delete;
   Key_List (Key_List &&) = delete;
-  Key_List &operator= (const Key_List &) = delete;
+  Key_List &operator= (Key_List const &) = delete;
   Key_List &operator= (Key_List &&) = delete;
   ~Key_List ();
   int keyword_list_length ();
@@ -80,10 +83,10 @@ public:
   int output ();
 
   /// Points to the head of the linked list.
-  List_Node *head;
+  List_Node *head {};
 
   /// Total number of duplicate hash values.
-  int total_duplicates;
+  int total_duplicates {};
 
 private:
   // = Make hash table 10 times larger than # of keyword entries.
@@ -112,28 +115,28 @@ private:
   void output_strcasecmp ();
   int output_types ();
   void dump ();
-  char *array_type ();
-  char *save_include_src ();
-  char *special_input (char delimiter);
+  bool array_type (std::string& result);
+  bool save_include_src (std::string& result);
+  bool special_input (char delimiter, std::string& result);
   List_Node *merge (List_Node *list1, List_Node *list2);
   List_Node *merge_sort (List_Node *head);
-  int count_duplicates (List_Node *link, const char *type);
+  int count_duplicates (List_Node *link, char const *type);
   void update_lookup_array (int lookup_array[],
                             int i1,
                             int i2,
                             Duplicate_Entry *dup_ptr,
                             int value);
   /// Pointer to the type for word list.
-  char *array_type_;
+  std::string array_type_;
 
   // Pointer to return type for lookup function.
-  char *return_type;
+  std::string return_type;
 
   /// Shorthand for user-defined struct tag type.
-  char *struct_tag;
+  std::string struct_tag;
 
   /// C source code to be included verbatim.
-  char *include_src;
+  std::string include_src;
 
   /// Maximum length of the longest keyword.
   int max_key_len;
@@ -142,34 +145,34 @@ private:
   int min_key_len;
 
   /// Minimum hash value for all keywords.
-  int min_hash_value;
+  int min_hash_value {};
 
   /// Maximum hash value for all keywords.
-  int max_hash_value;
+  int max_hash_value {};
 
   /// True if sorting by occurrence.
-  int occurrence_sort;
+  int occurrence_sort {};
 
   /// True if sorting by hash value.
-  int hash_sort;
+  int hash_sort {};
 
   /// True if sorting by key value.
-  int key_sort;
+  int key_sort {};
 
   /// True if any additional C code is included.
-  int additional_code;
+  int additional_code {};
 
   /// Length of head's Key_List, not counting duplicates.
-  int list_len;
+  int list_len {};
 
   /// Total number of keys, counting duplicates.
-  int total_keys;
+  int total_keys {1};
 
   /// Default type for generated code.
-  static const char *const default_array_type;
+  static constexpr char const *default_array_type = "char const *";
 
   /// in_word_set return type, by default.
-  static const char *const default_return_type;
+  static constexpr char const *default_return_type = "char const *";
 
   /// How wide the printed field width must be to contain the maximum
   /// hash value.
@@ -177,7 +180,7 @@ private:
 
   /// Sets the slot location for all keysig characters that are now
   /// determined.
-  static int determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
+  static std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> determined_;
 };
 
 #endif /* KEY_LIST_H */

@@ -1,23 +1,22 @@
-.TH GPERF 1 "December 16, 1988"
+.TH ACE_GPERF 1 "November 2026"
 .UC 4
 .SH NAME
-ace_gperf \- generate a perfect hash function from a key set
+ace_gperf \- generate C++17 perfect hash lookup code from a key set
 .SH SYNOPSIS
 .B ace_gperf
 [
-.B \-adghijklnoprsStv
+.I options
 ] [
 .I keyfile
 ]
 .SH DESCRIPTION
 
 \fIace_gperf\fP reads a set of ``keys'' from \fIkeyfile\fP (or, by
-default, from the standard input) and attempts to find a non-minimal
-perfect hashing function that recognizes a member of the key set in
-constant, i.e., O(1), time.  If such a function is found the program
-generates a pair of \fIC\fP source code routines that perform the
-hashing and table lookup.  All generated code is directed to the
-standard output.
+default, from standard input) and attempts to find a perfect hashing
+function that recognizes a member of the key set with one lookup. If
+such a function is found, the program writes C++17 source code for the
+hash function and lookup table to standard output. ACE gperf uses the
+ACE version number in its generated output.
 
-Please refer to the \fIace_gperf.texinfo\fP file for more information.
-This file is distributed with \fIace_gperf\fP release.
+Please refer to the \fIace_gperf.texi\fP file for more information.
+This file is distributed with the ACE gperf release.

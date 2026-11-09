@@ -39,24 +39,25 @@ Hash_Table::Hash_Table (size_t s)
 {
   if (this->size_ == 0)
     this->size_ = 1;
-  ACE_NEW (this->table_,
-           List_Node*[this->size_]);
-  std::fill_n (this->table_, this->size_, nullptr);
+  List_Node **table {};
+  ACE_NEW (table, List_Node*[this->size_]);
+  this->table_.reset (table);
+  std::fill_n (this->table_.get (), this->size_, nullptr);
 }
 
 Hash_Table::~Hash_Table ()
 {
   if (option[DEBUGGING])
     {
-      size_t keysig_width = option.max_keysig_size () > std::strlen ("keysig")
-        ? option.max_keysig_size ()
-        : std::strlen ("keysig");
+      int const keysig_width = option.max_keysig_size () > std::strlen ("keysig")
+        ? static_cast<int> (option.max_keysig_size ())
+        : static_cast<int> (std::strlen ("keysig"));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
+                  "\ndumping the hash table\ntotal available table slots = %B, total bytes = %B, total collisions = %d\n"
                   "location, %*s, keyword\n",
                   this->size_,
-                  this->size_ * (int) sizeof *this->table_,
+                  this->size_ * sizeof *this->table_.get (),
                   this->collisions_,
                   keysig_width,
                   "keysig"));
@@ -67,13 +68,12 @@ Hash_Table::~Hash_Table ()
                       "%8d, %*s, %s\n",
                       i,
                       keysig_width,
-                      this->table_[i]->keysig,
-                      this->table_[i]->key));
+                      this->table_[i]->keysig.c_str (),
+                      this->table_[i]->key.c_str ()));
       ACE_DEBUG ((LM_DEBUG,
                   "end dumping hash table\n\n"));
     }
 
-  delete [] this->table_;
 }
 
 // If the ITEM is already in the hash table return the item found in
@@ -84,7 +84,7 @@ List_Node *
 Hash_Table::find (List_Node *item,
                   int ignore_length)
 {
-  size_t hash_val = ACE::hash_pjw (item->keysig);
+  size_t hash_val = ACE::hash_pjw (item->keysig.c_str ());
   // The following works since the hash table size_ is always a power
   // of 2...
   size_t size = this->size_ - 1;
@@ -93,7 +93,7 @@ Hash_Table::find (List_Node *item,
 
   for (probe = hash_val & size;
        this->table_[probe]
-         && (std::strcmp (this->table_[probe]->keysig, item->keysig) != 0
+         && (this->table_[probe]->keysig != item->keysig
              || (ignore_length == 0 && this->table_[probe]->length != item->length));
        probe = (probe + increment) & size)
     {

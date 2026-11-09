@@ -116,7 +116,7 @@ int
 be_visitor_root_ch::init ()
 {
   /// First open the client-side file for writing
-  int status =
+  int const status =
     tao_cg->start_client_header (
       be_global->be_get_client_hdr_fname ());
 
@@ -180,7 +180,7 @@ be_visitor_root_ch::gen_ref_counting_overrides ()
     }
 
   std::size_t index {};
-  be_interface_fwd *ifwd = nullptr;
+  be_interface_fwd *ifwd {};
 
   TAO_INSERT_COMMENT (o_);
 
@@ -225,7 +225,7 @@ be_visitor_root_ch::gen_static_corba_overrides ()
     }
 
   std::size_t index {};
-  AST_Interface *i = nullptr;
+  AST_Interface *i {};
 
   TAO_INSERT_COMMENT (o_);
 
@@ -292,7 +292,7 @@ be_visitor_root_ch::gen_template_exports (be_root *node)
 int
 be_visitor_root_ch::gen_any_ops (be_root *node)
 {
-  int status = 0;
+  int status {};
 
   if (be_global->any_support ())
     {
@@ -315,7 +315,7 @@ be_visitor_root_ch::gen_any_ops (be_root *node)
 int
 be_visitor_root_ch::gen_cdr_ops (be_root *node)
 {
-  int status = 0;
+  int status {};
 
   if (be_global->cdr_support ())
     {

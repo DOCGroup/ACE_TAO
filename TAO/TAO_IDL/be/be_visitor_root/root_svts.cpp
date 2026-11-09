@@ -46,7 +46,7 @@ int
 be_visitor_root_svts::init ()
 {
   // First open the client-side header file for writing.
-  int status =
+  int const status =
     tao_cg->start_ciao_svnt_template_source (
       be_global->be_get_ciao_tmpl_svnt_src_fname ());
 

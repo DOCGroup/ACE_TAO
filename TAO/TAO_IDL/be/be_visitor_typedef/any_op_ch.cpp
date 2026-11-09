@@ -30,7 +30,7 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators
@@ -57,7 +57,7 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = nullptr; // base type
+  be_type *bt {}; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -129,7 +129,7 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_any_op_ch::visit_array (be_array *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -160,7 +160,7 @@ be_visitor_typedef_any_op_ch::visit_array (be_array *node)
 int
 be_visitor_typedef_any_op_ch::visit_enum (be_enum *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -190,7 +190,7 @@ be_visitor_typedef_any_op_ch::visit_enum (be_enum *node)
 int
 be_visitor_typedef_any_op_ch::visit_sequence (be_sequence *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -220,7 +220,7 @@ be_visitor_typedef_any_op_ch::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_any_op_ch::visit_structure (be_structure *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -250,7 +250,7 @@ be_visitor_typedef_any_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_typedef_any_op_ch::visit_union (be_union *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {

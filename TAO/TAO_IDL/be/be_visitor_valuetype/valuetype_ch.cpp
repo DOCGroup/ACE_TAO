@@ -44,7 +44,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   node->gen_var_out_seq_decls ();
 
   TAO_OutStream *os = this->ctx_->stream ();
-  int status = 0;
+  int status {};
 
   TAO_INSERT_COMMENT (os);
 
@@ -66,9 +66,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_idt_nl << ": " << be_idt;
 
   long i;  // loop index
-  be_valuetype *inherited = nullptr;
-  long n_inherits = node->n_inherits ();
-  bool inherits_eventtype = false;
+  be_valuetype *inherited {};
+  long const n_inherits = node->n_inherits ();
+  bool inherits_eventtype {};
 
   if (n_inherits > 0)
     {
@@ -87,7 +87,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "," << be_nl;
             }
 
-          be_decl *scope = nullptr;
+          be_decl *scope {};
 
           if (inherited->is_nested ())
             {
@@ -125,7 +125,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   /****************************************************************/
   // 1) Find out if the ValueType is an AMH_*ExceptionHolder
-  bool is_an_amh_exception_holder = this->is_amh_exception_holder (node);
+  bool const is_an_amh_exception_holder = this->is_amh_exception_holder (node);
 
   if (is_an_amh_exception_holder)
     {
@@ -243,7 +243,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "void _add_ref () override = 0;" << be_nl;
       *os << "void _remove_ref () override = 0;" << be_nl;
-      *os << "virtual ::CORBA::ValueBase *_tao_to_value ();";
+      *os << "::CORBA::ValueBase *_tao_to_value () override;";
     }
 
   // Generate the "protected" constructor so that users cannot
@@ -494,13 +494,14 @@ be_visitor_valuetype_ch::begin_private ()
 }
 
 int
-be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
+be_visitor_valuetype_ch::gen_supported_ops (be_interface *node,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
+  ctx.interface (node);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -517,7 +518,7 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
       be_visitor_valuetype_ch visitor (&ctx);
 
       if (nt == AST_Decl::NT_op)

@@ -83,9 +83,9 @@ be_visitor_context_svth::visit_component (be_component *node)
 //       << "typedef base_type::component_type component_type;"
 //       << be_nl;
 
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
   bool const is_connector = (nt == AST_Decl::NT_connector);
-  bool no_events = false;
+  bool no_events {};
 
   if (!is_connector)
     {

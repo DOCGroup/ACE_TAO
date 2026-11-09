@@ -86,7 +86,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
                         -1);
     }
 
-  int status =
+  int const status =
     node->traverse_inheritance_graph (
               be_visitor_interface_is::method_helper,
               os

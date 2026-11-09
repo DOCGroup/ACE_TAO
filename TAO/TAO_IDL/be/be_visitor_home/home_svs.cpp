@@ -130,7 +130,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
     }
   else
     {
-      std::string comp_sname_str (
+      std::string const comp_sname_str (
         ScopeAsDecl (comp_->defined_in ())->full_name ());
       std::string const& comp_lname = comp_->local_name ()->get_string ();
       std::string const global = comp_sname_str.empty () ? "" : "::";
@@ -348,7 +348,7 @@ be_visitor_home_svs::gen_servant_class ()
 
           Home_Op_Attr_Generator op_attr_gen (this);
 
-          int status =
+          int const status =
             bi->traverse_inheritance_graph (op_attr_gen,
                                             &os_,
                                             false,
@@ -394,7 +394,7 @@ be_visitor_home_svs::gen_entrypoint ()
       << "_Container_ptr c," << be_nl
       << "char const * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::PortableServer::Servant retval = nullptr;" << be_nl
+      << "::PortableServer::Servant retval {};" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname

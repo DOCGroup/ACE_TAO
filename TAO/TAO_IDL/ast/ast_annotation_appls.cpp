@@ -79,7 +79,7 @@ AST_Annotation_Appls::operator[] (std::size_t index) const
 AST_Annotation_Appl *
 AST_Annotation_Appls::find (AST_Annotation_Decl *annotation) const
 {
-  AST_Annotation_Appl *result = nullptr;
+  AST_Annotation_Appl *result {};
   for (AST_Annotation_Appl_Ptr const& appl_ptr : vector_)
     {
       AST_Annotation_Appl *appl = appl_ptr.get ();
@@ -99,13 +99,13 @@ AST_Annotation_Appls::find (std::string const& annotation) const
       return nullptr;
     }
 
-  UTL_Scope * bottom = idl_global->scopes ().bottom ();
+  UTL_Scope * const bottom = idl_global->scopes ().bottom ();
   if (bottom == nullptr)
     {
       return nullptr;
     }
 
-  AST_Decl * decl = bottom->lookup_by_name (annotation);
+  AST_Decl * const decl = bottom->lookup_by_name (annotation);
   if (decl == nullptr)
     {
       return nullptr;

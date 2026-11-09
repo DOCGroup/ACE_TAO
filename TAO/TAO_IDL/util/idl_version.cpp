@@ -50,7 +50,7 @@ std::string const& IdlVersion::to_string () const
 
 void IdlVersion::from_string (std::string const& version)
 {
-  for (int i = 0; i < IDL_VERSION_COUNT; i++)
+  for (int i {}; i < IDL_VERSION_COUNT; i++)
     {
       if (version == idlVersionNames[i])
         {

@@ -24,7 +24,7 @@
 #include "Vectors.h"
 
 /// Counts occurrences of each key set character.
-int Vectors::occurrences[ACE_STANDARD_CHARACTER_SET_SIZE];
+std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> Vectors::occurrences;
 
 /// Value associated with each character.
-int Vectors::asso_values[ACE_STANDARD_CHARACTER_SET_SIZE];
+std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> Vectors::asso_values;

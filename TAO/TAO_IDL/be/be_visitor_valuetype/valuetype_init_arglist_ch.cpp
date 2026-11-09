@@ -59,7 +59,7 @@ be_visitor_valuetype_init_arglist_ch::visit_argument (be_argument *node)
   // signature.
   be_visitor_context ctx (*this->ctx_);
   be_visitor_args_arglist visitor (&ctx);
-  int status = node->accept (&visitor);
+  int const status = node->accept (&visitor);
 
   if (status == -1)
     {

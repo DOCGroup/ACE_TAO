@@ -219,7 +219,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
       AST_Interface_List const& parents = iface->inherits_flat ();
       std::size_t const num_parents = parents.size ();
 
-      for (std::size_t j = 0; j < num_parents; ++j)
+      for (std::size_t j {}; j < num_parents; ++j)
         {
           AST_Interface *tmp =
             dynamic_cast<AST_Interface*> (parents[j]);
@@ -255,9 +255,9 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       return;
     }
 
-  AST_Decl *d = nullptr;
-  UTL_ScopedName *item = nullptr;
-  AST_Interface *i = nullptr;
+  AST_Decl *d {};
+  UTL_ScopedName *item {};
+  AST_Interface *i {};
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
@@ -428,7 +428,7 @@ FE_InterfaceHeader::already_seen (AST_Type *ip)
   AST_Param_Holder *ph =
     dynamic_cast<AST_Param_Holder*> (ip);
 
-  for (std::size_t i = 0; i < this->iseen_.size (); ++i)
+  for (std::size_t i {}; i < this->iseen_.size (); ++i)
     {
       AST_Param_Holder *tmp =
         dynamic_cast<AST_Param_Holder*> (this->iseen_[i]);
@@ -457,7 +457,7 @@ FE_InterfaceHeader::already_seen (AST_Type *ip)
 bool
 FE_InterfaceHeader::already_seen_flat (AST_Interface *ip)
 {
-  for (std::size_t i = 0; i < this->iseen_flat_.size (); ++i)
+  for (std::size_t i {}; i < this->iseen_flat_.size (); ++i)
     {
       if (this->iseen_flat_[i] == ip)
         {

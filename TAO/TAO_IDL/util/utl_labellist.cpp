@@ -115,18 +115,18 @@ UTL_LabelList::head () const
 UTL_LabelList *
 UTL_LabelList::copy ()
 {
-  AST_Expression *val = this->pd_car_data->label_val ();
+  AST_Expression * const val = this->pd_car_data->label_val ();
 
-  AST_Expression *val_copy = nullptr;
+  AST_Expression *val_copy {};
   ACE_NEW_RETURN (val_copy,
                   AST_Expression (val, val->ev ()->et),
                   nullptr);
 
-  AST_UnionLabel *label_copy =
+  AST_UnionLabel * const label_copy =
     idl_global->gen ()->create_union_label (this->pd_car_data->label_kind (),
                                             val_copy);
 
-  UTL_LabelList *retval = nullptr;
+  UTL_LabelList *retval {};
   ACE_NEW_RETURN (retval,
                   UTL_LabelList (label_copy,
                                  nullptr),
@@ -162,7 +162,7 @@ UTL_LabellistActiveIterator::item () const
       return nullptr;
     }
 
-  UTL_LabelList *llist = dynamic_cast<UTL_LabelList *> (this->source);
+  UTL_LabelList * const llist = dynamic_cast<UTL_LabelList *> (this->source);
 
   return (llist != nullptr ? llist->head () : nullptr);
 }

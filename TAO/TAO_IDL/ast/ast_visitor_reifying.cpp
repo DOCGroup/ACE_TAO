@@ -371,7 +371,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   std::unique_ptr<AST_Expression> v;
   std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> v_list;
 
-  for (std::size_t i = 0; i < node->n_dims (); ++i)
+  for (std::size_t i {}; i < node->n_dims (); ++i)
     {
       // ACE_NEW_RETURN requires a raw output pointer; adopt it into v immediately.
       AST_Param_Holder *ph = node->dims ()[i]->param_holder ();
@@ -390,7 +390,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
 
           AST_Constant *c = dynamic_cast<AST_Constant*> (this->reified_node_);
 
-          AST_Expression *new_expression = nullptr;
+          AST_Expression *new_expression {};
           ACE_NEW_RETURN (new_expression,
                           AST_Expression (c->constant_value (),
                                           AST_Expression::EV_ulong),
@@ -399,7 +399,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
         }
       else
         {
-          AST_Expression *new_expression = nullptr;
+          AST_Expression *new_expression {};
           ACE_NEW_RETURN (new_expression,
                           AST_Expression (node->dims ()[i].get (),
                                           AST_Expression::EV_ulong),
@@ -407,7 +407,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
           v.reset (new_expression);
         }
 
-      UTL_ExprList *el = nullptr;
+      UTL_ExprList *el {};
       ACE_NEW_RETURN (el,
                       UTL_ExprList (v.get (), nullptr),
                       -1);
@@ -600,7 +600,7 @@ ast_visitor_reifying::visit_string (AST_String *node)
       return 0;
     }
 
-  AST_Expression *bound = nullptr;
+  AST_Expression *bound {};
   ACE_NEW_RETURN (bound,
                   AST_Expression (b,
                                   AST_Expression::EV_ulong),
@@ -636,7 +636,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 
   FE_Utils::T_PARAMLIST_INFO const& t_params =
     *this->ctx_->template_params ();
-  for (std::size_t i = 0; i < t_params.size (); ++i)
+  for (std::size_t i {}; i < t_params.size (); ++i)
     {
       FE_Utils::T_Param_Info const& item = t_params[i];
 

@@ -88,8 +88,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //     whatever there is.
       //
 
-      int i = 0;
-      AST_Type *inherited = nullptr;
+      int i {};
+      AST_Type *inherited {};
 
       for (; i < node->n_inherits (); ++i)
         {
@@ -141,8 +141,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           TAO_INSERT_COMMENT (os);
 
-          *os << be_nl_2 << "virtual void _add_ref ();" << be_nl;
-          *os << "virtual void _remove_ref ();";
+          *os << be_nl_2 << "void _add_ref () override;" << be_nl;
+          *os << "void _remove_ref () override;";
         }
 
       if (node->have_operation ())
@@ -283,7 +283,7 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 void
 be_visitor_valuetype_obv_ch::begin_public ()
 {
-  AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
+  AST_Decl::NodeType const nt = this->ctx_->node ()->node_type ();
 
   // These types are skipped in the OBV class.
   if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)

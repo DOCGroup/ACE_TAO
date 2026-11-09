@@ -56,7 +56,7 @@ int
 be_visitor_root_ci::init ()
 {
   /// First open the client-side file for writing
-  int status =
+  int const status =
     tao_cg->start_client_inline (
       be_global->be_get_client_inline_fname ());
 

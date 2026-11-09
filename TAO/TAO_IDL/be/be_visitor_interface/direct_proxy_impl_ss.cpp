@@ -19,16 +19,10 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
 
   this->ctx_->node (node);
 
-  *os << be_nl_2
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl
-      << "//                 Direct Proxy  Implementation" << be_nl
-      << "//" << be_nl_2;
-
   // Destructor Implementation
-  *os << node->full_direct_proxy_impl_name () << "::~"
-      << node->direct_proxy_impl_name () << " ()"
-      << be_nl << "{" << be_nl << "}" << be_nl_2;
+  *os << be_nl_2
+      << node->full_direct_proxy_impl_name () << "::~"
+      << node->direct_proxy_impl_name () << " () = default;" << be_nl_2;
 
   if (this->visit_scope (node) == -1)
     {
@@ -38,11 +32,6 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
                          "codegen for scope failed\n"),
                         -1);
     }
-
-  *os << be_nl_2
-      << "//" << be_nl
-      << "//           End Direct Proxy Implementation" << be_nl
-      << "///////////////////////////////////////////////////////////////////////";
 
   return 0;
 }
@@ -59,7 +48,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
@@ -79,10 +68,10 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
-      UTL_ScopedName *item_new_name = nullptr;
-      UTL_ScopedName *new_name = nullptr;
+      UTL_ScopedName *item_new_name {};
+      UTL_ScopedName *new_name {};
 
       if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
@@ -91,7 +80,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
                                           nullptr),
                           -1);
 
-          new_name = (UTL_ScopedName *) node->name ()->copy ();
+          new_name = static_cast<UTL_ScopedName *> (node->name ()->copy ());
           new_name->nconc (item_new_name);
         }
       else
@@ -107,7 +96,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
         {
           be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_name =
-            (UTL_ScopedName *) op->name ()->copy ();
+            static_cast<UTL_ScopedName *> (op->name ()->copy ());
           op->set_name (new_name);
           op->set_defined_in (node);
           op->is_abstract (node->is_abstract ());

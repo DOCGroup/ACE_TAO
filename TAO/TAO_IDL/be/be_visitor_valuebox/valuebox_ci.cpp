@@ -27,7 +27,7 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   this->ctx_->node (node); // save the node
 
@@ -60,10 +60,10 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 int
 be_visitor_valuebox_ci::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -177,40 +177,17 @@ be_visitor_valuebox_ci::visit_interface (be_interface *node)
 int
 be_visitor_valuebox_ci::visit_predefined_type (be_predefined_type *node)
 {
-  bool is_any = false;
-
-  switch (node->pt())
-    {
-    case AST_PredefinedType::PT_boolean:
-      break;
-
-    case AST_PredefinedType::PT_char:
-      break;
-
-    case AST_PredefinedType::PT_wchar:
-      break;
-
-    case AST_PredefinedType::PT_octet:
-      break;
-
-    case AST_PredefinedType::PT_any:
-      is_any = true;
-      break;
-
-    default:
-      break;
-    }
-
+  bool const is_any = node->pt () == AST_PredefinedType::PT_any;
   return this->emit_for_predef_enum (node, "", is_any);
 }
 
 int
 be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -248,7 +225,7 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_valuebox_ci::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   char const *string_type {};
   char const *char_type {};
@@ -271,7 +248,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
     }
 
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -391,7 +368,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 int
 be_visitor_valuebox_ci::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -414,17 +391,16 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
   // Now generate the accessor and modifier functions for each struct
   // member.  These functions have the same signatures as
   // acessor and modifier functions for union members.
-  AST_Decl *d;
-  be_field *field;
   be_visitor_context ctx (*this->ctx_);
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
         si.next ())
     {
-      d = si.item ();
+      AST_Decl * const d = si.item ();
+      be_field * const field = dynamic_cast<be_field*> (d);
 
-      if (d == nullptr || (field = dynamic_cast<be_field*> (d)) == nullptr)
+      if (d == nullptr || field == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_cs::visit_structure -"
@@ -471,7 +447,7 @@ be_visitor_valuebox_ci::visit_typedef (be_typedef *node)
 int
 be_visitor_valuebox_ci::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -481,7 +457,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
   this->emit_assignment_alloc (node);
   this->emit_accessor_modifier (node);
 
-  be_valuebox *vb_node =
+  be_valuebox * const vb_node =
     dynamic_cast<be_valuebox*> (this->ctx_->node ());
 
   if (node->size_type() == AST_Type::FIXED)
@@ -495,17 +471,16 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
   // Now generate the accessor and modifier functions for each union
   // member.
-  AST_Decl *d;
-  be_union_branch *member;
   be_visitor_context ctx (*this->ctx_);
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
         si.next ())
     {
-      d = si.item ();
+      AST_Decl * const d = si.item ();
+      be_union_branch * const member = dynamic_cast<be_union_branch*> (d);
 
-      if (d == nullptr || (member = dynamic_cast<be_union_branch*> (d)) == nullptr)
+      if (d == nullptr || member == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ci::visit_union -"
@@ -531,8 +506,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 
   // Retrieve the disriminant type.
-  be_type *bt = nullptr;
-  bt = dynamic_cast<be_type*> (node->disc_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
@@ -566,10 +540,10 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
                                               std::string const& type_suffix,
                                               bool is_any)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -631,10 +605,10 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 void
 be_visitor_valuebox_ci::emit_default_constructor () const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl;
@@ -646,18 +620,18 @@ be_visitor_valuebox_ci::emit_default_constructor () const
 void
 be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node) const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci
-  be_decl * vb_node = this->ctx_->node ();
-  bool node_not_pod =
+  be_decl * const vb_node = this->ctx_->node ();
+  bool const node_not_pod =
     dynamic_cast<be_type*> (node)->size_type () == AST_Type::VARIABLE;
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
-      << node->full_name () << "* p = nullptr;" << be_nl
+      << node->full_name () << "* p {};" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name ()
@@ -670,10 +644,10 @@ void
 be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
                                                   std::string const& type_suffix)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public constructor with one argument of underlying type
   *os << "ACE_INLINE" << be_nl
@@ -687,17 +661,17 @@ be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
 void
 be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node) const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public constructor with single argument of type const T&
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (" << node->full_name () << " const &value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = nullptr;" << be_nl
+      << node->full_name () << "* p {};" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
@@ -708,10 +682,10 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node) const
 void
 be_visitor_valuebox_ci::emit_copy_constructor () const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public Copy constructor
   *os << "ACE_INLINE" << be_nl
@@ -728,10 +702,10 @@ be_visitor_valuebox_ci::emit_copy_constructor () const
 void
 be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public copy constructor
   *os << "ACE_INLINE" << be_nl
@@ -741,7 +715,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
       << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = nullptr;" << be_nl
+      << node->full_name () << "* p {};" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (val._pd_value.in ()));" << be_uidt_nl
@@ -754,10 +728,10 @@ void
 be_visitor_valuebox_ci::emit_assignment (be_decl *node,
                                          std::string const& type_suffix)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public assignment operator with one argument of underlying type
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
@@ -772,17 +746,17 @@ be_visitor_valuebox_ci::emit_assignment (be_decl *node,
 void
 be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node) const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public assignment operator with one argument of type const T&
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
       << vb_node->name () << "::operator= ("
       << node->full_name () << " const &value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = nullptr;" << be_nl
+      << node->full_name () << "* p {};" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value)," << be_nl
@@ -796,10 +770,10 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node) const
 void
 be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Public accessor method (const)
   *os << "ACE_INLINE " << node->full_name () << " const &" << be_nl
@@ -820,7 +794,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const
       << vb_node->name () << "::_value ("
       << node->full_name () << " const &value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = nullptr;" << be_nl
+      << node->full_name () << "* p {};" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
@@ -832,10 +806,10 @@ void
 be_visitor_valuebox_ci::emit_boxed_access (be_decl *node,
                                            std::string const& out_ref_modifier)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   // Access to the boxed value for method signatures
   *os << "ACE_INLINE " << node->full_name () << " const &" << be_nl

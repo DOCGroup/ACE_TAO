@@ -29,7 +29,7 @@
 #include <random>
 #include <utility>
 
-TAO_CodeGen * tao_cg = nullptr;
+TAO_CodeGen * tao_cg {};
 
 TAO_CodeGen::TAO_CodeGen ()
   : strategy_ (TAO_PERFECT_HASH)
@@ -2532,6 +2532,11 @@ TAO_CodeGen::gen_stub_src_includes ()
       this->gen_system_include (this->client_stubs_, "cstring");
     }
 
+  if (be_global->gen_ostream_operators () && idl_global->wstring_seen_)
+    {
+      this->gen_system_include (this->client_stubs_, "cwchar");
+    }
+
   this->gen_system_include (this->client_stubs_, "memory");
 
   if (idl_global->union_seen_)
@@ -3278,7 +3283,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
       std::string const exec_idl_fname =
         be_global->be_get_ciao_exec_idl_fname (true);
 
-      bool skip_incl = false;
+      bool skip_incl {};
       // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
       std::size_t const base = exec_idl_fname.find ("E.idl");
       if (base != std::string::npos)

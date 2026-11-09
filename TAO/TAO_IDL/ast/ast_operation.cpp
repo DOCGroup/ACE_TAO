@@ -123,7 +123,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_flags (fl),
     pd_exceptions (nullptr)
 {
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
 
   // Check that if the operation is oneway, the return type must be void.
   if (rt != nullptr && pd_flags == OP_oneway)
@@ -181,7 +181,7 @@ AST_Operation::has_in_arguments ()
 int
 AST_Operation::count_arguments_with_direction (int direction_mask)
 {
-  int count = 0;
+  int count {};
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -244,9 +244,9 @@ AST_Operation::compute_argument_attr ()
       return 0;
     }
 
-  AST_Decl *d = nullptr;
-  AST_Type *type = nullptr;
-  AST_Argument *arg = nullptr;
+  AST_Decl *d {};
+  AST_Type *type {};
+  AST_Argument *arg {};
 
   this->argument_count_ = 0;
 
@@ -316,11 +316,11 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       return nullptr;
     }
 
-  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> const t_owner (t);
 
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  UTL_ScopedName *nl_n {};
+  AST_Type *fe {};
+  AST_Decl *d {};
 
   this->pd_exceptions.reset ();
 
@@ -359,8 +359,24 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_typedef:
             {
               AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
+              if (td == nullptr)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                  return nullptr;
+                }
 
-              nt = td->primitive_base_type ()->node_type ();
+              AST_Type *primitive_type = td->primitive_base_type ();
+              if (primitive_type == nullptr)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                  return nullptr;
+                }
+
+              nt = primitive_type->node_type ();
 
               if (nt != AST_Decl::NT_except)
                 {
@@ -374,7 +390,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_native:
             {
               // This is the only use case for this node type.
-              int compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
+              int const compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
 
               if (compare != 0)
                 {
@@ -393,7 +409,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             break;
         };
 
-      bool oneway_op =
+      bool const oneway_op =
         (this->flags () == AST_Operation::OP_oneway);
 
       fe = dynamic_cast<AST_Type*> (d);
@@ -413,7 +429,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          UTL_ExceptList *exceptions = nullptr;
+          UTL_ExceptList *exceptions {};
           ACE_NEW_RETURN (exceptions,
                           UTL_ExceptList (fe,
                                           nullptr),
@@ -422,7 +438,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
         }
       else
         {
-          UTL_ExceptList *el = nullptr;
+          UTL_ExceptList *el {};
           ACE_NEW_RETURN (el,
                           UTL_ExceptList (fe,
                                           nullptr),
@@ -445,8 +461,8 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
-  AST_Type *e = nullptr;
+  AST_Decl *d {};
+  AST_Type *e {};
   if (this->pd_flags == OP_oneway)
     {
       this->dump_i (o, "oneway ");

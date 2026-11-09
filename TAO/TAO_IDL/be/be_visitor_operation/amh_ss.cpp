@@ -44,7 +44,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       return -1;
     }
 
-  int argument_count =
+  int const argument_count =
     node->count_arguments_with_direction (AST_Argument::dir_IN
                                           | AST_Argument::dir_INOUT);
 

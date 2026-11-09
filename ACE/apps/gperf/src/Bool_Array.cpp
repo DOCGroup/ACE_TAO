@@ -34,15 +34,13 @@ Bool_Array::~Bool_Array ()
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "\ndumping boolean array information\n"
-                "size = %u\niteration number = %u\nend of array dump\n",
-                size_,
-                generation_number_));
-  delete [] this->storage_array_;
+                "size = %B\niteration number = %B\nend of array dump\n",
+                static_cast<size_t> (size_),
+                static_cast<size_t> (generation_number_)));
 }
 
 Bool_Array::Bool_Array ()
-  : storage_array_ (nullptr),
-    generation_number_ (0),
+  : generation_number_ (0),
     size_ (0)
 {
 }
@@ -53,28 +51,30 @@ Bool_Array::open (u_long s)
   this->generation_number_ = 1;
   this->size_ = s;
 
-  ACE_NEW_RETURN (storage_array_,
+  u_long *storage_array {};
+  ACE_NEW_RETURN (storage_array,
                   u_long[s],
                   -1);
+  this->storage_array_.reset (storage_array);
 
-  std::fill_n (storage_array_, s, 0UL);
+  std::fill_n (this->storage_array_.get (), s, 0UL);
 
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
-                "\nbool array size = %u, total bytes = %u\n",
-                size_,
-                size_ * (int) sizeof *storage_array_));
+                "\nbool array size = %B, total bytes = %B\n",
+                static_cast<size_t> (size_),
+                static_cast<size_t> (size_) * sizeof (unsigned long)));
   return 0;
 }
 
 int
 Bool_Array::find (u_long slot)
 {
-  if (storage_array_[slot] == generation_number_)
+  if (this->storage_array_[slot] == generation_number_)
     return 1;
   else
     {
-      storage_array_[slot] = generation_number_;
+      this->storage_array_[slot] = generation_number_;
       return 0;
     }
 }
@@ -89,7 +89,7 @@ Bool_Array::reset ()
                     "(re-initializing bool_array)..."));
 
       this->generation_number_ = 1;
-      std::fill_n (storage_array_, size_, 0UL);
+      std::fill_n (this->storage_array_.get (), size_, 0UL);
       if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));

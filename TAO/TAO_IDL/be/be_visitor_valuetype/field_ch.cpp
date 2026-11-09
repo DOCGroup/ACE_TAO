@@ -61,7 +61,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -143,7 +143,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -201,7 +201,7 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -243,7 +243,7 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -285,7 +285,7 @@ be_visitor_valuetype_field_ch::visit_valuebox (be_valuebox *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -327,7 +327,7 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -375,7 +375,7 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -423,7 +423,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -496,7 +496,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -635,7 +635,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -719,7 +719,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())

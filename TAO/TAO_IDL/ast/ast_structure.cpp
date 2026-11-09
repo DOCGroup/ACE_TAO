@@ -425,7 +425,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
   AST_Decl *d =
     s->lookup_by_name_local (i->local_name (), false);
 
-  AST_Structure *fd = nullptr;
+  AST_Structure *fd {};
 
   if (d != nullptr)
     {
@@ -506,7 +506,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                 }
 
               // Use full definition node.
-              std::unique_ptr<AST_Structure> redefined_structure (i);
+              std::unique_ptr<AST_Structure> const redefined_structure (i);
               i->destroy ();
               i = fd;
             }
@@ -596,7 +596,7 @@ AST_Structure::operator[] (std::size_t const index)
     {
       return nullptr;
     }
-  std::size_t i = 0;
+  std::size_t i {};
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())

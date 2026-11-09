@@ -32,6 +32,8 @@
 
 #include "Options.h"
 
+#include <memory>
+
 /**
  * Efficient lookup table abstraction implemented as a "Generation
  * Number" Array.
@@ -59,7 +61,7 @@ public:
 
 private:
   /// Initialization of the index space.
-  unsigned long *storage_array_;
+  std::unique_ptr<unsigned long[]> storage_array_;
 
   /// Keep track of the current Generation.
   unsigned long generation_number_;

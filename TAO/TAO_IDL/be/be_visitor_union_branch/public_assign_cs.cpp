@@ -210,7 +210,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
   TAO_OutStream * const os = this->ctx_->stream ();
 
-  bool bt_is_defined = node->is_defined ();
+  bool const bt_is_defined = node->is_defined ();
 
   *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
       << "{" << be_idt_nl
@@ -307,7 +307,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
   TAO_OutStream * const os = this->ctx_->stream ();
 
-  bool bt_is_defined = node->full_definition ()->is_defined ();
+  bool const bt_is_defined = node->full_definition ()->is_defined ();
 
   *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
       << "{" << be_idt_nl

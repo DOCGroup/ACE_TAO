@@ -43,7 +43,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
     dynamic_cast<AST_Extended_Port*> (j.item ());
 
   bool first = true;
-  int port_nr = 0;
+  int port_nr {};
   for (UTL_ScopeActiveIterator i (p->port_type (), UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())

@@ -119,23 +119,24 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
   UTL_ExprlistActiveIterator iter (ds);
 
-  for (std::size_t i = 0;
+  for (std::size_t i {};
        !iter.is_done () && i < nds;
-       iter.next (), i++)
+       iter.next (), ++i)
     {
-      AST_Expression *orig = iter.item ();
-      AST_Param_Holder *ph = orig->param_holder ();
+      AST_Expression * const orig = iter.item ();
+      AST_Param_Holder * const ph = orig->param_holder ();
 
       AST_Expression::ExprType const ex_type =
         (ph == nullptr ? orig->ev ()->et : ph->info ()->const_type_);
 
-      AST_Expression *copy = nullptr;
+      // ACE_NEW_RETURN requires a raw output pointer; own it before vector insertion.
+      AST_Expression *copy {};
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
                                       ex_type),
                       std::vector<std::unique_ptr<AST_Expression>> ());
 
-      result.emplace_back (copy);
+      result.emplace_back (std::unique_ptr<AST_Expression> (copy));
     }
 
   return result;
@@ -153,7 +154,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (std::size_t i = 0; i < this->n_dims (); i++)
+  for (std::size_t i {}; i < this->n_dims (); i++)
     {
       this->dump_i (o, "[");
 
@@ -173,9 +174,9 @@ AST_Array::ast_accept (ast_visitor *visitor)
 int
 AST_Array::compute_size_type ()
 {
-  AST_Type *type = this->base_type ();
+  AST_Type * const type = this->base_type ();
 
-  if (!type)
+  if (type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_array::compute_size_type - "

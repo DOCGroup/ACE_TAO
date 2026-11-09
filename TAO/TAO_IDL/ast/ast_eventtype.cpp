@@ -77,7 +77,7 @@ AST_EventType::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, ": ");
 
-      for (long i = 0; i < this->pd_n_inherits; ++i)
+      for (long i {}; i < this->pd_n_inherits; ++i)
         {
           this->pd_inherits[i]->local_name ()->dump (o);
 
@@ -94,7 +94,7 @@ AST_EventType::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, "supports ");
 
-      for (std::size_t i = 0; i < this->pd_supports.size (); ++i)
+      for (std::size_t i {}; i < this->pd_supports.size (); ++i)
         {
           this->pd_supports[i]->local_name ()->dump (o);
 

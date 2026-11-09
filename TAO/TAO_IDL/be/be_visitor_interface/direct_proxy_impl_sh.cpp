@@ -16,21 +16,15 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl_2
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl
-      << "//                    Direct  Impl. Declaration" << be_nl
-      << "//" << be_nl_2;
-
   // Generate Class Declaration.
-  *os << "class " << be_global->skel_export_macro ()
+  *os << be_nl_2 << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
 
   bool first_concrete = true;
 
   if (node->n_inherits () > 0)
     {
-      AST_Type *parent = nullptr;
+      AST_Type *parent {};
 
       for (int i = 0; i < node->n_inherits (); ++i)
         {
@@ -82,11 +76,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
     }
 
   *os << be_uidt_nl
-      << "};" << be_nl_2
-      << "//" << be_nl
-      << "//                Direct  Proxy Impl. Declaration" << be_nl
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl_2;
+      << "};" << be_nl_2;
 
   return 0;
 }
@@ -103,7 +93,7 @@ be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH);

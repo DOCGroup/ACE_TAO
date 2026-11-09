@@ -110,10 +110,10 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       return;
     }
 
-  AST_Decl *d = nullptr;
-  UTL_ScopedName *item = nullptr;
-  AST_Interface *iface = nullptr;
-  AST_Type *t = nullptr;
+  AST_Decl *d {};
+  UTL_ScopedName *item {};
+  AST_Interface *iface {};
+  AST_Type *t {};
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.

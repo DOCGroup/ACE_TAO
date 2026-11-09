@@ -53,9 +53,9 @@ public:
             int word_end,
             int bad_val,
             int key_end);
-  Iterator (const Iterator &) = delete;
+  Iterator (Iterator const &) = delete;
   Iterator (Iterator &&) = delete;
-  Iterator &operator= (const Iterator &) = delete;
+  Iterator &operator= (Iterator const &) = delete;
   Iterator &operator= (Iterator &&) = delete;
 
   int operator () ();

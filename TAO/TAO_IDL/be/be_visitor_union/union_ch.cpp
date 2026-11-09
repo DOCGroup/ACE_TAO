@@ -100,7 +100,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
     }
 
   // Now check if we need to generate the _default () method.
-  be_union::DefaultValue dv;
+  be_union::DefaultValue dv {};
 
   if (node->default_value (dv) == -1)
     {

@@ -25,8 +25,8 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
     be_valuetype_fwd *node
   )
 {
-  AST_Interface *fd = node->full_definition ();
-  be_valuetype *bfd = dynamic_cast<be_valuetype*> (fd);
+  AST_Interface * const fd = node->full_definition ();
+  be_valuetype * const bfd = dynamic_cast<be_valuetype*> (fd);
 
   // If this forward declared vt is defined later in the file,
   // the CDR operator declaration (along with the corresponding
@@ -43,7 +43,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   be_valuetype *fvd =
     dynamic_cast<be_valuetype*> (node->full_definition ());

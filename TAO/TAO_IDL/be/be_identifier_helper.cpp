@@ -11,7 +11,7 @@
 std::string
 IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
 {
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
 
   switch (t->node_type ())
     {
@@ -22,6 +22,10 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
         return "";
       case AST_Decl::NT_pre_defined:
         pdt = dynamic_cast<AST_PredefinedType*> (t);
+        if (pdt == nullptr)
+          {
+            return {};
+          }
 
         switch (pdt->pt ())
           {
@@ -107,7 +111,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 {
   std::string retval;
   bool first = true;
-  bool second = false;
+  bool second {};
 
   for (UTL_IdListActiveIterator i (sn); !i.is_done ();)
     {

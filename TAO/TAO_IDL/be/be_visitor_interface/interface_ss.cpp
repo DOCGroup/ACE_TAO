@@ -48,13 +48,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       return -1;
     }
-  std::string full_skel_name =
+  std::string const full_skel_name =
     this->generate_full_skel_name (node);
 
-  std::string flat_name =
+  std::string const flat_name =
     this->generate_flat_name (node);
 
-  int status =
+  int const status =
     node->gen_operation_table (flat_name,
                                full_skel_name);
 
@@ -142,8 +142,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::CORBA::Boolean " << full_skel_name
       << "::_is_a (char const *value)" << be_nl
       << "{" << be_idt_nl
-      << "return" << be_idt_nl
-      << "(" << be_idt_nl;
+      << "return (" << be_idt_nl;
 
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
@@ -163,8 +162,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+  *os << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "char const *" << full_skel_name
@@ -227,7 +225,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
@@ -247,10 +245,10 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
-      UTL_ScopedName *item_new_name = nullptr;
-      UTL_ScopedName *new_name = nullptr;
+      UTL_ScopedName *item_new_name {};
+      UTL_ScopedName *new_name {};
 
       if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
@@ -259,7 +257,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
                                           nullptr),
                           -1);
 
-          new_name = (UTL_ScopedName *) node->name ()->copy ();
+          new_name = static_cast<UTL_ScopedName *> (node->name ()->copy ());
           new_name->nconc (item_new_name);
         }
       else
@@ -275,7 +273,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
         {
           be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_name =
-            (UTL_ScopedName *) op->name ()->copy ();
+            static_cast<UTL_ScopedName *> (op->name ()->copy ());
           op->set_name (new_name);
           op->set_defined_in (node);
           op->is_abstract (node->is_abstract ());

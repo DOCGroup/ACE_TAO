@@ -1,6 +1,7 @@
 #ifndef ANNOTEST_IDL_BE_UTIL_HEADER
 #define ANNOTEST_IDL_BE_UTIL_HEADER
 
+#include <memory>
 #include <string>
 
 class TAO_OutStream;
@@ -21,7 +22,7 @@ public:
   static void usage ();
 
   /// Create an AST node generator.
-  static AST_Generator *generator_init ();
+  static std::unique_ptr<AST_Generator> generator_init ();
 };
 
 #endif

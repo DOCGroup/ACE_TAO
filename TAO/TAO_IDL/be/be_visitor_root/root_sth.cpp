@@ -55,7 +55,7 @@ be_visitor_root_sth::visit_module (be_module *node)
       return 0;
     }
 
-  TAO_OutStream *os = tao_cg->server_template_header ();
+  TAO_OutStream * const os = tao_cg->server_template_header ();
 
   // Generate the skeleton class name.
 
@@ -127,7 +127,7 @@ int
 be_visitor_root_sth::init ()
 {
   /// First open the server-side file for writing
-  int status =
+  int const status =
     tao_cg->start_server_template_header (
       be_global->be_get_server_template_hdr_fname ());
 

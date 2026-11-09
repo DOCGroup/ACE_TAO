@@ -72,7 +72,7 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).
-  be_predefined_type *predef = nullptr;
+  be_predefined_type *predef {};
 
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
