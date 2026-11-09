@@ -32,7 +32,6 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Loader
   : public TAO_Object_Loader
 {
 public:
-  /// Constructor.
   TAO_TypeCodeFactory_Loader ();
 
   /// Overload the base class method to create a new instance
