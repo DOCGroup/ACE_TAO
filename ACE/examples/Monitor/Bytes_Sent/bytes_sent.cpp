@@ -4,9 +4,11 @@
 
 #include "examples/Monitor/MC_Test_Utilities.h"
 
+#include <cstddef>
+
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
+using ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Monitor_Base;
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -22,19 +24,21 @@ public:
 
   int svc () override
   {
+    constexpr std::size_t monitor_samples = 15;
+
     /// Get an instance of the MC service singleton.
-    MC_ADMINMANAGER* mgr =
+    MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    Monitor_Base *bytes_monitor =
+    Monitor_Base * const bytes_monitor =
       mgr->admin ().monitor_point ("OS/Network/BytesSent");
 
     if (bytes_monitor != nullptr)
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i = 0; i < 15; ++i)
+        for (std::size_t i = 0; i < monitor_samples; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -43,6 +47,7 @@ public:
             MC_Test_Utilities::display_bytes_sent (data);
           }
 
+        /// Release the reference returned by the monitor registry.
         bytes_monitor->remove_ref ();
       }
 
@@ -57,24 +62,28 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-  /// Set the timer for # of threads check at 2 sec.
-  Monitor_Base *monitor =
+  /// Set the timer to sample network bytes sent every two seconds.
+  Monitor_Base * const monitor =
     create_os_monitor<BYTES_SENT_MONITOR> (nullptr, ACE_Time_Value (2));
 
-  /// Runs the reactor's event loop in a separate thread so the timer(s)
-  /// can run concurrently with the application.
-  START_PERIODIC_MONITORS;
+  if (monitor != nullptr)
+    {
+      /// Runs the reactor's event loop in a separate thread so the timer(s)
+      /// can run concurrently with the application.
+      START_PERIODIC_MONITORS;
 
-  /// Run the monitor checker in a separate thread.
-  Monitor_Checker monitor_checker;
-  monitor_checker.activate ();
+      /// Run the monitor checker in a separate thread.
+      Monitor_Checker monitor_checker;
+      monitor_checker.activate ();
 
-  ACE_OS::sleep (30);
+      ACE_OS::sleep (30);
 
-  /// End the reactor's event loop, stopping the timer(s).
-  STOP_PERIODIC_MONITORS;
+      /// End the reactor's event loop, stopping the timer(s).
+      STOP_PERIODIC_MONITORS;
 
-  monitor->remove_ref ();
+      /// Release the reference returned by create_os_monitor.
+      monitor->remove_ref ();
+    }
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
