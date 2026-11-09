@@ -6,11 +6,11 @@
 #include <cstdlib>
 
 static void
-printContents (CORBA::ContainedSeq const& cont)
+printContents (CORBA::ContainedSeq const &cont)
 {
   try
     {
-      for (CORBA::ULong i = 0; i < cont.length (); ++i)
+      for (CORBA::ULong i {}; i < cont.length (); ++i)
         {
           CORBA::Contained::Description_var const description = cont[i]->describe ();
           if (description->kind == CORBA::dk_Interface)
@@ -21,7 +21,7 @@ printContents (CORBA::ContainedSeq const& cont)
               CORBA::InterfaceDef::FullInterfaceDescription_var const full_description =
                 interface_def->describe_interface ();
 
-              for (CORBA::ULong operation = 0;
+              for (CORBA::ULong operation {};
                    operation < full_description->operations.length ();
                    ++operation)
                 ACE_DEBUG ((LM_DEBUG,
@@ -29,7 +29,7 @@ printContents (CORBA::ContainedSeq const& cont)
                             full_description->name.in (),
                             full_description->operations[operation].name.in ()));
 
-              for (CORBA::ULong attribute = 0;
+              for (CORBA::ULong attribute {};
                    attribute < full_description->attributes.length ();
                    ++attribute)
                 ACE_DEBUG ((LM_DEBUG,
@@ -47,7 +47,7 @@ printContents (CORBA::ContainedSeq const& cont)
             }
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("printContents");
       std::exit (EXIT_FAILURE);
@@ -98,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("main");
       return -1;
