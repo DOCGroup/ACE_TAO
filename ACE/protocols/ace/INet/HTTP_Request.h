@@ -42,7 +42,6 @@ namespace ACE
               /// Constructor; creates an HTTP request with given method, URI and version.
               Request(const ACE_CString& method, const ACE_CString& uri, const ACE_CString& version);
 
-              /// Destructor
               ~Request () override;
 
               /// Reset the request object

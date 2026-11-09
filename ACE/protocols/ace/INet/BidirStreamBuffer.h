@@ -56,10 +56,8 @@ namespace ACE
               using openmode = typename ios_type::openmode;
               using interceptor_type = StreamInterceptorBase<char_type, char_traits>;
 
-              /// Constructor
               BasicBidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
 
-              /// Destructor
               ~BasicBidirStreamBuffer () override;
 
               int_type overflow (int_type c) override;

@@ -44,13 +44,11 @@ namespace ACE
               using base_type = ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE>;
               using mq_type = ACE_Message_Queue<ACE_SYNCH_USE>;
 
-              /// Constructor
               StreamHandler (const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                              ACE_Thread_Manager *thr_mgr = nullptr,
                              mq_type *mq = nullptr,
                              ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-              /// Destructor
               virtual ~StreamHandler ();
 
               /// Activate the connection

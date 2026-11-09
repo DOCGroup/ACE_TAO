@@ -86,7 +86,6 @@ namespace ACE
               /// Constructor; sets corresponding reason
               explicit Status(Code status);
 
-              /// Constructor
               Status(Code status, const ACE_CString& reason);
 
               /// Copy constructor

@@ -34,13 +34,10 @@ namespace ACE
           : public ACE::INet::HeaderBase
           {
             public:
-              /// Constructor
               Header();
 
-              /// Constructor
               explicit Header(const ACE_CString& version);
 
-              /// Destructor
               virtual ~Header();
 
               /// Sets the HTTP version to use.

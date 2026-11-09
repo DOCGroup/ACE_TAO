@@ -71,10 +71,8 @@ namespace ACE
         class ACE_INET_Export HeaderBase
           {
             public:
-              /// Constructor
               HeaderBase();
 
-              /// Destructor
               virtual ~HeaderBase();
 
               /// Sets the Content-Length header.

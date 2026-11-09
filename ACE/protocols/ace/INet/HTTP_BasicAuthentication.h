@@ -33,7 +33,6 @@ namespace ACE
         class ACE_INET_Export BasicAuthentication
           {
             public:
-              /// Constructor
               BasicAuthentication();
 
               /// Constructor. Sets user id and password.
@@ -42,7 +41,6 @@ namespace ACE
               /// Constructor. Decodes cedentials from request (if any).
               explicit BasicAuthentication(const Request& request);
 
-              /// Destructor
               virtual ~BasicAuthentication();
 
               /// Set user id.

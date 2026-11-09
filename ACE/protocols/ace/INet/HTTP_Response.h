@@ -37,14 +37,12 @@ namespace ACE
           : public ACE::INet::Response, public Header
           {
             public:
-              /// Constructor
               Response();
 
               explicit Response(const Status& status);
 
               Response(const ACE_CString& version, const Status& status = Status());
 
-              /// Destructor
               ~Response () override;
 
               /// Reset the response object

@@ -190,10 +190,8 @@ namespace ACE
 
               using map_entry_type = ACE_Hash_Map_Entry<ConnectionCacheKey, ConnectionCacheValue>;
 
-              /// Constructor
               explicit ConnectionCache (size_t size = ACE_DEFAULT_MAP_SIZE);
 
-              /// Destructor
               ~ConnectionCache ();
 
               ConnectionCache (ConnectionCache const&) = delete;
