@@ -9,12 +9,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int retval {};
   try
     {
-      // Initialise ORB
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      constexpr TimeBase::TimeT timeout = 5 * 10000000;
+      constexpr TimeBase::TimeT timeout {5 * 10000000};
 
-      CORBA::Object_var obj = orb->resolve_initial_references ("ORBPolicyManager");
+      CORBA::Object_var obj {orb->resolve_initial_references ("ORBPolicyManager")};
       CORBA::PolicyManager_var const policy_manager =
         CORBA::PolicyManager::_narrow (obj.in ());
 
@@ -31,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Now try to contact a server.
       // Use a remote machine that is unreachable on the network.
-      char const * const obj_ref = "corbaloc:iiop:1.0@10.123.123.123:4567/NameService";
+      constexpr char obj_ref[] {"corbaloc:iiop:1.0@10.123.123.123:4567/NameService"};
 
       obj = orb->string_to_object (obj_ref);
 
@@ -57,7 +56,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (::CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("ERROR : unexpected CORBA exception caugth :");
+      ex._tao_print_exception ("ERROR : unexpected CORBA exception caught :");
       ++retval;
     }
 
