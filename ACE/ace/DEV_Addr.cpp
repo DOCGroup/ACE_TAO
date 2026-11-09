@@ -34,7 +34,7 @@ ACE_DEV_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_DEV_Addr::get_addr");
 
-  return (void *) &this->devname_;
+  return const_cast<ACE_TCHAR *> (this->devname_);
 }
 
 void
@@ -49,19 +49,14 @@ ACE_DEV_Addr::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Do nothing constructor.
-
 ACE_DEV_Addr::ACE_DEV_Addr ()
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
-
-  (void) std::memset (&this->devname_,
-                      0, sizeof this->devname_);
 }
 
 int
-ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
+ACE_DEV_Addr::set (ACE_DEV_Addr const &sa)
 {
   this->base_set (sa.get_type (), sa.get_size ());
 
@@ -76,9 +71,7 @@ ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
   return 0;
 }
 
-// Copy constructor.
-
-ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
+ACE_DEV_Addr::ACE_DEV_Addr (ACE_DEV_Addr const &sa)
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
@@ -86,7 +79,7 @@ ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
   this->set (sa);
 }
 
-ACE_DEV_Addr::ACE_DEV_Addr (const ACE_TCHAR *devname)
+ACE_DEV_Addr::ACE_DEV_Addr (ACE_TCHAR const *devname)
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
@@ -95,7 +88,7 @@ ACE_DEV_Addr::ACE_DEV_Addr (const ACE_TCHAR *devname)
 }
 
 ACE_DEV_Addr &
-ACE_DEV_Addr::operator= (const ACE_DEV_Addr &sa)
+ACE_DEV_Addr::operator= (ACE_DEV_Addr const &sa)
 {
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
