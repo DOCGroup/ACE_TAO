@@ -3,19 +3,22 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -35,28 +38,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // Initialize and obtain reference to the Test object.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Client_Options options;
 
-      if (parse_args (argc, argv) != 0)
+      // Initialize and obtain reference to the Test object.
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
-      CORBA::Object_var object = orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (options.ior);
 
-      Test_var server = Test::_narrow (object.in ());
+      Test_var const server = Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Object reference <%s> is nil\n",
-                             ior),
+                             options.ior),
                             -1);
         }
 
       // Make an invocation on the obtained Test object.
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
