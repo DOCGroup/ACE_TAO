@@ -37,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Async_IOR_Table_Impl : public virtual TAO_IOR_Table_Impl
 {
 public:
-  /// Constructor
   TAO_Async_IOR_Table_Impl () = default;
   ~TAO_Async_IOR_Table_Impl () override = default;
 

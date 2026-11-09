@@ -33,10 +33,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
-  /// Constructor
   explicit TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
-  /// Destructor
   ~TAO_Table_Adapter () override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
@@ -85,7 +83,6 @@ private:
 class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
-  /// Constructor
   TAO_Table_Adapter_Factory () = default;
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for

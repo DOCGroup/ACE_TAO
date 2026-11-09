@@ -49,7 +49,6 @@ public:
     return nullptr;
   }
 
-  /// Constructor
   TAO_IOR_Table_Impl () = default;
 
   virtual bool async_available () { return false; }

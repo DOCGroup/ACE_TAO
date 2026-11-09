@@ -28,10 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Async_IORTable_Export TAO_Async_Table_Adapter : public TAO_Table_Adapter
 {
 public:
-  /// Constructor
   explicit TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
-  /// Destructor
   ~TAO_Async_Table_Adapter () override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
@@ -60,7 +58,6 @@ class TAO_Async_IORTable_Export TAO_Async_Table_Adapter_Factory :
   public TAO_Table_Adapter_Factory
 {
 public:
-  /// Constructor
   TAO_Async_Table_Adapter_Factory () = default;
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
