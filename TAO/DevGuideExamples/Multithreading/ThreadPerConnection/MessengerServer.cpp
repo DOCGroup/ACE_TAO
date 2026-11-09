@@ -1,21 +1,25 @@
 #include "Messenger_i.h"
 #include "ace/Get_Opt.h"
 #include <iostream>
-#include <fstream>
+#include <memory>
+#include <string>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior_output_file { ACE_TEXT ("test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  int option;
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -45,7 +49,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POAManager_var const mgr = poa->the_POAManager ();
     mgr->activate();
 
-    if (parse_args (argc, argv) != 0)
+    Options options;
+    if (parse_args (argc, argv, options) != 0)
       return 1;
 
     // Create a servant.
@@ -58,16 +63,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::Object_var messenger_obj = poa->id_to_reference (oid.in ());
     CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
 
-    // Output the IOR to the <ior_output_file>
-    FILE *const output_file = ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open output file for writing IOR: %s\n",
-                         ior_output_file),
-                         1);
-    ACE_OS::fprintf (output_file, "%s", str.in ());
-    ACE_OS::fclose (output_file);
-    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
+    {
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())),
+                          1);
+      ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+      std::cout << "IOR written to file "
+                << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()) << std::endl;
+    }
 
     // Accept requests from clients.
     orb->run();
