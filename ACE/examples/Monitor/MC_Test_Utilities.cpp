@@ -7,7 +7,7 @@
 
 void
 MC_Test_Utilities::display_timestamp (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   /// The heavy lifting of converting an ACE_Time_Value
   /// to something that's easily outputted in a pretty
@@ -25,7 +25,7 @@ MC_Test_Utilities::display_timestamp (
 
 void
 MC_Test_Utilities::display_num_threads (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "# of threads:             ";
   display_timestamp (data);
@@ -34,7 +34,7 @@ MC_Test_Utilities::display_num_threads (
 
 void
 MC_Test_Utilities::display_mq_size (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "Message queue size:       ";
   display_timestamp (data);
@@ -43,7 +43,7 @@ MC_Test_Utilities::display_mq_size (
 
 void
 MC_Test_Utilities::display_memory_usage (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "% memory used:            ";
   display_timestamp (data);
@@ -53,7 +53,7 @@ MC_Test_Utilities::display_memory_usage (
 
 void
 MC_Test_Utilities::display_cpu_load (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "% CPU load:               ";
   display_timestamp (data);
@@ -63,15 +63,16 @@ MC_Test_Utilities::display_cpu_load (
 
 void
 MC_Test_Utilities::display_bytes_sent (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "total bytes sent:         ";
   display_timestamp (data);
   cout << static_cast<ACE_UINT64> (data.value_) << endl;
 }
+
 void
 MC_Test_Utilities::display_bytes_received (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "total bytes received:         ";
   display_timestamp (data);
@@ -80,15 +81,16 @@ MC_Test_Utilities::display_bytes_received (
 
 void
 MC_Test_Utilities::display_packets_sent (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "total packets sent:         ";
   display_timestamp (data);
   cout << static_cast<ACE_UINT64> (data.value_) << endl;
 }
+
 void
 MC_Test_Utilities::display_packets_received (
-  const Monitor_Control_Types::Data &data)
+  Monitor_Control_Types::Data const &data)
 {
   cout << "total packets received:         ";
   display_timestamp (data);
