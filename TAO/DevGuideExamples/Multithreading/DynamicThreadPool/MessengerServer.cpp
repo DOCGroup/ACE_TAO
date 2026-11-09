@@ -5,20 +5,24 @@
 #include <iostream>
 #include <fstream>
 #include "ace/Get_Opt.h"
+#include <string>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior_output_file { ACE_TEXT ("Messenger.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  int option;
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -40,7 +44,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args (argc, argv) != 0)
+    Options options;
+    if (parse_args (argc, argv, options) != 0)
         return 1;
 
     //Get reference to the RootPOA.
@@ -48,7 +53,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
 
     // Create a configuration structure and set the values
-    TAO_DTP_Definition tp_config;
+    TAO_DTP_Definition tp_config {};
 
     tp_config.min_threads_ = 1;                   // Set low water mark to 1 thread.
     tp_config.init_threads_ = 3;                  // Start 3 threads to start.
@@ -83,9 +88,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::ObjectId_var const oid = poa->activate_object (servant.in ());
     obj = poa->id_to_reference (oid.in ());
     CORBA::String_var const str = orb->object_to_string (obj.in ());
-    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
-    ior_file << str.in () << std::endl;
-    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
+    {
+      std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));
+      ior_file << str.in () << std::endl;
+      std::cout << "IOR written to file "
+                << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()) << std::endl;
+    }
 
     // Accept requests from clients.
     orb->run();
