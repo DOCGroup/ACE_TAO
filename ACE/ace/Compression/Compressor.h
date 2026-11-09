@@ -105,8 +105,8 @@ public:
   virtual ~ACE_Compressor () = default;
 
 protected:
-  ACE_Compressor(ACE_CompressorId compressor_id,
-                 ACE_UINT32 compression_level = 0); // Must be inherited.
+  explicit ACE_Compressor (ACE_CompressorId compressor_id,
+                           ACE_UINT32 compression_level = 0); // Must be inherited.
 
   virtual void update_stats(ACE_UINT64 uncompressed_bytes,
                             ACE_UINT64 compressed_bytes);
