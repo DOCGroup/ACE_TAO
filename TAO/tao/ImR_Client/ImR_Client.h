@@ -45,7 +45,6 @@ namespace TAO
       : public ::TAO::Portable_Server::ImR_Client_Adapter
     {
     public:
-      /// Constructor.
       ImR_Client_Adapter_Impl ();
 
       /// Used to force the initialization of the PortableServer code.

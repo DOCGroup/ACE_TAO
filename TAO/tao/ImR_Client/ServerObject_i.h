@@ -38,7 +38,6 @@ class TAO_IMR_Client_Export ServerObject_i
   : public POA_ImplementationRepository::ServerObject
 {
 public:
-  /// Constructor.
   ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Ping method.
