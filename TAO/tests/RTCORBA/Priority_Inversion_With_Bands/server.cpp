@@ -5,32 +5,38 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
-static int ior_count = 1;
-static CORBA::ULong static_threads = 1;
-static CORBA::ULong dynamic_threads = 0;
-static RTCORBA::Priority low_priority;
-static RTCORBA::Priority high_priority;
+#include <cstdio>
+#include <memory>
+#include <string>
+
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT("ior")};
+  CORBA::ULong static_threads {1};
+  CORBA::ULong dynamic_threads {};
+  RTCORBA::Priority low_priority {};
+  RTCORBA::Priority high_priority {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:d:t:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 's':
-        static_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.static_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        dynamic_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.dynamic_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -42,9 +48,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\t-d <dynamic_threads> (defaults to %d)\n"
                            "\n",
                            argv [0],
-                           ior_output_file,
-                           static_threads,
-                           dynamic_threads),
+                           options.ior_output_file,
+                           options.static_threads,
+                           options.dynamic_threads),
                           -1);
       }
 
@@ -54,47 +60,44 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 write_ior_to_file (CORBA::ORB_ptr orb,
-                   test_ptr test)
+                   test_ptr test,
+                   Server_Options const &options)
 {
-  CORBA::String_var ior =
+  static int ior_count {1};
+
+  CORBA::String_var const ior =
     orb->object_to_string (test);
 
-  char filename[BUFSIZ];
-  ACE_OS::sprintf (filename,
-                   "%s_%d",
-                   ACE_TEXT_ALWAYS_CHAR (ior_output_file),
-                   ior_count++);
+  std::string filename (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file));
+  filename += '_';
+  filename += std::to_string (ior_count++);
 
-  FILE *output_file =
-    ACE_OS::fopen (filename,
-                   "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    std::fopen (filename.c_str (), "w"), std::fclose);
 
-  if (output_file == 0)
+  if (output_file == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output file for writing IOR: %s",
-                       filename),
+                       filename.c_str ()),
                       -1);
 
-  ACE_OS::fprintf (output_file,
-                   "%s",
-                   ior.in ());
-
-  ACE_OS::fclose (output_file);
+  std::fprintf (output_file.get (), "%s", ior.in ());
 
   return 0;
 }
 
-
 int
 create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
-                                 const char *poa_name,
+                                 char const *poa_name,
                                  PortableServer::POAManager_ptr poa_manager,
                                  PortableServer::POA_ptr root_poa,
                                  CORBA::ORB_ptr orb,
-                                 RTCORBA::RTORB_ptr rt_orb)
+                                 RTCORBA::RTORB_ptr rt_orb,
+                                 Server_Options const &options)
 {
   // Policies for the firstPOA to be created.
-  CORBA::PolicyList policies (3); policies.length (3);
+  CORBA::PolicyList policies (3);
+  policies.length (3);
 
   // Implicit_activation policy.
   policies[0] =
@@ -108,7 +111,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   // Priority Model policy.
   policies[2] =
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0);
+                                          RTCORBA::minPriority);
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
@@ -117,33 +120,31 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
                           policies);
 
   // Creation of POAs is over. Destroy the Policy objects.
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < policies.length ();
        ++i)
     {
       policies[i]->destroy ();
     }
 
-  test_i *servant =
+  PortableServer::ServantBase_var const safe_servant (
     new test_i (orb,
                 poa.in (),
-                low_priority,
-                high_priority);
-
-  PortableServer::ServantBase_var safe_servant (servant);
-  ACE_UNUSED_ARG (safe_servant);
+                options.low_priority,
+                options.high_priority));
 
   PortableServer::ObjectId_var id =
-    poa->activate_object (servant);
+    poa->activate_object (safe_servant.in ());
 
-  CORBA::Object_var object = poa->id_to_reference (id.in ());
+  CORBA::Object_var const object = poa->id_to_reference (id.in ());
 
-  test_var test =
+  test_var const test =
     test::_narrow (object.in ());
 
   int const result =
     write_ior_to_file (orb,
-                       test.in ());
+                       test.in (),
+                       options);
 
   return result;
 }
@@ -152,16 +153,25 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Server_Options const &options);
 
-  int svc ();
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
+  int svc () override;
+
+  Server_Options options_;
   CORBA::ORB_var orb_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Server_Options const &options)
   : ACE_Task_Base (&thread_manager),
+    options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -174,62 +184,56 @@ Task::svc ()
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       object =
         this->orb_->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
-      object =
-        this->orb_->resolve_initial_references ("RTCurrent");
-
-      RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ());
-
-      RTCORBA::Priority default_thread_priority =
+      RTCORBA::Priority const default_thread_priority =
         get_implicit_thread_CORBA_priority (this->orb_.in ());
 
-      low_priority = default_thread_priority;
-      high_priority = default_thread_priority + 1;
+      this->options_.low_priority = default_thread_priority;
+      this->options_.high_priority = default_thread_priority + 1;
 
       poa_manager->activate ();
 
-      CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
-      CORBA::ULong max_buffered_requests = 0;
-      CORBA::ULong max_request_buffer_size = 0;
+      CORBA::ULong const stacksize {};
+      CORBA::Boolean const allow_request_buffering {};
+      CORBA::ULong const max_buffered_requests {};
+      CORBA::ULong const max_request_buffer_size {};
 
-      RTCORBA::ThreadpoolId threadpool_id_1 =
+      RTCORBA::ThreadpoolId const threadpool_id_1 =
         rt_orb->create_threadpool (stacksize,
-                                   static_threads,
-                                   dynamic_threads,
-                                   low_priority,
+                                   this->options_.static_threads,
+                                   this->options_.dynamic_threads,
+                                   this->options_.low_priority,
                                    allow_request_buffering,
                                    max_buffered_requests,
                                    max_request_buffer_size);
 
-      CORBA::Policy_var threadpool_policy_1 =
+      CORBA::Policy_var const threadpool_policy_1 =
         rt_orb->create_threadpool_policy (threadpool_id_1);
 
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean const allow_borrowing {};
       RTCORBA::ThreadpoolLanes lanes (2);
       lanes.length (2);
 
-      lanes[0].lane_priority = low_priority;
-      lanes[0].static_threads = static_threads;
-      lanes[0].dynamic_threads = dynamic_threads;
+      lanes[0].lane_priority = this->options_.low_priority;
+      lanes[0].static_threads = this->options_.static_threads;
+      lanes[0].dynamic_threads = this->options_.dynamic_threads;
 
-      lanes[1].lane_priority = high_priority;
-      lanes[1].static_threads = static_threads;
-      lanes[1].dynamic_threads = dynamic_threads;
+      lanes[1].lane_priority = this->options_.high_priority;
+      lanes[1].static_threads = this->options_.static_threads;
+      lanes[1].dynamic_threads = this->options_.dynamic_threads;
 
-      RTCORBA::ThreadpoolId threadpool_id_2 =
+      RTCORBA::ThreadpoolId const threadpool_id_2 =
         rt_orb->create_threadpool_with_lanes (stacksize,
                                               lanes,
                                               allow_borrowing,
@@ -237,7 +241,7 @@ Task::svc ()
                                               max_buffered_requests,
                                               max_request_buffer_size);
 
-      CORBA::Policy_var threadpool_policy_2 =
+      CORBA::Policy_var const threadpool_policy_2 =
         rt_orb->create_threadpool_policy (threadpool_id_2);
 
       int result =
@@ -246,7 +250,8 @@ Task::svc ()
                                          poa_manager.in (),
                                          root_poa.in (),
                                          this->orb_.in (),
-                                         rt_orb.in ());
+                                         rt_orb.in (),
+                                         this->options_);
       if (result != 0)
         return result;
 
@@ -256,7 +261,8 @@ Task::svc ()
                                          poa_manager.in (),
                                          root_poa.in (),
                                          this->orb_.in (),
-                                         rt_orb.in ());
+                                         rt_orb.in (),
+                                         this->options_);
       if (result != 0)
         return result;
 
@@ -264,7 +270,7 @@ Task::svc ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -274,7 +280,7 @@ Task::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -282,8 +288,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc,
                          argv);
 
-      int result =
-        parse_args (argc, argv);
+      Server_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -297,10 +303,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
@@ -321,7 +328,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           else
             // Unexpected error.
-            ACE_ASSERT (0);
+            ACE_ASSERT (false);
         }
 
       // Wait for task to exit.
@@ -329,7 +336,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

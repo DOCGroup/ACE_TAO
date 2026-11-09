@@ -19,15 +19,22 @@ public:
           RTCORBA::Priority low_priority,
           RTCORBA::Priority high_priority);
 
+  ~test_i () override = default;
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+
   /// Initialize the server.
-  void initialize (CORBA::ULong total_iterations);
+  void initialize (CORBA::ULong total_iterations) override;
 
   /// Test method.
   void method (CORBA::ULong work,
-               const char *iteration);
+               char const *iteration) override;
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   /// Work (burn CPU).
   void work (CORBA::ULong work);
@@ -43,23 +50,23 @@ private:
   PortableServer::POA_var poa_;
 
   /// Value for low priority.
-  RTCORBA::Priority low_priority_;
+  RTCORBA::Priority const low_priority_;
 
   /// Value for high priority.
-  RTCORBA::Priority high_priority_;
+  RTCORBA::Priority const high_priority_;
 
   // RTCORBA Current.
   RTCORBA::Current_var rt_current_;
 
   /// Number of work iterations that can be performed in one second.
-  int work_iterations_in_one_sec_;
+  int work_iterations_in_one_sec_ {};
 
   /// Prime number used for burning CPU.
-  CORBA::ULong prime_number_;
+  CORBA::ULong prime_number_ {9619};
 
   /// Current iteration.
-  CORBA::ULong current_iteration_;
+  CORBA::ULong current_iteration_ {};
 
   /// Total iterations for this test.
-  CORBA::ULong total_iterations_;
+  CORBA::ULong total_iterations_ {};
 };

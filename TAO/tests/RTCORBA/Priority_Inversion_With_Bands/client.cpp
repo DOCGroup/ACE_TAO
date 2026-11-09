@@ -5,34 +5,39 @@
 #include "ace/Task.h"
 #include "../check_supported_priorities.cpp"
 
-static const ACE_TCHAR *ior = ACE_TEXT("file://ior_1");
-static int iterations = 12;
-static CORBA::ULong work = 2;
-static int make_banded_invocations = 0;
+#include <cstdio>
+
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://ior_1")};
+  int iterations {12};
+  CORBA::ULong work {2};
+  bool make_banded_invocations {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:k:i:w:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        make_banded_invocations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.make_banded_invocations = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'w':
-        work = ACE_OS::atoi (get_opts.opt_arg ());
+        options.work = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -45,10 +50,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\t-w <work> (default to %d)\n"
                            "\n",
                            argv [0],
-                           make_banded_invocations,
-                           ior,
-                           iterations,
-                           work),
+                           options.make_banded_invocations,
+                           options.ior,
+                           options.iterations,
+                           options.work),
                           -1);
       }
 
@@ -60,16 +65,25 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
 
-  int svc ();
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
+  int svc () override;
+
+  Client_Options const options_;
   CORBA::ORB_var orb_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
+    options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -80,7 +94,7 @@ Task::svc ()
   try
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (this->options_.ior);
 
       test_var test =
         test::_narrow (object.in ());
@@ -88,25 +102,25 @@ Task::svc ()
       object =
         this->orb_->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
 
-      RTCORBA::Current_var rt_current =
+      RTCORBA::Current_var const rt_current =
         RTCORBA::Current::_narrow (object.in ());
 
-      RTCORBA::Priority default_thread_priority =
+      RTCORBA::Priority const default_thread_priority =
         get_implicit_thread_CORBA_priority (this->orb_.in ());
 
-      RTCORBA::Priority low_priority =
+      RTCORBA::Priority const low_priority =
         default_thread_priority;
 
-      RTCORBA::Priority high_priority =
+      RTCORBA::Priority const high_priority =
         default_thread_priority + 1;
 
-      if (make_banded_invocations)
+      if (this->options_.make_banded_invocations)
         {
           RTCORBA::PriorityBands bands;
           bands.length (2);
@@ -130,27 +144,33 @@ Task::svc ()
 
       rt_current->the_priority (low_priority);
 
-      test->initialize (iterations * 2);
+      test->initialize (this->options_.iterations * 2);
 
-      int i = 0;
-      char iteration_description[BUFSIZ];
-      for (i = 0; i != iterations; ++i)
+      for (int i {}; i != this->options_.iterations; ++i)
         {
-          ACE_OS::sprintf (iteration_description, "L:%02d", i);
-          test->method (work,
+          char iteration_description[BUFSIZ];
+          std::snprintf (iteration_description,
+                         sizeof (iteration_description),
+                         "L:%02d",
+                         i);
+          test->method (this->options_.work,
                         iteration_description);
         }
 
       rt_current->the_priority (high_priority);
 
-      for (i = 0; i != iterations; ++i)
+      for (int i {}; i != this->options_.iterations; ++i)
         {
-          ACE_OS::sprintf (iteration_description, "H:%02d", i);
-          test->method (work,
+          char iteration_description[BUFSIZ];
+          std::snprintf (iteration_description,
+                         sizeof (iteration_description),
+                         "H:%02d",
+                         i);
+          test->method (this->options_.work,
                         iteration_description);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -160,15 +180,15 @@ Task::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      Client_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -182,10 +202,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
@@ -206,7 +227,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           else
             // Unexpected error.
-            ACE_ASSERT (0);
+            ACE_ASSERT (false);
         }
 
       // Wait for task to exit.
@@ -214,7 +235,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;
