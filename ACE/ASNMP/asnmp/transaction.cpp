@@ -175,7 +175,7 @@ int transaction::send ()
   return rc;
 }
 
-transaction_result::~transaction_result() {}
+transaction_result::~transaction_result() = default;
 
 ACE_HANDLE
 transaction::get_handle () const

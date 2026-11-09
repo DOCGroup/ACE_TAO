@@ -49,8 +49,7 @@
 
 // allow destruction of derived classes
 Address::~Address()
-{
-}
+= default;
 
 
 //-----------------------------------------------------------------
@@ -276,8 +275,7 @@ IpAddress::IpAddress( const GenAddress &genaddr)
 
 //-----[ destructor ]--------------------------------------------------
 IpAddress::~IpAddress()
-{
-}
+= default;
 
 // assumes member data is word aligned to avoid sigbus
 bool IpAddress::is_loopback() const
@@ -790,8 +788,7 @@ UdpAddress::UdpAddress( const IpAddress &ipaddr):IpAddress(ipaddr)
 
 //-----[ destructor ]--------------------------------------------------
 UdpAddress::~UdpAddress()
-{
-}
+= default;
 
 
   // copy an instance of this Value
@@ -1040,8 +1037,7 @@ NetbiosAddress::NetbiosAddress( const GenAddress& genaddr)
 }
 
 NetbiosAddress::~NetbiosAddress()
-{
-}
+= default;
 
 const char *NetbiosAddress::to_string()
 {
@@ -1212,8 +1208,7 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
 
 //-----[ destructor ]--------------------------------------------------
 IpxAddress::~IpxAddress()
-{
-}
+= default;
 
 
 //-----[ IPX Address general = operator ]-------------------------------
@@ -1575,8 +1570,7 @@ IpxSockAddress::IpxSockAddress( const IpxAddress &ipxaddr):IpxAddress(ipxaddr)
 
 //-----[ destructor ]--------------------------------------------------
 IpxSockAddress::~IpxSockAddress()
-{
-}
+= default;
 
 // copy an instance of this Value
 SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
@@ -1790,8 +1784,7 @@ MacAddress::MacAddress( const GenAddress &genaddr)
 
 //-----[ destructor ]--------------------------------------------------
 MacAddress::~MacAddress()
-{
-}
+= default;
 
 //---------[ MacAddress clone ]-------------------------------------------
 SnmpSyntax *MacAddress::clone() const
@@ -2427,8 +2420,7 @@ DecNetAddress::DecNetAddress( const GenAddress& genaddr)
 }
 
 DecNetAddress::~DecNetAddress()
-{
-}
+= default;
 
 const char *DecNetAddress::to_string()
 {
@@ -2564,8 +2556,7 @@ AppleTalkAddress::AppleTalkAddress( const GenAddress& genaddr)
 }
 
 AppleTalkAddress::~AppleTalkAddress()
-{
-}
+= default;
 
 const char *AppleTalkAddress::to_string()
 {
