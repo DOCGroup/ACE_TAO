@@ -91,7 +91,6 @@ public:
    */
   int fini ();
 
-  /// Destructor.
   ~TAO_ORB_Manager ();
 
   // = Accessor methods.
