@@ -26,14 +26,12 @@
 class QoS_Util
 {
 public:
-  // constructor.
   QoS_Util (int argc, ACE_TCHAR *argv[]);
   QoS_Util (QoS_Util const &) = delete;
   QoS_Util (QoS_Util &&) = delete;
   QoS_Util &operator= (QoS_Util const &) = delete;
   QoS_Util &operator= (QoS_Util &&) = delete;
 
-  // destructor.
   ~QoS_Util () = default;
 
   // Parse command-line arguments.
