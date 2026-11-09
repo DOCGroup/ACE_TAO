@@ -1,7 +1,8 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include "ace/OS_Memory.h"
 
 #include "Messenger_i.h"
 #include "StructuredEventSupplier_i.h"
@@ -10,86 +11,80 @@
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  CORBA::Object_var naming_obj =
+  CORBA::Object_var const naming_obj =
     orb_->resolve_initial_references ("NameService");
 
-  CosNaming::NamingContext_var naming_context =
-    CosNaming::NamingContext::_narrow (naming_obj.in());
+  CosNaming::NamingContext_var const naming_context =
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 
   CosNaming::Name name;
   name.length (1);
   name[0].id = CORBA::string_dup ("NotifyEventChannelFactory");
 
-  CORBA::Object_var obj = naming_context->resolve (name);
+  CORBA::Object_var const obj = naming_context->resolve (name);
 
-  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
+  CosNotifyChannelAdmin::EventChannelFactory_var const notify_factory =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
 
   CosNotifyChannelAdmin::ChannelID id;
-  CosNotification::QoSProperties initial_qos;
-  CosNotification::AdminProperties initial_admin;
+  CosNotification::QoSProperties const initial_qos;
+  CosNotification::AdminProperties const initial_admin;
 
-  CosNotifyChannelAdmin::EventChannel_var ec =
+  CosNotifyChannelAdmin::EventChannel_var const ec =
     notify_factory->create_channel (initial_qos,
                                     initial_admin,
                                     id);
 
   name[0].id = CORBA::string_dup ("MyEventChannel");
 
-  naming_context->rebind (name, ec.in());
+  naming_context->rebind (name, ec.in ());
 
   CosNotifyChannelAdmin::AdminID adminid;
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
+  CosNotifyChannelAdmin::InterFilterGroupOperator const ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
-  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
+  CosNotifyChannelAdmin::SupplierAdmin_var const supplier_admin =
     ec->new_for_suppliers (ifgop, adminid);
 
   CosNotifyChannelAdmin::ProxyID supplieradmin_proxy_id;
 
-  CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
+  CosNotifyChannelAdmin::ProxyConsumer_var const proxy_consumer =
     supplier_admin->obtain_notification_push_consumer(
                                  CosNotifyChannelAdmin::STRUCTURED_EVENT,
                                  supplieradmin_proxy_id);
 
-  StructuredEventSupplier_i *servant =
-    new StructuredEventSupplier_i(orb_.in());
+  // ACE_NEW_THROW_EX needs a writable raw pointer; servant_owner adopts it below.
+  StructuredEventSupplier_i *servant {};
+  ACE_NEW_THROW_EX (servant,
+                    StructuredEventSupplier_i (orb_.in ()),
+                    CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var const servant_owner (servant);
 
-  CORBA::Object_var poa_obj = orb_->resolve_initial_references ("RootPOA");
-  PortableServer::POA_var poa = PortableServer::POA::_narrow (poa_obj.in ());
-  PortableServer::POAManager_var mgr = poa->the_POAManager ();
+  CORBA::Object_var const poa_obj = orb_->resolve_initial_references ("RootPOA");
+  PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_obj.in ());
+  PortableServer::POAManager_var const mgr = poa->the_POAManager ();
 
   mgr->activate ();
-  PortableServer::ObjectId_var objectId = poa->activate_object (servant);
+  PortableServer::ObjectId_var const object_id = poa->activate_object (servant);
 
-  CORBA::Object_var supplier_obj = poa->id_to_reference (objectId.in ());
+  CORBA::Object_var const supplier_obj = poa->id_to_reference (object_id.in ());
 
-  CosNotifyComm::StructuredPushSupplier_var supplier =
+  CosNotifyComm::StructuredPushSupplier_var const supplier =
     CosNotifyComm::StructuredPushSupplier::_narrow (supplier_obj.in ());
 
   consumer_proxy_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxy_consumer.in());
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxy_consumer.in ());
 
-  consumer_proxy_->
-    connect_structured_push_supplier (supplier.in());
+  consumer_proxy_->connect_structured_push_supplier (supplier.in ());
 }
-
-
-Messenger_i::~Messenger_i () = default;
 
 CORBA::Boolean Messenger_i::send_message (
     char const *user_name,
     char const *subject,
     char *& message)
 {
-  ACE_OS::printf("Message from: %s\nSubject:      %s\nMessage:      %s\n",
-                 user_name, subject, message);
-  //cout << "Message from: " << user_name << endl;
-  //cout << "Subject:      " << subject << endl;
-  //cout << "Message:      " << message << endl;
-
-
-  // Event Definition
+  std::printf ("Message from: %s\nSubject:      %s\nMessage:      %s\n",
+               user_name, subject, message);
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =
@@ -101,10 +96,6 @@ CORBA::Boolean Messenger_i::send_message (
   event.header.fixed_header.event_name =
     CORBA::string_dup("myevent");
 
-  // OptionalHeaderFields
-  // PropertySeq
-
-  // sequence<Property>: string name, any value
   event.filterable_data.length (3);
   event.filterable_data[0].name = CORBA::string_dup("Message from:");
   event.filterable_data[0].value <<= user_name;
