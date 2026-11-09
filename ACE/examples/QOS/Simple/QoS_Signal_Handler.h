@@ -23,7 +23,6 @@
 class QoS_Signal_Handler : public ACE_Event_Handler
 {
 public:
-  /// constructor.
   QoS_Signal_Handler (ACE_QoS_Session *qos_session);
 
   /// Override this method to implement graceful shutdown.

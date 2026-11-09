@@ -21,10 +21,8 @@
 class Receiver_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Receiver_QoS_Event_Handler () = default;
 
-  /// Constructor.
   Receiver_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS const &dgram_mcast_qos,
                               ACE_QoS_Session *qos_session);
   Receiver_QoS_Event_Handler (Receiver_QoS_Event_Handler const &) = delete;
@@ -32,7 +30,6 @@ public:
   Receiver_QoS_Event_Handler &operator= (Receiver_QoS_Event_Handler const &) = delete;
   Receiver_QoS_Event_Handler &operator= (Receiver_QoS_Event_Handler &&) = delete;
 
-  /// Destructor.
   ~Receiver_QoS_Event_Handler () override = default;
 
   /// Override this to return the handle of the Dgram_Mcast

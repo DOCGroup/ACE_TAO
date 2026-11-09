@@ -33,14 +33,12 @@ public:
   using FLOW_SPEC_HASH_MAP = ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
 
   //Initialization and termination methods.
-  /// constructor.
   Fill_ACE_QoS ();
   Fill_ACE_QoS (Fill_ACE_QoS const &) = delete;
   Fill_ACE_QoS (Fill_ACE_QoS &&) = delete;
   Fill_ACE_QoS &operator= (Fill_ACE_QoS const &) = delete;
   Fill_ACE_QoS &operator= (Fill_ACE_QoS &&) = delete;
 
-  /// destructor.
   ~Fill_ACE_QoS () = default;
 
   /// To be used by receivers. Fills the receiver qos and sets the
