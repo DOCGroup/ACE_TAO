@@ -44,7 +44,6 @@ public:
   Event_Server (Event_Server &&) = delete;
   Event_Server &operator= (Event_Server const &) = delete;
   Event_Server &operator= (Event_Server &&) = delete;
-  // Constructor.
 
   int svc ();
   // Run the event-loop for the event server.

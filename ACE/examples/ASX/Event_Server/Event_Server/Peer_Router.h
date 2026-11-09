@@ -63,7 +63,6 @@ class Peer_Router_Context : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
   //     <Peer_Handlers> when Peers connect.
 public:
   explicit Peer_Router_Context (u_short port);
-  // Constructor.
 
   virtual int unbind_peer (ROUTING_KEY);
   // Remove the <Peer_Handler *> from the <PEER_MAP> that corresponds
