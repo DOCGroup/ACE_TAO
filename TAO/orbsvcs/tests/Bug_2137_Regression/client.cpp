@@ -5,63 +5,76 @@
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
-static CORBA::ORB_var orb = CORBA::ORB::_nil ();
+#include <array>
+
+struct IOR_Equivalence_Test
+{
+  char const *ior1;
+  char const *ior2;
+  bool expected_result;
+};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT (""));
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
+    {
+      switch (c)
+        {
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
-// Returns false if calling is_equivalent in both directions on the two supplied
-// IORs does not produce expected result.
-CORBA::Boolean
-check_is_equivalent (char const* ior1,
-                     char const* ior2,
-                     CORBA::Boolean const expected_result)
+// Returns false if either direction of _is_equivalent differs from expected_result.
+bool
+check_is_equivalent (CORBA::ORB_ptr orb,
+                     char const *ior1,
+                     char const *ior2,
+                     bool expected_result)
 {
-  CORBA::Boolean result = true;
+  bool result = true;
   try
     {
       CORBA::Object_var const object1 = orb->string_to_object (ior1);
+      CORBA::Object_var const object2 = orb->string_to_object (ior2);
+      char const * const expected_result_string = expected_result ? "true" : "false";
 
-      CORBA::Object_var const object2 =
-        orb->string_to_object (ior2);
-
-      char const* const expected_result_string = expected_result ? "true" : "false";
-
-      if ((object1->_is_equivalent (object2.in ())) != expected_result)
+      if (object1->_is_equivalent (object2.in ()) != expected_result)
         {
-          ACE_DEBUG ((LM_ERROR, "Error: Result of <%s>->_is_equivalent (<%s>) is not %s when it should be...\n",
-                                ior1, ior2, expected_result_string));
+          ACE_DEBUG ((LM_ERROR,
+                      "Error: Result of <%s>->_is_equivalent (<%s>) did not match expected %s\n",
+                      ior1,
+                      ior2,
+                      expected_result_string));
           result = false;
         }
 
-      if ((object2->_is_equivalent (object1.in ())) != expected_result)
+      if (object2->_is_equivalent (object1.in ()) != expected_result)
         {
-          ACE_DEBUG ((LM_ERROR, "Error: Result of <%s>->_is_equivalent (<%s>) is not %s when it should be...\n",
-                                ior2, ior1, expected_result_string));
+          ACE_DEBUG ((LM_ERROR,
+                      "Error: Result of <%s>->_is_equivalent (<%s>) did not match expected %s\n",
+                      ior2,
+                      ior1,
+                      expected_result_string));
           result = false;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      ACE_DEBUG ((LM_ERROR, "Vastly unexpected exception comparing %s and %s:\n", ior1, ior2));
+      ACE_DEBUG ((LM_ERROR,
+                  "Vastly unexpected exception comparing %s and %s:\n",
+                  ior1,
+                  ior2));
       ex._tao_print_exception ("Exception:");
       result = false;
     }
@@ -69,289 +82,65 @@ check_is_equivalent (char const* ior1,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::Boolean result = false;
+  bool result {};
   try
     {
-      orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      // ep1 is equivalent to no other IORs - it is not an IOGR, and ep2 is a different endpoint.
-      // The next nine should all be false.
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
+      constexpr std::array<IOR_Equivalence_Test, 35> tests {{
+        // A plain IOR is never equivalent to an IOGR; the plain endpoints differ too.
+        {"file://ep1.ior", "file://ep1_d1_g1_v1.ior", false},
+        {"file://ep1.ior", "file://ep1_d1_g1_v2.ior", false},
+        {"file://ep1.ior", "file://ep1_d1_g2_v1.ior", false},
+        {"file://ep1.ior", "file://ep1_d2_g1_v1.ior", false},
+        {"file://ep1.ior", "file://ep2.ior", false},
+        {"file://ep1.ior", "file://ep2_d1_g1_v1.ior", false},
+        {"file://ep1.ior", "file://ep2_d1_g1_v2.ior", false},
+        {"file://ep1.ior", "file://ep2_d1_g2_v1.ior", false},
+        {"file://ep1.ior", "file://ep2_d2_g1_v1.ior", false},
+        // IOGRs are equivalent when domain and group IDs match, independent of endpoint or version.
+        {"file://ep1_d1_g1_v1.ior", "file://ep1_d1_g1_v2.ior", true},
+        {"file://ep1_d1_g1_v1.ior", "file://ep1_d1_g2_v1.ior", false},
+        {"file://ep1_d1_g1_v1.ior", "file://ep1_d2_g1_v1.ior", false},
+        {"file://ep1_d1_g1_v1.ior", "file://ep2.ior", false},
+        {"file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v1.ior", true},
+        {"file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v2.ior", true},
+        {"file://ep1_d1_g1_v1.ior", "file://ep2_d1_g2_v1.ior", false},
+        {"file://ep1_d1_g1_v1.ior", "file://ep2_d2_g1_v1.ior", false},
+        {"file://ep1_d1_g1_v2.ior", "file://ep1_d1_g2_v1.ior", false},
+        {"file://ep1_d1_g1_v2.ior", "file://ep1_d2_g1_v1.ior", false},
+        {"file://ep1_d1_g1_v2.ior", "file://ep2.ior", false},
+        {"file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v1.ior", true},
+        {"file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v2.ior", true},
+        {"file://ep1_d1_g1_v2.ior", "file://ep2_d1_g2_v1.ior", false},
+        {"file://ep1_d1_g1_v2.ior", "file://ep2_d2_g1_v1.ior", false},
+        {"file://ep1_d1_g2_v1.ior", "file://ep1_d2_g1_v1.ior", false},
+        {"file://ep1_d1_g2_v1.ior", "file://ep2.ior", false},
+        {"file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v1.ior", false},
+        {"file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v2.ior", false},
+        {"file://ep1_d1_g2_v1.ior", "file://ep2_d1_g2_v1.ior", true},
+        {"file://ep1_d1_g2_v1.ior", "file://ep2_d2_g1_v1.ior", false},
+        {"file://ep1_d2_g1_v1.ior", "file://ep2.ior", false},
+        {"file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", false},
+        {"file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v2.ior", false},
+        {"file://ep1_d2_g1_v1.ior", "file://ep2_d1_g2_v1.ior", false},
+        {"file://ep1_d2_g1_v1.ior", "file://ep2_d2_g1_v1.ior", true}
+      }};
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g1_v2.ior", false))
+      for (IOR_Equivalence_Test const &test : tests)
         {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g2_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because these are IORs with different endpoints.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep2_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep2_d1_g1_v2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g2_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d1_g1_v2.ior", true))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be true because both are IOGRs and the domain and group ids "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d1_g2_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v1.ior", true))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be true because both are IOGRs and the domain and group ids "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v2.ior", true))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be true because both are IOGRs and the domain and group ids "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g2_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep1_d1_g2_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep1_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v1.ior", true))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be true because both are IOGRs and the domain and group ids "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v2.ior", true))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be true because both are IOGRs and the domain and group ids "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g2_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep1_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g2_v1.ior", true))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be true because both are IOGRs and the domain and group ids "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d2_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
-        }
-
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", false))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "... it should be false because both are IOGRs but the domain and group ids don't "
-                      "match.\n\n"));
-          result = true;
+          if (!check_is_equivalent (orb.in (), test.ior1, test.ior2, test.expected_result))
+            result = true;
         }
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
