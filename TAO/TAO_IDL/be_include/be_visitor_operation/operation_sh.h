@@ -27,10 +27,8 @@
 class be_visitor_operation_sh : public be_visitor_operation
 {
 public:
-  /// constructor
   explicit be_visitor_operation_sh (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_sh () override;
   be_visitor_operation_sh (be_visitor_operation_sh const &) = delete;
   be_visitor_operation_sh (be_visitor_operation_sh &&) = delete;
