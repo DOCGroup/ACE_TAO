@@ -7,12 +7,15 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Log_Msg.h"
 #include <array>
+#include <cstddef>
 
-constexpr int MAX_ITERATIONS = 100 * 1000;
-constexpr int NUM_TEST_STRS = 6;
+constexpr std::size_t MAX_ITERATIONS = 100 * 1000;
+constexpr std::size_t NUM_TEST_STRS = 6;
 
 static bool is_escaped (ACEXML_String const &s)
 {
+  if (s.length () == 0)
+    return false;
   if (s[0] != ACE_TEXT('&'))
     return false;
   if (s[s.length() - 1] != ACE_TEXT(';'))
@@ -21,13 +24,13 @@ static bool is_escaped (ACEXML_String const &s)
 }
 
 static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strings,
-                      int iterations)
+                      std::size_t const iterations)
 {
   // Test 1 - Escape the strings using a new temporary string each iteration.
   ACE_Time_Value start (ACE_OS::gettimeofday ());
-  for (int i = 0; i < iterations; ++i)
+  for (std::size_t i {}; i < iterations; ++i)
   {
-    ACEXML_String tmp = ACEXML_escape_string (test_strings[i % NUM_TEST_STRS]);
+    ACEXML_String const tmp = ACEXML_escape_string (test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
     {
       ACE_ERROR ((LM_ERROR, "Error: Failed to escape string\n"));
@@ -41,7 +44,7 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
   // be any faster than Test 1 as long as the compiler has return value optimization.
   ACEXML_String tmp;
   start = ACE_OS::gettimeofday ();
-  for (int i = 0; i < iterations; ++i)
+  for (std::size_t i {}; i < iterations; ++i)
   {
     tmp = ACEXML_escape_string (test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
@@ -57,7 +60,7 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
   // the alternate form of ACEXML_escape_string() so that our temporary buffer is reused.
   tmp.clear (1);
   start = ACE_OS::gettimeofday ();
-  for (int i = 0; i < iterations; ++i)
+  for (std::size_t i {}; i < iterations; ++i)
   {
     ACEXML_escape_string (test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
@@ -71,7 +74,7 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
 
   // Test 4 - Same as Test 3, except that the tmp buffer shouldn't have to resize.
   start = ACE_OS::gettimeofday ();
-  for (int i = 0; i < iterations; ++i)
+  for (std::size_t i {}; i < iterations; ++i)
   {
     ACEXML_escape_string (test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
@@ -100,9 +103,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG, "Rerun tests with larger strings\n"));
-  for (int i = 0; i < NUM_TEST_STRS; ++i)
+  for (std::size_t i {}; i < NUM_TEST_STRS; ++i)
   {
-    for (int j = 0; j < 5; ++j)
+    for (std::size_t j {}; j < 5; ++j)
     {
       test_strings[i] += test_strings[i];
     }
