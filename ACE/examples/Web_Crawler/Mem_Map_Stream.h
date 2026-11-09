@@ -55,8 +55,6 @@ public:
 
   using STRAT_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 
-  // Mem_Map_Stream ();
-  // constructor added:KIRTHIKA
   /// Initialize this object.
   virtual int open (STRAT_CONNECTOR *connector,
                     const ACE_INET_Addr &);
