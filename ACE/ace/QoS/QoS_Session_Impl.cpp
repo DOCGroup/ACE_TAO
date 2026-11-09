@@ -221,7 +221,6 @@ rsvp_callback (rapi_sid_t /* sid */,
   return 0;
 }
 
-// Constructor.
 ACE_RAPI_Session::ACE_RAPI_Session ()
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
@@ -623,7 +622,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // This is a GQoS session ID generator.
 int ACE_GQoS_Session::GQoS_session_id = 0;
 
-// Constructor.
 ACE_GQoS_Session::ACE_GQoS_Session ()
 {
   ACE_TRACE ("ACE_GQoS_Session::ACE_GQoS_Session");
