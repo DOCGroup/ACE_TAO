@@ -44,7 +44,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
     Options options;
 
     if (parse_args (argc, argv, options) != 0)
@@ -59,10 +59,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     ACE_ASSERT (!CORBA::is_nil (messenger.in ()));
 
     obj = orb->resolve_initial_references ("ORBPolicyManager");
-    CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow (obj.in ());
+    CORBA::PolicyManager_var const policy_manager = CORBA::PolicyManager::_narrow (obj.in ());
     ACE_ASSERT (!CORBA::is_nil (policy_manager.in ()));
     obj = orb->resolve_initial_references ("PolicyCurrent");
-    CORBA::PolicyCurrent_var policy_current = CORBA::PolicyCurrent::_narrow (obj.in());
+    CORBA::PolicyCurrent_var const policy_current = CORBA::PolicyCurrent::_narrow (obj.in());
     ACE_ASSERT (!CORBA::is_nil (policy_current.in ()));
 
     // TimeT is in 10ths of a microsecond (10000 == 1.0e-3 * 1.0e7).

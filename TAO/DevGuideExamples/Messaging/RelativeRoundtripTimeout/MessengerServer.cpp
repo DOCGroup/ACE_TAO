@@ -35,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
     std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("MessengerServer.ior")};
 
     if (parse_args (argc, argv, ior_output_file) != 0)
@@ -43,21 +43,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
     // Get reference to Root POA.
     CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+    PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
 
     // Activate POA manager
-    PortableServer::POAManager_var mgr = poa->the_POAManager ();
+    PortableServer::POAManager_var const mgr = poa->the_POAManager ();
     mgr->activate();
 
     // Create an object
-    PortableServer::Servant_var<Messenger_i> messenger_servant =
+    PortableServer::Servant_var<Messenger_i> const messenger_servant =
       new Messenger_i;
 
     // Write its stringified reference to a file
-    PortableServer::ObjectId_var oid = poa->activate_object (messenger_servant.in ());
+    PortableServer::ObjectId_var const oid = poa->activate_object (messenger_servant.in ());
     obj = poa->id_to_reference (oid.in ());
-    Messenger_var messenger = Messenger::_narrow (obj.in ());
-    CORBA::String_var str = orb->object_to_string (messenger.in ());
+    Messenger_var const messenger = Messenger::_narrow (obj.in ());
+    CORBA::String_var const str = orb->object_to_string (messenger.in ());
     std::ofstream fout (ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ()));
     fout << str.in() << std::endl;
     std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ())
