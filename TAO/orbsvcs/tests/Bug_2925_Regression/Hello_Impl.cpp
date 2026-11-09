@@ -1,7 +1,7 @@
 
 #include "Hello_Impl.h"
 
-Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog* logger)
+Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog &logger)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , logger_ (logger)
 {
@@ -10,10 +10,10 @@ Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog* logger)
 void
 Hello_Impl::say_hello (CORBA::Short count)
 {
-  this->logger_->register_message_recv (count);
+  this->logger_.register_message_recv (count);
 
   ACE_DEBUG ((LM_DEBUG,
-              "%02d<<; ",
+              ACE_TEXT ("%02d<<; "),
               count));
 }
 
@@ -24,7 +24,7 @@ Hello_Impl::shutdown ()
     {
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ex._tao_print_exception ("Exception caught in shutdown ():");
@@ -33,43 +33,34 @@ Hello_Impl::shutdown ()
 }
 
 MessageLog::MessageLog (int num)
-  : expected_ (num)
+  : received_ (static_cast<std::size_t> (num))
 {
-  this->rcvd_ = new int[this->expected_];
-
-  int i;
-  for (i = 0; i < this->expected_; i++)
-    {
-      this->rcvd_[i] = 0;
-    }
-}
-
-MessageLog::~MessageLog ()
-{
-  delete [] this->rcvd_;
 }
 
 void
 MessageLog::register_message_recv (int message_num)
 {
-  if (0 <= message_num && message_num < this->expected_)
+  ACE_GUARD (ACE_Mutex, guard, this->mutex_);
+  if (message_num >= 0 &&
+      static_cast<std::size_t> (message_num) < this->received_.size ())
     {
-      this->rcvd_[message_num]++;
+      ++this->received_[static_cast<std::size_t> (message_num)];
     }
 }
 
 int
 MessageLog::report_statistics ()
 {
-  int i, count = 0;
-  for (i = 0; i < this->expected_; i++)
+  ACE_GUARD_RETURN (ACE_Mutex, guard, this->mutex_, -1);
+  int count {};
+  for (std::size_t i = 0; i < this->received_.size (); ++i)
     {
-      count += this->rcvd_[i];
+      count += this->received_[i];
 
-      if (this->rcvd_[i] == 0)
+      if (this->received_[i] == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\nLOST message <<< %d >>>",
+                      ACE_TEXT ("\nLOST message <<< %B >>>"),
                       i));
         }
     }
