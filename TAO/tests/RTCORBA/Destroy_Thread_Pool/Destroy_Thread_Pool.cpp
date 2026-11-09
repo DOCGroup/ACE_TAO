@@ -3,27 +3,34 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
 
-static CORBA::ULong stacksize = 0;
-static CORBA::ULong static_threads = 1;
-static CORBA::ULong dynamic_threads = 0;
-static RTCORBA::Priority default_thread_priority;
-static CORBA::Boolean allow_request_buffering = 0;
-static CORBA::Boolean allow_borrowing = 0;
-static CORBA::ULong max_buffered_requests = 0;
-static CORBA::ULong max_request_buffer_size = 0;
-static int iterations = 5;
+struct Test_Options
+{
+  int iterations {5};
+};
+
+struct Threadpool_Options
+{
+  CORBA::ULong stacksize {};
+  CORBA::ULong static_threads {1};
+  CORBA::ULong dynamic_threads {};
+  RTCORBA::Priority default_thread_priority {};
+  CORBA::Boolean allow_request_buffering {};
+  CORBA::Boolean allow_borrowing {};
+  CORBA::ULong max_buffered_requests {};
+  CORBA::ULong max_request_buffer_size {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Test_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -40,93 +47,81 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 RTCORBA::ThreadpoolId
-create_threadpool (RTCORBA::RTORB_ptr rt_orb)
+create_threadpool (RTCORBA::RTORB_ptr rt_orb,
+                   Threadpool_Options const &options)
 {
-  RTCORBA::ThreadpoolId id =
-    rt_orb->create_threadpool (stacksize,
-                               static_threads,
-                               dynamic_threads,
-                               default_thread_priority,
-                               allow_request_buffering,
-                               max_buffered_requests,
-                               max_request_buffer_size);
-
-  return id;
+  return rt_orb->create_threadpool (options.stacksize,
+                                    options.static_threads,
+                                    options.dynamic_threads,
+                                    options.default_thread_priority,
+                                    options.allow_request_buffering,
+                                    options.max_buffered_requests,
+                                    options.max_request_buffer_size);
 }
 
 RTCORBA::ThreadpoolId
-create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb)
+create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb,
+                              Threadpool_Options const &options)
 {
   RTCORBA::ThreadpoolLanes lanes (2);
   lanes.length (2);
 
-  lanes[0].lane_priority = default_thread_priority;
-  lanes[0].static_threads = static_threads;
-  lanes[0].dynamic_threads = dynamic_threads;
+  lanes[0].lane_priority = options.default_thread_priority;
+  lanes[0].static_threads = options.static_threads;
+  lanes[0].dynamic_threads = options.dynamic_threads;
 
-  lanes[1].lane_priority = default_thread_priority;
-  lanes[1].static_threads = static_threads;
-  lanes[1].dynamic_threads = dynamic_threads;
+  lanes[1].lane_priority = options.default_thread_priority;
+  lanes[1].static_threads = options.static_threads;
+  lanes[1].dynamic_threads = options.dynamic_threads;
 
-  RTCORBA::ThreadpoolId id =
-    rt_orb->create_threadpool_with_lanes (stacksize,
-                                          lanes,
-                                          allow_borrowing,
-                                          allow_request_buffering,
-                                          max_buffered_requests,
-                                          max_request_buffer_size);
-
-  return id;
+  return rt_orb->create_threadpool_with_lanes (options.stacksize,
+                                               lanes,
+                                               options.allow_borrowing,
+                                               options.allow_request_buffering,
+                                               options.max_buffered_requests,
+                                               options.max_request_buffer_size);
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc,
                          argv);
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
-      object =
-        orb->resolve_initial_references ("RTCurrent");
-
-      RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ());
-
-      default_thread_priority =
-        get_implicit_thread_CORBA_priority (orb.in ());
-
-      int result =
-        parse_args (argc, argv);
+      Test_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
-      int i = 0;
-      for (i = 0;
-           i < iterations;
-           ++i)
+      Threadpool_Options threadpool_options;
+      threadpool_options.default_thread_priority =
+        get_implicit_thread_CORBA_priority (orb.in ());
+
+      for (int i {}; i < options.iterations; ++i)
         {
           RTCORBA::ThreadpoolId id =
-            create_threadpool (rt_orb.in ());
+            create_threadpool (rt_orb.in (), threadpool_options);
 
           rt_orb->destroy_threadpool (id);
 
           id =
-            create_threadpool_with_lanes (rt_orb.in ());
+            create_threadpool_with_lanes (rt_orb.in (), threadpool_options);
 
           rt_orb->destroy_threadpool (id);
         }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
