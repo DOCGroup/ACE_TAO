@@ -1,29 +1,28 @@
-
 #include "HelloS.h"
 #include "ace/Mutex.h"
+#include <vector>
 
 class MessageLog
 {
 public:
-  MessageLog (int num, bool sprs = false);
-  ~MessageLog ();
+  MessageLog (int expected, bool suppress = false);
 
   MessageLog (MessageLog const &) = delete;
   MessageLog (MessageLog &&) = delete;
   MessageLog &operator= (MessageLog const &) = delete;
   MessageLog &operator= (MessageLog &&) = delete;
 
-  void register_message_send (int message_num);
-  void register_message_recv (int message_num);
+  void register_message_send (int const message_num);
+  void register_message_recv (int const message_num);
   int report_statistics ();
 
 private:
-  int *sent_;
-  int *rcvd_;
-  int expected_;
-  int overdoseS_;
-  int overdoseR_;
-  bool supress_;
+  std::vector<int> sent_;
+  std::vector<int> rcvd_;
+  int const expected_;
+  int overdose_sent_;
+  int overdose_received_;
+  bool const suppress_;
   ACE_Mutex mutex_;
 };
 
@@ -31,8 +30,7 @@ class Hello_Impl
   : public virtual POA_Test::Hello
 {
 public:
-  // Constructor
-  Hello_Impl (CORBA::ORB_ptr orb, MessageLog *log);
+  Hello_Impl (CORBA::ORB_ptr orb, MessageLog &log);
 
   Hello_Impl (Hello_Impl const &) = delete;
   Hello_Impl (Hello_Impl &&) = delete;
@@ -47,5 +45,5 @@ public:
 private:
   CORBA::ORB_var orb_;
 
-  MessageLog *logger_;
+  MessageLog &logger_;
 };
