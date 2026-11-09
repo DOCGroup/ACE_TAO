@@ -67,10 +67,7 @@ public:
                     signal_number),
       sequence_number_ (sequence_number)
     {}
-  // Constructor.
-
   ~My_Result () override = default;
-  // Destructor.
 
     /**
      * This is the method that will be called by the Proactor for

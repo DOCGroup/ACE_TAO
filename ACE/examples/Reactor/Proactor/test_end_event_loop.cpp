@@ -36,12 +36,10 @@
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  // Constructor.
   My_Task ()
     : time_flag_ (0)
     {}
 
-  /// Destructor.
   ~My_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
