@@ -37,14 +37,11 @@ class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
   : public ::CORBA::LocalObject
 {
 public:
-  /// Destructor
   ~TAO_Smart_Proxy_Base () override;
 
 protected:
-  /// Constructor.
   TAO_Smart_Proxy_Base () = default;
 
-  /// Constructor.
   explicit TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
 
   /// The proxy to which remote/collocated calls are made.
