@@ -5,8 +5,8 @@
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include <memory>
 #include <string>
+#include <vector>
 
 struct Client_Options
 {
@@ -42,7 +42,7 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
            char const *domain_id,
            CORBA::ULongLong group_id,
            CORBA::ULong group_version,
-           Test::Hello_var const *refs,
+           std::vector<Test::Hello_var> const &refs,
            CORBA::ULong number_of_servers)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
@@ -60,8 +60,8 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Property values
 
   // Major and Minor revision numbers
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
   // Domain id
   ft_tag_component.group_domain_id = domain_id;
@@ -104,18 +104,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Get a ref to the IORManipulation object
       CORBA::Object_var const iorm_object =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0);
+                                         nullptr);
 
       // Narrow
       TAO_IOP::TAO_IOR_Manipulation_var const iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
-      Test::Hello_var *servers {};
-      ACE_NEW_RETURN (servers,
-                      Test::Hello_var [options.number_of_servers],
-                      -1);
-      // ACE_NEW_RETURN needs a raw pointer; unique_ptr owns the allocated array.
-      std::unique_ptr<Test::Hello_var[]> owner (servers);
+      std::vector<Test::Hello_var> servers (options.number_of_servers);
 
       for (CORBA::ULong i {}; i < options.number_of_servers; ++i)
         {

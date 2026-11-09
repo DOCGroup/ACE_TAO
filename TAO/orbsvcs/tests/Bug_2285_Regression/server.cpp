@@ -168,7 +168,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var const iorm_object =
-        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
       // Narrow
       TAO_IOP::TAO_IOR_Manipulation_var const iorm =
