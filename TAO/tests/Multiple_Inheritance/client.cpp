@@ -90,8 +90,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                options.ior_input_file),
                               -1);
           ACE_Read_Buffer ior_buffer (input_file);
-          char *data = ior_buffer.read ();
-          if (data == 0)
+          char * const data = ior_buffer.read ();
+          if (data == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to read ior\n"),
                               -1);
@@ -144,7 +144,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       string = d->method4 ();
       ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
       return 1;

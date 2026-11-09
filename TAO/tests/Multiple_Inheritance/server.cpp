@@ -9,19 +9,11 @@ struct Server_Options
   ACE_TCHAR const *ior_output_file {};
 };
 
-Multiple_Inheritance_i::Multiple_Inheritance_i ()
-{
-  // Sun/CC 5.0 crashes if there is no explicit default
-  // constructor
-  // Default constructor, do nothin..
-}
-
-int
+static int
 parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;
-
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -81,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb_manager.run ();
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;

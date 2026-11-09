@@ -3,7 +3,12 @@
 class Multiple_Inheritance_i : public POA_D
 {
 public:
-  Multiple_Inheritance_i ();
+  Multiple_Inheritance_i () = default;
+
+  Multiple_Inheritance_i (Multiple_Inheritance_i const &) = delete;
+  Multiple_Inheritance_i (Multiple_Inheritance_i &&) = delete;
+  Multiple_Inheritance_i &operator= (Multiple_Inheritance_i const &) = delete;
+  Multiple_Inheritance_i &operator= (Multiple_Inheritance_i &&) = delete;
 
   char* method1 () override
     {
