@@ -34,8 +34,6 @@ static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
 // Keep its base reference until all queued messages have been released.
 ACE_Data_Block *data_block {};
 
-/*******************************************************************/
-// Constructor for Synchronisers
 Synchronisers::Synchronisers ()
   : mutex_ (),
     event_ ()
