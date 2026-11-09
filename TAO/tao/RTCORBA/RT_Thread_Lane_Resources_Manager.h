@@ -41,10 +41,8 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager :
   public TAO_Thread_Lane_Resources_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_RT_Thread_Lane_Resources_Manager () override;
 
   /// Finalize resources.

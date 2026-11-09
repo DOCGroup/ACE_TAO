@@ -34,10 +34,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
-  /// Constructor
   TAO_RT_Protocols_Hooks () = default;
 
-  /// Destructor
   ~TAO_RT_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.

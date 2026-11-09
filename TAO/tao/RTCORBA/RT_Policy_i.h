@@ -47,7 +47,6 @@ class TAO_RTCORBA_Export TAO_PriorityModelPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_PriorityModelPolicy (RTCORBA::PriorityModel priority_model,
                            RTCORBA::Priority server_priority);
 
@@ -118,7 +117,6 @@ class TAO_RTCORBA_Export TAO_ThreadpoolPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
 
   /// Copy constructor.
@@ -168,7 +166,6 @@ class TAO_RTCORBA_Export TAO_PrivateConnectionPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_PrivateConnectionPolicy () = default;
 
   /// Copy constructor.
@@ -214,7 +211,6 @@ class TAO_RTCORBA_Export TAO_PriorityBandedConnectionPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands);
 
   /// Copy constructor.
@@ -281,7 +277,6 @@ class TAO_RTCORBA_Export TAO_ServerProtocolPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
   /// Copy constructor.
@@ -337,7 +332,6 @@ class TAO_RTCORBA_Export TAO_ClientProtocolPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
   /// Copy constructor.
@@ -405,7 +399,6 @@ class TAO_RTCORBA_Export TAO_TCP_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_TCP_Protocol_Properties (CORBA::Long send_buffer_size,
                                CORBA::Long recv_buffer_size,
                                CORBA::Boolean keep_alive,
@@ -474,7 +467,6 @@ class TAO_RTCORBA_Export TAO_UnixDomain_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
                                       CORBA::Long recv_buffer_size);
 
@@ -531,7 +523,6 @@ class TAO_RTCORBA_Export TAO_SharedMemory_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_SharedMemory_Protocol_Properties (CORBA::Long send_buffer_size,
                                         CORBA::Long recv_buffer_size,
                                         CORBA::Boolean keep_alive,
@@ -626,7 +617,6 @@ class TAO_RTCORBA_Export TAO_UserDatagram_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_UserDatagram_Protocol_Properties (CORBA::Long send_buffer_size,
                                         CORBA::Long recv_buffer_size,
                                         CORBA::Boolean enable_network_priority);
@@ -676,7 +666,6 @@ class TAO_RTCORBA_Export TAO_StreamControl_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_StreamControl_Protocol_Properties (CORBA::Long send_buffer_size,
                                          CORBA::Long recv_buffer_size,
                                          CORBA::Boolean keep_alive,

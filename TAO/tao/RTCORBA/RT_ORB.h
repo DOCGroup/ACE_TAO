@@ -47,10 +47,8 @@ class TAO_Thread_Pool_Manager;
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
 public:
-  /// Constructor.
   TAO_Named_RT_Mutex_Manager () = default;
 
-  /// Destructor.
   ~TAO_Named_RT_Mutex_Manager ();
 
   RTCORBA::Mutex_ptr create_mutex ();
@@ -90,7 +88,6 @@ class TAO_RTCORBA_Export TAO_RT_ORB
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_RT_ORB (TAO_ORB_Core *orb_core,
               TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
               ACE_Time_Value const &dynamic_thread_time);

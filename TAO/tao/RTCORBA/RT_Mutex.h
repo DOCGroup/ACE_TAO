@@ -67,7 +67,6 @@ public:
   /// Returns the name of the mutex.
   virtual char const *name () const;
 
-  /// Destructor.
   ~TAO_RT_Mutex () override;
 
 protected:
@@ -84,7 +83,6 @@ protected:
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
-  /// Constructor.
   explicit TAO_Named_RT_Mutex (char const *name);
 
   /// Returns the name of the mutex.

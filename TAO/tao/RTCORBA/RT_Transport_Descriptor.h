@@ -35,11 +35,9 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor
   : public TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Constructor
   explicit TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
                                         CORBA::Boolean flag = false);
 
-  /// Destructor
   ~TAO_RT_Transport_Descriptor () override;
 
   /// Insert Properties.

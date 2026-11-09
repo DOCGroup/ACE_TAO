@@ -46,7 +46,6 @@ class TAO_RTCORBA_Export TAO_RT_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-  /// Constructor.
   explicit TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
 
   /// Leader/Follower class uses this method to notify the system that
@@ -69,7 +68,6 @@ private:
 class TAO_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   explicit TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
@@ -107,7 +105,6 @@ private:
 class TAO_Dynamic_Thread_Pool_Threads : public TAO_Thread_Pool_Threads
 {
 public:
-  /// Constructor.
   explicit TAO_Dynamic_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
 protected:
@@ -136,7 +133,6 @@ class TAO_Thread_Pool;
 class TAO_RTCORBA_Export TAO_Thread_Lane
 {
 public:
-  /// Constructor.
   TAO_Thread_Lane (TAO_Thread_Pool &pool,
                    CORBA::ULong id,
                    CORBA::Short lane_priority,
@@ -145,7 +141,6 @@ public:
                    TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                    ACE_Time_Value const &dynamic_thread_time);
 
-  /// Destructor.
   ~TAO_Thread_Lane ();
 
   /// Open the lane.
@@ -292,7 +287,6 @@ public:
                    TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                    ACE_Time_Value const &dynamic_thread_time);
 
-  /// Destructor.
   ~TAO_Thread_Pool ();
 
   /// Open the pool.
@@ -364,10 +358,8 @@ class TAO_ORB_Core;
 class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_Thread_Pool_Manager ();
 
   /// Finalize the resources.
