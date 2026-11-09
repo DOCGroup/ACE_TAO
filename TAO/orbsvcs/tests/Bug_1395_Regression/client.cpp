@@ -1,23 +1,26 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int shutdown_server = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://test.ior")};
+  bool shutdown_server {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 's':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
       case '?':
       default:
@@ -33,46 +36,47 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior);
 
-      Test_var server =
-        Test::_narrow(tmp.in ());
+      Test_var const server =
+        Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Server reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
-      if (shutdown_server)
+      if (options.shutdown_server)
       {
-        server->shutdown();
+        server->shutdown ();
       }
       else
       {
-        result = server->try_and_create_POA();
+        result = server->try_and_create_POA ();
       }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      result =1;
+      result = 1;
     }
 
   return result;

@@ -10,7 +10,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 {
   try
     {
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb_->resolve_initial_references ("RootPOA");
       this->root_poa_ =
         PortableServer::POA::_narrow (obj.in ());
@@ -33,12 +33,12 @@ Test_i::~Test_i ()
   this->policies_[0]->destroy ();
 }
 
-int
+CORBA::Long
 Test_i::try_and_create_POA ()
 {
   try
     {
-      PortableServer::POA_var persistent_poa =
+      PortableServer::POA_var const persistent_poa =
         root_poa_->create_POA ("MyPoa",
                                poa_mgr_.in (),
                                this->policies_);
@@ -64,5 +64,5 @@ Test_i::try_and_create_POA ()
 void
 Test_i::shutdown ()
 {
-   orb_->shutdown (false);
+  orb_->shutdown (false);
 }
