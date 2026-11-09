@@ -32,7 +32,6 @@ public:
   /// Initialization and termination methods.
   ACEXML_URL_Addr ();
 
-  /// Constructor.
   ACEXML_URL_Addr (const ACEXML_Char *host_name,
                    const ACEXML_Char *path_name,
                    unsigned short port = ACE_DEFAULT_HTTP_PORT);
@@ -93,7 +92,6 @@ public:
   /// Assignment operator.
   void operator= (const ACEXML_URL_Addr &addr);
 
-  /// Destructor.
   ~ACEXML_URL_Addr ();
 
   /**

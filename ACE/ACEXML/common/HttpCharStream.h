@@ -39,7 +39,6 @@ public:
   ACEXML_HttpCharStream& operator= (ACEXML_HttpCharStream const&) = delete;
   ACEXML_HttpCharStream& operator= (ACEXML_HttpCharStream&&) = delete;
 
-  /// Destructor
   ~ACEXML_HttpCharStream () override;
 
   /// Open an URL.

@@ -57,7 +57,6 @@ public:
                     ACEXML_Char const *type,
                     ACEXML_Char const *value);
 
-  /// Destructor.
   ~ACEXML_Attribute () = default;
 
   /// Set all members.

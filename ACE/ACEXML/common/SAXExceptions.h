@@ -42,7 +42,6 @@ public:
   /// Copy constructor.
   ACEXML_SAXException (const ACEXML_SAXException &ex);
 
-  /// Destructor.
   virtual ~ACEXML_SAXException ();
 
   /// Throw the exception.
@@ -91,7 +90,6 @@ public:
   /// Constructor which accepts an informational message
   explicit ACEXML_SAXNotSupportedException (const ACEXML_Char* msg);
 
-  /// Destructor.
   virtual ~ACEXML_SAXNotSupportedException ();
 
   /// Throw the exception.
@@ -133,7 +131,6 @@ public:
   /// Assignment operator.
   ACEXML_SAXNotRecognizedException& operator= (const ACEXML_SAXNotRecognizedException &ex);
 
-  /// Destructor.
   virtual ~ACEXML_SAXNotRecognizedException ();
 
   /// Throw the exception.
@@ -175,7 +172,6 @@ public:
   /// Assignment operator.
   ACEXML_SAXParseException& operator= (const ACEXML_SAXParseException &ex);
 
-  /// Destructor.
   virtual ~ACEXML_SAXParseException ();
 
   /// Throw the exception.

@@ -63,7 +63,6 @@ public:
   /// Default constructor.
   ACEXML_Namespace_Context_Stack ();
 
-  /// Destructor.
   ~ACEXML_Namespace_Context_Stack ();
 
   /// Push the old namespace before entering into a new namespace scope.

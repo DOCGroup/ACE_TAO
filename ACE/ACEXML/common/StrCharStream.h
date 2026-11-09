@@ -38,7 +38,6 @@ public:
   ACEXML_StrCharStream& operator= (ACEXML_StrCharStream const&) = delete;
   ACEXML_StrCharStream& operator= (ACEXML_StrCharStream&&) = delete;
 
-  /// Destructor
   ~ACEXML_StrCharStream () override;
 
   /// Initializing StrCharStream with @a str and @a name

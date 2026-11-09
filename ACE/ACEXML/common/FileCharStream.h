@@ -38,7 +38,6 @@ public:
   ACEXML_FileCharStream& operator= (ACEXML_FileCharStream const&) = delete;
   ACEXML_FileCharStream& operator= (ACEXML_FileCharStream&&) = delete;
 
-  /// Destructor
   virtual ~ACEXML_FileCharStream ();
 
   /// Open a file.

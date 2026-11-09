@@ -59,7 +59,6 @@ public:
   virtual int open (Connector *connector,
                     const ACE_INET_Addr &);
 
-  /// Destructor.
   virtual ~ACEXML_Mem_Map_Stream ();
 
   /// Returns the underlying <ACE_SOCK_Stream>.

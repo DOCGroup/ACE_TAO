@@ -40,7 +40,6 @@ public:
   /// Default constructor.
   ACEXML_ZipCharStream ();
 
-  /// Destructor
   virtual ~ACEXML_ZipCharStream ();
 
   /// Open a file.
