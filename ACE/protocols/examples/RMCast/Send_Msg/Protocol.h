@@ -3,8 +3,10 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
-unsigned short const payload_size = 702;
-unsigned long const message_count = 80000;
+#include <cstddef>
+
+constexpr std::size_t payload_size = 702;
+constexpr std::size_t message_count = 80000;
 
 struct Message
 {
