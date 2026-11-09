@@ -3,18 +3,18 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+  CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    ORB_Task worker (orb.in ());
-    worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                      10);
+  ORB_Task worker (orb.in ());
+  worker.activate (THR_NEW_LWP | THR_JOINABLE,
+                   10);
 
-    ACE_Time_Value tv (20, 0);
-    orb->run(tv);
+  ACE_Time_Value tv (20, 0);
+  orb->run (tv);
 
-    orb->destroy ();
+  orb->destroy ();
 
-    worker.thr_mgr ()->wait ();
+  worker.thr_mgr ()->wait ();
 
-    return 0;
+  return 0;
 }
