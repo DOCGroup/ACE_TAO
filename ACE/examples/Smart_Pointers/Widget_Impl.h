@@ -24,10 +24,8 @@
 class Widget_Impl : public Widget
 {
 public:
-  /// Constructor.
   Widget_Impl ();
 
-  /// Destructor.
   ~Widget_Impl () override;
 
   Widget_Impl (Widget_Impl const &) = delete;

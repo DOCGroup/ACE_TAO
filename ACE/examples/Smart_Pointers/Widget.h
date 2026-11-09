@@ -24,7 +24,6 @@ class Widget
 public:
   Widget () = default;
 
-  /// Destructor.
   virtual ~Widget ();
 
   Widget (Widget const &) = delete;

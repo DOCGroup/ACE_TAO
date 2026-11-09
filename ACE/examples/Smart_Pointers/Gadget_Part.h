@@ -24,7 +24,6 @@ class Gadget_Part
 public:
   Gadget_Part () = default;
 
-  /// Destructor.
   virtual ~Gadget_Part ();
 
   Gadget_Part (Gadget_Part const &) = delete;

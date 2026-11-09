@@ -22,7 +22,6 @@ class Widget_Part
 public:
   Widget_Part () = default;
 
-  /// Destructor.
   virtual ~Widget_Part ();
 
   Widget_Part (Widget_Part const &) = delete;

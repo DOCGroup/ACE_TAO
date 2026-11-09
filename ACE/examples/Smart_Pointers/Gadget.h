@@ -23,7 +23,6 @@ class Gadget
 public:
   Gadget () = default;
 
-  /// Destructor.
   virtual ~Gadget ();
 
   Gadget (Gadget const &) = delete;

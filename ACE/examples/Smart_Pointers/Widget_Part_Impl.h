@@ -22,10 +22,8 @@
 class Widget_Part_Impl : public Widget_Part
 {
 public:
-  /// Constructor.
   Widget_Part_Impl (Widget *owner, char const *name, int size);
 
-  /// Destructor.
   ~Widget_Part_Impl () override;
 
   Widget_Part_Impl (Widget_Part_Impl const &) = delete;

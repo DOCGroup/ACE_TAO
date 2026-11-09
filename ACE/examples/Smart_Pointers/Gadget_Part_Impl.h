@@ -22,10 +22,8 @@
 class Gadget_Part_Impl : public Gadget_Part
 {
 public:
-  /// Constructor.
   Gadget_Part_Impl (Gadget_ptr owner, char const *name, int size);
 
-  /// Destructor.
   ~Gadget_Part_Impl () override;
 
   Gadget_Part_Impl (Gadget_Part_Impl const &) = delete;

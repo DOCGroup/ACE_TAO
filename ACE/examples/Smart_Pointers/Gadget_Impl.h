@@ -22,10 +22,8 @@
 class Gadget_Impl : public Gadget
 {
 public:
-  /// Constructor.
   Gadget_Impl ();
 
-  /// Destructor.
   ~Gadget_Impl () override;
 
   Gadget_Impl (Gadget_Impl const &) = delete;
