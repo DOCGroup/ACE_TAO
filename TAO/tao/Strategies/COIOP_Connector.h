@@ -45,10 +45,8 @@ class TAO_COIOP_Endpoint;
 class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_COIOP_Connector ();
 
-  /// Destructor.
   ~TAO_COIOP_Connector () = default;
 
   /**

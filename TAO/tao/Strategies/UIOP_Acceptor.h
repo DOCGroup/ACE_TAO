@@ -50,7 +50,6 @@ public:
   /// Create Acceptor object using addr.
   TAO_UIOP_Acceptor ();
 
-  /// Destructor
   ~TAO_UIOP_Acceptor () override;
 
   using TAO_UIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;

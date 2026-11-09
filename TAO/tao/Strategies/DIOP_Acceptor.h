@@ -45,10 +45,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_DIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_DIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go

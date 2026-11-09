@@ -51,10 +51,8 @@ class TAO_SHMIOP_Endpoint;
 class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_SHMIOP_Connector ();
 
-  /// Destructor
   ~TAO_SHMIOP_Connector () override;
 
   /**

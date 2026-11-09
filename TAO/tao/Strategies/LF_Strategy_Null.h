@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_LF_Strategy_Null : public TAO_LF_Strategy
 {
 public:
-  /// Constructor
   TAO_LF_Strategy_Null () = default;
 
   //@{

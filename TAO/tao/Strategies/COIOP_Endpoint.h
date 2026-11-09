@@ -51,7 +51,6 @@ public:
   /// does not require any address resolution processing.
   explicit TAO_COIOP_Endpoint (ACE_Utils::UUID const &uuid);
 
-  /// Destructor.
   ~TAO_COIOP_Endpoint () = default;
 
   /**

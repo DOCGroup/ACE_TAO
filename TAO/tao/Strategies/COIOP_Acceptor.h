@@ -43,10 +43,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_COIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_COIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_COIOP_Acceptor ();
 
   /**

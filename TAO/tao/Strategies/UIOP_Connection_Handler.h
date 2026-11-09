@@ -47,10 +47,8 @@ class TAO_Strategies_Export TAO_UIOP_Connection_Handler
 public:
   explicit TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
-  /// Constructor.
   explicit TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_UIOP_Connection_Handler ();
 
   //@{

@@ -51,10 +51,8 @@ class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-  /// Constructor.
   TAO_OC_Endpoint_Selector_Factory ();
 
-  /// Destructor.
   ~TAO_OC_Endpoint_Selector_Factory () override;
 
   int init (int argc, ACE_TCHAR *argv[]) override;

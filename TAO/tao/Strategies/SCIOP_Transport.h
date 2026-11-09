@@ -46,12 +46,10 @@ class TAO_Acceptor;
 class TAO_Strategies_Export TAO_SCIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.

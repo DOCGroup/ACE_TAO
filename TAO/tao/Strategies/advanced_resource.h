@@ -36,10 +36,8 @@ class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
   public TAO_Default_Resource_Factory
 {
 public:
-  /// Constructor.
   TAO_Advanced_Resource_Factory ();
 
-  /// Destructor.
   ~TAO_Advanced_Resource_Factory () override;
 
   // = Service Configurator hooks.

@@ -43,11 +43,9 @@ public:
   /// Default constructor.
   TAO_UIOP_Endpoint ();
 
-  /// Constructor.
   TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Destructor.
   ~TAO_UIOP_Endpoint () = default;
 
   /**

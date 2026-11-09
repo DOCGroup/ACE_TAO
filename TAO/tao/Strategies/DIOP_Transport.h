@@ -50,7 +50,6 @@ using TAO_DIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_DIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 

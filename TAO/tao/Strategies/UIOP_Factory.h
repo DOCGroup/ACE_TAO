@@ -34,10 +34,8 @@ class TAO_Connector;
 class TAO_Strategies_Export TAO_UIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
-  /// Constructor.
   TAO_UIOP_Protocol_Factory ();
 
-  /// Destructor.
   ~TAO_UIOP_Protocol_Factory () override;
 
   // = Service Configurator hooks.

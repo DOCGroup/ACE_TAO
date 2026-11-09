@@ -44,10 +44,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_SHMIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_SHMIOP_Acceptor ();
 
   using TAO_SHMIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;

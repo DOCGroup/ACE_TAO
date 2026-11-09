@@ -48,10 +48,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_SCIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_SCIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_SCIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go

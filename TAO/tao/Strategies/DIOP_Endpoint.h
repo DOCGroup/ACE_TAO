@@ -55,7 +55,6 @@ public:
                      ACE_INET_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Constructor.
   TAO_DIOP_Endpoint (ACE_INET_Addr const &addr,
                      int use_dotted_decimal_addresses);
 
@@ -64,7 +63,6 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  /// Destructor.
   ~TAO_DIOP_Endpoint () = default;
 
   /**

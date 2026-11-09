@@ -54,7 +54,6 @@ public:
    */
   TAO_UIOP_Connector ();
 
-  /// Destructor
   ~TAO_UIOP_Connector () override;
 
   /**
