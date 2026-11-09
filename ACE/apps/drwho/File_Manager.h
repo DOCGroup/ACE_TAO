@@ -30,7 +30,6 @@
 class File_Manager
 {
 public:
-  /// Constructor.
   File_Manager ();
 
   int open_file (const char *filename);

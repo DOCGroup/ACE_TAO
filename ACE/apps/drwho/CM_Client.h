@@ -27,10 +27,8 @@
 class CM_Client : public Comm_Manager
 {
 public:
-  /// Constructor.
   CM_Client ();
 
-  /// Destructor.
   virtual ~CM_Client ();
 
   int mux (char *packet, int &packet_length) override = 0;

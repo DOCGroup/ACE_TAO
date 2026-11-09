@@ -23,7 +23,6 @@ class BS_Client : public Binary_Search
 {
 public:
   // = Initialization.
-  /// Constructor.
   BS_Client ();
 
   /**

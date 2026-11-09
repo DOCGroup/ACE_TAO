@@ -27,7 +27,6 @@ public:
   /// Initialize the values for the iterators...
   Binary_Search ();
 
-  /// Destructor.
   virtual ~Binary_Search ();
 
   /**
