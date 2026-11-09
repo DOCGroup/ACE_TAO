@@ -6,29 +6,37 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
+#include <cstdio>
+#include <memory>
+
 class Test_i : public POA_Test
 {
   // = TITLE
   //   An implementation for the Test interface in test.idl
   //
 public:
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Short priority);
+  virtual void test_method (CORBA::Short priority);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  virtual void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
+  Test_i (Test_i const &) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i &&) = delete;
+
   CORBA::ORB_var orb_;
   // The ORB
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -38,16 +46,16 @@ Test_i::test_method (CORBA::Short priority)
   // Use RTCurrent to find out the CORBA priority of the current
   // thread.
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->orb_->resolve_initial_references ("RTCurrent");
 
-  RTCORBA::Current_var current =
+  RTCORBA::Current_var const current =
     RTCORBA::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (obj.in ()))
     throw CORBA::INTERNAL ();
 
-  CORBA::Short servant_thread_priority =
+  CORBA::Short const servant_thread_priority =
     current->the_priority ();
 
   // Print out the info.
@@ -70,20 +78,23 @@ Test_i::shutdown ()
 
 //*************************************************************************
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT("test.ior")};
+};
 
 // Parse command-line arguments.
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -103,17 +114,26 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Server_Options const &options);
 
   int svc ();
 
+private:
   CORBA::ORB_var orb_;
+  Server_Options const options_;
+  Task (Task const &) = delete;
+  Task &operator= (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task &&) = delete;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Server_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -125,7 +145,7 @@ Task::svc ()
       CORBA::Object_var object =
         this->orb_->resolve_initial_references("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -133,15 +153,15 @@ Task::svc ()
                            "ERROR: Panic <RootPOA> is nil\n"),
                           -1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       object = this->orb_->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+      RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
 
       // Create POA with CLIENT_PROPAGATED PriorityModelPolicy,
@@ -152,7 +172,7 @@ Task::svc ()
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               0);
 
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
                               poa_policy_list);
@@ -171,23 +191,23 @@ Task::svc ()
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n\n", ior.in ()));
 
-      if (ior_output_file != 0)
+      if (this->options_.ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (this->options_.ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               this->options_.ior_output_file),
                               -1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Get the initial priority of the current thread.
       // Note that it is an error to access the priority via the current in a thread that it
       // where it hasn't been set following the fix for tao681.
-      CORBA::Short initial_thread_priority
-        = get_implicit_thread_CORBA_priority (this->orb_.in ());
+      CORBA::Short const initial_thread_priority =
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
       current->the_priority (initial_thread_priority);
 
       // Run ORB Event loop.
@@ -198,7 +218,7 @@ Task::svc ()
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n"));
 
       // Get the final priority of the current thread.
-      CORBA::Short final_thread_priority =
+      CORBA::Short const final_thread_priority =
         current->the_priority ();
 
       if (final_thread_priority != initial_thread_priority)
@@ -212,7 +232,7 @@ Task::svc ()
                     "Final priority of the servant thread"
                     " = its initial priority\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -232,7 +252,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // Make sure we can support multiple priorities that are required
@@ -244,11 +265,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager thread_manager;
 
       // Create task.
-      Task task (thread_manager,
-                 orb.in ());
+      Task task (thread_manager, orb.in (), options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
@@ -277,7 +297,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

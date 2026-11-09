@@ -23,10 +23,10 @@ class Client_Request_Interceptor
   /// Client-side interceptor.  Verifies presence of RTCORBA priority
   /// context in the reply messages.
 public:
-  Client_Request_Interceptor (const char *orb_id);
+  explicit Client_Request_Interceptor (char const *orb_id);
   // ctor.
 
-  virtual ~Client_Request_Interceptor ();
+  virtual ~Client_Request_Interceptor () = default;
   // dtor.
 
   virtual char * name ();
@@ -45,7 +45,12 @@ public:
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
 private:
-  const char *myname_;
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
+
+  char const * const myname_;
 
   CORBA::String_var orb_id_;
   // The ID of the ORB where this interceptor was created, usually
@@ -53,7 +58,6 @@ private:
 
   CORBA::ORB_var orb_;
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
