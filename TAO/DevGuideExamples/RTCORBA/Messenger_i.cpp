@@ -2,10 +2,9 @@
 #include "ace/Thread.h"
 #include <iostream>
 
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 {
-  CORBA::Object_var obj = orb->resolve_initial_references ("RTCurrent");
+  CORBA::Object_var const obj = orb->resolve_initial_references ("RTCurrent");
   rt_current_ = RTCORBA::Current::_narrow (obj.in ());
 }
 
@@ -18,7 +17,7 @@ Messenger_i::send_message (char const *user_name,
 
   ACE_hthread_t current;
   ACE_Thread::self (current);
-  int native_priority = 0;
+  int native_priority {};
 
   std::cout << "Message from:    " << user_name << std::endl
             << "Subject:         " << subject   << std::endl
