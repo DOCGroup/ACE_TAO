@@ -28,10 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Messaging_Export TAO_Messaging_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_Messaging_Loader () = default;
 
-  /// Destructor.
   ~TAO_Messaging_Loader () override;
 
   /// Initialize the Messaging loader hooks.

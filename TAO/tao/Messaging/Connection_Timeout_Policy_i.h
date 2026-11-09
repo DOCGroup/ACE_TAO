@@ -45,7 +45,6 @@ class TAO_ConnectionTimeoutPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ConnectionTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
   /// Copy constructor.

@@ -8,7 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
     const TAO_Reply_Handler_Stub &reply_handler_stub,
     Messaging::ReplyHandler_ptr reply_handler,

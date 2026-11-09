@@ -31,14 +31,12 @@ class TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
 public:
-  /// Constructor.
   TAO_Asynch_Reply_Dispatcher (
       const TAO_Reply_Handler_Stub &reply_handler_stub,
       Messaging::ReplyHandler_ptr reply_handler_ptr,
       TAO_ORB_Core *orb_core,
       ACE_Allocator *allocator);
 
-  /// Destructor.
   ~TAO_Asynch_Reply_Dispatcher () override = default;
 
   /// @name The Reply Dispatcher methods

@@ -38,7 +38,6 @@ class TAO_RelativeRoundtripTimeoutPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_RelativeRoundtripTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
   /// Copy constructor.
@@ -97,7 +96,6 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
 
   /// Copy constructor.

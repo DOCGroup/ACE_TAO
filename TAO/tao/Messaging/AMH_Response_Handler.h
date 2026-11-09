@@ -65,10 +65,8 @@ class TAO_Messaging_Export TAO_AMH_Response_Handler
   : public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   TAO_AMH_Response_Handler () = default;
 
-  /// Destructor
   /**
    * Releases the transport and in case of an error, sends the appropriate
    * exception back to the client

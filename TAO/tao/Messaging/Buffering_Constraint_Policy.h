@@ -43,7 +43,6 @@ class TAO_Buffering_Constraint_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_Buffering_Constraint_Policy (TAO::BufferingConstraint const &buffering_constraint);
 
   /// Copy constructor.
