@@ -47,7 +47,6 @@ template <class TQ>
 class Bounded_Packet_Relay_Driver
 {
 public:
-  /// Constructor.
   Bounded_Packet_Relay_Driver () = default;
 
   Bounded_Packet_Relay_Driver (Bounded_Packet_Relay_Driver const &) = delete;
@@ -55,7 +54,6 @@ public:
   Bounded_Packet_Relay_Driver &operator= (Bounded_Packet_Relay_Driver const &) = delete;
   Bounded_Packet_Relay_Driver &operator= (Bounded_Packet_Relay_Driver &&) = delete;
 
-  /// Destructor.
   virtual ~Bounded_Packet_Relay_Driver () = default;
 
   /// Breaks up the input string buffer into pieces and executes the

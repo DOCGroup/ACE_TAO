@@ -74,12 +74,10 @@ public:
   /// Command entry point type definition.
   using ACTION = int (Bounded_Packet_Relay::*) (void *);
 
-  /// Constructor.
   Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                         Input_Device_Wrapper_Base *input_wrapper,
                         Output_Device_Wrapper_Base *output_wrapper);
 
-  /// Destructor.
   ~Bounded_Packet_Relay ();
 
   /// Requests output be sent to output device.
@@ -190,7 +188,6 @@ private:
 class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   explicit Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
 
   Input_Device_Wrapper_Base (Input_Device_Wrapper_Base const &) = delete;
@@ -198,7 +195,6 @@ public:
   Input_Device_Wrapper_Base &operator= (Input_Device_Wrapper_Base const &) = delete;
   Input_Device_Wrapper_Base &operator= (Input_Device_Wrapper_Base &&) = delete;
 
-  /// Destructor.
   ~Input_Device_Wrapper_Base () override;
 
   /// Sets a borrowed command in the input device driver object.

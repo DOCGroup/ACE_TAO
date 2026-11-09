@@ -65,7 +65,6 @@ public:
   enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_CREATED = 1};
 
-  /// Constructor.
   Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                              std::string const &text,
                              int logging = 0);
@@ -75,7 +74,6 @@ public:
   Text_Input_Device_Wrapper &operator= (Text_Input_Device_Wrapper const &) = delete;
   Text_Input_Device_Wrapper &operator= (Text_Input_Device_Wrapper &&) = delete;
 
-  /// Destructor.
   ~Text_Input_Device_Wrapper () override = default;
 
   /**
@@ -164,7 +162,6 @@ public:
 
   using ACTION = int (User_Input_Task::*) (void *);
 
-  /// Constructor.
   User_Input_Task (Bounded_Packet_Relay *relay,
                    Thread_Timer_Queue *queue,
                    Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
@@ -174,7 +171,6 @@ public:
   User_Input_Task &operator= (User_Input_Task const &) = delete;
   User_Input_Task &operator= (User_Input_Task &&) = delete;
 
-  /// Destructor.
   ~User_Input_Task () override;
 
   /// This method runs the event loop in the new thread.
@@ -249,7 +245,6 @@ public:
   using ACTION = int (BPR_Handler_Base::*) (void *);
 
 
-  /// Constructor.
   BPR_Handler_Base (Bounded_Packet_Relay &relay,
                     Thread_Timer_Queue &queue);
 
@@ -258,7 +253,6 @@ public:
   BPR_Handler_Base &operator= (BPR_Handler_Base const &) = delete;
   BPR_Handler_Base &operator= (BPR_Handler_Base &&) = delete;
 
-  /// Destructor.
   ~BPR_Handler_Base () override = default;
 
   // = Command accessible entry points.
@@ -297,7 +291,6 @@ public:
 
   using ACTION = int (Send_Handler::*) (void *);
 
-  /// Constructor.
   Send_Handler (u_long send_count,
                 ACE_Time_Value const &duration,
                 Bounded_Packet_Relay &relay,
@@ -309,7 +302,6 @@ public:
   Send_Handler &operator= (Send_Handler const &) = delete;
   Send_Handler &operator= (Send_Handler &&) = delete;
 
-  /// Destructor.
   ~Send_Handler () override = default;
 
   /// Call back hook.
@@ -349,7 +341,6 @@ private:
 class Termination_Handler : public BPR_Handler_Base
 {
 public:
-  /// Constructor.
   Termination_Handler (Bounded_Packet_Relay &relay,
                        Thread_Timer_Queue &queue,
                        Thread_Bounded_Packet_Relay_Driver &driver);
@@ -359,7 +350,6 @@ public:
   Termination_Handler &operator= (Termination_Handler const &) = delete;
   Termination_Handler &operator= (Termination_Handler &&) = delete;
 
-  /// Destructor.
   ~Termination_Handler () override = default;
 
   /// Call back hook.
@@ -391,7 +381,6 @@ public:
   // = Trait for commands issued from this driver
   using MYCOMMAND = ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION>;
 
-  /// Constructor.
   explicit Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
 
   Thread_Bounded_Packet_Relay_Driver (Thread_Bounded_Packet_Relay_Driver const &) = delete;
@@ -399,7 +388,6 @@ public:
   Thread_Bounded_Packet_Relay_Driver &operator= (Thread_Bounded_Packet_Relay_Driver const &) = delete;
   Thread_Bounded_Packet_Relay_Driver &operator= (Thread_Bounded_Packet_Relay_Driver &&) = delete;
 
-  /// Destructor.
   ~Thread_Bounded_Packet_Relay_Driver () override = default;
 
   /// Displays the user menu.
