@@ -1,20 +1,24 @@
 #include "MessengerC.h"
 #include "ace/Get_Opt.h"
 #include <iostream>
+#include <string>
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior { ACE_TEXT ("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  int option;
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -36,11 +40,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     // Initialize the ORB.
     CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args (argc, argv) != 0)
+    Options options;
+    if (parse_args (argc, argv, options) != 0)
       return 1;
 
     // Read and destringify the Messenger object's IOR.
-    CORBA::Object_var const obj = orb->string_to_object (ior);
+    CORBA::Object_var const obj = orb->string_to_object (options.ior.c_str ());
     if (CORBA::is_nil (obj.in ())) {
       std::cerr << "Could not get Messenger IOR." << std::endl;
       return 1;

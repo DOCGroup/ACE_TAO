@@ -2,22 +2,26 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 // 1. Define a "task" class for implenting the thread pool threads.
 #include "ace/Task.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior_output_file { ACE_TEXT ("test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  int option;
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -71,7 +75,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POAManager_var const mgr = poa->the_POAManager ();
     mgr->activate();
 
-    if (parse_args (argc, argv) != 0)
+    Options options;
+    if (parse_args (argc, argv, options) != 0)
       return 1;
 
     // Create a servant.
@@ -83,10 +88,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa->activate_object (messenger_servant.in ());
     CORBA::Object_var const messenger_obj = poa->id_to_reference (oid.in ());
     CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
-    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+    std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));
     ior_file << str.in () << std::endl;
     std::cout << "IOR written to file " <<
-      ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
+      ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()) << std::endl;
 
     // 3. Create and activate threads for the thread pool.
     ORB_Task task (orb.in());

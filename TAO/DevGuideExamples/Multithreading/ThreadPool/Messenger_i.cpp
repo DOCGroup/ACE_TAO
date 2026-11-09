@@ -13,11 +13,6 @@
 
 #include <sstream>
 
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-{
-}
-
 CORBA::Boolean Messenger_i::send_message (
     char const * /*user_name*/,
     char const * /*subject*/,
