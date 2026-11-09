@@ -6,19 +6,22 @@
 #include "tao/Policy_ManagerC.h"
 #include "tao/Policy_CurrentC.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -34,15 +37,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ERROR: Object reference <%C> is nil\n",
                        msg),
                       -1);
-  else
-    return 0;
+
+  return 0;
 }
 
 int
@@ -50,34 +53,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Client_Options options;
+
       // Initialize the ORB, parse arguments, and resolve references.
 
       // ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+      RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return -1;
 
       // Test object.
-      object = orb->string_to_object (ior);
-      Test_var server = Test::_narrow (object.in ());
+      object = orb->string_to_object (options.ior);
+      Test_var const server = Test::_narrow (object.in ());
       if (check_for_nil (server.in (), "server") == -1)
         return -1;
 
@@ -107,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n     Test 1\n"));
 
       CORBA::PolicyList_var pols;
-      int status = server->_validate_connection (pols.out ());
+      CORBA::Boolean status = server->_validate_connection (pols.out ());
 
       if (!status)
         ACE_DEBUG ((LM_DEBUG,
@@ -175,7 +180,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_OS::sleep (2);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in Explicit_Binding test client:");
