@@ -151,8 +151,6 @@ Custom_Handler_Input_Task::dump ()
               "end dumping timer queue\n"));
 }
 
-// constructor
-
 Thread_Timer_Queue_Custom_Handler_Test::Thread_Timer_Queue_Custom_Handler_Test ()
   : input_task_ (&timer_queue_, *this)
 {

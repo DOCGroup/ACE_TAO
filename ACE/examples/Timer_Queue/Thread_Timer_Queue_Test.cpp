@@ -199,8 +199,6 @@ Input_Task::dump ()
               "end dumping timer queue\n"));
 }
 
-// constructor
-
 Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver ()
   : input_task_ (&timer_queue_, *this)
 {

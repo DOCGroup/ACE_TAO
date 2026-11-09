@@ -19,7 +19,6 @@
 #include "Driver.h"
 #include <cstdio>
 
-// constructor
 template <class RECEIVER, class ACTION>
 Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
                                     ACTION action)
