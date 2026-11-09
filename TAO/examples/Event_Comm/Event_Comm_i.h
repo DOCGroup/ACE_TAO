@@ -111,7 +111,7 @@ public:
 
   /// Unsubscribe the @a Consumer.
   void unsubscribe (Event_Comm::Consumer *consumer,
-                    char const *filtering_criteria);
+                    char const *filtering_criteria) override;
 
 private:
   using MAP_MANAGER = ACE_Map_Manager <Event_Comm::Consumer_ptr,
