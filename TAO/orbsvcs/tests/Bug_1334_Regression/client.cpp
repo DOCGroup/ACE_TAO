@@ -10,25 +10,23 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       try
         {
-           CORBA::Object_var naming =
-              orb->resolve_initial_references ("NameService");
-           if (CORBA::is_nil (naming.in ()))
-             {
-                return 1;
-             }
+          CORBA::Object_var const naming =
+            orb->resolve_initial_references ("NameService");
+          if (CORBA::is_nil (naming.in ()))
+            return 1;
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           return 1;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
-       return 2;
+      return 2;
     }
 
   return 0;
