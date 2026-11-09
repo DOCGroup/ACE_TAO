@@ -61,7 +61,6 @@ public:
   /// constructor from raw form
   Oid(const unsigned long *raw_oid, size_t oid_len);
 
-  /// destructor
   ~Oid();
 
   /// syntax type

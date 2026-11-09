@@ -48,7 +48,6 @@ public:
   OctetStr (OctetStr const &octet);
   OctetStr (OctetStr &&) = delete;
 
-  /// destructor
   ~OctetStr ();
 
   OctetStr &operator= (OctetStr &&) = delete;

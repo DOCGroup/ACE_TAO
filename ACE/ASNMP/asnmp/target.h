@@ -196,7 +196,6 @@ public:
   /// can be constructed with Udp address object TODO: merge addresses
   explicit UdpTarget (ACE_INET_Addr &ace_inet_addr);
 
-  /// destructor
   ~UdpTarget () override;
 
   // ** set ***

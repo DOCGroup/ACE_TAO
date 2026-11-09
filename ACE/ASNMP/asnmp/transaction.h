@@ -38,8 +38,6 @@ class ASNMP_Export transaction : public ACE_Event_Handler
   transaction_result *result_ {}; // borrowed callback
 
 public:
-  /// constructor
-  /// destructor
   transaction (Pdu const &pdu, UdpTarget const &target, ACE_SOCK_Dgram &io);
   explicit transaction (ACE_SOCK_Dgram &io);
   transaction (transaction const &) = delete;

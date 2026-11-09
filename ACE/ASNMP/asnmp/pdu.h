@@ -59,7 +59,6 @@ public:
   Pdu (Pdu &&) = delete;
   Pdu &operator= (Pdu &&) = delete;
 
-  /// destructor
   ~Pdu();
 
   /// assignment to another Pdu object overloaded

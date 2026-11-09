@@ -357,7 +357,6 @@ public:
   /// default port # to zero
   UdpAddress( const IpAddress &ipaddr);
 
-  /// destructor
   ~UdpAddress() override;
 
   /// syntax type
@@ -422,7 +421,6 @@ public:
   /// construct a MacAddress with a GenAddress
   MacAddress( const GenAddress &genaddr);
 
-  /// destructor
   ~MacAddress() override;
 
   /// syntax type
@@ -655,7 +653,6 @@ public:
   /// construct with a GenAddress
   IpxAddress( const GenAddress &genaddr);
 
-  /// destructor
   ~IpxAddress() override;
 
   /// syntax type
@@ -725,7 +722,6 @@ public:
   /// default socket # is 0
   IpxSockAddress( const IpxAddress &ipxaddr);
 
-  /// destructor
   ~IpxSockAddress() override;
 
   /// syntax type
@@ -789,7 +785,6 @@ public:
   GenAddress (GenAddress const &addr);
   GenAddress (GenAddress &&) = delete;
 
-  /// destructor
   ~GenAddress() override;
 
   /// get the snmp syntax of the contained address

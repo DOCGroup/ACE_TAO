@@ -50,7 +50,6 @@ public:
   TimeTicks (TimeTicks const &t);
   TimeTicks (TimeTicks &&) = delete;
 
-  /// destructor
   ~TimeTicks () override = default;
 
   TimeTicks &operator= (TimeTicks &&) = delete;
