@@ -4,9 +4,22 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Malloc_Base.h"
 #include "ace/os_include/os_netdb.h"
+
+#include <memory>
+
+struct Read_Buffer_Deleter
+{
+  ACE_Allocator *allocator {};
+
+  void operator() (char *buffer) const
+  {
+    if (buffer != nullptr)
+      this->allocator->free (buffer);
+  }
+};
 
 // The following test throws an exception that the operation
 // <secure_universal_time> has not been currently implemented in the
@@ -27,7 +40,7 @@ Client_i::test_for_secure_universal_time ()
       sysex._tao_print_exception ("System Exception");
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) test_for_secure_universal_time() successful !!\n"));
-        }
+    }
 }
 
 // The following test retrieves the current universal time as a UTO
@@ -106,12 +119,10 @@ Client_i::test_for_uto_from_utc ()
     {
       CosTime::UTO_var const uto_server = this->clerk_->uto_from_utc (utc_struct);
 
-      TimeBase::InaccuracyT const inaccuracy =
-        (static_cast<TimeBase::InaccuracyT> (utc_struct.inacchi) << 32)
-        | utc_struct.inacclo;
-
       ACE_ASSERT (uto_server->time () == 999999999);
-      ACE_ASSERT (uto_server->inaccuracy () == inaccuracy);
+      ACE_ASSERT (uto_server->inaccuracy () ==
+                  ((static_cast<TimeBase::InaccuracyT> (utc_struct.inacchi) << 32)
+                   | utc_struct.inacclo));
       ACE_ASSERT (uto_server->tdf () == 99);
       ACE_ASSERT ((uto_server->utc_time ()).time == 999999999);
       ACE_ASSERT ((uto_server->utc_time ()).inacclo == 50);
@@ -165,21 +176,16 @@ Client_i::read_ior (ACE_TCHAR const *filename)
                        filename),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-  char * const data = ior_buffer.read ();
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  std::unique_ptr<char, Read_Buffer_Deleter> const data (
+    ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
 
-  if (data == nullptr)
-    {
-      ACE_OS::close (f_handle);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
-                        -1);
-    }
+  if (!data)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
+                      -1);
 
-  this->ior_ = data;
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = data.get ();
 
   return 0;
 }
@@ -190,7 +196,7 @@ int
 Client_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dn:f:xk:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -240,12 +246,10 @@ Client_i::run ()
   // Asserts the validity of the UTO created from a given UTC.
   test_for_uto_from_utc ();
 
-  // Asserts the validity of the TIO created using the given
-  // bounds.
+  // Asserts the validity of the TIO created using the given bounds.
   test_for_new_interval ();
 
-  // Throws an exception because the method has not been
-  // implemented currently.
+  // Throws an exception because the method has not been implemented.
   test_for_secure_universal_time ();
 
   return 0;
@@ -280,7 +284,7 @@ Client_i::obtain_initial_references ()
                   "%C|\n",
                   name.c_str ()));
 
-      CORBA::Object_var temp_object =
+      CORBA::Object_var const temp_object =
         my_name_client_->resolve (clerk_name);
 
       clerk_ = CosTime::TimeService::_narrow (temp_object.in ());
@@ -321,7 +325,7 @@ Client_i::init (int argc, ACE_TCHAR **argv)
           // An ior is specified for the client through a commandline
           // option or a file.
 
-          CORBA::Object_var server_object =
+          CORBA::Object_var const server_object =
             this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))

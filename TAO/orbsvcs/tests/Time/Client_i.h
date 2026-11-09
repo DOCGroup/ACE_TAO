@@ -76,7 +76,7 @@ private:
   int obtain_initial_references ();
 
   /// IOR of the obj ref of the server.
-  std::string ior_;
+  std::string ior_ {};
 
   /// Number of times to invoke the <time> operation.
   u_int loop_count_ {10};
@@ -85,12 +85,12 @@ private:
   bool shutdown_ {};
 
   /// Time Service Server object ptr.
-  CosTime::TimeService_var clerk_;
+  CosTime::TimeService_var clerk_ {};
 
   /// An instance of the name client used for resolving the Time
   /// Service object.
   TAO_Naming_Client my_name_client_;
 
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
