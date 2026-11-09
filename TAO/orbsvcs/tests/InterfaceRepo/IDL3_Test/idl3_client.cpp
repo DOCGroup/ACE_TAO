@@ -2,30 +2,28 @@
 #include "idl3_client.h"
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 // All the magic quantities are here at the top.
 
-char const* COMPONENT_ID = "IDL:mod/test_component:1.0";
-char const* COMPONENT_SCOPED_NAME = "::mod::test_component";
-char const* COMP_BASE_ID = "IDL:help/c_base:1.0";
+constexpr char const* const COMPONENT_ID = "IDL:mod/test_component:1.0";
+constexpr char const* const COMPONENT_SCOPED_NAME = "::mod::test_component";
+constexpr char const* const COMP_BASE_ID = "IDL:help/c_base:1.0";
 
-char const* VALUETYPE_ID = "IDL:mod/test_valuetype:1.0";
-char const* VALUETYPE_SCOPED_NAME = "::mod::test_valuetype";
-char const* VT_BASE_ID = "IDL:help/v_base:1.0";
+constexpr char const* const VALUETYPE_ID = "IDL:mod/test_valuetype:1.0";
+constexpr char const* const VT_BASE_ID = "IDL:help/v_base:1.0";
 
-char const* HOME_ID = "IDL:mod/test_home:1.0";
-char const* HOME_SCOPED_NAME = "::mod::test_home";
-char const* HOME_BASE_ID = "IDL:help/h_base:1.0";
-char const* HOME_KEY_ID = "IDL:help/h_key:1.0";
+constexpr char const* const HOME_ID = "IDL:mod/test_home:1.0";
+constexpr char const* const HOME_BASE_ID = "IDL:help/h_base:1.0";
+constexpr char const* const HOME_KEY_ID = "IDL:help/h_key:1.0";
 
-char const* EVENTTYPE_ID = "IDL:mod/test_eventtype:1.0";
+constexpr char const* const EVENTTYPE_ID = "IDL:mod/test_eventtype:1.0";
 
 constexpr CORBA::ULong ATTRS_LEN = 1;
 constexpr CORBA::ULong OPS_LEN = 1;
 constexpr CORBA::ULong FACTORY_LEN = 2;
 
-char const* ATTR_LOCAL_NAMES[] =
+constexpr char const* const ATTR_LOCAL_NAMES[] =
   {
     "c_attr1"
   };
@@ -45,7 +43,7 @@ constexpr CORBA::ULong PUT_EXCEP_LEN[] =
     2
   };
 
-char const* OP_NAMES[] =
+constexpr char const* const OP_NAMES[] =
   {
     "v_op"
   };
@@ -60,7 +58,7 @@ constexpr CORBA::ULong PARAMS_LEN[] =
     3
   };
 
-char const* PARAM_NAMES[] =
+constexpr char const* const PARAM_NAMES[] =
   {
     "inoutarg",
     "inarg",
@@ -74,7 +72,7 @@ constexpr CORBA::ULong OP_EXCEP_LEN[] =
 
 constexpr CORBA::ULong COMP_SUPPORTED_LEN = 2;
 
-char const* COMP_SUPPORTED_IDS[] =
+constexpr char const* const COMP_SUPPORTED_IDS[] =
   {
     "IDL:help/c_supp1:1.0",
     "IDL:help/c_supp2:1.0"
@@ -86,23 +84,23 @@ constexpr CORBA::ULong EMITS_LEN = 1;
 constexpr CORBA::ULong PUBLISHES_LEN = 1;
 constexpr CORBA::ULong CONSUMES_LEN = 1;
 
-char const* PROVIDES_NAMES[] =
+constexpr char const* const PROVIDES_NAMES[] =
   {
     "test_provides1"
   };
 
-char const* PROVIDES_TYPE_IDS[] =
+constexpr char const* const PROVIDES_TYPE_IDS[] =
   {
     "IDL:help/c_provides1:1.0"
   };
 
-char const* USES_NAMES[] =
+constexpr char const* const USES_NAMES[] =
   {
     "test_uses1",
     "test_uses2"
   };
 
-char const* USES_TYPE_IDS[] =
+constexpr char const* const USES_TYPE_IDS[] =
   {
     "IDL:help/c_uses1:1.0",
     "IDL:help/c_uses2:1.0"
@@ -114,39 +112,39 @@ constexpr CORBA::Boolean USES_MULTIPLE_FLAGS[] =
     true
   };
 
-char const* EMITS_NAMES[] =
+constexpr char const* const EMITS_NAMES[] =
   {
     "test_emits1"
   };
 
-char const* PUBLISHES_NAMES[] =
+constexpr char const* const PUBLISHES_NAMES[] =
   {
     "test_publishes1"
   };
 
-char const* CONSUMES_NAMES[] =
+constexpr char const* const CONSUMES_NAMES[] =
   {
     "test_consumes1"
   };
 
-char const* EMITS_IDS[] =
+constexpr char const* const EMITS_IDS[] =
   {
     "IDL:help/c_emits1:1.0"
   };
 
-char const* PUBLISHES_IDS[] =
+constexpr char const* const PUBLISHES_IDS[] =
   {
     "IDL:help/c_publishes1:1.0"
   };
 
-char const* CONSUMES_IDS[] =
+constexpr char const* const CONSUMES_IDS[] =
   {
     "IDL:help/c_consumes1:1.0"
   };
 
 constexpr CORBA::ULong VT_SUPPORTED_LEN = 2;
 
-char const* VT_SUPPORTED_IDS[] =
+constexpr char const* const VT_SUPPORTED_IDS[] =
   {
     "IDL:help/v_supp1:1.0",
     "IDL:help/v_supp2:1.0"
@@ -160,7 +158,7 @@ constexpr CORBA::Visibility MEM_VIS[] =
     CORBA::PRIVATE_MEMBER
   };
 
-char const* MEM_NAMES[] =
+constexpr char const* const MEM_NAMES[] =
   {
     "test_mem1",
     "test_mem2",
@@ -178,13 +176,13 @@ constexpr CORBA::ULong VT_FACTORY_EXCEP_LENS[] =
     2
   };
 
-char const* VT_FACTORY_PARAM_NAMES[][2] =
+constexpr char const* const VT_FACTORY_PARAM_NAMES[][2] =
   {
     {"set_tm1", nullptr},
     {"set_tm1a", "set_tm2"}
   };
 
-char const* VT_FACTORY_EXCEP_NAMES[][2] =
+constexpr char const* const VT_FACTORY_EXCEP_NAMES[][2] =
   {
     {nullptr, nullptr},
     {"whups", "doh"}
@@ -192,7 +190,7 @@ char const* VT_FACTORY_EXCEP_NAMES[][2] =
 
 constexpr CORBA::ULong HOME_SUPPORTED_LEN = 2;
 
-char const* HOME_SUPPORTED_IDS[] =
+constexpr char const* const HOME_SUPPORTED_IDS[] =
   {
     "IDL:help/h_supp1:1.0",
     "IDL:help/h_supp2:1.0"
@@ -206,7 +204,7 @@ constexpr CORBA::ULong HOME_FACTORY_PARAM_LENS[] =
     1
   };
 
-char const* HOME_FACTORY_PARAM_NAMES[][1] =
+constexpr char const* const HOME_FACTORY_PARAM_NAMES[][1] =
   {
     {"set_uid"}
   };
@@ -216,7 +214,7 @@ constexpr CORBA::ULong HOME_FACTORY_EXCEP_LENS[] =
     1
   };
 
-char const* HOME_FACTORY_EXCEP_NAMES[][1] =
+constexpr char const* const HOME_FACTORY_EXCEP_NAMES[][1] =
   {
     {"doh"}
   };
@@ -226,7 +224,7 @@ constexpr CORBA::ULong HOME_FINDER_PARAM_LENS[] =
     3
   };
 
-char const* HOME_FINDER_PARAM_NAMES[][3] =
+constexpr char const* const HOME_FINDER_PARAM_NAMES[][3] =
   {
     {"id_number", "id_string", "pkey"}
   };
@@ -236,19 +234,10 @@ constexpr CORBA::ULong HOME_FINDER_EXCEP_LENS[] =
     1
   };
 
-char const* HOME_FINDER_EXCEP_NAMES[][1] =
+constexpr char const* const HOME_FINDER_EXCEP_NAMES[][1] =
   {
     {"whups"}
   };
-
-IDL3_Client::IDL3_Client ()
-  : debug_ (false)
-{
-}
-
-IDL3_Client::~IDL3_Client ()
-{
-}
 
 int
 IDL3_Client::init (int argc,
@@ -256,7 +245,7 @@ IDL3_Client::init (int argc,
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->orb_->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (obj.in ()))
@@ -287,7 +276,7 @@ IDL3_Client::init (int argc,
 int
 IDL3_Client::run ()
 {
-  int status = this->component_test ();
+  int status {this->component_test ()};
 
   if (status != 0)
     {
@@ -325,7 +314,7 @@ IDL3_Client::parse_args (int argc,
                          ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("d"));
-  int c;
+  int c {};
 
   while ((c = opts ()) != -1)
     switch (c)
@@ -347,7 +336,7 @@ IDL3_Client::parse_args (int argc,
 int
 IDL3_Client::component_test ()
 {
-  CORBA::Contained_var result =
+  CORBA::Contained_var const result =
     this->repo_->lookup_id (COMPONENT_ID);
 
   if (CORBA::is_nil (result.in ()))
@@ -361,12 +350,12 @@ IDL3_Client::component_test ()
       return -1;
     }
 
-  CORBA::String_var str =
+  CORBA::String_var const str =
     result->absolute_name ();
 
-  const char *tmp = str.in ();
+  char const* tmp = str.in ();
 
-  if (tmp == 0)
+  if (tmp == nullptr)
     {
       if (this->debug_)
         {
@@ -377,7 +366,7 @@ IDL3_Client::component_test ()
       return -1;
     }
 
-  if (ACE_OS::strcmp (tmp, COMPONENT_SCOPED_NAME) != 0)
+  if (std::strcmp (tmp, COMPONENT_SCOPED_NAME) != 0)
     {
       if (this->debug_)
         {
@@ -389,10 +378,10 @@ IDL3_Client::component_test ()
       return -1;
     }
 
-  CORBA::ComponentIR::ComponentDef_var comp_def =
+  CORBA::ComponentIR::ComponentDef_var const comp_def =
     CORBA::ComponentIR::ComponentDef::_narrow (result.in ());
 
-  CORBA::TypeCode_var comp_tc =
+  CORBA::TypeCode_var const comp_tc =
     comp_def->type ();
 
   if (CORBA::is_nil (comp_tc.in ()))
@@ -409,7 +398,7 @@ IDL3_Client::component_test ()
 
   tmp = comp_tc->id ();
 
-  if (tmp == 0 || ACE_OS::strcmp (tmp, COMPONENT_ID) != 0)
+  if (tmp == nullptr || std::strcmp (tmp, COMPONENT_ID) != 0)
     {
       if (this->debug_)
         {
@@ -421,10 +410,10 @@ IDL3_Client::component_test ()
       return -1;
     }
 
-  CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var desc =
+  CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var const desc =
     comp_def->describe_ext_interface ();
 
-  if (desc.ptr () == 0)
+  if (desc.ptr () == nullptr)
     {
       if (this->debug_)
         {
@@ -463,7 +452,7 @@ IDL3_Client::component_test ()
 int
 IDL3_Client::home_test ()
 {
-  CORBA::Contained_var result =
+  CORBA::Contained_var const result =
     this->repo_->lookup_id (HOME_ID);
 
   if (CORBA::is_nil (result.in ()))
@@ -477,7 +466,7 @@ IDL3_Client::home_test ()
       return -1;
     }
 
-  CORBA::ComponentIR::HomeDef_var home =
+  CORBA::ComponentIR::HomeDef_var const home =
     CORBA::ComponentIR::HomeDef::_narrow (result.in ());
 
   if (CORBA::is_nil (result.in ()))
@@ -491,7 +480,7 @@ IDL3_Client::home_test ()
       return -1;
     }
 
-  CORBA::ComponentIR::ComponentDef_var managed =
+  CORBA::ComponentIR::ComponentDef_var const managed =
     home->managed_component ();
 
   if (CORBA::is_nil (managed.in ()))
@@ -507,7 +496,7 @@ IDL3_Client::home_test ()
 
   CORBA::String_var str = managed->id ();
 
-  if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMPONENT_ID) != 0)
+  if (str.in () == nullptr || std::strcmp (str.in (), COMPONENT_ID) != 0)
     {
       if (this->debug_)
         {
@@ -518,7 +507,7 @@ IDL3_Client::home_test ()
       return -1;
     }
 
-  CORBA::ValueDef_var pkey =
+  CORBA::ValueDef_var const pkey =
     home->primary_key ();
 
   if (CORBA::is_nil (pkey.in ()))
@@ -534,7 +523,7 @@ IDL3_Client::home_test ()
 
   str = pkey->id ();
 
-  if (str.in () == 0 || ACE_OS::strcmp (str.in (), HOME_KEY_ID) != 0)
+  if (str.in () == nullptr || std::strcmp (str.in (), HOME_KEY_ID) != 0)
     {
       if (this->debug_)
         {
@@ -552,12 +541,12 @@ IDL3_Client::home_test ()
       return -1;
     }
 
-  CORBA::Contained::Description_var desc =
+  CORBA::Contained::Description_var const desc =
     home->describe ();
 
-  const CORBA::ComponentIR::HomeDescription *home_desc = 0;
+  CORBA::ComponentIR::HomeDescription const* home_desc {};
 
-  if ((desc->value >>= home_desc) == 0)
+  if (!(desc->value >>= home_desc))
     {
       if (this->debug_)
         {
@@ -589,7 +578,7 @@ int
 IDL3_Client::valuetype_test (char const* repo_id,
                              char const* prefix)
 {
-  CORBA::Contained_var result =
+  CORBA::Contained_var const result =
     this->repo_->lookup_id (repo_id);
 
   if (CORBA::is_nil (result.in ()))
@@ -604,7 +593,7 @@ IDL3_Client::valuetype_test (char const* repo_id,
       return -1;
     }
 
-  CORBA::ExtValueDef_var evd =
+  CORBA::ExtValueDef_var const evd =
     CORBA::ExtValueDef::_narrow (result.in ());
 
   if (CORBA::is_nil (evd.in ()))
@@ -619,7 +608,7 @@ IDL3_Client::valuetype_test (char const* repo_id,
       return -1;
     }
 
-  CORBA::ExtValueDef::ExtFullValueDescription_var desc =
+  CORBA::ExtValueDef::ExtFullValueDescription_var const desc =
     evd->describe_ext_value ();
 
   int status = this->valuetype_attribute_test (desc,
@@ -666,7 +655,7 @@ IDL3_Client::valuetype_test (char const* repo_id,
 
 int
 IDL3_Client::component_attribute_test (
-    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var& desc)
+    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var const& desc)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
@@ -679,13 +668,13 @@ IDL3_Client::component_attribute_test (
       return -1;
     }
 
-  const char *tmp = 0;
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < ATTRS_LEN; ++i)
     {
       tmp = desc->attributes[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
         {
           if (this->debug_)
             {
@@ -698,7 +687,7 @@ IDL3_Client::component_attribute_test (
           return -1;
         }
 
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         desc->attributes[i].type->kind ();
 
       if (kind != ATTR_TC_KINDS[i])
@@ -748,9 +737,9 @@ IDL3_Client::component_attribute_test (
 
 int
 IDL3_Client::component_inheritance_test (
-    CORBA::ComponentIR::ComponentDef_var& comp_def)
+    CORBA::ComponentIR::ComponentDef_var const& comp_def)
 {
-  CORBA::ComponentIR::ComponentDef_var comp_base =
+  CORBA::ComponentIR::ComponentDef_var const comp_base =
     comp_def->base_component ();
 
   if (CORBA::is_nil (comp_base.in ()))
@@ -767,7 +756,7 @@ IDL3_Client::component_inheritance_test (
 
   CORBA::String_var str = comp_base->id ();
 
-  if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMP_BASE_ID) != 0)
+  if (str.in () == nullptr || std::strcmp (str.in (), COMP_BASE_ID) != 0)
     {
       if (this->debug_)
         {
@@ -782,7 +771,7 @@ IDL3_Client::component_inheritance_test (
   CORBA::InterfaceDefSeq_var supported =
     comp_base->supported_interfaces ();
 
-  CORBA::ULong length = supported->length ();
+  CORBA::ULong const length = supported->length ();
 
   if (length != COMP_SUPPORTED_LEN)
     {
@@ -800,8 +789,8 @@ IDL3_Client::component_inheritance_test (
     {
       str = supported[i]->id ();
 
-      if (str.in () == 0
-          || ACE_OS::strcmp (str.in (), COMP_SUPPORTED_IDS[i]) != 0)
+      if (str.in () == nullptr
+          || std::strcmp (str.in (), COMP_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
             {
@@ -820,14 +809,14 @@ IDL3_Client::component_inheritance_test (
 
 int
 IDL3_Client::component_port_test (
-    CORBA::ComponentIR::ComponentDef_var& comp_def)
+    CORBA::ComponentIR::ComponentDef_var const& comp_def)
 {
-  CORBA::Contained::Description_var desc =
+  CORBA::Contained::Description_var const desc =
     comp_def->describe ();
 
-  const CORBA::ComponentIR::ComponentDescription *cd = 0;
+  CORBA::ComponentIR::ComponentDescription const* cd {};
 
-  if ((desc->value >>= cd) == 0)
+  if (!(desc->value >>= cd))
     {
       if (this->debug_)
         {
@@ -904,13 +893,13 @@ IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq const& pd
       return -1;
     }
 
-  const char *tmp = 0;
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < PROVIDES_LEN; ++i)
     {
       tmp = pds[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, PROVIDES_NAMES[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, PROVIDES_NAMES[i]) != 0)
         {
           if (this->debug_)
             {
@@ -925,7 +914,7 @@ IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq const& pd
 
       tmp = pds[i].interface_type.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, PROVIDES_TYPE_IDS[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, PROVIDES_TYPE_IDS[i]) != 0)
         {
           if (this->debug_)
             {
@@ -957,14 +946,14 @@ IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq const& uds)
       return -1;
     }
 
-  const char *tmp = 0;
-  CORBA::Boolean mult = 0;
+  char const* tmp {};
+  CORBA::Boolean mult {};
 
   for (CORBA::ULong i = 0; i < USES_LEN; ++i)
     {
       tmp = uds[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, USES_NAMES[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, USES_NAMES[i]) != 0)
         {
           if (this->debug_)
             {
@@ -979,7 +968,7 @@ IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq const& uds)
 
       tmp = uds[i].interface_type.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, USES_TYPE_IDS[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, USES_TYPE_IDS[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1031,13 +1020,13 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq const&
       return -1;
     }
 
-  const char *tmp = 0;
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < seq_length; ++i)
     {
       tmp = eds[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, names[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, names[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1053,7 +1042,7 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq const&
 
       tmp = eds[i].event.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, ids[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, ids[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1072,10 +1061,10 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq const&
 }
 
 int
-IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var& vd,
+IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var const& vd,
                                          char const* prefix)
 {
-  CORBA::ValueDef_var bvd = vd->base_value ();
+  CORBA::ValueDef_var const bvd = vd->base_value ();
 
   if (CORBA::is_nil (bvd.in ()))
     {
@@ -1092,7 +1081,7 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var& vd,
 
   CORBA::String_var str = bvd->id ();
 
-  if (str.in () == 0 || ACE_OS::strcmp (str.in (), VT_BASE_ID) != 0)
+  if (str.in () == nullptr || std::strcmp (str.in (), VT_BASE_ID) != 0)
     {
       if (this->debug_)
         {
@@ -1108,7 +1097,7 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var& vd,
   CORBA::InterfaceDefSeq_var supported =
     vd->supported_interfaces ();
 
-  CORBA::ULong length = supported->length ();
+  CORBA::ULong const length = supported->length ();
 
   if (length != VT_SUPPORTED_LEN)
     {
@@ -1127,8 +1116,8 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var& vd,
     {
       str = supported[i]->id ();
 
-      if (str.in () == 0
-          || ACE_OS::strcmp (str.in (), VT_SUPPORTED_IDS[i]) != 0)
+      if (str.in () == nullptr
+          || std::strcmp (str.in (), VT_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1148,7 +1137,7 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var& vd,
 
 int
 IDL3_Client::valuetype_attribute_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    CORBA::ExtValueDef::ExtFullValueDescription_var const& desc,
     char const* prefix)
 {
   if (desc->attributes.length () != ATTRS_LEN)
@@ -1163,13 +1152,13 @@ IDL3_Client::valuetype_attribute_test (
       return -1;
     }
 
-  const char *tmp = 0;
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < ATTRS_LEN; ++i)
     {
       tmp = desc->attributes[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1236,11 +1225,11 @@ IDL3_Client::valuetype_attribute_test (
 
 int
 IDL3_Client::valuetype_operation_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    CORBA::ExtValueDef::ExtFullValueDescription_var const& desc,
     char const* prefix
   )
 {
-  CORBA::ULong ops_length = desc->operations.length ();
+  CORBA::ULong const ops_length = desc->operations.length ();
 
   if (ops_length != OPS_LEN)
     {
@@ -1255,15 +1244,15 @@ IDL3_Client::valuetype_operation_test (
       return -1;
     }
 
-  const char *tmp = 0;
-  CORBA::ULong j = 0;
-  CORBA::ULong length = 0;
+  char const* tmp {};
+  CORBA::ULong j {};
+  CORBA::ULong length {};
 
   for (CORBA::ULong i = 0; i < ops_length; ++i)
     {
       tmp = desc->operations[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, OP_NAMES[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, OP_NAMES[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1313,7 +1302,7 @@ IDL3_Client::valuetype_operation_test (
         {
           tmp = desc->operations[i].parameters[j].name.in ();
 
-          if (tmp == 0 || ACE_OS::strcmp (tmp, PARAM_NAMES[j]) != 0)
+          if (tmp == nullptr || std::strcmp (tmp, PARAM_NAMES[j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1352,10 +1341,10 @@ IDL3_Client::valuetype_operation_test (
 
 int
 IDL3_Client::valuetype_member_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    CORBA::ExtValueDef::ExtFullValueDescription_var const& desc,
     char const* prefix)
 {
-  CORBA::ULong length = desc->members.length ();
+  CORBA::ULong const length = desc->members.length ();
 
   if (length != MEM_LEN)
     {
@@ -1370,7 +1359,7 @@ IDL3_Client::valuetype_member_test (
       return -1;
     }
 
-  const char *tmp = 0;
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -1390,7 +1379,7 @@ IDL3_Client::valuetype_member_test (
 
       tmp = desc->members[i].name.in ();
 
-      if (tmp == 0 || ACE_OS::strcmp (tmp, MEM_NAMES[i]) != 0)
+      if (tmp == nullptr || std::strcmp (tmp, MEM_NAMES[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1410,10 +1399,10 @@ IDL3_Client::valuetype_member_test (
 
 int
 IDL3_Client::valuetype_factory_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    CORBA::ExtValueDef::ExtFullValueDescription_var const& desc,
     char const* prefix)
 {
-  CORBA::ULong length = desc->initializers.length ();
+  CORBA::ULong const length = desc->initializers.length ();
 
   if (length != FACTORY_LEN)
     {
@@ -1428,8 +1417,8 @@ IDL3_Client::valuetype_factory_test (
       return -1;
     }
 
-  CORBA::ULong inside_len = 0;
-  const char *tmp = 0;
+  CORBA::ULong inside_len {};
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < FACTORY_LEN; ++i)
     {
@@ -1449,14 +1438,14 @@ IDL3_Client::valuetype_factory_test (
           return -1;
         }
 
-      CORBA::ULong j = 0;
+      CORBA::ULong j {};
 
       for (j = 0; j < VT_FACTORY_PARAM_LENS[i]; ++j)
         {
           tmp = desc->initializers[i].members[j].name.in ();
 
-          if (tmp == 0
-              || ACE_OS::strcmp (tmp, VT_FACTORY_PARAM_NAMES[i][j]) != 0)
+          if (tmp == nullptr
+              || std::strcmp (tmp, VT_FACTORY_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1492,8 +1481,8 @@ IDL3_Client::valuetype_factory_test (
         {
           tmp = desc->initializers[i].exceptions[j].name.in ();
 
-          if (tmp == 0
-              || ACE_OS::strcmp (tmp, VT_FACTORY_EXCEP_NAMES[i][j]) != 0)
+          if (tmp == nullptr
+              || std::strcmp (tmp, VT_FACTORY_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1514,9 +1503,9 @@ IDL3_Client::valuetype_factory_test (
 }
 
 int
-IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var& hd)
+IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var const& hd)
 {
-  CORBA::ComponentIR::HomeDef_var bhd =
+  CORBA::ComponentIR::HomeDef_var const bhd =
     hd->base_home ();
 
   if (CORBA::is_nil (bhd.in ()))
@@ -1533,7 +1522,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var& hd)
 
   CORBA::String_var str = bhd->id ();
 
-  if (str.in () == 0 || ACE_OS::strcmp (str.in (), HOME_BASE_ID) != 0)
+  if (str.in () == nullptr || std::strcmp (str.in (), HOME_BASE_ID) != 0)
     {
       if (this->debug_)
         {
@@ -1548,7 +1537,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var& hd)
   CORBA::InterfaceDefSeq_var supported =
     bhd->supported_interfaces ();
 
-  CORBA::ULong length = supported->length ();
+  CORBA::ULong const length = supported->length ();
 
   if (length != HOME_SUPPORTED_LEN)
     {
@@ -1566,8 +1555,8 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var& hd)
     {
       str = supported[i]->id ();
 
-      if (str.in () == 0
-          || ACE_OS::strcmp (str.in (), HOME_SUPPORTED_IDS[i]) != 0)
+      if (str.in () == nullptr
+          || std::strcmp (str.in (), HOME_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
             {
@@ -1587,7 +1576,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var& hd)
 int
 IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription const* hd)
 {
-  CORBA::ULong length = hd->factories.length ();
+  CORBA::ULong const length = hd->factories.length ();
 
   if (length != HOME_FACTORY_LEN)
     {
@@ -1601,9 +1590,9 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription const* hd)
       return -1;
     }
 
-  CORBA::ULong inside_len = 0;
-  CORBA::ULong j = 0;
-  const char *tmp = 0;
+  CORBA::ULong inside_len {};
+  CORBA::ULong j {};
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < HOME_FACTORY_LEN; ++i)
     {
@@ -1626,8 +1615,8 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription const* hd)
         {
           tmp = hd->factories[i].parameters[j].name.in ();
 
-          if (tmp == 0
-              || ACE_OS::strcmp (tmp, HOME_FACTORY_PARAM_NAMES[i][j]) != 0)
+          if (tmp == nullptr
+              || std::strcmp (tmp, HOME_FACTORY_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1661,8 +1650,8 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription const* hd)
         {
           tmp = hd->factories[i].exceptions[j].name.in ();
 
-          if (tmp == 0
-              || ACE_OS::strcmp (tmp, HOME_FACTORY_EXCEP_NAMES[i][j]) != 0)
+          if (tmp == nullptr
+              || std::strcmp (tmp, HOME_FACTORY_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1684,7 +1673,7 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription const* hd)
 int
 IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription const* hd)
 {
-  CORBA::ULong length = hd->finders.length ();
+  CORBA::ULong const length = hd->finders.length ();
 
   if (length != HOME_FINDER_LEN)
     {
@@ -1698,9 +1687,9 @@ IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription const* hd)
       return -1;
     }
 
-  CORBA::ULong inside_len = 0;
-  CORBA::ULong j = 0;
-  const char *tmp = 0;
+  CORBA::ULong inside_len {};
+  CORBA::ULong j {};
+  char const* tmp {};
 
   for (CORBA::ULong i = 0; i < HOME_FINDER_LEN; ++i)
     {
@@ -1723,8 +1712,8 @@ IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription const* hd)
         {
           tmp = hd->finders[i].parameters[j].name.in ();
 
-          if (tmp == 0
-              || ACE_OS::strcmp (tmp, HOME_FINDER_PARAM_NAMES[i][j]) != 0)
+          if (tmp == nullptr
+              || std::strcmp (tmp, HOME_FINDER_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1758,8 +1747,8 @@ IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription const* hd)
         {
           tmp = hd->finders[i].exceptions[j].name.in ();
 
-          if (tmp == 0
-              || ACE_OS::strcmp (tmp, HOME_FINDER_EXCEP_NAMES[i][j]) != 0)
+          if (tmp == nullptr
+              || std::strcmp (tmp, HOME_FINDER_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
