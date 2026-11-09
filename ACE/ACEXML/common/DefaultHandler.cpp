@@ -2,13 +2,9 @@
 
 #include "ACEXML/common/DefaultHandler.h"
 
-ACEXML_DefaultHandler::ACEXML_DefaultHandler ()
-{
-}
+ACEXML_DefaultHandler::ACEXML_DefaultHandler () = default;
 
-ACEXML_DefaultHandler::~ACEXML_DefaultHandler ()
-{
-}
+ACEXML_DefaultHandler::~ACEXML_DefaultHandler () = default;
 
 void
 ACEXML_DefaultHandler::characters (const ACEXML_Char *,

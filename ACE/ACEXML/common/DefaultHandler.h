@@ -52,9 +52,6 @@ public:
    */
   ACEXML_DefaultHandler ();
 
-  /**
-   * destructor.
-   */
   virtual ~ACEXML_DefaultHandler ();
 
   // Methods inherit from ACEXML_ContentHandler.
