@@ -1,6 +1,5 @@
 #include "Account_i.h"
 
-// Constructor
 Account_i::Account_i (char const *name,
                       CORBA::Float balance)
   : balance_ (balance),

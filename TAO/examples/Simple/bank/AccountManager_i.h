@@ -44,10 +44,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class AccountManager_i : public POA_Bank::AccountManager
 {
 public:
-  /// Constructor.
   AccountManager_i () = default;
 
-  /// Destructor.
   ~AccountManager_i () override = default;
 
   AccountManager_i (AccountManager_i const &) = delete;

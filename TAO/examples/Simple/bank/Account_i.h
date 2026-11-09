@@ -28,13 +28,10 @@
 class Account_i : public POA_Bank::Account
 {
 public:
-  /// Constructor.
   Account_i () = default;
 
-  /// Constructor.
   Account_i (char const *, CORBA::Float);
 
-  /// Destructor.
   ~Account_i () override = default;
 
   Account_i (Account_i const &) = delete;

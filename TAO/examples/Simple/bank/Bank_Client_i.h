@@ -28,10 +28,8 @@
 class Bank_Client_i
 {
 public:
-  /// Constructor
   Bank_Client_i () = default;
 
-  /// Destructor
   ~Bank_Client_i () = default;
 
   Bank_Client_i (Bank_Client_i const &) = delete;
