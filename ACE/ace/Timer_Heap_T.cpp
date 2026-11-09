@@ -82,7 +82,6 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item ()
   return nullptr;
 }
 
-// Constructor
 // Note that timer_ids_curr_ and timer_ids_min_free_ both start at 0.
 // Since timer IDs are assigned by first incrementing the timer_ids_curr_
 // value, the first ID assigned will be 1 (just as in the previous design).

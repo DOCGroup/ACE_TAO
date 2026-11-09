@@ -40,7 +40,6 @@ class ACE_Timer_Queue_Upcall_Base
   : public ACE_Abstract_Timer_Queue<TYPE>
 {
 public:
-  // Constructor
   explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = nullptr);
 
   ACE_Timer_Queue_Upcall_Base (ACE_Timer_Queue_Upcall_Base const &) = delete;
