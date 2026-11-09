@@ -9,8 +9,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   worker.activate (THR_NEW_LWP | THR_JOINABLE,
                    10);
 
-  ACE_Time_Value tv (20, 0);
-  orb->run (tv);
+  ACE_Time_Value run_timeout {20, 0};
+  orb->run (run_timeout);
 
   orb->destroy ();
 

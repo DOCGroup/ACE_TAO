@@ -23,7 +23,7 @@ ORB_Task::svc ()
 
       CORBA::PolicyList policies {};
 
-      constexpr TimeBase::TimeT timeout = 5000 * 10000;
+      constexpr TimeBase::TimeT timeout {5000 * 10000};
 
       CORBA::Any timeout_any {};
       timeout_any <<= timeout;
