@@ -84,7 +84,7 @@ check_is_equivalent (CORBA::ORB_ptr orb,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  bool result {};
+  int status {};
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
@@ -135,7 +135,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (IOR_Equivalence_Test const &test : tests)
         {
           if (!check_is_equivalent (orb.in (), test.ior1, test.ior2, test.expected_result))
-            result = true;
+            status = 1;
         }
 
       orb->destroy ();
@@ -146,5 +146,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return result;
+  return status;
 }
