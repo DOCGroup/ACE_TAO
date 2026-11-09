@@ -30,7 +30,6 @@ public:
                          JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
 
   ~JAWS_Hash_Bucket_Item ();
-  // Destructor.
 
   EXT_ID ext_id_;
   // Key used to look up an entry.
