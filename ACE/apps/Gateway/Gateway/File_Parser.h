@@ -91,7 +91,7 @@ protected:
   int skipline ();
 
   /// Pointer to the file we're reading.
-  FILE *infile_;
+  FILE *infile_ {};
 };
 
 #include "File_Parser.cpp"

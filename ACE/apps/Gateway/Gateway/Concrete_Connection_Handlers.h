@@ -29,7 +29,7 @@
 class Supplier_Handler : public Connection_Handler
 {
 public:
-  explicit Supplier_Handler (const Connection_Config_Info &);
+  explicit Supplier_Handler (Connection_Config_Info const &);
   Supplier_Handler (Supplier_Handler const &) = delete;
   Supplier_Handler (Supplier_Handler &&) = delete;
   Supplier_Handler &operator= (Supplier_Handler const &) = delete;
@@ -53,7 +53,7 @@ protected:
 
   /// Keep track of event fragment to handle non-blocking recv's from
   /// Suppliers.
-  ACE_Message_Block *msg_frag_;
+  ACE_Message_Block *msg_frag_ {};
 };
 
 /**
@@ -69,7 +69,7 @@ protected:
 class Consumer_Handler : public Connection_Handler
 {
 public:
-  explicit Consumer_Handler (const Connection_Config_Info &);
+  explicit Consumer_Handler (Connection_Config_Info const &);
   Consumer_Handler (Consumer_Handler const &) = delete;
   Consumer_Handler (Consumer_Handler &&) = delete;
   Consumer_Handler &operator= (Consumer_Handler const &) = delete;
@@ -101,7 +101,7 @@ protected:
 class Thr_Consumer_Handler : public Consumer_Handler
 {
 public:
-  explicit Thr_Consumer_Handler (const Connection_Config_Info &);
+  explicit Thr_Consumer_Handler (Connection_Config_Info const &);
   Thr_Consumer_Handler (Thr_Consumer_Handler const &) = delete;
   Thr_Consumer_Handler (Thr_Consumer_Handler &&) = delete;
   Thr_Consumer_Handler &operator= (Thr_Consumer_Handler const &) = delete;
@@ -133,7 +133,7 @@ protected:
 
 private:
   /// If the controlling is in thread's svc() or not.
-  bool in_thread_;
+  bool in_thread_ {};
 };
 
 /**
@@ -144,7 +144,7 @@ private:
 class Thr_Supplier_Handler : public Supplier_Handler
 {
 public:
-  explicit Thr_Supplier_Handler (const Connection_Config_Info &pci);
+  explicit Thr_Supplier_Handler (Connection_Config_Info const &pci);
   Thr_Supplier_Handler (Thr_Supplier_Handler const &) = delete;
   Thr_Supplier_Handler (Thr_Supplier_Handler &&) = delete;
   Thr_Supplier_Handler &operator= (Thr_Supplier_Handler const &) = delete;
@@ -169,7 +169,7 @@ protected:
 
 private:
   /// If the controlling is in thread's svc() or not.
-  bool in_thread_;
+  bool in_thread_ {};
 };
 
 #endif /* CONCRETE_CONNECTION_HANDLER */

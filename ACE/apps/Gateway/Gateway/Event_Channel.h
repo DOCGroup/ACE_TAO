@@ -73,7 +73,7 @@ public:
 
   /// Subscribe the <Consumer_Dispatch_Set> to receive events that
   /// match <Event_Key>.
-  int subscribe (const Event_Key &event_addr,
+  int subscribe (Event_Key const &event_addr,
                  Consumer_Dispatch_Set *cds);
 
   // = Event processing entry point.
@@ -106,8 +106,8 @@ private:
 
   /// Periodically callback to perform timer-based performance
   /// profiling.
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *arg) override;
 
   /// Used to establish the connections actively.
   Connection_Handler_Connector connector_;

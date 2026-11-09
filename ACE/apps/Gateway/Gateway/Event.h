@@ -88,7 +88,7 @@ public:
   {
   }
 
-  bool operator== (const Event_Key &event_addr) const
+  bool operator== (Event_Key const &event_addr) const
   {
     return this->connection_id_ == event_addr.connection_id_
       && this->type_ == event_addr.type_;
@@ -217,14 +217,14 @@ public:
   // Encode from host byte order to network byte order.
 
   /// Connection id.
-  ACE_INT32 connection_id_;
+  ACE_INT32 connection_id_ {};
 
   /// Connection ids for consumers that will be routed information
   /// containing this <connection_id_>
-  ACE_INT32 consumers_[MAX_CONSUMERS];
+  ACE_INT32 consumers_[MAX_CONSUMERS] {};
 
   /// Total number of these consumers.
-  ACE_INT32 total_consumers_;
+  ACE_INT32 total_consumers_ {};
 };
 
 #endif /* EVENT_H */

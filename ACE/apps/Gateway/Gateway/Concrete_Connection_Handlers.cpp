@@ -4,7 +4,7 @@
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
-Consumer_Handler::Consumer_Handler (const Connection_Config_Info &pci)
+Consumer_Handler::Consumer_Handler (Connection_Config_Info const &pci)
   : Connection_Handler (pci)
 {
   this->connection_role_ = 'C';
@@ -300,9 +300,8 @@ Consumer_Handler::put (ACE_Message_Block *event,
       (event, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-Supplier_Handler::Supplier_Handler (const Connection_Config_Info &pci)
-  : Connection_Handler (pci),
-    msg_frag_ (nullptr)
+Supplier_Handler::Supplier_Handler (Connection_Config_Info const &pci)
+  : Connection_Handler (pci)
 {
   this->connection_role_ = 'S';
   this->msg_queue ()->high_water_mark (0);
@@ -527,11 +526,10 @@ Supplier_Handler::process (ACE_Message_Block *event_key)
   return this->event_channel_->put (event_key);
 }
 
-Thr_Consumer_Handler::Thr_Consumer_Handler (const Connection_Config_Info &pci)
+Thr_Consumer_Handler::Thr_Consumer_Handler (Connection_Config_Info const &pci)
   : Consumer_Handler (pci)
 {
   // It is not in thread svc() now.
-  in_thread_ = false;
 }
 
 // Overriding handle_close() method.  If in thread svc(), no need to
@@ -689,11 +687,10 @@ Thr_Consumer_Handler::svc ()
   ACE_NOTREACHED (return 0;)
 }
 
-Thr_Supplier_Handler::Thr_Supplier_Handler (const Connection_Config_Info &pci)
+Thr_Supplier_Handler::Thr_Supplier_Handler (Connection_Config_Info const &pci)
   : Supplier_Handler (pci)
 {
   // It is not in thread svc() now.
-  in_thread_ = false;
 }
 
 // Overriding handle_close() method.  If in thread svc(), no need to

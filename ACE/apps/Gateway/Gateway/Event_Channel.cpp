@@ -93,8 +93,8 @@ Event_Channel::compute_performance_statistics ()
 }
 
 int
-Event_Channel::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+Event_Channel::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   // This is called periodically to compute performance statistics.
   return this->compute_performance_statistics ();
@@ -276,7 +276,7 @@ Event_Channel::complete_connection_connection (Connection_Handler *connection_ha
 
   // Send the connection id to the peerd.
 
-  ssize_t const n = connection_handler->peer ().send ((const void *) &id,
+  ssize_t const n = connection_handler->peer ().send (&id,
                                                 sizeof id);
 
   if (n != (ssize_t) sizeof id)
@@ -517,7 +517,7 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 }
 
 int
-Event_Channel::subscribe (const Event_Key &event_addr,
+Event_Channel::subscribe (Event_Key const &event_addr,
                           Consumer_Dispatch_Set *cds)
 {
   int result = this->efd_.bind (event_addr, cds);

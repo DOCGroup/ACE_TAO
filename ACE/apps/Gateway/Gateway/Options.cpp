@@ -118,13 +118,13 @@ Options::threading_strategy () const
   return this->threading_strategy_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::connection_config_file () const
 {
   return this->connection_config_file_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::consumer_config_file () const
 {
   return this->consumer_config_file_;

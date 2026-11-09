@@ -120,10 +120,10 @@ public:
   u_short consumer_connector_port () const;
 
   /// Name of the connection configuration file.
-  const ACE_TCHAR *connection_config_file () const;
+  ACE_TCHAR const *connection_config_file () const;
 
   /// Name of the consumer map configuration file.
-  const ACE_TCHAR *consumer_config_file () const;
+  ACE_TCHAR const *consumer_config_file () const;
 
   /// The maximum retry timeout delay.
   long max_timeout () const;
