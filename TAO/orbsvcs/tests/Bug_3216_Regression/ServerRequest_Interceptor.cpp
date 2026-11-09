@@ -7,17 +7,8 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CDR.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "Hello.h"
-
-TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor ()
-: orb_ (nullptr),
-  client_id_ (0)
-{
-}
-
-TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor () = default;
-
 
 char *
 TAO249_ServerRequest_Interceptor::name ()
@@ -66,26 +57,24 @@ TAO249_ServerRequest_Interceptor::receive_request (
     Hello::normal_context_ok_ = false;
     Hello::extended_context_ok_ = false;
 
-    if (! ACE_OS::strcmp (op.in (), "check_normal_context"))
+    if (std::strcmp (op.in (), "check_normal_context") == 0)
       {
         FT::FTGroupVersionServiceContext ftrsc;
         Hello::normal_context_ok_ = (cdr >> ftrsc) != 0;
       }
-    else if (! ACE_OS::strcmp (op.in (), "check_extended_context"))
+    else if (std::strcmp (op.in (), "check_extended_context") == 0)
       {
         FT::TagFTGroupTaggedComponent tftgtc;
         Hello::extended_context_ok_ = (cdr >> tftgtc) != 0;
       }
   }
-catch (CORBA::Exception const &ex)
-  {
-    ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
-    ex._tao_print_exception (
-                               "Exception in TAO249_ServerRequest_Interceptor::receive_request\n");
-    throw;
-  }
-
-
+  catch (CORBA::Exception const &ex)
+    {
+      ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
+      ex._tao_print_exception (
+        "Exception in TAO249_ServerRequest_Interceptor::receive_request\n");
+      throw;
+    }
 }
 
 void
