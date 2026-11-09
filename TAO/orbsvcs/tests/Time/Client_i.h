@@ -29,10 +29,8 @@
 class Client_i
 {
 public:
-  /// Constructor.
   Client_i () = default;
 
-  /// Destructor.
   ~Client_i () = default;
 
   Client_i (Client_i const &) = delete;
