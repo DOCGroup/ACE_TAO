@@ -4,7 +4,7 @@
 // creates 3 ORBs. ORB-A becomes the default ORB, which shares the
 // global config context, ORB-B initializes a local configuration
 // context which loads a service. ORB-C finally shares the configuration
-// from ORB-B. The demonstration is to show that a service is avialable
+// from ORB-B. The demonstration is to show that a service is available
 // to ORB-C from the configuration initialized by ORB-B.
 
 #include "tao/corba.h"
@@ -13,9 +13,9 @@
 #include "ace/Dynamic_Service.h"
 #include "Service_Configuration_Per_ORB.h"
 
-ACE_TCHAR const arg_a[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A");
-ACE_TCHAR const arg_b[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf a.conf");
-ACE_TCHAR const arg_c[] = ACE_TEXT ("BBB -ORBGestalt ORB:ORB-B -ORBId ORB-C");
+constexpr ACE_TCHAR arg_a[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A");
+constexpr ACE_TCHAR arg_b[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf a.conf");
+constexpr ACE_TCHAR arg_c[] = ACE_TEXT ("BBB -ORBGestalt ORB:ORB-B -ORBId ORB-C");
 
 int
 testBug3049 (int, ACE_TCHAR *[])
@@ -26,15 +26,15 @@ testBug3049 (int, ACE_TCHAR *[])
     {
       ACE_ARGV args_a (arg_a);
       int argc_a = args_a.argc ();
-      CORBA::ORB_var orb_a (CORBA::ORB_init (argc_a, args_a.argv ()));
+      CORBA::ORB_var const orb_a = CORBA::ORB_init (argc_a, args_a.argv ());
 
       ACE_ARGV args_b (arg_b);
       int argc_b = args_b.argc ();
-      CORBA::ORB_var orb_b (CORBA::ORB_init (argc_b, args_b.argv ()));
+      CORBA::ORB_var const orb_b = CORBA::ORB_init (argc_b, args_b.argv ());
 
       ACE_ARGV args_c (arg_c);
       int argc_c = args_c.argc ();
-      CORBA::ORB_var orb_c (CORBA::ORB_init (argc_c, args_c.argv ()));
+      CORBA::ORB_var const orb_c = CORBA::ORB_init (argc_c, args_c.argv ());
 
       // Confirm ORB-C inherited SHMIOP from ORB-B, while it is unavailable
       // in the global context.
