@@ -8,14 +8,12 @@
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/PortableServer/LifespanPolicyC.h"
 
-
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,
                                   PortableServer::POAManager_ptr poa_manager)
@@ -229,8 +227,6 @@ TAO_ORB_Manager::poa_manager ()
 {
   return PortableServer::POAManager::_duplicate (this->poa_manager_.in ());
 }
-
-// Destructor.
 
 TAO_ORB_Manager::~TAO_ORB_Manager ()
 {
