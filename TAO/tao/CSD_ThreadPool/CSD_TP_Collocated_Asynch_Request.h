@@ -45,7 +45,6 @@ namespace TAO
                                                  : public TP_Corba_Request
     {
     public:
-      /// Constructor.
       TP_Collocated_Asynch_Request
                            (TAO_ServerRequest&              server_request,
                             const PortableServer::ObjectId& object_id,

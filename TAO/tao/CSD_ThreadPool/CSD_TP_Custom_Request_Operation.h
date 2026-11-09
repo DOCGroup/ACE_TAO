@@ -67,7 +67,6 @@ namespace TAO
       PortableServer::Servant servant();
 
     protected:
-      /// Constructor.
       explicit TP_Custom_Request_Operation(PortableServer::Servant servant);
 
       virtual void execute_i() = 0;

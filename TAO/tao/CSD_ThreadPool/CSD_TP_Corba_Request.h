@@ -48,7 +48,6 @@ namespace TAO
       ~TP_Corba_Request() override;
 
     protected:
-      /// Constructor.
       TP_Corba_Request(const PortableServer::ObjectId& object_id,
                        PortableServer::POA_ptr         poa,
                        const char*                     operation,

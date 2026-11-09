@@ -47,7 +47,6 @@ namespace TAO
       /// Default Constructor.
       TP_Servant_State_Map() = default;
 
-      /// Destructor.
       ~TP_Servant_State_Map();
 
       /// Accessor for the servant busy flag.

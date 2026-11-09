@@ -57,7 +57,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Remote_Request : public TP_Corba_Request
     {
     public:
-      /// Constructor.
       TP_Remote_Request(TAO_ServerRequest&              server_request,
                         const PortableServer::ObjectId& object_id,
                         PortableServer::POA_ptr         poa,

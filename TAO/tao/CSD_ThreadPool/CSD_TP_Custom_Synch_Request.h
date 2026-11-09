@@ -44,7 +44,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Custom_Synch_Request : public TP_Custom_Request
     {
     public:
-      /// Constructor.
       TP_Custom_Synch_Request(TP_Custom_Request_Operation* op,
                               TP_Servant_State*            servant_state);
 

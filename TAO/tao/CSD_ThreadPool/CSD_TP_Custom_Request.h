@@ -47,7 +47,6 @@ namespace TAO
       ~TP_Custom_Request() override;
 
     protected:
-      /// Constructor.
       TP_Custom_Request(TP_Custom_Request_Operation* op,
                         TP_Servant_State*            servant_state);
 

@@ -44,7 +44,6 @@ namespace TAO
                                              : public TP_Custom_Request
     {
     public:
-      /// Constructor.
       TP_Custom_Asynch_Request(TP_Custom_Request_Operation* op,
                                TP_Servant_State*            servant_state);
 

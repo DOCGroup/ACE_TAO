@@ -60,7 +60,6 @@ namespace TAO
       /// Default Constructor.
       TP_Queue() = default;
 
-      /// Destructor.
       ~TP_Queue();
 
       /// Place a request at the end of the queue.

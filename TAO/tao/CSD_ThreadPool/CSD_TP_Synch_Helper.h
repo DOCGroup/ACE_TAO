@@ -43,7 +43,6 @@ namespace TAO
       /// Constructor.  Sets initial state to PENDING.
       TP_Synch_Helper();
 
-      /// Destructor.
       ~TP_Synch_Helper();
 
       /// Returns true if the helper state is DISPATCHED, and false if
