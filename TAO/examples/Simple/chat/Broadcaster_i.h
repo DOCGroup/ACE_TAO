@@ -34,10 +34,8 @@
 class Broadcaster_i : public POA_Broadcaster
 {
 public:
-  /// Constructor.
   Broadcaster_i () = default;
 
-  /// Destructor.
   ~Broadcaster_i () override = default;
 
   Broadcaster_i (Broadcaster_i const &) = delete;

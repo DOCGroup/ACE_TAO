@@ -26,10 +26,8 @@
 class Receiver_i : public POA_Receiver
 {
 public:
-  /// Constructor.
   Receiver_i () = default;
 
-  /// Destructor.
   ~Receiver_i () override = default;
 
   Receiver_i (Receiver_i const &) = delete;

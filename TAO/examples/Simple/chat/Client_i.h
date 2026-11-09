@@ -39,7 +39,6 @@
 class Client_i : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Client_i ();
 
   /// Initialize the client communication with the server.

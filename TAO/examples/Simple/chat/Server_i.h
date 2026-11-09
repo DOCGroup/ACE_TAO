@@ -27,10 +27,8 @@
 class Server_i
 {
 public:
-  /// Constructor.
   Server_i ();
 
-  /// Destructor.
   ~Server_i () = default;
 
   Server_i (Server_i const &) = delete;
