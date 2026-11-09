@@ -27,13 +27,11 @@ public:
                   long interval,
                   size_t n_threads,
                   size_t max_iterations);
-  // Constructor.
 
   Thread_Handler (size_t id,
                   size_t max_iterations);
 
   ~Thread_Handler () override;
-  // Destructor.
 
   Thread_Handler (Thread_Handler const &) = delete;
   Thread_Handler (Thread_Handler &&) = delete;
