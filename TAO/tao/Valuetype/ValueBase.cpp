@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 CORBA::add_ref (CORBA::ValueBase *val)
 {
-  if (val)
+  if (val != nullptr)
     {
       val->_add_ref ();
     }
@@ -35,7 +35,7 @@ CORBA::add_ref (CORBA::ValueBase *val)
 void
 CORBA::remove_ref (CORBA::ValueBase *val)
 {
-  if (val)
+  if (val != nullptr)
     {
       val->_remove_ref ();
     }
@@ -324,7 +324,7 @@ CORBA::ValueBase::_tao_unmarshal_header (
     }
   else if (TAO_OBV_GIOP_Flags::has_no_type_info (valuetag))
     {
-      if (fallback_repo_id)
+      if (fallback_repo_id != nullptr)
         {
           ids.push_back (fallback_repo_id);
         }
@@ -368,7 +368,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   valuetype = nullptr;
 
   TAO_ORB_Core *orb_core = strm.orb_core ();
-  if (!orb_core)
+  if (orb_core == nullptr)
     {
       orb_core = TAO_ORB_Core_instance ();
       if (TAO_debug_level)

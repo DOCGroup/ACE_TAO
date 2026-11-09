@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 CORBA::add_ref (CORBA::ValueFactoryBase *val)
 {
-  if (val)
+  if (val != nullptr)
     {
       val->_add_ref ();
     }
@@ -18,7 +18,7 @@ CORBA::add_ref (CORBA::ValueFactoryBase *val)
 void
 CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 {
-  if (val)
+  if (val != nullptr)
     {
       val->_remove_ref ();
     }

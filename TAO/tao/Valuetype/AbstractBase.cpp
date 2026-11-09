@@ -383,7 +383,7 @@ CORBA::AbstractBase::_tao_to_value ()
 CORBA::Object_ptr
 CORBA::AbstractBase::create_object (TAO_Stub *stub)
 {
-  if (stub)
+  if (stub != nullptr)
     {
       stub->_incr_refcnt ();
 

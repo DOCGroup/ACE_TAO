@@ -7,7 +7,7 @@ ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
 {
-  if (obj)
+  if (obj != nullptr)
     {
       obj->_add_ref ();
     }
