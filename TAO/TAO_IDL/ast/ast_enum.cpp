@@ -127,15 +127,12 @@ AST_Enum::value_to_name (const unsigned long v)
 AST_EnumVal *
 AST_Enum::lookup_by_value (const AST_Expression *v)
 {
-  AST_EnumVal *item {};
-  AST_Decl *d {};
-
   for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();
        i.next ())
     {
-      d = i.item ();
-      item = dynamic_cast<AST_EnumVal*> (d);
+      AST_Decl * const d = i.item ();
+      AST_EnumVal * const item = dynamic_cast<AST_EnumVal*> (d);
       AST_Expression *cv = item->constant_value ();
 
       if (cv == v)
