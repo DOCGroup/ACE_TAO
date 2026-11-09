@@ -119,16 +119,12 @@ set_loc (char const *loc)
     assert (ICP_set (m_anum, "location", loc) == 0);
 }
 
-// Constructor.
-
 Thermometer_impl::
 Thermometer_impl (CCS::AssetType anum) :
     m_anum (anum), m_ref_count (1), m_removed (false)
 {
     m_ctrl->add_impl (anum); // Add self to controller's set
 }
-
-// Destructor.
 
 Thermometer_impl::
 ~Thermometer_impl ()
@@ -257,15 +253,11 @@ Thermostat_impl::set_nominal_temp (CCS::TempType new_temp)
     return old_temp;
 }
 
-// Constructor.
-
 Thermostat_impl::
 Thermostat_impl (CCS::AssetType anum) : Thermometer_impl (anum)
 {
     // Intentionally empty.
 }
-
-// Destructor.
 
 // IDL get_nominal operation.
 
@@ -311,8 +303,6 @@ Controller_impl::exists (CCS::AssetType anum)
     return m_assets.find (anum) != m_assets.end ();
 }
 
-// Constructor
-
 Controller_impl::
 Controller_impl (PortableServer::POA_ptr poa, char const *asset_file)
            : m_poa (PortableServer::POA::_duplicate (poa)),
@@ -332,8 +322,6 @@ Controller_impl (PortableServer::POA_ptr poa, char const *asset_file)
     //    throw 0;
     // }
 }
-
-// Destructor
 
 Controller_impl::
 ~Controller_impl ()
