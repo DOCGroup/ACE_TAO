@@ -12,62 +12,57 @@
 #include "tao/corba.h"
 #include "testS.h"
 
-class TestMonitorable_i: public virtual POA_Arch_Idl::Monitorable
+class TestMonitorable_i : public virtual POA_Arch_Idl::Monitorable
 {
 public:
   TestMonitorable_i () = default;
+  TestMonitorable_i (TestMonitorable_i const &) = delete;
+  TestMonitorable_i (TestMonitorable_i &&) = delete;
+  TestMonitorable_i &operator= (TestMonitorable_i const &) = delete;
+  TestMonitorable_i &operator= (TestMonitorable_i &&) = delete;
 };
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb1 =
-                    CORBA::ORB_init (argc, argv, "orb1");
-      CORBA::ORB_var orb2 =
-                    CORBA::ORB_init (argc, argv, "orb2");
+      CORBA::ORB_var const orb1 = CORBA::ORB_init (argc, argv, "orb1");
+      CORBA::ORB_var const orb2 = CORBA::ORB_init (argc, argv, "orb2");
 
-      CORBA::Object_var poaObj_var =
-                    orb1->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var rootPoa =
-                    PortableServer::POA::_narrow (poaObj_var.in ());
-      PortableServer::POAManager_var poaManager =
-                    rootPoa->the_POAManager ();
+      CORBA::Object_var const poa_object1 = orb1->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root_poa1 =
+        PortableServer::POA::_narrow (poa_object1.in ());
+      PortableServer::POAManager_var const poa_manager1 =
+        root_poa1->the_POAManager ();
 
-      CORBA::Object_var poaObj_var2 =
-                    orb2->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var rootPoa2 =
-                    PortableServer::POA::_narrow (poaObj_var2.in ());
-      PortableServer::POAManager_var poaManager2 =
-                    rootPoa2->the_POAManager ();
+      CORBA::Object_var const poa_object2 = orb2->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root_poa2 =
+        PortableServer::POA::_narrow (poa_object2.in ());
+      PortableServer::POAManager_var const poa_manager2 =
+        root_poa2->the_POAManager ();
 
-      poaManager2->activate ();
-      poaManager->activate ();
+      poa_manager2->activate ();
+      poa_manager1->activate ();
 
       TestMonitorable_i *monitorable_i {};
       ACE_NEW_RETURN (monitorable_i, TestMonitorable_i, 1);
-      PortableServer::ServantBase_var monitorable_var = monitorable_i;
+      PortableServer::ServantBase_var const monitorable_var = monitorable_i;
 
-      TestMonitorable_i *m2 {};
-      ACE_NEW_RETURN (m2, TestMonitorable_i, 1);
-      PortableServer::ServantBase_var m2_var = m2;
+      TestMonitorable_i *monitorable_i2 {};
+      ACE_NEW_RETURN (monitorable_i2, TestMonitorable_i, 1);
+      PortableServer::ServantBase_var const monitorable_var2 = monitorable_i2;
 
-      PortableServer::ObjectId_var monitorableId1_var =
-                    rootPoa->activate_object (monitorable_var.in ());
-      CORBA::Object_var obj1 =
-                    rootPoa->id_to_reference (monitorableId1_var.in ());
-      Arch_Idl::Monitorable_var monitorable1 =
-                    Arch_Idl::Monitorable::_narrow (obj1.in ());
+      PortableServer::ObjectId_var const monitorable_id1 =
+        root_poa1->activate_object (monitorable_var.in ());
+      CORBA::Object_var const object1 = root_poa1->id_to_reference (monitorable_id1.in ());
+      Arch_Idl::Monitorable_var const monitorable1 = Arch_Idl::Monitorable::_narrow (object1.in ());
 
-      PortableServer::ObjectId_var monitorableId2_var =
-                    rootPoa2->activate_object (m2_var.in ());
-      CORBA::Object_var obj2 =
-                    rootPoa2->id_to_reference (monitorableId2_var.in ());
-      Arch_Idl::Monitorable_var monitorable2 =
-                    Arch_Idl::Monitorable::_narrow (obj2.in ());
+      PortableServer::ObjectId_var const monitorable_id2 =
+        root_poa2->activate_object (monitorable_var2.in ());
+      CORBA::Object_var const object2 = root_poa2->id_to_reference (monitorable_id2.in ());
+      Arch_Idl::Monitorable_var const monitorable2 = Arch_Idl::Monitorable::_narrow (object2.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
