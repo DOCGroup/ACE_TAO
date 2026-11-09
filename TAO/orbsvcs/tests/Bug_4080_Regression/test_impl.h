@@ -15,15 +15,15 @@ public:
   UIPMC_Object_Impl &operator= (UIPMC_Object_Impl const &) = delete;
   UIPMC_Object_Impl &operator= (UIPMC_Object_Impl &&) = delete;
 
-  ~UIPMC_Object_Impl () override;
+  ~UIPMC_Object_Impl () override = default;
 
-  // The skeleton methods
   void process () override;
 
 private:
   CORBA::ORB_var orb_;
   ACE_Barrier barrier_;
   TAO_SYNCH_MUTEX lock_;
+  bool shutdown_ {};
 };
 
 #endif // _TEST_IMPL_H_
