@@ -206,7 +206,6 @@ ACE_Registry::Naming_Context::operator= (const Naming_Context &rhs)
 }
 
 
-// Destructor
 ACE_Registry::Naming_Context::~Naming_Context ()
 {
   this->close ();
