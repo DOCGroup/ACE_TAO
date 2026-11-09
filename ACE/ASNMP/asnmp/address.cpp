@@ -32,6 +32,7 @@
 
 #include "asnmp/address.h"
 #include <charconv>
+#include <cstring>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
@@ -1011,7 +1012,7 @@ int NetbiosAddress::parse_address(const char *address)
   if (ACE_OS::strlen(address) > NETBIOSLEN)
       return 0; // invalid
 
-  if (ACE_OS::strncmp(address, "IBM", 3) == 0)
+  if (std::strncmp (address, "IBM", 3) == 0)
      return 0;   // invalid
 
   // addresses are free form but this  check may need to be expose to user
