@@ -18,7 +18,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
+CORBA::AbstractBase::AbstractBase (CORBA::AbstractBase const &rhs)
   : is_objref_ (rhs.is_objref_)
   , refcount_ (1)
   , is_collocated_ (rhs.is_collocated_)
@@ -112,7 +112,7 @@ CORBA::AbstractBase::_to_value ()
 }
 
 CORBA::Boolean
-CORBA::AbstractBase::_is_a (const char *type_id)
+CORBA::AbstractBase::_is_a (char const *type_id)
 {
   if (this->is_objref_)
     {
@@ -125,20 +125,20 @@ CORBA::AbstractBase::_is_a (const char *type_id)
   return (std::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
 }
 
-const char *
+char const *
 CORBA::AbstractBase::_interface_repository_id () const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
 }
 
-const char *
+char const *
 CORBA::AbstractBase::_tao_obv_repository_id () const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
 }
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
+operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
 {
   CORBA::Boolean discriminator {true};
 
@@ -169,7 +169,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
               return false;
             }
 
-          const TAO_MProfile& mprofile = stubobj->base_profiles ();
+          TAO_MProfile const &mprofile = stubobj->base_profiles ();
 
           CORBA::ULong const profile_count = mprofile.profile_count ();
 
@@ -182,7 +182,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
           // anyway to achieve that?
           for (CORBA::ULong i {}; i < profile_count; ++i)
             {
-              const TAO_Profile *p = mprofile.get_profile (i);
+              TAO_Profile const *p = mprofile.get_profile (i);
 
               if (p->encode (strm) == 0)
                 {
@@ -361,7 +361,7 @@ CORBA::AbstractBase::_tao_match_formal_type (ptrdiff_t ) const
 
 std::ostream &
 CORBA::AbstractBase::_tao_stream (std::ostream &strm,
-                                  const CORBA::AbstractBase_ptr _tao_objref)
+                                  CORBA::AbstractBase_ptr const _tao_objref)
 {
   return _tao_objref->_tao_stream_v (strm);
 }

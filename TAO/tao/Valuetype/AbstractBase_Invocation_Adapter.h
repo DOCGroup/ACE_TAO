@@ -49,7 +49,7 @@ namespace TAO
         CORBA::AbstractBase_ptr target,
         Argument **args,
         int arg_number,
-        const char *operation,
+        char const *operation,
         std::size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
@@ -58,8 +58,8 @@ namespace TAO
 
   private:
     AbstractBase_Invocation_Adapter () = delete;
-    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &) = delete;
-    AbstractBase_Invocation_Adapter & operator= (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter const &) = delete;
+    AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter const &) = delete;
     AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;
     AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter &&) = delete;
   };

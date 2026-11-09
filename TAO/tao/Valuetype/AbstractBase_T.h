@@ -35,7 +35,7 @@ namespace TAO
     using T_ptr = T *;
 
     static T_ptr narrow (CORBA::AbstractBase_ptr,
-                         const char *repo_id);
+                         char const *repo_id);
 
     static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr);
   };

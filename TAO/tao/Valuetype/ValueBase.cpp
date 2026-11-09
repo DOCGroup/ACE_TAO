@@ -72,7 +72,7 @@ CORBA::ValueBase::_copy_value ()
 
 CORBA::ValueBase::ValueBase () = default;
 
-CORBA::ValueBase::ValueBase (const ValueBase& val)
+CORBA::ValueBase::ValueBase (ValueBase const &val)
   : is_truncatable_ (val.is_truncatable_),
     chunking_ (val.chunking_)
 {
@@ -143,7 +143,7 @@ CORBA::ValueBase::_tao_any_destructor (void *x)
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
-                                const CORBA::ValueBase *this_,
+                                CORBA::ValueBase const *this_,
                                 ptrdiff_t formal_type_id)
 {
   if ( ! _tao_write_special_value (strm, this_))
@@ -200,7 +200,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_pre (
   TAO_InputCDR &strm,
   CORBA::ValueBase *&valuetype,
-  const char *const fallback_repo_id,
+  char const * const fallback_repo_id,
   CORBA::Boolean &is_null_object,
   CORBA::Boolean &is_indirected)
 {
@@ -261,7 +261,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (
 CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_header (
   TAO_InputCDR &strm,
-  const char *const fallback_repo_id,
+  char const * const fallback_repo_id,
   Repository_Id_List &ids,
   CORBA::Boolean &is_null_object,
   CORBA::Boolean &is_indirected,
@@ -389,7 +389,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   CORBA::ValueFactory_var factory;
   CORBA::Boolean requires_truncation {false};
   std::size_t const num_ids = ids.size ();
-  const char *id = (num_ids) ? ids[0].c_str () : "{Null}";
+  char const *id = (num_ids) ? ids[0].c_str () : "{Null}";
   for (std::size_t i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
@@ -464,7 +464,7 @@ CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
 CORBA::Boolean
 CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
                                           TAO_InputCDR &indirected_strm,
-                                          const char * const repo_id_expected,
+                                          char const * const repo_id_expected,
                                           CORBA::Boolean & null_object,
                                           CORBA::Boolean & is_indirected)
 {
@@ -688,7 +688,7 @@ CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
 #if defined (GEN_OSTREAM_OPS)
 std::ostream &
 CORBA::ValueBase::_tao_stream (std::ostream &strm,
-                               const CORBA::ValueBase *value)
+                               CORBA::ValueBase const *value)
 {
   return value->_tao_stream_v (strm);
 }
@@ -704,7 +704,7 @@ CORBA::ValueBase::_tao_stream_v (std::ostream &strm) const
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
-                                            const CORBA::ValueBase *value)
+                                            CORBA::ValueBase const *value)
 {
   // If the 'value' is null then write the null value to the stream.
   if (value == nullptr)
@@ -786,7 +786,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_value (TAO_OutputCDR &strm,
-                                    const CORBA::ValueBase * value,
+                                    CORBA::ValueBase const * value,
                                     ptrdiff_t formal_type_id)
 {
   if (! value->_tao_write_value_header (strm, formal_type_id))
@@ -1466,7 +1466,7 @@ CORBA::DefaultValueRefCountBase::_refcount_value ()
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm,
-            const CORBA::ValueBase *_tao_valuetype)
+            CORBA::ValueBase const *_tao_valuetype)
 {
   return CORBA::ValueBase::_tao_marshal (
              strm,

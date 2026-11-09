@@ -162,7 +162,7 @@ namespace CORBA
     virtual CORBA::TypeCode_ptr _tao_type () const = 0;
 
     /// Return the repository id of this valuetype.
-    virtual const char * _tao_obv_repository_id () const = 0;
+    virtual char const * _tao_obv_repository_id () const = 0;
 
     /// Give the list of the RepositoryIds in the valuetype "truncatable"
     /// inheritance hierarchy. List the id of this valuetype as first
@@ -176,7 +176,7 @@ namespace CORBA
     /// Marshal a valuetype (see operator<< in tao_idl generated file
     /// how it is called)
     static CORBA::Boolean _tao_marshal (TAO_OutputCDR &strm,
-                                        const ValueBase *_this,
+                                        ValueBase const *_this,
                                         ptrdiff_t formal_type_id = 0);
 
     /// Unmarshal a valuetype, if formal type is a pointer to
@@ -192,13 +192,13 @@ namespace CORBA
     /// Both used internally and are called from T::_tao_unmarshal ()
     static CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &strm,
                                               CORBA::ValueBase *&valuetype,
-                                              const char *const repo_id,
+                                              char const * const repo_id,
                                               CORBA::Boolean &is_null_object,
                                               CORBA::Boolean &is_indirected);
 
     static CORBA::Boolean _tao_unmarshal_header (
       TAO_InputCDR &strm,
-      const char *const fallback_repo_id,
+      char const * const fallback_repo_id,
       Repository_Id_List &ids,
       CORBA::Boolean &is_null_object,
       CORBA::Boolean &is_indirected,
@@ -211,13 +211,13 @@ namespace CORBA
     static CORBA::Boolean _tao_validate_box_type (
                                           TAO_InputCDR &strm,
                                           TAO_InputCDR &indirected_strm,
-                                          const char * const repo_id_expected,
+                                          char const * const repo_id_expected,
                                           CORBA::Boolean & null_object,
                                           CORBA::Boolean & is_indirected);
 #if defined (GEN_OSTREAM_OPS)
     /// Used by optionally generated ostream operators for valuetypes
     /// to output the state of the actual type for debugging.
-    static std::ostream& _tao_stream (std::ostream &strm, const ValueBase *value);
+    static std::ostream& _tao_stream (std::ostream &strm, ValueBase const *value);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
 #endif /* GEN_OSTREAM_OPS */
 
@@ -237,7 +237,7 @@ namespace CORBA
 
   protected:
     ValueBase ();
-    ValueBase (const ValueBase&);
+    ValueBase (ValueBase const &);
     virtual ~ValueBase () = default;
 
     /// This flag is set to be true when the valuetype defined
@@ -280,11 +280,11 @@ namespace CORBA
 
     /// Write some special values such as null value or indirection value.
     static CORBA::Boolean _tao_write_special_value(TAO_OutputCDR &strm,
-                                              const CORBA::ValueBase * value);
+                                              CORBA::ValueBase const * value);
   private:
     /// Write whole value.
     static CORBA::Boolean _tao_write_value(TAO_OutputCDR &strm,
-                                      const CORBA::ValueBase * value,
+                                      CORBA::ValueBase const * value,
                                       ptrdiff_t formal_type_id);
 
     /// Write the header of the value which includes the valuetag, number of
@@ -333,9 +333,9 @@ namespace CORBA
     ~DefaultValueRefCountBase () override = default;
 
   private:
-    DefaultValueRefCountBase &operator= (const DefaultValueRefCountBase &) = delete;
+    DefaultValueRefCountBase &operator= (DefaultValueRefCountBase const &) = delete;
     DefaultValueRefCountBase &operator= (DefaultValueRefCountBase &&) = delete;
-    DefaultValueRefCountBase (const DefaultValueRefCountBase &) = delete;
+    DefaultValueRefCountBase (DefaultValueRefCountBase const &) = delete;
     DefaultValueRefCountBase (DefaultValueRefCountBase &&) = delete;
 
   private: // data
@@ -384,7 +384,7 @@ namespace TAO_OBV_GIOP_Flags
 }
 
 TAO_Valuetype_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);
+operator<< (TAO_OutputCDR&, CORBA::ValueBase const *);
 
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
