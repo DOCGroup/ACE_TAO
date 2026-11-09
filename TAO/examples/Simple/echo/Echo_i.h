@@ -29,10 +29,8 @@
 class Echo_i : public POA_Echo
 {
 public:
-  /// Constructor.
   Echo_i () = default;
 
-  /// Destructor.
   ~Echo_i () override = default;
 
   /// Return the mesg string back from the server.
