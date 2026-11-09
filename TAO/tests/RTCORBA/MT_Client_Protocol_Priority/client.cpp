@@ -35,7 +35,7 @@ public:
   Worker_Thread &operator= (Worker_Thread &&) = delete;
   // Constructor.
 
-  int svc ();
+  int svc () override;
   // Do work.
 
 private:
@@ -165,7 +165,7 @@ public:
   Task &operator= (Task const &) = delete;
   Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var const orb_;

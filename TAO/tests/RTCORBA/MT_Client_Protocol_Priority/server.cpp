@@ -23,10 +23,10 @@ public:
   Test_i &operator= (Test_i &&) = delete;
   // ctor
 
-  void test_method ();
+  void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -108,7 +108,7 @@ public:
   Task &operator= (Task const &) = delete;
   Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var const orb_;
