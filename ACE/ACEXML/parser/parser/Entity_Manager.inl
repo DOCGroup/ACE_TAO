@@ -1,6 +1,6 @@
 ACEXML_INLINE int
-ACEXML_Entity_Manager::add_entity (const ACEXML_Char *ref,
-                                   const ACEXML_Char *v)
+ACEXML_Entity_Manager::add_entity (ACEXML_Char const *ref,
+                                   ACEXML_Char const *v)
 {
   if (this->entities_ == nullptr)
     {
@@ -8,27 +8,27 @@ ACEXML_Entity_Manager::add_entity (const ACEXML_Char *ref,
       ACE_NEW_RETURN (entities, ACEXML_ENTITIES_MANAGER, -1);
       this->entities_.reset (entities);
     }
-  ACEXML_String name (ref, 0, false);
-  ACEXML_String value  (v, 0, false);
+  ACEXML_String const name (ref, nullptr, false);
+  ACEXML_String const value (v, nullptr, false);
   return this->entities_->bind (name, value);
 }
 
-ACEXML_INLINE const ACEXML_Char*
-ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char *ref)
+ACEXML_INLINE ACEXML_Char const *
+ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref)
 {
   if (this->entities_ == nullptr)
     return nullptr;
 
   ACEXML_ENTITY_ENTRY *entry {};
 
-  if (this->entities_->find (ACEXML_String (ref, 0, false),
+  if (this->entities_->find (ACEXML_String (ref, nullptr, false),
                             entry) == 0)
     return entry->int_id_.c_str();
   return nullptr;
 }
 
 ACEXML_INLINE int
-ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char* ref,
+ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref,
                                        ACEXML_Char*& systemId,
                                        ACEXML_Char*& publicId)
 {
@@ -56,7 +56,6 @@ ACEXML_Entity_Manager::reset ()
   this->entities_.reset ();
   return 0;
 }
-
 
 ACEXML_INLINE size_t
 ACEXML_Entity_Manager::size () const

@@ -156,7 +156,6 @@ ACEXML_Parser::isPubidChar (ACEXML_Char const c) const
           c == '%');
 }
 
-
 ACEXML_INLINE bool
 ACEXML_Parser::is_whitespace (ACEXML_Char const c) const
 {
@@ -179,12 +178,11 @@ ACEXML_Parser::skip_whitespace ()
   return ch;
 }
 
-
 ACEXML_INLINE int
 ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
 {
-  int wscount = 0;
-  ACEXML_Char dummy;
+  int wscount {};
+  ACEXML_Char dummy {};
   ACEXML_Char &forward = (peeky == nullptr ? dummy : *peeky);
 
   for (;this->is_whitespace ((forward = this->peek ())); ++wscount)
@@ -205,9 +203,9 @@ ACEXML_Parser::skip_equal ()
 ACEXML_INLINE ACEXML_Char
 ACEXML_Parser::get ()
 {
-  ACEXML_Char ch = 0;
-  const ACEXML_InputSource* ip = this->current_->getInputSource();
-  ACEXML_CharStream* instream = ip->getCharStream();
+  ACEXML_Char ch {};
+  ACEXML_InputSource const * const ip = this->current_->getInputSource();
+  ACEXML_CharStream * const instream = ip->getCharStream();
 
   if (instream->get (ch) != -1)
     {
@@ -235,19 +233,19 @@ ACEXML_Parser::peek ()
 {
   // Using an extra level of indirection so we can
   // manage document location in the future.
-  ACEXML_Char ch = 0;
-  const ACEXML_InputSource* ip = this->current_->getInputSource();
-  ACEXML_CharStream* instream = ip->getCharStream();
+  ACEXML_Char ch {};
+  ACEXML_InputSource const * const ip = this->current_->getInputSource();
+  ACEXML_CharStream * const instream = ip->getCharStream();
   ch = static_cast<ACEXML_Char> (instream->peek ());
   return (ch > 0 ? ch : 0);
 }
 
 ACEXML_INLINE int
-ACEXML_Parser::parse_token (const ACEXML_Char* keyword)
+ACEXML_Parser::parse_token (ACEXML_Char const *keyword)
 {
   if (keyword == nullptr)
     return -1;
-  const ACEXML_Char* ptr = keyword;
+  ACEXML_Char const *ptr = keyword;
   for (; *ptr != 0 && (this->get() == *ptr); ++ptr)
     ;
   if (*ptr == 0)

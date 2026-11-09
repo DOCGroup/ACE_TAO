@@ -75,14 +75,14 @@ public:
   ~ACEXML_Entity_Manager ();
 
   /// Add a new entity declaration.
-  int add_entity (const ACEXML_Char *ref, const ACEXML_Char *value);
+  int add_entity (ACEXML_Char const *ref, ACEXML_Char const *value);
 
   /// Resolve an entity reference.
-  const ACEXML_Char* resolve_entity (const ACEXML_Char *ref);
+  ACEXML_Char const *resolve_entity (ACEXML_Char const *ref);
 
   /// Resolve an entity reference and return the tuple of @c systemId and
   /// @c publicId
-  int resolve_entity (const ACEXML_Char* ref, ACEXML_Char*& systemId,
+  int resolve_entity (ACEXML_Char const *ref, ACEXML_Char*& systemId,
                       ACEXML_Char*& publicId);
 
   /// Number of items in the Entity Manager
@@ -92,7 +92,7 @@ public:
   int reset ();
 
 private:
-  std::unique_ptr<ACEXML_ENTITIES_MANAGER> entities_;
+  std::unique_ptr<ACEXML_ENTITIES_MANAGER> entities_ {};
   // bool init_;
 };
 

@@ -84,23 +84,23 @@ public:
    * programmers to check whether a specific feature has been
    * activated in the parser.
    */
-  int getFeature (const ACEXML_Char *name) override;
+  int getFeature (ACEXML_Char const *name) override;
 
   /**
    * Activating or deactivating a feature.
    */
-  void setFeature (const ACEXML_Char *name,
+  void setFeature (ACEXML_Char const *name,
                    int boolean_value) override;
 
   /*
    * Look up the value of a property.
    */
-  void * getProperty (const ACEXML_Char *name) override;
+  void * getProperty (ACEXML_Char const *name) override;
 
   /*
    * Set the value of a property.
    */
-  void setProperty (const ACEXML_Char *name,
+  void setProperty (ACEXML_Char const *name,
                     void *value) override;
 
   /*
@@ -111,7 +111,7 @@ public:
   /*
    * Parse an XML document from a system identifier (URI).
    */
-  void parse (const ACEXML_Char *systemId) override;
+  void parse (ACEXML_Char const *systemId) override;
 
   /*
    * Allow an application to register a content event handler.
@@ -132,7 +132,6 @@ public:
    * Allow an application to register an error event handler.
    */
   void setErrorHandler (ACEXML_ErrorHandler *handler) override;
-
 
 protected:
   /**
@@ -196,8 +195,8 @@ protected:
    *  Parse a content declaration.
    *
    */
-  int parse_content (const ACEXML_Char* startname, const ACEXML_Char*& ns_uri,
-                     const ACEXML_Char*& ns_lname, bool ns_flag);
+  int parse_content (ACEXML_Char const *startname, ACEXML_Char const *&ns_uri,
+                     ACEXML_Char const *&ns_lname, bool ns_flag);
 
   /**
    * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
@@ -366,7 +365,6 @@ protected:
    *
    */
   int parse_defaultdecl ();
-
 
   /**
    * Parse the "children" and "Mixed" non-terminals in contentspec.
@@ -620,19 +618,19 @@ private:
    * Dispatch errors to ErrorHandler.
    *
    */
-  void error (const ACEXML_Char* msg);
+  void error (ACEXML_Char const *msg);
 
   /**
    * Dispatch warnings to ErrorHandler.
    *
    */
-  void warning (const ACEXML_Char* msg);
+  void warning (ACEXML_Char const *msg);
 
   /**
    * Dispatch fatal errors to ErrorHandler.
    *
    */
-  void fatal_error (const ACEXML_Char* msg);
+  void fatal_error (ACEXML_Char const *msg);
 
   /**
    * Dispatch prefix mapping calls to the ContentHandler.
@@ -642,13 +640,13 @@ private:
    * @param name Local name
    * @param start true => startPrefixMapping, false => endPrefixMapping
    */
-  void prefix_mapping (const ACEXML_Char* prefix,
-                       const ACEXML_Char* uri,
+  void prefix_mapping (ACEXML_Char const *prefix,
+                       ACEXML_Char const *uri,
                        bool start);
   /**
    *  Parse a keyword.
    */
-  int parse_token (const ACEXML_Char* keyword);
+  int parse_token (ACEXML_Char const *keyword);
 
   /**
    *  Push the current context on to the stack.
@@ -667,16 +665,16 @@ private:
    *  Takes ownership of @a cstream.
    */
   virtual int switch_input (ACEXML_CharStream* cstream,
-                            const ACEXML_Char* systemId,
-                            const ACEXML_Char* publicId = nullptr);
+                            ACEXML_Char const *systemId,
+                            ACEXML_Char const *publicId = nullptr);
   /**
    *  Create a new ACEXML_InputSource from @a systemId and @a publicId and
    *  replace the current input source with the newly created InputSource.
    *  Takes ownership of @a input.
    */
   virtual int switch_input (ACEXML_InputSource* input,
-                            const ACEXML_Char* systemId,
-                            const ACEXML_Char* publicId = nullptr);
+                            ACEXML_Char const *systemId,
+                            ACEXML_Char const *publicId = nullptr);
 
   /**
    * Check for a parameter entity reference. This is used to check for the
@@ -698,7 +696,7 @@ private:
    * Very trivial, non-conformant normalization of a systemid.
    *
    */
-  ACEXML_Char* normalize_systemid (const ACEXML_Char* systemId);
+  ACEXML_Char* normalize_systemid (ACEXML_Char const *systemId);
 
   // Feature names:
 
@@ -750,16 +748,16 @@ private:
 
   /// Keeping track of the handlers. We do not manage the memory for
   /// handlers.
-  ACEXML_DTDHandler *dtd_handler_;
-  ACEXML_EntityResolver *entity_resolver_;
-  ACEXML_ContentHandler *content_handler_;
-  ACEXML_ErrorHandler *error_handler_;
+  ACEXML_DTDHandler *dtd_handler_ {};
+  ACEXML_EntityResolver *entity_resolver_ {};
+  ACEXML_ContentHandler *content_handler_ {};
+  ACEXML_ErrorHandler *error_handler_ {};
 
   /// Document Type
-  ACEXML_Char *doctype_;
+  ACEXML_Char *doctype_ {};
 
   /// Current parser context
-  ACEXML_Parser_Context* current_;
+  ACEXML_Parser_Context* current_ {};
 
   /// Stack used to hold the Parser_Context
   ACE_Unbounded_Stack<ACEXML_Parser_Context*> ctx_stack_;
@@ -787,7 +785,7 @@ private:
   ACEXML_NamespaceSupport xml_namespace_;
 
   /// T => We are processing a nested namespace
-  int nested_namespace_;
+  int nested_namespace_ {};
 
   /// Set of internal parsed general entities in the document
   ACEXML_Entity_Manager internal_GE_;
@@ -811,39 +809,39 @@ private:
   ACEXML_Entity_Manager notations_;
 
   /// State of the parser when it encounters a reference.
-  ACEXML_ParserInt::ReferenceState ref_state_;
+  ACEXML_ParserInt::ReferenceState ref_state_ {ACEXML_ParserInt::INVALID};
 
   /// T => We are parsing an external subset
-  bool external_subset_;
+  bool external_subset_ {};
 
   /// T => We are parsing an external entity value
-  int external_entity_;
+  int external_entity_ {};
 
   /// T => Internal DTD has parameter entity references
-  bool has_pe_refs_;
+  bool has_pe_refs_ {};
 
   /// If set, the document is a standalone XML document
-  bool standalone_;
+  bool standalone_ {};
 
   /// If set, the document has an external DTD subset
-  bool external_dtd_;
+  bool external_dtd_ {};
 
   /// If set, the document has an internal DTD
-  bool internal_dtd_;
+  bool internal_dtd_ {};
 
   /// Feature flags
   /// If set, the parser should parse a document without a prolog
-  bool simple_parsing_;
+  bool simple_parsing_ {};
 
   /// If set, the parser should also validate
-  bool validate_;
+  bool validate_ {true};
 
   /// If set, the parser should allow access by namespace qualified names.
-  bool namespaces_;
+  bool namespaces_ {true};
 
   /// If set, the parser should include namespace declarations in the list
   /// of attributes of an element.
-  bool namespace_prefixes_;
+  bool namespace_prefixes_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

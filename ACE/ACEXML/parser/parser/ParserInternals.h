@@ -75,9 +75,9 @@ public:
 
   static const ACEXML_Char base_char_table_[256];
 
-  static const ACEXML_Char* predef_ent_[];
+  static ACEXML_Char const *predef_ent_[];
 
-  static const ACEXML_Char* predef_val_[];
+  static ACEXML_Char const *predef_val_[];
 
   // Enum describing the position in a document when a reference occurs.
   enum ReferenceState {

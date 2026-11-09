@@ -1,7 +1,6 @@
 #include "ACEXML/parser/parser/ParserInternals.h"
 
-
-const ACEXML_Char* ACEXML_ParserInt::predef_ent_[] = {
+ACEXML_Char const *ACEXML_ParserInt::predef_ent_[] = {
   ACE_TEXT ("amp"),
   ACE_TEXT ("lt"),
   ACE_TEXT ("gt"),
@@ -9,7 +8,7 @@ const ACEXML_Char* ACEXML_ParserInt::predef_ent_[] = {
   ACE_TEXT ("quot")
 };
 
-const ACEXML_Char* ACEXML_ParserInt::predef_val_[] = {
+ACEXML_Char const *ACEXML_ParserInt::predef_val_[] = {
   ACE_TEXT ("&"),
   ACE_TEXT ("<"),
   ACE_TEXT (">"),
