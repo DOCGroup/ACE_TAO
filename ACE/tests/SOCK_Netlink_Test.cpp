@@ -200,7 +200,6 @@ public:
   // Default constructor
   Secondary_Ipaddr_Handler ();
 
-  // Destructor
   ~Secondary_Ipaddr_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS

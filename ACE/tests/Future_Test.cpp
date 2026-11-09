@@ -231,7 +231,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
                                   Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
@@ -244,8 +243,6 @@ Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
               ACE_TEXT ("(%t) Prime_Scheduler %s created\n"),
               this->name_));
 }
-
-// Destructor
 
 Prime_Scheduler::~Prime_Scheduler ()
 {

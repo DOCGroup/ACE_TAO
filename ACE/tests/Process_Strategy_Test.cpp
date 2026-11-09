@@ -75,7 +75,6 @@ connection_completed ()
     ACE_Reactor::instance()->wakeup_all_threads ();
 }
 
-// Constructor
 Process_Strategy::Process_Strategy (size_t n_processes,
                                     ACE_Event_Handler *acceptor,
                                     ACE_Reactor *r,
