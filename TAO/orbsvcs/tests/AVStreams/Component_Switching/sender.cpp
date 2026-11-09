@@ -16,7 +16,6 @@ typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
 int g_shutdown = 0;
 /// Flag set when a signal is raised.
 
-// constructor.
 Signal_Handler::Signal_Handler ()
 {
 }

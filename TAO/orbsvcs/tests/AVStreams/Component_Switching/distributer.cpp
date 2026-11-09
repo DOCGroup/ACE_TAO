@@ -8,7 +8,6 @@
 
 typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
 
-// constructor.
 Signal_Handler::Signal_Handler ()
 {
 }

@@ -10,7 +10,6 @@ static FILE *output_file = 0;
 static int done = 0;
 /// Flag set when a signal is raised.
 
-// constructor.
 Signal_Handler::Signal_Handler ()
 {
 }
