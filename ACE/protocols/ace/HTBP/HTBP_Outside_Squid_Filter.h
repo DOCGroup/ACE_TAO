@@ -44,7 +44,6 @@ namespace ACE
     class HTBP_Export Outside_Squid_Filter : public Filter
     {
     public:
-      /// Destructor.
       ~Outside_Squid_Filter () override;
 
       /// Outside and outside Send filters need to supply a data header that

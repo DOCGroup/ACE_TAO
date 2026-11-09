@@ -28,7 +28,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialization and termination methods.
-/// Constructor.
 ACE::HTBP::Channel::Channel (ACE::HTBP::Session *s)
   : filter_ (nullptr),
     session_ (s),
@@ -97,7 +96,6 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
-/// Destructor.
 ACE::HTBP::Channel::~Channel ()
 {
   delete this->notifier_;

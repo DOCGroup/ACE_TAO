@@ -17,7 +17,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialization and termination methods.
-/// Constructor.
 ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
   : session_ (s)
 {
@@ -27,7 +26,6 @@ ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
   session_->stream (this);
 }
 
-/// Destructor.
 ACE::HTBP::Stream::~Stream ()
 {
 }

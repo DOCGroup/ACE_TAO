@@ -71,7 +71,6 @@ namespace ACE
     {
     public:
       // Initialization and termination methods.
-      /// Constructor.
       Session ();
 
       /// Constructor (sets the underlying session id with <sid>).
@@ -89,7 +88,6 @@ namespace ACE
       Session (Session&& other) = delete;
       Session& operator= (Session&& other) = delete;
 
-      /// Destructor.
       ~Session ();
 
       /// The following methods are specific to the Session

@@ -31,7 +31,6 @@ namespace ACE
     class HTBP_Export ID_Requestor
     {
     public:
-      /// Constructor.
       explicit ID_Requestor (Environment* = nullptr);
 
       /// Accessor to HTID

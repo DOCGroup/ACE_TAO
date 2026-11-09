@@ -31,12 +31,10 @@ namespace ACE
     class HTBP_Export Environment
     {
     public:
-      /// Constructor
       Environment (ACE_Configuration *config = nullptr,
                    bool using_registry = false,
                    ACE_TCHAR const* persistent_file = nullptr);
 
-      /// Destructor
       ~Environment ();
 
       Environment (Environment const&) = delete;

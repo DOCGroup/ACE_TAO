@@ -86,10 +86,8 @@ namespace ACE
     {
     public:
       // Initialization and termination methods.
-      /// Constructor.
       explicit Stream (Session* s = nullptr);
 
-      /// Destructor.
       ~Stream ();
 
       // = I/O functions.

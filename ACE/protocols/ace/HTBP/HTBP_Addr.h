@@ -40,7 +40,6 @@ namespace ACE
     class HTBP_Export Addr : public ACE_INET_Addr
     {
     public:
-      /// Constructor
       Addr () = default;
 
       Addr (Addr const&) = default;
@@ -60,7 +59,6 @@ namespace ACE
             char const host_name[],
             int address_family = AF_UNSPEC);
 
-      /// Destructor
       ~Addr () override = default;
 
       int set (u_short port,

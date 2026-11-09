@@ -43,7 +43,6 @@ namespace ACE
     class HTBP_Export Inside_Squid_Filter : public Filter
     {
     public:
-      /// Destructor.
       ~Inside_Squid_Filter () override;
 
       /// Inside and outside Send filters need to supply a data header
