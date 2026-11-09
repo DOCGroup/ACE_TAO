@@ -26,11 +26,9 @@ Messenger_i::send_message (char const *user_name,
 char *
 Messenger_i::get_time ()
 {
-  time_t thetime = 0;
+  time_t thetime {};
 
   ACE_OS::time (&thetime);
-  struct tm *timeinfo = ACE_OS::localtime (&thetime);
-  char *timestring = CORBA::string_dup (ACE_OS::asctime (timeinfo));
-
-  return timestring;
+  struct tm const * const timeinfo = ACE_OS::localtime (&thetime);
+  return CORBA::string_dup (ACE_OS::asctime (timeinfo));
 }
