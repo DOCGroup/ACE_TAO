@@ -24,7 +24,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
     {
       ex._tao_print_exception ("Caught exception");
 
-      ACE_ASSERT (0);  // Force termination!
+      ACE_ASSERT (0); // Force termination!
     }
 }
 

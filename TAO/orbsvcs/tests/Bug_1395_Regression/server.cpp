@@ -1,7 +1,8 @@
-#include "ace/Get_Opt.h"
 #include "Test_i.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Shutdown_Utilities.h"
+
 #include <memory>
 
 struct Server_Options
@@ -17,10 +18,10 @@ public:
   {
   }
 
-  Service_Shutdown_Functor (Service_Shutdown_Functor const&) = delete;
-  Service_Shutdown_Functor (Service_Shutdown_Functor&&) = delete;
-  Service_Shutdown_Functor& operator= (Service_Shutdown_Functor const&) = delete;
-  Service_Shutdown_Functor& operator= (Service_Shutdown_Functor&&) = delete;
+  Service_Shutdown_Functor (Service_Shutdown_Functor const &) = delete;
+  Service_Shutdown_Functor (Service_Shutdown_Functor &&) = delete;
+  Service_Shutdown_Functor &operator= (Service_Shutdown_Functor const &) = delete;
+  Service_Shutdown_Functor &operator= (Service_Shutdown_Functor &&) = delete;
 
   void operator() (int which_signal) override
   {
@@ -54,7 +55,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Test_i server_impl (orb.in ());
 
-      PortableServer::ObjectId_var const tmp =
+      PortableServer::ObjectId_var const object_id =
         root_poa->activate_object (&server_impl);
 
       CORBA::Object_var const server = server_impl._this ();
@@ -97,27 +97,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
-      // If the ior_output_file exists, output the ior to it
       if (options.ior_output_file != nullptr)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "SERVER (%P): Cannot open output file "
-                               "for writing IOR: %s",
-                               ACE_TEXT_ALWAYS_CHAR (options.ior_output_file)),
+                               ACE_TEXT ("SERVER (%P): Cannot open output file "
+                                         "for writing IOR: %s"),
+                               options.ior_output_file),
                               1);
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
           ACE_DEBUG ((LM_DEBUG,
-                      "SERVER (%P): Activated as file://%s\n",
-                      ACE_TEXT_ALWAYS_CHAR (options.ior_output_file)));
+                      ACE_TEXT ("SERVER (%P): Activated as file://%s\n"),
+                      options.ior_output_file));
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "SERVER (%P): Activated as <%s>\n",
+                      ACE_TEXT ("SERVER (%P): Activated as <%C>\n"),
                       ior.in ()));
         }
 

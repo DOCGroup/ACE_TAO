@@ -10,7 +10,7 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:s"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -25,20 +25,17 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior> -s\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result {};
+  CORBA::Long result {};
   try
     {
       CORBA::ORB_var const orb =
@@ -56,20 +53,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (server.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Server reference <%s>\n",
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Nil Test::Server reference <%s>\n"),
                              options.ior),
                             1);
         }
 
       if (options.shutdown_server)
-      {
-        server->shutdown ();
-      }
+        {
+          server->shutdown ();
+        }
       else
-      {
-        result = server->try_and_create_POA ();
-      }
+        {
+          result = server->try_and_create_POA ();
+        }
 
       orb->destroy ();
     }
