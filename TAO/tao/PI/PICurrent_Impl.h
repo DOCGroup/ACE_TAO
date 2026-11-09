@@ -49,11 +49,9 @@ namespace TAO
   class TAO_PI_Export PICurrent_Impl
   {
   public:
-    /// Constructor.
     explicit PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
                     std::size_t tss_slot = 0,
                     PICurrent_Impl *pop= nullptr);
-    /// Destructor.
     ~PICurrent_Impl ();
 
     /// Retrieve information stored in the slot table at the given

@@ -53,7 +53,6 @@ public:
                                 ACE_Null_Mutex>;
 
 public:
-  /// Constructor
   TAO_PolicyFactory_Registry ();
 
   /// Destructor.  Releases duplicated PolicyFactory references.

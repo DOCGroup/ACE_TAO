@@ -61,7 +61,6 @@ namespace TAO
       DetailsType              details_;
     };
 
-    /// Constructor.
     Interceptor_List () = default;
 
     void add_interceptor (InterceptorType_ptr_type i);

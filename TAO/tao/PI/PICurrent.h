@@ -59,7 +59,6 @@ namespace TAO
       public virtual ::CORBA::LocalObject
   {
   public:
-    /// Constructor.
     explicit PICurrent (TAO_ORB_Core &orb_core);
 
     /**
@@ -94,7 +93,6 @@ namespace TAO
     void initialize (PortableInterceptor::SlotId sc);
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce the fact this class is reference
      * counted, and should not be destroyed using delete() by anything
