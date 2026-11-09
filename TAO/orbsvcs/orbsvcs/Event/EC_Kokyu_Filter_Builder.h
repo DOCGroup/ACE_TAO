@@ -41,10 +41,8 @@ class TAO_EC_Event_Channel_Base;
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Filter_Builder : public TAO_EC_Filter_Builder
 {
 public:
-  /// constructor.
   explicit TAO_EC_Kokyu_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
-  /// destructor...
   ~TAO_EC_Kokyu_Filter_Builder () override = default;
 
   // = The TAO_EC_Filter_Builder methods...

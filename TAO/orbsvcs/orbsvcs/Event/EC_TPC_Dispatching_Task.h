@@ -21,7 +21,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_TPC_Dispatching_Task : public TAO_EC_Dispatching_Task
 {
 public:
-  /// Constructor
   TAO_EC_TPC_Dispatching_Task (ACE_Thread_Manager* thr_mgr, TAO_EC_Queue_Full_Service_Object* so);
   TAO_EC_TPC_Dispatching_Task (const TAO_EC_TPC_Dispatching_Task&) = delete;
   TAO_EC_TPC_Dispatching_Task (TAO_EC_TPC_Dispatching_Task&&) = delete;

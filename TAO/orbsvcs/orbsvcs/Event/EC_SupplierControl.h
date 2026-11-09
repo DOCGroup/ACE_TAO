@@ -46,10 +46,8 @@ namespace CORBA
 class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl
 {
 public:
-  /// Constructor.
   TAO_EC_SupplierControl () = default;
 
-  /// Destructor.
   virtual ~TAO_EC_SupplierControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of

@@ -41,7 +41,6 @@ public:
   /// Constructor. It assumes ownership of the child.
   explicit TAO_EC_Negation_Filter (TAO_EC_Filter* child);
 
-  /// Destructor
   ~TAO_EC_Negation_Filter () override;
 
 

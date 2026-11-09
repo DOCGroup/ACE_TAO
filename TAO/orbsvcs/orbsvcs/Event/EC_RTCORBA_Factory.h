@@ -33,14 +33,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Factory : public TAO_EC_Factory
 {
 public:
-  /// Constructor
   /**
    * @param body The decorated factory.
    */
   TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
                           const RTCORBA::ThreadpoolLanes &lanes);
 
-  /// destructor...
   ~TAO_EC_RTCORBA_Factory () override = default;
 
   // Decorated methods...

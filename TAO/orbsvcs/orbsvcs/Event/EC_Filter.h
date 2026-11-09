@@ -49,10 +49,8 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Filter
 {
 public:
-  /// constructor...
   TAO_EC_Filter ();
 
-  /// destructor...
   virtual ~TAO_EC_Filter () = default;
 
   /// Obtain the parent of this filter.
@@ -170,7 +168,6 @@ private:
 class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 {
 public:
-  /// Constructor.
   TAO_EC_Null_Filter ();
 
   // = The TAO_EC_Filter methods, please check the documentation in

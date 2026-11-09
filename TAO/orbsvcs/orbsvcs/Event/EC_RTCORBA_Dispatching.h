@@ -36,12 +36,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
 {
 public:
-  /// Constructor
   TAO_EC_RTCORBA_Dispatching (const RTCORBA::ThreadpoolLanes &lanes,
                               RTCORBA::PriorityMapping *mapping,
                               RTCORBA::Current_ptr current);
 
-  /// Destructor
   ~TAO_EC_RTCORBA_Dispatching () override;
 
   TAO_EC_RTCORBA_Dispatching (TAO_EC_RTCORBA_Dispatching const &) = delete;

@@ -59,7 +59,6 @@ public:
                          CORBA::ULong type_mask,
                          TAO_EC_Filter* child);
 
-  /// Destructor
   ~TAO_EC_Bitmask_Filter () override;
 
   // = The TAO_EC_Filter methods, please check the documentation in

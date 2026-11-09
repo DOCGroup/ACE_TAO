@@ -58,7 +58,6 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Serv_Export TAO_EC_ObserverStrategy
 {
 public:
-  /// Destructor
   virtual ~TAO_EC_ObserverStrategy () = default;
 
   /// The basic methods to support the EC strategies.
@@ -91,7 +90,6 @@ public:
 class TAO_RTEvent_Serv_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
 public:
-  /// Constructor
   TAO_EC_Null_ObserverStrategy ();
 
   // = The TAO_EC_ObserverStrategy methods.
@@ -126,11 +124,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Basic_ObserverStrategy :
   public TAO_EC_ObserverStrategy
 {
 public:
-  /// Constructor
   TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
                                  ACE_Lock* lock);
 
-  /// Destructor
   ~TAO_EC_Basic_ObserverStrategy () override;
 
   // = The TAO_EC_ObserverStrategy methods.
@@ -240,11 +236,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ObserverStrategy :
   public TAO_EC_Basic_ObserverStrategy
 {
 public:
-  /// Constructor
   TAO_EC_Reactive_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
                                     ACE_Lock* lock);
 
-  /// Destructor
   ~TAO_EC_Reactive_ObserverStrategy () override = default;
 
 protected:
@@ -274,7 +268,6 @@ class TAO_EC_Accumulate_Supplier_Headers :
   public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
-  /// Constructor
   explicit TAO_EC_Accumulate_Supplier_Headers (
     TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
@@ -290,7 +283,6 @@ class TAO_EC_Accumulate_Consumer_Headers :
   public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
-  /// Constructor
   explicit TAO_EC_Accumulate_Consumer_Headers (
     TAO_EC_Basic_ObserverStrategy::Headers &headers);
 

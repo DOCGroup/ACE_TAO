@@ -46,13 +46,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Out_Endpoint
 {
 public:
-  /// Constructor
   TAO_ECG_UDP_Out_Endpoint ();
 
-  /// Constructor
   ~TAO_ECG_UDP_Out_Endpoint ();
 
-  /// Copy Constructor
   TAO_ECG_UDP_Out_Endpoint (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
   /// Assignment operator

@@ -66,7 +66,6 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter
 {
 public:
-  /// Destructor
   virtual ~TAO_EC_Supplier_Filter () = default;
 
   /**

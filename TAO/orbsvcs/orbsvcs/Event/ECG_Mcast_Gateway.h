@@ -135,7 +135,6 @@ public:
   /// configurator.
   static int init_svcs ();
 
-  /// Constructor.
   TAO_ECG_Mcast_Gateway ();
 
   /// Values for some configuration parameters to init ().

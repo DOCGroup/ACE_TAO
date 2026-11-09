@@ -45,7 +45,6 @@ class TAO_EC_ProxyPushSupplier_Set;
 class TAO_RTEvent_Serv_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
 public:
-  /// Constructor
   explicit TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter methods.
@@ -81,7 +80,6 @@ private:
 class TAO_RTEvent_Serv_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {
 public:
-  /// constructor....
   explicit TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter_Builder methods...

@@ -37,11 +37,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Timeout_Generator
   : public TAO_EC_Timeout_Generator
 {
 public:
-  /// Constructor.
   /// If <reactor> is 0 then we use the reactor in the ORB singleton.
   explicit TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = nullptr);
 
-  /// destructor
   ~TAO_EC_Reactive_Timeout_Generator () override = default;
 
   // = The TAO_EC_Timeout_Generator methods.

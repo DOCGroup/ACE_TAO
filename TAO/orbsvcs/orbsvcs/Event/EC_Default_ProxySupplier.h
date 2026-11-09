@@ -34,10 +34,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier
     public TAO_EC_ProxyPushSupplier
 {
 public:
-  /// Constructor...
   TAO_EC_Default_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
-  /// Destructor...
   virtual ~TAO_EC_Default_ProxyPushSupplier () = default;
 
   void activate (

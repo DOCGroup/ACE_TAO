@@ -46,7 +46,6 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Scheduling_Strategy
 {
 public:
-  /// Destructor
   virtual ~TAO_EC_Scheduling_Strategy ();
 
   /// Add all the dependencies between @a supplier and @a consumer

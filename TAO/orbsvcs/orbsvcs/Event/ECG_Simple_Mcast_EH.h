@@ -40,7 +40,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Mcast_EH
 public:
   /// Initialization and termination methods.
   //@{
-  /// Constructor.
   /// Messages received by this EH will be forwarded to the <recv>.
   /*
    * See comments for <receiver_> data member on why raw pointer is
@@ -48,7 +47,6 @@ public:
    */
   explicit TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
-  /// Destructor.
   ~TAO_ECG_Simple_Mcast_EH () override = default;
 
   /// Join the specified multicast group and register itself with the

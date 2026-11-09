@@ -38,13 +38,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_Masked_Type_Filter : public TAO_EC_Filter
 {
 public:
-  /// Constructor.
   TAO_EC_Masked_Type_Filter (CORBA::ULong source_mask,
                              CORBA::ULong type_mask,
                              CORBA::ULong source_value,
                              CORBA::ULong type_value);
 
-  /// Destructor
   ~TAO_EC_Masked_Type_Filter () override = default;
 
   // = The TAO_EC_Filter methods, please check the documentation in

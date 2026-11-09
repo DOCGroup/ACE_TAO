@@ -46,7 +46,6 @@ class TAO_EC_Reactive_ConsumerControl;
 class TAO_RTEvent_Serv_Export TAO_EC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   explicit TAO_EC_ConsumerControl_Adapter (TAO_EC_Reactive_ConsumerControl *adaptee);
 
   // = Documented in ACE_Event_Handler.
@@ -76,7 +75,6 @@ public:
                                    TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
-  /// Destructor.
   ~TAO_EC_Reactive_ConsumerControl () override = default;
 
   /// Receive the timeout from the adapter

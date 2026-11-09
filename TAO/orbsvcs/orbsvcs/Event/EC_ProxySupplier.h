@@ -59,10 +59,8 @@ public:
   using _var_type = RtecEventChannelAdmin::ProxyPushSupplier_var;
   using _ptr_type = RtecEventChannelAdmin::ProxyPushSupplier_ptr;
 
-  /// Constructor...
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
-  /// Destructor...
   virtual ~TAO_EC_ProxyPushSupplier ();
 
   /// Activate in the POA

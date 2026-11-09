@@ -33,7 +33,6 @@ public:
   /// TAO_ECG_Simple_Address_Server objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create ();
 
-  /// Destructor
   ~TAO_ECG_Simple_Address_Server () override = default;
 
   int init (char const *arg);

@@ -44,10 +44,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_SupplierAdmin
   , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
 {
 public:
-  /// constructor...
   explicit TAO_EC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// destructor...
   virtual ~TAO_EC_SupplierAdmin () = default;
 
   TAO_EC_SupplierAdmin (TAO_EC_SupplierAdmin const &) = delete;

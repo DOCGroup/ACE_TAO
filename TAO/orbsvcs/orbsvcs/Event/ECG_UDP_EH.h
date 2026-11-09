@@ -45,7 +45,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_EH :
 public:
   /// Initialization and termination methods.
   //@{
-  /// Constructor.
   /// Messages received by this EH will be forwarded to the @a recv.
   /*
    * See comments for <receiver_> data member on why raw pointer is
@@ -53,7 +52,6 @@ public:
    */
   explicit TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
 
-  /// Destructor.
   ~TAO_ECG_UDP_EH () override = default;
 
   /// Open the datagram and register itself with this->reactor().

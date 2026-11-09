@@ -36,10 +36,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
 public:
-  /// Constructor
   explicit TAO_EC_Simple_AddrServer (CORBA::UShort port);
 
-  /// Destructor
   ~TAO_EC_Simple_AddrServer () override = default;
 
   // = The RtecUDPAdmin::AddrServer methods

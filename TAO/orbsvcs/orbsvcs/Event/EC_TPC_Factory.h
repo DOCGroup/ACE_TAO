@@ -29,10 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_TPC_Factory : public TAO_EC_Default_Factory
 {
 public:
-  /// Constructor
   TAO_EC_TPC_Factory ();
 
-  /// destructor...
   ~TAO_EC_TPC_Factory () override = default;
 
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory const &) = delete;

@@ -71,7 +71,6 @@ public:
                     ACE_TCHAR const *net_if = nullptr,
                     CORBA::ULong buf_sz = 0);
 
-  /// Destructor.
   ~TAO_ECG_Mcast_EH () override;
 
   /**

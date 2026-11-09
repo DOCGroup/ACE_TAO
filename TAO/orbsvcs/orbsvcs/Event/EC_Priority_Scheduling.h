@@ -37,10 +37,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTSchedEvent_Export TAO_EC_Priority_Scheduling : public TAO_EC_Scheduling_Strategy
 {
 public:
-  /// Constructor.
   explicit TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
-  /// Destructor
   ~TAO_EC_Priority_Scheduling () override = default;
 
   void add_proxy_supplier_dependencies (

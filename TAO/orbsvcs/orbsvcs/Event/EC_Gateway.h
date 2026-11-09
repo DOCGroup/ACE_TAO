@@ -43,10 +43,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer
 {
 public:
-  /// Default constructor.
   TAO_EC_Gateway () = default;
 
-  /// Destructor
   virtual ~TAO_EC_Gateway () = default;
 
   /// The gateway must disconnect from all the relevant event channels,

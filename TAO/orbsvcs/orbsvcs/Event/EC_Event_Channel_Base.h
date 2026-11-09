@@ -110,7 +110,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Base
   : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
-  /// destructor
   virtual ~TAO_EC_Event_Channel_Base ();
 
   /// Start the internal threads (if any), etc.

@@ -45,7 +45,6 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Generator
 {
 public:
-  /// destructor
   virtual ~TAO_EC_Timeout_Generator () = default;
 
   /// Activate any internal threads.

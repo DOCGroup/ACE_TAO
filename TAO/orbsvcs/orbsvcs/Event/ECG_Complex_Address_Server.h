@@ -56,7 +56,6 @@ public:
   static PortableServer::Servant_var<TAO_ECG_Complex_Address_Server>
          create (bool is_source_mapping = true);
 
-  /// Destructor
   ~TAO_ECG_Complex_Address_Server () override = default;
 
   /// Initializes the mapping from the @a arg string.  See class notes

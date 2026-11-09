@@ -40,7 +40,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Reconnect_ConsumerEC_Control_Adapter
   : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   explicit TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (
     TAO_ECG_Reconnect_ConsumerEC_Control *adaptee);
 
@@ -77,7 +76,6 @@ public:
                                         TAO_EC_Gateway_IIOP* gateway,
                                         CORBA::ORB_ptr orb);
 
-  /// Destructor.
   ~TAO_ECG_Reconnect_ConsumerEC_Control () override = default;
 
   /// Receive the timeout from the adapter

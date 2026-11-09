@@ -35,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_Type_Filter : public TAO_EC_Filter
 {
 public:
-  /// Constructor.
   explicit TAO_EC_Type_Filter (RtecEventComm::EventHeader const &header);
 
   // = The TAO_EC_Filter methods, please check the documentation in

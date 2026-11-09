@@ -56,7 +56,6 @@ public:
                        RtecScheduler::handle_t parent_info,
                        RtecScheduler::Info_Type_t info_type);
 
-  /// Destructor
   ~TAO_EC_Kokyu_Filter () override;
 
   // = The TAO_EC_Filter methods, please check the documentation in

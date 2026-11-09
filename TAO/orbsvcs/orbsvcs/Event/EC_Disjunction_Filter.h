@@ -44,7 +44,6 @@ public:
   TAO_EC_Disjunction_Filter (TAO_EC_Filter* children[],
                              size_t n);
 
-  /// Destructor
   ~TAO_EC_Disjunction_Filter () override;
 
 

@@ -45,10 +45,8 @@ class TAO_EC_Queue_Full_Service_Object;
 class TAO_RTEvent_Serv_Export TAO_EC_Default_Factory : public TAO_EC_Factory
 {
 public:
-  /// Constructor
   TAO_EC_Default_Factory ();
 
-  /// destructor...
   ~TAO_EC_Default_Factory () override = default;
 
   TAO_EC_Default_Factory (TAO_EC_Default_Factory const &) = delete;

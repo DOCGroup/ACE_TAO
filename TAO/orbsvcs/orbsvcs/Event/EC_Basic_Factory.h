@@ -39,10 +39,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
 public:
-  /// Constructor
   TAO_EC_Basic_Factory () = default;
 
-  /// destructor...
   ~TAO_EC_Basic_Factory () override = default;
 
   TAO_EC_Basic_Factory (TAO_EC_Basic_Factory const &) = delete;

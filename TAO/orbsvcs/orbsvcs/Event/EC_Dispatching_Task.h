@@ -163,7 +163,6 @@ public:
   TAO_EC_Dispatch_Command& operator= (const TAO_EC_Dispatch_Command&) = delete;
   TAO_EC_Dispatch_Command& operator= (TAO_EC_Dispatch_Command&&) = delete;
 
-  /// Destructor
   ~TAO_EC_Dispatch_Command () override = default;
 
   /// Command callback
@@ -175,7 +174,6 @@ public:
 class TAO_RTEvent_Serv_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
 {
 public:
-  /// Constructor
   explicit TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
   TAO_EC_Shutdown_Task_Command (const TAO_EC_Shutdown_Task_Command&) = delete;
   TAO_EC_Shutdown_Task_Command (TAO_EC_Shutdown_Task_Command&&) = delete;
@@ -191,7 +189,6 @@ public:
 class TAO_RTEvent_Serv_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 {
 public:
-  /// Constructor
   TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                        RtecEventComm::PushConsumer_ptr consumer,
                        RtecEventComm::EventSet& event,
@@ -202,7 +199,6 @@ public:
   TAO_EC_Push_Command& operator= (const TAO_EC_Push_Command&) = delete;
   TAO_EC_Push_Command& operator= (TAO_EC_Push_Command&&) = delete;
 
-  /// Destructor
   ~TAO_EC_Push_Command () override;
 
   /// Command callback

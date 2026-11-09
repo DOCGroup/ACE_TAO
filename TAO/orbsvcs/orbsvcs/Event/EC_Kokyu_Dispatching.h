@@ -97,7 +97,6 @@ private:
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Dispatch_Command
 {
 public:
-  /// Constructor
   explicit TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
@@ -113,7 +112,6 @@ protected:
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Push_Command : public Kokyu::Dispatch_Command
 {
 public:
-  /// Constructor
   TAO_EC_Kokyu_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
                              RtecEventComm::EventSet& event,

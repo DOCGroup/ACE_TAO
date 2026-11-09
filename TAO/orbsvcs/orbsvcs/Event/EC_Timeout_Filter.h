@@ -40,14 +40,12 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
 public:
-  /// Constructor.
   TAO_EC_Timeout_Filter (TAO_EC_Event_Channel_Base *event_channel,
                          TAO_EC_ProxyPushSupplier *supplier,
                          TAO_EC_QOS_Info const &qos_info,
                          RtecEventComm::EventType type,
                          RtecEventComm::Time period);
 
-  /// Destructor.
   ~TAO_EC_Timeout_Filter () override;
 
   /// Return the QOS_Info for this Timeout filter.

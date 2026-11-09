@@ -31,7 +31,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_Scheduling
   : public TAO_EC_Scheduling_Strategy
 {
 public:
-  /// Constructor.
   TAO_EC_Null_Scheduling ();
 
   // Read EC_Scheduling_Strategy.h for more details
