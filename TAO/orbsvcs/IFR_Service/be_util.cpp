@@ -17,6 +17,9 @@
 
 #include "orbsvcs/Log_Macros.h"
 
+#include <memory>
+#include <new>
+
 // Prepare an argument for a BE.
 void
 be_util::prep_be_arg (std::string const&)
@@ -43,13 +46,9 @@ be_util::usage ()
     ));
 }
 
-AST_Generator *
+std::unique_ptr<AST_Generator>
 be_util::generator_init ()
 {
-  AST_Generator *gen {};
-  ACE_NEW_RETURN (gen,
-                  AST_Generator,
-                  nullptr);
-  return gen;
+  return std::unique_ptr<AST_Generator> (new (std::nothrow) AST_Generator);
 }
 

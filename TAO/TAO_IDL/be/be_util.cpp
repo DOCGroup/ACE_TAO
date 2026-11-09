@@ -31,6 +31,8 @@
 
 #include <cerrno>
 #include <cstdlib>
+#include <memory>
+#include <new>
 #include <string>
 
 void
@@ -969,17 +971,12 @@ be_util::usage ()
     ));
 }
 
-AST_Generator *
+std::unique_ptr<AST_Generator>
 be_util::generator_init ()
 {
   tao_cg = TAO_CODEGEN::instance ();
 
-  AST_Generator *gen {};
-  ACE_NEW_RETURN (gen,
-                  be_generator,
-                  nullptr);
-
-  return gen;
+  return std::unique_ptr<AST_Generator> (new (std::nothrow) be_generator);
 }
 
 std::string const&

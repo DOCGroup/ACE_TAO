@@ -15,6 +15,7 @@
 
 #include "TAO_IFR_BE_Export.h"
 
+#include <memory>
 #include <string>
 
 class AST_Generator;
@@ -35,7 +36,7 @@ public:
   usage ();
 
   /// Create an AST node generator.
-  static TAO_IFR_BE_Export AST_Generator *
+  static TAO_IFR_BE_Export std::unique_ptr<AST_Generator>
   generator_init ();
 };
 

@@ -16,6 +16,7 @@
 
 #include "TAO_IDL_BE_Export.h"
 
+#include <memory>
 #include <string>
 
 class TAO_OutStream;
@@ -57,7 +58,7 @@ public:
   usage ();
 
   /// Create an AST node generator.
-  static TAO_IDL_BE_Export AST_Generator *
+  static TAO_IDL_BE_Export std::unique_ptr<AST_Generator>
   generator_init ();
 
   /// Called from various places.
