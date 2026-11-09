@@ -6,6 +6,8 @@
 #include "ace/Task.h"
 #include "ace/Synch_Traits.h"
 
+#include <atomic>
+
 class NamingTask : public ACE_Task_Base
 {
 public:
@@ -23,9 +25,9 @@ public:
   char const *ior ();
 
 private:
-  CORBA::ORB_var orb_;
-  bool initialized_;
-  CORBA::String_var ior_;
+  CORBA::ORB_var orb_ {};
+  std::atomic<bool> initialized_ {};
+  CORBA::String_var ior_ {};
 };
 
 #endif

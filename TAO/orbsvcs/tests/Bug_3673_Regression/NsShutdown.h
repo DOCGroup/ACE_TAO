@@ -10,7 +10,6 @@ class NsShutdown
   : public virtual POA_Test::NsShutdown
 {
 public:
-  /// Constructor
   NsShutdown (CORBA::ORB_ptr orb);
 
   NsShutdown (NsShutdown const &) = delete;
@@ -23,7 +22,7 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #include /**/ "ace/post.h"
