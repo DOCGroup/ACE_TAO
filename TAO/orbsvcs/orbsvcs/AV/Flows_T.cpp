@@ -11,7 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_FDev
 // ------------------------------------------------------------
 
-// default constructor
 template <class T_Producer, class T_Consumer>
 TAO_FDev<T_Producer, T_Consumer>::TAO_FDev ()
 {

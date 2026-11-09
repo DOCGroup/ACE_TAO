@@ -21,10 +21,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry () = default;
 
-// constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (char const *flowname,
                                         char const *direction,
                                         char const *format_name,
@@ -66,7 +64,6 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (char const *flowname,
   this->set_direction (direction);
 }
 
-// Destructor.
 TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry ()
 {
   if (this->delete_peer_addr_)
@@ -407,7 +404,6 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
 // TAO_Forward_FlowSpec_Entry
 //------------------------------------------------------------
 
-// default constructor.
 TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry ()
 {
 }
@@ -735,7 +731,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 // TAO_Reverse_FlowSpec_Entry
 //------------------------------------------------------------
 
-//default constructor.
 TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry ()
 {
 }

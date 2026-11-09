@@ -87,10 +87,8 @@ public:
     TAO_AV_BOTH = 3
   };
 
-  /// Default constructor.
   TAO_AV_Core ();
 
-  /// Destructor.
   ~TAO_AV_Core ();
   TAO_AV_Core (TAO_AV_Core const &) = delete;
   TAO_AV_Core &operator= (TAO_AV_Core const &) = delete;

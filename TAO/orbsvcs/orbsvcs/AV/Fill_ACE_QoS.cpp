@@ -22,7 +22,6 @@ Fill_ACE_QoS::Fill_ACE_QoS ()
                            1));
 }
 
-// destructor.
 Fill_ACE_QoS::~Fill_ACE_QoS () = default;
 
 int

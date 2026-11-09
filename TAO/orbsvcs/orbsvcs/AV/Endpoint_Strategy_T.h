@@ -26,12 +26,9 @@ class TAO_AV_Endpoint_Reactive_Strategy
 : public TAO_AV_Endpoint_Strategy
 {
 protected:
-  // Constructor
 
-  /// Constructor
   TAO_AV_Endpoint_Reactive_Strategy ();
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Reactive_Strategy () override;
   TAO_AV_Endpoint_Reactive_Strategy (TAO_AV_Endpoint_Reactive_Strategy const &) = delete;
   TAO_AV_Endpoint_Reactive_Strategy &operator= (TAO_AV_Endpoint_Reactive_Strategy const &) = delete;
@@ -92,10 +89,8 @@ class TAO_AV_Endpoint_Reactive_Strategy_A
 public:
   TAO_AV_Endpoint_Reactive_Strategy_A ();
 
-  /// Constructor
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Reactive_Strategy_A () override;
   TAO_AV_Endpoint_Reactive_Strategy_A (TAO_AV_Endpoint_Reactive_Strategy_A const &) = delete;
   TAO_AV_Endpoint_Reactive_Strategy_A &operator= (TAO_AV_Endpoint_Reactive_Strategy_A const &) = delete;
@@ -121,10 +116,8 @@ class TAO_AV_Endpoint_Reactive_Strategy_B
   : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
 {
 public:
-  /// Constructor
   TAO_AV_Endpoint_Reactive_Strategy_B ();
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Reactive_Strategy_B () override;
   TAO_AV_Endpoint_Reactive_Strategy_B (TAO_AV_Endpoint_Reactive_Strategy_B const &) = delete;
   TAO_AV_Endpoint_Reactive_Strategy_B &operator= (TAO_AV_Endpoint_Reactive_Strategy_B const &) = delete;
@@ -154,10 +147,8 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process
 {
 public:
-  /// Constructor
   TAO_AV_Child_Process ();
 
-  /// Destructor
   virtual ~TAO_AV_Child_Process ();
   TAO_AV_Child_Process (TAO_AV_Child_Process const &) = delete;
   TAO_AV_Child_Process &operator= (TAO_AV_Child_Process const &) = delete;
@@ -255,10 +246,8 @@ class TAO_AV_Child_Process_A
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
 public:
-  /// Constructor.
   TAO_AV_Child_Process_A ();
 
-  /// Destructor.
   ~TAO_AV_Child_Process_A () override;
   TAO_AV_Child_Process_A (TAO_AV_Child_Process_A const &) = delete;
   TAO_AV_Child_Process_A &operator= (TAO_AV_Child_Process_A const &) = delete;
@@ -277,10 +266,8 @@ class TAO_AV_Child_Process_B
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
 public:
-  /// Constructor.
   TAO_AV_Child_Process_B ();
 
-  /// Destructor.
   ~TAO_AV_Child_Process_B () override;
   TAO_AV_Child_Process_B (TAO_AV_Child_Process_B const &) = delete;
   TAO_AV_Child_Process_B &operator= (TAO_AV_Child_Process_B const &) = delete;

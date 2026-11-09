@@ -48,7 +48,6 @@ public:
   /// Constructor for incoming RTCP packets.
   explicit RTCP_Packet(char *buffer);
 
-  /// Destructor
   virtual ~RTCP_Packet();
   RTCP_Packet (RTCP_Packet const &) = delete;
   RTCP_Packet &operator= (RTCP_Packet const &) = delete;
@@ -98,7 +97,6 @@ public:
   RTCP_BYE_Packet (char *buffer,
                    int *len);
 
-  /// Destructor.
   ~RTCP_BYE_Packet () override;
   RTCP_BYE_Packet (RTCP_BYE_Packet const &) = delete;
   RTCP_BYE_Packet &operator= (RTCP_BYE_Packet const &) = delete;
@@ -187,7 +185,6 @@ public:
   /// Constructor for outgoing receiver reports.
   RTCP_RR_Packet (ACE_UINT32 ssrc, RR_Block *blocks);
 
-  /// Destructor.
   ~RTCP_RR_Packet () override;
   RTCP_RR_Packet (RTCP_RR_Packet const &) = delete;
   RTCP_RR_Packet &operator= (RTCP_RR_Packet const &) = delete;
@@ -294,7 +291,6 @@ public:
   /// Constructor for outgoing SDES packets.
   RTCP_SDES_Packet();
 
-  /// Destructor.
   ~RTCP_SDES_Packet () override;
   RTCP_SDES_Packet (RTCP_SDES_Packet const &) = delete;
   RTCP_SDES_Packet &operator= (RTCP_SDES_Packet const &) = delete;
@@ -371,7 +367,6 @@ public:
                  ACE_UINT32 octetsSent,
                  RR_Block *rrBlocks);
 
-  /// Destructor
   ~RTCP_SR_Packet () override;
   RTCP_SR_Packet (RTCP_SR_Packet const &) = delete;
   RTCP_SR_Packet &operator= (RTCP_SR_Packet const &) = delete;

@@ -27,10 +27,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AV_Export TAO_Tokenizer
 {
 public:
-  /// constructor.
   TAO_Tokenizer (char const *string,char delimiter);
 
-  /// destructor.
   ~TAO_Tokenizer ();
   TAO_Tokenizer (TAO_Tokenizer const &) = delete;
   TAO_Tokenizer &operator= (TAO_Tokenizer const &) = delete;
@@ -82,7 +80,6 @@ public:
     TAO_AV_CONSUMER = 1
   };
 
-  /// default constructor.
   TAO_FlowSpec_Entry ();
 
   /// constructor to construct an entry from the arguments.
@@ -275,7 +272,6 @@ public:
                  TAO_AV_ADDRESS = 4,
                  TAO_AV_PEER_ADDR = 5};
 
-  /// default constructor.
   TAO_Forward_FlowSpec_Entry ();
 
   /// constructor to construct an entry from the arguments.
@@ -322,7 +318,6 @@ public:
                  TAO_AV_DIRECTION = 3,
                  TAO_AV_FORMAT = 4};
 
-  // default constructor.
   TAO_Reverse_FlowSpec_Entry ();
 
   // constructor to construct an entry from the arguments.

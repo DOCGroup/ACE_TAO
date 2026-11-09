@@ -201,13 +201,11 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 // TAO_AV_Endpoint_Reactive_Strategy_A
 // ----------------------------------------------------------------------
 
-//Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   TAO_AV_Endpoint_Reactive_Strategy_A () = default;
 
 
-// Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   ~TAO_AV_Endpoint_Reactive_Strategy_A () = default;
@@ -267,12 +265,10 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 // ----------------------------------------------------------------------
 
 
-// Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   TAO_AV_Endpoint_Reactive_Strategy_B () = default;
 
-// Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   ~TAO_AV_Endpoint_Reactive_Strategy_B () = default;
@@ -329,7 +325,6 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
 // TAO_AV_Child_Process
 // ----------------------------------------------------------------------
 
-// Constructor
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process ()
   : stream_endpoint_name_ (0),

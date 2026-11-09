@@ -266,7 +266,6 @@ public:
              char *data,
              ACE_UINT16 dataSize);
 
-  /// Destructor
   ~RTP_Packet();
 
   /// Returns the size of the RTP packet in bytes.

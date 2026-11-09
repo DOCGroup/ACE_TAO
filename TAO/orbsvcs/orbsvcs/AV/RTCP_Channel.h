@@ -30,7 +30,6 @@ public:
   RTCP_Channel_In(ACE_UINT32 ssrc,
                   ACE_Addr const *addr);
 
-  /// Destructor
   ~RTCP_Channel_In();
 
   /// This operation takes the incoming ACE_Message_Block, converts it to an
@@ -168,10 +167,8 @@ private:
 class RTCP_Channel_Out
 {
 public:
-  /// Constructor.
   RTCP_Channel_Out();
 
-  /// Destructor.
   ~RTCP_Channel_Out();
 
   /// Update the channel statistics each time an RTP packet is sent.

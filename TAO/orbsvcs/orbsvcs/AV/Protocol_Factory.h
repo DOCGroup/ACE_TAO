@@ -29,11 +29,9 @@ class TAO_AV_Export TAO_AV_Protocol_Object
 public:
   TAO_AV_Protocol_Object ();
 
-  /// constructor.
   TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
                           TAO_AV_Transport *transport);
 
-  /// Destructor
   virtual ~TAO_AV_Protocol_Object ();
   TAO_AV_Protocol_Object (TAO_AV_Protocol_Object const &) = delete;
   TAO_AV_Protocol_Object &operator= (TAO_AV_Protocol_Object const &) = delete;

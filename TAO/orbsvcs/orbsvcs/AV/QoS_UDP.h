@@ -108,7 +108,6 @@ class TAO_AV_UDP_QoS_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  /// Constructor.
   /**
    * Destructor
    */

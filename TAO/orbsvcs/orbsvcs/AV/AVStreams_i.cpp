@@ -64,7 +64,6 @@ AV_Null_MediaCtrl::~AV_Null_MediaCtrl () = default;
 // TAO_Basic_StreamCtrl
 // ----------------------------------------------------------------------
 
-// Constructor
 TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl ()
   :flow_count_ (0)
 {
@@ -310,25 +309,21 @@ TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr /* remote_negotiator */,
 // MMDevice_Map_Hash_Key
 // ----------------------------------------------------------------------
 
-//default constructor.
 MMDevice_Map_Hash_Key::MMDevice_Map_Hash_Key ()
 {
   this->mmdevice_ = AVStreams::MMDevice::_nil ();
 }
 
-// constructor.
 MMDevice_Map_Hash_Key::MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice)
 {
   this->mmdevice_ = AVStreams::MMDevice::_duplicate (mmdevice);
 }
 
-// copy constructor.
 MMDevice_Map_Hash_Key::MMDevice_Map_Hash_Key (MMDevice_Map_Hash_Key const &hash_key)
 {
   this->mmdevice_ = AVStreams::MMDevice::_duplicate (hash_key.mmdevice_);
 }
 
-// destructor.
 MMDevice_Map_Hash_Key::~MMDevice_Map_Hash_Key ()
 {
   CORBA::release (this->mmdevice_);
@@ -1542,8 +1537,6 @@ TAO_Base_StreamEndPoint::set_control_flow_handler (char const *flowname,
 // ----------------------------------------------------------------------
 // TAO_StreamEndPoint
 // ----------------------------------------------------------------------
-
-// constructor.
 
 TAO_StreamEndPoint::TAO_StreamEndPoint ()
   :flow_count_ (0),
@@ -3330,7 +3323,6 @@ TAO_MMDevice::remove_fdev (char const *flow_name)
     }
 }
 
-// destructor.
 TAO_MMDevice::~TAO_MMDevice ()
 {
   delete this->stream_ctrl_;
@@ -3340,7 +3332,6 @@ TAO_MMDevice::~TAO_MMDevice ()
 // TAO_FlowConnection
 //------------------------------------------------------------------
 
-// default constructor.
 TAO_FlowConnection::TAO_FlowConnection ()
   :fp_name_ (CORBA::string_dup ("")),
    mcastconfigif_i_ (nullptr)
@@ -3808,7 +3799,6 @@ TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target)
 // TAO_FlowEndPoint
 // -----------------------------------------------------------------
 
-//default constructor.
 TAO_FlowEndPoint::TAO_FlowEndPoint () = default;
 
 TAO_FlowEndPoint::TAO_FlowEndPoint (char const *flowname,
@@ -4260,7 +4250,6 @@ TAO_FlowEndPoint::set_protocol_object (char const * /*flowname*/,
 // TAO_FlowProducer class
 // ------------------------------------------------------------
 
-//default constructor
 TAO_FlowProducer::TAO_FlowProducer ()
   : source_id_ (0)
 {
@@ -4406,7 +4395,6 @@ TAO_FlowProducer::set_source_id (CORBA::Long source_id)
 // ------------------------------------------------------------
 
 
-// default constructor.
 TAO_FlowConsumer::TAO_FlowConsumer ()
 {
 }

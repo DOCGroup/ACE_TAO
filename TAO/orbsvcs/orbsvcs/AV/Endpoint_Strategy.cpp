@@ -23,12 +23,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Endpoint_Strategy
 // ----------------------------------------------------------------------
 
-// Constructor
 TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy ()
 {
 }
 
-// Destructor.
 TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy () = default;
 
 // The base class defines the "failure" case, so that unless the
@@ -61,7 +59,6 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_
 // TAO_AV_Endpoint_Process_Strategy
 // ----------------------------------------------------------------------
 
-// Constructor
 TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options)
   : process_options_ (process_options),
     pid_ (-1)
@@ -70,7 +67,6 @@ TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_
                     sizeof this->host_);
 }
 
-// Destructor.
 TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy () = default;
 
 // Spawns the process, and waits for it to finish booting.
@@ -231,13 +227,11 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
 // TAO_AV_Endpoint_Process_Strategy_A
 // ----------------------------------------------------------------------
 
-// Constructor
 TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options)
   : TAO_AV_Endpoint_Process_Strategy (process_options)
 {
 }
 
-// Destructor
 TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A () = default;
 
 // the "A" type endpoint creator
@@ -305,13 +299,11 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
 // TAO_AV_Endpoint_Process_Strategy_B
 // ----------------------------------------------------------------------
 
-// Constructor
 TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options)
   : TAO_AV_Endpoint_Process_Strategy (process_options)
 {
 }
 
-// Destructor
 TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B () = default;
 
 // Creates and returns a "B" type endpoint

@@ -29,13 +29,11 @@ class TAO_FDev :
   public virtual TAO_PropertySet
 {
 public:
-  /// default constructor
   TAO_FDev ();
 
   /// constructor taking a flowname.
   explicit TAO_FDev (char const *flowname);
 
-  /// Destructor..
   ~TAO_FDev () override;
   TAO_FDev (TAO_FDev const &) = delete;
   TAO_FDev &operator= (TAO_FDev const &) = delete;

@@ -110,7 +110,6 @@ private:
 class TAO_AV_Export TAO_AV_Flow_Handler
 {
 public:
-  /// Constructor.
   TAO_AV_Flow_Handler ();
 
   virtual ~TAO_AV_Flow_Handler ();

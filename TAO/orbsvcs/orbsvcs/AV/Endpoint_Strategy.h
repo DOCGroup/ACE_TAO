@@ -38,10 +38,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AV_Export TAO_AV_Endpoint_Strategy
 {
 public:
-  /// Constructor
   TAO_AV_Endpoint_Strategy ();
 
-  /// Destructor
   virtual ~TAO_AV_Endpoint_Strategy ();
   TAO_AV_Endpoint_Strategy (TAO_AV_Endpoint_Strategy const &) = delete;
   TAO_AV_Endpoint_Strategy &operator= (TAO_AV_Endpoint_Strategy const &) = delete;
@@ -81,7 +79,6 @@ public:
   /// for the process to be created
   explicit TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy () override;
   TAO_AV_Endpoint_Process_Strategy (TAO_AV_Endpoint_Process_Strategy const &) = delete;
   TAO_AV_Endpoint_Process_Strategy &operator= (TAO_AV_Endpoint_Process_Strategy const &) = delete;
@@ -131,10 +128,8 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_A
   : public TAO_AV_Endpoint_Process_Strategy
 {
 public:
-  /// Constructor
   explicit TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_A () override;
   TAO_AV_Endpoint_Process_Strategy_A (TAO_AV_Endpoint_Process_Strategy_A const &) = delete;
   TAO_AV_Endpoint_Process_Strategy_A &operator= (TAO_AV_Endpoint_Process_Strategy_A const &) = delete;
@@ -160,10 +155,8 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_B
   : public TAO_AV_Endpoint_Process_Strategy
 {
 public:
-  /// Constructor
   explicit TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_B () override;
   TAO_AV_Endpoint_Process_Strategy_B (TAO_AV_Endpoint_Process_Strategy_B const &) = delete;
   TAO_AV_Endpoint_Process_Strategy_B &operator= (TAO_AV_Endpoint_Process_Strategy_B const &) = delete;

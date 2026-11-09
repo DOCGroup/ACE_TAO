@@ -193,12 +193,10 @@ class TAO_AV_Export TAO_AV_RTCP_Object
   : public TAO_AV_Protocol_Object
 {
 public:
-  /// constructor.
   TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                       TAO_AV_RTCP_Callback *&rtcp_cb,
                       TAO_AV_Transport *transport = nullptr);
 
-  /// Destructor
   ~TAO_AV_RTCP_Object () override;
 
   int handle_input () override;

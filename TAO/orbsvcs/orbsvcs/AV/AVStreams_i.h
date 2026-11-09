@@ -75,7 +75,6 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
     public virtual TAO_PropertySet
 {
 public:
-  /// Default Constructor
   TAO_Basic_StreamCtrl ();
   TAO_Basic_StreamCtrl (TAO_Basic_StreamCtrl const &) = delete;
   TAO_Basic_StreamCtrl (TAO_Basic_StreamCtrl &&) = delete;
@@ -121,7 +120,6 @@ public:
                             CORBA::Object_ptr flow_connection) override;
 
 protected:
-  /// Destructor.
   ~TAO_Basic_StreamCtrl () override;
 
 
@@ -163,16 +161,12 @@ class TAO_MCastConfigIf;
 class TAO_AV_Export MMDevice_Map_Hash_Key
 {
 public:
-  /// default constructor.
   MMDevice_Map_Hash_Key ();
 
-  /// constructor.
   explicit MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
 
-  /// copy constructor.
   MMDevice_Map_Hash_Key (MMDevice_Map_Hash_Key const &);
 
-  /// destructor.
   ~MMDevice_Map_Hash_Key ();
 
   /// operator== needed by  ACE_Hash_Map_Manager.
@@ -201,7 +195,6 @@ class TAO_AV_Export TAO_StreamCtrl
     public virtual TAO_Basic_StreamCtrl
 {
 public:
-  /// Default Constructor
   TAO_StreamCtrl ();
   TAO_StreamCtrl (TAO_StreamCtrl const &) = delete;
   TAO_StreamCtrl (TAO_StreamCtrl &&) = delete;
@@ -301,7 +294,6 @@ public:
     Peer_Interface interface_;
   };
 
-  /// Default constructor.
   TAO_MCastConfigIf ();
   TAO_MCastConfigIf (TAO_MCastConfigIf const &) = delete;
   TAO_MCastConfigIf (TAO_MCastConfigIf &&) = delete;
@@ -347,7 +339,6 @@ protected:
 class TAO_AV_Export TAO_AV_QoS
 {
 public:
-  /// constructor.
   TAO_AV_QoS ();
   TAO_AV_QoS (TAO_AV_QoS const &) = delete;
   TAO_AV_QoS (TAO_AV_QoS &&) = delete;
@@ -472,7 +463,6 @@ class TAO_AV_Export TAO_StreamEndPoint
     public virtual TAO_Base_StreamEndPoint
 {
 public:
-  /// Constructor
   TAO_StreamEndPoint ();
   TAO_StreamEndPoint (TAO_StreamEndPoint const &) = delete;
   TAO_StreamEndPoint (TAO_StreamEndPoint &&) = delete;
@@ -537,7 +527,6 @@ public:
   /// Used to set a unique id for packets sent by this streamendpoint
   void set_source_id (CORBA::Long source_id) override;
 
-  /// Destructor
   ~TAO_StreamEndPoint () override;
 
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
@@ -601,7 +590,6 @@ class TAO_AV_Export TAO_StreamEndPoint_A :
   public virtual TAO_StreamEndPoint
 {
 public:
-  /// Constructor
   TAO_StreamEndPoint_A ();
   TAO_StreamEndPoint_A (TAO_StreamEndPoint_A const &) = delete;
   TAO_StreamEndPoint_A (TAO_StreamEndPoint_A &&) = delete;
@@ -621,7 +609,6 @@ public:
   void disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
                         AVStreams::flowSpec const &theSpec) override;
 
-  /// Destructor
   ~TAO_StreamEndPoint_A () override;
 };
 
@@ -640,7 +627,6 @@ class TAO_AV_Export TAO_StreamEndPoint_B :
   // = DESCRIPTION
   //     The "B" side of a streamendpoint
 public:
-  /// Constructor
   TAO_StreamEndPoint_B ();
   TAO_StreamEndPoint_B (TAO_StreamEndPoint_B const &) = delete;
   TAO_StreamEndPoint_B (TAO_StreamEndPoint_B &&) = delete;
@@ -651,7 +637,6 @@ public:
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                AVStreams::flowSpec &the_spec) override;
 
-  /// Destructor
   ~TAO_StreamEndPoint_B () override;
 };
 
@@ -665,7 +650,6 @@ class TAO_AV_Export TAO_VDev
    public virtual POA_AVStreams::VDev
 {
 public:
-  /// Default Constructor
   TAO_VDev ();
   TAO_VDev (TAO_VDev const &) = delete;
   TAO_VDev (TAO_VDev &&) = delete;
@@ -728,7 +712,6 @@ class TAO_AV_Export TAO_MMDevice
    public virtual TAO_PropertySet
 {
 public:
-  /// Constructor
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
   explicit TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
   TAO_MMDevice (TAO_MMDevice const &) = delete;
@@ -786,7 +769,6 @@ public:
   /// Not supported in the light profile, raises notsupported
   void remove_fdev (char const *flow_name) override;
 
-  /// Destructor
   ~TAO_MMDevice () override;
 
 protected:
@@ -830,7 +812,6 @@ class TAO_AV_Export TAO_FlowConnection
    public virtual TAO_PropertySet
 {
 public:
-  /// default constructor.
   TAO_FlowConnection ();
   TAO_FlowConnection (TAO_FlowConnection const &) = delete;
   TAO_FlowConnection (TAO_FlowConnection &&) = delete;
@@ -915,7 +896,6 @@ class TAO_AV_Export TAO_FlowEndPoint :
   public virtual TAO_Base_StreamEndPoint
 {
 public:
-  ///default constructor.
   TAO_FlowEndPoint ();
 
   TAO_FlowEndPoint (char const *flowname,
@@ -1061,7 +1041,6 @@ class TAO_AV_Export TAO_FlowProducer:
   public virtual TAO_FlowEndPoint
 {
 public:
-  /// default constructor
   TAO_FlowProducer ();
   TAO_FlowProducer (TAO_FlowProducer const &) = delete;
   TAO_FlowProducer (TAO_FlowProducer &&) = delete;
@@ -1121,7 +1100,6 @@ class TAO_AV_Export TAO_FlowConsumer :
   public virtual TAO_FlowEndPoint
 {
 public:
-  /// default constructor.
   TAO_FlowConsumer ();
   TAO_FlowConsumer (TAO_FlowConsumer const &) = delete;
   TAO_FlowConsumer (TAO_FlowConsumer &&) = delete;
@@ -1158,7 +1136,6 @@ class TAO_AV_Export TAO_MediaControl
   :public virtual POA_AVStreams::MediaControl
 {
 public:
-  /// default constructor
   TAO_MediaControl ();
   TAO_MediaControl (TAO_MediaControl const &) = delete;
   TAO_MediaControl (TAO_MediaControl &&) = delete;
