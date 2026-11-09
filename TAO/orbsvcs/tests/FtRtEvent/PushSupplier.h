@@ -22,32 +22,37 @@ class PushSupplier_impl :
  , public virtual POA_RtecEventComm::PushSupplier
 {
 public:
-  PushSupplier_impl(CORBA::ORB_ptr orb);
-  ~PushSupplier_impl();
+  explicit PushSupplier_impl (CORBA::ORB_ptr orb);
+  PushSupplier_impl (PushSupplier_impl const &) = delete;
+  PushSupplier_impl (PushSupplier_impl &&) = delete;
+  PushSupplier_impl &operator= (PushSupplier_impl const &) = delete;
+  PushSupplier_impl &operator= (PushSupplier_impl &&) = delete;
+  ~PushSupplier_impl () override;
 
-  int init(RtecEventChannelAdmin::EventChannel_ptr);
+  int init (RtecEventChannelAdmin::EventChannel_ptr);
 
-    virtual void  disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 private:
   class ReactorTask : public ACE_Task_Base
   {
   public:
-    // ctor
-    ReactorTask(ACE_Event_Handler* handler) : reactor_(0), handler_(handler){}
-    virtual int svc ();
-    // The thread entry point.
+    explicit ReactorTask (ACE_Event_Handler *handler);
+    ReactorTask (ReactorTask const &) = delete;
+    ReactorTask (ReactorTask &&) = delete;
+    ReactorTask &operator= (ReactorTask const &) = delete;
+    ReactorTask &operator= (ReactorTask &&) = delete;
 
-    ACE_Reactor* reactor_;
-    ACE_Event_Handler* handler_;
+    int svc () override;
+
+    ACE_Reactor *reactor_ {}; // Borrowed from svc() while its event loop runs.
+    ACE_Event_Handler *handler_ {}; // Borrowed from the owning PushSupplier_impl.
   };
 
-    virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
-  CORBA::ORB_var orb_;
-  CORBA::ULong seq_no_;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
+  CORBA::ORB_var orb_ {};
+  CORBA::ULong seq_no_ {};
   ReactorTask reactor_task_;
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
-  PushSupplier_impl(const PushSupplier_impl&);
-  bool operator==(const PushSupplier_impl&);
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_ {};
 };
 #endif
