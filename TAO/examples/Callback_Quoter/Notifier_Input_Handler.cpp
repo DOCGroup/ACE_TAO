@@ -15,7 +15,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
 
-// Destructor.
 Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
    // Make sure to cleanup the STDIN handler.
