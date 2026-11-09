@@ -23,7 +23,7 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
     {
       // We had allocated memory and stored the string. So we free the
       // memory.
-      CORBA::string_free ((char *) entry->ext_id_);
+      CORBA::string_free (const_cast<char *> (entry->ext_id_));
       entry->ext_id_ = nullptr;
       entry->int_id_->_remove_ref ();
       entry->int_id_ = nullptr;
@@ -31,7 +31,7 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
 }
 
 int
-TAO_ValueFactory_Map::rebind (const char *repo_id,
+TAO_ValueFactory_Map::rebind (char const *repo_id,
                               CORBA::ValueFactory &factory)
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
@@ -58,7 +58,7 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
 }
 
 int
-TAO_ValueFactory_Map::unbind (const char *repo_id,
+TAO_ValueFactory_Map::unbind (char const *repo_id,
                               CORBA::ValueFactory &factory)
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
@@ -84,7 +84,7 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
 
 // %! perhaps inline
 int
-TAO_ValueFactory_Map::find (const char *repo_id,
+TAO_ValueFactory_Map::find (char const *repo_id,
                             CORBA::ValueFactory &factory)
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);

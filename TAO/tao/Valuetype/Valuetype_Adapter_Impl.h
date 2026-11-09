@@ -58,11 +58,11 @@ public:
   CORBA::Boolean is_type_info_list (CORBA::Long) const override;
   CORBA::Boolean is_value_chunked (CORBA::Long) const override;
 
-  int vf_map_rebind (const char *, CORBA::ValueFactory &) override;
+  int vf_map_rebind (char const *, CORBA::ValueFactory &) override;
 
-  int vf_map_unbind (const char *) override;
+  int vf_map_unbind (char const *) override;
 
-  CORBA::ValueFactory vf_map_find (const char *) override;
+  CORBA::ValueFactory vf_map_find (char const *) override;
 
   CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) override;
 
