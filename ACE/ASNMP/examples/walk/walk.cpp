@@ -60,12 +60,13 @@ private:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
-  walkapp get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid ())
-     return get.run ();
-  else
-    walkapp::usage();
-  return 1;
+  walkapp app (atc.get_argc (), atc.get_ASCII_argv ());
+  if (!app.valid ())
+    {
+      walkapp::usage ();
+      return 1;
+    }
+  return app.run ();
 }
 
 bool walkapp::valid () const
@@ -75,56 +76,58 @@ bool walkapp::valid () const
 
 walkapp::walkapp (int argc, char *argv[])
 {
-   Oid req {};
-   Oid def_oid ("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII
-   if ( argc < 2)
-     return;
+  Oid req {};
+  Oid const def_oid ("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII
+  if (argc < 2)
+    return;
 
-   address_ = argv[argc - 1];
-   if (!address_.valid ()) {
-      cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc - 1] << "\n";
+  address_ = argv[argc - 1];
+  if (!address_.valid ())
+    {
+      cout << "ERROR: Invalid IPv4 address or DNS hostname: "
+           << argv[argc - 1] << "\n";
       return;
-   }
+    }
 
-   ACE_Argv_Type_Converter to_tchar (argc, argv);
-   ACE_Get_Opt get_opt (argc,
-                        to_tchar.get_TCHAR_argv (),
-                        ACE_TEXT ("o:c:r:t:"));
-   for (int option = get_opt (); option != -1; option = get_opt ())
-     switch (option)
-       {
-       case 'o':
-         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
-         if (req.valid () == 0)
-         cout << "ERROR: oid value: "
-              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ())
-              << "is not valid. using default.\n";
-         break;
+  ACE_Argv_Type_Converter to_tchar (argc, argv);
+  ACE_Get_Opt get_opt (argc,
+                       to_tchar.get_TCHAR_argv (),
+                       ACE_TEXT ("o:c:r:t:"));
+  for (int option = get_opt (); option != -1; option = get_opt ())
+    switch (option)
+      {
+      case 'o':
+        {
+          char const * const oid_arg = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          req = oid_arg;
+          if (!req.valid ())
+            cout << "ERROR: oid value: " << oid_arg
+                 << " is not valid. using default.\n";
+        }
+        break;
 
-       case 'c':
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
-         target_.set_read_community (community_);
-         break;
+      case 'c':
+        community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+        target_.set_read_community (community_);
+        break;
 
-       case 'r':
-         target_.set_retry (ACE_OS::atoi (get_opt.opt_arg ()));
-         break;
+      case 'r':
+        target_.set_retry (ACE_OS::atoi (get_opt.opt_arg ()));
+        break;
 
-       case 't':
-         target_.set_timeout (ACE_OS::atoi (get_opt.opt_arg ()));
-         break;
+      case 't':
+        target_.set_timeout (ACE_OS::atoi (get_opt.opt_arg ()));
+        break;
 
-       default:
-         break;
-       }
+      default:
+        break;
+      }
 
   Vb vb {}; // construct a Vb object
   if (req.valid ())
-     vb.set_oid (req); // set the Oid portion of the Vb
-  else {
-     vb.set_oid (def_oid); // set the Oid portion of the Vb
-  }
+    vb.set_oid (req); // set the Oid portion of the Vb
+  else
+    vb.set_oid (def_oid); // set the Oid portion of the Vb
   pdu_ += vb;
   vb.get_oid (oid_); // store for later use
   this->valid_ = true;
@@ -146,26 +149,26 @@ void walkapp::usage ()
 class MibIter
 {
 public:
-   // Pdu must contain initial oid to begin with
-   MibIter (Snmp *snmp, Pdu& pdu, UdpTarget *target);
-   int next (Vb& vb, char const *&err_reason); // return next oid in mib
+  // Pdu must contain initial oid to begin with
+  MibIter (Snmp &snmp, Pdu &pdu, UdpTarget &target);
+  int next (Vb &vb, char const *&err_reason); // 1: next OID, 0: error, -1: invalid iterator
 
- private:
+private:
   MibIter (MibIter const &) = delete;
   MibIter (MibIter &&) = delete;
   MibIter &operator= (MibIter const &) = delete;
   MibIter &operator= (MibIter &&) = delete;
 
-  // These pointers refer to the session and target owned by walkapp.
-  Snmp * const snmp_;
-  UdpTarget * const target_;
+  // These references refer to the session and target owned by walkapp.
+  Snmp &snmp_;
+  UdpTarget &target_;
   Pdu pdu_;
   Vb vb_;
   bool first_ {}; // flag to obtain first entry
   bool valid_ {}; // flag to obtain first entry
 };
 
-MibIter::MibIter (Snmp *snmp, Pdu& pdu, UdpTarget *target)
+MibIter::MibIter (Snmp &snmp, Pdu &pdu, UdpTarget &target)
   : snmp_ (snmp), target_ (target), pdu_ (pdu)
 {
   // verify we have a valid oid to begin iterating with
@@ -176,33 +179,37 @@ MibIter::MibIter (Snmp *snmp, Pdu& pdu, UdpTarget *target)
   this->valid_ = oid.valid ();
 }
 
-// return vb of next oid in agent tree, return 1 else return 0, reason set
-int MibIter::next (Vb& vb, char const *&reason)
+// Return 1 for the next OID, 0 on an SNMP error, or -1 for an invalid iterator.
+int MibIter::next (Vb &vb, char const *&reason)
 {
   int rc {};
 
   if (!this->valid_) // not valid object
-     return -1;
+    return -1;
 
   // 1. poll for value
-  if (!this->first_) {
-    rc = this->snmp_->get (pdu_, *this->target_);
-    this->first_ = true;
-  }
-  else {
-   rc = this->snmp_->get_next (pdu_, *this->target_);
-  }
+  if (!this->first_)
+    {
+      rc = this->snmp_.get (pdu_, this->target_);
+      this->first_ = true;
+    }
+  else
+    {
+      rc = this->snmp_.get_next (pdu_, this->target_);
+    }
 
-  if (rc != SNMP_CLASS_SUCCESS) {
-       reason = this->snmp_->error_string ();
-       return 0;
-  }
+  if (rc != SNMP_CLASS_SUCCESS)
+    {
+      reason = this->snmp_.error_string ();
+      return 0;
+    }
 
   // 2. check for problems
-  if (this->pdu_.get_error_status ()) {
-     reason = this->pdu_.agent_error_reason ();
-     return 0;
-  }
+  if (this->pdu_.get_error_status ())
+    {
+      reason = this->pdu_.agent_error_reason ();
+      return 0;
+    }
 
   // 3. return vb to caller
   this->pdu_.get_vb (vb, 0);
@@ -217,51 +224,52 @@ int MibIter::next (Vb& vb, char const *&reason)
 
 int walkapp::run ()
 {
-   //----------[ create a ASNMP session ]-----------------------------------
-   if (snmp_.valid () != SNMP_CLASS_SUCCESS) {
-      cout << "\nASNMP:ERROR:Create session failed: "<<
-          snmp_.error_string()<< "\n";
+  //----------[ create a ASNMP session ]-----------------------------------
+  if (snmp_.valid () != SNMP_CLASS_SUCCESS)
+    {
+      cout << "\nASNMP:ERROR:Create session failed: "
+           << snmp_.error_string () << "\n";
       return 1;
-   }
+    }
 
-   //--------[ build up ASNMP object needed ]-------------------------------
-   if (address_.get_port () == 0)
-     address_.set_port (DEF_AGENT_PORT);
-   target_.set_address (address_); // make a target using the address
+  //--------[ build up ASNMP object needed ]-------------------------------
+  if (address_.get_port () == 0)
+    address_.set_port (DEF_AGENT_PORT);
+  target_.set_address (address_); // make a target using the address
 
-   //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1) << \
-       " WALK SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
-   target_.get_address (address_); // target updates port used
-   int rc {};
-   char const * const name = address_.resolve_hostname (rc);
+  //-------[ issue the request, blocked mode ]-----------------------------
+  cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1)
+       << " WALK SAMPLE PROGRAM \nOID: " << oid_.to_string () << "\n";
+  target_.get_address (address_); // target updates port used
+  int rc {};
+  char const * const name = address_.resolve_hostname (rc);
 
-   cout << "Device: " << address_ << " ";
+  cout << "Device: " << address_ << " ";
 
    //FUZZ: disable check_for_lack_ACE_OS
-   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
+  cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
    //FUZZ: enable check_for_lack_ACE_OS
 
-   cout << "[ Retries=" << target_.get_retry() << " \
-        Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
-         community_.to_string() << " ]"<< endl;
+  cout << "[ Retries=" << target_.get_retry ()
+       << " Timeout=" << target_.get_timeout () << " ms Community="
+       << community_.to_string () << " ]" << endl;
 
-   MibIter iter (&snmp_, pdu_, &target_);
-   char const *err_str {};
-   Vb vb {};
-   while (iter.next (vb, err_str))
-     {
-     cout << "\tOid = " << vb.to_string_oid() << "\n";
-     cout << "\tValue = " << vb.to_string_value() << "\n";
-     }
+  MibIter iter (snmp_, pdu_, target_);
+  char const *err_str {};
+  Vb vb {};
+  while (iter.next (vb, err_str) > 0)
+    {
+      cout << "\tOid = " << vb.to_string_oid () << "\n";
+      cout << "\tValue = " << vb.to_string_value () << "\n";
+    }
 
-   if (err_str)
-     {
-     cout << "ERROR: walk: " << err_str << endl;
-     return 0;
-     }
+  if (err_str)
+    {
+      cout << "ERROR: walk: " << err_str << endl;
+      return 0;
+    }
 
-  cout << "ASNMP:INFO:command completed normally. ACE Rocks...\n"<< endl;
+  cout << "ASNMP:INFO:command completed normally. ACE Rocks...\n" << endl;
   return 0;
 }
 
