@@ -4,15 +4,11 @@
 // to dynamically load this necessary library.
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 
-
-
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -24,9 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s [-k <ior>]\n"),
                            argv [0]),
                           -1);
       }
@@ -39,44 +33,43 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      ACE_TCHAR const* ior {ACE_TEXT ("file://test.ior")};
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const object = orb->string_to_object (ior);
 
-      CORBA::InterfaceDef_var ifd = tmp->_get_interface();
+      CORBA::InterfaceDef_var const interface_def = object->_get_interface ();
 
-      if ( ! CORBA::is_nil (ifd.in()))
-      {
-        CORBA::InterfaceDef::FullInterfaceDescription *id = ifd->describe_interface();
-
-        CORBA::TypeCode_var paramType (id->operations[0].parameters[0].type.in());
-        if (paramType->member_count () != 2)
+      if (!CORBA::is_nil (interface_def.in ()))
         {
-          ACE_ERROR_RETURN((LM_ERROR,
-                            ACE_TEXT("ERROR Incorrect parameter member count %d expected 2.\n"),
-                            paramType->member_count ()),
-                            1);
+          CORBA::InterfaceDef::FullInterfaceDescription_var const description {
+            interface_def->describe_interface ()
+          };
+
+          CORBA::TypeCode_ptr const parameter_type =
+            description->operations[0].parameters[0].type.in ();
+          if (parameter_type->member_count () != 2)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR Incorrect parameter member count %d expected 2.\n"),
+                               parameter_type->member_count ()),
+                              1);
+
+          CORBA::TypeCode_ptr const exception_type =
+            description->operations[0].exceptions[0].type.in ();
+          if (exception_type->member_count () != 1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR Incorrect exception member count %d expected 1.\n"),
+                               exception_type->member_count ()),
+                              1);
         }
-        CORBA::TypeCode_var exceptionType (id->operations[0].exceptions[0].type.in());
-        if (exceptionType->member_count () != 1)
-        {
-          ACE_ERROR_RETURN((LM_ERROR,
-                            ACE_TEXT("ERROR Incorrect exception member count %d expected 1.\n"),
-                            exceptionType->member_count ()),
-                            1);
-        }
-      }
       else
-      {
-        ACE_ERROR_RETURN((LM_ERROR,
-                          ACE_TEXT("ERROR failed to get interface for object.\n")),
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("ERROR failed to get interface for object.\n")),
                           1);
-      }
 
       orb->destroy ();
     }

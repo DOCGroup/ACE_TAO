@@ -27,21 +27,10 @@
 
 #include "TestImpl.h"
 
-
-// Implementation skeleton constructor
-Test_interfaceOne_i::Test_interfaceOne_i ()
-{
-}
-
-// Implementation skeleton destructor
-Test_interfaceOne_i::~Test_interfaceOne_i ()
-{
-}
-
 void Test_interfaceOne_i::getstruct (
     ::Test::structOne_out tester
   )
 {
-  ::Test::structOne_var holder (new ::Test::structOne);
+  ::Test::structOne_var holder {new ::Test::structOne {}};
   tester = holder._retn();
 }
