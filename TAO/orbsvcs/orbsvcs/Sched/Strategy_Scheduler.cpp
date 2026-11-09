@@ -26,8 +26,6 @@ using COMP_FUNC = int (*) (void const *, void const *);
 // class ACE_Strategy_Scheduler member functions //
 ///////////////////////////////////////////////////
 
-// = Constructor.
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Strategy_Scheduler::ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy)
@@ -599,8 +597,6 @@ ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Prio
 // abstract base class ACE_Scheduler_Strategy member functions //
 /////////////////////////////////////////////////////////////////
 
-// = Constructor.
-
 ACE_Scheduler_Strategy::ACE_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
   : minimum_critical_priority_ (minimum_critical_priority)
@@ -748,8 +744,6 @@ ACE_MUF_Scheduler_Strategy::sort (Dispatch_Entry **dispatch_entries, u_int size)
                  static_cast<COMP_FUNC> (ACE_MUF_Scheduler_Strategy::sort_function));
 }
 
-
-// = Default constructor.
 
 ACE_MUF_Scheduler_Strategy::ACE_MUF_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
@@ -901,8 +895,6 @@ ACE_RMS_Scheduler_Strategy::sort (
 }
 
 
-// = Default constructor.
-
 ACE_RMS_Scheduler_Strategy::ACE_RMS_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
   :ACE_Scheduler_Strategy (minimum_critical_priority)
@@ -1009,8 +1001,6 @@ ACE_MLF_Scheduler_Strategy::sort (
                  static_cast<COMP_FUNC> (ACE_MLF_Scheduler_Strategy::sort_function));
 }
 
-
-// = Default constructor.
 
 ACE_MLF_Scheduler_Strategy::ACE_MLF_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority /* minimum_critical_priority */)
@@ -1133,8 +1123,6 @@ ACE_EDF_Scheduler_Strategy::sort (
                  static_cast<COMP_FUNC> (ACE_EDF_Scheduler_Strategy::sort_function));
 }
 
-
-// = Default constructor.
 
 ACE_EDF_Scheduler_Strategy::ACE_EDF_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority /* minimum_critical_priority */)
@@ -1267,8 +1255,6 @@ ACE_Criticality_Scheduler_Strategy::sort (
                  static_cast<COMP_FUNC> (ACE_Criticality_Scheduler_Strategy::sort_function));
 }
 
-
-// = Default constructor.
 
 ACE_Criticality_Scheduler_Strategy::ACE_Criticality_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)

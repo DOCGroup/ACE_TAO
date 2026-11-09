@@ -54,13 +54,10 @@ public:
   using Info_Type = RtecScheduler::Info_Type_t;
   using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
-    /// Constructor.
   explicit Dispatch_Entry_Link (Dispatch_Entry &d);
 
-    /// Copy constructor.
   Dispatch_Entry_Link (Dispatch_Entry_Link const &d);
 
-    /// Destructor.
   ~Dispatch_Entry_Link () = default;
 
     /// Less than comparison operator.
@@ -106,10 +103,8 @@ public:
                            INTERNAL_ERROR,
                            UNRECOGNIZED_INFO_TYPE};
 
-  // Constructor.
   Task_Entry () = default;
 
-  // Destructor.
   ~Task_Entry ();
 
   Task_Entry (Task_Entry const &) = delete;

@@ -39,8 +39,6 @@ using COMP_FUNC = int (*) (void const *, void const *);
 }
 
 
-// Default constructor.
-
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_Reconfig_Scheduler (bool enforce_schedule_stability,
@@ -121,8 +119,6 @@ TAO_Reconfig_Scheduler (int config_count,
     }
 }
 
-
-// Destructor.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::

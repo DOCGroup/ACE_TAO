@@ -74,7 +74,6 @@ public:
   /// caller or called handle.
   using DEPENDENCY_SET_MAP_ITERATOR = typename DEPENDENCY_SET_MAP::ITERATOR;
 
-  /// Default constructor.
   TAO_Reconfig_Scheduler (bool enforce_schedule_stability = false,
                           CORBA::Double const & critical_utilization_threshold = 1.0,
                           CORBA::Double const & noncritical_utilization_threshold = 1.1);
@@ -92,7 +91,6 @@ public:
                           CORBA::Double const & critical_utilization_threshold = 1.0,
                           CORBA::Double const & noncritical_utilization_threshold = 1.1);
 
-  /// Destructor.
   ~TAO_Reconfig_Scheduler () override;
 
   TAO_Reconfig_Scheduler (TAO_Reconfig_Scheduler const &) = delete;

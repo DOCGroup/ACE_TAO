@@ -37,10 +37,8 @@ class TAO_RTSched_Export ACE_Strategy_Scheduler : public ACE_DynScheduler
 {
 // public interface
 public:
-    /// = Constructor.
   explicit ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy);
 
-    /// = Virtual destructor.
   ~ACE_Strategy_Scheduler () override = default;
 
     /// = Assigns priorities to the sorted dispatch schedule,
@@ -114,11 +112,9 @@ public:
 class TAO_RTSched_Export ACE_Scheduler_Strategy
 {
 public:
-  /// = Constructor.
   explicit ACE_Scheduler_Strategy (
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
-  /// Destructor.
   virtual ~ACE_Scheduler_Strategy () = default;
 
     /**
@@ -195,11 +191,9 @@ protected:
 class TAO_RTSched_Export ACE_MUF_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-    /// = Constructor.
   explicit ACE_MUF_Scheduler_Strategy (
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
-  /// = Virtual destructor.
   ~ACE_MUF_Scheduler_Strategy () override = default;
 
     /// = Returns an instance of the strategy.
@@ -268,11 +262,9 @@ private:
 class TAO_RTSched_Export ACE_RMS_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-    /// = Constructor.
   explicit ACE_RMS_Scheduler_Strategy (
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
-    /// = Virtual destructor.
   ~ACE_RMS_Scheduler_Strategy () override = default;
 
     /// Returns an instance of the strategy.
@@ -333,11 +325,9 @@ private:
 class TAO_RTSched_Export ACE_MLF_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-    /// = Constructor.
   explicit ACE_MLF_Scheduler_Strategy (
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
-    /// = Virtual destructor.
   ~ACE_MLF_Scheduler_Strategy () override = default;
 
     /// = Returns an instance of the strategy.
@@ -399,11 +389,9 @@ private:
 class TAO_RTSched_Export ACE_EDF_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-    /// = Default constructor.
   explicit ACE_EDF_Scheduler_Strategy (
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
-    /// = Virtual destructor.
   ~ACE_EDF_Scheduler_Strategy () override = default;
 
   ACE_EDF_Scheduler_Strategy (ACE_EDF_Scheduler_Strategy const &) = delete;
@@ -469,11 +457,9 @@ private:
 class TAO_RTSched_Export ACE_Criticality_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-    /// = Constructor.
   explicit ACE_Criticality_Scheduler_Strategy (
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
-    /// = Virtual destructor.
   ~ACE_Criticality_Scheduler_Strategy () override = default;
 
   ACE_Criticality_Scheduler_Strategy (ACE_Criticality_Scheduler_Strategy const &) = delete;

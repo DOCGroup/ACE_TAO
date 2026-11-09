@@ -25,8 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // struct TAO_RT_Info_Ex //
 ///////////////////////////
 
-// Default Constructor.
-
 TAO_RT_Info_Ex::TAO_RT_Info_Ex ()
 {
   // Note: the entry_point string takes care of itself.
@@ -173,8 +171,6 @@ TAO_RT_Info_Tuple::TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &info)
 {
 }
 
-// Destructor.
-
 TAO_RT_Info_Tuple::~TAO_RT_Info_Tuple () = default;
 
 
@@ -200,8 +196,6 @@ TAO_RT_Info_Tuple::operator < (TAO_RT_Info_Tuple const &t) const
 // class TAO_Reconfig_Scheduler_Entry //
 ////////////////////////////////////////
 
-// Constructor.
-
 TAO_Reconfig_Scheduler_Entry::
 TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
   : actual_rt_info_ (&rt_info),
@@ -212,8 +206,6 @@ TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
   // Store the RT_Info fields.
   this->orig_rt_info_data (*actual_rt_info_);
 }
-
-// Constructor.
 
 TAO_Reconfig_Scheduler_Entry::
 ~TAO_Reconfig_Scheduler_Entry ()

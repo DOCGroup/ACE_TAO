@@ -55,7 +55,6 @@ public:
                                               ACE_Equal_To<RtecScheduler::handle_t>,
                                               ACE_LOCK>;
 
-  /// Constructor.
   TAO_RSE_Dependency_Visitor
     (DEPENDENCY_SET_MAP & dependency_map,
      RT_INFO_MAP & rt_info_map);
@@ -116,7 +115,6 @@ class TAO_RSE_DFS_Visitor :
   //   as appropriate according to DFS state markers.
 {
 public:
-  /// Constructor.
   TAO_RSE_DFS_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
@@ -167,7 +165,6 @@ class TAO_RSE_SCC_Visitor :
   //   flag cycles in the graph.
 {
 public:
-  /// Constructor.
   TAO_RSE_SCC_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
@@ -253,7 +250,6 @@ class TAO_RSE_Reverse_Propagation_Visitor :
   //   and its dependants, according to its dependencies.
 {
 public:
-  /// Constructor.
   TAO_RSE_Reverse_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
@@ -283,7 +279,6 @@ class TAO_RSE_Forward_Propagation_Visitor :
   //   its dependencies, and the period and threads it specifies.
 {
 public:
-  /// Constructor.
   TAO_RSE_Forward_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
@@ -349,7 +344,6 @@ class TAO_RSE_Priority_Visitor :
   //   priority and subpriority boundaries.
 {
 public:
-  /// Constructor.
   TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
                             TAO_Reconfig_Scheduler_Entry ** entry_ptr_array);
 
@@ -408,7 +402,6 @@ class TAO_Tuple_Admission_Visitor :
   //   whether or not a given operation is critical.
 {
 public:
-  /// Constructor.
   TAO_Tuple_Admission_Visitor (CORBA::Double const & critical_utilization_threshold,
                                CORBA::Double const & noncritical_utilization_threshold);
 
@@ -471,7 +464,6 @@ class TAO_RSE_Criticality_Propagation_Visitor :
   //   and its dependants, according to its dependencies.
 {
 public:
-  /// Constructor.
   TAO_RSE_Criticality_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);

@@ -40,14 +40,12 @@ struct TAO_RTSched_Export TAO_RT_Info_Ex
   //   for the underlying IDL-generated RT_Info descriptor.
 {
   TAO_RT_Info_Ex ();
-  // Default Constructor.
 
   explicit TAO_RT_Info_Ex (RtecScheduler::RT_Info const &);
   // Constructor from an RT_Info
   // (also serves as a copy constructor).
 
   virtual ~TAO_RT_Info_Ex () = default;
-  // Destructor.
 
   void operator = (RtecScheduler::RT_Info const &);
   // Assignment operator with an RT_Info on the RHS.
@@ -77,14 +75,12 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
   //   outside the scheduler.
 {
   TAO_RT_Info_Tuple () = default;
-  // Default Constructor.
 
   explicit TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &);
   // Constructor from an RT_Info.
   // (also serves as a copy constructor).
 
   ~TAO_RT_Info_Tuple () override;
-  // Destructor.
 
   void operator = (RtecScheduler::RT_Info const &);
   // Assignment operator with an RT_Info on the RHS.
@@ -116,10 +112,8 @@ public:
 
   enum Tuple_Type {ORIGINAL = 0x01UL, PROPAGATED = 0x02UL};
 
-  /// Constructor.
   explicit TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info);
 
-  /// Destructor.
   ~TAO_Reconfig_Scheduler_Entry ();
 
   TAO_Reconfig_Scheduler_Entry (TAO_Reconfig_Scheduler_Entry const &) = delete;
@@ -405,7 +399,6 @@ private:
 class TAO_RTSched_Export TAO_Reconfig_Sched_Entry_Visitor
 {
 public:
-  /// Destructor.
   virtual ~TAO_Reconfig_Sched_Entry_Visitor ();
 
   /// Visit a Reconfig Scheduler Entry.
@@ -423,10 +416,8 @@ class TAO_RTSched_Export TAO_RSE_Reset_Visitor :
   //   prior to the first DFS traversal for topological sorting.
 {
 public:
-  /// Constructor.
   TAO_RSE_Reset_Visitor () = default;
 
-  /// Destructor.
   ~TAO_RSE_Reset_Visitor () override = default;
 
   /// Resets the fields in the entry to pre-DFS traversal states.
@@ -446,7 +437,6 @@ public:
 class TAO_RTSched_Export TAO_RT_Info_Tuple_Visitor
 {
 public:
-  /// Destructor.
   virtual ~TAO_RT_Info_Tuple_Visitor ();
 
   /// Visit a RT_Info tuple.
