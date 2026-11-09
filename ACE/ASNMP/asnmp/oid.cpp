@@ -135,7 +135,6 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
 }
 
 //=============[Oid::~Oid]==============================================
-// destructor
 //
 // free up the descriptor space
 Oid::~Oid()

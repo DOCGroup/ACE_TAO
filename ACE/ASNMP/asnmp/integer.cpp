@@ -121,7 +121,6 @@ char const *SnmpUInt32::to_string ()
 //  INT 32 Implementation
 //====================================================================
 
-// default constructor
 SnmpInt32::SnmpInt32 (long const i)
 {
   smival.value.sNumber = i;

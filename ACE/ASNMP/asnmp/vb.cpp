@@ -70,7 +70,6 @@ Vb::Vb (Vb const &vb)
 }
 
 //---------------[ Vb::~Vb() ]------------------------------------------
-// destructor
 // if the vb has a oid or an octect string then
 // the associated memory needs to be freed
 Vb::~Vb() = default;
