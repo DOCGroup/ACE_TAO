@@ -19,21 +19,21 @@
 //#define DO_1459_SSLIOP_TEST 1
 
 // UIOP
-const ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
+constexpr ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
 
 #if defined (DO_1459_SSLIOP_TEST)
 // SSLIOP
-const ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
+constexpr ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
 #endif
 
 // UIPMC
-const ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");
+constexpr ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");
 
 // DIOP
-const ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf");
+constexpr ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf");
 
-// empty file
-const ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
+// Empty file.
+constexpr ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
 
 int
 testBug1459 (int, ACE_TCHAR *[])
@@ -42,13 +42,12 @@ testBug1459 (int, ACE_TCHAR *[])
 
   try
     {
-      int n;
       int error {};
 
       ACE_ARGV argM (argStrM);
-      n = argM.argc ();
+      int argcM = argM.argc ();
       CORBA::ORB_var ORBM =
-        CORBA::ORB_init (n, argM.argv ());
+        CORBA::ORB_init (argcM, argM.argv ());
 
       if (CORBA::is_nil (ORBM.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -58,9 +57,9 @@ testBug1459 (int, ACE_TCHAR *[])
 #if TAO_HAS_UIOP == 1
       // UIOP
       ACE_ARGV argA (argStrA);
-      n = argA.argc ();
+      int argcA = argA.argc ();
       CORBA::ORB_var ORBA =
-        CORBA::ORB_init (n, argA.argv ());
+        CORBA::ORB_init (argcA, argA.argv ());
 
       if (CORBA::is_nil (ORBA.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -71,9 +70,9 @@ testBug1459 (int, ACE_TCHAR *[])
 #if defined (DO_1459_SSLIOP_TEST)
       // SSLIOP
       ACE_ARGV argB (argStrB);
-      n = argB.argc ();
+      int argcB = argB.argc ();
       CORBA::ORB_var ORBB =
-        CORBA::ORB_init (n, argB.argv ());
+        CORBA::ORB_init (argcB, argB.argv ());
 
       if (CORBA::is_nil (ORBB.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -83,9 +82,9 @@ testBug1459 (int, ACE_TCHAR *[])
 
       // MIOP
       ACE_ARGV argC (argStrC);
-      n = argC.argc ();
+      int argcC = argC.argc ();
       CORBA::ORB_var ORBC =
-        CORBA::ORB_init (n, argC.argv ());
+        CORBA::ORB_init (argcC, argC.argv ());
 
       if (CORBA::is_nil (ORBC.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -94,9 +93,9 @@ testBug1459 (int, ACE_TCHAR *[])
 
       // DIOP
       ACE_ARGV argD (argStrD);
-      n = argD.argc ();
+      int argcD = argD.argc ();
       CORBA::ORB_var ORBD =
-        CORBA::ORB_init (n, argD.argv ());
+        CORBA::ORB_init (argcD, argD.argv ());
 
       if (CORBA::is_nil (ORBD.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -195,10 +194,10 @@ testBug1459 (int, ACE_TCHAR *[])
 
       ORBD->destroy();
 
-      if (error > 0)
+      if (error != 0)
         return -1;
     }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unhandled exception caught");
       return -1;
@@ -212,5 +211,5 @@ testBug1459 (int, ACE_TCHAR *[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  return testBug1459(argc, argv);
+  return testBug1459 (argc, argv);
 }
