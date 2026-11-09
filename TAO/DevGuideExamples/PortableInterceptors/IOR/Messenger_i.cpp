@@ -7,14 +7,14 @@ void Messenger_i::send_message (CORBA::OctetSeq const& user_name)
 {
   try
     {
-      int argc = 0;
-      char **argv = 0;
+      int argc {};
+      char **argv {};
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain a reference to the CodecFactory.
-      CORBA::Object_var obj =
-      orb->resolve_initial_references ("CodecFactory");
+      CORBA::Object_var const obj =
+        orb->resolve_initial_references ("CodecFactory");
 
       IOP::CodecFactory_var codec_factory;
 
@@ -31,7 +31,7 @@ void Messenger_i::send_message (CORBA::OctetSeq const& user_name)
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.2 CDR encapsulation Codec.
-      IOP::Encoding encoding;
+      IOP::Encoding encoding {};
       encoding.format = IOP::ENCODING_CDR_ENCAPS;
       encoding.major_version = 1;
       encoding.minor_version = 2;
@@ -43,7 +43,7 @@ void Messenger_i::send_message (CORBA::OctetSeq const& user_name)
       CORBA::Any uid_as_any;
       uid_as_any = *(codec->decode(user_name));
 
-      CORBA::Long uid;
+      CORBA::Long uid {};
       if (uid_as_any >>= uid)
         {
           std::cout << "UID: " << uid << std::endl;
