@@ -29,7 +29,7 @@ public:
   Signal_Handler ();
 
   /// Override this method to implement graceful shutdown.
-  int handle_signal(int signum, siginfo_t*,ucontext_t*);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 };
 
 
