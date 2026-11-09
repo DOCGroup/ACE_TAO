@@ -93,7 +93,6 @@ public:
 
 private:
   std::unique_ptr<ACEXML_ENTITIES_MANAGER> entities_ {};
-  // bool init_;
 };
 
 #if defined (__ACEXML_INLINE__)

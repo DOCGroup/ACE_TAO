@@ -214,8 +214,8 @@ protected:
   /**
    * Parse a reference name, i.e., foo in "&foo;" or "%foo;". The first
    * character encountered should be the character following '&' or '%'.
-   * Effectively the same as @sa parse_name but we don't use the parser's
-   * obstack. Caller is responsible for deleting the memory.
+   * Effectively the same as @sa parse_name but uses the parser's alternate
+   * obstack. The returned pointer remains owned by that obstack.
    *
    * @retval  A pointer to name of reference, 0 otherwise.
    */
@@ -753,13 +753,13 @@ private:
   ACEXML_ContentHandler *content_handler_ {};
   ACEXML_ErrorHandler *error_handler_ {};
 
-  /// Document Type
+  /// Non-owning pointer into obstack_ used to validate the root element.
   ACEXML_Char *doctype_ {};
 
-  /// Current parser context
+  /// Non-owning alias to the context at the top of ctx_stack_.
   ACEXML_Parser_Context* current_ {};
 
-  /// Stack used to hold the Parser_Context
+  /// Owns contexts pushed here; pop_context() and reset() delete removed contexts.
   ACE_Unbounded_Stack<ACEXML_Parser_Context*> ctx_stack_;
 
   /*
@@ -769,10 +769,10 @@ private:
    * both fall under different namespaces.
    *
    */
-  /// Set used to hold the general entity references that are active.
+  /// Non-owning references into alt_stack_ for active general entities.
   ACE_Unbounded_Stack<ACEXML_Char*> GE_reference_;
 
-  /// Set used to hold the parameter entity references that are active.
+  /// Non-owning references into alt_stack_ for active parameter entities.
   ACE_Unbounded_Stack<ACEXML_Char*> PE_reference_;
 
   /// Obstack used by the parser to hold all the strings parsed

@@ -13,10 +13,9 @@
 #include "ACEXML/parser/parser/ParserInternals.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
-#include <memory>
 
-static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
-static const ACEXML_Char empty_string[] = { 0 };
+static constexpr ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
+static constexpr ACEXML_Char empty_string[] = { 0 };
 
 const ACEXML_Char
 ACEXML_Parser::simple_parsing_feature_[] = ACE_TEXT ("Simple");
@@ -94,7 +93,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
   // Set up Locator.
   this->content_handler_->setDocumentLocator (this->current_->getLocator());
 
-  bool xmldecl_defined = false;
+  bool xmldecl_defined {};
   ACEXML_Char fwd = this->get();  // Consume '<'
   if (fwd == '<' && this->peek() == '?')
     {
@@ -114,8 +113,8 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
     }
   this->content_handler_->startDocument ();
 
-  bool doctype_defined = false;
-  bool prolog_done = false;
+  bool doctype_defined {};
+  bool prolog_done {};
   while (!prolog_done)
     {
       // Expect a '<' only if we have encountered a XMLDecl, or we are
@@ -204,7 +203,7 @@ ACEXML_Parser::parse_doctypedecl ()
     {
       this->fatal_error(ACE_TEXT ("Invalid DOCTYPE name"));
     }
-  int count = this->skip_whitespace_count (&nextch);
+  int const count = this->skip_whitespace_count (&nextch);
 
   if (nextch == 'S' || nextch == 'P') // ExternalID defined
     {
@@ -380,7 +379,7 @@ int
 ACEXML_Parser::parse_conditional_section ()
 {
   ACEXML_Char ch = this->get ();
-  bool include = false;
+  bool include {};
   if (ch != '[')
     {
       this->fatal_error(ACE_TEXT ("Internal Parser Error"));
@@ -443,7 +442,7 @@ ACEXML_Parser::parse_ignoresect ()
 {
   ACEXML_Char nextch = this->skip_whitespace();
   int count {};
-  bool done = false;
+  bool done {};
   do {
     switch (nextch)
       {
@@ -698,12 +697,12 @@ ACEXML_Parser::parse_element (bool is_root)
     }
   ACEXML_AttributesImpl attributes;
   ACEXML_Char ch {};
-  bool ns_flag = false; // Push only one namespace context onto the stack
+  bool ns_flag {}; // Push only one namespace context onto the stack
                      // if there are multiple namespaces declared.
 
   ACEXML_Char const *ns_uri {};
   ACEXML_Char const *ns_lname {}; // namespace URI and localName
-  bool start_element_done = false;
+  bool start_element_done {};
   while (!start_element_done)
     {
       ch = this->skip_whitespace ();
@@ -1033,7 +1032,7 @@ ACEXML_Parser::parse_entity_decl ()
                          ACE_TEXT ("space"));
     }
 
-  bool is_GEDecl = true;
+  bool is_GEDecl {true};
   if (nextch == '%')            // This is a PEDecl.
     {
       is_GEDecl = false;
@@ -1212,7 +1211,7 @@ ACEXML_Parser::check_for_PE_reference ()
 {
   ACEXML_Char fwd = '\xFF';
   // Skip any leading whitespaces and store the number of such chars skipped
-  int count = this->skip_whitespace_count (&fwd);
+  int const count = this->skip_whitespace_count (&fwd);
   if (fwd == 0)
     {
       this->get(); // Consume the 0
@@ -1467,7 +1466,7 @@ ACEXML_Parser::parse_atttype ()
               {
                 this->fatal_error(ACE_TEXT ("Expecting keyword `NOTATION'"));
               }
-            int count = this->check_for_PE_reference ();
+            int const count = this->check_for_PE_reference ();
             if (!count)
               {
                 this->fatal_error (ACE_TEXT ("Expecting space between keyword ")
@@ -1570,7 +1569,7 @@ ACEXML_Parser::parse_notation_decl ()
     }
   if (publicid)
     {
-      int retval = this->notations_.add_entity (notation, publicid);
+      int const retval = this->notations_.add_entity (notation, publicid);
       if (retval != 0 && !systemid && this->validate_)
         {
           this->fatal_error(ACE_TEXT ("Internal Parser Error"));
@@ -1678,7 +1677,7 @@ ACEXML_Parser::parse_children_definition ()
         // @@ close the element definition in the validator.
         break;
       default:
-        int status = this->parse_child (true);
+        int const status = this->parse_child (true);
         if (status != 0)
           return -1;
     }
@@ -1834,7 +1833,7 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
   ACEXML_Char ch = this->get();
   if (ch != '#')      // Internal error.
     return -1;
-  bool hex = false;
+  bool hex {};
   ch = this->peek();
   if (ch == 'x')
     {
@@ -1842,7 +1841,7 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
       this->get ();
     }
   size_t i {};
-  bool more_digit = false;
+  bool more_digit {};
   ch = this->get ();
   for ( ; i < len &&
           (this->isNormalDigit (ch) || (hex ? this->isCharRef (ch) : false)); ++i)
@@ -1854,7 +1853,8 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
   if (ch != ';' || !more_digit)
     return -1;
   buf[i] = 0;
-  ACEXML_UCS4 sum = (ACEXML_UCS4) ACE_OS::strtol (buf, 0, (hex ? 16 : 10));
+  ACEXML_UCS4 const sum =
+    static_cast<ACEXML_UCS4> (ACE_OS::strtol (buf, nullptr, (hex ? 16 : 10)));
   // [WFC: Legal Character]
   if (!this->isChar (sum))
     return -1;
@@ -2044,8 +2044,8 @@ ACEXML_Parser::parse_entity_reference ()
     }
 
   // [WFC: No Recursion]
-  ACEXML_Char* ref_name = replace;
-  int present = this->GE_reference_.insert (ref_name);
+  ACEXML_Char *ref_name = replace;
+  int const present = this->GE_reference_.insert (ref_name);
   if (present == 1 || present == -1)
     {
       while (this->GE_reference_.pop(ref_name) != -1)
@@ -2131,8 +2131,8 @@ ACEXML_Parser::parse_PE_reference ()
     }
 
   // [WFC: No Recursion]
-  ACEXML_Char* ref_name = replace;
-  int present = this->PE_reference_.insert (ref_name);
+  ACEXML_Char *ref_name = replace;
+  int const present = this->PE_reference_.insert (ref_name);
   if (present == 1 || present == -1)
     {
       while (this->PE_reference_.pop(ref_name) != -1)
@@ -2149,9 +2149,6 @@ ACEXML_Parser::parse_PE_reference ()
           ACEXML_Char const * const ch = ACE_TEXT (" ");
           str = ch + str + ch;
         }
-      //  ACE_DEBUG ((LM_DEBUG,
-      //             ACE_TEXT ("Entity is %s\n Replacement Text is : %s\n"),
-      //             replace, str.c_str()));
       ACE_NEW_RETURN (raw_sstream, ACEXML_StrCharStream, -1);
       std::unique_ptr<ACEXML_StrCharStream> sstream (raw_sstream);
       if (sstream->open (str.c_str(), replace) < 0)
@@ -2470,7 +2467,7 @@ ACEXML_Parser::prefix_mapping (ACEXML_Char const *prefix,
 {
   if (this->namespaces_)
     {
-      ACEXML_Char const *temp = (prefix == nullptr) ? empty_string : prefix;
+      ACEXML_Char const * const temp = (prefix == nullptr) ? empty_string : prefix;
       if (start) {
         this->content_handler_->startPrefixMapping (temp, uri);
       }
@@ -2541,13 +2538,13 @@ ACEXML_Parser::pop_context (int GE_ref)
       this->fatal_error(ACE_TEXT ("Unexpected end-of-file"));
     }
 
-  ACEXML_Parser_Context *temp {};
-  int retval = this->ctx_stack_.pop (temp);
+  ACEXML_Parser_Context *context {};
+  int const retval = this->ctx_stack_.pop (context);
+  std::unique_ptr<ACEXML_Parser_Context> context_owner (context);
   if (retval != 0)
     {
       this->fatal_error (ACE_TEXT ("Unable to pop element of the input stack"));
     }
-  delete temp;
   if (this->ctx_stack_.top (this->current_) != 0)
     {
       this->fatal_error (ACE_TEXT ("Unable to read top element of input stack"));
@@ -2867,10 +2864,9 @@ ACEXML_Parser::reset ()
                 ACE_TEXT ("Mismatched push/pop of Context stack")));
   if (this->current_)
     {
+      std::unique_ptr<ACEXML_Parser_Context> context_owner (this->current_);
       this->current_->getInputSource()->getCharStream()->rewind();
-
       this->current_->setInputSource (nullptr);
-      delete this->current_;
       this->current_ = nullptr;
     }
 
