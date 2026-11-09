@@ -35,8 +35,6 @@ static DEBUGGING_RANGE debug {DEBUG_NONE};
 // Timer for the test
 ACE_High_Res_Timer test_timer;
 
-/*******************************************************************/
-// Constructor for Synchronisers
 Synchronisers::Synchronisers ()
   : mutex_ (),
     condition_ (mutex_),
