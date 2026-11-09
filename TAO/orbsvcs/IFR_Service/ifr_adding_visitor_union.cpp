@@ -37,7 +37,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
   this->members_.length (nfields);
 
-  AST_Field *f = nullptr;
+  AST_Field *f {};
 
   // Index into members_.
   CORBA::ULong index = 0;
@@ -108,7 +108,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
           // Get the case label(s).
 
-          AST_UnionLabel *case_label = nullptr;
+          AST_UnionLabel *case_label {};
           AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (f);
           unsigned long len = ub->label_list_length ();
 
@@ -138,7 +138,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                       TAO_OutputCDR cdr;
                       cdr.write_ulong (ev->u.ulval);
                       TAO_InputCDR in_cdr (cdr);
-                      TAO::Unknown_IDL_Type *unk = nullptr;
+                      TAO::Unknown_IDL_Type *unk {};
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (
                                         this->disc_tc_.in (),
@@ -254,7 +254,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
 
-          UTL_ScopedName *member_name = nullptr;
+          UTL_ScopedName *member_name {};
 
           // Get a list of the member names.
           for (CORBA::ULong i = 0; i < member_count; ++i)

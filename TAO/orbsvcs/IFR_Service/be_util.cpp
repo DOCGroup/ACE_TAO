@@ -46,7 +46,7 @@ be_util::usage ()
 AST_Generator *
 be_util::generator_init ()
 {
-  AST_Generator *gen = nullptr;
+  AST_Generator *gen {};
   ACE_NEW_RETURN (gen,
                   AST_Generator,
                   nullptr);
