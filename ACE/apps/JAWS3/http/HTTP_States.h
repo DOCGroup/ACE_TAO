@@ -11,6 +11,11 @@
 class JAWS_HTTP_STATE_NAME : protected JAWS_Protocol_State                    \
 {                                                                             \
 public:                                                                       \
+  JAWS_HTTP_STATE_NAME () = default;                                          \
+  JAWS_HTTP_STATE_NAME (JAWS_HTTP_STATE_NAME const &) = delete;               \
+  JAWS_HTTP_STATE_NAME (JAWS_HTTP_STATE_NAME &&) = delete;                    \
+  JAWS_HTTP_STATE_NAME &operator= (JAWS_HTTP_STATE_NAME const &) = delete;    \
+  JAWS_HTTP_STATE_NAME &operator= (JAWS_HTTP_STATE_NAME &&) = delete;         \
   int service (JAWS_Event_Completer *, JAWS_HTTP_Data *);                      \
   JAWS_Protocol_State *transition (JAWS_Event_Result const &,                  \
                                    JAWS_HTTP_Data *,                           \

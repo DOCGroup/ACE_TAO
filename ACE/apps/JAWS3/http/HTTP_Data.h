@@ -12,6 +12,10 @@ class JAWS_HTTP_Data
 {
 public:
   explicit JAWS_HTTP_Data (JAWS_HTTP_Service_Handler *sh);
+  JAWS_HTTP_Data (JAWS_HTTP_Data const &) = delete;
+  JAWS_HTTP_Data (JAWS_HTTP_Data &&) = delete;
+  JAWS_HTTP_Data &operator= (JAWS_HTTP_Data const &) = delete;
+  JAWS_HTTP_Data &operator= (JAWS_HTTP_Data &&) = delete;
 
   ACE_SOCK_Stream & peer ();
   ACE_Message_Block & mb ();

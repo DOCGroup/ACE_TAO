@@ -28,6 +28,10 @@ class JAWS_HTTP_Service_Handler
 {
 public:
   JAWS_HTTP_Service_Handler ();
+  JAWS_HTTP_Service_Handler (JAWS_HTTP_Service_Handler const &) = delete;
+  JAWS_HTTP_Service_Handler (JAWS_HTTP_Service_Handler &&) = delete;
+  JAWS_HTTP_Service_Handler &operator= (JAWS_HTTP_Service_Handler const &) = delete;
+  JAWS_HTTP_Service_Handler &operator= (JAWS_HTTP_Service_Handler &&) = delete;
 
   int open (void *) override;
 
@@ -50,6 +54,12 @@ class ACE_Svc_Export JAWS_HTTP_Acceptor
 //     is created.
 {
 public:
+  JAWS_HTTP_Acceptor () = default;
+  JAWS_HTTP_Acceptor (JAWS_HTTP_Acceptor const &) = delete;
+  JAWS_HTTP_Acceptor (JAWS_HTTP_Acceptor &&) = delete;
+  JAWS_HTTP_Acceptor &operator= (JAWS_HTTP_Acceptor const &) = delete;
+  JAWS_HTTP_Acceptor &operator= (JAWS_HTTP_Acceptor &&) = delete;
+
   int init (int argc, ACE_TCHAR *argv[]) override;
 };
 
