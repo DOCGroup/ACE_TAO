@@ -15,7 +15,6 @@ class Hash_Map :
 class Hash_Map_Example
 {
 public:
-  // Constructor
   Hash_Map_Example ();
 
   // Illustrate the hash map.
