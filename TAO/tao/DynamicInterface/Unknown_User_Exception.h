@@ -45,16 +45,13 @@ namespace CORBA
     : public CORBA::UserException
   {
   public:
-    /// Constructor.
     UnknownUserException ();
 
-    /// Constructor.
     explicit UnknownUserException (CORBA::Any& exception);
 
     /// Copy constructor.
     UnknownUserException (UnknownUserException const& e);
 
-    /// Destructor.
     ~UnknownUserException () override;
 
     /// Return the any containing the user exception.

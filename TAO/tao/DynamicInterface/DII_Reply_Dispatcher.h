@@ -57,7 +57,6 @@ public:
   }
 
 protected:
-  /// Destructor.
   ~TAO_DII_Deferred_Reply_Dispatcher () = default;
 
 private:

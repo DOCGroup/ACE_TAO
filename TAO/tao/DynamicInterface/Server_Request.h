@@ -55,10 +55,8 @@ namespace CORBA
   class TAO_DynamicInterface_Export ServerRequest
   {
   public:
-    /// Constructor.
     explicit ServerRequest (TAO_ServerRequest &orb_server_request);
 
-    /// Destructor.
     ~ServerRequest ();
 
     /// Implementation uses this to provide the ORB with the operation's

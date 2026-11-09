@@ -52,14 +52,12 @@ namespace CORBA
   class TAO_DynamicInterface_Export ExceptionList
   {
   public:
-    /// Constructor.
     ExceptionList () = default;
 
     /// Constructor - initialize given a length and an array of
     /// TypeCodes.
     ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
-    /// Destructor.
     ~ExceptionList ();
 
     /// Return the number of elements.

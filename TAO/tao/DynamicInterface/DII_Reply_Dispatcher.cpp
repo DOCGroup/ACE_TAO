@@ -7,7 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)

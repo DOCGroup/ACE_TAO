@@ -121,14 +121,12 @@ namespace CORBA
   class TAO_DynamicInterface_Export ContextList
   {
   public:
-    /// Constructor.
     ContextList () = default;
 
     /// Constructor - initialize given a length and an array of
     /// strings.
     ContextList (CORBA::ULong len, char **ctx_list);
 
-    /// Destructor.
     ~ContextList ();
 
     /// Return the number of elements.
