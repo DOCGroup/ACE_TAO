@@ -89,8 +89,6 @@ Thermometer_impl::set_loc (char const *loc)
     assert (result == 0);
 }
 
-// Constructor.
-
 Thermometer_impl::
 Thermometer_impl (
     CCS::AssetType anum,
@@ -101,8 +99,6 @@ Thermometer_impl (
     set_loc (location);
     m_ctrl->add_impl (anum, this);   // Add self to controller's map
 }
-
-// Destructor.
 
 Thermometer_impl::~Thermometer_impl ()
 {
@@ -207,8 +203,6 @@ set_nominal_temp (CCS::TempType new_temp)
     }
     return old_temp;
 }
-
-// Constructor.
 
 Thermostat_impl::
 Thermostat_impl (
