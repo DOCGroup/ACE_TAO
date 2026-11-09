@@ -1,7 +1,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
-ACE_Env_Value<T>::operator T ()
+ACE_Env_Value<T>::operator T () const
 {
   return value_;
 }
