@@ -28,10 +28,8 @@
 class Time_i: public POA_Time
 {
 public:
-  /// Constructor
   Time_i () = default;
 
-  /// Destructor
   ~Time_i () override = default;
 
   Time_i (Time_i const &) = delete;
