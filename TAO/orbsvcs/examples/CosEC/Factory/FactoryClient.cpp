@@ -14,14 +14,12 @@ class FactoryClient
 public:
   // Initialization and termination methods
   FactoryClient () = default;
-  // constructor.
 
   ~FactoryClient () = default;
   FactoryClient (FactoryClient const &) = delete;
   FactoryClient (FactoryClient &&) = delete;
   FactoryClient &operator= (FactoryClient const &) = delete;
   FactoryClient &operator= (FactoryClient &&) = delete;
-  // destructor.
 
   void init_ORB (int argc, ACE_TCHAR *argv []);
   // Initializes the ORB.
