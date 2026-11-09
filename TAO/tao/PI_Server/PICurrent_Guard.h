@@ -48,7 +48,6 @@ namespace TAO
   class PICurrent_Guard
   {
   public:
-    /// Constructor
     /**
      * This constructor sets up this guard to copy the data held in a
      * given PICurrent when transitioning from that PICurrent's scope
@@ -63,7 +62,6 @@ namespace TAO
     PICurrent_Guard (TAO_ServerRequest &server_request,
                      bool tsc_to_rsc);
 
-    /// Destructor
     /**
      * The destructor copies (a logical copy whenever possible) data
      * held in a given PICurrent when transitioning from one PICurrent

@@ -70,7 +70,6 @@ namespace TAO
     , public virtual ::CORBA::LocalObject
   {
   public:
-    /// Constructor.
     ServerRequestInfo (TAO_ServerRequest & server_request,
                        TAO::Argument * const * args,
                        size_t nargs,

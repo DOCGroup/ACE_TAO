@@ -26,10 +26,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PI_Server_Export TAO_PI_Server_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_PI_Server_Loader () = default;
 
-  /// Destructor.
   ~TAO_PI_Server_Loader () override;
 
   /// Initialize the PI_Server loader hooks.

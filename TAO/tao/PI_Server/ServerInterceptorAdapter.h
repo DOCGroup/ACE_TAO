@@ -67,7 +67,6 @@ namespace TAO
     , public TAO_RequestInterceptor_Adapter_Impl
   {
   public:
-    /// Constructor.
     ServerRequestInterceptor_Adapter_Impl () = default;
 
     /**
