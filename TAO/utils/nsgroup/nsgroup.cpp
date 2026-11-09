@@ -6,7 +6,6 @@
  */
 //==========================================================================
 
-
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/Get_Opt.h"
 
@@ -14,7 +13,7 @@
 bool
 show_help(int argc, ACE_TCHAR *argv[])
 {
-  static const ACE_TCHAR options[] = ACE_TEXT("h");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT("h");
   static constexpr int skip_args = 1;
   static constexpr int report_errors {};
   static constexpr int ordering = ACE_Get_Opt::RETURN_IN_ORDER;
@@ -82,7 +81,6 @@ public:
     member_show
   };
 
-  /// Constructor
   NSGROUP (int argc, ACE_TCHAR **argv);
 
   NSGROUP (NSGROUP const &) = delete;
@@ -113,7 +111,7 @@ private:
   NS_group_svc svc_;
 
   int argc_;
-  ACE_TCHAR **argv_;
+  ACE_TCHAR ** const argv_;
 
   /// parsed command result
   NSGROUP_COMMAND nsgroup_cmd_ {NSGROUP_COMMAND::none};
@@ -126,8 +124,7 @@ private:
   ACE_TCHAR const *namepath_arg_ {};
 };
 
-
- NSGROUP::NSGROUP (int argc, ACE_TCHAR **argv)
+NSGROUP::NSGROUP (int argc, ACE_TCHAR **argv)
   : argc_ (argc),
     argv_ (argv)
 {
@@ -220,7 +217,6 @@ NSGROUP::run_cmd()
   {
     case NSGROUP_COMMAND::help:
       return show_usage ();
-    break;
 
     case NSGROUP_COMMAND::group_create:
       rc = svc_.group_create ( group_arg(), policy_arg() );
@@ -265,7 +261,6 @@ NSGROUP::run_cmd()
     default:
       show_usage ();
       return rc;
-    break;
   }
 
   if (rc == RC_BADARG)
@@ -291,7 +286,7 @@ NSGROUP::parse_command_line ()
   }
   #endif
 
-  static const ACE_TCHAR options[] = ACE_TEXT("g:p:t:l:i:n:h");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT("g:p:t:l:i:n:h");
   static constexpr int skip_args = 1;
   static constexpr int report_errors {};
   static constexpr int ordering = ACE_Get_Opt::PERMUTE_ARGS;
@@ -381,7 +376,6 @@ NSGROUP::parse_command_line ()
   {
     ++non_option_arg_count;
 
-
     if( ACE_OS::strncmp (this->argv_[i],ACE_TEXT("group_create"),
                          ACE_OS::strlen (ACE_TEXT("group_create"))) == 0 )
       {
@@ -448,7 +442,6 @@ NSGROUP::parse_command_line ()
   return nsgroup_cmd_;
 }
 
-
 int
 NSGROUP::show_usage ()
 {
@@ -471,7 +464,6 @@ NSGROUP::show_usage ()
     this->argv_[0]));
   return RC_SUCCESS;
 }
-
 
 //============================================================================
 int
