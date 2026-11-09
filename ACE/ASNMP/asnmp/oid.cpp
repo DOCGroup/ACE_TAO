@@ -29,6 +29,8 @@
 
 //---------[ external C libraries used ]--------------------------------
 
+#include <cstring>
+
 #include "asnmp/oid.h"                  // include def for oid class
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
@@ -61,7 +63,7 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
   set_null();
 
   size_t z;
-  if ((z = ACE_OS::strlen(dotted_oid_string)) == 0) {
+  if ((z = std::strlen (dotted_oid_string)) == 0) {
     set_invalid();
     return;
   }
@@ -230,7 +232,7 @@ Oid& Oid::operator+=( const char *a)
 
   if ( *a=='.')
     a++;
-  size_t sz = ACE_OS::strlen(a);
+  size_t sz = std::strlen (a);
 
   if (valid()) {
     n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
@@ -246,9 +248,9 @@ Oid& Oid::operator+=( const char *a)
         return *this;
       }
 
-   if (ACE_OS::strlen (ptr.get ()))
-     ACE_OS::strcat (ptr.get (), ".");
-   ACE_OS::strcat (ptr.get (), a);
+   if (std::strlen (ptr.get ()))
+     std::strcat (ptr.get (), ".");
+   std::strcat (ptr.get (), a);
    if ( smival.value.oid.len !=0) {
      set_invalid();
     }
@@ -432,11 +434,11 @@ Oid& Oid::operator+=( const unsigned long i)
        return *this;
     }
 
-    if (ACE_OS::strlen(ptr))
-       ACE_OS::strcat(ptr,".");
+    if (std::strlen (ptr))
+       std::strcat (ptr, ".");
 
     if (ACE_OS::sprintf( buffer,"%lu",i) != -1) {
-       ACE_OS::strcat(ptr, buffer);
+       std::strcat (ptr, buffer);
        if ( smival.value.oid.ptr ) {
          set_invalid();
        }
@@ -562,7 +564,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
   size_t nz;
 
   if (string && *string) {
-     nz = ACE_OS::strlen( string);
+     nz = std::strlen (string);
     }
   else {
      dstOid->len = 0;
@@ -748,7 +750,7 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
       return -1;
 
     // verify len is not over
-    if (totLen + ACE_OS::strlen(szNumber) + 1 >= size)
+    if (totLen + std::strlen (szNumber) + 1 >= size)
       return -2;
 
     // if not at end, pad with a dot
@@ -756,10 +758,10 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
       string[totLen++] = '.';
 
     // copy the string token into the main string
-    ACE_OS::strcpy(string + totLen, szNumber);
+    std::strcpy (string + totLen, szNumber);
 
     // adjust the total len
-    totLen += ACE_OS::strlen(szNumber);
+    totLen += std::strlen (szNumber);
   }
 
   how_many_bytes = totLen + 1;
