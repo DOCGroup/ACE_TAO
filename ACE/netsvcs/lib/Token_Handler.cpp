@@ -78,8 +78,6 @@ ACE_Token_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
 ACE_SVC_FACTORY_DEFINE (ACE_Token_Acceptor)
 
-// Default constructor.
-
 ACE_Token_Handler::ACE_Token_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm),
     collection_ (1),

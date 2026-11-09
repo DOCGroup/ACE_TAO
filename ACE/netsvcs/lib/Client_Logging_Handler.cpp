@@ -428,7 +428,6 @@ class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handl
   //     easily be factored into the <ACE_Acceptor>.
 public:
   ACE_Client_Logging_Acceptor ();
-  // Default constructor.
 
 protected:
   // = Dynamic linking hooks.
