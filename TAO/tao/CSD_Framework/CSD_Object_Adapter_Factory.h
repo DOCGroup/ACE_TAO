@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CSD_FW_Export TAO_CSD_Object_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
-  /// Constructor
   TAO_CSD_Object_Adapter_Factory () = default;
 
   // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for

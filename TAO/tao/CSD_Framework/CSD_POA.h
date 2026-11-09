@@ -37,7 +37,6 @@ class TAO_CSD_FW_Export TAO_CSD_POA
     public virtual TAO_Regular_POA
 {
 public:
-  /// Constructor
   TAO_CSD_POA (const String &name,
                PortableServer::POAManager_ptr poa_manager,
                const TAO_POA_Policy_Set &policies,
@@ -47,7 +46,6 @@ public:
                TAO_ORB_Core &orb_core,
                TAO_Object_Adapter *object_adapter);
 
-  /// Destructor
   ~TAO_CSD_POA () override;
 
   /// Pass the Strategy object reference to the CSD poa.
