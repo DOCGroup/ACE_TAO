@@ -74,6 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      // ACE_NEW_RETURN needs a writable raw pointer; the var adopts the initial reference.
       Server_ORBInitializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
@@ -123,6 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
+      // ACE_NEW_RETURN needs a writable raw pointer; owner adopts the servant reference.
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
