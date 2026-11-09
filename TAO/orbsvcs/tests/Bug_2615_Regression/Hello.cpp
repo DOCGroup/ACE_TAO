@@ -2,8 +2,7 @@
 #include "ServerRequest_Interceptor2.h"
 #include "Hello.h"
 
-
-Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
+Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
