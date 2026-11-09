@@ -59,7 +59,6 @@ public:
   /// Constructor
   explicit TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
-  /// destructor
   ~TAO_ESF_Peer_Admin () override = default;
 
   TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin const &) = delete;

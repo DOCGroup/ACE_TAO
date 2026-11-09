@@ -126,7 +126,6 @@ class TAO_ESF_Proxy_Collection
 public:
   TAO_ESF_Proxy_Collection () = default;
 
-  /// destructor
   virtual ~TAO_ESF_Proxy_Collection () = default;
 
   TAO_ESF_Proxy_Collection (TAO_ESF_Proxy_Collection const &) = delete;

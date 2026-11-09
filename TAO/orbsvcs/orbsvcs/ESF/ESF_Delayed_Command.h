@@ -41,7 +41,6 @@ template<class Target, class Object>
 class TAO_ESF_Connected_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   TAO_ESF_Connected_Command (Target *target,
                             Object *object);
 
@@ -84,7 +83,6 @@ template<class Target, class Object>
 class TAO_ESF_Reconnected_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   TAO_ESF_Reconnected_Command (Target *target,
                             Object *object);
 
@@ -128,7 +126,6 @@ template<class Target, class Object>
 class TAO_ESF_Disconnected_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   TAO_ESF_Disconnected_Command (Target *target,
                                Object *object);
 
@@ -171,7 +168,6 @@ template<class Target>
 class TAO_ESF_Shutdown_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   explicit TAO_ESF_Shutdown_Command (Target *target);
 
   TAO_ESF_Shutdown_Command (TAO_ESF_Shutdown_Command const &) = delete;
