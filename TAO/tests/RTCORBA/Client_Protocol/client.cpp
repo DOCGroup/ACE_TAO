@@ -7,29 +7,35 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
-const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
-CORBA::ULong protocol_type = 0;
+#include <cstdio>
+
+struct Client_Options
+{
+  ACE_TCHAR const *server_policy_ior {ACE_TEXT("file://test1.ior")};
+  ACE_TCHAR const *default_policy_ior {ACE_TEXT("file://test2.ior")};
+  CORBA::ULong protocol_type {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:p:"));
-  int c, result;
+  int c {};
+  int result {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 's':
-        ior1 = get_opts.opt_arg ();
+        options.server_policy_ior = get_opts.opt_arg ();
         break;
       case 'c':
-        ior2 = get_opts.opt_arg ();
+        options.default_policy_ior = get_opts.opt_arg ();
         break;
       case 'p':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           "%u",
-                           &protocol_type);
+        result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+                              "%u",
+                              &options.protocol_type);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-p> option"),
@@ -51,7 +57,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,18 +70,18 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 
 void
 exception_test (Test_ptr server,
-                const char *msg)
+                char const *msg)
 {
   try
     {
       server->test_method ();
     }
-  catch (const CORBA::INV_POLICY& )
+  catch (CORBA::INV_POLICY const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "INV_POLICY exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, msg));
       throw;
@@ -94,19 +100,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+      RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // PolicyManager.
       object = orb->resolve_initial_references ("ORBPolicyManager");
-      CORBA::PolicyManager_var policy_manager =
+      CORBA::PolicyManager_var const policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
       if (check_for_nil (policy_manager.in (), "PolicyManager")
           == -1)
@@ -114,21 +121,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return -1;
 
       // Test object 1 (ClientProtocolPolicy set on server).
-      object = orb->string_to_object (ior1);
-      Test_var server1 = Test::_narrow (object.in ());
+      object = orb->string_to_object (options.server_policy_ior);
+      Test_var const server1 = Test::_narrow (object.in ());
       if (check_for_nil (server1.in (), "server1") == -1)
         return -1;
 
       // Test object 2 (no client-exposed ClientProtocolPolicy).
-      object = orb->string_to_object (ior2);
-      Test_var server2 = Test::_narrow (object.in ());
+      object = orb->string_to_object (options.default_policy_ior);
+      Test_var const server2 = Test::_narrow (object.in ());
       if (check_for_nil (server2.in (), "server2") == -1)
         return -1;
 
@@ -148,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n     Test 2\n"));
       RTCORBA::ProtocolList protocols;
       protocols.length (1);
-      protocols[0].protocol_type = protocol_type;
+      protocols[0].protocol_type = options.protocol_type;
       protocols[0].transport_protocol_properties =
         RTCORBA::ProtocolProperties::_nil ();
       protocols[0].orb_protocol_properties =
@@ -203,7 +210,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n     Test 5\n"));
       protocols.length (2);
       protocols[0].protocol_type = 3;
-      protocols[1].protocol_type = protocol_type;
+      protocols[1].protocol_type = options.protocol_type;
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols);
 
@@ -221,7 +228,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // see Bug 1197  for details.
       ACE_OS::sleep (5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in ClientProtocolPolicy test client:");
