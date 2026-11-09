@@ -8,15 +8,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Messenger_i
 class  Messenger_i : public virtual Messenger,
          public virtual ::CORBA::LocalObject
 {
 public:
-  //Constructor
   Messenger_i () = default;
 
-  //Destructor
   ~Messenger_i () override = default;
 
   CORBA::Boolean send_message (
