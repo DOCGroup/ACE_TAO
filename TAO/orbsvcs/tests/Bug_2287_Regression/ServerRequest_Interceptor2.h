@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/ORB.h"
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/TimeBaseC.h"
@@ -23,16 +22,14 @@ class TAO249_ServerRequest_Interceptor2
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO249_ServerRequest_Interceptor2 ();
+  TAO249_ServerRequest_Interceptor2 () = default;
 
   TAO249_ServerRequest_Interceptor2 (TAO249_ServerRequest_Interceptor2 const &) = delete;
   TAO249_ServerRequest_Interceptor2 (TAO249_ServerRequest_Interceptor2 &&) = delete;
   TAO249_ServerRequest_Interceptor2 &operator= (TAO249_ServerRequest_Interceptor2 const &) = delete;
   TAO249_ServerRequest_Interceptor2 &operator= (TAO249_ServerRequest_Interceptor2 &&) = delete;
 
-  /// Destructor.
-  ~TAO249_ServerRequest_Interceptor2 () override;
+  ~TAO249_ServerRequest_Interceptor2 () override = default;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -64,15 +61,13 @@ public:
     PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
 
-  CORBA::Object_var server_iogr_;
+  CORBA::Object_var server_iogr_ {};
 
 protected:
   TimeBase::TimeT get_now ();
 
 private:
-  CORBA::ORB_var orb_;
-
-  CORBA::Boolean expired_;
+  bool expired_ {};
 };
 
 #endif  /* TAO249_SERVER_REQUEST_INTERCEPTOR2_H */

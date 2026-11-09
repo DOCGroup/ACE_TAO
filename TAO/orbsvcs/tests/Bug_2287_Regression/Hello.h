@@ -15,8 +15,7 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
-  Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
+  explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;
@@ -33,7 +32,7 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #if defined(_MSC_VER)
