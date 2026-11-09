@@ -58,7 +58,6 @@ public:
   TAO_ETCL_Literal_Constraint (TAO_ETCL_Literal_Constraint&&) = delete;
   TAO_ETCL_Literal_Constraint &operator= (TAO_ETCL_Literal_Constraint&&) = delete;
 
-  /// Destructor.
   ~TAO_ETCL_Literal_Constraint() override;
 
   /// Assignment operator.
