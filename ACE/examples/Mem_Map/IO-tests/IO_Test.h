@@ -18,7 +18,6 @@ public:
   IO_Test (char const *name,
            ACE_Profile_Timer &tm);
 
-  // Destructor.
   virtual ~IO_Test ();
 
   IO_Test (IO_Test const &) = delete;
