@@ -27,10 +27,8 @@ class BasicLog_Test
   static constexpr CORBA::ULongLong MAX_LOG_SIZE = 8192;
 
   BasicLog_Test () = default;
-  // constructor
 
   ~BasicLog_Test();
-  // destructor
 
   BasicLog_Test (BasicLog_Test const &) = delete;
   BasicLog_Test (BasicLog_Test &&) = delete;
