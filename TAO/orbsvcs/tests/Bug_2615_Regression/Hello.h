@@ -22,7 +22,6 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
   void shutdown () override;
 
   void ping () override;
@@ -32,7 +31,7 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #if defined(_MSC_VER)

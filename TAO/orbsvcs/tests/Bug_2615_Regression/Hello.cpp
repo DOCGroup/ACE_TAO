@@ -1,4 +1,3 @@
-
 #include "ServerRequest_Interceptor2.h"
 #include "Hello.h"
 
@@ -21,5 +20,5 @@ Hello::ping ()
 CORBA::Boolean
 Hello::has_ft_request_service_context ()
 {
-  return ServerRequest_Interceptor2::has_ft_request_sc_;
+  return ServerRequest_Interceptor2::has_ft_request_sc_.load ();
 }

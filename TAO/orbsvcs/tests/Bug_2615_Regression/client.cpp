@@ -14,8 +14,8 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:l:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -33,7 +33,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -43,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   bool result {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       Client_Options options;
@@ -51,13 +50,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // First perform the test with an IOR
-      CORBA::Object_var tmp =
+      CORBA::Object_var const ior_object =
         orb->string_to_object (options.ior);
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow (tmp.in ());
+      Test::Hello_var const ior_hello =
+        Test::Hello::_narrow (ior_object.in ());
 
-      if (CORBA::is_nil (hello.in ()))
+      if (CORBA::is_nil (ior_hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n"),
@@ -66,13 +65,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Check this isn't generating exceptions for any other reason
-      hello->ping ();
+      ior_hello->ping ();
 
-      if (hello->has_ft_request_service_context ())
+      if (ior_hello->has_ft_request_service_context ())
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("ERROR - REGRESSION - Request on a plain IOR has a FT_REQUEST context.\n")));
-          result = 1;
+          result = true;
         }
       else
         {
@@ -81,13 +80,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Now repeat the test (for the converse result) with an IOGR
-      tmp =
+      CORBA::Object_var const iogr_object =
         orb->string_to_object (options.iogr);
 
-      hello =
-        Test::Hello::_narrow (tmp.in ());
+      Test::Hello_var const iogr_hello =
+        Test::Hello::_narrow (iogr_object.in ());
 
-      if (CORBA::is_nil (hello.in ()))
+      if (CORBA::is_nil (iogr_hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n"),
@@ -96,9 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Check this isn't generating transients for any other reason
-      hello->ping ();
+      iogr_hello->ping ();
 
-      if (! hello->has_ft_request_service_context ())
+      if (!iogr_hello->has_ft_request_service_context ())
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("ERROR - REGRESSION - Request made on an IOGR has no FT_REQUEST service context.\n")));
@@ -110,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("Request made on an IOGR has a FT_REQUEST service context. This is OK.\n")));
         }
 
-      hello->shutdown ();
+      iogr_hello->shutdown ();
 
       orb->destroy ();
     }

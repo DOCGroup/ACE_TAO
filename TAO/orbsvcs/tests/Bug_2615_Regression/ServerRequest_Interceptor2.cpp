@@ -29,7 +29,7 @@ void
 ServerRequest_Interceptor2::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   if (std::strcmp (op.in (), "has_ft_request_service_context") != 0)
     return;
