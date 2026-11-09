@@ -27,11 +27,7 @@
 class Latency_Query_Client
 {
 public:
-  /// Constructor
-  Latency_Query_Client ();
-
-  /// Destructor
-  ~Latency_Query_Client ();
+  Latency_Query_Client () = default;
 
   Latency_Query_Client (Latency_Query_Client const&) = delete;
   Latency_Query_Client (Latency_Query_Client&&) = delete;
@@ -52,27 +48,25 @@ private:
   /// Put in something to query about.
   int populate_ifr ();
 
-private:
+  static constexpr CORBA::ULong DEFAULT_NUMCALLS {20000};
+
   /// Toggle debugging output.
-  bool debug_;
+  bool debug_ {};
 
   /// Toggle saving of dump history.
-  bool do_dump_history_;
+  bool do_dump_history_ {};
 
   /// Number of queries in a run.
-  CORBA::ULong iterations_;
+  CORBA::ULong iterations_ {DEFAULT_NUMCALLS};
 
   /// Storage of the ORB reference.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Storage of the IFR reference.
-  CORBA::Repository_var repo_;
-
-//  CORBA::AliasDef_var tdef_;
-  // Storage of the typedef definition that we will query.
+  CORBA::Repository_var repo_ {};
 
   /// Storage of the attribute definition we will query.
-  CORBA::AttributeDef_var attr_;
+  CORBA::AttributeDef_var attr_ {};
 };
 
 #endif /* LATENCY_QUERY_CLIENT_H */
