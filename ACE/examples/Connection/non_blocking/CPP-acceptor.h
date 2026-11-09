@@ -47,7 +47,6 @@ class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
   //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
 public:
   IPC_Server ();
-  // Constructor.
 
   ~IPC_Server () override = default;
   IPC_Server (IPC_Server const &) = delete;

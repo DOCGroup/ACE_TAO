@@ -62,7 +62,6 @@ class IPC_Client : public ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
   //   This class illustrates how the <ACE_Connector> works.
 public:
   IPC_Client ();
-  // Constructor.
 
   ~IPC_Client () override = default;
   IPC_Client (IPC_Client const &) = delete;
