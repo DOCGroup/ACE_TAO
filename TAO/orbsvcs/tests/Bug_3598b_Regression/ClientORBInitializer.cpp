@@ -4,7 +4,6 @@
 void
 ClientORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
-    // No-op
 }
 
 void
