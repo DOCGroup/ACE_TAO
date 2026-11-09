@@ -48,19 +48,16 @@ namespace TAO
     class Case
     {
     public:
-      /// Constructor.
       /**
        * Constructor used when creating static @c union @c TypeCodes.
        */
       Case (char const * name, TypeCodeType tc);
 
-      /// Constructor.
       /**
        * Constructor used when creating dynamic @c union @c TypeCodes.
        */
       Case () = default;
 
-      /// Destructor.
       virtual ~Case () = default;
 
       /// Cloning/copying operation.

@@ -107,7 +107,6 @@ namespace CORBA
     using _out_type = NamedValue_out;
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
@@ -239,7 +238,6 @@ namespace CORBA
     using _out_type = NVList_out;
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.

@@ -53,7 +53,6 @@ namespace TAO
       ///          array itself.
       using case_type = TAO::TypeCode::Case<StringType, TypeCodeType>;
 
-      /// Constructor.
       Union (char const * id,
              char const * name,
              TypeCodeType const & discriminant_type,

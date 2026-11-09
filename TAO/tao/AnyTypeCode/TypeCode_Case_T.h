@@ -85,12 +85,10 @@ namespace TAO
     class Case_T : public Case<StringType, TypeCodeType>
     {
     public:
-      /// Constructor.
       Case_T (DiscriminatorType member_label,
               char const * member_name,
               TypeCodeType member_type);
 
-      /// Constructor.
       /**
        * Constructor only used in the dynamically constructed @c union
        * @c TypeCode case.

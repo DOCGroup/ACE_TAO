@@ -59,7 +59,6 @@ namespace TAO
       using case_type = TAO::TypeCode::Case<char const *,
                                              CORBA::TypeCode_ptr const *>;
 
-      /// Constructor.
       Union (char const * id,
              char const * name,
              CORBA::TypeCode_ptr const * discriminant_type,

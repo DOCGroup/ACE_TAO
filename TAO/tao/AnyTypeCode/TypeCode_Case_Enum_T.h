@@ -47,13 +47,11 @@ namespace TAO
     class Case_Enum_T : public Case<StringType, TypeCodeType>
     {
     public:
-      /// Constructor.
       Case_Enum_T (CORBA::TypeCode_ptr discriminator_tc,
                    CORBA::ULong member_label,
                    char const * member_name,
                    TypeCodeType member_type);
 
-      /// Constructor.
       /**
        * Constructor only used in the dynamically constructed @c union
        * @c TypeCode case.

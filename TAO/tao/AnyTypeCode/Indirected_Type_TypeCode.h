@@ -44,7 +44,6 @@ namespace TAO
       : public CORBA::TypeCode
     {
     public:
-      /// Constructor.
       Indirected_Type (CORBA::TCKind kind,
                        char const * id);
 

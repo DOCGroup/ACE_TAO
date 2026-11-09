@@ -74,10 +74,8 @@ namespace TAO
 class TAO_AnyTypeCode_Export TAO_Marshal_Object
 {
 public:
-  /// constructor
   TAO_Marshal_Object () = default;
 
-  /// destructor
   virtual ~TAO_Marshal_Object ();
 
   /// skip entry point, it allocates the right kind of Marshal_Object

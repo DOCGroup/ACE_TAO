@@ -67,7 +67,6 @@ namespace CORBA
     class TAO_AnyTypeCode_Export Bounds : public UserException
     {
     public:
-      /// Constructor.
       Bounds ();
 
       static Bounds * _downcast (CORBA::Exception * ex);
@@ -421,10 +420,8 @@ namespace CORBA
     using _out_type = CORBA::TypeCode_out;
 
   protected:
-    /// Constructor.
     explicit TypeCode (CORBA::TCKind kind);
 
-    /// Destructor.
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.

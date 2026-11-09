@@ -52,7 +52,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-      /// Constructor.
       Objref (CORBA::TCKind kind,
               char const * id,
               char const * name);
