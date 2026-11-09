@@ -11,7 +11,6 @@
 #include "tao/Transport.h"
 
 #include "ace/Get_Opt.h"
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 enum class Policy_Level
 {
@@ -26,41 +25,43 @@ enum class Synchronization
   delayed
 };
 
-Policy_Level policy_level = Policy_Level::object;
-Synchronization synchronization = Synchronization::none;
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://test.ior")};
+  Policy_Level policy_level {Policy_Level::object};
+  Synchronization synchronization {Synchronization::none};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:s:"));
   int c {};
-  policy_level = Policy_Level::object;
-  synchronization = Synchronization::none;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'l':
         {
           ACE_TCHAR const *level = get_opts.opt_arg ();
           if (ACE_OS::strcmp (level, ACE_TEXT("orb")) == 0)
-            policy_level = Policy_Level::orb;
+            options.policy_level = Policy_Level::orb;
           else if (ACE_OS::strcmp (level, ACE_TEXT("thread")) == 0)
-            policy_level = Policy_Level::thread;
+            options.policy_level = Policy_Level::thread;
           else
-            policy_level = Policy_Level::object;
+            options.policy_level = Policy_Level::object;
           break;
         }
       case 's':
         {
           ACE_TCHAR const *synch = get_opts.opt_arg ();
           if (ACE_OS::strcmp (synch, ACE_TEXT("delayed")) == 0)
-            synchronization = Synchronization::delayed;
+            options.synchronization = Synchronization::delayed;
           else
-            synchronization = Synchronization::none;
+            options.synchronization = Synchronization::none;
           break;
         }
 
@@ -69,8 +70,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-         "-l <obj|orb|thread> "
-         "-s <none|delayed> "
+                           "-l <obj|orb|thread> "
+                           "-s <none|delayed> "
                            "\n",
                            argv [0]),
                           -1);
@@ -82,20 +83,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options {};
+
   try
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, "test");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var tmp = orb->string_to_object (options.ior);
 
       if (CORBA::is_nil (tmp.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n")
-                            ,1);
+          ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n"), 1);
         }
 
       {
@@ -103,12 +105,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         CORBA::Any scope_as_any;
 
-        if (synchronization == Synchronization::none)
+        if (options.synchronization == Synchronization::none)
           {
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying SYNC_NONE.\n"));
             scope_as_any <<= Messaging::SYNC_NONE;
           }
-        else if (synchronization == Synchronization::delayed)
+        else if (options.synchronization == Synchronization::delayed)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying SYNC_DELAYED_BUFFERING.\n"));
@@ -121,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                               scope_as_any);
 
-        if (policy_level == Policy_Level::thread)
+        if (options.policy_level == Policy_Level::thread)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at thread level.\n"));
@@ -134,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             policy_current->set_policy_overrides (policies,
                                                   CORBA::ADD_OVERRIDE);
           }
-        else if (policy_level == Policy_Level::orb)
+        else if (options.policy_level == Policy_Level::orb)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at orb level.\n"));
@@ -147,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             policy_manager->set_policy_overrides (policies,
                                                   CORBA::ADD_OVERRIDE);
           }
-        else if (policy_level == Policy_Level::object)
+        else if (options.policy_level == Policy_Level::object)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at Object level.\n"));
@@ -165,7 +167,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
@@ -183,49 +185,50 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (tcm.current_size () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-           "The Transport Cache shouldn't be empty here.\n"),
-          1);
+                             "The Transport Cache shouldn't be empty here.\n"),
+                            1);
         }
 
       size_t busy_count {};
       TAO_Transport *transport {};
       TAO::Transport_Cache_Manager::Find_Result const find_result =
         tcm.find_transport (&desc, transport, busy_count);
-      // We don't need this transport any more. Release the ownership.
-      transport->remove_reference ();
+      // find_transport adds a reference for each result that contains a transport.
+      if (transport != nullptr)
+        transport->remove_reference ();
 
       switch (find_result)
         {
         case TAO::Transport_Cache_Manager::CACHE_FOUND_NONE:
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-              ACE_TEXT("Expected to find a transport in the cache.\n")
-              ),1);
+                               ACE_TEXT("Expected to find a transport in the cache.\n")),
+                              1);
           }
         case TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING:
           {
-            ACE_DEBUG (( LM_DEBUG,
-              ACE_TEXT ("Transport Cache contains connecting entry as expected.\n")
-              ));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("Transport Cache contains connecting entry as expected.\n")));
             break; // that's what we expected
           }
         case TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY:
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-              ACE_TEXT("Cached Transport is busy.  Should not happen because there's no server.\n")
-              ),1);
+                               ACE_TEXT("Cached Transport is busy.  Should not happen because there's no server.\n")),
+                              1);
           }
         case TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE:
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-              ACE_TEXT("Cached Transport is available.  Should not happen because there's no server.\n")
-              ),1);
+                               ACE_TEXT("Cached Transport is available.  Should not happen "
+                                       "because there's no server.\n")),
+                              1);
           }
         default:
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-              ACE_TEXT("Transport_Cache::find returned unknown status.\n")
-              ),1);
+                               ACE_TEXT("Transport_Cache::find returned unknown status.\n")),
+                              1);
           }
         }
 
@@ -233,8 +236,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ACE_ERROR ((LM_ERROR, "ERROR: Exception caught: %s\"%s\"\n"
-      , ex._name(), ex._rep_id ()));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Exception caught: %s\"%s\"\n",
+                  ex._name (),
+                  ex._rep_id ()));
       return 1;
     }
 
