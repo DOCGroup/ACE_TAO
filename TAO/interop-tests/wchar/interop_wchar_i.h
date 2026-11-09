@@ -32,10 +32,8 @@
 class interop_WChar_Passer_i : public virtual POA_interop::WChar_Passer
 {
 public:
-  // Constructor
   explicit interop_WChar_Passer_i (CORBA::ORB_ptr o, bool verbose);
 
-  // Destructor
   ~interop_WChar_Passer_i () override = default;
   interop_WChar_Passer_i (interop_WChar_Passer_i const &) = delete;
   interop_WChar_Passer_i (interop_WChar_Passer_i &&) = delete;
