@@ -27,10 +27,8 @@ public:
            char const *ip_addr,
            ACE_TCHAR const *a_interface,
            ACE_Reactor & );
-  // Constructor.
 
   ~Handler () override;
-  // Destructor.
 
   Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;
