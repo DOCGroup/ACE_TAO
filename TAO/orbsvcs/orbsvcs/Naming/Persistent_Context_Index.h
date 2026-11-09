@@ -62,7 +62,6 @@ public:
   /// Allocator we will be using to make the Naming Service persistent.
   using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX>>;
 
-  /// Constructor.
   TAO_Persistent_Context_Index (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,

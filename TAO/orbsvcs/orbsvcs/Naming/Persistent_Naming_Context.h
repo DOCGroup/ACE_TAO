@@ -36,7 +36,6 @@ public:
   /// Underlying data structure.
   using HASH_MAP = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 
-  /// Constructor.
   explicit TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
 
   /// Allocate hash map of size @a hash_map_size from persistent storage
@@ -177,7 +176,6 @@ public:
                                  HASH_MAP * map = nullptr,
                                  ACE_UINT32 *counter = nullptr);
 
-  /// Destructor.
   ~TAO_Persistent_Naming_Context () override;
 
   // = Utility methods.

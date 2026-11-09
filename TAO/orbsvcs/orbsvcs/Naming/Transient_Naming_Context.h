@@ -39,10 +39,8 @@ public:
   /// Underlying data structure.
   using HASH_MAP = ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
 
-  /// Constructor.
   explicit TAO_Transient_Bindings_Map (size_t hash_table_size);
 
-  /// Destructor.
   ~TAO_Transient_Bindings_Map () override;
 
   // = Accessors.
@@ -130,13 +128,11 @@ public:
   /// Underlying data structure.
   using HASH_MAP = TAO_Transient_Bindings_Map::HASH_MAP;
 
-  /// Constructor.
   TAO_Transient_Naming_Context (PortableServer::POA_ptr poa,
                                 char const *poa_id,
                                 size_t hash_table_size
                                 = ACE_DEFAULT_MAP_SIZE);
 
-  /// Destructor.
   ~TAO_Transient_Naming_Context () override;
 
   // = Utility methods.

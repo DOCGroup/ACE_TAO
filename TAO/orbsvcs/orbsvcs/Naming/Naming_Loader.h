@@ -31,13 +31,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   /// By default will use the standard Naming_Server.  If a server is provided
   /// it will use that one instead. This object takes ownership of the provided
   /// Naming Server.
   TAO_Naming_Loader (TAO_Naming_Server *server = nullptr);
 
-  /// Destructor
   ~TAO_Naming_Loader () override;
 
   /// Called by the Service Configurator framework to initialize the

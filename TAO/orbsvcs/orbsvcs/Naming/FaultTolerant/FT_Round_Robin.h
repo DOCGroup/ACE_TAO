@@ -44,7 +44,6 @@ class TAO_FT_Naming_Manager;
 class TAO_FtNaming_Export TAO_FT_Round_Robin
 {
 public:
-  /// Constructor.
   TAO_FT_Round_Robin ();
 
   /// This function obtains the next object's location as it is bound
@@ -61,7 +60,6 @@ public:
       TAO_FT_Naming_Manager *naming_manager,
       PortableGroup::Location& location);
 
-  /// Destructor
   virtual ~TAO_FT_Round_Robin () = default;
 
 private:

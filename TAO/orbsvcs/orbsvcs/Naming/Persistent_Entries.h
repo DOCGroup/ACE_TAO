@@ -40,17 +40,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Persistent_IntId
 {
 public:
-  /// Constructor.
   TAO_Persistent_IntId ();
 
-  /// Constructor.
   TAO_Persistent_IntId (char * obj_ref,
                         CosNaming::BindingType type /* = CosNaming::nobject */);
 
-  /// Copy constructor.
   TAO_Persistent_IntId (TAO_Persistent_IntId const &rhs);
 
-  /// Destructor.
   ~TAO_Persistent_IntId ();
 
   /// Assignment operator.
@@ -82,17 +78,13 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_ExtId
 {
 public:
-  /// Constructor.
   TAO_Persistent_ExtId ();
 
-  /// Constructor.
   TAO_Persistent_ExtId (char const *id,
                         char const *kind);
 
-  /// Copy constructor.
   TAO_Persistent_ExtId (TAO_Persistent_ExtId const &rhs);
 
-  /// Destructor.
   ~TAO_Persistent_ExtId ();
 
   // = Assignment and comparison methods.
@@ -142,18 +134,14 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_IntId
 {
 public:
-  /// Constructor.
   TAO_Persistent_Index_IntId ();
 
-  /// Constructor.
   TAO_Persistent_Index_IntId (ACE_UINT32 *counter,
                               ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
                               TAO_Persistent_IntId> * hash_map);
 
-  /// Copy constructor.
   TAO_Persistent_Index_IntId (TAO_Persistent_Index_IntId const &rhs);
 
-  /// Destructor.
   ~TAO_Persistent_Index_IntId ();
 
   /// Assignment operator (does copy memory).
@@ -185,16 +173,12 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_ExtId
 {
 public:
-  /// Constructor.
   TAO_Persistent_Index_ExtId ();
 
-  /// Constructor.
   explicit TAO_Persistent_Index_ExtId (char const *poa_id);
 
-  /// Copy constructor.
   TAO_Persistent_Index_ExtId (TAO_Persistent_Index_ExtId const &rhs);
 
-  /// Destructor.
   ~TAO_Persistent_Index_ExtId ();
 
   // = Assignment and comparison methods.

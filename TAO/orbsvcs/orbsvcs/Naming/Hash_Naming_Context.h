@@ -45,7 +45,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Bindings_Map
 {
 public:
-  /// Destructor.
   virtual ~TAO_Bindings_Map ();
 
   /// Return current number of entries (name bindings) in the
@@ -107,14 +106,12 @@ public:
 class TAO_Naming_Serv_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
 {
 public:
-  /// Constructor.
   TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                            char const *poa_id);
 
   /// Set our interface_ pointer.
   void interface (TAO_Naming_Context *i);
 
-  /// Destructor.
   ~TAO_Hash_Naming_Context () override;
 
   TAO_Hash_Naming_Context (TAO_Hash_Naming_Context const &) = delete;

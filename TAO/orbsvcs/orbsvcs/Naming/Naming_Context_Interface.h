@@ -50,7 +50,6 @@ public:
   /// Constructor.  Initializes <impl_> with a concrete implementation.
   explicit TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
-  /// Destructor.
   ~TAO_Naming_Context () override;
 
   // = CosNaming::NamingContext idl interface methods.
@@ -250,7 +249,6 @@ private:
 class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 {
 public:
-  /// Destructor.
   virtual ~TAO_Naming_Context_Impl ();
 
   // = CosNaming::NamingContext idl interface methods.

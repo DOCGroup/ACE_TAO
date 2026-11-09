@@ -5,7 +5,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Constructor.
 TAO_Storable_Naming_Context_Factory::TAO_Storable_Naming_Context_Factory (
   size_t hash_table_size)
 : context_size_(hash_table_size)

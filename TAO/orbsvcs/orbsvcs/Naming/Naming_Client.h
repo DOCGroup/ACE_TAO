@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Export TAO_Naming_Client
 {
 public:
-  /// Default constructor.
   TAO_Naming_Client () = default;
 
   /**
@@ -48,7 +47,6 @@ public:
    */
   int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = nullptr);
 
-  /// Destructor.
   ~TAO_Naming_Client () = default;
 
   /// Returns a pointer to the root Naming Context.

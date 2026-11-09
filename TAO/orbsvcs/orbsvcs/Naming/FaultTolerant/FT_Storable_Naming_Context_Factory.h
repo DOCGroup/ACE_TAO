@@ -37,7 +37,6 @@ public:
   /// Data structure used by TAO_Persistent_Context_Index.
   using HASH_MAP = TAO_Storable_Naming_Context_Factory::HASH_MAP;
 
-  /// Constructor.
   explicit TAO_FT_Storable_Naming_Context_Factory (
     size_t hash_table_size = ACE_DEFAULT_MAP_SIZE,
     TAO_FT_Naming_Replication_Manager *rep = nullptr);

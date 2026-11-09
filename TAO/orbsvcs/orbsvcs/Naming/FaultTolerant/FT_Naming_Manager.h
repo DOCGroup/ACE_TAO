@@ -58,7 +58,6 @@ class TAO_FtNaming_Export TAO_FT_Naming_Manager
     public ACE_Task_Base
 {
 public:
-  /// Constructor.
   TAO_FT_Naming_Manager ();
 
   void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
@@ -279,7 +278,6 @@ public:
   /// Initialize a global load balancing strategy
   void set_global_strategy (ACE_TCHAR const *strat_name);
 
-  /// Destructor.
   ~TAO_FT_Naming_Manager () override;
 
 private:

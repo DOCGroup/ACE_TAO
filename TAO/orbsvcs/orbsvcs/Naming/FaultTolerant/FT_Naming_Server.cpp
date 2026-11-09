@@ -74,7 +74,6 @@ TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
   return 0;
 }
 
-/// Default Constructor.
 TAO_FT_Naming_Server::TAO_FT_Naming_Server ()
   : TAO_Naming_Server (IOR_ARRAY_SIZE),
     naming_manager_ (),
@@ -792,7 +791,6 @@ TAO_FT_Naming_Server::update_naming_context (
   return 0;
 }
 
-/// Destructor.
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server ()
 {
   this->stop_replicator ();

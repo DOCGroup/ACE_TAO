@@ -45,7 +45,6 @@ public:
                                     HASH_MAP *map = nullptr,
                                     ACE_UINT32 *counter = nullptr);
 
-  /// Destructor.
   ~TAO_FT_Persistent_Naming_Context () override = default;
 
   /**

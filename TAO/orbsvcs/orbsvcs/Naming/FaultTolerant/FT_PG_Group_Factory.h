@@ -39,10 +39,8 @@ namespace TAO
   class TAO_FtNaming_Export FT_PG_Group_Factory : public PG_Group_Factory
   {
   public:
-    /// Constructor.
     FT_PG_Group_Factory () = default;
 
-    /// Destructor.
     ~FT_PG_Group_Factory () override = default;
 
     /**

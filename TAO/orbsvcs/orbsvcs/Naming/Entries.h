@@ -40,17 +40,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_IntId
 {
 public:
-  /// Constructor.
   TAO_IntId ();
 
-  /// Constructor.
   TAO_IntId (CORBA::Object_ptr obj,
             CosNaming::BindingType type /* = CosNaming::nobject */);
 
-  /// Copy constructor.
   TAO_IntId (TAO_IntId const &rhs);
 
-  /// Destructor.
   ~TAO_IntId ();
 
   /// Assignment operator (does copy memory).
@@ -80,17 +76,13 @@ public:
 class TAO_Naming_Serv_Export TAO_ExtId
 {
 public:
-  /// Constructor.
   TAO_ExtId ();
 
-  /// Constructor.
   TAO_ExtId (char const *id,
             char const *kind);
 
-  /// Copy constructor.
   TAO_ExtId (TAO_ExtId const &rhs);
 
-  /// Destructor.
   ~TAO_ExtId ();
 
   // = Assignment and comparison operators.

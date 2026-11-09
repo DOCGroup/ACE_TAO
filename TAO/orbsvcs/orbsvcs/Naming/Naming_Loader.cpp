@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Naming_Loader::TAO_Naming_Loader (TAO_Naming_Server *server)
   : naming_server_ (server)
 {
-  // Constructor
 
   // If no server was provided, then we will construct one of the
   // base class type.

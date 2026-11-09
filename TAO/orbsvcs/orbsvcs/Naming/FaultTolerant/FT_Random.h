@@ -45,10 +45,8 @@ class TAO_FT_Naming_Manager;
 class TAO_FtNaming_Export TAO_FT_Random
 {
 public:
-  /// Constructor.
   TAO_FT_Random () = default;
 
-  /// Destructor
   virtual ~TAO_FT_Random () = default;
 
   /// This function obtains the next object's location as it is bound

@@ -66,7 +66,6 @@ class TAO_Persistent_Naming_Context_Factory;
 class TAO_Naming_Serv_Export TAO_Naming_Server
 {
 public:
-  /// Default constructor.
   TAO_Naming_Server (size_t bsize = 1);
 
   /**
@@ -129,7 +128,6 @@ public:
   /// Destroy the child POA created in @c init_with_orb
   virtual int fini ();
 
-  /// Destructor.
   virtual ~TAO_Naming_Server ();
 
   TAO_Naming_Server (TAO_Naming_Server const &) = delete;

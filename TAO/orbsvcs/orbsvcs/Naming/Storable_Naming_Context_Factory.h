@@ -38,7 +38,6 @@ public:
   /// - alias for ease of use.
   using HASH_MAP = TAO_Storable_Naming_Context::HASH_MAP;
 
-  /// Constructor.
   TAO_Storable_Naming_Context_Factory (
     size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 

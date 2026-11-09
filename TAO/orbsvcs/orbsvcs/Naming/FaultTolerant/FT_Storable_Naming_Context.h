@@ -47,7 +47,6 @@ public:
                                   TAO_Storable_Naming_Context_Factory *cxt_factory,
                                   TAO::Storable_Factory *factory);
 
-  /// Destructor.
   ~TAO_FT_Storable_Naming_Context () override = default;
 
   /**

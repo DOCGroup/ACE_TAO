@@ -137,13 +137,11 @@ public:
   /// if specified.
   ACE_Unbounded_List (ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
   ACE_Unbounded_List (ACE_Unbounded_List<T> const &);
 
   /// Assignment operator.
   void operator= (ACE_Unbounded_List<T> const &);
 
-  /// Destructor.
   ~ACE_Unbounded_List ();
 
   // = Check boundary conditions.

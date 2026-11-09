@@ -57,7 +57,6 @@ public:
                          std::unique_ptr<ITERATOR> hash_iter,
                          PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~TAO_Bindings_Iterator () override;
 
   /// Returns the Default POA of this Servant object

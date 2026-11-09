@@ -29,7 +29,6 @@ class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context_Factory
   : public TAO_Persistent_Naming_Context_Factory
 {
 public:
-  /// Constructor.
   TAO_FT_Persistent_Naming_Context_Factory () = default;
 
   /// Destructor.  Does not deallocate the hash map: if an instance of

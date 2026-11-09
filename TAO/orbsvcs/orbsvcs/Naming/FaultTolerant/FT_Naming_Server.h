@@ -136,7 +136,6 @@ public:
   /// @c init_replication_manager_with_orb
   int fini () override;
 
-  /// Destructor.
   ~TAO_FT_Naming_Server () override;
 
   void update_info (FT_Naming::UpdateInfoSeq &infos);

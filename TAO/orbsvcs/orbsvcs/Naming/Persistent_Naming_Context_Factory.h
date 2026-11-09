@@ -35,7 +35,6 @@ public:
   /// Data structure used by TAO_Persistent_Context_Index.
   using HASH_MAP = TAO_Persistent_Naming_Context::HASH_MAP;
 
-  /// Constructor.
   TAO_Persistent_Naming_Context_Factory ();
 
   /// Destructor.  Does not deallocate the hash map: if an instance of

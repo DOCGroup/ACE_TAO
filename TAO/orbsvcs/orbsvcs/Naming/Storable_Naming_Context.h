@@ -37,17 +37,13 @@ class TAO_Storable_Naming_Context_Factory;
 class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
-  /// Constructor.
   TAO_Storable_IntId ();
 
-  /// Constructor.
   TAO_Storable_IntId (/* in */ char const *ior,
                         CosNaming::BindingType type /* = CosNaming::nobject */);
 
-  /// Copy constructor.
   TAO_Storable_IntId (TAO_Storable_IntId const &rhs);
 
-  /// Destructor.
   ~TAO_Storable_IntId ();
 
   /// Assignment operator.
@@ -65,17 +61,13 @@ public:
 class TAO_Naming_Serv_Export TAO_Storable_ExtId
 {
 public:
-  /// Constructor.
   TAO_Storable_ExtId ();
 
-  /// Constructor.
   TAO_Storable_ExtId (/* in */ char const *id,
                       /* in */ char const *kind);
 
-  /// Copy constructor.
   TAO_Storable_ExtId (TAO_Storable_ExtId const &rhs);
 
-  /// Destructor.
   ~TAO_Storable_ExtId ();
 
   // = Assignment and comparison methods.
@@ -128,10 +120,8 @@ public:
                                         TAO_Storable_IntId,
                                         ACE_Null_Mutex>;
 
-  /// Constructor.
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
 
-  /// Destructor.
   ~TAO_Storable_Bindings_Map () override;
 
   // = Accessors.
@@ -220,7 +210,6 @@ public:
   /// Underlying data structure.
   using HASH_MAP = TAO_Storable_Bindings_Map::HASH_MAP;
 
-  /// Constructor.
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                char const *poa_id,
@@ -228,7 +217,6 @@ public:
                                TAO::Storable_Factory *factory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
-  /// Destructor.
   ~TAO_Storable_Naming_Context () override;
 
   // = Utility methods.
@@ -430,7 +418,6 @@ class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
 public TAO::Storable_File_Guard
 {
 public:
-  /// Constructor
   File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
                             Method_Type method_type,
                             bool loadnow = true);
@@ -461,7 +448,6 @@ protected:
   TAO::Storable_Base * create_stream (char const *mode) override;
 
 private:
-  /// Default constructor
   File_Open_Lock_and_Check();
 
   TAO_Storable_Naming_Context * context_;

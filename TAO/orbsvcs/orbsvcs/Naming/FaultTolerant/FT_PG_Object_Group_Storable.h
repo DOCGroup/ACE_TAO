@@ -70,7 +70,6 @@ namespace TAO
       TAO::Storable_Factory & storable_factory,
       TAO_FT_Naming_Replication_Manager *replicator);
 
-    /// Destructor
     ~FT_PG_Object_Group_Storable () override = default;
 
   public:
