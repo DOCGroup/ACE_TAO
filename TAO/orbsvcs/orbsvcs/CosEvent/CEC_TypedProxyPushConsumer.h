@@ -39,12 +39,10 @@ public:
   using _ptr_type = CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr;
   using _var_type = CosTypedEventChannelAdmin::TypedProxyPushConsumer_var;
 
-  /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
       TAO_CEC_TypedEventChannel* typed_event_channel,
       ACE_Time_Value const &timeout);
 
-  /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer () override;
 
   /// Activate in the POA
@@ -154,14 +152,12 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer_Guard
 {
 public:
-  /// Constructor
   TAO_CEC_TypedProxyPushConsumer_Guard (
       ACE_Lock *lock,
       CORBA::ULong &refcount,
       TAO_CEC_TypedEventChannel *ec,
       TAO_CEC_TypedProxyPushConsumer *proxy);
 
-  /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard ();
 
   TAO_CEC_TypedProxyPushConsumer_Guard (TAO_CEC_TypedProxyPushConsumer_Guard const &) = delete;

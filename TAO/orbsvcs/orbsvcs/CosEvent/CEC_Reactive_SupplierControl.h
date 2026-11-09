@@ -51,7 +51,6 @@ class TAO_Event_Serv_Export TAO_CEC_SupplierControl_Adapter
   : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   explicit TAO_CEC_SupplierControl_Adapter (TAO_CEC_Reactive_SupplierControl *adaptee);
 
   TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter const &) = delete;
@@ -101,7 +100,6 @@ public:
       CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  /// destructor...
   ~TAO_CEC_Reactive_SupplierControl () override = default;
 
   TAO_CEC_Reactive_SupplierControl (TAO_CEC_Reactive_SupplierControl const &) = delete;

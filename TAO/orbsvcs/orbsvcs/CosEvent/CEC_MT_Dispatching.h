@@ -38,7 +38,6 @@ class TAO_CEC_EventChannel;
 class TAO_Event_Serv_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
 {
 public:
-  /// Constructor
   /// It will create @a nthreads servicing threads...
   TAO_CEC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,

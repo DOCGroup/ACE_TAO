@@ -44,10 +44,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
 public:
-  /// Constructor
   TAO_CEC_Default_Factory ();
 
-  /// destructor...
   ~TAO_CEC_Default_Factory () override;
 
   TAO_CEC_Default_Factory (TAO_CEC_Default_Factory const &) = delete;

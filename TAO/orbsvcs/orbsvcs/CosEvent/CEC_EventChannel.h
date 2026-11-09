@@ -125,7 +125,6 @@ public:
                         TAO_CEC_Factory *factory = nullptr,
                         bool own_factory = false);
 
-  /// destructor
   ~TAO_CEC_EventChannel () override;
 
   TAO_CEC_EventChannel (TAO_CEC_EventChannel const &) = delete;

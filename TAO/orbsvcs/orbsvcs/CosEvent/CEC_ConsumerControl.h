@@ -47,7 +47,6 @@ namespace CORBA
 class TAO_Event_Serv_Export TAO_CEC_ConsumerControl
 {
 public:
-  /// Constructor
   TAO_CEC_ConsumerControl () = default;
 
   TAO_CEC_ConsumerControl (TAO_CEC_ConsumerControl const &) = delete;
@@ -55,7 +54,6 @@ public:
   TAO_CEC_ConsumerControl &operator= (TAO_CEC_ConsumerControl const &) = delete;
   TAO_CEC_ConsumerControl &operator= (TAO_CEC_ConsumerControl &&) = delete;
 
-  /// Destructor
   virtual ~TAO_CEC_ConsumerControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of

@@ -53,10 +53,8 @@ class TAO_Event_Serv_Export TAO_CEC_SupplierAdmin
   : public POA_CosEventChannelAdmin::SupplierAdmin
 {
 public:
-  /// constructor...
   explicit TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel* event_channel);
 
-  /// destructor...
   ~TAO_CEC_SupplierAdmin () override = default;
 
   TAO_CEC_SupplierAdmin (TAO_CEC_SupplierAdmin const &) = delete;

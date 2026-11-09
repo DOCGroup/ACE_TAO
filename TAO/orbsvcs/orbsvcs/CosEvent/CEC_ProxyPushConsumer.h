@@ -49,11 +49,9 @@ public:
   using _ptr_type = CosEventChannelAdmin::ProxyPushConsumer_ptr;
   using _var_type = CosEventChannelAdmin::ProxyPushConsumer_var;
 
-  /// constructor...
   TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel,
                              ACE_Time_Value const &timeout);
 
-  /// destructor...
   ~TAO_CEC_ProxyPushConsumer () override;
 
   TAO_CEC_ProxyPushConsumer (TAO_CEC_ProxyPushConsumer const &) = delete;
@@ -161,13 +159,11 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer_Guard
 {
 public:
-  /// Constructor
   TAO_CEC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                    CORBA::ULong &refcount,
                                    TAO_CEC_EventChannel *ec,
                                    TAO_CEC_ProxyPushConsumer *proxy);
 
-  /// Destructor
   ~TAO_CEC_ProxyPushConsumer_Guard ();
 
   TAO_CEC_ProxyPushConsumer_Guard (TAO_CEC_ProxyPushConsumer_Guard const &) = delete;

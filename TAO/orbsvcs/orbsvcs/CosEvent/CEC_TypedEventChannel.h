@@ -135,7 +135,6 @@ public:
                              TAO_CEC_Factory *factory = nullptr,
                              bool own_factory = false);
 
-  /// Destructor
   ~TAO_CEC_TypedEventChannel () override;
 
   /// Start the internal threads (if any), etc.
@@ -345,10 +344,8 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_Param
 {
 public:
-  /// Constructor
   TAO_CEC_Param () = default;
 
-  /// Destructor
   ~TAO_CEC_Param () = default;
 
 private:
@@ -363,9 +360,7 @@ private:
 
 class TAO_Event_Serv_Export TAO_CEC_Operation_Params
 {
-  /// constructor
   explicit TAO_CEC_Operation_Params (CORBA::ULong num_params);
-  /// destructor
   ~TAO_CEC_Operation_Params ();
 
   TAO_CEC_Operation_Params (TAO_CEC_Operation_Params const &) = delete;

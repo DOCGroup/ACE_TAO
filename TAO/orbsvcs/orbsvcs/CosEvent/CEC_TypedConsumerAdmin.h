@@ -36,10 +36,8 @@ class TAO_Event_Serv_Export TAO_CEC_TypedConsumerAdmin
   : public POA_CosTypedEventChannelAdmin::TypedConsumerAdmin
 {
 public:
-  // Constructor
   explicit TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
 
-  // Destructor
   ~TAO_CEC_TypedConsumerAdmin () override = default;
 
   /// For each elements call <worker->work()>.

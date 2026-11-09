@@ -59,7 +59,6 @@ public:
   using _ptr_type = CosEventChannelAdmin::ProxyPushSupplier_ptr;
   using _var_type = CosEventChannelAdmin::ProxyPushSupplier_var;
 
-  /// constructor...
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel,
                              ACE_Time_Value const &timeout);
 
@@ -69,7 +68,6 @@ public:
                              ACE_Time_Value const &timeout);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  /// destructor...
   ~TAO_CEC_ProxyPushSupplier () override;
 
   TAO_CEC_ProxyPushSupplier (TAO_CEC_ProxyPushSupplier const &) = delete;

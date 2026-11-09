@@ -84,7 +84,6 @@ class TAO_Event_Serv_Export TAO_CEC_Factory : public ACE_Service_Object
 public:
   TAO_CEC_Factory () = default;
 
-  /// destructor...
   ~TAO_CEC_Factory () override = default;
 
   TAO_CEC_Factory (TAO_CEC_Factory const &) = delete;

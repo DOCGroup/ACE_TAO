@@ -56,7 +56,6 @@ public:
    */
   explicit TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
 
-  /// Destructor...
   ~TAO_CEC_ConsumerAdmin () override = default;
 
   TAO_CEC_ConsumerAdmin (TAO_CEC_ConsumerAdmin const &) = delete;

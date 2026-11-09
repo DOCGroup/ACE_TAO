@@ -56,7 +56,6 @@ namespace CORBA
 class TAO_Event_Serv_Export TAO_CEC_SupplierControl
 {
 public:
-  /// Constructor
   TAO_CEC_SupplierControl () = default;
 
   TAO_CEC_SupplierControl (TAO_CEC_SupplierControl const &) = delete;
@@ -64,7 +63,6 @@ public:
   TAO_CEC_SupplierControl &operator= (TAO_CEC_SupplierControl const &) = delete;
   TAO_CEC_SupplierControl &operator= (TAO_CEC_SupplierControl &&) = delete;
 
-  /// destructor...
   virtual ~TAO_CEC_SupplierControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of

@@ -39,10 +39,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Event_Serv_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_CEC_Event_Loader () = default;
 
-  /// Destructor
   ~TAO_CEC_Event_Loader () override = default;
 
   //@{

@@ -53,7 +53,6 @@ class TAO_CEC_TypedEventChannel;
 class TAO_Event_Serv_Export TAO_CEC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   explicit TAO_CEC_ConsumerControl_Adapter (TAO_CEC_Reactive_ConsumerControl *adaptee);
 
   TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter const &) = delete;
@@ -103,7 +102,6 @@ public:
       CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  /// destructor...
   ~TAO_CEC_Reactive_ConsumerControl () override = default;
 
   TAO_CEC_Reactive_ConsumerControl (TAO_CEC_Reactive_ConsumerControl const &) = delete;

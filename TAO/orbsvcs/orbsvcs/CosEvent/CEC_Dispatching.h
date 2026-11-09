@@ -50,7 +50,6 @@ public:
   TAO_CEC_Dispatching &operator= (TAO_CEC_Dispatching const &) = delete;
   TAO_CEC_Dispatching &operator= (TAO_CEC_Dispatching &&) = delete;
 
-  /// destructor...
   virtual ~TAO_CEC_Dispatching () = default;
 
   /// Initialize all the data structures, activate any internal threads,

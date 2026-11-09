@@ -48,7 +48,6 @@ class TAO_CEC_Reactive_Pulling_Strategy;
 class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   explicit TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
 
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;

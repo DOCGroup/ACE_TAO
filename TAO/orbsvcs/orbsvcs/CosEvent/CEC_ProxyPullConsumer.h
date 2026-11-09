@@ -47,11 +47,9 @@ public:
   using _ptr_type = CosEventChannelAdmin::ProxyPullConsumer_ptr;
   using _var_type = CosEventChannelAdmin::ProxyPullConsumer_var;
 
-  /// constructor...
   TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel,
                              ACE_Time_Value const &timeout);
 
-  /// destructor...
   ~TAO_CEC_ProxyPullConsumer () override;
 
   TAO_CEC_ProxyPullConsumer (TAO_CEC_ProxyPullConsumer const &) = delete;
