@@ -44,7 +44,6 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const &value);
 
   /// Copy constructor.
