@@ -15,7 +15,7 @@ class TestTask : public ACE_Task_Base
 {
 public:
   TestTask (int argc, ACE_TCHAR **argv);
-  int svc ();
+  int svc () override;
 
   int parse_args (int argc, ACE_TCHAR **argv);
 
