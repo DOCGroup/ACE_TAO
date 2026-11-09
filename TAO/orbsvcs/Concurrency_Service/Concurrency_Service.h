@@ -56,6 +56,13 @@ public:
   int run ();
 
 private:
+  struct Options
+  {
+    ACE_TCHAR const *ior_file_name {};
+    ACE_TCHAR const *pid_file_name {};
+    bool use_naming_service {true};
+  };
+
   /// Parses the commandline arguments.
   int parse_args (int argc, ACE_TCHAR **argv);
 
@@ -72,14 +79,8 @@ private:
    */
   int init_naming_service ();
 
-  /// Flag to tell whether the naming service will be used.
-  bool use_naming_service_ {true};
-
-  /// The name of the file where we output the IOR.
-  ACE_TCHAR const *ior_file_name_ {};
-
-  /// The name of a file where the process stores its pid.
-  ACE_TCHAR const *pid_file_name_ {};
+  /// Filename pointers borrow command-line storage and are used before init() returns.
+  Options options_;
 
   /// The ORB manager
   TAO_ORB_Manager orb_manager_;

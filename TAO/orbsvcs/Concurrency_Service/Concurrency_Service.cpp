@@ -21,6 +21,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 // Default Constructor.
 
 Concurrency_Service::Concurrency_Service ()
@@ -55,13 +57,13 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR **argv)
         ++TAO_debug_level;
         break;
       case 'o': // output the IOR to a file
-        this->ior_file_name_ = get_opts.opt_arg ();
+        this->options_.ior_file_name = get_opts.opt_arg ();
         break;
       case 'p':
-        this->pid_file_name_ = get_opts.opt_arg ();
+        this->options_.pid_file_name = get_opts.opt_arg ();
         break;
       case 's':
-        this->use_naming_service_ = false;
+        this->options_.use_naming_service = false;
         break;
       default:
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -110,34 +112,34 @@ Concurrency_Service::init (int argc,
               "The IOR is: <%C>\n",
               str.in ()));
 
-  if (this->ior_file_name_ != nullptr)
+  if (this->options_.ior_file_name != nullptr)
     {
-      FILE *iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
+      std::unique_ptr<FILE, int (*) (FILE *)> iorf (
+        ACE_OS::fopen (this->options_.ior_file_name, ACE_TEXT("w")), ACE_OS::fclose);
       if (iorf == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
-                             ior_file_name_),
+                             this->options_.ior_file_name),
                             -1);
         }
 
-      ACE_OS::fprintf (iorf, "%s\n", str.in ());
-      ACE_OS::fclose (iorf);
+      ACE_OS::fprintf (iorf.get (), "%s\n", str.in ());
     }
 
-  if (this->pid_file_name_ != nullptr)
+  if (this->options_.pid_file_name != nullptr)
     {
-      FILE *pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
+      std::unique_ptr<FILE, int (*) (FILE *)> pidf (
+        ACE_OS::fopen (this->options_.pid_file_name, ACE_TEXT("w")), ACE_OS::fclose);
       if (pidf != nullptr)
         {
-          ACE_OS::fprintf (pidf,
+          ACE_OS::fprintf (pidf.get (),
                            "%ld\n",
                            static_cast<long> (ACE_OS::getpid ()));
-          ACE_OS::fclose (pidf);
         }
     }
 
-  if (this->use_naming_service_)
+  if (this->options_.use_naming_service)
     return this->init_naming_service ();
 
   return 0;
@@ -148,11 +150,9 @@ Concurrency_Service::init_naming_service ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "Concurrency_Service::init_naming_service (...)\n"));
   CORBA::ORB_var orb;
-  PortableServer::POA_var child_poa;
-
   orb = this->orb_manager_.orb ();
 
-  int result = this->naming_client_.init (orb.in ());
+  int const result = this->naming_client_.init (orb.in ());
 
   if (result == -1)
     return result;
@@ -216,12 +216,12 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
       concurrency_service.run ();
     }
 
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;
