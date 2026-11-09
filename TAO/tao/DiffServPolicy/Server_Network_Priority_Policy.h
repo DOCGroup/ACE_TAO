@@ -47,7 +47,6 @@ public:
   /// default constructor.
   TAO_Server_Network_Priority_Policy () = default;
 
-  /// Constructor.
   TAO_Server_Network_Priority_Policy (
      TAO::DiffservCodepoint const& request_diffserv_codepoint,
      TAO::DiffservCodepoint const& reply_diffserv_codepoint,

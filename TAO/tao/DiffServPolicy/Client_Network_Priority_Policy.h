@@ -44,10 +44,8 @@ class TAO_DiffServPolicy_Export TAO_Client_Network_Priority_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_Client_Network_Priority_Policy () = default;
 
-  /// Constructor.
   TAO_Client_Network_Priority_Policy (
      TAO::DiffservCodepoint request_diffserv_codepoint,
      TAO::DiffservCodepoint reply_diffserv_codepoint,
