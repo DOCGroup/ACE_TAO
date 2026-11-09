@@ -195,7 +195,6 @@ public:
   Method_Request_end &operator= (Method_Request_end &&) = delete;
 };
 
-// constructor
 Scheduler::Scheduler (std::string name, Scheduler *scheduler)
   : name_ (std::move (name)),
     scheduler_ (scheduler)
@@ -203,7 +202,6 @@ Scheduler::Scheduler (std::string name, Scheduler *scheduler)
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s created\n", this->name_.c_str ()));
 }
 
-// Destructor
 Scheduler::~Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s will be destroyed\n", this->name_.c_str ()));
