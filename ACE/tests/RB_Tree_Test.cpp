@@ -501,8 +501,6 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-// Constructor.
-
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Test
   (int entry_count,
@@ -517,13 +515,6 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Test
     key_array_ (key_array),
     item_array_ (item_array),
     order_index_ (order_index)
-{
-}
-
-// Destructor.
-
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Test ()
 {
 }
 
