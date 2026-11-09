@@ -8,21 +8,24 @@
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
+
 #include <array>
+#include <cstddef>
 #include <memory>
 
 #if !defined(ACE_WIN32)
 
-static ACE_TCHAR const default_input_filename[] = ACE_TEXT ("/usr/dict/words");
-static ACE_TCHAR const default_output_filename[] = ACE_TEXT ("/tmp/foo");
+static constexpr ACE_TCHAR default_input_filename[] = ACE_TEXT ("/usr/dict/words");
+static constexpr ACE_TCHAR default_output_filename[] = ACE_TEXT ("/tmp/foo");
 
 struct Options
 {
+  // These non-owning text pointers refer to argv storage or static defaults.
   ACE_TCHAR const *program_name {};
   ACE_TCHAR const *input_filename { default_input_filename };
   ACE_TCHAR const *output_filename { default_output_filename };
   bool remove_output { true };
-  int iteration_count { 100 };
+  std::size_t iteration_count { 100 };
 };
 
 static Options options {};
@@ -34,8 +37,7 @@ struct File_Deleter
 {
   void operator() (FILE *file) const
   {
-    if (file != nullptr)
-      ACE_OS::fclose (file);
+    ACE_OS::fclose (file);
   }
 };
 
@@ -64,7 +66,7 @@ cleanup (int)
 
 // Parse the command-line arguments and set options.
 
-static void
+static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:o:r"));
@@ -76,7 +78,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
       options.input_filename = get_opt.opt_arg ();
       break;
     case 'n':
-      options.iteration_count = ACE_OS::atoi (get_opt.opt_arg ());
+      {
+        int const iterations = ACE_OS::atoi (get_opt.opt_arg ());
+        if (iterations < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("iteration count must not be negative\n")),
+                            -1);
+        options.iteration_count = static_cast<std::size_t> (iterations);
+      }
       break;
     case 'o':
       options.output_filename = get_opt.opt_arg ();
@@ -88,6 +97,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       print_usage_and_die ();
       break;
   }
+  return 0;
 }
 
 template <typename TEST>
@@ -102,7 +112,7 @@ create_test (std::unique_ptr<IO_Test> &test,
 }
 
 static int
-run_tests (int iterations, FILE *input_fp, FILE *output_fp)
+run_tests (std::size_t iterations, FILE *input_fp, FILE *output_fp)
 {
   std::array<std::unique_ptr<IO_Test>, 6> test_vector {};
   if (create_test<Stdio_Test> (test_vector[0], "Stdio_Test") == -1
@@ -127,13 +137,15 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("--------------------\n")
-                  ACE_TEXT ("starting %C for %d iterations(s):\n"),
+                  ACE_TEXT ("starting %C for %B iterations(s):\n"),
                   test->name (),
                   iterations));
 
-      test->run_test (iterations,
-                      input_fp,
-                      output_fp);
+      if (test->run_test (iterations, input_fp, output_fp) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("IO test %C failed\n"),
+                           test->name ()),
+                          -1);
 
       ACE_Profile_Timer::ACE_Elapsed_Time et;
       profile_timer.elapsed_time (et);
@@ -156,7 +168,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   options.program_name = ACE::basename (argv[0],
                                         ACE_DIRECTORY_SEPARATOR_CHAR);
-  parse_args (argc, argv);
+  if (parse_args (argc, argv) == -1)
+    return 1;
 
   ACE_Sig_Action sa (&cleanup, SIGINT);
   ACE_UNUSED_ARG (sa);

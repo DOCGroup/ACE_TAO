@@ -3,6 +3,8 @@
 
 #include "ace/Profile_Timer.h"
 
+#include <cstddef>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -28,12 +30,12 @@ public:
   char const *name () const;
 
   // Execute the IO test (note this is a pure virtual function...)
-  virtual int run_test (int iterations,
+  virtual int run_test (std::size_t iterations,
                         FILE *input_fp,
                         FILE *output_fp) = 0;
 
 protected:
-  // Name of the test
+  // The caller passes a string literal, so this non-owning pointer remains valid.
   char const *const name_;
 
   // Reference to a timer
@@ -49,7 +51,7 @@ public:
   Slow_Read_Write_Test (Slow_Read_Write_Test &&) = delete;
   Slow_Read_Write_Test &operator= (Slow_Read_Write_Test const &) = delete;
   Slow_Read_Write_Test &operator= (Slow_Read_Write_Test &&) = delete;
-  int run_test (int iterations,
+  int run_test (std::size_t iterations,
                 FILE *input_fp,
                 FILE *output_fp) override;
 };
@@ -63,7 +65,7 @@ public:
   Stdio_Test (Stdio_Test &&) = delete;
   Stdio_Test &operator= (Stdio_Test const &) = delete;
   Stdio_Test &operator= (Stdio_Test &&) = delete;
-  int run_test (int iterations,
+  int run_test (std::size_t iterations,
                 FILE *input_fp,
                 FILE *output_fp) override;
 };
@@ -77,7 +79,7 @@ public:
   Block_Read_Write_Test (Block_Read_Write_Test &&) = delete;
   Block_Read_Write_Test &operator= (Block_Read_Write_Test const &) = delete;
   Block_Read_Write_Test &operator= (Block_Read_Write_Test &&) = delete;
-  int run_test (int iterations,
+  int run_test (std::size_t iterations,
                 FILE *input_fp,
                 FILE *output_fp) override;
 };
@@ -91,7 +93,7 @@ public:
   Block_Fread_Fwrite_Test (Block_Fread_Fwrite_Test &&) = delete;
   Block_Fread_Fwrite_Test &operator= (Block_Fread_Fwrite_Test const &) = delete;
   Block_Fread_Fwrite_Test &operator= (Block_Fread_Fwrite_Test &&) = delete;
-  int run_test (int iterations,
+  int run_test (std::size_t iterations,
                 FILE *input_fp,
                 FILE *output_fp) override;
 };
@@ -105,7 +107,7 @@ public:
   Mmap1_Test (Mmap1_Test &&) = delete;
   Mmap1_Test &operator= (Mmap1_Test const &) = delete;
   Mmap1_Test &operator= (Mmap1_Test &&) = delete;
-  int run_test (int iterations,
+  int run_test (std::size_t iterations,
                 FILE *input_fp,
                 FILE *output_fp) override;
 };
@@ -119,7 +121,7 @@ public:
   Mmap2_Test (Mmap2_Test &&) = delete;
   Mmap2_Test &operator= (Mmap2_Test const &) = delete;
   Mmap2_Test &operator= (Mmap2_Test &&) = delete;
-  int run_test (int iterations,
+  int run_test (std::size_t iterations,
                 FILE *input_fp,
                 FILE *output_fp) override;
 };
