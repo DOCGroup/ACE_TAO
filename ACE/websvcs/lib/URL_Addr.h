@@ -33,7 +33,6 @@ class ACE_URL_Addr_Visitor;
 class ACE_WEBSVCS_Export ACE_URL_Addr : public ACE_Addr
 {
 public:
-  /// Constructor.
   ACE_URL_Addr ();
 
   /// The copy constructor.
@@ -42,7 +41,6 @@ public:
   /// The assignment operator
   ACE_URL_Addr& operator= (const ACE_URL_Addr& address);
 
-  /// destructor
   virtual ~ACE_URL_Addr ();
 
   /// Get the original URL
@@ -123,7 +121,6 @@ class ACE_Mailto_Addr;
 class ACE_WEBSVCS_Export ACE_URL_Addr_Visitor
 {
 public:
-  /// Destructor
   virtual ~ACE_URL_Addr_Visitor ();
 
   /**
@@ -158,7 +155,6 @@ public:
 class ACE_WEBSVCS_Export ACE_HTTP_Addr : public ACE_URL_Addr
 {
 public:
-  /// Constructor
   ACE_HTTP_Addr ();
 
   /// Construct an HTTP URL from the host, path, query and port.
@@ -182,7 +178,6 @@ public:
   /// Essentially the copy constructor.
   int set (const ACE_HTTP_Addr &addr);
 
-  /// Destructor
   virtual ~ACE_HTTP_Addr ();
 
   /**
@@ -261,7 +256,6 @@ private:
 class ACE_WEBSVCS_Export ACE_FTP_Addr : public ACE_URL_Addr
 {
 public:
-  /// Constructor
   ACE_FTP_Addr ();
 
   /// Construct an FTP URL from the host_name, the path, the username
@@ -286,7 +280,6 @@ public:
   /// Essentially the copy constructor.
   int set (const ACE_FTP_Addr &addr);
 
-  /// Destructor
   virtual ~ACE_FTP_Addr ();
 
   /// Get the host name component in the URL
@@ -344,7 +337,6 @@ private:
 class ACE_WEBSVCS_Export ACE_Mailto_Addr : public ACE_URL_Addr
 {
 public:
-  /// Constructor
   ACE_Mailto_Addr ();
 
   /// Construct an FTP URL from the host, path and headers.
@@ -366,7 +358,6 @@ public:
   /// Essentially the copy constructor.
   int set (const ACE_Mailto_Addr &addr);
 
-  /// Destructor
   virtual ~ACE_Mailto_Addr ();
 
   /// Get the username component in the URL
