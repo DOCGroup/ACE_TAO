@@ -10,7 +10,7 @@ Messenger_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
                                 char const *,
                                 void *&cookie)
 {
-  cookie = nullptr;
+  cookie = {};
 
   // Get the ObjectId in string format.
   CORBA::String_var const oid_str = PortableServer::ObjectId_to_string (oid);
