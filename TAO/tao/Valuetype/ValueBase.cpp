@@ -736,7 +736,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, indirection %d=%@\n"),
-            offset, (void *)(strm.current()->wr_ptr () + offset) ));
+            offset, static_cast<void *> (strm.current()->wr_ptr () + offset) ));
         }
 
       return strm.write_long (offset);
@@ -1170,7 +1170,7 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
   else if (tag < TAO_OBV_GIOP_Flags::Value_tag_base)
     {
       // Read the chunk size and move forward to skip the data.
-      ACE_Message_Block* current =
+      ACE_Message_Block * const current =
         const_cast<ACE_Message_Block*>(strm.start ());
       current->rd_ptr (tag);
       return this->skip_chunks (strm);
