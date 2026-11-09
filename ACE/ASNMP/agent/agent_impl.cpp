@@ -33,8 +33,8 @@ int agent_impl::handle_get (Pdu &pdu, UdpTarget &target)
   //  1. verify we have a valid read string else drop pdu (no response to caller)
   if (mgr_rd_str != agent_rd_str)
     {
-     ACE_DEBUG ((LM_DEBUG, "agent_impl::handle_get: invalid read community recvd\n"));
-     return 0;
+      ACE_DEBUG ((LM_DEBUG, "agent_impl::handle_get: invalid read community recvd\n"));
+      return 0;
     }
 
   // 2. iterate over each varbind in the pdu, filling providing responses
@@ -59,49 +59,56 @@ int agent_impl::handle_get (Pdu &pdu, UdpTarget &target)
 
 // this routine makes up the brains of the agent
 // it knows only the MIB II system group set of variables for a get operation
-int agent_impl::get_response (Vb& vb)
+int agent_impl::get_response (Vb &vb)
 {
   // these objects represent the MIB II system group per RFC 1213
-   static Oid const sysDescr ("1.3.6.1.2.1.1.1.0"),
-     sysObjectID ("1.3.6.1.2.1.1.2.0"), sysUpTime ("1.3.6.1.2.1.1.3.0"),
-     sysContact ("1.3.6.1.2.1.1.4.0"), sysName ("1.3.6.1.2.1.1.5.0"),
-     sysLocation ("1.3.6.1.2.1.1.6.0"), sysServices ("1.3.6.1.2.1.1.7.0");
+  static Oid const sysDescr ("1.3.6.1.2.1.1.1.0"),
+    sysObjectID ("1.3.6.1.2.1.1.2.0"), sysUpTime ("1.3.6.1.2.1.1.3.0"),
+    sysContact ("1.3.6.1.2.1.1.4.0"), sysName ("1.3.6.1.2.1.1.5.0"),
+    sysLocation ("1.3.6.1.2.1.1.6.0"), sysServices ("1.3.6.1.2.1.1.7.0");
 
   Oid oid {};
   vb.get_oid (oid);
-  if (oid == sysDescr) {
-    OctetStr const desc ("ASNMP Prototype Agent 1.0");
-    vb.set_value (desc);
-  }
-  else if (oid == sysObjectID) { // the IANA gives assigns Enterprise Numbers
-    // see ftp://ftp.isi.edu/in-notes/iana/assignments/enterprise-numbers
-    // for the official list of enterprise numbers. Then under this tree
-    // assign a unique subtree to identify this agent
-    Oid const id ("1.3.6.1.4.1.2533.9.1");
-    vb.set_value (id);
-  }
-  else if (oid == sysUpTime) {
-    ACE_Time_Value tv {};
-    agent_clock_.elapsed_time (tv);
-    TimeTicks tt (tv.msec ());
-    vb.set_value (tt);
-  }
-  else if (oid == sysContact) {
-    OctetStr const contact ("mrm@acm.org");
-    vb.set_value (contact);
-  }
-  else if (oid == sysName) {
-    OctetStr const fqdn ("foo.org"); // extract this from the gethostbyname() TODO
-    vb.set_value (fqdn);
-  }
-  else if (oid == sysLocation) {
-    OctetStr const loc ("");
-    vb.set_value (loc);
-  }
-  else if (oid == sysServices) {
-    SnmpInt32 const svcs (72);
-    vb.set_value (svcs);
-  }
+  if (oid == sysDescr)
+    {
+      OctetStr const desc ("ASNMP Prototype Agent 1.0");
+      vb.set_value (desc);
+    }
+  else if (oid == sysObjectID) // the IANA gives assigns Enterprise Numbers
+    {
+      // See ftp://ftp.isi.edu/in-notes/iana/assignments/enterprise-numbers
+      // for the official list of enterprise numbers. Then under this tree
+      // assign a unique subtree to identify this agent.
+      Oid const id ("1.3.6.1.4.1.2533.9.1");
+      vb.set_value (id);
+    }
+  else if (oid == sysUpTime)
+    {
+      ACE_Time_Value tv {};
+      agent_clock_.elapsed_time (tv);
+      TimeTicks tt (tv.msec ());
+      vb.set_value (tt);
+    }
+  else if (oid == sysContact)
+    {
+      OctetStr const contact ("mrm@acm.org");
+      vb.set_value (contact);
+    }
+  else if (oid == sysName)
+    {
+      OctetStr const fqdn ("foo.org"); // extract this from the gethostbyname() TODO
+      vb.set_value (fqdn);
+    }
+  else if (oid == sysLocation)
+    {
+      OctetStr const loc ("");
+      vb.set_value (loc);
+    }
+  else if (oid == sysServices)
+    {
+      SnmpInt32 const svcs (72);
+      vb.set_value (svcs);
+    }
   else
     return 1; // noSuchName
 
@@ -110,14 +117,14 @@ int agent_impl::get_response (Vb& vb)
 
 int agent_impl::handle_get_next (Pdu &, UdpTarget &)
 {
-   ACE_TRACE ("agent_impl::handle_get_next -NI");
+  ACE_TRACE ("agent_impl::handle_get_next -NI");
   return 0;
 }
 
 int agent_impl::handle_set (Pdu &, UdpTarget &)
 {
- ACE_TRACE ("agent_impl::handle_set -NI");
- return 0;
+  ACE_TRACE ("agent_impl::handle_set -NI");
+  return 0;
 }
 
 // stuff used by process_requests

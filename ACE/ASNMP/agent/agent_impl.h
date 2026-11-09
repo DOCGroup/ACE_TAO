@@ -45,7 +45,7 @@ private:
   /// this agent's read, write community strings
   UdpTarget tgt_;
   /// set values for a "get" cmd
-  int get_response (Vb& vb);
+  int get_response (Vb &vb);
   /// agent "uptime" ticks reported in 1/100 second
   ACE_High_Res_Timer agent_clock_;
 };
