@@ -33,7 +33,6 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
 public:
   TAO_RTScheduler_Manager () = default;
 
-  /// Constructor.
   TAO_RTScheduler_Manager (TAO_ORB_Core* orb);
 
   void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);

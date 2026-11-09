@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Export TAO_RTScheduler_Initializer
 {
 public:
-  // Constructor.
   TAO_RTScheduler_Initializer ();
 };
 

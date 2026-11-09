@@ -30,10 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_RTScheduler_Loader ();
 
-  /// Destructor.
   ~TAO_RTScheduler_Loader () override;
 
   /// Initialize the RTScheduler loader hooks.
