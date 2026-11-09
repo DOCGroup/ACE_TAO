@@ -26,14 +26,11 @@
 class Grid_i: public POA_Grid
 {
 public:
-  /// Constructor
   Grid_i () = default;
 
-  /// Constructor.
   Grid_i (CORBA::Short,
           CORBA::Short);
 
-  /// Destructor
   ~Grid_i () override = default;
 
   Grid_i (Grid_i const &) = delete;
@@ -92,10 +89,8 @@ private:
 class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
-  /// Constructor.
   Grid_Factory_i () = default;
 
-  /// Destructor.
   ~Grid_Factory_i () override = default;
 
   Grid_Factory_i (Grid_Factory_i const &) = delete;

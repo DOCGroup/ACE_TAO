@@ -13,7 +13,6 @@ Grid_i::ushort_min (CORBA::UShort a, CORBA::UShort b)
   return a > b ? b : a;
 }
 
-//  Constructor.
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y)
   : width_ (x),
