@@ -3,6 +3,7 @@
 #include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"
+#include <cstddef>
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -37,18 +38,18 @@ public:
   int svc () override
   {
     /// Get an instance of the MC service singleton.
-    MC_ADMINMANAGER* mgr =
+    MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::Monitor_Control::Monitor_Base *thread_monitor =
+    ACE::Monitor_Control::Monitor_Base * const thread_monitor =
       mgr->admin ().monitor_point ("OS/System/NumThreads");
 
     if (thread_monitor != nullptr)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i = 0; i < 5; ++i)
+        for (std::size_t i {}; i < 5; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -72,7 +73,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   /// Set the timer for # of threads check at 2 sec.
-  Monitor_Base *num_threads_monitor =
+  Monitor_Base * const num_threads_monitor =
     create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
@@ -80,11 +81,11 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   START_PERIODIC_MONITORS;
 
   /// Run the monitor checker in a separate thread.
-  Monitor_Checker monitor_checker;
+  Monitor_Checker monitor_checker {};
   monitor_checker.activate ();
 
   /// Spawn 100 threads, sleep until they finish.
-  Worker worker;
+  Worker worker {};
   worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100);
 
   ACE_OS::sleep (6);
