@@ -6,8 +6,6 @@
 #include "QoS_Util.h"
 #include "ace/OS_NS_strings.h"
 
-
-// constructor.
 QoS_Util::QoS_Util (int argc,
                     ACE_TCHAR *argv[])
   : argc_ (argc),
