@@ -24,10 +24,8 @@
 class be_visitor_constant_cs : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_constant_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_constant_cs () override;
   be_visitor_constant_cs (be_visitor_constant_cs const &) = delete;
   be_visitor_constant_cs (be_visitor_constant_cs &&) = delete;

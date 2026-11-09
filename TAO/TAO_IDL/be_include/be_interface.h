@@ -51,7 +51,6 @@ public:
                 bool local,
                 bool abstract);
 
-  /// Destructor.
   ~be_interface ();
 
   // Methods, which access the strategy.
@@ -406,7 +405,6 @@ protected:
 class TAO_IDL_BE_Export TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  /// Destructor
   /**
    * This is a no-op, simply put here to keep compilers happy.
    */

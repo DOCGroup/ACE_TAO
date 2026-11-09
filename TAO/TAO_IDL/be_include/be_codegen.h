@@ -199,10 +199,8 @@ public:
       TAO_SUB_STATE_UNKNOWN
     };
 
-  /// Constructor
   TAO_CodeGen ();
 
-  /// Destructor
   ~TAO_CodeGen ();
 
   /// Set the client header stream.

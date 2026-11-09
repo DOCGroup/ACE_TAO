@@ -26,10 +26,8 @@
 class be_visitor_typedef_cs : public be_visitor_typedef
 {
 public:
-  /// constructor
   explicit be_visitor_typedef_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_typedef_cs () override  = default;
 
   be_visitor_typedef_cs (be_visitor_typedef_cs const &) = delete;

@@ -25,10 +25,8 @@
 class be_visitor_module_ch : public be_visitor_module
 {
 public:
-  /// constructor
   explicit be_visitor_module_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_module_ch () override;
 
   be_visitor_module_ch (const be_visitor_module_ch &) = delete;

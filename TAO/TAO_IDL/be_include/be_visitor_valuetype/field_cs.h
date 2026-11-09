@@ -29,10 +29,8 @@
 class be_visitor_valuetype_field_cs : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_field_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_field_cs () override;
   be_visitor_valuetype_field_cs (be_visitor_valuetype_field_cs const &) = delete;
   be_visitor_valuetype_field_cs (be_visitor_valuetype_field_cs &&) = delete;

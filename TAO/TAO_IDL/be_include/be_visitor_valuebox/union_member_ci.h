@@ -29,10 +29,8 @@
 class be_visitor_valuebox_union_member_ci : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_valuebox_union_member_ci (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuebox_union_member_ci () override  = default;
 
   be_visitor_valuebox_union_member_ci (be_visitor_valuebox_union_member_ci const &) = delete;

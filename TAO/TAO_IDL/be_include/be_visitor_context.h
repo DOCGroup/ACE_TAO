@@ -41,15 +41,12 @@ class be_scope;
 class be_visitor_context : public ast_visitor_context
 {
 public:
-  /// default constructor
   be_visitor_context ();
 
-  /// default constructor
   be_visitor_context (be_visitor_context const& ctx);
 
   be_visitor_context (be_visitor_context &&) = delete;
 
-  /// destructor
   ~be_visitor_context ();
 
   /// assignment operator
