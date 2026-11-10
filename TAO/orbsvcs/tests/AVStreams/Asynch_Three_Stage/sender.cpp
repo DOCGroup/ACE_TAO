@@ -8,10 +8,10 @@
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
   // Create and return the client application callback and return to the AVStreams
@@ -21,7 +21,7 @@ Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *flowname,
+Sender_StreamEndPoint::set_protocol_object (char const *flowname,
                                             TAO_AV_Protocol_Object *object)
 {
   Connection_Manager &connection_manager =
@@ -38,40 +38,28 @@ Sender_StreamEndPoint::set_protocol_object (const char *flowname,
   return 0;
 }
 
-Sender::Sender ()
-  : sender_mmdevice_ (0),
-    frame_count_ (0),
-    filename_ (ACE_TEXT("input")),
-    input_file_ (0),
-    addr_file_ (ACE_TEXT ("addr_file")),
-    frame_rate_ (10.0),
-    mb_ (BUFSIZ),
-    sender_name_ (ACE_TEXT("sender"))
-{
-}
-
 int
 Sender::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("s:f:r:da:"));
 
-  int c;
-  while ((c= opts ()) != -1)
+  int c {};
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'a':
-          this->addr_file_ = opts.opt_arg ();
+          this->options_.addr_file = opts.opt_arg ();
           break;
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->options_.filename = opts.opt_arg ();
           break;
         case 'r':
-          this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -100,44 +88,43 @@ Sender::init (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
-
   // Parse the command line arguments
   result =
     this->parse_args (argc, argv);
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
+  this->connection_manager_.load_ep_addr (
+    ACE_TEXT_ALWAYS_CHAR (this->options_.addr_file.c_str ()));
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "r"));
 
-  if (this->input_file_ == 0)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
                 "File opened successfully\n"));
 
   // Register the sender mmdevice object with the ORB
-  ACE_NEW_RETURN (this->sender_mmdevice_,
+  TAO_MMDevice *sender_mmdevice {};
+  ACE_NEW_RETURN (sender_mmdevice,
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
 
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
-    this->sender_mmdevice_;
+    sender_mmdevice;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this ();
+    sender_mmdevice->_this ();
 
   // Register the object reference with the Naming Service and bind to
   // the receivers
-  this->connection_manager_.bind_to_receivers (ACE_TEXT_ALWAYS_CHAR (this->sender_name_.c_str()),
+  this->connection_manager_.bind_to_receivers (this->options_.sender_name,
                                                mmdevice.in ());
 
   // Connect to the receivers
@@ -154,13 +141,13 @@ Sender::pace_data ()
   ACE_Time_Value inter_frame_time;
 
   // The time between two consecutive frames.
-  inter_frame_time.set (1.0 / ((double) this->frame_rate_));
+  inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %d / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                "Frame Rate = %f / second\n"
+                "Inter Frame Time = %ld (msec)\n",
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -169,18 +156,13 @@ Sender::pace_data ()
       ACE_High_Res_Timer elapsed_timer;
 
       // Continue to send data till the file is read to the end.
-      while (1)
+      while (true)
         {
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
-
-          if (n < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data fread failed\n"),
-                              -1);
+          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                               1,
+                                               this->mb_.size (),
+                                               this->input_file_.get ());
 
           if (n == 0)
             {
@@ -258,7 +240,7 @@ Sender::pace_data ()
           this->mb_.reset ();
         } // end while
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -296,8 +278,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                       root_poa.in ());
 
       // Initialize the Client.
-      int result = 0;
-      result = SENDER::instance ()->init (argc, argv);
+      int result = SENDER::instance ()->init (argc, argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -305,7 +286,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       SENDER::instance ()->pace_data ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;

@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#ifndef TAO_AV_ASYNCH_THREE_STAGE_CONNECTION_MANAGER_H
+#define TAO_AV_ASYNCH_THREE_STAGE_CONNECTION_MANAGER_H
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -19,9 +21,9 @@
 
 class Endpoint_Addresses
 {
- public:
-  ACE_CString sender_addr;
-  ACE_CString receiver_addr;
+public:
+  ACE_CString sender_addr {};
+  ACE_CString receiver_addr {};
 };
 
 /**
@@ -36,60 +38,54 @@ class Endpoint_Addresses
 class Connection_Manager
 {
 public:
-  /// Constructor
-  Connection_Manager ();
-
-  /// Destructor
-  ~Connection_Manager ();
+  Connection_Manager () = default;
+  Connection_Manager (Connection_Manager const &) = delete;
+  Connection_Manager &operator= (Connection_Manager const &) = delete;
+  Connection_Manager (Connection_Manager &&) = delete;
+  Connection_Manager &operator= (Connection_Manager &&) = delete;
 
   /// Initialize this class.
   int init (CORBA::ORB_ptr orb);
 
   /// Method that binds the sender to the Naming Service and retrieves
   /// the references of any registered receivers.
-  void bind_to_receivers (const ACE_CString &sender_name,
+  void bind_to_receivers (ACE_CString const &sender_name,
                           AVStreams::MMDevice_ptr sender);
 
   /// Connect to the receivers that we found.
   void connect_to_receivers (AVStreams::MMDevice_ptr sender);
 
   /// Bind receiver to the sender.
-  void bind_to_sender (const ACE_CString &sender_name,
-                       const ACE_CString &receiver_name,
+  void bind_to_sender (ACE_CString const &sender_name,
+                       ACE_CString const &receiver_name,
                        AVStreams::MMDevice_ptr receiver);
 
   /// Connect to the sender that we found.
   void connect_to_sender ();
 
-  /// Destroy all streams.
-  void destroy ();
-
-  /// Destroy streams associated with <flowname>.
-  void destroy (const ACE_CString &flowname);
-
   /// Add new streamctrl.
-  void add_streamctrl (const ACE_CString &flowname,
+  void add_streamctrl (ACE_CString const &flowname,
                        TAO_StreamEndPoint *endpoint);
 
   // Map of receivers.
   using Receivers = ACE_Hash_Map_Manager<ACE_CString,
-    AVStreams::MMDevice_var,
-    ACE_Null_Mutex>;
+                                        AVStreams::MMDevice_var,
+                                        ACE_Null_Mutex>;
 
   // Map of protocol objects.
+  // Borrowed from the AVStreams endpoint objects; the map does not own them.
   using Protocol_Objects = ACE_Hash_Map_Manager<ACE_CString,
-                               TAO_AV_Protocol_Object *,
-                               ACE_Null_Mutex>;
-
+                                                TAO_AV_Protocol_Object *,
+                                                ACE_Null_Mutex>;
 
   // Map of streamctrl.
   using StreamCtrls = ACE_Hash_Map_Manager<ACE_CString,
-                               AVStreams::StreamCtrl_var,
-                               ACE_Null_Mutex>;
+                                           AVStreams::StreamCtrl_var,
+                                           ACE_Null_Mutex>;
 
   // Map of flownames and corresponding endpoint addresses
   using EP_Addr = ACE_Hash_Map_Manager<ACE_CString,
-                               Endpoint_Addresses*,
+                               Endpoint_Addresses,
                                ACE_Null_Mutex>;
 
   // Map accessors.
@@ -97,7 +93,7 @@ public:
   Protocol_Objects &protocol_objects ();
   StreamCtrls &streamctrls ();
 
-  void load_ep_addr (const char* file_name);
+  void load_ep_addr (char const *file_name);
 
 protected:
   void find_receivers ();
@@ -131,3 +127,5 @@ protected:
   // Receiver context.
   CosNaming::NamingContext_var receiver_context_;
 };
+
+#endif /* TAO_AV_ASYNCH_THREE_STAGE_CONNECTION_MANAGER_H */

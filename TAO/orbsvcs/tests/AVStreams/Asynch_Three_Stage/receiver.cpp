@@ -1,14 +1,16 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include <cstddef>
+#include <cstdio>
+#include <memory>
 
-// File handle of the file into which received data is written.
-static FILE *output_file = 0;
+// Borrowed by the callback; ACE_TMAIN owns the file for the whole ORB run.
+static FILE *output_file {};
 
-// Flag to tell us if we are done or not.
-static int done=0;
+static bool done {};
 
 int
-Receiver_StreamEndPoint::get_callback (const char *,
+Receiver_StreamEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
   // Return the receiver application callback to the AVStreams for
@@ -17,15 +19,10 @@ Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (1)
-{
-}
-
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
-                                  const ACE_Addr &)
+                                  ACE_Addr const &)
 {
   //
   // Upcall from the AVStreams when there is data to be received from
@@ -35,16 +32,15 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
-        ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
-                        1,
-                        output_file);
+      std::size_t const result = ACE_OS::fwrite (frame->rd_ptr (),
+                                                 frame->length (),
+                                                 1,
+                                                 output_file);
 
-      if (result == frame->length ())
+      if (result != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -62,34 +58,12 @@ Receiver_Callback::handle_destroy ()
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
 
-  try
-    {
-      done=1;
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
-      return -1;
-    }
-
+  done = true;
   return 0;
 }
 
-Receiver::Receiver ()
-  : mmdevice_ (0),
-    output_file_name_ (ACE_TEXT ("output")),
-    addr_file_ (ACE_TEXT ("addr_file")),
-    sender_name_ ("distributer"),
-    receiver_name_ ("receiver")
-{
-}
-
-Receiver::~Receiver ()
-{
-}
-
 int
-Receiver::init (int, ACE_TCHAR *[])
+Receiver::init ()
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -104,23 +78,25 @@ Receiver::init (int, ACE_TCHAR *[])
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
+  this->connection_manager_.load_ep_addr (
+    ACE_TEXT_ALWAYS_CHAR (this->options_.addr_file.c_str ()));
 
   // Register the receiver mmdevice object with the ORB
-  ACE_NEW_RETURN (this->mmdevice_,
+  TAO_MMDevice *mmdevice_servant {};
+  ACE_NEW_RETURN (mmdevice_servant,
                   TAO_MMDevice (&this->reactive_strategy_),
                   -1);
 
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
-    this->mmdevice_;
+    mmdevice_servant;
 
   AVStreams::MMDevice_var mmdevice =
-    this->mmdevice_->_this ();
+    mmdevice_servant->_this ();
 
   // Bind to sender.
-  this->connection_manager_.bind_to_sender (this->sender_name_,
-                                            this->receiver_name_,
+  this->connection_manager_.bind_to_sender (this->options_.sender_name,
+                                            this->options_.receiver_name,
                                             mmdevice.in ());
 
   // Connect to the sender.
@@ -133,26 +109,24 @@ int
 Receiver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse the command line arguments
-  ACE_Get_Opt opts (argc,
-                    argv,
-                    "f:s:r:a:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT ("f:s:r:a:"));
 
-  int c;
+  int c {};
   while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'a':
-          this->addr_file_ = opts.opt_arg ();
+          this->options_.addr_file = opts.opt_arg ();
           break;
         case 'f':
-          this->output_file_name_ = opts.opt_arg ();
+          this->options_.output_file_name = opts.opt_arg ();
           break;
         case 's':
-          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->receiver_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.receiver_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -164,15 +138,18 @@ Receiver::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_TString
-Receiver::output_file_name ()
+ACE_TString const &
+Receiver::output_file_name () const
 {
-  return this->output_file_name_;
+  return this->options_.output_file_name;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr output_file_owner (nullptr, ACE_OS::fclose);
+
   try
     {
       // Initialize the ORB first.
@@ -202,10 +179,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       // Make sure we have a valid <output_file>
-      output_file =
-        ACE_OS::fopen (receiver.output_file_name ().c_str (),
-                       "w");
-      if (output_file == 0)
+      output_file_owner.reset (
+        ACE_OS::fopen (receiver.output_file_name ().c_str (), "w"));
+      output_file = output_file_owner.get ();
+      if (!output_file_owner)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            receiver.output_file_name ().c_str () ),
@@ -215,28 +192,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     "File Opened Successfully\n"));
 
-      result =
-        receiver.init (argc, argv);
+      result = receiver.init ();
 
       if (result != 0)
         return result;
 
-      ACE_Time_Value tv(0, 10000);
-      while(!done)
-      {
-         orb->run (tv);
-      }
+      ACE_Time_Value tv (0, 10000);
+      while (!done)
+        orb->run (tv);
 
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -27,8 +26,11 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  /// Constructor.
-  Receiver_Callback ();
+  Receiver_Callback () = default;
+  Receiver_Callback (Receiver_Callback const &) = delete;
+  Receiver_Callback &operator= (Receiver_Callback const &) = delete;
+  Receiver_Callback (Receiver_Callback &&) = delete;
+  Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -42,7 +44,7 @@ public:
 
 private:
   /// Keeping a count of the incoming frames.
-  int frame_count_;
+  int frame_count_ {1};
 };
 
 /**
@@ -55,8 +57,14 @@ private:
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
+  Receiver_StreamEndPoint () = default;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
+
   // Create a receiver application callback.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
 private:
@@ -75,24 +83,20 @@ private:
 class Receiver
 {
 public:
-  /// Constructor
-  Receiver ();
-
-  /// Destructor.
-  ~Receiver ();
+  Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
   Receiver &operator= (Receiver &&) = delete;
 
   /// Initialize data components.
-  int init (int argc, ACE_TCHAR *argv[]);
+  int init ();
 
   /// Parse args.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Name of the output file.
-  ACE_TString output_file_name ();
+  ACE_TString const &output_file_name () const;
 
 protected:
   /// Connection manager.
@@ -102,23 +106,13 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  /// The receiver MMDevice.
-  AVStreams::MMDevice_var mmdevice_obj_;
+  struct Options
+  {
+    ACE_TString output_file_name {ACE_TEXT ("output")};
+    ACE_TString addr_file {ACE_TEXT ("addr_file")};
+    ACE_CString sender_name {"distributer"};
+    ACE_CString receiver_name {"receiver"};
+  };
 
-  /// Receiver MMDevice.
-  TAO_MMDevice *mmdevice_;
-
-  /// The sender MMDevice
-  AVStreams::MMDevice_var sender_mmdevice_;
-
-  /// File name of the file into which received data is written.
-  ACE_TString output_file_name_;
-
-  ACE_TString addr_file_;
-
-  /// Sender name.
-  ACE_CString sender_name_;
-
-  /// Receiver name.
-  ACE_CString receiver_name_;
+  Options options_;
 };
