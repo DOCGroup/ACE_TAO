@@ -24,7 +24,7 @@ TAO_FT_Random::next_location (
   if (len == 0)
     return false;
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   if (len > 1)
     {
       // Prevent integer arithmetic overflow.

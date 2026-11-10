@@ -56,8 +56,9 @@ TAO_FT_Round_Robin::next_location (
 
   // Could not find an entry
   // Create an entry at location 0
-  CORBA::ULong start = 0;
-  location = locations[start++];
+  CORBA::ULong start {};
+  location = locations[start];
+  ++start;
   if (this->location_index_map_.bind (id, start) != 0)
   { // The location was already bound or some failure occurred. Should not happen.
     throw CORBA::INTERNAL ();

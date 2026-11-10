@@ -33,9 +33,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/default_ports.h"
-#include <string>
 #include "tao/Storable_FlatFileStream.h"
 
+#include <array>
+#include <string>
 #include <utility>
 
 #include "tao/debug.h"
@@ -107,7 +108,7 @@ TAO_FT_Naming_Server::update_info_i ()
         this->u_infos_.pop_front ();
       }
 
-      for (CORBA::ULong i = 0; i < block->length(); i++)
+      for (CORBA::ULong i {}; i < block->length (); ++i)
         {
           FT_Naming::UpdateInfo &infoRef = (*block)[i];
 
@@ -254,7 +255,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
 int
 TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::ORB_ptr orb)
 {
-  int result = 0;
+  int result {};
 
   // Need to lock during startup to prevent access of partially
   // initialized variables
@@ -965,10 +966,10 @@ TAO_FT_Naming_Server::recover_iors ()
          ACE_TEXT ("recover_ior should not be called.\n")), -1);
     }
 
-  size_t index[2] = {FT_ROOT, FT_GROUP};
-  for (int i = 0; i < 2; i++)
+  std::array<size_t, 2> const indexes {FT_ROOT, FT_GROUP};
+  for (size_t const index : indexes)
     {
-      ACE_TString fname = this->iors_[index[i]].filename_;
+      ACE_TString const fname = this->iors_[index].filename_;
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("recover_ior <%C>\n"),
@@ -977,14 +978,13 @@ TAO_FT_Naming_Server::recover_iors ()
       if (ACE_OS::access (fname.c_str (), F_OK) != 0)
         return -1;
 
-      CORBA::Object_ptr obj = CORBA::Object::_nil();
       try
         {
-          ACE_TString combined_ior = ACE_TEXT ("file://") + fname;
-          obj = this->orb_->string_to_object (combined_ior.c_str());
-          if (!CORBA::is_nil (obj))
+          ACE_TString const combined_ior = ACE_TEXT ("file://") + fname;
+          CORBA::Object_var obj = this->orb_->string_to_object (combined_ior.c_str());
+          if (!CORBA::is_nil (obj.in ()))
             {
-              this->assign(index[i], true, obj);
+              this->assign (index, true, obj._retn ());
             }
         }
       catch (CORBA::Exception const &ex)

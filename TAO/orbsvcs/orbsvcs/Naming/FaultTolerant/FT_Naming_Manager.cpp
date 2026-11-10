@@ -191,7 +191,7 @@ TAO_FT_Naming_Manager::get_object_group_ref_from_name (char const * group_name)
 TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_strategy)
 {
   PortableGroup::ObjectGroups_var all_groups = this->group_factory_.all_groups ();
-  int num_groups = all_groups->length ();
+  int const num_groups = all_groups->length ();
 
   ::FT_Naming::GroupNames* group_names;
   ACE_NEW_THROW_EX (
@@ -199,8 +199,8 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
     ::FT_Naming::GroupNames (num_groups),
     CORBA::NO_MEMORY());
 
-  int matching_groups = 0;
-  for (int i = 0; i < num_groups; ++i)
+  int matching_groups {};
+  for (int i {}; i < num_groups; ++i)
   {
     PortableGroup::ObjectGroup_var obj_group = (all_groups.in ())[i].in ();
 
@@ -571,7 +571,7 @@ TAO_FT_Naming_Manager::get_object_group_id (
       throw PortableGroup::ObjectGroupNotFound ();
     }
 
-  PortableGroup::ObjectGroupId result = 0;
+  PortableGroup::ObjectGroupId result {};
   TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
@@ -716,7 +716,7 @@ TAO_FT_Naming_Manager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = nullptr;
+  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr {};
   ACE_NEW_THROW_EX (factory_id_ptr,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
@@ -737,7 +737,7 @@ TAO_FT_Naming_Manager::delete_object (
     PortableGroup::GenericFactory::FactoryCreationId const &
       factory_creation_id)
 {
-  PortableGroup::ObjectGroupId group_id = 0;
+  PortableGroup::ObjectGroupId group_id {};
   if (factory_creation_id >>= group_id)
   {
     this->group_factory_.delete_group (

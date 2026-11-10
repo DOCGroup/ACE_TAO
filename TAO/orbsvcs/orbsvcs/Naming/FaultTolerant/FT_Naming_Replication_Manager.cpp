@@ -220,12 +220,10 @@ TAO_FT_Naming_Replication_Manager::handle_exception (ACE_HANDLE )
       CORBA::Long len = this->to_send_.length ();
       FT_Naming::UpdateInfoSeq payload (len);
       payload.length (len);
-      CORBA::Long p = 0;
-      for (CORBA::Long l = 0; l < len; l++)
+      for (CORBA::Long l {}; l < len; ++l)
         {
-           payload[p++] = this->to_send_[l];
+          payload[l] = this->to_send_[l];
         }
-      payload.length (p);
       this->to_send_.length (0);
       CORBA::ULongLong seq = ++this->seq_num_;
       mon.release ();
@@ -251,7 +249,7 @@ TAO_FT_Naming_Replication_Manager::send_objgrp_update (PortableGroup::ObjectGrou
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
-  for (CORBA::Long i = len -1; !found && i >= 0; i--)
+  for (CORBA::Long i = len - 1; !found && i >= 0; --i)
     {
       if (this->to_send_[i]._d() == FT_Naming::obj_grp &&
           this->to_send_[i].grp().id == id)
@@ -302,7 +300,7 @@ TAO_FT_Naming_Replication_Manager::send_context_update (std::string const &name,
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
 
-  for (CORBA::Long i = len -1; !found && i >= 0; i--)
+  for (CORBA::Long i = len - 1; !found && i >= 0; --i)
     {
       if (this->to_send_[i]._d() == FT_Naming::ctx_name &&
           std::strcmp (this->to_send_[i].ctx().context_name,

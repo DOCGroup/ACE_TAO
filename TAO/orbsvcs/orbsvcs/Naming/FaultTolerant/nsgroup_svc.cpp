@@ -389,7 +389,7 @@ NS_group_svc::group_list () const
   // naming manager IDL to support requesting the group list - which is a list of names
 
   /// Display object group list for each load balancing strategy
-  int rc = 0;
+  int rc {};
   if (display_load_policy_group (FT_Naming::ROUND_ROBIN,
                                  ACE_TEXT ("Round Robin")) < 0 )
     {
