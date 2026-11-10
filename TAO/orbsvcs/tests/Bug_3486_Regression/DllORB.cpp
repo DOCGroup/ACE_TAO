@@ -5,17 +5,14 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-
 DllORB::DllORB () = default;
 
-
 DllORB::~DllORB () = default;
-
 
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
 {
-  int thread_count = 1;
+  int thread_count { 1 };
 
   try
     {
@@ -52,7 +49,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           // (dangling) references to instances of objects created by this
           // module and destroyed by this object when it is dynamically
           // unloaded.
-          int const register_with_object_manager = 0;
+          int const register_with_object_manager {};
           TAO_Singleton_Manager * const p_tsm = TAO_Singleton_Manager::instance ();
           int const result = p_tsm->init (register_with_object_manager);
 
@@ -123,7 +120,6 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 int
 DllORB::fini ()
@@ -199,13 +195,12 @@ DllORB::fini ()
   return 0;
 }
 
-
 int
 DllORB::svc ()
 {
   mp_barrier_->wait ();
 
-  int result = 0;
+  int result {};
 
   try
     {
@@ -219,6 +214,5 @@ DllORB::svc ()
 
   return result;
 }
-
 
 ACE_FACTORY_DEFINE (bug3486, DllORB)

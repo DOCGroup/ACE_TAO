@@ -34,6 +34,7 @@ loadunloadcycle ()
               ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
               result));
 
+  // ACE_Dynamic_Service returns a borrowed pointer owned by the service repository.
   DllORB * const p_orb =
     ACE_Dynamic_Service<DllORB>::instance ("testDllOrb");
 
@@ -56,6 +57,7 @@ loadunloadcycle ()
               ACE_TEXT ("(%P|%t) loadunloadcycle - loading NamingService done. Result: <%d>\n"),
               result));
 
+  // This service pointer is also borrowed; its lifetime follows the service repository.
   TAO_Naming_Loader * const p_naming_service =
     ACE_Dynamic_Service<TAO_Naming_Loader>::instance ("testNamingService");
 

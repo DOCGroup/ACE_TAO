@@ -37,7 +37,7 @@ protected:
   int svc () override;
 
 private:
-  unsigned int const failPrePostInit_ = 3;
+  unsigned int const failPrePostInit_ { 3 };
   std::unique_ptr<ACE_Thread_Barrier> mp_barrier_;
   CORBA::ORB_var mv_orb_;
   PortableServer::POA_var mv_rootPOA_;
