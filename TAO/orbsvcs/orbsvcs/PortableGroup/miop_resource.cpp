@@ -111,7 +111,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             {
               int const size= ACE_OS::atoi (argv[curarg]);
               if (size < static_cast<int> (MIOP_MAX_HEADER_SIZE) ||
-                  size > static_cast<int> (MIOP_MAX_DGRAM_SIZE)    )
+                  size > static_cast<int> (MIOP_MAX_DGRAM_SIZE))
                 {
                   ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")

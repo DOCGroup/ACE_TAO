@@ -137,10 +137,10 @@ TAO_UIPMC_Profile::decode_endpoints ()
 int
 TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 {
-  CORBA::UShort port = 0u;
+  CORBA::UShort port {};
   ACE_CString address;
   if (!cdr.read_string (address) ||
-      !cdr.read_ushort (port)      )
+      !cdr.read_ushort (port))
     {
       if (TAO_debug_level)
         ORBSVCS_DEBUG ((LM_ERROR,
@@ -365,9 +365,9 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
 #if defined (ACE_HAS_IPV6)
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // decimal IPv6 address representation.
-  if ( (this->version ().major > TAO_MIN_IPV6_IIOP_MAJOR     ||
+  if ((this->version ().major > TAO_MIN_IPV6_IIOP_MAJOR ||
        (this->version ().major == TAO_MIN_IPV6_IIOP_MAJOR &&
-        this->version ().minor >= TAO_MIN_IPV6_IIOP_MINOR   )  ) &&
+        this->version ().minor >= TAO_MIN_IPV6_IIOP_MINOR)) &&
       string[0] == '[')
     {
       // In this case we have to find the end of the numeric address and
@@ -695,7 +695,7 @@ TAO_UIPMC_Profile::update_cached_group_component ()
       return;
     }
 
-  size_t length = out_cdr.total_length ();
+  size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = IOP::TAG_GROUP;
@@ -707,7 +707,7 @@ TAO_UIPMC_Profile::update_cached_group_component ()
        iterator != nullptr;
        iterator = iterator->cont ())
     {
-      size_t i_length = iterator->length ();
+      size_t const i_length = iterator->length ();
       std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
@@ -801,7 +801,7 @@ TAO_UIPMC_Profile::extract_group_component (
   // Read the version. We just read it here. We don't*do any*
   // processing.
   if (!cdr.read_octet (major) ||
-      !cdr.read_octet (minor)   )
+      !cdr.read_octet (minor))
     {
       if (TAO_debug_level)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -815,7 +815,7 @@ TAO_UIPMC_Profile::extract_group_component (
   CORBA::UShort port {};
 
   if (!cdr.read_string (address) ||
-      !cdr.read_ushort (port)      )
+      !cdr.read_ushort (port))
     {
       if (TAO_debug_level)
         ORBSVCS_DEBUG ((LM_ERROR,

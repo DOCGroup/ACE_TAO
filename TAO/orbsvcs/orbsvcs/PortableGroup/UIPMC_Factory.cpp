@@ -76,7 +76,7 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
                 (ACE_TEXT("-ORBListenInterface"))) )
         {
           if (0 == ACE_OS::strcasecmp (current_arg, ACE_TEXT ("CopyPreferredInterfaces")) ||
-              0 == ACE_OS::strcasecmp (current_arg, ACE_TEXT ("CopyPreferredInterface"))    )
+              0 == ACE_OS::strcasecmp (current_arg, ACE_TEXT ("CopyPreferredInterface")))
             {
               // Add a special token (see TAO_UIPMC_Acceptor) which will be
               // subsituted (when we have access to the orb->params).
