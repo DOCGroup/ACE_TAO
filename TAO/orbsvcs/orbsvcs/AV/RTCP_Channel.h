@@ -32,6 +32,12 @@ public:
 
   ~RTCP_Channel_In();
 
+  RTCP_Channel_In () = delete;
+  RTCP_Channel_In (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In (RTCP_Channel_In &&) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In &&) = delete;
+
   /// This operation takes the incoming ACE_Message_Block, converts it to an
   /// RTP_Packet and calls updateStatistics.  It also uses compares the peer_addr
   /// to the stored peer_address_ to check for loops.
@@ -60,15 +66,6 @@ public:
   int active () { return this->active_; }
 
 private:
-  /// Don't want default constructor.
-  RTCP_Channel_In();
-
-  /// Don't want copy constructor.
-  RTCP_Channel_In (RTCP_Channel_In const &) = delete;
-  RTCP_Channel_In &operator= (RTCP_Channel_In const &) = delete;
-  RTCP_Channel_In (RTCP_Channel_In &&) = delete;
-  RTCP_Channel_In &operator= (RTCP_Channel_In &&) = delete;
-
   /// The synchronization source id of the source this channel represents.
   ACE_UINT32 remote_ssrc_;
 
