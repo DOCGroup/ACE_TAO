@@ -83,7 +83,7 @@ class TAO_Export TAO_Default_Endpoint_Selector
   : public TAO_Invocation_Endpoint_Selector
 {
 public:
-  virtual ~TAO_Default_Endpoint_Selector ();
+  ~TAO_Default_Endpoint_Selector () override;
 
   void select_endpoint (TAO::Profile_Transport_Resolver *r,
                         ACE_Time_Value *val) override;
