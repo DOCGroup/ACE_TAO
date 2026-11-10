@@ -40,7 +40,7 @@ ACE_Allocator::instance ()
           // that of a pointer, we allocate it as a pointer so that it
           // doesn't get constructed statically.  We never bother to
           // destroy it.
-          static void *allocator_instance = nullptr;
+          static void *allocator_instance {};
 
           // Check this critical assumption.  We put it in a variable
           // first to avoid stupid compiler warnings that the
@@ -95,7 +95,7 @@ ACE_Allocator::ACE_Allocator ()
 void *
 ACE_New_Allocator::malloc (size_t nbytes)
 {
-  char *ptr = nullptr;
+  char *ptr {};
   if (nbytes > 0)
     ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
   return (void *) ptr;
@@ -105,7 +105,7 @@ void *
 ACE_New_Allocator::calloc (size_t nbytes,
                            char initial_value)
 {
-  char *ptr = nullptr;
+  char *ptr {};
 
   ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
 

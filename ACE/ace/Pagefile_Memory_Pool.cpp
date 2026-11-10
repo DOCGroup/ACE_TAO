@@ -86,7 +86,7 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
                                    size_t &rounded_bytes)
 {
   rounded_bytes = round_to_page_size (nbytes);
-  void *result = nullptr;
+  void *result {};
   int first_time = 0;
 
   // Check local_cb_ for consistency.  Remap, if extra space is too

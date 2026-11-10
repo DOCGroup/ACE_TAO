@@ -13,7 +13,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Process-wide ACE_Allocator.
-ACE_Allocator *ACE_Allocator::allocator_ = nullptr;
+ACE_Allocator *ACE_Allocator::allocator_ {};
 
 void
 ACE_Control_Block::ACE_Malloc_Header::dump () const

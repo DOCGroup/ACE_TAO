@@ -49,7 +49,7 @@ ACE_Notification_Queue::reset()
     }
 
   // ... free up the dynamically allocated resources ...
-  ACE_Notification_Queue_Node **b = nullptr;
+  ACE_Notification_Queue_Node **b {};
   for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Queue_Node *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
@@ -71,7 +71,7 @@ ACE_Notification_Queue::allocate_more_buffers()
 {
   ACE_TRACE ("ACE_Notification_Queue::allocate_more_buffers");
 
-  ACE_Notification_Queue_Node *temp = nullptr;
+  ACE_Notification_Queue_Node *temp {};
 
   ACE_NEW_RETURN (temp,
                   ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],

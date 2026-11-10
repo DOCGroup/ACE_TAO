@@ -95,9 +95,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
   else
     {
-      sockaddr *addr = nullptr;
+      sockaddr *addr {};
       struct sockaddr_in inet_addr;
-      int *len_ptr = nullptr;
+      int *len_ptr {};
       int len = 0;
 
       if (remote_sap != nullptr)
