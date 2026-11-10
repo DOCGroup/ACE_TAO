@@ -6,8 +6,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Transport_Selection_Guard*
-  Transport_Selection_Guard::current (TAO_ORB_Core* core, size_t tss_slot_id)
+  Transport_Selection_Guard *
+  Transport_Selection_Guard::current (TAO_ORB_Core *core, size_t tss_slot_id)
   {
     // @NOTE: (Iliyan) Started making this method aware of the core
     // and the tss slot that correspond to the "current" transport,
@@ -26,15 +26,14 @@ namespace TAO
 #if TAO_HAS_TRANSPORT_CURRENT == 1
     return TAO_TSS_Resources::instance ()->tsg_;
 #else  /* TAO_HAS_TRANSPORT_CURRENT != 1 */
-    return 0;
+    return nullptr;
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   }
 
-  /// Ctor
-  Transport_Selection_Guard::Transport_Selection_Guard (TAO_Transport* t)
+  Transport_Selection_Guard::Transport_Selection_Guard (TAO_Transport *t)
     :
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-    prev_ (TAO_TSS_Resources::instance ()->tsg_) ,
+    prev_ (TAO_TSS_Resources::instance ()->tsg_),
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
     curr_ (t)
   {
@@ -43,40 +42,37 @@ namespace TAO
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   }
 
-  /// Dtor
   Transport_Selection_Guard::~Transport_Selection_Guard ()
   {
 #if TAO_HAS_TRANSPORT_CURRENT == 1
     TAO_TSS_Resources::instance ()->tsg_ = prev_;
-    this->prev_ = nullptr;
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-    this->curr_ = nullptr;
   }
 
   bool
-  operator== (const Transport_Selection_Guard& lhs,
-              const TAO_Transport* rhs)
+  operator== (Transport_Selection_Guard const &lhs,
+              TAO_Transport const *rhs)
   {
     return lhs.curr_ == rhs;
   }
 
   bool
-  operator== (const TAO_Transport* lhs,
-              const Transport_Selection_Guard& rhs)
+  operator== (TAO_Transport const *lhs,
+              Transport_Selection_Guard const &rhs)
   {
     return lhs == rhs.curr_;
   }
 
   bool
-  operator!= (const Transport_Selection_Guard& lhs,
-              const TAO_Transport* rhs)
+  operator!= (Transport_Selection_Guard const &lhs,
+              TAO_Transport const *rhs)
   {
     return lhs.curr_ != rhs;
   }
 
   bool
-  operator!= (const TAO_Transport* lhs,
-              const Transport_Selection_Guard& rhs)
+  operator!= (TAO_Transport const *lhs,
+              Transport_Selection_Guard const &rhs)
   {
     return lhs != rhs.curr_;
   }
