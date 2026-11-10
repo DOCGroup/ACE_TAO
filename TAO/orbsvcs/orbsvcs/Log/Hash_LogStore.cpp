@@ -41,7 +41,7 @@ TAO_Hash_LogStore::list_logs ()
   // Iterate over and populate the list.
   HASHMAP::ENTRY *hash_entry {};
 
-  for (CORBA::ULong i {}; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       iter.next (hash_entry);
       iter.advance ();
@@ -77,7 +77,7 @@ TAO_Hash_LogStore::list_logs_by_id ()
   // Iterate over and populate the list.
   HASHMAP::ENTRY *hash_entry {};
 
-  for (CORBA::ULong i {}; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       iter.next (hash_entry);
       iter.advance ();

@@ -532,7 +532,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (DsLogAdmin::RecordIdList const &i
 {
   CORBA::ULong count {};
 
-  for (CORBA::ULong i {}; i < ids.length (); i++)
+  for (CORBA::ULong i {}; i < ids.length (); ++i)
     {
       if (this->remove_i (ids [i]) == 0)
         {

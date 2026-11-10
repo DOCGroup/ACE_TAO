@@ -12,7 +12,7 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
   : notify_factory_ (event_channel_factory)
 {
   CosNotifyChannelAdmin::ChannelID id;
-  CosNotifyChannelAdmin::AdminID adminID = 0;
+  CosNotifyChannelAdmin::AdminID adminID {};
   CosNotification::QoSProperties const initial_qos;
   CosNotification::AdminProperties const initial_admin;
 

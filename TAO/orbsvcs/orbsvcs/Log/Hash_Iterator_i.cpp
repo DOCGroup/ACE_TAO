@@ -76,7 +76,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
             {
               (*rec_list)[count] = this->iter_->item ();
               // copy the log record.
-              count++;
+              ++count;
             }
         }
     }

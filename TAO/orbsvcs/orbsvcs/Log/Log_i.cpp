@@ -860,7 +860,7 @@ TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
 
   CORBA::Short num_written {};
 
-  for (CORBA::ULong i {}; i < reclist.length (); i++)
+  for (CORBA::ULong i {}; i < reclist.length (); ++i)
     {
       // retval == 1 => log store reached max size.
 
@@ -888,7 +888,7 @@ TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
         }
       else if (retval == 0)
         {
-          num_written++;
+          ++num_written;
 
           this->check_capacity_alarm_threshold ();
         }
@@ -1165,7 +1165,7 @@ CORBA::Boolean
 TAO_Log_i::validate_capacity_alarm_thresholds (
     DsLogAdmin::CapacityAlarmThresholdList const & threshs)
 {
-  for (CORBA::ULong i {}; i < threshs.length (); i++)
+  for (CORBA::ULong i {}; i < threshs.length (); ++i)
     if (threshs[i] > 100)
       return false;
 
@@ -1176,7 +1176,7 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
   // normalizing the sequence.
 
   if (threshs.length () > 1)
-    for (CORBA::ULong i {}; i < threshs.length () - 1; i++)
+    for (CORBA::ULong i {}; i < threshs.length () - 1; ++i)
       if (threshs[i] >= threshs[i + 1])
         return false;
 

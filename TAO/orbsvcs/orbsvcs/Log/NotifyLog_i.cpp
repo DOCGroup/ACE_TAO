@@ -101,7 +101,7 @@ TAO_NotifyLog_i::destroy ()
 void
 TAO_NotifyLog_i::activate ()
 {
-  CosNotifyChannelAdmin::AdminID adminid = 0;
+  CosNotifyChannelAdmin::AdminID adminid {};
   CosNotifyChannelAdmin::InterFilterGroupOperator const ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
