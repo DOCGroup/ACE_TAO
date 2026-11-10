@@ -49,7 +49,7 @@ ACE_Log_Category::~ACE_Log_Category()
 
   if (this->id_ > 0)
     {
-      void *temp = nullptr;
+      void *temp {};
       if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
         {
           return; // This should not happen!
@@ -92,7 +92,7 @@ ACE_Log_Category::per_thr_obj()
       }
   }
 
-  void *temp = nullptr;
+  void *temp {};
   if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
     {
       return nullptr; // This should not happen!

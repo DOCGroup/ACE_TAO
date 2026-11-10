@@ -378,7 +378,7 @@ const ACE_Service_Type *
 ACE_Static_Node::record (const ACE_Service_Gestalt *config) const
 {
   ACE_TRACE ("ACE_Static_Node::record");
-  ACE_Service_Type *sr = nullptr;
+  ACE_Service_Type *sr {};
 
   if (config->find (this->name (), (const ACE_Service_Type **) &sr) == -1)
     return nullptr;
@@ -801,7 +801,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
   // Locate the factory function <function_name> in the statically
   // linked svcs.
 
-  ACE_Static_Svc_Descriptor *ssd = nullptr;
+  ACE_Static_Svc_Descriptor *ssd {};
   if (config->find_static_svc_descriptor (this->function_name_, &ssd) == -1)
     {
       ++yyerrno;
@@ -903,7 +903,7 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
       if (stp == nullptr)
         ++yyerrno;
 
-      ACE_Service_Type *tmp = nullptr;
+      ACE_Service_Type *tmp {};
       ACE_NEW_RETURN (tmp,
                       ACE_Service_Type (this->name (),
                                         stp,

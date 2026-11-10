@@ -62,7 +62,7 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI ACEdisableSetUnhandledExceptionFilter (
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
 
 // Singleton pointer.
-ACE_Object_Manager *ACE_Object_Manager::instance_ = nullptr;
+ACE_Object_Manager *ACE_Object_Manager::instance_ {};
 
 void *ACE_Object_Manager::preallocated_object[
   ACE_Object_Manager::ACE_PREALLOCATED_OBJECTS] = { nullptr };
@@ -421,7 +421,7 @@ ACE_Object_Manager::instance ()
 
   if (instance_ == nullptr)
     {
-      ACE_Object_Manager *instance_pointer = nullptr;
+      ACE_Object_Manager *instance_pointer {};
 
       ACE_NEW_RETURN (instance_pointer,
                       ACE_Object_Manager,
@@ -542,7 +542,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 
           if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = nullptr;
+              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter {};
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
@@ -592,7 +592,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 
           if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter = nullptr;
+              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter {};
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
@@ -676,7 +676,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 
           if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter = nullptr;
+              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter {};
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex>,
                               -1);
@@ -890,7 +890,7 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
 using ACE_Static_Object_Lock_Type = ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
-static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = nullptr;
+static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock {};
 
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
 // But, applications may find it useful for avoiding recursive calls

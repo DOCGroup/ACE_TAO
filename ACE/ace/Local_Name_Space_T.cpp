@@ -331,7 +331,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   size_t len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
-  char *new_type = nullptr;
+  char *new_type {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (new_type,
                         static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * (len + 1))),
@@ -480,7 +480,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
-  void *ns_map = nullptr;
+  void *ns_map {};
 
   // This is the easy case since if we find the Name Server Map
   // Manager we know it's already initialized.
@@ -611,7 +611,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  char *compiled_regexp = nullptr;
+  char *compiled_regexp {};
 
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
@@ -743,7 +743,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  char *compiled_regexp = nullptr;
+  char *compiled_regexp {};
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
 

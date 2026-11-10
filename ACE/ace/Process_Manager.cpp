@@ -54,7 +54,7 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
-ACE_Process_Manager *ACE_Process_Manager::instance_ = nullptr;
+ACE_Process_Manager *ACE_Process_Manager::instance_ {};
 
 // Controls whether the Process_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
@@ -182,7 +182,7 @@ ACE_Process_Manager::resize (size_t size)
   if (size <= this->max_process_table_size_)
     return 0;
 
-  Process_Descriptor *temp = nullptr;
+  Process_Descriptor *temp {};
 
   ACE_NEW_RETURN (temp,
                   Process_Descriptor[size],
@@ -411,7 +411,7 @@ pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options,
                             ACE_Event_Handler *event_handler)
 {
-  ACE_Process *process = nullptr;
+  ACE_Process *process {};
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
@@ -766,7 +766,7 @@ ACE_Process_Manager::wait (pid_t pid,
   *status = 0;
 
   ssize_t idx = -1;
-  ACE_Process *proc = nullptr;
+  ACE_Process *proc {};
 
   {
     // fake context after which the lock is released
@@ -789,7 +789,7 @@ ACE_Process_Manager::wait (pid_t pid,
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
       // Wait for any Process spawned by this Process_Manager.
 #if defined (ACE_WIN32)
-      HANDLE *handles = nullptr;
+      HANDLE *handles {};
 
       ACE_NEW_RETURN (handles,
                       HANDLE[this->current_count_],
