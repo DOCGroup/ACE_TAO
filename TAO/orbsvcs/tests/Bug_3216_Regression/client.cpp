@@ -2,18 +2,19 @@
 #include "tao/PI/PI.h"
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
 };
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -26,9 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -36,22 +35,23 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::Boolean result {};
   try
     {
       Client_Options options;
-      int one = 1;
-      char CLIENT[] = "client"; // Copy const into non-const storage.
+      int one { 1 };
+      // ORB_init accepts mutable argv strings and may adjust them.
+      char CLIENT[] = "client";
       char *argv1[] = { CLIENT, nullptr };
 
       CORBA::ORB_var const orb1 =
         CORBA::ORB_init (one, argv1, "orb1");
 
-      int three = 3;
-      char OPTION[] = "-ORBFTSendFullGroupTC"; // Copy const into non-const storage.
-      char VALUE[]  = "1"; // Copy const into non-const storage.
+      int three { 3 };
+      char OPTION[] = "-ORBFTSendFullGroupTC";
+      char VALUE[] = "1";
       char *argv2[] = { CLIENT, OPTION, VALUE, nullptr };
       CORBA::ORB_var orb2;
 
@@ -70,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb1->string_to_object (options.ior);
+        orb1->string_to_object (options.ior.c_str ());
 
       Test::Hello_var hello =
         Test::Hello::_narrow (tmp.in ());
@@ -78,8 +78,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
-                             options.ior),
+                             ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello "
+                                       "reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -94,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       tmp =
-        orb2->string_to_object (options.ior);
+        orb2->string_to_object (options.ior.c_str ());
 
       hello =
         Test::Hello::_narrow (tmp.in ());
@@ -102,8 +103,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
-                             options.ior),
+                             ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello "
+                                       "reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 

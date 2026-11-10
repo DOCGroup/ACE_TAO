@@ -1,10 +1,10 @@
 #include "Hello.h"
 
 CORBA::Boolean
-Hello::normal_context_ok_ = false;
+Hello::normal_context_ok_ {};
 
 CORBA::Boolean
-Hello::extended_context_ok_ = false;
+Hello::extended_context_ok_ {};
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

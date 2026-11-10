@@ -1,8 +1,10 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ServerORBInitializer.h"
 #include "ServerRequest_Interceptor.h"
@@ -12,13 +14,13 @@
 
 struct Server_Options
 {
-  ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+  ACE_TString ior_output_file { ACE_TEXT ("test.ior") };
 };
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -31,9 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -47,8 +47,7 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
            CORBA::ULong group_version,
            CORBA::Object_ptr ref)
 {
-  FT::TagFTGroupTaggedComponent ft_tag_component;
-  // Create the list
+  FT::TagFTGroupTaggedComponent ft_tag_component {};
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (1);
   iors.length (1);
   iors [0] = CORBA::Object::_duplicate (ref);
@@ -101,24 +100,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList policies (2);
-      policies.length (2);
-
-      policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
-
-      policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
-
-      PortableServer::POA_var const my_poa =
-        root_poa->create_POA ("my_poa", poa_manager.in (), policies);
-
-      // Creation of the new POA is over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
-        {
-          CORBA::Policy_ptr const policy = policies[i];
-          policy->destroy ();
-        }
+      PortableServer::POA_var my_poa;
+      {
+        TAO::Utils::PolicyList_Destroyer policies (2);
+        policies.length (2);
+        policies[0] =
+          root_poa->create_id_assignment_policy (PortableServer::USER_ID);
+        policies[1] =
+          root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
+        my_poa = root_poa->create_POA ("my_poa", poa_manager.in (), policies);
+      }
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
@@ -142,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var const iorm_object =
-        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
       TAO_IOP::TAO_IOR_Manipulation_var const iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
@@ -154,14 +145,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ACE_TEXT_ALWAYS_CHAR (options.ior_output_file)),
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file.c_str ()),
                             1);
         if (ACE_OS::fprintf (output_file.get (), "%s", iorgr_string.in ()) < 0)
-          ACE_ERROR_RETURN ((LM_ERROR, "Cannot write IOR to output file\n"), 1);
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
       }
 
       poa_manager->activate ();

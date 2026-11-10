@@ -40,11 +40,11 @@ TAO249_ServerRequest_Interceptor::receive_request (
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
-    TAO_InputCDR cdr (reinterpret_cast <const char*>
+    TAO_InputCDR cdr (reinterpret_cast <char const *>
                      (sc->context_data.get_buffer ()),
                      sc->context_data.length ());
 
-    CORBA::Boolean byte_order;
+    CORBA::Boolean byte_order {};
 
     if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
       {
