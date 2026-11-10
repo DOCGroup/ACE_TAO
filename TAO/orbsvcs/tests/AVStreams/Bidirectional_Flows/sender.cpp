@@ -2,19 +2,18 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include <cstddef>
+#include <memory>
 
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
-// Create a singleton instance of the Sender.
 
+// Borrowed by the callback; ACE_TMAIN owns the file for its duration.
 static FILE *output_file {};
-// File handle of the file into which received data is written.
 
-static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
-// File name of the file into which received data is written.
-
+static ACE_TCHAR const output_file_name[] = ACE_TEXT ("output");
 
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -24,7 +23,7 @@ Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *,
+Sender_StreamEndPoint::set_protocol_object (char const *,
                                             TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
@@ -33,15 +32,10 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Sender_Callback::Sender_Callback ()
-  : frame_count_ (1)
-{
-}
-
 int
 Sender_Callback::receive_frame (ACE_Message_Block *frame,
                                 TAO_AV_frame_info *,
-                                const ACE_Addr &)
+                                ACE_Addr const &)
 {
   //
   // Upcall from the AVStreams when there is data to be received from
@@ -54,13 +48,12 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
-        ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
-                        1,
-                        output_file);
+      std::size_t const result = ACE_OS::fwrite (frame->rd_ptr (),
+                                                 1,
+                                                 frame->length (),
+                                                 output_file);
 
-      if (result == frame->length ())
+      if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Sender_Callback::fwrite failed\n"),
                           -1);
@@ -68,23 +61,9 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
       frame = frame->cont ();
     }
 
-  if (SENDER::instance ()->eof () == 1)
+  if (SENDER::instance ()->eof ())
     SENDER::instance ()->shutdown ();
   return 0;
-}
-
-Sender::Sender ()
-  : sender_mmdevice_ (nullptr),
-    streamctrl_ (nullptr),
-    frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (nullptr),
-    protocol_ ("UDP"),
-    frame_rate_ (30),
-    mb_ (BUFSIZ),
-    protocol_object_ (nullptr),
-    eof_ (0)
-{
 }
 
 void
@@ -95,8 +74,8 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
   this->protocol_object_ = object;
 }
 
-int
-Sender::eof ()
+bool
+Sender::eof () const
 {
   return this->eof_;
 }
@@ -105,15 +84,15 @@ void
 Sender::shutdown ()
 {
   try
-  {
-    // File reading is complete, destroy the stream.
-    AVStreams::flowSpec stop_spec;
-    this->streamctrl_->destroy (stop_spec);
+    {
+      // File reading is complete, destroy the stream.
+      AVStreams::flowSpec stop_spec;
+      this->streamctrl_->destroy (stop_spec);
 
       // Shut the orb down.
-    TAO_AV_CORE::instance ()->orb ()->shutdown (false);
-  }
-  catch (const CORBA::Exception& ex)
+      TAO_AV_CORE::instance ()->orb ()->shutdown (false);
+    }
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("shutdown\n");
     }
@@ -127,18 +106,18 @@ Sender::parse_args (int argc,
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:p:r:d"));
 
   int c;
-  while ((c= opts ()) != -1)
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.protocol = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -200,14 +179,12 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
 
-  if (this->input_file_ == nullptr)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -230,8 +207,8 @@ Sender::init (int argc,
                                     "IN",
                                     "USER_DEFINED",
                                     "",
-                                    this->protocol_.c_str (),
-                                    0);
+                                    this->options_.protocol.c_str (),
+                                    nullptr);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (2);
@@ -242,22 +219,23 @@ Sender::init (int argc,
                                     "OUT",
                                     "USER_DEFINED",
                                     "",
-                                    this->protocol_.c_str (),
-                                    0);
+                                    this->options_.protocol.c_str (),
+                                    nullptr);
 
   flow_spec [1] = CORBA::string_dup (entry1.entry_to_string ());
 
   // Register the sender mmdevice object with the ORB
-  ACE_NEW_RETURN (this->sender_mmdevice_,
+  TAO_MMDevice *sender_mmdevice {};
+  ACE_NEW_RETURN (sender_mmdevice,
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
 
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
-    this->sender_mmdevice_;
+    sender_mmdevice;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this ();
+    sender_mmdevice->_this ();
 
   ACE_NEW_RETURN (this->streamctrl_,
                   TAO_StreamCtrl,
@@ -289,13 +267,13 @@ Sender::pace_data ()
   ACE_Time_Value inter_frame_time;
 
   // The time between two consecutive frames.
-  inter_frame_time.set (1 / (double) this->frame_rate_);
+  inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %d / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                "Inter Frame Time = %lu (msec)\n",
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -304,24 +282,19 @@ Sender::pace_data ()
       ACE_High_Res_Timer elapsed_timer;
 
       // Continue to send data till the file is read to the end.
-      while (1)
+      while (true)
         {
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
-
-          if (n < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data fread failed\n"),
-                              -1);
+          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                               1,
+                                               this->mb_.size (),
+                                               this->input_file_.get ());
 
           if (n == 0)
             {
               // At end of file break the loop and end the sender.
-              ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
-              this->eof_ = 1;
+              ACE_DEBUG ((LM_DEBUG, "Handle_Start:End of file\n"));
+              this->eof_ = true;
               break;
             }
 
@@ -342,7 +315,7 @@ Sender::pace_data ()
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
+                            "Elapsed Time = %lu\n",
                             elapsed_time.msec ()));
 
               // Check to see if the inter frame time has elapsed.
@@ -355,7 +328,7 @@ Sender::pace_data ()
 
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
+                                "Wait Time = %lu\n",
                                 wait_time.msec ()));
 
                   // Run the orb for the wait time so the sender can
@@ -368,8 +341,7 @@ Sender::pace_data ()
           elapsed_timer.start ();
 
           // Send frame.
-          int result =
-            this->protocol_object_->send_frame (&this->mb_);
+          int const result = this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -383,20 +355,14 @@ Sender::pace_data ()
 
           // Reset the message block.
           this->mb_.reset ();
-        } // end while
+        }
 
-         // File reading is complete, destroy the stream.
+        // File reading is complete, destroy the stream.
         AVStreams::flowSpec stop_spec;
         this->streamctrl_->destroy (stop_spec);
-
-        // Shut the orb down.
-        //TAO_AV_CORE::instance ()->orb ()->shutdown (1,
-        //);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
-      //ACE_PRINT_EXCEPTION (ex,
-       //                    "Sender::pace_data Failed\n");
       return -1;
     }
   return 0;
@@ -404,8 +370,11 @@ Sender::pace_data ()
 
 int
 ACE_TMAIN (int argc,
-      ACE_TCHAR *argv[])
+           ACE_TCHAR *argv[])
 {
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr output_file_owner (nullptr, ACE_OS::fclose);
+
   try
     {
       CORBA::ORB_var orb =
@@ -423,17 +392,11 @@ ACE_TMAIN (int argc,
 
       mgr->activate ();
 
-      // Initialize the AV Stream components.
-/*      TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()); */
-
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in ());
 
       // Initialize the Sender.
-      int result = 0;
-      result = SENDER::instance ()->init (argc,
-                                          argv);
+      int result = SENDER::instance ()->init (argc, argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -441,9 +404,9 @@ ACE_TMAIN (int argc,
                           -1);
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == nullptr)
+      output_file_owner.reset (ACE_OS::fopen (output_file_name, "wb"));
+      output_file = output_file_owner.get ();
+      if (!output_file_owner)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),
@@ -455,10 +418,10 @@ ACE_TMAIN (int argc,
 
       // Start sending data.
       result = SENDER::instance ()->pace_data ();
-      ACE_Time_Value tv(3,0);
+      ACE_Time_Value tv (3, 0);
       orb->run (tv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;

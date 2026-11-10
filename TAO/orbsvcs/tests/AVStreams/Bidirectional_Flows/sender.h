@@ -1,21 +1,28 @@
 /* -*- C++ -*- */
 
+#ifndef TAO_AV_BIDIRECTIONAL_FLOWS_SENDER_H
+#define TAO_AV_BIDIRECTIONAL_FLOWS_SENDER_H
+
+#include <cstdio>
+#include <memory>
+#include <string>
+
+#include "ace/OS_NS_stdio.h"
+#include "orbsvcs/Naming/Naming_Client.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
+
 //=============================================================================
 /**
  *  @file    sender.h
  *
- *  This application reads data from a file and sends it to s
+ *  This application reads data from a file and sends it to a
  *  receiver.
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================
-
-
-#include "orbsvcs/Naming/Naming_Client.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
 
 /**
  * @class Sender_Callback
@@ -27,8 +34,11 @@
 class Sender_Callback : public TAO_AV_Callback
 {
 public:
-  /// Constructor.
-  Sender_Callback ();
+  Sender_Callback () = default;
+  Sender_Callback (Sender_Callback const &) = delete;
+  Sender_Callback &operator= (Sender_Callback const &) = delete;
+  Sender_Callback (Sender_Callback &&) = delete;
+  Sender_Callback &operator= (Sender_Callback &&) = delete;
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -36,13 +46,9 @@ public:
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
-  //  int handle_destroy ();
-
 private:
   /// Keeping a count of the incoming frames.
-  int frame_count_;
+  int frame_count_ {1};
 };
 
 /**
@@ -53,14 +59,20 @@ private:
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
@@ -84,8 +96,7 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  /// Constructor
-  Sender ();
+  Sender () = default;
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
   Sender (Sender &&) = delete;
@@ -101,7 +112,7 @@ public:
   /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
-  int eof ();
+  bool eof () const;
 
   void shutdown ();
 
@@ -118,35 +129,35 @@ private:
   /// The receiver MMDevice that the sender connects to.
   AVStreams::MMDevice_var receiver_mmdevice_;
 
-  /// The sender MMDevice.
-  TAO_MMDevice *sender_mmdevice_;
-
   /// Stream controller
-  TAO_StreamCtrl *streamctrl_;
+  TAO_StreamCtrl *streamctrl_ {};
 
   /// Number of frames sent.
-  int frame_count_;
-
-  /// File from which data is read.
-  ACE_CString filename_;
+  int frame_count_ {};
 
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
 
   /// File handle of the file read from.
-  FILE *input_file_;
-
-  /// Selected protocol - default is UDP
-  ACE_CString protocol_;
-
-  /// Rate at which the data will be sent.
-  int frame_rate_;
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr input_file_ {nullptr, ACE_OS::fclose};
 
   /// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb_;
+  ACE_Message_Block mb_ {BUFSIZ};
 
-  /// Protocol object corresponding to the transport protocol selected.
-  TAO_AV_Protocol_Object *protocol_object_;
+  struct Options
+  {
+    std::string filename {"input"};
+    std::string protocol {"UDP"};
+    int frame_rate {30};
+  };
 
-  int eof_;
+  Options options_;
+
+  // Borrowed from the AVStreams transport setup; this object does not own it.
+  TAO_AV_Protocol_Object *protocol_object_ {};
+
+  bool eof_ {};
 };
+
+#endif /* TAO_AV_BIDIRECTIONAL_FLOWS_SENDER_H */
