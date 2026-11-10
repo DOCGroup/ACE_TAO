@@ -396,7 +396,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
       return false;
     }
 
-  char *peer = nullptr;
+  char *peer {};
   char **peerarg = ACE::debug () ? &peer : nullptr;
   int const flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
   size_t const len = std::strlen (name);
@@ -474,7 +474,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
       // change the CTX directly.
-      STACK_OF (X509_NAME) * cert_names = nullptr;
+      STACK_OF (X509_NAME) * cert_names {};
       cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
 
       // Add CAs from both the file and dir, if specified. There should
@@ -792,7 +792,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
   {
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    BIO * bio = nullptr;
+    BIO * bio {};
 
     if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == nullptr)
       {
