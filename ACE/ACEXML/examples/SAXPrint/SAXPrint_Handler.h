@@ -153,9 +153,9 @@ public:
   void print_indent ();
 
 private:
-  size_t indent_;
+  size_t indent_ {};
   std::basic_string<ACEXML_Char> file_name_;
-  ACEXML_Locator* locator_; // Non-owning; the parser owns the locator.
+  ACEXML_Locator *locator_ {}; // Non-owning; the parser owns the locator.
 };
 
 #if defined (__ACEXML_INLINE__)

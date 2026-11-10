@@ -55,13 +55,12 @@ Basic_Content_Tester::characters (ACEXML_Char const *ch,
   already_called = true;
 
   size_t const expected_len = std::char_traits<ACEXML_Char>::length (expect);
-  if (length != expected_len)
+  if (length != expected_len ||
+      std::char_traits<ACEXML_Char>::compare (ch + start, expect, expected_len) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("characters() expected len %u (%*s); ")
-                  ACE_TEXT ("got %u (%*s)\n"),
-                  expected_len, expected_len, ch + start,
-                  length, length, ch + start));
+                  ACE_TEXT ("characters() expected len %B; got %B\n"),
+                  expected_len, length));
       throw ACEXML_SAXException (ACE_TEXT ("Functionality failure"));
     }
 }

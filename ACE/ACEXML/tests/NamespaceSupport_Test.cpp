@@ -3,6 +3,7 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
+  int status {};
   ACEXML_NamespaceSupport xmlns;
   if (xmlns.init () == -1)
     {
@@ -11,21 +12,28 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       return 1;
     }
   xmlns.pushContext ();
-  xmlns.declarePrefix(ACE_TEXT (""),
-                      ACE_TEXT ("http://www.w3.org/1999/xhtml"));
-  xmlns.declarePrefix(ACE_TEXT ("dc"),
-                      ACE_TEXT ("http://www.purl.org/dc#"));
-  xmlns.declarePrefix(ACE_TEXT ("xc"),
-                      ACE_TEXT ("http://www.purl.org/dc#"));
+  if (xmlns.declarePrefix (ACE_TEXT (""),
+                           ACE_TEXT ("http://www.w3.org/1999/xhtml")) != 0 ||
+      xmlns.declarePrefix (ACE_TEXT ("dc"),
+                           ACE_TEXT ("http://www.purl.org/dc#")) != 0 ||
+      xmlns.declarePrefix (ACE_TEXT ("xc"),
+                           ACE_TEXT ("http://www.purl.org/dc#")) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to declare namespace prefixes\n")));
+      return 1;
+    }
 
   ACEXML_Char const *lName {}, *uri {};
   ACEXML_Char const * const n1 = ACE_TEXT ("p");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("*** Checking processName:\n")));
   if (xmlns.processName (n1, uri, lName, false) != 0)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("Fail to resolve namespace name %s\n"),
-                n1));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Fail to resolve namespace name %s\n"),
+                  n1));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
@@ -33,9 +41,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACEXML_Char const * const n2 = ACE_TEXT ("dc:title");
   if (xmlns.processName (n2, uri, lName, false) != 0)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("Fail to resolve namespace name %S\n"),
-                n2));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Fail to resolve namespace name %S\n"),
+                  n2));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
@@ -43,9 +54,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACEXML_Char const * const n3 = ACE_TEXT ("xml:title");
   if (xmlns.processName (n3, uri, lName, false) != 0)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("Fail to resolve namespace name %S\n"),
-                n3));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Fail to resolve namespace name %S\n"),
+                  n3));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
@@ -56,8 +70,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACEXML_STR_LIST prefixes;
   if (xmlns.getDeclaredPrefixes (prefixes) != 0)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("Fail to get a list of declared prefixes\n")));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Fail to get a list of declared prefixes\n")));
+      status = 1;
+    }
   else
     {
       ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
@@ -71,24 +88,32 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACEXML_Char const *prefix {};
 
   if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.purl.org/dc#"))) == nullptr)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("Fail to get prefix of http://www.purl.org/dc#\n")));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Fail to get prefix of http://www.purl.org/dc#\n")));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Prefix of http://www.purl.org/dc# is %s\n"),
                 prefix));
 
-  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/1999/xhtml"))) == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Fail to get prefix of http://www.w3.org/1999/xhtml which is okay\n")));
+  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/1999/xhtml"))) == nullptr ||
+      *prefix != ACE_TEXT ('\0'))
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("ERROR: Default namespace prefix is not empty\n")));
+      status = 1;
+    }
   else
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("ERROR: Prefix of http://www.w3.org/1999/xhtml is %s\n"),
-                prefix));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Default namespace prefix is empty\n")));
 
   if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/XML/1998/namespace"))) == nullptr)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("Fail to get prefix of http://www.w3.org/XML/1998/namespace\n")));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Fail to get prefix of http://www.w3.org/XML/1998/namespace\n")));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Prefix of http://www.w3.org/XML/1998/namespace is %s\n"),
@@ -98,7 +123,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   prefixes.reset ();
 
   if (xmlns.getPrefixes (ACE_TEXT ("http://www.purl.org/dc#"), prefixes) != 0)
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes based on known URI\n")));
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes based on known URI\n")));
+      status = 1;
+    }
   else
     {
       ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
@@ -112,7 +140,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   prefixes.reset ();
 
   if (xmlns.getPrefixes (prefixes) != 0)
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes\n")));
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes\n")));
+      status = 1;
+    }
   else
     {
       ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
@@ -126,23 +157,35 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACEXML_Char const *URI {};
 
   if ((URI = xmlns.getURI (ACE_TEXT ("dc"))) == nullptr)
-    ACE_DEBUG((LM_ERROR, ACE_TEXT ("Fail to get URI for \"dc\"\n")));
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"dc\"\n")));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"dc\" is %s\n"), URI));
   if ((URI = xmlns.getURI (ACE_TEXT ("xc"))) == nullptr)
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xc\"\n")));
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xc\"\n")));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xc\" is %s\n"), URI));
   if ((URI = xmlns.getURI (ACE_TEXT ("xml"))) == nullptr)
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xml\"\n")));
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xml\"\n")));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xml\" is %s\n"), URI));
   if ((URI = xmlns.getURI (ACE_TEXT (""))) == nullptr)
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get default namespace URI\n")));
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get default namespace URI\n")));
+      status = 1;
+    }
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for default namespace is %s\n"), URI));
 
   xmlns.popContext ();
 
-  return 0;
+  return status;
 }

@@ -4,8 +4,7 @@
 #include "ace/Log_Msg.h"
 
 ACEXML_Print_Handler::ACEXML_Print_Handler (ACEXML_Char const *fileName)
-  : file_name_ (fileName == nullptr ? ACE_TEXT ("") : fileName),
-    locator_ (nullptr)
+  : file_name_ (fileName == nullptr ? ACE_TEXT ("") : fileName)
 {
 }
 

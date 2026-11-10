@@ -8,9 +8,7 @@
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_SAXPrint_Handler::ACEXML_SAXPrint_Handler (ACEXML_Char const *filename)
-  : indent_ (0),
-    file_name_ (filename == nullptr ? ACE_TEXT ("") : filename),
-    locator_ (nullptr)
+  : file_name_ (filename == nullptr ? ACE_TEXT ("") : filename)
 {
 }
 

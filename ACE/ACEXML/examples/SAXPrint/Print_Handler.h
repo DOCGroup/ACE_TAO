@@ -149,7 +149,7 @@ public:
   void warning (ACEXML_SAXParseException &exception) override;
 private:
   std::basic_string<ACEXML_Char> file_name_;
-  ACEXML_Locator* locator_; // Non-owning; the parser owns the locator.
+  ACEXML_Locator *locator_ {}; // Non-owning; the parser owns the locator.
 };
 
 #endif /* ACEXML_PRINT_HANDLER_H */
