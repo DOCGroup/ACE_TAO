@@ -44,7 +44,7 @@ TAO_ECG_Mcast_Gateway::fini ()
 int
 TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 {
-  int result = 0;
+  int result {};
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

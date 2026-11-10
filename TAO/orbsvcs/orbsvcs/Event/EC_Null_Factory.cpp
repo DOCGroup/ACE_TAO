@@ -111,7 +111,7 @@ TAO_EC_Null_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 TAO_EC_Timeout_Generator*
 TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
-  int argc = 0;
+  int argc {};
   ACE_TCHAR **argv {};
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);

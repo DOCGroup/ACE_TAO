@@ -186,7 +186,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate ()
 int
 TAO_ECG_Reconnect_ConsumerEC_Control::shutdown ()
 {
-  int r = 0;
+  int r {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);

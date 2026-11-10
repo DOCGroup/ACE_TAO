@@ -296,7 +296,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
   if ( this->check_crc_ && header.crc != crc)
     {
-      static unsigned int err_count = 0;
+      static unsigned int err_count {};
       ORBSVCS_ERROR ((LM_ERROR,
                   "******************************\n"));
 

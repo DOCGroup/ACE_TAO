@@ -107,7 +107,7 @@ TAO_EC_Disjunction_Filter::clear ()
 CORBA::ULong
 TAO_EC_Disjunction_Filter::max_event_size () const
 {
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;

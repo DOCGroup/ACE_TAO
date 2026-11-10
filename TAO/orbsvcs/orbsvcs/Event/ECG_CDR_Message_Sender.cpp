@@ -61,9 +61,9 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
 
   // Reserve the first iovec for the header...
   int iovcnt = 1;
-  CORBA::ULong fragment_id = 0;
-  CORBA::ULong fragment_offset = 0;
-  CORBA::ULong fragment_size = 0;
+  CORBA::ULong fragment_id {};
+  CORBA::ULong fragment_offset {};
+  CORBA::ULong fragment_size {};
   for (ACE_Message_Block const *b = cdr.begin ();
        b != cdr.end ();
        b = b->cont ())
@@ -208,7 +208,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
     // Compute CRC
      iov[0].iov_base = cdr.begin ()->rd_ptr ();
      iov[0].iov_len  = cdr.begin ()->length ();
-     unsigned int crc = 0;
+     unsigned int crc {};
      unsigned char *crc_parts = (unsigned char *)(&crc);
      if (iovcnt > 1)
        {
@@ -274,10 +274,10 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (ACE_Message_Block const *beg
                                                     CORBA::ULong max_fragment_payload,
                                                     CORBA::ULong& total_length)
 {
-  CORBA::ULong fragment_count = 0;
+  CORBA::ULong fragment_count {};
   total_length = 0;
 
-  CORBA::ULong fragment_size = 0;
+  CORBA::ULong fragment_size {};
   // Reserve the first iovec for the header...
   int iovcnt = 1;
   for (ACE_Message_Block const *b = begin;

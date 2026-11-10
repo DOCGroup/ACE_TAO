@@ -305,7 +305,7 @@ TAO_EC_Gateway_IIOP::open_i (
           pub.publications.length (sub.dependencies.length () + 1);
           pub.is_gateway = true;
 
-          int c = 0;
+          int c {};
 
           RtecEventComm::EventSourceID sid = (*j).ext_id_;
           for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
@@ -321,7 +321,7 @@ TAO_EC_Gateway_IIOP::open_i (
                 RtecBase::TWO_WAY_CALL;
               pub.publications[c].dependency_info.number_of_calls = 1;
               pub.publications[c].dependency_info.rt_info = this->consumer_info_;
-              c++;
+              ++c;
             }
           //ORBSVCS_DEBUG ((LM_DEBUG,
           //            "ECG (%t) supplier id %d has %d elements\n",
@@ -344,7 +344,7 @@ TAO_EC_Gateway_IIOP::open_i (
   RtecEventChannelAdmin::SupplierQOS pub;
   pub.publications.length (sub.dependencies.length () + 1);
   pub.is_gateway = true;
-  int c = 0;
+  int c {};
   for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
     {
       RtecEventComm::EventHeader const &h =
@@ -365,7 +365,7 @@ TAO_EC_Gateway_IIOP::open_i (
         RtecBase::TWO_WAY_CALL;
       pub.publications[c].dependency_info.number_of_calls = 1;
       pub.publications[c].dependency_info.rt_info = this->consumer_info_;
-      c++;
+      ++c;
     }
 
   if (c > 0)

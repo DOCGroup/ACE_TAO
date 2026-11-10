@@ -38,10 +38,10 @@ TAO_EC_Kokyu_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos) const
 {
-  CORBA::ULong i=0,found=0;
-  CORBA::ULong pos = 0;
+  bool found {};
+  CORBA::ULong pos {};
   CORBA::Long npos = -1;
-  int establish_final_consumer_dependency=0;
+  bool establish_final_consumer_dependency {};
 
   CORBA::Object_var tmp =
     this->event_channel_->scheduler ();
@@ -50,7 +50,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
     RtecScheduler::Scheduler::_narrow (tmp.in ());
 
 #ifdef EC_KOKYU_LOGGING
-  for (i=0; i<qos.dependencies.length (); ++i)
+  for (CORBA::ULong i {}; i < qos.dependencies.length (); ++i)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "consumerqos[%d] event.header.type = %s,"
@@ -64,7 +64,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   //find the first entry which is not a designator. We are going to
   //assume that this entry will have the rt_info of the connecting
   //consumer (ProxyPushSupplier), which is passed into this function.
-  for (i=0; !found && i<qos.dependencies.length (); ++i)
+  for (CORBA::ULong i {}; !found && i < qos.dependencies.length (); ++i)
     {
       switch (qos.dependencies[i].event.header.type)
         {
@@ -75,7 +75,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
         case ACE_ES_BITMASK_DESIGNATOR:
         case ACE_ES_MASKED_TYPE_DESIGNATOR:
         case ACE_ES_NULL_DESIGNATOR:
-          establish_final_consumer_dependency = 1;
+          establish_final_consumer_dependency = true;
           continue;
 
         case ACE_ES_GLOBAL_DESIGNATOR:
@@ -86,7 +86,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
 
         default:
           npos = i;
-          found = 1;
+          found = true;
           break;
         }
     }
@@ -99,7 +99,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   ORBSVCS_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d]\n", npos));
 #endif
 
-  if (npos >= 0 && establish_final_consumer_dependency == 1)
+  if (npos >= 0 && establish_final_consumer_dependency)
     {
       //Hopefully this will have the final consumer's rt_info
       h_final_consumer_rt_info = qos.dependencies[npos].rt_info;
@@ -145,7 +145,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
               " dependency can be established\n"));
 #endif
 
-  if (npos >= 0 && establish_final_consumer_dependency == 1)
+  if (npos >= 0 && establish_final_consumer_dependency)
     {
 #ifdef EC_KOKYU_LOGGING
       ORBSVCS_DEBUG ((LM_DEBUG,

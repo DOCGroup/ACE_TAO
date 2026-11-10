@@ -93,7 +93,7 @@ TAO_EC_Queue::is_full_i ()
 int
 TAO_EC_Dispatching_Task::svc ()
 {
-  bool done = false;
+  bool done {};
 
   while (!done)
     {

@@ -61,7 +61,7 @@ TAO_ECG_Simple_Mcast_EH::shutdown ()
   if (!this->receiver_)
     return -1;
 
-  int result = 0;
+  int result {};
   if (this->reactor ())
     {
       result = this->reactor ()->remove_handler (this->dgram_.get_handle (),

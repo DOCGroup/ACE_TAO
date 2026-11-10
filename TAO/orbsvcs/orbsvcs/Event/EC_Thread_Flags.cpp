@@ -75,7 +75,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
         }
       else
         {
-          int found = 0;
+          bool found {};
           for (size_t i {}; !found && i < num_flags; ++i)
             {
               if (ACE_OS::strcasecmp (tok, supported_flags_[i].n) == 0)
@@ -97,7 +97,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
                     {
                       this->scope_ = supported_flags_[i].v;
                     }
-                  found = 1;
+                  found = true;
                 }
             }
           if (!found)

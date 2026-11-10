@@ -181,7 +181,7 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
                               this->event_channel_,
                               this);
 
-  int result = 0;
+  int result {};
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -203,7 +203,7 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
                               this->event_channel_,
                               this);
 
-  int result = 0;
+  int result {};
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,

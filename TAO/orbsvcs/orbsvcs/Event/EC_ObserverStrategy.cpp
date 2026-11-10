@@ -108,7 +108,7 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
   std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
   Observer_Map_Iterator end = this->observers_.end ();
-  int j = 0;
+  int j {};
   for (Observer_Map_Iterator i  = this->observers_.begin ();
        i != end;
        ++i)
@@ -242,7 +242,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   qos.publications.length (static_cast<CORBA::ULong> (headers.current_size ()));
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)
     {
       qos.publications[count++].event.header = (*i).key ();

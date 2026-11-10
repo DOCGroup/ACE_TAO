@@ -45,7 +45,7 @@ TAO_EC_Gateway_IIOP_Factory::fini ()
 int
 TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 {
-  int result = 0;
+  int result {};
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -166,7 +166,7 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
     return new TAO_ECG_ConsumerEC_Control ();
   else if (this->consumer_ec_control_ == 1)
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
@@ -175,7 +175,7 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
     }
   else if (this->consumer_ec_control_ == 2)
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());

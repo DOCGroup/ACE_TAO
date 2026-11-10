@@ -103,7 +103,7 @@ void
 TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
 {
   RtecEventComm::PushConsumer_var consumer;
-  int connected = 0;
+  int connected {};
 
   {
     ACE_GUARD_THROW_EX (

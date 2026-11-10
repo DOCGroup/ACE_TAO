@@ -118,7 +118,7 @@ TAO_EC_Type_Filter::filter_set (RtecEventComm::EventSet const &event,
     return 0;
 
   RtecEventComm::EventSet matched (maximum);
-  CORBA::ULong next_slot = 0;
+  CORBA::ULong next_slot {};
   for (CORBA::ULong i {}; i != maximum; ++i)
     {
       if (!this->can_match (event[i].header))
