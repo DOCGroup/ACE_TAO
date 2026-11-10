@@ -31,6 +31,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <array>
+#include <cstddef>
 
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
@@ -51,6 +52,16 @@
 class Vectors
 {
 public:
+  static constexpr std::size_t character_index (char character) noexcept
+  {
+    return character_index (static_cast<unsigned char> (character));
+  }
+
+  static constexpr std::size_t character_index (unsigned char character) noexcept
+  {
+    return character % ACE_STANDARD_CHARACTER_SET_SIZE;
+  }
+
   /// Counts occurrences of each key set character.
   static std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> occurrences;
 

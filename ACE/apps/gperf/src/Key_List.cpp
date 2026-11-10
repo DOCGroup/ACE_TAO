@@ -455,7 +455,7 @@ Key_List::occurrence (List_Node *ptr)
   int value = 0;
 
   for (char const temp : ptr->keysig)
-    value += Vectors::occurrences[static_cast<int> (temp)];
+    value += Vectors::occurrences[Vectors::character_index (temp)];
 
   return value;
 }
@@ -466,7 +466,7 @@ inline void
 Key_List::determined (List_Node *ptr)
 {
   for (char const temp : ptr->keysig)
-    Key_List::determined_[static_cast<int> (temp)] = 1;
+    Key_List::determined_[Vectors::character_index (temp)] = 1;
 }
 
 // Returns TRUE if PTR's key set is already completely determined.
@@ -477,7 +477,7 @@ Key_List::already_determined (List_Node *ptr)
 
   for (char const temp : ptr->keysig)
     if (is_determined)
-      is_determined = determined_[static_cast<int> (temp)];
+      is_determined = determined_[Vectors::character_index (temp)];
 
   return is_determined;
 }
