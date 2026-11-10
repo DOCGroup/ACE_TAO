@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "sender.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -12,7 +14,7 @@ using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -22,25 +24,13 @@ Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *,
+Sender_StreamEndPoint::set_protocol_object (char const *,
                                             TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
   // protocol selected.
   SENDER::instance ()->protocol_object (object);
   return 0;
-}
-
-Sender::Sender ()
-  : sender_mmdevice_ (nullptr),
-    streamctrl_ (nullptr),
-    frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (nullptr),
-    protocol_ ("UDP"),
-    frame_rate_ (30),
-    mb_ (BUFSIZ)
-{
 }
 
 void
@@ -70,18 +60,18 @@ Sender::parse_args (int argc,
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:p:r:d"));
 
   int c;
-  while ((c= opts ()) != -1)
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.protocol = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -143,14 +133,12 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
 
-  if (this->input_file_ == nullptr)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -173,8 +161,8 @@ Sender::init (int argc,
                                     "IN",
                                     "USER_DEFINED",
                                     "",
-                                    this->protocol_.c_str (),
-                                    0);
+                                    this->options_.protocol.c_str (),
+                                    nullptr);
   // &addr1_local, // ACE_INET_Addr addr1_local ("IP1:Port1");
 
   AVStreams::flowSpec flow_spec (1);
@@ -186,8 +174,8 @@ Sender::init (int argc,
                                      "IN",
                                      "USER_DEFINED",
                                      "",
-                                     this->protocol_.c_str (),
-                                     0);
+                                     this->options_.protocol.c_str (),
+                                     nullptr);
   // &addr2_local, // ACE_INET_Addr addr2_local ("IP2:Port2");
 
   flow_spec [1] = CORBA::string_dup (entry1.entry_to_string ());
@@ -232,15 +220,13 @@ Sender::pace_data ()
 {
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
-
-  // The time between two consecutive frames.
-  inter_frame_time.set (1 / (double) this->frame_rate_);
+  inter_frame_time.set (1 / static_cast<double> (this->options_.frame_rate));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %d / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                "Inter Frame Time = %lu (msec)\n",
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -252,18 +238,18 @@ Sender::pace_data ()
       while (1)
         {
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
-
-          if (n < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data fread failed\n"),
-                              -1);
+          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                               1,
+                                               this->mb_.size (),
+                                               this->input_file_.get ());
 
           if (n == 0)
             {
+              if (std::ferror (this->input_file_.get ()))
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Sender::pace_data fread failed\n"),
+                                  -1);
+
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
@@ -287,7 +273,7 @@ Sender::pace_data ()
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
+                            "Elapsed Time = %lu\n",
                             elapsed_time.msec ()));
 
               // Check to see if the inter frame time has elapsed.
@@ -300,7 +286,7 @@ Sender::pace_data ()
 
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
+                                "Wait Time = %lu\n",
                                 wait_time.msec ()));
 
                   // Run the orb for the wait time so the sender can
@@ -329,7 +315,7 @@ Sender::pace_data ()
 
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent successfully\n",
+                      "Sender::pace_data frame %B was sent successfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.
@@ -340,7 +326,7 @@ Sender::pace_data ()
 
       this->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -386,7 +372,7 @@ ACE_TMAIN (int argc,
       // Start sending data.
       result = SENDER::instance ()->pace_data ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;

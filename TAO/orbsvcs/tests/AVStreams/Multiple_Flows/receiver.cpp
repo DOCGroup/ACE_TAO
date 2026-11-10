@@ -1,8 +1,11 @@
+#include <cstring>
+#include <new>
+
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-int endstream = 0;
+static int endstream {};
 
 // Create a singleton instance of the Sender.
 
@@ -13,60 +16,51 @@ using RECEIVER = ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>;
 
 
 int
-Receiver_StreamEndPoint::get_callback (const char *flow_name,
+Receiver_StreamEndPoint::get_callback (char const *flow_name,
                                        TAO_AV_Callback *&callback)
 {
-  Receiver_Callback *callback_ {};
-  ACE_NEW_RETURN (callback_,
-                  Receiver_Callback,
-                  -1);
+  std::unique_ptr<Receiver_Callback> callback_owner (
+    new (std::nothrow) Receiver_Callback);
+  if (!callback_owner)
+    return -1;
 
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
-  callback = callback_;
-  callback_->flowname (flow_name);
+  if (callback_owner->flowname (flow_name) != 0)
+    return -1;
+  callback = callback_owner.release ();
   return 0;
 }
 
 
 int
-Receiver_StreamEndPoint::set_protocol_object (const char * flowname,
+Receiver_StreamEndPoint::set_protocol_object (char const *flowname,
                                               TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
   // protocol selected.
-  if (ACE_OS::strcmp (flowname, "Data_Receiver1") == 0)
+  if (std::strcmp (flowname, "Data_Receiver_One") == 0)
     RECEIVER::instance ()->protocol_object (object);
   return 0;
 }
 
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (1),
-      mb_ (BUFSIZ),
-      output_file_ (nullptr)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::Receiver_Callback\n"));
-}
-
-void
-Receiver_Callback::flowname (const char* flow_name)
+int
+Receiver_Callback::flowname (std::string const &flow_name)
 {
   this->flowname_ = flow_name;
 
   // Make sure we have a valid <output_file>
-  this->output_file_ = ACE_OS::fopen (this->flowname_.c_str (),
-                                      "w");
-  if (this->output_file_ == nullptr)
-    ACE_ERROR ((LM_DEBUG,
-                "Cannot open output file %C\n",
-                this->flowname_.c_str ()));
+  this->output_file_.reset (ACE_OS::fopen (this->flowname_.c_str (), "wb"));
+  if (!this->output_file_)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open output file %C\n",
+                       this->flowname_.c_str ()),
+                      -1);
 
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "%C File Opened Successfully\n",
-                this->flowname_.c_str ()));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "%C File Opened Successfully\n",
+              this->flowname_.c_str ()));
+  return 0;
 }
 
 int
@@ -79,20 +73,22 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // the sender.
   //
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame for frame %d for flow %C\n",
+              "Receiver_Callback::receive_frame for frame %B for flow %C\n",
               this->frame_count_++,
               this->flowname_.c_str ()));
+
+  if (!this->output_file_)
+    ACE_ERROR_RETURN ((LM_ERROR, "Output file is not open\n"), -1);
 
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
-        ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
-                        1,
-                        this->output_file_);
+      std::size_t const result = ACE_OS::fwrite (frame->rd_ptr (),
+                                                 1,
+                                                 frame->length (),
+                                                 this->output_file_.get ());
 
-      if (result == frame->length ())
+      if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -110,22 +106,11 @@ Receiver_Callback::handle_destroy ()
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::handle_destroy\n"));
 
+  this->output_file_.reset ();
   endstream++;
 
   return 0;
 }
-
-Receiver::Receiver ()
-  : mmdevice_ (nullptr),
-    frame_rate_ (30),
-    protocol_object_ (nullptr),
-    frame_count_ (0),
-    filename_ ("input"),
-    mb_ (BUFSIZ)
-{
-}
-
-Receiver::~Receiver () = default;
 
 void
 Receiver::protocol_object (TAO_AV_Protocol_Object *object)
@@ -140,19 +125,13 @@ Receiver::parse_args (int argc,
                       ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:r:d"));
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("d"));
 
   int c;
-  while ((c= opts ()) != -1)
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
-        case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
-          break;
-        case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
-          break;
         case 'd':
           TAO_debug_level++;
           break;
@@ -215,7 +194,7 @@ Receiver::init (int argc,
   return 0;
 }
 
-TAO_AV_Protocol_Object*
+TAO_AV_Protocol_Object *
 Receiver::protocol_object ()
 {
   return this->protocol_object_;
@@ -264,17 +243,17 @@ ACE_TMAIN (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
   RECEIVER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex> *
+ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
