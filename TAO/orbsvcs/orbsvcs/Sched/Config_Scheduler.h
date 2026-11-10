@@ -14,6 +14,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Sched/sched_export.h"
 
+#include <memory>
+
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #else
@@ -211,8 +213,7 @@ private:
 
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
-  // implementation base class pointer
-  BaseSchedImplType* impl;
+  std::unique_ptr<BaseSchedImplType> impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
