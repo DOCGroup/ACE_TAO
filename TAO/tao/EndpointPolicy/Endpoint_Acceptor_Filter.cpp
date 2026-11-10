@@ -27,7 +27,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
   for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptors)
     {
       bool tagfound {};
-      for (CORBA::ULong epx {}; !tagfound && epx < num_endpoints; epx++)
+      for (CORBA::ULong epx {}; !tagfound && epx < num_endpoints; ++epx)
         {
           tagfound = acceptor->tag () == endpoints_[epx]->protocol_tag();
         }
@@ -60,7 +60,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
                     ACE_TEXT("it contains %d endpoints\n"),
                     pfile_ndx, pfile->endpoint_count()));
 
-      bool first_endpoint = true;
+      bool first_endpoint {true};
       // Iterate the endpoints in the profile.
       while (ep_in_pfile != nullptr && pfile->endpoint_count() > 0)
         {
