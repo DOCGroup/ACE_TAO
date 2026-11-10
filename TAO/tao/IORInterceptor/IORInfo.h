@@ -58,12 +58,12 @@ public:
   CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type) override;
 
   /// Add the given tagged component to all profiles.
-  void add_ior_component (IOP::TaggedComponent const& component) override;
+  void add_ior_component (IOP::TaggedComponent const &component) override;
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   void add_ior_component_to_profile (
-      IOP::TaggedComponent const& component,
+      IOP::TaggedComponent const &component,
       IOP::ProfileId profile_id) override;
 
   char * manager_id () override;
@@ -75,9 +75,14 @@ public:
   PortableInterceptor::ObjectReferenceFactory *current_factory () override;
 
   void current_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory) override;
+      PortableInterceptor::ObjectReferenceFactory *current_factory) override;
 
   //@}
+
+  TAO_IORInfo (TAO_IORInfo const &) = delete;
+  TAO_IORInfo &operator= (TAO_IORInfo const &) = delete;
+  TAO_IORInfo (TAO_IORInfo &&) = delete;
+  TAO_IORInfo &operator= (TAO_IORInfo &&) = delete;
 
   /// Invalidate this IORInfo instance.
   /**
@@ -111,12 +116,7 @@ protected:
   void check_validity ();
 
 private:
-  TAO_IORInfo (TAO_IORInfo const &) = delete;
-  TAO_IORInfo &operator= (TAO_IORInfo const &) = delete;
-  TAO_IORInfo (TAO_IORInfo &&) = delete;
-  TAO_IORInfo &operator= (TAO_IORInfo &&) = delete;
-
-  /// Pointer to POA
+  /// Non-owning POA pointer; invalidated when the interceptor callbacks end.
   TAO_Root_POA * poa_ {};
 
   /// True if the IORInterceptor::components_established()

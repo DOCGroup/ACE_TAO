@@ -48,7 +48,6 @@ public:
   // Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_IORInterceptor_Adapter_Factory_Impl (TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;
   TAO_IORInterceptor_Adapter_Factory_Impl &operator= (
     TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;

@@ -38,7 +38,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type)
 }
 
 void
-TAO_IORInfo::add_ior_component (IOP::TaggedComponent const& component)
+TAO_IORInfo::add_ior_component (IOP::TaggedComponent const &component)
 {
   this->check_validity ();
 
@@ -51,7 +51,7 @@ TAO_IORInfo::add_ior_component (IOP::TaggedComponent const& component)
 
 void
 TAO_IORInfo::add_ior_component_to_profile (
-    IOP::TaggedComponent const& component,
+    IOP::TaggedComponent const &component,
     IOP::ProfileId profile_id)
 {
   this->check_validity ();
@@ -89,7 +89,7 @@ TAO_IORInfo::adapter_template ()
   // policies and the IOR Interceptor calls to add_ior_component and
   // add_ior_component_to_profile.  It's a const value and its value
   // never changes.
-  PortableInterceptor::ObjectReferenceTemplate *const adapter_template =
+  PortableInterceptor::ObjectReferenceTemplate * const adapter_template =
     this->poa_->get_adapter_template ();
 
   if (adapter_template == nullptr)
@@ -110,7 +110,7 @@ TAO_IORInfo::current_factory ()
   // same as the adapter_template, unlike adapter_template, its value
   // can be changed.  The value of the current_factory can be changed
   // only during the call to components_established method.
-  PortableInterceptor::ObjectReferenceFactory *const adapter_factory =
+  PortableInterceptor::ObjectReferenceFactory * const adapter_factory =
     this->poa_->get_obj_ref_factory ();
 
   if (adapter_factory == nullptr)
@@ -123,7 +123,7 @@ TAO_IORInfo::current_factory ()
 
 void
 TAO_IORInfo::current_factory (
-    PortableInterceptor::ObjectReferenceFactory * current_factory)
+    PortableInterceptor::ObjectReferenceFactory *current_factory)
 {
   this->check_validity ();
 

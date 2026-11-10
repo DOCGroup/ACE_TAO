@@ -19,7 +19,7 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
 void
 TAO_IORInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::IORInterceptor_ptr i,
-    CORBA::PolicyList const& policies)
+    CORBA::PolicyList const &policies)
 {
   this->ior_interceptor_list_.add_interceptor (i, policies);
 }
@@ -29,11 +29,12 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors ()
 {
   this->ior_interceptor_list_.destroy_interceptors ();
 
+  // TAO_ORB_Core calls this hook as the adapter's destruction operation.
   delete this;
 }
 
 void
-TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
+TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA *poa)
 {
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
@@ -63,7 +64,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
           this->ior_interceptor_list_.interceptor (i)->establish_components (
             info.in ());
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           // According to the Portable Interceptors specification,
           // IORInterceptor::establish_components() must not throw an
@@ -136,7 +137,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
-      TAO::ObjectReferenceTemplate_Array const& array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const &array_obj_ref_template,
       PortableInterceptor::AdapterState state)
 {
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
@@ -175,7 +176,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
-      char const* id,
+      char const *id,
       PortableInterceptor::AdapterState state)
 {
   /// Whenever the POAManager state is changed, the
