@@ -8,6 +8,7 @@
 #include "tao/CDR.h"
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -15,12 +16,10 @@ TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter () = default;
 
 TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter () = default;
 
-
-
 CORBA::Boolean
 TAO_IORManip_IIOP_Filter::compare_profile_info (
-                        const TAO_IORManip_IIOP_Filter::Profile_Info& left,
-                        const TAO_IORManip_IIOP_Filter::Profile_Info& right)
+    TAO_IORManip_IIOP_Filter::Profile_Info const &left,
+    TAO_IORManip_IIOP_Filter::Profile_Info const &right)
 {
   return (left.version_.major == right.version_.major &&
           left.version_.minor == right.version_.minor &&
@@ -28,19 +27,17 @@ TAO_IORManip_IIOP_Filter::compare_profile_info (
           left.host_name_     == right.host_name_);
 }
 
-
 CORBA::Boolean
 TAO_IORManip_IIOP_Filter::profile_info_matches (
-                            const TAO_IORManip_IIOP_Filter::Profile_Info&)
+    TAO_IORManip_IIOP_Filter::Profile_Info const &)
 {
   return true;
 }
 
-
 void
-TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
-                                          TAO_MProfile& new_profiles,
-                                          TAO_Profile* guideline)
+TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile *profile,
+                                          TAO_MProfile &new_profiles,
+                                          TAO_Profile *guideline)
 {
   TAO_IORManip_IIOP_Filter::Profile_Info ginfo;
   TAO_IORManip_IIOP_Filter::Profile_Info pinfo;
@@ -50,18 +47,10 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
   this->get_endpoints (profile, endpoints);
   if (endpoints.length () == 0)
     {
-      CORBA::Boolean matches {};
       this->fill_profile_info (profile, pinfo);
-
-      if (guideline == nullptr)
-        {
-          matches = this->profile_info_matches (pinfo);
-        }
-      else
-        {
-          // Compare the current profile with the guideline profile
-          matches = this->compare_profile_info (pinfo, ginfo);
-        }
+      CORBA::Boolean const matches = guideline == nullptr
+        ? this->profile_info_matches (pinfo)
+        : this->compare_profile_info (pinfo, ginfo);
 
       if (matches)
         {
@@ -75,8 +64,17 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
     {
       // Create a new profile with just the
       // components we are looking for
-      TAO_IIOP_Profile* const new_profile =
-          this->create_profile (profile);
+      struct Profile_Deleter
+      {
+        void operator() (TAO_IIOP_Profile *profile) const
+        {
+          if (profile != nullptr)
+            profile->_decr_refcnt ();
+        }
+      };
+      std::unique_ptr<TAO_IIOP_Profile, Profile_Deleter> new_profile {
+        this->create_profile (profile)
+      };
 
       // Set pinfo to match the current profile
       this->fill_profile_info (profile, pinfo);
@@ -84,76 +82,64 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
       // Add each endpoint if it matches.  Begin from the end
       // of the sequence to preserve endpoint order, since <add_endpoint>
       // method reverses the order of endpoints in the list.
-      for (CORBA::Long i = endpoints.length () - 1; i >= 0; i--) {
-        // Set pinfo host name to the current endpoint host name
-        pinfo.host_name_ = endpoints[i].host.in ();
-        pinfo.port_ = endpoints[i].port;
+      for (CORBA::Long i = endpoints.length () - 1; i >= 0; --i)
+        {
+          // Set pinfo host name to the current endpoint host name
+          pinfo.host_name_ = endpoints[i].host.in ();
+          pinfo.port_ = endpoints[i].port;
 
-        CORBA::Boolean matches {};
-        if (guideline == nullptr)
-          {
-            matches = this->profile_info_matches (pinfo);
-          }
-        else
-          {
-            // Compare the current profile with the guideline profile
-            matches = this->compare_profile_info (pinfo, ginfo);
-          }
+          CORBA::Boolean const matches = guideline == nullptr
+            ? this->profile_info_matches (pinfo)
+            : this->compare_profile_info (pinfo, ginfo);
 
-        if (matches)
-          {
-            // Set the main endpoint on the profile
-            if (i == 0)
-              {
-                TAO_IIOP_Endpoint* const ep = dynamic_cast<TAO_IIOP_Endpoint*> (
-                  new_profile->endpoint ());
-                if (ep == nullptr)
-                  {
-                    new_profile->_decr_refcnt ();
-                    return;
-                  }
-                else
-                  {
-                    ep->host (endpoints[i].host);
-                    ep->port (endpoints[i].port);
-                    ep->priority (endpoints[i].priority);
-                  }
-              }
-            else
-              {
-                TAO_IIOP_Endpoint* const endpoint =
-                  new (std::nothrow) TAO_IIOP_Endpoint (endpoints[i].host,
-                                                        endpoints[i].port,
-                                                        endpoints[i].priority);
-                if (!endpoint)
-                  {
-                    new_profile->_decr_refcnt ();
-                    return;
-                  }
+          if (matches)
+            {
+              // Set the main endpoint on the profile
+              if (i == 0)
+                {
+                  TAO_IIOP_Endpoint * const ep = dynamic_cast<TAO_IIOP_Endpoint *> (
+                    new_profile->endpoint ());
+                  if (ep == nullptr)
+                    {
+                      return;
+                    }
+                  ep->host (endpoints[i].host);
+                  ep->port (endpoints[i].port);
+                  ep->priority (endpoints[i].priority);
+                }
+              else
+                {
+                  std::unique_ptr<TAO_IIOP_Endpoint> endpoint {
+                    new (std::nothrow) TAO_IIOP_Endpoint (endpoints[i].host,
+                                                          endpoints[i].port,
+                                                          endpoints[i].priority)
+                  };
+                  if (!endpoint)
+                    {
+                      return;
+                    }
 
-                new_profile->add_endpoint (endpoint);
-              }
-          }
-      }
+                  new_profile->add_endpoint (endpoint.release ());
+                }
+            }
+        }
 
-      if (new_profiles.add_profile (new_profile) == -1)
+      if (new_profiles.add_profile (new_profile.get ()) == -1)
         {
           throw CORBA::NO_MEMORY ();
         }
 
       new_profile->encode_endpoints ();
 
-      // After adding the profile to the MProfile,
-      // we must decrement the reference to avoid a memory leak
-      new_profile->_decr_refcnt ();
+      // The unique pointer releases the initial reference after MProfile has
+      // retained its own reference.
     }
 }
 
-
 void
 TAO_IORManip_IIOP_Filter::fill_profile_info (
-                             TAO_Profile* profile,
-                             TAO_IORManip_IIOP_Filter::Profile_Info& pinfo)
+    TAO_Profile *profile,
+    TAO_IORManip_IIOP_Filter::Profile_Info &pinfo)
 {
   static constexpr int host_length = 384;
   if (profile != nullptr)
@@ -161,7 +147,7 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
       char host[host_length] {};
       if (profile->endpoint ()->addr_to_string (host, host_length) != -1)
         {
-          char* const delim = std::strchr (host, ':');
+          char * const delim = std::strchr (host, ':');
           if (delim != nullptr)
             {
               *delim = '\0';
@@ -174,26 +160,25 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
     }
 }
 
-
 void
-TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
-                                         TAO::IIOPEndpointSequence& endpoints)
+TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile *profile,
+                                         TAO::IIOPEndpointSequence &endpoints)
 {
   // Reset the endpoints
   endpoints.length (0);
 
   // Get the endpoints tagged component
-  const TAO_Tagged_Components& comps = profile->tagged_components ();
-  IOP::TaggedComponent tagged_component;
+  TAO_Tagged_Components const &comps = profile->tagged_components ();
+  IOP::TaggedComponent tagged_component {};
   tagged_component.tag = TAO_TAG_ENDPOINTS;
 
   if (comps.get_component (tagged_component))
     {
       // Prepare the CDR for endpoint extraction
-      const CORBA::Octet* const buf =
+      CORBA::Octet const * const buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                           tagged_component.component_data.length ());
 
       // Extract the Byte Order.
@@ -213,12 +198,11 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
     }
 }
 
-
-TAO_IIOP_Profile*
-TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile* profile)
+TAO_IIOP_Profile *
+TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile *profile)
 {
-  ACE_INET_Addr addr;
-  TAO_IIOP_Profile* new_profile {};
+  ACE_INET_Addr const addr;
+  TAO_IIOP_Profile *new_profile {};
   ACE_NEW_THROW_EX (new_profile,
                    TAO_IIOP_Profile (addr,
                                      profile->object_key (),
@@ -230,16 +214,26 @@ TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile* profile)
                        ENOMEM),
                      CORBA::COMPLETED_NO));
 
+  struct Profile_Deleter
+  {
+    void operator() (TAO_IIOP_Profile *profile) const
+    {
+      if (profile != nullptr)
+        profile->_decr_refcnt ();
+    }
+  };
+  std::unique_ptr<TAO_IIOP_Profile, Profile_Deleter> profile_owner {new_profile};
+
   // Copy all of the tagged components
-  const TAO_Tagged_Components& comps = profile->tagged_components ();
+  TAO_Tagged_Components const &comps = profile->tagged_components ();
   new_profile->tagged_components () = comps;
 
   // Set the endpoints component to an empty list
-  IOP::TaggedComponent tagged_component;
+  IOP::TaggedComponent tagged_component {};
   tagged_component.tag = TAO_TAG_ENDPOINTS;
   new_profile->tagged_components ().set_component (tagged_component);
 
-  return new_profile;
+  return profile_owner.release ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

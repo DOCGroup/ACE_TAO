@@ -44,23 +44,23 @@ public:
   /// Perform filtering using the profile passed in as a guide.
   /// If no profile is provided, filter using the profile_matches() method.
   CORBA::Object_ptr sanitize_profiles (CORBA::Object_ptr object,
-                                       TAO_Profile* profile = nullptr);
+                                       TAO_Profile *profile = nullptr);
 
-protected:
-  /// This will be the bulk of the filtering code.
-  virtual void filter_and_add (TAO_Profile* profile,
-                               TAO_MProfile& profiles,
-                               TAO_Profile* guideline = nullptr) = 0;
-
-private:
   TAO_IORManip_Filter (TAO_IORManip_Filter const &) = delete;
   TAO_IORManip_Filter &operator= (TAO_IORManip_Filter const &) = delete;
   TAO_IORManip_Filter (TAO_IORManip_Filter &&) = delete;
   TAO_IORManip_Filter &operator= (TAO_IORManip_Filter &&) = delete;
 
+protected:
+  /// This will be the bulk of the filtering code.
+  virtual void filter_and_add (TAO_Profile *profile,
+                               TAO_MProfile &profiles,
+                               TAO_Profile *guideline = nullptr) = 0;
+
+private:
   /// The sanitize_profiles() methods call this to do the work.
   CORBA::Object_ptr sanitize (CORBA::Object_ptr object,
-                              TAO_Profile* profile);
+                              TAO_Profile *profile);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

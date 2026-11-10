@@ -40,7 +40,7 @@ public:
   TAO_IOR_Manipulation_impl ();
 
   CORBA::Object_ptr merge_iors (
-    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors) override;
+    TAO_IOP::TAO_IOR_Manipulation::IORList const &iors) override;
 
   CORBA::Object_ptr add_profiles (
       CORBA::Object_ptr ior1, CORBA::Object_ptr ior2) override;
@@ -64,9 +64,9 @@ public:
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group) override;
 
-   CORBA::Boolean remove_primary_tag (
-       TAO_IOP::TAO_IOR_Property_ptr prop,
-       CORBA::Object_ptr iogr) override;
+  CORBA::Boolean remove_primary_tag (
+      TAO_IOP::TAO_IOR_Property_ptr prop,
+      CORBA::Object_ptr iogr) override;
 
   CORBA::ULong is_in_ior (
     CORBA::Object_ptr ior1,
@@ -74,14 +74,13 @@ public:
 
   CORBA::ULong get_profile_count (CORBA::Object_ptr group) override;
 
-protected:
-  ~TAO_IOR_Manipulation_impl () override = default;
-
-private:
   TAO_IOR_Manipulation_impl (TAO_IOR_Manipulation_impl const &) = delete;
   TAO_IOR_Manipulation_impl &operator= (TAO_IOR_Manipulation_impl const &) = delete;
   TAO_IOR_Manipulation_impl (TAO_IOR_Manipulation_impl &&) = delete;
   TAO_IOR_Manipulation_impl &operator= (TAO_IOR_Manipulation_impl &&) = delete;
+
+protected:
+  ~TAO_IOR_Manipulation_impl () override = default;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

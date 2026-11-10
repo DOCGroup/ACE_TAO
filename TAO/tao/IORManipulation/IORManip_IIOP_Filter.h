@@ -46,34 +46,42 @@ public:
 
   ~TAO_IORManip_IIOP_Filter () override;
 
+  TAO_IORManip_IIOP_Filter (TAO_IORManip_IIOP_Filter const &) = delete;
+  TAO_IORManip_IIOP_Filter &operator= (TAO_IORManip_IIOP_Filter const &) = delete;
+  TAO_IORManip_IIOP_Filter (TAO_IORManip_IIOP_Filter &&) = delete;
+  TAO_IORManip_IIOP_Filter &operator= (TAO_IORManip_IIOP_Filter &&) = delete;
+
   /// Compares the profile to the profile info.
   virtual CORBA::Boolean compare_profile_info (
-                         const TAO_IORManip_IIOP_Filter::Profile_Info& left,
-                         const TAO_IORManip_IIOP_Filter::Profile_Info& right);
+      TAO_IORManip_IIOP_Filter::Profile_Info const &left,
+      TAO_IORManip_IIOP_Filter::Profile_Info const &right);
 
   /// Empty virtual method to match on the profile info.
   /// Users must provide an implementation to use the first
   /// form of sanitize_profiles().
   virtual CORBA::Boolean profile_info_matches (
-                         const TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
+      TAO_IORManip_IIOP_Filter::Profile_Info const &pinfo);
 
 protected:
   /// This is the bulk of the filtering code.
-  void filter_and_add (TAO_Profile* profile,
-                       TAO_MProfile& profiles,
-                       TAO_Profile* guideline = nullptr) override;
+  void filter_and_add (TAO_Profile *profile,
+                       TAO_MProfile &profiles,
+                       TAO_Profile *guideline = nullptr) override;
 
 private:
   /// Fill in the Profile_Info with information from the profile.
-  void fill_profile_info (TAO_Profile* profile,
-                          TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
+  void fill_profile_info (
+      TAO_Profile *profile,
+      TAO_IORManip_IIOP_Filter::Profile_Info &pinfo);
 
   /// Get the endpoint sequence from the profile.
-  void get_endpoints (TAO_Profile* profile,
-                      TAO::IIOPEndpointSequence& endpoints);
+  void get_endpoints (
+      TAO_Profile *profile,
+      TAO::IIOPEndpointSequence &endpoints);
 
   /// Allocate a new IIOP Profile based on the profile passed in.
-  TAO_IIOP_Profile* create_profile (TAO_Profile* profile);
+  /// The caller holds its initial reference and must decrement it when done.
+  TAO_IIOP_Profile *create_profile (TAO_Profile *profile);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

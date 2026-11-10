@@ -15,7 +15,7 @@ TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl () = default;
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
-    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors)
+    TAO_IOP::TAO_IOR_Manipulation::IORList const &iors)
 {
   // we need to create a new CORBA::Object which has the union of the
   // two profile lists.  However, if any profiles are duplicates (i.e. in
@@ -43,12 +43,12 @@ TAO_IOR_Manipulation_impl::merge_iors (
   std::unique_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     throw TAO_IOP::Invalid_IOR ();
-  CORBA::String_var id =
+  CORBA::String_var const id =
     CORBA::string_dup (iors[0]->_stubobj ()->type_id.in ());
 
   for (CORBA::ULong i {1}; i < iors.length (); ++i)
     {
-      // this gets a copy of the MProfile, hence the auto_ptr;
+      // This creates a copy of the MProfile, so keep it under unique ownership.
       tmp_pfiles.reset (iors[i]->_stubobj ()->make_profiles ());
 
       // check to see if any of the profiles in tmp_pfiles are already
@@ -66,16 +66,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
         throw TAO_IOP::Invalid_IOR ();
     }
 
-  // MS C++ knows nothing about reset!
-  // tmp_pfiles.reset (0); // get rid of last MProfile
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  TAO_ORB_Core * const orb_core = TAO_ORB_Core_instance ();
 
-  TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
-                                          Merged_Profiles);
-
-  // Make the stub memory allocation exception safe for the duration
-  // of this method.
-  TAO_Stub_Auto_Ptr safe_stub (stub);
+  TAO_Stub_Auto_Ptr safe_stub (orb_core->create_stub (id.in (), Merged_Profiles));
 
   // Create the CORBA level proxy
   CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
@@ -91,9 +84,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
       throw TAO_IOP::Invalid_IOR ();
     }
 
-  // Release ownership of the pointers protected by the auto_ptrs since they
-  // no longer need to be protected by this point.
-  stub = safe_stub.release ();
+  // The CORBA object now owns the stub.
+  safe_stub.release ();
 
   return new_obj._retn ();
 }
@@ -104,9 +96,7 @@ TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior2)
 {
   // Get an estimate of the number of profiles
-  CORBA::Object_ptr buffer [2];
-  buffer [0] = ior1;
-  buffer [1] = ior2;
+  CORBA::Object_ptr buffer [2] {ior1, ior2};
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (2, 2, buffer, 0);
   return this->merge_iors (iors);
 }
@@ -117,14 +107,14 @@ TAO_IOR_Manipulation_impl::remove_profiles (
     CORBA::Object_ptr ior2)
 {
   // First verify they are the same type!
-  CORBA::String_var id =
+  CORBA::String_var const id =
     CORBA::string_dup (group->_stubobj ()->type_id.in ());
   if (id.in () && ior2->_stubobj ()->type_id.in () &&
       std::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
     throw TAO_IOP::Invalid_IOR ();
 
   // Since we are removing from group ...
-  CORBA::ULong count = group->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong const count = group->_stubobj ()->base_profiles ().profile_count ();
 
   // make sure we have some profiles
   if (count == 0 ||
@@ -147,14 +137,9 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // Instead, we create the Object Reference right here, which is
   // earlier than before.(Actually, I just moved some code
   // from below up to here).
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  TAO_ORB_Core * const orb_core = TAO_ORB_Core_instance ();
 
-  TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
-                                          Diff_Profiles);
-
-  // Make the stub memory allocation exception safe for the duration
-  // of this method.
-  TAO_Stub_Auto_Ptr safe_stub (stub);
+  TAO_Stub_Auto_Ptr safe_stub (orb_core->create_stub (id.in (), Diff_Profiles));
 
   // Create the CORBA level proxy
   CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
@@ -164,9 +149,9 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   CORBA::Object_var new_obj = temp_obj;
 
-  // Exception safety is no longer an issue by this point so release
-  // the TAO_Stub from the TAO_Stub_Auto_Ptr.
-  stub = safe_stub.release ();
+  // The CORBA object now owns the stub.
+  TAO_Stub * const stub = safe_stub.get ();
+  safe_stub.release ();
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
@@ -178,12 +163,9 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // the Object.
   tmp_pfiles.reset (ior2->_stubobj ()->make_profiles ());
 
-  TAO_MProfile& mp = stub -> base_profiles();
+  TAO_MProfile &mp = stub->base_profiles ();
   if (mp.remove_profiles (tmp_pfiles.get ()) < 0)
     throw TAO_IOP::NotFound ();
-
-  // MS C++ knows nothing about reset!
-  // tmp_pfiles.reset (0); // get rid of last MProfile
 
   return new_obj._retn ();
 }
@@ -258,7 +240,7 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2)
 {
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   TAO_Profile *pfile1 {};
   TAO_Profile *pfile2 {};
   std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
