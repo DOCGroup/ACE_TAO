@@ -12,7 +12,7 @@ TAO_Security_Current::TAO_Security_Current (size_t tss_slot,
                                             char const *orb_id)
   : tss_slot_ (tss_slot),
     orb_id_ (orb_id),
-    orb_core_ (nullptr)
+    orb_core_ {}
 {
 }
 

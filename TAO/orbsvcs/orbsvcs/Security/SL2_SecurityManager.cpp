@@ -138,7 +138,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
 
   // Look up the target in access_map_; if there, return the value,
   // otherwise return the default value.
-  CORBA::Boolean access_decision = false;
+  CORBA::Boolean access_decision {};
   if (this->access_map_.find (key, access_decision) == -1)
     {
       // It is not in the map, so let us take the global default

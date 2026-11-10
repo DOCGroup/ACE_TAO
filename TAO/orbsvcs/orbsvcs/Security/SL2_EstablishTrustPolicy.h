@@ -53,7 +53,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
       explicit EstablishTrustPolicy (::Security::EstablishTrust const & trust);
 
       /**
@@ -72,7 +71,6 @@ namespace TAO
       ::Security::EstablishTrust trust () override;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.

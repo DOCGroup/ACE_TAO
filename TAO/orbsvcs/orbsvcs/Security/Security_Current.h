@@ -47,7 +47,6 @@ class TAO_Security_Export TAO_Security_Current
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_Security_Current (size_t tss_slot, char const *orb_id);
 
   /**
@@ -83,7 +82,6 @@ public:
   size_t tss_slot () const;
 
 protected:
-  /// Destructor
   /// Protected to force allocation on the heap.
   ~TAO_Security_Current () override = default;
 

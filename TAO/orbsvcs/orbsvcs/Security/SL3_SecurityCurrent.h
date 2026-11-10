@@ -56,7 +56,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
       SecurityCurrent (size_t tss_slot, TAO_ORB_Core * oc);
 
       /**
@@ -80,7 +79,6 @@ namespace TAO
       size_t tss_slot () const;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.

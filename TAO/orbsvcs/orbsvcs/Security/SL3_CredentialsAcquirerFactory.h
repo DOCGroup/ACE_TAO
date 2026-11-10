@@ -42,7 +42,6 @@ namespace TAO
     class TAO_Security_Export CredentialsAcquirerFactory
     {
     public:
-      /// Destructor.
       virtual ~CredentialsAcquirerFactory ();
 
       /// Create a TAO::SL3::CredentialsAcquirerFactory.

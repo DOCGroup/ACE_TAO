@@ -45,7 +45,6 @@ namespace TAO
     class TAO_Security_Export SecurityCurrent_Impl
     {
     public:
-      /// Destructor.
       virtual ~SecurityCurrent_Impl ();
 
       /**

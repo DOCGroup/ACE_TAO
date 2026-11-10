@@ -80,7 +80,6 @@ namespace TAO
                                                          ACE_Null_Mutex>;
       using Credentials_Iterator = Credentials_Table::iterator;
 
-      /// Constructor
       CredentialsCurator ();
 
       static CredentialsCurator_ptr _duplicate (CredentialsCurator_ptr obj);
@@ -125,7 +124,6 @@ namespace TAO
         SecurityLevel3::OwnCredentials_ptr credentials);
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.

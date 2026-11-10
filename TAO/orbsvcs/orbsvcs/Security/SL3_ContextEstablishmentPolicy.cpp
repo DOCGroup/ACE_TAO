@@ -69,7 +69,7 @@ TAO::SL3::ContextEstablishmentPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO::SL3::ContextEstablishmentPolicy::copy ()
 {
-  CORBA::Policy_ptr p = CORBA::Policy_ptr ();
+  CORBA::Policy_ptr p {};
   ACE_NEW_THROW_EX (p,
                     TAO::SL3::ContextEstablishmentPolicy (
                       this->creds_directive_,

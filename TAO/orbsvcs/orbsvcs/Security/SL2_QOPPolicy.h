@@ -51,7 +51,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
       explicit QOPPolicy (::Security::QOP qop);
 
       /**
@@ -70,7 +69,6 @@ namespace TAO
       ::Security::QOP qop () override;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
