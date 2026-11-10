@@ -223,7 +223,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 {
   this->check_validity ();
 
-  TAO_Stub *stub = this->invocation_->target ()->_stubobj ();
+  TAO_Stub * const stub = this->invocation_->target ()->_stubobj ();
 
   TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
@@ -232,7 +232,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
   IOP::TaggedComponentSeq *tagged_components {};
   IOP::TaggedComponentSeq_var safe_tagged_components;
 
-  const CORBA::ULong len = components.length ();
+  CORBA::ULong const len = components.length ();
   for (CORBA::ULong i {}; i < len; ++i)
     {
       if (components[i].tag == id)
@@ -252,7 +252,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
               safe_tagged_components = tagged_components;
             }
 
-          const CORBA::ULong old_len = safe_tagged_components->length ();
+          CORBA::ULong const old_len = safe_tagged_components->length ();
           safe_tagged_components->length (old_len + 1);
 
           safe_tagged_components[old_len] = components[i];  // Deep copy

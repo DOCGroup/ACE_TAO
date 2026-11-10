@@ -175,7 +175,7 @@ TAO::PICurrent_Impl::push ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl *const currentHead =
+      TAO::PICurrent_Impl * const currentHead =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
       if (!currentHead->push_)
@@ -201,7 +201,7 @@ TAO::PICurrent_Impl::pop ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl *const currentHead =
+      TAO::PICurrent_Impl * const currentHead =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
       if (currentHead->pop_)

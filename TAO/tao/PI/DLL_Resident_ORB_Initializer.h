@@ -47,7 +47,7 @@ namespace PortableInterceptor
     public:
       DLL_Resident_ORB_Initializer (
         PortableInterceptor::ORBInitializer_ptr initializer,
-        const ACE_TCHAR * dll_name);
+        ACE_TCHAR const *dll_name);
       ~DLL_Resident_ORB_Initializer () override;
 
       void pre_init (::PortableInterceptor::ORBInitInfo_ptr info) override;
@@ -59,7 +59,7 @@ namespace PortableInterceptor
 #if 1 // to re-inject the CSD vs SSLIOP bug, make this a zero
     ACE_DLL dll_;
 #else // CSD vs SSLIOP
-    const ACE_TCHAR * dll_;
+    ACE_TCHAR const *dll_;
 #endif // CSD vs SSLIOP
 };
 }

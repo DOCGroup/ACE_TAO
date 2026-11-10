@@ -315,7 +315,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 
   std::size_t slot_id {};
 
-  const int result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
+  int const result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
 
   if (result != 0)
     throw ::CORBA::INTERNAL (

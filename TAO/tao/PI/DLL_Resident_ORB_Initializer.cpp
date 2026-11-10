@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableInterceptor::DLL_Resident_ORB_Initializer::DLL_Resident_ORB_Initializer (
   PortableInterceptor::ORBInitializer_ptr initializer,
-  const ACE_TCHAR * dll_name)
+  ACE_TCHAR const *dll_name)
   : initializer_(PortableInterceptor::ORBInitializer::_duplicate(initializer))
   , dll_(dll_name)
 {
