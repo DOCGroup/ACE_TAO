@@ -50,6 +50,11 @@ public:
 
   ~TAO_Time_Service_Clerk () override = default;
 
+  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk const &) = delete;
+  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk &&) = delete;
+  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk const &) = delete;
+  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk &&) = delete;
+
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
   CosTime::UTO_ptr universal_time () override;
@@ -93,11 +98,6 @@ public:
   CORBA::ULongLong time_ {};
 
 private:
-  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk const &) = delete;
-  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk &&) = delete;
-  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk const &) = delete;
-  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk &&) = delete;
-
   /// Time displacement factor in minutes.
   CORBA::Short time_displacement_factor_ {};
 

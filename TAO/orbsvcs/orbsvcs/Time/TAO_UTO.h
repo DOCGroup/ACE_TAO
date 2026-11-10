@@ -46,6 +46,11 @@ public:
 
   ~TAO_UTO () override = default;
 
+  TAO_UTO (TAO_UTO const &) = delete;
+  TAO_UTO (TAO_UTO &&) = delete;
+  TAO_UTO &operator= (TAO_UTO const &) = delete;
+  TAO_UTO &operator= (TAO_UTO &&) = delete;
+
   /// For the readonly attribute <time>.
   TimeBase::TimeT time () override;
 
@@ -85,11 +90,6 @@ public:
   CosTime::TIO_ptr interval () override;
 
 private:
-  TAO_UTO (TAO_UTO const &) = delete;
-  TAO_UTO (TAO_UTO &&) = delete;
-  TAO_UTO &operator= (TAO_UTO const &) = delete;
-  TAO_UTO &operator= (TAO_UTO &&) = delete;
-
   /**
    * The readonly attribute structure having the time, inaccuracy and
    * displacement.  The get methods for other readonly attributes

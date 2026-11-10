@@ -51,6 +51,11 @@ public:
 
   ~Timer_Helper () override = default;
 
+  Timer_Helper (Timer_Helper const &) = delete;
+  Timer_Helper (Timer_Helper &&) = delete;
+  Timer_Helper &operator= (Timer_Helper const &) = delete;
+  Timer_Helper &operator= (Timer_Helper &&) = delete;
+
   /// Constructor that sets the clerk.
   explicit Timer_Helper (TAO_Time_Service_Clerk * clerk);
 
@@ -60,11 +65,6 @@ public:
                       void const * arg) override;
 
 protected:
-  Timer_Helper (Timer_Helper const &) = delete;
-  Timer_Helper (Timer_Helper &&) = delete;
-  Timer_Helper &operator= (Timer_Helper const &) = delete;
-  Timer_Helper &operator= (Timer_Helper &&) = delete;
-
   /// Clerk's instance that this class helps to update time.
   TAO_Time_Service_Clerk *clerk_ {};
 

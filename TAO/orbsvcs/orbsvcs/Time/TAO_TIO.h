@@ -39,6 +39,11 @@ public:
 
   ~TAO_TIO () override = default;
 
+  TAO_TIO (TAO_TIO const &) = delete;
+  TAO_TIO (TAO_TIO &&) = delete;
+  TAO_TIO &operator= (TAO_TIO const &) = delete;
+  TAO_TIO &operator= (TAO_TIO &&) = delete;
+
   /// This is the get method for the attribute time interval.
   TimeBase::IntervalT time_interval () override;
 
@@ -71,11 +76,6 @@ public:
   CosTime::UTO_ptr time () override;
 
 private:
-  TAO_TIO (TAO_TIO const &) = delete;
-  TAO_TIO (TAO_TIO &&) = delete;
-  TAO_TIO &operator= (TAO_TIO const &) = delete;
-  TAO_TIO &operator= (TAO_TIO &&) = delete;
-
   /// This attribute returns an IntervalT structure with the values of
   /// its fields filled in with the corresponding values from the TIO.
   TimeBase::IntervalT attr_time_interval;

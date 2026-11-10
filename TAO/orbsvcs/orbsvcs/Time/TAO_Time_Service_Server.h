@@ -39,6 +39,11 @@ public:
 
   ~TAO_Time_Service_Server () override = default;
 
+  TAO_Time_Service_Server (TAO_Time_Service_Server const &) = delete;
+  TAO_Time_Service_Server (TAO_Time_Service_Server &&) = delete;
+  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server const &) = delete;
+  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server &&) = delete;
+
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.
   CosTime::UTO_ptr universal_time () override;
@@ -62,11 +67,6 @@ public:
   CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
                                  TimeBase::TimeT upper) override;
 
-private:
-  TAO_Time_Service_Server (TAO_Time_Service_Server const &) = delete;
-  TAO_Time_Service_Server (TAO_Time_Service_Server &&) = delete;
-  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server const &) = delete;
-  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
