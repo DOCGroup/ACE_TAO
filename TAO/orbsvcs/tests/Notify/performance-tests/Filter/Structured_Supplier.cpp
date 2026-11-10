@@ -214,15 +214,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (sig.in ());
 
       // If the ior_output_file exists, output the ior to it
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %C",
-                           options.ior_output_file.c_str (),
-                           ior.in ()),
-                          1);
-      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file %s for writing IOR: %C",
+                             options.ior_output_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
         create_supplieradmin (ec.in ());
