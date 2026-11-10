@@ -50,7 +50,7 @@ public:
 
 private:
   /// from the Fl_Gl_Window...
-  virtual void draw ();
+  void draw () override;
 
   int sides_;
 };
@@ -130,10 +130,10 @@ public:
                       Fl_Box* box = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
+  int open (void *) override;
   //FUZZ: enble check_for_lack_ACE_OS
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
 private:
   Test_Window *w_;
@@ -146,7 +146,7 @@ public:
   Acceptor (Test_Window *w = nullptr,
             Fl_Box *box = nullptr);
 
-  virtual int make_svc_handler (Connection_Handler *&sh);
+  int make_svc_handler (Connection_Handler *&sh) override;
 
 private:
   Test_Window* w_;
