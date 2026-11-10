@@ -17,6 +17,8 @@
  */
 //=============================================================================
 
+#include <string>
+
 #include "test_config.h"
 #include "ace/SString.h"
 #include "ace/Atomic_Op.h"
@@ -173,8 +175,7 @@ public:
       /// FUZZ: enable check_for_lack_ACE_OS
   int open (void*) override
   {
-    char tmp[10];
-    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+    order += std::to_string (sleep_time_).c_str ();
     ++running_tasks;
     activate ();
     return 0;
@@ -205,8 +206,7 @@ public:
                   ACE_TEXT ("(%P) reaped child, pid %d: %d\n"),
                   my_child,
                   exitcode));
-    char tmp[10];
-    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+    order += std::to_string (sleep_time_).c_str ();
     return 0;
   }
 
