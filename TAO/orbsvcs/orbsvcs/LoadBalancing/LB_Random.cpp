@@ -116,7 +116,7 @@ TAO_LB_Random::_tao_next_member (
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   if (len > 1)
     {
       // Prevent integer arithmetic overflow.

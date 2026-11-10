@@ -139,7 +139,7 @@ TAO_LB_RoundRobin::next_member (
                                       locations[i]);
 
       // Increment index to point to next location.
-      i++;
+      ++i;
 
       // Keep a copy of location list for use in next next_member call.
       this->copy_locations (locations);
@@ -154,7 +154,7 @@ TAO_LB_RoundRobin::next_member (
   // length of the sequence is 1 since the above code handles the
   // boundary case correctly by wrapping around.
 
-  CORBA::ULong const index = 0;
+  CORBA::ULong const index {};
   if (this->location_index_map_.bind (id, index + 1) != 0)
     throw CORBA::INTERNAL ();
 

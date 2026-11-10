@@ -727,7 +727,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
 
       size_t n_members = this->object_group_manager_.member_count (oid, true);
 
-      size_t count = 0;
+      size_t count {};
 
       while (count < n_members)
       {

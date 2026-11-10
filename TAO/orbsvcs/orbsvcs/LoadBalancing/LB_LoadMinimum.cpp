@@ -374,7 +374,7 @@ TAO_LB_LoadMinimum::get_location (
   CORBA::Float min_load = FLT_MAX;  // Start out with the largest
                                     // positive value.
 
-  CORBA::ULong location_index = 0;
+  CORBA::ULong location_index {};
   CORBA::Boolean found_location = false;
   CORBA::Boolean found_load = false;
 

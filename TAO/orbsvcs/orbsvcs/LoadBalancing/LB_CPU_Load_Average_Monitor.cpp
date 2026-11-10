@@ -71,7 +71,7 @@ TAO_LB_CPU_Load_Average_Monitor::the_location ()
 CosLoadBalancing::LoadList *
 TAO_LB_CPU_Load_Average_Monitor::loads ()
 {
-  CORBA::Float load = 0;
+  CORBA::Float load {};
 
   // Obtain the number of processors each time a load is computed.
   // The idea is to take into account the processor failures that can
@@ -142,7 +142,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 
 #   if defined (ACE_LACKS_GETLOADAVG)
 
-  int const samples = 0;
+  int const samples {};
 
 #   else
 

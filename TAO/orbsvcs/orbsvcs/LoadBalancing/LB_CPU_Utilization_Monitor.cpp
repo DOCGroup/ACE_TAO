@@ -15,19 +15,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 double calc_cpu_loading ()
 {
   static char buf[1024];
-  static unsigned long prev_idle = 0;
-  static double prev_total = 0.0;
+  static unsigned long prev_idle {};
+  static double prev_total {};
 
   FILE *file_ptr {};
   char *item {};
   char *arg {};
-  unsigned long delta_idle = 0;
-  unsigned long user = 0;
-  unsigned long nice = 0;
-  unsigned long idle = 0;
-  unsigned long sys = 0;
+  unsigned long delta_idle {};
+  unsigned long user {};
+  unsigned long nice {};
+  unsigned long idle {};
+  unsigned long sys {};
 
-  double percent_cpu_load = 0.0;
+  double percent_cpu_load {};
 
   if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == nullptr)
           return percent_cpu_load;
@@ -51,10 +51,8 @@ double calc_cpu_loading ()
   ACE_OS::fclose (file_ptr);
 
   delta_idle = idle - prev_idle;
-  double total;
-  double time_passed;
-  total = (double) (user + nice + sys + idle);
-  time_passed = total - prev_total;
+  double const total = static_cast<double> (user + nice + sys + idle);
+  double const time_passed = total - prev_total;
 
   percent_cpu_load = 100.0 - (delta_idle / time_passed * 100.0);
 
@@ -122,7 +120,7 @@ TAO_LB_CPU_Utilization_Monitor::the_location ()
 CosLoadBalancing::LoadList *
 TAO_LB_CPU_Utilization_Monitor::loads ()
 {
-  CORBA::Float load = 0;
+  CORBA::Float load {};
 
 #if defined (ACE_LINUX)
   double load_double = calc_cpu_loading ();

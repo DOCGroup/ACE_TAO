@@ -85,7 +85,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
   PortableGroup::ObjectGroup_var object_group;
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
 
   CORBA::Boolean const found_group =
     this->find_object_group (repository_id,

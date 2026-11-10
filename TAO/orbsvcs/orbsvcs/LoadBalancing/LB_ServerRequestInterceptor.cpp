@@ -53,7 +53,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           TAO_InputCDR cdr (buf,
                             service_context->context_data.length ());
 
-          CORBA::Boolean byte_order;
+          CORBA::Boolean byte_order {};
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             throw CORBA::BAD_PARAM ();
 
