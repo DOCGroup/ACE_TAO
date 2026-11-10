@@ -37,15 +37,14 @@ public:
   /// no-op.
   void assign (TAO_OutputCDR *) const override;
 
-private:
   TAO_UTF8_Latin1_Factory (TAO_UTF8_Latin1_Factory const &) = delete;
   TAO_UTF8_Latin1_Factory &operator= (TAO_UTF8_Latin1_Factory const &) = delete;
   TAO_UTF8_Latin1_Factory (TAO_UTF8_Latin1_Factory &&) = delete;
   TAO_UTF8_Latin1_Factory &operator= (TAO_UTF8_Latin1_Factory &&) = delete;
 
+private:
   bool create_translator () const;
 
-private:
   mutable std::unique_ptr<TAO_UTF8_Latin1_Translator> translator_ {};
 };
 

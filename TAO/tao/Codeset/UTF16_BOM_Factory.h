@@ -48,19 +48,18 @@ public:
   /// no-op.
   void assign (TAO_OutputCDR *) const override;
 
-private:
   TAO_UTF16_BOM_Factory (TAO_UTF16_BOM_Factory const &) = delete;
   TAO_UTF16_BOM_Factory &operator= (TAO_UTF16_BOM_Factory const &) = delete;
   TAO_UTF16_BOM_Factory (TAO_UTF16_BOM_Factory &&) = delete;
   TAO_UTF16_BOM_Factory &operator= (TAO_UTF16_BOM_Factory &&) = delete;
 
+private:
   bool create_translator () const;
   int parse_one_arg (int argc, ACE_TCHAR *argv[]);
 
-private:
   mutable std::unique_ptr<TAO_UTF16_BOM_Translator> translator_ {};
   /// Force big endian wchar, warray, & wstring
-  bool forceBE_ {false};
+  bool forceBE_ {};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)

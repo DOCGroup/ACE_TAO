@@ -54,12 +54,12 @@ public:
   void add_translator (ACE_TCHAR const *name) override;
   Translator_List &translators ();
 
-private:
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor const &) = delete;
   TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor const &) = delete;
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor &&) = delete;
   TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor &&) = delete;
 
+private:
   ACE_CDR::ULong ncs_ {};
   int max_bytes_ {1};
   Translator_List translators_;

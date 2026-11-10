@@ -65,12 +65,12 @@ public:
   ACE_CDR::ULong ncs () override { return 0x00010109; }
   ACE_CDR::ULong tcs () override { return 0x00010109; }
 
-private:
   TAO_UTF16_BOM_Translator (TAO_UTF16_BOM_Translator const &) = delete;
   TAO_UTF16_BOM_Translator &operator= (TAO_UTF16_BOM_Translator const &) = delete;
   TAO_UTF16_BOM_Translator (TAO_UTF16_BOM_Translator &&) = delete;
   TAO_UTF16_BOM_Translator &operator= (TAO_UTF16_BOM_Translator &&) = delete;
 
+private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_InputCDR &,
                                        ACE_CDR::WChar *,
                                        ACE_CDR::ULong &,

@@ -93,12 +93,12 @@ public:
   TAO_Codeset_Descriptor_Base *char_codeset_descriptor () override;
   TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor () override;
 
-private:
   TAO_Codeset_Manager_i (TAO_Codeset_Manager_i const &) = delete;
   TAO_Codeset_Manager_i &operator= (TAO_Codeset_Manager_i const &) = delete;
   TAO_Codeset_Manager_i (TAO_Codeset_Manager_i &&) = delete;
   TAO_Codeset_Manager_i &operator= (TAO_Codeset_Manager_i &&) = delete;
 
+private:
   // Compute the TCS for Char/WChar asper the CORBA Specification
   CONV_FRAME::CodeSetId computeTCS (CONV_FRAME::CodeSetComponent &,
                                     CONV_FRAME::CodeSetComponent &);

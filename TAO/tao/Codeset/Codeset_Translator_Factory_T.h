@@ -61,13 +61,13 @@ public:
   /// no-op.
   void assign (TAO_OutputCDR *) const override;
 
-private:
   TAO_Codeset_Translator_Factory_T (TAO_Codeset_Translator_Factory_T const &) = delete;
   TAO_Codeset_Translator_Factory_T &operator= (
     TAO_Codeset_Translator_Factory_T const &) = delete;
   TAO_Codeset_Translator_Factory_T (TAO_Codeset_Translator_Factory_T &&) = delete;
   TAO_Codeset_Translator_Factory_T &operator= (TAO_Codeset_Translator_Factory_T &&) = delete;
 
+private:
   std::unique_ptr<NCS_TO_TCS> translator_ {};
 };
 

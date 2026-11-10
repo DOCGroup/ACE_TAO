@@ -71,12 +71,12 @@ public:
   ACE_CDR::ULong ncs () override { return 0x00010001U; }
   ACE_CDR::ULong tcs () override { return 0x05010001U; }
 
- private:
   TAO_UTF8_Latin1_Translator (TAO_UTF8_Latin1_Translator const &) = delete;
   TAO_UTF8_Latin1_Translator &operator= (TAO_UTF8_Latin1_Translator const &) = delete;
   TAO_UTF8_Latin1_Translator (TAO_UTF8_Latin1_Translator &&) = delete;
   TAO_UTF8_Latin1_Translator &operator= (TAO_UTF8_Latin1_Translator &&) = delete;
 
+private:
   ACE_CDR::ULong read_char_i (ACE_InputCDR &, ACE_CDR::Char &);
 
   ACE_CDR::Boolean write_char_i (ACE_OutputCDR &, ACE_CDR::Char);
