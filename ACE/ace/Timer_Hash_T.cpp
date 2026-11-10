@@ -616,7 +616,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (TYPE con
 
   size_t i; // loop variable.
 
-  Hash_Token<TYPE> **raw_timer_ids = nullptr;
+  Hash_Token<TYPE> **raw_timer_ids {};
   size_t pos = 0;
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
@@ -775,7 +775,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::expire (ACE_Time
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Node_T<TYPE> *expired = nullptr;
+  ACE_Timer_Node_T<TYPE> *expired {};
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 

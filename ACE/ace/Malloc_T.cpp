@@ -622,8 +622,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     (nbytes + sizeof (MALLOC_HEADER) - 1) / sizeof (MALLOC_HEADER)
     + 1; // Add one for the <MALLOC_HEADER> itself.
 
-  MALLOC_HEADER *prevp = nullptr;
-  MALLOC_HEADER *currp = nullptr;
+  MALLOC_HEADER *prevp {};
+  MALLOC_HEADER *currp {};
 
   ACE_SEH_TRY
     {
@@ -857,7 +857,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
     return -1;
 
   // Combine the two allocations into one to avoid overhead...
-  NAME_NODE *new_node = nullptr;
+  NAME_NODE *new_node {};
 
   ACE_ALLOCATOR_RETURN (new_node,
                         (NAME_NODE *)
@@ -983,7 +983,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
   if (this->cb_ptr_ == 0)
     return -1;
 
-  NAME_NODE *prev = nullptr;
+  NAME_NODE *prev {};
 
   for (NAME_NODE *curr = this->cb_ptr_->name_head_;
        curr != 0;
@@ -1017,7 +1017,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind");
-  void *temp = nullptr;
+  void *temp {};
   return this->unbind (name, temp);
 }
 
@@ -1026,7 +1026,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
 template <class ACE_LOCK> ACE_LOCK *
 ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (const ACE_TCHAR *name)
 {
-  ACE_LOCK *p = nullptr;
+  ACE_LOCK *p {};
   if (name == nullptr)
     ACE_NEW_RETURN (p, ACE_LOCK (name), 0);
   else
@@ -1230,7 +1230,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::start ()
 {
   this->curr_ = this->curr_->next_;
-  NAME_NODE *prev = nullptr;
+  NAME_NODE *prev {};
 
   // Locate the element that was inserted first.
   // @@ We could optimize this by making the list a circular list or

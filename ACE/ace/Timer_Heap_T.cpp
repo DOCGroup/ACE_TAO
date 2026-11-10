@@ -236,7 +236,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T ()
       ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<TYPE> *>
         set_iterator (this->preallocated_node_set_);
 
-      for (ACE_Timer_Node_T<TYPE> **entry = nullptr;
+      for (ACE_Timer_Node_T<TYPE> **entry {};
            set_iterator.next (entry) !=0;
            set_iterator.advance ())
         delete [] *entry;
@@ -554,7 +554,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
   size_t const new_size = this->max_size_ * 2;
 
   // First grow the heap itself.
-  ACE_Timer_Node_T<TYPE> **new_heap = nullptr;
+  ACE_Timer_Node_T<TYPE> **new_heap {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
     new_heap = reinterpret_cast<ACE_Timer_Node_T<TYPE> **>
@@ -578,7 +578,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
 
   // Grow the array of timer ids.
 
-  ssize_t *new_timer_ids = nullptr;
+  ssize_t *new_timer_ids {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   new_timer_ids = reinterpret_cast<ssize_t *>
@@ -670,7 +670,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::alloc_node ()
 {
-  ACE_Timer_Node_T<TYPE> *temp = nullptr;
+  ACE_Timer_Node_T<TYPE> *temp {};
 
   // Only allocate a node if we are *not* using the preallocated heap.
   if (this->preallocated_nodes_ == nullptr)
@@ -732,7 +732,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (
       long const timer_id = this->timer_id ();
 
       // Obtain the memory to the new node.
-      ACE_Timer_Node_T<TYPE> *temp = nullptr;
+      ACE_Timer_Node_T<TYPE> *temp {};
 
       ACE_ALLOCATOR_RETURN (temp,
                             this->alloc_node (),
