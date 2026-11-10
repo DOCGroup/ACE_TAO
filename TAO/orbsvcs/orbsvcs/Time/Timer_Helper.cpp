@@ -7,6 +7,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk * clerk)
@@ -18,7 +20,7 @@ int
 Timer_Helper::handle_timeout (ACE_Time_Value const &,
                               void const *)
 {
-  int no_of_servers {};
+  std::size_t no_of_servers {};
   CORBA::ULongLong sum {};
 
   // The following are used to keep a track of the inaccuracy
@@ -64,7 +66,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
 
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "\nUpdated time from %d servers in the network",
+                    "\nUpdated time from %B servers in the network",
                     no_of_servers));
 
       // Return the average of the times retrieved from the various

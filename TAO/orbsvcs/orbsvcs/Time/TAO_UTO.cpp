@@ -11,7 +11,8 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   this->attr_utc_time_.time = time;
 
   // Extract the lower 32 bits in the inacclo.
-  this->attr_utc_time_.inacclo = (CORBA::ULong) ACE_U64_TO_U32 (inaccuracy);
+  this->attr_utc_time_.inacclo =
+    static_cast<CORBA::ULong> (ACE_U64_TO_U32 (inaccuracy));
 
   // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF
   // is only a sanity check.
