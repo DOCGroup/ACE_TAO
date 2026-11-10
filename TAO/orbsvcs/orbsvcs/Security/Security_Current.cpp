@@ -54,9 +54,9 @@ TAO_Security_Current::init ()
     {
       int argc {};
       ACE_TCHAR **argv {};
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            this->orb_id_.in ());
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc,
+                                                  argv,
+                                                  this->orb_id_.in ());
 
       this->orb_core_ = orb.in ()->orb_core ();
 

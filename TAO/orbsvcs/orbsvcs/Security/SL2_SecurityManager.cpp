@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Security/SL2_SecurityManager.h"
 
 #include "tao/ORB_Constants.h"
@@ -224,7 +223,7 @@ TAO::Security::AccessDecision::add_object
              // appears to fail when an allocation thru the allocator's
              // malloc() fails.  Depending on the malloc() implementation,
              // errno could get set OR an exception thrown.
-  int ret = this->access_map_.rebind (key, allow_insecure_access);
+  int const ret = this->access_map_.rebind (key, allow_insecure_access);
   if (ret == -1)
     {
       // rebind shouldn't fail under normal circumstances
@@ -268,7 +267,7 @@ TAO::Security::AccessDecision::remove_object
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->map_lock_);
 
   errno = 0;
-  int ret = this->access_map_.unbind (key);
+  int const ret = this->access_map_.unbind (key);
   if (ret == -1)
     {
       if (errno == ENOENT)
