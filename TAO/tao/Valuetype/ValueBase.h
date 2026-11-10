@@ -145,6 +145,10 @@ namespace CORBA
 
     using Repository_Id_List = std::vector<ACE_CString>;
 
+    ValueBase &operator= (ValueBase const &) = delete;
+    ValueBase (ValueBase &&) = delete;
+    ValueBase &operator= (ValueBase &&) = delete;
+
     virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
     // Reference counting.
@@ -306,8 +310,6 @@ namespace CORBA
     /// accounting for indirection.
     static CORBA::Boolean _tao_read_codebase_url (TAO_InputCDR& strm,
                                                   ACE_CString& codebase_url);
-  private:
-    ValueBase & operator= (ValueBase const &) = delete;
   }; // ValueBase
 
   /// Valuetype-related type codes.
@@ -332,7 +334,7 @@ namespace CORBA
     DefaultValueRefCountBase () = default;
     ~DefaultValueRefCountBase () override;
 
-  private:
+  public:
     DefaultValueRefCountBase &operator= (DefaultValueRefCountBase const &) = delete;
     DefaultValueRefCountBase &operator= (DefaultValueRefCountBase &&) = delete;
     DefaultValueRefCountBase (DefaultValueRefCountBase const &) = delete;

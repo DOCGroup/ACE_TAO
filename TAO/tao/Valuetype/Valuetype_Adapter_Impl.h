@@ -66,12 +66,12 @@ public:
 
   CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) override;
 
-private:
   TAO_Valuetype_Adapter_Impl (TAO_Valuetype_Adapter_Impl const &) = delete;
   TAO_Valuetype_Adapter_Impl &operator= (TAO_Valuetype_Adapter_Impl const &) = delete;
   TAO_Valuetype_Adapter_Impl (TAO_Valuetype_Adapter_Impl &&) = delete;
   TAO_Valuetype_Adapter_Impl &operator= (TAO_Valuetype_Adapter_Impl &&) = delete;
 
+private:
   TAO_ValueFactory_Map map_;
 };
 

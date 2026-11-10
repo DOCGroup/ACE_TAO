@@ -14,6 +14,7 @@
 #include "tao/SystemException.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/ValueBase.inl"
@@ -596,7 +597,10 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
       TAO_InputCDR::Value_Map* map = strm.get_value_map()->get ();
       for (TAO_InputCDR::Value_Map::ITERATOR it = map->begin (); it != map->end (); ++ it)
         {
-          TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, %@=%@\n"), it->ext_id_, it->int_id_));
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, %@=%@\n"),
+                         it->ext_id_,
+                         it->int_id_));
         }
     }
 
@@ -1437,8 +1441,8 @@ namespace TAO
 
 namespace CORBA
 {
-  TypeCode_ptr const _tc_ValueBase = &TAO::TypeCode::tc_ValueBase;
-  TypeCode_ptr const _tc_EventBase = &TAO::TypeCode::tc_EventBase;
+  TypeCode_ptr const _tc_ValueBase = std::addressof (TAO::TypeCode::tc_ValueBase);
+  TypeCode_ptr const _tc_EventBase = std::addressof (TAO::TypeCode::tc_EventBase);
 }
 
 // member functions for CORBA::DefaultValueRefCountBase ============

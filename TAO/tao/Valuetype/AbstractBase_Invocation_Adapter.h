@@ -56,8 +56,6 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
         bool has_in_args = false);
 
-  private:
-    AbstractBase_Invocation_Adapter () = delete;
     AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter const &) = delete;
     AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter const &) = delete;
     AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;

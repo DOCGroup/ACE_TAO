@@ -11,6 +11,7 @@
 #include "tao/CDR.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/AbstractBase.inl"
@@ -420,7 +421,7 @@ namespace TAO
 
 namespace CORBA
 {
-  TypeCode_ptr const _tc_AbstractBase = &TAO::TypeCode::tc_AbstractBase;
+  TypeCode_ptr const _tc_AbstractBase = std::addressof (TAO::TypeCode::tc_AbstractBase);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -102,8 +102,11 @@ private:
 
 
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
-  bool marshal_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
-    const ::CORBA::ULong length = source.length ();
+  bool marshal_sequence (
+    stream &strm,
+    TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> const &source)
+  {
+    ::CORBA::ULong const length = source.length ();
     if (length > source.maximum () || !(strm << length)) {
       return false;
     }

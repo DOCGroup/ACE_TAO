@@ -100,7 +100,10 @@ private:
 };
 
   template <typename stream, typename object_t, typename object_t_var>
-  bool marshal_sequence(stream & strm, const TAO::unbounded_valuetype_sequence<object_t, object_t_var> & source) {
+  bool marshal_sequence (
+    stream &strm,
+    TAO::unbounded_valuetype_sequence<object_t, object_t_var> const &source)
+  {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;

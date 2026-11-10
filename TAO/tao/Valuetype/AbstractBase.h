@@ -60,6 +60,10 @@ namespace CORBA
                   CORBA::Boolean,
                   TAO_Abstract_ServantBase *);
 
+    AbstractBase &operator= (AbstractBase const &) = delete;
+    AbstractBase (AbstractBase &&) = delete;
+    AbstractBase &operator= (AbstractBase &&) = delete;
+
     using _ptr_type = CORBA::AbstractBase_ptr;
     using _var_type = CORBA::AbstractBase_var;
     using _out_type = CORBA::AbstractBase_out;
@@ -130,8 +134,6 @@ namespace CORBA
     CORBA::Boolean is_objref_ {};
 
   private:
-    AbstractBase & operator= (AbstractBase const &) = delete;
-
     virtual CORBA::ValueBase *_tao_to_value ();
 
     CORBA::Object_ptr create_object (TAO_Stub *stub);
