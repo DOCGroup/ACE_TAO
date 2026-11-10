@@ -54,10 +54,14 @@ namespace TAO
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
     public:
-      Completion_Handler (ACE_Thread_Manager* t = nullptr);
+      explicit Completion_Handler (ACE_Thread_Manager* t = nullptr);
       /// Constructor.
-      Completion_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean = false);
+      explicit Completion_Handler (TAO_ORB_Core *orb_core,
+                                   CORBA::Boolean = false);
+      Completion_Handler (Completion_Handler const&) = delete;
+      Completion_Handler (Completion_Handler&&) = delete;
+      Completion_Handler& operator= (Completion_Handler const&) = delete;
+      Completion_Handler& operator= (Completion_Handler&&) = delete;
 
       /// Destructor.
       ~Completion_Handler () override;

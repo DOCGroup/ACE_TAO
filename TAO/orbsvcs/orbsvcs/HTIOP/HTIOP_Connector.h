@@ -70,6 +70,10 @@ namespace TAO
       /// Constructor.
       /// {@
       explicit Connector (ACE::HTBP::Environment *ht_env);
+      Connector (Connector const&) = delete;
+      Connector (Connector&&) = delete;
+      Connector& operator= (Connector const&) = delete;
+      Connector& operator= (Connector&&) = delete;
 
       /// Destructor.
       ~Connector () override;

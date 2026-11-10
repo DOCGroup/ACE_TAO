@@ -13,7 +13,7 @@
 
 #include <cstring>
 
-static const char the_prefix[] = "htiop";
+static constexpr char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -275,7 +275,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -301,7 +301,7 @@ TAO::HTIOP::Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  static const char digits [] = "0123456789";
+  static constexpr char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",

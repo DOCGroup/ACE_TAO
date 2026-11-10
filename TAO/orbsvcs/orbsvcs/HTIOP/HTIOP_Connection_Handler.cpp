@@ -244,7 +244,7 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
   // Get the size of the list
   CORBA::ULong len = listen_list.length ();
 
-  for (CORBA::ULong i {}; i < len; ++ i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       ::HTIOP::ListenPoint listen_point = listen_list[i];
       ACE::HTBP::Addr addr;

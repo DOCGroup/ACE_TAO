@@ -44,6 +44,10 @@ namespace TAO
     {
     public:
       Protocol_Factory ();
+      Protocol_Factory (Protocol_Factory const&) = delete;
+      Protocol_Factory (Protocol_Factory&&) = delete;
+      Protocol_Factory& operator= (Protocol_Factory const&) = delete;
+      Protocol_Factory& operator= (Protocol_Factory&&) = delete;
       ~Protocol_Factory () override;
 
       // = Service Configurator hooks.

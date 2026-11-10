@@ -314,7 +314,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
       for (size_t index {};
            index != count;
-           index++)
+           ++index)
         {
           if (local_addr.is_ip_equal (endpoint_addr[index]))
             {

@@ -43,9 +43,7 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
 {
 }
 
-
-TAO::HTIOP::Completion_Handler::~Completion_Handler ()
-= default;
+TAO::HTIOP::Completion_Handler::~Completion_Handler () = default;
 
 int
 TAO::HTIOP::Completion_Handler::open (void*)

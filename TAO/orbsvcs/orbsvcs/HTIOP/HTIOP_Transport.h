@@ -61,6 +61,10 @@ namespace TAO
       /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
+      Transport (Transport const&) = delete;
+      Transport (Transport&&) = delete;
+      Transport& operator= (Transport const&) = delete;
+      Transport& operator= (Transport&&) = delete;
 
       /// Default destructor.
       ~Transport () override;

@@ -681,7 +681,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   size_t lo_cnt {};  // Loopback interface count
   for (size_t j {}; j < if_cnt; ++j)
     if (inet_addrs[j].is_loopback ())
-      lo_cnt++;
+      ++lo_cnt;
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -745,7 +745,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (this->addrs_[host_cnt].ACE_INET_Addr::set (inet_addrs[i]) != 0)
         return -1;
 
-      host_cnt++;
+      ++host_cnt;
     }
 
   return 0;
@@ -826,7 +826,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
 
   ACE_CString options (str);
   size_t len = options.length ();
-  const char option_delimiter = '&';
+  constexpr char option_delimiter = '&';
 
   // Count the number of options.
   CORBA::ULong option_count { 1 };
@@ -836,7 +836,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.

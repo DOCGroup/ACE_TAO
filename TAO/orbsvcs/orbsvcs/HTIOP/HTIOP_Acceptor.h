@@ -67,6 +67,10 @@ namespace TAO
       /// Constructor.
       Acceptor (ACE::HTBP::Environment *ht_env,
                 int is_inside);
+      Acceptor (Acceptor const&) = delete;
+      Acceptor (Acceptor&&) = delete;
+      Acceptor& operator= (Acceptor const&) = delete;
+      Acceptor& operator= (Acceptor&&) = delete;
 
       /// Destructor.
       ~Acceptor () override;

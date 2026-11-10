@@ -49,6 +49,10 @@ namespace TAO
 
       /// Default constructor.
       Endpoint ();
+      Endpoint (Endpoint const&) = delete;
+      Endpoint (Endpoint&&) = delete;
+      Endpoint& operator= (Endpoint const&) = delete;
+      Endpoint& operator= (Endpoint&&) = delete;
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.

@@ -47,10 +47,14 @@ namespace TAO
                                             public TAO_Connection_Handler
     {
     public:
-      Connection_Handler (ACE_Thread_Manager* t = nullptr);
+      explicit Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
       /// Constructor.
-      Connection_Handler (TAO_ORB_Core *orb_core);
+      explicit Connection_Handler (TAO_ORB_Core *orb_core);
+      Connection_Handler (Connection_Handler const&) = delete;
+      Connection_Handler (Connection_Handler&&) = delete;
+      Connection_Handler& operator= (Connection_Handler const&) = delete;
+      Connection_Handler& operator= (Connection_Handler&&) = delete;
 
       /// Destructor.
       ~Connection_Handler () override;

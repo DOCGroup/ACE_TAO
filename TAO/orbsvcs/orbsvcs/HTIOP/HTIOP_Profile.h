@@ -73,7 +73,11 @@ namespace TAO
                TAO_ORB_Core *orb_core);
 
       /// Profile constructor, default.
-      Profile (TAO_ORB_Core *orb_core);
+      explicit Profile (TAO_ORB_Core *orb_core);
+      Profile (Profile const&) = delete;
+      Profile (Profile&&) = delete;
+      Profile& operator= (Profile const&) = delete;
+      Profile& operator= (Profile&&) = delete;
 
       /// Destructor is to be called only through <_decr_refcnt>.
       ~Profile () override;

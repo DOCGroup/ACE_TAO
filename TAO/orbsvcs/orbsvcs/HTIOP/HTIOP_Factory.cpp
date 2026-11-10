@@ -8,19 +8,17 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "tao/IOPC.h"
 
-static const char the_prefix[] = "htiop";
+static constexpr char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Protocol_Factory::Protocol_Factory ()
-  :  TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),
-     ht_env_ (nullptr),
-     inside_ (-1)
+  : TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),
+    inside_ {-1}
 {
 }
 
-TAO::HTIOP::Protocol_Factory::~Protocol_Factory ()
-= default;
+TAO::HTIOP::Protocol_Factory::~Protocol_Factory () = default;
 
 int
 TAO::HTIOP::Protocol_Factory::match_prefix (std::string const &prefix)
@@ -45,15 +43,15 @@ int
 TAO::HTIOP::Protocol_Factory::init (int argc,
                                   ACE_TCHAR* argv[])
 {
-  const ACE_TCHAR * config_file {};
-  const ACE_TCHAR * persist_file {};
+  ACE_TCHAR const *config_file {};
+  ACE_TCHAR const *persist_file {};
   unsigned proxy_port {};
-  const ACE_TCHAR * proxy_host {};
+  ACE_TCHAR const *proxy_host {};
 
   ACE_stat statbuf;
   bool use_registry {};
 
-  for (int i {}; i < argc; i++)
+  for (int i {}; i < argc; ++i)
     {
       if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-config")) == 0)
         {
