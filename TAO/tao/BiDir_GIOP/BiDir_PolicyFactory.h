@@ -39,7 +39,7 @@ public:
   TAO_BiDir_PolicyFactory () = default;
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   CORBA::Any const& value) override;
+                                   CORBA::Any const &value) override;
 
  private:
   TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory const &) = delete;

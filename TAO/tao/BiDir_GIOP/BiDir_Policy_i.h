@@ -45,7 +45,7 @@ public:
   explicit TAO_BidirectionalPolicy (BiDirPolicy::BidirectionalPolicyValue val);
 
   /// Copy constructor.
-  TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const& rhs);
+  TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const &rhs);
 
   /// Returns a copy of this.
   TAO_BidirectionalPolicy *clone () const;

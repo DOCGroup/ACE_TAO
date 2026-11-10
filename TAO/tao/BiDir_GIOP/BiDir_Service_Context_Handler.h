@@ -29,8 +29,8 @@ class TAO_BiDIR_Service_Context_Handler :
 public:
   TAO_BiDIR_Service_Context_Handler () = default;
 
-  int process_service_context (TAO_Transport& transport,
-                               IOP::ServiceContext const& context,
+  int process_service_context (TAO_Transport &transport,
+                               IOP::ServiceContext const &context,
                                TAO_ServerRequest *request) override;
   int generate_service_context (
     TAO_Stub * stub,

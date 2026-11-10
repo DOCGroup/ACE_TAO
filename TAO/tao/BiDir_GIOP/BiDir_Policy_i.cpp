@@ -18,7 +18,7 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
 {
 }
 
-TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const& rhs)
+TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::BiDirPolicy::BidirectionalPolicy ()
@@ -51,7 +51,7 @@ TAO_BidirectionalPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
-  TAO_BidirectionalPolicy* tmp {};
+  TAO_BidirectionalPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp, TAO_BidirectionalPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));

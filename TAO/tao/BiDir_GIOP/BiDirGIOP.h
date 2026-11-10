@@ -59,10 +59,10 @@ private:
 
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
-  bool initialized_ {false};
+  bool initialized_ {};
 };
 
-static bool
+static bool const
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 
 

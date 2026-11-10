@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    CORBA::Any const& value)
+    CORBA::Any const &value)
 {
   CORBA::Policy_ptr policy {};
 
