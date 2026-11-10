@@ -9,8 +9,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdlib.h"
 
 struct Consumer_Options
 {
@@ -24,6 +23,12 @@ constexpr char grammar[] = "TCL";
 class Consumer_Client : public Notify_Test_Client
 {
 public:
+  Consumer_Client () = default;
+  Consumer_Client (Consumer_Client const&) = delete;
+  Consumer_Client (Consumer_Client&&) = delete;
+  Consumer_Client& operator= (Consumer_Client const&) = delete;
+  Consumer_Client& operator= (Consumer_Client&&) = delete;
+
   int parse_args (int argc, ACE_TCHAR *argv[]) override;
 
   Consumer_Options const& options () const
@@ -63,7 +68,7 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  return 0; // successful parse
+  return 0;
 }
 
 static void
@@ -72,6 +77,7 @@ create_consumer (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                  Notify_Test_Client& client,
                  Consumer_Options const& options)
 {
+  // _connect() transfers the servant's initial reference to its POA.
   Notify_Push_Consumer* consumer {};
   ACE_NEW_THROW_EX (consumer,
                     Notify_Push_Consumer (options.event_count, options.use_filter, client),
@@ -130,7 +136,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         consumer_admin->add_filter (filter.in ());
       }
 
-    CORBA::ORB_ptr orb = client.orb ();
+    CORBA::ORB_ptr const orb = client.orb ();
 
     CORBA::Object_var object =
       orb->string_to_object (client.options ().ior);

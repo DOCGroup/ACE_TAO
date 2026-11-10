@@ -11,9 +11,11 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <memory>
 
 struct Supplier_Options
 {
@@ -71,6 +73,12 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
+  Supplier_Client () = default;
+  Supplier_Client (Supplier_Client const&) = delete;
+  Supplier_Client (Supplier_Client&&) = delete;
+  Supplier_Client& operator= (Supplier_Client const&) = delete;
+  Supplier_Client& operator= (Supplier_Client&&) = delete;
+
   int parse_args (int argc, ACE_TCHAR *argv[]) override;
 
   Supplier_Options const& options () const
@@ -118,7 +126,7 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 static int
 send_event (TAO_Notify_Tests_StructuredPushSupplier& supplier, int id)
 {
-  CosNotification::StructuredEvent event;
+  CosNotification::StructuredEvent event {};
 
   event.header.fixed_header.event_type.domain_name =
     CORBA::string_dup ("TAO Test Suite");
@@ -155,6 +163,7 @@ static TAO_Notify_Tests_StructuredPushSupplier*
 create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                  PortableServer::POA_ptr poa)
 {
+  // connect() transfers the servant's initial reference to its POA.
   TAO_Notify_Tests_StructuredPushSupplier* supplier {};
   ACE_NEW_THROW_EX (supplier,
                     TAO_Notify_Tests_StructuredPushSupplier (),
@@ -178,7 +187,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         client.create_event_channel ("MyEventChannel", 0);
       ACE_ASSERT (!CORBA::is_nil (ec.in ()));
 
-      CORBA::ORB_ptr orb = client.orb ();
+      CORBA::ORB_ptr const orb = client.orb ();
+
+      // sig_impl is a borrowed alias; sig_owner manages its servant reference.
       sig_i* sig_impl {};
       ACE_NEW_THROW_EX (sig_impl, sig_i (orb), CORBA::NO_MEMORY ());
       PortableServer::ServantBase_var sig_owner (sig_impl);
@@ -193,10 +204,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (sig.in ());
 
-      FILE* output_file = ACE_OS::fopen (client.options ().ior_file, ACE_TEXT ("w"));
-      ACE_ASSERT (output_file != nullptr);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (client.options ().ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file %s for writing IOR\n"),
+                             client.options ().ior_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       ACE_DEBUG ((LM_DEBUG, "Supplier ready...\n"));
       sig_impl->wait_for_startup ();
