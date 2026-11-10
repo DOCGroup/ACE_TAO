@@ -40,6 +40,11 @@ class TAO_DynamicAny_Export TAO_DynAnyFactory
 public:
   TAO_DynAnyFactory () = default;
 
+  TAO_DynAnyFactory (TAO_DynAnyFactory const &src) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const &src) = delete;
+  TAO_DynAnyFactory (TAO_DynAnyFactory &&) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory &&) = delete;
+
   // = The DynamicAnyFactory methods.
   DynamicAny::DynAny_ptr create_dyn_any (CORBA::Any const& value) override;
 
@@ -64,12 +69,6 @@ public:
   /// Same as above, but returns type code instead of TCKind. Caller
   /// must release the return value.
   static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc);
-
-private:
-  TAO_DynAnyFactory (TAO_DynAnyFactory const &src) = delete;
-  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const &src) = delete;
-  TAO_DynAnyFactory (TAO_DynAnyFactory &&) = delete;
-  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

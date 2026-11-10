@@ -41,6 +41,11 @@ public:
 
   ~TAO_DynValue_i () = default;
 
+  TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i &&) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i &&) = delete;
+
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
@@ -134,13 +139,6 @@ private:
 
   /// Read the value from the input stream
   void from_inputCDR (TAO_InputCDR &);
-
-  /// These are not implemented!
-  /// Use copy() or assign() instead of these.
-  TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
-  TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
-  TAO_DynValue_i (TAO_DynValue_i &&) = delete;
-  TAO_DynValue_i &operator= (TAO_DynValue_i &&) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;

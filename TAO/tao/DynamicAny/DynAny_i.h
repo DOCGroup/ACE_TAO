@@ -39,9 +39,14 @@ class TAO_DynamicAny_Export TAO_DynAny_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  explicit TAO_DynAny_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynAny_i (CORBA::Boolean allow_truncation = true);
 
   ~TAO_DynAny_i ();
+
+  TAO_DynAny_i (TAO_DynAny_i const &src) = delete;
+  TAO_DynAny_i &operator= (TAO_DynAny_i const &src) = delete;
+  TAO_DynAny_i (TAO_DynAny_i &&) = delete;
+  TAO_DynAny_i &operator= (TAO_DynAny_i &&) = delete;
 
   /// Initialize using just a TypeCode
   void init (CORBA::TypeCode_ptr tc);
@@ -73,12 +78,6 @@ private:
 
   /// Called by both versions of init().
   void init_common ();
-
-  // Use copy() or assign() instead of these.
-  TAO_DynAny_i (TAO_DynAny_i const &src) = delete;
-  TAO_DynAny_i &operator= (TAO_DynAny_i const &src) = delete;
-  TAO_DynAny_i (TAO_DynAny_i &&) = delete;
-  TAO_DynAny_i &operator= (TAO_DynAny_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

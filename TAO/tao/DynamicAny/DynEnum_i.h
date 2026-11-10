@@ -41,9 +41,14 @@ class TAO_DynamicAny_Export TAO_DynEnum_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation = true);
 
   ~TAO_DynEnum_i () = default;
+
+  TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;
+  TAO_DynEnum_i (TAO_DynEnum_i &&) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i &&) = delete;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -80,13 +85,6 @@ private:
   // Called by both versions of init().
   void init_common ();
 
-  // = Use copy() or assign() instead of these.
-  TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
-  TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;
-  TAO_DynEnum_i (TAO_DynEnum_i &&) = delete;
-  TAO_DynEnum_i &operator= (TAO_DynEnum_i &&) = delete;
-
-private:
   /// Current numeric value of the enum.
   CORBA::ULong value_ {};
 };

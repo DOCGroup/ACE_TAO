@@ -33,6 +33,11 @@ class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 public:
   TAO_DynamicAny_Loader ();
 
+  TAO_DynamicAny_Loader (TAO_DynamicAny_Loader const &) = delete;
+  TAO_DynamicAny_Loader &operator= (TAO_DynamicAny_Loader const &) = delete;
+  TAO_DynamicAny_Loader (TAO_DynamicAny_Loader &&) = delete;
+  TAO_DynamicAny_Loader &operator= (TAO_DynamicAny_Loader &&) = delete;
+
   /// Creates a DynamicAny factory and returns it.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,

@@ -35,9 +35,14 @@ class TAO_DynamicAny_Export TAO_DynValueBox_i
     public virtual TAO_DynValueCommon_i
 {
 public:
-  explicit TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynValueBox_i (CORBA::Boolean allow_truncation = true);
 
   ~TAO_DynValueBox_i () = default;
+
+  TAO_DynValueBox_i (TAO_DynValueBox_i const &src) = delete;
+  TAO_DynValueBox_i &operator= (TAO_DynValueBox_i const &src) = delete;
+  TAO_DynValueBox_i (TAO_DynValueBox_i &&) = delete;
+  TAO_DynValueBox_i &operator= (TAO_DynValueBox_i &&) = delete;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -78,12 +83,6 @@ private:
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
   void set_from_any (CORBA::Any const& any);
-
-  // = Use copy() or assign() instead of these.
-  TAO_DynValueBox_i (TAO_DynValueBox_i const &src) = delete;
-  TAO_DynValueBox_i &operator= (TAO_DynValueBox_i const &src) = delete;
-  TAO_DynValueBox_i (TAO_DynValueBox_i &&) = delete;
-  TAO_DynValueBox_i &operator= (TAO_DynValueBox_i &&) = delete;
 
   /// The boxed component of DynValueBox is another DynAny.
   DynamicAny::DynAny_var boxed_;

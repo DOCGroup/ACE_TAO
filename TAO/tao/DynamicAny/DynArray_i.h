@@ -42,9 +42,14 @@ class TAO_DynamicAny_Export TAO_DynArray_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  explicit TAO_DynArray_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynArray_i (CORBA::Boolean allow_truncation = true);
 
   ~TAO_DynArray_i ();
+
+  TAO_DynArray_i (TAO_DynArray_i const &src) = delete;
+  TAO_DynArray_i &operator= (TAO_DynArray_i const &src) = delete;
+  TAO_DynArray_i (TAO_DynArray_i &&) = delete;
+  TAO_DynArray_i &operator= (TAO_DynArray_i &&) = delete;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -87,13 +92,6 @@ private:
   /// Called by both versions of init().
   void init_common ();
 
-  // Use copy() or assign() instead of these.
-  TAO_DynArray_i (TAO_DynArray_i const &src) = delete;
-  TAO_DynArray_i &operator= (TAO_DynArray_i const &src) = delete;
-  TAO_DynArray_i (TAO_DynArray_i &&) = delete;
-  TAO_DynArray_i &operator= (TAO_DynArray_i &&) = delete;
-
-private:
   /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
 };

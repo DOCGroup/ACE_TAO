@@ -35,6 +35,11 @@ public:
 
   ~TAO_DynCommon () override = default;
 
+  TAO_DynCommon (TAO_DynCommon const &) = delete;
+  TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
+  TAO_DynCommon (TAO_DynCommon &&) = delete;
+  TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
+
   // = Some functions common to all Dynamic Any types.
 
   CORBA::TypeCode_ptr type () override;
@@ -245,11 +250,6 @@ protected:
   CORBA::Boolean allow_truncation_;
 
 private:
-  TAO_DynCommon (TAO_DynCommon const &) = delete;
-  TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
-  TAO_DynCommon (TAO_DynCommon &&) = delete;
-  TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
-
   // Utility functions used by insert_* and get_*.
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc);
 };

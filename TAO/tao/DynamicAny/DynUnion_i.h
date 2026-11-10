@@ -39,9 +39,14 @@ class TAO_DynamicAny_Export TAO_DynUnion_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation = true);
 
   ~TAO_DynUnion_i () = default;
+
+  TAO_DynUnion_i (TAO_DynUnion_i const &src) = delete;
+  TAO_DynUnion_i &operator= (TAO_DynUnion_i const &src) = delete;
+  TAO_DynUnion_i (TAO_DynUnion_i &&) = delete;
+  TAO_DynUnion_i &operator= (TAO_DynUnion_i &&) = delete;
 
   /// Constructor taking an Any argument.
   void init (CORBA::Any const& any);
@@ -96,13 +101,6 @@ private:
   CORBA::Boolean label_match (CORBA::Any const& my_any,
                               CORBA::Any const& other_any);
 
-  /// Use copy() or assign() instead of these.
-  TAO_DynUnion_i (TAO_DynUnion_i const &src) = delete;
-  TAO_DynUnion_i &operator= (TAO_DynUnion_i const &src) = delete;
-  TAO_DynUnion_i (TAO_DynUnion_i &&) = delete;
-  TAO_DynUnion_i &operator= (TAO_DynUnion_i &&) = delete;
-
-private:
   /// Just two components.
   DynamicAny::DynAny_var member_;
   DynamicAny::DynAny_var discriminator_;

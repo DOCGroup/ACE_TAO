@@ -42,6 +42,11 @@ class TAO_DynamicAny_Export TAO_DynFixed_i
 public:
   explicit TAO_DynFixed_i (CORBA::Boolean allow_truncation = true);
 
+  TAO_DynFixed_i (TAO_DynFixed_i const &) = delete;
+  TAO_DynFixed_i &operator= (TAO_DynFixed_i const &) = delete;
+  TAO_DynFixed_i (TAO_DynFixed_i &&) = delete;
+  TAO_DynFixed_i &operator= (TAO_DynFixed_i &&) = delete;
+
   /// Initialize from an Any or a TypeCode.
   void init (CORBA::Any const& any);
   void init (CORBA::TypeCode_ptr tc);
@@ -65,11 +70,6 @@ private:
   bool read_value (TAO_InputCDR &cdr, ACE_CDR::Fixed &value) const;
 
   ACE_CDR::Fixed value_;
-
-  TAO_DynFixed_i (TAO_DynFixed_i const &) = delete;
-  TAO_DynFixed_i &operator= (TAO_DynFixed_i const &) = delete;
-  TAO_DynFixed_i (TAO_DynFixed_i &&) = delete;
-  TAO_DynFixed_i &operator= (TAO_DynFixed_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
