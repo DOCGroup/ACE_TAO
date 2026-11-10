@@ -32,7 +32,6 @@ public:
   Hello_Impl &operator= (Hello_Impl const &) = delete;
   Hello_Impl &operator= (Hello_Impl &&) = delete;
 
-  // The skeleton methods
   void say_hello (CORBA::Short count) override;
 
   void shutdown () override;

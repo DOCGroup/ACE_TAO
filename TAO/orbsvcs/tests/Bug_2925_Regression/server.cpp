@@ -1,5 +1,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 #include "tao/Policy_Manager.h"
 #include "Hello_Impl.h"
@@ -9,8 +10,8 @@ constexpr int HELLO_CALL_NUMBER { 100 };
 
 struct Server_Options
 {
-  ACE_TCHAR const *uipmc_url {};
-  ACE_TCHAR const *ior_output_file {};
+  ACE_TString uipmc_url;
+  ACE_TString ior_output_file;
 };
 
 using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
@@ -18,7 +19,7 @@ using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("u:o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("u:o:"));
   int c {};
   while ((c = get_opts ()) != -1)
     {
@@ -39,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
         }
     }
 
-  if (options.uipmc_url == nullptr || options.ior_output_file == nullptr)
+  if (options.uipmc_url.length () == 0 || options.ior_output_file.length () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("usage: %s -u <url> -o <iorfile>\n"),
                        argv [0]),
@@ -72,7 +73,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      // servant
       Hello_Impl *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       Hello_Impl (orb.in (), logger),
@@ -83,9 +83,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv, options) != 0)
         return 2;
 
-      // create UIPMC reference
       CORBA::Object_var miop_ref =
-        orb->string_to_object (options.uipmc_url);
+        orb->string_to_object (options.uipmc_url.c_str ());
 
       // create id
       PortableServer::ObjectId_var id =
@@ -102,18 +101,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         File_Ptr output_file (
-          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
 
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file),
+                             options.ior_output_file.c_str ()),
                             1);
 
         if (ACE_OS::fprintf (output_file.get (), "%s", ior.in ()) < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot write output file for IOR: %s"),
-                             options.ior_output_file),
+                             options.ior_output_file.c_str ()),
                             1);
       }
 

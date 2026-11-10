@@ -1,4 +1,3 @@
-
 #include "Hello_Impl.h"
 
 Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog &logger)
