@@ -12,10 +12,7 @@ CORBA::Any::impl () const
 // *************************************************************
 
 ACE_INLINE
-CORBA::Any_var::Any_var ()
-  : ptr_ (nullptr)
-{
-}
+CORBA::Any_var::Any_var () = default;
 
 ACE_INLINE
 CORBA::Any_var::Any_var (CORBA::Any *p)
