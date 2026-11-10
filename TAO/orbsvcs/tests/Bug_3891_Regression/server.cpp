@@ -1,5 +1,6 @@
 #include "TestS.h"
 #include "tao/Stub.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #ifdef TAO_AS_STATIC_LIBS
 # include "tao/ImR_Client/ImR_Client.h"
 #endif
@@ -37,21 +38,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      PortableServer::LifespanPolicy_var const life =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
-
-      PortableServer::IdAssignmentPolicy_var const assign =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
-
-      CORBA::PolicyList pols {};
-      pols.length (2);
-      pols[0] = PortableServer::LifespanPolicy::_duplicate (life.in ());
-      pols[1] = PortableServer::IdAssignmentPolicy::_duplicate (assign.in ());
-
-      PortableServer::POA_var const poa =
-        root_poa->create_POA ("ImRified POA", poa_manager.in (), pols);
-      life->destroy ();
-      assign->destroy ();
+      PortableServer::POA_var poa;
+      {
+        TAO::Utils::PolicyList_Destroyer policies (2);
+        policies.length (2);
+        policies[0] = root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
+        policies[1] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
+        poa = root_poa->create_POA ("ImRified POA", poa_manager.in (), policies);
+      }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl, Hello, 1);
