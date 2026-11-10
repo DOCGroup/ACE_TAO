@@ -74,7 +74,7 @@ TAO_Trader_Base::trading_components () const
 CORBA::Boolean
 TAO_Trader_Base::is_valid_property_name (const char* ident)
 {
-  bool return_value = false;
+  bool return_value {};
 
   if (ident == nullptr)
     return return_value;
@@ -107,7 +107,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   int return_value = 1;
 
   // Allow scoped identifiers
-  CORBA::Boolean done = false;
+  CORBA::Boolean done {};
   char const * pos =
     std::strstr (ident,
                     double_colon);
@@ -595,7 +595,7 @@ bool
 operator== (const CosTrading::Admin::OctetSeq& left,
             const CosTrading::Admin::OctetSeq& right)
 {
-  bool return_value = false;
+  bool return_value {};
 
   const CORBA::ULong left_length = left.length ();
   const CORBA::ULong right_length = right.length ();

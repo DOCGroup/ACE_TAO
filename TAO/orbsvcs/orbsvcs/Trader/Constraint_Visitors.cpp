@@ -67,7 +67,7 @@ TAO_Constraint_Evaluator::TAO_Constraint_Evaluator ()
 CORBA::Boolean
 TAO_Constraint_Evaluator::evaluate_constraint (TAO_Constraint* root)
 {
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   this->queue_.clear ();
 
   // Evaluate the offer according to the constraints in root_;
@@ -158,7 +158,7 @@ TAO_Constraint_Evaluator::
 visit_and (TAO_Binary_Constraint* boolean_and)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   TAO_Constraint* left = boolean_and->left_operand (),
     *right = boolean_and->right_operand ();
 
@@ -194,7 +194,7 @@ TAO_Constraint_Evaluator::
 visit_or (TAO_Binary_Constraint* boolean_or)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   TAO_Constraint* left = boolean_or->left_operand (),
     *right = boolean_or->right_operand ();
 
@@ -524,7 +524,7 @@ sequence_does_contain (CORBA::Any* sequence,
   // wrapper uses the [] operator to locate the target element in the
   // sequence.
 
-  CORBA::Boolean return_value = false;
+  CORBA::Boolean return_value {};
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type = CORBA::tk_void;
   try
@@ -1049,7 +1049,7 @@ visit_in (TAO_Binary_Constraint* binary_in)
 
   if (right_type == TAO_SEQUENCE)
     {
-      CORBA::Boolean types_match = false;
+      CORBA::Boolean types_match {};
       CORBA::TCKind seq_type = CORBA::tk_void;
       try
         {

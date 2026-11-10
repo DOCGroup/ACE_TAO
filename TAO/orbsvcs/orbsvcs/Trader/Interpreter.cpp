@@ -39,7 +39,7 @@ TAO_Interpreter::build_tree (const char* constraints)
 bool
 TAO_Interpreter::is_empty_string (const char* str)
 {
-  bool return_value = false;
+  bool return_value {};
 
   if (str != nullptr)
     {

@@ -235,7 +235,7 @@ TAO_Property_Evaluator::~TAO_Property_Evaluator () = default;
 bool
 TAO_Property_Evaluator::is_dynamic_property (int index)
 {
-  bool return_value = false;
+  bool return_value {};
   int num_properties = this->props_.length();
 
   // Ensure index is in bounds.
@@ -372,7 +372,7 @@ bool
 TAO_Property_Evaluator_By_Name::
 is_dynamic_property(const char* property_name)
 {
-  bool predicate = false;
+  bool predicate {};
   int index {};
   CORBA::String_var prop_name (property_name);
 

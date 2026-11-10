@@ -230,7 +230,7 @@ CORBA::LongLong
 trader_strtoll(const char* s, unsigned int base)
 {
   // Check for the negative sign
-  bool negative = false;
+  bool negative {};
   if (*s == '-')
     {
       negative = true;

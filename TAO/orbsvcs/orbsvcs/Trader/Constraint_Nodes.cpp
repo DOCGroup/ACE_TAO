@@ -433,7 +433,7 @@ TAO_Literal_Constraint::operator CORBA::Boolean () const
 
 TAO_Literal_Constraint::operator CORBA::ULongLong () const
 {
-  CORBA::ULongLong return_value = 0;
+  CORBA::ULongLong return_value {};
 
   if (this->type_ == TAO_UNSIGNED)
     return_value = this->op_.uinteger_;
@@ -453,7 +453,7 @@ TAO_Literal_Constraint::operator CORBA::ULongLong () const
 
 TAO_Literal_Constraint::operator CORBA::LongLong () const
 {
-  CORBA::LongLong return_value = 0;
+  CORBA::LongLong return_value {};
 
   if (this->type_ == TAO_SIGNED)
     return_value = this->op_.integer_;
@@ -569,7 +569,7 @@ bool
 operator== (const TAO_Literal_Constraint& left,
             const TAO_Literal_Constraint& right)
 {
-  bool return_value = false;
+  bool return_value {};
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -602,7 +602,7 @@ bool
 operator< (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  bool return_value = false;
+  bool return_value {};
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -634,7 +634,7 @@ bool
 operator> (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  bool return_value = false;
+  bool return_value {};
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -669,7 +669,7 @@ bool
 operator== (const TAO::String_Manager& left,
             const TAO_Literal_Constraint& right)
 {
-  bool result = false;
+  bool result {};
 
   if (static_cast<const char*> (right) != nullptr)
     result = std::strcmp ((const char*) left,

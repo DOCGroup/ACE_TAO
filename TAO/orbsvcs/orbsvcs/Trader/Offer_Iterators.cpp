@@ -110,7 +110,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   while (offers_left > 0 && ! this->iters_.empty ())
     {
       CORBA::ULong offset {};
-      CORBA::Boolean any_left = false;
+      CORBA::Boolean any_left {};
       CosTrading::OfferIterator* iter = this->iters_.front ();
       this->iters_.pop_front ();
 

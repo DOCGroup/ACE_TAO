@@ -448,7 +448,7 @@ retrieve_links (TAO_Policies& policies,
                 CORBA::ULong offers_returned,
                 CosTrading::LinkNameSeq_out links)
 {
-  CORBA::Boolean should_follow = false;
+  CORBA::Boolean should_follow {};
   CosTrading::FollowOption follow_rule = policies.link_follow_rule ();
 
   // Determine whether or not a federated query is warranted. A query
@@ -728,7 +728,7 @@ TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 seen_request_id (TAO_Policies& policies,
                  const CosTrading::Admin::OctetSeq*& seq)
 {
-  CORBA::Boolean return_value = false;
+  CORBA::Boolean return_value {};
   std::unique_ptr<CosTrading::Admin::OctetSeq const> request_id;
 
   seq = policies.request_id ();
