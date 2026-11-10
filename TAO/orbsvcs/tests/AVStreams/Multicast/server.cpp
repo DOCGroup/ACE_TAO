@@ -1,20 +1,16 @@
 #include "server.h"
 
-int done = 0;
+static bool done {};
 
-FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint ()
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint\n"));
-}
+FTP_Server_StreamEndPoint::~FTP_Server_StreamEndPoint () = default;
 
 int
-FTP_Server_StreamEndPoint::get_callback (const char *,
+FTP_Server_StreamEndPoint::get_callback (char const *,
                                          TAO_AV_Callback *&callback)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::get_callback\n"));
-  ACE_NEW_RETURN (callback,
-                  FTP_Server_Callback,
-                  -1);
+  this->callback_ = std::make_unique<FTP_Server_Callback> ();
+  callback = this->callback_.get ();
   return 0;
 }
 
@@ -22,24 +18,24 @@ int
 FTP_Server_Callback::handle_stop ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
-  ACE_OS::fclose (FTP_SERVER::instance ()->file ());
-  done = 1;
+  FTP_SERVER::instance ()->close_file ();
+  done = true;
   return 0;
 }
 
 int
 FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
                                     TAO_AV_frame_info *,
-                                    const ACE_Addr &)
+                                    ACE_Addr const &)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
-  while (frame != 0)
+  while (frame != nullptr)
     {
-      int result = ACE_OS::fwrite (frame->rd_ptr (),
-                                   frame->length (),
-                                   1,
-                                   FTP_SERVER::instance ()->file ());
-      if (result == 0)
+      std::size_t const written = ACE_OS::fwrite (frame->rd_ptr (),
+                                                  frame->length (),
+                                                  1,
+                                                  FTP_SERVER::instance ()->file ());
+      if (written != 1)
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
       frame = frame->cont ();
     }
@@ -50,14 +46,8 @@ int
 FTP_Server_Callback::handle_end_stream ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::end_stream\n"));
-  done = 1;
+  done = true;
   return 0;
-}
-
-Server::Server ()
-{
-  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
-                      TAO_AV_CORE::instance ()->poa ());
 }
 
 int
@@ -74,8 +64,17 @@ Server::init (int argc,
       int result = this->parse_args (argc, argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
-      // Initialize the naming services
 
+      this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "w"));
+      if (!this->fp_)
+        ACE_ERROR_RETURN ((LM_ERROR, "Unable to open output file\n"), -1);
+
+      result = this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
+                                              TAO_AV_CORE::instance ()->poa ());
+      if (result != 0)
+        return result;
+
+      // Initialize the naming services
       if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
@@ -83,30 +82,32 @@ Server::init (int argc,
                           -1);
 
       // Register the video mmdevice object with the ORB
-      ACE_NEW_RETURN (this->mmdevice_,
+      TAO_MMDevice *mmdevice {};
+      ACE_NEW_RETURN (mmdevice,
                       TAO_MMDevice (&this->reactive_strategy_),
                       -1);
+      PortableServer::ServantBase_var safe_mmdevice = mmdevice;
 
       // Register the mmdevice with the naming service.
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice1");
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this ();
+      AVStreams::MMDevice_var mmdevice_ref = mmdevice->_this ();
 
       try
         {
           // Register the video control object with the naming server.
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in ());
+                                         mmdevice_ref.in ());
         }
-      catch (const CosNaming::NamingContext::AlreadyBound&)
+      catch (CosNaming::NamingContext::AlreadyBound const &)
         {
           server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice2");
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in ());
+                                         mmdevice_ref.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server::init");
       return -1;
@@ -117,49 +118,35 @@ Server::init (int argc,
 int
 Server::run ()
 {
-  CORBA::ORB_ptr orb = TAO_AV_CORE::instance ()->orb();
+  CORBA::ORB_ptr orb = TAO_AV_CORE::instance ()->orb ();
   try
     {
-      while( !done )
-      {
-        CORBA::Boolean wp = orb->work_pending ();
-        if (wp)
-         {
-              orb->perform_work();
-         }
-      }
+      while (!done)
+        if (orb->work_pending ())
+          orb->perform_work ();
 
-      orb->shutdown(true);
+      orb->shutdown (true);
     }
-    catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server::init");
       return -1;
     }
-
-
   return 0;
 }
 
 int
 Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:p:");
+  ACE_Get_Opt opts (argc, argv, "f:");
 
-  int c;
+  int c {};
   while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->fp_ = ACE_OS::fopen (opts.opt_arg (),"w");
-          if (this->fp_ != 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
-            }
-          break;
-        case 'p':
-          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+          this->options_.filename = opts.opt_arg ();
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename"),-1);
@@ -168,19 +155,23 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-FILE*
+FILE *
 Server::file ()
 {
-  return this->fp_;
+  return this->fp_.get ();
+}
+
+void
+Server::close_file ()
+{
+  this->fp_.reset ();
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
-
+  int result {};
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   try
     {
@@ -193,7 +184,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server::init");
       return -1;
