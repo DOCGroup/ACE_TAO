@@ -71,7 +71,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   TAO_Stub_Auto_Ptr safe_stub (orb_core->create_stub (id.in (), Merged_Profiles));
 
   // Create the CORBA level proxy
-  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr temp_obj {};
   ACE_NEW_THROW_EX (temp_obj,
                     CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
@@ -142,7 +142,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_Stub_Auto_Ptr safe_stub (orb_core->create_stub (id.in (), Diff_Profiles));
 
   // Create the CORBA level proxy
-  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr temp_obj {};
   ACE_NEW_THROW_EX (temp_obj,
                     CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());

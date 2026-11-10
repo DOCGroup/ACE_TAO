@@ -35,14 +35,14 @@ TAO_IORManip_Filter::sanitize (CORBA::Object_ptr object,
   CORBA::String_var const id =
       CORBA::string_dup (object->_stubobj ()->type_id.in ());
 
-  TAO_ORB_Core *orb_core = object->_stubobj ()->orb_core ();
+  TAO_ORB_Core *orb_core {object->_stubobj ()->orb_core ()};
   if (orb_core == nullptr)
     orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub_Auto_Ptr safe_stub (orb_core->create_stub (id.in (), new_profiles));
 
   // Create the CORBA level proxy
-  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr temp_obj {};
   ACE_NEW_THROW_EX (temp_obj,
                     CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
