@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/Container_i.h"
@@ -15,6 +14,7 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
+#include <cstdlib>
 #include <cstring>
 #include <memory>
 #include <string>
@@ -394,7 +394,7 @@ TAO_IFR_Server::init_multicast_server ()
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != nullptr)
-        port = static_cast<u_short> (ACE_OS::atoi (port_number));
+        port = static_cast<u_short> (std::atoi (port_number));
     }
 
   // Port wasn't specified on the command-line or in environment -
