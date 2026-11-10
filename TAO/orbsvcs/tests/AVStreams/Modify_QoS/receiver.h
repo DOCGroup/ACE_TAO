@@ -19,6 +19,10 @@ class Receiver_Callback : public TAO_AV_Callback
 {
 public:
   Receiver_Callback () = default;
+  Receiver_Callback (Receiver_Callback const &) = delete;
+  Receiver_Callback &operator= (Receiver_Callback const &) = delete;
+  Receiver_Callback (Receiver_Callback &&) = delete;
+  Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
   /// Method that is called when there is data to be received from a
   /// sender.
@@ -45,6 +49,12 @@ private:
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
+  Receiver_StreamEndPoint () = default;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
+
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback) override;

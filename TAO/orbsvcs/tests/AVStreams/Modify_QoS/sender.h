@@ -18,7 +18,13 @@
 // = Defines application specific sender stream endpoint.
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
-  public:
+public:
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback) override;
   /// Create the application callback and return its handle to
