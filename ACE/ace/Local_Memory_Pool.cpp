@@ -49,7 +49,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
 
-  char *temp = nullptr;
+  char *temp {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,
                         static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * rounded_bytes)),

@@ -67,7 +67,7 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
 ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 {
-  const ACE_Service_Type *tmp = nullptr;
+  const ACE_Service_Type *tmp {};
 
   // Lookup without ignoring suspended services. Making sure
   // not to ignore any inactive services, since those may be forward
@@ -191,7 +191,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt ()
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
     {
-      Processed_Static_Svc **pss = nullptr;
+      Processed_Static_Svc **pss {};
       for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
            iter.next (pss) != 0;
            iter.advance ())
@@ -275,7 +275,7 @@ ACE_Service_Gestalt::load_static_svcs ()
   if (this->static_svcs_ == nullptr)
     return 0; // Nothing to do
 
-  ACE_Static_Svc_Descriptor **ssdp = nullptr;
+  ACE_Static_Svc_Descriptor **ssdp {};
   for (ACE_STATIC_SVCS_ITERATOR iter (*this->static_svcs_);
        iter.next (ssdp) != 0;
        iter.advance ())
@@ -299,7 +299,7 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
   if (this->static_svcs_ == nullptr)
     return -1;
 
-  ACE_Static_Svc_Descriptor **ssdp = nullptr;
+  ACE_Static_Svc_Descriptor **ssdp {};
   for (ACE_STATIC_SVCS_ITERATOR iter ( *this->static_svcs_);
        iter.next (ssdp) != 0;
        iter.advance ())
@@ -323,7 +323,7 @@ ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
   if (this->processed_static_svcs_ == nullptr || name == nullptr)
     return nullptr;
 
-  Processed_Static_Svc **pss = nullptr;
+  Processed_Static_Svc **pss {};
   for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
        iter.next (pss) != 0;
        iter.advance ())
@@ -364,7 +364,7 @@ ACE_Service_Gestalt::add_processed_static_svc
     ACE_NEW (this->processed_static_svcs_,
              ACE_PROCESSED_STATIC_SVCS);
 
-  Processed_Static_Svc **pss = nullptr;
+  Processed_Static_Svc **pss {};
   for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
        iter.next (pss) != 0;
        iter.advance ())
@@ -375,7 +375,7 @@ ACE_Service_Gestalt::add_processed_static_svc
           return;
         }
     }
-  Processed_Static_Svc *tmp = nullptr;
+  Processed_Static_Svc *tmp {};
   ACE_NEW (tmp,Processed_Static_Svc(assd));
   this->processed_static_svcs_->insert(tmp);
 
@@ -435,7 +435,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
     }
 #endif
 
-  const ACE_Service_Type *srp = nullptr;
+  const ACE_Service_Type *srp {};
   for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; i++)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
@@ -496,7 +496,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
                 stf->name ()));
 #endif
 
-  ACE_Service_Type *srp = nullptr;
+  ACE_Service_Type *srp {};
   int const retv = this->repo_->find (stf->name (),
                                       (const ACE_Service_Type **) &srp);
 
@@ -588,7 +588,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
                 this->repo_,
                 sr->name ()));
 
-  ACE_Service_Type *srp = nullptr;
+  ACE_Service_Type *srp {};
   if (this->repo_->find (sr->name (),
                          (const ACE_Service_Type **) &srp) >= 0)
     {
@@ -617,7 +617,7 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
                          args.argv ()) == -1)
     {
       // We just get ps to avoid having remove() delete it.
-      ACE_Service_Type *ps = nullptr;
+      ACE_Service_Type *ps {};
       this->repo_->remove (sr->name (), &ps);
 
 #ifndef ACE_NLOGGING
@@ -734,7 +734,7 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
   if (stp == nullptr)
     return 0;
 
-  ACE_Service_Type *service_type = nullptr;
+  ACE_Service_Type *service_type {};
 
   // This is just a temporary to force the compiler to use the right
   // constructor in ACE_Service_Type. Note that, in cases where we are
@@ -953,7 +953,7 @@ ACE_Service_Gestalt::init_svc_conf_file_queue ()
 {
   if (this->svc_conf_file_queue_ == nullptr)
     {
-      ACE_SVC_QUEUE *tmp = nullptr;
+      ACE_SVC_QUEUE *tmp {};
       ACE_NEW_RETURN (tmp,
           ACE_SVC_QUEUE,
           -1);
@@ -1054,7 +1054,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
       if (has_files || has_cmdline)
         {
           // check if default file is already listed
-          ACE_TString *sptr = nullptr;
+          ACE_TString *sptr {};
           ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
 
           for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
@@ -1134,7 +1134,7 @@ ACE_Service_Gestalt::process_commandline_directives ()
   int result = 0;
   if (this->svc_queue_ != nullptr)
     {
-      ACE_TString *sptr = nullptr;
+      ACE_TString *sptr {};
       for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_queue_);
            iter.next (sptr) != 0;
            iter.advance ())
@@ -1243,7 +1243,7 @@ ACE_Service_Gestalt::process_directives (bool )
       return 0;
     }
 
-  ACE_TString *sptr = nullptr;
+  ACE_TString *sptr {};
   int failed = 0;
 
   // Iterate through all the svc.conf files.
@@ -1276,7 +1276,7 @@ ACE_Service_Gestalt::close ()
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
     {
-      Processed_Static_Svc **pss = nullptr;
+      Processed_Static_Svc **pss {};
       for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
            iter.next (pss) != 0;
            iter.advance ())

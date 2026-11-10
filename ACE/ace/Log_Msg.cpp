@@ -70,7 +70,7 @@ ACE_thread_key_t *log_msg_tss_key ()
 
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else
-static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = nullptr;
+static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup {};
 class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
 {
 public:
@@ -136,8 +136,8 @@ private:
 #endif /* ! ACE_MT_SAFE */
 };
 
-ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ = nullptr;
-ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ = nullptr;
+ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ {};
+ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ {};
 
 #ifndef ACE_DEFAULT_LOG_BACKEND_FLAGS
 #  ifdef ACE_ANDROID
@@ -194,7 +194,7 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 }
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = nullptr;
+ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ {};
 
 ACE_Recursive_Thread_Mutex *
 ACE_Log_Msg_Manager::get_lock ()
@@ -261,7 +261,7 @@ ACE_Log_Msg::exists ()
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
-  void *tss_log_msg = nullptr; // The actual type is ACE_Log_Msg*, but we need this
+  void *tss_log_msg {}; // The actual type is ACE_Log_Msg*, but we need this
                          // void to keep G++ from complaining.
 
   // Get the tss_log_msg from thread-specific storage.
@@ -329,8 +329,8 @@ ACE_Log_Msg::instance ()
         ACE_OS::thread_mutex_unlock (lock);
     }
 
-  ACE_Log_Msg *tss_log_msg = nullptr;
-  void *temp = nullptr;
+  ACE_Log_Msg *tss_log_msg {};
+  void *temp {};
 
   // Get the tss_log_msg from thread-specific storage.
   if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) == -1)
@@ -421,10 +421,10 @@ ACE_Log_Msg::program_name ()
 }
 
 /// Name of the local host.
-const ACE_TCHAR *ACE_Log_Msg::local_host_ = nullptr;
+const ACE_TCHAR *ACE_Log_Msg::local_host_ {};
 
 /// Records the program name.
-const ACE_TCHAR *ACE_Log_Msg::program_name_ = nullptr;
+const ACE_TCHAR *ACE_Log_Msg::program_name_ {};
 
 /// Default is to use stderr.
 u_long ACE_Log_Msg::flags_ = ACE_DEFAULT_LOG_FLAGS;
@@ -481,7 +481,7 @@ ACE_Log_Msg::close ()
          // unload of libACE, by a program not linked with libACE,
          // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
          // See Bugzilla 2980 for lots of details.
-         void *temp = nullptr;
+         void *temp {};
 
          // Get the tss_log_msg from thread-specific storage.
          if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
@@ -1066,7 +1066,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   if (timestamp_ > 0)
     {
       ACE_TCHAR day_and_time[27];
-      const ACE_TCHAR *s = nullptr;
+      const ACE_TCHAR *s {};
       if (timestamp_ == 1)
         {
           // Print just the time
@@ -1124,7 +1124,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           size_t fspace = 128;
           ACE_TCHAR format[128]; // Converted format string
           ACE_OS::memset (format, '\0', 128); // Set this string to known values.
-          ACE_TCHAR *fp = nullptr;         // Current format pointer
+          ACE_TCHAR *fp {};         // Current format pointer
           int       wp = 0;      // Width/precision extracted from args
           bool      done = false;
           bool      skip_nul_locate = false;
@@ -1312,7 +1312,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     else
                       {
                         errno = ACE::map_errno (this->errnum ());
-                        ACE_TCHAR *lpMsgBuf = nullptr;
+                        ACE_TCHAR *lpMsgBuf {};
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1515,7 +1515,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     else
                       {
                         errno = ACE::map_errno (this->errnum ());
-                        ACE_TCHAR *lpMsgBuf = nullptr;
+                        ACE_TCHAR *lpMsgBuf {};
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1887,7 +1887,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     if (wchar_str == nullptr)
                       break;
 
-                    wchar_t *wchar_t_str = nullptr;
+                    wchar_t *wchar_t_str {};
                     if (sizeof (ACE_OS::WChar) != sizeof (wchar_t))
                       {
                         size_t len = ACE_OS::wslen (wchar_str) + 1;

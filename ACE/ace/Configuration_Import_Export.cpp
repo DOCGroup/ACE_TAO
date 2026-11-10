@@ -34,7 +34,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 
   u_int buffer_size = 4096;
   u_int read_pos = 0;
-  ACE_TCHAR *buffer = nullptr;
+  ACE_TCHAR *buffer {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_NORETURN (buffer, static_cast<ACE_TCHAR*> (ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * buffer_size)));
 #else
@@ -47,7 +47,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       return -1;
     }
   ACE_Configuration_Section_Key section;
-  ACE_TCHAR *end = nullptr;
+  ACE_TCHAR *end {};
 
   while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in))
     {
@@ -704,7 +704,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 ACE_TCHAR *
 ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 {
-  ACE_TCHAR *cp = nullptr;
+  ACE_TCHAR *cp {};
 
   if (src == nullptr)
     return nullptr;
