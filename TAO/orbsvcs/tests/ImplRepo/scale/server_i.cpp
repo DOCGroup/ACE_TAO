@@ -7,6 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/streams.h"
+#include <string>
 
 class test_i
   : public virtual POA_test
@@ -84,8 +85,7 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 

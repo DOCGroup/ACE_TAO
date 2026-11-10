@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 
 #include "tao/IORTable/IORTable.h"
@@ -16,8 +18,7 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
