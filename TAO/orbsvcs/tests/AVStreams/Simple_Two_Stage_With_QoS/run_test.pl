@@ -6,10 +6,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug = 0;
+@protocols = ("UDP");
 
 my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $sv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -97,8 +98,6 @@ if ($cl->PutFile ($nsiorfile) == -1) {
     exit 1;
 }
 
-$outputfile = "TCP_output";
-
 for $protocol (@protocols) {
 
     $outputfile = $protocol."_output";
@@ -108,7 +107,7 @@ for $protocol (@protocols) {
     }
 
     my $sv_outputfile = $sv->LocalFile ($outputfile);
-    $ns->DeleteFile ($outputfile);
+    $sv->DeleteFile ($outputfile);
 
     $SV = $sv->CreateProcess ("receiver",
                               "-ORBInitRef NameService=file://$sv_nsiorfile ".
@@ -147,7 +146,16 @@ for $protocol (@protocols) {
         $status = 1;
     }
 
-    $ns->DeleteFile ($outputfile);
+    if ($sv->GetFile ($outputfile) == -1) {
+        print STDERR "ERROR: cannot retrieve output file <$sv_outputfile>\n";
+        $status = 1;
+    }
+    elsif (File::Compare::compare ($inputfile, $outputfile) != 0) {
+        print STDERR "ERROR: received file differs from input for <$protocol>\n";
+        $status = 1;
+    }
+
+    $sv->DeleteFile ($outputfile);
 }
 
 $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval()+985);
