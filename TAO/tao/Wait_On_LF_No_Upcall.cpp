@@ -26,7 +26,7 @@ namespace TAO
     if ((this->transport_->opened_as () == TAO::TAO_SERVER_ROLE) &&
         (this->transport_->bidirectional_flag () == -1))
       {
-        TAO_ORB_Core_TSS_Resources *tss =
+        TAO_ORB_Core_TSS_Resources * const tss =
           this->transport_->orb_core ()->get_tss_resources ();
 
         if (tss->upcalls_temporarily_suspended_on_this_thread_)
@@ -39,7 +39,7 @@ namespace TAO
   }
 
   int
-  Wait_On_LF_No_Upcall::defer_upcall (ACE_Event_Handler* eh)
+  Wait_On_LF_No_Upcall::defer_upcall (ACE_Event_Handler *eh)
   {
     if (TAO_debug_level > 6)
       TAOLIB_DEBUG ((LM_DEBUG,

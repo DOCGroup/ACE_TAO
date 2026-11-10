@@ -44,6 +44,12 @@ public:
 
   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   bool can_process_upcalls () const override;
+
+private:
+  TAO_Wait_On_Reactor (TAO_Wait_On_Reactor const &) = delete;
+  TAO_Wait_On_Reactor &operator= (TAO_Wait_On_Reactor const &) = delete;
+  TAO_Wait_On_Reactor (TAO_Wait_On_Reactor &&) = delete;
+  TAO_Wait_On_Reactor &operator= (TAO_Wait_On_Reactor &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

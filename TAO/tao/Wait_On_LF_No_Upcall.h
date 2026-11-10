@@ -51,7 +51,13 @@ namespace TAO
     bool can_process_upcalls () const override;
 
     /*! @copydoc TAO_Wait_Strategy::defer_upcall() */
-    int defer_upcall (ACE_Event_Handler*) override;
+    int defer_upcall (ACE_Event_Handler *) override;
+
+  private:
+    Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall const &) = delete;
+    Wait_On_LF_No_Upcall &operator= (Wait_On_LF_No_Upcall const &) = delete;
+    Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall &&) = delete;
+    Wait_On_LF_No_Upcall &operator= (Wait_On_LF_No_Upcall &&) = delete;
   };
 }
 

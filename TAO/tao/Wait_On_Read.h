@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Simply block on read() to wait for the reply.
  */
-class TAO_Wait_On_Read :  public TAO_Wait_Strategy
+class TAO_Wait_On_Read : public TAO_Wait_Strategy
 {
 public:
   explicit TAO_Wait_On_Read (TAO_Transport *transport);
@@ -34,7 +34,7 @@ public:
   /*! @copydoc TAO_Wait_Strategy::sending_request() */
   int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics) override;
 
-   /*! @copydoc TAO_Wait_Strategy::finished_request() */
+  /*! @copydoc TAO_Wait_Strategy::finished_request() */
   void finished_request () override;
 
   /*! @copydoc TAO_Wait_Strategy::wait() */
@@ -48,6 +48,12 @@ public:
 
   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   bool can_process_upcalls () const override;
+
+private:
+  TAO_Wait_On_Read (TAO_Wait_On_Read const &) = delete;
+  TAO_Wait_On_Read &operator= (TAO_Wait_On_Read const &) = delete;
+  TAO_Wait_On_Read (TAO_Wait_On_Read &&) = delete;
+  TAO_Wait_On_Read &operator= (TAO_Wait_On_Read &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

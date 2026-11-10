@@ -85,7 +85,7 @@ public:
   /// event to be deferred at the Leader_Follower which resumes
   /// the upcall at an opportune moment (when a new leader thread
   /// is activated).
-  virtual int defer_upcall (ACE_Event_Handler*);
+  virtual int defer_upcall (ACE_Event_Handler *);
 
   /// Get method for the flag
   bool is_registered () const;
@@ -94,13 +94,19 @@ public:
   void is_registered (bool flag);
 
 protected:
-  /// Transport object.
+  /// Non-owning transport; the transport owns this strategy.
   TAO_Transport *transport_;
 
   /// Flag to indicate whether the service handler that created the
   /// above transport has been registered with the reactor or not. The
   /// default is false.
-  bool is_registered_;
+  bool is_registered_ {};
+
+private:
+  TAO_Wait_Strategy (TAO_Wait_Strategy const &) = delete;
+  TAO_Wait_Strategy &operator= (TAO_Wait_Strategy const &) = delete;
+  TAO_Wait_Strategy (TAO_Wait_Strategy &&) = delete;
+  TAO_Wait_Strategy &operator= (TAO_Wait_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
