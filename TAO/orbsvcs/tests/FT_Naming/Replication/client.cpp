@@ -24,18 +24,16 @@ class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  My_Test_Object (CORBA::Short id = 0);
-  // Constructor.
+  explicit My_Test_Object (CORBA::Short id = 0);
 
-  ~My_Test_Object ();
-  // Destructor.
+  ~My_Test_Object () override;
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id);
+  void id (CORBA::Short id) override;
   // Sets id.
 
-  CORBA::Short id ();
+  CORBA::Short id () override;
   // Gets id.
 
 private:
