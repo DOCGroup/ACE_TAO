@@ -338,7 +338,7 @@ CC_Client::init_naming_service ()
     {
       naming_service_ = std::make_unique<CC_naming_service> ();
 
-      this->naming_service_->Init (this->orb_);
+      this->naming_service_->Init (this->orb_.in ());
     }
   catch (const CORBA::Exception&)
     {

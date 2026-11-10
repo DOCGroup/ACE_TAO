@@ -12,83 +12,74 @@
 
 
 #include "CC_naming_service.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
 
-CC_naming_service::CC_naming_service (CORBA::ORB_var orb)
-  : cc_factory_key_ (0),
-    orb_ (0),
-    factory_ (0)
+CC_naming_service::CC_naming_service (CORBA::ORB_ptr orb)
 {
-  this->Init(orb);
-
-  instance_ = this;
-}
-
-CC_naming_service::CC_naming_service()
-  : cc_factory_key_ (0),
-    orb_ (0),
-    factory_ (0)
-{
+  this->Init (orb);
 }
 
 void
-CC_naming_service::Init(CORBA::ORB_var orb)
+CC_naming_service::Init (CORBA::ORB_ptr orb)
 {
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
-  int success = init_naming_service ();
+  int const success = this->init_naming_service ();
   if (success < 0)
     throw CORBA::INTERNAL ();
+
+  CC_naming_service::instance_ = this;
 }
 
 CC_naming_service::~CC_naming_service ()
 {
-  //  if(instance_!=0)
-  // delete instance_;
-  // @TAO somthing went wrong when these lines were uncommented
+  if (CC_naming_service::instance_ == this)
+    CC_naming_service::instance_ = nullptr;
 }
 
 CC_naming_service *
-CC_naming_service::Instance()
+CC_naming_service::Instance ()
 {
-  if(instance_ == 0)
+  if (CC_naming_service::instance_ == nullptr)
     {
-      instance_ = new CC_naming_service();
+      static CC_naming_service default_instance;
+      CC_naming_service::instance_ = &default_instance;
     }
-  return instance_;
+  return CC_naming_service::instance_;
 }
 
 CORBA::Object_var
-CC_naming_service::get_obj_from_name (const char *c_name,
-                                      const char *name)
+CC_naming_service::get_obj_from_name (std::string const &context,
+                                      std::string const &name)
 {
-  ACE_DEBUG ((LM_DEBUG, "C: %s, N: %s\n", c_name, name));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("C: %C, N: %C\n"),
+              context.c_str (),
+              name.c_str ()));
   CORBA::Object_var obj;
 
   try
     {
-      if (ACE_OS::strlen (c_name) == 0)
+      if (context.empty ())
         {
           CosNaming::Name ns_name (1);
           ns_name.length (1);
-          ns_name[0].id = CORBA::string_dup (name);
+          ns_name[0].id = CORBA::string_dup (name.c_str ());
           obj = my_name_client_->resolve (ns_name);
         }
       else
         {
           CosNaming::Name ns_name (2);
           ns_name.length (2);
-          ns_name[0].id = CORBA::string_dup (c_name);
-          ns_name[1].id = CORBA::string_dup (name);
+          ns_name[0].id = CORBA::string_dup (context.c_str ());
+          ns_name[1].id = CORBA::string_dup (name.c_str ());
           obj = my_name_client_->resolve (ns_name);
         }
-      if (CORBA::is_nil (obj.in ()) )
-        ACE_DEBUG((LM_DEBUG,
-                   "OBJ was nill (aieee)\n"));
+      if (CORBA::is_nil (obj.in ()))
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OBJ was nil (aieee)\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CC_Client::get_obj_from_name (...)");
       return obj;
@@ -98,27 +89,27 @@ CC_naming_service::get_obj_from_name (const char *c_name,
 }
 
 void
-CC_naming_service::bind_name (const char *n,
+CC_naming_service::bind_name (std::string const &name,
                               CORBA::Object_ptr obj)
 {
-  ACE_DEBUG ((LM_DEBUG, "CC_Client::bind_name\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("CC_Client::bind_name\n")));
 
   try
     {
       CosNaming::Name ns_name (1);
       ns_name.length (1);
-      ns_name[0].id = CORBA::string_dup (n);
+      ns_name[0].id = CORBA::string_dup (name.c_str ());
       my_name_client_->bind (ns_name,
                              obj);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CC_Client::bind_name (...)");
     }
 }
 
 CosConcurrencyControl::LockSetFactory_var
-CC_naming_service::get_lock_set_factory ()
+CC_naming_service::get_lock_set_factory () const
 {
   return this->factory_;
 }
@@ -129,14 +120,14 @@ CC_naming_service::init_naming_service ()
   try
     {
       // Initialize the naming services
-      if (my_name_client_.init (orb_.in ()) != 0)
+      if (this->my_name_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize "
+                                    "the TAO_Naming_Client.\n")),
                           -1);
 
-      CORBA::Object_var factory_obj = get_obj_from_name ("CosConcurrency",
-                                                         "LockSetFactory");
+      CORBA::Object_var const factory_obj =
+        this->get_obj_from_name ("CosConcurrency", "LockSetFactory");
 
       this->factory_ =
         CosConcurrencyControl::LockSetFactory::_narrow
@@ -144,10 +135,10 @@ CC_naming_service::init_naming_service ()
 
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve lock set factory in Naming service\n"),
+                           ACE_TEXT (" could not resolve lock set factory in Naming service\n")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CC_Client::init_naming_service");
       return -1;
@@ -156,4 +147,4 @@ CC_naming_service::init_naming_service ()
   return 0;
 }
 
-CC_naming_service* CC_naming_service::instance_ = 0;
+CC_naming_service *CC_naming_service::instance_ {};

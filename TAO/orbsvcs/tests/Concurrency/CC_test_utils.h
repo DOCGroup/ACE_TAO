@@ -19,8 +19,8 @@
 class CC_TestUtils
 {
  public:
-  /// Function to return a human readable string from a lock_mode enum.
-  static char *get_lock_mode_name (CosConcurrencyControl::lock_mode mode);
+  /// Return a human-readable name for a lock mode.
+  static char const *get_lock_mode_name (CosConcurrencyControl::lock_mode mode);
 
   /// Creates a lock set by means of th lock set factory in the concurrency
   /// service server.
