@@ -10,9 +10,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
                                                       TAO_Reply_Dispatcher *rd,
                                                       TAO_Transport_Mux_Strategy *tms)
-  : status_(TAO_Bind_Dispatcher_Guard::UNBIND),
-    request_id_(request_id),
-    tms_(tms)
+  : status_ (TAO_Bind_Dispatcher_Guard::UNBIND),
+    request_id_ (request_id),
+    tms_ (tms)
 {
   int const retval =
     this->tms_->bind_dispatcher (
@@ -27,7 +27,7 @@ TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard ()
   // We try unbinding. If it works it works, else cant do much about
   // it..
   if (this->status_ == TAO_Bind_Dispatcher_Guard::UNBIND)
-    (void)this->tms_->unbind_dispatcher (this->request_id_);
+    (void) this->tms_->unbind_dispatcher (this->request_id_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

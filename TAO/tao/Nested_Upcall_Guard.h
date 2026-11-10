@@ -41,7 +41,7 @@ namespace TAO
   public:
     // Maybe we should instead just take in a ptr to
     // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
-    explicit Nested_Upcall_Guard (TAO_Transport *t, bool enable=true)
+    explicit Nested_Upcall_Guard (TAO_Transport *t, bool enable = true)
       : t_ (t),
         enable_ (enable)
     {
@@ -50,7 +50,7 @@ namespace TAO
           return;
         }
 
-      TAO_ORB_Core_TSS_Resources *tss =
+      TAO_ORB_Core_TSS_Resources * const tss =
         t_->orb_core ()->get_tss_resources ();
 
       tss->upcalls_temporarily_suspended_on_this_thread_ = true;
@@ -68,7 +68,7 @@ namespace TAO
           return;
         }
 
-      TAO_ORB_Core_TSS_Resources *tss =
+      TAO_ORB_Core_TSS_Resources * const tss =
         this->t_->orb_core ()->get_tss_resources ();
 
       tss->upcalls_temporarily_suspended_on_this_thread_ = false;
@@ -82,15 +82,13 @@ namespace TAO
     }
 
   private:
-    Nested_Upcall_Guard ();
+    Nested_Upcall_Guard () = delete;
+    Nested_Upcall_Guard (Nested_Upcall_Guard const &) = delete;
+    Nested_Upcall_Guard &operator= (Nested_Upcall_Guard const &) = delete;
+    Nested_Upcall_Guard (Nested_Upcall_Guard &&) = delete;
+    Nested_Upcall_Guard &operator= (Nested_Upcall_Guard &&) = delete;
 
-    Nested_Upcall_Guard (const Nested_Upcall_Guard&) = delete;
-    Nested_Upcall_Guard &operator= (const Nested_Upcall_Guard&) = delete;
-    Nested_Upcall_Guard (Nested_Upcall_Guard&&) = delete;
-    Nested_Upcall_Guard &operator= (Nested_Upcall_Guard&&) = delete;
-
-  private:
-    /// Pointer to the transport that we plan to use.
+    /// Non-owning pointer to the transport.
     TAO_Transport *t_;
 
     /// A flag to support conditional waiting in the LF_Connect_Strategy
