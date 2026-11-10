@@ -57,10 +57,15 @@ public:
   u_long hash () const override;
 
 private:
-  /// Stack of properties.
+  TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor const &) = delete;
+  TAO_RT_Transport_Descriptor &operator= (TAO_RT_Transport_Descriptor const &) = delete;
+  TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor &&) = delete;
+  TAO_RT_Transport_Descriptor &operator= (TAO_RT_Transport_Descriptor &&) = delete;
+
+  /// Manually linked properties; owned here only when delete_properties_ is true.
   TAO_RT_Transport_Descriptor_Property *property_list_ {};
 
-  /// Flag to delete properties.
+  /// Indicates whether this descriptor owns the linked properties.
   bool delete_properties_;
 };
 

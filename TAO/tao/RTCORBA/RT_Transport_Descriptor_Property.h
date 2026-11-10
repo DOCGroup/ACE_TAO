@@ -78,6 +78,15 @@ public:
   CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) override;
 
 private:
+  TAO_RT_Transport_Descriptor_Private_Connection_Property (
+    TAO_RT_Transport_Descriptor_Private_Connection_Property const &) = delete;
+  TAO_RT_Transport_Descriptor_Private_Connection_Property &operator= (
+    TAO_RT_Transport_Descriptor_Private_Connection_Property const &) = delete;
+  TAO_RT_Transport_Descriptor_Private_Connection_Property (
+    TAO_RT_Transport_Descriptor_Private_Connection_Property &&) = delete;
+  TAO_RT_Transport_Descriptor_Private_Connection_Property &operator= (
+    TAO_RT_Transport_Descriptor_Private_Connection_Property &&) = delete;
+
   /**
    * Unique identifier of the object to which private connection
    * identified with this descriptor belongs.  The value of
@@ -118,6 +127,16 @@ protected:
 
   /// The high priority of the Band.
   CORBA::Short high_priority_ {-1};
+
+private:
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property (
+    TAO_RT_Transport_Descriptor_Banded_Connection_Property const &) = delete;
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property &operator= (
+    TAO_RT_Transport_Descriptor_Banded_Connection_Property const &) = delete;
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property (
+    TAO_RT_Transport_Descriptor_Banded_Connection_Property &&) = delete;
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property &operator= (
+    TAO_RT_Transport_Descriptor_Banded_Connection_Property &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

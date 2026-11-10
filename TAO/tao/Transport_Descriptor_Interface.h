@@ -88,6 +88,12 @@ protected:
 
   /// Should the endpoint be used in either direction?
   CORBA::Boolean bidir_flag_ {};
+
+private:
+  TAO_Transport_Descriptor_Interface (TAO_Transport_Descriptor_Interface const &) = delete;
+  TAO_Transport_Descriptor_Interface &operator= (TAO_Transport_Descriptor_Interface const &) = delete;
+  TAO_Transport_Descriptor_Interface (TAO_Transport_Descriptor_Interface &&) = delete;
+  TAO_Transport_Descriptor_Interface &operator= (TAO_Transport_Descriptor_Interface &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -35,15 +35,13 @@ class TAO_Export TAO_Base_Transport_Property
   : public TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Default constructor
   TAO_Base_Transport_Property () = default;
 
-  TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
-                               CORBA::Boolean flag = false);
+  explicit TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
+                                        CORBA::Boolean flag = false);
 
   ~TAO_Base_Transport_Property () override = default;
 
-  /// The copy constructor.
   TAO_Base_Transport_Property (TAO_Base_Transport_Property const &rhs);
 
   /// This call allocates and copies the contents of this class and
@@ -56,6 +54,11 @@ public:
 
   /// Generate hash value for our class
   u_long hash () const override;
+
+private:
+  TAO_Base_Transport_Property &operator= (TAO_Base_Transport_Property const &) = delete;
+  TAO_Base_Transport_Property (TAO_Base_Transport_Property &&) = delete;
+  TAO_Base_Transport_Property &operator= (TAO_Base_Transport_Property &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
