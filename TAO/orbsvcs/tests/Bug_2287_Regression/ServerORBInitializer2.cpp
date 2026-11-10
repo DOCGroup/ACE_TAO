@@ -4,7 +4,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Exception.h"
 
-
 void
 Server_ORBInitializer2::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
@@ -42,5 +41,5 @@ void
 Server_ORBInitializer2::set_server_iogr (CORBA::Object_ptr obj)
 {
   if (this->sri_)
-    this->sri_->server_iogr_ = CORBA::Object::_duplicate (obj);
+    this->sri_->server_iogr (obj);
 }

@@ -3,6 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ServerORBInitializer2.h"
 #include "ServerRequest_Interceptor2.h"
@@ -118,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList policies (2);
+      TAO::Utils::PolicyList_Destroyer policies (2);
       policies.length (2);
 
       policies[0] =
@@ -131,13 +132,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->create_POA ("my_poa",
                               poa_manager.in (),
                               policies);
-
-      // Creation of the new POA is over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
-        {
-          CORBA::Policy_ptr const policy = policies[i];
-          policy->destroy ();
-        }
 
       if (parse_args (options, argc, argv) != 0)
         return 1;

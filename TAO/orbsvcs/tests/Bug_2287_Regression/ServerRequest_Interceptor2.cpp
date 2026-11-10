@@ -21,6 +21,12 @@ TAO249_ServerRequest_Interceptor2::destroy ()
 }
 
 void
+TAO249_ServerRequest_Interceptor2::server_iogr (CORBA::Object_ptr object)
+{
+  this->server_iogr_ = CORBA::Object::_duplicate (object);
+}
+
+void
 TAO249_ServerRequest_Interceptor2::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
 {
@@ -78,7 +84,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
         }
       else
         {
-          // A request has been recioved after the expiration time.
+          // A request has been received after the expiration time.
           // This could legitimately happen - it is only definitely a problem if
           // the client keeps on retrying after now. We set a flag so we can check for this.
           this->expired_ = true;
@@ -91,7 +97,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   // Let's forward the client back to us again. I would like to be able to make this a PERM
   // but there's no such animal in the PortableInterceptor module. Plus as we (currently) transform
   // and marshal *all* forward requests as vanilla LOCATION_FORWARD it doesn't really matter.
-  throw PortableInterceptor::ForwardRequest (server_iogr_.in ());
+  throw PortableInterceptor::ForwardRequest (this->server_iogr_.in ());
 }
 
 TimeBase::TimeT

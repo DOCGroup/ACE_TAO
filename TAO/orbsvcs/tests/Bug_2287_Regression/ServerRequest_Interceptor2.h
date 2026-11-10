@@ -61,12 +61,13 @@ public:
     PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
 
-  CORBA::Object_var server_iogr_ {};
+  void server_iogr (CORBA::Object_ptr object);
 
 protected:
   static TimeBase::TimeT get_now ();
 
 private:
+  CORBA::Object_var server_iogr_ {};
   bool expired_ {};
 };
 
