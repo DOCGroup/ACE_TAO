@@ -25,6 +25,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Basic_Types.h"
 
+#include <atomic>
 #include <cstddef>
 
 // The ACE_ASSERT macro used to be defined here, include ace/Assert.h
@@ -677,9 +678,9 @@ private:
   /// If we are reference counting, this points to a shared count that will
   /// be deleted when it reaches zero.  Since we want optional but shared
   /// ownership neither std::unique_ptr nor ACE_Strong_Bound_Ptr have the right
-  /// semantics.  *Bound_Ptr also doesn't take advantage of Atomic_Op.
-  using Atomic_ULong = ACE_Atomic_Op<ACE_MT_SYNCH::MUTEX, unsigned long>;
-  Atomic_ULong *ostream_refcount_;
+  /// semantics.
+  using Ostream_Refcount = std::atomic<unsigned long>;
+  Ostream_Refcount *ostream_refcount_;
 
   /// The callback object.
   ACE_Log_Msg_Callback *msg_callback_;

@@ -741,10 +741,10 @@ ACE_Log_Msg::cleanup_ostream ()
 {
   if (this->ostream_refcount_)
     {
-      if (--*this->ostream_refcount_ == 0)
+      if (this->ostream_refcount_->fetch_sub (1) == 1)
         {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-          this->ostream_refcount_->~Atomic_ULong();
+          this->ostream_refcount_->~Ostream_Refcount();
           ACE_Allocator::instance()->free(this->ostream_refcount_);
 #else
           delete this->ostream_refcount_;
@@ -3069,17 +3069,21 @@ ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, bool delete_ostream)
       if (delete_ostream && !this->ostream_refcount_)
         {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-          ACE_NEW_MALLOC (this->ostream_refcount_, static_cast<Atomic_ULong*>(ACE_Allocator::instance()->malloc(sizeof(Atomic_ULong))), Atomic_ULong (1));
+          ACE_NEW_MALLOC (
+            this->ostream_refcount_,
+            static_cast<Ostream_Refcount *> (
+              ACE_Allocator::instance ()->malloc (sizeof (Ostream_Refcount))),
+            Ostream_Refcount (1));
 #else
-          ACE_NEW (this->ostream_refcount_, Atomic_ULong (1));
+          ACE_NEW (this->ostream_refcount_, Ostream_Refcount (1));
 #endif /* ACE_HAS_ALLOC_HOOKS */
         }
       else if (!delete_ostream && this->ostream_refcount_)
         {
-          if (--*this->ostream_refcount_ == 0)
+          if (this->ostream_refcount_->fetch_sub (1) == 1)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-              this->ostream_refcount_->~Atomic_ULong();
+              this->ostream_refcount_->~Ostream_Refcount();
               ACE_Allocator::instance()->free(this->ostream_refcount_);
 #else
               delete this->ostream_refcount_;
@@ -3097,9 +3101,13 @@ ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, bool delete_ostream)
   if (delete_ostream)
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_NEW_MALLOC (this->ostream_refcount_, static_cast<Atomic_ULong*>(ACE_Allocator::instance()->malloc(sizeof(Atomic_ULong))), Atomic_ULong (1));
+      ACE_NEW_MALLOC (
+        this->ostream_refcount_,
+        static_cast<Ostream_Refcount *> (
+          ACE_Allocator::instance ()->malloc (sizeof (Ostream_Refcount))),
+        Ostream_Refcount (1));
 #else
-      ACE_NEW (this->ostream_refcount_, Atomic_ULong (1));
+      ACE_NEW (this->ostream_refcount_, Ostream_Refcount (1));
 #endif /* ACE_HAS_ALLOC_HOOKS */
     }
 
@@ -3162,7 +3170,7 @@ ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
       attributes.ostream_ = inherit_log->msg_ostream ();
       if (attributes.ostream_ && inherit_log->ostream_refcount_)
         {
-          ++*inherit_log->ostream_refcount_;
+          inherit_log->ostream_refcount_->fetch_add (1);
           attributes.ostream_refcount_ = inherit_log->ostream_refcount_;
         }
       else
@@ -3195,7 +3203,7 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
     {
       new_log->ostream_ = attributes.ostream_;
       new_log->ostream_refcount_ =
-        static_cast<Atomic_ULong *> (attributes.ostream_refcount_);
+        static_cast<Ostream_Refcount *> (attributes.ostream_refcount_);
 
       new_log->priority_mask (attributes.priority_mask_);
 
