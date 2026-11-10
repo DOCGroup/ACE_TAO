@@ -488,12 +488,12 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
 # if !defined (ACE_DISABLE_TEMPNAM)
-  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_NAMESPACE_STORAGE_CLASS
   char *tempnam (const char *dir = nullptr,
                  const char *pfx = nullptr);
 
 #   if defined (ACE_HAS_WCHAR)
-  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_NAMESPACE_STORAGE_CLASS
   wchar_t *tempnam (const wchar_t *dir,
                     const wchar_t *pfx = nullptr);
 #   endif /* ACE_HAS_WCHAR */

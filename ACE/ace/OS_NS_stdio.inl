@@ -891,65 +891,6 @@ ACE_OS::rewind (FILE *fp)
 #endif /* !ACE_MQX */
 }
 
-#if !defined (ACE_DISABLE_TEMPNAM)
-ACE_INLINE char *
-ACE_OS::tempnam (const char *dir, const char *pfx)
-{
-  ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (ACE_LACKS_TEMPNAM)
-  ACE_UNUSED_ARG (dir);
-  ACE_UNUSED_ARG (pfx);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_NONCONST_TEMPNAM)
-  return ::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx));
-#elif defined (ACE_TEMPNAM_EQUIVALENT)
-  return ACE_TEMPNAM_EQUIVALENT (dir, pfx);
-#else /* ACE_LACKS_TEMPNAM */
-  return ::tempnam (dir, pfx);
-#endif /* ACE_LACKS_TEMPNAM */
-}
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
-ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
-{
-  ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (ACE_LACKS_TEMPNAM)
-  ACE_UNUSED_ARG (dir);
-  ACE_UNUSED_ARG (pfx);
-  ACE_NOTSUP_RETURN (0);
-#elif defined(ACE_WIN32)
-#  if defined (ACE_HAS_NONCONST_TEMPNAM)
-  return ::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx));
-#  else
-  return ::_wtempnam (dir, pfx);
-#  endif /* ACE_HAS_NONCONST_TEMPNAM */
-#else /* ACE_LACKS_TEMPNAM */
-  // No native wide-char support; convert to narrow and call the char* variant.
-  ACE_Wide_To_Ascii wta_ndir(dir);
-  char *ndir = wta_ndir.char_rep ();
-
-  ACE_Wide_To_Ascii wta_npfx(pfx);
-  char *npfx = wta_npfx.char_rep ();
-  char *name = ACE_OS::tempnam (ndir, npfx);
-  // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
-  // Convert that string to wide-char and free() the original.
-  wchar_t *wname = nullptr;
-  if (name != 0)
-    {
-      size_t namelen = ACE_OS::strlen (name) + 1;
-      wname = reinterpret_cast<wchar_t *>
-        (ACE_OS::malloc (namelen * sizeof (wchar_t)));
-      if (wname != 0)
-        ACE_OS::strcpy (wname, ACE_Ascii_To_Wide (name).wchar_rep ());
-      ACE_OS::free (name);
-    }
-  return wname;
-#endif /* ACE_LACKS_TEMPNAM */
-}
-#endif /* ACE_HAS_WCHAR */
-#endif /* !ACE_DISABLE_TEMPNAM */
-
 ACE_INLINE int
 ACE_OS::vasprintf (char **bufp, const char* format, va_list argptr)
 {
