@@ -9,6 +9,7 @@
 //=============================================================================
 
 #include <cstdio>
+#include <cstddef>
 #include <memory>
 #include <string>
 
@@ -105,7 +106,7 @@ private:
   TAO_StreamCtrl *streamctrl_ {};
   /// Stream controller
 
-  int frame_count_ {};
+  std::size_t frame_count_ {};
   /// Number of frames sent.
 
   Options options_;

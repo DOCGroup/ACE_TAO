@@ -245,10 +245,10 @@ Sender::pace_data ()
       while (1)
         {
           // Read from the file into a message block.
-          size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                    1,
-                                    this->mb_.size (),
-                                    this->input_file_.get ());
+          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                               1,
+                                               this->mb_.size (),
+                                               this->input_file_.get ());
 
           if (n == 0)
             {
@@ -311,7 +311,7 @@ Sender::pace_data ()
                               -1);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent successfully\n",
+                      "Sender::pace_data frame %B was sent successfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.

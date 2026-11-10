@@ -9,6 +9,8 @@
  */
 //=============================================================================
 
+#include <cstddef>
+
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -38,7 +40,7 @@ public:
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
-  int frame_count_ {};
+  std::size_t frame_count_ {};
   /// Keeping a count of the incoming frames.
 
   /// Related stream control.

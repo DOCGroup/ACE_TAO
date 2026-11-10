@@ -56,7 +56,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // the sender.
   //
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame for frame %d\n",
+              "Receiver_Callback::receive_frame for frame %B\n",
               ++this->frame_count_));
 
   if (this->streamctrl_ != nullptr)
@@ -100,7 +100,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t const written =
+      std::size_t const written =
         ACE_OS::fwrite (frame->rd_ptr (),
                         frame->length (),
                         1,
