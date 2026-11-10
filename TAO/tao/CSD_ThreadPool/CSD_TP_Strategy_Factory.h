@@ -47,7 +47,6 @@ namespace TAO
 
         int init (int argc, ACE_TCHAR* argv[]) override;
 
-      private:
         TP_Strategy_Factory (TP_Strategy_Factory const &) = delete;
         TP_Strategy_Factory &operator= (TP_Strategy_Factory const &) = delete;
         TP_Strategy_Factory (TP_Strategy_Factory &&) = delete;

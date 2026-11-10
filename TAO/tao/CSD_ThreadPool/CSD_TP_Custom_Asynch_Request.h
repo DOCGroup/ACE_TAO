@@ -50,6 +50,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Custom_Asynch_Request() override;
 
+      TP_Custom_Asynch_Request (TP_Custom_Asynch_Request const &) = delete;
+      TP_Custom_Asynch_Request &operator= (TP_Custom_Asynch_Request const &) = delete;
+      TP_Custom_Asynch_Request (TP_Custom_Asynch_Request &&) = delete;
+      TP_Custom_Asynch_Request &operator= (TP_Custom_Asynch_Request &&) = delete;
+
     protected:
       /// Dispatch the request to the servant.
       void dispatch_i() override;

@@ -59,6 +59,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Collocated_Synch_With_Server_Request() override;
 
+      TP_Collocated_Synch_With_Server_Request (TP_Collocated_Synch_With_Server_Request const &) = delete;
+      TP_Collocated_Synch_With_Server_Request &operator= (TP_Collocated_Synch_With_Server_Request const &) = delete;
+      TP_Collocated_Synch_With_Server_Request (TP_Collocated_Synch_With_Server_Request &&) = delete;
+      TP_Collocated_Synch_With_Server_Request &operator= (TP_Collocated_Synch_With_Server_Request &&) = delete;
+
       /// Wait until the request has been dispatched (but not completed), or
       /// until it has been cancelled.  Note that this will wait until just
       /// *before* the request is dispatched by a worker thread.  This is

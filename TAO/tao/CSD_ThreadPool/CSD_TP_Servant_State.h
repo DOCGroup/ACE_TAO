@@ -69,12 +69,12 @@ namespace TAO
       /// Mutator for the servant busy flag.
       void busy_flag(bool new_value);
 
-    private:
       TP_Servant_State (TP_Servant_State const &) = delete;
       TP_Servant_State &operator= (TP_Servant_State const &) = delete;
       TP_Servant_State (TP_Servant_State &&) = delete;
       TP_Servant_State &operator= (TP_Servant_State &&) = delete;
 
+    private:
       /// The servant's current "busy" state (true == busy, false == not busy)
       bool busy_flag_ {};
     };

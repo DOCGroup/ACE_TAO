@@ -73,12 +73,12 @@ namespace TAO
       /// visiting every request).
       void accept_visitor(TP_Queue_Visitor& visitor);
 
-    private:
       TP_Queue (TP_Queue const &) = delete;
       TP_Queue &operator= (TP_Queue const &) = delete;
       TP_Queue (TP_Queue &&) = delete;
       TP_Queue &operator= (TP_Queue &&) = delete;
 
+    private:
       /// Non-owning front link; put() adds a reference for each queued request.
       TP_Request* head_ {};
 

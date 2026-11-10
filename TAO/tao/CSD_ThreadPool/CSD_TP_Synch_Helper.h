@@ -60,12 +60,12 @@ namespace TAO
       /// wait_while_pending() to unblock.
       void cancelled();
 
-    private:
       TP_Synch_Helper (TP_Synch_Helper const &) = delete;
       TP_Synch_Helper &operator= (TP_Synch_Helper const &) = delete;
       TP_Synch_Helper (TP_Synch_Helper &&) = delete;
       TP_Synch_Helper &operator= (TP_Synch_Helper &&) = delete;
 
+    private:
       /// Enumeration Type for all possible states of this helper object.
       enum HelperState
       {

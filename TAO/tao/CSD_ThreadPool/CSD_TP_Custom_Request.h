@@ -46,6 +46,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Custom_Request() override;
 
+      TP_Custom_Request (TP_Custom_Request const &) = delete;
+      TP_Custom_Request &operator= (TP_Custom_Request const &) = delete;
+      TP_Custom_Request (TP_Custom_Request &&) = delete;
+      TP_Custom_Request &operator= (TP_Custom_Request &&) = delete;
+
     protected:
       TP_Custom_Request(TP_Custom_Request_Operation* op,
                         TP_Servant_State*            servant_state);

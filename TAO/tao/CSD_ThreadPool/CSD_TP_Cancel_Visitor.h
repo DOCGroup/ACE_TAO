@@ -57,6 +57,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Cancel_Visitor() override;
 
+      TP_Cancel_Visitor (TP_Cancel_Visitor const &) = delete;
+      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor const &) = delete;
+      TP_Cancel_Visitor (TP_Cancel_Visitor &&) = delete;
+      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor &&) = delete;
+
       /// Returns true to continue visitation.  Returns false to stop
       /// visitation.  Sets the remove_flag to true if the request should
       /// be removed from the queue as a result of the visit.  Leaves the

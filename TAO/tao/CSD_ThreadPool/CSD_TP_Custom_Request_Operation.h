@@ -66,6 +66,11 @@ namespace TAO
       /// is useful for chaining.
       PortableServer::Servant servant();
 
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation &&) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation &&) = delete;
+
     protected:
       explicit TP_Custom_Request_Operation(PortableServer::Servant servant);
 
@@ -73,11 +78,6 @@ namespace TAO
       virtual void cancel_i() = 0;
 
     private:
-      TP_Custom_Request_Operation (TP_Custom_Request_Operation const &) = delete;
-      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation const &) = delete;
-      TP_Custom_Request_Operation (TP_Custom_Request_Operation &&) = delete;
-      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation &&) = delete;
-
       PortableServer::ServantBase_var servant_;
     };
   }

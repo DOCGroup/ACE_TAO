@@ -60,6 +60,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Collocated_Synch_Request() override;
 
+      TP_Collocated_Synch_Request (TP_Collocated_Synch_Request const &) = delete;
+      TP_Collocated_Synch_Request &operator= (TP_Collocated_Synch_Request const &) = delete;
+      TP_Collocated_Synch_Request (TP_Collocated_Synch_Request &&) = delete;
+      TP_Collocated_Synch_Request &operator= (TP_Collocated_Synch_Request &&) = delete;
+
       /// Wait until the request has been dispatched (and completed), or
       /// until it has been cancelled.
       /// Returns true if the request has been dispatched, and returns

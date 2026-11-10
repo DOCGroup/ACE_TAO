@@ -67,6 +67,10 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Remote_Request() override;
 
+      TP_Remote_Request (TP_Remote_Request const &) = delete;
+      TP_Remote_Request &operator= (TP_Remote_Request const &) = delete;
+      TP_Remote_Request (TP_Remote_Request &&) = delete;
+      TP_Remote_Request &operator= (TP_Remote_Request &&) = delete;
 
     protected:
       /// Prepare this TP_Remote_Request object to be placed into the

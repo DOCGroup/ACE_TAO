@@ -56,6 +56,10 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Collocated_Asynch_Request() override;
 
+      TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request const &) = delete;
+      TP_Collocated_Asynch_Request &operator= (TP_Collocated_Asynch_Request const &) = delete;
+      TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request &&) = delete;
+      TP_Collocated_Asynch_Request &operator= (TP_Collocated_Asynch_Request &&) = delete;
 
     protected:
       /// Prepare this TP_Collocated_Asynch_Request object to be placed

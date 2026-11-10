@@ -101,12 +101,12 @@ namespace TAO
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant);
 
-    private:
       TP_Task (TP_Task const &) = delete;
       TP_Task &operator= (TP_Task const &) = delete;
       TP_Task (TP_Task &&) = delete;
       TP_Task &operator= (TP_Task &&) = delete;
 
+    private:
       using LockType = TAO_SYNCH_MUTEX;
       using ConditionType = TAO_Condition<LockType>;
 

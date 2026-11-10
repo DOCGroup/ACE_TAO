@@ -48,6 +48,11 @@ namespace TAO
       /// Virtual Destructor.
       virtual ~TP_Queue_Visitor();
 
+      TP_Queue_Visitor (TP_Queue_Visitor const &) = delete;
+      TP_Queue_Visitor &operator= (TP_Queue_Visitor const &) = delete;
+      TP_Queue_Visitor (TP_Queue_Visitor &&) = delete;
+      TP_Queue_Visitor &operator= (TP_Queue_Visitor &&) = delete;
+
       /// Returns true to continue visitation.  Return false to stop
       /// visitation.  Sets the remove_flag to true if the request should
       /// be removed from the queue as a result of the visit.  Leaves the

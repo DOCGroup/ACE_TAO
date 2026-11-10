@@ -50,6 +50,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Custom_Synch_Request() override;
 
+      TP_Custom_Synch_Request (TP_Custom_Synch_Request const &) = delete;
+      TP_Custom_Synch_Request &operator= (TP_Custom_Synch_Request const &) = delete;
+      TP_Custom_Synch_Request (TP_Custom_Synch_Request &&) = delete;
+      TP_Custom_Synch_Request &operator= (TP_Custom_Synch_Request &&) = delete;
+
       /// Wait until the request has been executed (and completes), or
       /// until it has been cancelled.  Returns true if the request has
       /// been executed/completed, and returns false if the request has

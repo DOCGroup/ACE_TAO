@@ -47,6 +47,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Corba_Request() override;
 
+      TP_Corba_Request (TP_Corba_Request const &) = delete;
+      TP_Corba_Request &operator= (TP_Corba_Request const &) = delete;
+      TP_Corba_Request (TP_Corba_Request &&) = delete;
+      TP_Corba_Request &operator= (TP_Corba_Request &&) = delete;
+
     protected:
       TP_Corba_Request(const PortableServer::ObjectId& object_id,
                        PortableServer::POA_ptr         poa,

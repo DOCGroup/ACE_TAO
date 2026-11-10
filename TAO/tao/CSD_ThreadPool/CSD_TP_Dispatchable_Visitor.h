@@ -54,6 +54,11 @@ namespace TAO
       /// Virtual Destructor.
       ~TP_Dispatchable_Visitor() override;
 
+      TP_Dispatchable_Visitor (TP_Dispatchable_Visitor const &) = delete;
+      TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor const &) = delete;
+      TP_Dispatchable_Visitor (TP_Dispatchable_Visitor &&) = delete;
+      TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor &&) = delete;
+
       /// Reset this visitor object in order to re-use it for another
       /// visitation of the request queue.  This sets the visitor's "result"
       /// (the TP_Request* data member) to its default value (a nil handle).
