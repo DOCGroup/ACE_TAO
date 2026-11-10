@@ -57,9 +57,9 @@ public:
   /**
   * Default constructor. Should use instance() to get global instance.
   */
-  ACE_RLECompressor();
+  ACE_RLECompressor ();
 
-  ~ACE_RLECompressor() override = default;
+  ~ACE_RLECompressor () override = default;
 
   ACE_RLECompressor (ACE_RLECompressor const &) = delete;
   ACE_RLECompressor (ACE_RLECompressor &&) = delete;
@@ -80,7 +80,7 @@ public:
   * for the possibility that a reduced compressed length
   * is not possible.
   */
-  ACE_UINT64 compress(void const *in_ptr,
+  ACE_UINT64 compress (void const *in_ptr,
                       ACE_UINT64 in_len,
                       void *out_ptr,
                       ACE_UINT64 max_out_len) override;
@@ -94,7 +94,7 @@ public:
   * otherwise the return value will indicate the resultant
   * @a out_ptr decompressed buffer length.
   */
-  ACE_UINT64 decompress(void const *in_ptr,
+  ACE_UINT64 decompress (void const *in_ptr,
                         ACE_UINT64 in_len,
                         void *out_ptr,
                         ACE_UINT64 max_out_len) override;

@@ -27,7 +27,7 @@ ACE_RLECompressor::compress (void const *in_ptr,
 
     if (in_p != nullptr && out_p != nullptr && in_len != 0) {
         while (in_len-- > 0) {
-            ACE_Byte const cur_byte = *in_p++;
+            ACE_Byte const cur_byte {*in_p++};
 
             switch (out_index ? run_count : 128U) {  // BootStrap to 128
 
@@ -96,30 +96,34 @@ ACE_RLECompressor::decompress (void const *in_ptr,
     ACE_Byte const *in_p {static_cast<ACE_Byte const *> (in_ptr)};
     ACE_Byte *out_p {static_cast<ACE_Byte *> (out_ptr)};
 
-    if (in_p != nullptr && out_p != nullptr) while(in_len-- > 0) {
-        ACE_Byte const cur_byte = *in_p++;
-        ACE_UINT32 const cpy_len = static_cast<ACE_UINT32> ((cur_byte & ACE_CHAR_MAX) + 1);
+    if (in_p != nullptr && out_p != nullptr)
+      {
+        while (in_len-- > 0)
+          {
+            ACE_Byte const cur_byte {*in_p++};
+            ACE_UINT32 const cpy_len {static_cast<ACE_UINT32> ((cur_byte & ACE_CHAR_MAX) + 1)};
 
-        if (cpy_len > max_out_len) {
-            return static_cast<ACE_UINT64> (-1); // Output Exhausted
-        } else if ((cur_byte & 0x80) != 0) {  // compressed
-            if (in_len-- > 0) {
-                std::memset (out_p, *in_p++, cpy_len);
+            if (cpy_len > max_out_len) {
+                return static_cast<ACE_UINT64> (-1); // Output Exhausted
+            } else if ((cur_byte & 0x80) != 0) {  // compressed
+                if (in_len-- > 0) {
+                    std::memset (out_p, *in_p++, cpy_len);
+                } else {
+                    return static_cast<ACE_UINT64> (-1); // Output Exhausted
+                }
+            } else if (in_len >= cpy_len) {
+                std::memcpy (out_p, in_p, cpy_len);
+                in_p    += cpy_len;
+                in_len  -= cpy_len;
             } else {
                 return static_cast<ACE_UINT64> (-1); // Output Exhausted
             }
-        } else if (in_len >= cpy_len) {
-            std::memcpy (out_p, in_p, cpy_len);
-            in_p    += cpy_len;
-            in_len  -= cpy_len;
-        } else {
-            return static_cast<ACE_UINT64> (-1); // Output Exhausted
-        }
 
-        out_p       += cpy_len;
-        max_out_len -= cpy_len;
-        out_len     += cpy_len;
-    }
+            out_p       += cpy_len;
+            max_out_len -= cpy_len;
+            out_len     += cpy_len;
+          }
+      }
 
     return out_len;
 }
