@@ -73,6 +73,13 @@ CosProperty_Hash_Value::~CosProperty_Hash_Value () = default;
 // new'ed and at the destructor of the factory delete all these New'ed
 // things.
 
+TAO_PropertySetFactory::~TAO_PropertySetFactory ()
+{
+  CORBA::ULong const length = this->propertyset_products_.length ();
+  for (CORBA::ULong i {}; i < length; ++i)
+    delete this->propertyset_products_[i];
+}
+
 CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_propertyset ()
 {

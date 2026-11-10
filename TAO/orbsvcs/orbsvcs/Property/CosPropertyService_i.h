@@ -117,7 +117,7 @@ public:
   TAO_PropertySetFactory () = default;
   // Constructor.
 
-  ~TAO_PropertySetFactory () override = default;
+  ~TAO_PropertySetFactory () override;
   // Destructor.
 
   CosPropertyService::PropertySet_ptr create_propertyset () override;
