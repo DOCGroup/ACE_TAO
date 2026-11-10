@@ -2,18 +2,19 @@
 #include "tao/PI/PI.h"
 #include "TestS.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior { ACE_TEXT ("file://test.ior") };
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
 };
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -30,7 +31,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -46,7 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object (options.ior);
+        orb->string_to_object (options.ior.c_str ());
 
       Test::Hello_var hello =
         Test::Hello::_narrow (tmp.in ());
@@ -56,7 +56,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello "
                                        "reference <%s>\n"),
-                             options.ior),
+                             options.ior.c_str ()),
                             1);
         }
 

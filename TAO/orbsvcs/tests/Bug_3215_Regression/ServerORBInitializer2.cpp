@@ -27,6 +27,7 @@ Server_ORBInitializer2::register_server_request_interceptors (
 
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = sri;
+  // The ORB initializer retains a non-owning pointer to the registered interceptor.
   this->sri_ = sri;
 
   info->add_server_request_interceptor (server_interceptor.in ());
