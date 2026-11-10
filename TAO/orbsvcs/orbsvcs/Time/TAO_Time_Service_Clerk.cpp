@@ -9,7 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
                                                 int timer_value_usecs,
                                                 IORS const & servers)
@@ -31,7 +30,6 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
 
 // This method returns the global time and an estimate of inaccuracy
 // in a UTO.
-
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time ()
 {
@@ -50,7 +48,6 @@ TAO_Time_Service_Clerk::universal_time ()
 // This method returns the global time in a UTO only if the time can
 // be guaranteed to have been obtained securely.  This method is not
 // implemented currently.
-
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time ()
 {
@@ -58,7 +55,6 @@ TAO_Time_Service_Clerk::secure_universal_time ()
 }
 
 // This creates a new UTO based on the given parameters.
-
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
@@ -76,7 +72,6 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 }
 
 // This creates a new UTO given a time in the UtcT form.
-
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::uto_from_utc (TimeBase::UtcT const & utc)
 {

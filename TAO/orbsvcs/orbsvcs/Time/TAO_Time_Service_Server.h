@@ -35,10 +35,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_Time_Service_Server : public POA_CosTime::TimeService
 {
 public:
-  /// Constructor.
   TAO_Time_Service_Server () = default;
 
-  /// Destructor.
   ~TAO_Time_Service_Server () override = default;
 
   /// This operation returns the current system time and an estimate of

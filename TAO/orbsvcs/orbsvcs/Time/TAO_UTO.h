@@ -40,12 +40,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_UTO : public POA_CosTime::UTO
 {
 public:
-  /// Constructor.
   TAO_UTO (TimeBase::TimeT time,
            TimeBase::InaccuracyT inaccuracy,
            TimeBase::TdfT tdf);
 
-  /// Destructor.
   ~TAO_UTO () override = default;
 
   /// For the readonly attribute <time>.

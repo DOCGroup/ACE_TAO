@@ -44,12 +44,10 @@ public:
   /// Time server references.
   using IORS = std::vector<CosTime::TimeService_var>;
 
-  /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,
                           int timer_value_usecs,
                           IORS const & server);
 
-  /// Destructor.
   ~TAO_Time_Service_Clerk () override = default;
 
   /// This operation returns the global time and an estimate of

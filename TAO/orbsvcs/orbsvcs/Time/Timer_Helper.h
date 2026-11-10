@@ -47,10 +47,8 @@ class TAO_Time_Service_Clerk;
 class TAO_Time_Serv_Export Timer_Helper : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Timer_Helper () = default;
 
-  /// Destructor.
   ~Timer_Helper () override = default;
 
   /// Constructor that sets the clerk.

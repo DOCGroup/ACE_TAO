@@ -34,11 +34,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_TIO : public POA_CosTime::TIO
 {
 public:
-  /// Constructor.
   TAO_TIO (TimeBase::TimeT lower,
            TimeBase::TimeT upper);
 
-  /// Destructor.
   ~TAO_TIO () override = default;
 
   /// This is the get method for the attribute time interval.

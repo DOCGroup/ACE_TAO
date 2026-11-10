@@ -2,7 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
                   TimeBase::TimeT upper)
 {
@@ -11,7 +10,6 @@ TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
 }
 
 // This is the get method for the attribute time interval.
-
 TimeBase::IntervalT
 TAO_TIO::time_interval ()
 {
