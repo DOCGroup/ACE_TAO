@@ -354,9 +354,9 @@ TAO_PropertySet::define_property (char const *property_name,
                                      CosPropertyService::normal);
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
 
-  int ret = this->hash_table_.bind (hash_key,
-                                    hash_value,
-                                    entry_ptr);
+  int const ret = this->hash_table_.bind (hash_key,
+                                          hash_value,
+                                          entry_ptr);
 
   CORBA::TypeCode_var mapped_tc;
 
@@ -687,7 +687,7 @@ TAO_PropertySet::get_properties (CosPropertyService::PropertyNames const &proper
 
   // Get values for all the names.
 
-  CORBA::Any_var any_ptr = nullptr;
+  CORBA::Any_var any_ptr {};
   CORBA::Boolean ret_val = true;
 
   for (CORBA::ULong i {}; i < n; ++i)
@@ -1045,7 +1045,7 @@ TAO_PropertySetDef::define_property_with_mode (char const *property_name,
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
 
 
-  int ret = this->hash_table_.bind (hash_key, hash_value, entry_ptr);
+  int const ret = this->hash_table_.bind (hash_key, hash_value, entry_ptr);
 
   //CosProperty_Hash_Value old_value;
   //CosProperty_Hash_Key old_key;
@@ -1191,7 +1191,7 @@ TAO_PropertySetDef::get_property_mode (char const *property_name)
   CosProperty_Hash_Key hash_key (property_name);
   CosProperty_Hash_Value hash_value;
 
-  int ret = this->hash_table_.find (hash_key, hash_value);
+  int const ret = this->hash_table_.find (hash_key, hash_value);
 
   switch (ret)
     {
@@ -1281,7 +1281,7 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
   CosProperty_Hash_Key hash_key (property_name);
   CosProperty_Hash_Value hash_value;
 
-  int ret = this->hash_table_.find (hash_key, hash_value);
+  int const ret = this->hash_table_.find (hash_key, hash_value);
 
   //CosProperty_Hash_Value old_value;
   //CosProperty_Hash_Key old_key;
