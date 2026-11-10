@@ -312,7 +312,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   Messaging::PolicyValueSeq policy_value_seq;
 
-  size_t length {};
   CORBA::Octet *buf {};
 
   // This loop iterates through CORBA::PolicyList to convert
@@ -332,7 +331,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
       if (!((*policy_list)[i]->_tao_encode (out_CDR)))
         return;
 
-      length = out_CDR.total_length ();
+      size_t const length = out_CDR.total_length ();
       policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
 
       buf = policy_value_seq[i].pvalue.get_buffer ();
@@ -361,7 +360,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   if (!(out_cdr << policy_value_seq))
     return;
 
-  length = out_cdr.total_length ();
+  size_t const length = out_cdr.total_length ();
 
   tagged_component.component_data.length (static_cast <CORBA::ULong>(length));
   buf = tagged_component.component_data.get_buffer ();
