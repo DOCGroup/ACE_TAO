@@ -32,15 +32,12 @@ namespace TAO_FTRT {
   class TAO_FTRT_Export FTRT_ClientORB_Loader : public ACE_Service_Object
   {
   public:
-    /// Constructor.
     FTRT_ClientORB_Loader ();
 
-    /// Destructor.
     ~FTRT_ClientORB_Loader () override;
 
     /// Initialize the TransactionDepth loader hooks.
-    int init (int argc,
-      ACE_TCHAR *[]) override;
+    int init (int argc, ACE_TCHAR *[]) override;
 
   private:
     FTRT_ClientORB_Loader (FTRT_ClientORB_Loader const &) = delete;

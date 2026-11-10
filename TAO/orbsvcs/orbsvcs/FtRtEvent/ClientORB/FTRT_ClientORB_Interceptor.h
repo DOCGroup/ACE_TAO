@@ -38,10 +38,8 @@ class FTRT_ClientORB_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// ctor.
   explicit FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
 
-  /// dtor.
   ~FTRT_ClientORB_Interceptor () override = default;
 
   /// Canonical name of the interceptor.
@@ -65,8 +63,7 @@ private:
   FTRT_ClientORB_Interceptor (FTRT_ClientORB_Interceptor &&) = delete;
   FTRT_ClientORB_Interceptor &operator= (FTRT_ClientORB_Interceptor &&) = delete;
 
-  char const *myname_;
-  CORBA::Long transaction_depth_;
+  CORBA::Long const transaction_depth_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

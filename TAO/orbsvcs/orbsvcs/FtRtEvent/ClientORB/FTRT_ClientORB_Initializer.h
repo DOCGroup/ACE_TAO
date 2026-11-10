@@ -37,7 +37,7 @@ class FTRT_ClientORB_Initializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Priority mapping types
+  /// Creates an initializer with the configured transaction depth.
   explicit FTRT_ClientORB_Initializer (int transaction_depth);
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
