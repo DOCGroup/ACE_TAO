@@ -266,9 +266,9 @@ void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handl
 void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
                         RtecEventComm::EventSet const &data)
 {
-  const PortableServer::ObjectId_var object_id =
+  PortableServer::ObjectId_var const object_id =
     impl_->poa->reference_to_id(proxy_consumer);
-  FtRtecEventComm::ObjectId** result;
+  FtRtecEventComm::ObjectId **result {};
   std::memcpy (&result, &object_id[0], sizeof (FtRtecEventComm::ObjectId**));
 
   impl_->ftec->push(**result, data);
@@ -285,8 +285,9 @@ FTEC_Gateway_ConsumerAdmin::FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl)
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 {
-  FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
-  ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
+  // This pointer is encoded in the servant ObjectId and lives until disconnect.
+  FtRtecEventComm::ObjectId **remote_proxy_oid_ptr {};
+  ACE_NEW_THROW_EX (remote_proxy_oid_ptr, FtRtecEventComm::ObjectId *, CORBA::NO_MEMORY ());
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
@@ -310,8 +311,9 @@ FTEC_Gateway_SupplierAdmin::FTEC_Gateway_SupplierAdmin (FTEC_Gateway_Impl *impl)
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 {
-  FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
-  ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
+  // This pointer is encoded in the servant ObjectId and lives until disconnect.
+  FtRtecEventComm::ObjectId **remote_proxy_oid_ptr {};
+  ACE_NEW_THROW_EX (remote_proxy_oid_ptr, FtRtecEventComm::ObjectId *, CORBA::NO_MEMORY ());
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
@@ -335,7 +337,7 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb)
   const PortableServer::ObjectId_var object_id =
     current->get_object_id();
 
-  FtRtecEventComm::ObjectId** result;
+  FtRtecEventComm::ObjectId **result {};
   std::memcpy (&result, &object_id[0], sizeof (FtRtecEventComm::ObjectId**));
   return result;
 }

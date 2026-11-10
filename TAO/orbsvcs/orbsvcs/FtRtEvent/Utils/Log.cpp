@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
-unsigned int Log::log_level_;
+unsigned int Log::log_level_ {};
 
 #ifndef NDEBUG
   Log::Log (unsigned int log_level, ACE_TCHAR const *format, ...)
