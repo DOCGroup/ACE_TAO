@@ -44,7 +44,8 @@ namespace FTRTEC {
                   "(%P|%t) SCTP not enabled. ",
                   " Enable SCTP and rebuild ACE+TAO\n"));
 #endif /* TAO_HAS_SCIOP */
-      argc--; argv++;
+      --argc;
+      ++argv;
     }
     else {
       ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);

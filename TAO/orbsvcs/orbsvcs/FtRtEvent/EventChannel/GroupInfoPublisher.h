@@ -32,7 +32,7 @@ public:
   using BackupList = FtRtecEventChannelAdmin::EventChannelList;
 
   struct Info {
-    bool primary;
+    bool primary {};
     CORBA::Object_var iogr;
     FtRtecEventChannelAdmin::EventChannel_var successor;
     BackupList backups;

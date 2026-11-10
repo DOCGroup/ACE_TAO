@@ -59,11 +59,11 @@ UUID::UUID (ACE_TCHAR const *string_rep)
 bool
 UUID::from_string (char const *string_rep)
 {
-  int offset = 0;
+  int offset {};
 
-  for (int i = 0; i < 5; ++i)
+  for (int i {}; i < 5; ++i)
   {
-    for (int j = 0; j < counts[i]; ++j)
+    for (int j {}; j < counts[i]; ++j)
     {
       int r = hexbyte_to_byte(string_rep);
       if (r == -1)
@@ -91,7 +91,7 @@ bytes_to_hex (unsigned char const *bytes,
               char *dest,
               int len)
 {
-  for (int i = 0; i < len; ++i)
+  for (int i {}; i < len; ++i)
   {
     *dest++ = table[bytes[i] >> 4];
     *dest++ = table[bytes[i] & 0x0f];
@@ -106,7 +106,7 @@ bytes_to_hex (unsigned char const *bytes,
 void
 UUID::to_string (char *string_rep) const
 {
-  for (int i = 0; i < 5; ++i)
+  for (int i {}; i < 5; ++i)
   {
     string_rep = bytes_to_hex(rep_.uuid,
                               string_rep,

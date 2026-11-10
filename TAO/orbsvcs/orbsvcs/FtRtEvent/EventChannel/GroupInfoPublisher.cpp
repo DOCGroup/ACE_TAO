@@ -9,10 +9,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()
-  : info_(new Info)
+  : info_ (std::make_unique<Info> ())
 {
   subscribers_.reserve (2);
-  info_->primary = false;
 }
 
 void
@@ -56,7 +55,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
                                    int my_position,
                                    CORBA::ULong object_group_ref_version)
 {
-  Info_ptr result(new Info);
+  Info_ptr result = std::make_unique<Info> ();
 
   result->primary = (my_position == 0);
 
@@ -66,8 +65,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   TAO_IOP::TAO_IOR_Manipulation::IORList iors;
   iors.length(len);
 
-  size_t i;
-  for (i = 0; i < len; ++i) {
+  for (size_t i {}; i < len; ++i) {
     iors[i] = CORBA::Object::_duplicate(info_list[i].ior.in());
   }
 
@@ -86,7 +84,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   if (successors_length /*!= info_->backups.length() */)  {
     // successor changed, update successor
     iors.length(successors_length);
-    for (i = 0; i < successors_length; ++i) {
+    for (size_t i {}; i < successors_length; ++i) {
       iors[i] = CORBA::Object::_duplicate(info_list[i+ my_position+1].ior.in());
     }
 
@@ -109,7 +107,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
 
   // update backups
   result->backups.length(successors_length);
-  for (i = 0; i < successors_length; ++i)  {
+  for (size_t i {}; i < successors_length; ++i)  {
     result->backups[i] =
       FtRtecEventChannelAdmin::EventChannel::_narrow(
       info_list[i+ my_position+1].ior.in());

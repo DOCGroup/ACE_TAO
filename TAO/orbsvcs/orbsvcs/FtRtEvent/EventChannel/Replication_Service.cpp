@@ -41,7 +41,7 @@ namespace FTRTEC
       return 0;
 
     initialized = true;
-    bool ami = false;
+    bool ami {};
 
     // Parse any service configurator parameters.
     while (argc > 0) {

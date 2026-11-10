@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int find_by_location(const FTRT::ManagerInfoList& list,
                 const FTRT::Location & location)
 {
-    unsigned i;
+    unsigned i {};
     for (i = 0; i < list.length(); ++i) {
         if (list[i].the_location == location) {
             return i;
@@ -113,7 +113,8 @@ void TAO_FTEC_Group_Manager::add_member (
   TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
     (const char*)info.the_location[0].id);
 
-  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> new_impl(new TAO_FTEC_Group_Manager_Impl);
+  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> new_impl =
+    std::make_unique<TAO_FTEC_Group_Manager_Impl> ();
 
   new_impl->my_position = impl_->my_position;
   size_t pos = impl_->info_list.length();

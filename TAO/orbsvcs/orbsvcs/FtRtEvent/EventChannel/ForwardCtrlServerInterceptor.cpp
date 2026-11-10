@@ -18,7 +18,7 @@ CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::String_var orb_id = ri->orb_id();
 
-  int argc = 0;
+  int argc {};
   ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, orb_id.in());
 
@@ -121,7 +121,7 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
 void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   IOP::ServiceContext_var service_context;
-  FT::ObjectGroupRefVersion version=0;
+  FT::ObjectGroupRefVersion version {};
 
   try
   {

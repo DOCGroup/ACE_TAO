@@ -70,7 +70,7 @@ int SCTP_Fault_Detector::parse_conf(int argc, ACE_TCHAR** argv)
     if (ACE_OS::strcasecmp (argv[curarg],
       ACE_TEXT("-HeartBeat")) == 0)
     {
-      curarg++;
+      ++curarg;
       if (curarg < argc)
         connector_.set_heart_beat(ACE_OS::atoi(argv[curarg]));
     }

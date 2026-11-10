@@ -43,7 +43,7 @@ int  AMI_Primary_Replication_Strategy::release ()
 int AMI_Primary_Replication_Strategy::svc()
 {
   try{
-    int argc = 0;
+    int argc {};
     char** argv {};
     orb_ = CORBA::ORB_init (argc, argv);
 
@@ -91,7 +91,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 {
    ACE_Auto_Event event;
    Update_Manager* manager {};
-   bool success = false;
+   bool success {};
 
     FTRT::TransactionDepth transaction_depth =
       Request_Context_Repository().get_transaction_depth();

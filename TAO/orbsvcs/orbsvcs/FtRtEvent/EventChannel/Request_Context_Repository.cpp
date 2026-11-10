@@ -171,7 +171,7 @@ Request_Context_Repository::get_sequence_number()
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent");
   CORBA::Any_var a = pic->get_slot(seq_num_slot);
-  FTRT::SequenceNumber result  = 0;
+  FTRT::SequenceNumber result {};
   a >>= result;
   return result;
 }
@@ -181,7 +181,7 @@ Request_Context_Repository::get_sequence_number(
       PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   CORBA::Any_var a = ri->get_slot(seq_num_slot);
-  FTRT::SequenceNumber result  = 0;
+  FTRT::SequenceNumber result {};
   a >>= result;
   return result;
 }
@@ -231,7 +231,7 @@ Request_Context_Repository::get_transaction_depth(
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   CORBA::Any_var a = ri->get_slot(transaction_depth_slot);
-  FTRT::TransactionDepth result=0;
+  FTRT::TransactionDepth result {};
   a >>= result;
   return result;
 }
@@ -244,7 +244,7 @@ Request_Context_Repository::get_transaction_depth()
 
   CORBA::Any_var a = pic->get_slot(transaction_depth_slot);
 
-  FTRT::TransactionDepth result=0;
+  FTRT::TransactionDepth result {};
   a >>= result;
   return result;
 }

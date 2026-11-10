@@ -51,7 +51,7 @@ CachedRequestTable::get_state (FtRtecEventChannelAdmin::CachedOptionResults &sta
 {
   state.length(table_.current_size());
   TableImpl::iterator last = table_.end();
-  int i = 0;
+  int i {};
 
   for (TableImpl::iterator first = table_.begin();
     first != last;

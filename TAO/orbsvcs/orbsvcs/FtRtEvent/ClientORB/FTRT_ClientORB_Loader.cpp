@@ -27,15 +27,13 @@ namespace TAO_FTRT {
 
     // Set defaults.
     int transaction_depth = 1;
-    int curarg = 0;
-
     // Parse any service configurator parameters.
-    for (curarg = 0; curarg < argc; curarg++)
+    for (int curarg {}; curarg < argc; ++curarg)
       {
         if (ACE_OS::strcasecmp (argv[curarg],
           ACE_TEXT("-ORBTransactionDepth")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             transaction_depth = ACE_OS::atoi(argv[curarg]);
         }
