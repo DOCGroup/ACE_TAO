@@ -38,7 +38,6 @@ public:
   /// Initialize the Diffserv loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DiffServPolicy_Initializer (TAO_DiffServPolicy_Initializer const &) = delete;
   TAO_DiffServPolicy_Initializer &operator= (TAO_DiffServPolicy_Initializer const &) = delete;
   TAO_DiffServPolicy_Initializer (TAO_DiffServPolicy_Initializer &&) = delete;

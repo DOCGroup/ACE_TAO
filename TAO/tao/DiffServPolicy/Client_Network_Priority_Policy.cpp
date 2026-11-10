@@ -19,7 +19,7 @@ TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
 }
 
 TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
-   TAO_Client_Network_Priority_Policy const& rhs)
+   TAO_Client_Network_Priority_Policy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::NetworkPriorityPolicy ()
@@ -31,7 +31,7 @@ TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
 }
 
 CORBA::Policy_ptr
-TAO_Client_Network_Priority_Policy::create (CORBA::Any const&)
+TAO_Client_Network_Priority_Policy::create (CORBA::Any const &)
 {
   CORBA::Policy_ptr policy {};
 

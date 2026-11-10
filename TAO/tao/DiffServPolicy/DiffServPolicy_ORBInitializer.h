@@ -45,13 +45,13 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_DiffServPolicy_ORBInitializer (TAO_DiffServPolicy_ORBInitializer const &) = delete;
   TAO_DiffServPolicy_ORBInitializer &operator= (
     TAO_DiffServPolicy_ORBInitializer const &) = delete;
   TAO_DiffServPolicy_ORBInitializer (TAO_DiffServPolicy_ORBInitializer &&) = delete;
   TAO_DiffServPolicy_ORBInitializer &operator= (TAO_DiffServPolicy_ORBInitializer &&) = delete;
 
+private:
   /// Register DiffServ policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

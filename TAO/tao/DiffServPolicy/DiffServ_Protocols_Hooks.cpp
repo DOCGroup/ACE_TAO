@@ -27,7 +27,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
     {
       TAO_InputCDR cdr (reinterpret_cast
-                        <char const*>
+                        <char const *>
                         (context->context_data.get_buffer ()),
                         context->context_data.length ());
 
@@ -49,10 +49,10 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
 CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
-  TAO_Stub * stub, CORBA::Object * object)
+  TAO_Stub *stub, CORBA::Object *object)
 {
   CORBA::Long dscp {};
-  TAO::DiffservCodepoint diffserv_codepoint;
+  TAO::DiffservCodepoint diffserv_codepoint {};
   CORBA::Policy_var server_nw_priority_policy;
 
   CORBA::Policy_var client_nw_priority_policy =
@@ -61,12 +61,12 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
   if (CORBA::is_nil (client_nw_priority_policy.in ()))
     {
-      TAO_Stub *server_stub = object->_stubobj ();
+      TAO_Stub * const server_stub = object->_stubobj ();
       TAO_MProfile server_profiles = server_stub->base_profiles ();
       CORBA::PolicyList_var policy_list =
         server_profiles.policy_list ();
 
-  CORBA::ULong const length = policy_list->length ();
+      CORBA::ULong const length = policy_list->length ();
 
       for (CORBA::ULong i {}; i < length; ++i)
         {
@@ -89,7 +89,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
           if (!CORBA::is_nil (npp.in ()))
             {
-              TAO::NetworkPriorityModel network_priority_model =
+              TAO::NetworkPriorityModel const network_priority_model =
                 npp->network_priority_model ();
 
               if (network_priority_model ==

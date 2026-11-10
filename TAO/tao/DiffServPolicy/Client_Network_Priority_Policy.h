@@ -53,7 +53,7 @@ public:
 
   /// Copy constructor.
   TAO_Client_Network_Priority_Policy (
-     TAO_Client_Network_Priority_Policy const& rhs);
+     TAO_Client_Network_Priority_Policy const &rhs);
 
   /// Returns a copy of <this>.
   TAO_Client_Network_Priority_Policy *clone () const;
@@ -70,7 +70,7 @@ public:
 
   void network_priority_model (TAO::NetworkPriorityModel npm) override;
 
-  static CORBA::Policy_ptr create (CORBA::Any const& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   CORBA::PolicyType policy_type () override;
 

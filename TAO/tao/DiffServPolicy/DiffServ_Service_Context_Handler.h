@@ -37,7 +37,6 @@ public:
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg) override;
 
-private:
   TAO_DiffServ_Service_Context_Handler (TAO_DiffServ_Service_Context_Handler const &) = delete;
   TAO_DiffServ_Service_Context_Handler &operator= (
     TAO_DiffServ_Service_Context_Handler const &) = delete;

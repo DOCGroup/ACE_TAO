@@ -53,7 +53,6 @@ public:
   ///
   CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc) override;
 
-protected:
   TAO_DS_Network_Priority_Protocols_Hooks (TAO_DS_Network_Priority_Protocols_Hooks const &) = delete;
   TAO_DS_Network_Priority_Protocols_Hooks &operator= (
     TAO_DS_Network_Priority_Protocols_Hooks const &) = delete;
@@ -61,6 +60,8 @@ protected:
   TAO_DS_Network_Priority_Protocols_Hooks &operator= (
     TAO_DS_Network_Priority_Protocols_Hooks &&) = delete;
 
+protected:
+  /// Non-owning pointer provided by init_hooks().
   TAO_ORB_Core * orb_core_ {};
 };
 
