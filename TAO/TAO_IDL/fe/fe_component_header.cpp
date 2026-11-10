@@ -110,17 +110,12 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       return;
     }
 
-  AST_Decl *d {};
-  UTL_ScopedName *item {};
-  AST_Interface *iface {};
-  AST_Type *t {};
-
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
     {
-      item = l.item ();
+      UTL_ScopedName * const item = l.item ();
 
       // Check that scope stack is valid.
       if (idl_global->scopes ().top () == nullptr)
@@ -135,7 +130,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       // Look it up.
       UTL_Scope *s = idl_global->scopes ().top ();
 
-      d = s->lookup_by_name  (item, true);
+      AST_Decl *d = s->lookup_by_name (item, true);
 
       if (d == nullptr)
         {
@@ -166,11 +161,11 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
         }
 
       AST_Decl::NodeType nt = d->node_type ();
-      t = dynamic_cast<AST_Type*> (d);
+      AST_Type * const t = dynamic_cast<AST_Type*> (d);
 
       if (nt == AST_Decl::NT_interface)
         {
-          iface = dynamic_cast<AST_Interface*> (d);
+          AST_Interface * const iface = dynamic_cast<AST_Interface*> (d);
 
           // Undefined interface?
           if (!iface->is_defined ())

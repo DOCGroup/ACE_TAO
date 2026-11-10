@@ -89,11 +89,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i {};
-      AST_Type *inherited {};
 
       for (; i < node->n_inherits (); ++i)
         {
-          inherited = node->inherits ()[i];
+          AST_Type * const inherited = node->inherits ()[i];
 
           // We need only concrete valuetypes.
           if (inherited->is_abstract ())

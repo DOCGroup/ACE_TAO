@@ -73,11 +73,10 @@ be_type *
 be_typedef::primitive_base_type ()
 {
   be_type *d = this;
-  be_typedef *temp {};
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      temp = dynamic_cast<be_typedef*> (d);
+      be_typedef * const temp = dynamic_cast<be_typedef*> (d);
       d = dynamic_cast<be_type*> (temp->base_type ());
     }
 

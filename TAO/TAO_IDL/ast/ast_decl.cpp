@@ -282,11 +282,10 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 
   // OK, not global. So copy name of containing scope, then
   // smash last cdr of copy with new component
-  UTL_ScopedName *cn {};
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
   if (d)
     {
-      cn = d->name ();
+      UTL_ScopedName * const cn = d->name ();
       if (cn)
         {
           this->pd_name.reset (static_cast<UTL_IdList *> (cn->copy ()));

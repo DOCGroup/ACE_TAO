@@ -106,7 +106,7 @@ output_return_type (char const *type, bool const is_const)
     }
   else
     {
-      ACE_OS::printf ("%s%s", is_const ? "const " : "", type);
+      ACE_OS::printf ("%s", type);
     }
 }
 

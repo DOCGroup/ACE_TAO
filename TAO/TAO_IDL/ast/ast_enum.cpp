@@ -109,13 +109,10 @@ AST_Enum::member_count ()
 UTL_ScopedName *
 AST_Enum::value_to_name (const unsigned long v)
 {
-  AST_EnumVal *item {};
-  AST_Decl *d {};
-
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done (); i.next ())
     {
-      d = i.item  ();
-      item = dynamic_cast<AST_EnumVal*> (d);
+      AST_Decl * const d = i.item ();
+      AST_EnumVal * const item = dynamic_cast<AST_EnumVal*> (d);
 
       if (item->constant_value ()->ev ()->u.ulval == v)
         {
@@ -130,15 +127,12 @@ AST_Enum::value_to_name (const unsigned long v)
 AST_EnumVal *
 AST_Enum::lookup_by_value (const AST_Expression *v)
 {
-  AST_EnumVal *item {};
-  AST_Decl *d {};
-
   for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();
        i.next ())
     {
-      d = i.item ();
-      item = dynamic_cast<AST_EnumVal*> (d);
+      AST_Decl * const d = i.item ();
+      AST_EnumVal * const item = dynamic_cast<AST_EnumVal*> (d);
       AST_Expression *cv = item->constant_value ();
 
       if (cv == v)
@@ -244,6 +238,12 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
                                             t->name ());
 
+  if (t1 == nullptr)
+    {
+      // Prevent dereferencing null pointer in nested calls.
+      return nullptr;
+    }
+
   UTL_ScopedName *sn =
     munge_name_for_enumval (static_cast<UTL_IdList *> (t->name ()->copy ()),
                             t->local_name ());
@@ -291,12 +291,6 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   this->add_to_referenced (t,
                            false,
                            t->local_name ());
-
-  if (t1 == nullptr)
-    {
-      // Prevent dereferencing null pointer in nested calls.
-      return nullptr;
-    }
 
   // Add it to enclosing scope.
   idl_global->scopes ().next_to_top ()->fe_add_enum_val (t1);

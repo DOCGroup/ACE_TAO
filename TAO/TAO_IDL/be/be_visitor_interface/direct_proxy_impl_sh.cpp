@@ -24,11 +24,9 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   if (node->n_inherits () > 0)
     {
-      AST_Type *parent {};
-
       for (int i = 0; i < node->n_inherits (); ++i)
         {
-          parent = node->inherits ()[i];
+          AST_Type * const parent = node->inherits ()[i];
 
           if (parent->is_abstract ())
             {
@@ -93,7 +91,6 @@ be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH);
@@ -102,7 +99,7 @@ be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
        !si.is_done ();
        si.next ())
     {
-      d = si.item ();
+      AST_Decl * const d = si.item ();
 
       if (d == nullptr)
         {

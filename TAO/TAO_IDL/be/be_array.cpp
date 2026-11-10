@@ -58,8 +58,6 @@ int
 be_array::create_name ()
 {
   std::size_t i;
-  UTL_ScopedName *n {};
-  be_decl *scope {};
 
   // Retrieve the base type.
   // The name always starts this way.
@@ -107,12 +105,13 @@ be_array::create_name ()
     }
 
   // Now see if we have a fully scoped name and if so, generate one.
-  scope = dynamic_cast<be_scope*> (this->defined_in ())->decl ();
+  be_decl * const scope = dynamic_cast<be_scope*> (this->defined_in ())->decl ();
 
   if (scope)
     {
       // Make a copy of the enclosing scope's  name.
-      n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
+      UTL_ScopedName * const n =
+        static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
       Identifier *id {};
       ACE_NEW_RETURN (id,

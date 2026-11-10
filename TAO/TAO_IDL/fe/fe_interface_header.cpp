@@ -255,10 +255,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       return;
     }
 
-  AST_Decl *d {};
-  UTL_ScopedName *item {};
-  AST_Interface *i {};
-
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
 
@@ -266,7 +262,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
        !l.is_done ();
        l.next ())
     {
-      item = l.item ();
+      UTL_ScopedName * const item = l.item ();
 
       UTL_Scope *s = idl_global->scopes ().top ();
 
@@ -281,8 +277,8 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         }
 
       // Look it up.
-      d = s->lookup_by_name  (item,
-                              true); // full_def_only
+      AST_Decl *d = s->lookup_by_name (item,
+                                       true); // full_def_only
 
        // Undefined interface?
       if (nullptr == d)
@@ -331,7 +327,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
         }
 
-      i = dynamic_cast<AST_Interface*> (d);
+      AST_Interface * const i = dynamic_cast<AST_Interface*> (d);
 
       if (i != nullptr)
         {
