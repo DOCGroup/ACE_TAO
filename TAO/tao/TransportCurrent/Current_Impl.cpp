@@ -20,7 +20,6 @@ namespace TAO
 {
   namespace Transport
   {
-    /// ctor
     Current_Impl::Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id)
       : core_ (core)
       , tss_slot_id_ (tss_slot_id)
@@ -44,14 +43,12 @@ namespace TAO
       return topguard->get ();
     }
 
-    static const TAO::Transport::Stats dummy_transport_stats;
+    static TAO::Transport::Stats const dummy_transport_stats;
 
     /// Obtains the current transport's stats
     TAO::Transport::Stats const *
     Current_Impl::transport_stats () const
     {
-      static const TAO::Transport::Stats dummy;
-
       TAO_Transport const * const t = this->transport ();
 
       return (t == nullptr || t->stats () == nullptr) ? &dummy_transport_stats : t->stats ();

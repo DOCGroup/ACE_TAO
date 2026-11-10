@@ -47,9 +47,6 @@ namespace TAO
 #endif
     }
 
-
-    /// Ctor
-
     IIOP_Current_Impl::IIOP_Current_Impl (
       TAO_ORB_Core *core,
       std::size_t tss_slot_id)
@@ -115,7 +112,7 @@ namespace TAO
     IIOP_Current_Impl::local_port ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
-      TAO_IIOP_Connection_Handler *iiopch =
+      TAO_IIOP_Connection_Handler * const iiopch =
         this->handler ();
 
       ACE_INET_Addr a;
