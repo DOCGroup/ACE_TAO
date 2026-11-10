@@ -1,5 +1,5 @@
 #include "ace/INet/HeaderBase.h"
-#include "ace/OS_NS_stdlib.h"
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HeaderBase.inl"
@@ -36,9 +36,8 @@ namespace ACE
           }
         else
           {
-            char buf[32];
-            this->set (CONTENT_LENGTH,
-                       ACE_OS::itoa (length, buf, 10));
+            const std::string length_string = std::to_string (length);
+            this->set (CONTENT_LENGTH, length_string.c_str ());
           }
       }
 
