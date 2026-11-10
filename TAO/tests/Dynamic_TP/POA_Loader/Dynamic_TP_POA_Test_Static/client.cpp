@@ -48,12 +48,13 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %C ")
+                           ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("[-c <client #>] ")
                            ACE_TEXT ("[-e (show exception) <0|1>] ")
+                           ACE_TEXT ("[-g <goal>] ")
                            ACE_TEXT ("[-k <ior>] ")
                            ACE_TEXT ("[-s (shutdownE)] ")
-                           ACE_TEXT ("[-t <test> <goal>] ")
+                           ACE_TEXT ("[-t <test>] ")
                            ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
@@ -182,13 +183,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           try
             {
               if (hello->_non_existent ())
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT ("Client: non_existent returns true\n")),
-                                    -1);
-                }
-              else
-                break;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Client: non_existent returns true\n")),
+                                  -1);
+              break;
             }
           catch (CORBA::TRANSIENT const &)
             {
@@ -196,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("Client: got a transient exception with %d tries remaining\n"),
                           i - 1));
             }
-      }
+        }
 
       if (options.is_shutdown)
         hello->shutdown ();
