@@ -39,7 +39,7 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                                          ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_FlReactor::wait_for_multiple_events");
-  int nfound;
+  int nfound {};
 
   do
     {
@@ -255,11 +255,9 @@ ACE_FlReactor::reset_timer_interval
 
   if (result == -1)
     return -1;
-  else
-    {
-      this->reset_timeout ();
-      return result;
-    }
+
+  this->reset_timeout ();
+  return result;
 }
 
 long
@@ -271,17 +269,15 @@ ACE_FlReactor::schedule_timer (ACE_Event_Handler *event_handler,
   ACE_TRACE ("ACE_FlReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  long result = ACE_Select_Reactor::schedule_timer (event_handler,
-                                                    arg,
-                                                    delay,
-                                                    interval);
+  long const result = ACE_Select_Reactor::schedule_timer (event_handler,
+                                                         arg,
+                                                         delay,
+                                                         interval);
   if (result == -1)
     return -1;
-  else
-    {
-      this->reset_timeout ();
-      return result;
-    }
+
+  this->reset_timeout ();
+  return result;
 }
 
 int
@@ -293,11 +289,9 @@ ACE_FlReactor::cancel_timer (ACE_Event_Handler *handler,
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
     return -1;
-  else
-    {
-      this->reset_timeout ();
-      return 0;
-    }
+
+  this->reset_timeout ();
+  return 0;
 }
 
 int
@@ -311,11 +305,9 @@ ACE_FlReactor::cancel_timer (long timer_id,
                                         arg,
                                         dont_call_handle_close) == -1)
     return -1;
-  else
-    {
-      this->reset_timeout ();
-      return 0;
-    }
+
+  this->reset_timeout ();
+  return 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
