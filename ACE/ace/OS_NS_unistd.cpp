@@ -291,7 +291,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
 
-  ACE_TCHAR *buf = nullptr;
+  ACE_TCHAR *buf {};
   std::unique_ptr<ACE_TCHAR[]> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
@@ -329,7 +329,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 #   if defined (ACE_USES_WCHAR)
       // Wide-char builds need to convert the command-line args to
       // narrow char strings for execv ().
-      char **cargv = nullptr;
+      char **cargv {};
       int arg_count;
 #   endif /* ACE_HAS_WCHAR */
 

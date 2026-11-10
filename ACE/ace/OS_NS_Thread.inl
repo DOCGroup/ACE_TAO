@@ -462,7 +462,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = nullptr;
+  ACE_condattr_t *pattr {};
   return ACE_OS::event_init (event, type, pattr, manual_reset, initial_state, name, arg, sa);
 }
 
@@ -1467,7 +1467,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = nullptr;
+  ACE_condattr_t *pattr {};
   return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
 }
 
@@ -1780,7 +1780,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = nullptr;
+  ACE_condattr_t *pattr {};
   return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
 }
 
@@ -2338,7 +2338,7 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
   ACE_OS_TRACE ("ACE_OS::sigtimedwait");
 #if defined (ACE_HAS_SIGTIMEDWAIT)
   timespec_t ts;
-  timespec_t *tsp = nullptr;
+  timespec_t *tsp {};
 
   if (timeout != 0)
     {

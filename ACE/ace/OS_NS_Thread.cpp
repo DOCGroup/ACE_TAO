@@ -139,7 +139,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
         }
     }
 
-  void **old_ts_storage = nullptr;
+  void **old_ts_storage {};
 
   // Get the tss_storage from thread-OS specific storage.
   if (ACE_OS::thr_getspecific_native (native_tss_key_,
@@ -677,7 +677,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance ()
 {
   // Variable to hold the mutex_ to delete outside the scope of the
   // guard.
-  ACE_Thread_Mutex *del_mutex = nullptr;
+  ACE_Thread_Mutex *del_mutex {};
 
   // scope the guard
   {
@@ -757,7 +757,7 @@ ACE_TSS_Cleanup::thread_exit ()
     ACE_TSS_CLEANUP_GUARD
 
     // if not initialized or already cleaned up
-    ACE_TSS_Keys *this_thread_keys = nullptr;
+    ACE_TSS_Keys *this_thread_keys {};
     if (! find_tss_keys (this_thread_keys) )
       {
         return;
@@ -900,7 +900,7 @@ ACE_TSS_Cleanup::thread_detach_key (ACE_thread_key_t key)
   // variables to hold the destructor and the object to be destructed
   // the actual call is deferred until the guard is released
   ACE_TSS_Info::Destructor destructor = 0;
-  void * tss_obj = nullptr;
+  void * tss_obj {};
 
   // scope the guard
   {
@@ -940,7 +940,7 @@ ACE_TSS_Cleanup::thread_release (
   // assume guard is held by caller
   // Find the TSS keys (if any) for this thread
   // do not create them if they don't exist
-  ACE_TSS_Keys * thread_keys = nullptr;
+  ACE_TSS_Keys * thread_keys {};
   if (find_tss_keys (thread_keys))
     {
         // if this key is in use by this thread
@@ -1021,7 +1021,7 @@ ACE_TSS_Cleanup::tss_keys ()
         }
     }
 
-  void *ts_keys = nullptr;
+  void *ts_keys {};
   if (ACE_OS::thr_getspecific (in_use_, &ts_keys) == -1)
     {
       ACE_ASSERT (false);
@@ -3409,7 +3409,7 @@ extern "C" void integrity_task_adapter ()
 {
   const ACE_hthread_t curr_task = CurrentTask ();
 
-  ACE_Base_Thread_Adapter *thr_arg = nullptr;
+  ACE_Base_Thread_Adapter *thr_arg {};
   {
     // The thread argument should be ready when this function starts
     LockGuard guard (integrity_task_args_lock);
@@ -3470,7 +3470,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # define  ACE_THREAD_ARGUMENT  thread_args
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
-  ACE_Base_Thread_Adapter *thread_args = nullptr;
+  ACE_Base_Thread_Adapter *thread_args {};
   if (thread_adapter == nullptr)
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,

@@ -99,7 +99,7 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg = nullptr;
+  char *errmsg {};
 
 # if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
@@ -143,7 +143,7 @@ ACE_OS::strsignal (int signum)
 {
   static char signal_text[128];
 #if defined (ACE_HAS_STRSIGNAL)
-  char *ret_val = nullptr;
+  char *ret_val {};
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)

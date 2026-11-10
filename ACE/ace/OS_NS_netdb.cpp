@@ -96,8 +96,8 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   // It's easiest to know the first MAC-using interface. Use the BSD
   // getifaddrs function that simplifies access to connected interfaces.
-  struct ifaddrs *ifap = nullptr;
-  struct ifaddrs *p_if = nullptr;
+  struct ifaddrs *ifap {};
+  struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
     return -1;
@@ -178,7 +178,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   int numif = ifc.ifc_len / sizeof(struct ifreq);
 
   // find first eligible device
-  struct ifreq* ifr = nullptr;
+  struct ifreq* ifr {};
   for (int i=0; i< numif ;++i)
     {
       ifr = &ifr_buf[i];
@@ -228,7 +228,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   char buffer[BUFFERSIZE];
 
   struct ifconf ifc;
-  struct ifreq* ifr = nullptr;
+  struct ifreq* ifr {};
 
   ACE_HANDLE handle =
     ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);

@@ -291,7 +291,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   char *name = ACE_OS::tempnam (ndir, npfx);
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
-  wchar_t *wname = nullptr;
+  wchar_t *wname {};
   if (name != 0)
     {
       size_t namelen = ACE_OS::strlen (name) + 1;
@@ -1105,7 +1105,7 @@ namespace { // helpers for vsnprintf_emulation
 
   int snprintf_read_int (const char *&fmt)
   {
-    char *end = nullptr;
+    char *end {};
     const unsigned long i = ACE_OS::strtoul (fmt, &end, 10);
     fmt = end;
     if (i > INT_MAX)

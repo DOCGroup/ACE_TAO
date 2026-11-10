@@ -49,7 +49,7 @@ ACE_OS::dlerror ()
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-  const char *err = nullptr;
+  const char *err {};
   ACE_OSCALL (::dlerror (), const char *, err);
   if (err == 0)
     return 0;
@@ -113,7 +113,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
   ACE_UNUSED_ARG (mode);
-  MODULE* handle = nullptr;
+  MODULE* handle {};
   // Open readonly
   ACE_HANDLE filehandle = ACE_OS::open (fname,
                                         O_RDONLY,
@@ -191,7 +191,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_UNUSED_ARG (handle);
 #if (ACE_VXWORKS < 0x690)
   SYM_TYPE symtype;
-  char *value = nullptr;
+  char *value {};
   STATUS status;
   ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, status);
 

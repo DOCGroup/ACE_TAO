@@ -368,7 +368,7 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
 
   // FUZZ: disable check_for_lack_ACE_OS
-  struct hostent *result2 = nullptr;
+  struct hostent *result2 {};
   ACE_SOCKCALL (::gethostbyname (name),
                 struct hostent *,
                 0,
@@ -390,7 +390,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 #  else
-  struct hostent *hptr = nullptr;
+  struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
@@ -427,7 +427,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
                        struct hostent *, 0);
 #     endif /* ACE_HAS_NONCONST_GETBY */
 #   else
-  struct hostent *hptr = nullptr;
+  struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)

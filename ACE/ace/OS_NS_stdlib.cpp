@@ -107,7 +107,7 @@ ACE_OS::getenvstrings ()
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-  const ACE_TCHAR * start = nullptr;
+  const ACE_TCHAR * start {};
   if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != nullptr)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
