@@ -41,7 +41,7 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 
           this->initialized_ = true;
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {
@@ -124,7 +124,7 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
       return;
     }
 
-  static const char digits[] = "0123456789ABCD";
+  static constexpr char digits[] = "0123456789ABCD";
   int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
 
   TAOLIB_DEBUG ((LM_DEBUG,
@@ -502,7 +502,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                                        CORBA::ULong original_data_length,
                                        Compression::CompressorId compressor_id)
 {
-   static const CORBA::ULong
+   static constexpr CORBA::ULong
       Compression_Overhead = sizeof (compressor_id)
                            + sizeof (original_data_length)
                            + sizeof (CORBA::ULong); // Compressed data Sequence length
@@ -593,20 +593,20 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
                ::Compression::CompressorId compressor_id,
                ::Compression::CompressionLevel compression_level)
 {
-  bool compressed = true;
+  bool compressed {true};
 
   cdr.consolidate ();
 
   ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
 
-  char* initial_rd_ptr = current->rd_ptr();
+  char * const initial_rd_ptr = current->rd_ptr();
 
   // Set the read pointer to the point where the data starts
   current->rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   current = const_cast <ACE_Message_Block*> (cdr.current());
   CORBA::ULong const original_data_length =
-    (CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
+    static_cast<CORBA::ULong> (current->wr_ptr() - current->rd_ptr());
 
   if (original_data_length > 0)
     {
