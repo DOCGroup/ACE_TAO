@@ -106,7 +106,7 @@ TAO_InterfaceDef_i::describe_i ()
                                             holder);
   ifd.version = holder.fast_rep ();
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   CORBA::InterfaceDefSeq_var bases =
     this->base_interfaces_i ();
 
@@ -396,8 +396,8 @@ TAO_InterfaceDef_i::describe_interface_i ()
                                             holder);
   fifd->version = holder.fast_rep ();
 
-  CORBA::ULong i = 0;
-  CORBA::ULong j = 0;
+  CORBA::ULong i {};
+  CORBA::ULong j {};
   std::deque<ACE_Configuration_Section_Key> key_queue;
 
   // Store our section key for later restoration after we have
@@ -418,7 +418,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
                                           0,
                                           ops_key);
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
 
   if (status == 0)
     {
@@ -711,7 +711,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
                                              "mode",
                                              mode);
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   // Store the operation's parameter info.
   CORBA::ULong length = params.length ();
@@ -844,8 +844,8 @@ TAO_InterfaceDef_i::interface_contents (
                                             path);
 
   ACE_TString section_name;
-  int index = 0;
-  int status = 0;
+  int index {};
+  int status {};
 
   // Attributes
   if (limit_type == CORBA::dk_Attribute
@@ -987,8 +987,8 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
       return;
     }
 
-  int index = 0;
-  u_int kind = 0;
+  int index {};
+  u_int kind {};
   ACE_Configuration::VALUETYPE type;
   ACE_TString section_name, inherited_path;
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
@@ -1044,9 +1044,9 @@ TAO_InterfaceDef_i::inherited_attributes (
 
   size_t size = path_queue.size ();
   ACE_Configuration_Section_Key base_key, attrs_key, attr_key;
-  int status = 0;
+  int status {};
   ACE_TString path_name;
-  u_int count = 0;
+  u_int count {};
 
   for (size_t i {}; i < size; ++i)
     {
@@ -1097,9 +1097,9 @@ TAO_InterfaceDef_i::inherited_operations (
 
   size_t size = path_queue.size ();
   ACE_Configuration_Section_Key base_key, ops_key, op_key;
-  int status = 0;
+  int status {};
   ACE_TString path_name;
-  u_int count = 0;
+  u_int count {};
 
   for (size_t i {}; i < size; ++i)
     {

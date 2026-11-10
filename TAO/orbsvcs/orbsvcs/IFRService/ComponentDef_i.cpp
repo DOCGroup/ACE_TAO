@@ -22,7 +22,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
     CORBA::ULong index
   )
 {
-  CORBA::ULong is_multiple = 0;
+  CORBA::ULong is_multiple {};
   config->get_integer_value (key,
                              "is_multiple",
                              is_multiple);
@@ -168,7 +168,7 @@ TAO_ComponentDef_i::describe_i ()
   // If status wasn't 0, holder will contain the empty string.
   cd.base_component = holder.fast_rep ();
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   ACE_Configuration_Section_Key supports_key;
   status = this->repo_->config ()->open_section (this->section_key_,
                                                  "supported",
@@ -184,7 +184,7 @@ TAO_ComponentDef_i::describe_i ()
 
   cd.supported_interfaces.length (count);
   char *stringified {};
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   for (i = 0; i < count; ++i)
     {
@@ -324,7 +324,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
   CORBA::InterfaceDefSeq_var retval = seq;
   retval->length (0);
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
