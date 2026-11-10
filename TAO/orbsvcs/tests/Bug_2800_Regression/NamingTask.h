@@ -5,11 +5,12 @@
 #include "tao/ORB.h"
 #include "ace/Task.h"
 #include "ace/Synch_Traits.h"
+#include <atomic>
 
 class NamingTask : public ACE_Task_Base
 {
 public:
-  NamingTask (char const * orbname, int argc, ACE_TCHAR ** argv, unsigned short port);
+  NamingTask (ACE_TCHAR const *orbname, int argc, ACE_TCHAR **argv, unsigned short port);
   NamingTask (NamingTask const &) = delete;
   NamingTask (NamingTask &&) = delete;
   NamingTask &operator= (NamingTask const &) = delete;
@@ -19,12 +20,12 @@ public:
   void waitInit ();
   void end ();
 
-  char const * ior ();
+  char const *ior () const;
 
 private:
-  CORBA::ORB_var orb_;
-  bool initialized_;
-  CORBA::String_var ior_;
+  CORBA::ORB_var orb_ {};
+  std::atomic<bool> initialized_ {};
+  CORBA::String_var ior_ {};
 };
 
 #endif

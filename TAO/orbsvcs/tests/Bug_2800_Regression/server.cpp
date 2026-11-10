@@ -2,154 +2,141 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file { ACE_TEXT ("test.ior") };
+};
+
+using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
 class TestTask : public ACE_Task_Base
 {
 public:
   TestTask (int argc, ACE_TCHAR **argv);
-  virtual int svc ();
+  TestTask (TestTask const &) = delete;
+  TestTask (TestTask &&) = delete;
+  TestTask &operator= (TestTask const &) = delete;
+  TestTask &operator= (TestTask &&) = delete;
+
+  int svc () override;
 
   int parse_args (int argc, ACE_TCHAR **argv);
 
-  void end();
 private:
-  CORBA::ORB_var orb_;
-  CORBA::Boolean shutdown_ns_;
+  CORBA::ORB_var orb_ {};
+  Server_Options options_;
 };
 
-TestTask::TestTask(int argc, ACE_TCHAR **argv)
+TestTask::TestTask (int argc, ACE_TCHAR **argv)
 {
-  orb_ = CORBA::ORB_init (argc, argv, "ServerORB");
-  shutdown_ns_ = false;
+  orb_ = CORBA::ORB_init (argc, argv, ACE_TEXT ("ServerORB"));
   parse_args (argc, argv);
-}
-
-void TestTask::end()
-{
-  orb_->shutdown(0);
-  this->wait();
 }
 
 int
 TestTask::parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 's':
-        shutdown_ns_ = true;
-        break;
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options_.ior_output_file = get_opts.opt_arg ();
         break;
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
-int TestTask::svc()
+int
+TestTask::svc ()
 {
-  try {
-    // Get reference to Root POA
-    CORBA::Object_var obj = orb_->resolve_initial_references("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-
-    // Activate POA Manager
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
-    mgr->activate();
-
-    // Find the Naming Service
-    obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9932/NameService");
-    CosNaming::NamingContext_var root =
-      CosNaming::NamingContext::_narrow(obj.in());
-
-    if (CORBA::is_nil(root.in())) {
-      ACE_ERROR ((LM_ERROR, "Error, Nil Naming Context reference\n"));
-      return 1;
-    }
-    // Bind the example Naming Context, if necessary
-    CosNaming::NamingContext_var example_nc;
-    CosNaming::Name name;
-    name.length(1);
-    name[0].id = CORBA::string_dup("example");
-    try
+  try
     {
-      obj = root->resolve(name);
-      example_nc =
-        CosNaming::NamingContext::_narrow(obj.in());
+      CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POAManager_var const mgr = poa->the_POAManager ();
+      mgr->activate ();
+
+      obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9932/NameService");
+      CosNaming::NamingContext_var root = CosNaming::NamingContext::_narrow (obj.in ());
+      if (CORBA::is_nil (root.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, Nil Naming Context reference\n")));
+          return 1;
+        }
+
+      CosNaming::NamingContext_var example_nc;
+      CosNaming::Name name;
+      name.length (1);
+      name[0].id = CORBA::string_dup ("example");
+      try
+        {
+          obj = root->resolve (name);
+          example_nc = CosNaming::NamingContext::_narrow (obj.in ());
+        }
+      catch (CosNaming::NamingContext::NotFound const &)
+        {
+          example_nc = root->bind_new_context (name);
+        }
+
+      name.length (2);
+      name[1].id = CORBA::string_dup ("Hello");
+      // The POA borrows the stack servant, which remains alive through orb_->run().
+      Hello servant (orb_.in ());
+      PortableServer::ObjectId_var const oid = poa->activate_object (&servant);
+      obj = poa->id_to_reference (oid.in ());
+      root->rebind (name, obj.in ());
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Hello object bound in Naming Service B\n")));
+
+      name.length (1);
+      obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
+      root = CosNaming::NamingContext::_narrow (obj.in ());
+      root->bind_context (name, example_nc.in ());
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("'example' context of NS B bound in Naming Service A\n")));
+
+      CORBA::String_var const ior = orb_->object_to_string (obj.in ());
+      {
+        File_Ptr const output_file (
+          ACE_OS::fopen (options_.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                             options_.ior_output_file),
+                            1);
+        if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+      }
+
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Wrote IOR file\n")));
+      orb_->run ();
+      orb_->destroy ();
+
+      return 0;
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+  catch (CORBA::Exception const &ex)
     {
-      example_nc = root->bind_new_context(name);
+      ex._tao_print_exception ("CORBA exception: ");
     }
-
-    // Bind the Test object
-    name.length(2);
-    name[1].id = CORBA::string_dup("Hello");
-
-    // Create an object
-    Hello servant(orb_.in ());
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
-    obj = poa->id_to_reference(oid.in());
-    root->rebind(name, obj.in());
-
-    ACE_DEBUG ((LM_INFO, "Hello object bound in Naming Service B\n"));
-
-    name.length(1);
-    obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
-    root = CosNaming::NamingContext::_narrow(obj.in());
-    root->bind_context (name, example_nc.in ());
-
-    ACE_DEBUG ((LM_INFO, "'example' context of NS B bound in Naming Service A\n"));
-
-    CORBA::String_var ior =
-      orb_->object_to_string (obj.in ());
-
-    // Output the IOR to the <ior_output_file>
-    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file %s for writing IOR: %C\n",
-                          ior_output_file,
-                          ior.in ()),
-                          1);
-    ACE_OS::fprintf (output_file, "%s", ior.in ());
-    ACE_OS::fclose (output_file);
-
-    ACE_DEBUG ((LM_INFO, "Wrote IOR file\n"));
-
-    // Normally we run the orb and the orb is shutdown by
-    // calling TestTask::end().
-    // Accept requests
-    orb_->run();
-    orb_->destroy();
-
-    return 0;
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("CORBA exception: ");
-  }
 
   return -1;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // Start the Test task
-  TestTask test_ (argc, argv);
-  if (test_.activate() == -1)
+  TestTask test (argc, argv);
+  if (test.activate () == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to start test task.\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to start test task.\n")), -1);
     }
 
-  // Wait the tasks to finish.
-  test_.thr_mgr ()->wait();
+  test.thr_mgr ()->wait ();
 
   return 0;
 }

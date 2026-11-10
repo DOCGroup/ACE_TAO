@@ -1,84 +1,79 @@
 #include "NamingTask.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Argv_Type_Converter.h"
+#include "ace/OS_NS_stdio.h"
+#include <cstddef>
+#include <vector>
 
-NamingTask::NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigned short port)
- : initialized_(false)
+NamingTask::NamingTask (ACE_TCHAR const *orbname, int argc, ACE_TCHAR **argv, unsigned short port)
 {
-  ACE_TCHAR **my_argv = new ACE_TCHAR *[argc + 2];
-  ACE_TCHAR buf[128];
-  int my_argc = 0;
-  for(; my_argc<argc ;++my_argc)
-    my_argv[my_argc] = argv[my_argc];
-  ACE_OS::sprintf (buf, ACE_TEXT ("iiop://localhost:%d"), port);
-  const ACE_TCHAR* epopt = ACE_TEXT ("-ORBEndpoint");
-  my_argv[my_argc++] = const_cast<ACE_TCHAR *> (epopt);
-  my_argv[my_argc++] = buf;
+  ACE_TCHAR endpoint[128] {};
+  ACE_OS::snprintf (endpoint, sizeof endpoint / sizeof endpoint[0],
+                    ACE_TEXT ("iiop://localhost:%u"), static_cast<unsigned int> (port));
+  ACE_TCHAR endpoint_option[] = ACE_TEXT ("-ORBEndpoint");
+  std::vector<ACE_TCHAR *> my_argv;
+  my_argv.reserve (static_cast<std::size_t> (argc) + 2);
+  for (int i = 0; i < argc; ++i)
+    my_argv.push_back (argv[i]);
+  my_argv.push_back (endpoint_option);
+  my_argv.push_back (endpoint);
 
-  orb_ = CORBA::ORB_init (my_argc, my_argv, orbname);
-
-  delete [] my_argv;
+  int my_argc = static_cast<int> (my_argv.size ());
+  orb_ = CORBA::ORB_init (my_argc, my_argv.data (), orbname);
 }
 
-void NamingTask::waitInit ()
+void
+NamingTask::waitInit ()
 {
-  // Wait for Naming Service initialized.
-  while (! initialized_) {
-    ACE_OS::sleep(ACE_Time_Value(0, 100 * 1000));
-  }
+  while (!this->initialized_.load ())
+    ACE_OS::sleep (ACE_Time_Value (0, 100 * 1000));
 }
 
-void NamingTask::end()
+void
+NamingTask::end ()
 {
-  orb_->shutdown(0);
-  this->wait();
+  orb_->shutdown (false);
+  this->wait ();
 }
 
-const char* NamingTask::ior()
+char const *NamingTask::ior () const
 {
   return ior_.in ();
 }
 
-int NamingTask::svc()
+int
+NamingTask::svc ()
 {
-  try {
-    // Get reference to Root POA
-    CORBA::Object_var obj = orb_->resolve_initial_references("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-
-    // Activate POA Manager
-    PortableServer::POAManager_var poaManager = poa->the_POAManager();
-    poaManager->activate();
-
-    // Initialize the naming service
-    // We are not going to look for other naming servers
-    TAO_Naming_Server naming;
-    if (naming.init(orb_.in(),
-                    poa.in(),
-                    ACE_DEFAULT_MAP_SIZE,
-                    0,
-                    0,
-                    0,
-                    TAO_NAMING_BASE_ADDR,
-                    0) == 0)
+  try
     {
-      ACE_DEBUG ((LM_DEBUG, "The Naming Service Task is ready.\n"));
-      ior_ = naming.naming_service_ior ();
-      initialized_ = true;
-      // Accept requests
-      orb_->run();
-      return 0;
+      CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
+      poa_manager->activate ();
+
+      TAO_Naming_Server naming;
+      if (naming.init (orb_.in (),
+                       poa.in (),
+                       ACE_DEFAULT_MAP_SIZE,
+                       nullptr,
+                       false,
+                       nullptr,
+                       TAO_NAMING_BASE_ADDR,
+                       false) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Naming Service Task is ready.\n")));
+          ior_ = naming.naming_service_ior ();
+          this->initialized_.store (true);
+          orb_->run ();
+          return 0;
+        }
+
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to initialize the Naming Service.\n")));
     }
-    else
+  catch (CORBA::Exception const &ex)
     {
-      ACE_ERROR ((LM_ERROR, "Unable to initialize the Naming Service.\n"));
-    }
-  }
-  catch (const CORBA::Exception& ex)
-  {
       ex._tao_print_exception ("NamingTask::svc() CORBA::Exception: ");
-  }
+    }
 
   return -1;
 }

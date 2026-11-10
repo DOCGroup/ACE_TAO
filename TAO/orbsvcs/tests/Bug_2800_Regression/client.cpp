@@ -2,106 +2,105 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://shutdown.ior");
-bool shutdown_nsmain = false;
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT ("file://shutdown.ior") };
+  bool shutdown_nsmain {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
-        shutdown_nsmain = true;
+        options.ior = get_opts.opt_arg ();
+        options.shutdown_nsmain = true;
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "\n",
+                           ACE_TEXT ("usage:  %s\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object("corbaloc:iiop:1.2@localhost:9931/NameService");
+        orb->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
 
-      CosNaming::NamingContext_var root =
-        CosNaming::NamingContext::_narrow(tmp.in());
+      CosNaming::NamingContext_var const root =
+        CosNaming::NamingContext::_narrow (tmp.in ());
 
       if (CORBA::is_nil (root.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil NamingService reference\n"),
+                             ACE_TEXT ("Nil NamingService reference\n")),
                             1);
         }
 
-      ACE_DEBUG ((LM_INFO, "**** Narrowed root NamingContext\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("**** Narrowed root NamingContext\n")));
 
       CosNaming::Name name;
-      name.length(2);
-      name[0].id = CORBA::string_dup("example");
-      name[1].id = CORBA::string_dup("Hello");
+      name.length (2);
+      name[0].id = CORBA::string_dup ("example");
+      name[1].id = CORBA::string_dup ("Hello");
 
       try
         {
           tmp = root->resolve (name);
-          ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
+          ACE_DEBUG ((LM_INFO, ACE_TEXT ("**** Resolved #example/Hello\n")));
 
-          Test::Hello_var hello =
-            Test::Hello::_narrow(tmp.in ());
+          Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
           if (CORBA::is_nil (hello.in ()))
             {
               ACE_ERROR_RETURN ((LM_DEBUG,
-                                 "Nil Test::Hello reference\n"),
+                                 ACE_TEXT ("Nil Test::Hello reference\n")),
                                 1);
             }
 
-          CORBA::String_var the_string = hello->get_string ();
+          CORBA::String_var const the_string = hello->get_string ();
 
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) - string returned <%C>\n"),
                       the_string.in ()));
 
           hello->shutdown ();
         }
-      catch (const CosNaming::NamingContext::CannotProceed&)
+      catch (CosNaming::NamingContext::CannotProceed const &)
         {
-          ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Caught correct exception\n")));
         }
 
-      if (shutdown_nsmain)
+      if (options.shutdown_nsmain)
         {
-          CORBA::Object_var shutdowntmp = orb->string_to_object(ior);
+          CORBA::Object_var const shutdowntmp = orb->string_to_object (options.ior);
 
-          Test::NsShutdown_var shutdown =
-            Test::NsShutdown::_narrow(shutdowntmp.in ());
+          Test::NsShutdown_var const shutdown = Test::NsShutdown::_narrow (shutdowntmp.in ());
 
-          ACE_DEBUG ((LM_DEBUG, "Shutdown nsmain\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Shutdown nsmain\n")));
           shutdown->shutdown ();
         }
 
       orb->shutdown ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
