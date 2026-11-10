@@ -8,6 +8,8 @@
  */
 //=============================================================================
 
+#include <string>
+
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -52,8 +54,7 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  Sender ();
-  /// Constructor
+  Sender () = default;
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
   Sender (Sender &&) = delete;
@@ -82,33 +83,33 @@ private:
   AVStreams::MMDevice_var receiver_mmdevice_;
   /// The receiver MMDevice that the sender connects to.
 
-  TAO_MMDevice *sender_mmdevice_;
+  TAO_MMDevice *sender_mmdevice_ {};
   /// The sender MMDevice.
 
-  TAO_StreamCtrl *streamctrl_;
+  TAO_StreamCtrl *streamctrl_ {};
   /// Stream controller
 
-  int frame_count_;
+  int frame_count_ {};
   /// Number of frames sent.
 
-  ACE_CString filename_;
+  std::string filename_ {"input"};
   /// File from which data is read.
 
   TAO_Naming_Client naming_client_;
   /// The Naming Service client.
 
-  FILE *input_file_;
+  FILE *input_file_ {};
   /// File handle of the file read from.
 
-  ACE_CString protocol_;
+  std::string protocol_ {"UDP"};
   /// Selected protocol - default is UDP
 
-  int frame_rate_;
+  int frame_rate_ {1};
   /// Rate at which the data will be sent.
 
-  ACE_Message_Block mb_;
+  ACE_Message_Block mb_ {BUFSIZ};
   /// Message block into which data is read from a file and then sent.
 
-  TAO_AV_Protocol_Object *protocol_object_;
+  TAO_AV_Protocol_Object *protocol_object_ {};
   /// Protocol object corresponding to the transport protocol selected.
 };

@@ -18,8 +18,7 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  Receiver_Callback ();
-  /// Constructor.
+  Receiver_Callback () = default;
 
   /// Method that is called when there is data to be received from a
   /// sender.
@@ -35,11 +34,11 @@ public:
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
-  int frame_count_;
+  int frame_count_ {};
   /// Keeping a count of the incoming frames.
 
   /// Related stream control.
-  AVStreams::StreamCtrl_ptr streamctrl_;
+  AVStreams::StreamCtrl_ptr streamctrl_ {};
 };
 
 // = AVStreams calls this class during connection setup.
@@ -59,11 +58,9 @@ private:
 class Receiver
 {
 public:
-  Receiver ();
-  /// Constructor
+  Receiver () = default;
 
-  ~Receiver ();
-  /// Destructor.
+  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -73,7 +70,6 @@ public:
             ACE_TCHAR *argv[]);
   /// Initialize data components.
 
-
 protected:
   TAO_Naming_Client naming_client_;
   /// The Naming Service Client.
@@ -82,6 +78,6 @@ protected:
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   /// The endpoint reactive strategy.
 
-  TAO_MMDevice *mmdevice_;
+  TAO_MMDevice *mmdevice_ {};
   /// Receiver MMDevice.
 };

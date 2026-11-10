@@ -14,8 +14,6 @@ Receiver_StreamEndPoint::get_callback (const char *,
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
   callback = &this->callback_;
-
-
   // Get the stream controller for this stream.
   try
     {
@@ -28,7 +26,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
       // Store the stream control for the stream with the callback.
       this->callback_.streamctrl (streamctrl);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender_StreamEndPoint::get_callback failed");
 
@@ -36,12 +34,6 @@ Receiver_StreamEndPoint::get_callback (const char *,
     }
 
   return 0;
-}
-
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (0),
-    streamctrl_ (nullptr)
-{
 }
 
 void
@@ -52,11 +44,10 @@ Receiver_Callback::streamctrl (AVStreams::StreamCtrl_ptr streamctrl)
   this->streamctrl_ = streamctrl;
 }
 
-
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
-                                  const ACE_Addr &)
+                                  ACE_Addr const &)
 {
   //
   // Upcall from the AVStreams when there is data to be received from
@@ -65,7 +56,6 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::receive_frame for frame %d\n",
               ++this->frame_count_));
-
 
   if (this->streamctrl_ != nullptr)
     {
@@ -94,7 +84,6 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
           qos [0].QoSParams.length (1);
           qos [0].QoSParams [0].property_name = CORBA::string_dup ("video_frame_rate");
           qos [0].QoSParams [0].property_value <<= (CORBA::Short) 30;
-
 
           // Initiate the modifying of the qos for the flows.
           this->streamctrl_->modify_QoS (qos, flow_spec);
@@ -137,7 +126,7 @@ Receiver_Callback::handle_destroy ()
     {
       TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
@@ -145,14 +134,6 @@ Receiver_Callback::handle_destroy ()
 
   return 0;
 }
-
-Receiver::Receiver ()
-  : mmdevice_ (nullptr)
-{
-}
-
-Receiver::~Receiver () = default;
-
 
 int
 Receiver::init (int,
@@ -285,7 +266,7 @@ ACE_TMAIN (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;

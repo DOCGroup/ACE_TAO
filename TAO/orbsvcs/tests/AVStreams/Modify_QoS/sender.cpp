@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "sender.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -44,7 +46,7 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
   if (new_qos.length () != 0)
     {
       // Check which qos parameter has changed.
-      if (ACE_OS::strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
+      if (std::strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
         {
           // The video frame rate for this flow has changed.
 
@@ -61,19 +63,6 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
     }
 
   return true;
-}
-
-Sender::Sender ()
-  : sender_mmdevice_ (nullptr),
-    streamctrl_ (nullptr),
-    frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (nullptr),
-    protocol_ ("UDP"),
-    frame_rate_ (1),
-    mb_ (BUFSIZ),
-    protocol_object_ (nullptr)
-{
 }
 
 void
@@ -185,8 +174,6 @@ Sender::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
-
-
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
