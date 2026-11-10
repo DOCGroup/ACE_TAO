@@ -13,8 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default constructor.
-
 CC_LockSet::CC_LockSet ()
 {
   try

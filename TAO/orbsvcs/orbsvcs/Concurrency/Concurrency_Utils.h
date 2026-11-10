@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
 {
 public:
-  ///Default constructor.
   TAO_Concurrency_Server () = default;
 
   /// Takes the POA under which to register the Concurrency Service
@@ -46,7 +45,6 @@ public:
   TAO_Concurrency_Server (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~TAO_Concurrency_Server () = default;
 
   TAO_Concurrency_Server (TAO_Concurrency_Server const &) = delete;

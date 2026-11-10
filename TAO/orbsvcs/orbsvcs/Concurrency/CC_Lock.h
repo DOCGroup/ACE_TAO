@@ -48,7 +48,6 @@ public:
   /// Creates the lock with the desired mode
   explicit CC_Lock (CosConcurrencyControl::lock_mode mode);
 
-  /// Deletes the lock
   ~CC_Lock () = default;
 
   CC_Lock (CC_Lock const &) = delete;
@@ -122,10 +121,8 @@ private:
 class TAO_Concurrency_Serv_Export CC_LockModeIterator
 {
 public:
-  /// Default constructor
   CC_LockModeIterator () = default;
 
-  /// Destructor
   ~CC_LockModeIterator () = default;
 
   /// Reset the iterator to the first element

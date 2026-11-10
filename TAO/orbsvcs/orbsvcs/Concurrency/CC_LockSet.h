@@ -71,14 +71,12 @@ enum CC_LockModeEnum { CC_EM = -1, CC_IR = 0, CC_R, CC_U, CC_IW, CC_W };
 class TAO_Concurrency_Serv_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
 public:
-  /// Default constructor
   CC_LockSet ();
 
   /// Constructor used if create_related is used to create the lock
   /// set.
   explicit CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
 
-  /// Destructor.
   ~CC_LockSet () override = default;
 
   CC_LockSet (CC_LockSet const &) = delete;
@@ -127,11 +125,6 @@ private:
   /// not. Returns true if the semaphore should be locked.
   bool lock_i (CC_LockModeEnum lm);
 
-  // int unlock_i (CosConcurrencyControl::lock_mode lm);
-  // This function is not necessary because we lock access to the data
-  // and unlocks the semaphore until an invalid lock mode is first on
-  // the queue. Thereafter we release the lock.
-
   /// Locks the access to the data and determines whether to return
   /// true or false.
   bool try_lock_i (CC_LockModeEnum lm);
@@ -149,7 +142,6 @@ private:
   static constexpr int number_of_lock_modes = 5;
   int lock_[number_of_lock_modes] {};
 
-  // ACE_Thread_Semaphore semaphore_;
   /**
    * This is the semaphore for the lock set. The semaphore is used to
    * queue requests for locks in modes stronger than currently
@@ -166,8 +158,6 @@ private:
    * <LockSetCoordinator> is not implemented (it has the
    * responsibilities of dropping the locks).
    */
-  // CosConcurrencyControl::LockSet_ptr related_lockset_;
-
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
   inline static constexpr bool compatible_[number_of_lock_modes][number_of_lock_modes] = {

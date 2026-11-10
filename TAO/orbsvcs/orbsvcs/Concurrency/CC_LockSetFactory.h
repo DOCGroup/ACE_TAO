@@ -36,10 +36,8 @@ class TAO_Concurrency_Serv_Export CC_LockSetFactory
   : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
-  /// Default constructor.
   CC_LockSetFactory () = default;
 
-  /// Destructor.
   ~CC_LockSetFactory () override = default;
 
   CC_LockSetFactory (CC_LockSetFactory const &) = delete;
