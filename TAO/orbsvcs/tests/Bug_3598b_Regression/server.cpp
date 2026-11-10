@@ -1,12 +1,18 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 
 #include <cstdio>
 #include <memory>
 
+struct Server_Options
+{
+  ACE_TString ior_output_file { ACE_TEXT ("test.ior") };
+};
+
 int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
@@ -16,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
       switch (c)
         {
         case 'o':
-          ior_output_file = get_opts.opt_arg ();
+          options.ior_output_file = get_opts.opt_arg ();
           break;
 
         case '?':
@@ -35,9 +41,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
-      if (parse_args (argc, argv, ior_output_file) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const poa_object =
@@ -66,11 +72,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             ior_output_file),
+                             options.ior_output_file.c_str ()),
                             1);
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);

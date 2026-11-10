@@ -3,7 +3,7 @@
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
 
-CORBA::Boolean ClientRequest_Interceptor::success_flag_ = false;
+CORBA::Boolean ClientRequest_Interceptor::success_flag_ {};
 
 char *
 ClientRequest_Interceptor::name ()

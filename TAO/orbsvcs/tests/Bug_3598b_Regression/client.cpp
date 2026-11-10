@@ -1,13 +1,18 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "tao/PortableInterceptorC.h"
 #include "ClientORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
+struct Client_Options
+{
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
@@ -17,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
       switch (c)
         {
         case 'k':
-          ior = get_opts.opt_arg ();
+          options.ior = get_opts.opt_arg ();
           break;
 
         case '?':
@@ -50,13 +55,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
-      if (parse_args (argc, argv, ior) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior.c_str ());
 
       Test::Hello_var const hello =
         Test::Hello::_narrow (tmp.in ());
@@ -65,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
-                             ior),
+                             options.ior.c_str ()),
                             1);
         }
 
