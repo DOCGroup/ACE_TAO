@@ -2,6 +2,8 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Lock &
@@ -104,9 +106,9 @@ TAO_POA_Manager::generate_manager_id () const
 //     // ORB, or perhaps specific to the process.
 //     id = ...GENERATE_ID_ATOMICALLY...;  // Fallback
 
-  char* buf = new char [25];
-  ACE_OS::sprintf (buf, "POAManager%d", id);
-  return buf;
+  std::string manager_id {"POAManager"};
+  manager_id += std::to_string (id);
+  return CORBA::string_dup (manager_id.c_str ());
 }
 
 

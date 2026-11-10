@@ -20,14 +20,18 @@ std::size_t TAO_Active_Object_Map::system_id_size_ = 0;
 static void
 hexstring (ACE_CString& hexstr, const char* s, std::size_t l)
 {
-  char buf[3] = {0};
+  static constexpr char hex_chars[] = "0123456789abcdef";
+  char buf[2] {};
 
   hexstr.fast_resize (2 + l * 2);
   hexstr.append ("0x", 2);
-  while (--l)
+  while (l > 1)
     {
-      ACE_OS::sprintf (buf, "%02x", (unsigned int)(unsigned char)*s);
+      unsigned char const value = static_cast<unsigned char> (*s);
+      buf[0] = hex_chars[value >> 4];
+      buf[1] = hex_chars[value & 0x0f];
       hexstr.append (buf, 2);
+      --l;
       ++s;
     }
 }
