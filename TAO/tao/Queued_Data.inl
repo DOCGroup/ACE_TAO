@@ -94,7 +94,7 @@ TAO_Queued_Data::next () const
 }
 
 ACE_INLINE void
-TAO_Queued_Data::next (TAO_Queued_Data* qd)
+TAO_Queued_Data::next (TAO_Queued_Data *qd)
 {
   this->next_ = qd;
 }
@@ -102,22 +102,29 @@ TAO_Queued_Data::next (TAO_Queued_Data* qd)
 ACE_INLINE ACE_Message_Block *
 TAO_Queued_Data::msg_block () const
 {
-  return this->msg_block_;
+  return this->msg_block_.get ();
 }
 
 ACE_INLINE void
 TAO_Queued_Data::msg_block (ACE_Message_Block *mb)
 {
-  this->msg_block_ = mb;
+  if (mb == nullptr)
+    {
+      this->msg_block_.release ();
+    }
+  else if (mb != this->msg_block_.get ())
+    {
+      this->msg_block_.reset (mb);
+    }
 }
 
 ACE_INLINE void
-TAO_Queued_Data::state (const TAO_GIOP_Message_State& state)
+TAO_Queued_Data::state (TAO_GIOP_Message_State const &state)
 {
   this->state_ = state;
 }
 
-ACE_INLINE const TAO_GIOP_Message_State&
+ACE_INLINE TAO_GIOP_Message_State const &
 TAO_Queued_Data::state () const
 {
   return this->state_;
