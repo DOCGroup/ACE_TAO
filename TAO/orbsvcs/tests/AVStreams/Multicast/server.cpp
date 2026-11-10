@@ -31,11 +31,9 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != nullptr)
     {
-      std::size_t const written = ACE_OS::fwrite (frame->rd_ptr (),
-                                                  frame->length (),
-                                                  1,
-                                                  FTP_SERVER::instance ()->file ());
-      if (written != 1)
+      std::size_t const written = FTP_SERVER::instance ()->write_output (
+        frame->rd_ptr (), frame->length ());
+      if (written != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
       frame = frame->cont ();
     }
@@ -46,6 +44,7 @@ int
 FTP_Server_Callback::handle_end_stream ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::end_stream\n"));
+  FTP_SERVER::instance ()->close_file ();
   done = true;
   return 0;
 }
@@ -65,7 +64,7 @@ Server::init (int argc,
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
 
-      this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "w"));
+      this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
       if (!this->fp_)
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to open output file\n"), -1);
 
@@ -155,10 +154,13 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-FILE *
-Server::file ()
+std::size_t
+Server::write_output (char const *buffer, std::size_t length)
 {
-  return this->fp_.get ();
+  if (!this->fp_)
+    return 0;
+
+  return ACE_OS::fwrite (buffer, 1, length, this->fp_.get ());
 }
 
 void

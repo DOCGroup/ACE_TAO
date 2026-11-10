@@ -88,8 +88,9 @@ public:
   Client &operator= (Client &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]);
   int run ();
+  // Borrowed handle; Client retains ownership through its File_Ptr member.
   FILE *file ();
-  TAO_StreamCtrl *streamctrl ();
+  TAO_StreamCtrl &streamctrl ();
 private:
   struct Options
   {

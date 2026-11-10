@@ -66,7 +66,7 @@ public:
   int init (int argc,
             ACE_TCHAR *argv[]);
   int run ();
-  FILE *file ();
+  std::size_t write_output (char const *buffer, std::size_t length);
   void close_file ();
 
 protected:
