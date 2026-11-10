@@ -20,9 +20,9 @@ public:
     , orb_(CORBA::ORB::_duplicate(orb))
   {
   }
-  virtual ~test_i () {
+  ~test_i () override {
   }
-  virtual CORBA::Long get ()
+  CORBA::Long get () override
   {
     ++n_;
     CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");
