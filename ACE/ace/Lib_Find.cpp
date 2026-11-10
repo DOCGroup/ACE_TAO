@@ -175,7 +175,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       else
         {
 #if defined (ACE_WIN32)
-          ACE_TCHAR *file_component = nullptr;
+          ACE_TCHAR *file_component {};
           DWORD pathlen =
             ACE_TEXT_SearchPath (0,
                                  searchfilename,
@@ -210,7 +210,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
           else if (pathlen > 0)
             return 0;
 #else
-          ACE_TCHAR *ld_path = nullptr;
+          ACE_TCHAR *ld_path {};
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
           ld_path = const_cast<ACE_TCHAR*> (ACE_DEFAULT_LD_SEARCH_PATH);
 #  else
@@ -243,7 +243,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 
               // Look at each dynamic lib directory in the search path.
 
-              ACE_TCHAR *nextholder = nullptr;
+              ACE_TCHAR *nextholder {};
               const ACE_TCHAR *path_entry =
                 ACE::strsplit_r (ld_path,
                                  ACE_LD_SEARCH_PATH_SEPARATOR_STR,
@@ -491,7 +491,7 @@ ACE::strsplit_r (char *str,
                  const char *token,
                  char *&next_start)
 {
-  char *result = nullptr;
+  char *result {};
 
   if (str != nullptr)
     next_start = str;
@@ -525,7 +525,7 @@ ACE::strsplit_r (wchar_t *str,
                  const wchar_t *token,
                  wchar_t *&next_start)
 {
-  wchar_t *result = nullptr;
+  wchar_t *result {};
 
   if (str != nullptr)
     next_start = str;

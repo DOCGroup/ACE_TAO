@@ -50,7 +50,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 #else
   va_list argp;
   int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -105,7 +105,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 #else
   va_list argp;
   int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else

@@ -274,8 +274,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       // Take advantage of the BSD getifaddrs function that simplifies
       // access to connected interfaces.
-      struct ifaddrs *ifap = nullptr;
-      struct ifaddrs *p_if = nullptr;
+      struct ifaddrs *ifap {};
+      struct ifaddrs *p_if {};
 
       if (::getifaddrs (&ifap) != 0)
         return -1;
@@ -399,7 +399,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // Subscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
-      ACE_INET_Addr *if_addrs = nullptr;
+      ACE_INET_Addr *if_addrs {};
       size_t if_cnt;
 
       if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
@@ -690,7 +690,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // Unsubscribe on all local multicast-capable network interfaces, by
           // doing recursive calls with specific interfaces.
 
-          ACE_INET_Addr *if_addrs = nullptr;
+          ACE_INET_Addr *if_addrs {};
           size_t if_cnt;
 
           // NOTE - <get_ip_interfaces> doesn't always get all of the
@@ -739,7 +739,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // Unsubscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
-      ACE_INET_Addr *if_addrs = nullptr;
+      ACE_INET_Addr *if_addrs {};
       size_t if_cnt;
 
       // NOTE - <get_ip_interfaces> doesn't always get all of the

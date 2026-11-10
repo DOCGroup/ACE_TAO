@@ -138,7 +138,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   if (this->size_ == 0)
     return nullptr;
 
-  char *result = nullptr;
+  char *result {};
 
   // Recurse, when the recursion bottoms out, allocate the result
   // buffer.

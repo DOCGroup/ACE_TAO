@@ -94,7 +94,7 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
     return -1;
   else
     {
-      sockaddr *addr = nullptr;
+      sockaddr *addr {};
       int len = 0;
 
       if (remote_addr != nullptr)
