@@ -86,13 +86,13 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.protocol = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -154,13 +154,13 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_.reset (ACE_OS::fopen (this->filename_.c_str (),
+  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (),
                                           "r"));
 
   if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -181,7 +181,7 @@ Sender::init (int argc,
                                     "IN",
                                     "USER_DEFINED",
                                     "",
-                                    this->protocol_.c_str (),
+                                    this->options_.protocol.c_str (),
                                     0);
 
   AVStreams::flowSpec flow_spec (1);
@@ -227,13 +227,13 @@ int
 Sender::pace_data ()
 {
   // The time between two consecutive frames.
-  inter_frame_time.set (1 / (double) this->frame_rate_);
+  inter_frame_time.set (1 / (double) this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %d / second\n"
                 "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try

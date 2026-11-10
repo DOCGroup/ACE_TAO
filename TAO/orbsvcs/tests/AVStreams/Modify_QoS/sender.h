@@ -80,6 +80,13 @@ public:
   /// Set the protocol object corresponding to the transport protocol chosen.
 
 private:
+  struct Options
+  {
+    std::string filename {"input"};
+    std::string protocol {"UDP"};
+    int frame_rate {1};
+  };
+
   int parse_args (int argc, ACE_TCHAR *argv[]);
   /// Method to parse the command line arguments.
 
@@ -101,20 +108,14 @@ private:
   int frame_count_ {};
   /// Number of frames sent.
 
-  std::string filename_ {"input"};
-  /// File from which data is read.
+  Options options_;
+  /// Command-line settings for the sender.
 
   TAO_Naming_Client naming_client_;
   /// The Naming Service client.
 
   std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, ACE_OS::fclose};
   /// File handle of the file read from.
-
-  std::string protocol_ {"UDP"};
-  /// Selected protocol - default is UDP
-
-  int frame_rate_ {1};
-  /// Rate at which the data will be sent.
 
   ACE_Message_Block mb_ {BUFSIZ};
   /// Message block into which data is read from a file and then sent.
