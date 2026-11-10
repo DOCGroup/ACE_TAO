@@ -179,6 +179,10 @@ public:
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   ~TAO_OutputCDR ();
+  TAO_OutputCDR (TAO_OutputCDR const &) = delete;
+  TAO_OutputCDR &operator= (TAO_OutputCDR const &) = delete;
+  TAO_OutputCDR (TAO_OutputCDR &&) = delete;
+  TAO_OutputCDR &operator= (TAO_OutputCDR &&) = delete;
 
   // @todo do we want a special method to write an array of
   // strings and wstrings?
@@ -254,11 +258,6 @@ public:
   int offset (char* pos);
 
 private:
-  TAO_OutputCDR (const TAO_OutputCDR&rhs) = delete;
-  TAO_OutputCDR& operator= (const TAO_OutputCDR&) = delete;
-  TAO_OutputCDR (TAO_OutputCDR&&) = delete;
-  TAO_OutputCDR& operator= (TAO_OutputCDR&&) = delete;
-
 private:
   /**
    * @name Outgoing GIOP Fragment Related Attributes
