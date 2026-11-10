@@ -1,13 +1,15 @@
 #include "Test_impl.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 #include <memory>
+#include <optional>
 
 struct Server_Options
 {
-  ACE_TCHAR const *uipmc_url {};
-  ACE_TCHAR const *ior_output_file {};
+  std::optional<ACE_TString> uipmc_url;
+  std::optional<ACE_TString> ior_output_file;
 };
 
 int
@@ -28,10 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-u <miop_url>"
-                           "\n",
+                           ACE_TEXT ("usage: %s -o <iorfile> -u <miop_url>\n"),
                            argv [0]),
                           -1);
       }
@@ -47,7 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "Wrong arguments\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wrong arguments\n")), -1);
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -60,21 +59,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::ServantBase_var const owner (server_obj);
 
       CORBA::String_var ior;
-      if (options.uipmc_url != nullptr)
+      if (options.uipmc_url)
         {
           PortableGroup::GOA_var const root_poa =
             PortableGroup::GOA::_narrow (poa_object.in ());
 
           if (CORBA::is_nil (root_poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Panic: nil RootPOA\n"),
+                               ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                               1);
 
           PortableServer::POAManager_var const poa_manager =
             root_poa->the_POAManager ();
 
           CORBA::Object_var const ref =
-            orb->string_to_object (options.uipmc_url);
+            orb->string_to_object (options.uipmc_url->c_str ());
 
           PortableServer::ObjectId_var const id =
             root_poa->create_id_for_reference (ref.in ());
@@ -94,7 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (CORBA::is_nil (root_poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Panic: nil RootPOA\n"),
+                               ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                               1);
 
           PortableServer::POAManager_var const poa_manager =
@@ -109,17 +108,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           poa_manager->activate ();
         }
 
-      if (options.ior_output_file != nullptr)
+      if (options.ior_output_file)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+            ACE_OS::fopen (options.ior_output_file->c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
           if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s\n",
-                               ACE_TEXT_ALWAYS_CHAR (options.ior_output_file)),
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                               options.ior_output_file->c_str ()),
                               -1);
           if (ACE_OS::fprintf (output_file.get (), "%s", ior.in ()) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR, "Cannot write IOR to output file\n"), -1);
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);
         }
 
       orb->run ();

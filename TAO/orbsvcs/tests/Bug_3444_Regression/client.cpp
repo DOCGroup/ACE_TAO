@@ -1,10 +1,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "TestC.h"
+#include <optional>
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior_server {};
+  std::optional<ACE_TString> ior_server;
 };
 
 int
@@ -22,9 +24,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k file://<iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage: %s -k file://<iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -40,15 +40,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "Wrong arguments\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wrong arguments\n")), -1);
 
-      CORBA::Object_var const tmp = orb->string_to_object (options.ior_server);
+      if (!options.ior_server)
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Missing server IOR\n")), -1);
+
+      CORBA::Object_var const tmp = orb->string_to_object (options.ior_server->c_str ());
 
       Test::Server_var const server =
         Test::Server::_unchecked_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Nil reference\n")), -1);
 
       server->shutdown ();
 
