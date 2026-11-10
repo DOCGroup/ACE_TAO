@@ -8,6 +8,7 @@
 #include "tao/debug.h"
 
 #include <cstring>
+#include <string>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -27,10 +28,8 @@ TAO_Notify_POA_Helper::get_unique_id ()
   /// Factory for generating unique ids for the POAs.
   static TAO_Notify_ID_Factory poa_id_factory;
 
-  char buf[32];
-  ACE_OS::itoa (poa_id_factory.id (), buf, 10);
-
-  return ACE_CString (buf);
+  const std::string id = std::to_string (poa_id_factory.id ());
+  return ACE_CString (id.c_str ());
 }
 
 void
