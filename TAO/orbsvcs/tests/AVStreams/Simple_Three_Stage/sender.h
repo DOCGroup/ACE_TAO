@@ -27,14 +27,20 @@
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
@@ -58,7 +64,6 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  /// Constructor
   Sender ();
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
@@ -78,8 +83,17 @@ public:
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
+  struct Options
+  {
+    ACE_TString filename { ACE_TEXT ("input") };
+    /// Rate at which the data will be sent.
+    double frame_rate {10.0};
+  };
+
   /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  Options options_;
 
   /// The endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
@@ -88,16 +102,13 @@ private:
   AVStreams::MMDevice_var receiver_mmdevice_;
 
   /// Sender servant pointer, borrowed after ownership transfers to the POA.
-  TAO_MMDevice *sender_mmdevice_;
+  TAO_MMDevice *sender_mmdevice_ {};
 
   /// Stream controller reference retained from the endpoint property.
   AVStreams::StreamCtrl_var streamctrl_;
 
   /// Number of frames sent.
-  int frame_count_;
-
-  /// File from which data is read.
-  ACE_TString filename_;
+  int frame_count_ {};
 
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
@@ -105,12 +116,9 @@ private:
   /// File handle of the file read from.
   std::unique_ptr<FILE, int (*) (FILE *)> input_file_;
 
-  /// Rate at which the data will be sent.
-  double frame_rate_;
-
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
 
   /// Protocol object borrowed from the AVStreams endpoint strategy.
-  TAO_AV_Protocol_Object *protocol_object_;
+  TAO_AV_Protocol_Object *protocol_object_ {};
 };

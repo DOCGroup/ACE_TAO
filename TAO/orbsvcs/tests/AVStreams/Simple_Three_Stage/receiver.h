@@ -27,8 +27,11 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  /// Constructor.
-  Receiver_Callback ();
+  Receiver_Callback () = default;
+  Receiver_Callback (Receiver_Callback const &) = delete;
+  Receiver_Callback &operator= (Receiver_Callback const &) = delete;
+  Receiver_Callback (Receiver_Callback &&) = delete;
+  Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -42,7 +45,7 @@ public:
 
 private:
   /// Keeping a count of the incoming frames.
-  int frame_count_;
+  int frame_count_ {1};
 };
 
 /**
@@ -55,8 +58,14 @@ private:
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
+  Receiver_StreamEndPoint () = default;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
+
   // Create a receiver application callback.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
 private:
@@ -75,10 +84,8 @@ private:
 class Receiver
 {
 public:
-  /// Constructor
-  Receiver ();
+  Receiver () = default;
 
-  /// Destructor.
   ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
@@ -98,5 +105,5 @@ protected:
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
   /// Receiver servant reference borrowed from the POA after activation.
-  TAO_MMDevice *mmdevice_;
+  TAO_MMDevice *mmdevice_ {};
 };

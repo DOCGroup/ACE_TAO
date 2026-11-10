@@ -9,7 +9,7 @@
 using DISTRIBUTER = ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>;
 
 int
-Distributer_Sender_StreamEndPoint::get_callback (const char *,
+Distributer_Sender_StreamEndPoint::get_callback (char const *,
                                                  TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -19,7 +19,7 @@ Distributer_Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Distributer_Sender_StreamEndPoint::set_protocol_object (const char *,
+Distributer_Sender_StreamEndPoint::set_protocol_object (char const *,
                                                         TAO_AV_Protocol_Object *object)
 {
   // Set the protocol object corresponding to the transport protocol
@@ -30,7 +30,7 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 int
-Distributer_Receiver_StreamEndPoint::get_callback (const char *,
+Distributer_Receiver_StreamEndPoint::get_callback (char const *,
                                                    TAO_AV_Callback *&callback)
 {
   // Create and return the receiver application callback to AVStreams
@@ -39,15 +39,10 @@ Distributer_Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
-  : frame_count_ (1)
-{
-}
-
 int
 Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                               TAO_AV_frame_info *,
-                                              const ACE_Addr &)
+                                              ACE_Addr const &)
 {
   // Upcall from the AVStreams when there is data to be received from
   // the sender.
@@ -57,7 +52,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 
   // Get the protocol object corresponding to the receiver stream and
   // send the data received from sender to the receiver.
-  int result =
+  int const result =
     DISTRIBUTER::instance ()->sender_protocol_object ()->send_frame (frame);
 
   if (result < 0)
@@ -84,7 +79,7 @@ Distributer_Receiver_Callback::handle_destroy ()
       // We can close down now.
       DISTRIBUTER::instance ()->done (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Distributer_Callback::handle_destroy Failed\n");
@@ -109,19 +104,9 @@ Distributer::sender_protocol_object ()
   return this->sender_protocol_object_;
 }
 
-Distributer::Distributer ()
-  : distributer_receiver_mmdevice_ (nullptr),
-    distributer_sender_mmdevice_ (nullptr),
-    sender_protocol_object_ (nullptr),
-    receiver_streamctrl_ (nullptr),
-    protocol_ ("UDP"),
-    done_ (false)
-{
-}
-
 void
 Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-                               const ACE_CString &mmdevice_name)
+                               ACE_CString const &mmdevice_name)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -231,7 +216,7 @@ Distributer::init (int /*argc*/,
                                            this->protocol_.c_str (),
                                            0);
 
-  TAO_StreamCtrl* sender_streamctrl {};
+  TAO_StreamCtrl *sender_streamctrl {};
   // Video stream controller for the stream between sender and distributer
 
   ACE_NEW_RETURN (sender_streamctrl,
@@ -246,7 +231,7 @@ Distributer::init (int /*argc*/,
   flow_spec [0] = CORBA::string_dup (sender_entry.entry_to_string ());
 
   // Bind/Connect the sender and distributer MMDevices.
-  CORBA::Boolean res =
+  CORBA::Boolean const res =
     sender_streamctrl->bind_devs (sender_mmdevice_.in (),
                                   distributer_receiver_mmdevice.in (),
                                   the_qos.inout (),
@@ -278,7 +263,7 @@ Distributer::done (bool done)
 
 int
 ACE_TMAIN (int argc,
-      ACE_TCHAR *argv[])
+           ACE_TCHAR *argv[])
 {
   try
     {
@@ -303,7 +288,7 @@ ACE_TMAIN (int argc,
                                       root_poa.in ());
 
       // Initialize the Distributer
-      int result =
+      int const result =
         DISTRIBUTER::instance ()->init (argc,
                                         argv);
 
@@ -318,7 +303,7 @@ ACE_TMAIN (int argc,
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("main");
       return -1;
