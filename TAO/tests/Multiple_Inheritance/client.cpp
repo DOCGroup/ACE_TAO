@@ -7,14 +7,13 @@
  *  @author  Irfan Pyarali
  */
 //=============================================================================
+#include <memory>
 
-
+#include "Multiple_InheritanceC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Read_Buffer.h"
 #include "ace/SString.h"
-#include "Multiple_InheritanceC.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
 
 struct Client_Options
 {
@@ -26,7 +25,7 @@ static int
 parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:f:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -40,10 +39,8 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "\nusage:  %s "
-                           "-i <ior_input_file> "
-                           "-k IOR "
-                           "\n",
+                           ACE_TEXT ("\nusage: %s ")
+                           ACE_TEXT ("-f <ior_input_file> or -k IOR\n"),
                            argv [0]),
                           -1);
       }
@@ -64,7 +61,7 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Client_Options options;
   try
@@ -83,21 +80,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ior = options.ior;
       if (options.ior_input_file != nullptr)
         {
-          ACE_HANDLE input_file = ACE_OS::open (options.ior_input_file, 0);
-          if (input_file == ACE_INVALID_HANDLE)
+          std::unique_ptr<FILE, int (*) (FILE *)> input_file (
+            ACE_OS::fopen (options.ior_input_file, ACE_TEXT ("r")), ACE_OS::fclose);
+          if (!input_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open input file for reading IOR: %s\n",
+                               ACE_TEXT ("Cannot open input file for reading IOR: %s\n"),
                                options.ior_input_file),
                               -1);
-          ACE_Read_Buffer ior_buffer (input_file);
+          ACE_Read_Buffer ior_buffer (input_file.get ());
           char * const data = ior_buffer.read ();
           if (data == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior\n"),
+                               ACE_TEXT ("Unable to read ior\n")),
                               -1);
           ior = ACE_TEXT_CHAR_TO_TCHAR (data);
           ior_buffer.alloc ()->free (data);
-          ACE_OS::close (input_file);
         }
 
       // Get the object reference with the IOR
@@ -105,16 +102,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var string;
 
-      // Narrow the object reference
       A_var a = A::_narrow (object.in ());
 
-      // Narrow the object reference
       intB_var b = intB::_narrow (a.in ());
 
-      // Narrow the object reference
       C_var c = C::_narrow (a.in ());
 
-      // Narrow the object reference
       D_var d = D::_narrow (c.in ());
 
       string = a->method1 ();

@@ -1,8 +1,9 @@
-#include "ace/Get_Opt.h"
-#include "Multiple_Inheritance_i.h"
-#include "tao/Utils/ORB_Manager.h"
 #include <memory>
+
+#include "Multiple_Inheritance_i.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "tao/Utils/ORB_Manager.h"
 
 struct Server_Options
 {
@@ -13,7 +14,7 @@ static int
 parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -33,9 +34,8 @@ parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Server_Options options;
   Multiple_Inheritance_i servant;
@@ -62,10 +62,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (options.ior_output_file != nullptr)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
           if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                options.ior_output_file),
                               -1);
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
