@@ -73,6 +73,11 @@ public:
    */
   ~TAO_AMH_Response_Handler () override;
 
+  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler const &) = delete;
+  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler const &) = delete;
+  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler &&) = delete;
+  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler &&) = delete;
+
   /**
    * Stores necessary information from a TAO_Server_Request onto the heap
    */
@@ -94,12 +99,11 @@ protected:
   void _tao_rh_send_reply ();
 
   /// Send back an exception to the client.
-  void _tao_rh_send_exception (const CORBA::Exception &ex);
+  void _tao_rh_send_exception (CORBA::Exception const &ex);
 
   /// Send back a location forward exception to the client.
   void _tao_rh_send_location_forward (CORBA::Object_ptr fwd,
                                       CORBA::Boolean is_perm);
-
 
   /// The outgoing CDR stream
   /**
@@ -114,11 +118,6 @@ protected:
   GIOP::ReplyStatusType reply_status_ {GIOP::NO_EXCEPTION};
 
 private:
-  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler const &) = delete;
-  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler const &) = delete;
-  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler &&) = delete;
-  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler &&) = delete;
-
   /// Pointer to the original message-base
   TAO_GIOP_Message_Base *mesg_base_ {};
 

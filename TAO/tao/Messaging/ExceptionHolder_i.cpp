@@ -14,7 +14,7 @@ namespace TAO
   ExceptionHolder::ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
-      const ::CORBA::OctetSeq &marshaled_exception,
+      ::CORBA::OctetSeq const &marshaled_exception,
       ::TAO::Exception_Data* data,
       ::CORBA::ULong exceptions_count,
       ACE_Char_Codeset_Translator *char_translator,
@@ -39,7 +39,8 @@ namespace TAO
 
   void ExceptionHolder::raise_exception ()
     {
-      TAO_InputCDR _tao_in ((const char*) this->marshaled_exception ().get_buffer (),
+      TAO_InputCDR _tao_in (reinterpret_cast<char const *> (
+                                this->marshaled_exception ().get_buffer ()),
                             this->marshaled_exception ().length (),
                             this->byte_order ());
 
@@ -120,7 +121,7 @@ namespace TAO
     }
 
   void ExceptionHolder::raise_exception_with_list (
-      const ::Dynamic::ExceptionList &)
+      ::Dynamic::ExceptionList const &)
     {
       // todo convert exceptionlist to something we can really use.
       this->raise_exception ();

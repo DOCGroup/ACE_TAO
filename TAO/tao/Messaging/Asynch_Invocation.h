@@ -48,6 +48,11 @@ namespace TAO
                               TAO_Asynch_Reply_Dispatcher_Base *rd,
                               bool response_expected = true);
 
+    Asynch_Remote_Invocation (Asynch_Remote_Invocation const &) = delete;
+    Asynch_Remote_Invocation &operator= (Asynch_Remote_Invocation const &) = delete;
+    Asynch_Remote_Invocation (Asynch_Remote_Invocation &&) = delete;
+    Asynch_Remote_Invocation &operator= (Asynch_Remote_Invocation &&) = delete;
+
     Invocation_Status remote_invocation (ACE_Time_Value *value);
 
   protected:
@@ -55,12 +60,6 @@ namespace TAO
     // are given
     ACE_Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
                              ARDB_Refcount_Functor> safe_rd_;
-
-  private:
-    Asynch_Remote_Invocation (Asynch_Remote_Invocation const &) = delete;
-    Asynch_Remote_Invocation &operator= (Asynch_Remote_Invocation const &) = delete;
-    Asynch_Remote_Invocation (Asynch_Remote_Invocation &&) = delete;
-    Asynch_Remote_Invocation &operator= (Asynch_Remote_Invocation &&) = delete;
   };
 }
 

@@ -23,7 +23,7 @@ namespace TAO
     CORBA::Object *target,
     Argument **args,
     int arg_number,
-    const char *operation,
+    char const *operation,
     std::size_t op_len,
     int collocation_opportunity,
     Invocation_Mode m,
@@ -44,7 +44,7 @@ namespace TAO
   void
   Asynch_Invocation_Adapter::invoke (
     Messaging::ReplyHandler_ptr reply_handler_ptr,
-    const TAO_Reply_Handler_Stub &reply_handler_stub)
+    TAO_Reply_Handler_Stub const &reply_handler_stub)
   {
     TAO_Stub * stub =
       this->get_stub ();
@@ -104,7 +104,7 @@ namespace TAO
 
   void
   Asynch_Invocation_Adapter::invoke (
-    const TAO::Exception_Data *ex,
+    TAO::Exception_Data const *ex,
     unsigned long ex_count)
   {
     Invocation_Adapter::invoke (ex, ex_count );

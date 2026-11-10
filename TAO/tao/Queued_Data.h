@@ -47,6 +47,7 @@ class TAO_Export TAO_Queued_Data
 public:
   explicit TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
 
+  /// Borrow the message block \a mb; the caller retains ownership and controls its lifetime.
   explicit TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
 
   TAO_Queued_Data (TAO_Queued_Data const &qd);
@@ -98,7 +99,7 @@ public:
   /// Get message block
   ACE_Message_Block *msg_block () const;
 
-  /// Set the message block; nullptr detaches it without releasing it.
+  /// Adopt the message block \a mb; nullptr detaches it without releasing it.
   void msg_block (ACE_Message_Block *mb);
 
   /// Set the state
@@ -109,7 +110,9 @@ public:
 
 private:
   /// The message block that contains the message.
-  ACE_Message_Block_Unique_Ptr msg_block_ {};
+  /// Owns dynamically allocated message blocks; msg_block_ may also borrow a stack block.
+  ACE_Message_Block_Unique_Ptr msg_block_owner_ {};
+  ACE_Message_Block *msg_block_ {};
 
   /*!
     @name Missing Data details

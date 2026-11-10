@@ -19,7 +19,7 @@ TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
 long
 TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
                                             CORBA::ULong request_id,
-                                            const ACE_Time_Value &max_wait_time)
+                                            ACE_Time_Value const &max_wait_time)
 {
   // Remember them for later.
   this->tms_ = tms;
@@ -31,8 +31,8 @@ TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
 }
 
 int
-TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
-                                            const void *)
+TAO_Asynch_Timeout_Handler::handle_timeout (ACE_Time_Value const &,
+                                            void const *)
 {
   // Check if there was a reply dispatcher registered in the tms, if not
   // the reply already got dispatched by another thread

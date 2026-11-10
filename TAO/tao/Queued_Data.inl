@@ -44,7 +44,8 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
 
 ACE_INLINE
 TAO_Queued_Data::TAO_Queued_Data (TAO_Queued_Data const &qd)
-  : msg_block_ (qd.msg_block_->duplicate ()),
+  : msg_block_owner_ (qd.msg_block_->duplicate ()),
+    msg_block_ (msg_block_owner_.get ()),
     missing_data_ (qd.missing_data_),
     state_ (qd.state_),
     allocator_ (qd.allocator_)
@@ -102,7 +103,7 @@ TAO_Queued_Data::next (TAO_Queued_Data *qd)
 ACE_INLINE ACE_Message_Block *
 TAO_Queued_Data::msg_block () const
 {
-  return this->msg_block_.get ();
+  return this->msg_block_;
 }
 
 ACE_INLINE void
@@ -110,11 +111,13 @@ TAO_Queued_Data::msg_block (ACE_Message_Block *mb)
 {
   if (mb == nullptr)
     {
-      this->msg_block_.release ();
+      this->msg_block_owner_.release ();
+      this->msg_block_ = nullptr;
     }
-  else if (mb != this->msg_block_.get ())
+  else if (mb != this->msg_block_ || !this->msg_block_owner_)
     {
-      this->msg_block_.reset (mb);
+      this->msg_block_owner_.reset (mb);
+      this->msg_block_ = mb;
     }
 }
 

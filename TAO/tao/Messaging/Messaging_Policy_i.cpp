@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
-  const TimeBase::TimeT& relative_expiry)
+  TimeBase::TimeT const &relative_expiry)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
@@ -24,7 +24,7 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
 }
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
-  const TAO_RelativeRoundtripTimeoutPolicy &rhs)
+  TAO_RelativeRoundtripTimeoutPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
@@ -96,14 +96,14 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       msecs));
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       // Ignore all exceptions...
     }
 }
 
 CORBA::Policy_ptr
-TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val)
+TAO_RelativeRoundtripTimeoutPolicy::create (CORBA::Any const &val)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -190,7 +190,7 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 {
 }
 
-TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
+TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (TAO_Sync_Scope_Policy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , Messaging::SyncScopePolicy ()
@@ -246,14 +246,14 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
       has_synchronization = true;
       scope = p->synchronization ();
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       // Ignore all exceptions...
     }
 }
 
 CORBA::Policy_ptr
-TAO_Sync_Scope_Policy::create (const CORBA::Any& val)
+TAO_Sync_Scope_Policy::create (CORBA::Any const &val)
 {
   Messaging::SyncScope synchronization;
   if ((val >>= synchronization) == 0)

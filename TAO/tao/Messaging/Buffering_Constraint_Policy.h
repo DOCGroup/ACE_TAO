@@ -45,12 +45,14 @@ class TAO_Buffering_Constraint_Policy
 public:
   explicit TAO_Buffering_Constraint_Policy (TAO::BufferingConstraint const &buffering_constraint);
 
-  /// Copy constructor.
-  TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
+  TAO_Buffering_Constraint_Policy (TAO_Buffering_Constraint_Policy const &rhs);
+  TAO_Buffering_Constraint_Policy &operator= (TAO_Buffering_Constraint_Policy const &) = delete;
+  TAO_Buffering_Constraint_Policy (TAO_Buffering_Constraint_Policy &&) = delete;
+  TAO_Buffering_Constraint_Policy &operator= (TAO_Buffering_Constraint_Policy &&) = delete;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   /// Returns a copy of @c this.
   virtual TAO_Buffering_Constraint_Policy *clone () const;

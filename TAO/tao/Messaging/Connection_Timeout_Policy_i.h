@@ -47,8 +47,10 @@ class TAO_ConnectionTimeoutPolicy
 public:
   explicit TAO_ConnectionTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
-  /// Copy constructor.
-  TAO_ConnectionTimeoutPolicy (const TAO_ConnectionTimeoutPolicy &rhs);
+  TAO_ConnectionTimeoutPolicy (TAO_ConnectionTimeoutPolicy const &rhs);
+  TAO_ConnectionTimeoutPolicy &operator= (TAO_ConnectionTimeoutPolicy const &) = delete;
+  TAO_ConnectionTimeoutPolicy (TAO_ConnectionTimeoutPolicy &&) = delete;
+  TAO_ConnectionTimeoutPolicy &operator= (TAO_ConnectionTimeoutPolicy &&) = delete;
 
   /// Implement the timeout hook, this is set in the ORB_Core at
   /// initialization time.
@@ -59,7 +61,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   /// Returns a copy of <this>.
   virtual TAO_ConnectionTimeoutPolicy *clone () const;

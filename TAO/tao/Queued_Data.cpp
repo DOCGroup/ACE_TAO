@@ -122,7 +122,8 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
 
       ACE_Message_Block_Unique_Ptr mb_guard {mb};
       ACE_CDR::mb_align (mb_guard.get ());
-      qd->msg_block_.reset (mb_guard.release ());
+      qd->msg_block_owner_.reset (mb_guard.release ());
+      qd->msg_block_ = qd->msg_block_owner_.get ();
     }
 
   return qd_guard.release ();
@@ -133,7 +134,8 @@ void
 TAO_Queued_Data::release (TAO_Queued_Data *qd)
 {
   //// TODO
-  qd->msg_block_.reset ();
+  qd->msg_block_owner_.reset ();
+  qd->msg_block_ = nullptr;
 
   if (qd->allocator_)
     {
@@ -167,8 +169,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
   // @@ todo: Theoretically this should be within the Message Block,
   // but we dont have much scope to do this in that mess. Probably in
   // the next stage of MB rewrite we should be okay
-  ACE_Message_Block::Message_Flags fl =
-    sqd.msg_block_->self_flags ();
+  ACE_Message_Block::Message_Flags fl = sqd.msg_block_->self_flags ();
 
   if (ACE_BIT_ENABLED (fl,
                        ACE_Message_Block::DONT_DELETE))
@@ -213,7 +214,7 @@ TAO_Queued_Data::consolidate ()
     {
       // Create a message block big enough to hold the entire chain
       ACE_Message_Block *dest = clone_mb_nocopy_size (
-        this->msg_block_.get (), this->msg_block_->total_length ());
+        this->msg_block_, this->msg_block_->total_length ());
 
       if (nullptr == dest)
         {
@@ -230,10 +231,11 @@ TAO_Queued_Data::consolidate ()
       ACE_Message_Block_Unique_Ptr dest_guard {dest};
 
       // Use ACE_CDR to consolidate the chain for us
-      ACE_CDR::consolidate (dest, this->msg_block_.get ());
+      ACE_CDR::consolidate (dest, this->msg_block_);
 
       // Replace the original message block chain with the consolidated block.
-      this->msg_block_.reset (dest_guard.release ());
+      this->msg_block_owner_.reset (dest_guard.release ());
+      this->msg_block_ = this->msg_block_owner_.get ();
       this->state_.more_fragments (false);
     }
 

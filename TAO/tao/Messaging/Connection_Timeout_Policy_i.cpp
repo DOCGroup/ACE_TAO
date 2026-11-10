@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
-  const TimeBase::TimeT& relative_expiry)
+  TimeBase::TimeT const &relative_expiry)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::ConnectionTimeoutPolicy ()
@@ -22,7 +22,7 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
 }
 
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
-  const TAO_ConnectionTimeoutPolicy &rhs)
+  TAO_ConnectionTimeoutPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::ConnectionTimeoutPolicy ()
@@ -93,14 +93,14 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       msecs));
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       // Ignore all exceptions...
     }
 }
 
 CORBA::Policy_ptr
-TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val)
+TAO_ConnectionTimeoutPolicy::create (CORBA::Any const &val)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!

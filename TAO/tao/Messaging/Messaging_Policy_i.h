@@ -40,8 +40,10 @@ class TAO_RelativeRoundtripTimeoutPolicy
 public:
   explicit TAO_RelativeRoundtripTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
-  /// Copy constructor.
-  TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
+  TAO_RelativeRoundtripTimeoutPolicy (TAO_RelativeRoundtripTimeoutPolicy const &rhs);
+  TAO_RelativeRoundtripTimeoutPolicy &operator= (TAO_RelativeRoundtripTimeoutPolicy const &) = delete;
+  TAO_RelativeRoundtripTimeoutPolicy (TAO_RelativeRoundtripTimeoutPolicy &&) = delete;
+  TAO_RelativeRoundtripTimeoutPolicy &operator= (TAO_RelativeRoundtripTimeoutPolicy &&) = delete;
 
   /// Implement the timeout hook, this is set in the ORB_Core at
   /// initialization time.
@@ -52,7 +54,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   /// Returns a copy of @c this.
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone () const;
@@ -98,8 +100,10 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
 public:
   explicit TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
 
-  /// Copy constructor.
-  TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
+  TAO_Sync_Scope_Policy (TAO_Sync_Scope_Policy const &rhs);
+  TAO_Sync_Scope_Policy &operator= (TAO_Sync_Scope_Policy const &) = delete;
+  TAO_Sync_Scope_Policy (TAO_Sync_Scope_Policy &&) = delete;
+  TAO_Sync_Scope_Policy &operator= (TAO_Sync_Scope_Policy &&) = delete;
 
   /// Implement the Sync_Scope hook, this is set in the ORB_Core at
   /// initialization time.
@@ -110,7 +114,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   /// Returns a copy of <this>.
   virtual TAO_Sync_Scope_Policy *clone () const;

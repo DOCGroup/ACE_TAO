@@ -41,6 +41,13 @@ class TAO_Messaging_Export TAO_AMI_Arguments_Converter_Impl
   : public TAO::Collocated_Arguments_Converter
 {
 public:
+  TAO_AMI_Arguments_Converter_Impl () = default;
+
+  TAO_AMI_Arguments_Converter_Impl (TAO_AMI_Arguments_Converter_Impl const &) = delete;
+  TAO_AMI_Arguments_Converter_Impl &operator= (TAO_AMI_Arguments_Converter_Impl const &) = delete;
+  TAO_AMI_Arguments_Converter_Impl (TAO_AMI_Arguments_Converter_Impl &&) = delete;
+  TAO_AMI_Arguments_Converter_Impl &operator= (TAO_AMI_Arguments_Converter_Impl &&) = delete;
+
   void convert_request (TAO_ServerRequest & server_request,
                         TAO::Argument * const args[],
                         std::size_t nargs) override;
