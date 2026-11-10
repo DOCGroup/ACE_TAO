@@ -111,10 +111,10 @@ namespace TAO
       TP_Request* next_ {};
 
       /// Reference to the servant object.
-      PortableServer::ServantBase_var servant_;
+      PortableServer::ServantBase_var const servant_;
 
       /// Reference to the servant "state" object (contains the busy flag).
-      TP_Servant_State::HandleType servant_state_;
+      TP_Servant_State::HandleType const servant_state_;
     };
   }
 }

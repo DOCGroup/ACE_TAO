@@ -77,7 +77,7 @@ namespace TAO
       virtual void cancel_i() = 0;
 
     private:
-      PortableServer::ServantBase_var servant_;
+      PortableServer::ServantBase_var const servant_;
     };
   }
 }
