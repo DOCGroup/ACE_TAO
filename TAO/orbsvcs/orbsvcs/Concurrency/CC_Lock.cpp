@@ -30,7 +30,7 @@ CC_Lock::lock ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
-  lock_held_++;
+  ++lock_held_;
 }
 
 CORBA::Boolean
@@ -39,7 +39,7 @@ CC_Lock::try_lock ()
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
 
-  lock_held_++;
+  ++lock_held_;
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
@@ -54,7 +54,7 @@ CC_Lock::try_lock ()
     {
       if (errno == EBUSY)
         {
-          lock_held_--;
+          --lock_held_;
           return false;
         }
       else
@@ -80,7 +80,7 @@ CC_Lock::unlock ()
   if (success == -1)
     throw CORBA::INTERNAL ();
 
-  lock_held_--;
+  --lock_held_;
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
@@ -136,7 +136,7 @@ CC_Lock::GetLocksHeld () const
 void
 CC_Lock::DecLocksHeld ()
 {
-  this->lock_held_--;
+  --this->lock_held_;
 }
 
 void
