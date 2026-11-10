@@ -167,14 +167,14 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
 #endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
   };
 
-  const CORBA::PolicyType *end = type + sizeof (type) / sizeof (type[0]);
-  for (CORBA::PolicyType *i = type; i != end; ++i)
+  CORBA::PolicyType const * const end = type + sizeof (type) / sizeof (type[0]);
+  for (CORBA::PolicyType const *i = type; i != end; ++i)
     {
       try
         {
           info->register_policy_factory (*i, policy_factory.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {

@@ -26,7 +26,7 @@ namespace TAO
     std::size_t msg_count,
     std::size_t total_bytes,
     bool &must_flush,
-    const ACE_Time_Value &current_deadline,
+    ACE_Time_Value const &current_deadline,
     bool &set_timer,
     ACE_Time_Value &new_deadline) const
   {
@@ -43,7 +43,7 @@ namespace TAO
         TAO::BufferingConstraintPolicy_var bcpv =
           TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ());
 
-        TAO_Buffering_Constraint_Policy* bcp =
+        TAO_Buffering_Constraint_Policy * const bcp =
           dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcpv.in ());
         if (bcp == nullptr)
           {
@@ -51,7 +51,7 @@ namespace TAO
           }
         bcp->get_buffering_constraint (buffering_constraint);
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
         return true;
       }
@@ -91,8 +91,8 @@ namespace TAO
 
   bool
   Eager_Transport_Queueing_Strategy::timer_check (
-    const TAO::BufferingConstraint &buffering_constraint,
-    const ACE_Time_Value &current_deadline,
+    TAO::BufferingConstraint const &buffering_constraint,
+    ACE_Time_Value const &current_deadline,
     bool &set_timer,
     ACE_Time_Value &new_deadline) const
   {
@@ -106,7 +106,7 @@ namespace TAO
 
     // Compute the next deadline...
     ACE_Time_Value const now = ACE_OS::gettimeofday ();
-    ACE_Time_Value timeout =
+    ACE_Time_Value const timeout =
       this->time_conversion (buffering_constraint.timeout);
     new_deadline = now + timeout;
 
@@ -142,10 +142,10 @@ namespace TAO
 
   ACE_Time_Value
   Eager_Transport_Queueing_Strategy::time_conversion (
-    const TimeBase::TimeT &time) const
+    TimeBase::TimeT const &time) const
   {
-    TimeBase::TimeT seconds = time / 10000000u;
-    TimeBase::TimeT microseconds = (time % 10000000u) / 10;
+    TimeBase::TimeT const seconds = time / 10000000u;
+    TimeBase::TimeT const microseconds = (time % 10000000u) / 10;
     return ACE_Time_Value (ACE_U64_TO_U32 (seconds),
                            ACE_U64_TO_U32 (microseconds));
   }

@@ -127,7 +127,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                                      this->reply_handler_.in (),
                                      reply_error);
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level >= 4)
             ex._tao_print_exception ("Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
@@ -173,7 +173,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -236,7 +236,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level >= 4)
         {
