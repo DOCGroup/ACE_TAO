@@ -53,6 +53,11 @@ public:
   int add_strategy (std::string const &poa_name,
                     CSD_Framework::Strategy_ptr strategy);
 
+  TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository const &) = delete;
+  TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository const &) = delete;
+  TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository &&) = delete;
+  TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository &&) = delete;
+
 private:
   struct Strategy_Node
   {
@@ -62,23 +67,16 @@ private:
     void add_node (std::unique_ptr<Strategy_Node> node);
     Strategy_Node *find (std::string const &name);
 
-  private:
     Strategy_Node (Strategy_Node const &) = delete;
     Strategy_Node &operator= (Strategy_Node const &) = delete;
     Strategy_Node (Strategy_Node &&) = delete;
     Strategy_Node &operator= (Strategy_Node &&) = delete;
 
-  public:
     std::string poa_name_;
     CSD_Framework::Strategy_var strategy_;
     /// The node owns the remainder of the linked list.
     std::unique_ptr<Strategy_Node> next_ {};
   };
-
-  TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository const &) = delete;
-  TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository const &) = delete;
-  TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository &&) = delete;
-  TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository &&) = delete;
 
   /// The repository owns the linked list beginning at this node.
   std::unique_ptr<Strategy_Node> strategy_list_head_ {};

@@ -45,7 +45,6 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_CSD_ORBInitializer (TAO_CSD_ORBInitializer const &) = delete;
   TAO_CSD_ORBInitializer &operator= (TAO_CSD_ORBInitializer const &) = delete;
   TAO_CSD_ORBInitializer (TAO_CSD_ORBInitializer &&) = delete;

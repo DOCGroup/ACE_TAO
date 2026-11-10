@@ -72,12 +72,12 @@ namespace TAO
       /// Cancel the request.
       void cancel();
 
-    private:
       FW_Server_Request_Wrapper (FW_Server_Request_Wrapper const &) = delete;
       FW_Server_Request_Wrapper &operator= (FW_Server_Request_Wrapper const &) = delete;
       FW_Server_Request_Wrapper (FW_Server_Request_Wrapper &&) = delete;
       FW_Server_Request_Wrapper &operator= (FW_Server_Request_Wrapper &&) = delete;
 
+    private:
       /// Create a deep copy of the request_ object.
       /// The other clone methods are used to support the TAO_ServerRequest clone.
       TAO_ServerRequest* clone (TAO_ServerRequest*& from);

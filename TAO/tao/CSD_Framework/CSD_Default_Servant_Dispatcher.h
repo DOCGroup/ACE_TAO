@@ -31,7 +31,14 @@ class TAO_CSD_FW_Export TAO_CSD_Default_Servant_Dispatcher
   : public virtual TAO_Default_Servant_Dispatcher
 {
 public:
+  TAO_CSD_Default_Servant_Dispatcher () = default;
+
   ~TAO_CSD_Default_Servant_Dispatcher () override;
+
+  TAO_CSD_Default_Servant_Dispatcher (TAO_CSD_Default_Servant_Dispatcher const &) = delete;
+  TAO_CSD_Default_Servant_Dispatcher &operator= (TAO_CSD_Default_Servant_Dispatcher const &) = delete;
+  TAO_CSD_Default_Servant_Dispatcher (TAO_CSD_Default_Servant_Dispatcher &&) = delete;
+  TAO_CSD_Default_Servant_Dispatcher &operator= (TAO_CSD_Default_Servant_Dispatcher &&) = delete;
 
   /// Factory method for creating new CSD Root POA.
   TAO_Root_POA *create_Root_POA (ACE_CString const &name,

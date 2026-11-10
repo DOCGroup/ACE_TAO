@@ -48,6 +48,11 @@ public:
 
   ~TAO_CSD_POA () override;
 
+  TAO_CSD_POA (TAO_CSD_POA const &) = delete;
+  TAO_CSD_POA &operator= (TAO_CSD_POA const &) = delete;
+  TAO_CSD_POA (TAO_CSD_POA &&) = delete;
+  TAO_CSD_POA &operator= (TAO_CSD_POA &&) = delete;
+
   /// Pass the Strategy object reference to the CSD poa.
   void set_csd_strategy (::CSD_Framework::Strategy_ptr s) override;
 

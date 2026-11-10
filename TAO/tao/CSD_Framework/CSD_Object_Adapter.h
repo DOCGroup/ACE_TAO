@@ -39,6 +39,11 @@ public:
 
   ~TAO_CSD_Object_Adapter () override;
 
+  TAO_CSD_Object_Adapter (TAO_CSD_Object_Adapter const &) = delete;
+  TAO_CSD_Object_Adapter &operator= (TAO_CSD_Object_Adapter const &) = delete;
+  TAO_CSD_Object_Adapter (TAO_CSD_Object_Adapter &&) = delete;
+  TAO_CSD_Object_Adapter &operator= (TAO_CSD_Object_Adapter &&) = delete;
+
   /// Hand the request to the Service_Dispatching_Strategy_Proxy for
   /// dispatching.
   void do_dispatch (TAO_ServerRequest& req,

@@ -30,6 +30,11 @@ class TAO_CSD_FW_Export TAO_CSD_Object_Adapter_Factory : public TAO_Adapter_Fact
 public:
   TAO_CSD_Object_Adapter_Factory () = default;
 
+  TAO_CSD_Object_Adapter_Factory (TAO_CSD_Object_Adapter_Factory const &) = delete;
+  TAO_CSD_Object_Adapter_Factory &operator= (TAO_CSD_Object_Adapter_Factory const &) = delete;
+  TAO_CSD_Object_Adapter_Factory (TAO_CSD_Object_Adapter_Factory &&) = delete;
+  TAO_CSD_Object_Adapter_Factory &operator= (TAO_CSD_Object_Adapter_Factory &&) = delete;
+
   // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   // details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;

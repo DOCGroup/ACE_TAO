@@ -47,7 +47,6 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
   /// Initialize the PI_Server loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_CSD_Framework_Loader (TAO_CSD_Framework_Loader const &) = delete;
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader const &) = delete;
   TAO_CSD_Framework_Loader (TAO_CSD_Framework_Loader &&) = delete;
