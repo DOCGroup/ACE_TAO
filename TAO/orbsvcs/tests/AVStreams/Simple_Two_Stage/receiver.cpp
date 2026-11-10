@@ -16,7 +16,7 @@ struct Receiver_Options
 static Receiver_Options receiver_options {};
 
 int
-Receiver_StreamEndPoint::get_callback (const char *,
+Receiver_StreamEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
   // Return the receiver application callback to the AVStreams for
@@ -28,7 +28,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
-                                  const ACE_Addr &)
+                                  ACE_Addr const &)
 {
   //
   // Upcall from the AVStreams when there is data to be received from

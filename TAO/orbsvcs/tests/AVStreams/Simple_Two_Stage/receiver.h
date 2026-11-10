@@ -81,7 +81,7 @@ public:
   Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
 
   // Create a receiver application callback.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
 private:

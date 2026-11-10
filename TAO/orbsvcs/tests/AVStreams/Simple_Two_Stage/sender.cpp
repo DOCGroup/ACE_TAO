@@ -12,7 +12,7 @@
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -22,7 +22,7 @@ Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *,
+Sender_StreamEndPoint::set_protocol_object (char const *,
                                             TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
@@ -400,7 +400,7 @@ Sender::pace_data ()
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -445,7 +445,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         result = SENDER::instance ()->pace_data ();
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;
