@@ -6,10 +6,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
 
 $status = 0;
 $debug = 0;
+@protocols = ("UDP");
 
 my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $sv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -109,7 +109,7 @@ for $protocol (@protocols) {
     }
 
     my $sv_outputfile = $sv->LocalFile ($outputfile);
-    $ns->DeleteFile ($outputfile);
+    $sv->DeleteFile ($outputfile);
 
     $SV = $sv->CreateProcess ("server",
                               "-ORBInitRef NameService=file://$sv_nsiorfile ".

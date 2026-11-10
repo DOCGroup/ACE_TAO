@@ -10,164 +10,99 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_FTP_H
 #define TAO_AV_FTP_H
 
+#include <cstdio>
+#include <memory>
+#include <string>
+
 #include "ace/Get_Opt.h"
+#include "ace/Message_Block.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+using FTP_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
-/**
- * @class FTP_Client_Callback
- *
- * @brief Defines the client applcation callback.
- *
- * This class can override the methods of
- * the TAO_AV_Callback to do application
- * specific processing.
- */
+/** Client callback for application-specific AVStreams processing. */
 class FTP_Client_Callback : public TAO_AV_Callback
 {
 public:
-  ///Constructor
-  FTP_Client_Callback ();
+  FTP_Client_Callback () = default;
+  FTP_Client_Callback (FTP_Client_Callback const &) = delete;
+  FTP_Client_Callback &operator= (FTP_Client_Callback const &) = delete;
+  FTP_Client_Callback (FTP_Client_Callback &&) = delete;
+  FTP_Client_Callback &operator= (FTP_Client_Callback &&) = delete;
 };
 
-
-/**
- * @class FTP_Client_StreamEndPoint
- *
- * @brief Defines the client stream endpoint.
- *
- * This class overrides the methods of TAO_ClientStreamendpoint
- * so the application can perform its processing during post and pre
- * connection set up.
- */
-class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
+/** Client stream endpoint providing the application callback and protocol object. */
+class FTP_Client_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
-  /// Constructor
   FTP_Client_StreamEndPoint ();
+  FTP_Client_StreamEndPoint (FTP_Client_StreamEndPoint const &) = delete;
+  FTP_Client_StreamEndPoint &operator= (FTP_Client_StreamEndPoint const &) = delete;
+  FTP_Client_StreamEndPoint (FTP_Client_StreamEndPoint &&) = delete;
+  FTP_Client_StreamEndPoint &operator= (FTP_Client_StreamEndPoint &&) = delete;
 
-  /// Create the application client callback and return its handle to the
-  /// AVStreams for further application callbacks
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
-
-  /// Set protocol object corresponding to the transport protocol chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
-  /// reference to the cllient application callback.
   FTP_Client_Callback callback_;
 };
 
-using ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
+using ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<
+  FTP_Client_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
 
-
-/**
- * @class Client
- *
- * @brief Defines the Client Application
- *
- * The actual client program that acts as the ftp client that streams data
- * to the ftp servers that are waiting for data.
- */
+/** Client application that streams file data to the server. */
 class Client
 {
 public:
-  /// Constructor
   Client ();
   Client (Client const &) = delete;
   Client &operator= (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client &&) = delete;
 
-  /// Method to initialize the various data components.
-  int init (int argc,
-            ACE_TCHAR *argv[]);
-
-  /// Set the protocol object corresponding to the transport protocol chosen.
+  int init (int argc, ACE_TCHAR *argv[]);
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object);
-
-  /// Method to pace and send data from a file.
   int pace_data ();
 
-  /// File handle from which data is read to be sent.
-  FILE *file ();
-
-  /// The stream control interface that manages the stream set up
-  TAO_StreamCtrl *streamctrl ();
-
-  /// name of the flow set up.
-  char *flowname ();
-
-  /// The requested frame rate for sending each frame of data read from the file.
-  int frame_rate ();
-
 private:
-  /// Method to parse the command line arguments.
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  struct Options
+  {
+    ACE_TString filename {ACE_TEXT ("input")};
+    std::string address;
+    std::string peer_address;
+    std::string protocol {"UDP"};
+    int frame_rate {30};
+    bool use_sfp {};
+  };
 
-  /// Method that binds the ftp client to the server
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   int bind_to_server ();
 
-  /// The reacfive strategy of the client.
   ENDPOINT_STRATEGY endpoint_strategy_;
-
-  /// The server MMDevice that the ftpo client connects to
   AVStreams::MMDevice_var server_mmdevice_;
-
-  /// The ftp client MMDevice.
   TAO_MMDevice client_mmdevice_;
-
-  /// Video stream controller
   TAO_StreamCtrl streamctrl_;
-
-  /// Number of frames sent.
-  int count_;
-
-  int argc_;
-  ACE_TCHAR **argv_;
-
-  /// File from which data is read.
-  const char *filename_;
-
-  /// Address of the ftp client host machine or a multicast address - Default is
-  /// UDP multicast addess
-  const char *address_;
-  const char *peer_addr_str_;
-
-  /// The Naming Service client.
   TAO_Naming_Client my_naming_client_;
-
-  /// File handle of the file read from.
-  FILE *fp_;
-
-  /// Selected protocol - default is UDP
-  char *protocol_;
-
-  char *flowname_;
-
-  /// If set to 1 then use sfp as the flow carrier protocol.
-  int use_sfp_;
-
-  int frame_rate_;
-
-  /// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb;
-
-  /// Protocol object corresponding to the transport protocol selected.
-  TAO_AV_Protocol_Object *protocol_object_;
+  Options options_;
+  FTP_File_Ptr fp_ {nullptr, ACE_OS::fclose};
+  ACE_Message_Block mb_ {BUFSIZ};
+  // The AVStreams framework owns the protocol object.
+  TAO_AV_Protocol_Object *protocol_object_ {};
+  int count_ {};
 };
 
 using CLIENT = ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex>;
 
 #endif /* TAO_AV_FTP_H */
-
