@@ -109,7 +109,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
     {
       long i;
 
-      for (i = 0; i < node->n_inherits (); i++)
+      for (i = 0; i < node->n_inherits (); ++i)
         {
           be_interface *inherited =
             dynamic_cast<be_interface*> (node->inherits ()[i]);

@@ -272,7 +272,7 @@ TAO_OutStream::indent ()
   // Defer indentation so blank lines don't retain trailing spaces.
   if (this->indent_level_ > 0)
     {
-      for (int i = 0; i < this->indent_level_; i++)
+      for (int i = 0; i < this->indent_level_; ++i)
         {
           this->pending_whitespace_ += this->tab_unit_str_;
         }

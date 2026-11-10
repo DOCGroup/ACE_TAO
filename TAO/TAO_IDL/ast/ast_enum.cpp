@@ -190,7 +190,7 @@ munge_name_for_enumval (UTL_ScopedName *n,
   // list is at the name for the scope in which the enum is defined.
   while (len > 3)
     {
-      len--;
+      --len;
       n = static_cast<UTL_ScopedName *> (n->tail ());
     }
 
