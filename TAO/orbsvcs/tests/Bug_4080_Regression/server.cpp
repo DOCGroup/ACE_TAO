@@ -1,7 +1,7 @@
-
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 #include "test_impl.h"
@@ -11,9 +11,9 @@
 
 struct Server_Options
 {
-  ACE_TCHAR const *uipmc_url = ACE_TEXT ("corbaloc:miop:1.0@1.0-test-1/225.1.1.8:32158");
-  ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
-  CORBA::ULong threads = 2u;
+  ACE_TString uipmc_url { ACE_TEXT ("corbaloc:miop:1.0@1.0-test-1/225.1.1.8:32158") };
+  ACE_TString ior_output_file { ACE_TEXT ("test.ior") };
+  CORBA::ULong threads { 2u };
 };
 
 int
@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var const poa_manager = root_goa->the_POAManager ();
 
-      CORBA::Object_var const obj = orb->string_to_object (options.uipmc_url);
+      CORBA::Object_var const obj = orb->string_to_object (options.uipmc_url.c_str ());
 
       PortableServer::ObjectId_var const id =
         root_goa->create_id_for_reference (obj.in ());
@@ -131,20 +131,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("MIOP object is <%C>\n"), ior.in ()));
 
-      if (options.ior_output_file != nullptr)
-        {
-          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
-          if (!output_file)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                                 options.ior_output_file),
-                                -1);
-            }
-          if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);
-        }
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file.c_str ()),
+                            -1);
+        if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);
+      }
 
       poa_manager->activate ();
 

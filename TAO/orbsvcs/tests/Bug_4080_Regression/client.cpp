@@ -1,13 +1,14 @@
 
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
 #include "tao/Object_T.h"
 #include "testC.h"
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-  CORBA::ULong threads = 2u;
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
+  CORBA::ULong threads { 2u };
 };
 
 int
@@ -39,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("args to be used: -k '%s' -t %u\n"),
-              options.ior,
+              options.ior.c_str (),
               static_cast<unsigned int> (options.threads)));
   return 0;
 }
@@ -57,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("ERROR: wrong arguments\n")),
                           -1);
 
-      CORBA::Object_var const obj = orb->string_to_object (options.ior);
+      CORBA::Object_var const obj = orb->string_to_object (options.ior.c_str ());
 
       Test::UIPMC_Object_var const test =
         TAO::Narrow_Utils<Test::UIPMC_Object>::unchecked_narrow (obj.in ());

@@ -1,4 +1,3 @@
-
 #include "test_impl.h"
 
 UIPMC_Object_Impl::UIPMC_Object_Impl (CORBA::ORB_ptr orb,
