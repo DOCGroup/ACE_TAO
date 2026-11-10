@@ -112,8 +112,8 @@ protected:
                             ACE_UINT64 compressed_bytes);
 
 private:
-  ACE_CompressorId    compressor_id_;
-  ACE_UINT32          compression_level_;
+  ACE_CompressorId const compressor_id_;
+  ACE_UINT32 const compression_level_;
 
   // Ensure we can lock with immutability (i.e. const)
   mutable ACE_SYNCH_MUTEX mutex_;
