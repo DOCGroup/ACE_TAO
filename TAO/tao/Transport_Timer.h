@@ -38,6 +38,11 @@ namespace TAO
     */
     explicit Transport_Timer (TAO_Transport *transport);
 
+    Transport_Timer (Transport_Timer const &) = delete;
+    Transport_Timer &operator= (Transport_Timer const &) = delete;
+    Transport_Timer (Transport_Timer &&) = delete;
+    Transport_Timer &operator= (Transport_Timer &&) = delete;
+
     /// Receive timeout events from the Reactor and forward them to the
     /// TAO_Transport
     int handle_timeout (const ACE_Time_Value &current_time, const void *act) override;
