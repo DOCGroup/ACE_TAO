@@ -1,10 +1,10 @@
+#include <memory>
+
 #include "Hello.h"
-#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
-
-#include <memory>
+#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 
 struct Server_Options
 {
@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
+                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                           1);
 
       PortableServer::POAManager_var const poa_manager =
@@ -87,7 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-          ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file %s for writing IOR: %C"),
