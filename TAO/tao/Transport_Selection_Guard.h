@@ -63,6 +63,19 @@ namespace TAO
 
     ~Transport_Selection_Guard ();
 
+    // CSD server-request cloning copies the selected transport state.
+    Transport_Selection_Guard &operator= (Transport_Selection_Guard const &rhs)
+    {
+      if (this != &rhs)
+        {
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+          this->prev_ = rhs.prev_;
+#endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+          this->curr_ = rhs.curr_;
+        }
+      return *this;
+    }
+
     /// getter
     TAO_Transport *operator-> () const
     {
@@ -90,7 +103,6 @@ namespace TAO
 
   private:
     Transport_Selection_Guard (Transport_Selection_Guard const &) = delete;
-    Transport_Selection_Guard &operator= (Transport_Selection_Guard const &) = delete;
     Transport_Selection_Guard (Transport_Selection_Guard &&) = delete;
     Transport_Selection_Guard &operator= (Transport_Selection_Guard &&) = delete;
 
