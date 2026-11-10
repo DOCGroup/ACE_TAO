@@ -45,7 +45,7 @@ CosProperty_Hash_Key::operator == (CosProperty_Hash_Key const & hash_key) const
 u_long
 CosProperty_Hash_Key::hash () const
 {
-  u_long ret = ACE::hash_pjw (this->pname_);
+  u_long const ret = ACE::hash_pjw (this->pname_);
 
   return ret;
 }
@@ -89,7 +89,7 @@ TAO_PropertySetFactory::create_propertyset ()
   std::unique_ptr<TAO_PropertySet> new_set (new_set_raw);
 
   // Successful, store this in the products sequence and return.
-  CORBA::ULong cur_len = this->propertyset_products_.length ();
+  CORBA::ULong const cur_len = this->propertyset_products_.length ();
   this->propertyset_products_.length (cur_len + 1);
   this->propertyset_products_[cur_len] = new_set.get ();
   new_set.release ();
@@ -106,7 +106,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (
 {
   TAO_PropertySet *new_set_raw {};
   std::unique_ptr<TAO_PropertySet> new_set;
-  CosPropertyService::PropertySet_ptr propset_ptr = nullptr;
+  CosPropertyService::PropertySet_ptr propset_ptr {};
 
   try
     {
@@ -117,7 +117,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (
       new_set.reset (new_set_raw);
 
       // Successful, store this in the products sequence.
-      CORBA::ULong products_len = this->propertyset_products_.length ();
+      CORBA::ULong const products_len = this->propertyset_products_.length ();
       this->propertyset_products_.length (products_len + 1);
       this->propertyset_products_[products_len] = new_set.get ();
       new_set.release ();
@@ -143,7 +143,7 @@ TAO_PropertySetFactory::create_initial_propertyset (
 {
   TAO_PropertySet *new_set_raw {};
   std::unique_ptr<TAO_PropertySet> new_set;
-  CosPropertyService::PropertySet_ptr propset_ptr = nullptr;
+  CosPropertyService::PropertySet_ptr propset_ptr {};
 
   // New a TAO_PropertySet.
   ACE_NEW_RETURN (new_set_raw,
@@ -151,7 +151,7 @@ TAO_PropertySetFactory::create_initial_propertyset (
   new_set.reset (new_set_raw);
 
   // Successful, store this in the products sequence.
-  CORBA::ULong products_len = this->propertyset_products_.length ();
+  CORBA::ULong const products_len = this->propertyset_products_.length ();
   this->propertyset_products_.length (products_len + 1);
   this->propertyset_products_[products_len] = new_set.get ();
   new_set.release ();
@@ -162,7 +162,6 @@ TAO_PropertySetFactory::create_initial_propertyset (
   return propset_ptr;
 }
 
-// Destructor.
 TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory ()
 {
   // Release all the new'ed products.
@@ -187,7 +186,7 @@ TAO_PropertySetDefFactory::create_propertysetdef ()
   std::unique_ptr<TAO_PropertySetDef> new_set (new_set_raw);
 
   // Successful, store this in the products sequence and return.
-  CORBA::ULong cur_len = this->propertysetdef_products_.length ();
+  CORBA::ULong const cur_len = this->propertysetdef_products_.length ();
   this->propertysetdef_products_.length (cur_len + 1);
   this->propertysetdef_products_[cur_len] = new_set.get ();
   new_set.release ();
@@ -204,7 +203,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (
 {
   TAO_PropertySetDef *new_set_raw {};
   std::unique_ptr<TAO_PropertySetDef> new_set;
-  CosPropertyService::PropertySetDef_ptr propsetdef_ptr = nullptr;
+  CosPropertyService::PropertySetDef_ptr propsetdef_ptr {};
 
   try
     {
@@ -215,7 +214,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (
       new_set.reset (new_set_raw);
 
       // Successful, store this in the products sequence.
-      CORBA::ULong products_len = this->propertysetdef_products_.length ();
+      CORBA::ULong const products_len = this->propertysetdef_products_.length ();
       this->propertysetdef_products_.length (products_len + 1);
       this->propertysetdef_products_[products_len] = new_set.get ();
       new_set.release ();
@@ -241,7 +240,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (
 {
   TAO_PropertySetDef *new_set_raw {};
   std::unique_ptr<TAO_PropertySetDef> new_set;
-  CosPropertyService::PropertySetDef_ptr propsetdef_ptr = nullptr;
+  CosPropertyService::PropertySetDef_ptr propsetdef_ptr {};
 
   // New a TAO_PropertySet using these lengths.
   ACE_NEW_RETURN (new_set_raw,
@@ -249,7 +248,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (
   new_set.reset (new_set_raw);
 
   // Successful, store this in the products sequence.
-  CORBA::ULong products_len = this->propertysetdef_products_.length ();
+  CORBA::ULong const products_len = this->propertysetdef_products_.length ();
   this->propertysetdef_products_.length (products_len + 1);
   this->propertysetdef_products_[products_len] = new_set.get ();
   new_set.release ();
@@ -472,7 +471,7 @@ void
 TAO_PropertySet::define_properties (CosPropertyService::Properties const &nproperties)
 {
   // Get the length.
-  CORBA::ULong sequence_length = nproperties.length ();
+  CORBA::ULong const sequence_length = nproperties.length ();
 
   // Define multiple exceptions object.
   CosPropertyService::MultipleExceptions multi_ex;
@@ -487,7 +486,7 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
         }
       catch (CosPropertyService::InvalidPropertyName const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::invalid_property_name;
@@ -496,7 +495,7 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
         }
       catch (CosPropertyService::ConflictingProperty const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::conflicting_property;
@@ -505,7 +504,7 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
         }
       catch (CosPropertyService::ReadOnlyProperty const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::read_only_property;
@@ -514,7 +513,7 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
         }
       catch (CosPropertyService::UnsupportedTypeCode const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::unsupported_type_code;
@@ -523,7 +522,7 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
         }
       catch (CosPropertyService::UnsupportedProperty const &)
          {
-           CORBA::ULong len = multi_ex.exceptions.length ();
+           CORBA::ULong const len = multi_ex.exceptions.length ();
            multi_ex.exceptions.length (len + 1);
            multi_ex.exceptions[len].reason =
              CosPropertyService::unsupported_property;
@@ -566,7 +565,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
   ACE_NEW (property_names,
            CosPropertyService::PropertyNames);
 
-  CORBA::ULong num_of_properties =
+  CORBA::ULong const num_of_properties =
     this->get_number_of_properties ();
 
   if (num_of_properties == 0)
@@ -574,7 +573,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
     return;
 
   // Set the length of the property_names appropriately.
-  CORBA::ULong sequence_length = 0;
+  CORBA::ULong sequence_length {};
 
   if (how_many > 0)
     {
@@ -609,7 +608,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 
       for (CORBA::ULong i = how_many;
            i < num_of_properties;
-           i++, iterator.advance ())
+           ++i, iterator.advance ())
         if (iterator.next (entry_ptr) != 0)
           if (property_set->hash_table_.bind (entry_ptr->ext_id_,
                                               entry_ptr->int_id_) < 0)
@@ -679,7 +678,7 @@ TAO_PropertySet::get_properties (CosPropertyService::PropertyNames const &proper
                   false);
 
   // Validate the length.
-  CORBA::ULong n = property_names.length ();
+  CORBA::ULong const n = property_names.length ();
   if (n == 0)
     return false;
 
@@ -731,14 +730,14 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
            CosPropertyService::Properties);
 
   // Validate the length.
-  CORBA::ULong num_of_properties =
+  CORBA::ULong const num_of_properties =
           this->get_number_of_properties ();
 
   if (num_of_properties == 0)
     return;
 
   // Set the length for the nproperties if how_many > 0.
-  CORBA::ULong sequence_length = 0;
+  CORBA::ULong sequence_length {};
 
   if (how_many > 0)
     {
@@ -780,7 +779,7 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
       for (CORBA::ULong i = sequence_length;
            i < num_of_properties;
-           i++, iterator.advance ())
+           ++i, iterator.advance ())
         {
           if (iterator.next (entry_ptr) != 0
               && prop_set->hash_table_.bind (entry_ptr->ext_id_,
@@ -852,7 +851,7 @@ void
 TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &property_names)
 {
   // Get the length.
-  CORBA::ULong sequence_length = property_names.length ();
+  CORBA::ULong const sequence_length = property_names.length ();
 
   // Declare multiple exceptions' object.
   CosPropertyService::MultipleExceptions multi_ex;
@@ -867,7 +866,7 @@ TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &pro
       catch (CosPropertyService::InvalidPropertyName const &)
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::invalid_property_name;
@@ -877,7 +876,7 @@ TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &pro
       catch (CosPropertyService::PropertyNotFound const &)
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::property_not_found;
@@ -887,7 +886,7 @@ TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &pro
       catch (CosPropertyService::FixedProperty const &)
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::fixed_property;
@@ -922,7 +921,7 @@ TAO_PropertySet::delete_all_properties ()
   CosPropertyService::PropertyNamesIterator_out iter_out (iter_ptr);
   CosPropertyService::PropertyNamesIterator_var iter;
 
-  CORBA::ULong size = this->get_number_of_properties ();
+  CORBA::ULong const size = this->get_number_of_properties ();
 
   this->get_all_property_names (size,
                                 names_out,
@@ -1099,7 +1098,7 @@ void
 TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDefs const &property_defs)
 {
   // Get the length.
-  CORBA::ULong sequence_length = property_defs.length ();
+  CORBA::ULong const sequence_length = property_defs.length ();
 
   // Define multiple exceptions object.
   CosPropertyService::MultipleExceptions multi_ex;
@@ -1116,7 +1115,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
         }
       catch (CosPropertyService::InvalidPropertyName const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::invalid_property_name;
@@ -1125,7 +1124,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
         }
       catch (CosPropertyService::ConflictingProperty const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::conflicting_property;
@@ -1134,7 +1133,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
         }
       catch (CosPropertyService::ReadOnlyProperty const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::read_only_property;
@@ -1143,7 +1142,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
         }
       catch (CosPropertyService::UnsupportedTypeCode const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::unsupported_type_code;
@@ -1152,7 +1151,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
         }
       catch (CosPropertyService::UnsupportedProperty const &)
          {
-           CORBA::ULong len = multi_ex.exceptions.length ();
+           CORBA::ULong const len = multi_ex.exceptions.length ();
            multi_ex.exceptions.length (len + 1);
            multi_ex.exceptions[len].reason =
              CosPropertyService::unsupported_property;
@@ -1161,7 +1160,7 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
          }
       catch (CosPropertyService::UnsupportedMode const &)
         {
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::unsupported_mode;
@@ -1222,7 +1221,7 @@ TAO_PropertySetDef::get_property_modes (CosPropertyService::PropertyNames const 
                   true);
 
   // Validate the length of names sequence.
-  CORBA::ULong sequence_length = property_names.length ();
+  CORBA::ULong const sequence_length = property_names.length ();
 
   if (sequence_length == 0)
     return true;
@@ -1360,7 +1359,7 @@ void
 TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const &property_modes)
 {
   // Get the length of the sequence.
-  CORBA::ULong sequence_length = property_modes.length ();
+  CORBA::ULong const sequence_length = property_modes.length ();
 
   // Multiple exception variable to keep track of exceptions.
   CosPropertyService::MultipleExceptions multi_ex;
@@ -1376,7 +1375,7 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
       catch (CosPropertyService::PropertyNotFound const &)
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::property_not_found;
@@ -1386,7 +1385,7 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
       catch (CosPropertyService::InvalidPropertyName const &)
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::invalid_property_name;
@@ -1396,7 +1395,7 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
       catch (CosPropertyService::UnsupportedMode const &)
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex.exceptions.length ();
+          CORBA::ULong const len = multi_ex.exceptions.length ();
           multi_ex.exceptions.length (len + 1);
           multi_ex.exceptions[len].reason =
             CosPropertyService::unsupported_mode;
@@ -1416,7 +1415,7 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
 
 //======================================================================
 
-// Constructor. Construct the iterator from the PropertySet object.
+// Construct the iterator from the PropertySet object.
 
 TAO_PropertyNamesIterator::TAO_PropertyNamesIterator (TAO_PropertySet &property_set)
   : iterator_ (property_set.hash_table_)
@@ -1467,13 +1466,8 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return false;
 
-  CORBA::ULong size = static_cast<CORBA::ULong> (this->iterator_.map ().current_size ());
-
-  CORBA::ULong len = 0;
-  if (how_many <= size)
-    len = how_many;
-  else
-    len = size;
+  CORBA::ULong const size = static_cast<CORBA::ULong> (this->iterator_.map ().current_size ());
+  CORBA::ULong const len = how_many <= size ? how_many : size;
   property_names->length (len);
 
   for (CORBA::ULong ni {};
@@ -1547,13 +1541,8 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return false;
 
-  CORBA::ULong size = static_cast<CORBA::ULong> (this->iterator_.map ().current_size ());
-
-  CORBA::ULong len;
-  if (how_many <= size)
-    len = how_many;
-  else
-    len = size;
+  CORBA::ULong const size = static_cast<CORBA::ULong> (this->iterator_.map ().current_size ());
+  CORBA::ULong const len = how_many <= size ? how_many : size;
   nproperties->length (len);
 
   for (CORBA::ULong ni {};

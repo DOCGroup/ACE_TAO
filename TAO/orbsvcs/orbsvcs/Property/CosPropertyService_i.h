@@ -43,7 +43,6 @@ class TAO_Property_Serv_Export CosProperty_Hash_Key
   //     ACE_Hash_Map_Manager.
 public:
   CosProperty_Hash_Key () = default;
-  // Default constructor.
 
   explicit CosProperty_Hash_Key (char const * name);
   // Constructor from a const string.
@@ -52,12 +51,10 @@ public:
   // Costructor that takes PropertyName.
 
   CosProperty_Hash_Key (CosProperty_Hash_Key const & hash_key);
-  // Copy constructor.
 
   CosProperty_Hash_Key &operator= (CosProperty_Hash_Key const &) = default;
 
   virtual ~CosProperty_Hash_Key () = default;
-  // Destructor.
 
   virtual bool operator == (CosProperty_Hash_Key const & hash_key) const;
   // The operator for hash binding and "find"ing.
@@ -77,19 +74,16 @@ class TAO_Property_Serv_Export CosProperty_Hash_Value
   //     the ACE_Hash_Map_Manager.
 public:
   CosProperty_Hash_Value () = default;
-  // Default constructor.
 
   CosProperty_Hash_Value (CORBA::Any const & any,
                           CosPropertyService::PropertyModeType mode);
   // Constructor with the property_value and the property_mode.
 
   CosProperty_Hash_Value (CosProperty_Hash_Value const & hash_value);
-  // Copy constructor.
 
   CosProperty_Hash_Value &operator= (CosProperty_Hash_Value const &) = default;
 
   virtual ~CosProperty_Hash_Value ();
-  // Destructor.
 
 //private:
   CORBA::Any pvalue_;
@@ -115,10 +109,8 @@ class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosP
   //     The object may be created with some predfined properties.
 public:
   TAO_PropertySetFactory () = default;
-  // Constructor.
 
   ~TAO_PropertySetFactory () override;
-  // Destructor.
 
   CosPropertyService::PropertySet_ptr create_propertyset () override;
   // Returns a  new TAO_PropertySet object. "The property set returned
@@ -163,10 +155,8 @@ class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_Co
   //     The object creation may be done with some predefined properties.
 public:
   TAO_PropertySetDefFactory () = default;
-  // Constructor.
 
   ~TAO_PropertySetDefFactory () override;
-  // Destructor.
 
   CosPropertyService::PropertySetDef_ptr create_propertysetdef () override;
   // Returns a new TAO_PropertySetDef object.
@@ -207,7 +197,6 @@ public:
   friend class TAO_PropertyNamesIterator;
   friend class TAO_PropertiesIterator;
 
-  /// Default constructor.
   TAO_PropertySet () = default;
 
   TAO_PropertySet (CosPropertyService::PropertyTypes const &allowed_property_types,
@@ -222,7 +211,6 @@ public:
   // PropertySetDef's construction needs this.
 
   ~TAO_PropertySet () override = default;
-  // Destructor function.
 
   void define_property (char const *property_name,
                         CORBA::Any const &property_value) override;
@@ -327,7 +315,6 @@ class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosProper
   //     (metadata) of a PropertySet.
 public:
   TAO_PropertySetDef () = default;
-  // Constructor.
 
   TAO_PropertySetDef (CosPropertyService::PropertyTypes const &allowed_property_types,
                       CosPropertyService::PropertyDefs const &allowed_property);
@@ -337,7 +324,6 @@ public:
   // This is also for the factory.
 
   ~TAO_PropertySetDef () override = default;
-  // Destructor.
 
   void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types) override;
   // Indicates which types of properties are supported by this
@@ -423,10 +409,8 @@ class TAO_Property_Serv_Export TAO_PropertyNamesIterator
   //     the PropertyNamesIterator interface with the additional names.
 public:
   explicit TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
-  // Constructor.
 
   ~TAO_PropertyNamesIterator () override = default;
-  // Destructor.
 
   void reset () override;
   // The reset operation resets the position in an iterator to the
@@ -436,7 +420,6 @@ public:
   // The next_one operation returns true if an item exists at the
   // current position in the iterator with an output parameter of a
   // property name. A return of false signifies no more items in the iterator.
-
 
   CORBA::Boolean next_n (CORBA::ULong how_many,
                          CosPropertyService::PropertyNames_out property_names) override;
@@ -484,10 +467,8 @@ class TAO_Property_Serv_Export TAO_PropertiesIterator
   //     interface with the additional properties.
 public:
   explicit TAO_PropertiesIterator (TAO_PropertySet &property_set);
-  // Constructor.
 
   ~TAO_PropertiesIterator () override = default;
-  // Destructor.
 
   void reset () override;
   // Resets the position in an iterator to the first property, if one exists.
