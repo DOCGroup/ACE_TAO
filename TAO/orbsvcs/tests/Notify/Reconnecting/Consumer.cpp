@@ -6,6 +6,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include <cstdlib>
+#include <cstring>
 
 static constexpr char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static constexpr char NAMING_SERVICE_NAME[] = "NameService";
@@ -139,7 +141,7 @@ StructuredPushConsumer_i::push_structured_event (
   }
   if (notification.filterable_data.length () > 0)
   {
-    if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
+    if (std::strcmp (notification.filterable_data[0].name, "serial_number") == 0)
     {
       CORBA::Any const& data = notification.filterable_data[0].value;
 
@@ -165,8 +167,8 @@ StructuredPushConsumer_i::push_structured_event (
         ));
     }
   }
-  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") &&
-           0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+  else if (std::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") == 0 &&
+           std::strcmp (notification.header.fixed_header.event_type.domain_name, "") == 0)
   {
     CORBA::Any const* any;
     if (notification.remainder_of_body >>= any)
@@ -351,7 +353,7 @@ SequencePushConsumer_i::push_structured_events (
     CosNotification::StructuredEvent const& notification = notifications[nevent];
     if (notification.filterable_data.length () > 0)
     {
-      if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
+      if (std::strcmp (notification.filterable_data[0].name, "serial_number") == 0)
       {
         CORBA::Any const& data = notification.filterable_data[0].value;
 
@@ -377,8 +379,8 @@ SequencePushConsumer_i::push_structured_events (
           ));
       }
     }
-    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") &&
-             0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+    else if (std::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") == 0 &&
+             std::strcmp (notification.header.fixed_header.event_type.domain_name, "") == 0)
     {
         CORBA::ULong seq {};
       if (notification.remainder_of_body >>= seq)
@@ -549,7 +551,7 @@ AnyPushConsumer_i::push (
     {
       if (notification->filterable_data.length () > 0)
       {
-        if (0 == ACE_OS::strcmp (notification->filterable_data[0].name, "serial_number"))
+        if (std::strcmp (notification->filterable_data[0].name, "serial_number") == 0)
         {
           CORBA::Any const& data = notification->filterable_data[0].value;
 
@@ -923,7 +925,7 @@ Consumer_Main::save_ids()
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "w");
 
-  if (idf != 0)
+  if (idf != nullptr)
   {
     int endflag = 12345;
     int imode = static_cast<int>(this->mode_);
@@ -947,27 +949,31 @@ Consumer_Main::load_ids()
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "r");
 
-  if (idf != 0)
+  if (idf != nullptr)
   {
     int field {};
 
-    char buffer[100] = ""; // because ACE fgets doesn't put a null if the file is empty
+    char buffer[100] {}; // Keep the buffer terminated if the file is empty.
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
     ACE_OS::fclose (idf);
     char * pb = buffer;
-    while (!ok && *pb != 0)
+    while (!ok && *pb != '\0')
     {
-      char * eb = ACE_OS::strchr (pb, ',');
-      char * nb = eb + 1;
-      if (eb == 0)
+      char * eb = std::strchr (pb, ',');
+      char * nb {};
+      if (eb == nullptr)
       {
-        eb = pb + ACE_OS::strlen (pb);
+        eb = pb + std::strlen (pb);
         nb = eb;
       }
-      *eb = 0;
+      else
+        {
+          nb = eb + 1;
+        }
+      *eb = '\0';
       if (pb < eb)
       {
-        int value = ACE_OS::atoi(pb);
+        int const value = std::atoi (pb);
         switch (++field)
         {
         case 1:
@@ -1124,12 +1130,12 @@ Consumer_Main::init_event_channel ()
   if (!ok && this->channel_file_.length () > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
-    if (chf != 0)
+    if (chf != nullptr)
     {
-      char buffer[100];
+      char buffer[100] {};
       ACE_OS::fgets (buffer, sizeof(buffer), chf);
       ACE_OS::fclose (chf);
-      this->ec_id_ = ACE_OS::atoi (buffer);
+      this->ec_id_ = std::atoi (buffer);
 
       try
       {
@@ -1205,7 +1211,7 @@ Consumer_Main::init_event_channel ()
   if (ok && this->channel_file_.length() > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
-    if (chf != 0)
+    if (chf != nullptr)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
       ACE_OS::fclose (chf);

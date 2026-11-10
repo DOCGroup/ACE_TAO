@@ -6,6 +6,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstdlib>
+#include <cstring>
 
 static constexpr char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static constexpr char NAMING_SERVICE_NAME[] = "NameService";
@@ -370,7 +372,7 @@ Supplier_Main::save_ids()
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "w");
 
-  if (idf != 0)
+  if (idf != nullptr)
   {
     int endflag = 12345;
     int imode = static_cast<int>(this->mode_);
@@ -394,27 +396,31 @@ Supplier_Main::load_ids()
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "r");
 
-  if (idf != 0)
+  if (idf != nullptr)
   {
     int field {};
 
-    char buffer[100] = ""; // because ACE fgets doesn't put a null if the file is empty
+    char buffer[100] {}; // Keep the buffer terminated if the file is empty.
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
     ACE_OS::fclose (idf);
     char * pb = buffer;
-    while (!ok && *pb != 0)
+    while (!ok && *pb != '\0')
     {
-      char * eb = ACE_OS::strchr (pb, ',');
-      char * nb = eb + 1;
-      if (eb == 0)
+      char * eb = std::strchr (pb, ',');
+      char * nb {};
+      if (eb == nullptr)
       {
-        eb = pb + ACE_OS::strlen (pb);
+        eb = pb + std::strlen (pb);
         nb = eb;
       }
-      *eb = 0;
+      else
+      {
+        nb = eb + 1;
+      }
+      *eb = '\0';
       if (pb < eb)
       {
-        int value = ACE_OS::atoi(pb);
+        int const value = std::atoi (pb);
         switch (++field)
         {
         case 1:
@@ -557,12 +563,12 @@ Supplier_Main::init_event_channel ()
   if (!ok && this->channel_file_.length () > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
-    if (chf != 0)
+    if (chf != nullptr)
     {
-      char buffer[100];
+      char buffer[100] {};
       ACE_OS::fgets (buffer, sizeof(buffer), chf);
       ACE_OS::fclose (chf);
-      this->ec_id_ = ACE_OS::atoi (buffer);
+      this->ec_id_ = std::atoi (buffer);
 
       try
       {
@@ -638,7 +644,7 @@ Supplier_Main::init_event_channel ()
   if (ok && this->channel_file_.length() > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
-    if (chf != 0)
+    if (chf != nullptr)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
       ACE_OS::fclose (chf);
@@ -1123,7 +1129,7 @@ int Supplier_Main::run ()
       }
       reconnections = this->reconnection_callback_.reconnect_count ();
       FILE * pause_file = ACE_OS::fopen ("Supplier.paused", "w");
-      if (pause_file != 0)
+      if (pause_file != nullptr)
       {
         ACE_OS::fputs (ACE_TEXT ("paused\n"), pause_file);
         ACE_OS::fclose (pause_file);
