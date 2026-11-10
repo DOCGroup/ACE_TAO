@@ -100,11 +100,11 @@ namespace TAO
 
     for (CORBA::ULong i {};
          this->excp_list_ != nullptr && i < this->excp_list_->count ();
-         i++)
+         ++i)
       {
-          CORBA::TypeCode_var tc = this->excp_list_->item (i);
+          CORBA::TypeCode_var const tc = this->excp_list_->item (i);
 
-          char const* xid = tc->id ();
+          char const * const xid = tc->id ();
 
           if (std::strcmp (buf.in (), xid) != 0)
             {
