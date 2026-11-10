@@ -56,8 +56,11 @@ public:
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
 
-
   ~TAO_Asynch_Queued_Message () override;
+  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message &&) = delete;
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message &&) = delete;
 
   /**
    * @name Implement the Template Methods from TAO_Queued_Message
@@ -99,12 +102,6 @@ protected:
                              bool is_heap_allocated);
 
 private:
-  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
-  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
-  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message &&) = delete;
-  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message &&) = delete;
-
-private:
   /// The number of bytes in the buffer
   size_t const size_;
 
@@ -113,7 +110,7 @@ private:
    * Data up to @c offset has been sent already, only the
    * [offset_,size_) range remains to be sent.
    */
-  size_t offset_;
+  size_t offset_ {};
 
   /// The buffer containing the complete message.
   std::unique_ptr<char[]> buffer_;

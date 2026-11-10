@@ -23,10 +23,9 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (contents->total_length ())
-  , offset_ (0)
   , abs_timeout_ (ACE_Time_Value::zero)
 {
-  if (timeout != nullptr)// && *timeout != ACE_Time_Value::zero)
+  if (timeout != nullptr)
     {
       this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
     }
@@ -56,7 +55,6 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (size)
-  , offset_ (0)
   , buffer_ (std::move (buffer))
   , abs_timeout_ (abs_timeout)
 {
