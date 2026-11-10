@@ -79,11 +79,11 @@ namespace TAO
 
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid);
+                                  PortableServer::ObjectId const &oid);
 
       /// Event - A servant has been deactivated.
       void servant_deactivated_event(PortableServer::Servant servant,
-                                    const PortableServer::ObjectId& oid);
+                                    PortableServer::ObjectId const &oid);
 
     private:
       Strategy_Proxy (Strategy_Proxy const &) = delete;

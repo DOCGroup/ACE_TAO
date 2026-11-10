@@ -78,7 +78,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch (
       servant->_dispatch(*this->request_, servant_upcall);
     }
   // Only CORBA exceptions are caught here.
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (this->request_->collocated())
         {

@@ -106,7 +106,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::servant_activated_event
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid)
+                                 PortableServer::ObjectId const &oid)
 {
   this->servant_activated_event_i(servant, oid);
 }
@@ -115,7 +115,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid)
+                                 PortableServer::ObjectId const &oid)
 {
   this->servant_deactivated_event_i(servant, oid);
 }

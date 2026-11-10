@@ -83,17 +83,17 @@ namespace TAO
       /// Subclass provides implementation to dispatch a remote request.
       virtual DispatchResult dispatch_remote_request_i
                             (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                     operation,
                               PortableServer::Servant         servant) = 0;
 
       /// Subclass provides implementation to dispatch a collocated request.
       virtual DispatchResult dispatch_collocated_request_i
                           (TAO_ServerRequest&              server_request,
-                          const PortableServer::ObjectId& object_id,
+                          PortableServer::ObjectId const &object_id,
                           PortableServer::POA_ptr         poa,
-                          const char*                     operation,
+                          char const *                     operation,
                           PortableServer::Servant         servant) = 0;
 
       /// Event - The POA has been activated.
@@ -105,12 +105,12 @@ namespace TAO
       /// Event - A servant has been activated.
       virtual void servant_activated_event_i
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid);
+                                   PortableServer::ObjectId const &oid);
 
       /// Event - A servant has been deactivated.
       virtual void servant_deactivated_event_i
                                   (PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid);
+                                  PortableServer::ObjectId const &oid);
 
     private:
       /// Only our friend, the proxy, is allowed to invoke our private operations.
@@ -134,12 +134,12 @@ namespace TAO
 
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid);
+                                  PortableServer::ObjectId const &oid);
 
       /// Event - A servant has been deactivated.  This also occurs when
       ///         the POA is destroyed.
       void servant_deactivated_event(PortableServer::Servant servant,
-                                     const PortableServer::ObjectId& oid);
+                                     PortableServer::ObjectId const &oid);
 
       /// The POA to which this strategy has been applied.
       ::PortableServer::POA_var poa_;

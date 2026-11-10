@@ -47,7 +47,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_activated_event
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid)
+                                   PortableServer::ObjectId const &oid)
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)
@@ -61,7 +61,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_deactivated_event
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid)
+                                   PortableServer::ObjectId const &oid)
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)

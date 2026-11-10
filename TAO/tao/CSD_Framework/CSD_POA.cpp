@@ -12,9 +12,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
-TAO_CSD_POA::TAO_CSD_POA (const String &name,
+TAO_CSD_POA::TAO_CSD_POA (String const &name,
                           PortableServer::POAManager_ptr poa_manager,
-                          const TAO_POA_Policy_Set &policies,
+                          TAO_POA_Policy_Set const &policies,
                           TAO_Root_POA *parent,
                           ACE_Lock &lock,
                           TAO_SYNCH_MUTEX &thread_lock,
@@ -49,9 +49,9 @@ void TAO_CSD_POA::set_csd_strategy (::CSD_Framework::Strategy_ptr strategy)
 }
 
 TAO_Root_POA *
-TAO_CSD_POA::new_POA (const String &name,
+TAO_CSD_POA::new_POA (String const &name,
                       PortableServer::POAManager_ptr poa_manager,
-                      const TAO_POA_Policy_Set &policies,
+                      TAO_POA_Policy_Set const &policies,
                       TAO_Root_POA *parent,
                       ACE_Lock &lock,
                       TAO_SYNCH_MUTEX &thread_lock,
@@ -98,13 +98,13 @@ void TAO_CSD_POA::poa_deactivated_hook ()
 }
 
 void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant,
-                                          const PortableServer::ObjectId& oid)
+                                          PortableServer::ObjectId const &oid)
 {
   this->sds_proxy_->servant_activated_event (servant, oid);
 }
 
 void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid)
+                                 PortableServer::ObjectId const &oid)
 {
   this->sds_proxy_->servant_deactivated_event (servant, oid);
 }

@@ -37,9 +37,9 @@ class TAO_CSD_FW_Export TAO_CSD_POA
     public virtual TAO_Regular_POA
 {
 public:
-  TAO_CSD_POA (const String &name,
+  TAO_CSD_POA (String const &name,
                PortableServer::POAManager_ptr poa_manager,
-               const TAO_POA_Policy_Set &policies,
+               TAO_POA_Policy_Set const &policies,
                TAO_Root_POA *parent,
                ACE_Lock &lock,
                TAO_SYNCH_MUTEX &thread_lock,
@@ -59,16 +59,16 @@ public:
 
   /// Hook - A servant has been activated.
   void servant_activated_hook (PortableServer::Servant servant,
-                               const PortableServer::ObjectId& oid) override;
+                               PortableServer::ObjectId const &oid) override;
 
   /// Hook - A servant has been deactivated.
   void servant_deactivated_hook (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid) override;
+                                 PortableServer::ObjectId const &oid) override;
 
   /// Method for creating new CSD POA.
-  TAO_Root_POA * new_POA (const String &name,
+  TAO_Root_POA * new_POA (String const &name,
                           PortableServer::POAManager_ptr poa_manager,
-                          const TAO_POA_Policy_Set &policies,
+                          TAO_POA_Policy_Set const &policies,
                           TAO_Root_POA *parent,
                           ACE_Lock &lock,
                           TAO_SYNCH_MUTEX &thread_lock,

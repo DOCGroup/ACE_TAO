@@ -6,18 +6,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher () = default;
-
-
 TAO_Root_POA *
-TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
-                                                     PortableServer::POAManager_ptr poa_manager,
-                                                 const TAO_POA_Policy_Set &policies,
-                                                 ACE_Lock &lock,
-                                                 TAO_SYNCH_MUTEX &thread_lock,
-                                                 TAO_ORB_Core &orb_core,
-                                                 TAO_Object_Adapter *object_adapter)
-    {
+TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (
+  ACE_CString const &name,
+  PortableServer::POAManager_ptr poa_manager,
+  TAO_POA_Policy_Set const &policies,
+  ACE_Lock &lock,
+  TAO_SYNCH_MUTEX &thread_lock,
+  TAO_ORB_Core &orb_core,
+  TAO_Object_Adapter *object_adapter)
+{
   TAO_CSD_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
@@ -30,7 +28,6 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                  orb_core,
                                  object_adapter),
                     CORBA::NO_MEMORY ());
-
 
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");

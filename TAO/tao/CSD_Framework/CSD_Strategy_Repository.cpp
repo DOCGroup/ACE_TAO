@@ -9,15 +9,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository () = default;
 
 int
-TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
+TAO_CSD_Strategy_Repository::init (int, ACE_TCHAR **)
 {
-  static bool initialized {};
-
-  // Only allow initialization once.
-  if (initialized)
-    return 0;
-
-  initialized = true;
   return 0;
 }
 

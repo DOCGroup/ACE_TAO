@@ -52,9 +52,6 @@ private:
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader const &) = delete;
   TAO_CSD_Framework_Loader (TAO_CSD_Framework_Loader &&) = delete;
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader &&) = delete;
-
-  /// Set to true after init is called.
-  bool initialized_ {};
 };
 
 
