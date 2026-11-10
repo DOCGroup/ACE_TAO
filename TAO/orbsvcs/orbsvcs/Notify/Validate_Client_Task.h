@@ -74,7 +74,7 @@ private:
 
   CONDITION condition_;
 
-  bool shutdown_ = false;
+  bool shutdown_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -67,7 +67,7 @@ namespace TAO_Notify
   bool
   Routing_Slip_Queue::dispatch_one (Guard & guard)
   {
-    bool ok = false;
+    bool ok {};
     Routing_Slip_Ptr routing_slip;
     if (! this->queue_.empty ())
     {

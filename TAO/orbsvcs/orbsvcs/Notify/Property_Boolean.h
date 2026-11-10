@@ -65,10 +65,10 @@ protected:
   const char* name_;
 
   /// The value
-  CORBA::Boolean value_ = false;
+  CORBA::Boolean value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_ = false;
+  CORBA::Boolean valid_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

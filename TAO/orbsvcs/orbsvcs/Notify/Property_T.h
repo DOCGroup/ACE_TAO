@@ -74,7 +74,7 @@ protected:
   TYPE value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_ = false;
+  CORBA::Boolean valid_ {};
 };
 
 
@@ -136,7 +136,7 @@ protected:
   TYPE value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_ = false;
+  CORBA::Boolean valid_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

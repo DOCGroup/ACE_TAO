@@ -150,7 +150,7 @@ TAO_Notify_FilterAdmin::load_child (ACE_CString const &type, CORBA::Long id,
 {
   if (type == "filter")
   {
-   TAO_Notify_Object::ID mapid = 0;
+   TAO_Notify_Object::ID mapid {};
    attrs.load("MapId", mapid);
 
    TAO_Notify_FilterFactory* factory = ec_->default_filter_factory_servant ();

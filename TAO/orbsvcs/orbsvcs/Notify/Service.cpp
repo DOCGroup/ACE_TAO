@@ -15,7 +15,7 @@ TAO_Notify_Service::load_default ()
                                             };
 
   TAO_Notify_Service* notify_service {};
-  for(size_t i {}; services[i] != nullptr; i++)
+  for (size_t i {}; services[i] != nullptr; ++i)
     {
       notify_service =
         ACE_Dynamic_Service<TAO_Notify_Service>::instance (services[i]);

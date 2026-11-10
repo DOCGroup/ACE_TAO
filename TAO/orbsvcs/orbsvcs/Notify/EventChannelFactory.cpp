@@ -354,7 +354,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence ()
 bool
 TAO_Notify_EventChannelFactory::change_to_parent ()
 {
-  bool saving = false;
+  bool saving {};
   if (! this->loading_topology_)
   {
     // A null pointer means that saving of topology is disabled.

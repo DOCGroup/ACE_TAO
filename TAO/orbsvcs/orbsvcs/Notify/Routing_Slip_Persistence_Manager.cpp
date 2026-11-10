@@ -40,7 +40,7 @@ Routing_Slip_Persistence_Manager::set_callback(Persistent_Callback* callback)
 bool
 Routing_Slip_Persistence_Manager::store_root()
 {
-  bool result = false;
+  bool result {};
 
   this->factory_->get_preallocated_pointer (
     this->routing_slip_header_.next_serial_number,
@@ -80,7 +80,7 @@ Routing_Slip_Persistence_Manager::reload(
   ACE_Message_Block*& event,
   ACE_Message_Block*& routing_slip)
 {
-  bool result = false;
+  bool result {};
   if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
     event = this->event_mb_.release ();
@@ -105,7 +105,7 @@ Routing_Slip_Persistence_Manager::load(
    *       that there will be one and only one thread doing the entire
    *       reload process.
    */
-  bool result = false;
+  bool result {};
   size_t block_size = this->allocator_->block_size();
   this->first_routing_slip_block_ =
     this->allocator_->allocate_at(block_number);
@@ -190,7 +190,7 @@ bool
 Routing_Slip_Persistence_Manager::store(const ACE_Message_Block& event,
   const ACE_Message_Block& routing_slip)
 {
-  bool result = false;
+  bool result {};
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   if (!this->removed_)
   {
@@ -202,7 +202,7 @@ Routing_Slip_Persistence_Manager::store(const ACE_Message_Block& event,
 bool
 Routing_Slip_Persistence_Manager::update(const ACE_Message_Block& routing_slip)
 {
-  bool result = false;
+  bool result {};
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   // If we have not gotten the event yet or we have no allocator, fail
   if (!this->removed_)
@@ -218,7 +218,7 @@ Routing_Slip_Persistence_Manager::update(const ACE_Message_Block& routing_slip)
 bool
 Routing_Slip_Persistence_Manager::remove()
 {
-  bool result = false;
+  bool result {};
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   // Assert that this is in the dllist
   ACE_ASSERT(this->prev_manager_ != this);
@@ -229,7 +229,7 @@ Routing_Slip_Persistence_Manager::remove()
   this->remove_from_dllist();
   result = prev->update_next_manager(this);
   this->factory_->lock.release();
-  size_t block_number = 0;
+  size_t block_number {};
   if (this->first_routing_slip_block_ != nullptr)
   {
     this->allocator_->free(this->first_routing_slip_block_->block_number());
@@ -407,7 +407,7 @@ bool
 Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
   const ACE_Message_Block& routing_slip)
 {
-  bool result = false;
+  bool result {};
 
   bool initially_persisted = this->persisted();
   if (!initially_persisted)
@@ -517,7 +517,7 @@ size_t
 Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
   size_t offset_into_block, unsigned char* data, size_t data_size)
 {
-  size_t result = 0;
+  size_t result {};
   if (data_size > 0)
   {
     const size_t max_size = this->allocator_->block_size() - offset_into_block;
@@ -547,7 +547,7 @@ Routing_Slip_Persistence_Manager::build_chain(
   bool result = true;
   // Save the number of items currently on the allocation list for
   ACE_Unbounded_Stack<size_t> blocks_to_free;
-  size_t block_number = 0;
+  size_t block_number {};
 
   // reverse the order so when we pop, we free up things closer to block 0
   // first
@@ -636,12 +636,12 @@ Routing_Slip_Persistence_Manager::reload_chain(
   ACE_UINT64 expected_serial_number
   )
 {
-  bool result = false;
+  bool result {};
   size_t block_size = this->allocator_->block_size();
   if (this->allocator_->read(first_block))
   {
-    size_t pos = 0;
-    size_t nextptr = 0;
+    size_t pos {};
+    size_t nextptr {};
     ACE_Message_Block* mbptr = amb;
     ACE_Message_Block* mbnew {};
 
@@ -686,12 +686,12 @@ bool
 Routing_Slip_Persistence_Manager::update_next_manager(
   Routing_Slip_Persistence_Manager* next)
 {
-  bool result = false;
+  bool result {};
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   ACE_ASSERT(this->persisted());
   if (!this->removed_)
   {
-    bool updated = false;
+    bool updated {};
     if (this->next_manager_ != nullptr)
     {
       if (this->routing_slip_header_.next_serial_number !=

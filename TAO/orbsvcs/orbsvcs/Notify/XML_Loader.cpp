@@ -32,7 +32,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
-    CORBA::Long id = 0;
+    CORBA::Long id {};
   for (size_t i {}; i < attrs->getLength (); ++i)
     {
       ACE_CString name = ACE_TEXT_ALWAYS_CHAR(attrs->getQName (i));
@@ -59,7 +59,7 @@ namespace TAO_Notify
   bool
   XML_Loader::open (ACE_TString const &base_name)
   {
-    bool result = false;
+    bool result {};
 
     // if *.xml exists, use it
     // if it does not exist then

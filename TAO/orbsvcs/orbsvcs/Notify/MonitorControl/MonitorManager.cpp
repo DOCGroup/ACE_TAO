@@ -112,7 +112,7 @@ TAO_MonitorManager::fini ()
 int
 TAO_MonitorManager::run ()
 {
-  bool activate = false;
+  bool activate {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
@@ -132,7 +132,7 @@ TAO_MonitorManager::run ()
       }
   }
 
-  int status = 0;
+  int status {};
 
   if (activate)
     {

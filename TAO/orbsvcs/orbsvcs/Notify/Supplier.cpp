@@ -43,7 +43,7 @@ TAO_Notify_Supplier::dispatch_updates_i (
 bool
 TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
 {
-  bool status = false;
+  bool status {};
   CORBA::Object_var supplier = this->get_supplier ();
   if (CORBA::is_nil (supplier.in ()))
   {
@@ -60,7 +60,7 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
   CORBA::PolicyList policy_list;
   try
     {
-      bool do_liveliness_check = false;
+      bool do_liveliness_check {};
       ACE_Time_Value now = ACE_OS::gettimeofday ();
       ACE_Time_Value last_ping = proxy_->last_ping();
       if (CORBA::is_nil (this->rtt_obj_.in ()))

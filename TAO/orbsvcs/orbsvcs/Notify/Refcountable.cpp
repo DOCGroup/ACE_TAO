@@ -156,7 +156,7 @@ TAO_Notify_Tracker::dump (char const *title)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d.\n",
       iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.load () ));
-    iter++;
+    ++iter;
   }
 
   EntityMap::size_type current_count = map_.size();

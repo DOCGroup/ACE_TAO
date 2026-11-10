@@ -55,8 +55,8 @@ namespace TAO_Notify
   int
   XML_Topology_Factory::init (int argc, ACE_TCHAR *argv[])
   {
-    int result = 0;
-    bool verbose = false;
+    int result {};
+    bool verbose {};
     for (int narg {}; narg < argc; ++narg)
     {
       ACE_TCHAR * av = argv[narg];

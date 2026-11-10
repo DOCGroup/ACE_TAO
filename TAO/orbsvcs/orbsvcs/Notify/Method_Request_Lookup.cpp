@@ -116,7 +116,7 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
     id_path.reserve (count);
     for (size_t nid {}; ok && nid < count; ++nid)
     {
-      TAO_Notify_Object::ID id = 0;
+      TAO_Notify_Object::ID id {};
       if ( cdr.read_long (id))
       {
         id_path.push_back (id);

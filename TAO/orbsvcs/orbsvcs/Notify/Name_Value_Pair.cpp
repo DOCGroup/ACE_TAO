@@ -16,7 +16,7 @@ namespace
     if (! ACE_OS::ace_isdigit(s[0]))
       return 0;
 
-    ACE_UINT64 t = 0;
+    ACE_UINT64 t {};
     for (size_t i {}; i < len; ++i)
     {
       if (ACE_OS::ace_isdigit(s[i]) == 0)

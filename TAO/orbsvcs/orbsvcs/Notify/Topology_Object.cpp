@@ -52,7 +52,7 @@ namespace TAO_Notify
   bool
   Topology_Object::is_persistent () const
   {
-    bool result = false;
+    bool result {};
     if (this->qos_properties_.event_reliability().is_valid ())
     {
       result = CosNotification::Persistent == this->qos_properties_.event_reliability().value ();
@@ -74,7 +74,7 @@ namespace TAO_Notify
   bool
   Topology_Object::send_change ()
   {
-    bool saving = false;
+    bool saving {};
     if (is_persistent ())
     {
       while (this->self_changed_ || this->children_changed_)
@@ -98,7 +98,7 @@ namespace TAO_Notify
   bool
   Topology_Object::send_deletion_change ()
   {
-    bool saving = false;
+    bool saving {};
     if (is_persistent ())
     {
       saving = this->change_to_parent ();
@@ -111,7 +111,7 @@ namespace TAO_Notify
   bool
     Topology_Object::change_to_parent ()
     {
-      bool result = false;
+      bool result {};
       Topology_Parent * parent = this->topology_parent();
       if (parent != nullptr)
       {

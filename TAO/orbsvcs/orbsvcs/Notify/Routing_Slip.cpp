@@ -34,23 +34,23 @@ namespace TAO_Notify
 Routing_Slip_Queue Routing_Slip::persistent_queue_(QUEUE_ALLOWED);
 
 TAO_SYNCH_MUTEX Routing_Slip::sequence_lock_;
-int Routing_Slip::routing_slip_sequence_= 0;
-size_t Routing_Slip::count_enter_transient_ = 0;
-size_t Routing_Slip::count_continue_transient_ = 0;
-size_t Routing_Slip::count_enter_reloaded_ = 0;
-size_t Routing_Slip::count_enter_new_ = 0;
-size_t Routing_Slip::count_continue_new_ = 0;
-size_t Routing_Slip::count_enter_complete_while_new_ = 0;
-size_t Routing_Slip::count_enter_saving_ = 0;
-size_t Routing_Slip::count_enter_saved_ = 0;
-size_t Routing_Slip::count_enter_updating_ = 0;
-size_t Routing_Slip::count_enter_changed_while_saving_ = 0;
-size_t Routing_Slip::count_continue_changed_while_saving_ = 0;
-size_t Routing_Slip::count_enter_changed_ = 0;
-size_t Routing_Slip::count_continue_changed_ = 0;
-size_t Routing_Slip::count_enter_complete_ = 0;
-size_t Routing_Slip::count_enter_deleting_ = 0;
-size_t Routing_Slip::count_enter_terminal_ = 0;
+int Routing_Slip::routing_slip_sequence_ {};
+size_t Routing_Slip::count_enter_transient_ {};
+size_t Routing_Slip::count_continue_transient_ {};
+size_t Routing_Slip::count_enter_reloaded_ {};
+size_t Routing_Slip::count_enter_new_ {};
+size_t Routing_Slip::count_continue_new_ {};
+size_t Routing_Slip::count_enter_complete_while_new_ {};
+size_t Routing_Slip::count_enter_saving_ {};
+size_t Routing_Slip::count_enter_saved_ {};
+size_t Routing_Slip::count_enter_updating_ {};
+size_t Routing_Slip::count_enter_changed_while_saving_ {};
+size_t Routing_Slip::count_continue_changed_while_saving_ {};
+size_t Routing_Slip::count_enter_changed_ {};
+size_t Routing_Slip::count_continue_changed_ {};
+size_t Routing_Slip::count_enter_complete_ {};
+size_t Routing_Slip::count_enter_deleting_ {};
+size_t Routing_Slip::count_enter_terminal_ {};
 
 Routing_Slip_Ptr
 Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
@@ -845,11 +845,11 @@ Routing_Slip::marshal (TAO_OutputCDR & cdr)
 bool
 Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr)
 {
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   cdr.read_ulong (count);
   for (size_t nreq {}; nreq < count; ++nreq)
   {
-    ACE_CDR::Octet code = 0;
+    ACE_CDR::Octet code {};
     while (cdr.read_octet(code))
     {
       try

@@ -51,7 +51,7 @@ TAO_Notify_Event *
 TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
 {
   TAO_Notify_Event * result {};
-  ACE_CDR::Octet code = 0;
+  ACE_CDR::Octet code {};
   if (cdr.read_octet (code))
   {
     switch (code)

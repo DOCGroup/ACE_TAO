@@ -284,7 +284,7 @@ size_t
 TAO_MonitorEventChannelFactory::get_suppliers (
   CosNotifyChannelAdmin::ChannelID id)
 {
-  size_t count = 0;
+  size_t count {};
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->get_event_channel (id);
 
@@ -315,7 +315,7 @@ size_t
 TAO_MonitorEventChannelFactory::get_consumers (
   CosNotifyChannelAdmin::ChannelID id)
 {
-  size_t count = 0;
+  size_t count {};
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->get_event_channel (id);
 
@@ -347,7 +347,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
   Monitor_Control_Types::NameList* names,
   bool active)
 {
-  size_t count = 0;
+  size_t count {};
   CosNotifyChannelAdmin::ChannelIDSeq_var ids = this->get_all_channels ();
 
   CORBA::ULong total = ids->length ();
@@ -379,7 +379,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
 
       if (want_event_channel)
         {
-          count++;
+          ++count;
 
           if (names != nullptr)
             {

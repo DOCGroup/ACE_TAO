@@ -78,7 +78,7 @@ TAO_Control_Registry::names ()
 
       if (this->name_cache_.length () == 0)
         {
-          CORBA::ULong length = 0;
+          CORBA::ULong length {};
           Map::iterator itr (this->map_);
           Map::value_type* entry {};
 

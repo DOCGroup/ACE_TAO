@@ -185,7 +185,7 @@ protected:
   TAO_Notify_ProxySupplier* proxy_;
 
   /// Suspended Flag.
-  CORBA::Boolean is_suspended_ = false;
+  CORBA::Boolean is_suspended_ {};
 
   /// Interface that accepts offer_changes
   CosNotifyComm::NotifyPublish_var publish_;

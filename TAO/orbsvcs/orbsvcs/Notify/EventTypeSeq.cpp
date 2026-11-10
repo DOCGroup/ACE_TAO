@@ -109,7 +109,7 @@ TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq
 {
   event_type_seq.length (static_cast<CORBA::ULong> (this->size ()));
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   for (TAO_Notify_EventType const & event_type : this->event_types_)
     event_type_seq[i++] = event_type.native ();
 }
@@ -127,7 +127,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
   else
       event_type_seq.length (static_cast<CORBA::ULong> (this->size ()));
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   for (TAO_Notify_EventType const & event_type : this->event_types_)
     {
       if (event_type.is_special () == 0) // if its not the special event type.

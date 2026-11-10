@@ -241,7 +241,7 @@ private:
 
 private:
   TAO_SYNCH_MUTEX lock_;
-  bool removed_ = false;
+  bool removed_ {};
   ACE_UINT64 serial_number_ {};
   Persistent_File_Allocator* allocator_;
   Standard_Event_Persistence_Factory* factory_;

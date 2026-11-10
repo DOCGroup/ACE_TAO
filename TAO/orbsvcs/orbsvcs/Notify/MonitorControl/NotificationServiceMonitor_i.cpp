@@ -32,7 +32,7 @@ NotificationServiceMonitor_i::get_statistic_names ()
                   nullptr);
   Monitor::NameList_var safe_names = the_names;
   the_names->length (the_length);
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   for (Monitor_Control_Types::NameList::Iterator iter (name_list);
        !iter.done ();
@@ -252,7 +252,7 @@ NotificationServiceMonitor_i::get_invalid_names (
 {
   invalid.length (0);
 
-  CORBA::ULong ilength = 0;
+  CORBA::ULong ilength {};
   CORBA::ULong const length  = names.length ();
 
   for (CORBA::ULong i {}; i < length; ++i)

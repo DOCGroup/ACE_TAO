@@ -127,7 +127,7 @@ private:
   void release () override;
 
   mutable Ptr clone_;
-  bool is_on_heap_ = false;
+  bool is_on_heap_ {};
   ACE_Time_Value time_;
 };
 

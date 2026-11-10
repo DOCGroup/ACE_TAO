@@ -41,7 +41,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 
   CORBA::ULong const len = exp.event_types.length ();
 
-  bool has_et_exp = false;
+  bool has_et_exp {};
 
   for (CORBA::ULong ii {}; ii < len; ++ii)
   {

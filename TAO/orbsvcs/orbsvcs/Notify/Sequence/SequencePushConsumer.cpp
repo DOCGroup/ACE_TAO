@@ -119,7 +119,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
 
     Request_Queue completed;
 
-    CORBA::Long pos = 0;
+    CORBA::Long pos {};
     TAO_Notify_Method_Request_Event_Queueable * request {};
     while (pos < batch_size && requests.dequeue_head (request) == 0)
     {
@@ -141,7 +141,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     ACE_ASSERT (pos > 0);
 
     ace_mon.release ();
-    bool from_timeout = false;
+    bool from_timeout {};
     TAO_Notify_Consumer::DispatchStatus status =
       this->dispatch_batch (batch);
     ace_mon.acquire ();

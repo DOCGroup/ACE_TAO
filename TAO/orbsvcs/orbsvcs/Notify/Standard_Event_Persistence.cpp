@@ -45,8 +45,8 @@ Standard_Event_Persistence::reset ()
 int
 Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-  bool verbose = false;
+  int result {};
+  bool verbose {};
   for (int narg {}; narg < argc; ++narg)
   {
     ACE_TCHAR * av = argv[narg];
@@ -109,7 +109,7 @@ bool
 Standard_Event_Persistence_Factory::open (const ACE_TCHAR* filename,
                                           ACE_UINT32 block_size)
 {
-  bool result = false;
+  bool result {};
   if (allocator_.open (filename, block_size))
   {
     this->is_reloading_ = this->root_.load(ROUTING_SLIP_ROOT_BLOCK_NUMBER, ROUTING_SLIP_ROOT_SERIAL_NUMBER);

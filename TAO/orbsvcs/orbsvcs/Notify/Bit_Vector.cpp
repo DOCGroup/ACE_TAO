@@ -9,7 +9,7 @@ Bit_Vector::Bit_Vector() = default;
 bool
 Bit_Vector::is_set(const size_t location) const
 {
-  bool result = false;
+  bool result {};
   if (location < this->size_)
   {
     result = (0 != (this->bitvec_[location >> BPW_LOG_2] & (1 << (location % BITS_PER_WORD))));
@@ -43,7 +43,7 @@ Bit_Vector::set_bit(const size_t location, bool set)
 size_t
 Bit_Vector::find_first_bit(bool set) const
 {
-  size_t result = 0;
+  size_t result {};
   if (set)
   {
     result = this->first_set_bit_;
@@ -85,9 +85,9 @@ Bit_Vector::evaluate_firsts(const size_t location, bool set)
 size_t
 Bit_Vector::find_first_bit_of(const size_t location, bool set)
 {
-  size_t newloc = 0;
-  size_t idx = 0;
-  for (idx = location; (newloc == 0) && (idx < this->size_ + 1); idx++)
+  size_t newloc {};
+  size_t idx {};
+  for (idx = location; (newloc == 0) && (idx < this->size_ + 1); ++idx)
   {
     if (is_set(idx) == set)
     {

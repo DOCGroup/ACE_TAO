@@ -130,7 +130,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
   if (this->shutdown_)
     return -1;
 
-  bool discarded_existing = false;
+  bool discarded_existing {};
 
   bool local_overflow = this->max_events_per_consumer_.is_valid() &&
     static_cast <CORBA::Long> (this->msg_queue_.message_count ()) >= this->max_events_per_consumer_.value();

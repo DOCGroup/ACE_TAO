@@ -126,7 +126,7 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event)
 bool
 TAO_Notify_ProxyConsumer::supports_reliable_events () const
 {
-  bool reliable = false;
+  bool reliable {};
   CosNotification::PropertyValue value;
   if (this->find_qos_property_value (CosNotification::EventReliability, value))
     {

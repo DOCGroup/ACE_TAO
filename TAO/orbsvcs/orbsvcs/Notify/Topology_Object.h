@@ -183,9 +183,9 @@ namespace TAO_Notify
 
   protected:
     /// true if this object changed since last save_persistent
-    bool self_changed_ = false;
+    bool self_changed_ {};
     /// true of any of this object's children changed since last save_persistent
-    bool children_changed_ = false;
+    bool children_changed_ {};
 
     /// A safely-typed copy of parent_;
     Topology_Parent * topology_parent_ {};

@@ -57,7 +57,7 @@ public:
   virtual void forward_any_no_filtering (const CORBA::Any & event);
 protected:
   //= Data Members
-  CORBA::Boolean is_suspended_ = false;
+  CORBA::Boolean is_suspended_ {};
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (

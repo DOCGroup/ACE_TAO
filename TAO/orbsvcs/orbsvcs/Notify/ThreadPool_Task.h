@@ -88,7 +88,7 @@ private:
   std::unique_ptr<TAO_Notify_Buffering_Strategy> buffering_strategy_;
 
   /// Shutdown
-  bool shutdown_ = false;
+  bool shutdown_ {};
 
   /// The Queue based timer.
   TAO_Notify_Timer_Queue::Ptr timer_;

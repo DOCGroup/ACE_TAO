@@ -132,7 +132,7 @@ TAO_Notify_EventType::dump () const
 /// Initialize from an NVPList, return false on failure
 bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
 {
-  bool result = false;
+  bool result {};
 
   ACE_CString domain;
   ACE_CString type;

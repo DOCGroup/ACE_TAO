@@ -171,7 +171,7 @@ private:
   /// Protection for internal information
   TAO_SYNCH_MUTEX internals_;
   /// true when event persistence qos is guaranteed
-  bool is_safe_ = false;
+  bool is_safe_ {};
   /// signalled when is_safe_ goes true
   ACE_SYNCH_CONDITION until_safe_;
 

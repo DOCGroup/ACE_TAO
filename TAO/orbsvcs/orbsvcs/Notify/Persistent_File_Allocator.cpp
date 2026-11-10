@@ -189,7 +189,7 @@ Persistent_Storage_Block*
 Persistent_File_Allocator::allocate()
 {
   Persistent_Storage_Block* result {};
-  size_t block_number = 0;
+  size_t block_number {};
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   if (!this->allocate_block(block_number))
   {
@@ -266,7 +266,7 @@ bool
 Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
 {
   bool result = this->thread_active_;
-  bool cached = false;
+  bool cached {};
   if (result)
   {
     {

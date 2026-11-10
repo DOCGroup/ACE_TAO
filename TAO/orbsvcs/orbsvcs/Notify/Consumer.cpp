@@ -162,7 +162,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
   bool queued = enqueue_if_necessary (request);
   if (!queued)
     {
-      bool from_timeout = false;
+      bool from_timeout {};
       DispatchStatus status = this->dispatch_request (request);
       switch (status)
         {
@@ -738,7 +738,7 @@ TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
 bool
 TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
 {
-  bool status = false;
+  bool status {};
   CORBA::Object_var consumer = this->get_consumer ();
   if (CORBA::is_nil (consumer.in ()))
   {
@@ -755,7 +755,7 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
   CORBA::PolicyList policy_list;
   try
     {
-      bool do_liveliness_check = false;
+      bool do_liveliness_check {};
       ACE_Time_Value now = ACE_OS::gettimeofday ();
 
       if (CORBA::is_nil (this->rtt_obj_.in ()))

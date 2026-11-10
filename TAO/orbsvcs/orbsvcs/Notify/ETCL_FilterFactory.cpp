@@ -158,7 +158,7 @@ TAO_Notify_ETCL_FilterFactory::remove_filter (
 
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  bool found = false;
+  bool found {};
   TAO_Notify_ETCL_Filter* filter_servant {};
   FILTERMAP::ENTRY *entry {};
   while ( !found && iterator.next (entry) != 0 ) {
@@ -195,7 +195,7 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver &save
 
   if (this->filters_.current_size () > 0)
   {
-    int index = 0;
+    int index {};
     FILTERMAP::ITERATOR iterator (this->filters_);
 
     for (FILTERMAP::ENTRY *entry {};

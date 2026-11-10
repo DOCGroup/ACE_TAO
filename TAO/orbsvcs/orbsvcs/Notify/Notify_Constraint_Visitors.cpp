@@ -70,7 +70,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (CosNotification::Structure
   // copied into hash tables so iteration is done only once.
 
   CORBA::ULong length = s_event.filterable_data.length ();
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
 
   for (index = 0; index < length; ++index)
   {
@@ -119,7 +119,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (CosNotification::Structure
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
 {
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   this->queue_.reset ();
 
   // Evaluate the constraint in root_;
@@ -291,7 +291,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             CORBA::ULong count = tc->member_count ();
 
             const char *member_name {};
-            CORBA::ULong i = 0;
+            CORBA::ULong i {};
 
             for (i = 0; i < count; ++i)
               {
@@ -357,7 +357,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
     CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     DynamicAny::DynAny_var member;
-    CORBA::Boolean success = false;
+    CORBA::Boolean success {};
     CORBA::ULong slot = (CORBA::ULong) *pos->integer ();
 
     switch (kind)
@@ -493,7 +493,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
     CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     DynamicAny::DynAny_var member;
-    CORBA::Boolean success = false;
+    CORBA::Boolean success {};
     CORBA::ULong slot = (CORBA::ULong) *array->integer ();
 
     switch (kind)
@@ -802,7 +802,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
   if (component->accept (this) == 0)
     {
       const char *value {};
-      CORBA::Boolean result = false;
+      CORBA::Boolean result {};
 
       // For the two cases below, we don't want the item at the top of
       // the queue, because it's the result of a hash table
@@ -870,7 +870,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
   if (subexpr->accept (this) == 0)
     {
       TAO_ETCL_Literal_Constraint subexpr_result;
-      CORBA::Boolean result = false;
+      CORBA::Boolean result {};
       int op_type = unary_expr->type ();
 
       switch (op_type)
@@ -943,7 +943,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
   )
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   ETCL_Constraint *lhs = binary->lhs ();
 
   if (lhs->accept (this) == 0)
@@ -983,7 +983,7 @@ int
 TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   ETCL_Constraint *lhs = binary->lhs ();
 
   if (lhs->accept (this) == 0)
@@ -1025,7 +1025,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
 {
   int return_value = -1;
   ETCL_Constraint *lhs = binary->lhs ();
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
 
   // Perform an operation on the results of evaluating the left and
   // right branches of this subtree.
@@ -1169,7 +1169,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
                 return return_value;
               }
 
-              CORBA::Boolean result = false;
+              CORBA::Boolean result {};
 
               switch (kind)
               {

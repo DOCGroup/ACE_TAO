@@ -981,7 +981,7 @@ size_t
 TAO_MonitorEventChannel::get_consumers (
   Monitor_Control_Types::NameList* names)
 {
-  size_t count = 0;
+  size_t count {};
   CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
@@ -1010,7 +1010,7 @@ TAO_MonitorEventChannel::get_consumers (
                     {
                       if (this->supplier_map_.find (proxys[i]) == 0)
                         {
-                          count++;
+                          ++count;
                         }
                     }
                   else
@@ -1019,7 +1019,7 @@ TAO_MonitorEventChannel::get_consumers (
 
                       if (this->supplier_map_.find (proxys[i], name) == 0)
                         {
-                          count++;
+                          ++count;
                           names->push_back (name);
                         }
                     }
@@ -1050,7 +1050,7 @@ size_t
 TAO_MonitorEventChannel::get_suppliers (
   Monitor_Control_Types::NameList* names)
 {
-  size_t count = 0;
+  size_t count {};
   CosNotifyChannelAdmin::AdminIDSeq_var supadmin_ids =
     this->get_all_supplieradmins ();
   CORBA::ULong length = supadmin_ids->length ();
@@ -1079,7 +1079,7 @@ TAO_MonitorEventChannel::get_suppliers (
                     {
                       if (this->consumer_map_.find (proxys[i]) == 0)
                         {
-                          count++;
+                          ++count;
                         }
                     }
                   else
@@ -1088,7 +1088,7 @@ TAO_MonitorEventChannel::get_suppliers (
 
                       if (this->consumer_map_.find (proxys[i], name) == 0)
                         {
-                          count++;
+                          ++count;
                           names->push_back (name);
                         }
                     }
@@ -1140,7 +1140,7 @@ TAO_MonitorEventChannel::get_admins (
   CosNotifyChannelAdmin::AdminIDSeq const &admin_ids,
   Monitor_Control_Types::NameList* names)
 {
-  size_t count = 0;
+  size_t count {};
   CORBA::ULong length = admin_ids.length ();
 
   for (CORBA::ULong j {}; j < length; ++j)
@@ -1149,7 +1149,7 @@ TAO_MonitorEventChannel::get_admins (
         {
           if (map.find (admin_ids[j]) == 0)
             {
-              count++;
+              ++count;
             }
         }
       else
@@ -1158,7 +1158,7 @@ TAO_MonitorEventChannel::get_admins (
 
           if (map.find (admin_ids[j], name) == 0)
             {
-              count++;
+              ++count;
               names->push_back (name);
             }
         }
@@ -1195,7 +1195,7 @@ TAO_MonitorEventChannel::get_threadpool_task (
 size_t
 TAO_MonitorEventChannel::calculate_queue_size (bool count)
 {
-  size_t size = 0;
+  size_t size {};
   CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
@@ -1232,8 +1232,8 @@ void
 TAO_MonitorEventChannel::determine_slowest_consumer (
   Monitor_Control_Types::NameList* names)
 {
-  size_t largest = 0;
-  CosNotifyChannelAdmin::AdminID id = 0;
+  size_t largest {};
+  CosNotifyChannelAdmin::AdminID id {};
 
   CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
     this->get_all_consumeradmins ();
