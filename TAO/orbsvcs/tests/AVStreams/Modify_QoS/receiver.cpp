@@ -100,13 +100,13 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
+      size_t const written =
         ACE_OS::fwrite (frame->rd_ptr (),
                         frame->length (),
                         1,
                         output_file.get ());
 
-      if (result == frame->length ())
+      if (written != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
