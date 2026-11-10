@@ -214,8 +214,8 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   int result;
-  char *ip_buf = nullptr;
-  char *ip_addr = nullptr;
+  char *ip_buf {};
+  char *ip_addr {};
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (ip_buf,
@@ -246,7 +246,7 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
 
   if (port_p == nullptr) // Assume it's a port number.
     {
-      char *endp = nullptr;
+      char *endp {};
       long const port = ACE_OS::strtol (ip_addr, &endp, 10);
 
       if (*endp == '\0')    // strtol scanned the entire string - all digits
@@ -263,7 +263,7 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
     {
       *port_p = '\0'; ++port_p; // skip over ':'
 
-      char *endp = nullptr;
+      char *endp {};
       long port = ACE_OS::strtol (port_p, &endp, 10);
 
       if (*endp == '\0')    // strtol scanned the entire string - all digits
@@ -419,7 +419,7 @@ ACE_INET_Addr::set (u_short port_number,
   // searching this->inet_addrs_ which would slow things down.
   hints.ai_socktype = SOCK_STREAM;
 
-  addrinfo *res = nullptr;
+  addrinfo *res {};
   const int error = ACE_OS::getaddrinfo (host_name, nullptr, &hints, &res);
 
   if (error)
@@ -453,7 +453,7 @@ static int get_port_number_from_name (const char port_name[],
                                       const char protocol[])
 {
   // Maybe port_name is directly a port number?
-  char *endp = nullptr;
+  char *endp {};
   long port_number = ACE_OS::strtol (port_name, &endp, 10);
 
   if (*endp == '\0')
