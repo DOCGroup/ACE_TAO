@@ -8,27 +8,25 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
+#include <cstddef>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("pong.ior");
-char const *protocol = "RTP/UDP";
-int milliseconds = 100;
-size_t message_size = 64;
-bool respond = true;
+ACE_TString ior_output_file { ACE_TEXT ("pong.ior") };
+std::size_t message_size { 64 };
+bool respond { true };
 AVStreams::protocolSpec pong_protocols;
 AVStreams::protocolSpec ping_protocols;
 
-ACE_hrtime_t recv_throughput_base = 0;
+ACE_hrtime_t recv_throughput_base {};
 ACE_Throughput_Stats recv_latency;
 
-ACE_hrtime_t send_throughput_base = 0;
+ACE_hrtime_t send_throughput_base {};
 ACE_Throughput_Stats send_latency;
-
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xo:s:r:t:b:d"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xo:s:r:b:d"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -39,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'r':
         {
-          CORBA::ULong l = ping_protocols.length ();
+          CORBA::ULong const l = ping_protocols.length ();
           ping_protocols.length (l + 1);
           ping_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
@@ -47,14 +45,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 's':
         {
-          CORBA::ULong l = pong_protocols.length ();
+          CORBA::ULong const l = pong_protocols.length ();
           pong_protocols.length (l + 1);
           pong_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
-        break;
-
-      case 't':
-        milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
@@ -80,12 +74,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-o <iorfile> "
                            "-r <protocol=addr> "
                            "-s <protocol=addr> "
-                           "-t <milliseconds> "
                            "\n",
                            argv [0]),
                           -1);
       }
-
 
   // If no protocols are specified use the default...
   if (pong_protocols.length () == 0)
@@ -103,14 +95,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
+      if (result != 0)
+        return result;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -145,13 +138,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in () ));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (!ior_output_file.empty ())
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          FILE *output_file = ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w"));
           if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file %s for writing IOR: %C",
-                               ior_output_file,
+                               ior_output_file.c_str (),
                                ior.in ()),
                               1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
@@ -191,7 +184,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       send_latency.dump_results (ACE_TEXT("Send"), gsf);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -199,7 +192,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 // ****************************************************************
 
 Pong_Recv::Pong_Recv ()
@@ -210,10 +202,9 @@ Pong_Recv::Pong_Recv ()
 }
 
 int
-Pong_Recv::get_callback (const char *,
+Pong_Recv::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Recv::get_callback\n"));
   callback = &this->callback_;
   return 0;
 }
@@ -221,7 +212,6 @@ Pong_Recv::get_callback (const char *,
 int
 Pong_Recv_Callback::handle_stop ()
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::stop"));
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
@@ -231,9 +221,7 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
                                    ACE_Addr const &)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::receive_frame\n"));
-
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   for (ACE_Message_Block const *i = frame;
        i != nullptr;
        i = frame->cont ())
@@ -275,19 +263,16 @@ Ping_Send::Ping_Send ()
 }
 
 int
-Ping_Send::get_callback (const char *,
+Ping_Send::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Ping_Send::get_callback\n"));
   callback = &this->callback_;
   return 0;
 }
 
 Ping_Send_Callback::Ping_Send_Callback ()
-  :count_ (0)
+  : timeout_ (2)
 {
-  this->timeout_ = ACE_Time_Value (2);
-
   this->frame_.size (message_size);
   this->frame_.wr_ptr (message_size);
 }
@@ -326,15 +311,9 @@ Ping_Send_Callback::handle_timeout (void *)
     {
       send_throughput_base = stamp;
     }
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   send_latency.sample (now - send_throughput_base,
                        now - stamp);
 
-  return 0;
-}
-
-int
-Ping_Send_Callback::handle_end_stream ()
-{
   return 0;
 }
