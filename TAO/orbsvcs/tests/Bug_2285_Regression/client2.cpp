@@ -78,8 +78,7 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Set the property
   CORBA::Boolean const has_property = iorm->set_property (&iogr_prop, new_ref.in ());
 
-  // Set the primary
-  // See we are setting the second ior as the primary
+  // Use the first server as the primary.
   if (has_property)
     {
       iorm->set_primary (&iogr_prop, refs[0].in (), new_ref.in ());

@@ -77,10 +77,11 @@ TAO249_ServerRequest_Interceptor2::receive_request (
       else
         {
           // Subsequent servers read the previous server's expiration time.
-          std::fread (&last_exp_time,
-                      1,
-                      sizeof (TimeBase::TimeT),
-                      last_exp_time_file.get ());
+          if (std::fread (&last_exp_time,
+                          1,
+                          sizeof (TimeBase::TimeT),
+                          last_exp_time_file.get ()) != sizeof (TimeBase::TimeT))
+            throw CORBA::NO_RESOURCES ();
           ACE_OS::sleep (1);
         }
 
@@ -125,10 +126,11 @@ TAO249_ServerRequest_Interceptor2::receive_request (
           if (no_more_retries)
             {
               TimeBase::TimeT last_expired_attempt {};
-              std::fread (&last_expired_attempt,
-                          1,
-                          sizeof (TimeBase::TimeT),
-                          no_more_retries.get ());
+              if (std::fread (&last_expired_attempt,
+                              1,
+                              sizeof (TimeBase::TimeT),
+                              no_more_retries.get ()) != sizeof (TimeBase::TimeT))
+                throw CORBA::NO_RESOURCES ();
 
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("Test Failed - REGRESSION !!! Client ORB is still retrying after "
@@ -144,17 +146,20 @@ TAO249_ServerRequest_Interceptor2::receive_request (
               if (!no_more_retries)
                 throw CORBA::NO_RESOURCES ();
 
-              std::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries.get ());
-              std::fflush (no_more_retries.get ());
+              if (std::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries.get ()) !=
+                    sizeof (TimeBase::TimeT) ||
+                  std::fflush (no_more_retries.get ()) != 0)
+                throw CORBA::NO_RESOURCES ();
             }
           }
 
       // Write the expiration time for the next server to check.
-      std::fwrite (&ftrsc.expiration_time,
-                   1,
-                   sizeof (TimeBase::TimeT),
-                   last_exp_time_file.get ());
-      std::fflush (last_exp_time_file.get ());
+      if (std::fwrite (&ftrsc.expiration_time,
+                       1,
+                       sizeof (TimeBase::TimeT),
+                       last_exp_time_file.get ()) != sizeof (TimeBase::TimeT) ||
+          std::fflush (last_exp_time_file.get ()) != 0)
+        throw CORBA::NO_RESOURCES ();
       last_exp_time_file.reset ();
 
       std::abort ();

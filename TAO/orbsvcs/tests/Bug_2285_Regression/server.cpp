@@ -80,8 +80,7 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Set the property
   CORBA::Boolean const retval = iorm->set_property (&iogr_prop, new_ref.in ());
 
-  // Set the primary
-  // See we are setting the second ior as the primary
+  // Use the merged IOGR as the primary.
   if (retval)
     {
       iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
