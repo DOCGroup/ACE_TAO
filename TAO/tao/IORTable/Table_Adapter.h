@@ -54,6 +54,11 @@ public:
 
   CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
 
+  TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter &&) = delete;
+
 protected:
   static std::unique_ptr<ACE_Lock> create_lock (TAO_SYNCH_MUTEX &l);
 
@@ -70,12 +75,6 @@ protected:
   bool closed_ {true};
   TAO_SYNCH_MUTEX thread_lock_;
   std::unique_ptr<ACE_Lock> lock_;
-
-private:
-  TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
-  TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
-  TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;
-  TAO_Table_Adapter &operator= (TAO_Table_Adapter &&) = delete;
 };
 
 // ****************************************************************
@@ -89,7 +88,6 @@ public:
   /// details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
-private:
   TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory const &) = delete;
   TAO_Table_Adapter_Factory &operator= (TAO_Table_Adapter_Factory const &) = delete;
   TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory &&) = delete;

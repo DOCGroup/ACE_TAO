@@ -40,16 +40,15 @@ public:
                 TAO_ServerRequest &request,
                 CORBA::Object_out foward_to) override;
 
-protected:
-  /// Helper method to find an object bound in the table.
-  void find_object (::IORTable::Locate_ResponseHandler rh,
-                    TAO::ObjectKey &key);
-
-private:
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter &&) = delete;
   TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter &&) = delete;
+
+protected:
+  /// Helper method to find an object bound in the table.
+  void find_object (::IORTable::Locate_ResponseHandler rh,
+                    TAO::ObjectKey &key);
 };
 
 // ****************************************************************
@@ -64,7 +63,6 @@ public:
   /// details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
-private:
   TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory const &) = delete;
   TAO_Async_Table_Adapter_Factory &operator= (TAO_Async_Table_Adapter_Factory const &) = delete;
   TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory &&) = delete;

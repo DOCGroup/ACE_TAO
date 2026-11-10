@@ -71,6 +71,11 @@ public:
   void set_locator (IORTable::Locator_ptr the_locator) override;
   //@}
 
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl &&) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl &&) = delete;
+
 protected:
   using Map = std::unordered_map<std::string, std::string>;
 
@@ -82,12 +87,6 @@ protected:
 
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;
-
-private:
-  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
-  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;
-  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl &&) = delete;
-  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl &&) = delete;
 };
 
 // Traits specializations.
