@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Malloc_Base.h"
 #include "ace/os_include/os_netdb.h"
 
