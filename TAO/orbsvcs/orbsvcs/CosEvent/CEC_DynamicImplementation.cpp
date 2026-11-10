@@ -122,7 +122,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   else
     {
       CORBA::ULong const num = this->typed_event_channel_->number_of_base_interfaces ();
-      for (CORBA::ULong base=0; base<num; base++)
+      for (CORBA::ULong base = 0; base < num; ++base)
         {
           if (TAO_debug_level >= 10)
             {

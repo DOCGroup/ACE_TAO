@@ -275,7 +275,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
           this->base_interfaces_ = fid->base_interfaces;
           if (TAO_debug_level >= 10)
             {
-              for (CORBA::ULong base=0; base<fid->base_interfaces.length(); base++)
+              for (CORBA::ULong base = 0; base < fid->base_interfaces.length (); ++base)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** Base interface %C found on interface %C *****\n"),
@@ -285,7 +285,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
             }
 
           // Obtain the operations
-          for (CORBA::ULong oper=0; oper<fid->operations.length(); oper++)
+          for (CORBA::ULong oper = 0; oper < fid->operations.length (); ++oper)
             {
               if (TAO_debug_level >= 10)
                 {
@@ -300,7 +300,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
               CORBA::ULong const num_params = fid->operations[oper].parameters.length();
               TAO_CEC_Operation_Params *oper_params = new TAO_CEC_Operation_Params (num_params);
 
-              for (CORBA::ULong param=0; param<num_params; param++)
+              for (CORBA::ULong param = 0; param < num_params; ++param)
                 {
                   oper_params->parameters_[param].name_ = fid->operations[oper].parameters[param].name.in();
                   oper_params->parameters_[param].type_ = fid->operations[oper].parameters[param].type;
@@ -499,7 +499,7 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
 {
   this->orb_->create_list (0, new_list);
 
-  for (CORBA::ULong param=0; param<oper_params->num_params_; param++)
+  for (CORBA::ULong param = 0; param < oper_params->num_params_; ++param)
     {
       CORBA::Any any_1;
       any_1._tao_set_typecode(oper_params->parameters_[param].type_.in ());
