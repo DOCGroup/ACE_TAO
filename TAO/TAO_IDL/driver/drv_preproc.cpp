@@ -420,7 +420,7 @@ DRV_sweep_dirs (std::string const& rel_path,
   bname += rel_path;
   bool include_added {};
   char abspath[MAXPATHLEN] {};
-  for (ACE_DIRENT *dir_entry; (dir_entry = dir.read ()) != nullptr;)
+  for (ACE_DIRENT *dir_entry {}; (dir_entry = dir.read ()) != nullptr;)
     {
       // Skip the ".." and "." files in each directory.
       if (ACE::isdotdir (dir_entry->d_name))
@@ -850,15 +850,10 @@ namespace
         return; // Null filename not allowed.
       }
 
-    std::string const name_str (incl_file);
-    std::string const simple ("orb.idl");
-    std::string const nix_path ("tao/orb.idl");
-    std::string const win_path ("tao\\orb.idl");
-
     // Some backends pass this file through, others don't.
-    if (incl_file == simple
-        || incl_file == nix_path
-        || incl_file == win_path)
+    if (incl_file == "orb.idl"
+        || incl_file == "tao/orb.idl"
+        || incl_file == "tao\\orb.idl")
       {
         if (idl_global->pass_orb_idl ())
           {
