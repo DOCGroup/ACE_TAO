@@ -44,40 +44,27 @@ public:
   void _add_ref () override;
   void _remove_ref () override;
 
-  virtual void validate_event_qos (
-    const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos
-  );
+  void validate_event_qos (
+    CosNotification::QoSProperties const &required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  virtual CosNotification::QoSProperties * get_qos (
-  );
+  CosNotification::QoSProperties *get_qos () override;
 
-  virtual void set_qos (
-    const CosNotification::QoSProperties & qos
-  );
+  void set_qos (CosNotification::QoSProperties const &qos) override;
 
-  virtual void validate_qos (
-    const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos
-  );
+  void validate_qos (
+    CosNotification::QoSProperties const &required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  virtual CosNotifyFilter::FilterID add_filter (
-    CosNotifyFilter::Filter_ptr new_filter
-  );
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter) override;
 
-  virtual void remove_filter (
-    CosNotifyFilter::FilterID filter
-  );
+  void remove_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual CosNotifyFilter::Filter_ptr get_filter (
-    CosNotifyFilter::FilterID filter
-  );
+  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-  );
+  CosNotifyFilter::FilterIDSeq *get_all_filters () override;
 
-  virtual void remove_all_filters (
-  );
+  void remove_all_filters () override;
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

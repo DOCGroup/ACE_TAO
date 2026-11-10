@@ -60,37 +60,25 @@ protected:
   CORBA::Boolean is_suspended_ {};
 
   // = Interface methods
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
-  );
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin () override;
 
-  virtual void suspend_connection (
-  );
+  void suspend_connection () override;
 
-  virtual void resume_connection (
-  );
+  void resume_connection () override;
 
-  virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
-  );
+  CosNotifyFilter::MappingFilter_ptr priority_filter () override;
 
-  virtual void priority_filter (
-    CosNotifyFilter::MappingFilter_ptr priority_filter
-  );
+  void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter) override;
 
-  virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
-  );
+  CosNotifyFilter::MappingFilter_ptr lifetime_filter () override;
 
-  virtual void lifetime_filter (
-    CosNotifyFilter::MappingFilter_ptr lifetime_filter
-  );
+  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter) override;
 
-  virtual CosNotification::EventTypeSeq * obtain_offered_types (
-    CosNotifyChannelAdmin::ObtainInfoMode mode
-  );
+  CosNotification::EventTypeSeq *obtain_offered_types (
+    CosNotifyChannelAdmin::ObtainInfoMode mode) override;
 
-  virtual void subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  );
+  void subscription_change (CosNotification::EventTypeSeq const &added,
+                            CosNotification::EventTypeSeq const &removed) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
