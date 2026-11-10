@@ -20,11 +20,10 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue ()
        i < sz;
        ++i)
     {
-      TAO_Queued_Data *qd = this->dequeue_head ();
+      TAO_Queued_Data * const qd = this->dequeue_head ();
       TAO_Queued_Data::release (qd);
     }
 }
-
 
 TAO_Queued_Data *
 TAO_Incoming_Message_Queue::dequeue_head ()

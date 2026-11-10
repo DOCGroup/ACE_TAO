@@ -53,6 +53,10 @@ public:
   explicit TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
   ~TAO_Incoming_Message_Queue ();
+  TAO_Incoming_Message_Queue (TAO_Incoming_Message_Queue const &) = delete;
+  TAO_Incoming_Message_Queue &operator= (TAO_Incoming_Message_Queue const &) = delete;
+  TAO_Incoming_Message_Queue (TAO_Incoming_Message_Queue &&) = delete;
+  TAO_Incoming_Message_Queue &operator= (TAO_Incoming_Message_Queue &&) = delete;
 
   /// Adding and deleting a node from the queue.
   TAO_Queued_Data *dequeue_head ();
@@ -73,12 +77,12 @@ private:
     the list.  The earliest addition can be easily accessed via
     \a last_message_added_->next_.
    */
-  TAO_Queued_Data *last_added_;
+  TAO_Queued_Data *last_added_ {};
 
   /// The size of the queue
-  CORBA::ULong size_;
+  CORBA::ULong size_ {};
 
-  /// Copy of our ORB Core
+  /// Non-owning pointer to the ORB Core.
   TAO_ORB_Core *orb_core_;
 };
 
