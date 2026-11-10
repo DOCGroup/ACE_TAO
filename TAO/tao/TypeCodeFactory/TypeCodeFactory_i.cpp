@@ -949,7 +949,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
             case CORBA::tk_enum:
             {
               TAO::Any_Impl *impl = members[i].label.impl ();
-              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (nullptr));
 
               if (impl->encoded ())
                 {
@@ -1475,7 +1475,7 @@ TAO_TypeCodeFactory_i::valid_id (const char *id)
 
   if (pos == ACE_CString::npos)
     {
-      return 0;
+      return false;
     }
 
   ACE_CString format (safety.substr (0, pos));
@@ -1624,7 +1624,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
             case CORBA::tk_enum:
             {
               TAO::Any_Impl *impl = members[i].label.impl ();
-              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (nullptr));
 
               if (impl->encoded ())
                 {
