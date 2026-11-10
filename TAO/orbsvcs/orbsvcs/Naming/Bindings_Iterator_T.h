@@ -59,6 +59,11 @@ public:
 
   ~TAO_Bindings_Iterator () override;
 
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
+
   /// Returns the Default POA of this Servant object
   PortableServer::POA_ptr _default_POA () override;
 
@@ -90,11 +95,6 @@ public:
   static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
 private:
-  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
-  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
-  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
-  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
-
   /**
    * Flag indicating whether this iterator is still valid.  (The
    * iterator becomes invalid when <destroy> method has been invoked

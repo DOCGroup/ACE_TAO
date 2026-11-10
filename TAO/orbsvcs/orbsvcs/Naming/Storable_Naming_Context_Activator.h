@@ -55,6 +55,13 @@ public:
 
   ~TAO_Storable_Naming_Context_Activator () override;
 
+  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator const &) = delete;
+  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator &&) = delete;
+  TAO_Storable_Naming_Context_Activator &operator= (
+    TAO_Storable_Naming_Context_Activator const &) = delete;
+  TAO_Storable_Naming_Context_Activator &operator= (
+    TAO_Storable_Naming_Context_Activator &&) = delete;
+
   /**
    * Create a TAO_Storable_Naming_Context and TAO_Naming_Context on
    * demand if a request to a naming context CORBA reference is made
@@ -73,13 +80,6 @@ public:
                     CORBA::Boolean remaining_activations) override;
 
 private:
-  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator const &) = delete;
-  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator &&) = delete;
-  TAO_Storable_Naming_Context_Activator &operator= (
-    TAO_Storable_Naming_Context_Activator const &) = delete;
-  TAO_Storable_Naming_Context_Activator &operator= (
-    TAO_Storable_Naming_Context_Activator &&) = delete;
-
   CORBA::ORB_ptr orb_;
 
   /// The factory for constructing the persistence mechanism for the contexts

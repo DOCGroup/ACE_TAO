@@ -72,7 +72,12 @@ namespace TAO
 
     ~FT_PG_Object_Group_Storable () override = default;
 
-  public:
+    FT_PG_Object_Group_Storable () = delete;
+    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable const &) = delete;
+    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable &&) = delete;
+    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable const &) = delete;
+    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable &&) = delete;
+
     void stale (bool is_stale) override;
     bool stale () override;
 
@@ -86,12 +91,6 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr add_member_to_iogr (CORBA::Object_ptr member) override;
 
   private:
-    FT_PG_Object_Group_Storable () = delete;
-    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable const &) = delete;
-    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable &&) = delete;
-    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable const &) = delete;
-    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable &&) = delete;
-
     /// Replication persistence support
     bool stale_;
 

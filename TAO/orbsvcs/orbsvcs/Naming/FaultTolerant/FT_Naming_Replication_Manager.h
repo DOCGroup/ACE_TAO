@@ -44,12 +44,12 @@ public:
   void notify_update (CORBA::ULongLong seq_num,
                       FT_Naming::UpdateInfoSeq &info) override;
 
-private:
   FT_Update_Replicant_i (FT_Update_Replicant_i const &) = delete;
   FT_Update_Replicant_i (FT_Update_Replicant_i &&) = delete;
   FT_Update_Replicant_i &operator= (FT_Update_Replicant_i const &) = delete;
   FT_Update_Replicant_i &operator= (FT_Update_Replicant_i &&) = delete;
 
+private:
   TAO_FT_Naming_Replication_Manager &owner_;
 };
 
@@ -78,6 +78,13 @@ public:
 
   ~TAO_FT_Naming_Replication_Manager () override = default;
 
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager const &) = delete;
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager &&) = delete;
+  TAO_FT_Naming_Replication_Manager &operator= (
+    TAO_FT_Naming_Replication_Manager const &) = delete;
+  TAO_FT_Naming_Replication_Manager &operator= (
+    TAO_FT_Naming_Replication_Manager &&) = delete;
+
   int svc () override;
   int handle_exception (ACE_HANDLE) override;
 
@@ -98,13 +105,6 @@ public:
   char * ior ();
 
 private:
-  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager const &) = delete;
-  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager &&) = delete;
-  TAO_FT_Naming_Replication_Manager &operator= (
-    TAO_FT_Naming_Replication_Manager const &) = delete;
-  TAO_FT_Naming_Replication_Manager &operator= (
-    TAO_FT_Naming_Replication_Manager &&) = delete;
-
   Replica_var me_;
   Replica_var peer_;
   CORBA::ULongLong seq_num_;

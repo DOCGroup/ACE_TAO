@@ -52,6 +52,11 @@ public:
 
   ~TAO_Naming_Context () override;
 
+  TAO_Naming_Context (TAO_Naming_Context const &) = delete;
+  TAO_Naming_Context &operator= (TAO_Naming_Context const &) = delete;
+  TAO_Naming_Context (TAO_Naming_Context &&) = delete;
+  TAO_Naming_Context &operator= (TAO_Naming_Context &&) = delete;
+
   // = CosNaming::NamingContext idl interface methods.
 
   /**
@@ -229,12 +234,6 @@ private:
 protected:
   /// A concrete implementor of the NamingContext functions.
   std::unique_ptr<TAO_Naming_Context_Impl> impl_;
-
-private:
-  TAO_Naming_Context (TAO_Naming_Context const&) = delete;
-  TAO_Naming_Context& operator= (TAO_Naming_Context const&) = delete;
-  TAO_Naming_Context (TAO_Naming_Context&&) = delete;
-  TAO_Naming_Context& operator= (TAO_Naming_Context&&) = delete;
 };
 
 /**

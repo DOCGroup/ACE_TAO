@@ -38,14 +38,13 @@ public:
 
   int handle_exception (ACE_HANDLE) override;
 
-  TAO_FT_Naming_Server &owner_;
-  bool iors_;
-
-private:
   TAO_FTNS_Notifier (TAO_FTNS_Notifier const &) = delete;
   TAO_FTNS_Notifier (TAO_FTNS_Notifier &&) = delete;
   TAO_FTNS_Notifier &operator= (TAO_FTNS_Notifier const &) = delete;
   TAO_FTNS_Notifier &operator= (TAO_FTNS_Notifier &&) = delete;
+
+  TAO_FT_Naming_Server &owner_;
+  bool iors_;
 };
 
 
@@ -66,6 +65,11 @@ public:
   friend class TAO_FTNS_Notifier;
 
   TAO_FT_Naming_Server ();
+
+  TAO_FT_Naming_Server (TAO_FT_Naming_Server const &) = delete;
+  TAO_FT_Naming_Server (TAO_FT_Naming_Server &&) = delete;
+  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server const &) = delete;
+  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server &&) = delete;
 
   /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
@@ -162,11 +166,6 @@ protected:
 
 private:
   void stop_replicator ();
-
-  TAO_FT_Naming_Server (TAO_FT_Naming_Server const &) = delete;
-  TAO_FT_Naming_Server (TAO_FT_Naming_Server &&) = delete;
-  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server const &) = delete;
-  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server &&) = delete;
 
 protected:
   /// The object that implements the FT_Naming::Replication_Manager

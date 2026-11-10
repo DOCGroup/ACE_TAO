@@ -60,6 +60,11 @@ class TAO_FtNaming_Export TAO_FT_Naming_Manager
 public:
   TAO_FT_Naming_Manager ();
 
+  TAO_FT_Naming_Manager (TAO_FT_Naming_Manager const &) = delete;
+  TAO_FT_Naming_Manager (TAO_FT_Naming_Manager &&) = delete;
+  TAO_FT_Naming_Manager &operator= (TAO_FT_Naming_Manager const &) = delete;
+  TAO_FT_Naming_Manager &operator= (TAO_FT_Naming_Manager &&) = delete;
+
   void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
 
   /**
@@ -281,11 +286,6 @@ public:
   ~TAO_FT_Naming_Manager () override;
 
 private:
-  TAO_FT_Naming_Manager (TAO_FT_Naming_Manager const &) = delete;
-  TAO_FT_Naming_Manager (TAO_FT_Naming_Manager &&) = delete;
-  TAO_FT_Naming_Manager &operator= (TAO_FT_Naming_Manager const &) = delete;
-  TAO_FT_Naming_Manager &operator= (TAO_FT_Naming_Manager &&) = delete;
-
   /// A utility to ensure we can access the latest object reference for
   /// the object group when referenced externally.
   PortableGroup::ObjectGroup_ptr get_object_group_ref (

@@ -43,6 +43,11 @@ namespace TAO
 
     ~FT_PG_Group_Factory () override = default;
 
+    FT_PG_Group_Factory (FT_PG_Group_Factory const &) = delete;
+    FT_PG_Group_Factory (FT_PG_Group_Factory &&) = delete;
+    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory const &) = delete;
+    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory &&) = delete;
+
     /**
      * indicate the object group state is stale.
      * only valid when object group persistence is enabled.
@@ -72,12 +77,6 @@ namespace TAO
 
     /// Borrowed from the Naming server for outgoing replication updates.
     TAO_FT_Naming_Replication_Manager *replicator_ {};
-
-  private:
-    FT_PG_Group_Factory (FT_PG_Group_Factory const &) = delete;
-    FT_PG_Group_Factory (FT_PG_Group_Factory &&) = delete;
-    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory const &) = delete;
-    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory &&) = delete;
   };
 } // namespace TAO
 

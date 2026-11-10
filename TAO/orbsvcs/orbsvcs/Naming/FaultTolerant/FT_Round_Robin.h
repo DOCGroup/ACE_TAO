@@ -62,12 +62,12 @@ public:
 
   virtual ~TAO_FT_Round_Robin () = default;
 
-private:
   TAO_FT_Round_Robin (TAO_FT_Round_Robin const &) = delete;
   TAO_FT_Round_Robin (TAO_FT_Round_Robin &&) = delete;
   TAO_FT_Round_Robin &operator= (TAO_FT_Round_Robin const &) = delete;
   TAO_FT_Round_Robin &operator= (TAO_FT_Round_Robin &&) = delete;
 
+private:
   /// Lock used to ensure atomic access to state retained by this
   /// class.
   TAO_SYNCH_MUTEX lock_;
