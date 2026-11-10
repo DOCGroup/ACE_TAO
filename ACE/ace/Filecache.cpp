@@ -42,24 +42,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = nullptr;
 
-void
-ACE_Filecache_Handle::init ()
-{
-  this->file_ = nullptr;
-  this->handle_ = ACE_INVALID_HANDLE;
-}
-
-ACE_Filecache_Handle::ACE_Filecache_Handle ()
-  : file_ (nullptr), handle_ (0)
-{
-  this->init ();
-}
+ACE_Filecache_Handle::ACE_Filecache_Handle () = default;
 
 ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
                                             ACE_Filecache_Flag mapit)
-  : file_ (nullptr), handle_ (0)
 {
-  this->init ();
   // Fetch the file from the Virtual_Filesystem let the
   // Virtual_Filesystem do the work of cache coherency.
 
@@ -71,10 +58,7 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
 ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
                                             int size,
                                             ACE_Filecache_Flag )
-  : file_ (nullptr), handle_ (0)
 {
-  this->init ();
-
   if (size == 0)
     ACE_Filecache::instance ()->remove (filename);
   else

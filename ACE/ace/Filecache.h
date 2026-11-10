@@ -90,8 +90,8 @@ class ACE_Export ACE_Filecache_Handle
 public:
   /// Query cache for file, and acquire it.  Assumes the file is being
   /// opened for reading.
-  ACE_Filecache_Handle (const ACE_TCHAR *filename,
-                        ACE_Filecache_Flag mapit = ACE_MAPIT);
+  explicit ACE_Filecache_Handle (const ACE_TCHAR *filename,
+                                 ACE_Filecache_Flag mapit = ACE_MAPIT);
 
   /**
    * Create new entry, and acquire it.  Presence of SIZE assumes the
@@ -101,6 +101,11 @@ public:
   ACE_Filecache_Handle (const ACE_TCHAR *filename,
                         int size,
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
+
+  ACE_Filecache_Handle (ACE_Filecache_Handle const &) = delete;
+  ACE_Filecache_Handle (ACE_Filecache_Handle &&) = delete;
+  ACE_Filecache_Handle &operator= (ACE_Filecache_Handle const &) = delete;
+  ACE_Filecache_Handle &operator= (ACE_Filecache_Handle &&) = delete;
 
   /// Closes any open handles, release acquired file.
   ~ACE_Filecache_Handle ();
@@ -121,9 +126,6 @@ protected:
   /// Default do nothing constructor.  Prevent it from being called.
   ACE_Filecache_Handle ();
 
-  /// Common initializations for constructors.
-  void init ();
-
 public:
   /// These come from ACE_Filecache_Object, which is an internal class.
   enum
@@ -138,11 +140,12 @@ public:
   };
 
 private:
-  /// A reference to the low level instance.
-  ACE_Filecache_Object *file_;
+  /// Acquired from ACE_Filecache and released with ACE_Filecache::finish.
+  /// The cache manages this reference, so it cannot be owned by a smart pointer.
+  ACE_Filecache_Object *file_ {};
 
-  /// A dup'd version of the one from file_.
-  ACE_HANDLE handle_;
+  /// A duplicated OS handle, closed by the destructor when valid.
+  ACE_HANDLE handle_ {ACE_INVALID_HANDLE};
 };
 
 using ACE_Filecache_Hash = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
