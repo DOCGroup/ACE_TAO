@@ -11,14 +11,14 @@
 
 struct Client_Options
 {
-  ACE_TString collocated_ior_file {ACE_TEXT ("collocated_server.ior")};
-  ACE_TString server_ior_file {ACE_TEXT ("server.ior")};
+  ACE_TString collocated_ior_file { ACE_TEXT ("collocated_server.ior") };
+  ACE_TString server_ior_file { ACE_TEXT ("server.ior") };
 };
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("s:o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -33,20 +33,16 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-          "usage:  %s "
-          "-s <server_iorfile>"
-          "-o <collocated_iorfile>"
-          "\n",
-          argv [0]),
-          -1);
+                           ACE_TEXT ("usage: %s -s <server_iorfile> -o <collocated_iorfile>\n"),
+                           argv [0]),
+                          -1);
       }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Client_Options options;
 
@@ -70,16 +66,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       {
         ACE_Manual_Event me;
 
-        Server_Task server_task (options.collocated_ior_file.c_str (),
+        Server_Task server_task (options.collocated_ior_file,
                                  sorb.in (),
                                  me,
                                  ACE_Thread_Manager::instance ());
 
-        if (server_task.activate (THR_NEW_LWP | THR_JOINABLE,
-          1,
-          1) == -1)
+        if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
           {
-            ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error activating server task\n")));
           }
 
         // Wait for the server thread to do some processing
@@ -90,11 +84,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                  options.collocated_ior_file,
                                  options.server_ior_file);
 
-        if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
-          1,
-          1) == -1)
+        if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
           {
-            ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error activating client task\n")));
           }
 
         ACE_Thread_Manager::instance ()->wait ();

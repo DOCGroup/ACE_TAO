@@ -1,13 +1,11 @@
 #include "ace/Task.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
-//////////////////////////////////////////////////////////////////////////
-
-/// Implement a Task to run the client as a thread
-class Client_Task : public ACE_Task_Base
+/// Task that runs the client in a separate thread.
+class Client_Task
+  : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr,
                ACE_TString const &collocated_ior_file,
@@ -31,7 +29,7 @@ private:
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm_;
 
-  ACE_TString const &collocated_ior_file_;
+  ACE_TString const collocated_ior_file_;
 
-  ACE_TString const &server_ior_file_;
+  ACE_TString const server_ior_file_;
 };

@@ -2,19 +2,16 @@
 #include "Client_Task.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
-//////////////////////////////////////////////////////////////////////////
+ACE_TString const file_prefix { ACE_TEXT ("file://") };
 
-ACE_TString const file_prefix {ACE_TEXT ("file://")};
-
-/// Constructor
 Client_Task::Client_Task (CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
                           ACE_TString const &collocated_ior_file,
                           ACE_TString const &server_ior_file)
   : ACE_Task_Base (thr_mgr)
   , corb_ (CORBA::ORB::_duplicate (corb))
-  , collocated_ior_file_(collocated_ior_file)
-  , server_ior_file_(server_ior_file)
+  , collocated_ior_file_ (collocated_ior_file)
+  , server_ior_file_ (server_ior_file)
 {
 }
 
@@ -29,7 +26,7 @@ Client_Task::make_iogr (char const *domain_id,
 
   if (CORBA::is_nil (remote_server.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "Error: Remote server is not started.\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Remote server is not started.\n")));
       throw CORBA::INTERNAL ();
     }
 
@@ -39,7 +36,7 @@ Client_Task::make_iogr (char const *domain_id,
 
   if (CORBA::is_nil (collocated_server.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "Error: Collocated server is not started.\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Collocated server is not started.\n")));
       throw CORBA::INTERNAL ();
     }
 
@@ -48,8 +45,8 @@ Client_Task::make_iogr (char const *domain_id,
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
   iors.length (2);
-  iors [0] = CORBA::Object::_duplicate (remote_server.ptr());
-  iors [1] = CORBA::Object::_duplicate (collocated_server.ptr());
+  iors [0] = CORBA::Object::_duplicate (remote_server.in ());
+  iors [1] = CORBA::Object::_duplicate (collocated_server.in ());
 
   CORBA::Object_var new_ref =
     this->iorm_->merge_iors (iors);
@@ -84,8 +81,8 @@ Client_Task::make_iogr (char const *domain_id,
   return new_ref._retn ();
 }
 
-/// Thread entry point
-int Client_Task::svc ()
+int
+Client_Task::svc ()
 {
   try
     {
@@ -108,7 +105,9 @@ int Client_Task::svc ()
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            "Object reference <%s> is nil\n", iorgr_string.in()), 1);
+                             ACE_TEXT ("Object reference <%C> is nil\n"),
+                             iorgr_string.in ()),
+                            1);
         }
 
       CORBA::Object_var remote_server (
@@ -124,29 +123,30 @@ int Client_Task::svc ()
       Test_var collocated_server_as_test (Test::_narrow (collocated_server.in ()));
 
       if (!collocated_server->_is_collocated ())
-        { // Collocation is disabled, just skip the test - it has no sense.
-          ACE_DEBUG ((LM_ERROR, "Test has no sense, because collocation is disabled.\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("Test has no sense, because collocation is disabled.\n")));
         }
       else
         {
           try
-          {
-            // Following call will fail if the problem is not fixed.
+            {
+              // Following call will fail if the problem is not fixed.
 
-            // Because we are using TRANSIENT objects with the SYSTEM_ID policy
-            // the object keys won't match so the POA won't be able to dispatch locally.
-            // This wouldn't work with 'direct' collocation strategy but the default is 'through poa'.
-            server->myMethod ();
-          }
+              // Because we are using TRANSIENT objects with the SYSTEM_ID policy
+              // the object keys won't match so the POA won't be able to dispatch locally.
+              // This wouldn't work with 'direct' collocation strategy but the default is 'through poa'.
+              server->myMethod ();
+            }
           catch (CORBA::Exception const &ex)
-          {
-            ex._tao_print_exception ("Exception caught in client task:");
-          }
+            {
+              ex._tao_print_exception ("Exception caught in client task:");
+            }
         }
 
-      remote_server_as_test->shutdown();
+      remote_server_as_test->shutdown ();
 
-      collocated_server_as_test->shutdown();
+      collocated_server_as_test->shutdown ();
     }
   catch (CORBA::Exception const &ex)
     {

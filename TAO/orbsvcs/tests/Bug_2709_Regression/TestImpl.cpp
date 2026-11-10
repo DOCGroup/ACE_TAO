@@ -8,7 +8,7 @@ TestImpl::TestImpl (CORBA::ORB_ptr orb)
 
 void TestImpl::myMethod ()
 {
-  ACE_DEBUG ((LM_ERROR, "(%P): TestImpl::myMethod called!.\n"));
+  ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P): TestImpl::myMethod called!.\n")));
 }
 
 void TestImpl::shutdown ()

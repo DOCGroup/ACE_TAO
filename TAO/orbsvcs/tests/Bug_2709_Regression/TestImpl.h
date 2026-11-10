@@ -12,7 +12,6 @@ public:
   TestImpl &operator= (TestImpl const &) = delete;
   TestImpl &operator= (TestImpl &&) = delete;
 
-  // = The skeleton methods
   void myMethod () override;
 
   void shutdown () override;
