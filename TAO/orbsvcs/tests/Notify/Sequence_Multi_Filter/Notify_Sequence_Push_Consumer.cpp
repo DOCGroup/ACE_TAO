@@ -32,12 +32,12 @@ Notify_Sequence_Push_Consumer::_connect (
     CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow (
       proxysupplier.in ());
 
-  CosNotification::QoSProperties properties(3);
-  properties.length(3);
-  properties[0].name = CORBA::string_dup(CosNotification::MaximumBatchSize);
-  properties[0].value <<= (CORBA::Long)5;
-  properties[1].name = CORBA::string_dup(CosNotification::PacingInterval);
-  properties[1].value <<= (TimeBase::TimeT) 2 * 1000 * 10000;
+  CosNotification::QoSProperties properties (3);
+  properties.length (3);
+  properties[0].name = CORBA::string_dup (CosNotification::MaximumBatchSize);
+  properties[0].value <<= static_cast<CORBA::Long> (5);
+  properties[1].name = CORBA::string_dup (CosNotification::PacingInterval);
+  properties[1].value <<= static_cast<TimeBase::TimeT> (2 * 1000 * 10000);
 
   proxy_->set_qos(properties);
   proxy_->connect_sequence_push_consumer (objref.in ());

@@ -84,6 +84,12 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
+  Supplier_Client () = default;
+  Supplier_Client (Supplier_Client const&) = delete;
+  Supplier_Client (Supplier_Client&&) = delete;
+  Supplier_Client& operator= (Supplier_Client const&) = delete;
+  Supplier_Client& operator= (Supplier_Client&&) = delete;
+
   int parse_args (int argc, ACE_TCHAR *argv[]) override;
 
   Supplier_Options const& options () const
@@ -119,19 +125,16 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
                         -1);
   }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
-
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
-  CosNotifyChannelAdmin::AdminID adminid = 0;
+  CosNotifyChannelAdmin::AdminID adminid {};
   CosNotifyChannelAdmin::SupplierAdmin_var admin =
     ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
     adminid);
-
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
@@ -142,7 +145,7 @@ SendEvents (TAO_Notify_Tests_SequencePushSupplier& supplier,
             int id,
             int num_batches)
 {
-  static char const* const types[] = { "good", "bad", "ugly" };
+  static constexpr char const* types[] = { "good", "bad", "ugly" };
   CosNotification::EventBatch events {};
 
   CosNotification::StructuredEvent event {};
@@ -195,6 +198,7 @@ static TAO_Notify_Tests_SequencePushSupplier*
 create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                   PortableServer::POA_ptr poa)
 {
+  // connect() transfers the servant's initial reference to its POA.
   TAO_Notify_Tests_SequencePushSupplier* supplier {};
   ACE_NEW_THROW_EX (supplier,
                     TAO_Notify_Tests_SequencePushSupplier (),
@@ -226,8 +230,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 0);
 
-      CORBA::ORB_ptr orb = client.orb ();
+      CORBA::ORB_ptr const orb = client.orb ();
 
+      // sig_impl is a borrowed alias; sig_impl_owner manages its servant reference.
       ACE_NEW_RETURN (sig_impl, sig_i (orb), 1);
       PortableServer::ServantBase_var sig_impl_owner (sig_impl);
       sig_var sig = sig_impl->_this ();
@@ -256,8 +261,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         sig_impl->wait_for_startup ();
 
-        ACE_DEBUG ((LM_DEBUG, "1 supplier sending %d batches of %d events...\n",
-                    client.options ().num_batches, events_per_batch));
+        ACE_DEBUG ((LM_DEBUG,
+                    "1 supplier sending %d batches of %d events...\n",
+                    client.options ().num_batches,
+                    events_per_batch));
         for (int i = 0; i < client.options ().num_batches; ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "+"));

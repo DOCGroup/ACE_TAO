@@ -32,6 +32,12 @@ struct Consumer_Options
 class Consumer_Client : public Notify_Test_Client
 {
 public:
+  Consumer_Client () = default;
+  Consumer_Client (Consumer_Client const&) = delete;
+  Consumer_Client (Consumer_Client&&) = delete;
+  Consumer_Client& operator= (Consumer_Client const&) = delete;
+  Consumer_Client& operator= (Consumer_Client&&) = delete;
+
   int parse_args (int argc, ACE_TCHAR *argv[]) override;
 
   Consumer_Options const& options () const
@@ -74,19 +80,16 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
                          argv [0]),
                         -1);
   }
-  // Indicates successful parsing of the command line
   return 0;
 }
-
 
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
-  CosNotifyChannelAdmin::AdminID adminid = 0;
+  CosNotifyChannelAdmin::AdminID adminid {};
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
     adminid);
-
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
@@ -98,6 +101,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Consumer_Options const& options)
 {
   // startup the first consumer
+  // _connect() transfers the servant's initial reference to its POA.
   Notify_Sequence_Push_Consumer* consumer_1 {};
   ACE_NEW_THROW_EX (consumer_1,
     Notify_Sequence_Push_Consumer (options.low, options.high, client),
@@ -124,7 +128,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNotifyChannelAdmin::EventChannel_var ec =
       client.create_event_channel ("MyEventChannel", 1);
 
-    CORBA::ORB_ptr orb = client.orb ();
+    CORBA::ORB_ptr const orb = client.orb ();
     CORBA::Object_var object =
       orb->string_to_object (client.options ().ior);
 
