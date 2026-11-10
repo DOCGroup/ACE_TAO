@@ -418,7 +418,7 @@ TAO_SHMIOP_Profile::encode_endpoints ()
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
     return -1;
-  size_t length = out_cdr.total_length ();
+  size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
