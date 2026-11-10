@@ -28,7 +28,6 @@
 class Receiver_Stats
 {
 public:
-  /// Constructor
   /**
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.

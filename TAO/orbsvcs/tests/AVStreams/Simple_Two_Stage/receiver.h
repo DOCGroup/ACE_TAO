@@ -12,6 +12,10 @@
 //=============================================================================
 
 
+#include <array>
+#include <cstddef>
+
+#include "ace/Time_Value.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -28,8 +32,11 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  /// Constructor.
-  Receiver_Callback ();
+  Receiver_Callback () = default;
+  Receiver_Callback (Receiver_Callback const &) = delete;
+  Receiver_Callback &operator= (Receiver_Callback const &) = delete;
+  Receiver_Callback (Receiver_Callback &&) = delete;
+  Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -41,11 +48,18 @@ public:
   // down the connection.
   int handle_destroy () override;
 
-  int dump_samples (ACE_TCHAR const* file);
+  int dump_samples (ACE_TCHAR const *file);
 
 private:
+  static constexpr std::size_t max_stats_samples {1000010};
+
   /// Keeping a count of the incoming frames.
-  int frame_count_;
+  int frame_count_ {};
+  std::size_t bytes_received_ {};
+  std::array<int, max_stats_samples> samples_ {};
+  std::size_t samples_count_ {};
+  bool first_sample_ {true};
+  ACE_Time_Value previous_sample_time_ {};
 
   Receiver_Stats stats_;
 };
@@ -60,6 +74,12 @@ private:
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
+  Receiver_StreamEndPoint () = default;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
+
   // Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback) override;
@@ -80,11 +100,8 @@ private:
 class Receiver
 {
 public:
-  /// Constructor
   Receiver () = default;
 
-  /// Destructor.
-  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -93,7 +110,6 @@ public:
   /// Initialize data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
-
 
 protected:
   /// The Naming Service Client.

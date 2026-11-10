@@ -1,23 +1,19 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include <array>
+#include <cstdio>
 #include <memory>
 
+// Borrowed from the receiver's unique_ptr for the lifetime of the ORB loop.
 static FILE *output_file {};
-// File handle of the file into which received data is written.
 
-static ACE_TString output_file_name = ACE_TEXT ("output");
-// File name of the file into which received data is written.
+struct Receiver_Options
+{
+  ACE_TString output_file_name {ACE_TEXT ("output")};
+  ACE_TString stats_file_name {ACE_TEXT ("Stats.dat")};
+};
 
-static ACE_TString stats_file_name = ACE_TEXT ("Stats.dat");
-
-static constexpr std::size_t max_stats_samples {1000010};
-static std::array<int, max_stats_samples> stats {};
-static std::size_t stats_index {};
-
-static bool start {true};
-static ACE_Time_Value start_time {};
+static Receiver_Options receiver_options {};
 
 int
 Receiver_StreamEndPoint::get_callback (const char *,
@@ -27,11 +23,6 @@ Receiver_StreamEndPoint::get_callback (const char *,
   // future upcalls.
   callback = &this->callback_;
   return 0;
-}
-
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (0)
-{
 }
 
 int
@@ -47,22 +38,22 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
-  if (start)
+  if (this->first_sample_)
     {
-      start_time = ACE_OS::gettimeofday ();
-      start = false;
+      this->previous_sample_time_ = ACE_OS::gettimeofday ();
+      this->first_sample_ = false;
     }
   else
     {
-      ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - start_time;
-      if (stats_index == stats.size ())
+      ACE_Time_Value const elapsed_time =
+        ACE_OS::gettimeofday () - this->previous_sample_time_;
+      if (this->samples_count_ == this->samples_.size ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver statistics capacity exceeded\n"),
                           -1);
-      stats [stats_index++] = elapsed_time.msec ();
-      start_time = ACE_OS::gettimeofday ();
+      this->samples_ [this->samples_count_++] = elapsed_time.msec ();
+      this->previous_sample_time_ = ACE_OS::gettimeofday ();
     }
-
 
   while (frame != nullptr)
     {
@@ -78,6 +69,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
 
+      this->bytes_received_ += result;
       frame = frame->cont ();
     }
 
@@ -85,27 +77,27 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Receiver_Callback::dump_samples (ACE_TCHAR const* file)
+Receiver_Callback::dump_samples (ACE_TCHAR const *file)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Dumping Stats.....\n"));
 
   std::unique_ptr<FILE, int (*) (FILE *)> stats_file (
-    ACE_OS::fopen (file, "wb"), ACE_OS::fclose);
+    ACE_OS::fopen (file, ACE_TEXT ("wb")), ACE_OS::fclose);
 
   if (!stats_file)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Stats file cannot be opened\n")),
                       -1);
 
-  for (std::size_t i = 0; i < stats_index; ++i)
-    this->stats_.sample (static_cast<ACE_UINT64> (stats [i]));
+  for (std::size_t i = 0; i < this->samples_count_; ++i)
+    this->stats_.sample (static_cast<ACE_UINT64> (this->samples_ [i]));
 
   this->stats_.dump_results (
     ACE_TEXT ("Inter Frame Arrival Time Statistics "), stats_file.get (), 1);
 
-  for (std::size_t i = 0; i < stats_index; ++i)
-    ACE_OS::fprintf (stats_file.get (), "%d\n", stats [i]);
+  for (std::size_t i = 0; i < this->samples_count_; ++i)
+    std::fprintf (stats_file.get (), "%d\n", this->samples_ [i]);
 
   ACE_DEBUG ((LM_DEBUG,
               "Done\n"));
@@ -118,15 +110,22 @@ Receiver_Callback::handle_destroy ()
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
+  if (ACE_OS::fflush (output_file) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Receiver_Callback::fflush failed\n"),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG,
+              "Receiver_Callback received %B bytes\n",
+              this->bytes_received_));
 
-  if (this->dump_samples (stats_file_name.c_str ()) != 0)
+  if (this->dump_samples (receiver_options.stats_file_name.c_str ()) != 0)
     return -1;
 
   try
     {
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
@@ -178,7 +177,6 @@ Receiver::init (int,
   return 0;
 }
 
-
 int
 parse_args (int argc,
             ACE_TCHAR *argv[])
@@ -194,10 +192,10 @@ parse_args (int argc,
       switch (c)
         {
         case 'f':
-          output_file_name = opts.opt_arg ();
+          receiver_options.output_file_name = opts.opt_arg ();
           break;
         case 's':
-          stats_file_name = opts.opt_arg ();
+          receiver_options.stats_file_name = opts.opt_arg ();
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -234,7 +232,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ());
 
-      int result =
+      int result {};
+      result =
         parse_args (argc,
                     argv);
 
@@ -243,17 +242,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Make sure we have a valid <output_file>
       std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (
-        ACE_OS::fopen (output_file_name.c_str (), "w"), ACE_OS::fclose);
+        ACE_OS::fopen (receiver_options.output_file_name.c_str (), ACE_TEXT ("wb")),
+        ACE_OS::fclose);
       output_file = output_file_owner.get ();
-      if (output_file == nullptr)
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Cannot open output file %s\n"),
-                           output_file_name.c_str ()),
+                           receiver_options.output_file_name.c_str ()),
                           -1);
 
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfully\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "File Opened Successfully\n"));
 
       Receiver receiver;
       result =
@@ -270,7 +269,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;

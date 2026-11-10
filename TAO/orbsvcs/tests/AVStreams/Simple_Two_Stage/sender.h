@@ -30,6 +30,12 @@
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
@@ -61,7 +67,6 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  /// Constructor
   Sender ();
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
@@ -79,6 +84,19 @@ public:
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
 private:
+  struct Options
+  {
+    ACE_TString filename {ACE_TEXT ("input")};
+    ACE_TString protocol {ACE_TEXT ("UDP")};
+    double frame_rate {30.0};
+    long max_frame_count {20};
+    int buffer_size {1000};
+    std::string address;
+    std::string peer_address;
+    std::vector<std::string> local_sec_addrs;
+    std::vector<std::string> peer_sec_addrs;
+  };
+
   /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
@@ -92,16 +110,13 @@ private:
   AVStreams::MMDevice_var receiver_mmdevice_;
 
   /// Sender servant pointer, borrowed after ownership transfers to the POA.
-  TAO_MMDevice *sender_mmdevice_;
+  TAO_MMDevice *sender_mmdevice_ {};
 
   /// Stream controller servant pointer, borrowed after ownership transfers to the POA.
-  TAO_StreamCtrl *streamctrl_;
+  TAO_StreamCtrl *streamctrl_ {};
 
   /// Number of frames sent.
-  int frame_count_;
-
-  /// File from which data is read.
-  ACE_TString filename_;
+  int frame_count_ {};
 
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
@@ -109,28 +124,10 @@ private:
   /// File handle of the file read from.
   std::unique_ptr<FILE, int (*) (FILE *)> input_file_;
 
-  /// Selected protocol - default is UDP
-  ACE_TString protocol_;
-
-  /// Rate at which the data will be sent.
-  double frame_rate_;
+  Options options_;
 
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-
-  /// Optional destination address.
-  std::string address_;
-
-  /// Optional peer address.
-  std::string peer_address_;
-
-  /// Local secondary addresses.
-  std::vector<std::string> local_sec_addrs_;
-
-  /// Peer secondary addresses.
-  std::vector<std::string> peer_sec_addrs_;
-
-  long max_frame_count_;
 
   /// Protocol object borrowed from the AVStreams endpoint strategy.
   TAO_AV_Protocol_Object *protocol_object_ {};

@@ -6,6 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use File::Compare;
 
 $status = 0;
 $debug = 0;
@@ -129,7 +130,7 @@ for $protocol (@protocols) {
     }
 
     my $sv_outputfile = $sv->LocalFile ($outputfile);
-    $ns->DeleteFile ($outputfile);
+    $sv->DeleteFile ($outputfile);
 
     $SV = $sv->CreateProcess ("receiver",
                               "-ORBInitRef NameService=file://$sv_nsiorfile ".
@@ -140,6 +141,7 @@ for $protocol (@protocols) {
                               "-ORBInitRef NameService=file://$cl_nsiorfile ".
                               "-ORBDebugLevel $debug ".
                               "-p $protocol ".
+                              "-s 103 ".
                               $address_args.
                               "-f $cl_inputfile");
 
@@ -173,12 +175,14 @@ for $protocol (@protocols) {
         print STDERR "ERROR: cannot retrieve output file <$sv_outputfile>\n";
         $status = 1;
     }
-    elsif (! -s $outputfile) {
-        print STDERR "ERROR: receiver did not write any data\n";
+    elsif (File::Compare::compare ($inputfile, $outputfile) != 0) {
+        my $input_size = -s $inputfile;
+        my $output_size = -s $outputfile;
+        print STDERR "ERROR: received $output_size bytes, expected $input_size for $protocol\n";
         $status = 1;
     }
 
-    $ns->DeleteFile ($outputfile);
+    $sv->DeleteFile ($outputfile);
 }
 
 $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval()+985);
