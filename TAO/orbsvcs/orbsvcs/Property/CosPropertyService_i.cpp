@@ -13,6 +13,7 @@
 #include "ace/ACE.h"
 
 #include <cstring>
+#include <memory>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -83,15 +84,16 @@ TAO_PropertySetFactory::~TAO_PropertySetFactory ()
 CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_propertyset ()
 {
-  // New a TAO_PropertySet.
-  TAO_PropertySet *new_set;
-  ACE_NEW_RETURN (new_set, TAO_PropertySet, nullptr);
+  TAO_PropertySet *new_set_raw {};
+  ACE_NEW_RETURN (new_set_raw, TAO_PropertySet, nullptr);
+  std::unique_ptr<TAO_PropertySet> new_set (new_set_raw);
 
   // Successful, store this in the products sequence and return.
   CORBA::ULong cur_len = this->propertyset_products_.length ();
   this->propertyset_products_.length (cur_len + 1);
-  this->propertyset_products_[cur_len] = new_set;
-  return new_set->_this ();
+  this->propertyset_products_[cur_len] = new_set.get ();
+  new_set.release ();
+  return new_set_raw->_this ();
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -102,39 +104,31 @@ TAO_PropertySetFactory::create_constrained_propertyset (
   CosPropertyService::PropertyTypes const &allowed_property_types,
   CosPropertyService::Properties const &allowed_properties)
 {
-  TAO_PropertySet *new_set {};
+  TAO_PropertySet *new_set_raw {};
+  std::unique_ptr<TAO_PropertySet> new_set;
   CosPropertyService::PropertySet_ptr propset_ptr = nullptr;
 
   try
     {
       // New a TAO_PropertySet using these constraints.
-      ACE_NEW_RETURN (new_set,
+      ACE_NEW_RETURN (new_set_raw,
                       TAO_PropertySet (allowed_property_types,
                                        allowed_properties), nullptr);
+      new_set.reset (new_set_raw);
 
       // Successful, store this in the products sequence.
       CORBA::ULong products_len = this->propertyset_products_.length ();
       this->propertyset_products_.length (products_len + 1);
-      this->propertyset_products_[products_len] = new_set;
+      this->propertyset_products_[products_len] = new_set.get ();
+      new_set.release ();
 
       // All done.
-      propset_ptr = new_set->_this ();
+      propset_ptr = new_set_raw->_this ();
     }
   catch (CORBA::UserException const &)
     {
-      // Release the memory.
-      delete new_set;
-
       // Throw the exception.
       throw CosPropertyService::ConstraintNotSupported();
-    }
-  catch (CORBA::SystemException const &)
-    {
-      // Release memory.
-      delete new_set;
-
-      // Throw the exception.
-      throw;
     }
 
   return propset_ptr;
@@ -147,39 +141,23 @@ CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_initial_propertyset (
   CosPropertyService::Properties const &initial_properties)
 {
-  TAO_PropertySet *new_set {};
+  TAO_PropertySet *new_set_raw {};
+  std::unique_ptr<TAO_PropertySet> new_set;
   CosPropertyService::PropertySet_ptr propset_ptr = nullptr;
 
-  try
-    {
-      // New a TAO_PropertySet.
-      ACE_NEW_RETURN (new_set,
-                      TAO_PropertySet (initial_properties), nullptr);
+  // New a TAO_PropertySet.
+  ACE_NEW_RETURN (new_set_raw,
+                  TAO_PropertySet (initial_properties), nullptr);
+  new_set.reset (new_set_raw);
 
-      // Successful, store this in the products sequence.
-      CORBA::ULong products_len = this->propertyset_products_.length ();
-      this->propertyset_products_.length (products_len + 1);
-      this->propertyset_products_[products_len] = new_set;
+  // Successful, store this in the products sequence.
+  CORBA::ULong products_len = this->propertyset_products_.length ();
+  this->propertyset_products_.length (products_len + 1);
+  this->propertyset_products_[products_len] = new_set.get ();
+  new_set.release ();
 
-      // All done.
-      propset_ptr = new_set->_this ();
-    }
-  catch (CosPropertyService::MultipleExceptions const &)
-    {
-      // Release memory.
-      delete new_set;
-
-      // Throw the exception.
-      throw;
-    }
-  catch (CORBA::SystemException const &)
-    {
-      // Release the memory.
-      delete new_set;
-
-      // Throw the exception.
-      throw;
-    }
+  // All done.
+  propset_ptr = new_set_raw->_this ();
 
   return propset_ptr;
 }
@@ -204,17 +182,17 @@ TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory ()
 CosPropertyService::PropertySetDef_ptr
 TAO_PropertySetDefFactory::create_propertysetdef ()
 {
-  // New a TAO_PropertySetDef.
-  TAO_PropertySetDef *new_set;
-  ACE_NEW_RETURN (new_set, TAO_PropertySetDef, nullptr);
+  TAO_PropertySetDef *new_set_raw {};
+  ACE_NEW_RETURN (new_set_raw, TAO_PropertySetDef, nullptr);
+  std::unique_ptr<TAO_PropertySetDef> new_set (new_set_raw);
 
   // Successful, store this in the products sequence and return.
   CORBA::ULong cur_len = this->propertysetdef_products_.length ();
   this->propertysetdef_products_.length (cur_len + 1);
-  this->propertysetdef_products_[cur_len] = new_set;
+  this->propertysetdef_products_[cur_len] = new_set.get ();
+  new_set.release ();
 
-  CosPropertyService::PropertySetDef_ptr propsetdef_ptr =
-    new_set->_this ();
+  CosPropertyService::PropertySetDef_ptr propsetdef_ptr = new_set_raw->_this ();
 
   return propsetdef_ptr;
 }
@@ -224,39 +202,31 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (
   CosPropertyService::PropertyTypes const &allowed_property_types,
   CosPropertyService::PropertyDefs const &allowed_property_defs)
 {
-  TAO_PropertySetDef *new_set {};
+  TAO_PropertySetDef *new_set_raw {};
+  std::unique_ptr<TAO_PropertySetDef> new_set;
   CosPropertyService::PropertySetDef_ptr propsetdef_ptr = nullptr;
 
   try
     {
       // New a TAO_PropertySetDef using these constraints.
-      ACE_NEW_RETURN (new_set,
+      ACE_NEW_RETURN (new_set_raw,
                       TAO_PropertySetDef (allowed_property_types,
                                           allowed_property_defs), nullptr);
+      new_set.reset (new_set_raw);
 
       // Successful, store this in the products sequence.
       CORBA::ULong products_len = this->propertysetdef_products_.length ();
       this->propertysetdef_products_.length (products_len + 1);
-      this->propertysetdef_products_[products_len] = new_set;
+      this->propertysetdef_products_[products_len] = new_set.get ();
+      new_set.release ();
 
       // All done. Return the pointer.
-      propsetdef_ptr = new_set->_this ();
+      propsetdef_ptr = new_set_raw->_this ();
     }
   catch (CORBA::UserException const &)
     {
-      // Release the memory.
-      delete new_set;
-
       // Throw the exception.
       throw CosPropertyService::ConstraintNotSupported();
-    }
-  catch (CORBA::SystemException const &)
-    {
-      // Release memory.
-      delete new_set;
-
-      // Throw the exception.
-      throw;
     }
 
   return propsetdef_ptr;
@@ -269,39 +239,23 @@ CosPropertyService::PropertySetDef_ptr
 TAO_PropertySetDefFactory::create_initial_propertysetdef (
   CosPropertyService::PropertyDefs const &initial_property_defs)
 {
-  TAO_PropertySetDef *new_set {};
+  TAO_PropertySetDef *new_set_raw {};
+  std::unique_ptr<TAO_PropertySetDef> new_set;
   CosPropertyService::PropertySetDef_ptr propsetdef_ptr = nullptr;
 
-  try
-    {
-      // New a TAO_PropertySet using these lengths.
-      ACE_NEW_RETURN (new_set,
-                      TAO_PropertySetDef (initial_property_defs), nullptr);
+  // New a TAO_PropertySet using these lengths.
+  ACE_NEW_RETURN (new_set_raw,
+                  TAO_PropertySetDef (initial_property_defs), nullptr);
+  new_set.reset (new_set_raw);
 
-      // Successful, store this in the products sequence.
-      CORBA::ULong products_len = this->propertysetdef_products_.length ();
-      this->propertysetdef_products_.length (products_len + 1);
-      this->propertysetdef_products_[products_len] = new_set;
+  // Successful, store this in the products sequence.
+  CORBA::ULong products_len = this->propertysetdef_products_.length ();
+  this->propertysetdef_products_.length (products_len + 1);
+  this->propertysetdef_products_[products_len] = new_set.get ();
+  new_set.release ();
 
-      // All done.
-      propsetdef_ptr = new_set->_this ();
-    }
-  catch (CosPropertyService::MultipleExceptions const &)
-    {
-      // Release memory.
-      delete new_set;
-
-      // Throw the exception.
-      throw;
-    }
-  catch (CORBA::SystemException const &)
-    {
-      // Release the memory.
-      delete new_set;
-
-      // Throw the exception.
-      throw;
-    }
+  // All done.
+  propsetdef_ptr = new_set_raw->_this ();
 
   return propsetdef_ptr;
 }
