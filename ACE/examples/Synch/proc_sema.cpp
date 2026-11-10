@@ -6,8 +6,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Synch_Traits.h"
 
-int producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
-              int iter)
+void producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
+               int const iter)
 {
   for (int i = iter; i > 0; --i)
     {
@@ -15,17 +15,16 @@ int producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
                   "Try releasing the semaphore (%d): ",
                   i));
 
-      int result = sema.release ();
+      int const result = sema.release ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s",
                   (result != 0 ? "fail\n" : "succeed\n")));
     }
-  return 0;
 }
 
-int consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
-              int iter)
+void consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
+               int const iter)
 {
   for (int i = iter; i > 0; --i)
     {
@@ -33,13 +32,12 @@ int consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
                   "Try acquiring the semaphore (%d): ",
                   i));
 
-      int result = sema.acquire ();
+      int const result = sema.acquire ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s",
                   (result != 0 ? "fail\n" : "succeed\n")));
     }
-  return 0;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -48,13 +46,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
   //FUZZ: enable check_for_lack_ACE_OS
 
-  bool is_consumer = true;      // By default, make us a consumer.
-  bool delete_sema = false;
-  int iteration = 0;
-  int exit_delay = 0;
-  const ACE_TCHAR *sema_name = ACE_TEXT ("Process_Semaphore_Test");
+  bool is_consumer {true};      // By default, make us a consumer.
+  bool delete_sema {};
+  int iteration {};
+  int exit_delay {};
+  ACE_TCHAR const *sema_name = ACE_TEXT ("Process_Semaphore_Test");
 
-  int opt;
+  int opt {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   while ((opt = getopt ()) != -1)
@@ -83,7 +81,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         default:
           return -1;
         }
-    };
+    }
 
   ACE_SYNCH_PROCESS_SEMAPHORE sema (0, sema_name);
 
