@@ -62,7 +62,7 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
         ACE_Lock, ace_mon, *this->lock_,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
-    this->handle_generator_++;
+    ++this->handle_generator_;
     Observer_Entry entry (this->handle_generator_,
                           RtecEventChannelAdmin::Observer::_duplicate (obs));
 

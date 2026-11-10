@@ -216,7 +216,7 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->ec_refcount_--;
+    --this->ec_refcount_;
     if (this->ec_refcount_ != 0)
       return this->ec_refcount_;
   }

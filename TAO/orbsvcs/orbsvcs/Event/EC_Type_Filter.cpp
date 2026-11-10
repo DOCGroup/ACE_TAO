@@ -125,7 +125,7 @@ TAO_EC_Type_Filter::filter_set (RtecEventComm::EventSet const &event,
         continue;
       matched.length (next_slot + 1);
       matched[next_slot] = event[i];
-      next_slot++;
+      ++next_slot;
     }
   if (matched.length () == 0)
     return 0;

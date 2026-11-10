@@ -20,7 +20,7 @@ TAO_EC_Basic_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos) const
 {
-  CORBA::ULong pos = 0;
+  CORBA::ULong pos {};
   return this->recursive_build (supplier, qos, pos);
 }
 
@@ -30,20 +30,19 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     RtecEventChannelAdmin::ConsumerQOS& qos,
     CORBA::ULong& pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong const l = qos.dependencies.length ();
   if (pos == l)
     return nullptr;
 
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
-      CORBA::ULong i = 0;
-      for (; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
         }
@@ -51,13 +50,12 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     }
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
-      CORBA::ULong i = 0;
-      for (; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
         }
@@ -65,13 +63,12 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     }
   else if (e.header.type == ACE_ES_LOGICAL_AND_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
-      CORBA::ULong i = 0;
-      for (; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
         }
@@ -79,7 +76,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     }
   else if (e.header.type == ACE_ES_NEGATION_DESIGNATOR)
     {
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
       TAO_EC_Filter *child =
         this->recursive_build (supplier, qos, pos);
@@ -87,13 +84,13 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     }
   else if (e.header.type == ACE_ES_BITMASK_DESIGNATOR)
     {
-      pos++; // COnsumer the designator
+      ++pos; // Consume the designator
 
       if (pos == qos.dependencies.length ())
         return nullptr;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
-      pos++;
+      ++pos;
 
       TAO_EC_Filter *child =
         this->recursive_build (supplier, qos, pos);
@@ -103,19 +100,19 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     }
   else if (e.header.type == ACE_ES_MASKED_TYPE_DESIGNATOR)
     {
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
       if (pos == qos.dependencies.length ())
         return nullptr;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
-      pos++;
+      ++pos;
 
       if (pos == qos.dependencies.length ())
         return nullptr;
       CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_value = qos.dependencies[pos].event.header.type;
-      pos++;
+      ++pos;
 
       return new TAO_EC_Masked_Type_Filter (source_mask,
                                             type_mask,
@@ -124,7 +121,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     }
   else if (e.header.type == ACE_ES_NULL_DESIGNATOR)
     {
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
       return new TAO_EC_Null_Filter ();
     }
@@ -132,7 +129,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
       TAO_EC_QOS_Info qos_info;
       return new TAO_EC_Timeout_Filter (this->event_channel_,
                                         supplier,
@@ -140,7 +137,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
                                         e.header.type,
                                         e.header.creation_time);
     }
-  pos++; // Consume the event
+  ++pos; // Consume the event
   return new TAO_EC_Type_Filter (e.header);
 }
 
@@ -149,12 +146,12 @@ TAO_EC_Basic_Filter_Builder::
     count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                     CORBA::ULong pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong const l = qos.dependencies.length ();
   CORBA::ULong i;
-  int count = 0;
+  CORBA::ULong count {};
   for (i = pos; i != l; ++i)
     {
-      const RtecEventComm::Event& e = qos.dependencies[i].event;
+      RtecEventComm::Event const &e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_LOGICAL_AND_DESIGNATOR)
@@ -163,7 +160,7 @@ TAO_EC_Basic_Filter_Builder::
         break;
       else if (e.header.type == ACE_ES_BITMASK_DESIGNATOR)
         // These take up an extra element
-        i++;
+        ++i;
       else if (e.header.type == ACE_ES_MASKED_TYPE_DESIGNATOR)
         // These take up two extra elements
         i += 2;
@@ -175,17 +172,17 @@ TAO_EC_Basic_Filter_Builder::
         // a negation (when it is nested within a group).
         // This is isn't perfect, but its about the best we can
         // do without prefixes.
-        i++;
+        ++i;
         switch (qos.dependencies[i].event.header.type) {
         case ACE_ES_BITMASK_DESIGNATOR:
-          i++;
+          ++i;
           break;
         case ACE_ES_MASKED_TYPE_DESIGNATOR:
           i += 2;
           break;
         }
       }
-      count++;
+      ++count;
     }
   return count;
 }

@@ -124,7 +124,7 @@ TAO_EC_Basic_Factory::destroy_timeout_generator (TAO_EC_Timeout_Generator *x)
 TAO_EC_ObserverStrategy*
 TAO_EC_Basic_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
 {
-  ACE_Lock* lock;
+  ACE_Lock* lock {};
   ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
   return new TAO_EC_Basic_ObserverStrategy (ec, lock);
 }

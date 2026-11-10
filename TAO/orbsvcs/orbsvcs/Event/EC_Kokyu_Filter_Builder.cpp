@@ -176,7 +176,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
     RtecScheduler::Scheduler_ptr scheduler,
     RtecScheduler::handle_t parent_info) const
 {
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
 
 #ifdef EC_KOKYU_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG, "Filter_Builder::In recursive build\n"));
@@ -192,13 +192,13 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       this->recursive_name (qos, npos,
                             scheduler, name);
 
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
-      CORBA::ULong n = this->count_children (qos, pos);
+      CORBA::ULong const n = this->count_children (qos, pos);
 
       RtecBase::handle_t conj_rt_info = parent_info;
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -207,7 +207,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                                conj_rt_info);
         }
 
-      TAO_EC_Kokyu_Filter *filter;
+      TAO_EC_Kokyu_Filter *filter {};
       ACE_NEW_RETURN (filter,
                       TAO_EC_Kokyu_Filter (name.c_str (),
                                            conj_rt_info,
@@ -234,13 +234,13 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       this->recursive_name (qos, npos,
                             scheduler, name);
 
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
       RtecBase::handle_t disj_rt_info = parent_info;
 
-      CORBA::ULong n = this->count_children (qos, pos);
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -248,7 +248,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                                scheduler,
                                                disj_rt_info);
         }
-      TAO_EC_Kokyu_Filter *filter;
+      TAO_EC_Kokyu_Filter *filter {};
       ACE_NEW_RETURN (filter,
                       TAO_EC_Kokyu_Filter (name.c_str (),
                                            disj_rt_info,
@@ -294,7 +294,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
           static_cast<RtecScheduler::Period_t> (e.header.creation_time);
 
 #if 1 //by VS original code replaced with this
-        RtecScheduler::RT_Info* consumer_rt_info_ptr;
+        RtecScheduler::RT_Info* consumer_rt_info_ptr {};
 
         consumer_rt_info_ptr = scheduler->get (h_consumer_rt_info);
         scheduler->set (qos_info.rt_info,
@@ -314,7 +314,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                    RtecBase::TWO_WAY_CALL);
 #endif //by VS
 
-        pos++;
+        ++pos;
         return new TAO_EC_Timeout_Filter (this->event_channel_,
                                           supplier,
                                           qos_info,
@@ -325,7 +325,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 #if 1 //added by VS
   else if (e.header.type == ACE_ES_GLOBAL_DESIGNATOR)
     {
-      pos++;
+      ++pos;
       return this->recursive_build (supplier, qos, pos,
                                     scheduler,
                                     parent_info);
@@ -353,8 +353,8 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
   ACE_CString name = info->entry_point.in ();
 
-  pos++;
-  TAO_EC_Kokyu_Filter *filter;
+  ++pos;
+  TAO_EC_Kokyu_Filter *filter {};
   ACE_NEW_RETURN (filter,
                   TAO_EC_Kokyu_Filter (name.c_str (),
                                        parent_info,
@@ -378,12 +378,12 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
     RtecScheduler::Scheduler_ptr scheduler,
     ACE_CString& name) const
 {
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -404,8 +404,8 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
 
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -429,7 +429,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
-      pos++;
+      ++pos;
 
       char buf[64];
       std::sprintf (buf, "TIMEOUT:%umsec",
@@ -439,7 +439,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
       return;
     }
 
-  RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
+  RtecScheduler::handle_t const body_info = qos.dependencies[pos].rt_info;
 
   RtecScheduler::RT_Info_var info =
     scheduler->get (body_info);
@@ -447,7 +447,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
   name = info->entry_point.in ();
   name += "#rep";
 
-  pos++;
+  ++pos;
 }
 
 CORBA::ULong
@@ -455,11 +455,11 @@ TAO_EC_Kokyu_Filter_Builder::
     count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                     CORBA::ULong pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong const l = qos.dependencies.length ();
   CORBA::ULong i;
   for (i = pos; i != l; ++i)
     {
-      const RtecEventComm::Event& e = qos.dependencies[i].event;
+      RtecEventComm::Event const &e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
         break;

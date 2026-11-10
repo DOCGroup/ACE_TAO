@@ -163,7 +163,7 @@ TAO_EC_Per_Supplier_Filter::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
-  this->refcnt_++;
+  ++this->refcnt_;
   return this->refcnt_;
 }
 
@@ -173,7 +173,7 @@ TAO_EC_Per_Supplier_Filter::_decr_refcnt ()
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
-    this->refcnt_--;
+    --this->refcnt_;
     if (this->refcnt_ != 0)
       return this->refcnt_;
   }

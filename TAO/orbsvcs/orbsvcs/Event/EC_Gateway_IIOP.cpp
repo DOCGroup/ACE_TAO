@@ -441,7 +441,7 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-    this->busy_count_++;
+    ++this->busy_count_;
   }
 
   // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
@@ -474,7 +474,7 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
       out[0] = events[i];
 
       if (this->use_ttl_ == 1)
-        out[0].header.ttl--;
+        --out[0].header.ttl;
 
       // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       this->push_to_consumer(proxy, out);
@@ -483,7 +483,7 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-    this->busy_count_--;
+    --this->busy_count_;
 
     if (this->busy_count_ == 0 && this->cleanup_posted_)
       {

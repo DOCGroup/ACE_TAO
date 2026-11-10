@@ -194,7 +194,7 @@ TAO_ECG_Complex_Address_Server::dump_content ()
 
   for (MAP::iterator iter = this->mcast_mapping_.begin ();
        iter != this->mcast_mapping_.end ();
-       iter++)
+       ++iter)
     {
       MAP::ENTRY & entry = *iter;
       ORBSVCS_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",

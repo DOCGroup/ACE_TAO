@@ -124,7 +124,7 @@ TAO_EC_Reactive_SupplierControl::activate ()
 int
 TAO_EC_Reactive_SupplierControl::shutdown ()
 {
-  int r = 0;
+  int r {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);

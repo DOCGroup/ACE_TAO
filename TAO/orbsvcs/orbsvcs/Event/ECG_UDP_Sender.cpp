@@ -177,7 +177,7 @@ TAO_ECG_UDP_Sender::push (RtecEventComm::EventSet const &events)
       // would be wasteful; instead we create a new header and only
       // modify the header portion.
       RtecEventComm::EventHeader header = e.header;
-      header.ttl--;
+      --header.ttl;
 
       // Start building the message
       TAO_OutputCDR cdr;

@@ -23,7 +23,7 @@ TAO_EC_Sched_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos) const
 {
-  CORBA::ULong pos = 0;
+  CORBA::ULong pos {};
   CORBA::Object_var tmp =
     this->event_channel_->scheduler ();
 
@@ -47,7 +47,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
     RtecScheduler::Scheduler_ptr scheduler,
     RtecScheduler::handle_t parent_info) const
 {
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
@@ -59,10 +59,10 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       RtecScheduler::handle_t rt_info =
         scheduler->create (name.c_str ());
 
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -71,7 +71,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                                rt_info);
         }
 
-      TAO_EC_Sched_Filter *filter;
+      TAO_EC_Sched_Filter *filter {};
       ACE_NEW_RETURN (filter,
                       TAO_EC_Sched_Filter (name.c_str (),
                                            rt_info,
@@ -98,10 +98,10 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       RtecScheduler::handle_t rt_info =
         scheduler->create (name.c_str ());
 
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
+      TAO_EC_Filter** children {};
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -109,7 +109,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                                scheduler,
                                                rt_info);
         }
-      TAO_EC_Sched_Filter *filter;
+      TAO_EC_Sched_Filter *filter {};
       ACE_NEW_RETURN (filter,
                       TAO_EC_Sched_Filter (name.c_str (),
                                            rt_info,
@@ -131,7 +131,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
-      pos++;
+      ++pos;
 
       // @@ We need a unique name for each timeout, assigned by the
       //    application?
@@ -171,7 +171,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                         e.header.creation_time);
     }
 
-  RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
+  RtecScheduler::handle_t const body_info = qos.dependencies[pos].rt_info;
 
   RtecScheduler::RT_Info_var info =
     scheduler->get (body_info);
@@ -182,8 +182,8 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
   RtecScheduler::handle_t rt_info =
     scheduler->create (name.c_str ());
 
-  pos++;
-  TAO_EC_Sched_Filter *filter;
+  ++pos;
+  TAO_EC_Sched_Filter *filter {};
   ACE_NEW_RETURN (filter,
                   TAO_EC_Sched_Filter (name.c_str (),
                                        rt_info,
@@ -207,12 +207,12 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
     RtecScheduler::Scheduler_ptr scheduler,
     ACE_CString& name) const
 {
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -233,8 +233,8 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
 
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
       for (CORBA::ULong i {}; i != n; ++i)
         {
@@ -258,7 +258,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
-      pos++;
+      ++pos;
 
       char buf[64];
       std::sprintf (buf, "TIMEOUT:%u",
@@ -276,7 +276,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
   name = info->entry_point.in ();
   name += "#rep";
 
-  pos++;
+  ++pos;
 }
 
 CORBA::ULong
@@ -284,11 +284,11 @@ TAO_EC_Sched_Filter_Builder::
     count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                     CORBA::ULong pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong const l = qos.dependencies.length ();
   CORBA::ULong i;
   for (i = pos; i != l; ++i)
     {
-      const RtecEventComm::Event& e = qos.dependencies[i].event;
+      RtecEventComm::Event const &e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
         break;
