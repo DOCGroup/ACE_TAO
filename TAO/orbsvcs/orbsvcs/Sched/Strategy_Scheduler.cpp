@@ -197,22 +197,22 @@ ACE_Strategy_Scheduler::assign_subpriorities (
   u_int count,
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
-  ACE_DynScheduler::status_t status = ACE_DynScheduler::SUCCEEDED;
+  ACE_DynScheduler::status_t status { ACE_DynScheduler::SUCCEEDED };
   RtecScheduler::Scheduling_Anomaly *anomaly {};
 
   // Start subpriority levels and element counts at 1, set level values in
   // the first entry, increment the static subpriority level.
   Sub_Priority dynamic_subpriority_level {};
   Sub_Priority static_subpriority_level {};
-  u_int dynamic_subpriority_elements = 1;
-  u_int static_subpriority_elements = 1;
+  u_int dynamic_subpriority_elements { 1 };
+  u_int static_subpriority_elements { 1 };
   dispatches [0]->dynamic_subpriority (dynamic_subpriority_level);
   dispatches [0]->static_subpriority (static_subpriority_level);
 
   // Advance the static subpriority level.
-  static_subpriority_level++;
+  ++static_subpriority_level;
 
-  u_int i,j;
+  u_int i {}, j {};
   // Traverse ordered dispatch entry array, assigning priority
   // (array is sorted from highest to lowest priority).
   for (i = 1; i < count; ++i)
@@ -248,7 +248,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
         dispatches [i]->static_subpriority (static_subpriority_level);
 
         // Advance the static subpriority level.
-        static_subpriority_level++;
+        ++static_subpriority_level;
 
         break;
       }
@@ -269,8 +269,8 @@ ACE_Strategy_Scheduler::assign_subpriorities (
             // dispatches line up with identical dynamic subpriority that
             // were considered different with respect to the critical instant.
             dispatches [i]->static_subpriority (static_subpriority_level);
-            static_subpriority_level++;
-            static_subpriority_elements++;
+            ++static_subpriority_level;
+            ++static_subpriority_elements;
 
             break;
 
@@ -289,8 +289,8 @@ ACE_Strategy_Scheduler::assign_subpriorities (
                 // even if the dynamic subpriorities happen to align due to
                 // run-time variation.
                 dispatches [i]->static_subpriority (static_subpriority_level);
-                static_subpriority_level++;
-                static_subpriority_elements++;
+                ++static_subpriority_level;
+                ++static_subpriority_elements;
                 break;
 
               default: // We should never reach here: something *bad* has happened.
@@ -344,7 +344,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
         }
 
         dispatches [i]->dynamic_subpriority (dynamic_subpriority_level);
-        dynamic_subpriority_elements++;
+        ++dynamic_subpriority_elements;
 
         break;
 

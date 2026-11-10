@@ -249,7 +249,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   anomalies->length (anomaly_set_size);
   ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
     anomaly_iter (anomaly_set);
-  for (anomaly_iter.first (), anomaly_index = 0;
+  for (anomaly_iter.first ();
        anomaly_iter.next (anomaly);
        anomaly_iter.advance (), ++anomaly_index)
     {

@@ -74,9 +74,9 @@ public:
   /// caller or called handle.
   using DEPENDENCY_SET_MAP_ITERATOR = typename DEPENDENCY_SET_MAP::ITERATOR;
 
-  TAO_Reconfig_Scheduler (bool enforce_schedule_stability = false,
-                          CORBA::Double const & critical_utilization_threshold = 1.0,
-                          CORBA::Double const & noncritical_utilization_threshold = 1.1);
+  explicit TAO_Reconfig_Scheduler (bool enforce_schedule_stability = false,
+                                   CORBA::Double const & critical_utilization_threshold = 1.0,
+                                   CORBA::Double const & noncritical_utilization_threshold = 1.1);
 
   /// Constructor. Initialize the scheduler from POD_Config_Info, POD_RT_Info,
   /// and POD_Dependency arrays, plus schedule stability flags.

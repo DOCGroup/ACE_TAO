@@ -1108,7 +1108,6 @@ ACE_DynScheduler::propagate_dispatches (
   ACE_CString & unresolved_locals,
   ACE_CString & unresolved_remotes)
 {
-  u_long i;
   frame_size_ = 1;
   status_t status = SUCCEEDED;
   Scheduling_Anomaly * anomaly {};
@@ -1117,7 +1116,7 @@ ACE_DynScheduler::propagate_dispatches (
   // from highest DFS finishing time to lowest, so that every
   // calling dispatch is accessed before those it calls:
   // the dispatches propagate top down through the call DAG
-  for (i = 0; i < tasks (); ++i)
+  for (u_long i {}; i < tasks (); ++i)
   {
     switch (ordered_task_entries_ [i]->merge_dispatches (*dispatch_entries_,
                                                          unresolved_locals,
@@ -1449,12 +1448,11 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
                                     ACE_CString & unresolved_remotes)
 {
-  u_int i, j;
-  ACE_DynScheduler::status_t result = SUCCEEDED;
+  ACE_DynScheduler::status_t result { SUCCEEDED };
   char string_buffer [BUFSIZ];
 
   // walk array of task entries, picking out thread delineators
-  for (i = 0; i < tasks_; i++)
+  for (u_int i {}; i < tasks_; ++i)
   {
     // if entry has exposed threads or no callers, it may be a thread
     if ((task_entries_ [i].rt_info ()->threads > 0) ||
@@ -1472,7 +1470,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
         // Just use low 32 bits of effective_period.  This will
         // have to change when TimeBase.idl is finalized.
         const TimeBase::TimeT zero {};
-        for (j = 0; j < thread_count; j++)
+        for (u_int j {}; j < thread_count; ++j)
         {
           Dispatch_Entry *dispatch_ptr;
           const TimeBase::TimeT effective_period =
@@ -1558,14 +1556,13 @@ ACE_DynScheduler::check_dependency_cycles ()
                  compare_entry_finish_times);
 
   // set all the dfs_status indicators to NOT_VISITED
-  u_int i;
-  for (i = 0; i < tasks (); ++i)
+  for (u_int i {}; i < tasks (); ++i)
   {
           ordered_task_entries_ [i]->dfs_status (Task_Entry::NOT_VISITED);
   }
 
   // recurse on each entry, saving most recent status if it is not SUCCEEDED
-  for (i = 0; i < tasks (); ++i)
+  for (u_int i {}; i < tasks (); ++i)
   {
     status_t status =
       check_dependency_cycles_recurse (*ordered_task_entries_ [i]);
@@ -1898,8 +1895,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 {
   u_long dispatch_count {};
-  u_long i {};
-  for (i = 0; i < dispatch_entry_count_; ++i)
+  for (u_long i {}; i < dispatch_entry_count_; ++i)
   {
     dispatch_count +=
      frame_size_
@@ -1943,7 +1939,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
 
-  for (i = 0; i < dispatch_entry_count_; ++i)
+  for (u_long i {}; i < dispatch_entry_count_; ++i)
   {
     if (std::fprintf (file, "%-11s  %8lu  %8u  %11u  %11u\n",
         ordered_dispatch_entries_[i]->task_entry ().rt_info ()->
