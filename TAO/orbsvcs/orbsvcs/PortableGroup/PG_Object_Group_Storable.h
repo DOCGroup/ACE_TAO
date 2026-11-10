@@ -140,8 +140,8 @@ namespace TAO
     PG_Object_Group_Storable &operator= (PG_Object_Group_Storable &&) = delete;
 
     /// Indicate if instance of object group has been restored from store
-    bool group_previously_stored_;
-    PortableGroup::ObjectGroupId group_id_previously_stored_;
+    bool group_previously_stored_ {};
+    PortableGroup::ObjectGroupId group_id_previously_stored_ {};
 
     TAO::Storable_Base * create_stream (char const *mode);
 

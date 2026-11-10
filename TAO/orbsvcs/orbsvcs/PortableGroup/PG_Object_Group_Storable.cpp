@@ -237,8 +237,6 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
                     type_id,
                     the_criteria,
                     type_properties)
-  , group_previously_stored_(false)
-  , group_id_previously_stored_(0)
   , storable_factory_ (storable_factory)
 {
   // Create a temporary stream simply to check if a readable

@@ -88,7 +88,7 @@ TAO_PG_GenericFactory::create_object (
     // search through the range of FactoryCreationIds only once.
     while (this->factory_map_.find (this->next_fcid_) == 0)
       {
-        this->next_fcid_++;
+        ++this->next_fcid_;
 
         // If this is true, then no FactoryCreationIds are available.
         // This is highly unlikely since TAO implements a
@@ -166,7 +166,7 @@ TAO_PG_GenericFactory::create_object (
 
     // Object group was successfully created.  Increment the next
     // FactoryCreationId in preparation for the next object group.
-    this->next_fcid_++;
+    ++this->next_fcid_;
   }
 
   return object_group._retn ();

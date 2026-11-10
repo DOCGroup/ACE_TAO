@@ -98,7 +98,7 @@ namespace TAO
 
     for (CORBA::ULong i {};
          i < count;
-         i++)
+         ++i)
       {
         // Get the Tagged Components
         TAO_Tagged_Components const &pfile_tagged =
@@ -111,7 +111,7 @@ namespace TAO
               reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
               tc.component_data.length ());
 
-            CORBA::Boolean byte_order;
+            CORBA::Boolean byte_order {};
 
             cdr >> ACE_InputCDR::to_boolean (byte_order);
 

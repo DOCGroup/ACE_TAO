@@ -70,8 +70,8 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.
-  CORBA::Octet major;
-  CORBA::Octet minor;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
   if (!cdr.read_octet (major) || !cdr.read_octet (minor))
     {
       if (TAO_debug_level)
@@ -788,15 +788,15 @@ TAO_UIPMC_Profile::extract_group_component (
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   // Extract the Byte Order.
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   // Read and verify major, minor versions, ignoring UIPMC profiles
   // whose versions we don't understand.
-  CORBA::Octet major;
-  CORBA::Octet minor;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -812,7 +812,7 @@ TAO_UIPMC_Profile::extract_group_component (
 
   // Decode the endpoint.
   ACE_CString address;
-  CORBA::UShort port;
+  CORBA::UShort port {};
 
   if (!cdr.read_string (address) ||
       !cdr.read_ushort (port)      )
