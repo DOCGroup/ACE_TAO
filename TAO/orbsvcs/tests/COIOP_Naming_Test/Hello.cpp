@@ -3,11 +3,10 @@
 #include "tao/ORB_Table.h"
 #include "tao/Strategies/advanced_resource.h"
 
-
-  Hello::Hello (CORBA::ORB_ptr orb,
+Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
-    , thr_id_ (thrid)
+  , thr_id_ (thrid)
 {
 }
 
@@ -15,12 +14,12 @@ char *
 Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Upcall in process ..\n"));
+              ACE_TEXT ("(%P|%t) Upcall in process ..\n")));
 
   // Use portable thread IDs
   ACE_Thread_ID self_ID;
   ACE_Thread_ID this_ID;
-  this_ID.id(this->thr_id_);
+  this_ID.id (this->thr_id_);
 
   if (self_ID == this_ID)
     {
@@ -28,13 +27,14 @@ Hello::get_string ()
           this->orb_->orb_core ()->use_global_collocation ())
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR: A remote call has been made "
-                      " exiting ..\n"));
+                      ACE_TEXT ("(%P|%t) ERROR: A remote call has been made "
+                               " exiting ..\n")));
           ACE_OS::abort ();
         }
       else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
           !this->orb_->orb_core ()->use_global_collocation ())
         {
+          // The ORB table is a process-wide singleton; this pointer is borrowed.
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
@@ -42,9 +42,9 @@ Hello::get_string ()
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) ERROR: A remote call has been made "
-                          " with a single ORB "
-                          " exiting ..\n"));
+                          ACE_TEXT ("(%P|%t) ERROR: A remote call has been made "
+                                    " with a single ORB "
+                                    " exiting ..\n")));
               ACE_OS::abort ();
             }
         }

@@ -10,7 +10,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb,
          ACE_thread_t thr_id);
 
@@ -19,7 +18,6 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
   char * get_string () override;
 
   void shutdown () override;
