@@ -29,8 +29,9 @@ int
 MT_Requestor::svc ()
 {
   int retries {5};
-  while (retries-- > 0)
+  while (retries > 0)
     {
+      --retries;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Client thread %t calling delay with %d retries\n"),
                   retries));
@@ -111,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (middle.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
+          ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Nil Test::Middle reference <%s>\n"),
                              options.ior.c_str ()),
                             1);
@@ -128,7 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Client main exception caught:");
+      ex._tao_print_exception (ACE_TEXT ("Client main exception caught:"));
       return 1;
     }
 

@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file %s for writing IOR: %C"),
@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // are always a single lane.
       // The ORB core owns the lane and its thread pool.
       TAO_DTP_Thread_Pool * const pool =
-        static_cast <TAO_DTP_Thread_Pool *> (tss.lane_);
+        static_cast<TAO_DTP_Thread_Pool *> (tss.lane_);
 
       if (pool == nullptr)
         {
@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Server Exception caught:");
+      ex._tao_print_exception (ACE_TEXT ("Server Exception caught:"));
       return 1;
     }
 
