@@ -8,8 +8,11 @@
  */
 //=============================================================================
 
+#include <cstdio>
+#include <memory>
 #include <string>
 
+#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -104,7 +107,7 @@ private:
   TAO_Naming_Client naming_client_;
   /// The Naming Service client.
 
-  FILE *input_file_ {};
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, ACE_OS::fclose};
   /// File handle of the file read from.
 
   std::string protocol_ {"UDP"};

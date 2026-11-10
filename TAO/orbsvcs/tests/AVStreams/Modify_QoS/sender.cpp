@@ -154,11 +154,10 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (ACE_OS::fopen (this->filename_.c_str (),
+                                          "r"));
 
-  if (this->input_file_ == nullptr)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
                        this->filename_.c_str ()),
@@ -249,7 +248,7 @@ Sender::pace_data ()
           size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
                                     1,
                                     this->mb_.size (),
-                                    this->input_file_);
+                                    this->input_file_.get ());
 
           if (n == 0)
             {

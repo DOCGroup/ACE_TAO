@@ -1,7 +1,9 @@
+#include <memory>
+
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
-static FILE *output_file {};
+static std::unique_ptr<FILE, int (*) (FILE *)> output_file {nullptr, ACE_OS::fclose};
 // File handle of the file into which received data is written.
 
 static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
@@ -102,7 +104,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
         ACE_OS::fwrite (frame->rd_ptr (),
                         frame->length (),
                         1,
-                        output_file);
+                        output_file.get ());
 
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -239,9 +241,9 @@ ACE_TMAIN (int argc,
         return -1;
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == nullptr)
+      output_file.reset (ACE_OS::fopen (output_file_name,
+                                        "w"));
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),
@@ -271,8 +273,6 @@ ACE_TMAIN (int argc,
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }
