@@ -103,7 +103,7 @@ TAO_LB_RoundRobin::next_member (
       // location backwards one by one until we find an existing
       // one in current list then use the next location. If not
       // find a match, then start with 0 index.
-      bool found = false;
+      bool found {};
 
       for (CORBA::ULong k = i; k > 0 && !found; --k)
       {

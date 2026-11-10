@@ -375,8 +375,8 @@ TAO_LB_LoadMinimum::get_location (
                                     // positive value.
 
   CORBA::ULong location_index {};
-  CORBA::Boolean found_location = false;
-  CORBA::Boolean found_load = false;
+  CORBA::Boolean found_location {};
+  CORBA::Boolean found_load {};
 
   const CORBA::ULong len = locations.length ();
 

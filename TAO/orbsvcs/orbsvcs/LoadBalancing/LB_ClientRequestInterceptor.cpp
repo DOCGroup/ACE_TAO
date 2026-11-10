@@ -57,7 +57,7 @@ TAO_LB_ClientRequestInterceptor::send_request (
     }
   */
 
-  CORBA::Boolean const replace = false;
+  CORBA::Boolean const replace {};
   ri->add_request_service_context (service_context, replace);
 }
 
