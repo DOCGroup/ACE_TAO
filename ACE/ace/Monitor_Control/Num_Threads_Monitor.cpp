@@ -18,9 +18,6 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    char const* Num_Threads_Monitor::default_name_ =
-      "OS/System/NumThreads";
-
     Num_Threads_Monitor::Num_Threads_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
@@ -77,7 +74,7 @@ namespace ACE
     char const*
     Num_Threads_Monitor::default_name ()
     {
-      return Num_Threads_Monitor::default_name_;
+      return "OS/System/NumThreads";
     }
 
     void

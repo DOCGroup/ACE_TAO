@@ -135,7 +135,7 @@ namespace ACE
     int
     Constraint_Visitor::visit_or (ETCL_Binary_Expr *binary)
     {
-      int return_value = -1;
+      int return_value {-1};
       ACE_CDR::Boolean result {};
       ETCL_Constraint *const lhs = binary->lhs ();
 
@@ -176,7 +176,7 @@ namespace ACE
     int
     Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
     {
-      int return_value = -1;
+      int return_value {-1};
       ACE_CDR::Boolean result {};
       ETCL_Constraint *const lhs = binary->lhs ();
 
@@ -218,7 +218,7 @@ namespace ACE
     Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
                                          int op_type)
     {
-      int return_value = -1;
+      int return_value {-1};
       ETCL_Constraint *const lhs = binary->lhs ();
       ACE_CDR::Boolean result {};
 

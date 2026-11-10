@@ -73,8 +73,6 @@ namespace ACE
       /// Overridden reset, calls platform-specific reset.
       void clear_i () override;
 
-    private:
-      static char const* default_name_;
     };
   }
 }

@@ -59,9 +59,6 @@ namespace ACE
       /// Overridden reset, calls platform-specific reset.
       void clear_i () override;
 
-    private:
-      static char const* default_name_;
-
 #if defined (ACE_HAS_LINUX_SYSINFO)
       struct sysinfo sysinfo_;
 #endif

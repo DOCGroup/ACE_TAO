@@ -60,13 +60,9 @@ namespace ACE
       /// Common code to the constructor and to clear_i().
       void init ();
 
-    private:
 #if defined (ACE_LINUX)
       void access_proc_stat (unsigned long *which_idle);
 #endif
-
-    private:
-      static char const* default_name_;
 
       /// Linux implementation
 #if defined (ACE_LINUX)

@@ -8,9 +8,6 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    char const* Bytes_Received_Monitor::default_name_ =
-      "OS/Network/BytesReceived";
-
     Bytes_Received_Monitor::Bytes_Received_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
@@ -39,7 +36,7 @@ namespace ACE
     char const*
     Bytes_Received_Monitor::default_name ()
     {
-      return Bytes_Received_Monitor::default_name_;
+      return "OS/Network/BytesReceived";
     }
 
     void

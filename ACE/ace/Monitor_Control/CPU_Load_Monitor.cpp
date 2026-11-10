@@ -18,9 +18,6 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    char const* CPU_Load_Monitor::default_name_ =
-      "OS/Processor/CPULoad";
-
     CPU_Load_Monitor::CPU_Load_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
@@ -68,7 +65,7 @@ namespace ACE
     char const*
     CPU_Load_Monitor::default_name ()
     {
-      return CPU_Load_Monitor::default_name_;
+      return "OS/Processor/CPULoad";
     }
 
     void
