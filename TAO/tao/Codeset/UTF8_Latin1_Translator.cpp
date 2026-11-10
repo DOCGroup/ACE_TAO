@@ -130,7 +130,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   if (len > 0 && len <= cdr.length())
     {
       // detract terminating '\0' from length
-      len--;
+      --len;
       try
         {
           x.resize (len);
@@ -224,11 +224,11 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
 
   ACE_CDR::ULong l = len;
   // Compute the real buffer size by adding in multi-byte codepoints.
-  for (ACE_CDR::ULong i {}; i < len; i++)
-    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) l++;
+  for (ACE_CDR::ULong i {}; i < len; ++i)
+    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) ++l;
 
   // Always add one for the nul
-  l++;
+  ++l;
   if (cdr.write_ulong (l))
     {
       for (ACE_CDR::ULong i {}; i < len; ++i)
