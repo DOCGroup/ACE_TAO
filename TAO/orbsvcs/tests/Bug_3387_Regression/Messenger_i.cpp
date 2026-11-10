@@ -49,9 +49,9 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   CosNotifyChannelAdmin::ProxyID supplieradmin_proxy_id;
 
   CosNotifyChannelAdmin::ProxyConsumer_var const proxy_consumer =
-    supplier_admin->obtain_notification_push_consumer(
-                                 CosNotifyChannelAdmin::STRUCTURED_EVENT,
-                                 supplieradmin_proxy_id);
+    supplier_admin->obtain_notification_push_consumer (
+      CosNotifyChannelAdmin::STRUCTURED_EVENT,
+      supplieradmin_proxy_id);
 
   // ACE_NEW_THROW_EX needs a writable raw pointer; servant_owner adopts it below.
   StructuredEventSupplier_i *servant {};
@@ -88,24 +88,22 @@ CORBA::Boolean Messenger_i::send_message (
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup("OCI_TAO");
-  // string
+    CORBA::string_dup ("OCI_TAO");
   event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup("examples");
-  // string
+    CORBA::string_dup ("examples");
   event.header.fixed_header.event_name =
-    CORBA::string_dup("myevent");
+    CORBA::string_dup ("myevent");
 
   event.filterable_data.length (3);
-  event.filterable_data[0].name = CORBA::string_dup("Message from:");
+  event.filterable_data[0].name = CORBA::string_dup ("Message from:");
   event.filterable_data[0].value <<= user_name;
-  event.filterable_data[1].name = CORBA::string_dup("Subject:");
+  event.filterable_data[1].name = CORBA::string_dup ("Subject:");
   event.filterable_data[1].value <<= subject;
-  event.filterable_data[2].name = CORBA::string_dup("Message:");
+  event.filterable_data[2].name = CORBA::string_dup ("Message:");
   event.filterable_data[2].value <<= message;
 
   std::cout << "pushing " << std::endl;
-  consumer_proxy_->push_structured_event(event);
+  consumer_proxy_->push_structured_event (event);
 
   return true;
 }

@@ -44,9 +44,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Consumer_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-p <pass> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -p <pass>\n"),
                            argv [0]),
                           -1);
       }

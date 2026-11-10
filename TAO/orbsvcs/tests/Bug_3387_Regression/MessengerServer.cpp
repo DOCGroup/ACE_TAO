@@ -1,12 +1,13 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Messenger_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include <fstream>
 #include <iostream>
 
 struct Server_Options
 {
-  ACE_TCHAR const *ior_file = ACE_TEXT ("Messenger.ior");
+  ACE_TString ior_file { ACE_TEXT ("Messenger.ior") };
 };
 
 int
@@ -25,9 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -56,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
 
       {
-        std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_file));
+        std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_file.c_str ()));
         if (!ior_file)
           {
             std::cerr << "Cannot open IOR file" << std::endl;
@@ -69,7 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             return 1;
           }
       }
-      std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (options.ior_file)
+      std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR (options.ior_file.c_str ())
                 << std::endl;
 
       orb->run ();

@@ -2,17 +2,18 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include <iostream>
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior_file = ACE_TEXT ("file://Messenger.ior");
+  ACE_TString ior_file { ACE_TEXT ("file://Messenger.ior") };
 };
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -25,9 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -46,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var const obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior_file));
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior_file.c_str ()));
       if (CORBA::is_nil (obj.in ()))
         {
           std::cerr << "Nil Messenger reference" << std::endl;
