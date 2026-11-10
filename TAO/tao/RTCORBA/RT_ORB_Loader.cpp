@@ -26,7 +26,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
   this->initialized_ = true;
 
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+  ACE_Service_Gestalt * const gestalt = ACE_Service_Config::current ();
 
   ACE_Service_Object * const rt_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
@@ -47,9 +47,9 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   int ace_sched_policy = ACE_SCHED_OTHER;
   long sched_policy = THR_SCHED_DEFAULT;
   long scope_policy = THR_SCOPE_PROCESS;
-  int curarg {};
-  ACE_Time_Value dynamic_thread_time;
-  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_INFINITIVE;
+  ACE_Time_Value dynamic_thread_time {};
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan
+    {TAO_RT_ORBInitializer::TAO_RTCORBA_DT_INFINITIVE};
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -57,10 +57,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   while (arg_shifter.is_anything_left ())
     {
       ACE_TCHAR const *current_arg {};
-      if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                  (ACE_TEXT("-ORBPriorityMapping"))))
+      if ((current_arg = arg_shifter.get_the_parameter
+                  (ACE_TEXT("-ORBPriorityMapping"))) != nullptr)
         {
-          ACE_TCHAR const *name = current_arg;
+          ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("continuous")) == 0)
             priority_mapping_type =
@@ -80,10 +80,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                         name));
           arg_shifter.consume_arg ();
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-ORBSchedPolicy"))))
+      else if ((current_arg = arg_shifter.get_the_parameter
+                                 (ACE_TEXT("-ORBSchedPolicy"))) != nullptr)
         {
-          ACE_TCHAR const *name = current_arg;
+          ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("SCHED_OTHER")) == 0)
             {
@@ -109,10 +109,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                         name));
           arg_shifter.consume_arg ();
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-ORBScopePolicy"))))
+      else if ((current_arg = arg_shifter.get_the_parameter
+                                 (ACE_TEXT("-ORBScopePolicy"))) != nullptr)
         {
-          ACE_TCHAR const *name = current_arg;
+          ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("SYSTEM")) == 0)
             scope_policy = THR_SCOPE_SYSTEM;
@@ -126,29 +126,29 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                         name));
           arg_shifter.consume_arg ();
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-RTORBNetworkPriorityMapping"))))
+      else if ((current_arg = arg_shifter.get_the_parameter
+                                 (ACE_TEXT("-RTORBNetworkPriorityMapping"))) != nullptr)
         {
-          ACE_TCHAR const *name = current_arg;
+          ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("linear")) == 0)
               network_priority_mapping_type =
                 TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
           arg_shifter.consume_arg ();
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                                   (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"))))
+      else if ((current_arg = arg_shifter.get_the_parameter
+                                   (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"))) != nullptr)
         {
-          ACE_TCHAR const *name = current_arg;
+          ACE_TCHAR const * const name = current_arg;
           int const timeout = ACE_OS::atoi (name);
           dynamic_thread_time = ACE_Time_Value (0, timeout);
           lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_IDLE;
           arg_shifter.consume_arg ();
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                                   (ACE_TEXT("-RTORBDynamicThreadRunTime"))))
+      else if ((current_arg = arg_shifter.get_the_parameter
+                                   (ACE_TEXT("-RTORBDynamicThreadRunTime"))) != nullptr)
         {
-          ACE_TCHAR const *name = current_arg;
+          ACE_TCHAR const * const name = current_arg;
           int const timeout = ACE_OS::atoi (name);
           dynamic_thread_time = ACE_Time_Value (0, timeout);
           lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_FIXED;
@@ -156,13 +156,14 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
         }
     else
       {
+        ACE_TCHAR const * const unknown_arg = arg_shifter.get_current ();
         arg_shifter.ignore_arg ();
         if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("RT_ORB_Loader: Unknown option ")
                       ACE_TEXT("<%s>.\n"),
-                      argv[curarg]));
+                      unknown_arg));
         }
       }
     }

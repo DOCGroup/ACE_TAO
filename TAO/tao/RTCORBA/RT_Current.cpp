@@ -23,7 +23,7 @@ TAO_RT_Current::TAO_RT_Current (TAO_ORB_Core *orb_core)
 RTCORBA::Priority
 TAO_RT_Current::the_priority ()
 {
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks * const tph = this->orb_core_->get_protocols_hooks ();
 
   RTCORBA::Priority priority {};
 
@@ -45,7 +45,7 @@ TAO_RT_Current::the_priority ()
 void
 TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
 {
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks * const tph = this->orb_core_->get_protocols_hooks ();
 
   if (tph->set_thread_CORBA_priority (the_priority) == -1)
     {

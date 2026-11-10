@@ -25,13 +25,13 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
     lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time)
 {
-  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager =
+  TAO_Thread_Lane_Resources_Manager * const thread_lane_resources_manager =
     &this->orb_core_->thread_lane_resources_manager ();
 
-  TAO_RT_Thread_Lane_Resources_Manager *rt_thread_lane_resources_manager =
+  TAO_RT_Thread_Lane_Resources_Manager * const rt_thread_lane_resources_manager =
     dynamic_cast <TAO_RT_Thread_Lane_Resources_Manager *> (thread_lane_resources_manager);
 
-  if (!rt_thread_lane_resources_manager)
+  if (rt_thread_lane_resources_manager == nullptr)
     throw CORBA::INTERNAL ();
 
   this->tp_manager_ =
@@ -87,12 +87,12 @@ TAO_Named_RT_Mutex_Manager::create_mutex ()
 void
 TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
 {
-  TAO_RT_Mutex *tao_mutex =
+  TAO_RT_Mutex * const tao_mutex =
     dynamic_cast<TAO_RT_Mutex *> (mutex);
 
   // If this mutex is named, then we need to remove it from our table.
   // Otherwise, we don't have to do anything.
-  char const *name = tao_mutex->name ();
+  char const * const name = tao_mutex->name ();
   if (name != nullptr)
     {
       // The following should be atomic.
@@ -101,7 +101,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
                           this->lock_,
                           CORBA::INTERNAL ());
 
-      int result =
+      int const result =
         this->map_.unbind (name);
 
       if (result != 0)
@@ -451,7 +451,7 @@ TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
 
   int const minimum_priority = ACE_Sched_Params::priority_min (sched_policy);
 
-  ACE_hthread_t thread_id;
+  ACE_hthread_t thread_id {};
   ACE_Thread::self (thread_id);
 
   return ACE_Thread::setprio (thread_id, minimum_priority, sched_policy);

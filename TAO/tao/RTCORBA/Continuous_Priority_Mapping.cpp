@@ -23,7 +23,7 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
 #if defined (ACE_WIN32)
 
   int current_native_priority = this->min_;
-  int next_native_priority;
+  int next_native_priority {};
   for (int i = 1; i <= corba_priority; ++i)
     {
       next_native_priority =
@@ -40,7 +40,7 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
   return true;
 
 #else
-  int native;
+  int native {};
 
   if (this->min_ < this->max_)
     {

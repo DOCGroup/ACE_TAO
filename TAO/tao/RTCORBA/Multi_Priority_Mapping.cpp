@@ -176,9 +176,9 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
         int last_priority = this->base_native_priority_;
         while (true)
         {
-           int previous_priority = ACE_Sched_Params::previous_priority (this->policy_,
-                                                                        last_priority,
-                                                                        ACE_SCOPE_THREAD);
+           int const previous_priority = ACE_Sched_Params::previous_priority (this->policy_,
+                                                                              last_priority,
+                                                                              ACE_SCOPE_THREAD);
            last_priority = previous_priority;
 
            if (last_priority == this->min_)
@@ -213,9 +213,9 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
               if (native_priority <= last_priority) break;
            }
 
-           int previous_priority = ACE_Sched_Params::previous_priority (this->policy_,
-                                                                        last_priority,
-                                                                        ACE_SCOPE_THREAD);
+           int const previous_priority = ACE_Sched_Params::previous_priority (this->policy_,
+                                                                              last_priority,
+                                                                              ACE_SCOPE_THREAD);
            last_priority = previous_priority;
            priority_ndx++;
         }

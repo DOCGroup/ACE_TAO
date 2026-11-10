@@ -8,6 +8,8 @@
 #include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 #include "tao/Endpoint.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
@@ -33,16 +35,17 @@ TAO_Transport_Descriptor_Interface *
 TAO_RT_Transport_Descriptor::duplicate ()
 {
   // Get a copy of the underlying endpoint
-  TAO_Endpoint *endpoint =
-    this->endpoint_->duplicate ();
+  std::unique_ptr<TAO_Endpoint> endpoint {this->endpoint_->duplicate ()};
   if (endpoint == nullptr)
     return nullptr;
 
-  TAO_RT_Transport_Descriptor *new_descriptor {};
+  TAO_RT_Transport_Descriptor *descriptor {};
 
-  ACE_NEW_RETURN (new_descriptor,
-                  TAO_RT_Transport_Descriptor (endpoint, true),
+  ACE_NEW_RETURN (descriptor,
+                  TAO_RT_Transport_Descriptor (endpoint.get (), true),
                   nullptr);
+  endpoint.release ();
+  std::unique_ptr<TAO_RT_Transport_Descriptor> new_descriptor {descriptor};
 
   // Copy the Properties.
   TAO_RT_Transport_Descriptor_Property *current_property =
@@ -55,6 +58,8 @@ TAO_RT_Transport_Descriptor::duplicate ()
     {
       new_property =
         current_property->duplicate ();
+      if (new_property == nullptr)
+        return nullptr;
 
       // Note that we cannot use <insert> because that will reverse the stack.
       if (new_descriptor->property_list_ == nullptr)
@@ -66,7 +71,7 @@ TAO_RT_Transport_Descriptor::duplicate ()
       current_property = current_property->next_;
     }
 
-  return new_descriptor;
+  return new_descriptor.release ();
 }
 
 CORBA::Boolean

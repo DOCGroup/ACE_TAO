@@ -27,7 +27,7 @@ TAO_RT_Mutex::unlock ()
 CORBA::Boolean
 TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
 {
-  int result;
+  int result {};
 
   if (wait_time == 0)
     // No wait.
@@ -36,11 +36,11 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
     {
       // Wait for the specified amount of time before giving up.
       // (wait_time units are 100ns.  See TimeBase.pidl)
-      TimeBase::TimeT seconds = wait_time / 10000000u;
-      TimeBase::TimeT microseconds = (wait_time % 10000000u) / 10;
+      TimeBase::TimeT const seconds {wait_time / 10000000u};
+      TimeBase::TimeT const microseconds {(wait_time % 10000000u) / 10};
 
-      ACE_Time_Value relative_time (ACE_U64_TO_U32 (seconds),
-                                    ACE_U64_TO_U32 (microseconds));
+      ACE_Time_Value const relative_time (ACE_U64_TO_U32 (seconds),
+                                          ACE_U64_TO_U32 (microseconds));
 
       ACE_Time_Value absolute_time =
         relative_time +

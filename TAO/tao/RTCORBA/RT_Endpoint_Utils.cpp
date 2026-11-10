@@ -21,7 +21,7 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
   TAO_RT_Stub * const rt_stub =
     dynamic_cast<TAO_RT_Stub *> (r.stub ());
 
-  if (!rt_stub)
+  if (rt_stub == nullptr)
     throw CORBA::INTERNAL ();
 
   try
@@ -32,7 +32,7 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
     {
       if (r.inconsistent_policies ())
         {
-          CORBA::PolicyList *p = r.inconsistent_policies ();
+          CORBA::PolicyList * const p = r.inconsistent_policies ();
           p->length (1);
           (*p)[0u] = rt_stub->TAO_Stub::get_cached_policy (type);
         }
