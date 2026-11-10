@@ -23,7 +23,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (length != 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "CLIENT (%P): Incorrect number of elements in IFR - length is %d\n",
+                      ACE_TEXT ("CLIENT (%P): Incorrect number of elements in IFR - length is ")
+                      ACE_UINT32_FORMAT_SPECIFIER
+                      ACE_TEXT ("\n"),
                       length));
           return -1;
         }
