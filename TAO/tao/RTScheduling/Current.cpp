@@ -120,8 +120,8 @@ RTScheduling::DistributableThread_ptr
 TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
 {
   RTScheduling::DistributableThread_var DT;
-  int result = this->dt_hash_.find (id,
-                                    DT);
+  int const result = this->dt_hash_.find (id,
+                                          DT);
   if (result == 0)
     return DT._retn ();
   else return RTScheduling::DistributableThread::_nil ();
@@ -302,7 +302,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
   if (this->guid_.length () == 0)
     {
       //Generate GUID
-      size_t temp = ++TAO_RTScheduler_Current::guid_counter;
+      size_t const temp = ++TAO_RTScheduler_Current::guid_counter;
       this->guid_.length (sizeof(size_t));
       std::memcpy (this->guid_.get_buffer (),
                    &temp,
@@ -325,8 +325,8 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
         this->dt_ = TAO_DistributableThread_Factory::create_DT ();
 
       //Add new DT to map
-      int result = this->dt_hash_->bind (this->guid_,
-                                         this->dt_);
+      int const result = this->dt_hash_->bind (this->guid_,
+                                               this->dt_);
 
       // Error in binding to the map - cancel thread.
       if (result != 0)

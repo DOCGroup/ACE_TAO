@@ -40,7 +40,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           RTScheduling::Current::IdType guid;
           guid.length (sizeof(size_t));
 
-          size_t temp = ++TAO_RTScheduler_Current::guid_counter;
+          size_t const temp = ++TAO_RTScheduler_Current::guid_counter;
           std::memcpy (guid.get_buffer (),
                        &temp,
                        sizeof(size_t));
@@ -52,7 +52,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
-                        "The Guid is %d %d\n",
+                        "The Guid is %B %ld\n",
                         id,
                         TAO_RTScheduler_Current::guid_counter.load ()));
 
@@ -61,7 +61,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
             TAO_DistributableThread_Factory::create_DT ();
 
           // Add new DT to map.
-          int result = current->dt_hash ()->bind (guid, dt);
+          int const result = current->dt_hash ()->bind (guid, dt);
           if (result != 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -333,14 +333,14 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
-                "The Guid is %d\n",
+                "The Guid is %B\n",
                 id));
 
   // Create new DT.
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
 
   // Add new DT to map.
-  int result = new_current->dt_hash ()->bind (guid, dt);
+  int const result = new_current->dt_hash ()->bind (guid, dt);
 
   if (result != 0)
     {
