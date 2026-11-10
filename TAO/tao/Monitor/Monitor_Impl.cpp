@@ -115,7 +115,6 @@ Monitor_Impl::get_statistics (::Monitor::NameList const &names)
 
       if (monitor != nullptr)
         {
-          Monitor_Control_Types::Data d (monitor->type ());
           CORBA::ULong const length = datalist->length();
           datalist->length (length + 1);
           ::Monitor::Data data {};
@@ -150,7 +149,7 @@ Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
         {
           CORBA::ULong const length = datalist->length();
           datalist->length (length + 1);
-          ::Monitor::Data data;
+          ::Monitor::Data data {};
           TAO_Monitor::get_monitor_data (monitor.get (), data, true);
           (*datalist)[length] = data;
         }
