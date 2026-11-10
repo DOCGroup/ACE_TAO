@@ -417,7 +417,7 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type) const
     return true;
 
   // Check in the allowed_property_types sequence.
-  CORBA::Boolean ret_val = false;
+  CORBA::Boolean ret_val {};
   for (CORBA::ULong ti {};
        ti < this->allowed_property_types_.length ();
        ++ti)
