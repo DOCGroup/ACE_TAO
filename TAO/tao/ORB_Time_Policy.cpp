@@ -13,7 +13,7 @@ namespace TAO
 
   void ORB_Time_Policy::set_time_policy (ACE_Dynamic_Time_Policy_Base const * pol)
   {
-    if (pol != nullptr )
+    if (pol != nullptr)
       {
         active_policy_ = pol;
       }

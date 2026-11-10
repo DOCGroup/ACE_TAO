@@ -11,11 +11,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Time_Policy_Manager::TAO_Time_Policy_Manager ()
-  : time_policy_strategy_ (nullptr)
-#if defined(TAO_USE_HR_TIME_POLICY_STRATEGY)
-  , time_policy_setting_ (TAO_HR_TIME_POLICY)
+#if defined (TAO_USE_HR_TIME_POLICY_STRATEGY)
+  : time_policy_setting_ (Time_Policy_Setting::High_Resolution)
 #else
-  , time_policy_setting_ (TAO_OS_TIME_POLICY)
+  : time_policy_setting_ (Time_Policy_Setting::OS)
 #endif
 {
 }
@@ -47,17 +46,17 @@ TAO_Time_Policy_Manager::parse_args (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              ACE_TCHAR* name = argv[curarg];
+              ACE_TCHAR const *name = argv[curarg];
 
               if (ACE_OS::strcasecmp (name,
                                       ACE_TEXT("OS")) == 0)
-                this->time_policy_setting_ = TAO_OS_TIME_POLICY;
+                this->time_policy_setting_ = Time_Policy_Setting::OS;
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("HR")) == 0)
-                this->time_policy_setting_ = TAO_HR_TIME_POLICY;
+                this->time_policy_setting_ = Time_Policy_Setting::High_Resolution;
               else
                 {
-                  this->time_policy_setting_ = TAO_DYN_TIME_POLICY;
+                  this->time_policy_setting_ = Time_Policy_Setting::Dynamic;
                   this->time_policy_name_ = ACE_TEXT_ALWAYS_CHAR (name);
                 }
             }
@@ -79,11 +78,11 @@ ACE_Timer_Queue * TAO_Time_Policy_Manager::create_timer_queue ()
     if (this->time_policy_strategy_ == nullptr)
       {
         // load strategy
-        if (this->time_policy_setting_ == TAO_OS_TIME_POLICY)
+        if (this->time_policy_setting_ == Time_Policy_Setting::OS)
           {
             this->time_policy_name_ = "TAO_SYSTEM_TIME_POLICY";
           }
-        else if (this->time_policy_setting_ == TAO_HR_TIME_POLICY)
+        else if (this->time_policy_setting_ == Time_Policy_Setting::High_Resolution)
           {
             this->time_policy_name_ = "TAO_HR_TIME_POLICY";
           }

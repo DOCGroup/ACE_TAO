@@ -45,6 +45,10 @@ class TAO_Export TAO_Time_Policy_Manager
 public:
   TAO_Time_Policy_Manager ();
   ~TAO_Time_Policy_Manager () override;
+  TAO_Time_Policy_Manager (TAO_Time_Policy_Manager const &) = delete;
+  TAO_Time_Policy_Manager &operator= (TAO_Time_Policy_Manager const &) = delete;
+  TAO_Time_Policy_Manager (TAO_Time_Policy_Manager &&) = delete;
+  TAO_Time_Policy_Manager &operator= (TAO_Time_Policy_Manager &&) = delete;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -58,16 +62,17 @@ public:
   virtual void destroy_timer_queue (ACE_Timer_Queue *tmq);
 
 private:
-  enum Time_Policy_Setting
+  enum class Time_Policy_Setting
   {
-    TAO_OS_TIME_POLICY,
-    TAO_HR_TIME_POLICY,
-    TAO_DYN_TIME_POLICY
+    OS,
+    High_Resolution,
+    Dynamic
   };
 
   TAO_SYNCH_MUTEX lock_;
 
-  TAO_Time_Policy_Strategy * time_policy_strategy_;
+  /// Strategy supplied by the ACE dynamic service registry; this pointer is borrowed.
+  TAO_Time_Policy_Strategy *time_policy_strategy_ {};
 
   Time_Policy_Setting time_policy_setting_;
 
