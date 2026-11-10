@@ -42,7 +42,6 @@ class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping
 : public TAO_Priority_Mapping
 {
 public:
-  /// Default constructor
   /**
    * @param base_native_priority The native priority to use for the highest
    * priority endpoint.
@@ -58,7 +57,6 @@ public:
                               bool priorities_contiguous = true,
                               int policy = ACE_SCHED_FIFO);
 
-  /// The destructor
   ~TAO_Multi_Priority_Mapping () override = default;
 
   CORBA::Boolean

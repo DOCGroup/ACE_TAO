@@ -86,10 +86,10 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_Priority_Mapping_Manager_var (); // default constructor
+  TAO_Priority_Mapping_Manager_var ();
   TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_ptr);
-  TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_var const &); // copy constructor
-  ~TAO_Priority_Mapping_Manager_var (); // destructor
+  TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_var const &);
+  ~TAO_Priority_Mapping_Manager_var ();
 
   TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_ptr);
   TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_var const &);

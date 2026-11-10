@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_Network_Priority_Mapping
 {
 public:
-  /// The destructor
   virtual ~TAO_Network_Priority_Mapping ();
 
   virtual CORBA::Boolean

@@ -554,7 +554,7 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 
   for (CORBA::ULong i {};
        (i < this->protocols_.length ()) && is_write_ok;
-       i++)
+       ++i)
     {
       is_write_ok =
         (out_cdr << this->protocols_[i].protocol_type)
@@ -575,7 +575,7 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 
   this->protocols_.length (length);
 
-  for (CORBA::ULong i {}; (i < length) && is_read_ok; i++)
+  for (CORBA::ULong i {}; (i < length) && is_read_ok; ++i)
     {
       is_read_ok = in_cdr >> this->protocols_[i].protocol_type;
 

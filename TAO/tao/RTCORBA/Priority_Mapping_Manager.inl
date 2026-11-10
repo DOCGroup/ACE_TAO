@@ -6,12 +6,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // *************************************************************
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var () // default constructor
+TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var ()
   : ptr_ (TAO_Priority_Mapping_Manager::_nil ())
 {}
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_ptr p)
+TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var (
+  TAO_Priority_Mapping_Manager_ptr p)
   : ptr_ (p)
 {}
 
@@ -23,13 +24,13 @@ TAO_Priority_Mapping_Manager_var::ptr () const
 
 ACE_INLINE
 TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var (
-  TAO_Priority_Mapping_Manager_var const &p) // copy constructor
+  TAO_Priority_Mapping_Manager_var const &p)
   : TAO_Base_var (),
     ptr_ (TAO_Priority_Mapping_Manager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_var::~TAO_Priority_Mapping_Manager_var () // destructor
+TAO_Priority_Mapping_Manager_var::~TAO_Priority_Mapping_Manager_var ()
 {
   CORBA::release (this->ptr_);
 }
@@ -141,14 +142,16 @@ TAO_Priority_Mapping_Manager_var::upcast (void *src)
 // *************************************************************
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_ptr &p)
+TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (
+  TAO_Priority_Mapping_Manager_ptr &p)
   : ptr_ (p)
 {
   this->ptr_ = ::TAO_Priority_Mapping_Manager::_nil ();
 }
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_var &p) // constructor from _var
+TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (
+  TAO_Priority_Mapping_Manager_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
@@ -157,7 +160,7 @@ TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (TAO_Priority
 
 ACE_INLINE
 TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (
-  TAO_Priority_Mapping_Manager_out const &p) // copy constructor
+  TAO_Priority_Mapping_Manager_out const &p)
   : ptr_ (const_cast<TAO_Priority_Mapping_Manager_out &> (p).ptr_)
 {}
 

@@ -50,7 +50,6 @@ public:
   TAO_PriorityModelPolicy (RTCORBA::PriorityModel priority_model,
                            RTCORBA::Priority server_priority);
 
-  /// Copy constructor.
   TAO_PriorityModelPolicy (TAO_PriorityModelPolicy const &rhs);
 
   /**
@@ -119,7 +118,6 @@ class TAO_RTCORBA_Export TAO_ThreadpoolPolicy
 public:
   explicit TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
 
-  /// Copy constructor.
   TAO_ThreadpoolPolicy (TAO_ThreadpoolPolicy const &rhs);
 
   RTCORBA::ThreadpoolId threadpool () override;
@@ -168,7 +166,6 @@ class TAO_RTCORBA_Export TAO_PrivateConnectionPolicy
 public:
   TAO_PrivateConnectionPolicy () = default;
 
-  /// Copy constructor.
   TAO_PrivateConnectionPolicy (TAO_PrivateConnectionPolicy const &rhs);
 
   CORBA::PolicyType policy_type () override;
@@ -213,7 +210,6 @@ class TAO_RTCORBA_Export TAO_PriorityBandedConnectionPolicy
 public:
   explicit TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands);
 
-  /// Copy constructor.
   TAO_PriorityBandedConnectionPolicy (TAO_PriorityBandedConnectionPolicy const &rhs);
 
   /**
@@ -279,7 +275,6 @@ class TAO_RTCORBA_Export TAO_ServerProtocolPolicy
 public:
   explicit TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
-  /// Copy constructor.
   TAO_ServerProtocolPolicy (TAO_ServerProtocolPolicy const &rhs);
 
   /**
@@ -334,7 +329,6 @@ class TAO_RTCORBA_Export TAO_ClientProtocolPolicy
 public:
   explicit TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
-  /// Copy constructor.
   TAO_ClientProtocolPolicy (TAO_ClientProtocolPolicy const &rhs);
 
   /**
