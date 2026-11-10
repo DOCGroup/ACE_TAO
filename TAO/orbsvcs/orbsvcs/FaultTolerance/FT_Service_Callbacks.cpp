@@ -179,7 +179,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile * const p, CORBA::ULong const max
 
   cdr >> group_component;
 
-  return (CORBA::ULong) group_component.object_group_id % max;
+  return static_cast<CORBA::ULong> (group_component.object_group_id) % max;
 }
 
 CORBA::Boolean
@@ -326,8 +326,8 @@ TAO_FT_Service_Callbacks::now ()
 {
   // Grab the localtime on the machine where this is running
   ACE_Time_Value const time_val = ACE_OS::gettimeofday ();
-  TimeBase::TimeT const sec_part = ((TimeBase::TimeT)time_val.sec ()) * 10000000;
-  TimeBase::TimeT const usec_part = ((TimeBase::TimeT)time_val.usec ()) * 10;
+  TimeBase::TimeT const sec_part = static_cast<TimeBase::TimeT> (time_val.sec ()) * 10000000;
+  TimeBase::TimeT const usec_part = static_cast<TimeBase::TimeT> (time_val.usec ()) * 10;
 
   // Add the offset to convert from posix time.
   return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));

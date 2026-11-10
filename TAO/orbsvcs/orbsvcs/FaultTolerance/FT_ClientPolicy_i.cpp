@@ -28,7 +28,7 @@ TAO_FT_Request_Duration_Policy::policy_type ()
 CORBA::Policy_ptr
 TAO_FT_Request_Duration_Policy::create (CORBA::Any const &val)
 {
-  TimeBase::TimeT value;
+  TimeBase::TimeT value {};
   if (!(val >>= value))
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 

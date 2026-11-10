@@ -173,7 +173,7 @@ namespace TAO
     TAO_InputCDR icdr (cdr);
 
     CORBA::String_var rep_id;
-    CORBA::ULong min, cs = 0;
+    CORBA::ULong min {}, cs {};
 
     if (!(icdr.read_string (rep_id.out ()) &&
           icdr.read_ulong (min) &&
@@ -229,7 +229,7 @@ namespace TAO
           // Grab the object group version
           TAO_InputCDR cdr (reinterpret_cast<char const *> (tp->component_data.get_buffer ()),
             tp->component_data.length ());
-          CORBA::Boolean byte_order;
+          CORBA::Boolean byte_order {};
 
           if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
             return;
@@ -354,7 +354,7 @@ namespace TAO
         p =  FT::RequestDurationPolicy::_narrow (policy);
       }
 
-    TimeBase::TimeT t = 0;
+    TimeBase::TimeT t {};
 
     if (p.in ())
       {

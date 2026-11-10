@@ -22,7 +22,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value ()
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::create (CORBA::Any const &val)
 {
-  CORBA::Boolean value;
+  CORBA::Boolean value {};
 
   if (!(val >>= CORBA::Any::to_boolean (value)))
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);

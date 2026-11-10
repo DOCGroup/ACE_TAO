@@ -94,7 +94,7 @@ namespace TAO
     TAO_InputCDR cdr (reinterpret_cast<char const *> (svc.context_data.get_buffer ()),
                       svc.context_data.length ());
 
-    CORBA::Boolean byte_order;
+    CORBA::Boolean byte_order {};
 
     if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
       return;
@@ -147,7 +147,7 @@ namespace TAO
         CORBA::String_var orb_id =
           ri->orb_id ();
 
-        int argc = 0;
+        int argc {};
         ACE_TCHAR **argv {};
 
         this->orb_ =
