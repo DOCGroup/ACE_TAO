@@ -41,33 +41,30 @@ class TAO_Export Incoming_Message_Stack
 {
 public:
   /// default constructor, initiliazes empty stack.
-  Incoming_Message_Stack();
+  Incoming_Message_Stack ();
 
   /// destructor, releases all elements on stack
-  ~Incoming_Message_Stack() ;
+  ~Incoming_Message_Stack ();
+  Incoming_Message_Stack (Incoming_Message_Stack const &) = delete;
+  Incoming_Message_Stack &operator= (Incoming_Message_Stack const &) = delete;
+  Incoming_Message_Stack (Incoming_Message_Stack &&) = delete;
+  Incoming_Message_Stack &operator= (Incoming_Message_Stack &&) = delete;
 
   /// pushing a new element onto stack,
   /// @a data must be a valid pointer, not NULL
-  void push(TAO_Queued_Data *data);
+  void push (TAO_Queued_Data *data);
 
   /// removing top element of stack,
   /// @return 0 for Ok and @a data is defined, -1 for error
-  int pop (TAO_Queued_Data* &data);
+  int pop (TAO_Queued_Data *&data);
 
   /// peeking top element of stack
   /// @return 0 for Ok, -1 for error
-  int top (TAO_Queued_Data* &data) const;
+  int top (TAO_Queued_Data *&data) const;
 
 private:
   /// Top element of stack
-  TAO_Queued_Data *top_;
-
-private:
-  /// Default Copy-Constructor -  not for public usage.
-  Incoming_Message_Stack (Incoming_Message_Stack const &) = delete;
-
-  /// Assignment operator - not for public usage
-  Incoming_Message_Stack &operator= (Incoming_Message_Stack const &) = delete;
+  TAO_Queued_Data *top_ {};
 };
 }
 
