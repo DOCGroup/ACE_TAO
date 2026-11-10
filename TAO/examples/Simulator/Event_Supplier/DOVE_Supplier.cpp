@@ -20,7 +20,7 @@
 // Static pointer member initialization for Singleton.
 
 ACE_Scheduler_Factory::POD_RT_Info *
-DOVE_Supplier::pod_rt_info_instance_ = nullptr;
+DOVE_Supplier::pod_rt_info_instance_ {};
 
 // Constructor.
 

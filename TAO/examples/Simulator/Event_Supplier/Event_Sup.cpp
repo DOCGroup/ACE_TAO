@@ -102,7 +102,7 @@ void
 Event_Supplier::load_schedule_data
       (std::vector<Schedule_Viewer_Data *> &schedule_data)
 {
-  Schedule_Viewer_Data *data = nullptr;
+  Schedule_Viewer_Data *data {};
 
   if (this->input_file_name_)
     {
@@ -171,7 +171,7 @@ Event_Supplier::load_schedule_data
     {
       ACE_NEW (data, Schedule_Viewer_Data);
 
-      char const *oper_name = nullptr;
+      char const *oper_name {};
       switch (i % 4)
       {
       case 0:
