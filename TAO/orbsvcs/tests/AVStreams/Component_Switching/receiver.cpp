@@ -1,18 +1,17 @@
+#include <memory>
+#include <stdio.h>
+
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
-static FILE *output_file = 0;
-/// File handle of the file into which received data is written.
+static FILE *output_file {};
+/// Non-owning handle; ACE_TMAIN owns the file for all callbacks.
 
-static int done = 0;
+static bool done {};
 /// Flag set when a signal is raised.
-
-Signal_Handler::Signal_Handler ()
-{
-}
 
 int
 Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
@@ -23,23 +22,22 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
         ACE_DEBUG ((LM_DEBUG,
                     "In the signal handler\n"));
 
-      done = 1;
+      done = true;
     }
   return 0;
 }
 
-
-Connection_Manager *connection_manager;
+Connection_Manager *connection_manager {};
 
 int
-Receiver_StreamEndPoint::get_callback (const char *flow_name,
+Receiver_StreamEndPoint::get_callback (char const *flow_name,
                                        TAO_AV_Callback *&callback)
 {
   /// Return the receiver application callback to the AVStreams for
   /// future upcalls.
   callback = &this->callback_;
 
-  ACE_CString fname = flow_name;
+  ACE_CString const fname = flow_name;
   this->callback_.flowname (fname);
   return 0;
 }
@@ -62,18 +60,13 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
                   "Handle Connection Requested flowname %C\n",
                   entry.flowname ()));
 
-      ACE_CString flowname (entry.flowname ());
+      ACE_CString const flowname (entry.flowname ());
 
       /// Store the related streamctrl.
       connection_manager->add_streamctrl (flowname.c_str (),
                                          this);
     }
   return 1;
-}
-
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (1)
-{
 }
 
 ACE_CString &
@@ -83,7 +76,7 @@ Receiver_Callback::flowname ()
 }
 
 void
-Receiver_Callback::flowname (const ACE_CString &flowname)
+Receiver_Callback::flowname (ACE_CString const &flowname)
 {
   this->flowname_ = flowname;
 }
@@ -103,26 +96,26 @@ Receiver_Callback::handle_destroy ()
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
-                                  const ACE_Addr &)
+                                  ACE_Addr const &)
 {
   ///
   /// Upcall from the AVStreams when there is data to be received from
   /// the sender.
   ///
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame for frame %d\n",
+              "Receiver_Callback::receive_frame for frame %B\n",
               this->frame_count_++));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       /// Write the received data to the file.
-      int result =
+      std::size_t const bytes_written =
         ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
                         1,
+                        frame->length (),
                         output_file);
 
-      if (result == (signed) frame->length ())
+      if (bytes_written != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -131,30 +124,6 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     }
 
   return 0;
-}
-
-Receiver::Receiver ()
-  : mmdevice_ (0),
-    output_file_name_ ("output"),
-    sender_name_ ("distributer"),
-    receiver_name_ ("receiver")
-{
-}
-
-Receiver::~Receiver ()
-{
-}
-
-ACE_CString
-Receiver::sender_name ()
-{
-  return this->sender_name_;
-}
-
-ACE_CString
-Receiver::receiver_name ()
-{
-  return this->receiver_name_;
 }
 
 int
@@ -216,9 +185,9 @@ Receiver::parse_args (int argc,
   /// Parse the command line arguments
   ACE_Get_Opt opts (argc,
                     argv,
-                    "f:s:r:");
+                    ACE_TEXT("f:s:r:"));
 
-  int c;
+  int c {};
   while ((c = opts ()) != -1)
     {
       switch (c)
@@ -242,8 +211,8 @@ Receiver::parse_args (int argc,
   return 0;
 }
 
-ACE_CString
-Receiver::output_file_name ()
+ACE_CString const &
+Receiver::output_file_name () const
 {
   return this->output_file_name_;
 }
@@ -256,12 +225,11 @@ Receiver::shut_down ()
       AVStreams::MMDevice_var mmdevice_obj =
         this->mmdevice_->_this ();
 
-
       this->connection_manager_.unbind_receiver (this->sender_name_,
                                                  this->receiver_name_,
                                                  mmdevice_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Receiver::shut_down");
     }
@@ -295,17 +263,16 @@ ACE_TMAIN (int argc,
                                       root_poa.in ());
 
       Receiver receiver;
-      int result =
-        receiver.parse_args (argc,
-                             argv);
+      int result = receiver.parse_args (argc, argv);
       if (result == -1)
         return -1;
 
       /// Make sure we have a valid <output_file>
-      output_file =
-        ACE_OS::fopen (receiver.output_file_name ().c_str (),
-                       "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (
+        nullptr, ACE_OS::fclose);
+      output_file_owner.reset (ACE_OS::fopen (receiver.output_file_name ().c_str (), "w"));
+      output_file = output_file_owner.get ();
+      if (!output_file_owner)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %C\n",
                            receiver.output_file_name ().c_str ()),
@@ -329,9 +296,9 @@ ACE_TMAIN (int argc,
 
       receiver.shut_down ();
 
-      ACE_OS::fclose (output_file);
+      output_file = nullptr;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;

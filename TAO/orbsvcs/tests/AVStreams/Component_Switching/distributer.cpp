@@ -6,11 +6,7 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
-
-Signal_Handler::Signal_Handler ()
-{
-}
+using DISTRIBUTER = ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>;
 
 int
 Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
@@ -27,14 +23,14 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
 }
 
 int
-Distributer_Sender_StreamEndPoint::get_callback (const char *flow_name,
+Distributer_Sender_StreamEndPoint::get_callback (char const *flow_name,
                                                  TAO_AV_Callback *&callback)
 {
   /// Create and return the sender application callback to AVStreams
   /// for further upcalls.
   callback = &this->callback_;
 
-  ACE_CString fname = flow_name;
+  ACE_CString const fname = flow_name;
 
   this->callback_.flowname (fname);
 
@@ -42,7 +38,7 @@ Distributer_Sender_StreamEndPoint::get_callback (const char *flow_name,
 }
 
 int
-Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
+Distributer_Sender_StreamEndPoint::set_protocol_object (char const *flowname,
                                                         TAO_AV_Protocol_Object *object)
 {
   Connection_Manager &connection_manager =
@@ -58,21 +54,21 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
 }
 
 int
-Distributer_Receiver_StreamEndPoint::get_callback (const char *flow_name,
+Distributer_Receiver_StreamEndPoint::get_callback (char const *flow_name,
                                                    TAO_AV_Callback *&callback)
 {
   /// Create and return the receiver application callback to AVStreams
   /// for further upcalls.
   callback = &this->callback_;
 
-  ACE_CString flowname (flow_name);
+  ACE_CString const flowname (flow_name);
   this->callback_.flowname (flowname);
 
   return 0;
 }
 
 int
-Distributer_Receiver_StreamEndPoint::set_protocol_object (const char *,
+Distributer_Receiver_StreamEndPoint::set_protocol_object (char const *,
                                                           TAO_AV_Protocol_Object *)
 {
   /// Increment the stream count.
@@ -84,7 +80,7 @@ Distributer_Receiver_StreamEndPoint::set_protocol_object (const char *,
 CORBA::Boolean
 Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec)
 {
-  //if (TAO_debug_level > 0)
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Distributer_Receiver_StreamEndPoint::handle_connection_requested\n"));
 
@@ -101,12 +97,12 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (flowspec[i]);
 
-      //if (TAO_debug_level > 0)
+      if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "Handle Connection Requested flowname %C\n",
                     entry.flowname ()));
 
-      ACE_CString flowname (entry.flowname ());
+      ACE_CString const flowname (entry.flowname ());
 
       int const result = connection_manager.streamctrls ().find (flowname);
 
@@ -125,12 +121,6 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
   return true;
 }
 
-
-Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
-  : frame_count_ (1)
-{
-}
-
 ACE_CString &
 Distributer_Receiver_Callback::flowname ()
 {
@@ -138,21 +128,20 @@ Distributer_Receiver_Callback::flowname ()
 }
 
 void
-Distributer_Receiver_Callback::flowname (const ACE_CString &flowname)
+Distributer_Receiver_Callback::flowname (ACE_CString const &flowname)
 {
   this->flowname_ = flowname;
 }
 
-
 int
 Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                               TAO_AV_frame_info *,
-                                              const ACE_Addr &)
+                                              ACE_Addr const &)
 {
   /// Upcall from the AVStreams when there is data to be received from
   /// the sender.
   ACE_DEBUG ((LM_DEBUG,
-              "Distributer_Callback::receive_frame for frame %d\n",
+              "Distributer_Callback::receive_frame for frame %B\n",
               this->frame_count_++));
 
   Connection_Manager::Protocol_Objects &protocol_objects =
@@ -197,7 +186,7 @@ Distributer_Sender_Callback::flowname ()
 }
 
 void
-Distributer_Sender_Callback::flowname (const ACE_CString &flowname)
+Distributer_Sender_Callback::flowname (ACE_CString const &flowname)
 {
   this->flowname_ = flowname;
 }
@@ -219,19 +208,6 @@ Distributer_Sender_Callback::handle_destroy ()
   return 0;
 }
 
-Distributer::Distributer ()
-  : distributer_receiver_mmdevice_ (0),
-    sender_name_ ("sender"),
-    distributer_name_ ("distributer"),
-    done_ (false),
-    stream_count_ (0)
-{
-}
-
-Distributer::~Distributer ()
-{
-}
-
 void
 Distributer::stream_created ()
 {
@@ -247,7 +223,6 @@ Distributer::stream_destroyed ()
     this->done_ = true;
 }
 
-
 Connection_Manager &
 Distributer::connection_manager ()
 {
@@ -261,7 +236,7 @@ Distributer::parse_args (int argc,
   /// Parse command line arguments
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("s:r:"));
 
-  int c;
+  int c {};
   while ((c= opts ()) != -1)
     {
       switch (c)
@@ -279,7 +254,6 @@ Distributer::parse_args (int argc,
     }
   return 0;
 }
-
 
 int
 Distributer::init (int argc,
@@ -343,7 +317,6 @@ Distributer::init (int argc,
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
     this->distributer_receiver_mmdevice_->_this ();
 
-
   /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->distributer_name_,
@@ -385,9 +358,8 @@ Distributer::shut_down ()
       DISTRIBUTER::instance ()->connection_manager ().unbind_sender (this->distributer_name_,
                                                                      sender_mmdevice.in ());
 
-    //  DISTRIBUTER::instance ()->connection_manager ().destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Distributer::shut_down");
     }
@@ -428,19 +400,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          CORBA::Boolean wp = orb->work_pending ();
+          CORBA::Boolean const wp = orb->work_pending ();
 
           if (wp)
-          {
-            orb->perform_work ();
-          }
+            {
+              orb->perform_work ();
+            }
         }
 
       DISTRIBUTER::instance ()->shut_down ();
 
-//      orb->shutdown(true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("main");
       return -1;
@@ -452,5 +423,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *
+ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+#include <cstddef>
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -26,7 +27,11 @@
 class Signal_Handler : public ACE_Event_Handler
 {
 public:
-  Signal_Handler ();
+  Signal_Handler () = default;
+  Signal_Handler (Signal_Handler const &) = delete;
+  Signal_Handler &operator= (Signal_Handler const &) = delete;
+  Signal_Handler (Signal_Handler &&) = delete;
+  Signal_Handler &operator= (Signal_Handler &&) = delete;
 
   /// Override this method to implement graceful shutdown.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
@@ -42,8 +47,11 @@ public:
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  //// Constructor.
-  Receiver_Callback ();
+  Receiver_Callback () = default;
+  Receiver_Callback (Receiver_Callback const &) = delete;
+  Receiver_Callback &operator= (Receiver_Callback const &) = delete;
+  Receiver_Callback (Receiver_Callback &&) = delete;
+  Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
   /// Method that is called when there is data to be received from a
   /// sender.
@@ -55,11 +63,11 @@ public:
 
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname ();
-  void flowname (const ACE_CString &flowname);
+  void flowname (ACE_CString const &flowname);
 
 private:
   //// Keeping a count of the incoming frames.
-  int frame_count_;
+  std::size_t frame_count_ {1};
 
   //// Flowname of the flow.
   ACE_CString flowname_;
@@ -75,8 +83,14 @@ private:
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
+  Receiver_StreamEndPoint () = default;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
+
   /// Create a receiver application callback.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   //// Called when a distributor tries to connect to the receiver
@@ -98,11 +112,8 @@ private:
 class Receiver
 {
 public:
-  //// Constructor
-  Receiver ();
-
-  //// Destructor.
-  virtual ~Receiver ();
+  Receiver () = default;
+  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -117,10 +128,7 @@ public:
                   ACE_TCHAR **argv);
 
   //// Name of the output file.
-  ACE_CString output_file_name ();
-
-  ACE_CString sender_name ();
-  ACE_CString receiver_name ();
+  ACE_CString const &output_file_name () const;
 
   void shut_down ();
 
@@ -132,23 +140,17 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  //// The receiver MMDevice.
-  AVStreams::MMDevice_var mmdevice_obj_;
-
-  //// Receiver MMDevice.
-  TAO_MMDevice *mmdevice_;
-
-  //// The sender MMDevice
-  AVStreams::MMDevice_var sender_mmdevice_;
+  //// Non-owning pointer to the POA-managed receiver MMDevice servant.
+  TAO_MMDevice *mmdevice_ {};
 
   //// File name of the file into which received data is written.
-  ACE_CString output_file_name_;
+  ACE_CString output_file_name_ {"output"};
 
   //// Sender name.
-  ACE_CString sender_name_;
+  ACE_CString sender_name_ {"distributer"};
 
   //// Receiver name.
-  ACE_CString receiver_name_;
+  ACE_CString receiver_name_ {"receiver"};
 
   //// Reference to the signal handler.
   Signal_Handler signal_handler_;

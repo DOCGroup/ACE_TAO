@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+#include <cstddef>
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -26,12 +27,15 @@
 class Signal_Handler : public ACE_Event_Handler
 {
 public:
-  Signal_Handler ();
+  Signal_Handler () = default;
+  Signal_Handler (Signal_Handler const &) = delete;
+  Signal_Handler &operator= (Signal_Handler const &) = delete;
+  Signal_Handler (Signal_Handler &&) = delete;
+  Signal_Handler &operator= (Signal_Handler &&) = delete;
 
   /// Override this method to implement graceful shutdown.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 };
-
 
 /**
  * @class Distributer_Receiver_Callback
@@ -43,8 +47,11 @@ public:
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  //// Constructor.
-  Distributer_Receiver_Callback ();
+  Distributer_Receiver_Callback () = default;
+  Distributer_Receiver_Callback (Distributer_Receiver_Callback const &) = delete;
+  Distributer_Receiver_Callback &operator= (Distributer_Receiver_Callback const &) = delete;
+  Distributer_Receiver_Callback (Distributer_Receiver_Callback &&) = delete;
+  Distributer_Receiver_Callback &operator= (Distributer_Receiver_Callback &&) = delete;
 
   /// Method that is called when there is data to be received from a
   /// sender.
@@ -58,11 +65,11 @@ public:
 
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname ();
-  void flowname (const ACE_CString &flowname);
+  void flowname (ACE_CString const &flowname);
 
 private:
   //// Count of the frames passing through us.
-  int frame_count_;
+  std::size_t frame_count_ {1};
 
   //// Flowname of the flow.
   ACE_CString flowname_;
@@ -80,13 +87,19 @@ private:
 class Distributer_Sender_Callback : public TAO_AV_Callback
 {
 public:
+  Distributer_Sender_Callback () = default;
+  Distributer_Sender_Callback (Distributer_Sender_Callback const &) = delete;
+  Distributer_Sender_Callback &operator= (Distributer_Sender_Callback const &) = delete;
+  Distributer_Sender_Callback (Distributer_Sender_Callback &&) = delete;
+  Distributer_Sender_Callback &operator= (Distributer_Sender_Callback &&) = delete;
+
   //// Called when the sender has finished reading the file and wants
   //// to close down the connection.
   int handle_destroy () override;
 
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname ();
-  void flowname (const ACE_CString &flowname);
+  void flowname (ACE_CString const &flowname);
 
 private:
   ACE_CString flowname_;
@@ -102,13 +115,19 @@ private:
 class Distributer_Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
+  Distributer_Receiver_StreamEndPoint () = default;
+  Distributer_Receiver_StreamEndPoint (Distributer_Receiver_StreamEndPoint const &) = delete;
+  Distributer_Receiver_StreamEndPoint &operator= (Distributer_Receiver_StreamEndPoint const &) = delete;
+  Distributer_Receiver_StreamEndPoint (Distributer_Receiver_StreamEndPoint &&) = delete;
+  Distributer_Receiver_StreamEndPoint &operator= (Distributer_Receiver_StreamEndPoint &&) = delete;
+
   /// Create a receiver application callback.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   //// Store the reference to the protocol object corresponding
   //// to the transport
-  int set_protocol_object (const char *,
+  int set_protocol_object (char const *,
                            TAO_AV_Protocol_Object *object) override;
 
   //// Called when a sender makes a connection request.
@@ -127,14 +146,20 @@ private:
 class Distributer_Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
+  Distributer_Sender_StreamEndPoint () = default;
+  Distributer_Sender_StreamEndPoint (Distributer_Sender_StreamEndPoint const &) = delete;
+  Distributer_Sender_StreamEndPoint &operator= (Distributer_Sender_StreamEndPoint const &) = delete;
+  Distributer_Sender_StreamEndPoint (Distributer_Sender_StreamEndPoint &&) = delete;
+  Distributer_Sender_StreamEndPoint &operator= (Distributer_Sender_StreamEndPoint &&) = delete;
+
   //// Create the application callback and return its handle to
   //// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   //// Set protocol object corresponding to the transport protocol
   //// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
@@ -163,11 +188,8 @@ using RECEIVER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_B
 class Distributer
 {
 public:
-  //// Constructor
-  Distributer ();
-
-  //// Destructor.
-  ~Distributer ();
+  Distributer () = default;
+  ~Distributer () = default;
   Distributer (Distributer const &) = delete;
   Distributer &operator= (Distributer const &) = delete;
   Distributer (Distributer &&) = delete;
@@ -207,24 +229,24 @@ protected:
   //// The receiver endpoint strategy.
   RECEIVER_ENDPOINT_STRATEGY receiver_endpoint_strategy_;
 
-  //// The distributer receiver multimedia device
-  TAO_MMDevice *distributer_receiver_mmdevice_;
+  //// Non-owning pointer to the POA-managed receiver MMDevice servant.
+  TAO_MMDevice *distributer_receiver_mmdevice_ {};
 
-  //// The distributer receiver multimedia device
-  TAO_MMDevice *distributer_sender_mmdevice_;
+  //// Non-owning pointer to the POA-managed sender MMDevice servant.
+  TAO_MMDevice *distributer_sender_mmdevice_ {};
 
   //// The name of the sender to connect to.
-  ACE_CString sender_name_;
+  ACE_CString sender_name_ {"sender"};
 
   //// Our name.
-  ACE_CString distributer_name_;
+  ACE_CString distributer_name_ {"distributer"};
 
   //// Flag to know when we are done.
-  bool done_;
+  bool done_ {};
 
   //// Number of active streams. When a stream is disconnected this
   //// count is decremented.
-  int stream_count_;
+  int stream_count_ {};
 
   //// Reference to the signal handler.
   Signal_Handler signal_handler_;
