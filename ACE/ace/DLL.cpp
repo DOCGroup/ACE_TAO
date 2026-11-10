@@ -195,7 +195,7 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   this->error_ = 0;
   this->errmsg_.clear (true);
 
-  void *sym = nullptr;
+  void *sym {};
   if (this->dll_handle_)
     sym = this->dll_handle_->symbol (sym_name, ignore_errors, this->errmsg_);
 

@@ -336,7 +336,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
   hostent hentry;
   ACE_HOSTENT_DATA buf;
 
-  char * ip_addr = nullptr;
+  char * ip_addr {};
   int ip_addr_size = 0;
   if (addr.get_type () == AF_INET)
     {
@@ -510,7 +510,7 @@ get_ip_interfaces_win32 (size_t &count,
   for (count = 0, i = 0; i < n_interfaces; ++i)
     {
       LPINTERFACE_INFO lpii;
-      struct sockaddr_in *addrp = nullptr;
+      struct sockaddr_in *addrp {};
 
       lpii = &info[i];
       if (!(lpii->iiFlags & IFF_UP))
@@ -564,8 +564,8 @@ get_ip_interfaces_getifaddrs (size_t &count,
 {
   // Take advantage of the BSD getifaddrs function that simplifies
   // access to connected interfaces.
-  struct ifaddrs *ifap = nullptr;
-  struct ifaddrs *p_if = nullptr;
+  struct ifaddrs *ifap {};
+  struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
     return -1;
@@ -676,7 +676,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // what it returned, so increase the num_ifs by one.
   ++num_ifs;
 
-  struct IFREQ *ifs = nullptr;
+  struct IFREQ *ifs {};
   ACE_NEW_RETURN (ifs,
                   struct IFREQ[num_ifs],
                   -1);
@@ -783,7 +783,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // Retrieve IPv6 local interfaces by scanning /proc/net/if_inet6 if
   // it exists.  If we cannot open it then ignore possible IPv6
   // interfaces, we did our best;-)
-  FILE* fp = nullptr;
+  FILE* fp {};
   char addr_p[8][5];
   char s_ipaddr[64];
   int scopeid;
@@ -950,7 +950,7 @@ return 0;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 # if defined (ACE_HAS_IPV6)
-  FILE* fp = nullptr;
+  FILE* fp {};
 
   if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != nullptr)
     {
@@ -1003,7 +1003,7 @@ ip_check (int &ipvn_enabled, int pf)
       // will still permit the creation of a PF_INET6 socket, thus rendering the socket
       // creation test inconsistent. The recommended solution is to get the list of
       // endpoint addresses and see if any match the desired family.
-      ACE_INET_Addr *if_addrs = nullptr;
+      ACE_INET_Addr *if_addrs {};
       size_t if_cnt = 0;
 
       // assume enabled to avoid recursion during interface lookup.

@@ -90,7 +90,7 @@ ACE_SOCK_IO::send (size_t n, ...) const
 
   va_list argp;
   int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else

@@ -397,7 +397,7 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 {
   ACE_TRACE ("ACE_Stream_Type::remove");
 
-  ACE_Module_Type *prev = nullptr;
+  ACE_Module_Type *prev {};
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
   int result = 0;

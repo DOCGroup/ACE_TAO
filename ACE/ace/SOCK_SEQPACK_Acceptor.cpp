@@ -108,8 +108,8 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
     {
       // On Win32 the third parameter to <accept> must be a NULL
       // pointer if we want to ignore the client's address.
-      int *len_ptr = nullptr;
-      sockaddr *addr = nullptr;
+      int *len_ptr {};
+      sockaddr *addr {};
       int len = 0;
 
       if (remote_addr != nullptr)
@@ -328,7 +328,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           // Create an array of sockaddr_in to hold the underlying
           // representations of the primary and secondary
           // addresses.
-          sockaddr_in*  local_inet_addrs = nullptr;
+          sockaddr_in*  local_inet_addrs {};
 #if defined(ACE_HAS_ALLOC_HOOKS)
           ACE_ALLOCATOR_NORETURN (local_inet_addrs,
                                   static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * num_addresses)));
@@ -348,7 +348,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
 
 #if defined (ACE_HAS_LKSCTP)
 
-              sockaddr_in *local_sockaddr = nullptr;
+              sockaddr_in *local_sockaddr {};
 
               // bind the primary first
               if (ACE_OS::bind (this->get_handle (),

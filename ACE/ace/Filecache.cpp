@@ -40,7 +40,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // static data members
-ACE_Filecache *ACE_Filecache::cvf_ = nullptr;
+ACE_Filecache *ACE_Filecache::cvf_ {};
 
 ACE_Filecache_Handle::ACE_Filecache_Handle () = default;
 

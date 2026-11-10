@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 /// Process-wide Service Repository.
-ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = nullptr;
+ACE_Service_Repository *ACE_Service_Repository::svc_rep_ {};
 
 /// Controls whether the Service_Repository is deleted when we shut
 /// down (we can only delete it safely if we created it)!
@@ -395,7 +395,7 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
 
   size_t i = 0;
   int return_value = -1;
-  ACE_Service_Type const *s = nullptr;
+  ACE_Service_Type const *s {};
 
   // Establish scope for locking while manipulating the service
   // storage
@@ -488,7 +488,7 @@ int
 ACE_Service_Repository::remove (ACE_TCHAR const name[], ACE_Service_Type **ps)
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
-  ACE_Service_Type *s = nullptr;
+  ACE_Service_Type *s {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 

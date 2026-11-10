@@ -62,7 +62,7 @@ ACE_NS_WString::char_rep () const
     return nullptr;
   else
     {
-      char *t = nullptr;
+      char *t {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (t,
@@ -92,7 +92,7 @@ ACE_NS_WString::ushort_rep () const
     return nullptr;
   else
     {
-      ACE_UINT16 *t = nullptr;
+      ACE_UINT16 *t {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (t,
