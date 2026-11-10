@@ -12,13 +12,13 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-  ACE_TCHAR const *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  ACE_TCHAR const * const server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short const server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_IOStream<ACE_SOCK_Stream> server;
   ACE_SOCK_Connector connector;
-  ACE_INET_Addr addr (server_port,
-                      server_host);
+  ACE_INET_Addr const addr (server_port,
+                            server_host);
 
   if (connector.connect (server, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
