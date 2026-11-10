@@ -43,6 +43,11 @@ public:
 
   ~TAO_CEC_Event_Loader () override = default;
 
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader const &) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader const &) = delete;
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
+
   //@{
   /**
    * @name Derived from ACE_Service_Object
@@ -92,12 +97,6 @@ protected:
 
   /// The name used when binding to the NamingService.
   CosNaming::Name channel_name_;
-
-private:
-  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader const &) = delete;
-  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader const &) = delete;
-  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
-  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

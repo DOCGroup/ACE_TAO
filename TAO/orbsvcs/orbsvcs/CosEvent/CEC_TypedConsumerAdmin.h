@@ -40,6 +40,11 @@ public:
 
   ~TAO_CEC_TypedConsumerAdmin () override = default;
 
+  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin const &) = delete;
+  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin &&) = delete;
+  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin const &) = delete;
+  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin &&) = delete;
+
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
 
@@ -71,11 +76,6 @@ public:
   PortableServer::POA_ptr _default_POA () override;
 
 private:
-  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin const &) = delete;
-  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin &&) = delete;
-  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin const &) = delete;
-  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin &&) = delete;
-
   /// The Event Channel we belong to
   TAO_CEC_TypedEventChannel *typed_event_channel_;
 

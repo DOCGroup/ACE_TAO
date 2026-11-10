@@ -137,6 +137,11 @@ public:
 
   ~TAO_CEC_TypedEventChannel () override;
 
+  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel const &) = delete;
+  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel &&) = delete;
+  TAO_CEC_TypedEventChannel &operator= (TAO_CEC_TypedEventChannel const &) = delete;
+  TAO_CEC_TypedEventChannel &operator= (TAO_CEC_TypedEventChannel &&) = delete;
+
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
   virtual void activate ();
@@ -270,11 +275,6 @@ protected:
   int clear_ifr_cache ();
 
 private:
-  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel const &) = delete;
-  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel &&) = delete;
-  TAO_CEC_TypedEventChannel &operator= (TAO_CEC_TypedEventChannel const &) = delete;
-  TAO_CEC_TypedEventChannel &operator= (TAO_CEC_TypedEventChannel &&) = delete;
-
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
   PortableServer::POA_var typed_supplier_poa_;
@@ -360,15 +360,16 @@ private:
 
 class TAO_Event_Serv_Export TAO_CEC_Operation_Params
 {
-  explicit TAO_CEC_Operation_Params (CORBA::ULong num_params);
-  ~TAO_CEC_Operation_Params ();
-
+public:
   TAO_CEC_Operation_Params (TAO_CEC_Operation_Params const &) = delete;
   TAO_CEC_Operation_Params (TAO_CEC_Operation_Params &&) = delete;
   TAO_CEC_Operation_Params &operator= (TAO_CEC_Operation_Params const &) = delete;
   TAO_CEC_Operation_Params &operator= (TAO_CEC_Operation_Params &&) = delete;
 
 private:
+  explicit TAO_CEC_Operation_Params (CORBA::ULong num_params);
+  ~TAO_CEC_Operation_Params ();
+
   /// Only the TypedEventChannel can read the private fields.
   friend class TAO_CEC_TypedEventChannel;
 
