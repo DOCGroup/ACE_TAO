@@ -150,7 +150,7 @@ ast_visitor_tmpl_module_inst::visit_valuetype_fwd (AST_ValueTypeFwd *)
 int
 ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
 {
-  UTL_ScopedName *base_name = nullptr;
+  UTL_ScopedName *base_name {};
   AST_Decl *parent =
     this->reify_type (node->base_component ());
 
@@ -161,12 +161,12 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
 
   UTL_NameList_Owner supports_names (this->create_name_list (node->supports ()));
 
-  Identifier *node_id = nullptr;
+  Identifier *node_id {};
   ACE_NEW_RETURN (node_id,
                   Identifier (node->local_name ()->get_string ()),
                   -1);
 
-  UTL_ScopedName *local_name = nullptr;
+  UTL_ScopedName *local_name {};
   ACE_NEW_RETURN (local_name,
                   UTL_ScopedName (node_id, nullptr),
                   -1);
@@ -411,7 +411,7 @@ ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *node)
 int
 ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 {
-  UTL_ScopedName *base_name = nullptr;
+  UTL_ScopedName *base_name {};
   AST_Decl *parent =
     this->reify_type (node->base_home ());
 
@@ -422,7 +422,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 
   UTL_NameList_Owner supports_names (this->create_name_list (node->supports ()));
 
-  UTL_ScopedName *managed_comp_name = nullptr;
+  UTL_ScopedName *managed_comp_name {};
 
   AST_Component *managed_comp = dynamic_cast<AST_Component*> (this->reify_type (node->managed_component ()));
 
@@ -431,7 +431,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
       managed_comp_name = managed_comp->name ();
     }
 
-  UTL_ScopedName *p_key_name = nullptr;
+  UTL_ScopedName *p_key_name {};
 
   AST_ValueType *p_key = dynamic_cast<AST_ValueType*> (this->reify_type (node->primary_key ()));
 
@@ -440,12 +440,12 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
       p_key_name = p_key->name ();
     }
 
-  Identifier *node_id = nullptr;
+  Identifier *node_id {};
   ACE_NEW_RETURN (node_id,
                   Identifier (node->local_name ()->get_string ()),
                   -1);
 
-  UTL_ScopedName *local_name = nullptr;
+  UTL_ScopedName *local_name {};
   ACE_NEW_RETURN (local_name,
                   UTL_ScopedName (node_id, nullptr),
                   -1);
@@ -787,17 +787,17 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 
   UTL_NameList_Owner supports_names (this->create_name_list (node->supports ()));
 
-  Identifier *node_id = nullptr;
+  Identifier *node_id {};
   ACE_NEW_RETURN (node_id,
                   Identifier (node->local_name ()->get_string ()),
                   -1);
 
-  UTL_ScopedName *local_name = nullptr;
+  UTL_ScopedName *local_name {};
   ACE_NEW_RETURN (local_name,
                   UTL_ScopedName (node_id, nullptr),
                   -1);
 
-  AST_ValueType *added_vtype = nullptr;
+  AST_ValueType *added_vtype {};
 
   FE_OBVHeader const header (local_name,
                        parent_names.get (),
@@ -871,12 +871,12 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
 {
   UTL_NameList_Owner parent_names (this->create_name_list (node->inherits ()));
 
-  Identifier *node_id = nullptr;
+  Identifier *node_id {};
   ACE_NEW_RETURN (node_id,
                   Identifier (node->local_name ()->get_string ()),
                   -1);
 
-  UTL_ScopedName *local_name = nullptr;
+  UTL_ScopedName *local_name {};
   ACE_NEW_RETURN (local_name,
                   UTL_ScopedName (node_id, nullptr),
                   -1);
@@ -1046,7 +1046,7 @@ ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
   AST_Param_Holder *ph =
     node->constant_value ()->param_holder ();
 
-  AST_Expression *v = nullptr;
+  AST_Expression *v {};
   AST_Expression::ExprType const et = node->et ();
 
   if (ph != nullptr)
@@ -1149,7 +1149,7 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
   Identifier id (node->local_name ()->get_string ());
   UTL_ScopedName sn (&id, nullptr);
 
-  AST_Factory *added_factory = nullptr;
+  AST_Factory *added_factory {};
 
   if (this->for_finder_)
     {
@@ -1248,7 +1248,7 @@ ast_visitor_tmpl_module_inst::reify_exception_list (
       return nullptr;
     }
 
-  UTL_ExceptList *retval = nullptr;
+  UTL_ExceptList *retval {};
 
   for (UTL_ExceptlistActiveIterator i (orig);
        !i.is_done ();
@@ -1257,7 +1257,7 @@ ast_visitor_tmpl_module_inst::reify_exception_list (
       AST_Type *ex =
         dynamic_cast<AST_Type*> (this->reify_type (i.item ()));
 
-      UTL_ExceptList *ex_list = nullptr;
+      UTL_ExceptList *ex_list {};
       ACE_NEW_RETURN (ex_list,
                       UTL_ExceptList (ex, nullptr),
                       nullptr);
@@ -1288,7 +1288,7 @@ ast_visitor_tmpl_module_inst::create_name_list (AST_Type_List const& list)
       // We copy each name added so we can call destroy() on the
       // list, which disposes of the contents as well as the
       // nested tail pointers.
-      UTL_NameList *name_item = nullptr;
+      UTL_NameList *name_item {};
       ACE_NEW_RETURN (name_item,
                       UTL_NameList (item->name ()->copy (), nullptr),
                       nullptr);

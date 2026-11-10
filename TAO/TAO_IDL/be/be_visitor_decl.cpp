@@ -45,7 +45,7 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
       // In case our container was typedef'd.
       ctx.tdef (nullptr);
 
-      int status = 0;
+      int status {};
 
       switch (cg_state)
       {

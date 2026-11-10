@@ -30,7 +30,7 @@ std::string
 be_visitor_args::type_name (be_type *node,
                             std::string const& suffix)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Use the typedefed name if that is the one
   // used in the IDL defn.

@@ -70,7 +70,7 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
       << "{" << be_nl
       << "}";
 
-  bool is_intf = node->node_type () == AST_Decl::NT_interface;
+  bool const is_intf = node->node_type () == AST_Decl::NT_interface;
 
   if (is_intf)
     {
@@ -88,7 +88,7 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
 
       be_facet_op_attr_defn_helper helper (op_scope);
 
-      int status =
+      int const status =
         op_scope->traverse_inheritance_graph (helper,
                                               &os_,
                                               false,
@@ -124,7 +124,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                                     TAO_OutStream *os,
                                     be_interface *base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
+  AST_Decl::NodeType const nt = base_interface->node_type ();
 
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {

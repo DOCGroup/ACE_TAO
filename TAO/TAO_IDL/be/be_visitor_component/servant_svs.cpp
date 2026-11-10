@@ -33,7 +33,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
   AST_Decl::NodeType const nt = this->node_->node_type ();
 
   bool const is_connector = (nt == AST_Decl::NT_connector);
-  bool no_events = false;
+  bool no_events {};
 
   if (!is_connector)
     {
@@ -314,7 +314,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << "," << be_nl << global << sname_str << "::CCM_" << lname << "," << be_nl
         << global << "Components::" << be_global->ciao_container_type ()
         << "Context>;" << be_uidt_nl << be_uidt_nl
-        << lname << "_type *" << port_name << "_servant_impl = nullptr;" << be_nl
+        << lname << "_type *" << port_name << "_servant_impl {};" << be_nl
         << "ACE_NEW_THROW_EX (" << be_idt_nl
         << port_name << "_servant_impl," << be_nl
         << lname << "_type (" << be_idt_nl

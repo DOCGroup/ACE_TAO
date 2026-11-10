@@ -124,7 +124,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Root *
 be_generator::create_root (UTL_ScopedName *n)
 {
-  be_root *retval = nullptr;
+  be_root *retval {};
   ACE_NEW_RETURN (retval,
                   be_root (n),
                   nullptr);
@@ -136,7 +136,7 @@ AST_PredefinedType *
 be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                       UTL_ScopedName *n)
 {
-  be_predefined_type *retval = nullptr;
+  be_predefined_type *retval {};
   ACE_NEW_RETURN (retval,
                   be_predefined_type (t,
                                       n),
@@ -149,7 +149,7 @@ AST_Module *
 be_generator::create_module (UTL_Scope *s,
                              UTL_ScopedName *n)
 {
-  AST_Module *retval = nullptr;
+  AST_Module *retval {};
 
   // Check for another module of the same name in this scope.
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
@@ -210,7 +210,7 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 bool l,
                                 bool a)
 {
-  be_interface *retval = nullptr;
+  be_interface *retval {};
   ACE_NEW_RETURN (retval,
                   be_interface (n,
                                 ih,
@@ -246,7 +246,7 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                                      is_local,
                                                      is_abstract);
 
-  be_interface_fwd *retval = nullptr;
+  be_interface_fwd *retval {};
   ACE_NEW_RETURN (retval,
                   be_interface_fwd (full_defn,
                                     n),
@@ -260,7 +260,7 @@ AST_ValueBox *
 be_generator::create_valuebox (UTL_ScopedName *n,
                                AST_Type *boxed_type)
 {
-  be_valuebox *retval = nullptr;
+  be_valuebox *retval {};
   ACE_NEW_RETURN (retval,
                   be_valuebox (boxed_type,
                                n),
@@ -283,7 +283,7 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 bool is_truncatable,
                                 bool is_custom)
 {
-  be_valuetype *retval = nullptr;
+  be_valuetype *retval {};
   ACE_NEW_RETURN (retval,
                   be_valuetype (n,
                                 inherits,
@@ -319,7 +319,7 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
                                                      false,
                                                      false);
 
-  be_valuetype_fwd *retval = nullptr;
+  be_valuetype_fwd *retval {};
   ACE_NEW_RETURN (retval,
                   be_valuetype_fwd (full_defn,
                                     n),
@@ -343,7 +343,7 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 bool is_truncatable,
                                 bool is_custom)
 {
-  be_eventtype *retval = nullptr;
+  be_eventtype *retval {};
   ACE_NEW_RETURN (retval,
                   be_eventtype (n,
                                 inherits,
@@ -379,7 +379,7 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
                                                      false,
                                                      false);
 
-  be_eventtype_fwd *retval = nullptr;
+  be_eventtype_fwd *retval {};
   ACE_NEW_RETURN (retval,
                   be_eventtype_fwd (full_defn,
                                     n),
@@ -397,7 +397,7 @@ be_generator::create_component (UTL_ScopedName *n,
                                 AST_Interface_List const& supports_flat,
                                 std::size_t n_supports_flat)
 {
-  be_component *retval = nullptr;
+  be_component *retval {};
   ACE_NEW_RETURN (retval,
                   be_component (n,
                                 base_component,
@@ -420,7 +420,7 @@ be_generator::create_component_fwd (UTL_ScopedName *n)
                                                      AST_Interface_List {},
                                                      0);
 
-  be_component_fwd *retval = nullptr;
+  be_component_fwd *retval {};
   ACE_NEW_RETURN (retval,
                   be_component_fwd (full_defn,
                                     n),
@@ -440,7 +440,7 @@ be_generator::create_home (UTL_ScopedName *n,
                            AST_Interface_List const& supports_flat,
                            std::size_t n_supports_flat)
 {
-  be_home *retval = nullptr;
+  be_home *retval {};
   ACE_NEW_RETURN (retval,
                   be_home (n,
                            base_home,
@@ -460,7 +460,7 @@ be_generator::create_exception (UTL_ScopedName *n,
                                 bool is_local,
                                 bool is_abstract)
 {
-  be_exception *retval = nullptr;
+  be_exception *retval {};
   ACE_NEW_RETURN (retval,
                   be_exception (n,
                                 is_local,
@@ -475,7 +475,7 @@ be_generator::create_structure (UTL_ScopedName *n,
                                 bool is_local,
                                 bool is_abstract)
 {
-  be_structure *retval = nullptr;
+  be_structure *retval {};
   ACE_NEW_RETURN (retval,
                   be_structure (n,
                                 is_local,
@@ -491,7 +491,7 @@ be_generator::create_structure_fwd (UTL_ScopedName *n)
   AST_Structure *full_defn = this->create_structure (n,
                                                      false,
                                                      false);
-  be_structure_fwd *retval = nullptr;
+  be_structure_fwd *retval {};
   ACE_NEW_RETURN (retval,
                   be_structure_fwd (full_defn,
                                     n),
@@ -506,7 +506,7 @@ be_generator::create_enum (UTL_ScopedName *n,
                            bool is_local,
                            bool is_abstract)
 {
-  be_enum *retval = nullptr;
+  be_enum *retval {};
   ACE_NEW_RETURN (retval,
                   be_enum (n,
                            is_local,
@@ -523,7 +523,7 @@ be_generator::create_operation (AST_Type *rt,
                                 bool is_local,
                                 bool is_abstract)
 {
-  be_operation *retval = nullptr;
+  be_operation *retval {};
   ACE_NEW_RETURN (retval,
                   be_operation (rt,
                                 fl,
@@ -540,7 +540,7 @@ be_generator::create_field (AST_Type *ft,
                             UTL_ScopedName *n,
                             AST_Field::Visibility vis)
 {
-  be_field *retval = nullptr;
+  be_field *retval {};
   ACE_NEW_RETURN (retval,
                   be_field (ft,
                             n,
@@ -555,7 +555,7 @@ be_generator::create_argument (AST_Argument::Direction d,
                                AST_Type *ft,
                                UTL_ScopedName *n)
 {
-  be_argument *retval = nullptr;
+  be_argument *retval {};
   ACE_NEW_RETURN (retval,
                   be_argument (d,
                                ft,
@@ -572,7 +572,7 @@ be_generator::create_attribute (bool ro,
                                 bool is_local,
                                 bool is_abstract)
 {
-  be_attribute *retval = nullptr;
+  be_attribute *retval {};
   ACE_NEW_RETURN (retval,
                   be_attribute (ro,
                                 ft,
@@ -590,7 +590,7 @@ be_generator::create_union (AST_ConcreteType *dt,
                             bool is_local,
                             bool is_abstract)
 {
-  be_union *retval = nullptr;
+  be_union *retval {};
   ACE_NEW_RETURN (retval,
                   be_union (dt,
                             n,
@@ -608,7 +608,7 @@ be_generator::create_union_fwd (UTL_ScopedName *n)
                                              n,
                                              false,
                                              false);
-  be_union_fwd *retval = nullptr;
+  be_union_fwd *retval {};
   ACE_NEW_RETURN (retval,
                   be_union_fwd (full_defn,
                                 n),
@@ -623,7 +623,7 @@ be_generator::create_union_branch (UTL_LabelList *ll,
                                    AST_Type *ft,
                                    UTL_ScopedName *n)
 {
-  be_union_branch *retval = nullptr;
+  be_union_branch *retval {};
   ACE_NEW_RETURN (retval,
                   be_union_branch (ll,
                                    ft,
@@ -637,7 +637,7 @@ AST_UnionLabel *
 be_generator::create_union_label (AST_UnionLabel::UnionLabel ul,
                                   AST_Expression *lv)
 {
-  be_union_label *retval = nullptr;
+  be_union_label *retval {};
   ACE_NEW_RETURN (retval,
                   be_union_label (ul,
                                   lv),
@@ -651,7 +651,7 @@ be_generator::create_constant (AST_Expression::ExprType et,
                                AST_Expression *ev,
                                UTL_ScopedName *n)
 {
-  be_constant *retval = nullptr;
+  be_constant *retval {};
   ACE_NEW_RETURN (retval,
                   be_constant (et,
                                ev,
@@ -664,7 +664,7 @@ be_generator::create_constant (AST_Expression::ExprType et,
 AST_Expression *
 be_generator::create_expr (UTL_ScopedName *n)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (n),
                   nullptr);
@@ -676,7 +676,7 @@ AST_Expression *
 be_generator::create_expr (AST_Expression *b,
                            AST_Expression::ExprType t)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (b,
                                  t),
@@ -690,7 +690,7 @@ be_generator::create_expr (AST_Expression::ExprComb c,
                            AST_Expression *v1,
                            AST_Expression *v2)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (c,
                                  v1,
@@ -703,7 +703,7 @@ be_generator::create_expr (AST_Expression::ExprComb c,
 AST_Expression *
 be_generator::create_expr (ACE_CDR::Long l)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (l),
                   nullptr);
@@ -714,7 +714,7 @@ be_generator::create_expr (ACE_CDR::Long l)
 AST_Expression *
 be_generator::create_expr (ACE_CDR::LongLong l)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (l),
                   nullptr);
@@ -725,7 +725,7 @@ be_generator::create_expr (ACE_CDR::LongLong l)
 AST_Expression *
 be_generator::create_expr (ACE_CDR::Boolean b)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (b),
                   nullptr);
@@ -736,7 +736,7 @@ be_generator::create_expr (ACE_CDR::Boolean b)
 AST_Expression *
 be_generator::create_expr (ACE_CDR::ULong l)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (l),
                   nullptr);
@@ -747,7 +747,7 @@ be_generator::create_expr (ACE_CDR::ULong l)
 AST_Expression *
 be_generator::create_expr (ACE_CDR::ULongLong l)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (l),
                   nullptr);
@@ -759,7 +759,7 @@ AST_Expression *
 be_generator::create_expr (ACE_CDR::ULong l,
                            AST_Expression::ExprType t)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (l, t),
                   nullptr);
@@ -770,7 +770,7 @@ be_generator::create_expr (ACE_CDR::ULong l,
 AST_Expression *
 be_generator::create_expr (std::string s)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (std::move (s), AST_Expression::EV_string),
                   nullptr);
@@ -781,7 +781,7 @@ be_generator::create_expr (std::string s)
 AST_Expression *
 be_generator::create_expr (ACE_CDR::Char c)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (c),
                   nullptr);
@@ -792,7 +792,7 @@ be_generator::create_expr (ACE_CDR::Char c)
 AST_Expression *
 be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (wc),
                   nullptr);
@@ -803,7 +803,7 @@ be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 AST_Expression *
 be_generator::create_wstring_expr (std::string s)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
@@ -814,7 +814,7 @@ be_generator::create_wstring_expr (std::string s)
 AST_Expression *
 be_generator::create_expr (ACE_CDR::Double d)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (d),
                   nullptr);
@@ -825,7 +825,7 @@ be_generator::create_expr (ACE_CDR::Double d)
 AST_Expression *
 be_generator::create_expr (const ACE_CDR::Fixed &f)
 {
-  be_expression *retval = nullptr;
+  be_expression *retval {};
   ACE_NEW_RETURN (retval,
                   be_expression (f),
                   nullptr);
@@ -837,7 +837,7 @@ AST_EnumVal *
 be_generator::create_enum_val (ACE_CDR::ULong v,
                                UTL_ScopedName *n)
 {
-  be_enum_val *retval = nullptr;
+  be_enum_val *retval {};
   ACE_NEW_RETURN (retval,
                   be_enum_val (v,
                                n),
@@ -853,7 +853,7 @@ be_generator::create_array (UTL_ScopedName *n,
                             bool is_local,
                             bool is_abstract)
 {
-  be_array *retval = nullptr;
+  be_array *retval {};
   ACE_NEW_RETURN (retval,
                   be_array (n,
                             ndims,
@@ -872,7 +872,7 @@ be_generator::create_sequence (AST_Expression *v,
                                bool is_local,
                                bool is_abstract)
 {
-  be_sequence *retval = nullptr;
+  be_sequence *retval {};
   ACE_NEW_RETURN (retval,
                   be_sequence (v,
                                bt,
@@ -892,7 +892,7 @@ be_generator::create_map (AST_Expression *v,
                           bool is_local,
                           bool is_abstract)
 {
-  be_map *retval = nullptr;
+  be_map *retval {};
   ACE_NEW_RETURN (retval,
                   be_map (v,
                           kt,
@@ -912,7 +912,7 @@ be_generator::create_string (AST_Expression *v)
   UTL_ScopedName n (&id,
                     nullptr);
 
-  be_string *retval = nullptr;
+  be_string *retval {};
   ACE_NEW_RETURN (retval,
                   be_string (AST_Decl::NT_string,
                              &n,
@@ -935,7 +935,7 @@ be_generator::create_wstring (AST_Expression *v)
                             ? AST_Decl::NT_string
                             : AST_Decl::NT_wstring;
 
-  be_string *retval = nullptr;
+  be_string *retval {};
   ACE_NEW_RETURN (retval,
                   be_string (nt,
                              &n,
@@ -952,7 +952,7 @@ be_generator::create_fixed (AST_Expression *digits,
 {
   Identifier id ("fixed");
   UTL_ScopedName name (&id, nullptr);
-  AST_Fixed *retval = nullptr;
+  AST_Fixed *retval {};
   ACE_NEW_RETURN (retval, be_fixed (&name, digits, scale), nullptr);
   return retval;
 }
@@ -963,7 +963,7 @@ be_generator::create_typedef (AST_Type *bt,
                               bool is_local,
                               bool is_abstract)
 {
-  be_typedef *retval = nullptr;
+  be_typedef *retval {};
   ACE_NEW_RETURN (retval,
                   be_typedef (bt,
                               n,
@@ -977,7 +977,7 @@ be_generator::create_typedef (AST_Type *bt,
 AST_Native *
 be_generator::create_native (UTL_ScopedName *n)
 {
-  be_native *retval = nullptr;
+  be_native *retval {};
   ACE_NEW_RETURN (retval,
                   be_native (n),
                   nullptr);
@@ -988,7 +988,7 @@ be_generator::create_native (UTL_ScopedName *n)
 AST_Factory *
 be_generator::create_factory (UTL_ScopedName *n)
 {
-  be_factory *retval = nullptr;
+  be_factory *retval {};
   ACE_NEW_RETURN (retval,
                   be_factory (n),
                   nullptr);
@@ -999,7 +999,7 @@ be_generator::create_factory (UTL_ScopedName *n)
 AST_Finder *
 be_generator::create_finder (UTL_ScopedName *n)
 {
-  be_finder *retval = nullptr;
+  be_finder *retval {};
   ACE_NEW_RETURN (retval,
                   be_finder (n),
                   nullptr);
@@ -1010,7 +1010,7 @@ be_generator::create_finder (UTL_ScopedName *n)
 AST_PortType *
 be_generator::create_porttype (UTL_ScopedName *n)
 {
-  be_porttype *retval = nullptr;
+  be_porttype *retval {};
   ACE_NEW_RETURN (retval,
                   be_porttype (n),
                   nullptr);
@@ -1022,7 +1022,7 @@ AST_Provides *
 be_generator::create_provides (UTL_ScopedName *n,
                                AST_Type *provides_type)
 {
-  be_provides *retval = nullptr;
+  be_provides *retval {};
   ACE_NEW_RETURN (retval,
                   be_provides (n,
                                provides_type),
@@ -1036,7 +1036,7 @@ be_generator::create_uses (UTL_ScopedName *n,
                            AST_Type *uses_type,
                            bool is_multiple)
 {
-  be_uses *retval = nullptr;
+  be_uses *retval {};
   ACE_NEW_RETURN (retval,
                   be_uses (n,
                            uses_type,
@@ -1050,7 +1050,7 @@ AST_Publishes *
 be_generator::create_publishes (UTL_ScopedName *n,
                                 AST_Type *publishes_type)
 {
-  be_publishes *retval = nullptr;
+  be_publishes *retval {};
   ACE_NEW_RETURN (retval,
                   be_publishes (n,
                                 publishes_type),
@@ -1063,7 +1063,7 @@ AST_Emits *
 be_generator::create_emits (UTL_ScopedName *n,
                             AST_Type *emits_type)
 {
-  be_emits *retval = nullptr;
+  be_emits *retval {};
   ACE_NEW_RETURN (retval,
                   be_emits (n,
                             emits_type),
@@ -1075,7 +1075,7 @@ AST_Consumes *
 be_generator::create_consumes (UTL_ScopedName *n,
                                AST_Type *consumes_type)
 {
-  be_consumes *retval = nullptr;
+  be_consumes *retval {};
   ACE_NEW_RETURN (retval,
                   be_consumes (n,
                                consumes_type),
@@ -1089,7 +1089,7 @@ be_generator::create_extended_port (
   UTL_ScopedName *n,
   AST_PortType *porttype_ref)
 {
-  be_extended_port *retval = nullptr;
+  be_extended_port *retval {};
   ACE_NEW_RETURN (retval,
                   be_extended_port (n,
                                     porttype_ref),
@@ -1103,7 +1103,7 @@ be_generator::create_mirror_port (
   UTL_ScopedName *n,
   AST_PortType *porttype_ref)
 {
-  be_mirror_port *retval = nullptr;
+  be_mirror_port *retval {};
   ACE_NEW_RETURN (retval,
                   be_mirror_port (n,
                                   porttype_ref),
@@ -1117,7 +1117,7 @@ be_generator::create_connector (
   UTL_ScopedName *n,
   AST_Connector *base_connector)
 {
-  be_connector *retval = nullptr;
+  be_connector *retval {};
   ACE_NEW_RETURN (retval,
                   be_connector (n,
                                 base_connector),
@@ -1131,7 +1131,7 @@ be_generator::create_template_module (
   UTL_ScopedName *n,
   FE_Utils::T_PARAMLIST_INFO *template_params)
 {
-  be_template_module *retval = nullptr;
+  be_template_module *retval {};
   ACE_NEW_RETURN (retval,
                   be_template_module (n,
                                       template_params),
@@ -1146,7 +1146,7 @@ be_generator::create_template_module_inst (
   AST_Template_Module *ref,
   FE_Utils::T_ARGLIST *template_args)
 {
-  be_template_module_inst *retval = nullptr;
+  be_template_module_inst *retval {};
   ACE_NEW_RETURN (retval,
                   be_template_module_inst (n,
                                            ref,
@@ -1162,7 +1162,7 @@ be_generator::create_template_module_ref (
   AST_Template_Module *ref,
   UTL_StrList param_refs)
 {
-  be_template_module_ref *retval = nullptr;
+  be_template_module_ref *retval {};
   ACE_NEW_RETURN (retval,
                   be_template_module_ref (n,
                                           ref,
@@ -1177,7 +1177,7 @@ be_generator::create_param_holder (
   UTL_ScopedName *parameter_name,
   FE_Utils::T_Param_Info *info)
 {
-  be_param_holder *retval = nullptr;
+  be_param_holder *retval {};
   ACE_NEW_RETURN (retval,
                   be_param_holder (parameter_name,
                                    info),

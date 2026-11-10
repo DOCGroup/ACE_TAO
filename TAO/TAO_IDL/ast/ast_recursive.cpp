@@ -86,14 +86,12 @@ bool
 AST_illegal_interface_recursion (AST_Decl *t)
 {
   // Can't be 0 since we know we have an interface or valuetype.
-  AST_Decl *d = nullptr;
-
   // If we encounter the argument in an enclosing scope, it's illegal.
   for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
        !i.is_done ();
        i.next ())
     {
-      d = ScopeAsDecl (i.item ());
+      AST_Decl * const d = ScopeAsDecl (i.item ());
 
       // Exceptions cannot be recursive, but may contain a reference
       // to the interface they are defined in.
@@ -143,10 +141,10 @@ AST_illegal_recursive_type (AST_Decl *t)
       return false;  // NOT ILLEGAL.
     }
 
-  bool check_for_struct = false;
-  bool check_for_union = false;
-  AST_Structure  *st1 = nullptr;
-  AST_Union  *un1 = nullptr;
+  bool check_for_struct {};
+  bool check_for_union {};
+  AST_Structure  *st1 {};
+  AST_Union  *un1 {};
 
   // Narrow the type appropriately so comparison will work.
   if (t->node_type () == AST_Decl::NT_struct)
@@ -170,16 +168,12 @@ AST_illegal_recursive_type (AST_Decl *t)
         }
     }
 
-  UTL_Scope  *s = nullptr;
-  AST_Structure *st2 = nullptr;
-  AST_Union *un2 = nullptr;
-
   // OK, iterate up the stack.
   for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
        !i.is_done ();
        i.next ())
     {
-      s = i.item ();
+      UTL_Scope * const s = i.item ();
 
       // If we hit a NULL we're done since it means that we're nested inside
       // a sequence, where recursive types may be used.
@@ -192,7 +186,7 @@ AST_illegal_recursive_type (AST_Decl *t)
       if (s->scope_node_type () == AST_Decl::NT_struct
           && check_for_struct == true)
         {
-          st2 = dynamic_cast<AST_Structure*> (s);
+          AST_Structure * const st2 = dynamic_cast<AST_Structure*> (s);
 
           if (st2 != nullptr && st2 == st1)
             {
@@ -202,7 +196,7 @@ AST_illegal_recursive_type (AST_Decl *t)
       else if (s->scope_node_type () == AST_Decl::NT_union
                && check_for_union == true)
         {
-          un2 = dynamic_cast<AST_Union*> (s);
+          AST_Union * const un2 = dynamic_cast<AST_Union*> (s);
 
           if (un2 != nullptr && un2 == un1)
             {

@@ -94,7 +94,7 @@ UTL_IdList::UTL_IdList (Identifier *s,
 UTL_IdList *
 UTL_IdList::copy ()
 {
-  UTL_IdList *retval = nullptr;
+  UTL_IdList *retval {};
   ACE_NEW_RETURN (retval,
                   UTL_IdList (this->head ()->copy (),
                               nullptr),
@@ -241,7 +241,7 @@ void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
   bool first = true;
-  bool second = false;
+  bool second {};
 
   for (UTL_IdListActiveIterator i (this);
        !i.is_done ();
@@ -314,10 +314,10 @@ UTL_IdList::get_string_copy () const
    * Absolute Names have "::" as the first item in the idlist, so delimiters
    * have to start be inserted depending on if the name is absolute or not
    */
-  std::size_t delimiter_start = is_absolute () ? 1 : 0;
+  std::size_t const delimiter_start = is_absolute () ? 1 : 0;
 
   std::string result;
-  std::size_t n = 0;
+  std::size_t n {};
   UTL_IdList const *item_list = this;
   while (item_list != nullptr)
     {

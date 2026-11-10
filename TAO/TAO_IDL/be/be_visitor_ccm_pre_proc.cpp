@@ -201,7 +201,7 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
       std::string prefix ("provide_");
       prefix += this->ctx_->port_prefix ();
 
-      AST_Operation *provides_op = nullptr;
+      AST_Operation *provides_op {};
       UTL_ScopedName *op_name =
         this->create_scoped_name (prefix,
                                   node->local_name ()->get_string (),
@@ -528,7 +528,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -543,7 +543,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
   Identifier arg_id ("conxn");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                node->uses_type (),
@@ -551,12 +551,12 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
                   -1);
   op->be_add_argument (arg);
 
-  UTL_ExceptList *tail = nullptr;
+  UTL_ExceptList *tail {};
   ACE_NEW_RETURN (tail,
                   UTL_ExceptList (this->invalid_connection_,
                                   nullptr),
                   -1);
-  UTL_ExceptList *connect_single = nullptr;
+  UTL_ExceptList *connect_single {};
   ACE_NEW_RETURN (connect_single,
                   UTL_ExceptList (this->already_connected_,
                                   tail),
@@ -585,7 +585,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
@@ -597,7 +597,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
-  UTL_ExceptList *disconnect_single = nullptr;
+  UTL_ExceptList *disconnect_single {};
   ACE_NEW_RETURN (disconnect_single,
                   UTL_ExceptList (this->no_connection_,
                                   nullptr),
@@ -626,7 +626,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
@@ -662,7 +662,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
                               {},
                               comp_);
 
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (this->cookie_,
                                 AST_Operation::OP_noflags,
@@ -677,19 +677,19 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
   Identifier arg_id ("connection");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                node->uses_type (),
                                &arg_name),
                   -1);
   op->be_add_argument (arg);
-  UTL_ExceptList *tail = nullptr;
+  UTL_ExceptList *tail {};
   ACE_NEW_RETURN (tail,
                   UTL_ExceptList (this->invalid_connection_,
                                   nullptr),
                   -1);
-  UTL_ExceptList *connect_multiple = nullptr;
+  UTL_ExceptList *connect_multiple {};
   ACE_NEW_RETURN (connect_multiple,
                   UTL_ExceptList (this->exceeded_connection_limit_,
                                   tail),
@@ -718,7 +718,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
@@ -733,14 +733,14 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
   Identifier arg_id ("ck");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                this->cookie_,
                                &arg_name),
                   -1);
   op->be_add_argument (arg);
-  UTL_ExceptList *disconnect_multiple = nullptr;
+  UTL_ExceptList *disconnect_multiple {};
   ACE_NEW_RETURN (disconnect_multiple,
                   UTL_ExceptList (this->invalid_connection_,
                                   nullptr),
@@ -784,7 +784,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
                                        true);
   be_typedef *td = dynamic_cast<be_typedef*> (d);
 
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (td,
                                 AST_Operation::OP_noflags,
@@ -817,7 +817,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                                   node->local_name (),
                                   {},
                                   consumer);
-      be_operation *push_op = nullptr;
+      be_operation *push_op {};
       ACE_NEW_RETURN (push_op,
                       be_operation (be_global->void_type (),
                                     AST_Operation::OP_noflags,
@@ -834,7 +834,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
       Identifier arg_id (arg_string);
       UTL_ScopedName arg_name (&arg_id,
                                nullptr);
-      be_argument *arg = nullptr;
+      be_argument *arg {};
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_IN,
                                    node,
@@ -864,7 +864,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (this->cookie_,
                                 AST_Operation::OP_noflags,
@@ -891,14 +891,14 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
   Identifier arg_id ("consumer");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                i,
                                &arg_name),
                   -1);
   op->be_add_argument (arg);
-  UTL_ExceptList *subscribe = nullptr;
+  UTL_ExceptList *subscribe {};
   ACE_NEW_RETURN (subscribe,
                   UTL_ExceptList (this->exceeded_connection_limit_,
                                   nullptr),
@@ -938,7 +938,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (i,
                                 AST_Operation::OP_noflags,
@@ -953,14 +953,14 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
   Identifier arg_id ("ck");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                this->cookie_,
                                &arg_name),
                   -1);
   op->be_add_argument (arg);
-  UTL_ExceptList *unsubscribe = nullptr;
+  UTL_ExceptList *unsubscribe {};
   ACE_NEW_RETURN (unsubscribe,
                   UTL_ExceptList (this->invalid_connection_,
                                   nullptr),
@@ -989,7 +989,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -1015,14 +1015,14 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
   Identifier arg_id ("consumer");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  be_argument *arg = nullptr;
+  be_argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                i,
                                &arg_name),
                   -1);
   op->be_add_argument (arg);
-  UTL_ExceptList *emits_connect = nullptr;
+  UTL_ExceptList *emits_connect {};
   ACE_NEW_RETURN (emits_connect,
                   UTL_ExceptList (this->already_connected_,
                                   nullptr),
@@ -1062,7 +1062,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (i,
                                 AST_Operation::OP_noflags,
@@ -1074,7 +1074,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
   op->set_name (op_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
-  UTL_ExceptList *emits_disconnect = nullptr;
+  UTL_ExceptList *emits_disconnect {};
   ACE_NEW_RETURN (emits_disconnect,
                   UTL_ExceptList (this->no_connection_,
                                   nullptr),
@@ -1114,7 +1114,7 @@ be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
                               node->local_name ()->get_string (),
                               {},
                               comp_);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (i,
                                 AST_Operation::OP_noflags,
@@ -1144,7 +1144,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                                       "create",
                                                       {},
                                                       implicit);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (node->managed_component (),
                                 AST_Operation::OP_noflags,
@@ -1155,7 +1155,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   AST_Type *pk = node->primary_key ();
-  UTL_ExceptList *exceps = nullptr;
+  UTL_ExceptList *exceps {};
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->create_failure_,
                                   nullptr),
@@ -1166,7 +1166,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
       Identifier arg_id ("key");
       UTL_ScopedName arg_name (&arg_id,
                                nullptr);
-      AST_Argument *arg = nullptr;
+      AST_Argument *arg {};
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_IN,
                                    pk,
@@ -1174,12 +1174,12 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                       -1);
       op->be_add_argument (arg);
 
-      UTL_ExceptList *tail = nullptr;
+      UTL_ExceptList *tail {};
       ACE_NEW_RETURN (tail,
                       UTL_ExceptList (this->invalid_key_,
                                       nullptr),
                       -1);
-      UTL_ExceptList *middle = nullptr;
+      UTL_ExceptList *middle {};
       ACE_NEW_RETURN (middle,
                       UTL_ExceptList (this->duplicate_key_value_,
                                       tail),
@@ -1208,7 +1208,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                                       "find_by_primary_key",
                                                       {},
                                                       implicit);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (node->managed_component (),
                                 AST_Operation::OP_noflags,
@@ -1222,7 +1222,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
   Identifier arg_id ("key");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                pk,
@@ -1230,8 +1230,8 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                   -1);
   op->be_add_argument (arg);
 
-  UTL_ExceptList *tail = nullptr;
-  UTL_ExceptList *middle = nullptr;
+  UTL_ExceptList *tail {};
+  UTL_ExceptList *middle {};
 
   if (!be_global->gen_lwccm ())
     {
@@ -1245,7 +1245,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                       -1);
     }
 
-  UTL_ExceptList *exceps = nullptr;
+  UTL_ExceptList *exceps {};
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->finder_failure_,
                                   middle),
@@ -1271,7 +1271,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                                       "remove",
                                                       {},
                                                       implicit);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -1285,7 +1285,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
   Identifier arg_id ("key");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                pk,
@@ -1293,8 +1293,8 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                   -1);
   op->be_add_argument (arg);
 
-  UTL_ExceptList *tail = nullptr;
-  UTL_ExceptList *middle = nullptr;
+  UTL_ExceptList *tail {};
+  UTL_ExceptList *middle {};
 
   if (!be_global->gen_lwccm ())
     {
@@ -1308,7 +1308,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                       -1);
     }
 
-  UTL_ExceptList *exceps = nullptr;
+  UTL_ExceptList *exceps {};
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->remove_failure_,
                                   middle),
@@ -1334,7 +1334,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
                                                       "get_primary_key",
                                                       {},
                                                       implicit);
-  be_operation *op = nullptr;
+  be_operation *op {};
   ACE_NEW_RETURN (op,
                   be_operation (node->primary_key (),
                                 AST_Operation::OP_noflags,
@@ -1347,7 +1347,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
   Identifier arg_id ("comp");
   UTL_ScopedName arg_name (&arg_id,
                            nullptr);
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                node->managed_component (),
@@ -1416,7 +1416,7 @@ be_visitor_ccm_pre_proc::lookup_cookie ()
 int
 be_visitor_ccm_pre_proc::lookup_exceptions ()
 {
-  int status = 0;
+  int status {};
 
   for (std::size_t i = 0; i < N_LW_EXCEPS; ++i)
     {
@@ -1507,7 +1507,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
       return 0;
     }
 
-  AST_Interface *event_consumer = nullptr;
+  AST_Interface *event_consumer {};
   AST_Module *m = dynamic_cast<AST_Module*> (s);
 
   // We're at global scope here so we need to fool the scope stack
@@ -1607,17 +1607,17 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
 AST_Interface *
 be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 {
-  Identifier *parent_id = nullptr;
+  Identifier *parent_id {};
   ACE_NEW_RETURN (parent_id,
                   Identifier ("KeylessCCMHome"),
                   nullptr);
 
-  UTL_ScopedName *parent_local_name = nullptr;
+  UTL_ScopedName *parent_local_name {};
   ACE_NEW_RETURN (parent_local_name,
                   UTL_ScopedName (parent_id, nullptr),
                   nullptr);
 
-  UTL_ScopedName *parent_full_name = nullptr;
+  UTL_ScopedName *parent_full_name {};
   ACE_NEW_RETURN (parent_full_name,
                   UTL_ScopedName (this->module_id_.copy (),
                                   parent_local_name),
@@ -1625,7 +1625,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 
   UTL_NameList parent_list (parent_full_name, nullptr);
 
-  UTL_NameList *parent_list_ptr = nullptr;
+  UTL_NameList *parent_list_ptr {};
 
   if (node->primary_key () == nullptr)
     {
@@ -1649,7 +1649,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                               "Implicit",
                               ScopeAsDecl (node->defined_in ()));
 
-  be_interface *i = nullptr;
+  be_interface *i {};
   ACE_NEW_RETURN (i,
                   be_interface (implicit_name,
                                 header.inherits (),
@@ -1707,7 +1707,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
 
-  be_interface *retval = nullptr;
+  be_interface *retval {};
   ACE_NEW_RETURN (retval,
                   be_interface (equiv_name,
                                 header.inherits (),
@@ -1763,11 +1763,11 @@ be_visitor_ccm_pre_proc::create_scoped_name (std::string const& prefix,
     {
       local_string += suffix;
     }
-  Identifier *local_id = nullptr;
+  Identifier *local_id {};
   ACE_NEW_RETURN (local_id,
                   Identifier (local_string),
                   nullptr);
-  UTL_ScopedName *last_segment = nullptr;
+  UTL_ScopedName *last_segment {};
   ACE_NEW_RETURN (last_segment,
                   UTL_ScopedName (local_id,
                                   nullptr),
@@ -1781,20 +1781,20 @@ be_visitor_ccm_pre_proc::create_scoped_name (std::string const& prefix,
 UTL_NameList *
 be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
 {
-  UTL_NameList *retval = nullptr;
+  UTL_NameList *retval {};
 
   if (node->base_home () == nullptr)
     {
-      Identifier *local_id = nullptr;
+      Identifier *local_id {};
       ACE_NEW_RETURN (local_id,
                       Identifier ("CCMHome"),
                       nullptr);
-      UTL_ScopedName *local_name = nullptr;
+      UTL_ScopedName *local_name {};
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (local_id,
                                       nullptr),
                       nullptr);
-      UTL_ScopedName *full_name = nullptr;
+      UTL_ScopedName *full_name {};
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (this->module_id_.copy (),
                                       local_name),
@@ -1818,8 +1818,8 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
 
   long const n_supports = node->n_inherits ();
-  UTL_ScopedName *supported_name = nullptr;
-  UTL_NameList *conc_value = nullptr;
+  UTL_ScopedName *supported_name {};
+  UTL_NameList *conc_value {};
 
   for (long i = 0; i < n_supports; ++i)
     {
@@ -1938,7 +1938,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
 
       s = u->defined_in ();
       idl_global->scopes ().push (s);
-      be_uses *ami_uses = nullptr;
+      be_uses *ami_uses {};
       ACE_NEW_RETURN (ami_uses,
                       be_uses (&utmp_sn,
                                ami_iface,

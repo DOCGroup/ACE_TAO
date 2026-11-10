@@ -103,11 +103,11 @@ void
 AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 {
   std::size_t const l = this->label_list_length ();
-  for (std::size_t i = 0; i < l; ++i)
+  for (std::size_t i {}; i < l; ++i)
     {
       this->dump_i (o, "case ");
 
-      AST_UnionLabel *ul = this->label (i);
+      AST_UnionLabel * const ul = this->label (i);
       ul->dump (o);
 
       this->dump_i (o, ":\n");
@@ -154,7 +154,7 @@ AST_UnionBranch::labels () const
 AST_UnionLabel *
 AST_UnionBranch::label (std::size_t index)
 {
-  std::size_t i = 0;
+  std::size_t i {};
 
   for (UTL_LabellistActiveIterator iter (this->pd_ll.get ());
        !iter.is_done ();
@@ -176,7 +176,7 @@ AST_UnionBranch::label (std::size_t index) const
 {
   UTL_LabelList const *labels = this->pd_ll.get ();
 
-  for (std::size_t i = 0; labels != nullptr; ++i)
+  for (std::size_t i {}; labels != nullptr; ++i)
     {
       if (i == index)
         {
@@ -205,7 +205,7 @@ AST_UnionBranch::label_list_length () const
 void
 AST_UnionBranch::add_labels (AST_Union *u)
 {
-  const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
+  bool const enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
   for (UTL_LabellistActiveIterator i (this->pd_ll.get ());
        !i.is_done ();
        i.next ())
@@ -215,8 +215,8 @@ AST_UnionBranch::add_labels (AST_Union *u)
           continue;
         }
 
-      AST_Expression *ex = i.item ()->label_val ();
-      UTL_ScopedName *n = ex->n ();
+      AST_Expression * const ex = i.item ()->label_val ();
+      UTL_ScopedName * const n = ex->n ();
 
       if (n)
         {
@@ -229,14 +229,14 @@ AST_UnionBranch::add_labels (AST_Union *u)
       if (enum_labels)
         {
           ex->ev ()->et = AST_Expression::EV_enum;
-          AST_Enum *disc = dynamic_cast<AST_Enum*> (u->disc_type ());
+          AST_Enum * const disc = dynamic_cast<AST_Enum*> (u->disc_type ());
           if (disc == nullptr)
             {
               // this is strictly to mollycoddle the Coverity null pointer
               // dereference check. The enum labels ensures consistency here.
               return;
             }
-          AST_EnumVal *dval = disc->lookup_by_value (ex);
+          AST_EnumVal * const dval = disc->lookup_by_value (ex);
 
           if (dval == nullptr)
             {
@@ -252,16 +252,16 @@ AST_UnionBranch::add_labels (AST_Union *u)
 void
 AST_UnionBranch::coerce_labels (AST_Union *u)
 {
-  for (std::size_t i = 0; i < this->label_list_length (); ++i)
+  for (std::size_t i {}; i < this->label_list_length (); ++i)
     {
-      AST_UnionLabel *ul = this->label (i);
+      AST_UnionLabel * const ul = this->label (i);
 
       if (ul->label_kind () == AST_UnionLabel::UL_default)
         {
           continue;
         }
 
-      AST_Expression *lv = ul->label_val ();
+      AST_Expression * const lv = ul->label_val ();
       lv->set_ev (lv->coerce (u->udisc_type ()));
     }
 }

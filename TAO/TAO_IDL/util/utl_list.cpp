@@ -112,7 +112,7 @@ UTL_List::nconc (UTL_List *l)
 UTL_List *
 UTL_List::copy ()
 {
-  UTL_List *retval = nullptr;
+  UTL_List *retval {};
 
   if (this->pd_cdr_data == nullptr)
     {

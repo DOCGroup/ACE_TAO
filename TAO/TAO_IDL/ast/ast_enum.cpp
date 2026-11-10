@@ -109,13 +109,10 @@ AST_Enum::member_count ()
 UTL_ScopedName *
 AST_Enum::value_to_name (const unsigned long v)
 {
-  AST_EnumVal *item = nullptr;
-  AST_Decl *d = nullptr;
-
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done (); i.next ())
     {
-      d = i.item  ();
-      item = dynamic_cast<AST_EnumVal*> (d);
+      AST_Decl * const d = i.item ();
+      AST_EnumVal * const item = dynamic_cast<AST_EnumVal*> (d);
 
       if (item->constant_value ()->ev ()->u.ulval == v)
         {
@@ -130,15 +127,12 @@ AST_Enum::value_to_name (const unsigned long v)
 AST_EnumVal *
 AST_Enum::lookup_by_value (const AST_Expression *v)
 {
-  AST_EnumVal *item = nullptr;
-  AST_Decl *d = nullptr;
-
   for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();
        i.next ())
     {
-      d = i.item ();
-      item = dynamic_cast<AST_EnumVal*> (d);
+      AST_Decl * const d = i.item ();
+      AST_EnumVal * const item = dynamic_cast<AST_EnumVal*> (d);
       AST_Expression *cv = item->constant_value ();
 
       if (cv == v)
@@ -171,7 +165,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
 unsigned long
 AST_Enum::next_enum_val ()
 {
-  unsigned long i = pd_enum_counter++;
+  unsigned long const i = pd_enum_counter++;
 
   return i;
 }
@@ -197,10 +191,10 @@ munge_name_for_enumval (UTL_ScopedName *n,
   while (len > 3)
     {
       len--;
-      n = (UTL_ScopedName *) n->tail ();
+      n = static_cast<UTL_ScopedName *> (n->tail ());
     }
 
-  UTL_IdList *id = nullptr;
+  UTL_IdList *id {};
   ACE_NEW_RETURN (id,
                   UTL_IdList (last_component->copy (),
                               nullptr),
@@ -235,8 +229,8 @@ AST_Enum::compute_member_count ()
 AST_EnumVal *
 AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d = nullptr;
-  AST_EnumVal *t1 = nullptr;
+  AST_Decl *d {};
+  AST_EnumVal *t1 {};
 
   std::unique_ptr<AST_Expression::AST_ExprValue> ev (
     t->constant_value ()->coerce (AST_Expression::EV_ulong));
@@ -244,13 +238,19 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
                                             t->name ());
 
+  if (t1 == nullptr)
+    {
+      // Prevent dereferencing null pointer in nested calls.
+      return nullptr;
+    }
+
   UTL_ScopedName *sn =
-    munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
+    munge_name_for_enumval (static_cast<UTL_IdList *> (t->name ()->copy ()),
                             t->local_name ());
 
   t->set_name (sn);
 
-  sn = munge_name_for_enumval ((UTL_IdList *) t1->name ()->copy (),
+  sn = munge_name_for_enumval (static_cast<UTL_IdList *> (t1->name ()->copy ()),
                                 t1->local_name ());
 
   t1->set_name (sn);
@@ -292,12 +292,6 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                            false,
                            t->local_name ());
 
-  if (t1 == nullptr)
-    {
-      // Prevent dereferencing null pointer in nested calls.
-      return nullptr;
-    }
-
   // Add it to enclosing scope.
   idl_global->scopes ().next_to_top ()->fe_add_enum_val (t1);
 
@@ -310,7 +304,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   if (this->is_local ())
     {

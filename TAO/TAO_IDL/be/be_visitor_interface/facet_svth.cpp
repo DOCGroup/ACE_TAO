@@ -48,7 +48,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
       << "namespace CIAO_FACET" << suffix << be_nl
       << "{" << be_idt_nl;
 
-  bool is_intf = node->node_type () == AST_Decl::NT_interface;
+  bool const is_intf = node->node_type () == AST_Decl::NT_interface;
 
   os_ << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
       << "class " << lname << "_Servant_T" << be_idt_nl
@@ -69,7 +69,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
 
       be_global->in_facet_servant (true);
 
-      int status =
+      int const status =
         intf->traverse_inheritance_graph (
           be_interface::op_attr_decl_helper,
           &os_);

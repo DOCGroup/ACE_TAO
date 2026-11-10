@@ -122,14 +122,14 @@ be_visitor_component_ami_rh_exs::visit_operation (
   if (!vrt)
     {
       // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
-      Identifier *id = nullptr;
+      Identifier *id {};
 
       ACE_NEW_RETURN (id,
                       Identifier ("ami_return_val"),
                       -1);
       std::unique_ptr<Identifier> id_owner (id);
 
-      UTL_ScopedName *tmp = nullptr;
+      UTL_ScopedName *tmp {};
 
       ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id_owner.get (),
@@ -144,7 +144,7 @@ be_visitor_component_ami_rh_exs::visit_operation (
       tmp_owner.release ();
 
       // Create the argument.
-      be_argument *arg = nullptr;
+      be_argument *arg {};
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_OUT,
                                   node->return_type (),

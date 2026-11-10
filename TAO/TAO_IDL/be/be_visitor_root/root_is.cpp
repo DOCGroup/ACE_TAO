@@ -43,7 +43,7 @@ int
 be_visitor_root_is::init ()
 {
   /// First open the file for writing.
-  int status =
+  int const status =
     tao_cg->start_implementation_skeleton (
       be_global->be_get_implementation_skel_fname ());
 

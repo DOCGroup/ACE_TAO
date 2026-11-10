@@ -111,7 +111,7 @@ be_connector::check_ancestors ()
           // for the moment
           AST_Module *m =
             dynamic_cast<AST_Module*> (this->defined_in ());
-          AST_Template_Module_Inst *t_inst = nullptr;
+          AST_Template_Module_Inst *t_inst {};
           while (t_inst == nullptr && m != nullptr)
             {
               t_inst = m->from_inst ();

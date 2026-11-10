@@ -123,8 +123,6 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_flags (fl),
     pd_exceptions (nullptr)
 {
-  AST_PredefinedType *pdt = nullptr;
-
   // Check that if the operation is oneway, the return type must be void.
   if (rt != nullptr && pd_flags == OP_oneway)
     {
@@ -135,7 +133,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
         }
       else
         {
-          pdt = dynamic_cast<AST_PredefinedType*> (rt);
+          AST_PredefinedType * const pdt = dynamic_cast<AST_PredefinedType*> (rt);
 
           if (pdt == nullptr || pdt->pt () != AST_PredefinedType::PT_void)
             {
@@ -181,7 +179,7 @@ AST_Operation::has_in_arguments ()
 int
 AST_Operation::count_arguments_with_direction (int direction_mask)
 {
-  int count = 0;
+  int count {};
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -244,10 +242,6 @@ AST_Operation::compute_argument_attr ()
       return 0;
     }
 
-  AST_Decl *d = nullptr;
-  AST_Type *type = nullptr;
-  AST_Argument *arg = nullptr;
-
   this->argument_count_ = 0;
 
   // If there are elements in this scope.
@@ -259,13 +253,13 @@ AST_Operation::compute_argument_attr ()
            si.next ())
         {
           // Get the next AST decl node.
-          d = si.item ();
+          AST_Decl * const d = si.item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
               this->argument_count_++;
 
-              arg = dynamic_cast<AST_Argument*> (d);
+              AST_Argument * const arg = dynamic_cast<AST_Argument*> (d);
 
               if (arg->direction() == AST_Argument::dir_IN ||
                   arg->direction() == AST_Argument::dir_INOUT)
@@ -274,7 +268,7 @@ AST_Operation::compute_argument_attr ()
                 }
 
 
-              type = dynamic_cast<AST_Type*> (arg->field_type ());
+              AST_Type * const type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -284,9 +278,9 @@ AST_Operation::compute_argument_attr ()
         }
     }
 
-  type = dynamic_cast<AST_Type*> (this->return_type ());
+  AST_Type * const return_type = dynamic_cast<AST_Type*> (this->return_type ());
 
-  if (type->node_type () == AST_Decl::NT_native)
+  if (return_type->node_type () == AST_Decl::NT_native)
     {
       this->has_native_ = true;
     }
@@ -316,18 +310,14 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       return nullptr;
     }
 
-  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
-
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> const t_owner (t);
 
   this->pd_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
-      nl_n = nl_i.item ();
-      d = this->lookup_by_name (nl_n, true);
+      UTL_ScopedName * const nl_n = nl_i.item ();
+      AST_Decl * const d = this->lookup_by_name (nl_n, true);
 
       if (d == nullptr)
         {
@@ -359,8 +349,24 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_typedef:
             {
               AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
+              if (td == nullptr)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                  return nullptr;
+                }
 
-              nt = td->primitive_base_type ()->node_type ();
+              AST_Type *primitive_type = td->primitive_base_type ();
+              if (primitive_type == nullptr)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                  return nullptr;
+                }
+
+              nt = primitive_type->node_type ();
 
               if (nt != AST_Decl::NT_except)
                 {
@@ -374,7 +380,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_native:
             {
               // This is the only use case for this node type.
-              int compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
+              int const compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
 
               if (compare != 0)
                 {
@@ -393,10 +399,10 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             break;
         };
 
-      bool oneway_op =
+      bool const oneway_op =
         (this->flags () == AST_Operation::OP_oneway);
 
-      fe = dynamic_cast<AST_Type*> (d);
+      AST_Type * const fe = dynamic_cast<AST_Type*> (d);
 
       if (oneway_op && fe != nullptr)
         {
@@ -413,7 +419,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          UTL_ExceptList *exceptions = nullptr;
+          UTL_ExceptList *exceptions {};
           ACE_NEW_RETURN (exceptions,
                           UTL_ExceptList (fe,
                                           nullptr),
@@ -422,7 +428,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
         }
       else
         {
-          UTL_ExceptList *el = nullptr;
+          UTL_ExceptList *el {};
           ACE_NEW_RETURN (el,
                           UTL_ExceptList (fe,
                                           nullptr),
@@ -445,8 +451,6 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
-  AST_Type *e = nullptr;
   if (this->pd_flags == OP_oneway)
     {
       this->dump_i (o, "oneway ");
@@ -464,7 +468,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
   // Must advance the iterator explicity inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done ();)
     {
-      d = i.item ();
+      AST_Decl * const d = i.item ();
       d->dump (o);
       i.next ();
 
@@ -484,7 +488,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions.get ());
            !ei.is_done ();)
         {
-          e = ei.item ();
+          AST_Type * const e = ei.item ();
           ei.next ();
           e->local_name ()->dump (o);
 

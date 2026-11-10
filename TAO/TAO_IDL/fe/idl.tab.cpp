@@ -118,8 +118,8 @@ extern "C" int tao_yywrap (void);
 extern char tao_yytext[];
 extern int tao_yyleng;
 
-AST_Enum *tao_enum_constant_decl = 0;
-AST_String *tao_string_decl = 0;
+AST_Enum *tao_enum_constant_decl {};
+AST_String *tao_string_decl {};
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 bool stack_based_lookup_for_primary_expr = false;
 
@@ -984,7 +984,7 @@ namespace tao_yy {
                 IDL_GlobalData::PS_ModuleIDSeen);
             }
 
-          AST_Module *m = 0;
+          AST_Module *m {};
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
           /*
@@ -1284,7 +1284,7 @@ namespace tao_yy {
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName *sn = (yystack_[5].value.idlist);
-          AST_Template_Module *ref = 0;
+          AST_Template_Module *ref {};
           AST_Decl *d = s->lookup_by_name (sn);
 
           if (d == 0)
@@ -1360,7 +1360,7 @@ namespace tao_yy {
 #line 963 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Interface *i = 0;
+          AST_Interface *i {};
 
           FE_InterfaceHeader *header = (yystack_[0].value.ihval);
           (yystack_[0].value.ihval) = 0;
@@ -1463,7 +1463,7 @@ namespace tao_yy {
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName *n = 0;
+          UTL_ScopedName *n {};
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ((yystack_[1].value.idval), 0),
                           1);
@@ -1496,7 +1496,7 @@ namespace tao_yy {
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName *n = 0;
+          UTL_ScopedName *n {};
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ((yystack_[1].value.idval), 0),
                           1);
@@ -1529,7 +1529,7 @@ namespace tao_yy {
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName *n = 0;
+          UTL_ScopedName *n {};
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ((yystack_[1].value.idval), 0),
                           1);
@@ -1620,7 +1620,7 @@ namespace tao_yy {
         {
           FE_OBVHeader *&valuetype_header = (yystack_[0].value.vhval);
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
-          AST_ValueType *valuetype = 0;
+          AST_ValueType *valuetype {};
 
           if (scope && valuetype_header)
             {
@@ -1711,8 +1711,8 @@ namespace tao_yy {
 #line 1245 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_ValueType *v = 0;
-          AST_Interface *i = 0;
+          AST_ValueType *v {};
+          AST_Interface *i {};
 
           if (s != 0 && (yystack_[0].value.vhval) != 0)
             {
@@ -1798,7 +1798,7 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
-          UTL_ScopedName *sn = 0;
+          UTL_ScopedName *sn {};
           ACE_NEW_RETURN (sn,
                           UTL_ScopedName ((yystack_[3].value.idval), 0),
                           1);
@@ -1883,7 +1883,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_ValueTypeFwd *f = 0;
+          AST_ValueTypeFwd *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeForwardSeen);
 
           /*
@@ -1909,7 +1909,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_ValueTypeFwd *f = 0;
+          AST_ValueTypeFwd *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeForwardSeen);
 
           /*
@@ -1945,7 +1945,7 @@ namespace tao_yy {
               /*
               * Get the type_spec associated with the valuebox
               */
-              AST_Type *tp = 0;
+              AST_Type *tp {};
               AST_Typedef *td
                 = dynamic_cast<AST_Typedef*> ((yystack_[0].value.dcval));
 
@@ -2283,7 +2283,7 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopedNameSeen);
 
-          UTL_NameList *nl = 0;
+          UTL_NameList *nl {};
           ACE_NEW_RETURN (nl,
                           UTL_NameList ((yystack_[0].value.idlist),
                                         0),
@@ -2336,13 +2336,13 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
-          Identifier *id = 0;
+          Identifier *id {};
           ACE_NEW_RETURN (id,
                           Identifier ((yystack_[2].value.strval)),
                           1);
           ACE::strdelete ((yystack_[2].value.strval));
           (yystack_[2].value.strval) = 0;
-          UTL_IdList *sn = 0;
+          UTL_IdList *sn {};
           ACE_NEW_RETURN (sn,
                           UTL_IdList ((yystack_[0].value.idval),
                                       0),
@@ -2374,7 +2374,7 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
-          UTL_IdList *sn = 0;
+          UTL_IdList *sn {};
           ACE_NEW_RETURN (sn,
                           UTL_IdList ((yystack_[0].value.idval),
                                       0),
@@ -2432,7 +2432,7 @@ namespace tao_yy {
               break;
             }
 
-          AST_InterfaceFwd *f = 0;
+          AST_InterfaceFwd *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceForwardSeen);
 
           /*
@@ -2459,7 +2459,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_InterfaceFwd *f = 0;
+          AST_InterfaceFwd *f {};
           idl_global->set_parse_state (
                           IDL_GlobalData::PS_InterfaceForwardSeen
                         );
@@ -2488,7 +2488,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_InterfaceFwd *f = 0;
+          AST_InterfaceFwd *f {};
           idl_global->set_parse_state (
                           IDL_GlobalData::PS_InterfaceForwardSeen
                         );
@@ -2552,7 +2552,7 @@ namespace tao_yy {
           UTL_ScopedName n ((yystack_[4].value.idval));
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Constant *c = 0;
+          AST_Constant *c {};
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstExprSeen);
 
           /*
@@ -2660,8 +2660,8 @@ namespace tao_yy {
 #line 1988 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_PredefinedType *c = 0;
-          AST_Typedef *t = 0;
+          AST_PredefinedType *c {};
+          AST_Typedef *t {};
           UTL_ScopedName *sn = (yystack_[0].value.idlist);
 
           /*
@@ -2959,7 +2959,7 @@ namespace tao_yy {
            * but only when it is evaluated (such as when it is assigned
            * as a constant value).
            */
-          AST_Expression *expr = 0;
+          AST_Expression *expr {};
 
           AST_Decl *node = stack_based_lookup_for_primary_expr ?
             idl_global->scopes ().lookup_by_name (name) :
@@ -3347,7 +3347,7 @@ namespace tao_yy {
             idl_global->err ()->idl_version_error (
               "Annotations are not allowed in IDL versions before 4");
 
-          AST_Annotation_Decl *decl = 0;
+          AST_Annotation_Decl *decl {};
           UTL_ScopedName *name = (yystack_[0].value.idlist);
           AST_Annotation_Decl::escape_name (name);
 
@@ -3405,7 +3405,7 @@ namespace tao_yy {
         {
           idl_global->ignore_lookup_errors_ = false;
           stack_based_lookup_for_primary_expr = false;
-          AST_Annotation_Appl *appl = 0;
+          AST_Annotation_Appl *appl {};
           UTL_ScopedName *name = (yystack_[2].value.idlist);
           AST_Annotation_Decl *decl = (yystack_[1].value.annotation_decl_val);
           AST_Annotation_Appl::Params *params = (yystack_[0].value.annotation_params_val);
@@ -3562,7 +3562,7 @@ namespace tao_yy {
 #line 2703 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Native *node = 0;
+          AST_Native *node {};
           idl_global->set_parse_state (IDL_GlobalData::PS_NativeSeen);
 
           /*
@@ -3613,8 +3613,8 @@ namespace tao_yy {
           UTL_DeclList *decls = (yystack_[0].value.dlval);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          FE_Declarator *d = 0;
-          AST_Typedef *t = 0;
+          FE_Declarator *d {};
+          AST_Typedef *t {};
           unsigned long index = 0UL;
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclaratorsSeen);
 
@@ -3706,7 +3706,7 @@ namespace tao_yy {
 #line 2821 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = 0;
+          AST_Decl *d {};
 
           if (s != 0)
             {
@@ -3849,7 +3849,7 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
-          UTL_DeclList *dl = 0;
+          UTL_DeclList *dl {};
           ACE_NEW_RETURN (dl,
                           UTL_DeclList ((yystack_[0].value.deval),
                                         0),
@@ -3912,7 +3912,7 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
-          UTL_DeclList *dl = 0;
+          UTL_DeclList *dl {};
           ACE_NEW_RETURN (dl,
                           UTL_DeclList ((yystack_[0].value.deval),
                                         0),
@@ -3942,7 +3942,7 @@ namespace tao_yy {
   case 267: // simple_declarator: defining_id
 #line 2966 "fe/idl.ypp"
         {
-          UTL_ScopedName *sn = 0;
+          UTL_ScopedName *sn {};
           ACE_NEW_RETURN (sn,
                           UTL_ScopedName ((yystack_[0].value.idval),
                                           0),
@@ -3959,7 +3959,7 @@ namespace tao_yy {
   case 268: // complex_declarator: array_declarator
 #line 2982 "fe/idl.ypp"
         {
-          UTL_ScopedName *sn = 0;
+          UTL_ScopedName *sn {};
           ACE_NEW_RETURN (sn,
                           UTL_ScopedName (
                               (yystack_[0].value.dcval)->local_name ()->copy (),
@@ -4201,7 +4201,7 @@ namespace tao_yy {
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval));
-          AST_Structure *d = 0;
+          AST_Structure *d {};
 
           /*
            * Create a node representing a struct declaration. Add it
@@ -4318,8 +4318,8 @@ namespace tao_yy {
 #line 3241 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          FE_Declarator *d = 0;
-          AST_Field *f = 0;
+          FE_Declarator *d {};
+          AST_Field *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
           AST_Decls *members = nullptr;
 
@@ -4419,7 +4419,7 @@ namespace tao_yy {
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[3].value.idval));
-          AST_Union *u = 0;
+          AST_Union *u {};
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
 
           /*
@@ -4491,7 +4491,7 @@ namespace tao_yy {
               else
                 {
                   /* Create a union with a correct discriminator. */
-                  AST_Union *u = 0;
+                  AST_Union *u {};
                   u = idl_global->gen ()->create_union (tp,
                                                         &n,
                                                         s->is_local (),
@@ -4607,9 +4607,9 @@ namespace tao_yy {
 #line 3470 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = 0;
-          AST_PredefinedType *p = 0;
-          AST_Typedef *t = 0;
+          AST_Decl *d {};
+          AST_PredefinedType *p {};
+          AST_Typedef *t {};
           bool found = false;
 
           /*
@@ -4734,7 +4734,7 @@ namespace tao_yy {
 #line 3595 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_UnionBranch *b = 0;
+          AST_UnionBranch *b {};
           AST_Annotation_Appls *annotations = (yystack_[3].value.annotations_val);
           AST_Field *f = (yystack_[2].value.ffval);
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemCompleted);
@@ -4797,7 +4797,7 @@ namespace tao_yy {
   case 336: // case_labels: case_labels case_label
 #line 3649 "fe/idl.ypp"
         {
-          UTL_LabelList *ll = 0;
+          UTL_LabelList *ll {};
           ACE_NEW_RETURN (ll,
                           UTL_LabelList ((yystack_[0].value.ulval),
                                          0),
@@ -4935,7 +4935,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_StructureFwd *d = 0;
+          AST_StructureFwd *d {};
 
           /*
            * Create a node representing a forward declaration of a struct.
@@ -4960,7 +4960,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_UnionFwd *u = 0;
+          AST_UnionFwd *u {};
 
           /*
            * Create a node representing a forward declaration of a union.
@@ -4990,7 +4990,7 @@ namespace tao_yy {
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval));
-          AST_Enum *e = 0;
+          AST_Enum *e {};
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
 
           /*
@@ -5075,8 +5075,8 @@ namespace tao_yy {
           ACE::strdelete ((yystack_[0].value.strval));
           (yystack_[0].value.strval) = 0;
           UTL_ScopedName n (&id);
-          AST_EnumVal *e = 0;
-          AST_Enum *c = 0;
+          AST_EnumVal *e {};
+          AST_Enum *c {};
 
           /*
            * Create a node representing one enumerator in an enum
@@ -5304,10 +5304,10 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
-          AST_Sequence *seq = 0;
+          AST_Sequence *seq {};
           Decl_Annotations_Pair *seq_head = (yystack_[5].value.decl_annotations_pair_val);
-          AST_Decl *type = 0;
-          AST_Annotation_Appls *type_annotations = 0;
+          AST_Decl *type {};
+          AST_Annotation_Appls *type_annotations {};
           if (seq_head)
             {
               type = seq_head->decl;
@@ -5328,8 +5328,8 @@ namespace tao_yy {
           /*
            * Create a node representing a sequence
            */
-          AST_Expression::AST_ExprValue *ev = 0;
-          AST_Param_Holder *param_holder = 0;
+          AST_Expression::AST_ExprValue *ev {};
+          AST_Param_Holder *param_holder {};
 
           if ((yystack_[2].value.exval) != 0)
             {
@@ -5389,10 +5389,10 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
-          AST_Sequence *seq = 0;
+          AST_Sequence *seq {};
           Decl_Annotations_Pair *seq_head = (yystack_[1].value.decl_annotations_pair_val);
-          AST_Decl *type = 0;
-          AST_Annotation_Appls *type_annotations = 0;
+          AST_Decl *type {};
+          AST_Annotation_Appls *type_annotations {};
           if (seq_head)
             {
               type = seq_head->decl;
@@ -5516,7 +5516,7 @@ namespace tao_yy {
           /*
            * Create a node representing a string.
            */
-          AST_Expression::AST_ExprValue *ev = 0;
+          AST_Expression::AST_ExprValue *ev {};
 
           if ((yystack_[2].value.exval) != 0)
             {
@@ -5610,7 +5610,7 @@ namespace tao_yy {
           /*
            * Create a node representing a string.
            */
-          AST_Expression::AST_ExprValue *ev = 0;
+          AST_Expression::AST_ExprValue *ev {};
 
           if ((yystack_[2].value.exval) != 0)
             {
@@ -5693,7 +5693,7 @@ namespace tao_yy {
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayCompleted);
 
-          AST_Array *array = 0;
+          AST_Array *array {};
           AST_Annotation_Appls *base_type_annotations = (yystack_[1].value.annotations_val);
           UTL_ExprList *array_dims = (yystack_[0].value.elval);
 
@@ -5742,7 +5742,7 @@ namespace tao_yy {
   case 383: // array_dims: array_dims array_dim
 #line 4486 "fe/idl.ypp"
         {
-          UTL_ExprList *el = 0;
+          UTL_ExprList *el {};
           ACE_NEW_RETURN (el,
                           UTL_ExprList ((yystack_[0].value.exval),
                                         0),
@@ -5794,8 +5794,8 @@ namespace tao_yy {
            * Array dimensions are expressions which must be coerced to
            * positive integers.
            */
-          AST_Expression::AST_ExprValue *ev = 0;
-          AST_Param_Holder *param_holder = 0;
+          AST_Expression::AST_ExprValue *ev {};
+          AST_Param_Holder *param_holder {};
 
           if ((yystack_[2].value.exval) != 0)
             {
@@ -5891,8 +5891,8 @@ namespace tao_yy {
 #line 4597 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Attribute *a = 0;
-          FE_Declarator *d = 0;
+          AST_Attribute *a {};
+          FE_Declarator *d {};
 
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
@@ -5979,8 +5979,8 @@ namespace tao_yy {
 #line 4668 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Attribute *a = 0;
-          FE_Declarator *d = 0;
+          AST_Attribute *a {};
+          FE_Declarator *d {};
 
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseCompleted);
 
@@ -6054,7 +6054,7 @@ namespace tao_yy {
           Identifier *&id = (yystack_[0].value.idval);
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
           UTL_ScopedName scoped_name (id);
-          AST_Exception *exception = 0;
+          AST_Exception *exception {};
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptIDSeen);
 
           /*
@@ -6124,7 +6124,7 @@ namespace tao_yy {
   case 406: // $@117: %empty
 #line 4792 "fe/idl.ypp"
         {
-          AST_Operation *op = 0;
+          AST_Operation *op {};
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
 
           AST_Operation::Flags op_flags = (yystack_[3].value.ofval);
@@ -6206,7 +6206,7 @@ namespace tao_yy {
 #line 4861 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Operation *o = 0;
+          AST_Operation *o {};
           idl_global->set_parse_state (IDL_GlobalData::PS_OpCompleted);
 
           /*
@@ -6315,7 +6315,7 @@ namespace tao_yy {
 
           UTL_ScopedName n (&id,
                             0);
-          AST_Factory *factory = 0;
+          AST_Factory *factory {};
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
@@ -6425,7 +6425,7 @@ namespace tao_yy {
 #line 5035 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Argument *a = 0;
+          AST_Argument *a {};
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDeclSeen);
 
           /*
@@ -6517,7 +6517,7 @@ namespace tao_yy {
 #line 5110 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Argument *a = 0;
+          AST_Argument *a {};
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDeclSeen);
 
           /*
@@ -6583,7 +6583,7 @@ namespace tao_yy {
 #line 5161 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = 0;
+          AST_Decl *d {};
           UTL_ScopedName *n = (yystack_[0].value.idlist);
 
           if (s != 0)
@@ -6605,7 +6605,7 @@ namespace tao_yy {
               d->last_referenced_as ((yystack_[0].value.idlist));
               AST_Decl::NodeType nt = d->node_type ();
               AST_Type *t = dynamic_cast<AST_Type*> (d);
-              AST_Typedef *td = 0;
+              AST_Typedef *td {};
               bool can_be_undefined = false;
 
               if (nt == AST_Decl::NT_typedef)
@@ -7029,7 +7029,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_ComponentFwd *f = 0;
+          AST_ComponentFwd *f {};
           idl_global->set_parse_state (
                           IDL_GlobalData::PS_ComponentForwardSeen
                         );
@@ -7057,7 +7057,7 @@ namespace tao_yy {
         {
           FE_ComponentHeader *&component_header = (yystack_[0].value.chval);
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
-          AST_Component *component = 0;
+          AST_Component *component {};
 
           /*
            * Make a new component node and add it to the enclosing scope.
@@ -7154,7 +7154,7 @@ namespace tao_yy {
            * Create an AST representation of the information in the header
            * part of a component.
            */
-          UTL_ScopedName *n = 0;
+          UTL_ScopedName *n {};
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ((yystack_[4].value.idval),
                                           0),
@@ -7351,7 +7351,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
-          AST_Param_Holder *ph = 0;
+          AST_Param_Holder *ph {};
 
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist), true, false);
@@ -7405,7 +7405,7 @@ namespace tao_yy {
                 }
             }
 
-          AST_Provides *provides = 0;
+          AST_Provides *provides {};
 
           if (so_far_so_good)
             {
@@ -7449,13 +7449,13 @@ namespace tao_yy {
   case 502: // interface_type: IDL_OBJECT
 #line 5864 "fe/idl.ypp"
         {
-          Identifier *corba_id = 0;
+          Identifier *corba_id {};
 
           ACE_NEW_RETURN (corba_id,
                           Identifier ("Object"),
                           1);
 
-          UTL_IdList *conc_name = 0;
+          UTL_IdList *conc_name {};
           ACE_NEW_RETURN (conc_name,
                           UTL_IdList (corba_id,
                                       0),
@@ -7479,7 +7479,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
-          AST_Param_Holder *ph = 0;
+          AST_Param_Holder *ph {};
 
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist), true, false);
@@ -7533,7 +7533,7 @@ namespace tao_yy {
                 }
             }
 
-          AST_Uses *uses = 0;
+          AST_Uses *uses {};
 
           if (so_far_so_good)
             {
@@ -7610,7 +7610,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
-          AST_Param_Holder *ph = 0;
+          AST_Param_Holder *ph {};
 
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist), true, false);
@@ -7649,7 +7649,7 @@ namespace tao_yy {
                 }
             }
 
-          AST_Emits *e = 0;
+          AST_Emits *e {};
 
           if (so_far_so_good)
             {
@@ -7685,7 +7685,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
-          AST_Param_Holder *ph = 0;
+          AST_Param_Holder *ph {};
 
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist), true, false);
@@ -7724,7 +7724,7 @@ namespace tao_yy {
                 }
             }
 
-          AST_Publishes *p = 0;
+          AST_Publishes *p {};
 
           if (so_far_so_good)
             {
@@ -7757,7 +7757,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
-          AST_Param_Holder *ph = 0;
+          AST_Param_Holder *ph {};
 
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist), true, false);
@@ -7796,7 +7796,7 @@ namespace tao_yy {
                 }
             }
 
-          AST_Consumes *c = 0;
+          AST_Consumes *c {};
 
           if (so_far_so_good)
             {
@@ -7830,7 +7830,7 @@ namespace tao_yy {
 #line 6232 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Home *h = 0;
+          AST_Home *h {};
 
           /*
            * Make a new home node and add it to the enclosing scope.
@@ -7937,7 +7937,7 @@ namespace tao_yy {
            * Create an AST representation of the information in the header
            * part of a component home.
            */
-          UTL_ScopedName *n = 0;
+          UTL_ScopedName *n {};
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ((yystack_[10].value.idval), 0),
                           1);
@@ -8208,7 +8208,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_EventTypeFwd *f = 0;
+          AST_EventTypeFwd *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeForwardSeen);
 
           /*
@@ -8236,7 +8236,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yystack_[0].value.idval),
                             0);
-          AST_EventTypeFwd *f = 0;
+          AST_EventTypeFwd *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeForwardSeen);
 
           /*
@@ -8262,8 +8262,8 @@ namespace tao_yy {
 #line 6590 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_EventType *e = 0;
-          AST_Interface *i = 0;
+          AST_EventType *e {};
+          AST_Interface *i {};
 
           if (s != 0 && (yystack_[1].value.idval) != 0)
             {
@@ -8418,7 +8418,7 @@ namespace tao_yy {
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
           Identifier *&event_id = (yystack_[1].value.idval);
           FE_OBVHeader *&event_header = (yystack_[0].value.vhval);
-          AST_EventType *eventtype = 0;
+          AST_EventType *eventtype {};
 
           if (scope && event_header)
             {
@@ -8875,7 +8875,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist));
-          AST_PortType *pt = 0;
+          AST_PortType *pt {};
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -8895,7 +8895,7 @@ namespace tao_yy {
                 }
             }
 
-          AST_Extended_Port *ep = 0;
+          AST_Extended_Port *ep {};
 
           if (so_far_so_good)
             {
@@ -8946,7 +8946,7 @@ namespace tao_yy {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
             s->lookup_by_name ((yystack_[1].value.idlist));
-          AST_PortType *pt = 0;
+          AST_PortType *pt {};
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -8966,7 +8966,7 @@ namespace tao_yy {
                  }
              }
 
-          AST_Mirror_Port *mp = 0;
+          AST_Mirror_Port *mp {};
 
           if (so_far_so_good)
             {
@@ -9042,7 +9042,7 @@ namespace tao_yy {
           // arg list.
           AST_Expression *ex = (yystack_[0].value.exval);
           UTL_ScopedName *sn = ex->n ();
-          AST_Decl *d = 0;
+          AST_Decl *d {};
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
           if (sn != 0)
@@ -9118,7 +9118,7 @@ namespace tao_yy {
 #line 7310 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Connector *parent = 0;
+          AST_Connector *parent {};
           bool so_far_so_good = true;
 
           Identifier id ((yystack_[2].value.strval));

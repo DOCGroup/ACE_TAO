@@ -57,7 +57,7 @@ public:
   ~ACE_Env_Value () = default;
 
   /// Returns the value as type T.
-  operator T ();
+  operator T () const;
 
   /// The constructor, read @a varname from the environment, using
   /// @a defval as its value if it is not defined.

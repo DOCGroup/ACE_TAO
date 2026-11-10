@@ -251,7 +251,7 @@ be_union::be_add_union_branch (AST_UnionBranch *b)
 ACE_UINT64
 be_union::nlabels ()
 {
-  ACE_UINT64 retval = 0;
+  ACE_UINT64 retval {};
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();

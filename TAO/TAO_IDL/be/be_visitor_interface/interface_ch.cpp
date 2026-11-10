@@ -57,7 +57,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (!node->is_local ())
     {
-      bool abs = node->is_abstract ();
+      bool const abs = node->is_abstract ();
 
       *os << be_nl
           << "friend class TAO::"
@@ -72,13 +72,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << be_nl_2
       << "// The static operations." << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
-      << node->local_name () << "_ptr obj);" << be_nl_2;
+      << node->local_name () << "_ptr obj);" << be_nl;
 
   if (c == nullptr)
     {
       *os << "static void _tao_release ("
           << node->local_name () << "_ptr obj);"
-          << be_nl_2;
+          << be_nl;
     }
 
   if (! this->gen_xxx_narrow ("_narrow", node, os))
@@ -233,12 +233,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
 
       *os << "// Non-local interface only." << be_nl
-          << node->local_name () << " (" << be_idt << be_idt_nl
+          << node->local_name () << " (" << be_idt_nl
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated = false," << be_nl
           << "TAO_Abstract_ServantBase *servant = nullptr," <<  be_nl
           << "TAO_ORB_Core *orb_core = nullptr);"
-          << be_uidt << be_uidt;
+          << be_uidt;
     }
 
   if (c != nullptr)
@@ -261,8 +261,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Abstract interfaces have a *protected* copy constructor.
   if (! node->is_abstract ())
     {
-      *os << "// Private and unimplemented for concrete interfaces." << be_nl
-          << node->local_name () << " ("
+      *os << node->local_name () << " ("
           << node->local_name () << " const &) = delete;" << be_nl
           << node->local_name () << " ("
           << node->local_name () << " &&) = delete;" << be_nl;
@@ -343,7 +342,7 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
     dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
-  int status = this->visit_scope (node->port_type ());
+  int const status = this->visit_scope (node->port_type ());
 
   if (status == -1)
     {
@@ -372,7 +371,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
     dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
-  int status = this->visit_scope (node->port_type ());
+  int const status = this->visit_scope (node->port_type ());
 
   if (status == -1)
     {
@@ -398,9 +397,10 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);
+  ctx.interface (node);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();

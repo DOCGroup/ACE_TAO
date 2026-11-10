@@ -121,7 +121,7 @@ AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                        UTL_ScopedName *n)
 {
-  AST_PredefinedType *retval = nullptr;
+  AST_PredefinedType *retval {};
   ACE_NEW_RETURN (retval,
                   AST_PredefinedType (t, n),
                   nullptr);
@@ -133,7 +133,7 @@ AST_Module *
 AST_Generator::create_module (UTL_Scope *s,
                               UTL_ScopedName *n)
 {
-  AST_Module *retval = nullptr;
+  AST_Module *retval {};
 
   // Check for another module of the same name in the scope.
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
@@ -187,7 +187,7 @@ AST_Generator::create_module (UTL_Scope *s,
 AST_Root *
 AST_Generator::create_root (UTL_ScopedName *n)
 {
-  AST_Root *retval = nullptr;
+  AST_Root *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Root (n),
                   nullptr);
@@ -204,7 +204,7 @@ AST_Generator::create_interface (UTL_ScopedName *n,
                                  bool is_local,
                                  bool is_abstract)
 {
-  AST_Interface *retval = nullptr;
+  AST_Interface *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Interface (n,
                                  inherits,
@@ -231,7 +231,7 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
                                          0,
                                          is_local,
                                          is_abstract);
-  AST_InterfaceFwd *retval = nullptr;
+  AST_InterfaceFwd *retval {};
   ACE_NEW_RETURN (retval,
                   AST_InterfaceFwd (full_defn, n),
                   nullptr);
@@ -254,7 +254,7 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
                                  bool is_truncatable,
                                  bool is_custom)
 {
-  AST_ValueType *retval = nullptr;
+  AST_ValueType *retval {};
   ACE_NEW_RETURN (retval,
                   AST_ValueType (n,
                                  inherits,
@@ -297,7 +297,7 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
                                                      false,
                                                      false);
 
-  AST_ValueTypeFwd *retval = nullptr;
+  AST_ValueTypeFwd *retval {};
   ACE_NEW_RETURN (retval,
                   AST_ValueTypeFwd (full_defn,
                                     n),
@@ -321,7 +321,7 @@ AST_Generator::create_eventtype (UTL_ScopedName *n,
                                  bool is_truncatable,
                                  bool is_custom)
 {
-  AST_EventType *retval = nullptr;
+  AST_EventType *retval {};
   ACE_NEW_RETURN (retval,
                   AST_EventType (n,
                                  inherits,
@@ -365,7 +365,7 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
                                                      false,
                                                      false);
 
-  AST_EventTypeFwd *retval = nullptr;
+  AST_EventTypeFwd *retval {};
   ACE_NEW_RETURN (retval,
                   AST_EventTypeFwd (full_defn,
                                     n),
@@ -383,7 +383,7 @@ AST_Generator::create_component (UTL_ScopedName *n,
                                  AST_Interface_List const& supports_flat,
                                  std::size_t n_supports_flat)
 {
-  AST_Component *retval = nullptr;
+  AST_Component *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Component (n,
                                  base_component,
@@ -406,7 +406,7 @@ AST_Generator::create_component_fwd (UTL_ScopedName *n)
                                                      AST_Interface_List {},
                                                      0);
 
-  AST_ComponentFwd *retval = nullptr;
+  AST_ComponentFwd *retval {};
   ACE_NEW_RETURN (retval,
                   AST_ComponentFwd (full_defn,
                                     n),
@@ -426,7 +426,7 @@ AST_Generator::create_home (UTL_ScopedName *n,
                             AST_Interface_List const& supports_flat,
                             std::size_t n_supports_flat)
 {
-  AST_Home *retval = nullptr;
+  AST_Home *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Home (n,
                             base_home,
@@ -446,7 +446,7 @@ AST_Generator::create_exception (UTL_ScopedName *n,
                                  bool is_local,
                                  bool is_abstract)
 {
-  AST_Exception *retval = nullptr;
+  AST_Exception *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Exception (n,
                                  is_local,
@@ -461,7 +461,7 @@ AST_Generator::create_structure (UTL_ScopedName *n,
                                  bool is_local,
                                  bool is_abstract)
 {
-  AST_Structure *retval = nullptr;
+  AST_Structure *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Structure (n,
                                  is_local,
@@ -477,7 +477,7 @@ AST_Generator::create_structure_fwd (UTL_ScopedName *n)
   AST_Structure *full_defn = this->create_structure  (n,
                                                       false,
                                                       false);
-  AST_StructureFwd *retval = nullptr;
+  AST_StructureFwd *retval {};
   ACE_NEW_RETURN (retval,
                   AST_StructureFwd (full_defn,
                                     n),
@@ -492,7 +492,7 @@ AST_Generator::create_enum (UTL_ScopedName *n,
                             bool is_local,
                             bool is_abstract)
 {
-  AST_Enum *retval = nullptr;
+  AST_Enum *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Enum (n,
                             is_local,
@@ -509,7 +509,7 @@ AST_Generator::create_operation (AST_Type *rt,
                                  bool is_local,
                                  bool is_abstract)
 {
-  AST_Operation *retval = nullptr;
+  AST_Operation *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Operation (rt,
                                  fl,
@@ -526,7 +526,7 @@ AST_Generator::create_field (AST_Type *ft,
                              UTL_ScopedName *n,
                              AST_Field::Visibility vis)
 {
-  AST_Field *retval = nullptr;
+  AST_Field *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Field (ft,
                              n,
@@ -541,7 +541,7 @@ AST_Generator::create_argument (AST_Argument::Direction d,
                                 AST_Type *ft,
                                 UTL_ScopedName *n)
 {
-  AST_Argument *retval = nullptr;
+  AST_Argument *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Argument (d,
                                 ft,
@@ -558,7 +558,7 @@ AST_Generator::create_attribute (bool ro,
                                  bool is_local,
                                  bool is_abstract)
 {
-  AST_Attribute *retval = nullptr;
+  AST_Attribute *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Attribute (ro,
                                  ft,
@@ -576,7 +576,7 @@ AST_Generator::create_union (AST_ConcreteType *dt,
                              bool is_local,
                              bool is_abstract)
 {
-  AST_Union *retval = nullptr;
+  AST_Union *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Union (dt,
                              n,
@@ -594,7 +594,7 @@ AST_Generator::create_union_fwd (UTL_ScopedName *n)
                                              n,
                                              false,
                                              false);
-  AST_UnionFwd *retval = nullptr;
+  AST_UnionFwd *retval {};
   ACE_NEW_RETURN (retval,
                   AST_UnionFwd (full_defn,
                                 n),
@@ -609,7 +609,7 @@ AST_Generator::create_union_branch (UTL_LabelList *ll,
                                     AST_Type *ft,
                                     UTL_ScopedName *n)
 {
-  AST_UnionBranch *retval = nullptr;
+  AST_UnionBranch *retval {};
   ACE_NEW_RETURN (retval,
                   AST_UnionBranch (ll,
                                    ft,
@@ -623,7 +623,7 @@ AST_UnionLabel *
 AST_Generator::create_union_label (AST_UnionLabel::UnionLabel ul,
                                    AST_Expression *v)
 {
-  AST_UnionLabel *retval = nullptr;
+  AST_UnionLabel *retval {};
   ACE_NEW_RETURN (retval,
                   AST_UnionLabel (ul,
                                   v),
@@ -637,7 +637,7 @@ AST_Generator::create_constant (AST_Expression::ExprType et,
                                 AST_Expression *ev,
                                 UTL_ScopedName *n)
 {
-  AST_Constant *retval = nullptr;
+  AST_Constant *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Constant (et,
                                 ev,
@@ -650,7 +650,7 @@ AST_Generator::create_constant (AST_Expression::ExprType et,
 AST_Expression *
 AST_Generator::create_expr (UTL_ScopedName *n)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (n),
                   nullptr);
@@ -662,7 +662,7 @@ AST_Expression *
 AST_Generator::create_expr (AST_Expression *v,
                             AST_Expression::ExprType t)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (v,
                                   t),
@@ -676,7 +676,7 @@ AST_Generator::create_expr (AST_Expression::ExprComb c,
                             AST_Expression *v1,
                             AST_Expression *v2)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (c,
                                   v1,
@@ -689,7 +689,7 @@ AST_Generator::create_expr (AST_Expression::ExprComb c,
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::Long v)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (v),
                   nullptr);
@@ -700,7 +700,7 @@ AST_Generator::create_expr (ACE_CDR::Long v)
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::LongLong l)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (l),
                   nullptr);
@@ -711,7 +711,7 @@ AST_Generator::create_expr (ACE_CDR::LongLong l)
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::Boolean b)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (b),
                   nullptr);
@@ -722,7 +722,7 @@ AST_Generator::create_expr (ACE_CDR::Boolean b)
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::ULong v)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (v),
                   nullptr);
@@ -733,7 +733,7 @@ AST_Generator::create_expr (ACE_CDR::ULong v)
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::ULongLong l)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (l),
                   nullptr);
@@ -745,7 +745,7 @@ AST_Expression *
 AST_Generator::create_expr (ACE_CDR::ULong v,
                             AST_Expression::ExprType t)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (v, t),
                   nullptr);
@@ -756,7 +756,7 @@ AST_Generator::create_expr (ACE_CDR::ULong v,
 AST_Expression *
 AST_Generator::create_expr (std::string s)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (std::move (s)),
                   nullptr);
@@ -767,7 +767,7 @@ AST_Generator::create_expr (std::string s)
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::Char c)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (c),
                   nullptr);
@@ -778,7 +778,7 @@ AST_Generator::create_expr (ACE_CDR::Char c)
 AST_Expression *
 AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (wc),
                   nullptr);
@@ -789,7 +789,7 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 AST_Expression *
 AST_Generator::create_wstring_expr (std::string s)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
@@ -800,7 +800,7 @@ AST_Generator::create_wstring_expr (std::string s)
 AST_Expression *
 AST_Generator::create_expr (ACE_CDR::Double d)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (d),
                   nullptr);
@@ -811,7 +811,7 @@ AST_Generator::create_expr (ACE_CDR::Double d)
 AST_Expression *
 AST_Generator::create_expr (const ACE_CDR::Fixed &f)
 {
-  AST_Expression *retval = nullptr;
+  AST_Expression *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Expression (f),
                   nullptr);
@@ -823,7 +823,7 @@ AST_EnumVal *
 AST_Generator::create_enum_val (ACE_CDR::ULong v,
                                 UTL_ScopedName *n)
 {
-  AST_EnumVal *retval = nullptr;
+  AST_EnumVal *retval {};
   ACE_NEW_RETURN (retval,
                   AST_EnumVal (v,
                                n),
@@ -839,7 +839,7 @@ AST_Generator::create_array (UTL_ScopedName *n,
                              bool is_local,
                              bool is_abstract)
 {
-  AST_Array *retval = nullptr;
+  AST_Array *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Array (n,
                              ndims,
@@ -858,7 +858,7 @@ AST_Generator::create_sequence (AST_Expression *ms,
                                 bool is_local,
                                 bool is_abstract)
 {
-  AST_Sequence *retval = nullptr;
+  AST_Sequence *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Sequence (ms,
                                 bt,
@@ -878,7 +878,7 @@ AST_Generator::create_map (AST_Expression *ms,
                            bool is_local,
                            bool is_abstract)
 {
-  AST_Map *retval = nullptr;
+  AST_Map *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Map (ms,
                            key_bt,
@@ -898,7 +898,7 @@ AST_Generator::create_string (AST_Expression *ms)
   UTL_ScopedName n (&id,
                     nullptr);
 
-  AST_String *retval = nullptr;
+  AST_String *retval {};
   ACE_NEW_RETURN (retval,
                   AST_String (AST_Decl::NT_string,
                               &n,
@@ -920,7 +920,7 @@ AST_Generator::create_wstring (AST_Expression *ms)
                             ? AST_Decl::NT_string
                             : AST_Decl::NT_wstring;
 
-  AST_String *retval = nullptr;
+  AST_String *retval {};
   ACE_NEW_RETURN (retval,
                   AST_String (nt,
                               &n,
@@ -937,7 +937,7 @@ AST_Generator::create_fixed (AST_Expression *digits,
 {
   Identifier id ("fixed");
   UTL_ScopedName name (&id, nullptr);
-  AST_Fixed *retval = nullptr;
+  AST_Fixed *retval {};
   ACE_NEW_RETURN (retval, AST_Fixed (&name, digits, scale), nullptr);
   return retval;
 }
@@ -948,7 +948,7 @@ AST_Generator::create_typedef (AST_Type *bt,
                                bool is_local,
                                bool is_abstract)
 {
-  AST_Typedef *retval = nullptr;
+  AST_Typedef *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Typedef (bt,
                                n,
@@ -962,7 +962,7 @@ AST_Generator::create_typedef (AST_Type *bt,
 AST_Native *
 AST_Generator::create_native (UTL_ScopedName *n)
 {
-  AST_Native *retval = nullptr;
+  AST_Native *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Native (n),
                   nullptr);
@@ -973,7 +973,7 @@ AST_Generator::create_native (UTL_ScopedName *n)
 AST_Factory *
 AST_Generator::create_factory (UTL_ScopedName *n)
 {
-  AST_Factory *retval = nullptr;
+  AST_Factory *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Factory (n),
                   nullptr);
@@ -984,7 +984,7 @@ AST_Generator::create_factory (UTL_ScopedName *n)
 AST_Finder *
 AST_Generator::create_finder (UTL_ScopedName *n)
 {
-  AST_Finder *retval = nullptr;
+  AST_Finder *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Finder (n),
                   nullptr);
@@ -996,7 +996,7 @@ AST_ValueBox *
 AST_Generator::create_valuebox (UTL_ScopedName *n,
                                 AST_Type *boxed_type)
 {
-  AST_ValueBox *retval = nullptr;
+  AST_ValueBox *retval {};
   ACE_NEW_RETURN (retval,
                   AST_ValueBox (n, boxed_type),
                   nullptr);
@@ -1007,7 +1007,7 @@ AST_Generator::create_valuebox (UTL_ScopedName *n,
 AST_PortType *
 AST_Generator::create_porttype (UTL_ScopedName *n)
 {
-  AST_PortType *retval = nullptr;
+  AST_PortType *retval {};
   ACE_NEW_RETURN (retval,
                   AST_PortType (n),
                   nullptr);
@@ -1019,7 +1019,7 @@ AST_Provides *
 AST_Generator::create_provides (UTL_ScopedName *n,
                                 AST_Type *provides_type)
 {
-  AST_Provides *retval = nullptr;
+  AST_Provides *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Provides (n,
                                 provides_type),
@@ -1033,7 +1033,7 @@ AST_Generator::create_uses (UTL_ScopedName *n,
                             AST_Type *uses_type,
                             bool is_multiple)
 {
-  AST_Uses *retval = nullptr;
+  AST_Uses *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Uses (n,
                             uses_type,
@@ -1047,7 +1047,7 @@ AST_Publishes *
 AST_Generator::create_publishes (UTL_ScopedName *n,
                                  AST_Type *publishes_type)
 {
-  AST_Publishes *retval = nullptr;
+  AST_Publishes *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Publishes (n,
                                  publishes_type),
@@ -1060,7 +1060,7 @@ AST_Emits *
 AST_Generator::create_emits (UTL_ScopedName *n,
                              AST_Type *emits_type)
 {
-  AST_Emits *retval = nullptr;
+  AST_Emits *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Emits (n,
                              emits_type),
@@ -1072,7 +1072,7 @@ AST_Consumes *
 AST_Generator::create_consumes (UTL_ScopedName *n,
                                 AST_Type *consumes_type)
 {
-  AST_Consumes *retval = nullptr;
+  AST_Consumes *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Consumes (n,
                                 consumes_type),
@@ -1086,7 +1086,7 @@ AST_Generator::create_extended_port (
   UTL_ScopedName *n,
   AST_PortType *porttype_ref)
 {
-  AST_Extended_Port *retval = nullptr;
+  AST_Extended_Port *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Extended_Port (n,
                                      porttype_ref),
@@ -1100,7 +1100,7 @@ AST_Generator::create_mirror_port (
   UTL_ScopedName *n,
   AST_PortType *porttype_ref)
 {
-  AST_Mirror_Port *retval = nullptr;
+  AST_Mirror_Port *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Mirror_Port (n,
                                    porttype_ref),
@@ -1114,7 +1114,7 @@ AST_Generator::create_connector (
   UTL_ScopedName *n,
   AST_Connector *base_connector)
 {
-  AST_Connector *retval = nullptr;
+  AST_Connector *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Connector (n,
                                  base_connector),
@@ -1128,7 +1128,7 @@ AST_Generator::create_template_module (
   UTL_ScopedName *n,
   FE_Utils::T_PARAMLIST_INFO *template_params)
 {
-  AST_Template_Module *retval = nullptr;
+  AST_Template_Module *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Template_Module (n,
                                        template_params),
@@ -1143,7 +1143,7 @@ AST_Generator::create_template_module_inst (
   AST_Template_Module *ref,
   FE_Utils::T_ARGLIST *template_args)
 {
-  AST_Template_Module_Inst *retval = nullptr;
+  AST_Template_Module_Inst *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Template_Module_Inst (n,
                                             ref,
@@ -1159,7 +1159,7 @@ AST_Generator::create_template_module_ref (
   AST_Template_Module *ref,
   UTL_StrList param_refs)
 {
-  AST_Template_Module_Ref *retval = nullptr;
+  AST_Template_Module_Ref *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Template_Module_Ref (n,
                                            ref,
@@ -1174,7 +1174,7 @@ AST_Generator::create_param_holder (
   UTL_ScopedName *parameter_name,
   FE_Utils::T_Param_Info *info)
 {
-  AST_Param_Holder *retval = nullptr;
+  AST_Param_Holder *retval {};
   ACE_NEW_RETURN (retval,
                   AST_Param_Holder (parameter_name,
                                     info),
@@ -1187,7 +1187,7 @@ AST_Annotation_Decl *
 AST_Generator::create_annotation_decl (
   UTL_ScopedName *name)
 {
-  AST_Annotation_Decl *retval = nullptr;
+  AST_Annotation_Decl *retval {};
   ACE_NEW_RETURN (retval, AST_Annotation_Decl (name), nullptr);
   return retval;
 }
@@ -1197,7 +1197,7 @@ AST_Generator::create_annotation_appl (
   UTL_ScopedName *name,
   AST_Annotation_Appl::Params *params)
 {
-  AST_Annotation_Appl *retval = nullptr;
+  AST_Annotation_Appl *retval {};
   ACE_NEW_RETURN (retval, AST_Annotation_Appl (name, params), nullptr);
   return retval;
 }
@@ -1208,7 +1208,7 @@ AST_Generator::create_annotation_member (
   AST_Type *type,
   UTL_ScopedName *name)
 {
-  AST_Annotation_Member *retval = nullptr;
+  AST_Annotation_Member *retval {};
   ACE_NEW_RETURN (retval, AST_Annotation_Member (expr_type, type, name), nullptr);
   return retval;
 }

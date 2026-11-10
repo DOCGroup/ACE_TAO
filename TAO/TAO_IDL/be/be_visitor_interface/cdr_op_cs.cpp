@@ -58,7 +58,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
-  AST_Decl::NodeType nt = node->node_type ();
+  AST_Decl::NodeType const nt = node->node_type ();
 
   if (node->is_abstract ())
     {

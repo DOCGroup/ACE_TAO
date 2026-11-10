@@ -152,7 +152,7 @@ be_visitor_component::visit_structure (be_structure *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -221,7 +221,7 @@ be_visitor_component::visit_typedef (be_typedef *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

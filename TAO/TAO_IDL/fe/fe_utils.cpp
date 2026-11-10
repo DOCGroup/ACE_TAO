@@ -33,7 +33,7 @@
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
-  for (std::size_t cur_pos = 0; cur_pos < params->size (); ++cur_pos)
+  for (std::size_t cur_pos {}; cur_pos < params->size (); ++cur_pos)
     {
       FE_Utils::T_Param_Info const& this_one = (*params)[cur_pos];
 
@@ -171,7 +171,7 @@ UTL_ScopedName *
 FE_Utils::string_to_scoped_name (std::string const& name)
 {
   Scoped_Name_Owner retval;
-  std::string::size_type start = 0;
+  std::string::size_type start {};
 
   try
     {
@@ -315,7 +315,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 
   (void) c->fe_add_structure (connection);
 
-  ACE_CDR::ULong bound = 0;
+  ACE_CDR::ULong const bound {};
   AST_Expression *bound_expr =
     idl_global->gen ()->create_expr (bound,
                                      AST_Expression::EV_ulong);
@@ -353,7 +353,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 
   for (std::string const &item : idl_global->included_ami_recep_names ())
     {
-      Scoped_Name_Owner sn = FE_Utils::string_to_scoped_name_owner (item);
+      Scoped_Name_Owner const sn = FE_Utils::string_to_scoped_name_owner (item);
 
       AST_Decl *d =
         idl_global->root ()->lookup_by_name (sn.get (), true);
@@ -452,7 +452,7 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   std::string retval;
   std::string const pattern ("sequence<");
   std::size_t const len = pattern.length ();
-  for (std::size_t index = 0; index < list->size (); ++index)
+  for (std::size_t index {}; index < list->size (); ++index)
     {
       FE_Utils::T_Param_Info const& param = (*list)[index];
 
@@ -477,7 +477,7 @@ FILE *
 FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
-  FILE * f = nullptr;
+  FILE * f {};
   std::string the_file ("/");
   the_file += filename;
 
@@ -503,7 +503,6 @@ FE_Utils::is_include_file_found (std::string &inc_file,
                                  std::string const& idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
-  char *full_path = nullptr;
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
@@ -517,10 +516,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
 
   inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
   inc_file += idl_file_name;
-  full_path =
-    ACE_OS::realpath (inc_file.c_str (), abspath);
-
-  if (full_path != nullptr)
+  if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
       FILE *test = ACE_OS::fopen (abspath, "r");
 
@@ -547,7 +543,7 @@ void
 FE_Utils::validate_included_idl_files ()
 {
   // Flag to make sure we don't repeat things.
-  static bool already_done = false;
+  static bool already_done {};
 
   if (already_done)
     {
@@ -566,7 +562,6 @@ FE_Utils::validate_included_idl_files ()
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
-  char *full_path = nullptr;
 
   // We are going to assemble a list of the include files found in
   // the top level file in the order that they are found in the pre-
@@ -578,19 +573,16 @@ FE_Utils::validate_included_idl_files ()
   for (std::size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
       std::string const& post_tmp = post_preproc_includes[i];
-      full_path = ACE_OS::realpath (post_tmp.c_str (), post_abspath);
-
-      if (full_path)
+      if (ACE_OS::realpath (post_tmp.c_str (), post_abspath) != nullptr)
         {
           for (std::size_t j = 0u; j < pre_preproc_includes.size (); ++j)
             {
               // Check this name with the name that we got from the
               // preprocessor.
 
-              bool valid_file = false;
-              full_path = ACE_OS::realpath (pre_preproc_includes [j].c_str (),
-                                            pre_abspath);
-              if (full_path &&
+              bool valid_file {};
+              if (ACE_OS::realpath (pre_preproc_includes [j].c_str (),
+                                    pre_abspath) != nullptr &&
                   FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
                   ACE_OS::access (post_abspath, R_OK) == 0)
                 {
@@ -612,11 +604,8 @@ FE_Utils::validate_included_idl_files ()
                     }
                   pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
                   pre_partial += pre_preproc_includes [j];
-                  full_path =
-                    ACE_OS::realpath (pre_partial.c_str (),
-                                      pre_abspath);
-
-                  if (full_path &&
+                  if (ACE_OS::realpath (pre_partial.c_str (),
+                                        pre_abspath) != nullptr &&
                       FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
                       ACE_OS::access (post_abspath, R_OK) == 0)
                     {
@@ -717,7 +706,7 @@ FE_Utils::original_local_name (Identifier *local_name)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
 
-      unsigned int len =
+      unsigned int const len =
         static_cast<unsigned int> (lname.size () - 5);
 
       TAO_IDL_CPP_Keyword_Entry const *entry =
@@ -734,8 +723,8 @@ bool
 FE_Utils::can_be_redefined (AST_Decl *prev_decl,
                             AST_Decl *curr_decl)
 {
-  AST_Decl::NodeType pnt = prev_decl->node_type ();
-  AST_Decl::NodeType cnt = curr_decl->node_type ();
+  AST_Decl::NodeType const pnt = prev_decl->node_type ();
+  AST_Decl::NodeType const cnt = curr_decl->node_type ();
 
   switch (cnt)
   {
@@ -756,13 +745,13 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
 
   UTL_Scope *prev_scope = prev_decl->defined_in ();
   UTL_Scope *curr_scope = curr_decl->defined_in ();
-  AST_Structure *s = nullptr;
-  AST_StructureFwd *s_fwd = nullptr;
-  AST_Template_Module *ptm = nullptr;
-  AST_Template_Module *ctm = nullptr;
+  AST_Structure *s {};
+  AST_StructureFwd *s_fwd {};
+  AST_Template_Module *ptm {};
+  AST_Template_Module *ctm {};
 
-  bool nt_eq = (pnt == cnt);
-  bool s_eq = (prev_scope == curr_scope);
+  bool const nt_eq = (pnt == cnt);
+  bool const s_eq = (prev_scope == curr_scope);
 
   switch (pnt)
   {
@@ -873,7 +862,7 @@ FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   std::string const &param_id,
                                   std::size_t index)
 {
-  for (std::size_t local_index = 0; local_index < index; ++local_index)
+  for (std::size_t local_index {}; local_index < index; ++local_index)
     {
       if ((*list)[local_index].name_ == param_id)
         {

@@ -35,7 +35,7 @@ int be_visitor_map_ch::visit_map (be_map *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << be_nl_2;
 
@@ -47,8 +47,8 @@ int be_visitor_map_ch::visit_map (be_map *node)
 
   *os << "using " << node->local_name () << " = std::map< ";
 
-  be_type* kt = node->key_type();
-  be_type* vt = node->value_type();
+  be_type * const kt = node->key_type ();
+  be_type * const vt = node->value_type ();
 
   // Generate the base type for the buffer.
   be_visitor_context ctx (*this->ctx_);

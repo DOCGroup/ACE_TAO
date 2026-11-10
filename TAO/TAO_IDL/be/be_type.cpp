@@ -74,7 +74,7 @@ be_type::compute_tc_name ()
         }
       else
         {
-          UTL_ScopedName *conc_name = nullptr;
+          UTL_ScopedName *conc_name {};
           ACE_NEW (conc_name,
                    UTL_ScopedName (n->head ()->copy (),
                                    nullptr));
@@ -82,13 +82,13 @@ be_type::compute_tc_name ()
           this->tc_name_->nconc (conc_name);
         }
 
-      n = (UTL_ScopedName *)n->tail ();
+      n = static_cast<UTL_ScopedName *> (n->tail ());
     }
 
   std::string namebuf ("_tc_");
   namebuf += n->last_component ()->get_string ();
 
-  Identifier *id = nullptr;
+  Identifier *id {};
   ACE_NEW (id,
            Identifier (namebuf));
 
@@ -101,7 +101,7 @@ be_type::compute_tc_name ()
     }
   else
     {
-      UTL_ScopedName *conc_name = nullptr;
+      UTL_ScopedName *conc_name {};
       ACE_NEW (conc_name,
                UTL_ScopedName (id,
                                nullptr));
@@ -159,7 +159,7 @@ void
 be_type::gen_fwd_helper_name ()
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
-  Identifier *segment = nullptr;
+  Identifier *segment {};
   this->fwd_helper_name_.clear ();
 
   if (parent != nullptr && parent->node_type () != AST_Decl::NT_root)
@@ -282,7 +282,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
           << (v == nullptr ? "_ptr" : "*") << ";";
     }
 
-  bool skip_varout = false;
+  bool skip_varout {};
   AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
 
   if (s != nullptr)

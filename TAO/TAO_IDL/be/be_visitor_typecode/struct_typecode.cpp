@@ -31,7 +31,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
     this->queue_lookup (this->tc_queue_, node);
 
   std::vector<AST_Type *> recursion_queue;
-  bool in_recursion = node->in_recursion (recursion_queue);
+  bool const in_recursion = node->in_recursion (recursion_queue);
   if (qnode && in_recursion)
     {
       // we're repeated and we're recursive so just leave
@@ -170,7 +170,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
 int
 TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 {
-  AST_Field *member_ptr = nullptr;
+  AST_Field *member_ptr {};
   ACE_CDR::ULong const count = node->nfields ();
 
   for (ACE_CDR::ULong i = 0; i < count; ++i)
@@ -212,7 +212,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 int
 TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 {
-  AST_Field *member_ptr = nullptr;
+  AST_Field *member_ptr {};
   ACE_CDR::ULong const count = node->nfields ();
   TAO_OutStream & os = *this->ctx_->stream ();
 

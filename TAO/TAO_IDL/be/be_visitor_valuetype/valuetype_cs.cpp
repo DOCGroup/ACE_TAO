@@ -162,7 +162,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << be_nl
       << "{}" << be_nl_2;
 
-  bool is_an_amh_exception_holder =
+  bool const is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
 
   // Nothing to marshal if abstract valuetype.

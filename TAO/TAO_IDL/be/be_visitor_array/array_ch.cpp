@@ -70,7 +70,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
-      int status = 0;
+      int status {};
       be_visitor_context ctx (*this->ctx_);
 
       switch (nt)

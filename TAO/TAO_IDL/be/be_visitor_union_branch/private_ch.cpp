@@ -368,7 +368,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
 
   *os << be_nl;
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_object
       || pt == AST_PredefinedType::PT_abstract)

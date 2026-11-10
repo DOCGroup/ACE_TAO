@@ -95,9 +95,9 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
 
-  Identifier *id = nullptr;
-  UTL_ScopedName *new_name = nullptr;
-  UTL_ScopedName *conc_name = nullptr;
+  Identifier *id {};
+  UTL_ScopedName *new_name {};
+  UTL_ScopedName *conc_name {};
   bool const narrow = this->width () == sizeof (char);
 
   ACE_NEW (id,

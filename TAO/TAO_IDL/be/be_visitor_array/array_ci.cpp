@@ -62,7 +62,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
-      int status = 0;
+      int status {};
       be_visitor_context ctx (*this->ctx_);
 
       switch (nt)
@@ -200,7 +200,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "{" << be_idt_nl;
 
   std::size_t const ndims = node->n_dims ();
-  be_array *primitive_type = nullptr;
+  be_array *primitive_type {};
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {

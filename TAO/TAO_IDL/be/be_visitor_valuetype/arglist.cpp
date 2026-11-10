@@ -54,7 +54,7 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 int
 be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 {
-  bool amh_valuetype = this->is_amh_exception_holder (node);
+  bool const amh_valuetype = this->is_amh_exception_holder (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << " (";
@@ -80,9 +80,6 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
       *os << ")";
     }
-
-  be_visitor_context ctx = *this->ctx_;
-  be_visitor_operation operation_visitor (&ctx);
 
   switch (this->ctx_->state ())
     {
@@ -170,7 +167,7 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

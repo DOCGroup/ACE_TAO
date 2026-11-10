@@ -15,7 +15,7 @@ project(TAO_IDL_GEN) {
     all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
     GPERF ?= $(ACE_ROOT)/bin/ace_gperf
     GPERF_ARGS := -M -J -Q -c -C -D -E -T -f 0 \
-      -a -o -t -p -K keyword_ -L C++17 \
+      -o -t -p -K keyword_ \
       -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$
     fe/keywords.dat.tmp: fe/keywords.dat
     "	$(GPERF) $(GPERF_ARGS) $^ > $@"

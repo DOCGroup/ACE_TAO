@@ -41,7 +41,7 @@ Gen_Perf::Gen_Perf ()
   : max_hash_value (0),
     fewest_collisions (0),
     num_done (1),
-    union_set (nullptr)
+    union_set {}
 {
 }
 
@@ -108,8 +108,8 @@ Gen_Perf::hash (List_Node *key_node)
 {
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
-  for (char *ptr = key_node->keysig; *ptr; ptr++)
-      sum += Vectors::asso_values[(int) *ptr];
+  for (char const ptr : key_node->keysig)
+      sum += Vectors::asso_values[static_cast<int> (ptr)];
 
   key_node->hash_value = sum;
   return sum;
@@ -191,26 +191,26 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
     ACE_DEBUG ((LM_DEBUG,
                 "collision on keyword #%d, prior = \"%C\", curr = \"%C\" hash = %d\n",
                 num_done,
-                prior->key,
-                curr->key,
+                prior->key.c_str (),
+                curr->key.c_str (),
                 curr->hash_value));
-  Gen_Perf::sort_set (this->union_set,
-                      compute_disjoint_union (prior->keysig,
-                                              curr->keysig,
-                                              this->union_set));
+  Gen_Perf::sort_set (this->union_set.get (),
+                      compute_disjoint_union (prior->keysig.data (),
+                                              curr->keysig.data (),
+                                              this->union_set.get ()));
 
   // Try changing some values, if change doesn't alter other values
   // continue normal action.
   ++fewest_collisions;
 
-  for (char *temp = union_set; *temp != '\0'; temp++)
+  for (char *temp = this->union_set.get (); *temp != '\0'; temp++)
     if (affects_prev (*temp, curr) == 0)
       {
         if (option[DEBUGGING])
           ACE_DEBUG ((LM_DEBUG,
                       " by changing asso_value['%c'] (char #%d) to %d\n",
                       *temp,
-                      temp - union_set + 1,
+                      temp - this->union_set.get () + 1,
                       Vectors::asso_values[(int) *temp]));
         // Good, doesn't affect previous hash values, we'll take it.
         return 0;
@@ -280,18 +280,14 @@ Gen_Perf::open ()
     + option.asso_max ()
     * option.max_keysig_size ();
 
-  ACE_NEW_RETURN (this->union_set,
+  char *union_set {};
+  ACE_NEW_RETURN (union_set,
                   char[2 * option.max_keysig_size () + 1],
                   -1);
+  this->union_set.reset (union_set);
   ACE_OS::printf ("/* ");
 
-  if (option[C])
-    ACE_OS::printf ("C");
-
-  else if (option[CPLUSPLUS])
-    ACE_OS::printf ("C++");
-
-  ACE_OS::printf (" code produced by gperf version %s */\n",
+  ACE_OS::printf ("C++ code produced by ACE gperf version %s */\n",
                   version_string);
   Options::print_options ();
 
@@ -320,7 +316,7 @@ Gen_Perf::compute_binary_search ()
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr = nullptr;
+  List_Node *curr {};
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
@@ -340,7 +336,7 @@ Gen_Perf::compute_linear_search ()
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr = nullptr;
+  List_Node *curr {};
   int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
@@ -354,7 +350,7 @@ Gen_Perf::compute_linear_search ()
 int
 Gen_Perf::compute_perfect_hash ()
 {
-  List_Node *curr = nullptr;
+  List_Node *curr {};
 
   for (curr = this->key_list.head;
        curr != nullptr;
@@ -465,6 +461,5 @@ Gen_Perf::~Gen_Perf ()
                   "end table dumping\n"));
     }
 
-  delete [] this->union_set;
 }
 

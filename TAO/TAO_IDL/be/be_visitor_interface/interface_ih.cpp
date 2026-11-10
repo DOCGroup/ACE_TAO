@@ -103,7 +103,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
 
   // Generate the code for the members of the derived classes.
-  int status =
+  int const status =
     node->traverse_inheritance_graph (
       be_visitor_interface_ih::method_helper,
       os);

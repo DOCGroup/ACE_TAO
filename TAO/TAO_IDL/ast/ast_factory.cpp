@@ -179,10 +179,6 @@ AST_Factory::compute_argument_attr ()
       return 0;
     }
 
-  AST_Decl *d = nullptr;
-  AST_Type *type = nullptr;
-  AST_Argument *arg = nullptr;
-
   this->argument_count_ = 0;
 
   // If there are elements in this scope.
@@ -193,15 +189,15 @@ AST_Factory::compute_argument_attr ()
            i.next ())
         {
           // Get the next AST decl node.
-          d = i.item ();
+          AST_Decl * const d = i.item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
               this->argument_count_++;
 
-              arg = dynamic_cast<AST_Argument*> (d);
+              AST_Argument * const arg = dynamic_cast<AST_Argument*> (d);
 
-              type = dynamic_cast<AST_Type*> (arg->field_type ());
+              AST_Type * const type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -223,11 +219,7 @@ AST_Factory::fe_add_argument (AST_Argument *t)
 UTL_NameList *
 AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
-  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
-
-  UTL_ScopedName *nl_n = nullptr;
-  AST_Type *fe = nullptr;
-  AST_Decl *d = nullptr;
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> const t_owner (t);
 
   this->pd_exceptions.reset ();
 
@@ -235,9 +227,9 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
        !nl_i.is_done ();
        nl_i.next ())
     {
-      nl_n = nl_i.item ();
+      UTL_ScopedName * const nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n, true);
+      AST_Decl * const d = this->defined_in ()->lookup_by_name (nl_n, true);
 
       if (d == nullptr)
         {
@@ -255,9 +247,9 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      fe = dynamic_cast<AST_Type*> (d);
+      AST_Type * const fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = nullptr;
+      UTL_ExceptList *el {};
       ACE_NEW_RETURN (el,
                       UTL_ExceptList (fe, nullptr),
                       nullptr);
@@ -281,8 +273,6 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 void
 AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = nullptr;
-
   this->dump_i (o, "factory ");
   this->local_name ()->dump (o);
   this->dump_i (o, "(");
@@ -291,7 +281,7 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
   for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();)
     {
-      d = i.item ();
+      AST_Decl * const d = i.item ();
       d->dump (o);
       i.next ();
 

@@ -338,7 +338,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       ub->gen_default_label_value (os, bu);
     }
 
-  bool bt_is_defined = node->is_defined ();
+  bool const bt_is_defined = node->is_defined ();
 
   *os << ";" << be_nl
       << "using OBJECT_FIELD = "
@@ -429,7 +429,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       ub->gen_default_label_value (os, bu);
     }
 
-  bool bt_is_defined = node->full_definition ()->is_defined ();
+  bool const bt_is_defined = node->full_definition ()->is_defined ();
 
   *os << ";" << be_nl
       << "using OBJECT_FIELD = "
@@ -604,7 +604,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       << bu->name () << "::" << ub->local_name () << " (";
 
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object

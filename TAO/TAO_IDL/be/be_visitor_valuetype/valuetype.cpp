@@ -98,7 +98,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                        false,
                        false);
 
-  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  get_op.set_name (static_cast<UTL_IdList *> (node->name ()->copy ()));
 
   if (this->visit_operation (&get_op) == -1)
     {
@@ -131,7 +131,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                                          node->field_type (),
                                          node->name ());
 
-  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+  arg->set_name (static_cast<UTL_IdList *> (node->name ()->copy ()));
 
   // Create the operation.
   be_operation set_op (&rt,
@@ -140,7 +140,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                        false,
                        false);
 
-  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.set_name (static_cast<UTL_IdList *> (node->name ()->copy ()));
   set_op.be_add_argument (arg);
 
  if (this->visit_operation (&set_op) == -1)
@@ -164,7 +164,7 @@ be_visitor_valuetype::visit_constant (be_constant *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -220,7 +220,7 @@ be_visitor_valuetype::visit_enum (be_enum *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -294,7 +294,7 @@ be_visitor_valuetype::visit_exception (be_exception *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -361,7 +361,7 @@ be_visitor_valuetype::visit_structure (be_structure *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -430,7 +430,7 @@ be_visitor_valuetype::visit_structure_fwd (be_structure_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -461,7 +461,7 @@ be_visitor_valuetype::visit_union (be_union *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -544,7 +544,7 @@ be_visitor_valuetype::visit_union_fwd (be_union_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -575,7 +575,7 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -792,7 +792,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       Identifier id {arg_name};
       UTL_ScopedName sn (&id, nullptr);
       be_type *ft = dynamic_cast<be_type*> (f->field_type ());
-      bool seen = ft->seen_in_operation ();
+      bool const seen = ft->seen_in_operation ();
 
       // This sets ft->seen_in_operation (true), so we have to
       // restore the original value below.

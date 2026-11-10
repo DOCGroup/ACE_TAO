@@ -16,7 +16,7 @@
 #include "global_extern.h"
 #include "idl_defines.h"
 
-TAO_IFR_BE_Export BE_GlobalData *be_global = nullptr;
+TAO_IFR_BE_Export BE_GlobalData *be_global {};
 
 BE_GlobalData::BE_GlobalData ()
 {

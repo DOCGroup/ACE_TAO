@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <cstdio>
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "drv_extern.h"
 
@@ -345,7 +346,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout (status);
         }
 
-      AST_Generator *gen = be_util::generator_init ();
+      std::unique_ptr<AST_Generator> gen = be_util::generator_init ();
 
       if (nullptr == gen)
         {
@@ -359,7 +360,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          idl_global->set_gen (std::unique_ptr<AST_Generator> (gen));
+          idl_global->set_gen (std::move (gen));
         }
 
       // Initialize AST and load predefined types.
@@ -392,7 +393,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      FILE *output_file = nullptr;
+      FILE *output_file {};
 
       if (idl_global->multi_file_input ())
         {

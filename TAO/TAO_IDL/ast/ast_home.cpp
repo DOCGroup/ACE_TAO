@@ -49,7 +49,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
-  AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
+  AST_ValueType * const pk = dynamic_cast<AST_ValueType*> (primary_key);
 
   if (pk != nullptr)
     {
@@ -68,7 +68,7 @@ AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   if (this->pd_base_home != nullptr)
     {
@@ -84,7 +84,7 @@ AST_Decl *
 AST_Home::look_in_supported (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
@@ -100,7 +100,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (std::size_t j = 0; j < supported.size (); ++j)
+  for (std::size_t j {}; j < supported.size (); ++j)
     {
       if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {

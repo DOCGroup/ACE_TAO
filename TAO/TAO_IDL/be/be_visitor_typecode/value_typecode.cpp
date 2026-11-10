@@ -31,7 +31,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
     this->queue_lookup (this->tc_queue_, node);
 
   std::vector<AST_Type *> recursion_queue;
-  bool in_recursion = node->in_recursion (recursion_queue);
+  bool const in_recursion = node->in_recursion (recursion_queue);
   if (qnode && in_recursion)
     {
       // we're repeated and we're recursive so just leave
@@ -239,7 +239,7 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
     node->data_members_count (AST_Field::vis_PUBLIC)
     + node->data_members_count (AST_Field::vis_PRIVATE);
 
-  std::size_t i = 0;
+  std::size_t i {};
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();

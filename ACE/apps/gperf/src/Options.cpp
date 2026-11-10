@@ -49,15 +49,13 @@ namespace
   }
 }
 
-/// These need to appear before the global class instantiation, since
-/// they are static members with a default constructor that initializes
-/// an ACE_Allocator needed in the Options class constructor.
-ACE_CString Options::function_name_;
-ACE_CString Options::fill_default_;
-ACE_CString Options::key_name_;
-ACE_CString Options::class_name_;
-ACE_CString Options::hash_name_;
-ACE_CString Options::delimiters_;
+/// Define option strings before the global Options object that initializes them.
+std::string Options::function_name_;
+std::string Options::fill_default_;
+std::string Options::key_name_;
+std::string Options::class_name_;
+std::string Options::hash_name_;
+std::string Options::delimiters_;
 
 /// Global option coordinator for the entire program.
 Options option;
@@ -69,25 +67,24 @@ extern char const *version_string;
 static constexpr int DEFAULT_JUMP_VALUE = 5;
 
 /// Default name for generated lookup function.
-static const char *const DEFAULT_NAME = "in_word_set";
+static constexpr char const *DEFAULT_NAME = "in_word_set";
 
 /// Default filler for keyword table.
-static const char *const DEFAULT_FILL = "";
+static constexpr char const *DEFAULT_FILL = "";
 
 /// Default name for the key component.
-static const char *const DEFAULT_KEY = "name";
+static constexpr char const *DEFAULT_KEY = "name";
 
 /// Default name for the generated class.
-static const char *const DEFAULT_CLASS_NAME = "Perfect_Hash";
+static constexpr char const *DEFAULT_CLASS_NAME = "Perfect_Hash";
 
 /// Default name for generated hash function.
-static const char *const DEFAULT_HASH_NAME = "hash";
+static constexpr char const *DEFAULT_HASH_NAME = "hash";
 
 /// Default delimiters that separate keywords from their attributes.
-static const char *const DEFAULT_DELIMITERS = ",\n";
+static constexpr char const *DEFAULT_DELIMITERS = ",\n";
 
 int Options::option_word_;
-bool Options::cxx17_;
 int Options::total_switches_;
 u_int Options::total_keysig_size_;
 int Options::size_;
@@ -97,15 +94,15 @@ int Options::initial_asso_value_;
 int Options::argc_;
 ACE_TCHAR **Options::argv_;
 int Options::iterations_;
-char Options::key_positions_[MAX_KEY_POS];
+std::array<char, MAX_KEY_POS> Options::key_positions_;
 
 /// Prints program usage to standard error stream.
 void
 Options::usage ()
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage: %n [-abBcCdDef[num]gGhH<hashname>i<init>IjJ"
-              "k<keys>K<keyname>lL<language>mMnN<function name>o"
+              "Usage: %n [-bBcCdDe<delimiters>Ef[num]F<fill>gGhH<hashname>"
+              "i<init>IjJk<keys>K<keyname>lmMnN<function name>o"
               "Oprs<size>S<switches>tTvVZ<class name>].\n"
               "(type %n -h for help)\n"));
 }
@@ -163,9 +160,8 @@ Options::Options ()
   key_positions_[2] = EOS;
   total_keysig_size_ = 2;
   delimiters_ = DEFAULT_DELIMITERS;
-  cxx17_ = false;
   jump_ = DEFAULT_JUMP_VALUE;
-  option_word_ = DEFAULTCHARS | C;
+  option_word_ = DEFAULTCHARS;
   function_name_ = DEFAULT_NAME;
   fill_default_ = DEFAULT_FILL;
   key_name_ = DEFAULT_KEY;
@@ -180,13 +176,12 @@ Options::~Options ()
 {
   if (ACE_BIT_ENABLED (option_word_, DEBUGGING))
     {
-      char *ptr = nullptr;
+      char *ptr {};
 
       ACE_OS::fprintf (stderr,
                        "\ndumping Options:"
                        "\nDEBUGGING is...: %s"
                        "\nORDER is.......: %s"
-                       "\nANSI is........: %s"
                        "\nTYPE is........: %s"
                        "\nINLINE is......: %s"
                        "\nRANDOM is......: %s"
@@ -201,8 +196,6 @@ Options::~Options ()
                        "\nNOTYPE is......: %s"
                        "\nGLOBAL is......: %s"
                        "\nCONSTANT is....: %s"
-                       "\nCPLUSPLUS is...: %s"
-                       "\nC is...........: %s"
                        "\nENUM is........: %s"
                        "\nSTRCASECMP is..: %s"
                        "\nOPTIMIZE is....: %s"
@@ -221,7 +214,6 @@ Options::~Options ()
                        "\n",
                        ACE_BIT_ENABLED (option_word_, DEBUGGING) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, ORDER) ? "enabled" : "disabled",
-                       ACE_BIT_ENABLED (option_word_, ANSI) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, TYPE) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, INLINE) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, RANDOM) ? "enabled" : "disabled",
@@ -236,8 +228,6 @@ Options::~Options ()
                        ACE_BIT_ENABLED (option_word_, NOTYPE) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, GLOBAL) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, CONSTANT) ? "enabled" : "disabled",
-                       ACE_BIT_ENABLED (option_word_, CPLUSPLUS) ? "enabled" : "disabled",
-                       ACE_BIT_ENABLED (option_word_, C) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, ENUM) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, STRCASECMP) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, OPTIMIZE) ? "enabled" : "disabled",
@@ -261,7 +251,7 @@ Options::~Options ()
                        "maximum keysig size = %d\nkey positions are:\n",
                        total_keysig_size_);
 
-      for (ptr = key_positions_; *ptr != EOS; ptr++)
+      for (ptr = key_positions_.data (); *ptr != EOS; ptr++)
         if (*ptr == WORD_END)
           ACE_OS::fprintf (stderr, "$\n");
         else
@@ -279,7 +269,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:Q"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("bBcCdDe:Ef:F:gGhH:i:IJj:k:K:lmMnN:oOprs:S:tTvVZ:QR"));
 
   argc_ = argc;
   argv_ = argv;
@@ -289,12 +279,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     {
       switch (option_char)
         {
-          // Generated coded uses the ANSI prototype format.
-        case 'a':
-          {
-            ACE_SET_BITS (option_word_, ANSI);
-            break;
-          }
           // Generate code for Linear Search.
         case 'b':
           {
@@ -374,7 +358,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           {
             Options::usage ();
             ACE_OS::fprintf (stderr,
-                             "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
                              "-b\tGenerate code for Linear Search.\n"
                              "-B\tGenerate code for Binary Search.\n"
                              "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
@@ -408,6 +391,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "\tcharacter value upon collisions.  Must be an odd number, default is %d.\n"
                              "-J\tSkips '#include \"ace/OS_NS_string.h\"' part in the output.\n"
                              "-Q\tSkips '#include <cstring>' in C++ output.\n"
+                             "-R\tSkips C++17 standard headers in the output.\n"
                              "-k\tAllows selection of the key positions used in the hash function.\n"
                              "\tThe allowable choices range between 1-%d, inclusive.  The positions\n"
                              "\tare separated by commas, ranges may be used, and key positions may\n"
@@ -418,11 +402,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "\tstructure.\n"
                              "-l\tCompare key lengths before trying a string comparison.  This helps\n"
                              "\tcut down on the number of string comparisons made during the lookup.\n"
-                             "-L\tGenerates code in the language specified by the option's argument.\n"
-                             "\tLanguages handled are C++17, C++, and C.  The default is C.\n"
                              "-m\tAvoids the warning about identical hash values. This is valid\n"
                              "\tonly if the -D option is enabled.\n"
-                             "-M\tSkips class definition in the output. This is valid only in C++ mode.\n"
+                             "-M\tSkip the class definition in the generated output.\n"
                              "-n\tDo not include the length of the keyword when computing the hash\n"
                              "\tfunction.\n"
                              "-N\tAllow user to specify name of generated lookup function.  Default\n"
@@ -445,13 +427,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "\tvalue about 3 times smaller than the number of input keys. A\n"
                              "\tlarger table should decrease the time required for an unsuccessful\n"
                              "\tsearch, at the expense of extra table space.  Default value is 1.\n"
-                             "-S\tCauses the generated C code to use a switch statement scheme, rather\n"
+                             "-S\tCauses the generated code to use a switch statement scheme, rather\n"
                              "\tthan an array lookup table.  This can lead to a reduction in both\n"
                              "\ttime and space requirements for some keyfiles.  The argument to\n"
                              "\tthis option determines how many switch statements are generated.\n"
                              "\tA value of 1 generates 1 switch containing all the elements, a value\n"
                              "\tof 2 generates 2 tables with 1/2 the elements in each table, etc.\n"
-                             "\tThis is useful since many C compilers cannot correctly generate code\n"
+                             "\tThis is useful since some compilers cannot correctly generate code\n"
                              "\tfor large switch statements.\n"
                              "-t\tAllows the user to include a structured type declaration for\n"
                              "\tgenerated code. Any text before %%%% is consider part of the type\n"
@@ -519,10 +501,16 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             ACE_SET_BITS (option_word_, SKIPSTDCSTRING);
             break;
           }
+        // Skip including the C++17 standard headers.
+        case 'R':
+          {
+            ACE_SET_BITS (option_word_, SKIPCPP17HEADERS);
+            break;
+          }
         // Sets key positions used for hash function.
         case 'k':
           {
-            const int BAD_VALUE = -1;
+            int const BAD_VALUE = -1;
             int value;
             Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
                              1,
@@ -538,7 +526,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
               {
                 char *l_key_pos;
 
-                for (l_key_pos = key_positions_;
+                for (l_key_pos = key_positions_.data ();
                      (value = expand ()) != EOS;
                      l_key_pos++)
                   if (value == BAD_VALUE)
@@ -552,13 +540,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
                 *l_key_pos = EOS;
 
-                total_keysig_size_ = ACE_Utils::truncate_cast<u_int> (l_key_pos - key_positions_);
+                total_keysig_size_ = ACE_Utils::truncate_cast<u_int> (l_key_pos - key_positions_.data ());
                 if (total_keysig_size_ == 0)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "No keys selected.\n%r",
                                      &Options::usage),
                                     -1);
-                else if (key_sort (key_positions_, total_keysig_size_) == 0)
+                else if (key_sort (key_positions_.data (), total_keysig_size_) == 0)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "Duplicate keys selected\n%r",
                                      &Options::usage),
@@ -582,31 +570,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             ACE_SET_BITS (option_word_, LENTABLE);
             break;
           }
-        // Deal with different generated languages.
-        case 'L':
-          {
-            option_word_ &= ~C;
-            cxx17_ = !ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++17"));
-            if (cxx17_ || !ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++")))
-              ACE_SET_BITS (option_word_, (CPLUSPLUS | ANSI));
-            else if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C")))
-              ACE_SET_BITS (option_word_, C);
-            else
-              {
-                ACE_ERROR ((LM_ERROR,
-                            "unsupported language option %s, defaulting to C\n",
-                            get_opt.opt_arg ()));
-                ACE_SET_BITS (option_word_, C);
-              }
-            break;
-          }
         // Don't print the warnings.
         case 'm':
           {
             ACE_SET_BITS (option_word_, MUTE);
             break;
           }
-        // Skip the class definition while in C++ mode.
+        // Skip the class definition in the generated C++ code.
         case 'M':
           {
             ACE_SET_BITS (option_word_, SKIPCLASS);
@@ -811,38 +781,38 @@ Options::jump ()
 }
 
 /// Returns the generated function name.
-const char *
+std::string const&
 Options::function_name ()
 {
-  return function_name_.c_str ();
+  return function_name_;
 }
 
 /// Returns the fill default
-const char *
+std::string const&
 Options::fill_default ()
 {
-  return fill_default_.c_str ();
+  return fill_default_;
 }
 
 /// Returns the keyword key name.
-const char *
+std::string const&
 Options::key_name ()
 {
-  return key_name_.c_str ();
+  return key_name_;
 }
 
 /// Returns the hash function name.
-const char *
+std::string const&
 Options::hash_name ()
 {
-  return hash_name_.c_str ();
+  return hash_name_;
 }
 
 /// Returns the generated class name.
-const char *
+std::string const&
 Options::class_name ()
 {
-  return class_name_.c_str ();
+  return class_name_;
 }
 
 /// Returns the initial associated character value.
@@ -860,17 +830,10 @@ Options::iterations ()
 }
 
 /// Returns the string used to delimit keywords from other attributes.
-const char *
+std::string const&
 Options::delimiter ()
 {
-  return delimiters_.c_str ();
-}
-
-/// True when C++17 output was selected.
-bool
-Options::cxx17 ()
-{
-  return cxx17_;
+  return delimiters_;
 }
 
 /// Gets the total number of switch statements to generate.

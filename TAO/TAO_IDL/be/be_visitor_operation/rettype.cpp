@@ -86,7 +86,7 @@ be_visitor_operation_rettype::visit_predefined_type (
       bt = node;
     }
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt != AST_PredefinedType::PT_void)
     {
@@ -157,8 +157,8 @@ be_visitor_operation_rettype::visit_sequence (
 int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != sizeof (char));
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
+  bool const wide = (node->width () != sizeof (char));
 
   if (wide)
     {

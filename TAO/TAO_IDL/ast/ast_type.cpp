@@ -201,7 +201,7 @@ AST_Type const *
 AST_Type::unaliased_type () const
 {
   AST_Type const *t = this;
-  AST_Typedef const *td = nullptr;
+  AST_Typedef const *td {};
   AST_Decl::NodeType nt = this->node_type ();
 
   while (nt == AST_Decl::NT_typedef)

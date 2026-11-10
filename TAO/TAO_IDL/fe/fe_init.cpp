@@ -87,7 +87,7 @@ fe_populate_global_scope ()
   // No need to create a scoped name for the basic types, the
   // AST_PredefinedType constructor will do that.
 
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
   AST_Root *root =
     dynamic_cast<AST_Root*> (idl_global->root ());
 
@@ -383,7 +383,7 @@ FE_init ()
 void
 FE_populate ()
 {
-  AST_Root *r = nullptr;
+  AST_Root *r {};
 
   // Check that the BE init created a generator object
   if (idl_global->gen () == nullptr)
@@ -428,8 +428,8 @@ FE_populate ()
 void
 FE_extract_env_include_paths (std::vector<std::string> &list)
 {
-  ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
-                                   nullptr);
+  ACE_Env_Value<char*> const incl_paths (ACE_TEXT ("INCLUDE"),
+                                         nullptr);
   char const * const env_paths = incl_paths;
 
   if (env_paths != nullptr)
@@ -440,7 +440,7 @@ FE_extract_env_include_paths (std::vector<std::string> &list)
       constexpr char separator = ':';
 #endif
       std::string const paths (env_paths);
-      std::string::size_type start = 0;
+      std::string::size_type start {};
 
       do
         {
@@ -475,8 +475,8 @@ std::string
 FE_get_cpp_loc_from_env ()
 {
   // See if TAO_IDL_PREPROCESSOR is defined.
-  ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
-                                     nullptr);
+  ACE_Env_Value<char*> const preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
+                                           nullptr);
 
   char const * const env_preprocessor = preprocessor;
   if (env_preprocessor != nullptr)
@@ -491,8 +491,8 @@ std::string
 FE_get_cpp_args_from_env ()
 {
   // Added some customizable preprocessor options
-  ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
-                              nullptr);
+  ACE_Env_Value<char*> const args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
+                                    nullptr);
 
   char const * const env_args = args1;
   if (env_args != nullptr)

@@ -102,7 +102,7 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
       << "_var x =" << be_idt_nl
       << global << sname_str << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = nullptr;" << be_nl
+      << "::PortableServer::Servant retval {};" << be_nl
       << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_NEW_NORETURN (retval," << be_nl

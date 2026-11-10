@@ -33,6 +33,8 @@
 #include "Options.h"
 #include "List_Node.h"
 
+#include <memory>
+
 /**
  * Hash table used to check for duplicate keyword entries.
  *
@@ -46,11 +48,11 @@ class Hash_Table
 {
 public:
   /// Constructor
-  Hash_Table (size_t s);
+  explicit Hash_Table (size_t s);
 
-  Hash_Table (const Hash_Table &) = delete;
+  Hash_Table (Hash_Table const &) = delete;
   Hash_Table (Hash_Table &&) = delete;
-  Hash_Table &operator= (const Hash_Table &) = delete;
+  Hash_Table &operator= (Hash_Table const &) = delete;
   Hash_Table &operator= (Hash_Table &&) = delete;
 
   /// Destructor
@@ -60,7 +62,7 @@ public:
 
 private:
   /// Vector of pointers to linked lists of List_Node's.
-  List_Node **table_;
+  std::unique_ptr<List_Node*[]> table_;
 
   /// Size of the vector.
   size_t size_;

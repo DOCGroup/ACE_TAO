@@ -95,6 +95,7 @@ public:
       TAO_OPERATION_CS,                       // in client stubs
 
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
+      TAO_OPERATION_ARGLIST_SMART_PROXY_CH,   // ... for smart proxy headers
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
       TAO_TIE_OPERATION_ARGLIST_SH,           // ... for TIE class header
 

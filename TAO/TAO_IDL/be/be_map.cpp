@@ -116,8 +116,8 @@ be_map::primitive_value_type () const
 std::string
 be_map::gen_name ()
 {
-  be_type *kt = nullptr;
-  be_type *vt = nullptr;
+  be_type *kt {};
+  be_type *vt {};
 
   // Retrieve the base type.
   kt = dynamic_cast<be_type*> (this->key_type ());
@@ -184,12 +184,12 @@ be_map::create_name (be_typedef *node)
           // Make a copy of the enclosing scope's name.
           UTL_ScopedName *const n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
-          Identifier *id = nullptr;
+          Identifier *id {};
           ACE_NEW_RETURN (id,
                           Identifier (namebuf),
                           -1);
 
-          UTL_ScopedName *conc_name = nullptr;
+          UTL_ScopedName *conc_name {};
           ACE_NEW_RETURN (conc_name,
                           UTL_ScopedName (id,
                                           nullptr),

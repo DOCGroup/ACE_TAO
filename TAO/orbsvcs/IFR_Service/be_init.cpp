@@ -75,7 +75,7 @@ BE_ifr_orb_init (int &ac, ACE_TCHAR *av[])
 {
   try
     {
-      ACE_TCHAR *name = nullptr;
+      ACE_TCHAR *name {};
       be_global->orb (CORBA::ORB_init (ac,
                                        av,
                                        name));

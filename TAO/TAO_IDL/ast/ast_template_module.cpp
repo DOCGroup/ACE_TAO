@@ -49,7 +49,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       return false;
     }
 
-  std::size_t slot = 0;
+  std::size_t slot {};
 
   for (AST_Decl *d : *args)
     {
@@ -93,7 +93,7 @@ AST_Template_Module::match_param_refs (UTL_StrList const& refs,
                                        UTL_Scope *decl_scope)
 {
   UTL_Scope *s = decl_scope;
-  AST_Template_Module *enclosing = nullptr;
+  AST_Template_Module *enclosing {};
 
   while (enclosing == nullptr && s != nullptr)
     {

@@ -136,7 +136,7 @@ be_sequence::primitive_base_type () const
 std::string
 be_sequence::gen_name ()
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Retrieve the base type.
   bt = dynamic_cast<be_type*> (this->base_type ());
@@ -216,10 +216,6 @@ int
 be_sequence::create_name (be_typedef *node)
 {
   std::string namebuf;
-  UTL_ScopedName *n = nullptr;
-
-  // Scope in which we are defined.
-  be_decl *scope = nullptr;
 
   // If there is a typedef node, we use its name as our name.
   if (node)
@@ -240,19 +236,20 @@ be_sequence::create_name (be_typedef *node)
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
 
-      scope = dynamic_cast<be_scope*> (us)->decl ();
+      be_decl * const scope = dynamic_cast<be_scope*> (us)->decl ();
 
       if (scope != nullptr)
         {
           // Make a copy of the enclosing scope's name.
-          n = (UTL_ScopedName *) scope->name ()->copy ();
+          UTL_ScopedName * const n =
+            static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
-          Identifier *id = nullptr;
+          Identifier *id {};
           ACE_NEW_RETURN (id,
                           Identifier (namebuf),
                           -1);
 
-          UTL_ScopedName *conc_name = nullptr;
+          UTL_ScopedName *conc_name {};
           ACE_NEW_RETURN (conc_name,
                           UTL_ScopedName (id,
                                           nullptr),
@@ -319,7 +316,7 @@ be_sequence::managed_type () const
               be_predefined_type * const bpd =
                 dynamic_cast<be_predefined_type*> (base_type);
 
-              AST_PredefinedType::PredefinedType pt = bpd->pt ();
+              AST_PredefinedType::PredefinedType const pt = bpd->pt ();
 
               switch (pt)
                 {
@@ -795,7 +792,7 @@ be_sequence::compute_tc_name ()
   // TypeCode.  Generate a TypeCode name that is meant for internal
   // use alone.
 
-  Identifier * tao_id = nullptr;
+  Identifier * tao_id {};
   ACE_NEW (tao_id,
            Identifier ("TAO"));
 
@@ -814,22 +811,22 @@ be_sequence::compute_tc_name ()
   local_tc_name += this->flat_name ();
   local_tc_name += bound;
 
-  Identifier * typecode_scope = nullptr;
+  Identifier * typecode_scope {};
   ACE_NEW (typecode_scope,
            Identifier ("TypeCode"));
 
-  UTL_ScopedName * tc_scope_conc_name = nullptr;
+  UTL_ScopedName * tc_scope_conc_name {};
   ACE_NEW (tc_scope_conc_name,
            UTL_ScopedName (typecode_scope,
                            nullptr));
 
   this->tc_name_->nconc (tc_scope_conc_name);
 
-  Identifier * id = nullptr;
+  Identifier * id {};
   ACE_NEW (id,
            Identifier (local_tc_name));
 
-  UTL_ScopedName * conc_name = nullptr;
+  UTL_ScopedName * conc_name {};
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
                            nullptr));

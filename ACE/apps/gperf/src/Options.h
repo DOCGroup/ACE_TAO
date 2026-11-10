@@ -25,7 +25,9 @@
 #define OPTIONS_H
 
 #include "ace/Log_Msg.h"
-#include "ace/SString.h"
+
+#include <array>
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +38,6 @@ enum Option_Type
 {
   DEBUGGING    = 01,            /* Enable debugging (prints diagnostics to stderr). */
   ORDER        = 02,            /**< Apply ordering heuristic to speed-up search time. */
-  ANSI         = 04,            /**< Generate ANSI prototypes. */
   ALLCHARS     = 010,           /**< Use all characters in hash function. */
   INLINE       = 020,           /**< Generate code for inline functions. */
   TYPE         = 040,           /**< Handle user-defined type structured keyword input. */
@@ -52,18 +53,16 @@ enum Option_Type
   COMP         = 0100000,       /**< Generate strncmp rather than strcmp. */
   GLOBAL       = 0200000,       /**< Make the keyword table a global variable. */
   CONSTANT     = 0400000,       /**< Make the generated tables readonly (const). */
-  CPLUSPLUS    = 01000000,      /**< Generate C++ code. */
-  C            = 02000000,      /**< Generate C code. */
   ENUM         = 04000000,      /**< Use enum for constants. */
   STRCASECMP   = 010000000,     /**< Use the case insensitive comparison. */
   OPTIMIZE     = 020000000,     /**< Assume all input keywords are in the keyset. */
-  ADA          = 040000000,     /**< Generate Ada code. */
   MUTE         = 0100000000,    /**< Dont print the warnings. */
   SKIPCLASS    = 0200000000,    /**< Skip the class definition part in the output while in C++ mode. */
   SKIPSTRINGH  = 0400000000,    /**< Skip including the header file ace/OS_NS_string.h. */
   BINARYSEARCH = 01000000000,   /**< Generates Binary Search code. */
   LINEARSEARCH = 02000000000,   /**< Generates Linear Search code. */
-  SKIPSTDCSTRING = 04000000000  /**< Skip including the C++ <cstring> header. */
+  SKIPSTDCSTRING = 04000000000, /**< Skip including the C++ <cstring> header. */
+  SKIPCPP17HEADERS = 010000000000 /**< Skip including C++17 standard headers. */
 };
 
 // Define some useful constants (these don't really belong here, but
@@ -71,13 +70,10 @@ enum Option_Type
 // g++ doesn't seem to do the right thing with them at the
 // moment... ;-(
 
-enum
-{
-  MAX_KEY_POS = 128 - 1,    /**< Max size of each word's key set. */
-  WORD_START = 1,           /**< Signals the start of a word. */
-  WORD_END = 0,             /**< Signals the end of a word. */
-  EOS = MAX_KEY_POS         /**< Signals end of the key list. */
-};
+constexpr int MAX_KEY_POS {128 - 1}; /**< Max size of each word's key set. */
+constexpr int WORD_START {1};        /**< Signals the start of a word. */
+constexpr int WORD_END {};           /**< Signals the end of a word. */
+constexpr int EOS {MAX_KEY_POS};     /**< Signals end of the key list. */
 
 /*
  * This class provides a uniform interface to the various options
@@ -95,9 +91,9 @@ class Options
 {
 public:
   Options ();
-  Options (const Options &) = delete;
+  Options (Options const &) = delete;
   Options (Options &&) = delete;
-  Options &operator= (const Options &) = delete;
+  Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
   ~Options ();
   int operator[] (Option_Type option);
@@ -115,20 +111,16 @@ public:
   static int jump ();
   static int initial_value ();
   static int total_switches ();
-  static const char *function_name ();
-  static const char *fill_default ();
-  static const char *key_name ();
-  static const char *class_name ();
-  static const char *hash_name ();
-  static const char *delimiter ();
-  static bool cxx17 ();
+  static std::string const& function_name ();
+  static std::string const& fill_default ();
+  static std::string const& key_name ();
+  static std::string const& class_name ();
+  static std::string const& hash_name ();
+  static std::string const& delimiter ();
 
 private:
   /// Holds the user-specified Options.
   static int option_word_;
-
-  /// Whether C++17 output was selected.
-  static bool cxx17_;
 
   /// Number of switch statements to generate.
   static int total_switches_;
@@ -158,25 +150,25 @@ private:
   static ACE_TCHAR **argv_;
 
   /// Names used for generated lookup function.
-  static ACE_CString function_name_;
+  static std::string function_name_;
 
   /// Expression used to assign default values in keyword table.
-  static ACE_CString fill_default_;
+  static std::string fill_default_;
 
   /// Name used for keyword key.
-  static ACE_CString key_name_;
+  static std::string key_name_;
 
   /// Name used for generated C++ class.
-  static ACE_CString class_name_;
+  static std::string class_name_;
 
   /// Name used for generated hash function.
-  static ACE_CString hash_name_;
+  static std::string hash_name_;
 
   /// Separates keywords from other attributes.
-  static ACE_CString delimiters_;
+  static std::string delimiters_;
 
   /// Contains user-specified key choices.
-  static char key_positions_[MAX_KEY_POS];
+  static std::array<char, MAX_KEY_POS> key_positions_;
 
   /// Sorts key positions in REVERSE order.
   static int key_sort (char *base, int len);

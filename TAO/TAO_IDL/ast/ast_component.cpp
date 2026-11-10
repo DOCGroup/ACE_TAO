@@ -51,7 +51,7 @@ AST_Component::~AST_Component () = default;
 void
 AST_Component::redefine (AST_Interface *from)
 {
-  AST_Component *c = dynamic_cast<AST_Component*> (from);
+  AST_Component * const c = dynamic_cast<AST_Component*> (from);
 
   if (c == nullptr)
     {
@@ -71,7 +71,7 @@ AST_Decl *
 AST_Component::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
 
   if (this->pd_base_component != nullptr)
     {
@@ -89,7 +89,7 @@ AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = nullptr;
+  AST_Decl *d {};
   AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
@@ -101,7 +101,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 
   // OK, loop through supported interfaces.
 
-  for (std::size_t j = 0; j < supported.size (); ++j)
+  for (std::size_t j {}; j < supported.size (); ++j)
     {
       if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
@@ -180,7 +180,7 @@ AST_Component::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, "supports ");
 
-      for (long i = 0; i < this->pd_n_inherits; ++i)
+      for (long i {}; i < this->pd_n_inherits; ++i)
         {
           this->pd_inherits[i]->local_name ()->dump (o);
 

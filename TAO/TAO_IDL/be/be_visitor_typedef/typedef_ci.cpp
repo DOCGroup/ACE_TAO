@@ -45,7 +45,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = nullptr; // base type
+  be_type *bt {}; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -117,9 +117,9 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_ci::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream (); // output stream
+  be_typedef * const tdef = this->ctx_->tdef (); // typedef node
+  be_type *bt {};
 
   // This doesn't catch 'typedef of a typedef' if the node is
   // imported, so we check for that below before generating
@@ -141,7 +141,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
   // check for cli_hdr_gen() to the IF statement keeps it in. Subsequent
   // layers of typedef, if any, assign the context alias to bt, so we go
   // straight to the ELSE branch.
-  if (bt->node_type () == AST_Decl::NT_array && bt->cli_inline_gen () == 0)
+  if (bt->node_type () == AST_Decl::NT_array && !bt->cli_inline_gen ())
     {
       // let the base class visitor handle this case
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -212,7 +212,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
 int
 be_visitor_typedef_ci::visit_sequence (be_sequence *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -243,7 +243,7 @@ be_visitor_typedef_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_ci::visit_structure (be_structure *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -274,7 +274,7 @@ be_visitor_typedef_ci::visit_structure (be_structure *node)
 int
 be_visitor_typedef_ci::visit_union (be_union *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {

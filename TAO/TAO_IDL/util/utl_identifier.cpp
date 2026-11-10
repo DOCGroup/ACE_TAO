@@ -97,7 +97,7 @@ Identifier::replace_string (std::string const& s)
 void
 Identifier::preprocess_and_replace_string (std::string const& s)
 {
-  bool shift = false;
+  bool shift {};
 
   if (!s.empty () && s[0] == '_')
     {
@@ -132,7 +132,7 @@ Identifier::preprocess_and_replace_string (std::string const& s)
             }
 
           TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-          unsigned int len =
+          unsigned int const len =
             static_cast<unsigned int> (keyword_length);
           TAO_IDL_CPP_Keyword_Entry const *entry =
             cpp_key_tbl.lookup (s.data () + keyword_offset, len);
@@ -186,7 +186,7 @@ Identifier::case_compare_quiet (Identifier const *o) const
 Identifier *
 Identifier::copy () const
 {
-  Identifier *retval = nullptr;
+  Identifier *retval {};
   ACE_NEW_RETURN (retval,
                   Identifier (*this),
                   nullptr);
