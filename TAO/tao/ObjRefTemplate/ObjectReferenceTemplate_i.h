@@ -54,8 +54,8 @@ namespace TAO
       public virtual CORBA::DefaultValueRefCountBase
   {
   public:
-    ObjectReferenceTemplate (std::string const& server_id,
-                             std::string const& orb_id,
+    ObjectReferenceTemplate (std::string const &server_id,
+                             std::string const &orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
                              PortableServer::POA_ptr poa);
     ::CORBA::ValueBase *_copy_value () override;
@@ -82,9 +82,14 @@ namespace TAO
      */
     //@{
     CORBA::Object_ptr make_object (
-      const char * repository_id,
-      const PortableInterceptor::ObjectId & id) override;
+      char const *repository_id,
+      PortableInterceptor::ObjectId const &id) override;
     //@}
+
+    ObjectReferenceTemplate (ObjectReferenceTemplate const &) = delete;
+    ObjectReferenceTemplate &operator= (ObjectReferenceTemplate const &) = delete;
+    ObjectReferenceTemplate (ObjectReferenceTemplate &&) = delete;
+    ObjectReferenceTemplate &operator= (ObjectReferenceTemplate &&) = delete;
 
   protected:
     /**
@@ -94,11 +99,6 @@ namespace TAO
     ~ObjectReferenceTemplate () override;
 
   private:
-    ObjectReferenceTemplate (ObjectReferenceTemplate const &) = delete;
-    ObjectReferenceTemplate &operator= (ObjectReferenceTemplate const &) = delete;
-    ObjectReferenceTemplate (ObjectReferenceTemplate &&) = delete;
-    ObjectReferenceTemplate &operator= (ObjectReferenceTemplate &&) = delete;
-
     std::string server_id_;
     std::string orb_id_;
     PortableInterceptor::AdapterName_var adapter_name_;

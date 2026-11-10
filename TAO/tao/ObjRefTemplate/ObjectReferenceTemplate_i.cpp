@@ -9,8 +9,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ObjectReferenceTemplate::ObjectReferenceTemplate (
-  std::string const& server_id,
-  std::string const& orb_id,
+  std::string const &server_id,
+  std::string const &orb_id,
   PortableInterceptor::AdapterName *adapter_name,
   PortableServer::POA_ptr poa)
   : server_id_ (server_id),
@@ -70,14 +70,14 @@ namespace TAO
 
   CORBA::Object_ptr
   ObjectReferenceTemplate::make_object (
-      const char *,
-      const PortableInterceptor::ObjectId &)
+      char const *,
+      PortableInterceptor::ObjectId const &)
   {
     if (CORBA::is_nil (this->poa_.in ()))
       throw ::CORBA::BAD_INV_ORDER ();
 
-    TAO_Root_POA *const tao_poa =
-      dynamic_cast<TAO_Root_POA*> (this->poa_.in());
+    TAO_Root_POA * const tao_poa =
+      dynamic_cast<TAO_Root_POA *> (this->poa_.in());
 
     if (tao_poa == nullptr)
       throw ::CORBA::INTERNAL ();

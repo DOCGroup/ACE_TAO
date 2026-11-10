@@ -28,8 +28,8 @@ TAO::ORT_Adapter_Impl::tao_adapter_name ()
 }
 
 CORBA::Object_ptr
-TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
-                                    const PortableInterceptor::ObjectId &id)
+TAO::ORT_Adapter_Impl::make_object (char const *repo_id,
+                                    PortableInterceptor::ObjectId const &id)
 {
   return this->ort_factory_->make_object (repo_id, id);
 }
@@ -70,8 +70,8 @@ TAO::ORT_Adapter_Impl::release (
 
 int
 TAO::ORT_Adapter_Impl::activate (
-  const char *server_id,
-  const char *orb_id,
+  char const *server_id,
+  char const *orb_id,
   PortableInterceptor::AdapterName *adapter_name,
   PortableServer::POA_ptr poa)
 {
