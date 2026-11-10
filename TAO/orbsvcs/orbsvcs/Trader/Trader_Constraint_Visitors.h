@@ -32,8 +32,8 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
    * it. The map allows O(lg n) associative access, rather than the
    * O(n) sequential lookup from the CORBA data structures.
    */
-  TAO_Trader_Constraint_Validator (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
-                                   type_struct);
+  explicit TAO_Trader_Constraint_Validator (
+    CosTradingRepos::ServiceTypeRepository::TypeStruct const& type_struct);
 
   ~TAO_Trader_Constraint_Validator () override;
 };
@@ -41,8 +41,9 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
 class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
 {
  public:
-  TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
-                                   CORBA::Boolean supports_dynamic_properties = true);
+  explicit TAO_Trader_Constraint_Evaluator (
+    CosTrading::Offer* offer,
+    CORBA::Boolean supports_dynamic_properties = true);
 
   int visit_property (TAO_Property_Constraint* literal) override;
 

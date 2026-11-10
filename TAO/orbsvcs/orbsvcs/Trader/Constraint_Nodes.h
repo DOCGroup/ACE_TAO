@@ -75,7 +75,7 @@ public:
 class TAO_Trading_Serv_Export TAO_Noop_Constraint : public TAO_Constraint
 {
 public:
-  TAO_Noop_Constraint (TAO_Expression_Type type)
+  explicit TAO_Noop_Constraint (TAO_Expression_Type type)
     : type_ (type) {}
 
   int accept (TAO_Constraint_Visitor* visitor) override;
@@ -189,7 +189,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 {
 public:
-  TAO_Property_Constraint (const char* name);
+  explicit TAO_Property_Constraint (char const* name);
 
   ~TAO_Property_Constraint () override;
 
@@ -221,12 +221,12 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 public:
   TAO_Literal_Constraint ();
 
-  TAO_Literal_Constraint (CORBA::Any* any);
-  TAO_Literal_Constraint (CORBA::ULongLong uinteger);
-  TAO_Literal_Constraint (CORBA::LongLong integer);
-  TAO_Literal_Constraint (CORBA::Boolean boolean);
-  TAO_Literal_Constraint (CORBA::Double doub);
-  TAO_Literal_Constraint (const char* str);
+  explicit TAO_Literal_Constraint (CORBA::Any* any);
+  explicit TAO_Literal_Constraint (CORBA::ULongLong uinteger);
+  explicit TAO_Literal_Constraint (CORBA::LongLong integer);
+  explicit TAO_Literal_Constraint (CORBA::Boolean boolean);
+  explicit TAO_Literal_Constraint (CORBA::Double doub);
+  explicit TAO_Literal_Constraint (char const* str);
 
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
 

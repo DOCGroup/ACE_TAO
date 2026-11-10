@@ -1,6 +1,7 @@
 #include "orbsvcs/Trader/Trader_Utils.h"
 #include <algorithm>
 #include <cstring>
+#include <memory>
 #include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -264,7 +265,8 @@ TAO_Property_Evaluator::property_value (int index)
   bool const dynamic = this->is_dynamic_property (index);
 
   if (!dynamic)
-    prop_val = (CORBA::Any *) &(this->props_[index].value);
+    prop_val = const_cast<CORBA::Any*> (
+      std::addressof (this->props_[index].value));
   else if (this->supports_dp_ && in_cache)
     prop_val = this->dp_cache_[index].get ();
   else if (this->supports_dp_)
@@ -363,7 +365,7 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 
   for (int i {}; i < length; ++i)
     {
-      CORBA::String_var prop_name = (const char*) this->props_[i].name;
+      CORBA::String_var prop_name = static_cast<char const*> (this->props_[i].name);
       this->table_.bind (prop_name, i);
     }
 }
@@ -1014,7 +1016,7 @@ TAO_Offer_Modifier (const char* type_name,
   for (i = 0; i < props_length; ++i)
     {
       CORBA::String_var prop_name =
-        static_cast<const char*> (prop_seq[i].name);
+        static_cast<char const*> (prop_seq[i].name);
       this->props_.bind (prop_name, &prop_seq[i]);
     }
 }
@@ -1041,7 +1043,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes)
 
   for (i = 0; i < length; ++i)
     {
-      const char* dname = static_cast<const char*> (deletes[i]);
+      char const* dname = static_cast<char const*> (deletes[i]);
       if (! TAO_Trader_Base::is_valid_property_name (dname))
         throw CosTrading::IllegalPropertyName (dname);
       else
@@ -1060,7 +1062,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes)
   for (i = 0; i < length; ++i)
     {
       CORBA::String_var prop_name =
-        static_cast<const char *> (deletes[i]);
+        static_cast<char const *> (deletes[i]);
       this->props_.unbind (prop_name);
     }
 }
@@ -1222,7 +1224,7 @@ configure_type (CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct)
       if (mode == CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY ||
           mode == CosTradingRepos::ServiceTypeRepository::PROP_READONLY)
         {
-          CORBA::String_var prop_name ((const char*) prop_seq[i].name);
+          CORBA::String_var prop_name (static_cast<char const*> (prop_seq[i].name));
           insert_string (this->not_mod_props_, prop_name);
         }
     }
@@ -1252,7 +1254,8 @@ TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
             {
               // Determine if this property name is found in the set
               // of modifiable properties for the type being considered.
-              CORBA::String_var prop_name ((const char*) offer->properties[i].name);
+              CORBA::String_var prop_name (
+                static_cast<char const*> (offer->properties[i].name));
               if (find_string (this->not_mod_props_, prop_name) == -1)
                 {
                   insert_string (this->limits_, use_mods);

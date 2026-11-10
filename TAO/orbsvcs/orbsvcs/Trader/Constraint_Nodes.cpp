@@ -251,7 +251,7 @@ TAO_Unary_Constraint::operand ()
 }
 
 TAO_Property_Constraint::
-TAO_Property_Constraint (const char* name)
+TAO_Property_Constraint (char const* name)
   : name_ (CORBA::string_dup (name))
 {
 }
@@ -399,7 +399,7 @@ TAO_Literal_Constraint::TAO_Literal_Constraint (CORBA::Double doub)
   this->op_.double_ = doub;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint (const char* str)
+TAO_Literal_Constraint::TAO_Literal_Constraint (char const* str)
   : type_ (TAO_STRING)
 {
   this->op_.str_ = CORBA::string_dup (str);
@@ -573,8 +573,8 @@ operator== (const TAO_Literal_Constraint& left,
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = std::strcmp (static_cast<const char*> (left),
-                                  static_cast<const char*> (right)) == 0;
+      return_value = std::strcmp (static_cast<char const*> (left),
+                                  static_cast<char const*> (right)) == 0;
       break;
     case TAO_DOUBLE:
       return_value = ACE::is_equal (static_cast<CORBA::Double> (left),
@@ -608,8 +608,8 @@ operator< (const TAO_Literal_Constraint& left,
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = std::strcmp (static_cast<const char*> (left),
-                                  static_cast<const char*> (right)) < 0;
+      return_value = std::strcmp (static_cast<char const*> (left),
+                                  static_cast<char const*> (right)) < 0;
       break;
     case TAO_DOUBLE:
       return_value = static_cast<CORBA::Double> (left) <
@@ -643,8 +643,8 @@ operator> (const TAO_Literal_Constraint& left,
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = std::strcmp (static_cast<const char*> (left),
-                                  static_cast<const char*> (right)) > 0;
+      return_value = std::strcmp (static_cast<char const*> (left),
+                                  static_cast<char const*> (right)) > 0;
       break;
     case TAO_DOUBLE:
       return_value = static_cast<CORBA::Double> (left) >
@@ -675,9 +675,9 @@ operator== (const TAO::String_Manager& left,
 {
   bool result {};
 
-  if (static_cast<const char*> (right) != nullptr)
-    result = std::strcmp (static_cast<const char*> (left),
-                          static_cast<const char*> (right)) == 0;
+  if (static_cast<char const*> (right) != nullptr)
+    result = std::strcmp (static_cast<char const*> (left),
+                          static_cast<char const*> (right)) == 0;
   return result;
 }
 

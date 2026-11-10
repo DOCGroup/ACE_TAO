@@ -119,7 +119,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock ()
 
 template <class IF>
 TAO_Trader_Components<IF>::
-TAO_Trader_Components (const TAO_Trading_Components_i& comps)
+TAO_Trader_Components (TAO_Trading_Components_i const& comps)
   : comps_ (comps)
 {
 }
@@ -155,7 +155,7 @@ TAO_Trader_Components<IF>::link_if ()
 }
 template <class IF>
 TAO_Support_Attributes<IF>::
-TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs)
+TAO_Support_Attributes (TAO_Support_Attributes_i const& attrs)
   : attrs_ (attrs)
 {
 }
@@ -186,7 +186,7 @@ TAO_Support_Attributes<IF>::type_repos ( )
 
 template <class IF>
 TAO_Import_Attributes<IF>::
-TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs)
+TAO_Import_Attributes (TAO_Import_Attributes_i const& attrs)
   : attrs_ (attrs)
 {
 }
@@ -259,7 +259,7 @@ TAO_Import_Attributes<IF>::max_follow_policy ()
 
 template <class IF>
 TAO_Link_Attributes<IF>::
-TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs)
+TAO_Link_Attributes (TAO_Link_Attributes_i const& attrs)
   : attrs_ (attrs)
 {
 }

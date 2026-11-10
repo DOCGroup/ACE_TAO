@@ -60,7 +60,7 @@ class TAO_Lookup :
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
 {
 public:
-  TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  explicit TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Lookup ();
 
@@ -270,7 +270,7 @@ class TAO_Register :
   public TAO_Support_Attributes<POA_CosTrading::Register>
 {
 public:
-  TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  explicit TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Register () override;
 
@@ -516,7 +516,7 @@ class TAO_Admin :
   public TAO_Link_Attributes <POA_CosTrading::Admin>
 {
 public:
-  TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  explicit TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Admin ();
 
@@ -618,7 +618,7 @@ class TAO_Link :
   public TAO_Link_Attributes <POA_CosTrading::Link>
 {
 public:
-  TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  explicit TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Link ();
 
@@ -771,7 +771,7 @@ class TAO_Proxy :
   public TAO_Support_Attributes <POA_CosTrading::Proxy>
 {
 public:
-  TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  explicit TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Proxy ();
 

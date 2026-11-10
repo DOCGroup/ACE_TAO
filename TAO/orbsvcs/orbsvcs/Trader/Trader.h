@@ -154,7 +154,7 @@ protected:
 class TAO_Trading_Serv_Export TAO_Support_Attributes_i
 {
 public:
-  TAO_Support_Attributes_i (TAO_Lockable &locker);
+  explicit TAO_Support_Attributes_i (TAO_Lockable &locker);
   ~TAO_Support_Attributes_i ();
 
   // = Accessor methods.
@@ -209,7 +209,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Link_Attributes_i
 {
 public:
-  TAO_Link_Attributes_i (TAO_Lockable &locker);
+  explicit TAO_Link_Attributes_i (TAO_Lockable &locker);
   ~TAO_Link_Attributes_i ();
 
   // = Accessor methods.
@@ -242,7 +242,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Import_Attributes_i
 {
 public:
-  TAO_Import_Attributes_i (TAO_Lockable &locker);
+  explicit TAO_Import_Attributes_i (TAO_Lockable &locker);
   ~TAO_Import_Attributes_i ();
 
   // = Accessor methods.
@@ -341,7 +341,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
-  TAO_Trading_Components_i (TAO_Lockable &locker);
+  explicit TAO_Trading_Components_i (TAO_Lockable &locker);
   ~TAO_Trading_Components_i ();
 
   /// Returns an object reference to the Lookup interface of the trader.

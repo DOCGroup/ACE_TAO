@@ -19,7 +19,7 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
     {
       TAO_Constraint* root {};
       ACE_NEW_THROW_EX (root,
-                        TAO_Literal_Constraint ((CORBA::Boolean) 1),
+                        TAO_Literal_Constraint (true),
                         CORBA::NO_MEMORY ());
       this->root_.reset (root);
     }
@@ -41,7 +41,7 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
     {
       TAO_Constraint* root {};
       ACE_NEW_THROW_EX (root,
-                        TAO_Literal_Constraint ((CORBA::Boolean) 1),
+                        TAO_Literal_Constraint (true),
                         CORBA::NO_MEMORY ());
       this->root_.reset (root);
     }

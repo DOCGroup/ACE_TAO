@@ -110,7 +110,7 @@ TAO_Trading_Loader::fini ()
 {
   try
     {
-      if (this->trader_.get () != nullptr)
+      if (this->trader_)
         {
           TAO_Trading_Components_i& trd_comp
             = this->trader_->trading_components ();

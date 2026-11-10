@@ -205,7 +205,7 @@ visit_or (TAO_Binary_Constraint* boolean_or)
       result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
 
-      if (result == (CORBA::Boolean) 0)
+      if (!result)
         {
           if (right->accept (this) == 0)
             {
@@ -251,8 +251,8 @@ TAO_Constraint_Evaluator::
 visit_exist (TAO_Unary_Constraint* unary_exist)
 {
   TAO_Property_Constraint* operand =
-    (TAO_Property_Constraint*) unary_exist->operand ();
-  CORBA::String_var property_name ((const char*) operand->name ());
+    static_cast<TAO_Property_Constraint*> (unary_exist->operand ());
+  CORBA::String_var property_name (static_cast<char const*> (operand->name ()));
 
   // Determine if a property is defined on this offer.
 
@@ -295,13 +295,13 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
     (operation <= TAO_NE)
     ?
     TAO_Literal_Constraint
-    ((CORBA::Boolean)
+    (static_cast<CORBA::Boolean> (
      ((operation == TAO_GT) ? l_op > r_op :
       (operation == TAO_GE) ? l_op >= r_op :
       (operation == TAO_LT) ? l_op < r_op :
       (operation == TAO_LE) ? l_op <= r_op :
       (operation == TAO_NE) ? l_op != r_op :
-      (operation == TAO_EQ) ? l_op == r_op : 0))
+      (operation == TAO_EQ) ? l_op == r_op : 0)))
     :
     ((operation == TAO_PLUS) ? l_op + r_op :
      (operation == TAO_MINUS) ? l_op - r_op :
@@ -383,9 +383,9 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
           TAO_Literal_Constraint& left_operand = this->queue_.get_left_operand ();
           TAO_Literal_Constraint& right_operand = this->queue_.get_right_operand ();
 
-          CORBA::Boolean result = (CORBA::Boolean)
-            (std::strstr ((const char*)right_operand,
-                             (const char*)left_operand) != 0);
+          CORBA::Boolean result =
+            std::strstr (static_cast<char const*> (right_operand),
+                         static_cast<char const*> (left_operand)) != nullptr;
 
           this->queue_.dequeue_operand ();
           this->queue_.dequeue_operand ();
@@ -411,15 +411,16 @@ visit_in(TAO_Binary_Constraint* binary_in)
 
   if (left->accept (this) == 0)
     {
-      if (this->visit_property ((TAO_Property_Constraint*) right) == 0)
+      if (this->visit_property (static_cast<TAO_Property_Constraint*> (right)) == 0)
         {
           TAO_Literal_Constraint& left_value = this->queue_.get_left_operand();
-          const CORBA::Any* any = (const CORBA::Any*) this->queue_.get_right_operand();
+          CORBA::Any const* any =
+            static_cast<CORBA::Any const*> (this->queue_.get_right_operand ());
 
           if (any != nullptr)
             {
               CORBA::Boolean result =
-                this->sequence_does_contain ((CORBA::Any*) any, left_value);
+                this->sequence_does_contain (const_cast<CORBA::Any*> (any), left_value);
 
               this->queue_.dequeue_operand ();
               this->queue_.dequeue_operand ();
@@ -1192,7 +1193,8 @@ TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
   type = expr->expr_type ();
   if (type == TAO_IDENT)
     {
-      TAO_Property_Constraint* prop = (TAO_Property_Constraint*) expr;
+      TAO_Property_Constraint* prop =
+        static_cast<TAO_Property_Constraint*> (expr);
       CORBA::String_var prop_name (prop->name ());
 
       if (this->type_map_.find (prop_name, return_value) == 0)

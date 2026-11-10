@@ -38,7 +38,7 @@ public:
    * probably best. The Service_Type_Repository assumes control of the
    * lock.
    */
-  TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
+  explicit TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
 
   ~TAO_Service_Type_Repository () override;
 

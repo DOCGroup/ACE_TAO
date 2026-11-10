@@ -455,7 +455,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Policy_Creator
 {
 public:
-  TAO_Policy_Creator (int num_policies = 0);
+  explicit TAO_Policy_Creator (int num_policies = 0);
 
   // = Routines to set policies.
 
@@ -611,7 +611,7 @@ class TAO_Offer_Filter
 public:
   /// Glean from the TypeStruct and Policy setting the appropriate way
   /// to screen unsuitable offers from consideration.
-  TAO_Offer_Filter (TAO_Policies& policies);
+  explicit TAO_Offer_Filter (TAO_Policies& policies);
 
   /// Set the offer filter to screen for offers containing properties
   /// that aren't marked as readonly in this TypeStruct.
@@ -693,7 +693,7 @@ public:
   TAO_Property_Filter () : policy_ (CosTrading::Lookup::all) {}
 
   /// Verify that the specified properties are correct.
-  TAO_Property_Filter (SPECIFIED_PROPS const& desired_props);
+  explicit TAO_Property_Filter (SPECIFIED_PROPS const& desired_props);
 
   TAO_Property_Filter (TAO_Property_Filter const&) = default;
   TAO_Property_Filter& operator= (TAO_Property_Filter const&) = default;

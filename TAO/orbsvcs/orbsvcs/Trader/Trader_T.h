@@ -67,7 +67,7 @@ public:
    * The argument is a bitwise OR of desired Trader_Components as listed
    * in enumerated type above.
    */
-  TAO_Trader (Trader_Components components = LOOKUP);
+  explicit TAO_Trader (Trader_Components components = LOOKUP);
 
   ~TAO_Trader () override;
 
@@ -106,7 +106,7 @@ class TAO_Trader_Components :
   public virtual IF
 {
 public:
-  TAO_Trader_Components (const TAO_Trading_Components_i& comps);
+  explicit TAO_Trader_Components (TAO_Trading_Components_i const& comps);
 
   // = CosTrading::TraderComponents methods.
   /// Returns an object reference to the Lookup interface of the trader.
@@ -142,7 +142,7 @@ template <class IF>
 class TAO_Support_Attributes : public virtual IF
 {
 public:
-  TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs);
+  explicit TAO_Support_Attributes (TAO_Support_Attributes_i const& attrs);
 
   // = CosTrading::SupportAttributes methods.
 
@@ -167,7 +167,7 @@ template <class IF>
 class TAO_Import_Attributes : public virtual IF
 {
 public:
-  TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs);
+  explicit TAO_Import_Attributes (TAO_Import_Attributes_i const& attrs);
 
   // = CosTrading::ImportAttributes methods.
 
@@ -216,7 +216,7 @@ template <class IF>
 class TAO_Link_Attributes : public virtual IF
 {
 public:
-  TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
+  explicit TAO_Link_Attributes (TAO_Link_Attributes_i const& attrs);
 
   // = CosTrading::LinkAttributes methods
   CosTrading::FollowOption max_link_follow_policy () override;
