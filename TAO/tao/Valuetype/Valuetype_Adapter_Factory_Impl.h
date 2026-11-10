@@ -41,7 +41,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Factory_Impl
 public:
   TAO_Valuetype_Adapter_Factory_Impl () = default;
 
-  ~TAO_Valuetype_Adapter_Factory_Impl () override = default;
+  ~TAO_Valuetype_Adapter_Factory_Impl () override;
 
   TAO_Valuetype_Adapter *create () override;
 

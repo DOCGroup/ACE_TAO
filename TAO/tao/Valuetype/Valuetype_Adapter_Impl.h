@@ -40,7 +40,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
 {
 public:
   TAO_Valuetype_Adapter_Impl () = default;
-  ~TAO_Valuetype_Adapter_Impl () override = default;
+  ~TAO_Valuetype_Adapter_Impl () override;
 
   CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr) override;

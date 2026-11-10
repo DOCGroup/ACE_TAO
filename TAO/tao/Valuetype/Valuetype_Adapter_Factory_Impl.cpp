@@ -7,6 +7,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Valuetype_Adapter_Factory_Impl::~TAO_Valuetype_Adapter_Factory_Impl () = default;
+
 TAO_Valuetype_Adapter *
 TAO_Valuetype_Adapter_Factory_Impl::create ()
 {

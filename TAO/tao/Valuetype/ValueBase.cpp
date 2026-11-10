@@ -78,6 +78,8 @@ CORBA::ValueBase::ValueBase (ValueBase const &val)
 {
 }
 
+CORBA::ValueBase::~ValueBase () = default;
+
 CORBA::ValueBase*
 CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
 {
@@ -1440,6 +1442,8 @@ namespace CORBA
 }
 
 // member functions for CORBA::DefaultValueRefCountBase ============
+
+CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase () = default;
 
 void
 CORBA::DefaultValueRefCountBase::_add_ref ()

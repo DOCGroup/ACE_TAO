@@ -238,7 +238,7 @@ namespace CORBA
   protected:
     ValueBase ();
     ValueBase (ValueBase const &);
-    virtual ~ValueBase () = default;
+    virtual ~ValueBase ();
 
     /// This flag is set to be true when the valuetype defined
     /// in the idl has the truncatable parent.
@@ -330,7 +330,7 @@ namespace CORBA
 
   protected:
     DefaultValueRefCountBase () = default;
-    ~DefaultValueRefCountBase () override = default;
+    ~DefaultValueRefCountBase () override;
 
   private:
     DefaultValueRefCountBase &operator= (DefaultValueRefCountBase const &) = delete;
