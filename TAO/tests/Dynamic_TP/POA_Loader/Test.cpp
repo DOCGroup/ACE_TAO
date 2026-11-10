@@ -1,16 +1,16 @@
 #include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 #include "tao/debug.h"
 
 #include <array>
+#include <string>
 
 struct Expected_POA_Config
 {
-  ACE_TCHAR const *name;
+  std::string name;
   bool expected;
 };
 
@@ -36,23 +36,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Check that configured POA names exist and unconfigured names do not.
   std::array<Expected_POA_Config, 4> const poa_list {{
-    {ACE_TEXT ("MyPOA"), true},
-    {ACE_TEXT ("POA2"), false},
-    {ACE_TEXT ("MyPOA3"), true},
-    {ACE_TEXT ("MyPOA1"), false}
+    {"MyPOA", true},
+    {"POA2", false},
+    {"MyPOA3", true},
+    {"MyPOA1", false}
   }};
 
   for (Expected_POA_Config const &config : poa_list)
     {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Config definition for %C\n"), config.name));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Config definition for %C\n"), config.name.c_str ()));
       TAO_DTP_POA_Strategy const * const found_strategy =
-        dynamic_cast<TAO_DTP_POA_Strategy const *> (
-          dtp_poa_strat_repo->find (ACE_TEXT_ALWAYS_CHAR (config.name)));
+        dynamic_cast<TAO_DTP_POA_Strategy const *> (dtp_poa_strat_repo->find (config.name));
       if ((found_strategy != nullptr) != config.expected)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unexpected lookup result for POA configuration %C\n"),
-                      config.name));
+                      config.name.c_str ()));
           return -1;
         }
     }
