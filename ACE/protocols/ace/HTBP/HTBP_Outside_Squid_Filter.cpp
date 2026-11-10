@@ -1,5 +1,6 @@
 #include <cstring>
 #include <cstdlib>
+#include <string>
 
 #include "ace/Log_Msg.h"
 
@@ -169,9 +170,8 @@ ACE::HTBP::Outside_Squid_Filter::send_data_header (ssize_t data_len,
   ACE_CString header ("HTTP/1.1 200 OK\n"
                       "Content-Type: application/octet-stream\n"
                       "Content-Length: ");
-  char datalenstr[20];
-  ACE_OS::itoa (data_len,datalenstr,10);
-  header += datalenstr;
+  const std::string data_length = std::to_string (data_len);
+  header += data_length.c_str ();
   header += "\n\n";
   ssize_t result = ch->ace_stream().send(header.c_str(),header.length());
   ch->state(result == -1 ?

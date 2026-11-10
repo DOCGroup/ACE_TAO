@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <memory>
+#include <string>
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
 #include "HTBP_Session.h"
 #include "HTBP_Inside_Squid_Filter.h"
 
@@ -99,9 +99,8 @@ ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
     {
       ACE_CString header (buffer);
       header += "Content-Type: application/octet-stream\nContent-Length: ";
-      char datalenstr[20];
-      ACE_OS::itoa (data_len,datalenstr,10);
-      header += datalenstr;
+      const std::string data_length = std::to_string (data_len);
+      header += data_length.c_str ();
       header += "\n\n";
       result = ch->ace_stream().send(header.c_str(),header.length());
     }
