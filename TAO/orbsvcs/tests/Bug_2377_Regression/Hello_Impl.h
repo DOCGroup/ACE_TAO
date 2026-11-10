@@ -5,7 +5,7 @@
 class MessageLog
 {
 public:
-  MessageLog (int expected, bool suppress = false);
+  explicit MessageLog (int expected);
 
   MessageLog (MessageLog const &) = delete;
   MessageLog (MessageLog &&) = delete;
@@ -14,7 +14,7 @@ public:
 
   void register_message_send (int const message_num);
   void register_message_recv (int const message_num);
-  int report_statistics ();
+  int report_statistics () const;
 
 private:
   std::vector<int> sent_;
@@ -22,7 +22,6 @@ private:
   int const expected_;
   int overdose_sent_;
   int overdose_received_;
-  bool const suppress_;
   ACE_Mutex mutex_;
 };
 

@@ -27,13 +27,12 @@ Hello_Impl::shutdown ()
     }
 }
 
-MessageLog::MessageLog (int const expected, bool const suppress)
+MessageLog::MessageLog (int const expected)
   : sent_ (expected)
   , rcvd_ (expected)
   , expected_ (expected)
   , overdose_sent_ {}
   , overdose_received_ {}
-  , suppress_ (suppress)
 {
 }
 
@@ -50,12 +49,9 @@ MessageLog::register_message_send (int const message_num)
       this->overdose_sent_++;
     }
 
-  if (!this->suppress_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%02d>>; "),
-                  message_num));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%02d>>; "),
+              message_num));
 }
 
 void
@@ -71,16 +67,13 @@ MessageLog::register_message_recv (int const message_num)
       this->overdose_received_++;
     }
 
-  if (!this->suppress_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%02d<<; "),
-                  message_num));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%02d<<; "),
+              message_num));
 }
 
 int
-MessageLog::report_statistics ()
+MessageLog::report_statistics () const
 {
   int lmco {};
 
@@ -88,21 +81,21 @@ MessageLog::report_statistics ()
     {
       lmco += this->sent_[i] - this->rcvd_[i];
 
-      if (this->sent_[i] > 1 && !this->suppress_)
+      if (this->sent_[i] > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nSENT message <<< %d >>> %d times"),
                       i, this->sent_[i]));
         }
 
-      if (this->rcvd_[i] > 1 && !this->suppress_)
+      if (this->rcvd_[i] > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nRECEIVED message <<< %d >>> %d times"),
                       i, this->rcvd_[i]));
         }
 
-      if (this->sent_[i] != this->rcvd_[i] && !this->suppress_)
+      if (this->sent_[i] != this->rcvd_[i])
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nLOST message <<< %d >>> %d times"),
@@ -110,12 +103,12 @@ MessageLog::report_statistics ()
         }
     }
 
-  if (this->overdose_sent_ != 0 && !this->suppress_)
+  if (this->overdose_sent_ != 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nSent more than expected.")));
     }
 
-  if (this->overdose_received_ != 0 && !this->suppress_)
+  if (this->overdose_received_ != 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nReceived more than expected.")));
     }
