@@ -12,7 +12,9 @@
 //=============================================================================
 
 #include <cstddef>
+#include <string>
 
+#include "ace/OS_NS_stdio.h"
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -113,7 +115,6 @@ class Receiver
 {
 public:
   Receiver () = default;
-  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -128,7 +129,7 @@ public:
                   ACE_TCHAR **argv);
 
   //// Name of the output file.
-  ACE_CString const &output_file_name () const;
+  std::string const &output_file_name () const;
 
   void shut_down ();
 
@@ -144,13 +145,14 @@ protected:
   TAO_MMDevice *mmdevice_ {};
 
   //// File name of the file into which received data is written.
-  ACE_CString output_file_name_ {"output"};
+  struct Options
+  {
+    std::string output_file_name {"output"};
+    std::string sender_name {"distributer"};
+    std::string receiver_name {"receiver"};
+  };
 
-  //// Sender name.
-  ACE_CString sender_name_ {"distributer"};
-
-  //// Receiver name.
-  ACE_CString receiver_name_ {"receiver"};
+  Options options_;
 
   //// Reference to the signal handler.
   Signal_Handler signal_handler_;

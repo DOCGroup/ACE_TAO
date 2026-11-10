@@ -170,7 +170,7 @@ Connection_Manager::connect_to_receivers ()
                                                "USER_DEFINED",
                                                "",
                                                "UDP",
-                                               0);
+                                               nullptr);
 
       // Set the flow specification for the stream between receiver
       // and distributer
@@ -219,7 +219,7 @@ Connection_Manager::bind_to_sender (ACE_CString const &sender_name,
   this->receiver_ =
     AVStreams::MMDevice::_duplicate (receiver);
 
-  this->sender_ = 0 ;
+  this->sender_ = nullptr;
 
   CosNaming::Name name (1);
   name.length (1);
@@ -324,7 +324,7 @@ Connection_Manager::connect_to_sender ()
                                            "USER_DEFINED",
                                            "",
                                            "UDP",
-                                           0);
+                                           nullptr);
 
   // Set the flow specification for the stream between sender and
   // receiver.

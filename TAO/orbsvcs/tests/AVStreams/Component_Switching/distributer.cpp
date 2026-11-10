@@ -242,10 +242,10 @@ Distributer::parse_args (int argc,
       switch (c)
         {
         case 's':
-          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->distributer_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.distributer_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));
@@ -317,16 +317,19 @@ Distributer::init (int argc,
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
     this->distributer_receiver_mmdevice_->_this ();
 
+  ACE_CString const sender_name (this->options_.sender_name.c_str ());
+  ACE_CString const distributer_name (this->options_.distributer_name.c_str ());
+
   /// Bind to sender.
-  this->connection_manager_.bind_to_sender (this->sender_name_,
-                                            this->distributer_name_,
+  this->connection_manager_.bind_to_sender (sender_name,
+                                            distributer_name,
                                             distributer_receiver_mmdevice.in ());
 
   /// Connect to sender.
   this->connection_manager_.connect_to_sender ();
 
   /// Bind to receivers.
-  this->connection_manager_.bind_to_receivers (this->distributer_name_,
+  this->connection_manager_.bind_to_receivers (distributer_name,
                                                distributer_sender_mmdevice.in ());
 
   /// Connect to receivers
@@ -349,13 +352,15 @@ Distributer::shut_down ()
       AVStreams::MMDevice_var receiver_mmdevice =
         this->distributer_receiver_mmdevice_->_this ();
 
-      DISTRIBUTER::instance ()->connection_manager ().unbind_receiver (this->sender_name_,
-                                                                       this->distributer_name_,
+      ACE_CString const sender_name (this->options_.sender_name.c_str ());
+      ACE_CString const distributer_name (this->options_.distributer_name.c_str ());
+      DISTRIBUTER::instance ()->connection_manager ().unbind_receiver (sender_name,
+                                                                       distributer_name,
                                                                        receiver_mmdevice.in ());
       AVStreams::MMDevice_var sender_mmdevice =
         this->distributer_sender_mmdevice_->_this ();
 
-      DISTRIBUTER::instance ()->connection_manager ().unbind_sender (this->distributer_name_,
+      DISTRIBUTER::instance ()->connection_manager ().unbind_sender (distributer_name,
                                                                      sender_mmdevice.in ());
 
     }

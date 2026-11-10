@@ -12,9 +12,11 @@
 //=============================================================================
 
 #include <cstddef>
+#include <cstdio>
 #include <memory>
-#include <stdio.h>
+#include <string>
 
+#include "ace/OS_NS_stdio.h"
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -102,7 +104,7 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  Sender ();
+  Sender () = default;
 
   ~Sender ();
   Sender (Sender const &) = delete;
@@ -135,20 +137,20 @@ private:
   //// Number of frames sent.
   std::size_t frame_count_ {};
 
-  //// File from which data is read.
-  ACE_CString filename_ {"input"};
-
   //// File handle of the file read from.
-  std::unique_ptr<FILE, int (*) (FILE *)> input_file_;
-
-  //// Rate at which the data will be sent.
-  double frame_rate_ {5};
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, ACE_OS::fclose};
 
   //// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_ {BUFSIZ};
 
-  //// Name of this sender.
-  ACE_CString sender_name_ {"sender"};
+  struct Options
+  {
+    std::string filename {"input"};
+    std::string sender_name {"sender"};
+    int frame_rate {5};
+  };
+
+  Options options_;
 
   //// Connection manager.
   Connection_Manager connection_manager_;

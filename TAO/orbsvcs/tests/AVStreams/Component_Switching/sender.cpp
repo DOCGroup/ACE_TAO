@@ -100,11 +100,6 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
   return 1;
 }
 
-Sender::Sender ()
-  : input_file_ (nullptr, ACE_OS::fclose)
-{
-}
-
 Sender::~Sender ()
 {
   if (TAO_debug_level > 0)
@@ -120,7 +115,8 @@ Sender::shut_down ()
       AVStreams::MMDevice_var mmdevice =
         this->sender_mmdevice_->_this ();
 
-      SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
+      ACE_CString const sender_name (this->options_.sender_name.c_str ());
+      SENDER::instance ()->connection_manager ().unbind_sender (sender_name,
                                                                 mmdevice.in ());
     }
   catch (CORBA::Exception const &ex)
@@ -142,13 +138,13 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 's':
-          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -186,12 +182,12 @@ Sender::init (int argc,
     return result;
 
   /// Open file to read.
-  this->input_file_.reset (ACE_OS::fopen (this->filename_.c_str (), "r"));
+  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
 
   if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -211,7 +207,8 @@ Sender::init (int argc,
 
   /// Register the object reference with the Naming Service and bind to
   /// the receivers
-  this->connection_manager_.bind_to_receivers (this->sender_name_,
+  ACE_CString const sender_name (this->options_.sender_name.c_str ());
+  this->connection_manager_.bind_to_receivers (sender_name,
                                                mmdevice.in ());
 
   /// Connect to the receivers
@@ -228,13 +225,13 @@ Sender::pace_data ()
   ACE_Time_Value inter_frame_time;
 
   /// The time between two consecutive frames.
-  inter_frame_time.set (1.0 / this->frame_rate_);
+  inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %d / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                "Inter Frame Time = %lu (msec)\n",
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -280,7 +277,7 @@ Sender::pace_data ()
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
+                            "Elapsed Time = %lu\n",
                             elapsed_time.msec ()));
 
               /// Check to see if the inter frame time has elapsed.
@@ -293,7 +290,7 @@ Sender::pace_data ()
 
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
+                                "Wait Time = %lu\n",
                                 wait_time.msec ()));
 
                   /// Run the orb for the wait time so the sender can

@@ -32,7 +32,6 @@ class Connection_Manager
 {
 public:
   Connection_Manager () = default;
-  ~Connection_Manager () = default;
   Connection_Manager (Connection_Manager const &) = delete;
   Connection_Manager &operator= (Connection_Manager const &) = delete;
   Connection_Manager (Connection_Manager &&) = delete;

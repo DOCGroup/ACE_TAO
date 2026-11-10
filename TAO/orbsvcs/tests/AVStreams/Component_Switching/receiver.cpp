@@ -1,8 +1,9 @@
+#include <cstdio>
 #include <memory>
-#include <stdio.h>
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/debug.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -27,6 +28,7 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
   return 0;
 }
 
+// Borrowed pointer to Receiver's connection manager for callback access.
 Connection_Manager *connection_manager {};
 
 int
@@ -168,8 +170,10 @@ Receiver::init (int,
     this->mmdevice_->_this ();
 
   /// Bind to sender.
-  this->connection_manager_.bind_to_sender (this->sender_name_,
-                                            this->receiver_name_,
+  ACE_CString const sender_name (this->options_.sender_name.c_str ());
+  ACE_CString const receiver_name (this->options_.receiver_name.c_str ());
+  this->connection_manager_.bind_to_sender (sender_name,
+                                            receiver_name,
                                             mmdevice.in ());
 
   /// Connect to the sender.
@@ -193,13 +197,13 @@ Receiver::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->output_file_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.output_file_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 's':
-          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->receiver_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.receiver_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -211,10 +215,10 @@ Receiver::parse_args (int argc,
   return 0;
 }
 
-ACE_CString const &
+std::string const &
 Receiver::output_file_name () const
 {
-  return this->output_file_name_;
+  return this->options_.output_file_name;
 }
 
 void
@@ -225,8 +229,10 @@ Receiver::shut_down ()
       AVStreams::MMDevice_var mmdevice_obj =
         this->mmdevice_->_this ();
 
-      this->connection_manager_.unbind_receiver (this->sender_name_,
-                                                 this->receiver_name_,
+      ACE_CString const sender_name (this->options_.sender_name.c_str ());
+      ACE_CString const receiver_name (this->options_.receiver_name.c_str ());
+      this->connection_manager_.unbind_receiver (sender_name,
+                                                 receiver_name,
                                                  mmdevice_obj.in ());
     }
   catch (CORBA::Exception const &ex)
@@ -270,7 +276,7 @@ ACE_TMAIN (int argc,
       /// Make sure we have a valid <output_file>
       std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (
         nullptr, ACE_OS::fclose);
-      output_file_owner.reset (ACE_OS::fopen (receiver.output_file_name ().c_str (), "w"));
+      output_file_owner.reset (ACE_OS::fopen (receiver.output_file_name ().c_str (), "wb"));
       output_file = output_file_owner.get ();
       if (!output_file_owner)
         ACE_ERROR_RETURN ((LM_DEBUG,

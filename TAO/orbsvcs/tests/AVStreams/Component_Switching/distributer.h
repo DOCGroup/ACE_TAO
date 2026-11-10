@@ -12,6 +12,7 @@
 //=============================================================================
 
 #include <cstddef>
+#include <string>
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -189,7 +190,6 @@ class Distributer
 {
 public:
   Distributer () = default;
-  ~Distributer () = default;
   Distributer (Distributer const &) = delete;
   Distributer &operator= (Distributer const &) = delete;
   Distributer (Distributer &&) = delete;
@@ -236,10 +236,13 @@ protected:
   TAO_MMDevice *distributer_sender_mmdevice_ {};
 
   //// The name of the sender to connect to.
-  ACE_CString sender_name_ {"sender"};
+  struct Options
+  {
+    std::string sender_name {"sender"};
+    std::string distributer_name {"distributer"};
+  };
 
-  //// Our name.
-  ACE_CString distributer_name_ {"distributer"};
+  Options options_;
 
   //// Flag to know when we are done.
   bool done_ {};
