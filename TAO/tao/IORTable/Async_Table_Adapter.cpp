@@ -56,7 +56,7 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
     rootref = this->root_;
   }
 
-  if (this->root_->async_available ())
+  if (rootref->async_available ())
     {
       // construct a callback handler
       TAO_AMH_Locate_ResponseHandler_ptr rhp {};
@@ -81,10 +81,19 @@ void
 TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
                                       TAO::ObjectKey &key)
 {
+  TAO_IOR_Table_Impl_var rootref;
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    if (!this->closed_)
+      {
+        rootref = this->root_;
+      }
+  }
+
   CORBA::String_var object_key;
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
   TAO_Async_IOR_Table_Impl * const aroot =
-    dynamic_cast<TAO_Async_IOR_Table_Impl *>(this->root_.ptr());
+    dynamic_cast<TAO_Async_IOR_Table_Impl *> (rootref.ptr ());
   if (aroot != nullptr)
     {
       aroot->async_find (rh, object_key.in ());

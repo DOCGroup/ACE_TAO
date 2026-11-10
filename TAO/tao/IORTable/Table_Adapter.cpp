@@ -170,7 +170,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
   try
     {
-      CORBA::String_var ior = this->root_->find (object_key.in ());
+      CORBA::String_var ior = rootref->find (object_key.in ());
       forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
   catch (::IORTable::NotFound const &)
