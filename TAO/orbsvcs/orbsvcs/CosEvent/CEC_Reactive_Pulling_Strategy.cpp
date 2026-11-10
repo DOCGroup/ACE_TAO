@@ -71,7 +71,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i {}; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
@@ -154,7 +154,7 @@ TAO_CEC_Pulling_Strategy_Adapter::handle_timeout (
 void
 TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer)
 {
-  CORBA::Boolean has_event = false;
+  CORBA::Boolean has_event {};
   CORBA::Any_var any;
 
   try

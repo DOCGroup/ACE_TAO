@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_CEC_Dispatching_Task::svc ()
 {
-  bool done = false;
+  bool done {};
 
   while (!done)
     {

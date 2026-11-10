@@ -80,14 +80,14 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       ACE_TCHAR const *ior_file {};
       ACE_TCHAR const *pid_file {};
       this->bind_to_naming_service_ = true;
-      bool use_rebind = false;
-      bool disconnect_callbacks = false;
+      bool use_rebind {};
+      bool disconnect_callbacks {};
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       // Flag to create a typed event channel
-      bool typed_ec = false;
+      bool typed_ec {};
       // Flag to destroy the event channel on shutdown
-      bool destroy = false;
+      bool destroy {};
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
       while ((opt = get_opt ()) != EOF)

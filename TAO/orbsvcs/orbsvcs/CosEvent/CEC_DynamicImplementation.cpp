@@ -113,7 +113,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   object_id));
     }
 
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   if (std::strcmp (value, this->repository_id_) == 0
       || std::strcmp (value, object_id) == 0)
     {
@@ -122,7 +122,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   else
     {
       CORBA::ULong const num = this->typed_event_channel_->number_of_base_interfaces ();
-      for (CORBA::ULong base = 0; base < num; ++base)
+      for (CORBA::ULong base {}; base < num; ++base)
         {
           if (TAO_debug_level >= 10)
             {
