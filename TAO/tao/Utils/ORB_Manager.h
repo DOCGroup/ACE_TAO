@@ -39,17 +39,17 @@ public:
   /** Constructor.
    *
    *  @param orb  pointer to an ORB which is duplicated an stored
-   *              internally in an ORB_var.  If pointer is 0,
+   *              internally in an ORB_var.  If pointer is nullptr,
    *              a new ORB pointer is created internally in the init()
    *              call.
    *
    *  @param poa  pointer to a POA which is duplicated and stored
-   *              internally in a POA_var.  If pointer is 0,
+   *              internally in a POA_var.  If pointer is nullptr,
    *              a pointer to the Root POA is obtained from the ORB.
    *
    *  @param poa_manager pointer to a POA Manager which is duplicated
    *                     and stored internally in a POAManager_var.
-   *                     If pointer is 0, a new POAManager is created
+   *                     If pointer is nullptr, a new POAManager is created
    *                     internally in the init() call.
    */
   explicit TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),

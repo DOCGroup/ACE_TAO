@@ -3,7 +3,6 @@
 
 #include "tao/Utils/RIR_Narrow.h"
 #include "tao/SystemException.h"
-#include <stdexcept>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
