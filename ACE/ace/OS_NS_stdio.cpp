@@ -262,8 +262,6 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_NONCONST_TEMPNAM)
-  return ::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx));
 #elif defined (ACE_TEMPNAM_EQUIVALENT)
   return ACE_TEMPNAM_EQUIVALENT (dir, pfx);
 #else /* ACE_LACKS_TEMPNAM */
@@ -281,11 +279,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-#  if defined (ACE_HAS_NONCONST_TEMPNAM)
-  return ::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx));
-#  else
   return ::_wtempnam (dir, pfx);
-#  endif /* ACE_HAS_NONCONST_TEMPNAM */
 #else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
   ACE_Wide_To_Ascii wta_ndir(dir);
