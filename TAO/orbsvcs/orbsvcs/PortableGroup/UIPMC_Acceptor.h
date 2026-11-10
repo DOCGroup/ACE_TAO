@@ -47,11 +47,9 @@ static constexpr char CopyPreferredInterfaceToken[] = "$$$$";
 class TAO_PortableGroup_Export TAO_UIPMC_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_UIPMC_Acceptor (bool listen_on_all_ifs,
                       char const *listener_interfaces);
 
-  /// Destructor.
   ~TAO_UIPMC_Acceptor () override;
 
   /// @@ Helper method for the implementation repository, should go
@@ -117,7 +115,6 @@ protected:
   /// Parse protocol specific options.
   virtual int parse_options (char const *options);
 
-private:
   TAO_UIPMC_Acceptor (TAO_UIPMC_Acceptor const &) = delete;
   TAO_UIPMC_Acceptor (TAO_UIPMC_Acceptor &&) = delete;
   TAO_UIPMC_Acceptor & operator= (TAO_UIPMC_Acceptor const &) = delete;

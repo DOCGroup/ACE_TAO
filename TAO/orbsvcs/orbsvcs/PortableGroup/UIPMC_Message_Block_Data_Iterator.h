@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class UIPMC_Message_Block_Data_Iterator
 {
 public:
-  /// Constructor
   UIPMC_Message_Block_Data_Iterator (iovec *iov, int iovcnt);
 
   /// Get the next data block that has a size less than or equal

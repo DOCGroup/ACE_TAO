@@ -53,12 +53,15 @@ public:
                                TAO_PG::UIPMC_Recv_Packet *,
                                ACE_SYNCH_NULL_MUTEX>;
 
-  /// Constructor.
   TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
   ~TAO_UIPMC_Mcast_Transport () override;
+
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport &&) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport &&) = delete;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,
@@ -106,11 +109,6 @@ public:
   //@}
 
 private:
-  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport const &) = delete;
-  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport &&) = delete;
-  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport const &) = delete;
-  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport &&) = delete;
-
   /// Receive a UDP message and extract all necessary info from the MIOP
   /// header. If everything is fine return a pointer to the first byte of
   /// the non-MIOP data.

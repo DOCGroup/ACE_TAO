@@ -81,10 +81,8 @@ public:
     struct Map_Entry *next {};
   };
 
-  /// Constructor.
   TAO_Portable_Group_Map () = default;
 
-  /// Destructor.
   ~TAO_Portable_Group_Map ();
 
   TAO_Portable_Group_Map (TAO_Portable_Group_Map const &) = delete;

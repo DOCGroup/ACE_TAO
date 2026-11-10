@@ -68,6 +68,15 @@ public:
   ///  Default destructor.
   ~TAO_PortableGroup_Acceptor_Registry ();
 
+  TAO_PortableGroup_Acceptor_Registry (
+    TAO_PortableGroup_Acceptor_Registry const &) = delete;
+  TAO_PortableGroup_Acceptor_Registry (
+    TAO_PortableGroup_Acceptor_Registry &&) = delete;
+  TAO_PortableGroup_Acceptor_Registry &operator= (
+    TAO_PortableGroup_Acceptor_Registry const &) = delete;
+  TAO_PortableGroup_Acceptor_Registry &operator= (
+    TAO_PortableGroup_Acceptor_Registry &&) = delete;
+
   /// Open an acceptor based on a tagged profile.
   void open (TAO_Profile const *profile, TAO_ORB_Core &orb_core);
 
@@ -87,17 +96,6 @@ protected:
   int find (TAO_Profile const *profile,
             Entry *&entry);
 
-private:
-  TAO_PortableGroup_Acceptor_Registry (
-    TAO_PortableGroup_Acceptor_Registry const &) = delete;
-  TAO_PortableGroup_Acceptor_Registry (
-    TAO_PortableGroup_Acceptor_Registry &&) = delete;
-  TAO_PortableGroup_Acceptor_Registry &operator= (
-    TAO_PortableGroup_Acceptor_Registry const &) = delete;
-  TAO_PortableGroup_Acceptor_Registry &operator= (
-    TAO_PortableGroup_Acceptor_Registry &&) = delete;
-
-private:
   /// List of acceptors that are currently open.
   Acceptor_Registry registry_;
 };

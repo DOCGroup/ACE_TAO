@@ -40,15 +40,14 @@ class TAO_PortableGroup_Export TAO_PortableGroup_ORBInitializer :
 public:
   TAO_PortableGroup_ORBInitializer () = default;
 
-  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-
-  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-
-private:
   TAO_PortableGroup_ORBInitializer (TAO_PortableGroup_ORBInitializer const &) = delete;
   TAO_PortableGroup_ORBInitializer (TAO_PortableGroup_ORBInitializer &&) = delete;
   TAO_PortableGroup_ORBInitializer & operator= (TAO_PortableGroup_ORBInitializer const &) = delete;
   TAO_PortableGroup_ORBInitializer & operator= (TAO_PortableGroup_ORBInitializer &&) = delete;
+
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -50,10 +50,8 @@ class TAO_PortableGroup_Export TAO_MIOP_Resource_Factory
   : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_MIOP_Resource_Factory ();
 
-  /// Destructor.
   ~TAO_MIOP_Resource_Factory () override;
 
   TAO_MIOP_Resource_Factory (TAO_MIOP_Resource_Factory const &) = delete;

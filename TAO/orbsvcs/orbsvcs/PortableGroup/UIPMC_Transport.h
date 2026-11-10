@@ -39,12 +39,15 @@ class TAO_UIPMC_Connection_Handler;
 class TAO_PortableGroup_Export TAO_UIPMC_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
   ~TAO_UIPMC_Transport () override = default;
+
+  TAO_UIPMC_Transport (TAO_UIPMC_Transport const &) = delete;
+  TAO_UIPMC_Transport (TAO_UIPMC_Transport &&) = delete;
+  TAO_UIPMC_Transport & operator= (TAO_UIPMC_Transport const &) = delete;
+  TAO_UIPMC_Transport & operator= (TAO_UIPMC_Transport &&) = delete;
 
 protected:
   /** @name Overridden Template Methods
@@ -107,10 +110,6 @@ private:
   u_long total_bytes_outstanding_ {};
   ACE_Time_Value time_last_sent_;
 
-  TAO_UIPMC_Transport (TAO_UIPMC_Transport const &) = delete;
-  TAO_UIPMC_Transport (TAO_UIPMC_Transport &&) = delete;
-  TAO_UIPMC_Transport & operator= (TAO_UIPMC_Transport const &) = delete;
-  TAO_UIPMC_Transport & operator= (TAO_UIPMC_Transport &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

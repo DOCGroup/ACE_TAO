@@ -56,7 +56,6 @@ public:
   /// protocol configuration properties for this connection.
   explicit TAO_UIPMC_Mcast_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_UIPMC_Mcast_Connection_Handler () override;
 
   //@{
@@ -101,7 +100,6 @@ public:
   /// (Same as -ORBPreferredInterfaces but for listeners)
   void listener_interfaces (char const *);
 
-private:
   TAO_UIPMC_Mcast_Connection_Handler (
     TAO_UIPMC_Mcast_Connection_Handler const &) = delete;
   TAO_UIPMC_Mcast_Connection_Handler (

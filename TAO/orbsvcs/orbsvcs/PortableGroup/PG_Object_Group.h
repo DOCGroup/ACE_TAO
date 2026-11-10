@@ -90,7 +90,6 @@ namespace TAO
         PortableGroup::GenericFactory_ptr factory,
         PortableGroup::GenericFactory::FactoryCreationId factory_id);
 
-      /// Destructor
       ~MemberInfo();
     };
 
@@ -133,8 +132,12 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator);
 
-    /// Destructor
     virtual ~PG_Object_Group ();
+
+    PG_Object_Group (PG_Object_Group const &) = delete;
+    PG_Object_Group (PG_Object_Group &&) = delete;
+    PG_Object_Group &operator= (PG_Object_Group const &) = delete;
+    PG_Object_Group &operator= (PG_Object_Group &&) = delete;
 
     /////////////////
     // public methods
@@ -285,12 +288,6 @@ namespace TAO
     // Forbidden methods
   private:
     PG_Object_Group ();
-    PG_Object_Group (PG_Object_Group const &) = delete;
-    PG_Object_Group (PG_Object_Group &&) = delete;
-    PG_Object_Group &operator= (PG_Object_Group const &) = delete;
-    PG_Object_Group &operator= (PG_Object_Group &&) = delete;
-
-
     /////////////////
     // Static Methods
   public:

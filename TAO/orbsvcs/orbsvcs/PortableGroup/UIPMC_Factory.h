@@ -53,12 +53,12 @@ public:
   TAO_Connector *make_connector  () override;
   int requires_explicit_endpoint () const override;
 
-private:
   TAO_UIPMC_Protocol_Factory (TAO_UIPMC_Protocol_Factory const &) = delete;
   TAO_UIPMC_Protocol_Factory (TAO_UIPMC_Protocol_Factory &&) = delete;
   TAO_UIPMC_Protocol_Factory & operator= (TAO_UIPMC_Protocol_Factory const &) = delete;
   TAO_UIPMC_Protocol_Factory & operator= (TAO_UIPMC_Protocol_Factory &&) = delete;
 
+private:
   /// Changing the version number can be used to provide backwards
   /// compatibility with old clients.
   // int major_;

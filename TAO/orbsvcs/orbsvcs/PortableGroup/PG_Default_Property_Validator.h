@@ -34,10 +34,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Default_Property_Validator
 {
 public:
-  /// Constructor.
   TAO_PG_Default_Property_Validator ();
 
-  /// Destructor
   virtual ~TAO_PG_Default_Property_Validator () = default;
 
   /// Validate the given properties.  Throw an exception when the

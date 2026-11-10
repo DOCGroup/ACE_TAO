@@ -39,10 +39,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_UIPMC_Connector ();
 
-  /// Destructor.
   ~TAO_UIPMC_Connector () override = default;
 
   // = The TAO_Connector methods, please check the documentation on
@@ -69,7 +67,6 @@ protected:
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
 
-private:
   TAO_UIPMC_Connector (TAO_UIPMC_Connector const &) = delete;
   TAO_UIPMC_Connector (TAO_UIPMC_Connector &&) = delete;
   TAO_UIPMC_Connector & operator= (TAO_UIPMC_Connector const &) = delete;

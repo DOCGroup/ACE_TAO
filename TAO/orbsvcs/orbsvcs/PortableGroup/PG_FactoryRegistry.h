@@ -72,7 +72,6 @@ namespace TAO
     //////////////////////
     // non-CORBA interface
   public:
-    /// Constructor
     explicit PG_FactoryRegistry (char const * name = "FactoryRegistry");
 
     /// virtual Destructor

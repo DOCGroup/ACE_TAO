@@ -39,10 +39,8 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group_Manipulator
   {
   public:
-    /// Constructor.
     PG_Object_Group_Manipulator ();
 
-    /// Destructor.
     ~PG_Object_Group_Manipulator () = default;
 
     PG_Object_Group_Manipulator (PG_Object_Group_Manipulator const &) = delete;

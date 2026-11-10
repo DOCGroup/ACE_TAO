@@ -73,7 +73,6 @@ namespace TAO
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory);
 
-    /// Destructor
     ~PG_Object_Group_Storable () override;
 
   public:
@@ -130,15 +129,13 @@ namespace TAO
 
     PortableGroup::ObjectGroupId get_object_group_id () const override;
 
-  private:
-    /////////////////////////
-    // Forbidden methods
     PG_Object_Group_Storable () = delete;
     PG_Object_Group_Storable (PG_Object_Group_Storable const &) = delete;
     PG_Object_Group_Storable (PG_Object_Group_Storable &&) = delete;
     PG_Object_Group_Storable &operator= (PG_Object_Group_Storable const &) = delete;
     PG_Object_Group_Storable &operator= (PG_Object_Group_Storable &&) = delete;
 
+  private:
     /// Indicate if instance of object group has been restored from store
     bool group_previously_stored_ {};
     PortableGroup::ObjectGroupId group_id_previously_stored_ {};

@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Object_Adapter_Factory : public TAO_Object_Adapter_Factory
 {
 public:
-  /// Constructor
   TAO_PG_Object_Adapter_Factory () = default;
 
   TAO_PG_Object_Adapter_Factory (TAO_PG_Object_Adapter_Factory const &) = delete;

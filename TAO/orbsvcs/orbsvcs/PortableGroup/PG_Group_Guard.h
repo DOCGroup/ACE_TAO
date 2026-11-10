@@ -46,24 +46,22 @@ class TAO_PG_ObjectGroupManager;
 class TAO_PG_Group_Guard
 {
 public:
-  /// Constructor.
   TAO_PG_Group_Guard (TAO_PG_GenericFactory &generic_factory,
                       TAO_PG_Factory_Set &factory_set,
                       TAO_PG_ObjectGroupManager &group_manager,
                       PortableServer::ObjectId const &oid);
 
-  /// Destructor.
   ~TAO_PG_Group_Guard ();
 
-  /// Relinquish cleanup responsibility.
-  void release ();
-
-private:
   TAO_PG_Group_Guard (TAO_PG_Group_Guard const &) = delete;
   TAO_PG_Group_Guard (TAO_PG_Group_Guard &&) = delete;
   TAO_PG_Group_Guard &operator= (TAO_PG_Group_Guard const &) = delete;
   TAO_PG_Group_Guard &operator= (TAO_PG_Group_Guard &&) = delete;
 
+  /// Relinquish cleanup responsibility.
+  void release ();
+
+private:
   /// Reference to the infrastructure TAO_PG_GenericFactory that
   /// created the below TAO_PG_Factory_Set.
   TAO_PG_GenericFactory & generic_factory_;

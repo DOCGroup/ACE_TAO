@@ -56,8 +56,6 @@ public:
   /// protocol configuration properties for this connection.
   explicit TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
 
-
-  /// Destructor.
   ~TAO_UIPMC_Connection_Handler () override;
 
   //@{
@@ -125,12 +123,12 @@ protected:
   // set the TOS field in the IP packets.
   int set_tos (int tos);
 
-private:
   TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler const &) = delete;
   TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler &&) = delete;
   TAO_UIPMC_Connection_Handler & operator= (TAO_UIPMC_Connection_Handler const &) = delete;
   TAO_UIPMC_Connection_Handler & operator= (TAO_UIPMC_Connection_Handler &&) = delete;
 
+private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 

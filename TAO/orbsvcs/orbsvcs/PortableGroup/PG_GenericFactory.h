@@ -49,11 +49,9 @@ class TAO_PortableGroup_Export TAO_PG_GenericFactory
   : public virtual PortableGroup::GenericFactory
 {
 public:
-  /// Constructor.
   TAO_PG_GenericFactory (TAO_PG_ObjectGroupManager &object_group_map,
                          TAO_PG_PropertyManager &property_manager);
 
-  /// Destructor.
   ~TAO_PG_GenericFactory () override;
 
   TAO_PG_GenericFactory (TAO_PG_GenericFactory const &) = delete;

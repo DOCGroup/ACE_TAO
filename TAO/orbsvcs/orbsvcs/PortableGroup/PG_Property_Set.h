@@ -89,6 +89,11 @@ namespace TAO
 
     ~PG_Property_Set ();
 
+    PG_Property_Set (PG_Property_Set const &) = delete;
+    PG_Property_Set &operator= (PG_Property_Set const &) = delete;
+    PG_Property_Set (PG_Property_Set &&) = delete;
+    PG_Property_Set &operator= (PG_Property_Set &&) = delete;
+
     /**
      * general purpose find. returns a pointer to an Any
      *  if templated methods were available:
@@ -145,13 +150,7 @@ namespace TAO
     void merge_properties (ValueMap & merged_values) const;
 
     ////////////////////
-    // Forbidden methods
   private:
-    PG_Property_Set (PG_Property_Set const &) = delete;
-    PG_Property_Set &operator= (PG_Property_Set const &) = delete;
-    PG_Property_Set (PG_Property_Set &&) = delete;
-    PG_Property_Set &operator= (PG_Property_Set &&) = delete;
-
     ///////////////
     // Data Members
   private:

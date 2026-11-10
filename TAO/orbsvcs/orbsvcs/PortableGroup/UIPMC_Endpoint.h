@@ -39,13 +39,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Endpoint : public TAO_Endpoint
 {
 public:
-  /// Default constructor.
   TAO_UIPMC_Endpoint ();
 
-  /// Constructor.
   explicit TAO_UIPMC_Endpoint (ACE_INET_Addr const &addr);
 
-  /// Destructor.
   ~TAO_UIPMC_Endpoint () override;
 
   // = Implementation of abstract TAO_Endpoint methods.  See
@@ -100,12 +97,12 @@ public:
   /// Acessor for the preferred network interface name if set
   char const *preferred_if () const;
 
-private:
   TAO_UIPMC_Endpoint (TAO_UIPMC_Endpoint const &) = delete;
   TAO_UIPMC_Endpoint (TAO_UIPMC_Endpoint &&) = delete;
   TAO_UIPMC_Endpoint & operator= (TAO_UIPMC_Endpoint const &) = delete;
   TAO_UIPMC_Endpoint & operator= (TAO_UIPMC_Endpoint &&) = delete;
 
+private:
   /// String representing the host address.
   CORBA::String_var host_;
 

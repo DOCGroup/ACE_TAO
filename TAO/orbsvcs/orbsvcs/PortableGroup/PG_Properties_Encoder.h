@@ -62,8 +62,12 @@ namespace TAO_PG
       values_.reserve (10);
     }
 
-    /// standard destructor
     ~Properties_Encoder () = default;
+
+    Properties_Encoder (Properties_Encoder const &) = delete;
+    Properties_Encoder &operator= (Properties_Encoder const &) = delete;
+    Properties_Encoder (Properties_Encoder &&) = delete;
+    Properties_Encoder &operator= (Properties_Encoder &&) = delete;
 
     /**
      * add a name/value property to the Properties_Encoder.
@@ -76,12 +80,6 @@ namespace TAO_PG
      */
     void encode (PortableGroup::Properties * property_set) const;
 
-  private:
-    Properties_Encoder (Properties_Encoder const &) = delete;
-    Properties_Encoder &operator= (Properties_Encoder const &) = delete;
-    Properties_Encoder (Properties_Encoder &&) = delete;
-    Properties_Encoder &operator= (Properties_Encoder &&) = delete;
-  private:
     NamedValueVec values_;
   };
 } //namespace TAO_PG

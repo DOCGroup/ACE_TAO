@@ -40,7 +40,6 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
 public:
   PortableGroup_Request_Dispatcher () = default;
 
-  /// Destructor.
   ~PortableGroup_Request_Dispatcher () override = default;
 
   PortableGroup_Request_Dispatcher (PortableGroup_Request_Dispatcher const &) = delete;

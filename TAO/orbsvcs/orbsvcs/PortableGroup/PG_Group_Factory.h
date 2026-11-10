@@ -74,10 +74,8 @@ namespace TAO
        TAO_SYNCH_MUTEX>;
 
   public:
-    /// Constructor.
     PG_Group_Factory ();
 
-    /// Destructor.
     virtual ~PG_Group_Factory ();
 
     PG_Group_Factory (PG_Group_Factory const &) = delete;

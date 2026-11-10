@@ -169,8 +169,13 @@ public:
 
   ~TAO_GOA () override;
 
-    // Used to force the initialization of the code.
-    static int Initializer ();
+  TAO_GOA (TAO_GOA const &) = delete;
+  TAO_GOA (TAO_GOA &&) = delete;
+  TAO_GOA & operator= (TAO_GOA const &) = delete;
+  TAO_GOA & operator= (TAO_GOA &&) = delete;
+
+  // Used to force the initialization of the code.
+  static int Initializer ();
 
 protected:
   /// Template method for creating new POA's of this type.
@@ -201,11 +206,6 @@ protected:
         CORBA::Object_ptr group_ref,
         CORBA::Object_ptr obj_ref);
 
-private:
-  TAO_GOA (TAO_GOA const &) = delete;
-  TAO_GOA (TAO_GOA &&) = delete;
-  TAO_GOA & operator= (TAO_GOA const &) = delete;
-  TAO_GOA & operator= (TAO_GOA &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

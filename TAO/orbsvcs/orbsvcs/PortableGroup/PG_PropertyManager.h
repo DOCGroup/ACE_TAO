@@ -49,7 +49,6 @@ class TAO_PortableGroup_Export TAO_PG_PropertyManager
   : public virtual POA_PortableGroup::PropertyManager
 {
 public:
-  /// Constructor.
   explicit TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
   /**

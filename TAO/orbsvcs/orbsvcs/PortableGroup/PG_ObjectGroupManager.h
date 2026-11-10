@@ -46,10 +46,8 @@ class TAO_PortableGroup_Export TAO_PG_ObjectGroupManager
   : public virtual POA_PortableGroup::ObjectGroupManager
 {
 public:
-  /// Constructor.
   TAO_PG_ObjectGroupManager ();
 
-  /// Destructor.
   ~TAO_PG_ObjectGroupManager () override;
 
   TAO_PG_ObjectGroupManager (TAO_PG_ObjectGroupManager const &) = delete;
