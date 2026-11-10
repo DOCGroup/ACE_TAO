@@ -53,21 +53,21 @@ namespace TAO
 
     ::Compression::CompressionRatio compression_ratio () override;
 
+    BaseCompressor (BaseCompressor const &) = delete;
+    BaseCompressor &operator= (BaseCompressor const &) = delete;
+    BaseCompressor (BaseCompressor &&) = delete;
+    BaseCompressor &operator= (BaseCompressor &&) = delete;
+
   protected:
     void update_stats (::CORBA::ULongLong uncompressed_bytes,
                        ::CORBA::ULongLong compressed_bytes);
 
     TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressionLevel compression_level_;
+    // Non-owning back-reference; the compressor factory retains the compressor.
     ::Compression::CompressorFactory *compressor_factory_;
-    ::CORBA::ULongLong compressed_bytes_;
-    ::CORBA::ULongLong uncompressed_bytes_;
-
-  private:
-    BaseCompressor (BaseCompressor const &) = delete;
-    BaseCompressor &operator= (BaseCompressor const &) = delete;
-    BaseCompressor (BaseCompressor &&) = delete;
-    BaseCompressor &operator= (BaseCompressor &&) = delete;
+    ::CORBA::ULongLong compressed_bytes_ {};
+    ::CORBA::ULongLong uncompressed_bytes_ {};
   };
 }
 

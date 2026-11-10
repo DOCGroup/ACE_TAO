@@ -44,7 +44,6 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
- private:
   TAO_Compression_Loader (TAO_Compression_Loader const &) = delete;
   TAO_Compression_Loader &operator= (TAO_Compression_Loader const &) = delete;
   TAO_Compression_Loader (TAO_Compression_Loader &&) = delete;

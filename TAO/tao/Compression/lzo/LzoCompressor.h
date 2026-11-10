@@ -42,7 +42,6 @@ namespace TAO
           ::Compression::Buffer const & source,
           ::Compression::Buffer & target) override;
 
-    private:
       LzoCompressor (LzoCompressor const &) = delete;
       LzoCompressor &operator= (LzoCompressor const &) = delete;
       LzoCompressor (LzoCompressor &&) = delete;

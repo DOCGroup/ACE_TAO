@@ -38,13 +38,13 @@ namespace TAO
     ::Compression::Compressor_ptr get_compressor
       (::Compression::CompressionLevel compression_level) override = 0;
 
-  private:
-    ::Compression::CompressorId const compressor_id_;
-
     CompressorFactory (CompressorFactory const &) = delete;
     CompressorFactory &operator= (CompressorFactory const &) = delete;
     CompressorFactory (CompressorFactory &&) = delete;
     CompressorFactory &operator= (CompressorFactory &&) = delete;
+
+  private:
+    ::Compression::CompressorId const compressor_id_;
   };
 }
 
