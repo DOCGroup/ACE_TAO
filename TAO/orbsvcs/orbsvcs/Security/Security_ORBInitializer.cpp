@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Security/Security_ORBInitializer.h"
 
 #include "orbsvcs/Security/Security_Current.h"
@@ -23,7 +22,7 @@ TAO::Security::ORBInitializer::pre_init (
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // allocate_tss_slot_id() TAO extension.
-  TAO_ORBInitInfo_var tao_info =
+  TAO_ORBInitInfo_var const tao_info =
     TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -40,9 +39,7 @@ TAO::Security::ORBInitializer::pre_init (
 
   // Reserve a TSS slot in the ORB core internal TSS resources for the
   // thread-specific portion of Security::Current.
-  size_t tss_slot = tao_info->allocate_tss_slot_id (0 /* no cleanup function */);
-
-#if 1
+  size_t const tss_slot = tao_info->allocate_tss_slot_id (0 /* no cleanup function */);
 
 #if 0 // why am I getting a BAD_OPERATION from no SSL context?!
   CORBA::String_var orb_id = info->orb_id ();
@@ -67,7 +64,7 @@ TAO::Security::ORBInitializer::pre_init (
   /*
    * Instantiate and register the SecurityLevel2::SecurityManager
    */
-  SecurityLevel2::SecurityManager_ptr manager2;
+  SecurityLevel2::SecurityManager_ptr manager2 {};
   ACE_NEW_THROW_EX (manager2,
                     TAO::Security::SecurityManager (/*need args*/),
                     CORBA::NO_MEMORY (
@@ -83,15 +80,13 @@ TAO::Security::ORBInitializer::pre_init (
   info->register_initial_reference ("SecurityLevel2:SecurityManager",
                                     security_manager2.in ());
 
-#endif
-
   // Rather than reserve another TSS slot in the ORB core internal TSS
   // resources for the thread-specific portion of
   // SecurityLevel3::SecurityCurrent object, we will re-use the slot
   // allocated earlier.
 
   // Create the SecurityLevel3::Current object.
-  SecurityLevel3::SecurityCurrent_ptr current3;
+  SecurityLevel3::SecurityCurrent_ptr current3 {};
   ACE_NEW_THROW_EX (current3,
                     TAO::SL3::SecurityCurrent (tss_slot,
                                                tao_info->orb_core ()),
@@ -109,7 +104,7 @@ TAO::Security::ORBInitializer::pre_init (
                                     security_current3.in ());
 
   // Create the SecurityLevel3::CredentialsCurator object.
-  SecurityLevel3::CredentialsCurator_ptr curator;
+  SecurityLevel3::CredentialsCurator_ptr curator {};
   ACE_NEW_THROW_EX (curator,
                     TAO::SL3::CredentialsCurator,
                     CORBA::NO_MEMORY (
@@ -126,7 +121,7 @@ TAO::Security::ORBInitializer::pre_init (
                                     credentials_curator.in ());
 
   // Create the SecurityLevel3::SecurityManager object.
-  SecurityLevel3::SecurityManager_ptr manager3;
+  SecurityLevel3::SecurityManager_ptr manager3 {};
   ACE_NEW_THROW_EX (manager3,
                     TAO::SL3::SecurityManager (credentials_curator.in ()),
                     CORBA::NO_MEMORY (
@@ -158,7 +153,7 @@ TAO::Security::ORBInitializer::register_policy_factories (
 
   if (CORBA::is_nil (this->policy_factory_.in ()))
     {
-      PortableInterceptor::PolicyFactory_ptr policy_factory;
+      PortableInterceptor::PolicyFactory_ptr policy_factory {};
       ACE_NEW_THROW_EX (policy_factory,
                         TAO::Security::PolicyFactory,
                           CORBA::NO_MEMORY (
@@ -174,31 +169,26 @@ TAO::Security::ORBInitializer::register_policy_factories (
   // types since a single policy factory is used to create each of
   // the different types of security policies.
 
-  CORBA::PolicyType type;
+  info->register_policy_factory (::Security::SecQOPPolicy, this->policy_factory_.in ());
 
-  type = ::Security::SecQOPPolicy;
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (::Security::SecMechanismsPolicy, this->policy_factory_.in ());
 
-  type = ::Security::SecMechanismsPolicy;
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (::Security::SecInvocationCredentialsPolicy,
+                                 this->policy_factory_.in ());
 
-  type = ::Security::SecInvocationCredentialsPolicy;
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (::Security::SecFeaturePolicy,
+                                 this->policy_factory_.in ()); // Deprecated
 
-  type = ::Security::SecFeaturePolicy;   // Deprecated
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (::Security::SecDelegationDirectivePolicy,
+                                 this->policy_factory_.in ());
 
-  type = ::Security::SecDelegationDirectivePolicy;
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (::Security::SecEstablishTrustPolicy, this->policy_factory_.in ());
 
-  type = ::Security::SecEstablishTrustPolicy;
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (SecurityLevel3::ContextEstablishmentPolicyType,
+                                 this->policy_factory_.in ());
 
-  type = SecurityLevel3::ContextEstablishmentPolicyType;
-  info->register_policy_factory (type, this->policy_factory_.in ());
-
-  type = SecurityLevel3::ObjectCredentialsPolicyType;
-  info->register_policy_factory (type, this->policy_factory_.in ());
+  info->register_policy_factory (SecurityLevel3::ObjectCredentialsPolicyType,
+                                 this->policy_factory_.in ());
 
   // ----------------------------------------------------------------
 }

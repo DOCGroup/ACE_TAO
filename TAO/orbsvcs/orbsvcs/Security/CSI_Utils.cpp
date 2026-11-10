@@ -48,7 +48,7 @@ TAO::CSI_Utils::extract_sas_service_context (
                       sc.context_data.get_buffer ()),
                     sc.context_data.length ());
 
-  ACE_CDR::Boolean byte_order;
+  ACE_CDR::Boolean byte_order {};
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     return false;

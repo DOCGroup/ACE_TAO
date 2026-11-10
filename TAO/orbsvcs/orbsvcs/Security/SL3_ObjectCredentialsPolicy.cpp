@@ -29,7 +29,7 @@ TAO::SL3::ObjectCredentialsPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO::SL3::ObjectCredentialsPolicy::copy ()
 {
-  CORBA::Policy_ptr p = CORBA::Policy_ptr ();
+  CORBA::Policy_ptr p {};
   ACE_NEW_THROW_EX (p,
                     TAO::SL3::ObjectCredentialsPolicy (this->creds_list_),
                     CORBA::NO_MEMORY ());

@@ -20,7 +20,7 @@ Security::AttributeList *
 TAO_Security_Current::get_attributes (
     Security::AttributeTypeList const & attributes)
 {
-  TAO::Security::Current_Impl *impl = this->implementation ();
+  TAO::Security::Current_Impl * const impl = this->implementation ();
 
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
@@ -34,7 +34,7 @@ TAO_Security_Current::get_attributes (
 SecurityLevel2::ReceivedCredentials_ptr
 TAO_Security_Current::received_credentials ()
 {
-  TAO::Security::Current_Impl *impl = this->implementation ();
+  TAO::Security::Current_Impl * const impl = this->implementation ();
 
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception

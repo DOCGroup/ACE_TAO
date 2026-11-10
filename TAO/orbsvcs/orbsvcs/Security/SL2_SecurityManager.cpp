@@ -17,7 +17,7 @@ TAO::Security::SecurityManager::SecurityManager (/* unknown */)
   : principal_authenticator_ (SecurityLevel2::PrincipalAuthenticator::_nil ())
 {
   // this needs to change to access decision
-  SecurityLevel2::AccessDecision_ptr ad;
+  SecurityLevel2::AccessDecision_ptr ad {};
   ACE_NEW_THROW_EX (ad,
                     TAO::Security::AccessDecision,
                     CORBA::NO_MEMORY (
@@ -94,8 +94,8 @@ bool
 TAO::Security::AccessDecision::ReferenceKeyType::operator==
   (ReferenceKeyType const & other) const
 {
-  ::CORBA::ULong const olen = this->oid_->length();
-  ::CORBA::ULong const alen = this->adapter_id_->length();
+  ::CORBA::ULong const olen = this->oid_->length ();
+  ::CORBA::ULong const alen = this->adapter_id_->length ();
 
   if (olen == other.oid_->length() &&
       alen == other.adapter_id_->length())

@@ -70,7 +70,7 @@ TAO::SL3::CredentialsCurator::_nil ()
 SecurityLevel3::AcquisitionMethodList *
 TAO::SL3::CredentialsCurator::supported_methods ()
 {
-  SecurityLevel3::AcquisitionMethodList * list;
+  SecurityLevel3::AcquisitionMethodList * list {};
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::AcquisitionMethodList,
                     CORBA::NO_MEMORY ());
@@ -79,7 +79,7 @@ TAO::SL3::CredentialsCurator::supported_methods ()
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
-                    0);
+                    nullptr);
 
   methods->length (this->acquirer_factories_.current_size ());
 
@@ -101,7 +101,7 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
     char const * acquisition_method,
     CORBA::Any const & acquisition_arguments)
 {
-  TAO::SL3::CredentialsAcquirerFactory * factory;
+  TAO::SL3::CredentialsAcquirerFactory * factory {};
 
   if (this->acquirer_factories_.find (acquisition_method,
                                       factory) == 0)
@@ -116,7 +116,7 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::CredentialsCurator::default_creds_list ()
 {
-  SecurityLevel3::OwnCredentialsList * list;
+  SecurityLevel3::OwnCredentialsList * list {};
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::OwnCredentialsList,
                     CORBA::NO_MEMORY ());
@@ -126,7 +126,7 @@ TAO::SL3::CredentialsCurator::default_creds_list ()
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
-                    0);
+                    nullptr);
 
   creds_list->length (this->credentials_table_.current_size ());
 
@@ -147,7 +147,7 @@ TAO::SL3::CredentialsCurator::default_creds_list ()
 SecurityLevel3::CredentialsIdList *
 TAO::SL3::CredentialsCurator::default_creds_ids ()
 {
-  SecurityLevel3::CredentialsIdList * list;
+  SecurityLevel3::CredentialsIdList * list {};
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::CredentialsIdList,
                     CORBA::NO_MEMORY ());
@@ -156,7 +156,7 @@ TAO::SL3::CredentialsCurator::default_creds_ids ()
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
-                    0);
+                    nullptr);
 
   creds_ids->length (this->credentials_table_.current_size ());
 
