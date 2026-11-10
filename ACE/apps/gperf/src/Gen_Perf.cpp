@@ -56,26 +56,29 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 
   while (*set1 && *set2)
     if (*set1 == *set2)
-      set1++, set2++;
+      {
+        ++set1;
+        ++set2;
+      }
     else
       {
         *set3 = *set1 < *set2 ? *set1++ : *set2++;
         if (set3 == base || *set3 != *(set3 - 1))
-          set3++;
+          ++set3;
       }
 
   while (*set1)
     {
       *set3 = *set1++;
       if (set3 == base || *set3 != *(set3 - 1))
-        set3++;
+        ++set3;
     }
 
   while (*set2)
     {
       *set3 = *set2++;
       if (set3 == base || *set3 != *(set3 - 1))
-        set3++;
+        ++set3;
     }
   *set3 = '\0';
   return ACE_Utils::truncate_cast<int> (set3 - base);
@@ -88,7 +91,7 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 void
 Gen_Perf::sort_set (char *union_set, int len)
 {
-  for (int i = 0, j = len - 1; i < j; i++)
+  for (int i = 0, j = len - 1; i < j; ++i)
     {
       int curr;
       unsigned char tmp;
@@ -97,7 +100,7 @@ Gen_Perf::sort_set (char *union_set, int len)
            curr > 0
            && Vectors::occurrences[Vectors::character_index (tmp)] <
              Vectors::occurrences[Vectors::character_index (union_set[curr - 1])];
-           curr--)
+           --curr)
         union_set[curr] = union_set[curr - 1];
 
       union_set[curr] = static_cast<char> (tmp);
@@ -206,7 +209,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   // continue normal action.
   ++fewest_collisions;
 
-  for (char *temp = this->union_set.get (); *temp != '\0'; temp++)
+  for (char *temp = this->union_set.get (); *temp != '\0'; ++temp)
     if (affects_prev (*temp, curr) == 0)
       {
         if (option[DEBUGGING])
@@ -323,7 +326,7 @@ Gen_Perf::compute_binary_search ()
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
-       curr = curr->next, hash_value++)
+       curr = curr->next, ++hash_value)
     {
       curr->hash_value = hash_value;
     }
@@ -343,7 +346,7 @@ Gen_Perf::compute_linear_search ()
   int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
-       curr = curr->next, hash_value++)
+       curr = curr->next, ++hash_value)
     {
       curr->hash_value = hash_value;
     }
@@ -370,7 +373,7 @@ Gen_Perf::compute_perfect_hash ()
               return -1;
             break;
           }
-      num_done++;
+      ++num_done;
     }
 
   // Make one final check, just to make sure nothing weird happened...
@@ -388,7 +391,7 @@ Gen_Perf::compute_perfect_hash ()
               // Keep track of the number of "dynamic" links (i.e., keys
               // that hash to the same value) so that we can use it later
               // when generating the output.
-              this->key_list.total_duplicates++;
+              ++this->key_list.total_duplicates;
             }
           else
             {
@@ -452,7 +455,7 @@ Gen_Perf::~Gen_Perf ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
-      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; i++)
+      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
         if (Vectors::occurrences[i])
           ACE_DEBUG ((LM_DEBUG,
                       "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",

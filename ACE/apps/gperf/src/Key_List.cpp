@@ -856,10 +856,10 @@ Key_List::output_keylength_table ()
                       indent,
                       indent);
 
-      for (temp = head; temp; temp = temp->next, slot++)
+      for (temp = head; temp; temp = temp->next, ++slot)
         {
           if (slot < temp->hash_value)
-            for ( ; slot < temp->hash_value; slot++)
+            for ( ; slot < temp->hash_value; ++slot)
               ACE_OS::printf ("%3d,%s", 0, ++column % (max_column - 1) ? "" : "\n    ");
 
           ACE_OS::printf ("%3d,%s", temp->length, ++column % (max_column - 1 ) ? "" : "\n    ");
@@ -920,14 +920,14 @@ Key_List::output_keyword_table ()
 
   int column_defaults;
 
-  for (column_defaults = 1; slot < head->hash_value; column_defaults++)
+  for (column_defaults = 1; slot < head->hash_value; ++column_defaults)
     {
       ACE_OS::printf ("%s\"\",%s%s%s",
                       l_brace,
                       option.fill_default ().c_str (),
                       r_brace,
                       column_defaults % 9 ? "" : "\n      ");
-      slot++;
+      ++slot;
     }
 
   if (0 < head->hash_value && column_defaults % 10)
@@ -935,7 +935,7 @@ Key_List::output_keyword_table ()
 
   // Generate an array of reserved words at appropriate locations.
 
-  for (temp = head ; temp; temp = temp->next, slot++)
+  for (temp = head ; temp; temp = temp->next, ++slot)
     {
       temp->slot = slot;
 
@@ -945,7 +945,7 @@ Key_List::output_keyword_table ()
 
           ACE_OS::printf ("      ");
 
-          for (column = 1; slot < temp->hash_value; slot++, column++)
+          for (column = 1; slot < temp->hash_value; ++slot, ++column)
             ACE_OS::printf ("%s\"\",%s%s%s",
                             l_brace,
                             option.fill_default ().c_str (),
@@ -1225,7 +1225,7 @@ Key_List::output_hash_function ()
 
   for (Key_List::field_width = 2;
        (count /= 10) > 0;
-       Key_List::field_width++)
+       ++Key_List::field_width)
     continue;
 
   if (option[INLINE])
@@ -1346,14 +1346,14 @@ Key_List::output_hash_function ()
               // Break these options up for speed (gee, is this misplaced efficiency or what?!
               if (option[STRCASECMP])
 
-                for (i = max_key_len; i > 0; i--)
+                for (i = max_key_len; i > 0; --i)
                   ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
                                   "(charmap[static_cast<unsigned char> (str[%d])]) %% asso_values.size ()];\n",
                                   i, i - 1);
 
               else
 
-                for (i = max_key_len; i > 0; i--)
+                for (i = max_key_len; i > 0; --i)
                   ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
                                   "(str[%d]) %% asso_values.size ()];\n", i, i - 1);
 
@@ -1401,7 +1401,7 @@ Key_List::count_duplicates (List_Node *link,
        ptr != nullptr;
        ptr = ptr->link)
     {
-      count++;
+      ++count;
 
       if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
@@ -1502,7 +1502,7 @@ Key_List::output_lookup_array ()
                    temp = temp->next)
                 dup_ptr->count += this->count_duplicates (temp->next,
                                                           "dynamic");
-              dup_ptr++;
+              ++dup_ptr;
             }
         }
 
@@ -1519,7 +1519,7 @@ Key_List::output_lookup_array ()
           int i;
 
           // Look to the left first.
-          for (i = dup_ptr->hash_value; i > 0; i--)
+          for (i = dup_ptr->hash_value; i > 0; --i)
             if (lookup_array[i] == DEFAULT_VALUE && lookup_array[i - 1] == DEFAULT_VALUE)
               {
                 this->update_lookup_array (lookup_array,
@@ -1534,7 +1534,7 @@ Key_List::output_lookup_array ()
           // instead...
           if (i == 0)
             {
-              for (i = dup_ptr->hash_value; i < max_hash_value; i++)
+              for (i = dup_ptr->hash_value; i < max_hash_value; ++i)
                 if (lookup_array[i] == DEFAULT_VALUE && lookup_array[i + 1] == DEFAULT_VALUE)
                   {
                     this->update_lookup_array (lookup_array,
@@ -1587,7 +1587,7 @@ Key_List::output_lookup_array ()
 
       // Calculate maximum number of digits required for LOOKUP_ARRAY_SIZE.
 
-      for (Key_List::field_width = 2; (count /= 10) > 0; Key_List::field_width++)
+      for (Key_List::field_width = 2; (count /= 10) > 0; ++Key_List::field_width)
         continue;
 
       int const max_column = 15;
@@ -1595,7 +1595,7 @@ Key_List::output_lookup_array ()
 
       for (lookup_ptr = lookup_array;
            lookup_ptr < lookup_array + max_hash_value + 1;
-           lookup_ptr++)
+           ++lookup_ptr)
         {
           if (option[DEBUGGING])
             ACE_OS::printf ("      %*d, /* slot = %d */\n",
