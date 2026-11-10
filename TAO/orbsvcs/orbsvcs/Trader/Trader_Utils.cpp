@@ -164,7 +164,7 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
     {
       // Expand the policy sequence, and copy in the policy name into
       // the new element.
-      CORBA::ULong length = this->policies_.length ();
+      CORBA::ULong const length = this->policies_.length ();
       ++this->num_policies_;
 
       if (length < this->num_policies_)
@@ -887,7 +887,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
       // We always require a hop count.
       if (i == HOP_COUNT)
         {
-          CORBA::ULong count = this->hop_count ();
+          CORBA::ULong const count = this->hop_count ();
 
           new_policy.name = POLICY_NAMES[HOP_COUNT];
           new_policy.value <<= count - 1;
@@ -934,7 +934,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
               // The any will sieze control of this memory.
               // Allocating here avoids copying in the policy
               // any.
-              CORBA::ULong length = trader_name.length ();
+              CORBA::ULong const length = trader_name.length ();
               CosTrading::LinkName* buf =
                 CosTrading::TraderName::allocbuf (length - 1);
 

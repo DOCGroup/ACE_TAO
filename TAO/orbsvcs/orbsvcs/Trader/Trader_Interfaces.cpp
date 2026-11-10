@@ -150,7 +150,7 @@ query (const char *type,
   returned_limits_applied = offer_filter.limits_applied ();
 
   // Fill the return sequence and iterator with the bountiful results.
-  CORBA::ULong offers_returned =
+  CORBA::ULong const offers_returned =
     this->fill_receptacles (type,
                             how_many,
                             desired_props,
@@ -276,7 +276,7 @@ lookup_all_subtypes (const char* type,
   // Scan all types inserted after the super types. If the transitive
   // closure of a type's super type relation includes the super type
   // being considered, then perform a search on that type.
-  CORBA::ULong num_types = all_types->length ();
+  CORBA::ULong const num_types = all_types->length ();
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
   for (CORBA::ULong i {};
        i < num_types && offer_filter.ok_to_consider_more ();
@@ -287,7 +287,7 @@ lookup_all_subtypes (const char* type,
 
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq&
         super_types = type_struct->super_types;
-      CORBA::ULong num_super_types = super_types.length ();
+      CORBA::ULong const num_super_types = super_types.length ();
 
       for (CORBA::ULong j {}; j < num_super_types; ++j)
         {
@@ -396,7 +396,7 @@ fill_receptacles (const char* /* type */,
     }
 
   // Clear the preference intrerpreter of superfluous items.
-  size_t num_offers = pref_inter.num_offers ();
+  size_t const num_offers = pref_inter.num_offers ();
   for (size_t j {}; j < num_offers; ++j)
     {
       CosTrading::Offer* offer {};
@@ -1058,12 +1058,11 @@ validate_properties (const char* type,
                      const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                      const CosTrading::PropertySeq& properties)
 {
-  CORBA::ULong length = properties.length ();
   const CosTradingRepos::ServiceTypeRepository::PropStructSeq&prop_types = type_struct->props;
   TAO_Property_Evaluator_By_Name prop_eval (properties);
 
   // Perform property validation
-  length = prop_types.length ();
+  CORBA::ULong const length = prop_types.length ();
 
   for (CORBA::ULong i {}; i < length; ++i)
     {

@@ -329,7 +329,8 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
 
   // Count the total number of properties.
   CORBA::ULong num_props {};
-  CORBA::ULong num_types = static_cast<CORBA::ULong> (service_type_queue.size ());
+  CORBA::ULong const num_types =
+    static_cast<CORBA::ULong> (service_type_queue.size ());
 
   for (std::string const& next_type_name : service_type_queue)
     {
@@ -471,7 +472,7 @@ TAO_Service_Type_Repository::
 validate_inheritance (Prop_Map &prop_map,
                       const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
 {
-  CORBA::ULong num_super_types = super_types.length ();
+  CORBA::ULong const num_super_types = super_types.length ();
 
   for (CORBA::ULong i {};
        i < num_super_types;
@@ -492,7 +493,7 @@ validate_inheritance (Prop_Map &prop_map,
       else
         continue;
 
-      CORBA::ULong num_props = super_props.length ();
+      CORBA::ULong const num_props = super_props.length ();
 
       for (CORBA::ULong j {};
            j < num_props;

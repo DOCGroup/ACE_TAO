@@ -79,7 +79,7 @@ TAO_Trader_Base::is_valid_property_name (const char* ident)
   if (ident == nullptr)
     return return_value;
 
-  size_t length = std::strlen (ident);
+  size_t const length = std::strlen (ident);
   if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
     {
       return_value = true;
@@ -120,7 +120,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
         ++ident;
       }
 
-    size_t length =
+    size_t const length =
       pos ? static_cast<size_t>(pos - ident) : std::strlen (ident);
 
     if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
