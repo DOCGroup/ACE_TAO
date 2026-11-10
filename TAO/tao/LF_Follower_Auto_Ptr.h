@@ -41,12 +41,12 @@ public:
   TAO_LF_Follower *operator-> ();
   operator TAO_LF_Follower * ();
 
-private:
   TAO_LF_Follower_Auto_Ptr (TAO_LF_Follower_Auto_Ptr const &) = delete;
   TAO_LF_Follower_Auto_Ptr &operator= (TAO_LF_Follower_Auto_Ptr const &) = delete;
   TAO_LF_Follower_Auto_Ptr (TAO_LF_Follower_Auto_Ptr &&) = delete;
   TAO_LF_Follower_Auto_Ptr &operator= (TAO_LF_Follower_Auto_Ptr &&) = delete;
 
+private:
   /// Keep a reference to the leader follower
   TAO_Leader_Follower &leader_follower_;
 

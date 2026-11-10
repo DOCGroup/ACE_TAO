@@ -36,12 +36,12 @@ public:
 
   ~TAO_LF_Follower_Auto_Adder ();
 
-private:
   TAO_LF_Follower_Auto_Adder (TAO_LF_Follower_Auto_Adder const &) = delete;
   TAO_LF_Follower_Auto_Adder &operator= (TAO_LF_Follower_Auto_Adder const &) = delete;
   TAO_LF_Follower_Auto_Adder (TAO_LF_Follower_Auto_Adder &&) = delete;
   TAO_LF_Follower_Auto_Adder &operator= (TAO_LF_Follower_Auto_Adder &&) = delete;
 
+private:
   /// Keep a reference to the leader follower
   TAO_Leader_Follower &leader_follower_;
 
