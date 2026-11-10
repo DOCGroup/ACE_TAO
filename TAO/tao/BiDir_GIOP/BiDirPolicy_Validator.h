@@ -44,7 +44,6 @@ public:
 
   CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 
- private:
   TAO_BiDirPolicy_Validator (TAO_BiDirPolicy_Validator const &) = delete;
   TAO_BiDirPolicy_Validator &operator= (TAO_BiDirPolicy_Validator const &) = delete;
   TAO_BiDirPolicy_Validator (TAO_BiDirPolicy_Validator &&) = delete;

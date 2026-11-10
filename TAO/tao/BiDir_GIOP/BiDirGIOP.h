@@ -51,12 +51,12 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader const &) = delete;
   TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader const &) = delete;
   TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader &&) = delete;
   TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader &&) = delete;
 
+private:
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
   bool initialized_ {};

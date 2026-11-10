@@ -39,7 +39,6 @@ public:
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg) override;
 
- private:
   TAO_BiDIR_Service_Context_Handler (TAO_BiDIR_Service_Context_Handler const &) = delete;
   TAO_BiDIR_Service_Context_Handler &operator= (
     TAO_BiDIR_Service_Context_Handler const &) = delete;

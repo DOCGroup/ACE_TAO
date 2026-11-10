@@ -41,7 +41,6 @@ public:
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const &value) override;
 
- private:
   TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory const &) = delete;
   TAO_BiDir_PolicyFactory &operator= (TAO_BiDir_PolicyFactory const &) = delete;
   TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory &&) = delete;

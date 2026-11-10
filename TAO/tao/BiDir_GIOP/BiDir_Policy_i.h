@@ -61,11 +61,11 @@ public:
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-private:
   TAO_BidirectionalPolicy (TAO_BidirectionalPolicy &&) = delete;
   TAO_BidirectionalPolicy &operator= (TAO_BidirectionalPolicy const &) = delete;
   TAO_BidirectionalPolicy &operator= (TAO_BidirectionalPolicy &&) = delete;
 
+private:
   /// The attribute
   BiDirPolicy::BidirectionalPolicyValue value_;
 };
