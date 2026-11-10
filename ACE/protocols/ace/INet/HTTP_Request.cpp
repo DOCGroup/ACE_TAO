@@ -85,11 +85,17 @@ namespace ACE
           while (!it.done () && ACE_OS::ace_isspace (*it))
             ++it;
           while (!it.done () && !ACE_OS::ace_isspace (*it))
-            scheme += *it++;
+            {
+              scheme += *it;
+              ++it;
+            }
           while (!it.done () && ACE_OS::ace_isspace (*it))
             ++it;
           while (!it.done ())
-            auth_info += *it++;
+            {
+              auth_info += *it;
+              ++it;
+            }
         }
       }
 

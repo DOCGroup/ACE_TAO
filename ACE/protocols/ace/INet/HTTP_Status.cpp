@@ -1,6 +1,6 @@
 #include "ace/INet/HTTP_Status.h"
 #include "ace/INet/HeaderBase.h"
-#include "ace/OS_NS_stdlib.h"
+#include <cstdlib>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_Status.inl"
@@ -85,7 +85,7 @@ namespace ACE
 
     void Status::set_status(const ACE_CString& status)
       {
-        Code istat = (Code)ACE_OS::atoi (status.c_str ());
+        Code const istat = static_cast<Code> (std::atoi (status.c_str ()));
         if (istat == HTTP_NONE || get_reason (istat) == HTTP_REASON_UNKNOWN)
           {
             this->code_ = INVALID;
