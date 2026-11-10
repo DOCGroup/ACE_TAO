@@ -336,7 +336,7 @@ fill_receptacles (const char* /* type */,
 
   CORBA::ULong return_card = policies.return_card ();
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   CORBA::ULong size = static_cast<CORBA::ULong> (pref_inter.num_offers ());
   CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
@@ -356,10 +356,10 @@ fill_receptacles (const char* /* type */,
   offers.length (offers_in_sequence);
 
   // Add to the sequence, filtering out the undesired properties.
-  for (i = 0; i < offers_in_sequence; i++)
+  for (i = 0; i < offers_in_sequence; ++i)
     {
       CosTrading::Offer* offer {};
-      CosTrading::OfferId offer_id = 0;
+      CosTrading::OfferId offer_id {};
 
       // Pull the next ordered offer out of the preference
       // interpreter.
@@ -383,10 +383,10 @@ fill_receptacles (const char* /* type */,
       oi->_remove_ref ();
 
       // Add to the iterator
-      for (i = 0; i < offers_in_iterator; i++)
+      for (i = 0; i < offers_in_iterator; ++i)
         {
           CosTrading::Offer* offer {};
-          CosTrading::OfferId offer_id = 0;
+          CosTrading::OfferId offer_id {};
 
           // Pull the next ordered offer out of the preference
           // intrerpreter and add it to the offer iterator.
@@ -397,10 +397,10 @@ fill_receptacles (const char* /* type */,
 
   // Clear the preference intrerpreter of superfluous items.
   size_t num_offers = pref_inter.num_offers ();
-  for (size_t j = 0; j < num_offers; j++)
+  for (size_t j {}; j < num_offers; ++j)
     {
       CosTrading::Offer* offer {};
-      CosTrading::OfferId offer_id = 0;
+      CosTrading::OfferId offer_id {};
 
       pref_inter.remove_offer (offer, offer_id);
       CORBA::string_free (offer_id);
@@ -477,7 +477,7 @@ retrieve_links (TAO_Policies& policies,
       CORBA::ULong i = 0, j = 0,
         length = links->length ();
 
-      for (i = 0; i < length; i++)
+      for (i = 0; i < length; ++i)
         {
           // Grab the link information.
           CosTrading::Link::LinkInfo_var
@@ -496,7 +496,7 @@ retrieve_links (TAO_Policies& policies,
               if (i > j)
                 links[j] = links[i];
 
-              j++;
+              ++j;
             }
         }
 
@@ -548,7 +548,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
   CosTrading::PolicySeq policies_to_pass;
   policies.copy_to_pass (policies_to_pass, request_id);
 
-  for (int i = links.length () - 1; i >= 0; i--)
+  for (int i = links.length () - 1; i >= 0; --i)
     {
       CosTrading::OfferSeq* out_offers {};
       CosTrading::OfferIterator* out_offer_iter {};
@@ -578,7 +578,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
                                 CosTrading::OfferIterator_out (out_offer_iter),
                                 CosTrading::PolicyNameSeq_out (out_limits));
 
-          CORBA::ULong j = 0;
+          CORBA::ULong j {};
           CosTrading::OfferSeq_var out_offers_var (out_offers);
           CosTrading::PolicyNameSeq_var out_limits_var (out_limits);
 
@@ -592,7 +592,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
             total_length = source_length + target_length;
 
           limits.length (total_length);
-          for (j = 0; j < source_length; j++)
+          for (j = 0; j < source_length; ++j)
             limits[j + target_length] = out_limits_var[j];
 
           // Concatenate the sequence offers.
@@ -601,7 +601,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           total_length = source_length + target_length;
 
           offers.length (total_length);
-          for (j = 0; j < source_length; j++)
+          for (j = 0; j < source_length; ++j)
             offers[j + target_length] = out_offers_var[j];
         }
       catch (const CORBA::Exception&)
@@ -625,14 +625,14 @@ TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
                        CosTrading::OfferSeq& offers)
 {
-  CORBA::ULong j = 0;
+  CORBA::ULong j {};
   CORBA::ULong length = offers.length ();
 
   // Grab ownership of the offers already in the target sequence.
   CosTrading::Offer* target_buf = offers.get_buffer (1);
 
   // Order the sequence.
-  for (j = 0; j < length; j++)
+  for (j = 0; j < length; ++j)
     pref_inter.order_offer (&target_buf[j]);
   //pref_inter.order_offer (&offers[j]);
 
@@ -643,7 +643,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   //  copy.length (length);
 
   // Copy in the ordered offers.
-  for (j = 0; j < length; j++)
+  for (j = 0; j < length; ++j)
     {
       CosTrading::Offer* offer {};
       pref_inter.remove_offer (offer);
@@ -1042,7 +1042,7 @@ resolve (const CosTrading::TraderName &name)
     {
       // Create a new Trader Name with the first link removed.
       CosTrading::TraderName trader_name (name.length () - 1);
-      for (int i = trader_name.length () - 1; i >= 0; i--)
+      for (int i = trader_name.length () - 1; i >= 0; --i)
         trader_name[i] = name[i + 1];
 
       return_value = remote_reg->resolve (trader_name);
@@ -1116,7 +1116,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   // generate pseudo random numbers.
 
   // Ok, then, Carlos, we'll do it a different way: ip addr + pid.
-  ACE_UINT32 ip_addr = 0;
+  ACE_UINT32 ip_addr {};
   ACE_TCHAR host_name[BUFSIZ];
 
   if (ACE_OS::hostname (host_name,
@@ -1177,7 +1177,7 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem ()
   this->stem_id_[11] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 24) & 0xff);
 
   // Increment the sequence number and return a copy of the stem_id.
-  this->sequence_number_++;
+  ++this->sequence_number_;
   return new CosTrading::Admin::OctetSeq (this->stem_id_);
 }
 
@@ -1559,14 +1559,14 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links ()
 {
   // Allocate space for the link names.
   size_t size = this->links_.current_size ();
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   CosTrading::LinkName* link_seq =
     CosTrading::LinkNameSeq::allocbuf (static_cast<CORBA::ULong> (size));
 
   // Copy the link names into the buffer.
   for (typename Links::iterator links_iter (this->links_);
        ! links_iter.done ();
-       links_iter++)
+       ++links_iter)
     link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
 
   // Return a sequence of the buf names.

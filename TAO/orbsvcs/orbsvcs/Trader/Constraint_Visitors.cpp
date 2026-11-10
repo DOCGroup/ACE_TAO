@@ -501,7 +501,7 @@ TAO_find_string (CosTradingSequences::StringSeq& sequence,
  int length = sequence.length (),
     return_value = 0;
 
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
       if (std::strcmp (sequence[i], element) == 0)
         {
@@ -616,7 +616,7 @@ TAO_Element_Equal<CORBA::Short>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Short element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Short value = dyn_any.get_short ();
@@ -633,7 +633,7 @@ TAO_Element_Equal<CORBA::UShort>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::UShort element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::UShort value = dyn_any.get_ushort ();
@@ -650,7 +650,7 @@ TAO_Element_Equal<CORBA::Long>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Long element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Long value = dyn_any.get_long ();
@@ -667,7 +667,7 @@ TAO_Element_Equal<CORBA::ULong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULong element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::ULong value = dyn_any.get_ulong ();
@@ -684,7 +684,7 @@ TAO_Element_Equal<CORBA::LongLong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::LongLong element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::LongLong value = dyn_any.get_longlong ();
@@ -701,7 +701,7 @@ TAO_Element_Equal<CORBA::ULongLong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULongLong element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::ULongLong value = dyn_any.get_ulonglong ();
@@ -718,7 +718,7 @@ TAO_Element_Equal<CORBA::Float>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Float element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Float value = dyn_any.get_float ();
@@ -733,7 +733,7 @@ TAO_Element_Equal<CORBA::Double>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Double element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Double value = dyn_any.get_double ();
@@ -748,7 +748,7 @@ TAO_Element_Equal<CORBA::Boolean>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Boolean element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
     CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short ();
@@ -763,7 +763,7 @@ TAO_Element_Equal<const char*>::
 operator () (TAO_DynSequence_i& dyn_any,
              const char* element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::String_var value = dyn_any.get_string ();
@@ -783,7 +783,7 @@ TAO_Constraint_Validator::~TAO_Constraint_Validator ()
 {
   for (TAO_Typecode_Table::iterator type_iter (this->type_map_);
        ! type_iter.done ();
-       type_iter++)
+       ++type_iter)
     {
       CORBA::TypeCode_ptr corba_type = (*type_iter).int_id_;
       CORBA::release (corba_type);
@@ -1205,7 +1205,7 @@ TAO_Constraint_Validator::expr_returns_boolean (TAO_Expression_Type expr_type)
 {
   // If the expression is a boolean operations, a boolean literal, or
   // a boolean property, return 1.
-  int return_value = 0;
+  int return_value {};
 
   if (expr_type <= TAO_BOOLEAN)
     return_value = 1;
@@ -1219,7 +1219,7 @@ TAO_Constraint_Validator::expr_returns_number (TAO_Expression_Type expr_type)
 {
   // If the expression is a number operation, a numeric literal, or a
   // numeric property, return 1.
-  int return_value = 0;
+  int return_value {};
 
   if ((expr_type >= TAO_PLUS && expr_type <= TAO_NUMBER) ||
       (expr_type >= TAO_SIGNED && expr_type <= TAO_DOUBLE))
@@ -1233,7 +1233,7 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 {
   // If the expression is an operation with a string return value, a
   // string literal, or a property whose type is string, return 1.
-  int return_value = 0;
+  int return_value {};
 
   if (expr_type == TAO_STRING)
     return_value = 1;

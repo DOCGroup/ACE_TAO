@@ -22,7 +22,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database ()
 
   for (typename Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
-       type_iter++)
+       ++type_iter)
     {
       std::unique_ptr<Offer_Map_Entry> offer_map_entry ((*type_iter).int_id_);
 
@@ -33,7 +33,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database ()
 
         for (TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
              ! offer_iter.done ();
-             offer_iter++)
+             ++offer_iter)
           {
             // Delete all the offers in the offer map.
             std::unique_ptr<CosTrading::Offer> offer ((*offer_iter).int_id_);
@@ -46,7 +46,7 @@ template <class LOCK_TYPE> CosTrading::OfferId
 TAO_Offer_Database<LOCK_TYPE>::
 insert_offer (const char* type, CosTrading::Offer* offer)
 {
-  CosTrading::OfferId return_value = 0;
+  CosTrading::OfferId return_value {};
   std::unique_ptr<CosTrading::Offer> offer_owner (offer);
   typename Offer_Database::ENTRY* database_entry {};
   CORBA::String_var service_type (type);
@@ -97,7 +97,7 @@ insert_offer (const char* type, CosTrading::Offer* offer)
   offer_owner.release ();
   return_value = this->generate_offer_id (type,
                                           offer_map_entry->counter_);
-  offer_map_entry->counter_++;
+  ++offer_map_entry->counter_;
 
   return return_value;
 }
@@ -250,7 +250,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids ()
 
   for (typename Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
-       type_iter++)
+       ++type_iter)
     {
       const char* type_name = (*type_iter).ext_id_.in ();
       Offer_Map_Entry* offer_map_entry = (*type_iter).int_id_;
@@ -259,7 +259,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids ()
 
       for (TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
            ! offer_iter.done ();
-           offer_iter++)
+           ++offer_iter)
         {
           CORBA::ULong offer_index = (*offer_iter).ext_id_;
           CosTrading::OfferId offer_id =

@@ -109,7 +109,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
   while (offers_left > 0 && ! this->iters_.empty ())
     {
-      CORBA::ULong offset = 0;
+      CORBA::ULong offset {};
       CORBA::Boolean any_left = false;
       CosTrading::OfferIterator* iter = this->iters_.front ();
       this->iters_.pop_front ();
@@ -134,7 +134,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Merge it with the passed set.
       offset = offers->length ();
       offers->length (out_offers->length () + offset);
-      for (CORBA::ULong j = out_offers->length (); j > 0; j--)
+      for (CORBA::ULong j = out_offers->length (); j > 0; --j)
         offers[j + offset - 1] = out_offers[j - 1];
 
       offers_left -= out_offers->length ();

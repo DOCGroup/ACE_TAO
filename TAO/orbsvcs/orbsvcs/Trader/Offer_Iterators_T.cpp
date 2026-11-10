@@ -41,7 +41,7 @@ TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
         CosTrading::OfferSeq_out offers)
 {
-  CORBA::ULong ret_offers = 0;
+  CORBA::ULong ret_offers {};
 
   CORBA::ULong const max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n :

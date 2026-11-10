@@ -219,7 +219,7 @@ int
 TAO_Preference_Interpreter::
 remove_offer (CosTrading::Offer*& offer)
 {
-  CosTrading::OfferId offer_id = 0;
+  CosTrading::OfferId offer_id {};
   return this->remove_offer (offer, offer_id);
 }
 

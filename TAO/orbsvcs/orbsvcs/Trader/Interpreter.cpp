@@ -19,7 +19,7 @@ TAO_Interpreter::build_tree (const char* constraints)
                     -1);
 
   TAO_Lex_String_Input::reset ((char*)constraints);
-  int return_value = 0;
+  int return_value {};
 
   yyval.constraint_ = nullptr;
   return_value = ::yyparse ();
@@ -43,13 +43,13 @@ TAO_Interpreter::is_empty_string (const char* str)
 
   if (str != nullptr)
     {
-      int i = 0;
+      int i {};
       while (str[i] != '\0')
         {
           if (str[i] != ' ')
             break;
 
-          i++;
+          ++i;
         }
 
       if (str[i] == '\0')

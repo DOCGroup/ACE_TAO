@@ -318,7 +318,7 @@ TAO_Trading_Loader::bootstrap_to_federation ()
               "*** Linking self to all linked traders.\n"));
   for (CORBA::ULong i = link_name_seq->length () - 1;
        i > 0;
-       i--)
+       --i)
     {
       // Avoid linking to ourselves.
       if (std::strcmp (static_cast<const char *> (link_name_seq[i]),

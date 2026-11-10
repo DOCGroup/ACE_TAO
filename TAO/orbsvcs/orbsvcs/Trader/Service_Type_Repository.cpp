@@ -23,7 +23,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository ()
 
     for (Service_Type_Map_Iterator service_map_iterator (this->type_map_);
          service_map_iterator.done () == 0;
-         service_map_iterator++)
+         ++service_map_iterator)
       {
         std::unique_ptr<Type_Info> type_info ((*service_map_iterator).int_id_);
       }
@@ -110,11 +110,11 @@ add_type (const char *name,
     this->incarnation_;
 
   // Increment incarnation number.
-  this->incarnation_.low++;
+  ++this->incarnation_.low;
 
   // If we wrapped around in lows...
   if (this->incarnation_.low == 0)
-    this->incarnation_.high++;
+    ++this->incarnation_.high;
 
   return return_value;
 }
@@ -150,7 +150,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
   CORBA::ULong const length = static_cast<CORBA::ULong>(this->type_map_.current_size ());
-  CORBA::ULong found = 0;
+  CORBA::ULong found {};
   // Initial allocate a result seq for maximum expected results.
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var types;
   ACE_NEW_RETURN (types,
@@ -167,7 +167,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
 
   for (Service_Type_Map_Iterator itr (this->type_map_);
        itr.done () == 0;
-       itr++)
+       ++itr)
     {
       Type_Info* type_info = (*itr).int_id_;
       const char* type_name = (*itr).ext_id_.in ();
@@ -328,7 +328,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
                                        service_type_queue);
 
   // Count the total number of properties.
-  CORBA::ULong num_props = 0;
+  CORBA::ULong num_props {};
   CORBA::ULong num_types = static_cast<CORBA::ULong> (service_type_queue.size ());
 
   for (std::string const& next_type_name : service_type_queue)
@@ -348,13 +348,13 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
   super_types.length (num_types);
 
   // Copy in all properties.
-  int i = 0;
-  CORBA::ULong prop_index = 0;
-  CORBA::ULong type_index = 0;
+  int i {};
+  CORBA::ULong prop_index {};
+  CORBA::ULong type_index {};
 
   for (i = type_struct.props.length () - 1;
        i >= 0;
-       i--)
+       --i)
     props[prop_index++] = type_struct.props[i];
 
   for (std::string const& next_type_name : service_type_queue)
@@ -372,7 +372,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
 
           for (i = tstruct.props.length () - 1;
                i >= 0;
-               i--)
+               --i)
             props[prop_index++] = tstruct.props[i];
 
           super_types[type_index++] = hash_key.in ();
@@ -388,7 +388,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
   // Recurse for each super_type
   for (int i = type_struct.super_types.length () - 1;
        i >= 0;
-       i--)
+       --i)
     {
       Service_Type_Map::ENTRY* next_type_entry {};
       CORBA::String_var next_type_name (type_struct.super_types[i]);
@@ -512,7 +512,7 @@ validate_inheritance (Prop_Map &prop_map,
                 *existing_prop->int_id_;
 
               CORBA::TypeCode_ptr prop_type = property_in_map.value_type.in ();
-              int compare = 0;
+              int compare {};
               try
                 {
                   compare =
@@ -553,7 +553,7 @@ update_type_map (const char *name,
 
   for (Service_Type_Map_Iterator super_map_iterator (super_map);
        super_map_iterator.done () == 0;
-       super_map_iterator++)
+       ++super_map_iterator)
     {
       Type_Info *super_type_info =
         (*super_map_iterator).int_id_;
