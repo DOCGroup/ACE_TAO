@@ -38,7 +38,7 @@ NamingTask::end ()
 }
 
 char const *
-NamingTask::ior ()
+NamingTask::ior () const
 {
   return this->ior_.in ();
 }

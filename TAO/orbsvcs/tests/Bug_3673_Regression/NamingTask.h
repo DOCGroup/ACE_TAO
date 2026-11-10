@@ -22,11 +22,11 @@ public:
   void waitInit ();
   void end ();
 
-  char const *ior ();
+  char const *ior () const;
 
 private:
   CORBA::ORB_var orb_ {};
-  std::atomic<bool> initialized_ {};
+  std::atomic<bool> initialized_ { false };
   CORBA::String_var ior_ {};
 };
 

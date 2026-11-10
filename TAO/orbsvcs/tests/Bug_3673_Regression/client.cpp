@@ -12,7 +12,7 @@ struct Client_Options
 int
 parse_args (Client_Options &options, int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -24,12 +24,10 @@ parse_args (Client_Options &options, int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "\n",
+                           ACE_TEXT ("usage:  %s \n"),
                            argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -39,7 +37,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       Client_Options options;
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (options, argc, argv) != 0)
         return 1;
@@ -47,17 +45,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var tmp =
         orb->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
 
-      CosNaming::NamingContext_var root =
+      CosNaming::NamingContext_var const root =
         CosNaming::NamingContext::_narrow (tmp.in ());
 
       if (CORBA::is_nil (root.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil NamingService reference\n"),
+                             ACE_TEXT ("Nil NamingService reference\n")),
                             1);
         }
 
-      ACE_DEBUG ((LM_INFO, "**** Narrowed root NamingContext\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("**** Narrowed root NamingContext\n")));
 
       CosNaming::Name name;
       name.length (4);
@@ -75,19 +73,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           try
             {
               tmp = root->resolve (name);
-              ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
+              ACE_DEBUG ((LM_INFO, ACE_TEXT ("**** Resolved #example/Hello\n")));
 
               Test::Hello_var const hello =
                 Test::Hello::_narrow (tmp.in ());
 
               if (CORBA::is_nil (hello.in ()))
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Nil Test::Hello reference\n"),
+                                   ACE_TEXT ("Nil Test::Hello reference\n")),
                                   1);
             }
           catch (CosNaming::NamingContext::NotFound const &)
             {
-              ACE_DEBUG ((LM_DEBUG, "Caught correct exception for iteration %d\n", i));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Caught correct exception for iteration %d\n"),
+                          i));
             }
         }
 
@@ -98,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           Test::NsShutdown_var const shutdown =
             Test::NsShutdown::_narrow (shutdown_tmp.in ());
 
-          ACE_DEBUG ((LM_DEBUG, "Shutdown nsmain\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Shutdown nsmain\n")));
           shutdown->shutdown ();
         }
 
