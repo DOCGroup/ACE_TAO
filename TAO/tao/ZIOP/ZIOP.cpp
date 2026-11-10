@@ -183,8 +183,8 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
     {
       ZIOP::CompressionData data;
       // first set the read pointer after the header
-      size_t begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
-      char * initial_rd_ptr = qd.msg_block ()-> rd_ptr();
+      size_t const begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
+      char * const initial_rd_ptr = qd.msg_block ()-> rd_ptr();
       size_t const wr = qd.msg_block ()->wr_ptr () - qd.msg_block ()->base ();
 
       TAO_InputCDR cdr ((*db),
@@ -216,8 +216,8 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
           if (decompress (compressor.in (), data.data, myout))
             {
-              size_t new_data_length = (size_t)(data.original_length +
-                                       TAO_GIOP_MESSAGE_HEADER_LEN);
+              size_t const new_data_length = static_cast<size_t> (
+                data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN);
 
               ACE_Message_Block mb (new_data_length);
               qd.msg_block ()->rd_ptr (initial_rd_ptr);
@@ -252,8 +252,11 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
         }
       catch (const ::Compression::UnknownCompressorId &)
         {
-          TAOLIB_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) client used ZIOP with an unregistered (at the server) compressor (ID %d: %C)\n",
-                      static_cast <int> (data.compressor), TAO_ZIOP_Loader::ziop_compressorid_name (data.compressor)));
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "ZIOP (%P|%t) client used ZIOP with an unregistered "
+                         "(at the server) compressor (ID %d: %C)\n",
+                         static_cast <int> (data.compressor),
+                         TAO_ZIOP_Loader::ziop_compressorid_name (data.compressor)));
           return false;
         }
     }
@@ -363,7 +366,7 @@ TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio &this_ra
    // Note we don't want to overload the receiver with messages that have not
    // compressed enough, i.e. the achieved ratio must be at least as small as
    // the min_ratio, (i.e. smaller ratios are better).
-  bool allow_compression = this_ratio <= min_ratio;
+  bool const allow_compression = this_ratio <= min_ratio;
   if (allow_compression)
     {
       if (TAO_debug_level > 8)
@@ -552,7 +555,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
           data.data = output;
           cdr << data;
           mb.rd_ptr(initial_rd_ptr);
-          size_t begin = (mb.rd_ptr() - mb.base ());
+          size_t const begin = (mb.rd_ptr() - mb.base ());
           mb.data_block ()->base ()[0 + begin] = 0x5A;
           mb.data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] =
             static_cast<char> (cdr.length() - TAO_GIOP_MESSAGE_HEADER_LEN);
@@ -630,7 +633,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub)
 {
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP != 0
   Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
-  Compression::CompressionLevel compression_level = 0;
+  Compression::CompressionLevel compression_level {};
 
   CORBA::Policy_var compression_enabling_policy =
     stub.get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
