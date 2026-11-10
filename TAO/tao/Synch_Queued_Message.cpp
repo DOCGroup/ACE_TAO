@@ -14,19 +14,13 @@ TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
   ACE_Allocator *alloc,
   bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
-  , contents_ (const_cast<ACE_Message_Block*> (contents))
+  , contents_ (const_cast<ACE_Message_Block *> (contents))
+  , owned_contents_ (is_heap_allocated ? contents_ : nullptr)
   , current_block_ (contents_)
-  , own_contents_ (is_heap_allocated)
 {
 }
 
-TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message ()
-{
-  if (this->own_contents_ && this->contents_ != nullptr)
-    {
-      ACE_Message_Block::release (this->contents_);
-    }
-}
+TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message () = default;
 
 ACE_Message_Block const *
 TAO_Synch_Queued_Message::current_block () const
@@ -67,7 +61,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
       // Check if this block has any data to be sent.
       if (message_block_length > 0)
         {
-              // Collect the data in the iovec.
+          // Collect the data in the iovec.
           iov[iovcnt].iov_base = message_block->rd_ptr ();
           iov[iovcnt].iov_len  = static_cast<u_long> (message_block_length);
 
@@ -119,24 +113,29 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
   // starting from <contents_> since we dont want to clone blocks that
   // have already been sent on the wire. Waste of memory and
   // associated copying.
-  ACE_Message_Block *mb = this->current_block_->clone ();
+  ACE_Message_Block_Unique_Ptr message_block {this->current_block_->clone ()};
 
   if (alloc != nullptr)
     {
       ACE_NEW_MALLOC_RETURN (qm,
                              static_cast<TAO_Synch_Queued_Message *> (
                                alloc->malloc (sizeof (TAO_Synch_Queued_Message))),
-                             TAO_Synch_Queued_Message (mb,
+                             TAO_Synch_Queued_Message (message_block.get (),
                                                        this->orb_core_,
                                                        alloc,
                                                        true),
                              nullptr);
+      message_block.release ();
     }
   else
     {
       ACE_NEW_RETURN (qm,
-                      TAO_Synch_Queued_Message (mb, this->orb_core_, nullptr, true),
+                      TAO_Synch_Queued_Message (message_block.get (),
+                                                this->orb_core_,
+                                                nullptr,
+                                                true),
                       nullptr);
+      message_block.release ();
     }
 
   return qm;
@@ -145,9 +144,9 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
 void
 TAO_Synch_Queued_Message::destroy ()
 {
-  if (this->own_contents_)
+  if (this->owned_contents_)
     {
-      ACE_Message_Block::release (this->contents_);
+      this->owned_contents_.reset ();
       this->current_block_ = nullptr;
       this->contents_ = nullptr;
     }
@@ -171,7 +170,7 @@ TAO_Synch_Queued_Message::destroy ()
 void
 TAO_Synch_Queued_Message::copy_if_necessary (ACE_Message_Block const *chain)
 {
-  if (!this->own_contents_)
+  if (!this->owned_contents_)
     {
       // Go through the message block chain looking for the message block
       // that matches our "current" message block.
@@ -184,8 +183,8 @@ TAO_Synch_Queued_Message::copy_if_necessary (ACE_Message_Block const *chain)
               // in and calls reset() on the output stream (via another
               // invocation on the transport), it doesn't cause the rest
               // of our message to be released.
-              this->own_contents_ = true;
-              this->contents_ = this->current_block_->clone ();
+              this->owned_contents_.reset (this->current_block_->clone ());
+              this->contents_ = this->owned_contents_.get ();
               this->current_block_ = this->contents_;
               break;
             }
