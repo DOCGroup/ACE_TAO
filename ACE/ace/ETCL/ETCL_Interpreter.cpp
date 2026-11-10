@@ -13,21 +13,20 @@ ETCL_Parser_Export ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
 
 ETCL_Interpreter::ETCL_Interpreter () = default;
 
-ETCL_Interpreter::~ETCL_Interpreter ()
-= default;
+ETCL_Interpreter::~ETCL_Interpreter () = default;
 
 int
-ETCL_Interpreter::build_tree (const char* constraints)
+ETCL_Interpreter::build_tree (char const *constraints)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                     guard,
                     ETCL_Interpreter::parserMutex__,
                     -1);
 
-  Lex_String_Input::reset ((char*)constraints);
+  Lex_String_Input::reset (constraints);
 
   yyval.constraint = nullptr;
-  int return_value = ::yyparse ();
+  int const return_value = ::yyparse ();
 
   if (return_value == 0 && yyval.constraint != nullptr)
     {
@@ -42,7 +41,7 @@ ETCL_Interpreter::build_tree (const char* constraints)
 }
 
 bool
-ETCL_Interpreter::is_empty_string (const char* str)
+ETCL_Interpreter::is_empty_string (char const *str)
 {
   bool return_value {};
 
@@ -69,14 +68,13 @@ ETCL_Interpreter::is_empty_string (const char* str)
   return return_value;
 }
 
-char* Lex_String_Input::string_ = nullptr;
-char* Lex_String_Input::current_ = nullptr;
-char* Lex_String_Input::end_ = nullptr;
+char const *Lex_String_Input::current_ = nullptr;
+char const *Lex_String_Input::end_ = nullptr;
 
 // Routine to have Lex read its input from the constraint string.
 
 int
-Lex_String_Input::copy_into (char* buf,
+Lex_String_Input::copy_into (char *buf,
                              int max_size)
 {
   int const chars_left =
@@ -97,12 +95,11 @@ Lex_String_Input::copy_into (char* buf,
 }
 
 void
-Lex_String_Input::reset (char* input_string)
+Lex_String_Input::reset (char const *input_string)
 {
-  Lex_String_Input::string_ = input_string;
   Lex_String_Input::current_ = input_string;
   Lex_String_Input::end_ =
-    input_string + std::strlen (Lex_String_Input::string_);
+    input_string + std::strlen (input_string);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

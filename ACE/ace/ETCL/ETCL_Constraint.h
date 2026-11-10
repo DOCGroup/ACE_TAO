@@ -14,6 +14,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <memory>
+
 #include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,7 +35,6 @@ class ETCL_Constraint_Visitor;
 class ACE_ETCL_Export ETCL_Constraint
 {
 public:
-  /// Constructor and destructor
   ETCL_Constraint () = default;
   virtual ~ETCL_Constraint () = default;
 
@@ -61,68 +62,68 @@ class ACE_ETCL_Export ETCL_Literal_Constraint
 public:
   ETCL_Literal_Constraint ();
 
-  // = Constructors for each of the various types of literals.
   explicit ETCL_Literal_Constraint (ACE_CDR::ULong uinteger);
   explicit ETCL_Literal_Constraint (ACE_CDR::Long integer);
   explicit ETCL_Literal_Constraint (ACE_CDR::Boolean boolean);
   explicit ETCL_Literal_Constraint (ACE_CDR::Double doub);
-  explicit ETCL_Literal_Constraint (const char* str);
+  explicit ETCL_Literal_Constraint (char const *str);
 
-  /// Copy constructor
-  ETCL_Literal_Constraint (const ETCL_Literal_Constraint& lit);
+  ETCL_Literal_Constraint (ETCL_Literal_Constraint const &lit);
+  ETCL_Literal_Constraint (ETCL_Literal_Constraint &&) = delete;
 
   ~ETCL_Literal_Constraint() override;
 
   /// Visitor accept method.
-  int accept (ETCL_Constraint_Visitor* visitor) override;
+  int accept (ETCL_Constraint_Visitor *visitor) override;
 
   Literal_Type expr_type () const;
 
   /// Assignment operator.
-  void operator= (const ETCL_Literal_Constraint& co);
+  void operator= (ETCL_Literal_Constraint const &co);
+  void operator= (ETCL_Literal_Constraint &&) = delete;
 
   // Conversion routines.
   operator ACE_CDR::Boolean () const;
   operator ACE_CDR::ULong () const;
   operator ACE_CDR::Long () const;
   operator ACE_CDR::Double () const;
-  operator const char* () const;
+  operator char const * () const;
 
   // Return the type represented by this MysteryOperand.
 
   // = Boolean operators.
 
   bool
-  operator< (const ETCL_Literal_Constraint& rhs);
+  operator< (ETCL_Literal_Constraint const &rhs);
 
   bool
-  operator<= (const ETCL_Literal_Constraint& rhs);
+  operator<= (ETCL_Literal_Constraint const &rhs);
 
   bool
-  operator> (const ETCL_Literal_Constraint& rhs);
+  operator> (ETCL_Literal_Constraint const &rhs);
 
   bool
-  operator>= (const ETCL_Literal_Constraint& rhs);
+  operator>= (ETCL_Literal_Constraint const &rhs);
 
   bool
-  operator== (const ETCL_Literal_Constraint& rhs);
+  operator== (ETCL_Literal_Constraint const &rhs);
 
   bool
-  operator!= (const ETCL_Literal_Constraint& rhs);
+  operator!= (ETCL_Literal_Constraint const &rhs);
 
   // = Arithmetic operators.
 
   ETCL_Literal_Constraint
-  operator+ (const ETCL_Literal_Constraint& rhs);
+  operator+ (ETCL_Literal_Constraint const &rhs);
 
   ETCL_Literal_Constraint
-  operator- (const ETCL_Literal_Constraint& rhs);
+  operator- (ETCL_Literal_Constraint const &rhs);
 
   ETCL_Literal_Constraint
-  operator* (const ETCL_Literal_Constraint& rhs);
+  operator* (ETCL_Literal_Constraint const &rhs);
 
   ETCL_Literal_Constraint
-  operator/ (const ETCL_Literal_Constraint& rhs);
+  operator/ (ETCL_Literal_Constraint const &rhs);
 
   // Unary minus.
   ETCL_Literal_Constraint
@@ -130,16 +131,16 @@ public:
 
   /// Ensure both operands are of the same simple numeric type.
   virtual Literal_Type
-  widest_type (const ETCL_Literal_Constraint& rhs);
+  widest_type (ETCL_Literal_Constraint const &rhs);
 
 protected:
   /// Private copy method.
-  void copy (const ETCL_Literal_Constraint& co);
+  void copy (ETCL_Literal_Constraint const &co);
 
   /// Union of the possible literal types.
   union
   {
-    char* str_;
+    char *str_; // Managed with ACE::strnew and ACE::strdelete.
     ACE_CDR::ULong uinteger_;
     ACE_CDR::Long integer_;
     ACE_CDR::Boolean bool_;
@@ -155,10 +156,10 @@ protected:
 class ACE_ETCL_Export ETCL_Identifier : public ETCL_Constraint
 {
 public:
-  explicit ETCL_Identifier (const char *value);
+  explicit ETCL_Identifier (char const *value);
 
   /// Get the value
-  const char *value () const;
+  char const *value () const;
 
   // = The Constraint methods.
   int accept (ETCL_Constraint_Visitor *visitor) override;
@@ -170,6 +171,7 @@ private:
 
 // ****************************************************************
 
+/// Expression node constructors take ownership of child pointers of the expected node types.
 class ACE_ETCL_Export ETCL_Union_Value : public ETCL_Constraint
 {
 public:
@@ -178,6 +180,11 @@ public:
   explicit ETCL_Union_Value (ETCL_Constraint *string = nullptr);
   ~ETCL_Union_Value () override;
 
+  ETCL_Union_Value (ETCL_Union_Value const &) = delete;
+  ETCL_Union_Value (ETCL_Union_Value &&) = delete;
+  ETCL_Union_Value &operator= (ETCL_Union_Value const &) = delete;
+  ETCL_Union_Value &operator= (ETCL_Union_Value &&) = delete;
+
   int sign () const;
   ETCL_Literal_Constraint *integer () const;
   ETCL_Literal_Constraint *string () const;
@@ -185,17 +192,22 @@ public:
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  int sign_;
-  ETCL_Literal_Constraint *integer_;
-  ETCL_Literal_Constraint *string_;
+  int sign_ {};
+  std::unique_ptr<ETCL_Literal_Constraint> integer_ {};
+  std::unique_ptr<ETCL_Literal_Constraint> string_ {};
 };
 
 class ACE_ETCL_Export ETCL_Union_Pos : public ETCL_Constraint
 {
 public:
-  ETCL_Union_Pos (ETCL_Constraint *union_value = nullptr,
-                  ETCL_Constraint *component = nullptr);
+  explicit ETCL_Union_Pos (ETCL_Constraint *union_value = nullptr,
+                           ETCL_Constraint *component = nullptr);
   ~ETCL_Union_Pos () override;
+
+  ETCL_Union_Pos (ETCL_Union_Pos const &) = delete;
+  ETCL_Union_Pos (ETCL_Union_Pos &&) = delete;
+  ETCL_Union_Pos &operator= (ETCL_Union_Pos const &) = delete;
+  ETCL_Union_Pos &operator= (ETCL_Union_Pos &&) = delete;
 
   ETCL_Union_Value *union_value () const;
   ETCL_Constraint *component () const;
@@ -203,8 +215,8 @@ public:
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Union_Value *union_value_;
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Union_Value> union_value_ {};
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Component_Pos : public ETCL_Constraint
@@ -214,14 +226,19 @@ public:
                                ETCL_Constraint *component = nullptr);
   ~ETCL_Component_Pos () override;
 
+  ETCL_Component_Pos (ETCL_Component_Pos const &) = delete;
+  ETCL_Component_Pos (ETCL_Component_Pos &&) = delete;
+  ETCL_Component_Pos &operator= (ETCL_Component_Pos const &) = delete;
+  ETCL_Component_Pos &operator= (ETCL_Component_Pos &&) = delete;
+
   ETCL_Literal_Constraint *integer () const;
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Literal_Constraint *integer_;
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Literal_Constraint> integer_ {};
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Component_Assoc : public ETCL_Constraint
@@ -231,14 +248,19 @@ public:
                                  ETCL_Constraint *component = nullptr);
   ~ETCL_Component_Assoc () override;
 
+  ETCL_Component_Assoc (ETCL_Component_Assoc const &) = delete;
+  ETCL_Component_Assoc (ETCL_Component_Assoc &&) = delete;
+  ETCL_Component_Assoc &operator= (ETCL_Component_Assoc const &) = delete;
+  ETCL_Component_Assoc &operator= (ETCL_Component_Assoc &&) = delete;
+
   ETCL_Identifier *identifier () const;
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Identifier *identifier_;
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Identifier> identifier_ {};
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Component_Array : public ETCL_Constraint
@@ -248,14 +270,19 @@ public:
                                  ETCL_Constraint *component = nullptr);
   ~ETCL_Component_Array () override;
 
+  ETCL_Component_Array (ETCL_Component_Array const &) = delete;
+  ETCL_Component_Array (ETCL_Component_Array &&) = delete;
+  ETCL_Component_Array &operator= (ETCL_Component_Array const &) = delete;
+  ETCL_Component_Array &operator= (ETCL_Component_Array &&) = delete;
+
   ETCL_Literal_Constraint *integer () const;
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Literal_Constraint *integer_;
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Literal_Constraint> integer_ {};
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Special : public ETCL_Constraint
@@ -280,14 +307,19 @@ public:
                            ETCL_Constraint *component = nullptr);
   ~ETCL_Component () override;
 
+  ETCL_Component (ETCL_Component const &) = delete;
+  ETCL_Component (ETCL_Component &&) = delete;
+  ETCL_Component &operator= (ETCL_Component const &) = delete;
+  ETCL_Component &operator= (ETCL_Component &&) = delete;
+
   ETCL_Identifier *identifier () const;
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Identifier *identifier_;
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Identifier> identifier_ {};
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Dot : public ETCL_Constraint
@@ -296,12 +328,17 @@ public:
   explicit ETCL_Dot (ETCL_Constraint *component = nullptr);
   ~ETCL_Dot () override;
 
+  ETCL_Dot (ETCL_Dot const &) = delete;
+  ETCL_Dot (ETCL_Dot &&) = delete;
+  ETCL_Dot &operator= (ETCL_Dot const &) = delete;
+  ETCL_Dot &operator= (ETCL_Dot &&) = delete;
+
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Eval : public ETCL_Constraint
@@ -310,12 +347,17 @@ public:
   explicit ETCL_Eval (ETCL_Constraint *component = nullptr);
   ~ETCL_Eval () override;
 
+  ETCL_Eval (ETCL_Eval const &) = delete;
+  ETCL_Eval (ETCL_Eval &&) = delete;
+  ETCL_Eval &operator= (ETCL_Eval const &) = delete;
+  ETCL_Eval &operator= (ETCL_Eval &&) = delete;
+
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Default : public ETCL_Constraint
@@ -324,12 +366,17 @@ public:
   explicit ETCL_Default (ETCL_Constraint *component = nullptr);
   ~ETCL_Default () override;
 
+  ETCL_Default (ETCL_Default const &) = delete;
+  ETCL_Default (ETCL_Default &&) = delete;
+  ETCL_Default &operator= (ETCL_Default const &) = delete;
+  ETCL_Default &operator= (ETCL_Default &&) = delete;
+
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Exist : public ETCL_Constraint
@@ -338,12 +385,17 @@ public:
   explicit ETCL_Exist (ETCL_Constraint *component = nullptr);
   ~ETCL_Exist () override;
 
+  ETCL_Exist (ETCL_Exist const &) = delete;
+  ETCL_Exist (ETCL_Exist &&) = delete;
+  ETCL_Exist &operator= (ETCL_Exist const &) = delete;
+  ETCL_Exist &operator= (ETCL_Exist &&) = delete;
+
   ETCL_Constraint *component () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  ETCL_Constraint *component_;
+  std::unique_ptr<ETCL_Constraint> component_ {};
 };
 
 class ACE_ETCL_Export ETCL_Unary_Expr : public ETCL_Constraint
@@ -353,14 +405,19 @@ public:
                    ETCL_Constraint *subexpr);
   ~ETCL_Unary_Expr () override;
 
+  ETCL_Unary_Expr (ETCL_Unary_Expr const &) = delete;
+  ETCL_Unary_Expr (ETCL_Unary_Expr &&) = delete;
+  ETCL_Unary_Expr &operator= (ETCL_Unary_Expr const &) = delete;
+  ETCL_Unary_Expr &operator= (ETCL_Unary_Expr &&) = delete;
+
   int type () const;
   ETCL_Constraint *subexpr () const;
 
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  int type_;
-  ETCL_Constraint *subexpr_;
+  int type_ {};
+  std::unique_ptr<ETCL_Constraint> subexpr_ {};
 };
 
 class ACE_ETCL_Export ETCL_Binary_Expr : public ETCL_Constraint
@@ -371,6 +428,11 @@ public:
                     ETCL_Constraint *rhs);
   ~ETCL_Binary_Expr () override;
 
+  ETCL_Binary_Expr (ETCL_Binary_Expr const &) = delete;
+  ETCL_Binary_Expr (ETCL_Binary_Expr &&) = delete;
+  ETCL_Binary_Expr &operator= (ETCL_Binary_Expr const &) = delete;
+  ETCL_Binary_Expr &operator= (ETCL_Binary_Expr &&) = delete;
+
   int type () const;
   ETCL_Constraint *rhs () const;
   ETCL_Constraint *lhs () const;
@@ -378,9 +440,9 @@ public:
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
 private:
-  int type_;
-  ETCL_Constraint *lhs_;
-  ETCL_Constraint *rhs_;
+  int type_ {};
+  std::unique_ptr<ETCL_Constraint> lhs_ {};
+  std::unique_ptr<ETCL_Constraint> rhs_ {};
 };
 
 class ACE_ETCL_Export ETCL_Preference : public ETCL_Constraint
@@ -391,6 +453,11 @@ public:
                             ETCL_Constraint *subexpr = nullptr);
   ~ETCL_Preference () override;
 
+  ETCL_Preference (ETCL_Preference const &) = delete;
+  ETCL_Preference (ETCL_Preference &&) = delete;
+  ETCL_Preference &operator= (ETCL_Preference const &) = delete;
+  ETCL_Preference &operator= (ETCL_Preference &&) = delete;
+
   int type () const;
   ETCL_Constraint *subexpr () const;
 
@@ -398,7 +465,7 @@ public:
 
 private:
   int type_ {};
-  ETCL_Constraint *subexpr_ {};
+  std::unique_ptr<ETCL_Constraint> subexpr_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

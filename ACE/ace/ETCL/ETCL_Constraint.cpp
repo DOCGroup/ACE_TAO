@@ -21,7 +21,7 @@ ETCL_Constraint::accept (ETCL_Constraint_Visitor * /* visitor */)
 // ****************************************************************
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    const ETCL_Literal_Constraint & lit)
+    ETCL_Literal_Constraint const &lit)
   : ETCL_Constraint(),
     type_ (ACE_ETCL_UNKNOWN)
 {
@@ -54,7 +54,7 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    const char* str) : type_ (ACE_ETCL_STRING)
+    char const *str) : type_ (ACE_ETCL_STRING)
 {
   this->op_.str_ = ACE::strnew (str);
 }
@@ -68,7 +68,7 @@ ETCL_Literal_Constraint::~ETCL_Literal_Constraint ()
 }
 
 int
-ETCL_Literal_Constraint::accept (ETCL_Constraint_Visitor* visitor)
+ETCL_Literal_Constraint::accept (ETCL_Constraint_Visitor *visitor)
 {
   return visitor->visit_literal (this);
 }
@@ -80,7 +80,7 @@ ETCL_Literal_Constraint::expr_type () const
 }
 
 void
-ETCL_Literal_Constraint::operator= (const ETCL_Literal_Constraint& co)
+ETCL_Literal_Constraint::operator= (ETCL_Literal_Constraint const &co)
 {
   this->copy (co);
 }
@@ -99,13 +99,13 @@ ETCL_Literal_Constraint::operator ACE_CDR::ULong () const
     case ACE_ETCL_SIGNED:
     case ACE_ETCL_INTEGER:
       return
-        (this->op_.integer_ > 0) ? (ACE_CDR::ULong) this->op_.integer_ : 0;
+        (this->op_.integer_ > 0) ? static_cast<ACE_CDR::ULong> (this->op_.integer_) : 0;
     case ACE_ETCL_DOUBLE:
       return
         (this->op_.double_ > 0) ?
         ((this->op_.double_ > ACE_UINT32_MAX) ?
          ACE_UINT32_MAX :
-         (ACE_CDR::ULong) this->op_.double_)
+         static_cast<ACE_CDR::ULong> (this->op_.double_))
         : 0;
     default:
       return 0;
@@ -121,17 +121,17 @@ ETCL_Literal_Constraint::operator ACE_CDR::Long () const
       return this->op_.integer_;
     case ACE_ETCL_UNSIGNED:
       return
-        (this->op_.uinteger_ > (ACE_CDR::ULong) ACE_INT32_MAX) ?
-        ACE_INT32_MAX : (ACE_CDR::Long) this->op_.uinteger_;
+        (this->op_.uinteger_ > static_cast<ACE_CDR::ULong> (ACE_INT32_MAX)) ?
+        ACE_INT32_MAX : static_cast<ACE_CDR::Long> (this->op_.uinteger_);
     case ACE_ETCL_DOUBLE:
       return
         (this->op_.double_ > 0) ?
          ((this->op_.double_ > ACE_INT32_MAX) ?
           ACE_INT32_MAX :
-          (ACE_CDR::Long) this->op_.double_) :
+          static_cast<ACE_CDR::Long> (this->op_.double_)) :
           ((this->op_.double_ < ACE_INT32_MIN) ?
            ACE_INT32_MIN :
-           (ACE_CDR::Long) this->op_.double_);
+           static_cast<ACE_CDR::Long> (this->op_.double_));
     default:
       return 0;
   }
@@ -145,15 +145,15 @@ ETCL_Literal_Constraint::operator ACE_CDR::Double () const
       return this->op_.double_;
     case ACE_ETCL_SIGNED:
     case ACE_ETCL_INTEGER:
-      return (ACE_CDR::Double) this->op_.integer_;
+      return static_cast<ACE_CDR::Double> (this->op_.integer_);
     case ACE_ETCL_UNSIGNED:
-      return (ACE_CDR::Double) this->op_.uinteger_;
+      return static_cast<ACE_CDR::Double> (this->op_.uinteger_);
     default:
       return 0.0;
   }
 }
 
-ETCL_Literal_Constraint::operator const char* () const
+ETCL_Literal_Constraint::operator char const * () const
 {
   switch (this->type_)
   {
@@ -165,10 +165,10 @@ ETCL_Literal_Constraint::operator const char* () const
 }
 
 bool
-ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator== (ETCL_Literal_Constraint const &rhs)
 {
   bool return_value {};
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
@@ -177,17 +177,18 @@ ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
                                    static_cast<char const *> (rhs)) == 0);
       break;
     case ACE_ETCL_DOUBLE:
-      return_value = ACE::is_equal ((ACE_CDR::Double) *this, (ACE_CDR::Double) rhs);
+      return_value = ACE::is_equal (static_cast<ACE_CDR::Double> (*this),
+                                    static_cast<ACE_CDR::Double> (rhs));
       break;
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
-      return_value = (ACE_CDR::Long) *this == (ACE_CDR::Long) rhs;
+      return_value = static_cast<ACE_CDR::Long> (*this) == static_cast<ACE_CDR::Long> (rhs);
       break;
     case ACE_ETCL_UNSIGNED:
-      return_value = (ACE_CDR::ULong) *this == (ACE_CDR::ULong) rhs;
+      return_value = static_cast<ACE_CDR::ULong> (*this) == static_cast<ACE_CDR::ULong> (rhs);
       break;
     case ACE_ETCL_BOOLEAN:
-      return_value = (ACE_CDR::Boolean) *this == (ACE_CDR::Boolean) rhs;
+      return_value = static_cast<ACE_CDR::Boolean> (*this) == static_cast<ACE_CDR::Boolean> (rhs);
       break;
     default:
      break;
@@ -197,10 +198,10 @@ ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
 }
 
 bool
-ETCL_Literal_Constraint::operator< (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator< (ETCL_Literal_Constraint const &rhs)
 {
   bool return_value {};
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
@@ -209,17 +210,17 @@ ETCL_Literal_Constraint::operator< (const ETCL_Literal_Constraint & rhs)
                                    static_cast<char const *> (rhs)) < 0);
       break;
     case ACE_ETCL_DOUBLE:
-      return_value = (ACE_CDR::Double) *this < (ACE_CDR::Double) rhs;
+      return_value = static_cast<ACE_CDR::Double> (*this) < static_cast<ACE_CDR::Double> (rhs);
       break;
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
-      return_value = (ACE_CDR::Long) *this < (ACE_CDR::Long) rhs;
+      return_value = static_cast<ACE_CDR::Long> (*this) < static_cast<ACE_CDR::Long> (rhs);
       break;
     case ACE_ETCL_UNSIGNED:
-      return_value = (ACE_CDR::ULong) *this < (ACE_CDR::ULong) rhs;
+      return_value = static_cast<ACE_CDR::ULong> (*this) < static_cast<ACE_CDR::ULong> (rhs);
       break;
     case ACE_ETCL_BOOLEAN:
-      return_value = (ACE_CDR::Boolean) *this < (ACE_CDR::Boolean) rhs;
+      return_value = static_cast<ACE_CDR::Boolean> (*this) < static_cast<ACE_CDR::Boolean> (rhs);
       break;
     default:
       break;
@@ -229,10 +230,10 @@ ETCL_Literal_Constraint::operator< (const ETCL_Literal_Constraint & rhs)
 }
 
 bool
-ETCL_Literal_Constraint::operator> (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator> (ETCL_Literal_Constraint const &rhs)
 {
   bool return_value {};
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
@@ -241,14 +242,14 @@ ETCL_Literal_Constraint::operator> (const ETCL_Literal_Constraint & rhs)
                                    static_cast<char const *> (rhs)) > 0);
       break;
     case ACE_ETCL_DOUBLE:
-      return_value = (ACE_CDR::Double) *this > (ACE_CDR::Double) rhs;
+      return_value = static_cast<ACE_CDR::Double> (*this) > static_cast<ACE_CDR::Double> (rhs);
       break;
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
-      return_value = (ACE_CDR::Long) *this > (ACE_CDR::Long) rhs;
+      return_value = static_cast<ACE_CDR::Long> (*this) > static_cast<ACE_CDR::Long> (rhs);
       break;
     case ACE_ETCL_UNSIGNED:
-      return_value = (ACE_CDR::ULong) *this > (ACE_CDR::ULong) rhs;
+      return_value = static_cast<ACE_CDR::ULong> (*this) > static_cast<ACE_CDR::ULong> (rhs);
       break;
     default:
       break;
@@ -258,123 +259,135 @@ ETCL_Literal_Constraint::operator> (const ETCL_Literal_Constraint & rhs)
 }
 
 ETCL_Literal_Constraint
-ETCL_Literal_Constraint::operator+ (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator+ (ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        ACE_CDR::Double result = (ACE_CDR::Double) *this + (ACE_CDR::Double) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Double) result);
+        ACE_CDR::Double const result =
+          static_cast<ACE_CDR::Double> (*this) + static_cast<ACE_CDR::Double> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        ACE_CDR::Long result = (ACE_CDR::Long) *this + (ACE_CDR::Long) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Long) result);
+        ACE_CDR::Long const result =
+          static_cast<ACE_CDR::Long> (*this) + static_cast<ACE_CDR::Long> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        ACE_CDR::ULong result = (ACE_CDR::ULong) *this + (ACE_CDR::ULong) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::ULong) result);
+        ACE_CDR::ULong const result =
+          static_cast<ACE_CDR::ULong> (*this) + static_cast<ACE_CDR::ULong> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     default:
-      return ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+      return ETCL_Literal_Constraint (ACE_CDR::Long {});
     }
 }
 
 ETCL_Literal_Constraint
-ETCL_Literal_Constraint::operator- (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator- (ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        ACE_CDR::Double result = (ACE_CDR::Double) *this - (ACE_CDR::Double) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Double) result);
+        ACE_CDR::Double const result =
+          static_cast<ACE_CDR::Double> (*this) - static_cast<ACE_CDR::Double> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        ACE_CDR::Long result = (ACE_CDR::Long) *this - (ACE_CDR::Long) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Long) result);
+        ACE_CDR::Long const result =
+          static_cast<ACE_CDR::Long> (*this) - static_cast<ACE_CDR::Long> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        ACE_CDR::ULong result = (ACE_CDR::ULong) *this - (ACE_CDR::ULong) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::ULong) result);
+        ACE_CDR::ULong const result =
+          static_cast<ACE_CDR::ULong> (*this) - static_cast<ACE_CDR::ULong> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     default:
-      return ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+      return ETCL_Literal_Constraint (ACE_CDR::Long {});
     }
 }
 
 ETCL_Literal_Constraint
-ETCL_Literal_Constraint::operator* (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator* (ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        ACE_CDR::Double result = (ACE_CDR::Double) *this * (ACE_CDR::Double) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Double) result);
+        ACE_CDR::Double const result =
+          static_cast<ACE_CDR::Double> (*this) * static_cast<ACE_CDR::Double> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        ACE_CDR::Long result = (ACE_CDR::Long) *this * (ACE_CDR::Long) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Long) result);
+        ACE_CDR::Long const result =
+          static_cast<ACE_CDR::Long> (*this) * static_cast<ACE_CDR::Long> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        ACE_CDR::ULong result = (ACE_CDR::ULong) *this * (ACE_CDR::ULong) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::ULong) result);
+        ACE_CDR::ULong const result =
+          static_cast<ACE_CDR::ULong> (*this) * static_cast<ACE_CDR::ULong> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     default:
-      return ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+      return ETCL_Literal_Constraint (ACE_CDR::Long {});
     }
 }
 
 ETCL_Literal_Constraint
-ETCL_Literal_Constraint::operator/ (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator/ (ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        if (ACE::is_equal ((ACE_CDR::Double) rhs, 0.0))
-          return ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
+        if (ACE::is_equal (static_cast<ACE_CDR::Double> (rhs), 0.0))
+          return ETCL_Literal_Constraint (ACE_CDR::Double {});
 
-        ACE_CDR::Double result = (ACE_CDR::Double) *this / (ACE_CDR::Double) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Double) result);
+        ACE_CDR::Double const result =
+          static_cast<ACE_CDR::Double> (*this) / static_cast<ACE_CDR::Double> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        if ((ACE_CDR::Long) rhs == 0)
-          return ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+        if (static_cast<ACE_CDR::Long> (rhs) == 0)
+          return ETCL_Literal_Constraint (ACE_CDR::Long {});
 
-        ACE_CDR::Long result = (ACE_CDR::Long) *this / (ACE_CDR::Long) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::Long) result);
+        ACE_CDR::Long const result =
+          static_cast<ACE_CDR::Long> (*this) / static_cast<ACE_CDR::Long> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        if ((ACE_CDR::ULong) rhs == 0)
-          return ETCL_Literal_Constraint ((ACE_CDR::ULong) 0);
+        if (static_cast<ACE_CDR::ULong> (rhs) == 0)
+          return ETCL_Literal_Constraint (ACE_CDR::ULong {});
 
-        ACE_CDR::ULong result = (ACE_CDR::ULong) *this / (ACE_CDR::ULong) rhs;
-        return ETCL_Literal_Constraint ((ACE_CDR::ULong) result);
+        ACE_CDR::ULong const result =
+          static_cast<ACE_CDR::ULong> (*this) / static_cast<ACE_CDR::ULong> (rhs);
+        return ETCL_Literal_Constraint (result);
       }
     default:
-      return ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+      return ETCL_Literal_Constraint (ACE_CDR::Long {});
     }
 }
 
@@ -389,16 +402,16 @@ ETCL_Literal_Constraint::operator- ()
     case ACE_ETCL_SIGNED:
       return ETCL_Literal_Constraint (- this->op_.integer_);
     case ACE_ETCL_UNSIGNED:
-      return ETCL_Literal_Constraint (- (ACE_CDR::Long) this->op_.uinteger_);
+      return ETCL_Literal_Constraint (-static_cast<ACE_CDR::Long> (this->op_.uinteger_));
     default:
-      return ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+      return ETCL_Literal_Constraint (ACE_CDR::Long {});
   }
 }
 
 Literal_Type
-ETCL_Literal_Constraint::widest_type (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::widest_type (ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type rhs_type = rhs.expr_type ();
+  Literal_Type const rhs_type = rhs.expr_type ();
   Literal_Type return_value = rhs_type;
 
   if (rhs_type != this->type_)
@@ -417,7 +430,7 @@ ETCL_Literal_Constraint::widest_type (const ETCL_Literal_Constraint & rhs)
 }
 
 void
-ETCL_Literal_Constraint::copy (const ETCL_Literal_Constraint &lit)
+ETCL_Literal_Constraint::copy (ETCL_Literal_Constraint const &lit)
 {
   if (this->type_ == ACE_ETCL_STRING)
     {
@@ -460,11 +473,7 @@ ETCL_Identifier::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Union_Value::~ETCL_Union_Value ()
-{
-  delete this->string_;
-  delete this->integer_;
-}
+ETCL_Union_Value::~ETCL_Union_Value () = default;
 
 int
 ETCL_Union_Value::accept (ETCL_Constraint_Visitor *visitor)
@@ -474,11 +483,7 @@ ETCL_Union_Value::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Union_Pos::~ETCL_Union_Pos ()
-{
-  delete this->component_;
-  delete this->union_value_;
-}
+ETCL_Union_Pos::~ETCL_Union_Pos () = default;
 
 int
 ETCL_Union_Pos::accept (ETCL_Constraint_Visitor *visitor)
@@ -488,11 +493,7 @@ ETCL_Union_Pos::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component_Pos::~ETCL_Component_Pos ()
-{
-  delete this->component_;
-  delete this->integer_;
-}
+ETCL_Component_Pos::~ETCL_Component_Pos () = default;
 
 int
 ETCL_Component_Pos::accept (ETCL_Constraint_Visitor *visitor)
@@ -502,11 +503,7 @@ ETCL_Component_Pos::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component_Assoc::~ETCL_Component_Assoc ()
-{
-  delete this->component_;
-  delete this->identifier_;
-}
+ETCL_Component_Assoc::~ETCL_Component_Assoc () = default;
 
 int
 ETCL_Component_Assoc::accept (ETCL_Constraint_Visitor *visitor)
@@ -516,11 +513,7 @@ ETCL_Component_Assoc::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component_Array::~ETCL_Component_Array ()
-{
-  delete this->component_;
-  delete this->integer_;
-}
+ETCL_Component_Array::~ETCL_Component_Array () = default;
 
 int
 ETCL_Component_Array::accept (ETCL_Constraint_Visitor *visitor)
@@ -538,11 +531,7 @@ ETCL_Special::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component::~ETCL_Component ()
-{
-  delete this->component_;
-  delete this->identifier_;
-}
+ETCL_Component::~ETCL_Component () = default;
 
 int
 ETCL_Component::accept (ETCL_Constraint_Visitor *visitor)
@@ -552,10 +541,7 @@ ETCL_Component::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Dot::~ETCL_Dot ()
-{
-  delete this->component_;
-}
+ETCL_Dot::~ETCL_Dot () = default;
 
 int
 ETCL_Dot::accept (ETCL_Constraint_Visitor *visitor)
@@ -565,10 +551,7 @@ ETCL_Dot::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Eval::~ETCL_Eval ()
-{
-  delete this->component_;
-}
+ETCL_Eval::~ETCL_Eval () = default;
 
 int
 ETCL_Eval::accept (ETCL_Constraint_Visitor *visitor)
@@ -578,10 +561,7 @@ ETCL_Eval::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Default::~ETCL_Default ()
-{
-  delete this->component_;
-}
+ETCL_Default::~ETCL_Default () = default;
 
 int
 ETCL_Default::accept (ETCL_Constraint_Visitor *visitor)
@@ -591,10 +571,7 @@ ETCL_Default::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Exist::~ETCL_Exist ()
-{
-  delete this->component_;
-}
+ETCL_Exist::~ETCL_Exist () = default;
 
 int
 ETCL_Exist::accept (ETCL_Constraint_Visitor *visitor)
@@ -604,10 +581,7 @@ ETCL_Exist::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Unary_Expr::~ETCL_Unary_Expr ()
-{
-  delete this->subexpr_;
-}
+ETCL_Unary_Expr::~ETCL_Unary_Expr () = default;
 
 int
 ETCL_Unary_Expr::accept (ETCL_Constraint_Visitor *visitor)
@@ -617,11 +591,7 @@ ETCL_Unary_Expr::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Binary_Expr::~ETCL_Binary_Expr ()
-{
-  delete this->lhs_;
-  delete this->rhs_;
-}
+ETCL_Binary_Expr::~ETCL_Binary_Expr () = default;
 
 int
 ETCL_Binary_Expr::accept (ETCL_Constraint_Visitor *visitor)
@@ -631,10 +601,7 @@ ETCL_Binary_Expr::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Preference::~ETCL_Preference ()
-{
-  delete this->subexpr_;
-}
+ETCL_Preference::~ETCL_Preference () = default;
 
 int
 ETCL_Preference::accept (ETCL_Constraint_Visitor *visitor)
