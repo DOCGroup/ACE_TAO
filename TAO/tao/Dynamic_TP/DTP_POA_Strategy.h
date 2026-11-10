@@ -187,7 +187,7 @@ private:
   /// into a DTP_Config_Registry.  This is the key to the RB
   /// Tree entry.
 
-  std::string dynamic_tp_config_name_;
+  std::string const dynamic_tp_config_name_;
 
   /// This is the active object used by the worker threads.
   /// The request queue is owned/managed by the task object.

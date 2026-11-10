@@ -16,6 +16,7 @@ ACE_INLINE
 TAO_DTP_POA_Strategy::TAO_DTP_POA_Strategy (TAO_DTP_Definition * tp_config,
                                             bool ss)
   : serialize_servants_ (ss),
+    dynamic_tp_config_name_ {},
     config_initialized_ (true)
 {
   this->set_dtp_config (*tp_config);

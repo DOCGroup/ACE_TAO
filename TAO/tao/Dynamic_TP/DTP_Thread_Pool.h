@@ -195,7 +195,7 @@ private:
 
   TAO_DTP_Thread_Pool_Manager &manager_;
 
-  CORBA::ULong id_;
+  CORBA::ULong const id_;
 
   /// This boolean is set when we are shutting down, then we will not create
   /// any new dynamic threads
