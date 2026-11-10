@@ -72,7 +72,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
   component.tag = tag;
 
   // Make a *copy* of the CDR stream...
-  size_t length = cdr.total_length ();
+  size_t const length = cdr.total_length ();
   component.component_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = component.component_data.get_buffer ();
 
