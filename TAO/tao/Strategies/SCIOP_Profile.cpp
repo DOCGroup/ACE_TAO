@@ -95,7 +95,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   // Add multiple endpoints > 1
 
-  for (int i=endpointSeq.length() - 1; i > 0 ; i--)
+  for (int i = endpointSeq.length () - 1; i > 0; --i)
     {
       TAO_SCIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
@@ -300,7 +300,7 @@ TAO_SCIOP_Profile::add_endpoint (TAO_SCIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *

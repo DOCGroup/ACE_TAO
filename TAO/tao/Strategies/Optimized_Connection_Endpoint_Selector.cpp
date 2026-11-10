@@ -94,7 +94,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
   TAO_MProfile const *profiles = stub->forward_profiles();
   if (profiles != nullptr)
     {
-      for (CORBA::ULong count {}; count <  profiles->profile_count(); count++)
+      for (CORBA::ULong count {}; count < profiles->profile_count (); ++count)
         {
           p = const_cast<TAO_Profile *>(profiles->get_profile(count));
           if (this->check_profile (p, r) != 0)

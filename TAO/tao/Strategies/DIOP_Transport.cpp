@@ -50,7 +50,7 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
 
   ssize_t bytes_to_send {};
-  for (int i {}; i < iovcnt; i++)
+  for (int i {}; i < iovcnt; ++i)
      bytes_to_send += iov[i].iov_len;
 
   this->connection_handler_->peer ().send (iov, iovcnt, addr);

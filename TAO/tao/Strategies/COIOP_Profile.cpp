@@ -193,7 +193,7 @@ TAO_COIOP_Profile::add_endpoint (TAO_COIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *

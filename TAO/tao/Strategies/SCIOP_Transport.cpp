@@ -258,7 +258,7 @@ TAO_SCIOP_Transport::get_listen_point (
                         -1);
     }
 
-  for (size_t index {}; index != count; index++)
+  for (size_t index {}; index != count; ++index)
     {
       if (local_addr.get_ip_address() == endpoint_addr[index].get_ip_address())
         {

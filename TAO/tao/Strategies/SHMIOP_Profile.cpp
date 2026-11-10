@@ -313,7 +313,7 @@ TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *

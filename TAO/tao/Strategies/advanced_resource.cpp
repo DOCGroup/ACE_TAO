@@ -352,7 +352,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
       return 0;
     }
 
-  for (; factory != end; factory++)
+  for (; factory != end; ++factory)
     {
       std::string const &name = (*factory)->protocol_name ();
 

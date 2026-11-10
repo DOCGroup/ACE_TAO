@@ -355,7 +355,8 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       return -1;
 
     // Put secondary ip address into the array
-    secondary_ip_addrs[i++] = temp_addr.get_ip_address();
+    secondary_ip_addrs[i] = temp_addr.get_ip_address();
+    ++i;
   }
 
   // Populate our ACE_Multihomed_INET_Addr with all the right
@@ -526,7 +527,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
       bool found_a_port {};
       ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
-      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+      for (ACE_UINT32 p = requested_port; p <= last_port; ++p)
         {
           if (TAO_debug_level > 5)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -847,7 +848,8 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 
   while (index < num_hostnames) {
     ACE_CString hostname_object(hostname);
-    hostnames_out.set(hostname_object, index++);
+    hostnames_out.set (hostname_object, index);
+    ++index;
 
     hostname = ACE_OS::strtok_r (0, "+", &last);
   }

@@ -228,7 +228,7 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 

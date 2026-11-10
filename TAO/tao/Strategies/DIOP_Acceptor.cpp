@@ -395,7 +395,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 
   ACE_INET_Addr a(addr);
   bool found_a_port {};
-  for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+  for (ACE_UINT32 p = requested_port; p <= last_port; ++p)
     {
       ACE_NEW_RETURN (this->connection_handler_,
                       TAO_DIOP_Connection_Handler (this->orb_core_),
@@ -756,7 +756,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   size_t lo_cnt {};  // Loopback interface count
   for (size_t j {}; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
-      lo_cnt++;
+      ++lo_cnt;
 
 #if defined (ACE_HAS_IPV6)
   size_t ipv4_cnt {};
@@ -918,7 +918,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
         return -1;
 
-      host_cnt++;
+      ++host_cnt;
     }
 
   return 0;
