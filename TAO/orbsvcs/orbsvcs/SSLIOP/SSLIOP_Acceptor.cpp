@@ -205,7 +205,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                                               TAO_MProfile &mprofile,
                                               CORBA::Short priority)
 {
-  size_t index = 0;
+  size_t index {};
   TAO_Profile *pfile {};
   TAO_SSLIOP_Profile *ssliop_profile {};
 
@@ -484,10 +484,10 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       ACE_INET_Addr a(addr);
 
-      bool found_a_port = false;
+      bool found_a_port {};
       ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
-      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+      for (ACE_UINT32 p = requested_port; p <= last_port; ++p)
         {
           if (TAO_debug_level > 5)
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -578,7 +578,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
     return result;
 
   // then parse out our own options.
-  int i = 0;
+  int i {};
   while (i < argc)
     {
       // since the base class has already iterated over the list once,
@@ -613,16 +613,16 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       else
         {
           // the name is not known, skip to the next option
-          i++;
+          ++i;
           continue;
         }
       // at the end, we've consumed this argument. Shift the list and
       // put this one on the end. This technique has the effect of
       // putting them in reverse order, but that doesn't matter, since
       // these arguments are only whole strings.
-      argc--;
+      --argc;
       ACE_CString *temp = argv[i];
-      for (int j = i; j <= argc-1; j++)
+      for (int j = i; j <= argc-1; ++j)
         argv[j] = argv[j+1];
       argv[argc] = temp;
     }

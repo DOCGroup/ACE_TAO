@@ -22,7 +22,7 @@ int
 TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
                                        ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
 
   // Invalidate the TSS SSL session state to make sure that SSL state
   // from a previous SSL connection is not confused with this non-SSL

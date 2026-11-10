@@ -263,7 +263,7 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 TAO_Profile *
 TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
 {
-   bool ssl_only = false;
+   bool ssl_only {};
    if (this->check_prefix (endpoint) == 0)
    {
        ssl_only = true;
@@ -445,7 +445,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       return nullptr;
     }
 
-  int result = 0;
+  int result {};
   TAO::SSLIOP::Connection_Handler *svc_handler {};
   TAO_Transport *transport {};
 
@@ -485,7 +485,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
 
   // Check the Cache first for connections
-  size_t busy_count = 0;
+  size_t busy_count {};
   TAO::Transport_Cache_Manager::Find_Result found =
     this->orb_core ()->lane_resources ().transport_cache ().find_transport (
         desc,
@@ -558,7 +558,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
           // Setup the establishment of trust connection properties, if
           // any.
-          int verify_mode = 0;
+          int verify_mode {};
 
           // On the server side, "trust_in_client" requires that a peer
           // (client) certificate exist.  Fail if one doesn't exist.

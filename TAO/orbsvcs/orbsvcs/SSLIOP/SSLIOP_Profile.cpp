@@ -82,7 +82,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 
   // Attempt to decode SSLIOP::SSL tagged component.  It may not be
   // there if we are dealing with pure IIOP profile.
-  bool ssl_component_found = false;
+  bool ssl_component_found {};
   IOP::TaggedComponent component;
   component.tag = ::SSLIOP::TAG_SSL_SEC_TRANS;
 
@@ -90,7 +90,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
     {
       TAO_InputCDR cdr_component (reinterpret_cast<char const *> (component.component_data.get_buffer ()),
                                   component.component_data.length ());
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
       if (!(cdr_component >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       cdr_component.reset_byte_order (static_cast<int> (byte_order));

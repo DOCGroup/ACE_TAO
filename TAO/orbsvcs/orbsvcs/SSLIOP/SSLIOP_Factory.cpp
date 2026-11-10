@@ -49,7 +49,7 @@ namespace
   size_t
   secret_input (char *buf, size_t max)
   {
-    size_t len = 0;
+    size_t len {};
     char c = '\0';
 #if defined (ACE_WIN32)
     if (!ACE_OS::isatty (ACE_STDIN))
@@ -128,7 +128,7 @@ int
 TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *the_passwd)
 {
   char const *passwd_str = reinterpret_cast<char const *>(the_passwd);
-  int len = 0;
+  int len {};
   if (the_passwd != nullptr)
     {
       len = ACE_Utils::truncate_cast<int> (std::strlen (passwd_str));
@@ -390,7 +390,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLCertificate")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
@@ -401,7 +401,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLPrivateKey")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
@@ -412,7 +412,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLAuthenticate")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               int mode = SSL_VERIFY_NONE;
@@ -438,10 +438,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLAcceptTimeout")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
-              float timeout = 0;
+              float timeout {};
 
               if (sscanf (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), "%f", &timeout) != 1
                   || timeout < 0)
@@ -458,7 +458,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLDHparams")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
@@ -469,7 +469,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLCAfile")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               (void) parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), ca_file.out());
@@ -479,7 +479,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLCApath")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ca_dir = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
@@ -489,7 +489,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLrand")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               rand_path = argv[curarg];
@@ -507,7 +507,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLCipherList")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
@@ -526,7 +526,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLVersionList")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ssl_ctx->filter_versions (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
@@ -535,7 +535,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLPassword")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               pem_passwd_ = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
@@ -566,7 +566,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // in addition to what's pointed to by ACE_SSL_RAND_FILE_ENV
   if (rand_path != nullptr)
   {
-    short errors = 0;
+    short errors {};
     ACE_TCHAR *file_name {};
     ACE_TCHAR const *path = ACE_OS::strtok_r (rand_path,
                                               TAO_PATH_SEPARATOR_STRING,
