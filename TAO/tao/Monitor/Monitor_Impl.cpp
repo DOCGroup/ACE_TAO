@@ -42,8 +42,7 @@ struct TAO_Monitor_Point_Deleter
 {
   void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
   {
-    if (monitor != nullptr)
-      monitor->remove_ref ();
+    monitor->remove_ref ();
   }
 };
 
@@ -51,8 +50,7 @@ struct TAO_Control_Action_Deleter
 {
   void operator() (ACE::Monitor_Control::Control_Action *action) const
   {
-    if (action != nullptr)
-      action->remove_ref ();
+    action->remove_ref ();
   }
 };
 
@@ -120,7 +118,7 @@ Monitor_Impl::get_statistics (::Monitor::NameList const &names)
           Monitor_Control_Types::Data d (monitor->type ());
           CORBA::ULong const length = datalist->length();
           datalist->length (length + 1);
-          ::Monitor::Data data;
+          ::Monitor::Data data {};
           TAO_Monitor::get_monitor_data (monitor.get (), data, false);
           (*datalist)[length] = data;
         }
@@ -192,7 +190,7 @@ TAO_Monitor::get_monitor_data (
     }
   else
     {
-      Monitor::Numeric num;
+      Monitor::Numeric num {};
       num.count = static_cast<CORBA::ULong> (monitor->count ());
       num.minimum = monitor->minimum_sample ();
       num.maximum = monitor->maximum_sample ();
@@ -211,12 +209,7 @@ TAO_Monitor::get_monitor_data (
       ACE_UINT64 usecs {};
       d.timestamp_.to_usec (usecs);
 
-      if (monitor->type() == Monitor_Control_Types::MC_COUNTER)
-        {
-          num.average = 0;
-          num.sum_of_squares = 0;
-        }
-      else
+      if (monitor->type () != Monitor_Control_Types::MC_COUNTER)
         {
           num.average = monitor->average ();
           num.sum_of_squares = monitor->sum_of_squares ();
