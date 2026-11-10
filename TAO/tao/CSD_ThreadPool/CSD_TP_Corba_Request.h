@@ -44,7 +44,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Corba_Request : public TP_Request
     {
     public:
-      /// Virtual Destructor.
       ~TP_Corba_Request() override;
 
       TP_Corba_Request (TP_Corba_Request const &) = delete;
@@ -53,9 +52,9 @@ namespace TAO
       TP_Corba_Request &operator= (TP_Corba_Request &&) = delete;
 
     protected:
-      TP_Corba_Request(const PortableServer::ObjectId& object_id,
+      TP_Corba_Request(PortableServer::ObjectId const &object_id,
                        PortableServer::POA_ptr         poa,
-                       const char*                     operation,
+                       char const *                    operation,
                        PortableServer::Servant         servant,
                        TP_Servant_State*               servant_state,
                        TAO_ServerRequest&              server_request);

@@ -47,7 +47,6 @@ namespace TAO
       TP_Custom_Synch_Request(TP_Custom_Request_Operation* op,
                               TP_Servant_State*            servant_state);
 
-      /// Virtual Destructor.
       ~TP_Custom_Synch_Request() override;
 
       TP_Custom_Synch_Request (TP_Custom_Synch_Request const &) = delete;

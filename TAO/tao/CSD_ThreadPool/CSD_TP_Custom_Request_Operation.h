@@ -51,7 +51,6 @@ namespace TAO
                       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-      /// Virtual Destructor.
       virtual ~TP_Custom_Request_Operation();
 
       /// Invoked by a worker thread to perform the operation.

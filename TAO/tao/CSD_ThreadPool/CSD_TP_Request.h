@@ -49,7 +49,6 @@ namespace TAO
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-      /// Virtual Destructor.
       virtual ~TP_Request();
 
       /// Prepare the request to be placed into the request queue.
@@ -74,6 +73,10 @@ namespace TAO
       /// servant object.
       bool is_target(PortableServer::Servant servant);
 
+      TP_Request (TP_Request const &) = delete;
+      TP_Request &operator= (TP_Request const &) = delete;
+      TP_Request (TP_Request &&) = delete;
+      TP_Request &operator= (TP_Request &&) = delete;
 
     protected:
       TP_Request(PortableServer::Servant servant,
@@ -95,11 +98,6 @@ namespace TAO
 
       /// Ask the subclass to perform its duties to carry out the cancellation.
       virtual void cancel_i() = 0;
-
-      TP_Request (TP_Request const &) = delete;
-      TP_Request &operator= (TP_Request const &) = delete;
-      TP_Request (TP_Request &&) = delete;
-      TP_Request &operator= (TP_Request &&) = delete;
 
     private:
       /// The TP_Queue class is our friend since it needs access to

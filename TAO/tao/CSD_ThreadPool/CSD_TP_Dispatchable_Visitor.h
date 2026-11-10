@@ -48,10 +48,8 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Dispatchable_Visitor : public TP_Queue_Visitor
     {
     public:
-      /// Default Constructor.
       TP_Dispatchable_Visitor() = default;
 
-      /// Virtual Destructor.
       ~TP_Dispatchable_Visitor() override;
 
       TP_Dispatchable_Visitor (TP_Dispatchable_Visitor const &) = delete;

@@ -3,9 +3,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Corba_Request::TP_Corba_Request
-                             (const PortableServer::ObjectId& object_id,
+                             (PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*,
+                              char const *,
                               PortableServer::Servant         servant,
                               TP_Servant_State*               servant_state,
                               TAO_ServerRequest&              server_request)

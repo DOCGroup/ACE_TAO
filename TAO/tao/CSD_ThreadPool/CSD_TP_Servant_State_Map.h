@@ -44,7 +44,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Servant_State_Map
     {
     public:
-      /// Default Constructor.
       TP_Servant_State_Map() = default;
 
       ~TP_Servant_State_Map();

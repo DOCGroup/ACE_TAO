@@ -45,19 +45,19 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
       return -1;
     }
 
-  repo->init(0,0);
+  repo->init (0, nullptr);
 
   // Parse any service configurator parameters.
-  for (int curarg {}; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT("-CSDtp")) == 0)
         {
           std::string poa_name;
           unsigned long num_threads = 1;
-          bool serialize_servants = true;
+          bool serialize_servants {true};
 
-          curarg++;
+          ++curarg;
           if (curarg >= argc)
             {
               return -1;

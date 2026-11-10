@@ -57,10 +57,8 @@ namespace TAO
       /// Handle Type (aka, Smart Pointer Type).
       using HandleType = TAO_Intrusive_Ref_Count_Handle<TP_Servant_State>;
 
-      /// Default Constructor.
       TP_Servant_State() = default;
 
-      /// Virtual Destructor.
       virtual ~TP_Servant_State();
 
       /// Accessor for the servant busy flag.

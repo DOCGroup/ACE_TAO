@@ -47,14 +47,13 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Cancel_Visitor : public TP_Queue_Visitor
     {
     public:
-      /// Default Constructor - cancel *all* requests.
+      /// Cancels all requests by default.
       TP_Cancel_Visitor() = default;
 
       /// Constructor with provided servant - cancel requests that
       /// target the supplied servant.
       explicit TP_Cancel_Visitor(PortableServer::Servant servant);
 
-      /// Virtual Destructor.
       ~TP_Cancel_Visitor() override;
 
       TP_Cancel_Visitor (TP_Cancel_Visitor const &) = delete;

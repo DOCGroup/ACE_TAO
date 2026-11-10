@@ -45,7 +45,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue_Visitor
     {
     public:
-      /// Virtual Destructor.
       virtual ~TP_Queue_Visitor();
 
       TP_Queue_Visitor (TP_Queue_Visitor const &) = delete;
@@ -60,7 +59,6 @@ namespace TAO
       virtual bool visit_request(TP_Request* request, bool& remove_flag) = 0;
 
     protected:
-      /// Default Constructor.
       TP_Queue_Visitor() = default;
     };
   }

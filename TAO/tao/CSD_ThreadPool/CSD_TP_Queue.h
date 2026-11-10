@@ -57,7 +57,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue
     {
     public:
-      /// Default Constructor.
       TP_Queue() = default;
 
       ~TP_Queue();

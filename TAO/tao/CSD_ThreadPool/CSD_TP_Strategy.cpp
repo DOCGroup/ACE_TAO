@@ -73,12 +73,12 @@ TAO::CSD::TP_Strategy::poa_deactivated_event_i()
 
 
 TAO::CSD::Strategy_Base::DispatchResult
-TAO::CSD::TP_Strategy::dispatch_remote_request_i
-                             (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
-                              PortableServer::POA_ptr         poa,
-                              const char*                     operation,
-                              PortableServer::Servant         servant)
+TAO::CSD::TP_Strategy::dispatch_remote_request_i (
+  TAO_ServerRequest &server_request,
+  PortableServer::ObjectId const &object_id,
+  PortableServer::POA_ptr poa,
+  char const *operation,
+  PortableServer::Servant servant)
 {
   TP_Servant_State::HandleType servant_state =
                         this->get_servant_state(servant);
@@ -87,7 +87,7 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
   // before queuing the request and thus avoid delaying the client.
   // This is a problem if the servant ends up throwing a Location Forward
   // exception. If necessary, add an override config option here.
-  CORBA::Boolean early_sync = true;
+  CORBA::Boolean const early_sync {true};
   server_request.is_queued (early_sync);
   server_request.sync_before_dispatch ();
 
@@ -119,18 +119,18 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
 
 
 TAO::CSD::Strategy_Base::DispatchResult
-TAO::CSD::TP_Strategy::dispatch_collocated_request_i
-                             (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
-                              PortableServer::POA_ptr         poa,
-                              const char*                     operation,
-                              PortableServer::Servant         servant)
+TAO::CSD::TP_Strategy::dispatch_collocated_request_i (
+  TAO_ServerRequest &server_request,
+  PortableServer::ObjectId const &object_id,
+  PortableServer::POA_ptr poa,
+  char const *operation,
+  PortableServer::Servant servant)
 {
   TP_Servant_State::HandleType servant_state =
                         this->get_servant_state(servant);
 
-  bool is_sync_with_server = server_request.sync_with_server();
-  bool is_synchronous      = server_request.response_expected();
+  bool const is_sync_with_server = server_request.sync_with_server();
+  bool const is_synchronous = server_request.response_expected();
 
   TP_Collocated_Synch_Request_Handle             synch_request;
   TP_Collocated_Synch_With_Server_Request_Handle synch_with_server_request;
@@ -190,8 +190,8 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
   // synchronous request.
   if (!synch_request.is_nil())
     {
-      int srw = synch_request->wait();
-      if (srw == false)
+      int const srw = synch_request->wait();
+      if (!srw)
         {
           // Raise exception when request was cancelled.
           throw ::CORBA::NO_IMPLEMENT();
@@ -199,8 +199,8 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
     }
   else if (!synch_with_server_request.is_nil())
     {
-      bool swsr = synch_with_server_request->wait();
-      if (swsr == false)
+      bool const swsr = synch_with_server_request->wait();
+      if (!swsr)
         {
           // Raise exception when request was cancelled.
           throw ::CORBA::NO_IMPLEMENT();
@@ -212,9 +212,9 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
 
 
 void
-TAO::CSD::TP_Strategy::servant_activated_event_i
-                                (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+TAO::CSD::TP_Strategy::servant_activated_event_i (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId const &)
 {
   if (this->serialize_servants_)
     {
@@ -225,9 +225,9 @@ TAO::CSD::TP_Strategy::servant_activated_event_i
 
 
 void
-TAO::CSD::TP_Strategy::servant_deactivated_event_i
-                                (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+TAO::CSD::TP_Strategy::servant_deactivated_event_i (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId const &)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->task_.cancel_servant(servant);

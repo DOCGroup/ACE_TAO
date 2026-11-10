@@ -47,13 +47,12 @@ namespace TAO
     public:
       TP_Collocated_Asynch_Request
                            (TAO_ServerRequest&              server_request,
-                            const PortableServer::ObjectId& object_id,
+                            PortableServer::ObjectId const &object_id,
                             PortableServer::POA_ptr         poa,
-                            const char*                     operation,
+                            char const *                    operation,
                             PortableServer::Servant         servant,
                             TP_Servant_State*               servant_state);
 
-      /// Virtual Destructor.
       ~TP_Collocated_Asynch_Request() override;
 
       TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request const &) = delete;

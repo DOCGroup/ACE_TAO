@@ -40,7 +40,7 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Synch_Helper
     {
     public:
-      /// Constructor.  Sets initial state to PENDING.
+      /// Starts in the PENDING state.
       TP_Synch_Helper();
 
       ~TP_Synch_Helper();

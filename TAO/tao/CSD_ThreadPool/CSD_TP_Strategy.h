@@ -58,7 +58,6 @@ namespace TAO
       explicit TP_Strategy(Thread_Counter num_threads = 1,
                            bool serialize_servants = true);
 
-      /// Virtual Destructor.
       ~TP_Strategy() override;
 
       /// Set the number of threads in the pool (must be > 0).
@@ -98,6 +97,11 @@ namespace TAO
       /// This is requested on the user application level.
       void cancel_requests(PortableServer::Servant servant);
 
+      TP_Strategy (TP_Strategy const &) = delete;
+      TP_Strategy &operator= (TP_Strategy const &) = delete;
+      TP_Strategy (TP_Strategy &&) = delete;
+      TP_Strategy &operator= (TP_Strategy &&) = delete;
+
     protected:
       /// Handle the dispatching of a remote request.
       ///
@@ -106,9 +110,9 @@ namespace TAO
       /// servicing the queue, and performing the actual dispatch logic.
       Strategy_Base::DispatchResult dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant) override;
 
       /// Handle the dispatching of a collocated request.
@@ -118,9 +122,9 @@ namespace TAO
       /// servicing the queue, and performing the actual dispatch logic.
       Strategy_Base::DispatchResult dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant) override;
 
       /// Event - The POA has been activated.
@@ -134,19 +138,14 @@ namespace TAO
       void poa_deactivated_event_i() override;
 
       /// Event - A servant has been activated
-      void servant_activated_event_i
-                                     (PortableServer::Servant servant,
-                                      const PortableServer::ObjectId& oid) override;
+      void servant_activated_event_i (
+        PortableServer::Servant servant,
+        PortableServer::ObjectId const &oid) override;
 
       /// Event - A servant has been deactivated
-      void servant_deactivated_event_i
-                                    (PortableServer::Servant servant,
-                                     const PortableServer::ObjectId& oid) override;
-
-      TP_Strategy (TP_Strategy const &) = delete;
-      TP_Strategy &operator= (TP_Strategy const &) = delete;
-      TP_Strategy (TP_Strategy &&) = delete;
-      TP_Strategy &operator= (TP_Strategy &&) = delete;
+      void servant_deactivated_event_i (
+        PortableServer::Servant servant,
+        PortableServer::ObjectId const &oid) override;
 
     private:
       /**
