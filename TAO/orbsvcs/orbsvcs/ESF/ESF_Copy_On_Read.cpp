@@ -25,9 +25,10 @@ template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
     for_each (TAO_ESF_Worker<PROXY> *worker)
 {
-  // @@ Use an allocator for this memory...
+  // Keep a snapshot of proxy pointers while temporary references protect them
+  // as workers run outside the collection lock.
   PROXY **proxies {};
-  size_t size = 0;
+  size_t size {};
   try
     {
       {
@@ -42,7 +43,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 
         j = proxies;
 
-        ITERATOR end = this->collection_.end ();
+        ITERATOR const end = this->collection_.end ();
         for (ITERATOR i = this->collection_.begin (); i != end; ++i)
           {
             *j = *i;

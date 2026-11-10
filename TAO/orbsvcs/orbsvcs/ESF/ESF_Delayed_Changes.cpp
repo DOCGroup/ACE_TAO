@@ -69,7 +69,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   ACE_GUARD (Busy_Lock, ace_mon, this->lock_);
 
   worker->set_size (this->collection_.size ());
-  ITERATOR end = this->collection_.end ();
+  ITERATOR const end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
       worker->work (*i);
@@ -144,7 +144,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
           throw CORBA::NO_MEMORY ();
         }
       command.release ();
-      this->write_delay_count_++;
+      ++this->write_delay_count_;
     }
 }
 
@@ -172,7 +172,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
           throw CORBA::NO_MEMORY ();
         }
       command.release ();
-      this->write_delay_count_++;
+      ++this->write_delay_count_;
     }
 }
 
@@ -197,7 +197,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
           throw CORBA::NO_MEMORY ();
         }
       command.release ();
-      this->write_delay_count_++;
+      ++this->write_delay_count_;
     }
 }
 
@@ -221,7 +221,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::shutdown ()
           throw CORBA::NO_MEMORY ();
         }
       command.release ();
-      this->write_delay_count_++;
+      ++this->write_delay_count_;
     }
 }
 

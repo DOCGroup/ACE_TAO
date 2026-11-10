@@ -27,7 +27,7 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt ()
       return this->refcount_;
   }
 
-  ITERATOR end = this->collection.end ();
+  ITERATOR const end = this->collection.end ();
   for (ITERATOR i = this->collection.begin (); i != end; ++i)
     {
       (*i)->_decr_refcnt ();
@@ -68,7 +68,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                       this->collection_);
 
   worker->set_size (ace_mon.collection->collection.size ());
-  ITERATOR end = ace_mon.collection->collection.end ();
+  ITERATOR const end = ace_mon.collection->collection.end ();
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
     {
       worker->work (*i);
@@ -146,7 +146,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   {
     ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex);
 
-    this->pending_writes++;
+    ++this->pending_writes;
 
     while (this->writing_flag)
       this->cond.wait ();
@@ -164,7 +164,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   this->copy->collection = this->collection->collection;
 
   // Increase the reference counts
-  ITERATOR end = this->copy->collection.end ();
+  ITERATOR const end = this->copy->collection.end ();
   for (ITERATOR i = this->copy->collection.begin (); i != end; ++i)
     {
       (*i)->_incr_refcnt ();
@@ -182,7 +182,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     tmp = this->collection;
     this->collection = this->copy;
     this->writing_flag = false;
-    this->pending_writes--;
+    --this->pending_writes;
 
     this->cond.signal ();
   }
