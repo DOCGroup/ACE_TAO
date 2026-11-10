@@ -201,7 +201,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   CORBA::ULong items_left = static_cast<CORBA::ULong> (this->ids_.size());
   int difference = items_left - n;
   CORBA::ULong returnable_items = (difference >= 0) ? n : items_left;
-  CORBA::Boolean return_value = (CORBA::Boolean) (difference > 0);
+  CORBA::Boolean const return_value = static_cast<CORBA::Boolean> (difference > 0);
 
   // Allocate result sequence.
   ACE_NEW_RETURN (_ids,

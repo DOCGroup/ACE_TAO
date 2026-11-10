@@ -76,7 +76,7 @@ TAO_Constraint_Evaluator::evaluate_constraint (TAO_Constraint* root)
       if ((root->accept (this) == 0) &&
           (! this->queue_.empty ()))
         {
-          result = (CORBA::Boolean) this->queue_.get_operand();
+          result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
           this->queue_.dequeue_operand ();
         }
     }
@@ -166,14 +166,14 @@ visit_and (TAO_Binary_Constraint* boolean_and)
 
   if (left->accept (this) == 0)
     {
-      result = (CORBA::Boolean) this->queue_.get_operand ();
+      result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
 
       if (result)
         {
           if (right->accept(this) == 0)
             {
-              result = (CORBA::Boolean) this->queue_.get_operand();
+              result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
               this->queue_.dequeue_operand ();
 
               return_value = 0;
@@ -202,14 +202,14 @@ visit_or (TAO_Binary_Constraint* boolean_or)
 
   if (left->accept (this) == 0)
     {
-      result = (CORBA::Boolean) this->queue_.get_operand ();
+      result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
 
       if (result == (CORBA::Boolean) 0)
         {
           if (right->accept (this) == 0)
             {
-              result = (CORBA::Boolean) this->queue_.get_operand ();
+              result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
               this->queue_.dequeue_operand ();
               return_value = 0;
             }
@@ -235,7 +235,8 @@ visit_not (TAO_Unary_Constraint* unary_not)
 
   if (operand->accept (this) == 0)
     {
-      CORBA::Boolean result = ! (CORBA::Boolean)this->queue_.get_operand ();
+      CORBA::Boolean const result =
+        ! static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
       this->queue_.push_front (TAO_Literal_Constraint (result));
 
@@ -256,7 +257,7 @@ visit_exist (TAO_Unary_Constraint* unary_exist)
   // Determine if a property is defined on this offer.
 
   CORBA::Boolean result =
-    (CORBA::Boolean) (this->props_.find (property_name) == 0);
+    this->props_.find (property_name) == 0;
 
   this->queue_.push_front (TAO_Literal_Constraint (result));
   return 0;
@@ -510,7 +511,7 @@ TAO_find_string (CosTradingSequences::StringSeq& sequence,
         }
     }
 
-  return (CORBA::Boolean) return_value;
+  return static_cast<CORBA::Boolean> (return_value);
 }
 */
 
@@ -751,7 +752,8 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value {};
   try
     {
-    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short ();
+    CORBA::Boolean const value =
+      static_cast<CORBA::Boolean> (dyn_any.get_short ());
       return_value = (value == element);
     }
   catch (const CORBA::Exception&){}
