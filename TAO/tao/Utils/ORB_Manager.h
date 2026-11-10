@@ -207,6 +207,11 @@ public:
    */
   PortableServer::POAManager_ptr poa_manager ();
 
+  TAO_ORB_Manager (TAO_ORB_Manager const &) = delete;
+  TAO_ORB_Manager &operator= (TAO_ORB_Manager const &) = delete;
+  TAO_ORB_Manager (TAO_ORB_Manager &&) = delete;
+  TAO_ORB_Manager &operator= (TAO_ORB_Manager &&) = delete;
+
 protected:
   /// The ORB.
   CORBA::ORB_var orb_;
@@ -219,12 +224,6 @@ protected:
 
   /// The POA manager of poa_.
   PortableServer::POAManager_var poa_manager_;
-
- private:
-  TAO_ORB_Manager (TAO_ORB_Manager const &) = delete;
-  TAO_ORB_Manager &operator= (TAO_ORB_Manager const &) = delete;
-  TAO_ORB_Manager (TAO_ORB_Manager &&) = delete;
-  TAO_ORB_Manager &operator= (TAO_ORB_Manager &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

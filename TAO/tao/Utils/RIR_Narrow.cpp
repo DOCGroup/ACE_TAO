@@ -6,25 +6,25 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
+template <class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb, char const * id)
 {
-  CORBA::Object_var object =
+  CORBA::Object_var const object =
     orb->resolve_initial_references (id);
 
   return RIR_Narrow<T>::narrow_object (object.in ());
 }
 
-template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
+template <class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (PortableInterceptor::ORBInitInfo_ptr info,
                                    char const * id)
 {
-  CORBA::Object_var object = info->resolve_initial_references (id);
+  CORBA::Object_var const object = info->resolve_initial_references (id);
 
   return RIR_Narrow<T>::narrow_object (object.in ());
 }
 
-template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
+template <class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object)
 {
   _var_type narrowed_object = T::_narrow (object);

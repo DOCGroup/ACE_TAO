@@ -36,7 +36,7 @@ TAO_ORB_Manager::init (int &argc,
   if (CORBA::is_nil (this->poa_.in ()))
     {
       // Get the POA from the ORB.
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -106,9 +106,9 @@ TAO_ORB_Manager::activate_poa_manager ()
 char *
 TAO_ORB_Manager::activate (PortableServer::Servant servant)
 {
-  PortableServer::ObjectId_var id = this->poa_->activate_object (servant);
+  PortableServer::ObjectId_var const id = this->poa_->activate_object (servant);
 
-  CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
+  CORBA::Object_var const obj = this->poa_->id_to_reference (id.in ());
 
   CORBA::String_var str = this->orb_->object_to_string (obj.in ());
 
@@ -118,9 +118,9 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant)
 void
 TAO_ORB_Manager::deactivate (char const *id)
 {
-  CORBA::Object_var object = this->orb_->string_to_object (id);
+  CORBA::Object_var const object = this->orb_->string_to_object (id);
 
-  PortableServer::ObjectId_var object_id =
+  PortableServer::ObjectId_var const object_id =
     this->poa_->reference_to_id (object.in ());
 
   this->poa_->deactivate_object (object_id.in ());
@@ -138,12 +138,12 @@ TAO_ORB_Manager::activate_under_child_poa (char const *object_name,
                        ACE_TEXT ("object_name is null!")),
                       nullptr);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     PortableServer::string_to_ObjectId (object_name);
 
   this->child_poa_->activate_object_with_id (id.in (), servant);
 
-  CORBA::Object_var obj = this->child_poa_->id_to_reference (id.in ());
+  CORBA::Object_var const obj = this->child_poa_->id_to_reference (id.in ());
 
   CORBA::String_var str = this->orb_->object_to_string (obj.in ());
 
@@ -153,9 +153,9 @@ TAO_ORB_Manager::activate_under_child_poa (char const *object_name,
 void
 TAO_ORB_Manager::deactivate_under_child_poa (char const *id)
 {
-  CORBA::Object_var object = this->orb_->string_to_object (id);
+  CORBA::Object_var const object = this->orb_->string_to_object (id);
 
-  PortableServer::ObjectId_var object_id =
+  PortableServer::ObjectId_var const object_id =
     this->child_poa_->reference_to_id (object.in ());
 
   this->child_poa_->deactivate_object (object_id.in ());

@@ -30,8 +30,8 @@
  *
  *  The servant implementation (Xyzzy_i in this case) must implement
  *  the following methods:
- *      Xyzzy_i (); // null constructor
- *      ~Xyzzy_i (); // destructor
+ *      Xyzzy_i ();
+ *      ~Xyzzy_i ();
  *      int parse_args (int argc, ACE_TCHAR * argv[]);
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);

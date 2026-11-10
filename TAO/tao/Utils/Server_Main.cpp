@@ -21,12 +21,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename SERVANT>
 TAO::Utils::Server_Main<SERVANT>::Server_Main (std::string const &name)
-  : name_(name)
+  : name_ (name)
 {
 }
 
@@ -40,10 +39,10 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
   {
     // Initialize the orb
 
-    CORBA::ORB_var orb =
+    CORBA::ORB_var const orb =
       CORBA::ORB_init (argc, argv, this->name_.c_str ());
 
-    if (! ::CORBA::is_nil(orb.in ()))
+    if (! ::CORBA::is_nil (orb.in ()))
     {
       // create an instance of the servant object and give it a
       // chance at the arguments.
@@ -63,15 +62,15 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
           //////////////////////////////////
           // Run the event loop for the ORB.
           // Initial run to initialize the orb
-          ACE_Time_Value tv (1,0);
+          ACE_Time_Value tv (1, 0);
           orb->run (tv);
 
           // now run event loop
           int quit {};
           while (result == 0 && ! quit )
           {
-            ACE_Time_Value work_tv (1,0);
-            orb->perform_work(work_tv);
+            ACE_Time_Value work_tv (1, 0);
+            orb->perform_work (work_tv);
             quit = servant.idle (result);
           }
           servant.fini ();

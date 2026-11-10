@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer() noexcept
+TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer () noexcept
 {
   for (CORBA::ULong i {}; i != length (); ++i)
     {
@@ -16,7 +16,7 @@ TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer() noexcept
           try
             {
               policy->destroy ();
-              (*this)[i] = CORBA::Policy::_nil();
+              (*this)[i] = CORBA::Policy::_nil ();
             }
           catch (...)
             {

@@ -51,14 +51,13 @@ public:
   ///  Returns true on success and false on failure.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) = 0;
 
- protected:
-  TAO_Encodable () = default;
-
- private:
   TAO_Encodable (TAO_Encodable const &) = delete;
   TAO_Encodable &operator= (TAO_Encodable const &) = delete;
   TAO_Encodable (TAO_Encodable &&) = delete;
   TAO_Encodable &operator= (TAO_Encodable &&) = delete;
+
+protected:
+  TAO_Encodable () = default;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

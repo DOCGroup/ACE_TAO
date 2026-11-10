@@ -34,7 +34,7 @@ namespace TAO
      * @brief Helper class to obtain an initial reference and narrow it
      *        to the proper object reference.
      */
-    template<class T> class RIR_Narrow
+    template <class T> class RIR_Narrow
     {
     public:
       using _ptr_type = typename T::_ptr_type;

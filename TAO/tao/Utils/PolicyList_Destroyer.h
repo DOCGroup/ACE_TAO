@@ -34,9 +34,8 @@ namespace TAO
     {
     public:
       explicit PolicyList_Destroyer (CORBA::ULong length_hint);
-      ~PolicyList_Destroyer() noexcept;
+      ~PolicyList_Destroyer () noexcept;
 
-    private:
       PolicyList_Destroyer (PolicyList_Destroyer const &) = delete;
       PolicyList_Destroyer &operator= (PolicyList_Destroyer const &) = delete;
       PolicyList_Destroyer (PolicyList_Destroyer &&) = delete;
