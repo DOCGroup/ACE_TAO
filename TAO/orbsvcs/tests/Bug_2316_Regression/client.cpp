@@ -1,9 +1,10 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior { ACE_TEXT ("file://server.ior") };
+  ACE_TString ior { ACE_TEXT ("file://server.ior") };
 };
 
 constexpr ACE_TCHAR uipmc_ior[] =
@@ -48,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var const obj = orb->string_to_object (uipmc_ior);
 
-      CORBA::Object_var const tmp = orb->string_to_object (options.ior);
+      CORBA::Object_var const tmp = orb->string_to_object (options.ior.c_str ());
       server_var const server = server::_narrow (tmp.in ());
 
       try
