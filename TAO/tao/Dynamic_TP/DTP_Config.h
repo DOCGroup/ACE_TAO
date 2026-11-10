@@ -43,10 +43,9 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 {
- public:
+public:
   TAO_DTP_Config_Registry_Installer ();
 
- private:
   TAO_DTP_Config_Registry_Installer (TAO_DTP_Config_Registry_Installer const &) = delete;
   TAO_DTP_Config_Registry_Installer &operator= (
     TAO_DTP_Config_Registry_Installer const &) = delete;
@@ -69,12 +68,12 @@ public:
   int bind (std::string const &name, TAO_DTP_Definition &entry);
   int rebind (std::string const &name, TAO_DTP_Definition &entry);
 
- private:
   TAO_DTP_Config_Registry (TAO_DTP_Config_Registry const &) = delete;
   TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry const &) = delete;
   TAO_DTP_Config_Registry (TAO_DTP_Config_Registry &&) = delete;
   TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry &&) = delete;
 
+private:
   using Registry =
     ACE_RB_Tree<std::string, TAO_DTP_Definition, ACE_Less_Than<std::string>, ACE_Null_Mutex>;
   Registry registry_;
@@ -98,12 +97,12 @@ public:
   /// Init can be called multiple times,
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DTP_Config (TAO_DTP_Config const &) = delete;
   TAO_DTP_Config &operator= (TAO_DTP_Config const &) = delete;
   TAO_DTP_Config (TAO_DTP_Config &&) = delete;
   TAO_DTP_Config &operator= (TAO_DTP_Config &&) = delete;
 
+private:
   int parse_long (int &curarg, int argc, ACE_TCHAR* argv[],
                   ACE_TCHAR const *match, long &value);
   int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[],

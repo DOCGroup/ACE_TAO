@@ -71,7 +71,6 @@ public:
 
   // @}
 
-private:
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;
   TAO_DTP_Thread_Lane_Resources_Manager &operator= (
     TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;
@@ -105,7 +104,6 @@ public:
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
     TAO_ORB_Core &core) override;
 
- private:
   TAO_DTP_Thread_Lane_Resources_Manager_Factory (
     TAO_DTP_Thread_Lane_Resources_Manager_Factory const &) = delete;
   TAO_DTP_Thread_Lane_Resources_Manager_Factory &operator= (

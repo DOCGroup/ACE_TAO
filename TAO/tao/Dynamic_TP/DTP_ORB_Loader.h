@@ -40,12 +40,12 @@ public:
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader const &) = delete;
   TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader const &) = delete;
   TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader &&) = delete;
   TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader &&) = delete;
 
+private:
   /// Set to true after init is called.
   bool initialized_ {};
 };

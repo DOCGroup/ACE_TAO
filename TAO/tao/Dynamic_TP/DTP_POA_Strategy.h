@@ -153,12 +153,12 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
     (PortableServer::Servant servant,
      PortableServer::ObjectId const &oid) override;
 
- private:
   TAO_DTP_POA_Strategy (TAO_DTP_POA_Strategy const &) = delete;
   TAO_DTP_POA_Strategy &operator= (TAO_DTP_POA_Strategy const &) = delete;
   TAO_DTP_POA_Strategy (TAO_DTP_POA_Strategy &&) = delete;
   TAO_DTP_POA_Strategy &operator= (TAO_DTP_POA_Strategy &&) = delete;
 
+private:
   /**
    * Helper method that is responsible for looking up the servant
    * state object in the servant state map *if* the "serialize

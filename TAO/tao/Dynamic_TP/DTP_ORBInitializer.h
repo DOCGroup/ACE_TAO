@@ -48,12 +48,12 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_DTP_ORBInitializer (TAO_DTP_ORBInitializer const &) = delete;
   TAO_DTP_ORBInitializer &operator= (TAO_DTP_ORBInitializer const &) = delete;
   TAO_DTP_ORBInitializer (TAO_DTP_ORBInitializer &&) = delete;
   TAO_DTP_ORBInitializer &operator= (TAO_DTP_ORBInitializer &&) = delete;
 
+private:
   /// Register Dynamic_TP policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

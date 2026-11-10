@@ -115,12 +115,12 @@ public:
   /// Cancel all requests that are targeted for the provided servant.
   void cancel_servant (PortableServer::Servant servant);
 
-private:
   TAO_DTP_Task (TAO_DTP_Task const &) = delete;
   TAO_DTP_Task &operator= (TAO_DTP_Task const &) = delete;
   TAO_DTP_Task (TAO_DTP_Task &&) = delete;
   TAO_DTP_Task &operator= (TAO_DTP_Task &&) = delete;
 
+private:
   /// get the next available request. Return true if one available, nonblocking
   bool request_ready (TAO::CSD::TP_Dispatchable_Visitor &v,
                       TAO::CSD::TP_Request_Handle &r);
