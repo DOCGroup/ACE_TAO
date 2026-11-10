@@ -393,13 +393,13 @@ TAO_DTP_POA_Strategy::set_dtp_config (TAO_DTP_Definition &tp_config)
         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy: ")
         ACE_TEXT ("Initialized with:\n")
         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy initial_pool_threads_=")
-        ACE_TEXT ("[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy min_pool_threads_=[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_pool_threads_=[%d]\n")
+        ACE_TEXT ("[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy min_pool_threads_=[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_pool_threads_=[%B]\n")
         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_request_queue_depth_=")
-        ACE_TEXT ("[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_stack_size_=[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_idle_time_=[%d]\n"),
+        ACE_TEXT ("[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_stack_size_=[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_idle_time_=[%:]\n"),
         this->dtp_task_.get_init_pool_threads(),
         this->dtp_task_.get_min_pool_threads(),
         this->dtp_task_.get_max_pool_threads(),

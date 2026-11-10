@@ -181,7 +181,7 @@ private:
   size_t num_queue_requests_ {};
 
   /// The number of currently active worker threads.
-  std::atomic<unsigned long> busy_threads_ {};
+  std::atomic<size_t> busy_threads_ {};
 
   /// The queue of pending servant requests (a.k.a. the "request queue").
   TAO::CSD::TP_Queue queue_;

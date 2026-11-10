@@ -225,7 +225,7 @@ TAO_DTP_Thread_Pool::create_initial_threads ()
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) DTP_Thread_Pool::create_initial_threads ")
-                  ACE_TEXT ("Creating %d threads\n"),
+                  ACE_TEXT ("Creating %B threads\n"),
                   count));
     }
 
@@ -269,7 +269,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread ()
       if (TAO_debug_level > 7)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
-                    ACE_TEXT ("count = %d, creating new thread\n"),
+                    ACE_TEXT ("count = %B, creating new thread\n"),
                     this->id_,
                     this->active_count_));
 

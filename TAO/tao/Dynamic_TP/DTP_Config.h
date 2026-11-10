@@ -39,9 +39,6 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
   size_t stack_size_ {ACE_DEFAULT_THREAD_STACKSIZE};
   ACE_Time_Value timeout_ {60, 0};   // default to 60 seconds
   int queue_depth_ {};
-
-  // Create explicit constructor to eliminate issues with non-initialized struct values.
-  TAO_DTP_Definition () = default;
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
@@ -112,7 +109,7 @@ private:
   int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[],
                   ACE_TCHAR const *match, bool &value);
   int parse_string (int &curarg, int argc, ACE_TCHAR* argv[],
-                    ACE_TCHAR const *match, ACE_TCHAR *&value);
+                    ACE_TCHAR const *match, ACE_TCHAR const *&value);
   void report_option_value_error (ACE_TCHAR const *option_name,
                                   ACE_TCHAR const *option_value);
 };
