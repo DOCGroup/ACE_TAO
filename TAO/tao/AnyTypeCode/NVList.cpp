@@ -44,7 +44,6 @@ CORBA::NamedValue::~NamedValue ()
   if (this->name_)
     {
       CORBA::string_free (this->name_);
-      this->name_ = nullptr;
     }
   // the any will be destroyed by itself
 }
@@ -78,8 +77,6 @@ CORBA::NVList::~NVList ()
       (void) iter.next (nv);
       delete *nv;
     }
-
-  this->max_ = 0;
 }
 
 // add an element and just initialize its flags
@@ -295,7 +292,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
         {
           CORBA::NamedValue_ptr *item {};
           (void) i.next (item);
-          CORBA::NamedValue_ptr nv = *item;
+          CORBA::NamedValue_ptr const nv = *item;
           if (ACE_BIT_DISABLED (nv->flags (), flag))
             {
               continue;
@@ -314,7 +311,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
                           ACE_TEXT ("NVList::_tao_encode - parameter <%C>\n"),
                           arg));
             }
-          CORBA::TypeCode_ptr tc = nv->value ()->_tao_get_typecode ();
+          CORBA::TypeCode_ptr const tc = nv->value ()->_tao_get_typecode ();
           (void) TAO_Marshal_Object::perform_append (tc,
                                                      this->incoming_.get (),
                                                      &cdr);
@@ -334,7 +331,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
     {
       CORBA::NamedValue_ptr *item {};
       (void) i.next (item);
-      CORBA::NamedValue_ptr nv = *item;
+      CORBA::NamedValue_ptr const nv = *item;
       if (ACE_BIT_DISABLED (nv->flags (), flag))
         {
           continue;
@@ -360,7 +357,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
     {
       CORBA::NamedValue_ptr *item {};
       (void) i.next (item);
-      CORBA::NamedValue_ptr nv = *item;
+      CORBA::NamedValue_ptr const nv = *item;
       // check if it is an in or inout parameter
       // @@ this is where we assume that the NVList is coming from
       //    a Server-side request, we could probably handle both
@@ -377,7 +374,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
                       nv->name ()? nv->name () : "(no name given)" ));
         }
 
-      CORBA::Any_ptr any = nv->value ();
+      CORBA::Any_ptr const any = nv->value ();
       any->impl ()->_tao_decode (incoming);
     }
 }
