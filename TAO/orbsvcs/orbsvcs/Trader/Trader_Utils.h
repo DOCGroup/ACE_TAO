@@ -439,7 +439,7 @@ private:
   TAO_Policies& operator= (TAO_Policies&&) = delete;
 
   /// The policies indexable from the enumerated type.
-  CosTrading::Policy* policies_[REQUEST_ID + 1] {};
+  CosTrading::Policy const* policies_[REQUEST_ID + 1] {};
 
   /// For the validating identifier names.
   TAO_Trader_Base& trader_;

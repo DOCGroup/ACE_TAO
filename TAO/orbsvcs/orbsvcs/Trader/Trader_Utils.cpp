@@ -501,8 +501,8 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
 {
   for (CORBA::ULong j {}; j < policies.length (); ++j)
     {
-      char const* pol_name = (char const*) policies[j].name;
-      size_t const length = (pol_name == nullptr) ? 0 : std::strlen (pol_name);
+      char const* const pol_name = static_cast<char const*> (policies[j].name);
+      size_t const length {pol_name == nullptr ? 0 : std::strlen (pol_name)};
       int index = -1;
 
       if (length < std::strlen (POLICY_NAMES[HOP_COUNT]))
@@ -547,10 +547,10 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
       // vector.
       if (index == -1 || std::strcmp (POLICY_NAMES[index], pol_name) != 0)
         throw CosTrading::Lookup::IllegalPolicyName (pol_name);
-      else if (this->policies_[index] != 0)
+      else if (this->policies_[index] != nullptr)
         throw CosTrading::DuplicatePolicyName (pol_name);
       else
-        this->policies_[index] = (CosTrading::Policy *) &(policies[j]);
+        this->policies_[index] = &policies[j];
     }
 }
 
@@ -559,8 +559,8 @@ TAO_Policies::~TAO_Policies () = default;
 CORBA::ULong
 TAO_Policies::ulong_prop (POLICY_TYPE pol) const
 {
-  CORBA::ULong return_value = 0, max_value = 0;
-  const TAO_Import_Attributes_i& import_attrs =
+  CORBA::ULong return_value {}, max_value {};
+  TAO_Import_Attributes_i const& import_attrs =
     this->trader_.import_attributes ();
 
   // Discover the default values for each of the possible cardinality
@@ -592,9 +592,9 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol) const
       // Extract the desired policy value.
       CosTrading::Policy const* policy = this->policies_[pol];
       CosTrading::PolicyValue const& value = policy->value;
-      CORBA::TypeCode_var type = value.type ();
+      CORBA::TypeCode_var const type = value.type ();
 
-      CORBA::Boolean equal_ulong = type->equal (CORBA::_tc_ulong);
+      CORBA::Boolean const equal_ulong = type->equal (CORBA::_tc_ulong);
 
       if (!equal_ulong)
         throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
@@ -629,8 +629,7 @@ TAO_Policies::return_card () const
 CORBA::Boolean
 TAO_Policies::boolean_prop (POLICY_TYPE pol) const
 {
-  CORBA::Boolean def_value = true,
-    return_value = true;
+  CORBA::Boolean def_value {true}, return_value {true};
   TAO_Support_Attributes_i const& support_attrs =
     this->trader_.support_attributes ();
 
@@ -658,7 +657,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
       CosTrading::PolicyValue const& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      CORBA::Boolean equal_boolean =
+      CORBA::Boolean const equal_boolean =
         type->equal (CORBA::_tc_boolean);
 
       if (!equal_boolean)
@@ -707,14 +706,14 @@ TAO_Policies::starting_trader () const
 
   if (this->policies_[STARTING_TRADER] != nullptr)
     {
-      CosTrading::Policy* policy = this->policies_[STARTING_TRADER];
-      CosTrading::PolicyValue& value = policy->value;
+      CosTrading::Policy const* policy = this->policies_[STARTING_TRADER];
+      CosTrading::PolicyValue const& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      CORBA::Boolean equal_tradername =
+      CORBA::Boolean const equal_tradername =
         type->equal (CosTrading::_tc_TraderName);
 
-      CORBA::Boolean equal_linknameseq =
+      CORBA::Boolean const equal_linknameseq =
         type->equal (CosTrading::_tc_LinkNameSeq);
 
       if (!equal_tradername ||
@@ -735,15 +734,15 @@ TAO_Policies::link_follow_rule () const
 
   if (this->policies_[LINK_FOLLOW_RULE] != nullptr)
     {
-      CosTrading::FollowOption max_follow_policy =
+      CosTrading::FollowOption const max_follow_policy =
         this->trader_.import_attributes ().max_follow_policy ();
 
-      CosTrading::Policy* policy = this->policies_[LINK_FOLLOW_RULE];
-      CosTrading::PolicyValue& value = policy->value;
+      CosTrading::Policy const* policy = this->policies_[LINK_FOLLOW_RULE];
+      CosTrading::PolicyValue const& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
       // Extract the link follow rule
-      CORBA::Boolean type_equal =
+      CORBA::Boolean const type_equal =
         type->equal (CosTrading::_tc_FollowOption);
 
       if (!type_equal)
@@ -792,11 +791,11 @@ TAO_Policies::request_id () const
 
   if (this->policies_[REQUEST_ID] != nullptr)
     {
-      CosTrading::Policy* policy = this->policies_[REQUEST_ID];
-      CosTrading::PolicyValue& value = policy->value;
+      CosTrading::Policy const* policy = this->policies_[REQUEST_ID];
+      CosTrading::PolicyValue const& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      CORBA::Boolean equal_octetseq =
+      CORBA::Boolean const equal_octetseq =
         type->equal (CosTrading::Admin::_tc_OctetSeq);
 
       if (!equal_octetseq)
@@ -837,8 +836,8 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
        ? link_info.def_pass_on_follow_rule
        : trader_max_follow_policy);
 
-  CORBA::ULong i = 0;
-  for (i = 0; i < policy_seq.length (); i++)
+  CORBA::ULong i {};
+  for (; i < policy_seq.length (); ++i)
     if (std::strcmp (policy_seq[i].name,
                         POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
       {
@@ -859,7 +858,7 @@ TAO_Policies::
 copy_to_pass (CosTrading::PolicySeq& policy_seq,
               const CosTrading::Admin::OctetSeq& request_id) const
 {
-  CORBA::ULong counter = 0;
+  CORBA::ULong counter {};
   CosTrading::Policy* policy_buffer =
     CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
 
@@ -875,14 +874,14 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
           // Set the new request id.
           new_policy.name = POLICY_NAMES[REQUEST_ID];
           new_policy.value <<= request_id;
-          counter++;
+          ++counter;
         }
        else if (this->policies_[i] != nullptr)
         {
           // Copy in the existing policies.
           new_policy.name = POLICY_NAMES[i];
           new_policy.value = this->policies_[i]->value;
-          counter++;
+          ++counter;
         }
 
       // We always require a hop count.
@@ -895,7 +894,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
 
           // Don't count hop count twice.
           if (this->policies_[i] == nullptr)
-            counter++;
+            ++counter;
         }
     }
 
@@ -912,7 +911,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
   // Create a new policy sequence, shortening the starting trader
   // policy by one link.
 
-  CORBA::ULong counter = 0;
+  CORBA::ULong counter {};
   CosTrading::Policy* policy_buffer =
     CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
 
@@ -951,14 +950,14 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
                                                    1);
 
                   new_policy.value <<= new_name;
-                  counter++;
+                  ++counter;
                 }
             }
           else if (i != STARTING_TRADER)
             {
               new_policy.name = this->policies_[i]->name;
               new_policy.value = this->policies_[i]->value;
-              counter++;
+              ++counter;
             }
         }
     }
