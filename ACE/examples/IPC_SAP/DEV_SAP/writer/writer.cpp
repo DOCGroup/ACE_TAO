@@ -23,16 +23,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Try to read default parameters
   if (write_dev.control (ACE_TTY_IO::GETPARAMS, &myparams) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("GETPARAMS is not supported\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GETPARAMS is not supported\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("GETPARAMS is supported\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GETPARAMS is supported\n")));
     }
 
   myparams.baudrate = 19200;
   myparams.readmincharacters = 0;
-  myparams.readtimeoutmsec = 10*1000; // 10 seconds
+  myparams.readtimeoutmsec = 10 * 1000; // 10 seconds
 
   if (write_dev.control (ACE_TTY_IO::SETPARAMS, &myparams) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -43,11 +43,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("enter character to send, q terminates :\n")));
 
-  for (char writeto;
-       ACE_OS::read (ACE_STDIN, &writeto, 1) != -1;
-       )
+  char writeto {};
+  ssize_t bytes_read {};
+  while ((bytes_read = ACE_OS::read (ACE_STDIN, &writeto, 1)) == 1)
     {
-      ssize_t bytes_written =
+      ssize_t const bytes_written =
         write_dev.send_n (&writeto,
                           1);
 
@@ -59,6 +59,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (writeto == 'q')
         break;
     }
+
+  if (bytes_read == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("read")),
+                      1);
 
   if (write_dev.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
