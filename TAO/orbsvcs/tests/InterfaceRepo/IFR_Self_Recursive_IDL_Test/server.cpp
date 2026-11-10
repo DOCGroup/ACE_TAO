@@ -63,14 +63,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const ior = orb->object_to_string (goodday.in ());
 
       // Output the IOR to the <ior_output_file>
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (ior_output_file, "w"), std::fclose);
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("Cannot open output file for writing IOR: %s\n"),
-                           ior_output_file),
-                          1);
-      std::fprintf (output_file.get (), "%s", ior.in ());
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), std::fclose);
+        if (output_file == nullptr)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Cannot open output file for writing IOR: %s\n"),
+                             ior_output_file),
+                            1);
+        std::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       orb->run ();
 
