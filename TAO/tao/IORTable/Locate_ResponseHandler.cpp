@@ -50,10 +50,9 @@ void
 TAO_AMH_Locate_ResponseHandler::forward_ior (char const *ior,
                                              CORBA::Boolean is_perm)
 {
-  CORBA::Object_var fwd = this->orb_->string_to_object (ior);
+  CORBA::Object_var const fwd = this->orb_->string_to_object (ior);
   this->_tao_rh_send_location_forward (fwd.in(), is_perm);
 }
-
 
 void *
 TAO_AMH_Locate_ResponseHandler::_downcast (char const *)

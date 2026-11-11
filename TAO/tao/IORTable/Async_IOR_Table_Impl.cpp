@@ -20,7 +20,7 @@ TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler
   {
     std::string const key (object_key);
     std::string ior;
-    TAO_AMH_Locate_ResponseHandler_var rh = handler;
+    TAO_AMH_Locate_ResponseHandler_var const rh = handler;
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     Map::const_iterator const iter = this->map_.find (key);
     if (iter != this->map_.end ())
