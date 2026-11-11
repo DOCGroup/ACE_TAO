@@ -52,7 +52,6 @@ using Connector = ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 class ACEXML_Export ACEXML_Mem_Map_Stream
 {
 public:
-  /// Default constructor
   ACEXML_Mem_Map_Stream ();
 
   /// Initialize this object.
@@ -179,8 +178,5 @@ private:
   char *end_of_mapping_plus1_;
 };
 
-
 #include /**/ "ace/post.h"
-
-
 #endif /* _ACEXML_MEM_MAP_STREAM_H */

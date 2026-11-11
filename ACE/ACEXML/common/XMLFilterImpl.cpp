@@ -26,10 +26,7 @@ ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent)
 {
 }
 
-ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl ()
-{
-  // @@ How are all the object lifecycles managed?
-}
+ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl () = default;
 
 void
 ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input)

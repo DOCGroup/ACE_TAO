@@ -120,7 +120,6 @@ public:
   virtual void dump () = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_ELEMENT_DEF_BUILDER_H_ */

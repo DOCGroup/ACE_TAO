@@ -135,7 +135,6 @@ ACEXML_FileCharStream::close ()
   return 0;
 }
 
-
 int
 ACEXML_FileCharStream::getchar_i (char& ch)
 {

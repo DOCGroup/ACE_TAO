@@ -18,10 +18,7 @@ ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack ()
 {
 }
 
-ACEXML_Namespace_Context_Stack::~ACEXML_Namespace_Context_Stack ()
-{
-  // Clean up stuff.
-}
+ACEXML_Namespace_Context_Stack::~ACEXML_Namespace_Context_Stack () = default;
 
 int
 ACEXML_Namespace_Context_Stack::push (ACEXML_NS_CONTEXT *nsc)

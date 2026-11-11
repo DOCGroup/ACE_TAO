@@ -18,10 +18,7 @@ const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXM
 # include "ACEXML/common/SAXExceptions.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_SAXException::ACEXML_SAXException ()
-  : message_ (nullptr)
-{
-}
+ACEXML_SAXException::ACEXML_SAXException () = default;
 
 ACEXML_SAXException::ACEXML_SAXException (const ACEXML_Char *msg)
   : message_ (ACE::strnew (msg))
@@ -30,8 +27,7 @@ ACEXML_SAXException::ACEXML_SAXException (const ACEXML_Char *msg)
 
 ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
   : ACEXML_Exception (ex),
-    message_ (ACE::strnew (ex.message_))
-
+    message_ (ACE::strnew (ex.message_.get ()))
 {
 }
 
@@ -40,8 +36,7 @@ ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
 {
   if (this != &src)
     {
-      ACE::strdelete (this->message_);
-      this->message_ = ACE::strnew (src.message_);
+      this->message_.reset (ACE::strnew (src.message_.get ()));
     }
 
   return *this;
@@ -53,10 +48,7 @@ ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXException*> (ex);
 }
 
-ACEXML_SAXException::~ACEXML_SAXException ()
-{
-  ACE::strdelete (this->message_);
-}
+ACEXML_SAXException::~ACEXML_SAXException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXException::duplicate () const
@@ -109,10 +101,7 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_C
 {
 }
 
-ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException ()
-{
-}
-
+ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXNotSupportedException::duplicate () const
@@ -165,9 +154,7 @@ ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
 }
 
-ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException ()
-{
-}
+ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXNotRecognizedException::duplicate () const
@@ -220,9 +207,7 @@ ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXParseException*> (ex);
 }
 
-ACEXML_SAXParseException::~ACEXML_SAXParseException ()
-{
-}
+ACEXML_SAXParseException::~ACEXML_SAXParseException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXParseException::duplicate () const

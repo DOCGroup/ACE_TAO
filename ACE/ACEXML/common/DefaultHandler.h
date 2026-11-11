@@ -47,9 +47,6 @@ class ACEXML_Export ACEXML_DefaultHandler
     public ACEXML_ErrorHandler
 {
 public:
-  /**
-   * Default constructor.
-   */
   ACEXML_DefaultHandler ();
 
   virtual ~ACEXML_DefaultHandler ();

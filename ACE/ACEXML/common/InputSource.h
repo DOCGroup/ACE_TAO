@@ -52,9 +52,6 @@
 class ACEXML_Export ACEXML_InputSource
 {
 public:
-  /**
-   * Default constructor.
-   */
   ACEXML_InputSource ();
 
   ACEXML_InputSource (const ACEXML_InputSource &) = delete;
@@ -74,9 +71,6 @@ public:
    */
   explicit ACEXML_InputSource (ACEXML_Char const *systemId);
 
-  /**
-   * Default destructor.
-   */
   virtual ~ACEXML_InputSource ();
 
   /**
@@ -127,7 +121,6 @@ private:
   std::unique_ptr<ACEXML_Char[]> publicId_ {};
   std::unique_ptr<ACEXML_Char[]> systemId_ {};
 };
-
 
 #include /**/ "ace/post.h"
 

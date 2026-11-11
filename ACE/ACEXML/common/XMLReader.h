@@ -115,7 +115,6 @@ public:
   virtual void setProperty (const ACEXML_Char *name, void *value) = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_XMLREADER_H_ */

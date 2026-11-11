@@ -9,7 +9,6 @@
 #include "ACEXML/common/ZipCharStream.h"
 #endif /* USE_ZZIP */
 
-
 ACEXML_CharStream*
 ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
 {

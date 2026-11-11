@@ -21,9 +21,7 @@ ACEXML_AttributesImpl::ACEXML_AttributesImpl (const
     this->attrs_[i] = attrs.attrs_[i];
 }
 
-ACEXML_AttributesImpl::~ACEXML_AttributesImpl ()
-{
-}
+ACEXML_AttributesImpl::~ACEXML_AttributesImpl () = default;
 
 int
 ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
@@ -91,7 +89,6 @@ ACEXML_AttributesImpl::removeAttribute (size_t index)
   return 0;
 }
 
-
 int
 ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
 {
@@ -128,7 +125,6 @@ ACEXML_AttributesImpl::getLocalName (size_t index)
   return nullptr;
 }
 
-
 const ACEXML_Char *
 ACEXML_AttributesImpl::getQName (size_t index)
 {
@@ -144,7 +140,6 @@ ACEXML_AttributesImpl::getType (size_t index)
     return this->attrs_[index].type ();
   return nullptr;
 }
-
 
 const ACEXML_Char *
 ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
@@ -168,7 +163,6 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
   return nullptr;
 }
 
-
 const ACEXML_Char *
 ACEXML_AttributesImpl::getURI (size_t index)
 {
@@ -176,7 +170,6 @@ ACEXML_AttributesImpl::getURI (size_t index)
     return this->attrs_[index].uri ();
   return nullptr;
 }
-
 
 const ACEXML_Char *
 ACEXML_AttributesImpl::getValue (size_t index)
@@ -229,7 +222,6 @@ ACEXML_AttributesImpl::setAttribute (size_t index,
   return -1;
 }
 
-
 int
 ACEXML_AttributesImpl::setLocalName (size_t index,
                                      const ACEXML_Char *localName)
@@ -253,7 +245,6 @@ ACEXML_AttributesImpl::setQName (size_t index,
     }
   return -1;
 }
-
 
 int
 ACEXML_AttributesImpl::setURI (size_t index,

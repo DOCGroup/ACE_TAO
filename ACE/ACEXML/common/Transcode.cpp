@@ -77,7 +77,6 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
   return ACEXML_NON_UNICODE;
 }
 
-
 int
 ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
                                ACEXML_UTF16 *dst,

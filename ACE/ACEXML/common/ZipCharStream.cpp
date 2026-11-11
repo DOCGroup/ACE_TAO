@@ -3,7 +3,6 @@
 #include "ACEXML/common/ZipCharStream.h"
 #include "ace/ACE.h"
 
-
 ACEXML_ZipCharStream::ACEXML_ZipCharStream ()
   : filename_ (nullptr), encoding_ (nullptr), size_ (0), infile_ (nullptr), pos_ (0),
     limit_ (0)
@@ -110,7 +109,6 @@ ACEXML_ZipCharStream::close ()
   return 0;
 }
 
-
 int
 ACEXML_ZipCharStream::getchar_i (char& ch)
 {
@@ -179,7 +177,6 @@ ACEXML_ZipCharStream::get (ACEXML_Char& ch)
   return this->getchar_i (ch);
 #endif /* ACE_USES_WCHAR */
 }
-
 
 int
 ACEXML_ZipCharStream::peek ()

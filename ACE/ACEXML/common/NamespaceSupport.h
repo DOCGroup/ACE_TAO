@@ -24,7 +24,6 @@
 #include "ace/Containers_T.h"
 #include "ace/Null_Mutex.h"
 
-
 using ACEXML_NS_CONTEXT_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
                                                    ACEXML_String>;
 
@@ -60,7 +59,6 @@ using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
 class ACEXML_Export ACEXML_Namespace_Context_Stack
 {
 public:
-  /// Default constructor.
   ACEXML_Namespace_Context_Stack ();
 
   ~ACEXML_Namespace_Context_Stack ();
@@ -123,14 +121,8 @@ private:
 class ACEXML_Export ACEXML_NamespaceSupport
 {
 public:
-  /**
-   * Default constructor.
-   */
   ACEXML_NamespaceSupport ();
 
-  /**
-   * Default destructor.
-   */
   ~ACEXML_NamespaceSupport ();
 
   /**

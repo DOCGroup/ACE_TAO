@@ -37,7 +37,6 @@
 class ACEXML_Export ACEXML_ZipCharStream : public ACEXML_CharStream
 {
 public:
-  /// Default constructor.
   ACEXML_ZipCharStream ();
 
   virtual ~ACEXML_ZipCharStream ();
@@ -71,7 +70,6 @@ public:
    *  Determine the encoding of the file.
    */
   virtual int determine_encoding ();
-
 
   /**
    * Peek the next ACEXML_Char in the CharStream.  Return the

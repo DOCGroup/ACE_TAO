@@ -30,7 +30,6 @@
 class ACEXML_Export ACEXML_StrCharStream : public ACEXML_CharStream
 {
 public:
-  /// Default constructor.
   ACEXML_StrCharStream ();
 
   ACEXML_StrCharStream (ACEXML_StrCharStream const&) = delete;

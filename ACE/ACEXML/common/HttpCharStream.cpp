@@ -102,7 +102,6 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 // SUCH DAMAGE.
 
-
 int
 ACEXML_HttpCharStream::get_url (size_t& len)
 {
@@ -263,7 +262,6 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   return status;
 }
 
-
 int
 ACEXML_HttpCharStream::send_request ()
 {
@@ -294,7 +292,6 @@ ACEXML_HttpCharStream::send_request ()
     return -1;
   return retval;
 }
-
 
 int
 ACEXML_HttpCharStream::available ()
@@ -385,7 +382,6 @@ ACEXML_HttpCharStream::getSystemId ()
   return this->url_.get ();
 }
 
-
 int
 ACEXML_HttpCharStream::read (ACEXML_Char *str,
                              size_t len)
@@ -399,7 +395,6 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
   ACE_OS::strncpy (str, ACE_TEXT_CHAR_TO_TCHAR (temp), len);
   return static_cast<int> (len);
 }
-
 
 int
 ACEXML_HttpCharStream::get (ACEXML_Char& ch)
@@ -426,7 +421,6 @@ ACEXML_HttpCharStream::peek ()
   return this->stream_->peek_char (0);
 #endif /* ACE_USES_WCHAR */
 }
-
 
 #if defined (ACE_USES_WCHAR)
 int

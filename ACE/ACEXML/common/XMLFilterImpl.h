@@ -38,9 +38,7 @@ class ACEXML_Export ACEXML_XMLFilterImpl
     public ACEXML_ErrorHandler
 {
 public:
-  /**
-   * Default constructor.  Create with no parent.
-   */
+  /// Create a filter with no parent.
   ACEXML_XMLFilterImpl ();
 
   /**
@@ -48,9 +46,6 @@ public:
    */
   explicit ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent);
 
-  /**
-   * Destructor.
-   */
   ~ACEXML_XMLFilterImpl () override;
 
   /*

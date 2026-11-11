@@ -113,5 +113,4 @@ public:
 
 #include /**/ "ace/post.h"
 
-
 #endif /* _ACEXML_CONTENTHANDLER_H_ */

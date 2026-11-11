@@ -66,7 +66,6 @@ public:
                                    const ACEXML_Char *notationName) = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_DTDHANDLER_H_ */

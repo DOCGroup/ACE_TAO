@@ -55,7 +55,6 @@ public:
   virtual void print () const = 0;
 
 protected:
-  /// Default constructor.
   ACEXML_Exception ();
 
   /// All exceptions have names.  This name is used to identify the

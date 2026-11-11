@@ -61,9 +61,6 @@ class ACEXML_Export ACEXML_LocatorImpl :
   public ACEXML_Locator
 {
 public:
-  /*
-   * Default constructor.
-   */
   ACEXML_LocatorImpl ();
 
   /**
@@ -73,7 +70,7 @@ public:
   ACEXML_LocatorImpl (ACEXML_Char const *systemId,
                       ACEXML_Char const *publicId);
   /**
-   * Copy constructor.  Create a persistent copy of the current state
+   * Create a persistent copy of the current state
    * of a locator. When the original locator changes, this copy will
    * still keep the original values (and it can be used outside the
    * scope of DocumentHandler methods).
@@ -85,9 +82,6 @@ public:
   ACEXML_LocatorImpl &operator= (const ACEXML_LocatorImpl &) = delete;
   ACEXML_LocatorImpl &operator= (ACEXML_LocatorImpl &&) = delete;
 
-  /*
-   * Destructor.
-   */
   virtual ~ACEXML_LocatorImpl ();
 
   /*

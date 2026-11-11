@@ -61,7 +61,6 @@ public:
   //@}
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_XML_CODECS_H */

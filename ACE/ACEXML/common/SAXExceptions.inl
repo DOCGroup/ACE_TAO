@@ -5,7 +5,7 @@ ACEXML_SAXException::message () const
 {
   return (this->message_ == nullptr ?
           ACEXML_Exception::null_ :
-          this->message_);
+          this->message_.get ());
 }
 
 ACEXML_INLINE void

@@ -11,6 +11,8 @@
 #ifndef _ACEXML_SAXEXCEPTIONS_H_
 #define _ACEXML_SAXEXCEPTIONS_H_
 
+#include <memory>
+
 #include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
@@ -30,16 +32,13 @@
 class ACEXML_Export ACEXML_SAXException : public ACEXML_Exception
 {
 public:
-  /// Default constructor.
   ACEXML_SAXException ();
 
   /// Constructor initializing the exception message.
   explicit ACEXML_SAXException (const ACEXML_Char *msg);
 
-  /// Assignment operator
   ACEXML_SAXException& operator= (const ACEXML_SAXException& src);
 
-  /// Copy constructor.
   ACEXML_SAXException (const ACEXML_SAXException &ex);
 
   virtual ~ACEXML_SAXException ();
@@ -66,7 +65,7 @@ protected:
   static const ACEXML_Char * exception_name_;
 
   /// A message providing more information about the exception being thrown.
-  ACEXML_Char *message_;
+  std::unique_ptr<ACEXML_Char[]> message_;
 };
 
 /**
@@ -78,13 +77,10 @@ class ACEXML_Export ACEXML_SAXNotSupportedException
   : public ACEXML_SAXException
 {
 public:
-  /// Default constructor.
   ACEXML_SAXNotSupportedException ();
 
-  /// Copy constructor.
   ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex);
 
-  /// Assignment operator
   ACEXML_SAXNotSupportedException& operator= (const ACEXML_SAXNotSupportedException &ex);
 
   /// Constructor which accepts an informational message
@@ -119,16 +115,13 @@ class ACEXML_Export ACEXML_SAXNotRecognizedException
   : public ACEXML_SAXException
 {
 public:
-  /// Default constructor.
   ACEXML_SAXNotRecognizedException ();
 
   /// Constructor with an initializing exception message.
   explicit ACEXML_SAXNotRecognizedException (const ACEXML_Char *msg);
 
-  /// Copy constructor.
   ACEXML_SAXNotRecognizedException (const ACEXML_SAXNotRecognizedException &ex);
 
-  /// Assignment operator.
   ACEXML_SAXNotRecognizedException& operator= (const ACEXML_SAXNotRecognizedException &ex);
 
   virtual ~ACEXML_SAXNotRecognizedException ();
@@ -160,16 +153,13 @@ class ACEXML_Export ACEXML_SAXParseException
   : public ACEXML_SAXException
 {
 public:
-  /// Default constructor.
   ACEXML_SAXParseException ();
 
   /// Constructor with an initializing exception message.
   explicit ACEXML_SAXParseException (const ACEXML_Char *msg);
 
-  /// Copy constructor.
   ACEXML_SAXParseException (const ACEXML_SAXParseException &ex);
 
-  /// Assignment operator.
   ACEXML_SAXParseException& operator= (const ACEXML_SAXParseException &ex);
 
   virtual ~ACEXML_SAXParseException ();

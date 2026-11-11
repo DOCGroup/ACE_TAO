@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACEXML_ATTRIBUTESIMPL_H
 #define ACEXML_ATTRIBUTESIMPL_H
 
@@ -41,16 +40,14 @@ class ACEXML_Export ACEXML_Attribute
 public:
   friend class ACEXML_AttributesImpl;
 
-  /// Default constructor.
   ACEXML_Attribute () = default;
 
   ACEXML_Attribute (ACEXML_Attribute&&) = delete;
   ACEXML_Attribute& operator= (ACEXML_Attribute&&) = delete;
 
-  /// Copy constructor.
   ACEXML_Attribute (ACEXML_Attribute const &attr);
 
-  /// Initialize all constructor.
+  /// Initialize all attribute fields.
   ACEXML_Attribute (ACEXML_Char const *uri,
                     ACEXML_Char const *localName,
                     ACEXML_Char const *qName,
@@ -96,7 +93,6 @@ public:
   /// Set \a value_.
   void value (ACEXML_Char const *value);
 
-  /// Assignment operator.
   ACEXML_Attribute &operator= (ACEXML_Attribute const &rhs);
 
   /// Comparison operator.
@@ -175,7 +171,6 @@ public:
    * value.  (It will repack the array.)
    */
   virtual int removeAttribute (size_t index);
-
 
   /**
    * Look up the index of an attribute by XML 1.0 qualified name.

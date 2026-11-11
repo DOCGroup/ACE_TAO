@@ -36,7 +36,6 @@ public:
                    const ACEXML_Char *path_name,
                    unsigned short port = ACE_DEFAULT_HTTP_PORT);
 
-  /// Copy constructor.
   ACEXML_URL_Addr (const ACEXML_URL_Addr &addr);
 
   /// Essentially the copy constructor.
@@ -89,7 +88,6 @@ public:
    */
   virtual const ACEXML_Char *addr_to_string (int ipaddr_format = 1);
 
-  /// Assignment operator.
   void operator= (const ACEXML_URL_Addr &addr);
 
   ~ACEXML_URL_Addr ();

@@ -30,7 +30,6 @@
 class ACEXML_Export ACEXML_FileCharStream : public ACEXML_CharStream
 {
 public:
-  /// Default constructor.
   ACEXML_FileCharStream ();
 
   ACEXML_FileCharStream (ACEXML_FileCharStream const&) = delete;
@@ -76,7 +75,6 @@ public:
    *  Determine the encoding of the file.
    */
   virtual int determine_encoding ();
-
 
   /**
    * Peek the next ACEXML_Char in the CharStream.  Return the
@@ -135,7 +133,6 @@ private:
   // pushback.
   ACEXML_Char   peek_ {};
 };
-
 
 #include /**/ "ace/post.h"
 

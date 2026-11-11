@@ -31,7 +31,6 @@
 class ACEXML_Export ACEXML_HttpCharStream : public ACEXML_CharStream
 {
 public:
-  /// Default constructor.
   ACEXML_HttpCharStream ();
 
   ACEXML_HttpCharStream (ACEXML_HttpCharStream const&) = delete;
@@ -92,7 +91,6 @@ public:
    */
   ACEXML_Char const *getSystemId () override;
 
-
 private:
 #if defined (ACE_USES_WCHAR)
   /**
@@ -134,7 +132,6 @@ private:
 
   std::unique_ptr<ACEXML_Char[]> encoding_ {};
 };
-
 
 #include /**/ "ace/post.h"
 

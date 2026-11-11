@@ -43,7 +43,6 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
   return result;
 }
 
-
 ACEXML_Char*
 ACEXML_Base64::decode (const ACEXML_Char* input,
                        size_t* output_len)

@@ -48,7 +48,6 @@ public:
   virtual void setParent (ACEXML_XMLReader *parent) = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_XMLFILTER_H_ */

@@ -17,7 +17,6 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (ACEXML_Char const *systemId,
 {
 }
 
-
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (ACEXML_Locator const& locator)
   : publicId_ (locator.getPublicId () ? ACE::strnew (locator.getPublicId ()) : nullptr),
     systemId_ (locator.getSystemId () ? ACE::strnew (locator.getSystemId ()) : nullptr),
