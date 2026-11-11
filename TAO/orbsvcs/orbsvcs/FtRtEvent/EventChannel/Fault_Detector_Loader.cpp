@@ -59,6 +59,13 @@ namespace FTRTEC {
   {
     return detector_.get();
   }
+
+  void
+  Fault_Detector_Loader::stop ()
+  {
+    if (this->detector_ != nullptr)
+      this->detector_->stop ();
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

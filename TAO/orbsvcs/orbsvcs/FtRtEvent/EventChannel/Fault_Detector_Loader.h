@@ -46,6 +46,7 @@ namespace FTRTEC {
 
     int init (int argc,
       ACE_TCHAR* []) override;
+    void stop ();
     Fault_Detector* detector();
   private:
     std::unique_ptr<Fault_Detector> detector_;
