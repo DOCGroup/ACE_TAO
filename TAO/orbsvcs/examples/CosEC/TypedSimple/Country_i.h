@@ -8,15 +8,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Country_i
+// Class Country_i
 class Country_i : public virtual POA_Country
 {
 public:
-  //Constructor
   explicit Country_i (CORBA::ORB_ptr orb);
-
-  //Destructor
-  ~Country_i () override = default;
 
   void update_population (char const *country,
                           CORBA::Long population) override;
@@ -33,7 +29,7 @@ public:
   Country_i &operator= (Country_i &&) = delete;
 
 private:
-  /// The ORB
+  /// The ORB reference used to shut down the application.
   CORBA::ORB_var orb_;
 };
 

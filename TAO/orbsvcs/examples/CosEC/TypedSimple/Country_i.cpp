@@ -1,52 +1,46 @@
 // -*- C++ -*-
 #include "Country_i.h"
 
-// Implementation skeleton constructor
-Country_i::Country_i (CORBA::ORB_ptr orb) :
-  orb_ (CORBA::ORB::_duplicate (orb))
+Country_i::Country_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-void Country_i::update_population (char const *country,
-                                   CORBA::Long population)
+void
+Country_i::update_population (char const *country,
+                              CORBA::Long population)
 {
-  //Add your implementation here
-  ACE_DEBUG ((LM_DEBUG, "Country %s has population %d\n",
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Country %C has population %d\n"),
               country, population));
 }
 
 CORBA::Object_ptr
 Country_i::get_typed_consumer ()
-
 {
-  //Add your implementation here
-  ACE_DEBUG ((LM_DEBUG, "Country_i::get_typed_consumer called...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Country_i::get_typed_consumer called...\n")));
 
-  Country_var ret = this->_this ();
+  Country_var const ret = this->_this ();
 
-  ACE_DEBUG ((LM_DEBUG, "...returning CORBA::Object_ptr for Country_i\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("...returning CORBA::Object_ptr for Country_i\n")));
 
-  return Country::_duplicate(ret.in ());
+  return Country::_duplicate (ret.in ());
 }
 
 void
 Country_i::push (CORBA::Any const & /* data */)
 {
-  //Add your implementation here
 }
 
 void
 Country_i::disconnect_push_consumer ()
-
 {
-  //Add your implementation here
-  ACE_DEBUG ((LM_DEBUG, "Country_i::disconnect_push_consumer called...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Country_i::disconnect_push_consumer called...\n")));
 
   // Deactivate the impl
-  PortableServer::POA_var t_poa =
+  PortableServer::POA_var const t_poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var t_id =
+  PortableServer::ObjectId_var const t_id =
     t_poa->servant_to_id (this);
 
   t_poa->deactivate_object (t_id.in ());

@@ -3,14 +3,13 @@
 #include "Country_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_TCHAR const *ior_output_file = ACE_TEXT("Consumer.ior");
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -22,9 +21,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <ior_output_file> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <ior_output_file>\n"),
                            argv [0]),
                           -1);
       }
@@ -33,75 +30,74 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // ORB initialization...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior_output_file = ACE_TEXT ("Consumer.ior");
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
-      CORBA::Object_var poa_obj =
+      CORBA::Object_var const poa_obj =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (poa_obj.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // Obtain the event channel using the Naming Service.
-      CORBA::Object_var nam_obj =
-        orb->resolve_initial_references ("NameService" );
+      CORBA::Object_var const nam_obj =
+        orb->resolve_initial_references ("NameService");
 
-      CosNaming::NamingContext_var root_context =
-        CosNaming::NamingContext::_narrow(nam_obj.in ());
+      CosNaming::NamingContext_var const root_context =
+        CosNaming::NamingContext::_narrow (nam_obj.in ());
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup ("CountryEventChannel");
 
-      CORBA::Object_var ec_obj =
-        root_context->resolve(channel_name);
+      CORBA::Object_var const ec_obj =
+        root_context->resolve (channel_name);
 
       // Downcast the object reference to a TypedEventChannel reference
-      CosTypedEventChannelAdmin::TypedEventChannel_var typed_event_channel =
-        CosTypedEventChannelAdmin::TypedEventChannel::_narrow(ec_obj.in ());
+      CosTypedEventChannelAdmin::TypedEventChannel_var const typed_event_channel =
+        CosTypedEventChannelAdmin::TypedEventChannel::_narrow (ec_obj.in ());
 
       // Initialise the Country Impl
       Country_i country (orb.in ());
-      Country_var typed_consumer = country._this();
+      Country_var const typed_consumer = country._this ();
 
       // Connect to the typed channel
-      CosTypedEventChannelAdmin::TypedConsumerAdmin_var typed_consumer_admin =
+      CosTypedEventChannelAdmin::TypedConsumerAdmin_var const typed_consumer_admin =
         typed_event_channel->for_consumers ();
 
-      CosEventChannelAdmin::ProxyPushSupplier_var proxy_push_supplier =
+      CosEventChannelAdmin::ProxyPushSupplier_var const proxy_push_supplier =
         typed_consumer_admin->obtain_typed_push_supplier (_tc_Country->id());
 
-      proxy_push_supplier->connect_push_consumer (typed_consumer.in () );
+      proxy_push_supplier->connect_push_consumer (typed_consumer.in ());
 
-      CORBA::String_var str =
-         orb->object_to_string (typed_consumer.in ());
+      CORBA::String_var const str =
+        orb->object_to_string (typed_consumer.in ());
 
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file),
-                                        ACE_TEXT("w"));
-      if (output_file == nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+        ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                            ior_output_file),
                           1);
 
-      ACE_OS::fprintf (output_file, "%s", str.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", str.in ());
 
       // Wait for events.
-      ACE_DEBUG ((LM_DEBUG, "Waiting on orb->run for events...\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Waiting on orb->run for events...\n")));
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "...ORB shutdown\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("...ORB shutdown\n")));
 
       // Destroy the POA
       poa->destroy (1, 0);
@@ -111,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("main");
+      ex._tao_print_exception (ACE_TEXT ("main"));
       return 1;
     }
   return 0;
