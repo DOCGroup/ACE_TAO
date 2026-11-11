@@ -255,7 +255,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
                                  CORBA::ULong reply_status)
 {
   // Retrieve Reply Handler object.
-  TAO_DII_Reply_Handler* reply_handler =
+  TAO_DII_Reply_Handler* const reply_handler =
     dynamic_cast<TAO_DII_Reply_Handler*> (rh);
 
   // Exception handling

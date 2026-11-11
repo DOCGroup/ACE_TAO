@@ -59,7 +59,7 @@ namespace TAO
     std::unique_ptr<TAO::Exception_Data[]> ex_data (exception_data);
     for (unsigned long l {}; l < ex_count; ++l)
     {
-      CORBA::TypeCode_var xtc = this->exception_list_->item (l);
+      CORBA::TypeCode_var const xtc = this->exception_list_->item (l);
       ex_data[l].id = xtc->id ();
       ex_data[l].alloc = nullptr;
 #if TAO_HAS_INTERCEPTORS == 1
@@ -77,7 +77,7 @@ namespace TAO
     CORBA::Object_var &effective_target,
     Collocation_Strategy strat)
   {
-    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+    TAO_DII_Arguments_Converter_Impl* const dii_arguments_converter
       = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
         "DII_Arguments_Converter");
     details.cac (dii_arguments_converter);
@@ -126,7 +126,7 @@ namespace TAO
     // forward requested byte order
     synch._tao_byte_order (this->_tao_byte_order ());
 
-    Invocation_Status status = synch.remote_twoway (max_wait_time);
+    Invocation_Status const status = synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
         (synch.reply_status () == GIOP::LOCATION_FORWARD ||
@@ -200,7 +200,7 @@ namespace TAO
     CORBA::Object_var &effective_target,
     Collocation_Strategy strat)
   {
-    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+    TAO_DII_Arguments_Converter_Impl* const dii_arguments_converter
       = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
         "DII_Arguments_Converter");
     details.cac (dii_arguments_converter);
@@ -301,7 +301,6 @@ namespace TAO
                                                     effective_target,
                                                     strat);
   }
-
 
 } // End namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
