@@ -36,7 +36,6 @@ TAO_CodeGen::TAO_CodeGen ()
 {
 }
 
-// destructor
 TAO_CodeGen::~TAO_CodeGen () = default;
 
 // Change the string to all upper case.

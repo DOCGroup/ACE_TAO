@@ -41,7 +41,6 @@
 class List_Node
 {
 public:
-  /// Constructor.
   List_Node (char const *input, int len);
 
   List_Node (List_Node const &) = delete;
@@ -49,7 +48,6 @@ public:
   List_Node &operator= (List_Node const &) = delete;
   List_Node &operator= (List_Node &&) = delete;
 
-  /// Destructor.
   ~List_Node () = default;
 
   static void sort (char *base, int len);

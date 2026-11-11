@@ -42,10 +42,8 @@ class TAO_IFRService_Export TAO_ModuleDef_i
   //    Represents a module definition.
   //
 public:
-  /// Constructor
   explicit TAO_ModuleDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ModuleDef_i () override;
 
   /// Return our definition kind.

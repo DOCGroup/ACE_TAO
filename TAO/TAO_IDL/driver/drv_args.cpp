@@ -187,7 +187,7 @@ DRV_parse_args (long ac, char **av)
   DRV_cpp_init ();
   idl_global->set_prog_name (av[0]);
 
-  for (i = 1; i < ac; i++)
+  for (i = 1; i < ac; ++i)
     {
       if (!just_files && av[i][0] == '-')
         {
@@ -549,7 +549,7 @@ print_idl_versions()
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("These are the valid IDL versions this compiler will accept:\n")
     ));
-  for (int v = 1; v < IDL_VERSION_COUNT; v++)
+  for (int v = 1; v < IDL_VERSION_COUNT; ++v)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
         IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ().c_str ()
@@ -647,7 +647,7 @@ process_long_option(long ac, char **av, long &i)
         }
       else
         {
-          i++;
+          ++i;
           std::string const annotation_mode (av[i]);
           if (annotation_mode == "warn-once")
             {

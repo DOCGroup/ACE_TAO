@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-char const *TAO_ComponentContainer_i::tmp_name_holder_ = nullptr;
+char const *TAO_ComponentContainer_i::tmp_name_holder_ {};
 
 TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -110,8 +110,8 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      char const *supported_path = nullptr;
-      char *stringified = nullptr;
+      char const *supported_path {};
+      char *stringified {};
 
       for (i = 0; i < count; ++i)
         {
@@ -186,7 +186,7 @@ TAO_ComponentContainer_i::create_home_i (
         "defns"
       );
 
-  char *base_path = nullptr;
+  char *base_path {};
 
   if (! CORBA::is_nil (base_home))
     {
@@ -219,8 +219,8 @@ TAO_ComponentContainer_i::create_home_i (
                                                  "count",
                                                  length);
 
-      char *supported_path = nullptr;
-      char *stringified = nullptr;
+      char *supported_path {};
+      char *stringified {};
 
       for (i = 0; i < length; ++i)
         {
@@ -360,7 +360,7 @@ TAO_ComponentContainer_i::create_event_i (
                                             1,
                                             bases_key);
 
-      char *base_path = nullptr;
+      char *base_path {};
 
       for (i = 0; i < length; ++i)
         {
@@ -388,7 +388,7 @@ TAO_ComponentContainer_i::create_event_i (
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
                                                  length);
-      char *supported_path = nullptr;
+      char *supported_path {};
 
       for (i = 0; i < length; ++i)
         {
@@ -414,8 +414,8 @@ TAO_ComponentContainer_i::create_event_i (
                                             initializers_key);
 
       CORBA::ULong count = 0;
-      char *path = nullptr;
-      char *stringified = nullptr;
+      char *path {};
+      char *stringified {};
       ACE_Configuration_Section_Key initializer_key;
       ACE_Configuration_Section_Key outer_key;
       ACE_Configuration_Section_Key inner_key;
@@ -447,7 +447,7 @@ TAO_ComponentContainer_i::create_event_i (
                                                          "count",
                                                          count);
 
-              for (CORBA::ULong j = 0; j < count; ++j)
+              for (CORBA::ULong j {}; j < count; ++j)
                 {
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (outer_key,
@@ -485,7 +485,7 @@ TAO_ComponentContainer_i::create_event_i (
                                                          "count",
                                                          count);
 
-              for (CORBA::ULong k = 0; k < count; ++k)
+              for (CORBA::ULong k {}; k < count; ++k)
                 {
                   this->repo_->config ()->get_string_value (
                       this->repo_->repo_ids_key (),

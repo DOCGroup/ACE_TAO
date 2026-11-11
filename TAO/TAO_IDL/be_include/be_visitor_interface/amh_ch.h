@@ -26,10 +26,8 @@
 class be_visitor_amh_interface_ch : public be_visitor_interface
 {
 public:
-  /// constructor
   explicit be_visitor_amh_interface_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_amh_interface_ch () override;
   be_visitor_amh_interface_ch (be_visitor_amh_interface_ch const &) = delete;
   be_visitor_amh_interface_ch (be_visitor_amh_interface_ch &&) = delete;

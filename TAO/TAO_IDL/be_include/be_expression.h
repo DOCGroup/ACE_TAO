@@ -21,7 +21,6 @@ class be_visitor;
 class be_expression : public virtual AST_Expression
 {
 public:
-  // Constructors.
   explicit be_expression (UTL_ScopedName *n);
 
   be_expression (AST_Expression *b,

@@ -24,10 +24,8 @@
 class be_visitor_enum_ch : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_enum_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_enum_ch () override = default;
   be_visitor_enum_ch (be_visitor_enum_ch const &) = delete;
   be_visitor_enum_ch (be_visitor_enum_ch &&) = delete;

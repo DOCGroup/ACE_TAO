@@ -25,10 +25,8 @@
 class be_visitor_map_cdr_op_cs : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_map_cdr_op_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_map_cdr_op_cs () override = default;
 
   be_visitor_map_cdr_op_cs (const be_visitor_map_cdr_op_cs &) = delete;

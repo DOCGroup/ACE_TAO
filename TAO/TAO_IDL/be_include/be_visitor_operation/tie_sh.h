@@ -28,10 +28,8 @@
 class be_visitor_operation_tie_sh : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_operation_tie_sh (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_tie_sh () override;
   be_visitor_operation_tie_sh (be_visitor_operation_tie_sh const &) = delete;
   be_visitor_operation_tie_sh (be_visitor_operation_tie_sh &&) = delete;

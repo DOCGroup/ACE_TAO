@@ -42,10 +42,8 @@ class TAO_Repository_i;
 class TAO_IFRService_Export TAO_IDLType_i : public virtual TAO_IRObject_i
 {
 public:
-  /// Constructor.
   explicit TAO_IDLType_i (TAO_Repository_i *repo);
 
-  /// Destructor.
   ~TAO_IDLType_i () override;
   /// Defined in concrete classes.
   virtual CORBA::TypeCode_ptr type () = 0;

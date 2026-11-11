@@ -24,10 +24,8 @@
 class be_visitor_union_branch_cdr_op_ch : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_union_branch_cdr_op_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_union_branch_cdr_op_ch () override;
 
   be_visitor_union_branch_cdr_op_ch (be_visitor_union_branch_cdr_op_ch const &) = delete;

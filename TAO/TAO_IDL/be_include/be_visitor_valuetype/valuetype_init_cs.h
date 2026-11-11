@@ -27,10 +27,8 @@
 class be_visitor_valuetype_init_cs : public be_visitor_valuetype_init
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_init_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_init_cs () override;
   be_visitor_valuetype_init_cs (be_visitor_valuetype_init_cs const &) = delete;
   be_visitor_valuetype_init_cs (be_visitor_valuetype_init_cs &&) = delete;

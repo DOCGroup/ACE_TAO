@@ -77,7 +77,7 @@ TAO_InterfaceDef_i::describe ()
 CORBA::Contained::Description *
 TAO_InterfaceDef_i::describe_i ()
 {
-  CORBA::Contained::Description *desc_ptr = nullptr;
+  CORBA::Contained::Description *desc_ptr {};
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -106,7 +106,7 @@ TAO_InterfaceDef_i::describe_i ()
                                             holder);
   ifd.version = holder.fast_rep ();
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   CORBA::InterfaceDefSeq_var bases =
     this->base_interfaces_i ();
 
@@ -114,7 +114,7 @@ TAO_InterfaceDef_i::describe_i ()
   CORBA::RepositoryIdSeq repo_ids (length);
   repo_ids.length (length);
 
-  char *base_path = nullptr;
+  char *base_path {};
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
@@ -187,7 +187,7 @@ TAO_InterfaceDef_i::base_interfaces_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
 
-  CORBA::InterfaceDefSeq *seq = nullptr;
+  CORBA::InterfaceDefSeq *seq {};
   ACE_NEW_THROW_EX (seq,
                     CORBA::InterfaceDefSeq (size),
                     CORBA::NO_MEMORY ());
@@ -195,7 +195,7 @@ TAO_InterfaceDef_i::base_interfaces_i ()
   seq->length (size);
   CORBA::InterfaceDefSeq_var retval = seq;
 
-  for (CORBA::ULong i = 0; i < size; ++i)
+  for (CORBA::ULong i {}; i < size; ++i)
     {
       kind_queue.pop_front ();
 
@@ -234,7 +234,7 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
     {
       CORBA::ULong length = base_interfaces.length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           def_kind = base_interfaces[i]->def_kind ();
 
@@ -260,11 +260,11 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
                                         inherited_key);
 
   CORBA::String_var name;
-  char *inherited_path = nullptr;
+  char *inherited_path {};
   PortableServer::ObjectId_var oid;
   ACE_Configuration_Section_Key base_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       inherited_path =
         TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
@@ -329,10 +329,10 @@ TAO_InterfaceDef_i::is_a_i (char const *interface_id)
   CORBA::ULong length = bases->length ();
 
   PortableServer::ObjectId_var oid;
-  char *base_path = nullptr;
+  char *base_path {};
   ACE_Configuration_Section_Key base_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
@@ -368,7 +368,7 @@ TAO_InterfaceDef_i::describe_interface ()
 CORBA::InterfaceDef::FullInterfaceDescription *
 TAO_InterfaceDef_i::describe_interface_i ()
 {
-  CORBA::InterfaceDef::FullInterfaceDescription *fifd = nullptr;
+  CORBA::InterfaceDef::FullInterfaceDescription *fifd {};
   ACE_NEW_RETURN (fifd,
                   CORBA::InterfaceDef::FullInterfaceDescription,
                   0);
@@ -396,8 +396,8 @@ TAO_InterfaceDef_i::describe_interface_i ()
                                             holder);
   fifd->version = holder.fast_rep ();
 
-  CORBA::ULong i = 0;
-  CORBA::ULong j = 0;
+  CORBA::ULong i {};
+  CORBA::ULong j {};
   std::deque<ACE_Configuration_Section_Key> key_queue;
 
   // Store our section key for later restoration after we have
@@ -418,7 +418,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
                                           0,
                                           ops_key);
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
 
   if (status == 0)
     {
@@ -531,7 +531,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
   repo_ids.length (length);
 
   PortableServer::ObjectId_var oid;
-  char *base_path = nullptr;
+  char *base_path {};
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
@@ -711,7 +711,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
                                              "mode",
                                              mode);
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   // Store the operation's parameter info.
   CORBA::ULong length = params.length ();
@@ -727,7 +727,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path = nullptr;
+      char *type_path {};
 
       for (i = 0; i < length; ++i)
         {
@@ -778,7 +778,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
                                             "excepts",
                                             1,
                                             excepts_key);
-      char *type_path = nullptr;
+      char *type_path {};
 
       for (i = 0; i < length; ++i)
         {
@@ -844,8 +844,8 @@ TAO_InterfaceDef_i::interface_contents (
                                             path);
 
   ACE_TString section_name;
-  int index = 0;
-  int status = 0;
+  int index {};
+  int status {};
 
   // Attributes
   if (limit_type == CORBA::dk_Attribute
@@ -987,8 +987,8 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
       return;
     }
 
-  int index = 0;
-  u_int kind = 0;
+  int index {};
+  u_int kind {};
   ACE_Configuration::VALUETYPE type;
   ACE_TString section_name, inherited_path;
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
@@ -1044,11 +1044,11 @@ TAO_InterfaceDef_i::inherited_attributes (
 
   size_t size = path_queue.size ();
   ACE_Configuration_Section_Key base_key, attrs_key, attr_key;
-  int status = 0;
+  int status {};
   ACE_TString path_name;
-  u_int count = 0;
+  u_int count {};
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       path_name = path_queue.front ();
       path_queue.pop_front ();
@@ -1070,7 +1070,7 @@ TAO_InterfaceDef_i::inherited_attributes (
                                                      "count",
                                                      count);
 
-          for (u_int j = 0; j < count; ++j)
+          for (u_int j {}; j < count; ++j)
             {
               char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (attrs_key,
@@ -1097,11 +1097,11 @@ TAO_InterfaceDef_i::inherited_operations (
 
   size_t size = path_queue.size ();
   ACE_Configuration_Section_Key base_key, ops_key, op_key;
-  int status = 0;
+  int status {};
   ACE_TString path_name;
-  u_int count = 0;
+  u_int count {};
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       path_name = path_queue.front ();
       path_queue.pop_front ();
@@ -1123,7 +1123,7 @@ TAO_InterfaceDef_i::inherited_operations (
                                                      "count",
                                                      count);
 
-          for (u_int j = 0; j < count; ++j)
+          for (u_int j {}; j < count; ++j)
             {
               char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (ops_key,
@@ -1159,7 +1159,7 @@ TAO_InterfaceDef_i::check_inherited (char const *name,
   ACE_Configuration_Section_Key inherited_key;
   ACE_TString inherited_name;
 
-  for (u_int i = 0; i < size; ++i)
+  for (u_int i {}; i < size; ++i)
     {
       inherited_key = key_queue.front ();
       key_queue.pop_front ();

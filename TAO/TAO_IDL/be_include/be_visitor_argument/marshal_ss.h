@@ -24,10 +24,8 @@
 class be_visitor_args_marshal_ss : public be_visitor_args
 {
 public:
-  /// constructor
   explicit be_visitor_args_marshal_ss (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_args_marshal_ss () override;
   be_visitor_args_marshal_ss (be_visitor_args_marshal_ss const &) = delete;
   be_visitor_args_marshal_ss (be_visitor_args_marshal_ss &&) = delete;

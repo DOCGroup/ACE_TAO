@@ -26,7 +26,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-    /// Constructor.
     explicit be_visitor_alias_typecode (be_visitor_context * ctx);
 
     be_visitor_alias_typecode (be_visitor_alias_typecode const &) = delete;

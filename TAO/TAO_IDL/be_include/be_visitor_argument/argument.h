@@ -35,10 +35,8 @@
 class be_visitor_args : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_args (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_args () override = default;
   be_visitor_args (be_visitor_args const &) = delete;
   be_visitor_args (be_visitor_args &&) = delete;

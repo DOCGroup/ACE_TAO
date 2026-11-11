@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/Container_i.h"
@@ -15,6 +14,7 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
+#include <cstdlib>
 #include <cstring>
 #include <memory>
 #include <string>
@@ -23,7 +23,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = nullptr;
+TAO_Repository_i *TAO_IFR_Service_Utils::repo_ {};
 
 TAO_IFR_Server::TAO_IFR_Server () = default;
 
@@ -218,7 +218,7 @@ TAO_IFR_Server::open_config ()
             "Software\\TAO\\IFR"
           );
 
-      ACE_Configuration_Win32Registry *registry = nullptr;
+      ACE_Configuration_Win32Registry *registry {};
       ACE_NEW_THROW_EX (registry,
                         ACE_Configuration_Win32Registry (root),
                         CORBA::NO_MEMORY ());
@@ -229,7 +229,7 @@ TAO_IFR_Server::open_config ()
     }
   else
     {
-      ACE_Configuration_Heap *heap = nullptr;
+      ACE_Configuration_Heap *heap {};
       ACE_NEW_THROW_EX (heap,
                         ACE_Configuration_Heap,
                         CORBA::NO_MEMORY ());
@@ -264,7 +264,7 @@ TAO_IFR_Server::open_config ()
 int
 TAO_IFR_Server::create_repository ()
 {
-  TAO_ComponentRepository_i *impl = nullptr;
+  TAO_ComponentRepository_i *impl {};
   ACE_NEW_THROW_EX (
       impl,
       TAO_ComponentRepository_i (
@@ -278,7 +278,7 @@ TAO_IFR_Server::create_repository ()
   std::unique_ptr<TAO_ComponentRepository_i> safety (impl);
   TAO_IFR_Service_Utils::repo_ = impl;
 
-  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie = nullptr;
+  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie {};
 
   ACE_NEW_THROW_EX (
       impl_tie,
@@ -394,7 +394,7 @@ TAO_IFR_Server::init_multicast_server ()
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != nullptr)
-        port = static_cast<u_short> (ACE_OS::atoi (port_number));
+        port = static_cast<u_short> (std::atoi (port_number));
     }
 
   // Port wasn't specified on the command-line or in environment -
@@ -404,7 +404,7 @@ TAO_IFR_Server::init_multicast_server ()
 
   // Instantiate a handler which will handle client requests for
   // the IFR ior, received on the multicast port.
-  TAO_IOR_Multicast *ior_multicast = nullptr;
+  TAO_IOR_Multicast *ior_multicast {};
   ACE_NEW_THROW_EX (ior_multicast,
                     TAO_IOR_Multicast (),
                     CORBA::NO_MEMORY ());
@@ -600,7 +600,7 @@ TAO_IFR_Service_Utils::name_exists (
   int status = 0;
   ACE_TString section_name;
   u_int count = 0;
-  char *stringified = nullptr;
+  char *stringified {};
 
   // Check the members defined elsewhere, if any.
   ACE_Configuration_Section_Key refs_key;
@@ -616,7 +616,7 @@ TAO_IFR_Service_Utils::name_exists (
                                           "count",
                                           count);
 
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key member_key;
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -653,7 +653,7 @@ TAO_IFR_Service_Utils::name_exists (
                                           "count",
                                           count);
 
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -750,9 +750,9 @@ TAO_IFR_Service_Utils::check_subsection (
 
   ACE_Configuration_Section_Key entry_key;
   ACE_TString entry_name;
-  char *stringified = nullptr;
+  char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (sub_key,
@@ -950,9 +950,9 @@ TAO_IFR_Service_Utils::set_exceptions (
                              "count",
                              length);
 
-  char *type_path = nullptr;
+  char *type_path {};
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       type_path =
         TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
@@ -1070,12 +1070,12 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
                                       "count",
                                       count);
   vm_seq.length (count);
-  char *stringified = nullptr;
+  char *stringified {};
   ACE_Configuration_Section_Key member_key, type_key;
   ACE_TString holder;
   CORBA::ULong access = 0;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       repo->config ()->open_section (members_key,

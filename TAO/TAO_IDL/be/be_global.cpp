@@ -2544,13 +2544,13 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->client_stub_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else if (av[i][2] == 'i')
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->client_inline_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else
           {

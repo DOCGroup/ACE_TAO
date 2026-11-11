@@ -36,10 +36,8 @@ class TAO_IFRService_Export TAO_ExtAttributeDef_i
   : public virtual TAO_AttributeDef_i
 {
 public:
-  /// Constructor
   explicit TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ExtAttributeDef_i () override;
 
   virtual CORBA::ExcDescriptionSeq *get_exceptions ();

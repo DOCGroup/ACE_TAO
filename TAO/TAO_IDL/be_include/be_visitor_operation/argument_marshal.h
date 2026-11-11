@@ -27,10 +27,8 @@ class be_visitor_operation_argument_marshal
   : public be_visitor_operation_argument
 {
 public:
-  /// constructor
   explicit be_visitor_operation_argument_marshal (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_argument_marshal () override;
   be_visitor_operation_argument_marshal (be_visitor_operation_argument_marshal const &) = delete;
   be_visitor_operation_argument_marshal (be_visitor_operation_argument_marshal &&) = delete;
@@ -68,7 +66,6 @@ private:
 class be_visitor_args_decl : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_args_decl (be_visitor_context *ctx);
   be_visitor_args_decl (be_visitor_args_decl const &) = delete;
   be_visitor_args_decl (be_visitor_args_decl &&) = delete;

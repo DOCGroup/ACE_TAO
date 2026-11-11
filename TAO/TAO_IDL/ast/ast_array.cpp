@@ -154,7 +154,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (std::size_t i {}; i < this->n_dims (); i++)
+  for (std::size_t i {}; i < this->n_dims (); ++i)
     {
       this->dump_i (o, "[");
 

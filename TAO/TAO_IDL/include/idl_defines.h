@@ -123,6 +123,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define TAO_IDL_HAS_STD_STRING_API
 
 /**
+ * This signals that TAO IDL APIs which transfer ownership use std::unique_ptr
+ * instead of owning raw pointers. This currently includes
+ * be_util::generator_init (), which returns std::unique_ptr<AST_Generator>.
+ *
+ * External backends that support older TAO IDL versions can use this to
+ * select the matching ownership API independently of the string API.
+ */
+#define TAO_IDL_HAS_STD_UNIQUE_PTR_API
+
+/**
  * This signals that the TAO IDL AST exposes inheritance and supported-interface
  * lists as standard C++ containers instead of pointer arrays. External backends
  * can use this to support both this API and older TAO IDL releases.

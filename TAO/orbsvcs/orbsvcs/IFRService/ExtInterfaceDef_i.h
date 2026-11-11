@@ -43,10 +43,8 @@ class TAO_IFRService_Export TAO_ExtInterfaceDef_i
   //    Mixes in TAO_InterfaceAttrExtension_i to get attribute exceptions.
   //
 public:
-  /// Constructor
   explicit TAO_ExtInterfaceDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ExtInterfaceDef_i () override;
 };
 

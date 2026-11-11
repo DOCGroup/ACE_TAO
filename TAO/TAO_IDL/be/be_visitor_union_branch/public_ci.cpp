@@ -17,7 +17,6 @@
 //  Visitor for union_branch in the client inline file.
 // *****************************************************
 
-// constructor
 be_visitor_union_branch_public_ci::be_visitor_union_branch_public_ci (
     be_visitor_context *ctx
   )
@@ -25,7 +24,6 @@ be_visitor_union_branch_public_ci::be_visitor_union_branch_public_ci (
 {
 }
 
-// destructor
 be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci () = default;
 
 int

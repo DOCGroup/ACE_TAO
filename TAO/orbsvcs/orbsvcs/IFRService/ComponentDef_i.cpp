@@ -22,7 +22,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
     CORBA::ULong index
   )
 {
-  CORBA::ULong is_multiple = 0;
+  CORBA::ULong is_multiple {};
   config->get_integer_value (key,
                              "is_multiple",
                              is_multiple);
@@ -168,7 +168,7 @@ TAO_ComponentDef_i::describe_i ()
   // If status wasn't 0, holder will contain the empty string.
   cd.base_component = holder.fast_rep ();
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   ACE_Configuration_Section_Key supports_key;
   status = this->repo_->config ()->open_section (this->section_key_,
                                                  "supported",
@@ -183,8 +183,8 @@ TAO_ComponentDef_i::describe_i ()
     }
 
   cd.supported_interfaces.length (count);
-  char *stringified = nullptr;
-  CORBA::ULong i = 0;
+  char *stringified {};
+  CORBA::ULong i {};
 
   for (i = 0; i < count; ++i)
     {
@@ -263,7 +263,7 @@ TAO_ComponentDef_i::describe_i ()
 
   cd.type = this->type_i ();
 
-  CORBA::Contained::Description *cont_desc_ptr = nullptr;
+  CORBA::Contained::Description *cont_desc_ptr {};
   ACE_NEW_THROW_EX (cont_desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -317,14 +317,14 @@ TAO_ComponentDef_i::supported_interfaces ()
 CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces_i ()
 {
-  CORBA::InterfaceDefSeq *seq = nullptr;
+  CORBA::InterfaceDefSeq *seq {};
   ACE_NEW_RETURN (seq,
                   CORBA::InterfaceDefSeq (0),
                   0);
   CORBA::InterfaceDefSeq_var retval = seq;
   retval->length (0);
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
@@ -338,11 +338,11 @@ TAO_ComponentDef_i::supported_interfaces_i ()
                                                  "count",
                                                  count);
       retval->length (count);
-      char *stringified = nullptr;
+      char *stringified {};
       ACE_TString path;
       CORBA::Object_var tmp;
 
-      for (CORBA::ULong i = 0; i < count; ++i)
+      for (CORBA::ULong i {}; i < count; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->get_string_value (supported_key,
@@ -389,10 +389,10 @@ TAO_ComponentDef_i::supported_interfaces_i (
                                         inherited_key);
 
   CORBA::String_var name;
-  char *supported_path = nullptr;
+  char *supported_path {};
   ACE_Configuration_Section_Key supported_key;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       supported_path =
         TAO_IFR_Service_Utils::reference_to_path (

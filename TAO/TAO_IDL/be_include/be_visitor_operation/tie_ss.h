@@ -27,10 +27,8 @@
 class be_visitor_operation_tie_ss : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_operation_tie_ss (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_tie_ss () override;
   be_visitor_operation_tie_ss (be_visitor_operation_tie_ss const &) = delete;
   be_visitor_operation_tie_ss (be_visitor_operation_tie_ss &&) = delete;

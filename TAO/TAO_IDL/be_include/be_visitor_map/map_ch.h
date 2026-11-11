@@ -26,10 +26,8 @@
 class be_visitor_map_ch : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_map_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_map_ch () override = default;
 
   be_visitor_map_ch (const be_visitor_map_ch &) = delete;

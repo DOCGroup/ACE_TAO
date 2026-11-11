@@ -25,10 +25,8 @@
 class be_visitor_enum_any_op_cs : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_enum_any_op_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_enum_any_op_cs () override;
   be_visitor_enum_any_op_cs (be_visitor_enum_any_op_cs const &) = delete;
   be_visitor_enum_any_op_cs (be_visitor_enum_any_op_cs &&) = delete;

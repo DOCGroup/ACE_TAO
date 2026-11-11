@@ -24,10 +24,8 @@
 class be_visitor_args_invoke_cs : public be_visitor_args
 {
 public:
-  /// constructor
   explicit be_visitor_args_invoke_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_args_invoke_cs () override;
   be_visitor_args_invoke_cs (be_visitor_args_invoke_cs const &) = delete;
   be_visitor_args_invoke_cs (be_visitor_args_invoke_cs &&) = delete;

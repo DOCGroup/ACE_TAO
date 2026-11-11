@@ -40,10 +40,8 @@ class TAO_IFRService_Export TAO_ExtAbstractInterfaceDef_i
     public virtual TAO_InterfaceAttrExtension_i
 {
 public:
-  /// Constructor
   explicit TAO_ExtAbstractInterfaceDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ExtAbstractInterfaceDef_i () override;
 
   void destroy () override;

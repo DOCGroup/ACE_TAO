@@ -28,10 +28,8 @@
 class be_visitor_valuetype_ch : public be_visitor_valuetype
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_ch () override;
   be_visitor_valuetype_ch (be_visitor_valuetype_ch const &) = delete;
   be_visitor_valuetype_ch (be_visitor_valuetype_ch &&) = delete;

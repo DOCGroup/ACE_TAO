@@ -46,7 +46,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 
       this->ctx_->scope (node);
       this->ctx_->node (bd);
-      this->elem_number_++;
+      ++this->elem_number_;
 
       AST_Field *field = dynamic_cast<AST_Field*> (d);
 
@@ -694,7 +694,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
 
       // Set the node to be visited.
       this->ctx_->node (field);
-      this->elem_number_++;
+      ++this->elem_number_;
 
       if (this->gen_field_pd (field) == -1)
         {

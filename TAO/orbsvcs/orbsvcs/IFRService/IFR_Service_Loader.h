@@ -30,10 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_IFR_Service_Loader : public TAO_Object_Loader
 {
 public:
-  // Constructor
   TAO_IFR_Service_Loader ();
 
-  // Destructor
   ~TAO_IFR_Service_Loader () override;
 
   // Called by the Service Configurator framework to initialize the

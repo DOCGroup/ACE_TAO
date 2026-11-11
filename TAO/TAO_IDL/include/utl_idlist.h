@@ -92,7 +92,6 @@ public:
   // Constructor(s)
 
   ~UTL_IdList () override = default;
-  // destructor
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to ostream.

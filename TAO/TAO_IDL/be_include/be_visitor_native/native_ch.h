@@ -23,10 +23,8 @@
 class be_visitor_native_ch : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_native_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_native_ch () override = default;
 
   be_visitor_native_ch (const be_visitor_native_ch &) = delete;

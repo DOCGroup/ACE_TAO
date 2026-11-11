@@ -567,7 +567,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.short_val
                                 == expr->ev ()->u.sval)
                             {
-                              this->default_value_.u.short_val++;
+                              ++this->default_value_.u.short_val;
                               break_loop = 1;
                             }
 
@@ -576,7 +576,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.ushort_val
                                 == expr->ev ()->u.usval)
                             {
-                              this->default_value_.u.ushort_val++;
+                              ++this->default_value_.u.ushort_val;
                               break_loop = 1;
                             }
 
@@ -585,7 +585,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.long_val
                                 == expr->ev ()->u.lval)
                             {
-                              this->default_value_.u.long_val++;
+                              ++this->default_value_.u.long_val;
                               break_loop = 1;
                             }
 
@@ -594,7 +594,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.ulong_val
                                 == expr->ev ()->u.ulval)
                             {
-                              this->default_value_.u.ulong_val++;
+                              ++this->default_value_.u.ulong_val;
                               break_loop = 1;
                             }
 
@@ -606,7 +606,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.char_val
                                 == expr->ev ()->u.cval)
                             {
-                              this->default_value_.u.char_val++;
+                              ++this->default_value_.u.char_val;
                               break_loop = 1;
                             }
 
@@ -615,7 +615,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.wchar_val
                                 == expr->ev ()->u.wcval)
                             {
-                              this->default_value_.u.wchar_val++;
+                              ++this->default_value_.u.wchar_val;
                               break_loop = 1;
                             }
 
@@ -635,7 +635,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.enum_val
                                 == expr->ev ()->u.eval)
                             {
-                              this->default_value_.u.enum_val++;
+                              ++this->default_value_.u.enum_val;
                               break_loop = 1;
                             }
 
@@ -644,7 +644,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.longlong_val
                                 == expr->ev ()->u.llval)
                             {
-                              this->default_value_.u.longlong_val++;
+                              ++this->default_value_.u.longlong_val;
                               break_loop = 1;
                             }
 
@@ -653,7 +653,7 @@ AST_Union::compute_default_value ()
                           if (this->default_value_.u.ulonglong_val
                                 == expr->ev ()->u.ullval)
                             {
-                              this->default_value_.u.ulonglong_val++;
+                              ++this->default_value_.u.ulonglong_val;
                               break_loop = 1;
                             }
 

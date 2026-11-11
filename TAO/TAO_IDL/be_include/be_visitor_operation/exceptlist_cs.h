@@ -29,10 +29,8 @@
 class be_visitor_operation_exceptlist_cs : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_exceptlist_cs () override;
   be_visitor_operation_exceptlist_cs (be_visitor_operation_exceptlist_cs const &) = delete;
   be_visitor_operation_exceptlist_cs (be_visitor_operation_exceptlist_cs &&) = delete;
