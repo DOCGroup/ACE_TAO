@@ -49,8 +49,10 @@ namespace XML
     explicit XStr (ACE_TCHAR const *str);
 #endif
 
+    /// Adopts a Xerces-allocated string and releases it with XMLString::release.
     explicit XStr (XMLCh *wstr);
 
+    /// Copies the input string into Xerces-managed storage.
     explicit XStr (XMLCh const *wstr);
 
     XStr (XStr const &copy);
@@ -75,11 +77,13 @@ namespace XML
 
     XMLCh operator[] (XMLSize_t i) const;
 
+    /// Returns a borrowed pointer valid until this XStr is modified or destroyed.
     operator XMLCh const * () const
     {
       return _wstr.get ();
     }
 
+    /// Transfers ownership to the caller, which must release the string with Xerces.
     XMLCh *release ();
 
     /// Release the held string and free its memory.
