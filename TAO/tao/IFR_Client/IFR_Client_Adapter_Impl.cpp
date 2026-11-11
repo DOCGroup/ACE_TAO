@@ -9,6 +9,8 @@
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
 
+#include <array>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl () = default;
@@ -74,14 +76,11 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
 
-  TAO::Argument *_tao_signature [] =
-    {
-      &_tao_retval
-    };
+  std::array<TAO::Argument *, 1> _tao_signature {{&_tao_retval}};
 
   TAO::Invocation_Adapter _tao_call (
       target,
-      _tao_signature,
+      _tao_signature.data (),
       1,
       "_interface",
       10,
