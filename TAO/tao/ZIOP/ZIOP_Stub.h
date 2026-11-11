@@ -51,6 +51,11 @@ public:
 
   ~TAO_ZIOP_Stub () override;
 
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub &&) = delete;
+
   /**
    * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
@@ -85,12 +90,6 @@ private:
   CORBA::Policy_var compression_id_list_policy_;
 
   CORBA::Boolean are_policies_parsed_ {};
-
-private:
-  TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
-  TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
-  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;
-  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

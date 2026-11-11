@@ -43,6 +43,11 @@ public:
 
   ~TAO_ZIOP_Loader () override;
 
+  TAO_ZIOP_Loader (TAO_ZIOP_Loader const &) = delete;
+  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader const &) = delete;
+  TAO_ZIOP_Loader (TAO_ZIOP_Loader &&) = delete;
+  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader &&) = delete;
+
   bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core) override;
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
@@ -61,13 +66,8 @@ public:
   static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
-  TAO_ZIOP_Loader (TAO_ZIOP_Loader const &) = delete;
-  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader const &) = delete;
-  TAO_ZIOP_Loader (TAO_ZIOP_Loader &&) = delete;
-  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader &&) = delete;
-
   /// Set to true after init is called.
-  bool initialized_ {false};
+  bool initialized_ {};
 
   /// dump a ZIOP datablock after (de)compression
   void dump_msg (const char *type,  const u_char *ptr,

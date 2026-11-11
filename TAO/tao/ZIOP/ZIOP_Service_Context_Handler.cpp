@@ -98,7 +98,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
   TAO_Target_Specification &,
   TAO_OutputCDR &)
 {
-  if (stub)
+  if (stub != nullptr)
     {
       // Obtain the two policies we are interested in sending to the server.
       CORBA::Policy_var idpolicy =
@@ -116,7 +116,6 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
       Messaging::PolicyValueSeq policy_value_seq;
       policy_value_seq.length (0);
       CORBA::ULong i {};
-      size_t length {};
 
       // If we do have an COMPRESSION_ID_LEVEL_LIST_POLICY, place it in a slot
       if (!CORBA::is_nil (idpolicyp.in ()))
@@ -131,8 +130,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
           if (!(idpolicyp->_tao_encode (out_CDR)))
             return 0;
 
-          length = out_CDR.total_length ();
-          policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
+          size_t const length = out_CDR.total_length ();
+          policy_value_seq[i].pvalue.length (static_cast<CORBA::ULong> (length));
           CORBA::Octet *buf = policy_value_seq[i].pvalue.get_buffer ();
 
           // Copy the CDR buffer data into the octet sequence buffer.
@@ -159,8 +158,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
           if (!(enabledpolicyp->_tao_encode (out_CDR)))
             return 0;
 
-          length = out_CDR.total_length ();
-          policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
+          size_t const length = out_CDR.total_length ();
+          policy_value_seq[i].pvalue.length (static_cast<CORBA::ULong> (length));
           CORBA::Octet *buf = policy_value_seq[i].pvalue.get_buffer ();
 
           // Copy the CDR buffer data into the octet sequence buffer.
