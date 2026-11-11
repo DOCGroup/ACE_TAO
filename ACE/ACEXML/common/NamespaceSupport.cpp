@@ -2,6 +2,8 @@
 
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ace/OS_NS_string.h"
+#include <new>
+#include <utility>
 
 constexpr ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 
@@ -45,9 +47,8 @@ ACEXML_Namespace_Context_Stack::pop ()
 int
 ACEXML_NamespaceSupport::popContext ()
 {
-  delete this->effective_context_;
-
-  if ((this->effective_context_ = this->ns_stack_.pop ()) == nullptr)
+  this->effective_context_.reset (this->ns_stack_.pop ());
+  if (this->effective_context_ == nullptr)
     return -1;
   return 0;
 }
@@ -55,33 +56,38 @@ ACEXML_NamespaceSupport::popContext ()
 int
 ACEXML_NamespaceSupport::pushContext ()
 {
-  ACEXML_NS_CONTEXT *temp = this->effective_context_;
-  ACE_NEW_RETURN (this->effective_context_,
-                  ACEXML_NS_CONTEXT (),
-                  -1);
+  std::unique_ptr<ACEXML_NS_CONTEXT> new_context (
+    new (std::nothrow) ACEXML_NS_CONTEXT ());
+  if (new_context == nullptr)
+    return -1;
 
   // @@ Copy everything from the old context to the new one.
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
-  for (ACEXML_NS_CONTEXT_ITER iter (*temp);
+  for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    this->effective_context_->bind (entry->ext_id_,
-                                    entry->int_id_);
-  this->ns_stack_.push (temp);
+    new_context->bind (entry->ext_id_, entry->int_id_);
+
+  if (this->ns_stack_.push (this->effective_context_.get ()) != 0)
+    return -1;
+
+  this->effective_context_.release ();
+  this->effective_context_ = std::move (new_context);
   return 0;
 }
 
 ACEXML_NamespaceSupport::ACEXML_NamespaceSupport ()
-  : ns_stack_ (),
-    effective_context_ (nullptr)
+  : ns_stack_ ()
 {}
 
 int
 ACEXML_NamespaceSupport::init ()
 {
   // @@ No way to tell if the new fails.
-  ACE_NEW_RETURN (effective_context_, ACEXML_NS_CONTEXT(), -1);
+  this->effective_context_.reset (new (std::nothrow) ACEXML_NS_CONTEXT ());
+  if (this->effective_context_ == nullptr)
+    return -1;
 
   ACEXML_String prefix (ACEXML_TABOO_NS_PREFIX, 0, false);
   ACEXML_String uri (ACEXML_XMLNS_URI_name, 0, false);

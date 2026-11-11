@@ -23,6 +23,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 using ACEXML_NS_CONTEXT_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
                                                    ACEXML_String>;
@@ -63,6 +64,11 @@ public:
 
   ~ACEXML_Namespace_Context_Stack ();
 
+  ACEXML_Namespace_Context_Stack (ACEXML_Namespace_Context_Stack const &) = delete;
+  ACEXML_Namespace_Context_Stack (ACEXML_Namespace_Context_Stack &&) = delete;
+  ACEXML_Namespace_Context_Stack &operator= (ACEXML_Namespace_Context_Stack const &) = delete;
+  ACEXML_Namespace_Context_Stack &operator= (ACEXML_Namespace_Context_Stack &&) = delete;
+
   /// Push the old namespace before entering into a new namespace scope.
   int push (ACEXML_NS_CONTEXT * old);
 
@@ -70,7 +76,7 @@ public:
   ACEXML_NS_CONTEXT *pop ();
 
 private:
-  /// Internal stack structure to hold namespace context.
+  /// Owns contexts passed to push; pop transfers ownership back to the caller.
   ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*> stack_;
 };
 
@@ -124,6 +130,11 @@ public:
   ACEXML_NamespaceSupport ();
 
   ~ACEXML_NamespaceSupport ();
+
+  ACEXML_NamespaceSupport (ACEXML_NamespaceSupport const &) = delete;
+  ACEXML_NamespaceSupport (ACEXML_NamespaceSupport &&) = delete;
+  ACEXML_NamespaceSupport &operator= (ACEXML_NamespaceSupport const &) = delete;
+  ACEXML_NamespaceSupport &operator= (ACEXML_NamespaceSupport &&) = delete;
 
   /**
    *  Initialize the namespace support object
@@ -216,7 +227,7 @@ private:
   /**
    * The effective namespace context.
    */
-  ACEXML_NS_CONTEXT *effective_context_;
+  std::unique_ptr<ACEXML_NS_CONTEXT> effective_context_ {};
 };
 
 #include /**/ "ace/post.h"
