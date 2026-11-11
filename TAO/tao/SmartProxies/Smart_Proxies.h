@@ -17,7 +17,6 @@
 
 #include "tao/SmartProxies/smartproxies_export.h"
 #include "tao/Object.h"
-#include "tao/TAO_Singleton.h"
 #include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
