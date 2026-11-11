@@ -13,13 +13,13 @@ Basic_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_var poa_object =
+  CORBA::Object_var const poa_object =
     this->orb_->resolve_initial_references ("RootPOA");
 
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->poa_->the_POAManager ();
 
   poa_manager->activate ();
@@ -28,7 +28,7 @@ Basic_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv[])
 int
 Basic_Logging_Service::parse_args (int argc, ACE_TCHAR * argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:o:p:t:x"));
   int opt {};
 
   while ((opt = get_opt ()) != EOF)
@@ -58,13 +58,13 @@ Basic_Logging_Service::parse_args (int argc, ACE_TCHAR * argv[])
         case '?':
         default:
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      "-n service_name "
-                      "-o ior_file_name "
-                      "-p pid_file_name "
-                      "-t threads "
-                      "-x [disable naming service bind] "
-                      "\n",
+                      ACE_TEXT ("Usage: %s "
+                                "-n service_name "
+                                "-o ior_file_name "
+                                "-p pid_file_name "
+                                "-t threads "
+                                "-x [disable naming service bind] "
+                                "\n"),
                       argv[0]));
           return -1;
         }
@@ -106,7 +106,7 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR * argv[])
       if (!iorf)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                              this->ior_file_name_->c_str ()),
                             -1);
         }
@@ -145,7 +145,7 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR * argv[])
 void
 Basic_Logging_Service::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
+  CORBA::Object_var const naming_obj =
     this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
@@ -180,7 +180,7 @@ Basic_Logging_Service::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
