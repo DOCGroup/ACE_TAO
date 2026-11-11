@@ -38,7 +38,7 @@ class TAO_RTPortableServer_Export TAO_POA_RT_Policy_Validator
   : public TAO_Policy_Validator
 {
 public:
-  TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
+  explicit TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
   ~TAO_POA_RT_Policy_Validator () override = default;
 

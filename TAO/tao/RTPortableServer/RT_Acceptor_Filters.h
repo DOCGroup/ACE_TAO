@@ -44,7 +44,7 @@ class TAO_RTPortableServer_Export TAO_Server_Protocol_Acceptor_Filter :
   public TAO_Acceptor_Filter
 {
 public:
-  TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
+  explicit TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
   /// Populate @a mprofile based on what's in <protocols_>.
   int fill_profile (TAO::ObjectKey const &object_key,
