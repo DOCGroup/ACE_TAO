@@ -7,9 +7,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Default_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
+TAO_Default_Acceptor_Filter::fill_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
-                                           TAO_AcceptorSet const& acceptors,
+                                           TAO_AcceptorSet const &acceptors,
                                            CORBA::Short priority)
 {
   // Go through all the acceptors.
@@ -30,7 +30,7 @@ TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
   // per profile, even without priority.
   for (CORBA::ULong i {}; i < mprofile.profile_count (); ++i)
     {
-      TAO_Profile *profile = mprofile.get_profile (i);
+      TAO_Profile * const profile = mprofile.get_profile (i);
       if (profile->encode_alternate_endpoints () == -1)
         return -1;
     }

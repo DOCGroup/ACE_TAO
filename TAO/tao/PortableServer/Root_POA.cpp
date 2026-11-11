@@ -1037,11 +1037,11 @@ TAO_Root_POA::add_ior_component (TAO_MProfile & mprofile,
                                  const IOP::TaggedComponent &component)
 {
   // Add the given tagged component to all profiles.
-  const CORBA::ULong profile_count = mprofile.profile_count ();
+  CORBA::ULong const profile_count = mprofile.profile_count ();
 
   for (CORBA::ULong i {}; i < profile_count; ++i)
     {
-      TAO_Profile *profile = mprofile.get_profile (i);
+      TAO_Profile * const profile = mprofile.get_profile (i);
 
       profile->add_tagged_component (component);
     }
@@ -1055,13 +1055,13 @@ TAO_Root_POA::add_ior_component_to_profile (
 {
   // Add the given tagged component to all profiles matching the given
   // ProfileId.
-  bool found_profile {false};
+  bool found_profile {};
 
   CORBA::ULong const profile_count = mprofile.profile_count ();
 
   for (CORBA::ULong i {}; i < profile_count; ++i)
     {
-      TAO_Profile *profile = mprofile.get_profile (i);
+      TAO_Profile * const profile = mprofile.get_profile (i);
 
       if (profile->tag () == profile_id)
         {

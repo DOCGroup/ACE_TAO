@@ -21,9 +21,9 @@ namespace TAO
     void
     Cached_Policies::update (TAO_POA_Policy_Set &policy_set)
     {
-      for (CORBA::ULong i {}; i < policy_set.num_policies (); i++)
+      for (CORBA::ULong i {}; i < policy_set.num_policies (); ++i)
         {
-          CORBA::Policy_var policy = policy_set.get_policy_by_index (i);
+          CORBA::Policy_var const policy = policy_set.get_policy_by_index (i);
 
           this->update_policy (policy.in ());
         }
@@ -33,7 +33,7 @@ namespace TAO
     Cached_Policies::update_policy (CORBA::Policy_ptr const policy)
     {
     #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-      ::PortableServer::ThreadPolicy_var thread
+      ::PortableServer::ThreadPolicy_var const thread
         = ::PortableServer::ThreadPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (thread.in ()))
@@ -45,7 +45,7 @@ namespace TAO
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     #if !defined (CORBA_E_MICRO)
-      ::PortableServer::LifespanPolicy_var lifespan
+      ::PortableServer::LifespanPolicy_var const lifespan
         = ::PortableServer::LifespanPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (lifespan.in ()))
@@ -57,7 +57,7 @@ namespace TAO
     #endif
 
     #if !defined (CORBA_E_MICRO)
-      ::PortableServer::IdUniquenessPolicy_var id_uniqueness
+      ::PortableServer::IdUniquenessPolicy_var const id_uniqueness
         = ::PortableServer::IdUniquenessPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (id_uniqueness.in ()))
@@ -69,7 +69,7 @@ namespace TAO
     #endif
 
     #if !defined (CORBA_E_MICRO)
-      ::PortableServer::IdAssignmentPolicy_var id_assignment
+      ::PortableServer::IdAssignmentPolicy_var const id_assignment
         = ::PortableServer::IdAssignmentPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (id_assignment.in ()))
@@ -82,7 +82,7 @@ namespace TAO
 
     #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-      ::PortableServer::ImplicitActivationPolicy_var implicit_activation
+      ::PortableServer::ImplicitActivationPolicy_var const implicit_activation
         = ::PortableServer::ImplicitActivationPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (implicit_activation.in ()))
@@ -92,7 +92,7 @@ namespace TAO
           return;
         }
 
-      ::PortableServer::ServantRetentionPolicy_var servant_retention
+      ::PortableServer::ServantRetentionPolicy_var const servant_retention
         = ::PortableServer::ServantRetentionPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (servant_retention.in ()))
@@ -102,7 +102,7 @@ namespace TAO
           return;
         }
 
-      ::PortableServer::RequestProcessingPolicy_var request_processing
+      ::PortableServer::RequestProcessingPolicy_var const request_processing
         = ::PortableServer::RequestProcessingPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (request_processing.in ()))
