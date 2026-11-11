@@ -30,11 +30,9 @@ class Event_Logging_Service
   //   Implementation of the Telecom Log Service
 
 public:
-  Event_Logging_Service ();
-  // Constructor.
+  Event_Logging_Service () = default;
 
-  ~Event_Logging_Service () override;
-  // Destructor.
+  ~Event_Logging_Service () override = default;
 
   Event_Logging_Service (Event_Logging_Service const &) = delete;
   Event_Logging_Service (Event_Logging_Service &&) = delete;
@@ -67,9 +65,6 @@ protected:
   // Run worker threads.
 
   // = Data members
-  TAO_EventLogFactory_i * event_log_factory_ {};
-  // The Event Log Factory.
-
   CORBA::ORB_var orb_;
   // The ORB that we use.
 

@@ -34,11 +34,9 @@ class Notify_Logging_Service
   //   Implementation of the Telecom Log Service
 
  public:
-  Notify_Logging_Service ();
-  // Constructor.
+  Notify_Logging_Service () = default;
 
-  ~Notify_Logging_Service () override;
-  // Destructor.
+  ~Notify_Logging_Service () override = default;
 
   Notify_Logging_Service (Notify_Logging_Service const &) = delete;
   Notify_Logging_Service (Notify_Logging_Service &&) = delete;
@@ -76,9 +74,6 @@ protected:
 
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
   // The Factory.
-
-  TAO_NotifyLogFactory_i * notify_log_factory_ {};
-  // The Notify Log Factory.
 
   CORBA::ORB_var orb_;
   // The ORB that we use.

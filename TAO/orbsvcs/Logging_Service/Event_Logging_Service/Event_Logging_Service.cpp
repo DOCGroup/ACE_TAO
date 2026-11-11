@@ -7,9 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Event_Logging_Service::Event_Logging_Service () = default;
-
-Event_Logging_Service::~Event_Logging_Service () = default;
+#include <memory>
 
 void
 Event_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv [])
@@ -86,52 +84,51 @@ Event_Logging_Service::init (int argc, ACE_TCHAR * argv[])
     return -1;
 
   // Activate the event log factory
-  ACE_NEW_THROW_EX (this->event_log_factory_,
+  TAO_EventLogFactory_i *event_log_factory {};
+  ACE_NEW_THROW_EX (event_log_factory,
                     TAO_EventLogFactory_i (),
                     CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var const event_log_factory_owner (event_log_factory);
 
   DsEventLogAdmin::EventLogFactory_var obj =
-    this->event_log_factory_->activate (this->orb_.in (),
-                                        this->poa_.in ());
+    event_log_factory->activate (this->orb_.in (),
+                                 this->poa_.in ());
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
   CORBA::String_var ior =
     this->orb_->object_to_string (obj.in ());
 
-  if (true)
-    {
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable");
+  CORBA::Object_var table_object =
+    this->orb_->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ());
+  IORTable::Table_var adapter =
+    IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind("EventLogService", ior.in ());
-    }
+  adapter->bind("EventLogService", ior.in ());
 
   if (this->ior_file_name_ != nullptr)
     {
-      FILE * iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
+        ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+      if (!iorf)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
                              this->ior_file_name_),
                             -1);
         }
-      ACE_OS::fprintf (iorf, "%s\n", ior.in ());
-      ACE_OS::fclose (iorf);
+      ACE_OS::fprintf (iorf.get (), "%s\n", ior.in ());
     }
 
   if (this->pid_file_name_ != nullptr)
     {
-      FILE * pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
-      if (pidf != nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
+        ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+      if (pidf)
         {
-          ACE_OS::fprintf (pidf,
+          ACE_OS::fprintf (pidf.get (),
                            "%ld\n",
                            static_cast<long> (ACE_OS::getpid ()));
-          ACE_OS::fclose (pidf);
         }
     }
 

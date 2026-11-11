@@ -29,11 +29,9 @@ class Basic_Logging_Service
   //   Implementation of the Telecom Log Service
 
 public:
-  Basic_Logging_Service ();
-  // Constructor.
+  Basic_Logging_Service () = default;
 
-  ~Basic_Logging_Service () override;
-  // Destructor.
+  ~Basic_Logging_Service () override = default;
 
   Basic_Logging_Service (Basic_Logging_Service const &) = delete;
   Basic_Logging_Service (Basic_Logging_Service &&) = delete;

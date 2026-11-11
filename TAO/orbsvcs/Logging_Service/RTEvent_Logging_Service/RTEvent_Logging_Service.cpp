@@ -5,9 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-RTEvent_Logging_Service::RTEvent_Logging_Service () = default;
-
-RTEvent_Logging_Service::~RTEvent_Logging_Service () = default;
+#include <memory>
 
 void
 RTEvent_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv[])
@@ -85,12 +83,14 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
     return -1;
 
   // Activate the rtevent log factory
-  ACE_NEW_THROW_EX (this->rtevent_log_factory_,
+  TAO_RTEventLogFactory_i *rtevent_log_factory {};
+  ACE_NEW_THROW_EX (rtevent_log_factory,
                     TAO_RTEventLogFactory_i (),
                     CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var const rtevent_log_factory_owner (rtevent_log_factory);
 
-  if (this->rtevent_log_factory_->init (orb_.in (),
-                                        poa_.in ()) != 0)
+  if (rtevent_log_factory->init (orb_.in (),
+                                 poa_.in ()) != 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) Unable to initialize "
@@ -99,45 +99,42 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
     }
 
   RTEventLogAdmin::EventLogFactory_var obj =
-    this->rtevent_log_factory_->activate ();
+    rtevent_log_factory->activate ();
 
   CORBA::String_var ior =
     this->orb_->object_to_string (obj.in ());
 
-  if (true)
-    {
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable");
+  CORBA::Object_var table_object =
+    this->orb_->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ());
+  IORTable::Table_var adapter =
+    IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind("RTEventLogService", ior.in ());
-    }
+  adapter->bind("RTEventLogService", ior.in ());
 
   if (this->ior_file_name_ != nullptr)
     {
-      FILE * iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
+        ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+      if (!iorf)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
                              this->ior_file_name_),
                             -1);
         }
-      ACE_OS::fprintf (iorf, "%s\n", ior.in ());
-      ACE_OS::fclose (iorf);
+      ACE_OS::fprintf (iorf.get (), "%s\n", ior.in ());
     }
 
   if (this->pid_file_name_ != nullptr)
     {
-      FILE * pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
-      if (pidf != nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
+        ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+      if (pidf)
         {
-          ACE_OS::fprintf (pidf,
+          ACE_OS::fprintf (pidf.get (),
                            "%ld\n",
                            static_cast<long> (ACE_OS::getpid ()));
-          ACE_OS::fclose (pidf);
         }
     }
 

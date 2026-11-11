@@ -28,11 +28,9 @@ class RTEvent_Logging_Service
   //   Implementation of the Telecom Log Service
 
 public:
-  RTEvent_Logging_Service ();
-  // Constructor.
+  RTEvent_Logging_Service () = default;
 
-  ~RTEvent_Logging_Service () override;
-  // Destructor.
+  ~RTEvent_Logging_Service () override = default;
 
   RTEvent_Logging_Service (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service (RTEvent_Logging_Service &&) = delete;
@@ -65,9 +63,6 @@ protected:
 
 private:
   // = Data members
-  TAO_RTEventLogFactory_i * rtevent_log_factory_ {};
-  // The RTEvent Log Factory.
-
   CORBA::ORB_var orb_;
   // The ORB that we use.
 

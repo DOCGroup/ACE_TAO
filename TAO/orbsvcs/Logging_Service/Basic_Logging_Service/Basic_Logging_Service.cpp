@@ -6,9 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Basic_Logging_Service::Basic_Logging_Service () = default;
-
-Basic_Logging_Service::~Basic_Logging_Service () = default;
+#include <memory>
 
 void
 Basic_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv [])
@@ -93,21 +91,19 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR * argv[])
   CORBA::String_var ior =
     this->orb_->object_to_string (obj.in ());
 
-  if (true)
-    {
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable");
+  CORBA::Object_var table_object =
+    this->orb_->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ());
+  IORTable::Table_var adapter =
+    IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind("BasicLogService", ior.in ());
-    }
+  adapter->bind("BasicLogService", ior.in ());
 
   if (this->ior_file_name_ != nullptr)
     {
-      FILE * iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
+        ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+      if (!iorf)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
@@ -115,19 +111,18 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR * argv[])
                             -1);
         }
 
-      ACE_OS::fprintf (iorf, "%s\n", ior.in ());
-      ACE_OS::fclose (iorf);
+      ACE_OS::fprintf (iorf.get (), "%s\n", ior.in ());
     }
 
   if (this->pid_file_name_ != nullptr)
     {
-      FILE * pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
-      if (pidf != nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
+        ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+      if (pidf)
         {
-          ACE_OS::fprintf (pidf,
+          ACE_OS::fprintf (pidf.get (),
                            "%ld\n",
                            static_cast<long> (ACE_OS::getpid ()));
-          ACE_OS::fclose (pidf);
         }
     }
 
