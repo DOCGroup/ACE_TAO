@@ -39,20 +39,21 @@ namespace TAO
   public:
     explicit FoxResource_Factory (FXApp *app);
 
-  protected:
-    /// Create or obtain current reactor implementation
-    ACE_Reactor_Impl *reactor_impl () override;
-
-  private:
     FoxResource_Factory (FoxResource_Factory const &) = delete;
     FoxResource_Factory &operator= (FoxResource_Factory const &) = delete;
     FoxResource_Factory (FoxResource_Factory &&) = delete;
     FoxResource_Factory &operator= (FoxResource_Factory &&) = delete;
 
+  protected:
+    /// Create or obtain current reactor implementation
+    ACE_Reactor_Impl *reactor_impl () override;
+
+  private:
     /// Reactor created by this factory.
     ACE_FoxReactor *reactor_impl_ {};
 
-    FXApp *fxapp_ {};
+    /// Borrowed; the application must outlive this factory and its reactor.
+    FXApp * const fxapp_ {};
   };
 }
 

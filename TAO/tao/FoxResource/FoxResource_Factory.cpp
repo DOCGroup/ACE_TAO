@@ -19,15 +19,15 @@ namespace TAO
 
     // synchronized by external locks
     if (!this->reactor_impl_)
-    {
-      ACE_NEW_RETURN (this->reactor_impl_,
-                      ACE_FoxReactor (),
-                      nullptr);
+      {
+        ACE_NEW_RETURN (this->reactor_impl_,
+                        ACE_FoxReactor (this->fxapp_),
+                        nullptr);
 
-      if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - ACE_FoxReactor created\n"));
-    }
+        if (TAO_debug_level > 0)
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - ACE_FoxReactor created\n"));
+      }
 
     return this->reactor_impl_;
   }

@@ -13,7 +13,7 @@ namespace TAO
     ACE_NEW (tmp,
              FoxResource_Factory (app));
 
-    TAO_ORB_Core::set_gui_resource_factory( tmp );
+    TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
   FoxResource_Loader::~FoxResource_Loader () = default;

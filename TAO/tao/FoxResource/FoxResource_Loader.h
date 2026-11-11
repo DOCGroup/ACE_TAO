@@ -49,7 +49,6 @@ namespace TAO
 
     virtual ~FoxResource_Loader ();
 
-  private:
     FoxResource_Loader (FoxResource_Loader const &) = delete;
     FoxResource_Loader &operator= (FoxResource_Loader const &) = delete;
     FoxResource_Loader (FoxResource_Loader &&) = delete;
