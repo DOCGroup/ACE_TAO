@@ -1,14 +1,16 @@
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
-#include "ace/OS_NS_unistd.h"
+
+#include <chrono>
 #include <iostream>
+#include <thread>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       TAO_Naming_Client naming_client;
 
       if (naming_client.init (orb.in ()) != 0)
@@ -30,11 +32,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
           catch (CosNaming::NamingContext::NotFound const &)
             {
-              ACE_OS::sleep (1);
+              std::this_thread::sleep_for (std::chrono::seconds (1));
             }
         }
 
-      Messenger_var messenger = Messenger::_narrow (object.in ());
+      Messenger_var const messenger = Messenger::_narrow (object.in ());
       if (CORBA::is_nil (messenger.in ()))
         {
           std::cerr << "Not a Messenger reference" << std::endl;
@@ -44,6 +46,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var message = CORBA::string_dup ("Hello!");
       messenger->send_message ("TAO User", "TAO Test", message.inout ());
       std::cout << "Message was sent" << std::endl;
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {
