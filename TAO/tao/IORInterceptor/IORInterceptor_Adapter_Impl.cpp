@@ -50,6 +50,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA *poa)
                           ENOMEM),
                        CORBA::COMPLETED_NO));
 
+  // The var owns the reference; tao_info remains a non-owning typed alias.
   PortableInterceptor::IORInfo_var info = tao_info;
 
   // Release the POA during IORInterceptor calls to avoid potential
@@ -127,7 +128,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
               ior_3_interceptor->components_established (info);
             }
         }
-      catch (const ::CORBA::Exception&)
+      catch (::CORBA::Exception const &)
         {
           throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 6,
                                       CORBA::COMPLETED_NO);
@@ -152,7 +153,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
   for (size_t counter {}; counter < array_obj_ref_template.size(); ++counter)
     {
-      PortableInterceptor::ObjectReferenceTemplate *const member =
+      PortableInterceptor::ObjectReferenceTemplate * const member =
         array_obj_ref_template[counter];
 
       CORBA::add_ref (member);

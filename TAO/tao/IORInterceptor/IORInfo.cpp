@@ -131,7 +131,7 @@ TAO_IORInfo::current_factory (
 }
 
 void
-TAO_IORInfo::check_validity ()
+TAO_IORInfo::check_validity () const
 {
   if (this->poa_ == nullptr)
     {

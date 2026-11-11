@@ -113,7 +113,7 @@ protected:
    * this IORInfo object is no longer valid.  Throw an exception in
    * that case.
    */
-  void check_validity ();
+  void check_validity () const;
 
 private:
   /// Non-owning POA pointer; invalidated when the interceptor callbacks end.
