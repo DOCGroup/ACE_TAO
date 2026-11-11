@@ -276,7 +276,7 @@ ACE::execname (const ACE_TCHAR *old_name)
 {
 #if defined (ACE_WIN32)
   const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
-  if (suffix == 0 || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
+  if (suffix == nullptr || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
     {
       ACE_TCHAR *new_name {};
 
@@ -287,7 +287,7 @@ ACE::execname (const ACE_TCHAR *old_name)
 
       ACE_NEW_RETURN (new_name,
                       ACE_TCHAR[size],
-                      0);
+                      nullptr);
       ACE_TCHAR *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);

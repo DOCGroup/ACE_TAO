@@ -81,7 +81,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       // Broadcast addresses are weird...
       && std::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
-  else if (addr == 0)
+  else if (addr == nullptr)
     return 0;
   else
     {

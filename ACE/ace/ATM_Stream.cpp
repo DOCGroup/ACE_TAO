@@ -81,19 +81,20 @@ ACE_ATM_Stream::get_peer_name () const
   // Find the host address in the ATM hosts file and return the
   //  host name
   char line[256];
-  char *host_ptr, *host_name = 0;
-  ACE_NEW_RETURN (host_name, char[256], 0);
+  char *host_ptr;
+  char *host_name {};
+  ACE_NEW_RETURN (host_name, char[256], nullptr);
   while (!atm_hosts.eof ()) {
     atm_hosts.getline (line, 256);
     // Convert the line to lower case to ease comparison
     for (index = 0; index < ACE_OS::strlen (line); ++index)
       line[index] = ACE_OS::ace_tolower (line[index]);
-    if (ACE_OS::strstr (line, buffer) != 0)
+    if (ACE_OS::strstr (line, buffer) != nullptr)
       {
         char *strtok_p;
         // Grab the second token which is the host name
         ACE_OS::strtok_r (line, " \t", &strtok_p);
-        host_ptr = ACE_OS::strtok (0, " \t", &strtok_p);
+        host_ptr = ACE_OS::strtok (nullptr, " \t", &strtok_p);
         ACE_OS::strcpy (host_name, host_ptr);
         break;
       }

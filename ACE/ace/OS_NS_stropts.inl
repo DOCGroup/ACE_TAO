@@ -151,18 +151,18 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
 #else
   ACE_UNUSED_ARG (flags);
   ssize_t result;
-  if (ctl == 0 && data == 0)
+  if (ctl == nullptr && data == nullptr)
     {
       errno = EINVAL;
       return 0;
     }
   // Handle the two easy cases.
-  else if (ctl != 0)
+  else if (ctl != nullptr)
     {
       result = ACE_OS::write (handle, ctl->buf, static_cast<size_t> (ctl->len));
       return static_cast<int> (result);
     }
-  else if (data != 0)
+  else if (data != nullptr)
     {
       result = ACE_OS::write (handle, data->buf, static_cast<size_t> (data->len));
       return static_cast<int> (result);

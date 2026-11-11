@@ -191,7 +191,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
 {
   ACE_TRACE ("ACE_Token_Name::name");
 
-  if (new_name == 0)
+  if (new_name == nullptr)
     new_name = ACE_TEXT ("no name");
 
   size_t n = ACE_OS::strlen (new_name) + 1;
