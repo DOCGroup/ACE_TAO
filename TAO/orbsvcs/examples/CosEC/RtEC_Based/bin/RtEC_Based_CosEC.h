@@ -16,6 +16,8 @@
 #include "CosEvent_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include <string>
+
 #if defined (_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -31,10 +33,7 @@
 class RtEC_Based_CosEC : public CosEC_ServantBase
 {
  public:
-  /// Constructor.
-  RtEC_Based_CosEC ();
-
-  /// Destructor.
+  RtEC_Based_CosEC () = default;
   ~RtEC_Based_CosEC () override = default;
   RtEC_Based_CosEC (RtEC_Based_CosEC const &) = delete;
   RtEC_Based_CosEC (RtEC_Based_CosEC &&) = delete;
@@ -78,19 +77,19 @@ protected:
 
   // = Data members
   /// The name we use to register with the Naming Service.
-  ACE_TCHAR const *service_name;
+  std::basic_string<ACE_TCHAR> service_name {ACE_TEXT ("CosEventService")};
 
   /// The name of the Real Time Event Service.
-  ACE_TCHAR const *rt_service_name;
+  std::basic_string<ACE_TCHAR> rt_service_name {ACE_TEXT ("EventService")};
 
   /// The ORB that we use.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Reference to the root poa.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 
   /// A naming context.
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var naming_ {};
 
   /// Flag to indicate if the RtEC is local/remote,
   /// false => local, true => remote, default is local.

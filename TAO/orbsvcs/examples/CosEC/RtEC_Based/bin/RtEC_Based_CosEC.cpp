@@ -2,24 +2,18 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"
 
-RtEC_Based_CosEC::RtEC_Based_CosEC ()
-  : service_name (ACE_TEXT("CosEventService")),
-    rt_service_name (ACE_TEXT("EventService"))
-{
-}
-
 void
-RtEC_Based_CosEC::init_ORB  (int& argc, ACE_TCHAR *argv [])
+RtEC_Based_CosEC::init_ORB (int &argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_var poa_object  =
-    this->orb_->resolve_initial_references("RootPOA");
+  CORBA::Object_var const poa_object =
+    this->orb_->resolve_initial_references ("RootPOA");
 
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->poa_->the_POAManager ();
 
   poa_manager->activate ();
@@ -28,10 +22,11 @@ RtEC_Based_CosEC::init_ORB  (int& argc, ACE_TCHAR *argv [])
 int
 RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:n:e:o:p:r"));
-  int opt;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("t:n:e:o:p:r"));
+  int opt {};
 
-  while ((opt = get_opt ()) != EOF)
+  // ACE_Get_Opt returns pointers into argv; the base fields borrow them.
+  while ((opt = get_opt ()) != -1)
     {
       switch (opt)
         {
@@ -62,15 +57,15 @@ RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv [])
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      "\n\t-n <COS Event Service name>"
-                      "\n\t-t <RealTime Event Service name>"
-                      "\n\t-r" // creates the RtEC locally.
-                      "\n\t-e [\"EventType_1, EventType_2...\"] for ConsumerQOS."
-                      "\n\t-o [\"EventSourceID_1, [EventSourceID_2...\"] for ConsumerQOS."
-                      "\n\t-p [\"Source, Event\" pairs] for SupplierQOS."
-                      "\n",
-                      argv[0]));
+                      ACE_TEXT ("Usage: %s "
+                                "\n\t-n <COS Event Service name>"
+                                "\n\t-t <RealTime Event Service name>"
+                                "\n\t-r creates the RtEC locally."
+                                "\n\t-e [\"EventType_1, EventType_2...\"] for ConsumerQOS."
+                                "\n\t-o [\"EventSourceID_1, [EventSourceID_2...\"] for ConsumerQOS."
+                                "\n\t-p [\"Source, Event\" pairs] for SupplierQOS."
+                                "\n"),
+                      argv [0]));
           return -1;
         }
     }
@@ -82,7 +77,7 @@ void
 RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Starting up the CosEvent Service...\n"));
+              ACE_TEXT ("Starting up the CosEvent Service...\n")));
 
   // initialize the ORB.
   this->init_ORB (argc, argv);
@@ -101,37 +96,37 @@ RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
   this->activate ();
 
   // Register ourselves with the naming service.
-  ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
+  ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->poa_->servant_to_reference (this);
 
-  CORBA::String_var str =
+  CORBA::String_var const str =
     this->orb_->object_to_string (obj.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "The CosEC IOR is <%s>\n", str.in ()));
+              ACE_TEXT ("The CosEC IOR is <%C>\n"), str.in ()));
 
-  CosNaming::Name name (1);
+  CosNaming::Name name;
   name.length (1);
-  name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->service_name));
+  name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->service_name.c_str ()));
 
   this->naming_->rebind (name,
                          obj.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "Registered with the naming service as: %s\n",
-              this->service_name));
+              ACE_TEXT ("Registered with the naming service as: %s\n"),
+              this->service_name.c_str ()));
 }
 
 POA_RtecEventChannelAdmin::EventChannel_ptr
 RtEC_Based_CosEC::create_rtec ()
 {
   // see if the user wants a local RtEC..
-  if (!this->remote_rtec_)
-    return CosEC_ServantBase::create_rtec ();
-  else
+  if (this->remote_rtec_)
     return nullptr;
+
+  return CosEC_ServantBase::create_rtec ();
 }
 
 void
@@ -150,7 +145,7 @@ RtEC_Based_CosEC::activate_rtec ()
       // Use the return value to check success.
       if (CORBA::is_nil (this->rtec_.in ()))
         ACE_DEBUG ((LM_DEBUG,
-                    "Could not locate a RT EventChannel.Please start one and try again\n"));
+                    ACE_TEXT ("Could not locate a RT EventChannel. Please start one and try again\n")));
     }
 }
 
@@ -167,12 +162,12 @@ RtEC_Based_CosEC::deactivate_rtec ()
 void
 RtEC_Based_CosEC::locate_rtec ()
 {
-  CosNaming::Name ref_name (1);
+  CosNaming::Name ref_name;
   ref_name.length (1);
   ref_name[0].id =
-    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->rt_service_name));
+    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->rt_service_name.c_str ()));
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->naming_->resolve (ref_name);
 
   this->rtec_ =
@@ -182,7 +177,7 @@ RtEC_Based_CosEC::locate_rtec ()
 void
 RtEC_Based_CosEC::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
+  CORBA::Object_var const naming_obj =
     this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
@@ -196,14 +191,15 @@ RtEC_Based_CosEC::resolve_naming_service ()
 int
 RtEC_Based_CosEC::run ()
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: Running the CosEventService\n", __FILE__));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%C: Running the CosEventService\n"), __FILE__));
   try
     {
       this->orb_->run ();
     }
   catch (CORBA::Exception const &)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("run")), 1);
     }
 
   return 0;
@@ -216,9 +212,9 @@ RtEC_Based_CosEC::shutdown ()
   this->deactivate ();
 
   // Unbind from the naming service.
-  CosNaming::Name name (1);
+  CosNaming::Name name;
   name.length (1);
-  name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->service_name));
+  name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->service_name.c_str ()));
 
   this->naming_->unbind (name);
 
@@ -228,7 +224,7 @@ RtEC_Based_CosEC::shutdown ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -243,13 +239,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           service.shutdown ();
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Failed to run the CosEventService.\n"),
+                             ACE_TEXT ("Failed to run the CosEventService.\n")),
                             1);
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Failed to start CosEventService");
+      ex._tao_print_exception (ACE_TEXT ("Failed to start CosEventService"));
       return 1;
     }
 
