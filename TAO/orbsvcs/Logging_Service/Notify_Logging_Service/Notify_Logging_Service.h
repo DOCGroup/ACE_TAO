@@ -22,7 +22,8 @@
 #include "orbsvcs/DsNotifyLogAdminC.h"
 #include "orbsvcs/Log/NotifyLogFactory_i.h"
 
-#define NOTIFY_KEY "NotifyLogFactory"
+#include <optional>
+#include <string>
 
 class Notify_Logging_Service
   : public ACE_Task_Base
@@ -70,27 +71,28 @@ protected:
 
   // = Data members
 
-  TAO_Notify_Service * notify_service_ {};
+  // Borrowed from ACE_Dynamic_Service.
+  TAO_Notify_Service *notify_service_ {};
 
-  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ {};
   // The Factory.
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // The ORB that we use.
 
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
   // Reference to the root poa.
 
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var naming_ {};
   // A naming context.
 
-  ACE_CString service_name_ {NOTIFY_KEY};
+  std::string service_name_ {"NotifyLogFactory"};
   // The name we use to bind with the NameService
 
-  ACE_TCHAR const * ior_file_name_ {};
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
   // The name of the file where we output the factory IOR.
 
-  ACE_TCHAR const * pid_file_name_ {};
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
   // The name of the file where we output the process id.
 
   bool bind_to_naming_service_ {true};

@@ -22,8 +22,8 @@ Notify_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv [])
       return -1;
     }
 
-  CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA");
+  CORBA::Object_var const poa_object =
+    this->orb_->resolve_initial_references ("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -33,7 +33,7 @@ Notify_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv [])
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->poa_->the_POAManager ();
 
   poa_manager->activate ();
@@ -45,14 +45,14 @@ int
 Notify_Logging_Service::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
-  int opt;
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'o':
@@ -111,41 +111,42 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR * argv[])
                       CORBA::NO_MEMORY ());
   PortableServer::ServantBase_var const notify_log_factory_owner (notify_log_factory);
 
-  DsNotifyLogAdmin::NotifyLogFactory_var obj =
+  DsNotifyLogAdmin::NotifyLogFactory_var const obj =
     notify_log_factory->activate (this->orb_.in (),
                                   this->poa_.in ());
 
-
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (obj.in ());
 
-  CORBA::Object_var table_object =
+  CORBA::Object_var const table_object =
     this->orb_->resolve_initial_references ("IORTable");
 
-  IORTable::Table_var adapter =
+  IORTable::Table_var const adapter =
     IORTable::Table::_narrow (table_object.in ());
 
-  adapter->bind("NotifyLogService", ior.in ());
+  adapter->bind ("NotifyLogService", ior.in ());
 
-  if (this->ior_file_name_ != nullptr)
+  if (this->ior_file_name_)
     {
       std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
-        ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+        ACE_OS::fopen (this->ior_file_name_->c_str (), ACE_TEXT ("w")),
+        ACE_OS::fclose);
       if (!iorf)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             this->ior_file_name_),
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             this->ior_file_name_->c_str ()),
                             -1);
         }
 
       ACE_OS::fprintf (iorf.get (), "%s\n", ior.in ());
     }
 
-  if (this->pid_file_name_ != nullptr)
+  if (this->pid_file_name_)
     {
       std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
-        ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w")), ACE_OS::fclose);
+        ACE_OS::fopen (this->pid_file_name_->c_str (), ACE_TEXT ("w")),
+        ACE_OS::fclose);
       if (pidf)
         {
           ACE_OS::fprintf (pidf.get (),
@@ -173,7 +174,7 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR * argv[])
 void
 Notify_Logging_Service::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
+  CORBA::Object_var const naming_obj =
     this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
