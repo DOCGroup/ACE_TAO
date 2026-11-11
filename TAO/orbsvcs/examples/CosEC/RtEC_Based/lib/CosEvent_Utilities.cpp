@@ -52,8 +52,6 @@ CosEC_ServantBase::activate ()
    PortableServer::ObjectId_var const oid =
      this->thispoa_->activate_object (this);
 
-   this->_remove_ref ();
-
    CORBA::Object_var const obj =
      this->thispoa_->id_to_reference (oid.in ());
 
@@ -81,8 +79,6 @@ CosEC_ServantBase::activate (char const *servant_id)
   // Note that the POA is <thispoa_>
   this->thispoa_->activate_object_with_id (oid.in (),
                                            this);
-
-  this->_remove_ref ();
 
   CORBA::Object_var const obj =
     this->thispoa_->id_to_reference (oid.in ());
