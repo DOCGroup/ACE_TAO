@@ -9,12 +9,18 @@
 class ACE_Svc_Export Baseline_Base_Test : public Baseline_Test_Base
 {
 public:
-  virtual int acquire ();
-  virtual int release ();
+  Baseline_Base_Test (Baseline_Base_Test const &) = delete;
+  Baseline_Base_Test (Baseline_Base_Test &&) = delete;
+  Baseline_Base_Test &operator= (Baseline_Base_Test const &) = delete;
+  Baseline_Base_Test &operator= (Baseline_Base_Test &&) = delete;
+  Baseline_Base_Test () = default;
+
+  int acquire () override;
+  int release () override;
   // These two method are used to test try_acquire performance.
 
-  virtual int test_acquire_release ();
-  virtual int test_try_lock ();
+  int test_acquire_release () override;
+  int test_try_lock () override;
   // Real test methods.
 };
 

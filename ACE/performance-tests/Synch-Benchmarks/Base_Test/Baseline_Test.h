@@ -2,6 +2,8 @@
 #ifndef ACE_BASELINE_TEST_H
 #define ACE_BASELINE_TEST_H
 
+#include <cstddef>
+
 #include "Synch_Lib/Benchmark_Base.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -10,20 +12,32 @@
 #include "ace/svc_export.h"
 #include "ace/Barrier.h"
 
-const unsigned long DEFAULT_ITERATIONS = 1000000;
+constexpr std::size_t DEFAULT_ITERATIONS = 1000000;
+
+enum class Baseline_Yield_Method
+{
+  sleep_zero,
+  thread_yield
+};
 
 class ACE_Svc_Export Baseline_Test_Base : public Benchmark_Base
 {
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
 public:
-  enum {
-    TEST_LOCK,
-    TEST_READLOCK,
-    TEST_WRITELOCK
+  enum class Lock_Type
+  {
+    lock,
+    read_lock,
+    write_lock
   };
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  Baseline_Test_Base (Baseline_Test_Base const &) = delete;
+  Baseline_Test_Base (Baseline_Test_Base &&) = delete;
+  Baseline_Test_Base &operator= (Baseline_Test_Base const &) = delete;
+  Baseline_Test_Base &operator= (Baseline_Test_Base &&) = delete;
+
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Standard initializing method for Baseline Test.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -37,25 +51,25 @@ public:
   virtual int test_try_lock () = 0;
   // Real test methods.
 
-  virtual int yield_method ();
+  virtual Baseline_Yield_Method yield_method () const;
   // Query the yield method used.
 
   virtual void yield ();
   // Yield to other thread.
 
-  size_t iteration ();
+  std::size_t iteration () const;
   // Access methods.
 
 protected:
   Baseline_Test_Base ();
 
-  int yield_method_;
+  Baseline_Yield_Method yield_method_ {Baseline_Yield_Method::sleep_zero};
   // Should we your thr_yield or sleep (0).
 
-  size_t iteration_;
+  std::size_t iteration_ {DEFAULT_ITERATIONS};
   // Total number of operations.  <iterations_>
 
-  int what_;
+  Lock_Type what_ {Lock_Type::lock};
   // What test should be performed?
 };
 
@@ -66,52 +80,47 @@ class ACE_Svc_Export Baseline_Test_Options
 public:
   friend class Baseline_Test;
 
-  enum
-  {
-    USE_SLEEP_ZERO,
-    USE_THR_YIELD
-  };
+  Baseline_Test_Options (Baseline_Test_Options const &) = delete;
+  Baseline_Test_Options (Baseline_Test_Options &&) = delete;
+  Baseline_Test_Options &operator= (Baseline_Test_Options const &) = delete;
+  Baseline_Test_Options &operator= (Baseline_Test_Options &&) = delete;
 
-  Baseline_Test_Options ();
-  // ctor.
+  Baseline_Test_Options () = default;
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse and set the Baseline_Test options and flags.
 
-  int reset_params (size_t iteration, int yield);
+  void reset_params (std::size_t iteration, Baseline_Yield_Method yield);
   // Reset test parameters for next round.
 
-  int test_try_lock ();
+  bool test_try_lock () const;
   // Return test configuration.
 
   void start_inc_timer ();
   void stop_inc_timer ();
   // Start/stop measuring time.
 
-  int inc_loop_counter ();
+  bool inc_loop_counter ();
   // Returns
-
-  size_t current_iteration ();
-  // Return <iteration_>.
 
   void print_result ();
   // Print out the result.
 
 private:
-  int test_try_lock_;
+  bool test_try_lock_ {};
   // A flag indicates whether we are testing try_lock or lock and
   // release.
 
-  int verbose_;
+  bool verbose_ {};
   // Print out the result in verbose mode.
 
-  int current_yield_method_;
+  Baseline_Yield_Method current_yield_method_ {Baseline_Yield_Method::sleep_zero};
   // yield or sleep.
 
-  size_t current_iteration_;
+  std::size_t current_iteration_ {};
   // Number of iteration.
 
-  size_t total_iteration_;
+  std::size_t total_iteration_ {DEFAULT_ITERATIONS};
   // Total number of target iteration.
 
   ACE_High_Res_Timer timer;
@@ -123,19 +132,24 @@ extern Baseline_Test_Options baseline_options;
 class ACE_Svc_Export Baseline_Test : public Benchmark_Method_Base
 {
 public:
-  Baseline_Test ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int pre_run_test (Benchmark_Base *bp);
-  virtual int run_test ();
-  virtual int post_run_test ();
-  virtual int valid_test_object (Benchmark_Base *);
+  Baseline_Test (Baseline_Test const &) = delete;
+  Baseline_Test (Baseline_Test &&) = delete;
+  Baseline_Test &operator= (Baseline_Test const &) = delete;
+  Baseline_Test &operator= (Baseline_Test &&) = delete;
 
-  static void *hold_lock (void * arg);
+  Baseline_Test ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int pre_run_test (Benchmark_Base *bp) override;
+  int run_test () override;
+  int post_run_test () override;
+  int valid_test_object (Benchmark_Base *) override;
+
+  static ACE_THR_FUNC_RETURN hold_lock (void *arg);
   // This method runs in a separate thread, and is used to hold the lock while
   // we test the performance of try lock.
 
 private:
-  Baseline_Test_Base *current_test_;
+  Baseline_Test_Base *current_test_ {};
   ACE_Barrier get_lock_;
   ACE_Barrier let_go_lock_;
 };
