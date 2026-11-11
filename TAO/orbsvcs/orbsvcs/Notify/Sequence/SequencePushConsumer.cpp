@@ -68,13 +68,13 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
             }
           //--cj end
         }
-      catch (const CORBA::TRANSIENT& ex)
+      catch (CORBA::TRANSIENT const &ex)
         {
           ex._tao_print_exception (
             "Got a TRANSIENT in NS_SequencePushConsumer::init");
           ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_SequencePushConsumer %@\n", this));
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // _narrow failed
         }
@@ -101,17 +101,16 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       requests.size ()));
   }
 
-  CORBA::ULong queue_size = ACE_Utils::truncate_cast<CORBA::ULong> (requests.size ());
-  CORBA::Long max_batch_size = queue_size;
-  if (this->max_batch_size_.is_valid () )
-  {
-    max_batch_size = this->max_batch_size_.value ();
-  }
+  CORBA::ULong const queue_size =
+    ACE_Utils::truncate_cast<CORBA::ULong> (requests.size ());
+  CORBA::Long const max_batch_size = this->max_batch_size_.is_valid ()
+    ? this->max_batch_size_.value ()
+    : queue_size;
   CORBA::Long batch_size = queue_size;
   if (batch_size > max_batch_size)
-  {
-    batch_size = max_batch_size;
-  }
+    {
+      batch_size = max_batch_size;
+    }
   if (batch_size > 0)
   {
     CosNotification::EventBatch batch (batch_size);
@@ -130,7 +129,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           request));
       }
 
-      const TAO_Notify_Event * ev = request->event ();
+      TAO_Notify_Event const * const ev = request->event ();
       ev->convert (batch [pos]);
       ++pos;
 
@@ -211,7 +210,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
         {
           this->proxy_supplier ()->destroy (from_timeout);
         }
-        catch (const CORBA::Exception&)
+        catch (CORBA::Exception const &)
         {
           // todo is there something meaningful we can do here?
           ;
@@ -264,7 +263,7 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
     ORBSVCS_DEBUG ( (LM_DEBUG, "SequencePushConsumer enqueing event.\n"));
   this->enqueue_request (request);
 
-  size_t mbs = static_cast<size_t>(this->max_batch_size_.value());
+  size_t const mbs = static_cast<size_t> (this->max_batch_size_.value ());
 
   if (this->pending_events().size() >= mbs || this->pacing_.is_valid () == 0)
   {
@@ -277,22 +276,22 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
   return true;
 }
 
-
 void
-TAO_Notify_SequencePushConsumer::push (const CORBA::Any& /*event*/)
+TAO_Notify_SequencePushConsumer::push (CORBA::Any const &/*event*/)
 {
   //NOP
 }
 
 void
-TAO_Notify_SequencePushConsumer::push (const CosNotification::StructuredEvent& /*notification*/)
+TAO_Notify_SequencePushConsumer::push (
+  CosNotification::StructuredEvent const &/*notification*/)
 {
   //NOP
 }
 
-
 void
-TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch)
+TAO_Notify_SequencePushConsumer::push (
+  CosNotification::EventBatch const &event_batch)
 {
   //--cj verify dispatching ORB
   if (TAO_debug_level >= 10) {
@@ -308,13 +307,13 @@ ACE_CString
 TAO_Notify_SequencePushConsumer::get_ior () const
 {
   ACE_CString result;
-  CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance ()->orb ();
+  CORBA::ORB_var const orb = TAO_Notify_PROPERTIES::instance ()->orb ();
   try
   {
     CORBA::String_var ior = orb->object_to_string (this->push_consumer_.in ());
-    result = static_cast<const char*> (ior.in ());
+    result = static_cast<char const *> (ior.in ());
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     result.fast_clear();
   }
@@ -324,7 +323,8 @@ TAO_Notify_SequencePushConsumer::get_ior () const
 void
 TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer)
 {
-  TAO_Notify_SequencePushConsumer* tmp = dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
+  TAO_Notify_SequencePushConsumer * const tmp =
+    dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
   ACE_ASSERT(tmp != nullptr);
   this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);

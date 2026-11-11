@@ -53,7 +53,6 @@ public:
   TAO_Notify_SequenceProxyPushSupplier &operator= (TAO_Notify_SequenceProxyPushSupplier const &) = delete;
   TAO_Notify_SequenceProxyPushSupplier &operator= (TAO_Notify_SequenceProxyPushSupplier &&) = delete;
 
-
   char const * get_proxy_type_name () const override;
 
   void load_attrs (TAO_Notify::NVPList const &attrs) override;
