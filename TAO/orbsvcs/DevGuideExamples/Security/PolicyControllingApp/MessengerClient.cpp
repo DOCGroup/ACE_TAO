@@ -1,6 +1,7 @@
 /* -*- C++ -*-  */
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include "MessengerC.h"
 #include "orbsvcs/SecurityC.h"
@@ -75,32 +76,34 @@
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //
 
-ACE_TCHAR const * ior = ACE_TEXT("file://Messenger.ior");
-
-int which = 0;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct ClientOptions
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:k:"));
+  ACE_TCHAR const *ior { ACE_TEXT ("file://Messenger.ior") };
+  int policy {};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ClientOptions &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("e:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'e':
-        which = ACE_OS::atoi(get_opts.optarg);
-    if(which < 1 || 2 < which)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Usage:  %s "
-                               "-e [12] "
-                               "-k <ior>"
-                               "\n",
-                               argv [0]),
-                              -1);
+        options.policy = ACE_OS::atoi (get_opts.optarg);
+        if (options.policy < 1 || 2 < options.policy)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Usage:  %s "
+                             "-e [12] "
+                             "-k <ior>"
+                             "\n",
+                             argv[0]),
+                            -1);
         break;
       case '?':
       default:
@@ -109,82 +112,60 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-e [12] "
                            "-k <ior>"
                            "\n",
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  if (options.policy == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Usage:  %s -e [12] -k <ior>\n",
+                       argv[0]),
+                      -1);
   return 0;
 }
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    CORBA::ORB_var orb =
-      CORBA::ORB_init( argc, argv );
-
-    if (parse_args (argc, argv) != 0)
-      return 1;
-    else if(which < 1 || 2 < which)
-      return 1;
-
-    CORBA::Object_var obj =
-      orb->string_to_object( ior );
-
-    Security::QOP            qop;
-    CORBA::Any               protection;
-    Security::EstablishTrust establish_trust;
-    CORBA::Any               trust;
-    CORBA::PolicyList        policy_list (2);
-
-    if (which == 1)
+  ClientOptions options {};
+  try
     {
-      qop = Security::SecQOPNoProtection;
-      //qop = Security::SecQOPIntegrity;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
 
+      CORBA::Object_var const object = orb->string_to_object (options.ior);
+      Security::QOP const qop = options.policy == 1
+        ? Security::SecQOPNoProtection
+        : Security::SecQOPIntegrityAndConfidentiality;
+      CORBA::Any protection {};
+      protection <<= qop;
+
+      Security::EstablishTrust establish_trust {};
       establish_trust.trust_in_client = false;
-      establish_trust.trust_in_target = 1;
+      establish_trust.trust_in_target = true;
+      CORBA::Any trust {};
+      trust <<= establish_trust;
+
+      CORBA::Policy_var const protection_policy =
+        orb->create_policy (Security::SecQOPPolicy, protection);
+      CORBA::Policy_var const trust_policy =
+        orb->create_policy (Security::SecEstablishTrustPolicy, trust);
+      CORBA::PolicyList policy_list {};
+      policy_list.length (2);
+      policy_list[0] = CORBA::Policy::_duplicate (protection_policy.in ());
+      policy_list[1] = CORBA::Policy::_duplicate (trust_policy.in ());
+
+      CORBA::Object_var const object_with_policy =
+        object->_set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
+      Messenger_var const messenger = Messenger::_narrow (object_with_policy.in ());
+      CORBA::String_var message = CORBA::string_dup ("Implementing security policy now!");
+      messenger->send_message ("Chief of Security", "New Directive", message.inout ());
+      orb->destroy ();
     }
-    else
+  catch (CORBA::Exception const &ex)
     {
-      qop = Security::SecQOPIntegrityAndConfidentiality;
-
-      establish_trust.trust_in_client = false;
-      establish_trust.trust_in_target = 1;
+      ex._tao_print_exception ("Client: main block");
+      return 1;
     }
-
-    protection <<= qop;
-    trust      <<= establish_trust;
-
-    CORBA::Policy_var policy =
-    orb->create_policy (Security::SecQOPPolicy, protection);
-
-    CORBA::Policy_var policy2 =
-    orb->create_policy (Security::SecEstablishTrustPolicy, trust);
-
-    policy_list.length (1);
-    policy_list[0] = CORBA::Policy::_duplicate (policy.in ());
-    policy_list.length (2);
-    policy_list[1] = CORBA::Policy::_duplicate (policy2.in ());
-
-    CORBA::Object_var object =
-    obj->_set_policy_overrides (policy_list,
-                                  CORBA::SET_OVERRIDE);
-
-    Messenger_var messenger =
-      Messenger::_narrow( object.in() );
-
-    CORBA::String_var message =
-      CORBA::string_dup( "Implementing security policy now!" );
-
-    messenger->send_message( "Chief of Security",
-                             "New Directive",
-                             message.inout() );
-  }
-  catch (CORBA::Exception const & ex) {
-    ex._tao_print_exception("Client: main block");
-    return 1;
-  }
 
   return 0;
 }
