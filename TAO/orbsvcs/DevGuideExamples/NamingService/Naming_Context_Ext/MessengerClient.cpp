@@ -1,6 +1,7 @@
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
+
 #include <iostream>
 
 struct Options
@@ -34,7 +35,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Options options {};
       if (parse_args (argc, argv, options) != 0)
         return 1;
@@ -53,12 +54,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::cout << "Now try the same thing with the simple name." << std::endl;
 
       object = orb->resolve_initial_references ("NameService");
-      CosNaming::NamingContextExt_var root =
+      CosNaming::NamingContextExt_var const root =
         CosNaming::NamingContextExt::_narrow (object.in ());
       object = root->resolve_str ("Simple/Messenger");
       messenger = Messenger::_narrow (object.in ());
       messenger->send_message ("ACE User", "TAO Test", message.inout ());
       std::cout << "Message was sent" << std::endl;
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {

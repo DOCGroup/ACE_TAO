@@ -1,8 +1,12 @@
 #include "Messenger_i.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
-#include <fstream>
+
+#include <cstdio>
 #include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
 
 struct Options
 {
@@ -45,18 +49,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Options options {};
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (poa_object.in ());
-      PortableServer::POAManager_var poa_manager = poa->the_POAManager ();
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
       poa_manager->activate ();
 
-      CORBA::Object_var naming_object = orb->resolve_initial_references ("NameService");
-      CosNaming::NamingContextExt_var root =
+      CORBA::Object_var const naming_object = orb->resolve_initial_references ("NameService");
+      CosNaming::NamingContextExt_var const root =
         CosNaming::NamingContextExt::_narrow (naming_object.in ());
       if (CORBA::is_nil (root.in ()))
         {
@@ -70,49 +74,49 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       name[0].kind = CORBA::string_dup ("kind1");
       try
         {
-          CORBA::Object_var context_object = root->resolve (name);
+          CORBA::Object_var const context_object = root->resolve (name);
         }
       catch (CosNaming::NamingContext::NotFound const &)
         {
-          CosNaming::NamingContext_var context = root->bind_new_context (name);
+          CosNaming::NamingContext_var const context = root->bind_new_context (name);
         }
 
       name.length (2);
       name[1].id = CORBA::string_dup ("leaf/esc-slash");
       name[1].kind = CORBA::string_dup ("kind2");
 
-      PortableServer::Servant_var<Messenger_i> servant = new Messenger_i;
-      PortableServer::ObjectId_var object_id = poa->activate_object (servant.in ());
-      CORBA::Object_var messenger_object = poa->id_to_reference (object_id.in ());
+      PortableServer::Servant_var<Messenger_i> const servant = new Messenger_i;
+      PortableServer::ObjectId_var const object_id = poa->activate_object (servant.in ());
+      CORBA::Object_var const messenger_object = poa->id_to_reference (object_id.in ());
       root->rebind (name, messenger_object.in ());
 
       CosNaming::Name_var simple_name = root->to_name ("Simple");
       try
         {
-          CORBA::Object_var context_object = root->resolve (simple_name.in ());
+          CORBA::Object_var const context_object = root->resolve (simple_name.in ());
         }
       catch (CosNaming::NamingContext::NotFound const &)
         {
-          CosNaming::NamingContext_var context = root->bind_new_context (simple_name.in ());
+          CosNaming::NamingContext_var const context = root->bind_new_context (simple_name.in ());
         }
       simple_name = root->to_name ("Simple/Messenger");
       root->rebind (simple_name.in (), messenger_object.in ());
 
-      CORBA::String_var string_name = root->to_string (name);
+      CORBA::String_var const string_name = root->to_string (name);
       std::cout << "str_name:  " << string_name.in () << std::endl;
-      CORBA::String_var string_simple = root->to_string (simple_name.in ());
+      CORBA::String_var const string_simple = root->to_string (simple_name.in ());
       std::cout << "simple: " << string_simple.in () << std::endl;
 
-      CosNaming::Name_var converted_name = root->to_name (string_name.in ());
+      CosNaming::Name_var const converted_name = root->to_name (string_name.in ());
       std::cout << "converted back to a CosNaming::Name: " << std::endl;
-      std::cout << "   name[0] = " << (*converted_name)[0].id.in () << " , "
-                << (*converted_name)[0].kind.in () << std::endl;
-      std::cout << "   name[1] = " << (*converted_name)[1].id.in () << " , "
-                << (*converted_name)[1].kind.in () << std::endl;
+      std::cout << "   name[0] = " << converted_name.in ()[0].id.in () << " , "
+                << converted_name.in ()[0].kind.in () << std::endl;
+      std::cout << "   name[1] = " << converted_name.in ()[1].id.in () << " , "
+                << converted_name.in ()[1].kind.in () << std::endl;
 
       try
         {
-          CORBA::Object_var object = root->resolve_str (string_name.in ());
+          CORBA::Object_var const object = root->resolve_str (string_name.in ());
         }
       catch (CosNaming::NamingContext::NotFound const &)
         {
@@ -120,28 +124,33 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      ACE_CString base_address (":");
+      std::string base_address (":");
       base_address += ACE_TEXT_ALWAYS_CHAR (options.hostname);
-      base_address += ":";
+      base_address += ':';
       base_address += ACE_TEXT_ALWAYS_CHAR (options.port);
-      ACE_CString address (base_address + "/key/str");
-      CORBA::String_var corba_address = CORBA::string_dup (address.c_str ());
+      std::string address (base_address + "/key/str");
 
-      std::cout << "call to_url(\"" << corba_address.in () << "\"" << std::endl;
+      std::cout << "call to_url(\"" << address << "\"" << std::endl;
       std::cout << "           ,\"" << string_simple.in () << "\")" << std::endl;
-      CORBA::String_var url_string = root->to_url (corba_address.in (), string_simple.in ());
+      CORBA::String_var const url_string = root->to_url (address.c_str (), string_simple.in ());
       std::cout << "to_url result: " << url_string.in () << std::endl;
 
-      CORBA::String_var naming_address = CORBA::string_dup (base_address.c_str ());
-      std::cout << "call to_url(\"" << naming_address.in () << "\",\""
+      std::cout << "call to_url(\"" << base_address << "\",\""
                 << string_simple.in () << "\")" << std::endl;
-      CORBA::String_var url = root->to_url (naming_address.in (), string_simple.in ());
+      CORBA::String_var const url = root->to_url (base_address.c_str (), string_simple.in ());
       std::cout << "to_url result:    " << url.in () << std::endl;
 
-      std::ofstream output_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file));
-      output_file << url.in () << std::endl;
-      std::cout << "Naming Service URL written to file "
-                << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file) << std::endl;
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          throw std::runtime_error ("Cannot open URL output file");
+        ACE_OS::fprintf (output_file.get (), "%s\n", url.in ());
+      }
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Naming Service URL written to file %s\n"),
+                  options.ior_output_file));
 
       orb->run ();
       orb->destroy ();
@@ -149,6 +158,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception const &ex)
     {
       std::cerr << "Caught a CORBA::Exception: " << ex << std::endl;
+      return 1;
+    }
+  catch (std::runtime_error const &ex)
+    {
+      std::cerr << "Server: " << ex.what () << std::endl;
       return 1;
     }
 
