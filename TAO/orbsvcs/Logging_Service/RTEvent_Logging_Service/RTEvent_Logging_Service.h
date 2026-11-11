@@ -18,6 +18,9 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
 
+#include <optional>
+#include <string>
+
 class RTEvent_Logging_Service
   : public ACE_Task_Base
 {
@@ -41,7 +44,7 @@ public:
   // Initializes the Telecom Log Service.
 
   int run ();
-    // Run the Telecom Log Service.
+  // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
   void shutdown ();
@@ -63,22 +66,22 @@ protected:
 
 private:
   // = Data members
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // The ORB that we use.
 
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
   // Reference to the root poa.
 
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var naming_ {};
   // A naming context.
 
-  ACE_CString service_name_ {"RTEventLogFactory"};
+  std::string service_name_ {"RTEventLogFactory"};
   // The name we use to bind with the NameService
 
-  ACE_TCHAR const * ior_file_name_ {};
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
   // The name of the file were we output the factory IOR.
 
-  ACE_TCHAR const * pid_file_name_ {};
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
   // The name of a file where the process stores its pid
 
   bool bind_to_naming_service_ {true};
