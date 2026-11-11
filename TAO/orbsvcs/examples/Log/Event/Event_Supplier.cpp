@@ -27,15 +27,15 @@ Supplier::run (int argc, ACE_TCHAR *argv[])
       this->orb_ =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
-      CORBA::Object_var naming_obj =
+      CORBA::Object_var const naming_obj =
         this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
@@ -49,7 +49,7 @@ Supplier::run (int argc, ACE_TCHAR *argv[])
       name.length (1);
       name[0].id = CORBA::string_dup (event_tls_log_factory_name);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->naming_context_->resolve (name);
 
       this->event_log_factory_ =
@@ -68,7 +68,7 @@ Supplier::run (int argc, ACE_TCHAR *argv[])
 
       DsLogAdmin::LogId logid {};
 
-      DsEventLogAdmin::EventLog_var event_log =
+      DsEventLogAdmin::EventLog_var const event_log =
         this->event_log_factory_->create (logfullaction,
                                           max_size,
                                           threshold,
@@ -76,13 +76,13 @@ Supplier::run (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Create returned logid = %u\n"), logid));
 
-      CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
+      CosEventChannelAdmin::SupplierAdmin_var const supplier_admin =
         event_log->for_suppliers ();
 
       this->consumer_ =
         supplier_admin->obtain_push_consumer ();
 
-      CosEventComm::PushSupplier_var supplier =
+      CosEventComm::PushSupplier_var const supplier =
         this->_this ();
 
       this->consumer_->connect_push_supplier (supplier.in ());
@@ -141,7 +141,7 @@ Supplier::run (int argc, ACE_TCHAR *argv[])
       event_log->destroy ();
 
       // Deactivate this object...
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
 
       poa->deactivate_object (id.in ());

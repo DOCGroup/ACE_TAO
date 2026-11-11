@@ -32,7 +32,6 @@ class Consumer : public POA_CosEventComm::PushConsumer
   //
 public:
   Consumer () = default;
-  // Constructor
 
   Consumer (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;

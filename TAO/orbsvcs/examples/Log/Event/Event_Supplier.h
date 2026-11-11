@@ -31,7 +31,6 @@ class Supplier : public POA_CosEventComm::PushSupplier
   //
 public:
   Supplier () = default;
-  // Constructor
 
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;
