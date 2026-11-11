@@ -11,6 +11,7 @@
 #include "tao/PortableServer/PortableServer.h"
 
 #include "Log.h"
+#include <cstring>
 #include <memory>
 
 // State management
@@ -26,9 +27,12 @@ class ReplicaController
     public virtual ::CORBA::LocalObject
 {
 public:
-  ~ReplicaController () override = default;
+  explicit ReplicaController (CORBA::ORB_ptr orb);
 
-  ReplicaController (CORBA::ORB_ptr orb);
+  ReplicaController (ReplicaController const &) = delete;
+  ReplicaController (ReplicaController &&) = delete;
+  ReplicaController &operator= (ReplicaController const &) = delete;
+  ReplicaController &operator= (ReplicaController &&) = delete;
 
 public:
   char *name () override;
@@ -64,28 +68,28 @@ public:
 
 private:
   static ACE_THR_FUNC_RETURN
-  listener_thunk (void* p);
+  listener_thunk (void *p);
 
   void
   listener ();
 
   PortableServer::POA_ptr
-  resolve_poa (PortableInterceptor::AdapterName const& name);
+  resolve_poa (PortableInterceptor::AdapterName const &name);
 
 private:
   class RecordId
   {
   public:
-    RecordId (char const* client_id, CORBA::Long retention_id)
+    RecordId (char const *client_id, CORBA::Long retention_id)
         : client_id_ (CORBA::string_dup (client_id)),
           retention_id_ (retention_id)
     {
     }
 
     friend bool
-    operator< (RecordId const& a, RecordId const& b)
+    operator< (RecordId const &a, RecordId const &b)
     {
-      int r (ACE_OS::strcmp (a.client_id_.in (), b.client_id_.in ()));
+      int const r (std::strcmp (a.client_id_.in (), b.client_id_.in ()));
 
       return (r < 0) || (r == 0 && a.retention_id_ < b.retention_id_);
     }

@@ -2,34 +2,37 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
 #include "RolyPoly_i.h"
 #include "CrashPoint.h"
 #include "ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_TCHAR const *ior_file {};
+struct Server_Options
+{
+  ACE_TCHAR const *ior_file {};
+  short crash_point {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:c:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_file = get_opts.opt_arg ();
+        options.ior_file = get_opts.opt_arg ();
         break;
       case 'c':
-        crash_point = ACE_OS::atoi (get_opts.opt_arg ());
+        options.crash_point = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-o <IOR> "
-                           "-c <CrashPoint>\n",
+                           ACE_TEXT ("Usage:  %s -o <IOR> -c <CrashPoint>\n"),
                            argv[0]),
                           -1);
       }
@@ -38,71 +41,72 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      if (::parse_args (argc, argv) != 0) return -1;
+      Server_Options options {};
+      if (::parse_args (argc, argv, options) != 0)
+        return -1;
+      crash_point = options.crash_point;
 
       ORB_Initializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       ORB_Initializer,
                       -1);  // No exceptions yet!
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, "Server ORB");
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      RolyPoly_i* roly_poly_impl {};
+      RolyPoly_i *roly_poly_impl {};
 
       ACE_NEW_RETURN (roly_poly_impl,
                       RolyPoly_i (orb.in ()),
                       1);
 
-      PortableServer::ServantBase_var owner_transfer (roly_poly_impl);
+      PortableServer::ServantBase_var const owner_transfer (roly_poly_impl);
 
-      RolyPoly_var t =
+      RolyPoly_var const t =
         roly_poly_impl->_this ();
 
-      CORBA::PolicyList policies;  // Empty policy list.
-
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (t.in ());
 
       poa_manager->activate ();
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == nullptr)
-      {
+      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+        ACE_OS::fopen (options.ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
+        {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file <%s> for writing "
-                           "IOR: %s",
+                           ACE_TEXT ("Cannot open output file <%s> for writing IOR: %C"),
+                           options.ior_file,
                            ior.in ()),
                           1);
-      }
+        }
 
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Server is ready\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server is ready\n")));
 
       // Run the ORB event loop.
       orb->run ();
@@ -111,11 +115,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Event loop finished.\n")));
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Caught exception:");
+      ex._tao_print_exception (ACE_TEXT ("Caught exception:"));
       return -1;
     }
 

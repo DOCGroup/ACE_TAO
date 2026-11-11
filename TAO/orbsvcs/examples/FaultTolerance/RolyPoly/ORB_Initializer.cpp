@@ -1,6 +1,5 @@
 // file      : RolyPoly/ORB_Initializer.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-#include <memory>
 #include "tao/corba.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
@@ -22,9 +21,9 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   // Register replica controller as server request interceptor.
   //
-  TAO_ORBInitInfo* tao_info = dynamic_cast<TAO_ORBInitInfo*> (info);
+  TAO_ORBInitInfo * const tao_info = dynamic_cast<TAO_ORBInitInfo*> (info);
 
-  CORBA::ORB_var orb (tao_info->orb_core ()->orb ());
+  CORBA::ORB_var const orb (tao_info->orb_core ()->orb ());
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor;
 

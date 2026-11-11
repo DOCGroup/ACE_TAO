@@ -14,40 +14,39 @@ public:
   using RecordValueType = RV;
 
 private:
-  using Map_ = ACE_RB_Tree <RecordIdType,
-                            RecordValueType,
-                            ACE_Less_Than<RecordIdType>,
-                            ACE_Null_Mutex>;
+  using Map_ = ACE_RB_Tree<RecordIdType,
+                           RecordValueType,
+                           ACE_Less_Than<RecordIdType>,
+                           ACE_Null_Mutex>;
 
 public:
   class Duplicate {};
   class NotFound {};
 
   void
-  insert (RecordIdType const& ri, RecordValueType const& rv)
+  insert (RecordIdType const &ri, RecordValueType const &rv)
   {
     if (map_.bind (ri, rv) != 0) throw Duplicate ();
   }
 
   bool
-  contains (RecordIdType const& ri) const
+  contains (RecordIdType const &ri) const
   {
     // Guess what: ACE_RB_Tree::find() is not const.
     //
-    Map_& m = const_cast<Map_&> (map_);
+    Map_ &m = const_cast<Map_ &> (map_);
 
-    RecordValueType tmp;
+    RecordValueType tmp {};
 
     return m.find (ri, tmp) == 0;
   }
 
-
-  RecordValueType const&
-  lookup (RecordIdType const& ri) const
+  RecordValueType const &
+  lookup (RecordIdType const &ri) const
   {
-    Map_& m = const_cast<Map_&> (map_);
+    Map_ &m = const_cast<Map_ &> (map_);
 
-    typename Map_::ENTRY* entry;
+    typename Map_::ENTRY *entry {};
 
     if (m.find (ri, entry) != 0) throw NotFound ();
 

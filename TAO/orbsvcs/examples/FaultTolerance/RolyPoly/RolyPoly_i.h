@@ -10,9 +10,7 @@ class RolyPoly_i : public virtual POA_RolyPoly,
                    public virtual Checkpointable
 {
 public:
-  RolyPoly_i (CORBA::ORB_ptr orb);
-
-  ~RolyPoly_i () override = default;
+  explicit RolyPoly_i (CORBA::ORB_ptr orb);
 
   // Checkpointable
   CORBA::Any *get_state () override;
@@ -23,6 +21,11 @@ public:
   CORBA::Short number (char *&s) override;
 
   void shutdown () override;
+
+  RolyPoly_i (RolyPoly_i const &) = delete;
+  RolyPoly_i (RolyPoly_i &&) = delete;
+  RolyPoly_i &operator= (RolyPoly_i const &) = delete;
+  RolyPoly_i &operator= (RolyPoly_i &&) = delete;
 
 private:
   CORBA::Short number_ {};

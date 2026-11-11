@@ -11,6 +11,12 @@ class ORB_Initializer :
   public virtual ::CORBA::LocalObject
 {
 public:
+  ORB_Initializer () = default;
+  ORB_Initializer (ORB_Initializer const &) = delete;
+  ORB_Initializer (ORB_Initializer &&) = delete;
+  ORB_Initializer &operator= (ORB_Initializer const &) = delete;
+  ORB_Initializer &operator= (ORB_Initializer &&) = delete;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
