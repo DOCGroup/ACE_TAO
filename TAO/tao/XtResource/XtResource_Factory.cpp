@@ -16,23 +16,23 @@ namespace TAO
   {
     // synchronized by external locks
     if (!this->context_)
-    {
-      TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - XtAppContext is undefined.")
-                  ACE_TEXT(" Cannot create ACE_XtReactor\n")));
-      return nullptr; // Private and undefined;
-    }
+      {
+        TAOLIB_ERROR ((LM_ERROR,
+                       ACE_TEXT ("TAO (%P|%t) - XtAppContext is undefined.")
+                       ACE_TEXT (" Cannot create ACE_XtReactor\n")));
+        return nullptr;
+      }
 
     if (!this->reactor_impl_)
-    {
-      ACE_NEW_RETURN (this->reactor_impl_,
-                      ACE_XtReactor (this->context_),
-                      nullptr);
+      {
+        ACE_NEW_RETURN (this->reactor_impl_,
+                        ACE_XtReactor (this->context_),
+                        nullptr);
 
-      if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - ACE_XtReactor created\n"));
-    }
+        if (TAO_debug_level > 0)
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - ACE_XtReactor created\n"));
+      }
 
     return this->reactor_impl_;
   }

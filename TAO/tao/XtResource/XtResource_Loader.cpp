@@ -13,7 +13,7 @@ namespace TAO
     ACE_NEW (tmp,
              XtResource_Factory (context));
 
-    TAO_ORB_Core::set_gui_resource_factory( tmp );
+    TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
   XtResource_Loader::~XtResource_Loader () = default;
