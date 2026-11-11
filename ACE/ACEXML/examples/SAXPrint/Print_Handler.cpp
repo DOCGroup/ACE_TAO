@@ -14,7 +14,8 @@ ACEXML_Print_Handler::characters (ACEXML_Char const *cdata,
                                   size_t length)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event characters () ** start: %u  end: %u ***************\n%s\n- End event characters () ---------------\n"),
+              ACE_TEXT ("* Event characters () ** start: %u  end: %u ***************\n%s\n")
+              ACE_TEXT ("- End event characters () ---------------\n"),
               start, length, cdata));
 }
 
@@ -177,7 +178,7 @@ ACEXML_Print_Handler::resolveEntity (ACEXML_Char const *,
  * Receive notification of a recoverable error.
  */
 void
-ACEXML_Print_Handler::error (ACEXML_SAXParseException & ex)
+ACEXML_Print_Handler::error (ACEXML_SAXParseException &ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == nullptr
@@ -189,7 +190,7 @@ ACEXML_Print_Handler::error (ACEXML_SAXParseException & ex)
 }
 
 void
-ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex)
+ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException &ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == nullptr
@@ -201,7 +202,7 @@ ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex)
 }
 
 void
-ACEXML_Print_Handler::warning (ACEXML_SAXParseException & ex)
+ACEXML_Print_Handler::warning (ACEXML_SAXParseException &ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == nullptr

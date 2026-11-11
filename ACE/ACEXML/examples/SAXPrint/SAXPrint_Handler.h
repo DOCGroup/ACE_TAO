@@ -23,20 +23,14 @@
 class ACEXML_SAXPrint_Handler : public ACEXML_DefaultHandler
 {
 public:
-  /*
-   * Default constructor.
-   */
   explicit ACEXML_SAXPrint_Handler (ACEXML_Char const *name);
 
-  /*
-   * Default destructor.
-   */
   ~ACEXML_SAXPrint_Handler () override = default;
 
   ACEXML_SAXPrint_Handler (ACEXML_SAXPrint_Handler const &) = delete;
-  ACEXML_SAXPrint_Handler (ACEXML_SAXPrint_Handler&&) = delete;
-  ACEXML_SAXPrint_Handler& operator= (ACEXML_SAXPrint_Handler const &) = delete;
-  ACEXML_SAXPrint_Handler& operator= (ACEXML_SAXPrint_Handler&&) = delete;
+  ACEXML_SAXPrint_Handler (ACEXML_SAXPrint_Handler &&) = delete;
+  ACEXML_SAXPrint_Handler &operator= (ACEXML_SAXPrint_Handler const &) = delete;
+  ACEXML_SAXPrint_Handler &operator= (ACEXML_SAXPrint_Handler &&) = delete;
 
   // Methods inherit from ACEXML_ContentHandler.
 

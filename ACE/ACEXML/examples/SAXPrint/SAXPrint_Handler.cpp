@@ -158,7 +158,7 @@ ACEXML_SAXPrint_Handler::resolveEntity (ACEXML_Char const *,
  * Receive notification of a recoverable error.
  */
 void
-ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex)
+ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException &ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == nullptr
@@ -170,7 +170,7 @@ ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex)
 }
 
 void
-ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex)
+ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException &ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == nullptr
@@ -182,7 +182,7 @@ ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex)
 }
 
 void
-ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex)
+ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException &ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == nullptr
