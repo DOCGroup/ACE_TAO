@@ -85,7 +85,7 @@ public:
   /// confirm if this QoS session was subscribed to by the socket.
   virtual int qos (ACE_SOCK *socket,
                    ACE_QoS_Manager *qos_manager,
-                   const ACE_QoS &ace_qos) = 0;
+                   ACE_QoS const &ace_qos) = 0;
 
   /**
    * Sets the QoS for this session object to ace_qos. Does not
@@ -95,7 +95,7 @@ public:
    * method e.g. inside the dgram_mcast.subscribe () where the QoS for
    * the socket is set through ACE_OS::join_leaf ().
    */
-  virtual void qos (const ACE_QoS &ace_qos) = 0;
+  virtual void qos (ACE_QoS const &ace_qos) = 0;
 
   /**
    * This is called from handle_qos () method of the the QoS Event
@@ -108,13 +108,13 @@ public:
 
   /// Get/Set methods for the flags_.
   virtual ACE_End_Point_Type flags () const = 0;
-  virtual void flags (const ACE_End_Point_Type flags) = 0;
+  virtual void flags (ACE_End_Point_Type flags) = 0;
 
   /// Get the session id.
   virtual int session_id () const = 0;
 
   /// Set the session id.
-  virtual void session_id (const int session_id) = 0;
+  virtual void session_id (int session_id) = 0;
 
   /// Get the file descriptor on which RSVP events will occur.
   virtual ACE_HANDLE rsvp_events_handle () = 0;
@@ -130,19 +130,19 @@ public:
   virtual ACE_INET_Addr dest_addr () const = 0;
 
   /// Set the destination address for this session.
-  virtual void dest_addr (const ACE_INET_Addr &dest_addr) = 0;
+  virtual void dest_addr (ACE_INET_Addr const &dest_addr) = 0;
 
   /// Get the source port for this session.
   virtual u_short source_port () const = 0;
 
   /// Set the source port for this session.
-  virtual void source_port (const u_short &source_port) = 0;
+  virtual void source_port (u_short const &source_port) = 0;
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr () const = 0;
+  virtual ACE_INET_Addr *source_addr () const = 0;
 
   /// Set the source port for this session.
-  virtual void source_addr (ACE_INET_Addr* source_addr) = 0;
+  virtual void source_addr (ACE_INET_Addr *source_addr) = 0;
 
 
   /**

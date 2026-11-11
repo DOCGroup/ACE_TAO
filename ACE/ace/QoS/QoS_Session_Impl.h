@@ -133,17 +133,17 @@ private:
 
   /// Construct a simplified RAPI Sender TSpec object
   /// from an ACE_Flow_Spec object. Used internally by this class.
-  rapi_tspec_t *init_tspec_simplified (const ACE_Flow_Spec &flow_spec);
+  rapi_tspec_t *init_tspec_simplified (ACE_Flow_Spec const &flow_spec);
 
   /// Construct a simplified RAPI Receiver FlowSpec object
   /// from an ACE_Flow_Spec object. Used internally by the class.
-  rapi_flowspec_t *init_flowspec_simplified(const ACE_Flow_Spec &flow_spec);
+  rapi_flowspec_t *init_flowspec_simplified (ACE_Flow_Spec const &flow_spec);
 
   /// Set sending QoS for this RAPI session.
-  int sending_qos (const ACE_QoS &ace_qos);
+  int sending_qos (ACE_QoS const &ace_qos);
 
   /// Set receiving  QoS for this RAPI session.
-  int receiving_qos (const ACE_QoS &ace_qos);
+  int receiving_qos (ACE_QoS const &ace_qos);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

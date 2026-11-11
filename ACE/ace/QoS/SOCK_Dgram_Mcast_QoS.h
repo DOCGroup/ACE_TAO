@@ -64,10 +64,10 @@ public:
    * these numbers in alphanumeric form and <subscribe> will convert
    * them into numbers via <ACE_OS::atoi>.
    */
-  int subscribe (const ACE_INET_Addr &mcast_addr,
-                 const ACE_QoS_Params &qos_params,
+  int subscribe (ACE_INET_Addr const &mcast_addr,
+                 ACE_QoS_Params const &qos_params,
                  int reuse_addr = 1,
-                 const ACE_TCHAR *net_if = nullptr,
+                 ACE_TCHAR const *net_if = nullptr,
                  int protocol_family = PF_INET,
                  int protocol = 0,
                  ACE_Protocol_Info *protocolinfo = nullptr,
@@ -79,18 +79,18 @@ public:
 
   /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
   /// I/O (uses <WSASentTo>).  Returns 0 on success.
-  ssize_t send (const iovec buffers[],
+  ssize_t send (iovec const buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
                 int flags,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
   /// Send an @a n byte @a buf to the datagram socket (uses <WSASentTo>).
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
@@ -101,8 +101,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  int open (const ACE_INET_Addr &addr,
-            const ACE_QoS_Params &qos_params,
+  int open (ACE_INET_Addr const &addr,
+            ACE_QoS_Params const &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,
             ACE_Protocol_Info *protocolinfo = nullptr,
@@ -114,9 +114,9 @@ private:
   // = Disable public <open> method to ensure class used properly.
 
   /// Subscribe to the multicast interface using QoS-enabled semantics.
-  int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ACE_QoS_Params &qos_params,
-                     const ACE_TCHAR *net_if,
+  int subscribe_ifs (ACE_INET_Addr const &mcast_addr,
+                     ACE_QoS_Params const &qos_params,
+                     ACE_TCHAR const *net_if,
                      int protocol_family,
                      int protocol,
                      int reuse_addr,

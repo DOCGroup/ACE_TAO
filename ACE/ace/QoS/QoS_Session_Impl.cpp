@@ -301,7 +301,7 @@ ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 int
 ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
                        ACE_QoS_Manager * /* qos_manager */,
-                       const ACE_QoS &ace_qos)
+                       ACE_QoS const &ace_qos)
 {
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
@@ -318,7 +318,7 @@ ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
 
 // Set sending QoS for this RAPI session.
 int
-ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
+ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
 {
   ACE_Flow_Spec *sending_flowspec = ace_qos.sending_flowspec ();
 
@@ -420,7 +420,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 
 // Set receiving QoS for this RAPI session.
 int
-ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
+ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
 {
   ACE_Flow_Spec *receiving_flowspec = ace_qos.receiving_flowspec ();
   if (receiving_flowspec == nullptr)
@@ -538,7 +538,7 @@ ACE_RAPI_Session::update_qos ()
 // simplified as against the full bodied IntServ version.
 
 rapi_tspec_t *
-ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
+ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
 {
   rapi_tspec_t *t_spec;
 
@@ -569,7 +569,7 @@ ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
 // full bodied IntServ version.
 
 rapi_flowspec_t *
-ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
+ACE_RAPI_Session::init_flowspec_simplified (ACE_Flow_Spec const &flow_spec)
 {
   rapi_flowspec_t *flowsp;
   ACE_NEW_RETURN (flowsp,
@@ -652,7 +652,7 @@ ACE_GQoS_Session::close ()
 int
 ACE_GQoS_Session::qos (ACE_SOCK *socket,
                        ACE_QoS_Manager *qos_manager,
-                       const ACE_QoS &ace_qos)
+                       ACE_QoS const &ace_qos)
 {
   // Confirm if the current session is one of the QoS sessions
   // subscribed to by the given socket.

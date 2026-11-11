@@ -30,8 +30,8 @@ ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (options opts)
 }
 
 int
-ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_INET_Addr &addr,
-                                const ACE_QoS_Params &qos_params,
+ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
+                                ACE_QoS_Params const &qos_params,
                                 int protocol_family,
                                 int protocol,
                                 ACE_Protocol_Info *protocolinfo,
@@ -65,9 +65,9 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_INET_Addr &addr,
 
 
 int
-ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                         const ACE_QoS_Params &qos_params,
-                                         const ACE_TCHAR *net_if,
+ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
+                                         ACE_QoS_Params const &qos_params,
+                                         ACE_TCHAR const *net_if,
                                          int protocol_family,
                                          int protocol,
                                          int reuse_addr,
@@ -169,10 +169,10 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
-                                     const ACE_QoS_Params &qos_params,
+ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
+                                     ACE_QoS_Params const &qos_params,
                                      int reuse_addr,
-                                     const ACE_TCHAR *net_if,
+                                     ACE_TCHAR const *net_if,
                                      int protocol_family,
                                      int protocol,
                                      ACE_Protocol_Info *protocolinfo,
@@ -237,7 +237,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
 
       // XX This is windows stuff only. fredk
       if (ACE_OS::join_leaf (this->get_handle (),
-                             reinterpret_cast<const sockaddr *> (&ret_mreq.IMR_MULTIADDR.s_addr),
+                             reinterpret_cast<sockaddr const *> (&ret_mreq.IMR_MULTIADDR.s_addr),
                              sizeof ret_mreq.IMR_MULTIADDR.s_addr,
                              qos_params) == ACE_INVALID_HANDLE
           && errno != ENOTSUP)

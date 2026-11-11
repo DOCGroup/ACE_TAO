@@ -19,7 +19,7 @@ ACE_RAPI_Session::qos () const
 // Overloaded method to set the QoS for this session object. Does not
 // interfere with the underlying socket QoS.
 ACE_INLINE void
-ACE_RAPI_Session::qos (const ACE_QoS &ace_qos)
+ACE_RAPI_Session::qos (ACE_QoS const &ace_qos)
 {
   this->qos_ = ace_qos;
 }
@@ -33,7 +33,7 @@ ACE_RAPI_Session::session_id () const
 
 // Set the RAPI session id.
 ACE_INLINE void
-ACE_RAPI_Session::session_id (const int session_id)
+ACE_RAPI_Session::session_id (int session_id)
 {
   this->session_id_ = session_id;
 }
@@ -63,7 +63,7 @@ ACE_RAPI_Session::flags () const
 
 // Set the End Point Type (Sender/Receiver/Both).
 ACE_INLINE void
-ACE_RAPI_Session::flags (const ACE_End_Point_Type flags)
+ACE_RAPI_Session::flags (ACE_End_Point_Type flags)
 {
   this->flags_ = flags;
 }
@@ -78,7 +78,7 @@ ACE_RAPI_Session::dest_addr () const
 
 // Set the destination address for this RAPI session.
 ACE_INLINE void
-ACE_RAPI_Session::dest_addr (const ACE_INET_Addr &dest_addr)
+ACE_RAPI_Session::dest_addr (ACE_INET_Addr const &dest_addr)
 {
   this->dest_addr_ = dest_addr;
 }
@@ -92,19 +92,19 @@ ACE_RAPI_Session::source_port () const
 
 // Set the source port for this RAPI session.
 ACE_INLINE void
-ACE_RAPI_Session::source_port (const u_short &source_port)
+ACE_RAPI_Session::source_port (u_short const &source_port)
 {
   this->source_port_ = source_port;
 }
 
-ACE_INLINE ACE_INET_Addr*
+ACE_INLINE ACE_INET_Addr *
 ACE_RAPI_Session::source_addr () const
 {
   return this->src_addr_;
 }
 
 ACE_INLINE void
-ACE_RAPI_Session::source_addr (ACE_INET_Addr* source_addr)
+ACE_RAPI_Session::source_addr (ACE_INET_Addr *source_addr)
 {
   this->src_addr_ = source_addr;
 }
@@ -134,7 +134,7 @@ ACE_GQoS_Session::qos () const
 // Overloaded method to set the QoS for this session object. Does not
 // interfere with the underlying socket QoS.
 ACE_INLINE void
-ACE_GQoS_Session::qos (const ACE_QoS &ace_qos)
+ACE_GQoS_Session::qos (ACE_QoS const &ace_qos)
 {
   this->qos_ = ace_qos;
 }
@@ -148,7 +148,7 @@ ACE_GQoS_Session::session_id () const
 
 // Set the GQoS session id.
 ACE_INLINE void
-ACE_GQoS_Session::session_id (const int session_id)
+ACE_GQoS_Session::session_id (int session_id)
 {
   this->session_id_ = session_id;
 }
@@ -171,7 +171,7 @@ ACE_GQoS_Session::flags () const
 
 // Set the End Point Type (Sender/Receiver/Both).
 ACE_INLINE void
-ACE_GQoS_Session::flags (const ACE_End_Point_Type flags)
+ACE_GQoS_Session::flags (ACE_End_Point_Type flags)
 {
   this->flags_ = flags;
 }
@@ -185,7 +185,7 @@ ACE_GQoS_Session::dest_addr () const
 
 // Set the destination address for this GQoS session.
 ACE_INLINE void
-ACE_GQoS_Session::dest_addr (const ACE_INET_Addr &dest_addr)
+ACE_GQoS_Session::dest_addr (ACE_INET_Addr const &dest_addr)
 {
   this->dest_addr_ = dest_addr;
 }
@@ -199,19 +199,19 @@ ACE_GQoS_Session::source_port () const
 
 // Set the source port for this RAPI session.
 ACE_INLINE void
-ACE_GQoS_Session::source_port (const u_short &source_port)
+ACE_GQoS_Session::source_port (u_short const &source_port)
 {
   this->source_port_ = source_port;
 }
 
-ACE_INLINE ACE_INET_Addr*
+ACE_INLINE ACE_INET_Addr *
 ACE_GQoS_Session::source_addr () const
 {
   return this->src_addr_;
 }
 
 ACE_INLINE void
-ACE_GQoS_Session::source_addr (ACE_INET_Addr* source_addr)
+ACE_GQoS_Session::source_addr (ACE_INET_Addr *source_addr)
 {
   this->src_addr_ = source_addr;
 }
