@@ -17,7 +17,7 @@
 #define TAO_FT_NOTIFIER_I_H_
 #include /**/ "ace/pre.h"
 #include "ace/ACE.h"
-#include "ace/SString.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -42,7 +42,7 @@ namespace TAO
     /**
      * Default constructor.
      */
-    FT_FaultNotifier_i ();
+    FT_FaultNotifier_i () = default;
 
     /**
      * Virtual destructor.
@@ -75,14 +75,14 @@ namespace TAO
      * Identify this fault notifier.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * idle time activity.
      * @param result [out] status code to return from process
      * @returns 0 to continue; nonzero to quit
      */
-    int idle(int &result);
+    int idle (int & result);
 
     //////////////////
     // CORBA interface
@@ -158,12 +158,12 @@ namespace TAO
     /**
      * A file to which the notifier's IOR should be written.
      */
-    ACE_TCHAR const * ior_output_file_;
+    std::basic_string<ACE_TCHAR> ior_output_file_;
 
     /**
      * A name to be used to register the notifier with the name service.
      */
-    char const * ns_name_;
+    char const * ns_name_ {};
 
     CosNaming::NamingContext_var naming_context_;
 
@@ -188,7 +188,7 @@ namespace TAO
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
-    ACE_CString identity_;
+    std::string identity_;
 
     /////////////////////////////
     //
@@ -206,10 +206,10 @@ namespace TAO
 
     ProxyInfoVec proxy_infos_;
 
-    size_t consumer_connects_;
-    size_t consumer_disconnects_;
+    size_t consumer_connects_ {};
+    size_t consumer_disconnects_ {};
 
-    ::CosNotifyChannelAdmin::ChannelID channel_id_;
+    ::CosNotifyChannelAdmin::ChannelID channel_id_ {};
     ::CosNotifyChannelAdmin::EventChannel_var notify_channel_;
     ::CosNotifyFilter::FilterFactory_var filter_factory_;
     ::CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
