@@ -12,14 +12,11 @@
 //=============================================================================
 
 
-#include "orbsvcs/Log_Macros.h"
-#include "tao/ORB_Constants.h"
 #include "tao/ORB.h"
 #include "ace/Service_Config.h"
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Signal.h"
 #include "ace/Time_Value.h"
-#include "ace/Argv_Type_Converter.h"
 
 extern "C" void handler (int)
 {
@@ -32,9 +29,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // ORB initialization boiler plate...
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (handler), SIGHUP);
+      ACE_Sig_Action const sa (handler, SIGHUP);
 
       for (;;)
         {
