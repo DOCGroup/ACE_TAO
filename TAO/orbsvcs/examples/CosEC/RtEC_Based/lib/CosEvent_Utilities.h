@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_COSEVENT_UTILITIES_H
 #define TAO_COSEVENT_UTILITIES_H
 #include /**/ "ace/pre.h"
@@ -33,10 +32,8 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   //   create and manage a CosEC servant.
   //   Clients can derive from this class and create servants.
  public:
-  /// Constructor.
   CosEC_ServantBase ();
 
-  /// Destructor.
   ~CosEC_ServantBase () override = default;
   CosEC_ServantBase (CosEC_ServantBase const &) = delete;
   CosEC_ServantBase (CosEC_ServantBase &&) = delete;
@@ -99,7 +96,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   void init_SupplierQOS (RtecBase::handle_t supp_handle,
                          ACE_SupplierQOS_Factory &supplier_qos,
                          ACE_TCHAR *source_type_pairs);
-
 
   /// Initialize the ConsumerQOS Factory.
   void init_ConsumerQOS (RtecBase::handle_t cons_handle,

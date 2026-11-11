@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef EVENTCHANNEL_I_H
 #define EVENTCHANNEL_I_H
 #include /**/ "ace/pre.h"
@@ -35,10 +34,8 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
   //   the real-time implementation.
   //
 public:
-  /// Constructor.
   TAO_CosEC_EventChannel_i ();
 
-  /// Destructor.
   ~TAO_CosEC_EventChannel_i () override = default;
   TAO_CosEC_EventChannel_i (TAO_CosEC_EventChannel_i const &) = delete;
   TAO_CosEC_EventChannel_i (TAO_CosEC_EventChannel_i &&) = delete;

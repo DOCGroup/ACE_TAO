@@ -23,15 +23,12 @@ class TAO_CosEC_PushConsumerWrapper :
   //   PushConsumer.
 public:
   explicit TAO_CosEC_PushConsumerWrapper (CosEventComm::PushConsumer_ptr consumer);
-  // Constructor.
 
   ~TAO_CosEC_PushConsumerWrapper () override = default;
   TAO_CosEC_PushConsumerWrapper (TAO_CosEC_PushConsumerWrapper const &) = delete;
   TAO_CosEC_PushConsumerWrapper (TAO_CosEC_PushConsumerWrapper &&) = delete;
   TAO_CosEC_PushConsumerWrapper &operator= (TAO_CosEC_PushConsumerWrapper const &) = delete;
   TAO_CosEC_PushConsumerWrapper &operator= (TAO_CosEC_PushConsumerWrapper &&) = delete;
-  // Destructor.
-
   void push (RtecEventComm::EventSet const &data) override;
   // This method is called by the RTEvent Channel to supply data.
 
@@ -77,10 +74,10 @@ TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer ()
   // Deactivate the supplier proxy.
   this->consumer_->disconnect_push_consumer ();
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
@@ -103,10 +100,10 @@ TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier ()
   this->pps_->disconnect_push_supplier ();
 
   // Deactivate the supplier proxy
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
@@ -121,18 +118,18 @@ TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer
   if (this->connected ())
     throw CosEventChannelAdmin::AlreadyConnected ();
 
-  if (push_consumer == CosEventComm::PushConsumer::_nil())
+  if (push_consumer == CosEventComm::PushConsumer::_nil ())
     throw CORBA::BAD_PARAM ();
 
-  TAO_CosEC_PushConsumerWrapper *wrapper;
+  TAO_CosEC_PushConsumerWrapper *wrapper {};
   ACE_NEW_THROW_EX (wrapper,
                     TAO_CosEC_PushConsumerWrapper (push_consumer),
                     CORBA::NO_MEMORY ());
 
-  std::unique_ptr <TAO_CosEC_PushConsumerWrapper> auto_wrapper (wrapper);
+  std::unique_ptr<TAO_CosEC_PushConsumerWrapper> auto_wrapper (wrapper);
 
   // @@ This code is not exception safe.
-  RtecEventComm::PushConsumer_ptr  rtecpushconsumer =
+  RtecEventComm::PushConsumer_ptr const rtecpushconsumer =
     auto_wrapper.get ()->_this ();
 
   // give the ownership to the POA.
@@ -145,7 +142,7 @@ TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer
 }
 
 bool
-TAO_CosEC_ProxyPushSupplier_i::connected ()
+TAO_CosEC_ProxyPushSupplier_i::connected () const
 {
   return this->wrapper_ != nullptr;
 }

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PROXYPUSHSUPPLIER_H
 #define _PROXYPUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
@@ -32,11 +31,9 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushSupplier_i :
   //   This implementation of the ProxyPushSupplier uses the
   //   RtecEventChannelAdmin::ProxyPushSupplier.
 public:
-  /// Constructor.
   TAO_CosEC_ProxyPushSupplier_i (RtecEventChannelAdmin::ConsumerQOS const &qos,
                                  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);
 
-  /// Destructor.
   ~TAO_CosEC_ProxyPushSupplier_i () override = default;
   TAO_CosEC_ProxyPushSupplier_i (TAO_CosEC_ProxyPushSupplier_i const &) = delete;
   TAO_CosEC_ProxyPushSupplier_i (TAO_CosEC_ProxyPushSupplier_i &&) = delete;
@@ -52,7 +49,7 @@ public:
 private:
   /// Returns 0 if a push_consumer is already connected to this
   /// ProxyPushSupplier, otherwise it returns a 1.
-  bool connected ();
+  bool connected () const;
 
   /// The ConsumerQOS specified by the user of this class.
   RtecEventChannelAdmin::ConsumerQOS const &qos_;

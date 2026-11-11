@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMERADMIN_I_H
 #define CONSUMERADMIN_I_H
 #include /**/ "ace/pre.h"
@@ -30,10 +29,8 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ConsumerAdmin_i :
   //   This implementation of the ConsumerAdmin uses the
   //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
-  /// Constructor.
   TAO_CosEC_ConsumerAdmin_i ();
 
-  /// Destructor.
   ~TAO_CosEC_ConsumerAdmin_i () override = default;
   TAO_CosEC_ConsumerAdmin_i (TAO_CosEC_ConsumerAdmin_i const &) = delete;
   TAO_CosEC_ConsumerAdmin_i (TAO_CosEC_ConsumerAdmin_i &&) = delete;

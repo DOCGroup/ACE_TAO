@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PROXYPUSHCONSUMER_I_H
 #define _PROXYPUSHCONSUMER_I_H
 #include /**/ "ace/pre.h"
@@ -39,11 +38,9 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushConsumer_i :
   //   so we assume that publications[0] is initialized.
   //
 public:
-  /// Constructor.
   TAO_CosEC_ProxyPushConsumer_i (RtecEventChannelAdmin::SupplierQOS const &qos,
                                  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer);
 
-  /// Destructor.
   ~TAO_CosEC_ProxyPushConsumer_i () override = default;
   TAO_CosEC_ProxyPushConsumer_i (TAO_CosEC_ProxyPushConsumer_i const &) = delete;
   TAO_CosEC_ProxyPushConsumer_i (TAO_CosEC_ProxyPushConsumer_i &&) = delete;
@@ -62,7 +59,7 @@ public:
 private:
   /// Returns 0 if a push_supplier is already connected to this
   /// ProxyPushConsumer, otherwise it returns a 1.
-  bool connected ();
+  bool connected () const;
 
   /// The SupplierQOS specified by the user of this class.
   RtecEventChannelAdmin::SupplierQOS const &qos_;
