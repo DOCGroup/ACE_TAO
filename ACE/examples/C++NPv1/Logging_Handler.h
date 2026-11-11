@@ -6,11 +6,8 @@
 #define _LOGGING_HANDLER_H
 
 #include "ace/FILE_IO.h"
+#include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Message_Block;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Logging_Handler
 {
@@ -40,12 +37,12 @@ public:
   // hostname, <mblk->cont()> contains the log record header
   // (the byte order and the length) and the data.  Returns -1 on
   // failure or connection close.
-  int recv_log_record (ACE_Message_Block *&log_record);
+  int recv_log_record (ACE_Message_Block_Unique_Ptr &log_record);
 
   // Write one record to the log file.  The <mblk> contains the
   // hostname and the <mblk->cont> contains the log record.
   // Returns length of record written on success, or -1 on failure.
-  int write_log_record (ACE_Message_Block *log_record);
+  int write_log_record (ACE_Message_Block const &log_record);
 
   // Log one record by calling <recv_log_record> and
   // <write_log_record>.  Returns 0 on success and -1 on failure.

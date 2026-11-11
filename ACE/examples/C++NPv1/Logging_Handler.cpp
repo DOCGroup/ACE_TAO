@@ -8,7 +8,7 @@
 #include "ace/Log_Record.h"
 #include "ace/Truncate.h"
 #include "ace/Message_Block.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include <new>
 
 #include "Logging_Handler.h"
@@ -18,9 +18,9 @@
 
 #include "ace/os_include/os_netdb.h"
 
-int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
+int Logging_Handler::recv_log_record (ACE_Message_Block_Unique_Ptr &mblk)
 {
-  mblk = nullptr;
+  mblk.reset ();
 
   // Put <logging_peer>'s hostname in new message block.
   ACE_INET_Addr peer_addr;
@@ -33,7 +33,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
       return -1;
     }
   peer_addr.get_host_name (record->wr_ptr (), MAXHOSTNAMELEN);
-  record->wr_ptr (ACE_OS::strlen (record->wr_ptr ()) + 1); // Go past name
+  record->wr_ptr (std::strlen (record->wr_ptr ()) + 1); // Go past name
 
   // Allocate a message block for the payload; initially at least
   // large enough to hold the header, but needs some room for
@@ -73,7 +73,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
       payload->wr_ptr (length);   // Reflect additional bytes
       // Chain the payload to mblk via the contination field.
       record->cont (payload.release ());
-      mblk = record.release ();
+      mblk.reset (record.release ());
       return length;
     }
   }
@@ -82,15 +82,15 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 }
 
 int
-Logging_Handler::write_log_record (ACE_Message_Block *mblk)
+Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
 {
   // Peer hostname is in the <mblk> and the log record data
   // is in its continuation.
-  if (log_file_.send_n (mblk) == -1)
+  if (log_file_.send_n (&mblk) == -1)
     return -1;
   if (ACE::debug ()) {
     // Build a CDR stream from the log record data.
-    ACE_InputCDR cdr (mblk->cont ());
+    ACE_InputCDR cdr (mblk.cont ());
     ACE_CDR::Boolean byte_order {};
     ACE_CDR::ULong length {};
     // Extract the byte-order and length, ending up at the start
@@ -101,20 +101,19 @@ Logging_Handler::write_log_record (ACE_Message_Block *mblk)
     cdr >> length;
     ACE_Log_Record log_record;
     cdr >> log_record;  // Finally extract the <ACE_log_record>.
-    log_record.print (mblk->rd_ptr (), 1, cerr);
+    log_record.print (mblk.rd_ptr (), 1, cerr);
   }
-  return ACE_Utils::truncate_cast<int> (mblk->total_length ());
+  return ACE_Utils::truncate_cast<int> (mblk.total_length ());
 }
 
 
 int Logging_Handler::log_record ()
 {
-  ACE_Message_Block *mblk {};
+  ACE_Message_Block_Unique_Ptr mblk;
   if (recv_log_record (mblk) == -1)
     return -1;
   else {
-    ACE_Message_Block_Unique_Ptr owner {mblk};
-    int const result = write_log_record (owner.get ());
+    int const result = write_log_record (*mblk);
     return result == -1 ? -1 : 0;
   }
 }

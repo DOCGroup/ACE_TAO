@@ -106,13 +106,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
-    char user_input[ACE_Log_Record::MAXLOGMSGLEN];
-    if (!gets (user_input))
+    std::array<char, ACE_Log_Record::MAXLOGMSGLEN> user_input {};
+    if (!cin.getline (user_input.data (), static_cast<int> (user_input.size ())))
       break;
 
     ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
-    log_record.msg_data (user_input);
+    log_record.msg_data (user_input.data ());
     if (logging_client.send (log_record) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n", "logging_client.send()"), 1);
