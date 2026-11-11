@@ -48,7 +48,7 @@ TAO_IOR_Table_Impl::find (char const *object_key)
   {
     std::string const key (object_key);
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
     Map::const_iterator const iter = this->map_.find (key);
     if (iter != this->map_.end ())
       {
