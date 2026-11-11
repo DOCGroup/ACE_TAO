@@ -3,9 +3,10 @@
 
 #include "EchoEventSupplier_i.h"
 
+#include "ace/OS_NS_string.h"
+#include "ace/Time_Value.h"
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
@@ -13,6 +14,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "ace/Thread_Manager.h"
+
 #include <iostream>
 #include <fstream>
 
@@ -21,93 +23,116 @@ constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
 constexpr int EVENT_DELAY_MS = 10;
 
-ACE_THR_FUNC_RETURN orb_thread(void *orb_ptr)
+ACE_THR_FUNC_RETURN orb_thread (void *orb_ptr)
 {
-  CORBA::ORB_var orb = CORBA::ORB::_duplicate((CORBA::ORB_ptr) orb_ptr);
-  orb->run();
+  CORBA::ORB_var const orb = CORBA::ORB::_duplicate (static_cast<CORBA::ORB_ptr> (orb_ptr));
+  orb->run ();
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  struct Command_Line_Options
+  {
+    ACE_TCHAR const *event_channel_name {ACE_TEXT ("EventService")};
+    ACE_TCHAR const *gateway_event_channel_name {};
+    ACE_TCHAR const *ior_file_name {};
+  };
+
   try
   {
     // Initialize the EC Factory so we can customize the EC
     TAO_EC_Default_Factory::init_svcs ();
 
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    ACE_TCHAR const * ecname = ACE_TEXT ("EventService");
-    ACE_TCHAR const * remote_ecname = nullptr;
-    ACE_TCHAR const * iorfile = nullptr;
-    for (int i = 0; argv[i] != nullptr; ++i) {
-      if (ACE_OS::strcmp(argv[i], ACE_TEXT("-ecname")) == 0) {
-        if (argv[i + 1] != nullptr) {
-          i++;
-          ecname = argv[i];
-        } else {
-          std::cerr << "Missing Event channel name" << std::endl;
-        }
+    Command_Line_Options options {};
+    for (int i = 1; i < argc; ++i)
+      {
+        ACE_TCHAR const * const option = argv[i];
+        if (ACE_OS::strcmp (option, ACE_TEXT ("-ecname")) == 0)
+          {
+            if (++i < argc)
+              {
+                options.event_channel_name = argv[i];
+              }
+            else
+              {
+                std::cerr << "Missing Event channel name" << std::endl;
+                return 1;
+              }
+          }
+        else if (ACE_OS::strcmp (option, ACE_TEXT ("-gateway")) == 0)
+          {
+            if (++i < argc)
+              {
+                options.gateway_event_channel_name = argv[i];
+              }
+            else
+              {
+                std::cerr << "Missing remote Event channel name" << std::endl;
+                return 1;
+              }
+          }
+        else if (ACE_OS::strcmp (option, ACE_TEXT ("-iorfile")) == 0)
+          {
+            if (++i < argc)
+              {
+                options.ior_file_name = argv[i];
+              }
+            else
+              {
+                std::cerr << "Missing IOR file name" << std::endl;
+                return 1;
+              }
+          }
       }
-      if (ACE_OS::strcmp(argv[i], ACE_TEXT("-gateway")) == 0) {
-        if (argv[i + 1] != nullptr) {
-          i++;
-          remote_ecname = argv[i];
-        } else {
-          std::cerr << "Missing Event channel name" << std::endl;
-        }
-      }
-      if (ACE_OS::strcmp(argv[i], ACE_TEXT("-iorfile")) == 0) {
-        if (argv[i + 1] != nullptr) {
-          i++;
-          iorfile = argv[i];
-        }
-      }
-    }
 
     // Get the POA
     CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow (object.in ());
-    PortableServer::POAManager_var poa_manager = poa->the_POAManager ();
+    PortableServer::POA_var const poa = PortableServer::POA::_narrow (object.in ());
+    PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
     poa_manager->activate ();
 
     // Spawn a thread for the orb
-    ACE_Thread_Manager *thread_mgr = ACE_Thread_Manager::instance();
-    thread_mgr->spawn(orb_thread, orb.in());
+    ACE_Thread_Manager * const thread_mgr = ACE_Thread_Manager::instance ();
+    thread_mgr->spawn (orb_thread, orb.in ());
 
     // Create a local event channel and register it with the RootPOA.
     TAO_EC_Event_Channel_Attributes attributes (poa.in (), poa.in ());
-    PortableServer::Servant_var<TAO_EC_Event_Channel> ec_impl =
-      new TAO_EC_Event_Channel(attributes);
+    PortableServer::Servant_var<TAO_EC_Event_Channel> const ec_impl =
+      new TAO_EC_Event_Channel (attributes);
     ec_impl->activate ();
-    PortableServer::ObjectId_var oid = poa->activate_object(ec_impl.in());
-    CORBA::Object_var ec_obj = poa->id_to_reference(oid.in());
-    RtecEventChannelAdmin::EventChannel_var ec =
-      RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
+    PortableServer::ObjectId_var const ec_oid = poa->activate_object (ec_impl.in ());
+    CORBA::Object_var const ec_obj = poa->id_to_reference (ec_oid.in ());
+    RtecEventChannelAdmin::EventChannel_var const ec =
+      RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
     // Find the Naming Service.
-    object = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(object.in());
-    CosNaming::Name_var name = root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
-    root_context->rebind(name.in(), ec.in());
+    object = orb->resolve_initial_references ("NameService");
+    CosNaming::NamingContextExt_var const root_context =
+      CosNaming::NamingContextExt::_narrow (object.in ());
+    CosNaming::Name_var const name =
+      root_context->to_name (ACE_TEXT_ALWAYS_CHAR (options.event_channel_name));
+    root_context->rebind (name.in (), ec.in ());
 
     // Get a SupplierAdmin object from the EventChannel.
-    RtecEventChannelAdmin::SupplierAdmin_var admin = ec->for_suppliers();
+    RtecEventChannelAdmin::SupplierAdmin_var const admin = ec->for_suppliers ();
 
     // Get a ProxyPushConsumer from the SupplierAdmin.
-    RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
-                                        admin->obtain_push_consumer();
+    RtecEventChannelAdmin::ProxyPushConsumer_var const consumer =
+      admin->obtain_push_consumer ();
 
     // Instantiate an EchoEventSupplier_i servant.
-    PortableServer::Servant_var<EchoEventSupplier_i> servant =
-      new EchoEventSupplier_i(orb.in());
+    PortableServer::Servant_var<EchoEventSupplier_i> const servant =
+      new EchoEventSupplier_i (orb.in ());
 
     // Register it with the RootPOA.
-    oid = poa->activate_object(servant.in());
-    CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
-    RtecEventComm::PushSupplier_var supplier =
-      RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
+    PortableServer::ObjectId_var const supplier_oid = poa->activate_object (servant.in ());
+    CORBA::Object_var const supplier_obj = poa->id_to_reference (supplier_oid.in ());
+    RtecEventComm::PushSupplier_var const supplier =
+      RtecEventComm::PushSupplier::_narrow (supplier_obj.in ());
 
     // Publish the events the supplier provides.
     ACE_SupplierQOS_Factory qos;
@@ -121,7 +146,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                      qos.get_SupplierQOS ());
 
     // Create an event (just a string in this case).
-    CORBA::String_var const eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
+    CORBA::String_var const event_data =
+      CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (options.event_channel_name));
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
@@ -131,75 +157,78 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     event[0].header.ttl = 1;
     event[0].header.type = MY_EVENT_TYPE;
     // Initialize data fields in event.
-    event[0].data.any_value <<= eventData;
+    event[0].data.any_value <<= event_data;
 
-    PortableServer::Servant_var<TAO_EC_Gateway_IIOP> gateway =
+    PortableServer::Servant_var<TAO_EC_Gateway_IIOP> const gateway =
       new TAO_EC_Gateway_IIOP;
-    bool gateway_initialized = false;
+    bool gateway_initialized {};
 
     std::cout << "Supplier starting sending of events.\n";
 
-    while (true) {
-      consumer->push (event);
-      ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
-      orb->run(tv);
+    while (true)
+      {
+        consumer->push (event);
+        ACE_Time_Value tv (0, 1000 * EVENT_DELAY_MS);
+        orb->run (tv);
 
-      if (remote_ecname != nullptr && !gateway_initialized) {
-        try {
-          // Get the remote event channel object
-          CORBA::Object_var obj = root_context->resolve_str (ACE_TEXT_ALWAYS_CHAR (remote_ecname));
-          RtecEventChannelAdmin::EventChannel_var remote_ec =
-            RtecEventChannelAdmin::EventChannel::_narrow(obj.in());
+        if (options.gateway_event_channel_name != nullptr && !gateway_initialized)
+          {
+            try
+              {
+                CORBA::Object_var remote_obj = root_context->resolve_str (
+                  ACE_TEXT_ALWAYS_CHAR (options.gateway_event_channel_name));
+                RtecEventChannelAdmin::EventChannel_var const remote_ec =
+                  RtecEventChannelAdmin::EventChannel::_narrow (remote_obj.in ());
 
-          bool ok = false;
-          if (!CORBA::is_nil(remote_ec.in())) {
-            // Now check if we can talk to it...
-            try {
-              RtecEventChannelAdmin::SupplierAdmin_var adm =
-                remote_ec->for_suppliers();
-              ok = true;
-            } catch (CORBA::UserException const &) {
-              // What is the correct exception(s) to catch here?
-            }
+                bool can_connect {};
+                if (!CORBA::is_nil (remote_ec.in ()))
+                  {
+                    try
+                      {
+                        RtecEventChannelAdmin::SupplierAdmin_var const remote_admin =
+                          remote_ec->for_suppliers ();
+                        can_connect = true;
+                      }
+                    catch (CORBA::UserException const &)
+                      {
+                        // The remote channel may not be ready to accept suppliers yet.
+                      }
+                  }
+
+                if (can_connect)
+                  {
+                    gateway->init (remote_ec.in (), ec.in ());
+
+                    PortableServer::ObjectId_var const gateway_oid =
+                      poa->activate_object (gateway.in ());
+                    CORBA::Object_var const gateway_obj =
+                      poa->id_to_reference (gateway_oid.in ());
+                    RtecEventChannelAdmin::Observer_var const observer =
+                      RtecEventChannelAdmin::Observer::_narrow (gateway_obj.in ());
+                    RtecEventChannelAdmin::Observer_Handle const observer_handle =
+                      ec->append_observer (observer.in ());
+                    ACE_UNUSED_ARG (observer_handle);
+                    gateway_initialized = true;
+                    std::cout << "Gateway initialized\n";
+                    if (options.ior_file_name != nullptr)
+                      {
+                        CORBA::String_var const ior = orb->object_to_string (ec.in ());
+                        std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_file_name));
+                        ior_file << ior.in () << std::endl;
+                      }
+                  }
+              }
+            catch (CosNaming::NamingContext::NotFound const &)
+              {
+                // Try again after the next event dispatch interval.
+              }
           }
-
-          // There is a good remote event channel so initialize the
-          // gateway.
-          if (ok) {
-            gateway->init(remote_ec.in(), ec.in());
-
-            PortableServer::ObjectId_var gateway_oid =
-              poa->activate_object(gateway.in());
-            CORBA::Object_var gateway_obj =
-              poa->id_to_reference(gateway_oid.in());
-            RtecEventChannelAdmin::Observer_var obs =
-              RtecEventChannelAdmin::Observer::_narrow(gateway_obj.in());
-            RtecEventChannelAdmin::Observer_Handle local_ec_obs_handle =
-              ec->append_observer (obs.in ());
-            ACE_UNUSED_ARG (local_ec_obs_handle);
-            gateway_initialized = true;
-            std::cout << "Gateway initialized\n";
-            if (iorfile != nullptr) {
-              CORBA::String_var str = orb->object_to_string( ec.in() );
-              std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile) );
-              iorFile << str.in() << std::endl;
-              iorFile.close();
-            }
-          }
-        } catch (CosNaming::NamingContext::NotFound const &) {
-          // Try again later...
-        }
       }
+  }
+  catch (CORBA::Exception const &exc)
+    {
+      std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
     }
-
-    orb->destroy();
-
-    return 0;
-  }
-  catch (CORBA::Exception const & exc)
-  {
-    std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
-  }
 
   return 1;
 }
