@@ -12,13 +12,13 @@
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  long pid = long (ACE_OS::getpid ());
+  long const pid = static_cast<long> (ACE_OS::getpid ());
 
   ACE_Typed_SV_Message_Queue<Message_Data> msgque (key_t (SRV_KEY));
 
 #if !defined(ACE_LACKS_CUSERID)
   Message_Data msg_data (pid,
-                         ACE_OS::cuserid (static_cast<char *> (0)),
+                         ACE_OS::cuserid (static_cast<char *> (nullptr)),
                          "did you get this?");
 #else
   Message_Data msg_data (pid,
@@ -39,7 +39,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("msgque.recv")), 1);
 
-  Message_Data &recv_msg_data = recv_msg.data ();
+  Message_Data const &recv_msg_data = recv_msg.data ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("a message of length %d")

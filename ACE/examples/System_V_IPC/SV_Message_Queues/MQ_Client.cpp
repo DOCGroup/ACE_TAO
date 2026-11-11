@@ -15,7 +15,7 @@
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  long pid = long (ACE_OS::getpid ());
+  long const pid = static_cast<long> (ACE_OS::getpid ());
   ACE_SV_Message_Queue msgque (SRV_KEY);
   Message_Block send_msg (SRV_ID,
                           pid,
@@ -24,10 +24,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Message_Block recv_msg (pid);
 
   if (msgque.send (send_msg, send_msg.length ()) < 0)
-    ACE_OS::perror ("msgque.send"), ACE_OS::exit (1);
+    {
+      ACE_OS::perror ("msgque.send");
+      ACE_OS::exit (1);
+    }
 
   if (msgque.recv (recv_msg, sizeof (Message_Data), recv_msg.type ()) < 0)
-    ACE_OS::perror ("msgrcv"), ACE_OS::exit (1);
+    {
+      ACE_OS::perror ("msgrcv");
+      ACE_OS::exit (1);
+    }
 
   cout << "a message of length "
        << recv_msg.length ()
