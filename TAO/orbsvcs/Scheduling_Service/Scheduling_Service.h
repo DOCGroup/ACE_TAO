@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SCHEDULING_SERVICE_H
 #define TAO_SCHEDULING_SERVICE_H
 
@@ -23,7 +22,9 @@
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 #include "orbsvcs/Sched/Config_Scheduler.h"
-#include "ace/SString.h"
+
+#include <optional>
+#include <string>
 
 /**
  * @class TAO_Scheduling_Service
@@ -37,8 +38,7 @@
 class TAO_Scheduling_Service
 {
 public:
-  /// Default Constructor.
-  TAO_Scheduling_Service ();
+  TAO_Scheduling_Service () = default;
 
   /// Constructor taking the command-line arguments.
   TAO_Scheduling_Service (int argc, ACE_TCHAR * argv[]);
@@ -54,8 +54,7 @@ public:
   /// Run the TAO_Scheduling_Service.
   int run ();
 
-  /// Destructor.
-  ~TAO_Scheduling_Service ();
+  ~TAO_Scheduling_Service () = default;
 
 private:
   using CONFIG_SCHED_TYPE = ACE_Config_Scheduler;
@@ -63,7 +62,7 @@ private:
   using RECONFIG_SCHED_TYPE = TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy,
                                                      TAO_SYNCH_MUTEX>;
 
-  enum Scheduler_Type {CONFIG, RECONFIG};
+  enum class Scheduler_Type { config, reconfig };
 
   /// parses the arguments.
   int parse_args (int argc, ACE_TCHAR * argv[]);
@@ -72,22 +71,19 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// Scheduler instance.
-  POA_RtecScheduler::Scheduler *scheduler_impl_ {};
+  PortableServer::ServantBase_var scheduler_impl_ {};
 
   /// Name of the IOR output file.
-  ACE_CString ior_file_name_;
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
 
   /// Name of the process id output file.
-  ACE_CString pid_file_name_;
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
 
   /// Name used to register the service.
-  ACE_CString service_name_ {"ScheduleService"};
+  std::string service_name_ {"ScheduleService"};
 
   /// Type of scheduler with which to instantiate the service.
-  Scheduler_Type scheduler_type_ {CONFIG};
-
-  /// A reference to the ORB, to shut it down properly.
-  CORBA::ORB_var orb_ {};
+  Scheduler_Type scheduler_type_ {Scheduler_Type::config};
 };
 
 #endif /* TAO_SCHEDULING_SERVICE_H */

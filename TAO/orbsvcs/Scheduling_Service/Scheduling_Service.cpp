@@ -8,24 +8,16 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
 
-TAO_Scheduling_Service::TAO_Scheduling_Service () = default;
+#include <memory>
 
-// Constructor taking the command-line arguments.
 TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR * argv[])
 {
   this->init (argc, argv);
 }
 
-TAO_Scheduling_Service::~TAO_Scheduling_Service () = default;
-
-// Initialize the Scheduling Service with the arguments.
 int
 TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
 {
-  int result {};
-  CORBA::ORB_var orb {};
-  PortableServer::POAManager_ptr poa_manager = nullptr;
-
   try
     {
       // Copy command line parameter.
@@ -34,9 +26,9 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
       // Initialize ORB manager.
       this->orb_manager_.init (command_line.get_argc (), command_line.get_TCHAR_argv ());
 
-      orb = this->orb_manager_.orb ();
-
-      poa_manager = this->orb_manager_.poa_manager ();
+      CORBA::ORB_var const orb = this->orb_manager_.orb ();
+      PortableServer::POAManager_var const poa_manager =
+        this->orb_manager_.poa_manager ();
 
       poa_manager->activate ();
 
@@ -44,23 +36,31 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
       // initialize the scheduler implementation so that we know which
       // type of scheduler to use.
 
-      result = this->parse_args (command_line.get_argc (), command_line.get_TCHAR_argv ());
+      int const result =
+        this->parse_args (command_line.get_argc (), command_line.get_TCHAR_argv ());
       if (result < 0)
         return result;
 
       // Construct a scheduler implementation of the specified type.
+      POA_RtecScheduler::Scheduler *scheduler_impl {};
       switch (this->scheduler_type_)
         {
-          case RECONFIG:
-            ACE_NEW_THROW_EX (scheduler_impl_,
-                              RECONFIG_SCHED_TYPE,
-                              CORBA::NO_MEMORY ());
+          case Scheduler_Type::reconfig:
+            {
+              ACE_NEW_THROW_EX (scheduler_impl,
+                                RECONFIG_SCHED_TYPE,
+                                CORBA::NO_MEMORY ());
+              this->scheduler_impl_ = scheduler_impl;
+            }
             break;
 
-          case CONFIG:
-            ACE_NEW_THROW_EX (scheduler_impl_,
-                              CONFIG_SCHED_TYPE,
-                              CORBA::NO_MEMORY ());
+          case Scheduler_Type::config:
+            {
+              ACE_NEW_THROW_EX (scheduler_impl,
+                                CONFIG_SCHED_TYPE,
+                                CORBA::NO_MEMORY ());
+              this->scheduler_impl_ = scheduler_impl;
+            }
             break;
 
           default:
@@ -70,20 +70,20 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
         }
 
       // Locate the naming service.
-      CORBA::Object_var naming_obj =
+      CORBA::Object_var const naming_obj =
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to locate the Naming Service.\n"),
                           -1);
-      CosNaming::NamingContext_var naming_context =
+      CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      RtecScheduler::Scheduler_var scheduler =
-        this->scheduler_impl_->_this ();
+      RtecScheduler::Scheduler_var const scheduler =
+        scheduler_impl->_this ();
 
-      CORBA::String_var scheduler_ior_string =
+      CORBA::String_var const scheduler_ior_string =
         orb->object_to_string (scheduler.in ());
 
       ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%C>\n"),
@@ -92,30 +92,32 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
-      schedule_name[0].id = CORBA::string_dup (this->service_name_.rep ());
+      schedule_name[0].id = CORBA::string_dup (this->service_name_.c_str ());
       naming_context->rebind (schedule_name, scheduler.in ());
 
-      if (this->ior_file_name_.rep () != nullptr)
+      if (this->ior_file_name_)
         {
-          FILE *iorf = ACE_OS::fopen (this->ior_file_name_.rep (), "w");
-          if (iorf != nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
+            ACE_OS::fopen (this->ior_file_name_->c_str (), ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (iorf)
             {
-              ACE_OS::fprintf (iorf,
+              ACE_OS::fprintf (iorf.get (),
                                "%s\n",
                                scheduler_ior_string.in ());
-              ACE_OS::fclose (iorf);
             }
         }
 
-      if (this->pid_file_name_.rep () != nullptr)
+      if (this->pid_file_name_)
         {
-          FILE *pidf = ACE_OS::fopen (this->pid_file_name_.rep (), "w");
-          if (pidf != nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
+            ACE_OS::fopen (this->pid_file_name_->c_str (), ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (pidf)
             {
-              ACE_OS::fprintf (pidf,
-                               ACE_TEXT("%ld\n"),
+              ACE_OS::fprintf (pidf.get (),
+                               "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pidf);
             }
         }
     }
@@ -128,18 +130,12 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
   return 0;
 }
 
-
-// Runs the TAO_Scheduling_Service.
-
 int
 TAO_Scheduling_Service::run ()
 {
   // Run the ORB manager.
   return this->orb_manager_.run ();
 }
-
-
-// Parses the command line arguments.
 
 int
 TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR * argv[])
@@ -152,25 +148,25 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR * argv[])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'p':
-          this->pid_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
 
         case 'o':
-          this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->ior_file_name_ = get_opt.opt_arg ();
           break;
 
         case 's':
-          if (ACE_OS::strcasecmp (ACE_TEXT("CONFIG"), get_opt.optarg) == 0)
+          if (ACE_OS::strcasecmp (ACE_TEXT ("CONFIG"), get_opt.optarg) == 0)
             {
-              this->scheduler_type_ = CONFIG;
+              this->scheduler_type_ = Scheduler_Type::config;
             }
-          else if (ACE_OS::strcasecmp (ACE_TEXT("RECONFIG"), get_opt.optarg) == 0)
+          else if (ACE_OS::strcasecmp (ACE_TEXT ("RECONFIG"), get_opt.optarg) == 0)
             {
-              this->scheduler_type_ = RECONFIG;
+              this->scheduler_type_ = Scheduler_Type::reconfig;
             }
           else
             {
