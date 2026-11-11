@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <orbsvcs/FT_ReplicationManagerS.h>
+#include <string>
 //#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
 //#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
 //#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
@@ -365,10 +366,10 @@ namespace TAO
     PortableServer::POA_var poa_;
 
     /// A file to which the factory's IOR should be written.
-    ACE_TCHAR const * ior_output_file_ {};
+    std::basic_string<ACE_TCHAR> ior_output_file_;
 
     /// A name to be used to register the factory with the name service.
-    ACE_CString ns_name_;
+    std::string ns_name_;
     CosNaming::NamingContext_var naming_context_;
     CosNaming::Name this_name_;
 
@@ -376,7 +377,7 @@ namespace TAO
     FT::ReplicationManager_var replication_manager_ref_;
 
     /// A human-readable string to identify this Replication Manager.
-    ACE_CString identity_;
+    std::string identity_;
 
     /// an object that manages a collection of object groups
     TAO::PG_Group_Factory group_factory_;
@@ -387,7 +388,7 @@ namespace TAO
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
     /// set by command line -f option
-    ACE_TCHAR const * fault_notifier_ior_string_ {};
+    std::basic_string<ACE_TCHAR> fault_notifier_ior_string_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;

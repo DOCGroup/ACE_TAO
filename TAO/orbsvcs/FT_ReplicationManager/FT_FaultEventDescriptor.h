@@ -32,11 +32,10 @@ namespace TAO
   struct TAO_ReplicationManagerLib_Export FT_FaultEventDescriptor
   {
   public:
-    /// Default constructor.
     FT_FaultEventDescriptor ();
 
     /// Debugging support.
-    void dump ();
+    void dump () const;
 
     /////////////////
     /// Data members.

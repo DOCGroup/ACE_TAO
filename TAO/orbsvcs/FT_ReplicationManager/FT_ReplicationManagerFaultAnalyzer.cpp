@@ -31,9 +31,7 @@ TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
 {
 }
 
-/// Destructor.
-TAO::FT_ReplicationManagerFaultAnalyzer::~FT_ReplicationManagerFaultAnalyzer ()
-  = default;
+TAO::FT_ReplicationManagerFaultAnalyzer::~FT_ReplicationManagerFaultAnalyzer () = default;
 
 // Validate the event to make sure it is one we can handle.
 // If it is not an event we can handle, this function logs the error

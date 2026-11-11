@@ -13,29 +13,28 @@
  */
 //=============================================================================
 
+#include <string>
+
 #include "orbsvcs/Log_Macros.h"
 #include "FT_FaultEventDescriptor.h"
 
-#include "ace/SString.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default constructor.
 TAO::FT_FaultEventDescriptor::FT_FaultEventDescriptor ()
   : type_id (CORBA::string_dup (""))
 {
 }
 
 // Debugging support.
-void TAO::FT_FaultEventDescriptor::dump ()
+void TAO::FT_FaultEventDescriptor::dump () const
 {
   // Get the location as a string.
-  ACE_CString loc_as_string;
+  std::string loc_as_string;
   for (CORBA::ULong li = 0; li < this->location->length(); ++li)
   {
     if (li > 0) loc_as_string += "/";
     // Assume only the "id" field of the CosNaming::Name is used.
-    loc_as_string += CORBA::string_dup (this->location[li].id);
+    loc_as_string += this->location[li].id;
   }
 
   if (this->all_at_location_failed)

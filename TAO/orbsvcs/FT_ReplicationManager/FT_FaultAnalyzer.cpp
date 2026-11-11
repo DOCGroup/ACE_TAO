@@ -13,7 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Destructor.
 TAO::FT_FaultAnalyzer::~FT_FaultAnalyzer () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

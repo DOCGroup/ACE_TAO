@@ -10,6 +10,8 @@
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================
+#include <memory>
+
 #include "orbsvcs/Log_Macros.h"
 #include "FT_ReplicationManager.h"
 #include "FT_Property_Validator.h"
@@ -83,7 +85,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager () = default;
 int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:o:f:"));
-  int c;
+  int c {};
 
   while ( (c = get_opts ()) != -1)
   {
@@ -94,7 +96,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
         break;
 
       case 'n':
-        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case 'f':
@@ -171,10 +173,10 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   // If we were given an initial IOR string for a Fault Notifier on the
   // command line, convert it to an IOR, then register the fault
   // notifier.
-  if (this->fault_notifier_ior_string_ != nullptr)
+  if (!this->fault_notifier_ior_string_.empty ())
   {
     CORBA::Object_var notifier_obj = this->orb_->string_to_object (
-      this->fault_notifier_ior_string_);
+      this->fault_notifier_ior_string_.c_str ());
     FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (
       notifier_obj.in ());
     if (! CORBA::is_nil (notifier.in ()))
@@ -217,14 +219,14 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   }
 
   // Publish our IOR, either to a file or the Naming Service.
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
     this->identity_ = "file:";
-    this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
+    this->identity_ += ACE_TEXT_ALWAYS_CHAR (this->ior_output_file_.c_str ());
     result = this->write_ior ();
   }
 
-  if (result == 0 && this->ns_name_.length () != 0)
+  if (result == 0 && !this->ns_name_.empty ())
   {
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
@@ -323,12 +325,12 @@ int TAO::FT_ReplicationManager::fini ()
 
   result = this->fault_consumer_.fini ();
 
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
-    ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = nullptr;
+    ACE_OS::unlink (this->ior_output_file_.c_str ());
+    this->ior_output_file_.clear ();
   }
-  if (this->ns_name_.length () != 0)
+  if (!this->ns_name_.empty ())
   {
     this->naming_context_->unbind (this->this_name_);
     this->ns_name_.clear ();
@@ -862,7 +864,7 @@ TAO::FT_ReplicationManager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = nullptr;
+  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr {};
   ACE_NEW_THROW_EX (factory_id_ptr,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
@@ -898,23 +900,21 @@ TAO::FT_ReplicationManager::delete_object (
 //private
 int TAO::FT_ReplicationManager::write_ior ()
 {
-  int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> out (
+    ACE_OS::fopen (this->ior_output_file_.c_str (), ACE_TEXT ("w")),
+    ACE_OS::fclose);
   if (out)
   {
-    CORBA::String_var ior_str = this->orb_->object_to_string (
+    CORBA::String_var const ior_str = this->orb_->object_to_string (
       this->replication_manager_ref_.in ());
-    ACE_OS::fprintf (out, "%s", ior_str.in ());
-    ACE_OS::fclose (out);
-    result = 0;
+    ACE_OS::fprintf (out.get (), "%s", ior_str.in ());
+    return 0;
   }
-  else
-  {
-    ORBSVCS_ERROR ( (LM_ERROR,
-      ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_
-    ));
-  }
-  return result;
+
+  ORBSVCS_ERROR ( (LM_ERROR,
+    ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_.c_str ()
+  ));
+  return -1;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

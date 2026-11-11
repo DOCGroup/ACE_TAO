@@ -22,7 +22,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Destructor.
 TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
 
 // Validate the event to make sure it is one we can handle.

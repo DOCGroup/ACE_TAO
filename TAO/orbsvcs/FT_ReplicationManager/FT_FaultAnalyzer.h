@@ -34,14 +34,8 @@ namespace TAO
   class TAO_ReplicationManagerLib_Export FT_FaultAnalyzer
   {
   public:
-    /**
-    * Default constructor.
-    */
     FT_FaultAnalyzer () = default;
 
-    /**
-    * Destructor.
-    */
     virtual ~FT_FaultAnalyzer ();
 
   public:
@@ -64,9 +58,7 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    /// Copy constructor.
     FT_FaultAnalyzer (FT_FaultAnalyzer const &) = delete;
-    /// Assignment operator.
     FT_FaultAnalyzer (FT_FaultAnalyzer &&) = delete;
     FT_FaultAnalyzer & operator= (FT_FaultAnalyzer const &) = delete;
     FT_FaultAnalyzer & operator= (FT_FaultAnalyzer &&) = delete;

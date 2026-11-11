@@ -43,14 +43,8 @@ namespace TAO
     // non-CORBA interface
 
   public:
-    /**
-    * Default constructor.
-    */
     FT_FaultConsumer ();
 
-    /**
-    * Destructor.
-    */
     ~FT_FaultConsumer () override;
 
     /**
@@ -111,9 +105,7 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    /// Copy constructor.
     FT_FaultConsumer (FT_FaultConsumer const &) = delete;
-    /// Assignment operator.
     FT_FaultConsumer (FT_FaultConsumer &&) = delete;
     FT_FaultConsumer & operator= (FT_FaultConsumer const &) = delete;
     FT_FaultConsumer & operator= (FT_FaultConsumer &&) = delete;

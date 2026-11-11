@@ -81,14 +81,11 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    /// Default constructor.
     FT_ReplicationManagerFaultAnalyzer () = delete;
 
-    /// Copy constructor.
     FT_ReplicationManagerFaultAnalyzer (
       FT_ReplicationManagerFaultAnalyzer const &) = delete;
 
-    /// Assignment operator.
     FT_ReplicationManagerFaultAnalyzer (FT_ReplicationManagerFaultAnalyzer &&) = delete;
     FT_ReplicationManagerFaultAnalyzer & operator= (
       FT_ReplicationManagerFaultAnalyzer const &) = delete;

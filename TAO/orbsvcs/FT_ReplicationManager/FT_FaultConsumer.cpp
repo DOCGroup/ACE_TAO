@@ -22,7 +22,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Default constructor.
 TAO::FT_FaultConsumer::FT_FaultConsumer ()
   : poa_ (PortableServer::POA::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
@@ -30,7 +29,6 @@ TAO::FT_FaultConsumer::FT_FaultConsumer ()
 {
 }
 
-/// Destructor.
 TAO::FT_FaultConsumer::~FT_FaultConsumer () = default;
 
 /**
