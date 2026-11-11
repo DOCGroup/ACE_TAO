@@ -5,9 +5,9 @@
 #include "tao/PI/PI.h"
 
 class ServerInitializer :
-public virtual PortableInterceptor::ORBInitializer
+  public virtual PortableInterceptor::ORBInitializer
 {
- public:
+public:
   ServerInitializer () = default;
   ServerInitializer (ServerInitializer const &) = delete;
   ServerInitializer (ServerInitializer &&) = delete;

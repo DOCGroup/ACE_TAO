@@ -5,12 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include <iostream>
 
-ClientInitializer::ClientInitializer ()
- : slot_ (0),
-   current_ (PortableInterceptor::Current::_nil())
-{
-}
-
 void
 ClientInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
@@ -20,60 +14,55 @@ void
 ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Find the Naming Service
-  CORBA::Object_var naming_obj =
-    info->resolve_initial_references("NameService");
-  CosNaming::NamingContext_var root =
-    CosNaming::NamingContext::_narrow(naming_obj.in());
-  if( CORBA::is_nil(root.in())) {
-    std::cerr << "Nil Naming Context reference" << std::endl;
-    ACE_ASSERT(false);
-  }
-
-  // Resolve the Messenger object
-  CosNaming::Name name;
-  name.length( 1 );
-  name[0].id = CORBA::string_dup( "Messenger" );
-  CORBA::Object_var obj = CORBA::Object::_nil();
-  while ( CORBA::is_nil( obj.in() ) ) {
-    try {
-      obj = root->resolve( name );
-    } catch (CosNaming::NamingContext::NotFound const &) {
-      // Sleep for a second and try again
-      ACE_OS::sleep(1);
+  CORBA::Object_var const naming_object = info->resolve_initial_references ("NameService");
+  CosNaming::NamingContext_var const root =
+    CosNaming::NamingContext::_narrow (naming_object.in ());
+  if (CORBA::is_nil (root.in ()))
+    {
+      std::cerr << "Nil Naming Context reference" << std::endl;
+      ACE_ASSERT (false);
     }
-   }
 
-  Messenger_var messenger = Messenger::_narrow( obj.in() );
-  if( CORBA::is_nil( messenger.in() ) ) {
-    std::cerr << "Not a Messenger reference" << std::endl;
-    ACE_ASSERT(false);
-  }
+  CosNaming::Name name {};
+  name.length (1);
+  name[0].id = CORBA::string_dup ("Messenger");
+  CORBA::Object_var object {};
+  while (CORBA::is_nil (object.in ()))
+    {
+      try
+        {
+          object = root->resolve (name);
+        }
+      catch (CosNaming::NamingContext::NotFound const &)
+        {
+          ACE_OS::sleep (1);
+        }
+    }
 
-  // allocate slot
-  slot_ = info->allocate_slot_id();
+  Messenger_var const messenger = Messenger::_narrow (object.in ());
+  if (CORBA::is_nil (messenger.in ()))
+    {
+      std::cerr << "Not a Messenger reference" << std::endl;
+      ACE_ASSERT (false);
+    }
 
-  // get PICurrent
-  CORBA::Object_var current_obj = info->resolve_initial_references("PICurrent");
+  slot_ = info->allocate_slot_id ();
 
-  current_ =
-    PortableInterceptor::Current::_narrow(current_obj.in());
+  CORBA::Object_var const current_object = info->resolve_initial_references ("PICurrent");
+  current_ = PortableInterceptor::Current::_narrow (current_object.in ());
 
-  // Create and register the request interceptors.
-  PortableInterceptor::ClientRequestInterceptor_var ci =
-      new ClientInterceptor(messenger, current_.in(), slot_);
-  info->add_client_request_interceptor (ci.in());
+  PortableInterceptor::ClientRequestInterceptor_var const ci =
+    new ClientInterceptor (messenger, current_.in (), slot_);
+  info->add_client_request_interceptor (ci.in ());
 }
 
 void
 ClientInitializer::set_slot_data ()
 {
-  // Set the recursion flag
-  CORBA::Any flag;
-  CORBA::Boolean const x = false;
-  flag <<= CORBA::Any::from_boolean(x);
-  current_->set_slot(slot_, flag);
+  CORBA::Any flag {};
+  CORBA::Boolean const initial_value = false;
+  flag <<= CORBA::Any::from_boolean (initial_value);
+  current_->set_slot (slot_, flag);
 
-  // Now that we're done with the PICurrent, we will release
-  // our reference to it.
   current_ = PortableInterceptor::Current::_nil();
 }

@@ -4,8 +4,7 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/PI_Server/ServerRequestInterceptorA.h"
 
-class ServerInterceptor
-: public PortableInterceptor::ServerRequestInterceptor
+class ServerInterceptor : public PortableInterceptor::ServerRequestInterceptor
 {
  public:
   ServerInterceptor ();
@@ -32,8 +31,8 @@ class ServerInterceptor
 
   void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
- private:
-  char const * myname_;
+private:
+  char const * const myname_;
 };
 
 #endif
