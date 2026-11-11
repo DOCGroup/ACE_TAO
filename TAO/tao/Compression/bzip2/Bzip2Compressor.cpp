@@ -6,9 +6,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 Bzip2Compressor::Bzip2Compressor (
-  ::Compression::CompressorFactory_ptr compressor_factory,
-  ::Compression::CompressionLevel compression_level) :
-    BaseCompressor (compressor_factory, compression_level)
+    ::Compression::CompressorFactory_ptr compressor_factory,
+    ::Compression::CompressionLevel compression_level)
+  : BaseCompressor (compressor_factory, compression_level)
 {
 }
 
@@ -32,13 +32,9 @@ Bzip2Compressor::compress (
                                   this->compression_level () * 25);
 
   if (retval != BZ_OK)
-    {
-      throw ::Compression::CompressionException (retval, "");
-    }
-  else
-    {
-      target.length (static_cast <CORBA::ULong> (max_length));
-    }
+    throw ::Compression::CompressionException (retval, "");
+
+  target.length (static_cast <CORBA::ULong> (max_length));
 
   // Update statistics for this compressor
   this->update_stats (source.length (), target.length ());
@@ -59,13 +55,9 @@ Bzip2Compressor::decompress (
                                  1);
 
   if (retval != BZ_OK)
-    {
-      throw ::Compression::CompressionException (retval, "");
-    }
-  else
-    {
-      target.length (static_cast  <CORBA::ULong> (max_length));
-    }
+    throw ::Compression::CompressionException (retval, "");
+
+  target.length (static_cast <CORBA::ULong> (max_length));
 }
 }
 
