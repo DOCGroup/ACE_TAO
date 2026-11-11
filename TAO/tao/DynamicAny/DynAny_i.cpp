@@ -429,10 +429,10 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       }
     case CORBA::tk_string:
       {
-        CORBA::TypeCode_var unaliased_tc =
+        CORBA::TypeCode_var const unaliased_tc =
           TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-        CORBA::ULong bound =
+        CORBA::ULong const bound =
           unaliased_tc->length ();
 
         char const* rhs_v, *lhs_v;
@@ -463,10 +463,10 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       }
     case CORBA::tk_wstring:
       {
-        CORBA::TypeCode_var unaliased_tc =
+        CORBA::TypeCode_var const unaliased_tc =
           TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-        CORBA::ULong bound =
+        CORBA::ULong const bound =
           unaliased_tc->length ();
 
         CORBA::WChar const* rhs_v, *lhs_v;
@@ -500,17 +500,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
     case CORBA::tk_sequence:
       {
         // The only way we can get here is if we have a basic sequence (see check_typecode)
-        CORBA::TypeCode_var unaliased_tc =
+        CORBA::TypeCode_var const unaliased_tc =
           TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-        CORBA::TCKind tk_content = TAO_DynAnyFactory::unalias (unaliased_tc->content_type());
+        CORBA::TCKind const tk_content = TAO_DynAnyFactory::unalias (unaliased_tc->content_type());
 
         switch (tk_content)
           {
             case CORBA::tk_short:
               {
-                CORBA::ShortSeq_var lvalues(this->get_short_seq());
-                CORBA::ShortSeq_var rvalues(rhs_n->get_short_seq());
+                CORBA::ShortSeq_var const lvalues(this->get_short_seq());
+                CORBA::ShortSeq_var const rvalues(rhs_n->get_short_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -528,8 +528,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_long:
               {
-                CORBA::LongSeq_var lvalues(this->get_long_seq());
-                CORBA::LongSeq_var rvalues(rhs_n->get_long_seq());
+                CORBA::LongSeq_var const lvalues(this->get_long_seq());
+                CORBA::LongSeq_var const rvalues(rhs_n->get_long_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -549,8 +549,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_ushort:
               {
-                CORBA::UShortSeq_var lvalues(this->get_ushort_seq());
-                CORBA::UShortSeq_var rvalues(rhs_n->get_ushort_seq());
+                CORBA::UShortSeq_var const lvalues(this->get_ushort_seq());
+                CORBA::UShortSeq_var const rvalues(rhs_n->get_ushort_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -570,8 +570,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_ulong:
               {
-                CORBA::ULongSeq_var lvalues(this->get_ulong_seq());
-                CORBA::ULongSeq_var rvalues(rhs_n->get_ulong_seq());
+                CORBA::ULongSeq_var const lvalues(this->get_ulong_seq());
+                CORBA::ULongSeq_var const rvalues(rhs_n->get_ulong_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -591,8 +591,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_float:
               {
-                CORBA::FloatSeq_var lvalues(this->get_float_seq());
-                CORBA::FloatSeq_var rvalues(rhs_n->get_float_seq());
+                CORBA::FloatSeq_var const lvalues(this->get_float_seq());
+                CORBA::FloatSeq_var const rvalues(rhs_n->get_float_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -612,8 +612,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_double:
               {
-                CORBA::DoubleSeq_var lvalues(this->get_double_seq());
-                CORBA::DoubleSeq_var rvalues(rhs_n->get_double_seq());
+                CORBA::DoubleSeq_var const lvalues(this->get_double_seq());
+                CORBA::DoubleSeq_var const rvalues(rhs_n->get_double_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -633,8 +633,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_longlong:
               {
-                CORBA::LongLongSeq_var lvalues(this->get_longlong_seq());
-                CORBA::LongLongSeq_var rvalues(rhs_n->get_longlong_seq());
+                CORBA::LongLongSeq_var const lvalues(this->get_longlong_seq());
+                CORBA::LongLongSeq_var const rvalues(rhs_n->get_longlong_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -654,8 +654,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_ulonglong:
               {
-                CORBA::ULongLongSeq_var lvalues(this->get_ulonglong_seq());
-                CORBA::ULongLongSeq_var rvalues(rhs_n->get_ulonglong_seq());
+                CORBA::ULongLongSeq_var const lvalues(this->get_ulonglong_seq());
+                CORBA::ULongLongSeq_var const rvalues(rhs_n->get_ulonglong_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -675,8 +675,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_boolean:
               {
-                CORBA::BooleanSeq_var lvalues(this->get_boolean_seq());
-                CORBA::BooleanSeq_var rvalues(rhs_n->get_boolean_seq());
+                CORBA::BooleanSeq_var const lvalues(this->get_boolean_seq());
+                CORBA::BooleanSeq_var const rvalues(rhs_n->get_boolean_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -696,8 +696,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_char:
               {
-                CORBA::CharSeq_var lvalues(this->get_char_seq());
-                CORBA::CharSeq_var rvalues(rhs_n->get_char_seq());
+                CORBA::CharSeq_var const lvalues(this->get_char_seq());
+                CORBA::CharSeq_var const rvalues(rhs_n->get_char_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -717,8 +717,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_wchar:
               {
-                CORBA::WCharSeq_var lvalues(this->get_wchar_seq());
-                CORBA::WCharSeq_var rvalues(rhs_n->get_wchar_seq());
+                CORBA::WCharSeq_var const lvalues(this->get_wchar_seq());
+                CORBA::WCharSeq_var const rvalues(rhs_n->get_wchar_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -738,8 +738,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_octet:
               {
-                CORBA::OctetSeq_var lvalues(this->get_octet_seq());
-                CORBA::OctetSeq_var rvalues(rhs_n->get_octet_seq());
+                CORBA::OctetSeq_var const lvalues(this->get_octet_seq());
+                CORBA::OctetSeq_var const rvalues(rhs_n->get_octet_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
@@ -760,8 +760,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             case CORBA::tk_longdouble:
               {
-                CORBA::LongDoubleSeq_var lvalues(this->get_longdouble_seq());
-                CORBA::LongDoubleSeq_var rvalues(rhs_n->get_longdouble_seq());
+                CORBA::LongDoubleSeq_var const lvalues(this->get_longdouble_seq());
+                CORBA::LongDoubleSeq_var const rvalues(rhs_n->get_longdouble_seq());
 
                 if (lvalues->length() != rvalues->length())
                   {
