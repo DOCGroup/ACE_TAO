@@ -29,8 +29,6 @@ namespace ACE
       return 0;
     }
 
-    //=========================================================
-
     Monitor_Query::Monitor_Query (char const* monitor_name)
     {
       ACE_CString name_str (monitor_name, nullptr, false);
@@ -51,7 +49,7 @@ namespace ACE
           return;
         }
 
-      Monitor_Base::CONSTRAINTS& list = this->monitor_->constraints ();
+      Monitor_Base::CONSTRAINTS const& list = this->monitor_->constraints ();
 
       for (Monitor_Base::CONSTRAINT_ITERATOR i (list.begin ());
            i != list.end ();

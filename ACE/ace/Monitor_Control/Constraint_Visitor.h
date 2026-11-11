@@ -51,6 +51,11 @@ namespace ACE
       : public ETCL_Constraint_Visitor
     {
     public:
+      Constraint_Visitor (Constraint_Visitor const &) = delete;
+      Constraint_Visitor (Constraint_Visitor &&) = delete;
+      Constraint_Visitor &operator= (Constraint_Visitor const &) = delete;
+      Constraint_Visitor &operator= (Constraint_Visitor &&) = delete;
+
       explicit Constraint_Visitor (Monitor_Control_Types::Data const& data);
       ~Constraint_Visitor () override = default;
 

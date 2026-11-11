@@ -31,7 +31,7 @@ namespace ACE
         {
           ETCL_Literal_Constraint top;
           this->queue_.dequeue_head (top);
-          result = (ACE_CDR::Boolean) top;
+          result = static_cast<ACE_CDR::Boolean> (top);
         }
       }
 
@@ -78,7 +78,7 @@ namespace ACE
           {
             case ETCL_NOT:
               this->queue_.dequeue_head (subexpr_result);
-              result = ! (ACE_CDR::Boolean) subexpr_result;
+              result = !static_cast<ACE_CDR::Boolean> (subexpr_result);
               this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
               return 0;
             case ETCL_MINUS:
@@ -144,7 +144,7 @@ namespace ACE
         {
           ETCL_Literal_Constraint lhs_result;
           this->queue_.dequeue_head (lhs_result);
-          result = (ACE_CDR::Boolean) lhs_result;
+          result = static_cast<ACE_CDR::Boolean> (lhs_result);
 
           /// Short-circuiting OR.
           if (!result)
@@ -155,7 +155,7 @@ namespace ACE
               {
                 ETCL_Literal_Constraint rhs_result;
                 this->queue_.dequeue_head (rhs_result);
-                result = (ACE_CDR::Boolean) rhs_result;
+                result = static_cast<ACE_CDR::Boolean> (rhs_result);
                 return_value = 0;
               }
             }
@@ -185,7 +185,7 @@ namespace ACE
         {
           ETCL_Literal_Constraint lhs_result;
           this->queue_.dequeue_head (lhs_result);
-          result = (ACE_CDR::Boolean) lhs_result;
+          result = static_cast<ACE_CDR::Boolean> (lhs_result);
 
           /// Short-circuiting AND.
           if (result == true)
@@ -196,7 +196,7 @@ namespace ACE
               {
                 ETCL_Literal_Constraint rhs_result;
                 this->queue_.dequeue_head (rhs_result);
-                result = (ACE_CDR::Boolean) rhs_result;
+                result = static_cast<ACE_CDR::Boolean> (rhs_result);
                 return_value = 0;
               }
             }

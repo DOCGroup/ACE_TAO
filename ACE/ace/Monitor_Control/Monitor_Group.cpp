@@ -13,7 +13,7 @@ namespace ACE
     {}
 
     void
-    Monitor_Group::add_member (Monitor_Base* member)
+    Monitor_Group::add_member (Monitor_Base * const member)
     {
       this->members_.enqueue_tail (member);
     }

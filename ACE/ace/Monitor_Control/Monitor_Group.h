@@ -37,6 +37,11 @@ namespace ACE
     class MONITOR_CONTROL_Export Monitor_Group : public Monitor_Base
     {
     public:
+      Monitor_Group (Monitor_Group const &) = delete;
+      Monitor_Group (Monitor_Group &&) = delete;
+      Monitor_Group &operator= (Monitor_Group const &) = delete;
+      Monitor_Group &operator= (Monitor_Group &&) = delete;
+
       explicit Monitor_Group (char const* name);
 
       void add_member (Monitor_Base* member);
@@ -54,6 +59,7 @@ namespace ACE
       using MEMBERS = ACE_Unbounded_Queue<Monitor_Base *>;
       using MEMBERS_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<Monitor_Base *>;
 
+      // The group borrows these pointers; their owners must keep them alive.
       MEMBERS members_;
     };
   }

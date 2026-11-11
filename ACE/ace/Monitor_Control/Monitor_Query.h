@@ -39,6 +39,11 @@ namespace ACE
       : public ACE_Event_Handler
     {
     public:
+      Monitor_Point_Auto_Query (Monitor_Point_Auto_Query const &) = delete;
+      Monitor_Point_Auto_Query (Monitor_Point_Auto_Query &&) = delete;
+      Monitor_Point_Auto_Query &operator= (Monitor_Point_Auto_Query const &) = delete;
+      Monitor_Point_Auto_Query &operator= (Monitor_Point_Auto_Query &&) = delete;
+
       /// Default constructor
       Monitor_Point_Auto_Query ();
 
@@ -62,6 +67,7 @@ namespace ACE
       void query () const;
 
     private:
+      // The registry owns this monitor; this query only borrows it.
       Monitor_Base* monitor_ {};
     };
   }
