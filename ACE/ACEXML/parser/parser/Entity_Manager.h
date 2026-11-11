@@ -63,7 +63,6 @@ using ACEXML_ENTITY_ENTRY_ITERATOR =
 class ACEXML_PARSER_Export ACEXML_Entity_Manager
 {
 public:
-  /// Default constructor.
   ACEXML_Entity_Manager ();
 
   ACEXML_Entity_Manager (ACEXML_Entity_Manager const &) = delete;
@@ -71,7 +70,6 @@ public:
   ACEXML_Entity_Manager &operator= (ACEXML_Entity_Manager const &) = delete;
   ACEXML_Entity_Manager &operator= (ACEXML_Entity_Manager &&) = delete;
 
-  /// Destructor.
   ~ACEXML_Entity_Manager ();
 
   /// Add a new entity declaration.

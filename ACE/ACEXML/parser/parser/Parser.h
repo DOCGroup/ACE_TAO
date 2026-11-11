@@ -43,10 +43,8 @@
 class ACEXML_PARSER_Export ACEXML_Parser : public ACEXML_XMLReader
 {
 public:
-  /// Default constructor.
   ACEXML_Parser ();
 
-  /// Destructor.
   ~ACEXML_Parser () override;
 
   ACEXML_Parser (ACEXML_Parser const &) = delete;

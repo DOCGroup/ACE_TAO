@@ -1,5 +1,6 @@
-#include "ACEXML/parser/parser/Parser.h"
 #include <memory>
+
+#include "ACEXML/parser/parser/Parser.h"
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/parser/Parser.inl"
@@ -2529,7 +2530,7 @@ ACEXML_Parser::push_context (ACEXML_Parser_Context* context)
 size_t
 ACEXML_Parser::pop_context (int GE_ref)
 {
-  size_t nrelems = this->ctx_stack_.size();
+  size_t const nrelems = this->ctx_stack_.size ();
   if (nrelems <= 1)
     {
       this->fatal_error(ACE_TEXT ("Unexpected end-of-file"));
@@ -2561,14 +2562,12 @@ ACEXML_Parser::pop_context (int GE_ref)
           this->fatal_error (ACE_TEXT ("Internal Parser Error"));
         }
     }
-  nrelems = this->ctx_stack_.size();
-
   if (this->external_entity_ && (GE_ref == 0 || GE_ref == 1))
     --this->external_entity_;
 
   this->content_handler_->setDocumentLocator (this->current_->getLocator());
 
-  return nrelems;
+  return this->ctx_stack_.size ();
 }
 
 int

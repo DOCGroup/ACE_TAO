@@ -29,7 +29,6 @@
 class ACEXML_PARSER_Export ACEXML_Parser_Context
 {
 public:
-  /// Default constructor
   ACEXML_Parser_Context () = default;
 
   ACEXML_Parser_Context (ACEXML_Parser_Context const&) = delete;
@@ -44,7 +43,6 @@ public:
   /// Comparison operator
   bool operator!= (ACEXML_Parser_Context const& src) const;
 
-  /// Destructor
   virtual ~ACEXML_Parser_Context();
 
   /// Reset the parser context. This does not free up the memory. Only sets
