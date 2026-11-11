@@ -21,32 +21,27 @@ namespace XMLSchema
   template <typename T>
   struct cdr_arg_traits
   {
-    using in_type = T const&;
-    using out_type = T&;
+    using in_type = T const &;
+    using out_type = T &;
     using ret_type = T;
-    using inout_type = T*&;
+    using inout_type = T *&;
   };
 }
 
 template <typename T>
-bool
-operator<< (XMLSchema::CDR_OutputStream& stream,
-            XMLSchema::string<T> const& element)
+bool operator<< (XMLSchema::CDR_OutputStream &stream, XMLSchema::string<T> const &element)
 {
   return stream << element.c_str ();
 }
 
 template <typename T>
-bool
-operator<< (XMLSchema::CDR_OutputStream& stream,
-            XMLSchema::IDREF<T> const& element)
+bool operator<< (XMLSchema::CDR_OutputStream &stream, XMLSchema::IDREF<T> const &element)
 {
   return stream << element.id ().c_str ();
 }
 
 template <typename T>
-bool
-operator<< (XMLSchema::CDR_OutputStream& stream, XMLSchema::ID<T> const& element)
+bool operator<< (XMLSchema::CDR_OutputStream &stream, XMLSchema::ID<T> const &element)
 {
   return stream << element.c_str ();
 }

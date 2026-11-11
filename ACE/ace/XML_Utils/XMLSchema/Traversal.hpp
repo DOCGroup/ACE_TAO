@@ -11,22 +11,22 @@ namespace XMLSchema
   namespace Traversal
   {
     // Automatic traversal of IDREFs.
-    struct IDREF :
-    XSCRT::Traversal::Traverser<XMLSchema::IDREF_Base, XSCRT::Type>
+    struct IDREF : XSCRT::Traversal::Traverser<XMLSchema::IDREF_Base, XSCRT::Type>
     {
-      void
-      traverse (XMLSchema::IDREF_Base& r) override
+      void traverse (XMLSchema::IDREF_Base &r) override
       {
-        if (r.get ()) dispatch (*(r.get ()));
+        XSCRT::Type *const referenced (r.get ());
+        if (referenced != nullptr)
+          dispatch (*referenced);
       }
 
-      void
-      traverse (XMLSchema::IDREF_Base const& r) override
+      void traverse (XMLSchema::IDREF_Base const &r) override
       {
-        if (r.get ()) dispatch (*(r.get ()));
+        XSCRT::Type const *const referenced (r.get ());
+        if (referenced != nullptr)
+          dispatch (*referenced);
       }
     };
-
 
     template <typename T>
     struct Traverser : XSCRT::Traversal::Traverser<T, XSCRT::Type>
@@ -51,7 +51,7 @@ namespace XMLSchema
     using double_ = Traverser<double_>;
 
     template <typename C>
-    struct string : Traverser<XMLSchema::string<C> >
+    struct string : Traverser<XMLSchema::string<C>>
     {
     };
 
@@ -61,7 +61,7 @@ namespace XMLSchema
     };
 
     template <typename C>
-    struct anyURI : Traverser <XMLSchema::anyURI<C> >
+    struct anyURI : Traverser<XMLSchema::anyURI<C>>
     {
     };
   }
