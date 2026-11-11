@@ -684,7 +684,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   // For CORBA basic types, the skip can be optimized
   CORBA::TCKind const kind = tc2->kind ();
 
-  char *dummy;
+  char *dummy {};
   switch (kind)
     {
     case CORBA::tk_octet:
@@ -734,7 +734,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     default:
       while (bounds-- && continue_skipping)
         {
-          int stop =
+          int const stop =
             TAO_Marshal_Object::perform_skip (tc2.in (), stream);
           if (stop == TAO::TRAVERSE_STOP)
             continue_skipping = false;
