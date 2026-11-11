@@ -7,10 +7,22 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/Malloc_Base.h"
 
 #include <cstring>
+#include <string>
+
+struct Read_Buffer_Deleter
+{
+  ACE_Allocator *allocator;
+
+  void operator() (char *data) const
+  {
+    if (data != nullptr)
+      this->allocator->free (data);
+  }
+};
 
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
@@ -18,20 +30,21 @@ int
 Clerk_i::read_ior (ACE_TCHAR const * filename)
 {
   // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
+  std::unique_ptr<FILE, int (*) (FILE *)> ior_file (
+    ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose);
 
-  if (f_handle == ACE_INVALID_HANDLE)
+  if (!ior_file)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n"),
+                       ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
                        filename),
                       -1);
-  else
-    this->ior_file_provided_ = true;
+  this->ior_file_provided_ = true;
 
-  ACE_Read_Buffer ior_buffer (f_handle);
+  ACE_Read_Buffer ior_buffer (ior_file.get ());
 
-  char * data = ior_buffer.read (EOF,'\n','\n');
-  if (data == nullptr)
+  std::unique_ptr<char, Read_Buffer_Deleter> data (
+    ior_buffer.read (EOF, '\n', '\n'), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  if (!data)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
@@ -40,9 +53,9 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
 
   try
     {
-      for (char * str = ACE_OS::strtok (data, "\n");
+      for (char * str = std::strtok (data.get (), "\n");
            str != nullptr;
-           str = ACE_OS::strtok (nullptr, "\n"))
+           str = std::strtok (nullptr, "\n"))
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("iors -> |%C|\n"),
@@ -71,9 +84,6 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
       ex._tao_print_exception (ACE_TEXT("Exception"));
     }
 
-  ACE_OS::close (f_handle);
-  ior_buffer.alloc ()->free (data);
-
   return result;
 }
 
@@ -92,7 +102,7 @@ Clerk_i::parse_args (int argc,
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case 't':  // time in secs after which the clerk should update time.
@@ -153,7 +163,7 @@ Clerk_i::get_first_IOR ()
 {
   try
     {
-      char host_name[MAXHOSTNAMELEN];
+      char host_name[MAXHOSTNAMELEN] {};
 
       ACE_OS::hostname (host_name,
                         MAXHOSTNAMELEN);
@@ -284,15 +294,17 @@ Clerk_i::create_clerk ()
     {
       // Create a new clerk object. Pass it the timer value, the set
       // of server IORs and the no. of servers.
-      ACE_NEW_RETURN (this->time_service_clerk_impl_,
+      TAO_Time_Service_Clerk *clerk_impl {};
+      ACE_NEW_RETURN (clerk_impl,
                       TAO_Time_Service_Clerk (this->timer_value_,
                                               this->timer_value_usecs_,
                                               this->server_),
-                      0);
+                      -1);
+      PortableServer::ServantBase_var const clerk_impl_owner (clerk_impl);
 
       // Generate IOR of the Clerk and register with POA.
       this->time_service_clerk_ =
-        this->time_service_clerk_impl_->_this ();
+        clerk_impl->_this ();
 
       // Convert the clerk reference to a string.
       CORBA::String_var objref_clerk =
@@ -311,9 +323,6 @@ Clerk_i::create_clerk ()
                            objref_clerk.in ());
           this->ior_output_file_.reset ();
         }
-
-      // Register the clerk implementation with the Interface
-      // Repository.  init_IR();
     }
   catch (CORBA::Exception const &ex)
     {
@@ -348,19 +357,18 @@ Clerk_i::register_clerk ()
           // OK, naming context already exists.
         }
 
-      char host_name[MAXHOSTNAMELEN];
-      char clerk_mc_name[MAXHOSTNAMELEN];
+      char host_name[MAXHOSTNAMELEN] {};
       ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
       //CosNaming::Name clerk_name (clerk_context_name);
       CosNaming::Name clerk_name;
       clerk_name.length (2);
 
-      std::strcpy (clerk_mc_name, "Clerk:");
-      std::strcat (clerk_mc_name, host_name);
+      std::string clerk_mc_name {"Clerk:"};
+      clerk_mc_name += host_name;
 
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
-      clerk_name[1].id = CORBA::string_dup (clerk_mc_name);
+      clerk_name[1].id = CORBA::string_dup (clerk_mc_name.c_str ());
 
       this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ());

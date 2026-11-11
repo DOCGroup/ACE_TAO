@@ -21,7 +21,7 @@ Server_i::parse_args (int argc,
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_.reset (
@@ -67,14 +67,16 @@ Server_i::create_server ()
   try
     {
       // Create a new server object.
-      ACE_NEW_RETURN (this->time_service_server_impl_,
+      TAO_Time_Service_Server *server_impl {};
+      ACE_NEW_RETURN (server_impl,
                       TAO_Time_Service_Server,
-                      0);
+                      -1);
+      PortableServer::ServantBase_var const server_impl_owner (server_impl);
 
       // Register a servant with the child poa.
       CORBA::String_var server_str =
         this->orb_manager_.activate_under_child_poa ("server",
-                                                     this->time_service_server_impl_);
+                                                     server_impl);
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");
@@ -141,16 +143,15 @@ Server_i::register_server ()
           // OK, naming context already exists.
         }
 
-      char host_name[MAXHOSTNAMELEN];
-      char server_mc_name[MAXHOSTNAMELEN];
+      char host_name[MAXHOSTNAMELEN] {};
       ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
       CosNaming::Name server_name (server_context_name);
 
       server_name.length (2);
-      std::strcpy (server_mc_name, "Server:");
-      std::strcat (server_mc_name, host_name);
-      server_name[1].id = CORBA::string_dup (server_mc_name);
+      std::string server_mc_name {"Server:"};
+      server_mc_name += host_name;
+      server_name[1].id = CORBA::string_dup (server_mc_name.c_str ());
 
       // Bind the compound name (ServerContext(Server:<hostname>))
       // to the Naming Server.

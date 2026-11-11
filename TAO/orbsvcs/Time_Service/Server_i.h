@@ -33,10 +33,8 @@
 class Server_i
 {
 public:
-  /// Constructor.
   Server_i () = default;
 
-  /// Destructor.
   ~Server_i () = default;
 
   Server_i (Server_i const &) = delete;
@@ -79,14 +77,8 @@ private:
   /// <TimeService Server> object.
   TAO_Naming_Client naming_client_;
 
-  /// Implementation of the <TimeService> Server object.
-  TAO_Time_Service_Server *time_service_server_impl_ {};
-
   /// Reference of the time server.
   CosTime::TimeService_var time_service_server_;
-
-  /// Naming context for the Naming Service.
-  CosNaming::NamingContext_var time_service_server_context_;
 };
 
 #endif /* SERVER_I_H */

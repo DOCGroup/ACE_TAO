@@ -40,10 +40,8 @@ public:
     DEFAULT_SERVER_COUNT = 8
   };
 
-  /// Constructor.
   Clerk_i () = default;
 
-  /// Destructor.
   ~Clerk_i () = default;
 
   Clerk_i (Clerk_i const &) = delete;
@@ -91,10 +89,6 @@ private:
   /// Bind the clerk in the appropriate context in the Naming Service.
   int register_clerk ();
 
-  /// Initialise the Interface Repository and register the clerk
-  /// implementation with it.
-  int init_IR ();
-
   /// Get the reference to the server naming context and the first
   /// server IOR.
   int get_first_IOR ();
@@ -112,14 +106,8 @@ private:
    */
   TAO_Naming_Client naming_client_;
 
-  /// Implementation of the <TimeService> Clerk object.
-  TAO_Time_Service_Clerk *time_service_clerk_impl_ {};
-
   /// Reference of the time service clerk.
   CosTime::TimeService_var time_service_clerk_;
-
-  /// Naming context for the Naming Service.
-  CosNaming::NamingContext_var time_service_clerk_context_;
 
   /// My orb.
   CORBA::ORB_var orb_;
@@ -130,9 +118,6 @@ private:
 
   /// Continues the precision of timer_value_ in microseconds.
   int timer_value_usecs_ {};
-
-  //  IR_Helper *ir_helper_;
-  // Helper class for using the IR.
 
   /// The unbounded set of server IORS.
   IORS server_ {};
