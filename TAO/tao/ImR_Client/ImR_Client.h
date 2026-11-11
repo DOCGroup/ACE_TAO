@@ -47,6 +47,11 @@ namespace TAO
     public:
       ImR_Client_Adapter_Impl ();
 
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl &&) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
+
       /// Used to force the initialization of the PortableServer code.
       static int Initializer ();
 
@@ -62,11 +67,6 @@ namespace TAO
                                             const TAO::ObjectKey &key,
                                             const char *type_id) const override;
     private:
-      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl const &) = delete;
-      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl const &) = delete;
-      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl &&) = delete;
-      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
-
       /// Implementation Repository Server Object
       ServerObject_i *server_object_ {};
     };
@@ -76,7 +76,6 @@ namespace TAO
       TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer ();
   }
 }
-
 
 ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)

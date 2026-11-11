@@ -40,6 +40,11 @@ class TAO_IMR_Client_Export ServerObject_i
 public:
   ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
+  ServerObject_i (ServerObject_i const &) = delete;
+  ServerObject_i &operator= (ServerObject_i const &) = delete;
+  ServerObject_i (ServerObject_i &&) = delete;
+  ServerObject_i &operator= (ServerObject_i &&) = delete;
+
   /// Ping method.
   void ping () override;
 
@@ -50,11 +55,6 @@ public:
   PortableServer::POA_ptr _default_POA () override;
 
 protected:
-  ServerObject_i (ServerObject_i const &) = delete;
-  ServerObject_i &operator= (ServerObject_i const &) = delete;
-  ServerObject_i (ServerObject_i &&) = delete;
-  ServerObject_i &operator= (ServerObject_i &&) = delete;
-
   /// Our ORB.  We need this member in case we need to shutdown the
   /// server.
   CORBA::ORB_var orb_;
