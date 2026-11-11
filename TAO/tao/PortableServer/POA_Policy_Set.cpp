@@ -58,11 +58,11 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
   // POA extensions.
   for (CORBA::ULong i {};
        i < this->impl_.num_policies ();
-       i++)
+       ++i)
     {
       CORBA::Policy_var policy = this->impl_.get_policy_by_index (i);
 
-      CORBA::PolicyType type = policy->policy_type ();
+      CORBA::PolicyType const type = policy->policy_type ();
 
       if (!(validator.legal_policy (type)))
         {

@@ -14,12 +14,12 @@ namespace PortableServer
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
-    u_int string_length = ACE_OS::wslen (string);
+    u_int const string_length = ACE_OS::wslen (string);
 
-    CORBA::ULong buffer_size = string_length * sizeof (CORBA::WChar);
+    CORBA::ULong const buffer_size = string_length * sizeof (CORBA::WChar);
 
     // Create the buffer for the Id
-    CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
+    CORBA::Octet * const buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
     // Copy contents
     std::memcpy (buffer, string, buffer_size);
@@ -46,7 +46,7 @@ namespace PortableServer
     // Allocate an extra slot if the id's length is not "aligned" on a
     // CORBA::WChar.
     if (id.length () % sizeof (CORBA::WChar))
-      string_length++;
+      ++string_length;
 
     // Create space - note that this method adds + 1 for the '\0'.
     CORBA::WChar* string = CORBA::wstring_alloc (string_length);

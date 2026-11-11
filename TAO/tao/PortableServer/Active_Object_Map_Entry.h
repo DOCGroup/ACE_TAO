@@ -34,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 struct TAO_Active_Object_Map_Entry
 {
-  /// Default constructor.
   TAO_Active_Object_Map_Entry () = default;
 
   /// User id.
