@@ -1,17 +1,15 @@
 #include "Event_Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
-namespace
-{
-  constexpr char naming_service_name[] = "NameService";
-  constexpr char event_tls_log_factory_name[] = "EventLogFactory";
-}
+constexpr char naming_service_name[] = "NameService";
+constexpr char event_tls_log_factory_name[] = "EventLogFactory";
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Consumer consumer;
+  Consumer consumer {};
 
   return consumer.run (argc, argv);
 }
@@ -89,7 +87,7 @@ Consumer::push (CORBA::Any const &)
   ++this->event_count_;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Consumer (%P|%t): %d log generated events received\n",
+              ACE_TEXT ("Consumer (%P|%t): %u log generated events received\n"),
               this->event_count_));
 }
 
