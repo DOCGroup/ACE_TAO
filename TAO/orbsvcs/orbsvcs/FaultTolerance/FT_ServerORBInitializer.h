@@ -35,17 +35,17 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
+  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer const&) = delete;
+  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer const&) = delete;
+  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer&&) = delete;
+  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer&&) = delete;
+
 private:
   /// Register FTCORBA policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
   /// Register the necessary interceptors.
   void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
-
-  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer const&) = delete;
-  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer const&) = delete;
-  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer&&) = delete;
-  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

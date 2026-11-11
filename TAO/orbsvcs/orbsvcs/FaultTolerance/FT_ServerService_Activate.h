@@ -38,10 +38,8 @@ class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate
 : public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_FT_ServerService_Activate ();
 
-  /// The destructor
   ~TAO_FT_ServerService_Activate () override;
 
   /// Used to force the initialization.

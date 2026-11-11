@@ -53,12 +53,10 @@ class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Our Constructor
   explicit TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
   TAO_FT_IOGR_Property ();
 
-  /// Destructor
   ~TAO_FT_IOGR_Property () override;
 
   TAO_FT_IOGR_Property (TAO_FT_IOGR_Property const&) = delete;
@@ -103,8 +101,6 @@ private:
   CORBA::Boolean encode_properties (
       TAO_OutputCDR &cdr,
       IOP::TaggedComponent& tagged_components) const;
-
-private:
   /// Hold the reference to the FT group tagged component
   FT::TagFTGroupTaggedComponent *ft_group_tagged_component_ {};
 };

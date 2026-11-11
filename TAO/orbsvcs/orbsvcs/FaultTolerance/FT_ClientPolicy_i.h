@@ -45,7 +45,6 @@ class TAO_FT_Request_Duration_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_FT_Request_Duration_Policy (TimeBase::TimeT const &relative_expiry);
 
   /// Copy constructor.
@@ -89,7 +88,6 @@ class TAO_FT_Heart_Beat_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_FT_Heart_Beat_Policy (CORBA::Boolean const boolean,
                             TimeBase::TimeT const &interval,
                             TimeBase::TimeT const &timeout);

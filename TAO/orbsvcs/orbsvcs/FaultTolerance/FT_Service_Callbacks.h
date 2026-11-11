@@ -41,10 +41,8 @@ class TAO_ORB_Core;
 class TAO_FT_ClientORB_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
 {
 public:
-  /// Constructor
   explicit TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
-  /// Dtor
   ~TAO_FT_Service_Callbacks () override;
 
   /// Select the profile from MProfile as the needs of the services
@@ -85,16 +83,16 @@ public:
 
   static TimeBase::TimeT now ();
 
+  TAO_FT_Service_Callbacks (TAO_FT_Service_Callbacks const&) = delete;
+  TAO_FT_Service_Callbacks& operator= (TAO_FT_Service_Callbacks const&) = delete;
+  TAO_FT_Service_Callbacks (TAO_FT_Service_Callbacks&&) = delete;
+  TAO_FT_Service_Callbacks& operator= (TAO_FT_Service_Callbacks&&) = delete;
+
 private:
   /// Check whether the right flags are available so that we can issue a
   /// restart.
   CORBA::Boolean restart_policy_check (IOP::ServiceContextList const& service_list,
                                        TAO_Profile const* const profile) const;
-
-  TAO_FT_Service_Callbacks (TAO_FT_Service_Callbacks const&) = delete;
-  TAO_FT_Service_Callbacks& operator= (TAO_FT_Service_Callbacks const&) = delete;
-  TAO_FT_Service_Callbacks (TAO_FT_Service_Callbacks&&) = delete;
-  TAO_FT_Service_Callbacks& operator= (TAO_FT_Service_Callbacks&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

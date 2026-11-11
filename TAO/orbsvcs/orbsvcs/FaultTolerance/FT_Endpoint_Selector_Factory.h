@@ -43,10 +43,8 @@ class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-  /// Constructor.
   TAO_FT_Endpoint_Selector_Factory ();
 
-  /// Destructor.
   ~TAO_FT_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and

@@ -33,7 +33,6 @@ class TAO_FT_Heart_Beat_Enabled_Policy
   , public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_FT_Heart_Beat_Enabled_Policy (CORBA::Boolean const boolean);
 
   /// Copy constructor.
