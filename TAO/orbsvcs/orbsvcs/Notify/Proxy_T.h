@@ -44,27 +44,29 @@ public:
   void _add_ref () override;
   void _remove_ref () override;
 
-  void validate_event_qos (
+  // SERVANT_TYPE may be a CosEvent servant without these Notify operations.
+  // Retain virtual here so both servant families can instantiate this template.
+  virtual void validate_event_qos (
     CosNotification::QoSProperties const &required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos) override;
+    CosNotification::NamedPropertyRangeSeq_out available_qos);
 
-  CosNotification::QoSProperties *get_qos () override;
+  virtual CosNotification::QoSProperties *get_qos ();
 
-  void set_qos (CosNotification::QoSProperties const &qos) override;
+  virtual void set_qos (CosNotification::QoSProperties const &qos);
 
-  void validate_qos (
+  virtual void validate_qos (
     CosNotification::QoSProperties const &required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos) override;
+    CosNotification::NamedPropertyRangeSeq_out available_qos);
 
-  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter) override;
+  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
 
-  void remove_filter (CosNotifyFilter::FilterID filter) override;
+  virtual void remove_filter (CosNotifyFilter::FilterID filter);
 
-  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter) override;
+  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  CosNotifyFilter::FilterIDSeq *get_all_filters () override;
+  virtual CosNotifyFilter::FilterIDSeq *get_all_filters ();
 
-  void remove_all_filters () override;
+  virtual void remove_all_filters ();
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
