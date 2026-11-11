@@ -42,22 +42,16 @@ private:
 template<class LOCK> int
 Baseline_Lock_Test<LOCK>::acquire ()
 {
-  int retv = 0;
   switch (this->what_)
     {
     case Lock_Type::read_lock:
-      retv = this->lock_.acquire_read ();
-      break;
+      return this->lock_.acquire_read ();
     case Lock_Type::write_lock:
-      retv = this->lock_.acquire_write ();
-      break;
+      return this->lock_.acquire_write ();
     case Lock_Type::lock:
     default:
-      retv = this->lock_.acquire ();
-      break;
+      return this->lock_.acquire ();
     }
-
-  return retv;
 }
 
 template<class LOCK> int

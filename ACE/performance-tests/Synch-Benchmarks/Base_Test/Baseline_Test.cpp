@@ -73,7 +73,7 @@ Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Baseline_Test_Base::yield ()
+Baseline_Test_Base::yield () const
 {
   if (this->yield_method_ == Baseline_Yield_Method::sleep_zero)
     ACE_OS::sleep (0);

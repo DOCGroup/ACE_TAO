@@ -54,7 +54,7 @@ public:
   virtual Baseline_Yield_Method yield_method () const;
   // Query the yield method used.
 
-  virtual void yield ();
+  virtual void yield () const;
   // Yield to other thread.
 
   std::size_t iteration () const;
@@ -101,7 +101,6 @@ public:
   // Start/stop measuring time.
 
   bool inc_loop_counter ();
-  // Returns
 
   void print_result ();
   // Print out the result.
@@ -149,6 +148,7 @@ public:
   // we test the performance of try lock.
 
 private:
+  // The service repository owns the test object; this pointer is non-owning.
   Baseline_Test_Base *current_test_ {};
   ACE_Barrier get_lock_;
   ACE_Barrier let_go_lock_;
