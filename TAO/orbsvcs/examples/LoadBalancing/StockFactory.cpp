@@ -1,8 +1,7 @@
-
 #include "StockFactory.h"
-#include "ace/streams.h"
 
 #include <cstring>
+#include <iostream>
 
 StockFactory::StockFactory (CORBA::ORB_ptr orb, int number)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
@@ -15,12 +14,13 @@ StockFactory::StockFactory (CORBA::ORB_ptr orb, int number)
 Test::Stock_ptr
 StockFactory::get_stock (char const *symbol)
 {
-  cout << "Server Number is " << number_ << endl;
-  if (std::strcmp (symbol, "RHAT") == 0) {
+  std::cout << "Server Number is " << number_ << std::endl;
+
+  if (std::strcmp (symbol, "RHAT") == 0)
     return this->rhat_._this ();
-  } else if (std::strcmp (symbol, "MSFT") == 0) {
+  else if (std::strcmp (symbol, "MSFT") == 0)
     return this->msft_._this ();
-  }
+
   throw Test::Invalid_Stock_Symbol ();
 }
 

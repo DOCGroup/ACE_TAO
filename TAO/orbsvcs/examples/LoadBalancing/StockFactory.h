@@ -1,4 +1,3 @@
-
 #ifndef STOCKFACTORY_H
 #define STOCKFACTORY_H
 
@@ -24,7 +23,7 @@ private:
   CORBA::ORB_var orb_;
   Stock rhat_;
   Stock msft_;
-  int number_;
+  int const number_;
 };
 
 #endif /* STOCKFACTORY_H */

@@ -6,17 +6,21 @@
 #include "ace/OS_NS_strings.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("obj.ior");
+#include <memory>
 
-CORBA::Float reject_threshold {};
-CORBA::Float critical_threshold {};
-CORBA::Float dampening {};
-ACE_TCHAR const *strategy = ACE_TEXT("LeastLoaded");
-int number {};
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("obj.ior")};
+  ACE_TCHAR const *strategy {ACE_TEXT ("LeastLoaded")};
+  CORBA::Float reject_threshold {};
+  CORBA::Float critical_threshold {};
+  CORBA::Float dampening {};
+  int number {};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:s:r:c:d:"));
   int c;
@@ -25,42 +29,41 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 's':
-        strategy = get_opts.opt_arg ();
+        options.strategy = get_opts.opt_arg ();
         break;
 
       case 'n':
-        number = ACE_OS::atoi (get_opts.opt_arg ());
+        options.number = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'r':
-        reject_threshold =
+        options.reject_threshold =
           static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'c':
-        critical_threshold =
+        options.critical_threshold =
           static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'd':
-        dampening =
+        options.dampening =
           static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "  -o <iorfile>\n"
-                           "  -s <RoundRobin | Random | LeastLoaded>\n"
-                           "  -r <reject threshold>    (LeastLoaded only)\n"
-                           "  -c <critical threshold>  (LeastLoaded only)\n"
-                           "  -d <damping value>       (LeastLoaded only)\n"
-                           "\n",
+                           ACE_TEXT ("usage:  %s\n")
+                           ACE_TEXT ("  -o <iorfile>\n")
+                           ACE_TEXT ("  -s <RoundRobin | Random | LeastLoaded>\n")
+                           ACE_TEXT ("  -r <reject threshold>    (LeastLoaded only)\n")
+                           ACE_TEXT ("  -c <critical threshold>  (LeastLoaded only)\n")
+                           ACE_TEXT ("  -d <damping value>       (LeastLoaded only)\n\n"),
                            argv [0]),
                           -1);
       }
@@ -71,7 +74,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 CORBA::Object_ptr
 join_object_group (CORBA::ORB_ptr orb,
                    CosLoadBalancing::LoadManager_ptr lm,
-                   PortableGroup::Location const &location)
+                   PortableGroup::Location const &location,
+                   Server_Options const &options)
 {
   CORBA::Object_var ns_object =
     orb->resolve_initial_references ("NameService");
@@ -94,7 +98,7 @@ join_object_group (CORBA::ORB_ptr orb,
   catch (CosNaming::NamingContext::NotFound const &)
     {
       // Object group not created.  Create one.
-      char const repository_id[] = "IDL:Test/StockFactory:1.0";
+      constexpr char repository_id[] = "IDL:Test/StockFactory:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -105,7 +109,7 @@ join_object_group (CORBA::ORB_ptr orb,
       property.nam[0].id =
         CORBA::string_dup ("omg.org.PortableGroup.MembershipStyle");
 
-      PortableGroup::MembershipStyleValue msv =
+      PortableGroup::MembershipStyleValue const msv =
         PortableGroup::MEMB_APP_CTRL;
       property.val <<= msv;
 
@@ -128,52 +132,55 @@ join_object_group (CORBA::ORB_ptr orb,
 
           CosLoadBalancing::StrategyInfo strategy_info;
 
-          strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(strategy));
+          strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (options.strategy));
 
-          if (ACE_OS::strcasecmp (strategy, ACE_TEXT("LeastLoaded")) == 0
-              && (!ACE::is_equal (reject_threshold, 0.0f)
-                  || !ACE::is_equal (critical_threshold, 0.0f)
-                  || !ACE::is_equal (dampening, 0.0f)))
+          if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("LeastLoaded")) == 0
+              && (!ACE::is_equal (options.reject_threshold, 0.0f)
+                  || !ACE::is_equal (options.critical_threshold, 0.0f)
+                  || !ACE::is_equal (options.dampening, 0.0f)))
             {
               CORBA::ULong len = 1;
 
               PortableGroup::Properties & props =
                 strategy_info.props;
 
-              if (!ACE::is_equal (reject_threshold, 0.0f))
+              if (!ACE::is_equal (options.reject_threshold, 0.0f))
                 {
                   CORBA::ULong const i = len - 1;
 
-                  props.length (len++);
+                  props.length (len);
+                  ++len;
 
                   props[i].nam.length (1);
                   props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.RejectThreshold");
-                  props[i].val <<= reject_threshold;
+                  props[i].val <<= options.reject_threshold;
                 }
 
-              if (!ACE::is_equal (critical_threshold, 0.0f))
+              if (!ACE::is_equal (options.critical_threshold, 0.0f))
                 {
                   CORBA::ULong const i = len - 1;
 
-                  props.length (len++);
+                  props.length (len);
+                  ++len;
 
                   props[i].nam.length (1);
                   props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold");
-                  props[i].val <<= critical_threshold;
+                  props[i].val <<= options.critical_threshold;
                 }
 
-              if (!ACE::is_equal (dampening, 0.0f))
+              if (!ACE::is_equal (options.dampening, 0.0f))
                 {
                   CORBA::ULong const i = len - 1;
 
-                  props.length (len++);
+                  props.length (len);
+                  ++len;
 
                   props[i].nam.length (1);
                   props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.Dampening");
-                  props[i].val <<= dampening;
+                  props[i].val <<= options.dampening;
                 }
 
             }
@@ -192,9 +199,9 @@ join_object_group (CORBA::ORB_ptr orb,
         }
     }
 
-  StockFactory * stockfactory_impl;
+  StockFactory *stockfactory_impl {};
   ACE_NEW_THROW_EX (stockfactory_impl,
-                    StockFactory (orb, number),
+                    StockFactory (orb, options.number),
                     CORBA::NO_MEMORY ());
 
   PortableServer::ServantBase_var owner_transfer (stockfactory_impl);
@@ -210,11 +217,13 @@ join_object_group (CORBA::ORB_ptr orb,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Server_Options options;
+
   try
     {
-      ORBInitializer *initializer = nullptr;
+      ORBInitializer *initializer {};
       ACE_NEW_RETURN (initializer,
                       ORBInitializer,
                       -1);  // No exceptions yet!
@@ -226,13 +235,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       PortableServer::POA_var root_poa =
@@ -241,7 +249,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       poa_manager->activate ();
@@ -252,7 +260,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CosLoadBalancing::LoadManager_var load_manager =
         CosLoadBalancing::LoadManager::_narrow (lm_object.in ());
 
-      RPS_Monitor * monitor_servant;
+      RPS_Monitor *monitor_servant {};
       ACE_NEW_THROW_EX (monitor_servant,
                         RPS_Monitor (initializer->interceptor ()),
                         CORBA::NO_MEMORY ());
@@ -268,26 +276,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var stockfactory =
         ::join_object_group (orb.in (),
                              load_manager.in (),
-                             location.in ());
+                             location.in (),
+                             options);
 
       TAO_LB_LoadAlert & alert_servant = initializer->load_alert ();
 
       CosLoadBalancing::LoadAlert_var load_alert =
         alert_servant._this ();
 
-
       CORBA::String_var ior =
         orb->object_to_string (stockfactory.in ());
 
-      // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       load_manager->register_load_monitor (location.in (),
                                            load_monitor.in ());
@@ -297,7 +307,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) server - event loop finished\n")));
 
       root_poa->destroy (true, true);
 

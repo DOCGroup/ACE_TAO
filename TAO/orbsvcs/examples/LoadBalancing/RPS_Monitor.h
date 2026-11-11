@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RPS_MONITOR_H
 #define TAO_RPS_MONITOR_H
 
@@ -19,7 +18,6 @@
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 class ServerRequestInterceptor;
 
@@ -76,7 +74,7 @@ private:
   /// The name of the location at which this LoadMonitor resides.
   CosLoadBalancing::Location location_;
 
-  ServerRequestInterceptor * interceptor_;
+  ServerRequestInterceptor * const interceptor_;
 
   ACE_Time_Value last_time_;
 

@@ -24,7 +24,7 @@ RPS_Monitor::RPS_Monitor (ServerRequestInterceptor * interceptor)
 CosLoadBalancing::Location *
 RPS_Monitor::the_location ()
 {
-  CosLoadBalancing::Location * location;
+  CosLoadBalancing::Location *location {};
   ACE_NEW_THROW_EX (location,
                     CosLoadBalancing::Location (this->location_),
                     CORBA::NO_MEMORY (
@@ -41,7 +41,7 @@ RPS_Monitor::loads ()
 {
   ACE_Time_Value const current_time = ACE_OS::gettimeofday ();
 
-  ACE_Time_Value elapsed_time;
+  ACE_Time_Value elapsed_time {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, monitor, this->lock_, nullptr);
@@ -52,7 +52,7 @@ RPS_Monitor::loads ()
 
   CORBA::Long const request_count = this->interceptor_->request_count ();
 
-  CosLoadBalancing::LoadList * tmp;
+  CosLoadBalancing::LoadList *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (
@@ -71,8 +71,8 @@ RPS_Monitor::loads ()
   load_list[0].value =
     static_cast<CORBA::Float> (request_count / elapsed_time.msec () * 1000);
 
-  // Strictly for debugging or
-  ACE_DEBUG ((LM_DEBUG, "%f\n", load_list[0].value));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%f\n"), load_list[0].value));
 
   return load_list._retn ();
 }

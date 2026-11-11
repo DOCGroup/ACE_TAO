@@ -1,4 +1,3 @@
-
 #include "Stock.h"
 
 Stock::Stock (char const *symbol,

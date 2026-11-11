@@ -1,14 +1,17 @@
 #include "TestC.h"
+
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://obj.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://obj.ior")};
+  int niterations {100};
+  int number {};
+};
 
-int niterations {100};
-int number {};
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:i:"));
   int c;
@@ -17,24 +20,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'n':
-        number = ACE_OS::atoi (get_opts.opt_arg ());
+        options.number = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior> -i <niterations>\n"),
                            argv [0]),
                           -1);
       }
@@ -42,19 +42,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
+
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::StockFactory_var stockfactory =
         Test::StockFactory::_narrow (tmp.in ());
@@ -62,28 +63,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (stockfactory.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::StockFactory reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil Test::StockFactory reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Starting Client %d\n", number));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting Client %d\n"), options.number));
 
-      for (int i = 0; i < niterations; ++i)
+      for (int i = 0; i < options.niterations; ++i)
         {
           Test::Stock_var stock =
             stockfactory->get_stock ("RHAT");
 
           CORBA::String_var full_name = stock->full_name ();
 
-          CORBA::Double price = stock->price ();
+          CORBA::Double const price = stock->price ();
 
-          ACE_DEBUG ((LM_DEBUG, "The price of a stock in \"%s\" is $%f\n",
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The price of a stock in \"%C\" is $%f\n"),
                       full_name.in (),
                       price));
         }
-
-      //stockfactory->shutdown ();
 
       orb->destroy ();
     }

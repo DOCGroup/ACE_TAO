@@ -1,7 +1,5 @@
 #include "ServerRequestInterceptor.h"
 
-ServerRequestInterceptor::ServerRequestInterceptor () = default;
-
 char *
 ServerRequestInterceptor::name ()
 {
@@ -47,8 +45,5 @@ ServerRequestInterceptor::send_other (
 CORBA::Long
 ServerRequestInterceptor::request_count ()
 {
-  CORBA::Long const r = static_cast<CORBA::Long> (
-    this->request_count_.exchange (0, std::memory_order_relaxed));
-
-  return r;
+  return this->request_count_.exchange (CORBA::Long {}, std::memory_order_relaxed);
 }

@@ -1,4 +1,3 @@
-
 #ifndef STOCK_H
 #define STOCK_H
 
@@ -23,9 +22,9 @@ public:
   CORBA::Double price () override;
 
 private:
-  std::string symbol_;
-  std::string full_name_;
-  CORBA::Double price_;
+  std::string const symbol_;
+  std::string const full_name_;
+  CORBA::Double const price_;
 };
 
 #endif /* STOCK_H */

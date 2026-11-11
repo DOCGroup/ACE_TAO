@@ -6,12 +6,6 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "tao/ORB_Constants.h"
 
-ORBInitializer::ORBInitializer ()
-  : load_alert_ (),
-    interceptor_ (nullptr)
-{
-}
-
 void
 ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -49,7 +43,6 @@ ORBInitializer::post_init (
 
   info->add_server_request_interceptor (safe_reject_interceptor.in ());
 }
-
 
 TAO_LB_LoadAlert &
 ORBInitializer::load_alert ()

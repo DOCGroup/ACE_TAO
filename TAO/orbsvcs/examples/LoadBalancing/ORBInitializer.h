@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ORB_INITIALIZER_H
 #define ORB_INITIALIZER_H
 
@@ -45,7 +44,8 @@ class ORBInitializer
 {
 public:
   /// Constructor.
-  ORBInitializer ();
+  ORBInitializer () = default;
+  ~ORBInitializer () override = default;
 
   ORBInitializer (ORBInitializer const &) = delete;
   ORBInitializer (ORBInitializer &&) = delete;
@@ -78,9 +78,8 @@ private:
    */
   TAO_LB_LoadAlert load_alert_;
 
-  ServerRequestInterceptor * interceptor_;
+  ServerRequestInterceptor *interceptor_ {};
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
