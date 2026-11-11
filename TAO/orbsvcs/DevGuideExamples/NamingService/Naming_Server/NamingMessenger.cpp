@@ -4,19 +4,19 @@
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Start the Naming Service task
-  NamingTask namingService(argc, argv);
-  namingService.activate();
+  NamingTask naming_service (argc, argv);
+  naming_service.activate ();
   // Wait for the Naming Service initialized.
-  namingService.waitInit();
+  naming_service.waitInit ();
 
   // Start the Messenger task
   MessengerTask messenger;
-  messenger.activate();
+  messenger.activate ();
 
   // Wait the Messenger task finish.
-  messenger.wait();
+  messenger.wait ();
   // Shutdown the Naming Service.
-  namingService.end();
+  naming_service.end ();
 
   return 0;
 }

@@ -4,19 +4,24 @@
 #include "tao/corba.h"
 #include "ace/Task.h"
 
+#include <atomic>
+
 class NamingTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  NamingTask (int argc, ACE_TCHAR** argv);
-  virtual int svc();
+  NamingTask (int argc, ACE_TCHAR *argv[]);
+  int svc () override;
   void waitInit ();
-  void end();
+  void end ();
+
+  NamingTask (NamingTask const &) = delete;
+  NamingTask (NamingTask &&) = delete;
+  NamingTask &operator= (NamingTask const &) = delete;
+  NamingTask &operator= (NamingTask &&) = delete;
 
 private:
-  int argc_;
-  ACE_TCHAR **argv_;
-  CORBA::ORB_var orb_;
-  bool initialized_;
+  CORBA::ORB_var const orb_;
+  std::atomic<bool> initialized_ {};
 };
 
 #endif
