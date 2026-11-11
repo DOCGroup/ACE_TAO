@@ -6,6 +6,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 
 #include <iostream>
+
 #include "MessengerC.h"
 
 constexpr int EVENT_DELAY_MS = 10;
@@ -15,60 +16,63 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
   {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     // Find the Naming Service.
-    CORBA::Object_var obj = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
+    CosNaming::NamingContextExt_var const root_context =
+      CosNaming::NamingContextExt::_narrow (obj.in ());
 
     // Find the EventChannel.
-    obj = root_context->resolve_str("CosEventService");
+    obj = root_context->resolve_str ("CosEventService");
 
     // Downcast the object reference to a TypedEventChannel reference.
-    CosTypedEventChannelAdmin::TypedEventChannel_var ec =
+    CosTypedEventChannelAdmin::TypedEventChannel_var const ec =
       CosTypedEventChannelAdmin::TypedEventChannel::_narrow(obj.in ());
-    if (CORBA::is_nil(ec.in())) {
-      std::cerr << "Could not resolve TypedEventChannel." << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (ec.in ()))
+      {
+        std::cerr << "Could not resolve TypedEventChannel." << std::endl;
+        return 1;
+      }
 
     // Get a SupplierAdmin object from the EventChannel.
-    CosTypedEventChannelAdmin::TypedSupplierAdmin_var supplierAdmin =
-      ec->for_suppliers();
+    CosTypedEventChannelAdmin::TypedSupplierAdmin_var const supplierAdmin =
+      ec->for_suppliers ();
 
     // Get a ProxyPushConsumer from the SupplierAdmin.
-    CosTypedEventChannelAdmin::TypedProxyPushConsumer_var consumer =
-      supplierAdmin->obtain_typed_push_consumer(::_tc_Messenger->id());
+    CosTypedEventChannelAdmin::TypedProxyPushConsumer_var const consumer =
+      supplierAdmin->obtain_typed_push_consumer (::_tc_Messenger->id ());
 
     // Connect to the ProxyPushConsumer as a PushSupplier
     // (passing a nil PushSupplier object reference to it because
     // we don't care to be notified about disconnects).
-    consumer->connect_push_supplier(CosEventComm::PushSupplier::_nil());
+    consumer->connect_push_supplier (CosEventComm::PushSupplier::_nil ());
 
     // Obtain the interface from the event channel
-    CORBA::Object_var messenger_obj = consumer->get_typed_consumer();
+    CORBA::Object_var const messenger_obj = consumer->get_typed_consumer ();
 
     // Narrow the interface
-    Messenger_var messenger = Messenger::_narrow(messenger_obj.in () );
+    Messenger_var const messenger = Messenger::_narrow (messenger_obj.in ());
 
     // Create an event (just a string in this case).
-    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup ("Hello, world.");
 
     // Send one event per second. (approx)
-    while (true) {
-      messenger->send_message("King Lizard",
-                              "Proclamations",
-                              eventData.in());
+    while (true)
+      {
+        messenger->send_message ("King Lizard",
+                                 "Proclamations",
+                                 eventData.in ());
 
-      ACE_Time_Value event_delay(0, 1000 * EVENT_DELAY_MS);
-      orb->run(event_delay);
+        ACE_Time_Value event_delay (0, 1000 * EVENT_DELAY_MS);
+        orb->run (event_delay);
+      }
+
+  }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "Caught CORBA::Exception. " << std::endl << ex << std::endl;
     }
-
-  }
-  catch (CORBA::Exception const & ex)
-  {
-    std::cerr << "Caught CORBA::Exception. " << std::endl << ex << std::endl;
-  }
 
   return 1;
 }

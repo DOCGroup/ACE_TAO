@@ -18,32 +18,28 @@
 
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 
-//Class Messenger_i
-class  Messenger_i : public virtual POA_Messenger
+class Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   Messenger_i (CORBA::ORB_ptr orb,
                CosEventChannelAdmin::ProxyPushSupplier_ptr supplier,
                int event_limit);
 
-  //Destructor
-  virtual ~Messenger_i ();
+  ~Messenger_i () override = default;
 
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;
   Messenger_i &operator= (Messenger_i const &) = delete;
   Messenger_i &operator= (Messenger_i &&) = delete;
 
-  void send_message (char const * user_name,
-                     char const * subject,
-                     char const * message) override;
+  void send_message (char const *user_name,
+                     char const *subject,
+                     char const *message) override;
 
 private:
   CORBA::ORB_var orb_;
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
   int event_limit_;
 };
-
 
 #endif /* MESSENGERI_H_  */
