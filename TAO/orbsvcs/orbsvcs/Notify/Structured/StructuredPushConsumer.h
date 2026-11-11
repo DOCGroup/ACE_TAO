@@ -43,9 +43,6 @@ public:
   TAO_Notify_StructuredPushConsumer &operator= (TAO_Notify_StructuredPushConsumer &&) = delete;
 
   /// Push <event> to this consumer.
-//  virtual void push_i (const TAO_Notify_Event* event);
-
-  /// Push <event> to this consumer.
   void push (CORBA::Any const &event) override;
 
   /// Push <event> to this consumer.
@@ -61,7 +58,6 @@ public:
   /// to the new one
   void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) override;
 
-
 protected:
   CORBA::Object_ptr get_consumer () override;
 
@@ -73,7 +69,7 @@ private:
   void release () override;
 
   /// Connection valid flag
-  int connection_valid;
+  bool connection_valid_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

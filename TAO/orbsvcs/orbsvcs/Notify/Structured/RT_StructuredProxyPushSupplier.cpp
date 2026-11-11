@@ -15,7 +15,7 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
   CORBA::Object_var object = TAO_Notify_Proxy::activate (servant);
 
   // Obtain our ref.
-  CORBA::Object_var obj = this->ref ();
+  CORBA::Object_var const obj = this->ref ();
 
   this->event_forwarder_ = Event_Forwarder::StructuredProxyPushSupplier::_narrow (obj.in ());
 
@@ -23,7 +23,7 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
 }
 
 CORBA::Object_ptr
-TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ,
+TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant,
                                                      CORBA::Long)
 {
    return CORBA::Object::_nil ();
@@ -36,7 +36,7 @@ TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Di
     {
       request.event()->push (this->event_forwarder_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 2)
         {
@@ -48,13 +48,14 @@ TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Di
 }
 
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_Event* event)
+TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (
+  TAO_Notify_Event const *event)
 {
   try
     {
       event->push_no_filtering (this->event_forwarder_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 2)
         {

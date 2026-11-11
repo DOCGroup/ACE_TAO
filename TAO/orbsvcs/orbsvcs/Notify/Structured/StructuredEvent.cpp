@@ -9,10 +9,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent &notification)
+TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (
+  CosNotification::StructuredEvent const &notification)
   : notification_ (&notification), type_ (notification.header.fixed_header.event_type)
 {
-  const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
+  CosNotification::PropertySeq const &prop_seq =
+    notification.header.variable_header;
 
   for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
     {
@@ -23,7 +25,7 @@ TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (const Co
     }
 }
 
-const TAO_Notify_EventType&
+TAO_Notify_EventType const &
 TAO_Notify_StructuredEvent_No_Copy::type () const
 {
   return this->type_;
@@ -53,7 +55,7 @@ TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 TAO_Notify_Event *
 TAO_Notify_StructuredEvent_No_Copy::copy () const
 {
-  TAO_Notify_Event * new_event;
+  TAO_Notify_Event *new_event {};
   ACE_NEW_THROW_EX (new_event,
                     TAO_Notify_StructuredEvent (*this->notification_),
                     CORBA::NO_MEMORY ());
@@ -71,13 +73,14 @@ TAO_Notify_StructuredEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter
 }
 
 void
-TAO_Notify_StructuredEvent_No_Copy::convert (CosNotification::StructuredEvent& notification) const
+TAO_Notify_StructuredEvent_No_Copy::convert (
+  CosNotification::StructuredEvent &notification) const
 {
   notification = *this->notification_;
 }
 
 void
-TAO_Notify_StructuredEvent_No_Copy::push (TAO_Notify_Consumer* consumer) const
+TAO_Notify_StructuredEvent_No_Copy::push (TAO_Notify_Consumer *consumer) const
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -121,7 +124,8 @@ TAO_Notify_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPus
 
 /*****************************************************************************************************/
 
-TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification)
+TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (
+  CosNotification::StructuredEvent const &notification)
   : TAO_Notify_StructuredEvent_No_Copy (notification)
     , notification_copy (notification)
 {

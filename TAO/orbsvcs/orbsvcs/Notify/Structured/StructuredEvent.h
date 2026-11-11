@@ -47,13 +47,13 @@ public:
   CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const override;
 
   /// Convert to CosNotification::Structured type
-  void convert (CosNotification::StructuredEvent& notification) const override;
+  void convert (CosNotification::StructuredEvent &notification) const override;
 
   /// Get the event type.
   TAO_Notify_EventType const &type () const override;
 
   /// Push event to consumer
-  void push (TAO_Notify_Consumer* consumer) const override;
+  void push (TAO_Notify_Consumer *consumer) const override;
 
   /// Push event to the Event_Forwarder interface
   void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const override;
@@ -68,7 +68,7 @@ public:
   void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const override;
 
   /// unmarshal this event from a CDR buffer (for persistence)
-  /// \return the new event, or NULL if this is the wrong type of event.
+  /// \return the new event, or nullptr if this is the wrong type of event.
   static TAO_Notify_StructuredEvent * unmarshal (TAO_InputCDR & cdr);
 
 protected:
@@ -76,10 +76,11 @@ protected:
   TAO_Notify_Event * copy () const override;
 
   /// Structured Event
-  const CosNotification::StructuredEvent* notification_;
+  /// Borrowed event; the copying derived type redirects this pointer to its owned copy.
+  CosNotification::StructuredEvent const *notification_;
 
   /// Our type.
-  const TAO_Notify_EventType type_;
+  TAO_Notify_EventType const type_;
 };
 
 /*****************************************************************************/
@@ -92,10 +93,15 @@ protected:
 class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent : public TAO_Notify_StructuredEvent_No_Copy
 {
 public:
-  explicit TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
+  explicit TAO_Notify_StructuredEvent (
+    CosNotification::StructuredEvent const &notification);
 
   ~TAO_Notify_StructuredEvent () override = default;
 
+  TAO_Notify_StructuredEvent (TAO_Notify_StructuredEvent const &) = delete;
+  TAO_Notify_StructuredEvent (TAO_Notify_StructuredEvent &&) = delete;
+  TAO_Notify_StructuredEvent &operator= (TAO_Notify_StructuredEvent const &) = delete;
+  TAO_Notify_StructuredEvent &operator= (TAO_Notify_StructuredEvent &&) = delete;
 
 protected:
   /// Copy of the Event.
