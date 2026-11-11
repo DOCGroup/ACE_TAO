@@ -299,24 +299,23 @@ ACEXML_Parser::parse_external_dtd ()
     }
   if (this->validate_)
     {
-      ACEXML_Char* uri = this->normalize_systemid (systemId);
-      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> uri = this->normalize_systemid (systemId);
       ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
-                                                      (uri ? uri : systemId));
+                                                      (uri ? uri.get () : systemId));
         }
       if (ip)
         {
-          if (this->switch_input (ip, (uri ? uri : systemId), publicId) != 0)
+          if (this->switch_input (ip, (uri ? uri.get () : systemId), publicId) != 0)
             return -1;
         }
       else
         {
           ACEXML_StreamFactory factory;
           ACEXML_CharStream* cstream = factory.create_stream (uri ?
-                                                              uri: systemId);
+                                                              uri.get () : systemId);
           if (!cstream) {
             this->fatal_error (ACE_TEXT ("Invalid input source"));
           }
@@ -636,13 +635,13 @@ ACEXML_Parser::parse_external_id (ACEXML_Char *&publicId,
   return 0;
 }
 
-ACEXML_Char*
+std::unique_ptr<ACEXML_Char[]>
 ACEXML_Parser::normalize_systemid (ACEXML_Char const *systemId)
 {
   if (ACE_OS::strstr (systemId, ACE_TEXT("ftp://")) != nullptr ||
       ACE_OS::strstr (systemId, ACE_TEXT ("http://")) != nullptr ||
       ACE_OS::strstr (systemId, ACE_TEXT ("file://")) != nullptr)
-    return nullptr;
+    return {};
   else
     {
       ACEXML_Char *normalized_uri {};
@@ -670,12 +669,12 @@ ACEXML_Parser::normalize_systemid (ACEXML_Char const *systemId)
         {
           size_t const pos = temp - baseURI + 1;
           size_t const len = pos + ACE_OS::strlen (systemId) + 1;
-          ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], nullptr);
+          ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], {});
           ACE_OS::strncpy (normalized_uri, baseURI, pos);
           ACE_OS::strcpy (normalized_uri + pos, systemId);
-          return normalized_uri;
+          return std::unique_ptr<ACEXML_Char[]> (normalized_uri);
         }
-      return nullptr;
+      return {};
     }
 }
 
@@ -731,7 +730,7 @@ ACEXML_Parser::parse_element (bool is_root)
             if (ns_flag)
               {
                 this->xml_namespace_.popContext ();
-                this->nested_namespace_--;
+                --this->nested_namespace_;
               }
             return;
           case '>':
@@ -764,7 +763,7 @@ ACEXML_Parser::parse_element (bool is_root)
                     if (!ns_flag)
                       {
                         this->xml_namespace_.pushContext ();
-                        this->nested_namespace_++;
+                        ++this->nested_namespace_;
                         ns_flag = true;
                       }
 
@@ -902,7 +901,7 @@ ACEXML_Parser::parse_content (ACEXML_Char const *startname,
                         if (this->nested_namespace_ >= 1)
                           {
                             this->xml_namespace_.popContext ();
-                            this->nested_namespace_--;
+                            --this->nested_namespace_;
                           }
                       }
                     return 0;
@@ -2040,7 +2039,7 @@ ACEXML_Parser::parse_entity_reference ()
         {
           this->fatal_error (ACE_TEXT ("External EntityRef in Attribute Value"));
         }
-      this->external_entity_++;
+      ++this->external_entity_;
     }
 
   // [WFC: No Recursion]
@@ -2069,16 +2068,15 @@ ACEXML_Parser::parse_entity_reference ()
     }
   else
     {
-      ACEXML_Char* uri = this->normalize_systemid (systemId);
-      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> uri = this->normalize_systemid (systemId);
       ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
-                                                      (uri ? uri : systemId));
+                                                      (uri ? uri.get () : systemId));
           if (ip)
             {
-              if (this->switch_input (ip, (uri ? uri : systemId),
+              if (this->switch_input (ip, (uri ? uri.get () : systemId),
                                       publicId) != 0)
                 {
                   this->fatal_error (ACE_TEXT ("Internal Parser Error"));
@@ -2087,7 +2085,7 @@ ACEXML_Parser::parse_entity_reference ()
             }
         }
       ACEXML_StreamFactory factory;
-      ACEXML_CharStream* cstream = factory.create_stream (uri ? uri: systemId);
+      ACEXML_CharStream* cstream = factory.create_stream (uri ? uri.get () : systemId);
       if (!cstream) {
         this->fatal_error (ACE_TEXT ("Invalid input source"));
       }
@@ -2127,7 +2125,7 @@ ACEXML_Parser::parse_PE_reference ()
         {
           this->fatal_error (ACE_TEXT ("Undefined PEReference"));
         }
-      this->external_entity_++;
+      ++this->external_entity_;
     }
 
   // [WFC: No Recursion]
@@ -2161,17 +2159,16 @@ ACEXML_Parser::parse_PE_reference ()
     }
   else if (this->external_entity_ && this->validate_)
     {
-      ACEXML_Char* uri = this->normalize_systemid (systemId);
-      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> uri = this->normalize_systemid (systemId);
       ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
-                                                      (uri ? uri : systemId));
+                                                      (uri ? uri.get () : systemId));
         }
       if (ip)
         {
-          if (this->switch_input (ip, (uri ? uri : systemId), publicId) != 0)
+          if (this->switch_input (ip, (uri ? uri.get () : systemId), publicId) != 0)
             {
               this->fatal_error (ACE_TEXT ("Error in switching InputSource"));
             }
@@ -2180,7 +2177,7 @@ ACEXML_Parser::parse_PE_reference ()
       else
         {
           ACEXML_StreamFactory factory;
-          ACEXML_CharStream* cstream = factory.create_stream (uri ? uri: systemId);
+          ACEXML_CharStream* cstream = factory.create_stream (uri ? uri.get () : systemId);
           if (!cstream) {
             this->fatal_error (ACE_TEXT ("Invalid input source"));
           }
@@ -2334,7 +2331,7 @@ ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
                         (ch == '_' || ch == '.' || ch == ':')))
         {
           this->obstack_.grow (ch);
-          numchars++;
+          ++numchars;
         }
       else
         return -1;
@@ -2422,7 +2419,7 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
                         (ch == '_' || ch == '.')))
         {
           this->obstack_.grow (ch);
-          numchars++;
+          ++numchars;
         }
       else
         return -1;
@@ -2452,7 +2449,7 @@ ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
         {
           case 'y': case 'e': case 's': case 'n': case 'o':
             this->obstack_.grow (ch);
-            numchars++;
+            ++numchars;
             break;
           default:
             return -1;
@@ -2567,7 +2564,7 @@ ACEXML_Parser::pop_context (int GE_ref)
   nrelems = this->ctx_stack_.size();
 
   if (this->external_entity_ && (GE_ref == 0 || GE_ref == 1))
-    this->external_entity_--;
+    --this->external_entity_;
 
   this->content_handler_->setDocumentLocator (this->current_->getLocator());
 
@@ -2802,7 +2799,7 @@ ACEXML_Parser::parse_comment ()
       ACEXML_Char fwd = this->get ();
       if ((fwd == '-' && state < 2) ||
           (fwd == '>' && state == 2))
-        state += 1;
+        ++state;
       else
         state = 0;              // Reset parse state.
     }

@@ -185,7 +185,7 @@ ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
   ACEXML_Char dummy {};
   ACEXML_Char &forward = (peeky == nullptr ? dummy : *peeky);
 
-  for (;this->is_whitespace ((forward = this->peek ())); ++wscount)
+  for (; this->is_whitespace ((forward = this->peek ())); ++wscount)
     this->get ();
   return wscount;
 }

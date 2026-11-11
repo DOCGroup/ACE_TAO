@@ -12,6 +12,8 @@
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_
 
+#include <memory>
+
 #include /**/ "ace/pre.h"
 #include "ACEXML/parser/parser/Parser_export.h"
 
@@ -696,7 +698,7 @@ private:
    * Very trivial, non-conformant normalization of a systemid.
    *
    */
-  ACEXML_Char* normalize_systemid (ACEXML_Char const *systemId);
+  std::unique_ptr<ACEXML_Char[]> normalize_systemid (ACEXML_Char const *systemId);
 
   // Feature names:
 
