@@ -125,7 +125,7 @@ TAO_DTP_Task::open (void * /* args */)
       return 0;
     }
 
-  int num = static_cast<int> (this->init_pool_threads_);
+  int const num = static_cast<int> (this->init_pool_threads_);
 
   if (TAO_debug_level > 4)
     {
@@ -442,7 +442,7 @@ TAO_DTP_Task::close (u_long flag)
     this->work_available_.broadcast();
   }
 
-  size_t in_task = (this->thr_mgr ()->task () == this) ? 1 : 0;
+  size_t const in_task = (this->thr_mgr ()->task () == this) ? 1 : 0;
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,

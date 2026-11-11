@@ -248,7 +248,7 @@ TAO_DTP_Config::parse_bool (int &curarg,
                                    ACE_TCHAR const *match, bool &value)
 {
   long num {};
-  int result = this->parse_long (curarg, argc, argv, match, num);
+  int const result = this->parse_long (curarg, argc, argv, match, num);
   if (result < 1)
     return result;
 

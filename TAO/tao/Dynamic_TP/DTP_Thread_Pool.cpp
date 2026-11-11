@@ -115,7 +115,7 @@ TAO_DTP_Thread_Pool_Threads::svc ()
 int
 TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 {
-  CORBA::ORB_ptr orb = orb_core.orb ();
+  CORBA::ORB_ptr const orb = orb_core.orb ();
   // A timeout is specified, run the ORB in an idle loop, if we
   // don't handle any operations for the given timeout we just
   // exit the loop and this thread ends itself.
@@ -138,7 +138,7 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
     {
       tv = this->pool_.dynamic_thread_time ();
       orb->perform_work (tv);
-      bool timeout = errno == ETIME;
+      bool const timeout = errno == ETIME;
       if (TAO_debug_level > 7)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
@@ -219,7 +219,7 @@ TAO_DTP_Thread_Pool::create_initial_threads ()
   // first, create the minimum number of threads as static
   // if the min threads count is -1 that means all threads are static
 
-  size_t count = (size_t)this->definition_.init_threads_;
+  size_t const count = (size_t)this->definition_.init_threads_;
 
   if (TAO_debug_level > 7)
     {
@@ -293,11 +293,11 @@ int
 TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 {
   // Overwritten parameters.
-  int force_active = 1;
-  long thread_flags = THR_NEW_LWP | THR_DETACHED;
+  int const force_active = 1;
+  long const thread_flags = THR_NEW_LWP | THR_DETACHED;
 
   // Default parameters.
-  int default_grp_id = -1;
+  int const default_grp_id = -1;
   ACE_Task_Base *default_task {};
   ACE_hthread_t *default_thread_handles {};
   void **default_stack {};
@@ -317,7 +317,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 
   TAO_ORB_Core &orb_core = manager_.orb_core ();
 
-  long flags =
+  long const flags =
     thread_flags |
     orb_core.orb_params ()->thread_creation_flags ();
 

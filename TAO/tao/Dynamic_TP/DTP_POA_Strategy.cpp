@@ -22,7 +22,7 @@ TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_synch_request(
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
     this->get_servant_state(op->servant());
 
   TAO::CSD::TP_Custom_Synch_Request *req_ptr {};
@@ -46,7 +46,7 @@ TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_asynch_request (
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
     this->get_servant_state (op->servant ());
 
   TAO::CSD::TP_Custom_Asynch_Request *req_ptr {};
@@ -68,7 +68,7 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
   // Activates the worker threads, and waits until all have been started.
   if (!this->config_initialized_)
     {
-      TAO_DTP_Config_Registry * config_repo =
+      TAO_DTP_Config_Registry * const config_repo =
       ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
         ("DTP_Config_Registry");
 
@@ -125,14 +125,14 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
                               char const *                    operation,
                               PortableServer::Servant         servant)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state (servant);
 
   // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
   // before queuing the request and thus avoid delaying the client.
   // This is a problem if the servant ends up throwing a Location Forward
   // exception. If necessary, add an override config option here.
-  CORBA::Boolean early_sync = true;
+  CORBA::Boolean const early_sync = true;
   server_request.is_queued (early_sync);
   server_request.sync_before_dispatch ();
 
@@ -174,11 +174,11 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                               char const *                    operation,
                               PortableServer::Servant         servant)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state (servant);
 
-  bool is_sync_with_server = server_request.sync_with_server ();
-  bool is_synchronous      = server_request.response_expected ();
+  bool const is_sync_with_server = server_request.sync_with_server ();
+  bool const is_synchronous = server_request.response_expected ();
 
   TAO::CSD::TP_Collocated_Synch_Request_Handle
     synch_request;
@@ -256,7 +256,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
   // synchronous request.
   if (!synch_request.is_nil ())
     {
-      int srw = synch_request->wait ();
+      int const srw = synch_request->wait ();
       if (srw == false)
         {
           // Raise exception when request was cancelled.
@@ -265,7 +265,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else if (!synch_with_server_request.is_nil())
     {
-      bool swsr = synch_with_server_request->wait();
+      bool const swsr = synch_with_server_request->wait();
       if (swsr == false)
         {
           // Raise exception when request was cancelled.
