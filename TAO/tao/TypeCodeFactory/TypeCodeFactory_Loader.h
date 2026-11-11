@@ -32,7 +32,12 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Loader
   : public TAO_Object_Loader
 {
 public:
-  TAO_TypeCodeFactory_Loader ();
+  TAO_TypeCodeFactory_Loader () = default;
+
+  TAO_TypeCodeFactory_Loader (TAO_TypeCodeFactory_Loader const &) = delete;
+  TAO_TypeCodeFactory_Loader &operator= (TAO_TypeCodeFactory_Loader const &) = delete;
+  TAO_TypeCodeFactory_Loader (TAO_TypeCodeFactory_Loader &&) = delete;
+  TAO_TypeCodeFactory_Loader &operator= (TAO_TypeCodeFactory_Loader &&) = delete;
 
   /// Overload the base class method to create a new instance
   /// of a TypeCodeFactory object.

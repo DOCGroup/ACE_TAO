@@ -47,11 +47,8 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
  * Implementation of the CORBA::TypeCodeFactory interface
  */
 public:
-  /// ctor
-  TAO_TypeCodeFactory_i ();
-
-  /// dtor
-  ~TAO_TypeCodeFactory_i () override;
+  TAO_TypeCodeFactory_i () = default;
+  ~TAO_TypeCodeFactory_i () override = default;
 
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);
@@ -219,9 +216,8 @@ private:
   CORBA::TypeCode_ptr make_recursive_tc (CORBA::TCKind kind,
                                          char const * id);
 
-  /// Prohibited
-  TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src) = delete;
-  TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src) = delete;
+  TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i const &src) = delete;
+  TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i const &src) = delete;
   TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i &&) = delete;
   TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i &&) = delete;
 };

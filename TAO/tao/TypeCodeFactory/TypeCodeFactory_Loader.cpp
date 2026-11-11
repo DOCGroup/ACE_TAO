@@ -14,12 +14,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader () = default;
-
 CORBA::Object_ptr
 TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR * [])
 {
-  CORBA::Object_ptr obj;
+  CORBA::Object_ptr obj {};
   ACE_NEW_RETURN (obj,
                   TAO_TypeCodeFactory_i,
                   CORBA::Object::_nil ());

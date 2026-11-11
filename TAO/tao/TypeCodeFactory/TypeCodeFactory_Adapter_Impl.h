@@ -40,7 +40,8 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Adapter_Impl
   : public TAO_TypeCodeFactory_Adapter
 {
 public:
-  ~TAO_TypeCodeFactory_Adapter_Impl () override;
+  TAO_TypeCodeFactory_Adapter_Impl () = default;
+  ~TAO_TypeCodeFactory_Adapter_Impl () override = default;
 
   CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
@@ -184,6 +185,12 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
+
+private:
+  TAO_TypeCodeFactory_Adapter_Impl (TAO_TypeCodeFactory_Adapter_Impl const &) = delete;
+  TAO_TypeCodeFactory_Adapter_Impl &operator= (TAO_TypeCodeFactory_Adapter_Impl const &) = delete;
+  TAO_TypeCodeFactory_Adapter_Impl (TAO_TypeCodeFactory_Adapter_Impl &&) = delete;
+  TAO_TypeCodeFactory_Adapter_Impl &operator= (TAO_TypeCodeFactory_Adapter_Impl &&) = delete;
 };
 
 static int

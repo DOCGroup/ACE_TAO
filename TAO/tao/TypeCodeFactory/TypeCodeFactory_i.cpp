@@ -38,8 +38,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i () = default;
-
 namespace TCF
 {
   namespace Struct
@@ -91,9 +89,6 @@ namespace TCF
                                                                     field_array_type>;
   }  // End namespace Value
 }
-
-
-TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i () = default;
 
 TAO_TypeCodeFactory_i *
 TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
