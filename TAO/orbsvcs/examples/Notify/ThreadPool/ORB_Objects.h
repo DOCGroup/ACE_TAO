@@ -22,17 +22,20 @@
 class TAO_Notify_ORB_Objects
 {
 public:
-  /// Constructor
-  TAO_Notify_ORB_Objects ();
+  TAO_Notify_ORB_Objects () = default;
 
-  /// Destructor
-  ~TAO_Notify_ORB_Objects ();
+  TAO_Notify_ORB_Objects (TAO_Notify_ORB_Objects const&) = delete;
+  TAO_Notify_ORB_Objects (TAO_Notify_ORB_Objects&&) = delete;
+  TAO_Notify_ORB_Objects& operator= (TAO_Notify_ORB_Objects const&) = delete;
+  TAO_Notify_ORB_Objects& operator= (TAO_Notify_ORB_Objects&&) = delete;
+
+  ~TAO_Notify_ORB_Objects () = default;
 
   /// Resolves all the references.
-  void init (CORBA::ORB_var& orb);
+  void init (CORBA::ORB_ptr orb);
 
   /// Resolve Notification
-  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory ();
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory () const;
 
   ///= Public Data
   CORBA::ORB_var orb_;

@@ -23,11 +23,14 @@ class TAO_Notify_ThreadPool_Supplier;
 class TAO_Notify_ThreadPool_Supplier_Client : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  TAO_Notify_ThreadPool_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
+  explicit TAO_Notify_ThreadPool_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
 
-  /// Destructor
-  ~TAO_Notify_ThreadPool_Supplier_Client ();
+  TAO_Notify_ThreadPool_Supplier_Client (TAO_Notify_ThreadPool_Supplier_Client const&) = delete;
+  TAO_Notify_ThreadPool_Supplier_Client (TAO_Notify_ThreadPool_Supplier_Client&&) = delete;
+  TAO_Notify_ThreadPool_Supplier_Client& operator= (TAO_Notify_ThreadPool_Supplier_Client const&) = delete;
+  TAO_Notify_ThreadPool_Supplier_Client& operator= (TAO_Notify_ThreadPool_Supplier_Client&&) = delete;
+
+  ~TAO_Notify_ThreadPool_Supplier_Client () override = default;
 
   /// Init
   void _init ();
@@ -39,7 +42,7 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
 protected:
   /// Create an EC
@@ -49,25 +52,21 @@ protected:
   void write_ior ();
 
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 
-  /// Supplier that sends events.
-  TAO_Notify_ThreadPool_Supplier* supplier_;
+  // The POA retains ownership of this servant after implicit activation.
+  TAO_Notify_ThreadPool_Supplier* supplier_ {};
 
-  /// The Number of consumers that we expect to send an event to.
-  int consumer_count_;
+  struct Options
+  {
+    int consumer_count {2};
+    int event_channel_thread_count {};
+    int proxy_consumer_thread_count {};
+    int max_events {10};
+    ACE_TString ior_file_name {ACE_TEXT ("supplier.ior")};
+  };
 
-  /// Name of the file to write the supplier ior to.
-  ACE_TString ior_file_name_;
-
-  /// Number of threads at the EC
-  int ec_thread_count_;
-
-  /// Number of Therads at the ProxyConsumer.
-  int proxy_consumer_thread_count_;
-
-  // Max events to send.
-  int max_events_;
+  Options options_ {};
 };
 
 #include /**/ "ace/post.h"

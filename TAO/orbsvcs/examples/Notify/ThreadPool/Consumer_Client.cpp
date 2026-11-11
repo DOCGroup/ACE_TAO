@@ -1,24 +1,13 @@
 #include "Consumer_Client.h"
+
 #include "Consumer.h"
 #include "ORB_Run_Task.h"
 #include "ace/Arg_Shifter.h"
-#include "orbsvcs/NotifyExtC.h"
-#include "orbsvcs/CosNamingC.h"
 #include "tao/ORB_Core.h"
-#include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
-
 
 TAO_Notify_ThreadPool_Consumer_Client::TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
-  , consumer_ (0)
-  , proxy_supplier_thread_count_ (0)
-  , max_events_ (10)
-  , delay_ (0)
-{
-}
-
-TAO_Notify_ThreadPool_Consumer_Client::~TAO_Notify_ThreadPool_Consumer_Client ()
 {
 }
 
@@ -27,26 +16,26 @@ TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const* current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg =
-                arg_shifter.get_the_parameter(ACE_TEXT("-ProxySupplier_ThreadPool")))) // Specify a threadpool.
+      if ((current_arg = arg_shifter.get_the_parameter (
+             ACE_TEXT ("-ProxySupplier_ThreadPool"))) != nullptr)
         {
-          this->proxy_supplier_thread_count_ = ACE_OS::atoi (arg_shifter.get_current ());
+          this->options_.proxy_supplier_thread_count = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-MaxEvents")))) // Max Events
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-MaxEvents"))) != nullptr)
         {
-          this->max_events_ = ACE_OS::atoi (arg_shifter.get_current ());
+          this->options_.max_events = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-Delay")))) // seconds wait in consumer per push.
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Delay"))) != nullptr)
         {
-          this->delay_ = ACE_OS::atoi (current_arg);
+          this->options_.delay = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -56,7 +45,14 @@ TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  return 0;
+  if (this->options_.proxy_supplier_thread_count >= 0
+      && this->options_.max_events >= 2
+      && this->options_.delay >= 0)
+    {
+      return 0;
+    }
+
+  return -1;
 }
 
 void
@@ -75,7 +71,7 @@ TAO_Notify_ThreadPool_Consumer_Client::_init ()
 
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  if (channel_seq->length() > 0)
+  if (channel_seq->length () != 0)
     {
       ec = ecf->get_event_channel (channel_seq[0]);
     }
@@ -86,7 +82,7 @@ TAO_Notify_ThreadPool_Consumer_Client::_init ()
     }
 
   // Create a Consumer Admin
-  CosNotifyChannelAdmin::AdminID adminid = 0;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP, adminid);
@@ -96,10 +92,15 @@ TAO_Notify_ThreadPool_Consumer_Client::_init ()
   PortableServer::POA_var rt_poa = this->create_rt_poa ();
 
   // Create a Consumer
+  // The POA retains ownership of this servant after implicit activation.
   this->consumer_ = new TAO_Notify_ThreadPool_Consumer (this->orb_objects_);
 
   // Initialize it.
-  this->consumer_->init (rt_poa, consumer_admin, this->proxy_supplier_thread_count_, this->max_events_, this->delay_);
+  this->consumer_->init (rt_poa.in (),
+                         consumer_admin.in (),
+                         this->options_.proxy_supplier_thread_count,
+                         this->options_.max_events,
+                         this->options_.delay);
 }
 
 PortableServer::POA_ptr
@@ -116,16 +117,15 @@ TAO_Notify_ThreadPool_Consumer_Client::create_rt_poa ()
 
   // Create a priority model policy.
   priority_model_policy =
-    this->orb_objects_.rt_orb_->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED
-                                                              , 0);
+    this->orb_objects_.rt_orb_->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED, {});
 
-  CORBA::ULong stacksize = 0;
-  CORBA::ULong static_threads = 1;
-  CORBA::ULong dynamic_threads = 0;
-  RTCORBA::Priority default_priority = 0;
-  CORBA::Boolean allow_request_buffering = 0;
-  CORBA::ULong max_buffered_requests = 0;
-  CORBA::ULong max_request_buffer_size = 0;
+  CORBA::ULong stacksize {};
+  CORBA::ULong static_threads {1};
+  CORBA::ULong dynamic_threads {};
+  RTCORBA::Priority default_priority {};
+  CORBA::Boolean allow_request_buffering {};
+  CORBA::ULong max_buffered_requests {};
+  CORBA::ULong max_request_buffer_size {};
 
   // Create the thread-pool.
   RTCORBA::ThreadpoolId threadpool_id =
@@ -150,23 +150,21 @@ TAO_Notify_ThreadPool_Consumer_Client::create_rt_poa ()
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager ();
 
-  rt_poa = this->orb_objects_.root_poa_->create_POA ("RT POA!",
-                                                     poa_manager.in (),
-                                                     poa_policy_list);
+  rt_poa = this->orb_objects_.root_poa_->create_POA (
+    "RT POA!",
+    poa_manager.in (),
+    poa_policy_list);
 
   return rt_poa._retn ();
 }
 
 void
-TAO_Notify_ThreadPool_Consumer_Client::run ()
-{
-  this->consumer_->run ();
-}
-
-void
 TAO_Notify_ThreadPool_Consumer_Client::dump_stats ()
 {
-  this->consumer_->dump_throughput ();
+  if (this->consumer_ != nullptr)
+    {
+      this->consumer_->dump_throughput ();
+    }
 }
 
 int
@@ -174,16 +172,14 @@ TAO_Notify_ThreadPool_Consumer_Client::svc ()
 {
   try
     {
-      // Initialize this threads priority.
-      this->orb_objects_.current_->the_priority (0);
+      // Initialize this thread's priority.
+      this->orb_objects_.current_->the_priority ({});
 
-      this->_init (); //Init the Client
-
-      this->run ();
+      this->_init ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("Supplier error "));
+      ex._tao_print_exception (ACE_TEXT ("Consumer error "));
     }
 
   return 0;
@@ -198,11 +194,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       TAO_Notify_ORB_Objects orb_objects;
-
-      orb_objects.init (orb);
-
-      TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
-
       TAO_Notify_ThreadPool_Consumer_Client client (orb_objects);
 
       if (client.parse_args (argc, argv) != 0)
@@ -211,11 +202,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      long flags = THR_NEW_LWP | THR_JOINABLE;
+      orb_objects.init (orb.in ());
+      TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
+
+      long flags {THR_NEW_LWP | THR_JOINABLE};
 
       flags |=
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
 
       if (orb_run_task.activate (flags) == -1 || client.activate (flags) == -1)
         {
@@ -224,16 +217,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
                               -1);
           else
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%t) Task activation at priority %d failed.\n")));
+            ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%t) Task activation failed.\n")));
         }
 
       orb_run_task.thr_mgr ()->wait ();
       client.thr_mgr ()->wait ();
 
-          client.dump_stats ();
+      client.dump_stats ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Consumer Client error "));
     }
