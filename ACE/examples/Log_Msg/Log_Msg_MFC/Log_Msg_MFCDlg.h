@@ -19,7 +19,7 @@ class CLog_Msg_MFCDlg : public CDialog
 {
 public:
   // Construction
-  CLog_Msg_MFCDlg(CWnd* pParent = 0); // standard constructor
+  CLog_Msg_MFCDlg (CWnd *pParent = nullptr);
 
   // Dialog Data
   //{{AFX_DATA(CLog_Msg_MFCDlg)
@@ -30,7 +30,7 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CLog_Msg_MFCDlg)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
+  void DoDataExchange (CDataExchange *pDX) override; // DDX/DDV support
   //}}AFX_VIRTUAL
 
   // Implementation
@@ -39,7 +39,7 @@ protected:
 
   // Generated message map functions
   //{{AFX_MSG(CLog_Msg_MFCDlg)
-  virtual BOOL OnInitDialog();
+  BOOL OnInitDialog () override;
   afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
   afx_msg void OnPaint();
   afx_msg HCURSOR OnQueryDragIcon();
