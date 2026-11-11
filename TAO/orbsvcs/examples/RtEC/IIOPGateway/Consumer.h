@@ -11,6 +11,7 @@
 #define CONSUMER_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,6 +45,8 @@ public:
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  ACE_TString event_channel_name_;
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count_ {};
