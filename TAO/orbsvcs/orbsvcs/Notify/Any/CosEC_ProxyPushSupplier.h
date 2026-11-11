@@ -41,6 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_CosEventChannelAdmin::ProxyPushSupplier>
 {
   friend class TAO_Notify_Builder;
+
 public:
   TAO_Notify_CosEC_ProxyPushSupplier ();
 
@@ -59,7 +60,8 @@ public:
   void disconnect_push_supplier () override;
 
   void validate () override;
-  virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
+  virtual void configure (TAO_Notify_ConsumerAdmin &admin,
+                          CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 private:
   /// Release

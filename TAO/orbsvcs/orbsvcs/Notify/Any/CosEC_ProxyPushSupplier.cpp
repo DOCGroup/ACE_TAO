@@ -3,11 +3,12 @@
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Any/PushConsumer.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_CosEC_ProxyPushSupplier::TAO_Notify_CosEC_ProxyPushSupplier ()
-{
-}
+= default;
 
 void
 TAO_Notify_CosEC_ProxyPushSupplier::release ()
@@ -25,19 +26,20 @@ TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushCon
                     TAO_Notify_PushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer);
+  std::unique_ptr<TAO_Notify_PushConsumer> consumer_guard (consumer);
+  consumer_guard->init (push_consumer);
 
-  this->connect (consumer);
+  this->connect (consumer_guard.release ());
 }
 
 void
 TAO_Notify_CosEC_ProxyPushSupplier::disconnect_push_supplier ()
 {
-  TAO_Notify_CosEC_ProxyPushSupplier::Ptr guard( this );
+  TAO_Notify_CosEC_ProxyPushSupplier::Ptr guard (this);
   this->destroy ();
 }
 
-const char *
+char const *
 TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name () const
 {
   return "ec_proxy_push_supplier";
@@ -46,7 +48,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name () const
 void
 TAO_Notify_CosEC_ProxyPushSupplier::validate ()
 {
-  TAO_Notify_Consumer* con = this->consumer ();
+  TAO_Notify_Consumer * const con = this->consumer ();
   if (con != nullptr && ! con->is_alive (true))
   {
     if (TAO_debug_level > 0)
@@ -60,7 +62,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::validate ()
 }
 
 void
-TAO_Notify_CosEC_ProxyPushSupplier::configure(
+TAO_Notify_CosEC_ProxyPushSupplier::configure (
   TAO_Notify_ConsumerAdmin & /*admin*/,
   CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
 {

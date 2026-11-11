@@ -52,7 +52,8 @@ public:
   void load_attrs (TAO_Notify::NVPList const &attrs) override;
   void validate () override;
 
-  virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
+  virtual void configure (TAO_Notify_SupplierAdmin &admin,
+                          CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods

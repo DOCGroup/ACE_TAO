@@ -6,11 +6,12 @@
 #include "orbsvcs/Notify/Any/AnyEvent.h"
 #include "orbsvcs/Notify/Any/PushSupplier.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ProxyPushConsumer::TAO_Notify_ProxyPushConsumer ()
-{
-}
+= default;
 
 void
 TAO_Notify_ProxyPushConsumer::release ()
@@ -26,14 +27,14 @@ TAO_Notify_ProxyPushConsumer::MyType ()
 }
 
 void
-TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any)
+TAO_Notify_ProxyPushConsumer::push (CORBA::Any const &any)
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
       && this->admin_properties().queue_full ())
     throw CORBA::IMP_LIMIT ();
 
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     {
       throw CosEventComm::Disconnected ();
     }
@@ -46,25 +47,26 @@ void
 TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
 {
   // Convert Supplier to Base Type
-  TAO_Notify_PushSupplier *supplier;
+  TAO_Notify_PushSupplier *supplier {};
   ACE_NEW_THROW_EX (supplier,
                     TAO_Notify_PushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier);
+  std::unique_ptr<TAO_Notify_PushSupplier> supplier_guard (supplier);
+  supplier_guard->init (push_supplier);
 
-  this->connect (supplier);
+  this->connect (supplier_guard.release ());
   this->self_change ();
 }
 
 void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer ()
 {
-  TAO_Notify_ProxyPushConsumer::Ptr guard( this );
+  TAO_Notify_ProxyPushConsumer::Ptr guard (this);
   this->destroy ();
   this->self_change ();
 }
 
-const char *
+char const *
 TAO_Notify_ProxyPushConsumer::get_proxy_type_name () const
 {
   return "proxy_push_consumer";
@@ -73,7 +75,7 @@ TAO_Notify_ProxyPushConsumer::get_proxy_type_name () const
 void
 TAO_Notify_ProxyPushConsumer::validate ()
 {
-  TAO_Notify_Supplier* sup = this->supplier ();
+  TAO_Notify_Supplier * const sup = this->supplier ();
   if (sup != nullptr && ! sup->is_alive (true))
   {
     if (TAO_debug_level > 0)
@@ -88,24 +90,23 @@ TAO_Notify_ProxyPushConsumer::validate ()
 
 
 void
-TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
+TAO_Notify_ProxyPushConsumer::load_attrs (TAO_Notify::NVPList const &attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
   if (attrs.load("PeerIOR", ior))
     {
-      CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+      CORBA::ORB_var const orb = TAO_Notify_PROPERTIES::instance ()->orb ();
       try
         {
-          CosNotifyComm::PushSupplier_var ps = CosNotifyComm::PushSupplier::_nil();
+          CosNotifyComm::PushSupplier_var ps = CosNotifyComm::PushSupplier::_nil ();
           if ( ior.length() > 0 )
             {
-              CORBA::Object_var obj =
-                orb->string_to_object(ior.c_str());
-              ps = CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in());
+              CORBA::Object_var const obj = orb->string_to_object (ior.c_str ());
+              ps = CosNotifyComm::PushSupplier::_unchecked_narrow (obj.in ());
             }
           // minor hack: suppress generating subscription updates during reload.
-          bool save_updates = this->updates_off_;
+          bool const save_updates = this->updates_off_;
           this->updates_off_ = true;
           this->connect_any_push_supplier(ps.in());
           this->updates_off_ = save_updates;
@@ -125,6 +126,5 @@ TAO_Notify_ProxyPushConsumer::configure(
   // presently nothing to do here.
   // this method was added to support NotificationMC
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

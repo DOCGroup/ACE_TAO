@@ -18,9 +18,7 @@
 
 #include "orbsvcs/Notify/Event.h"
 #include "orbsvcs/Notify/EventType.h"
-
 #include "orbsvcs/CosNotificationC.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,10 +48,10 @@ public:
   CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const override;
 
   /// Convert to CosNotification::Structured type
-  void convert (CosNotification::StructuredEvent& notification) const override;
+  void convert (CosNotification::StructuredEvent &notification) const override;
 
   /// Push event to consumer
-  void push (TAO_Notify_Consumer* consumer) const override;
+  void push (TAO_Notify_Consumer *consumer) const override;
 
   /// Push event to the Event_Forwarder interface
   void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const override;
@@ -72,17 +70,15 @@ public:
 
   /// unmarshal this event from a CDR buffer (for persistence)
   /// \param cdr a CDR stream containing the marshalled data for the event.
-  /// \return the new event, or NULL if this is the wrong type of event.
+  /// \return the new event, or nullptr if this is the wrong type of event.
   static TAO_Notify_AnyEvent * unmarshal (TAO_InputCDR & cdr);
 
 protected:
   /// returns a copy of this event allocated from the heap
   TAO_Notify_Event * copy () const override;
 
-protected:
-  // This must be a pointer rather than a reference, because the derived
-  // class needs to redirect it to a new copy
-  const CORBA::Any* event_;
+  /// Borrowed Any; the copying derived type redirects this pointer to its copy.
+  CORBA::Any const *event_;
 
   /// Our event type.
   static TAO_Notify_EventType event_type_;
@@ -98,9 +94,14 @@ protected:
 class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No_Copy
 {
 public:
-  explicit TAO_Notify_AnyEvent (const CORBA::Any &event);
+  explicit TAO_Notify_AnyEvent (CORBA::Any const &event);
 
   ~TAO_Notify_AnyEvent () override = default;
+
+  TAO_Notify_AnyEvent (TAO_Notify_AnyEvent const &) = delete;
+  TAO_Notify_AnyEvent (TAO_Notify_AnyEvent &&) = delete;
+  TAO_Notify_AnyEvent &operator= (TAO_Notify_AnyEvent const &) = delete;
+  TAO_Notify_AnyEvent &operator= (TAO_Notify_AnyEvent &&) = delete;
 
 protected:
   /// Copy of the Event.

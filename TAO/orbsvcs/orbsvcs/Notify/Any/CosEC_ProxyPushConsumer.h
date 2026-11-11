@@ -35,7 +35,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosEventChannelAdmin::ProxyPushConsumer>
 {
- friend class TAO_Notify_Builder;
+  friend class TAO_Notify_Builder;
+
 public:
   TAO_Notify_CosEC_ProxyPushConsumer ();
 
@@ -48,7 +49,8 @@ public:
 
   char const * get_proxy_type_name () const override;
   void validate () override;
-  virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
+  virtual void configure (TAO_Notify_SupplierAdmin &admin,
+                          CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
@@ -58,6 +60,7 @@ protected:
   void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
   void disconnect_push_consumer () override;
+
 private:
   /// Release
   void release () override;

@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
 {
 public:
-  explicit TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
+  explicit TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier *proxy);
 
   ~TAO_Notify_PushConsumer () override = default;
 
@@ -41,20 +41,20 @@ public:
   void init (CosEventComm::PushConsumer_ptr push_consumer);
 
   /// Push @a event to this consumer.
-  void push (const CORBA::Any& event) override;
+  void push (CORBA::Any const &event) override;
 
   /// Push @a event to this consumer.
-  void push (const CosNotification::StructuredEvent& event) override;
+  void push (CosNotification::StructuredEvent const &event) override;
 
   /// Push a batch of events to this consumer.
-  void push (const CosNotification::EventBatch& event) override;
+  void push (CosNotification::EventBatch const &event) override;
 
   /// Retrieve the ior of this peer
   ACE_CString get_ior () const override;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
-  void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) override;
+  void reconnect_from_consumer (TAO_Notify_Consumer *old_consumer) override;
 
 protected:
   CORBA::Object_ptr get_consumer () override;
