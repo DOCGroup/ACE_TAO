@@ -884,7 +884,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.char_val == dv.char_val)
                 {
-                  dv.char_val++;
+                  ++dv.char_val;
                   success = false;
                 }
               break;
@@ -902,7 +902,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.short_val == dv.short_val)
                 {
-                  dv.short_val++;
+                  ++dv.short_val;
                   success = false;
                 }
               break;
@@ -911,7 +911,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.ushort_val == dv.ushort_val)
                 {
-                  dv.ushort_val++;
+                  ++dv.ushort_val;
                   success = false;
                 }
               break;
@@ -920,7 +920,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.long_val == dv.long_val)
                 {
-                  dv.long_val++;
+                  ++dv.long_val;
                   success = false;
                 }
               break;
@@ -929,7 +929,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.ulong_val == dv.ulong_val)
                 {
-                  dv.ulong_val++;
+                  ++dv.ulong_val;
                   success = false;
                 }
               break;
@@ -938,18 +938,18 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.ulonglong_val == dv.ulonglong_val)
                 {
-                  dv.ulonglong_val++;
+                  ++dv.ulonglong_val;
                   success = false;
                 }
               break;
             case CORBA::tk_enum:
             {
-              TAO::Any_Impl *impl = members[i].label.impl ();
+              TAO::Any_Impl * const impl = members[i].label.impl ();
               TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (nullptr));
 
               if (impl->encoded ())
                 {
-                  TAO::Unknown_IDL_Type *unk =
+                  TAO::Unknown_IDL_Type * const unk =
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                   if (!unk)
@@ -972,7 +972,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.enum_val == dv.enum_val)
                 {
-                  dv.enum_val++;
+                  ++dv.enum_val;
                   success = false;
                 }
               break;
