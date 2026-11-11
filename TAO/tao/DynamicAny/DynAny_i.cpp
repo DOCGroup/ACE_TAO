@@ -28,7 +28,7 @@ void
 TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
 {
   // Check to see if it's a simple type.
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const tk = TAO_DynAnyFactory::unalias (tc);
 
   switch (tk)
   {
@@ -80,7 +80,7 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
 void
 TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const tk = TAO_DynAnyFactory::unalias (tc);
 
   switch (tk)
   {
@@ -153,8 +153,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
       break;
     case CORBA::tk_wstring:
       {
-        CORBA::WChar wstr[1];
-        wstr[0] = 0;
+        CORBA::WChar wstr[1] {};
         this->any_ <<= wstr;
         break;
       }
@@ -221,7 +220,7 @@ TAO_DynAny_i::from_any (CORBA::Any const& any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var any_tc = any.type ();
+  CORBA::TypeCode_var const any_tc = any.type ();
 
   if (!this->type_->equivalent (any_tc.in ()))
     {
@@ -272,7 +271,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       return false;
     }
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ());
+  CORBA::TCKind const tk = TAO_DynAnyFactory::unalias (this->type_.in ());
 
   switch (tk)
     {
