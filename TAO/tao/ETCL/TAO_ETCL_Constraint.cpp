@@ -17,15 +17,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  TAO_ETCL_Literal_Constraint const& lit)
+  TAO_ETCL_Literal_Constraint const &lit)
   : ETCL_Literal_Constraint ()
 {
   this->copy (lit);
 }
 
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
+TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any *any)
 {
-  CORBA::Any const& any_ref = *any;
+  CORBA::Any const &any_ref = *any;
   CORBA::TypeCode_var const type = any_ref.type ();
   CORBA::TCKind corba_type = CORBA::tk_null;
 
@@ -33,7 +33,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     {
       corba_type = type->kind ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Seth: Don't know what else to do. Make sure we can tell
       // when this constructor fails.
@@ -71,11 +71,11 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
         }
       else if (corba_type == CORBA::tk_enum)
         {
-          TAO::Any_Impl *const impl = any->impl ();
+          TAO::Any_Impl * const impl = any->impl ();
 
           if (impl->encoded ())
             {
-              TAO::Unknown_IDL_Type *const unk =
+              TAO::Unknown_IDL_Type * const unk =
                 dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
               if (unk == nullptr)
@@ -123,7 +123,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
       break;
     case ACE_ETCL_STRING:
       {
-        char const* s {};
+        char const *s {};
         any_ref >>= s;
         this->op_.str_ = CORBA::string_dup (s);
       }
@@ -144,7 +144,7 @@ TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint ()
 }
 
 void
-TAO_ETCL_Literal_Constraint::operator= (TAO_ETCL_Literal_Constraint const& co)
+TAO_ETCL_Literal_Constraint::operator= (TAO_ETCL_Literal_Constraint const &co)
 {
   this->copy (co);
 }
@@ -250,7 +250,7 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
         kind = tmp->kind ();
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     return return_value;
   }
@@ -288,7 +288,7 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator+ (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator+ (TAO_ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type const widest_type = this->widest_type (rhs);
 
@@ -319,7 +319,7 @@ TAO_ETCL_Literal_Constraint::operator+ (TAO_ETCL_Literal_Constraint const& rhs)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator- (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator- (TAO_ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type const widest_type = this->widest_type (rhs);
 
@@ -350,7 +350,7 @@ TAO_ETCL_Literal_Constraint::operator- (TAO_ETCL_Literal_Constraint const& rhs)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator* (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator* (TAO_ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type const widest_type = this->widest_type (rhs);
 
@@ -381,7 +381,7 @@ TAO_ETCL_Literal_Constraint::operator* (TAO_ETCL_Literal_Constraint const& rhs)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type const widest_type = this->widest_type (rhs);
 
@@ -440,15 +440,15 @@ TAO_ETCL_Literal_Constraint::operator- ()
 
 Literal_Type
 TAO_ETCL_Literal_Constraint::widest_type (
-  ETCL_Literal_Constraint const& rhs)
+  ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type rhs_type = rhs.expr_type ();
   Literal_Type return_value = rhs_type;
 
   if (rhs_type == ACE_ETCL_COMPONENT)
     {
-      TAO_ETCL_Literal_Constraint const& actual =
-        dynamic_cast<TAO_ETCL_Literal_Constraint const&> (rhs);
+      TAO_ETCL_Literal_Constraint const &actual =
+        dynamic_cast<TAO_ETCL_Literal_Constraint const &> (rhs);
       CORBA::TypeCode_var tc = actual.any_->type ();
       rhs_type = TAO_ETCL_Literal_Constraint::comparable_type (tc.in ());
       return return_value;
@@ -458,7 +458,7 @@ TAO_ETCL_Literal_Constraint::widest_type (
 }
 
 void
-TAO_ETCL_Literal_Constraint::copy (TAO_ETCL_Literal_Constraint const& lit)
+TAO_ETCL_Literal_Constraint::copy (TAO_ETCL_Literal_Constraint const &lit)
 {
   if (this->type_ == ACE_ETCL_COMPONENT && this->any_ != nullptr)
     {
