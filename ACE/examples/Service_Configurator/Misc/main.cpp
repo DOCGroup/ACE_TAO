@@ -13,11 +13,10 @@
 
 
 #include "ace/OS_main.h"
-#include "ace/Service_Config.h"
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
+#include "ace/Service_Config.h"
 #include "Timer_Service.h"
-
 
 // Create an object that will insert the <Timer_Service> into the list
 // of statically linked services that the <ACE_Service_Config> will
@@ -34,7 +33,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // that allows us to pass these entries via the "command-line"
   // rather than the svc.conf file.
 
-  for (int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; ++i)
     args.add (argv[i]);
 
   args.add (ACE_TEXT ("-y"));
@@ -52,7 +51,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               args.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < args.argc (); i++)
+  int const arg_count = args.argc ();
+  for (int i = 0; i < arg_count; ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%d) %s\n"),
                 i,
@@ -68,9 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("open")),
                       1);
 
-  // Run forever, performing the configured services until we
-  // shutdown.
-
+  // Run the configured services until they shut down.
   ACE_Reactor::run_event_loop ();
   return 0;
 }

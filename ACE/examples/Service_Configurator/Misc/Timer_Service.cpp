@@ -1,13 +1,7 @@
-#include "ace/OS_NS_string.h"
 #include "Timer_Service.h"
 #include "ace/Log_Msg.h"
 
-
-Timer_Service_1::Timer_Service_1 ()
-{
-  ACE_OS::strcpy (this->name_,
-                  ACE_TEXT ("Timer_Service_1"));
-}
+Timer_Service_1::Timer_Service_1 () = default;
 
 int
 Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
@@ -17,7 +11,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
               argv[0], argc));
 
   // Printout the <argv> values for sanity's sake.
-  for (int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("argv[%d] = %s\n"),
                 i, argv[i]));
@@ -64,8 +58,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
        ACE_Time_Value (1),
        ACE_Time_Value (interval)) == -1)
     return -1;
-  else
-    return 0;
+  return 0;
 }
 
 int
@@ -76,19 +69,18 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
               ACE_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
               ACE_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
-              this->name_,
+              this->name_.c_str (),
               tv.sec (),
               tv.usec (),
               this->cur_timeouts_,
               this->max_timeouts_));
 
-  this->cur_timeouts_++;
+  ++this->cur_timeouts_;
 
   if (this->cur_timeouts_ == this->max_timeouts_)
     // Shutdown the test.
     return -1;
-  else
-    return 0;
+  return 0;
 }
 
 int
@@ -100,20 +92,18 @@ Timer_Service_1::handle_close (ACE_HANDLE,
   // Remove ourselves from the timer queue.
   ACE_Reactor::instance ()->cancel_timer (this);
 
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 
 Timer_Service_2::Timer_Service_2 ()
 {
-  ACE_OS::strcpy (this->name_,
-                  ACE_TEXT ("Timer_Service_2"));
+  this->name_ = ACE_TEXT ("Timer_Service_2");
 }
 
 Timer_Service_3::Timer_Service_3 ()
 {
-  ACE_OS::strcpy (this->name_,
-                  ACE_TEXT ("Timer_Service_3"));
+  this->name_ = ACE_TEXT ("Timer_Service_3");
 }
 
 // Define the object that describes the service.
