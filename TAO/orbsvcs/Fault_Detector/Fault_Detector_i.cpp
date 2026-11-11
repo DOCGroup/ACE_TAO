@@ -71,9 +71,9 @@ void TAO::Fault_Detector_i::request_quit()
   this->sleep_.signal ();
 }
 
-void TAO::Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
+int TAO::Fault_Detector_i::start (ACE_Thread_Manager & thread_manager)
 {
-  threadManager.spawn(thr_func, this);
+  return thread_manager.spawn (thr_func, this);
 }
 
 ///////////////////////////////////////////////////

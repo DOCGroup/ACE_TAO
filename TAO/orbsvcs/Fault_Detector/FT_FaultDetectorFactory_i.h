@@ -16,14 +16,16 @@
 #define FT_FAULTDETECTORFACTORY_I_H_
 #include /**/ "ace/pre.h"
 #include "ace/ACE.h"
-#include "ace/SString.h"
+#include <memory>
+#include <string>
+#include <vector>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /////////////////////////////////
 // Includes needed by this header
-#include <ace/Vector_T.h>
 #include <orbsvcs/FT_FaultDetectorFactoryS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
@@ -86,7 +88,7 @@ namespace TAO
   // Class Declarations
   class  FT_FaultDetectorFactory_i : public virtual POA_FT::FaultDetectorFactory
   {
-    using DetectorVec = ACE_Vector<Fault_Detector_i *>;
+    using DetectorVec = std::vector<std::unique_ptr<Fault_Detector_i>>;
 
     //////////////////////
     // non-CORBA interface
@@ -231,15 +233,11 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    ACE_TCHAR const * ior_output_file_ {};
+    std::basic_string<ACE_TCHAR> ior_output_file_;
 
-    /**
-     * A name to be used to register the factory with the name service.
-     */
+    /// Optional Naming Service registration state.
     char const * ns_name_ {};
-
     ::CosNaming::NamingContext_var naming_context_;
-
     ::CosNaming::Name this_name_;
 
     /**
@@ -287,7 +285,7 @@ namespace TAO
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
-    ACE_CString identity_;
+    std::string identity_;
 
     /**
      * A manager for all FaultDetector threads.

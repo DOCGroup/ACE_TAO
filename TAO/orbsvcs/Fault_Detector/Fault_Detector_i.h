@@ -81,7 +81,7 @@ namespace TAO
      * Start the thread associated with this fault detector.
      * @param threadManager to track this thread.
      */
-    void start(ACE_Thread_Manager & threadManager);
+    int start (ACE_Thread_Manager & thread_manager);
 
     /**
      * Request that this detector shut itself down.
