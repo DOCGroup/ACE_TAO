@@ -1,11 +1,25 @@
+#include <cstddef>
+#include <memory>
+
 #include "ace/OS_NS_unistd.h"
 
 #include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"
-#include <cstddef>
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
+struct Monitor_Reference_Releaser
+{
+  void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
+  {
+    if (monitor != nullptr)
+      monitor->remove_ref ();
+  }
+};
+
+using Monitor_Reference = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
+                                          Monitor_Reference_Releaser>;
 
 class Worker : public ACE_Task_Base
 {
@@ -40,10 +54,12 @@ public:
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::Monitor_Control::Monitor_Base * const thread_monitor =
-      mgr->admin ().monitor_point ("OS/System/NumThreads");
+    Monitor_Reference const thread_monitor (
+      mgr->admin ().monitor_point ("OS/System/NumThreads"));
 
     if (thread_monitor != nullptr)
       {
@@ -58,7 +74,6 @@ public:
             MC_Test_Utilities::display_num_threads (data);
           }
 
-        thread_monitor->remove_ref ();
       }
 
     return 0;
@@ -73,8 +88,15 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   /// Set the timer for # of threads check at 2 sec.
-  Monitor_Base * const num_threads_monitor =
-    create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (2));
+  MC_ADMINMANAGER * const mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+
+  Monitor_Reference const num_threads_monitor (
+    create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (2)));
+  if (num_threads_monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create thread monitor\n"), 1);
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -92,8 +114,6 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-
-  num_threads_monitor->remove_ref ();
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
