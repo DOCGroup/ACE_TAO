@@ -15,9 +15,9 @@ class Monitor_Checker : public ACE_Task_Base
 {
 public:
   Monitor_Checker () = default;
-  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker const &) = delete;
   Monitor_Checker (Monitor_Checker &&) = delete;
-  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker const &) = delete;
   Monitor_Checker &operator= (Monitor_Checker &&) = delete;
 
   int svc () override
@@ -38,7 +38,7 @@ public:
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (std::size_t i = 0; i < monitor_samples; ++i)
+        for (std::size_t i {}; i < monitor_samples; ++i)
           {
             ACE_OS::sleep (2);
 

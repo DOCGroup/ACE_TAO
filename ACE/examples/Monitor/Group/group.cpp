@@ -26,9 +26,9 @@ class Monitor_Checker : public ACE_Task_Base
 {
 public:
   Monitor_Checker () = default;
-  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker const &) = delete;
   Monitor_Checker (Monitor_Checker &&) = delete;
-  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker const &) = delete;
   Monitor_Checker &operator= (Monitor_Checker &&) = delete;
 
   int svc () override
@@ -52,7 +52,7 @@ public:
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to find a monitor point\n"), -1);
 
     // Query each monitor every 2 seconds and display its data.
-    for (int i = 0; i < 10; ++i)
+    for (int i {}; i < 10; ++i)
       {
         ACE_OS::sleep (2);
 
@@ -140,7 +140,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   std::array<std::unique_ptr<char[]>, 5> str_array {};
 
-  for (int i = 0; i < 10; ++i)
+  for (int i {}; i < 10; ++i)
     {
       ACE_OS::sleep (1);
 
@@ -151,7 +151,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
         }
       else
         {
-          for (unsigned long j = 0; j < 5050505; j++)
+          for (unsigned long j {}; j < 5050505; ++j)
             {
               (void) ACE::gcd (2419233733UL, 567715713UL);
             }

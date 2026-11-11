@@ -13,9 +13,9 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker () = default;
-  Worker (const Worker &) = delete;
+  Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
-  Worker &operator= (const Worker &) = delete;
+  Worker &operator= (Worker const &) = delete;
   Worker &operator= (Worker &&) = delete;
 
   int svc () override
@@ -32,9 +32,9 @@ class Monitor_Checker : public ACE_Task_Base
 {
 public:
   Monitor_Checker () = default;
-  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker const &) = delete;
   Monitor_Checker (Monitor_Checker &&) = delete;
-  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker const &) = delete;
   Monitor_Checker &operator= (Monitor_Checker &&) = delete;
 
   int svc () override

@@ -16,9 +16,9 @@ class Monitor_Checker : public ACE_Task_Base
 {
 public:
   Monitor_Checker () = default;
-  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker const &) = delete;
   Monitor_Checker (Monitor_Checker &&) = delete;
-  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker const &) = delete;
   Monitor_Checker &operator= (Monitor_Checker &&) = delete;
 
   int svc () override
