@@ -109,7 +109,7 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR * argv[])
   ACE_NEW_THROW_EX (notify_log_factory,
                       TAO_NotifyLogFactory_i (this->notify_factory_.in ()),
                       CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var const notify_log_factory_owner (notify_log_factory);
+  this->notify_log_factory_owner_ = notify_log_factory;
 
   DsNotifyLogAdmin::NotifyLogFactory_var const obj =
     notify_log_factory->activate (this->orb_.in (),

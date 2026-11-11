@@ -74,9 +74,6 @@ protected:
   // Borrowed from ACE_Dynamic_Service.
   TAO_Notify_Service *notify_service_ {};
 
-  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ {};
-  // The Factory.
-
   CORBA::ORB_var orb_ {};
   // The ORB that we use.
 
@@ -85,6 +82,12 @@ protected:
 
   CosNaming::NamingContext_var naming_ {};
   // A naming context.
+
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ {};
+  // The Factory.
+
+  PortableServer::ServantBase_var notify_log_factory_owner_ {};
+  // Keep the factory servant alive while it is active in the POA.
 
   std::string service_name_ {"NotifyLogFactory"};
   // The name we use to bind with the NameService

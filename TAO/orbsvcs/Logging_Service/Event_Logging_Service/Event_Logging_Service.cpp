@@ -88,7 +88,7 @@ Event_Logging_Service::init (int argc, ACE_TCHAR * argv[])
   ACE_NEW_THROW_EX (event_log_factory,
                     TAO_EventLogFactory_i (),
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var const event_log_factory_owner (event_log_factory);
+  this->event_log_factory_owner_ = event_log_factory;
 
   DsEventLogAdmin::EventLogFactory_var const obj =
     event_log_factory->activate (this->orb_.in (),

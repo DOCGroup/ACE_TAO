@@ -86,7 +86,7 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
   ACE_NEW_THROW_EX (rtevent_log_factory,
                     TAO_RTEventLogFactory_i (),
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var const rtevent_log_factory_owner (rtevent_log_factory);
+  this->rtevent_log_factory_owner_ = rtevent_log_factory;
 
   if (rtevent_log_factory->init (this->orb_.in (),
                                  this->poa_.in ()) != 0)

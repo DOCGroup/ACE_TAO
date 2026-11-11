@@ -72,6 +72,9 @@ private:
   PortableServer::POA_var poa_ {};
   // Reference to the root poa.
 
+  PortableServer::ServantBase_var rtevent_log_factory_owner_ {};
+  // Keep the factory servant alive while it is active in the POA.
+
   CosNaming::NamingContext_var naming_ {};
   // A naming context.
 
