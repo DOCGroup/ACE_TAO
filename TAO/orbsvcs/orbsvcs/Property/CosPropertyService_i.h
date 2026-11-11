@@ -112,6 +112,11 @@ public:
 
   ~TAO_PropertySetFactory () override;
 
+  TAO_PropertySetFactory (TAO_PropertySetFactory const &) = delete;
+  TAO_PropertySetFactory (TAO_PropertySetFactory &&) = delete;
+  TAO_PropertySetFactory &operator= (TAO_PropertySetFactory const &) = delete;
+  TAO_PropertySetFactory &operator= (TAO_PropertySetFactory &&) = delete;
+
   CosPropertyService::PropertySet_ptr create_propertyset () override;
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
@@ -129,11 +134,6 @@ public:
   // modes".
 
 private:
-  TAO_PropertySetFactory (TAO_PropertySetFactory const &) = delete;
-  TAO_PropertySetFactory (TAO_PropertySetFactory &&) = delete;
-  TAO_PropertySetFactory &operator= (TAO_PropertySetFactory const &) = delete;
-  TAO_PropertySetFactory &operator= (TAO_PropertySetFactory &&) = delete;
-
   TAO::unbounded_value_sequence<TAO_PropertySet*> propertyset_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
@@ -158,6 +158,11 @@ public:
 
   ~TAO_PropertySetDefFactory () override;
 
+  TAO_PropertySetDefFactory (TAO_PropertySetDefFactory const &) = delete;
+  TAO_PropertySetDefFactory (TAO_PropertySetDefFactory &&) = delete;
+  TAO_PropertySetDefFactory &operator= (TAO_PropertySetDefFactory const &) = delete;
+  TAO_PropertySetDefFactory &operator= (TAO_PropertySetDefFactory &&) = delete;
+
   CosPropertyService::PropertySetDef_ptr create_propertysetdef () override;
   // Returns a new TAO_PropertySetDef object.
 
@@ -173,11 +178,6 @@ public:
   // initial properties.
 
 private:
-  TAO_PropertySetDefFactory (TAO_PropertySetDefFactory const &) = delete;
-  TAO_PropertySetDefFactory (TAO_PropertySetDefFactory &&) = delete;
-  TAO_PropertySetDefFactory &operator= (TAO_PropertySetDefFactory const &) = delete;
-  TAO_PropertySetDefFactory &operator= (TAO_PropertySetDefFactory &&) = delete;
-
   TAO::unbounded_value_sequence<TAO_PropertySetDef*> propertysetdef_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
@@ -207,10 +207,15 @@ public:
   // PropertySetFactory needs this constructor.
 
   TAO_PropertySet (CosPropertyService::PropertyTypes const &allowed_property_types,
-                   CORBA::ULong const number_of_allowed_propertydefs);
+                   CORBA::ULong number_of_allowed_propertydefs);
   // PropertySetDef's construction needs this.
 
   ~TAO_PropertySet () override = default;
+
+  TAO_PropertySet (TAO_PropertySet const &) = delete;
+  TAO_PropertySet (TAO_PropertySet &&) = delete;
+  TAO_PropertySet &operator= (TAO_PropertySet const &) = delete;
+  TAO_PropertySet &operator= (TAO_PropertySet &&) = delete;
 
   void define_property (char const *property_name,
                         CORBA::Any const &property_value) override;
@@ -273,12 +278,6 @@ protected:
   // Tells  whether this property is allowed in this property set or
   // no.
 
-private:
-  TAO_PropertySet (TAO_PropertySet const &) = delete;
-  TAO_PropertySet (TAO_PropertySet &&) = delete;
-  TAO_PropertySet &operator= (TAO_PropertySet const &) = delete;
-  TAO_PropertySet &operator= (TAO_PropertySet &&) = delete;
-
 public: // @todo make private
   COSPROPERTY_HASH_MAP hash_table_;
   // This Hash_Table manages storage for our properties.
@@ -324,6 +323,11 @@ public:
   // This is also for the factory.
 
   ~TAO_PropertySetDef () override = default;
+
+  TAO_PropertySetDef (TAO_PropertySetDef const &) = delete;
+  TAO_PropertySetDef (TAO_PropertySetDef &&) = delete;
+  TAO_PropertySetDef &operator= (TAO_PropertySetDef const &) = delete;
+  TAO_PropertySetDef &operator= (TAO_PropertySetDef &&) = delete;
 
   void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types) override;
   // Indicates which types of properties are supported by this
@@ -385,11 +389,6 @@ public:
   // MultipleExceptions.
   void set_property_modes (CosPropertyService::PropertyModes const &property_modes) override;
 
-private:
-  TAO_PropertySetDef (TAO_PropertySetDef const &) = delete;
-  TAO_PropertySetDef (TAO_PropertySetDef &&) = delete;
-  TAO_PropertySetDef &operator= (TAO_PropertySetDef const &) = delete;
-  TAO_PropertySetDef &operator= (TAO_PropertySetDef &&) = delete;
 };
 
 // ============================================================================
@@ -412,6 +411,11 @@ public:
 
   ~TAO_PropertyNamesIterator () override = default;
 
+  TAO_PropertyNamesIterator (TAO_PropertyNamesIterator const &) = delete;
+  TAO_PropertyNamesIterator (TAO_PropertyNamesIterator &&) = delete;
+  TAO_PropertyNamesIterator &operator= (TAO_PropertyNamesIterator const &) = delete;
+  TAO_PropertyNamesIterator &operator= (TAO_PropertyNamesIterator &&) = delete;
+
   void reset () override;
   // The reset operation resets the position in an iterator to the
   // first property name, if one exists.
@@ -433,11 +437,6 @@ public:
   // Destroys the iterator.
 
 private:
-  TAO_PropertyNamesIterator (TAO_PropertyNamesIterator const &) = delete;
-  TAO_PropertyNamesIterator (TAO_PropertyNamesIterator &&) = delete;
-  TAO_PropertyNamesIterator &operator= (TAO_PropertyNamesIterator const &) = delete;
-  TAO_PropertyNamesIterator &operator= (TAO_PropertyNamesIterator &&) = delete;
-
   using COSPROPERTY_HASH_MAP =
     ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
   using COSPROPERTY_HASH_ITERATOR =
@@ -470,6 +469,11 @@ public:
 
   ~TAO_PropertiesIterator () override = default;
 
+  TAO_PropertiesIterator (TAO_PropertiesIterator const &) = delete;
+  TAO_PropertiesIterator (TAO_PropertiesIterator &&) = delete;
+  TAO_PropertiesIterator &operator= (TAO_PropertiesIterator const &) = delete;
+  TAO_PropertiesIterator &operator= (TAO_PropertiesIterator &&) = delete;
+
   void reset () override;
   // Resets the position in an iterator to the first property, if one exists.
 
@@ -491,11 +495,6 @@ public:
   // Destroys the iterator.
 
 private:
-  TAO_PropertiesIterator (TAO_PropertiesIterator const &) = delete;
-  TAO_PropertiesIterator (TAO_PropertiesIterator &&) = delete;
-  TAO_PropertiesIterator &operator= (TAO_PropertiesIterator const &) = delete;
-  TAO_PropertiesIterator &operator= (TAO_PropertiesIterator &&) = delete;
-
   using COSPROPERTY_HASH_MAP =
     ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
   using COSPROPERTY_HASH_ITERATOR =

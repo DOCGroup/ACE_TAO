@@ -297,7 +297,7 @@ TAO_PropertySet::TAO_PropertySet (CosPropertyService::PropertyTypes const &allow
 // allowed properties' sequence withe just the maximum length.
 
 TAO_PropertySet::TAO_PropertySet (CosPropertyService::PropertyTypes const &allowed_property_types,
-                                  CORBA::ULong const number_of_allowed_properties)
+                                  CORBA::ULong number_of_allowed_properties)
   : allowed_property_types_ (allowed_property_types),
     allowed_property_names_ (number_of_allowed_properties)
 {
