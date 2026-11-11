@@ -49,7 +49,7 @@ class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler_var
 {
 public:
   TAO_AMH_Locate_ResponseHandler_var ();
-  TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_Locate_ResponseHandler_ptr);
+  explicit TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_Locate_ResponseHandler_ptr);
   TAO_AMH_Locate_ResponseHandler_var (
       TAO_AMH_Locate_ResponseHandler_var const &);
   ~TAO_AMH_Locate_ResponseHandler_var ();
