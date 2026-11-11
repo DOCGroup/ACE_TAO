@@ -158,8 +158,8 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   // Take over the GIOP version, the input cdr can have a different
   // version then our current GIOP version.
-  ACE_CDR::Octet major_version;
-  ACE_CDR::Octet minor_version;
+  ACE_CDR::Octet major_version {};
+  ACE_CDR::Octet minor_version {};
   cdr.get_version (major_version, minor_version);
   this->cdr_.set_version (major_version, minor_version);
 }

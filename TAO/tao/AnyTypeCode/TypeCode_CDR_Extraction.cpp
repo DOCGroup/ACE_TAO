@@ -88,7 +88,7 @@ namespace
 
   bool start_cdr_encap_extraction (TAO_InputCDR & cdr)
   {
-    CORBA::Boolean byte_order;
+    CORBA::Boolean byte_order {};
 
     // Don't bother demarshaling the encapsulation length.  Prefer
     // speed over early error checking.  Any CDR length related
@@ -460,7 +460,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id, name;
-  CORBA::ULong nfields;
+  CORBA::ULong nfields {};
 
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
         && cdr >> TAO_InputCDR::to_string (name.out (), 0)
@@ -611,7 +611,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
         {
         case CORBA::tk_enum:
           {
-            CORBA::ULong label;
+            CORBA::ULong label {};
             if (!(cdr >> label))
               return false;
 
@@ -625,7 +625,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_ulong:
           {
-            CORBA::ULong label;
+            CORBA::ULong label {};
             if (!(cdr >> label))
               return false;
 
@@ -640,7 +640,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_long:
           {
-            CORBA::Long label;
+            CORBA::Long label {};
             if (!(cdr >> label))
               return false;
 
@@ -655,7 +655,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_ushort:
           {
-            CORBA::UShort label;
+            CORBA::UShort label {};
             if (!(cdr >> label))
               return false;
 
@@ -670,7 +670,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_short:
           {
-            CORBA::Short label;
+            CORBA::Short label {};
             if (!(cdr >> label))
               return false;
 
@@ -685,7 +685,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_char:
           {
-            CORBA::Char label;
+            CORBA::Char label {};
             if (!(cdr >> CORBA::Any::to_char (label)))
               return false;
 
@@ -700,7 +700,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_boolean:
           {
-            CORBA::Boolean label;
+            CORBA::Boolean label {};
              if (!(cdr >> CORBA::Any::to_boolean (label)))
               return false;
 
@@ -715,7 +715,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_longlong:
           {
-            CORBA::LongLong label;
+            CORBA::LongLong label {};
             if (!(cdr >> label))
               return false;
 
@@ -730,7 +730,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           break;
         case CORBA::tk_ulonglong:
           {
-            CORBA::ULongLong label;
+            CORBA::ULongLong label {};
             if (!(cdr >> label))
               return false;
 
@@ -844,7 +844,7 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id, name;
-  CORBA::ULong nenumerators;
+  CORBA::ULong nenumerators {};
 
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
         && cdr >> TAO_InputCDR::to_string (name.out (), 0)
@@ -884,7 +884,7 @@ TAO::TypeCodeFactory::tc_string_factory (CORBA::TCKind kind,
   // A tk_string/tk_wstring TypeCode has a simple parameter list,
   // i.e. it is not encoded in a CDR encapsulation.
 
-  CORBA::ULong bound;
+  CORBA::ULong bound {};
   if (!(cdr >> bound))
     return false;
 
@@ -927,7 +927,7 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
 
   // Extract the repository ID, name and content type.
   CORBA::TypeCode_var content_type;
-  CORBA::ULong length;
+  CORBA::ULong length {};
 
   if (!(tc_demarshal (cdr, content_type.out (), indirect_infos, direct_infos)
         && cdr >> length))
@@ -1109,9 +1109,9 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
     return false;
 
   CORBA::String_var name;
-  CORBA::ValueModifier type_modifier;
+  CORBA::ValueModifier type_modifier {};
   CORBA::TypeCode_var concrete_base;
-  CORBA::ULong nfields;
+  CORBA::ULong nfields {};
 
   if (!(cdr >> TAO_InputCDR::to_string (name.out (), 0)
         && cdr >> type_modifier
@@ -1289,7 +1289,7 @@ namespace
   {
     // ULong since we need to detect indirected TypeCodes, too.
 
-    CORBA::ULong kind;
+    CORBA::ULong kind {};
     if (!(cdr >> kind)
         || (kind >= static_cast<CORBA::ULong> (CORBA::TAO_TC_KIND_COUNT)
             && kind != TYPECODE_INDIRECTION))
@@ -1356,7 +1356,7 @@ namespace
     TAO::TypeCodeFactory::TC_Info_List & indirect_infos,
     TAO::TypeCodeFactory::TC_Info_List & direct_infos)
   {
-    CORBA::Long offset;
+    CORBA::Long offset {};
 
     if (!(cdr >> offset) || offset >= -4)
       {
@@ -1377,7 +1377,7 @@ namespace
         return false;
       }
 
-    CORBA::TCKind kind;
+    CORBA::TCKind kind {};
     if (!(indir_stream >> kind)
 
         // Indirected TypeCode must point to top-level TypeCode.

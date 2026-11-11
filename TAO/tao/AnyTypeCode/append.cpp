@@ -84,7 +84,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
         CORBA::UShort const length = (tc->fixed_digits () + 2) / 2;
         for (CORBA::UShort i {}; i < length && continue_append; ++i)
           {
-            ACE_CDR::Octet octet;
+            ACE_CDR::Octet octet {};
             continue_append = src->read_octet (octet)
               && dest->write_octet (octet);
           }
@@ -145,7 +145,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_append {true};
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
-  CORBA::ULong kind;
+  CORBA::ULong kind {};
 
   // Decode the "kind" field of the typecode from the src for further
   // use. However, also write it back into the destination
@@ -459,7 +459,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
     {
       CORBA::Any_var any = tc->member_label (i);
 
-      CORBA::Octet o;
+      CORBA::Octet o {};
 
       if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
@@ -478,7 +478,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
         {
         case CORBA::tk_short:
           {
-            CORBA::Short d;
+            CORBA::Short d {};
             if ((any >>= d) && d == short_v)
               current_member = i;
           }
@@ -486,7 +486,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_ushort:
           {
-            CORBA::UShort d;
+            CORBA::UShort d {};
             if ((any >>= d) && d == ushort_v)
               current_member = i;
           }
@@ -494,7 +494,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_long:
           {
-            CORBA::Long d;
+            CORBA::Long d {};
             if ((any >>= d) && d == long_v)
               current_member = i;
           }
@@ -502,7 +502,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_ulong:
           {
-            CORBA::ULong d;
+            CORBA::ULong d {};
             if ((any >>= d) && d == ulong_v)
               current_member = i;
           }
@@ -510,7 +510,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_enum:
           {
-            CORBA::ULong d;
+            CORBA::ULong d {};
             TAO::Any_Impl *impl = any->impl ();
 
             if (impl->encoded ())
@@ -545,7 +545,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_char:
           {
-            CORBA::Char d;
+            CORBA::Char d {};
             if ((any >>= CORBA::Any::to_char (d)) && d == char_v)
               current_member = i;
           }
@@ -553,7 +553,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_wchar:
           {
-            CORBA::WChar d;
+            CORBA::WChar d {};
             if ((any >>= CORBA::Any::to_wchar (d)) && d == wchar_v)
               current_member = i;
           }
@@ -561,7 +561,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_boolean:
           {
-            CORBA::Boolean d;
+            CORBA::Boolean d {};
             if ((any >>= CORBA::Any::to_boolean (d)) && d == boolean_v)
               current_member = i;
           }
@@ -632,7 +632,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               TAO_OutputCDR *dest)
 {
   // Size of element.
-  CORBA::ULong bounds;
+  CORBA::ULong bounds {};
 
   // First unmarshal the sequence length ... we trust it to be right
   // here, on the "be gracious in what you accept" principle.  We
@@ -1134,7 +1134,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
     {
       this->nested_processing_ = 1;
 
-      CORBA::ULong value_tag;
+      CORBA::ULong value_tag {};
 
       if (!src->read_ulong (value_tag) ||
           !dest->write_ulong (value_tag))

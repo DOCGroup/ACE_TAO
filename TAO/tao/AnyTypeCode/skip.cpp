@@ -112,7 +112,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   CORBA::Boolean continue_skipping {true};
 
   // Typecode kind.
-  CORBA::ULong kind;
+  CORBA::ULong kind {};
 
   // Decode the "kind" field of the typecode from the stream.
   continue_skipping = stream->read_ulong (kind);
@@ -168,7 +168,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
             case CORBA::tk_home:
             case CORBA::tk_event:
               {
-                CORBA::ULong length;
+                CORBA::ULong length {};
 
                 // get the encapsulation length
                 continue_skipping = stream->read_ulong (length);
@@ -208,7 +208,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   CORBA::Boolean continue_skipping {true};
 
   // specifies the number of bytes in the Principal
-  CORBA::ULong len;
+  CORBA::ULong len {};
 
   continue_skipping = stream->read_ulong (len);
   if (len > 0 && continue_skipping)
@@ -256,13 +256,13 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 
   while (profiles-- != 0 && continue_skipping)
       {
-        CORBA::ULong tag;
+        CORBA::ULong tag {};
 
         // get the profile ID tag
         if ( (continue_skipping = stream->read_ulong (tag)) == 0)
           continue;
 
-        CORBA::ULong encap_len;
+        CORBA::ULong encap_len {};
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
         // Create the decoding stream from the encapsulation in the
@@ -410,7 +410,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
     {
       CORBA::Any_var any = tc->member_label (i);
 
-      CORBA::Octet o;
+      CORBA::Octet o {};
       if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
           CORBA::ULong default_index =
@@ -428,7 +428,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
         {
         case CORBA::tk_short:
           {
-            CORBA::Short d;
+            CORBA::Short d {};
             if ((any >>= d) && d == short_v)
               current_member = i;
           }
@@ -436,7 +436,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_ushort:
           {
-            CORBA::UShort d;
+            CORBA::UShort d {};
             if ((any >>= d) && d == ushort_v)
               current_member = i;
           }
@@ -444,7 +444,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_long:
           {
-            CORBA::Long d;
+            CORBA::Long d {};
             if ((any >>= d) && d == long_v)
               current_member = i;
           }
@@ -452,7 +452,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_ulong:
           {
-            CORBA::ULong d;
+            CORBA::ULong d {};
             if ((any >>= d) && d == ulong_v)
               current_member = i;
           }
@@ -460,7 +460,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_enum:
           {
-            CORBA::ULong d;
+            CORBA::ULong d {};
             TAO::Any_Impl *impl = any->impl ();
 
             if (impl->encoded ())
@@ -495,7 +495,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_char:
           {
-            CORBA::Char d;
+            CORBA::Char d {};
             if ((any >>= CORBA::Any::to_char (d)) && d == char_v)
               current_member = i;
           }
@@ -503,7 +503,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_wchar:
           {
-            CORBA::WChar d;
+            CORBA::WChar d {};
             if ((any >>= CORBA::Any::to_wchar (d)) && d == wchar_v)
               current_member = i;
           }
@@ -511,7 +511,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 
         case CORBA::tk_boolean:
           {
-            CORBA::Boolean d;
+            CORBA::Boolean d {};
             if ((any >>= CORBA::Any::to_boolean (d)) && d == boolean_v)
               current_member = i;
           }
@@ -576,7 +576,7 @@ TAO::traverse_status
 TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   // Size of element.
-  CORBA::ULong bounds;
+  CORBA::ULong bounds {};
 
   // First unmarshal the sequence length ... we trust it to be right
   // here, on the "be gracious in what you accept" principle.  We
@@ -862,7 +862,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     {
       this->nested_processing_ = true;
 
-      CORBA::Long value_tag;
+      CORBA::Long value_tag {};
 
       if (!stream->read_long (value_tag))
         {
@@ -896,7 +896,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
         }
       else if (adapter->is_type_info_list(value_tag))
         {
-          CORBA::Long num_types;
+          CORBA::Long num_types {};
           if (!stream->read_long (num_types))
             {
               return TAO::TRAVERSE_STOP;
