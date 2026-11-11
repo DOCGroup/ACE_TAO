@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LIFECYCLE_SERVICE_IMPL_H
 #define LIFECYCLE_SERVICE_IMPL_H
 
@@ -32,7 +31,7 @@ public:
   Life_Cycle_Service_i (Life_Cycle_Service_i &&) = delete;
   Life_Cycle_Service_i &operator= (Life_Cycle_Service_i const &) = delete;
   Life_Cycle_Service_i &operator= (Life_Cycle_Service_i &&) = delete;
-  ~Life_Cycle_Service_i () override;
+  ~Life_Cycle_Service_i () override = default;
 
   /// Returns true if the Generic Factory is able to forward a request
   /// for creating an object described by the <factory_key>.
@@ -55,9 +54,7 @@ private:
   std::unique_ptr<Factory_Trader> factory_trader_ptr_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int const debug_level_;
 };
 
 #endif /* LIFECYCLE_SERVICE_IMPL_H */
-
-

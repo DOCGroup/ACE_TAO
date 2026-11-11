@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
@@ -45,9 +44,6 @@ Factory_Trader::Factory_Trader (int debug_level)
     }
   // @@ ACE_CHECK?  No way to pass back any exceptions.
 }
-
-Factory_Trader::~Factory_Trader () = default;
-
 
 void
 Factory_Trader::add_type ()
@@ -91,7 +87,6 @@ Factory_Trader::add_type ()
   // @@ ACE_CHECK
 }
 
-
 void
 Factory_Trader::_cxx_export (char const * name,
                              char const * location,
@@ -133,9 +128,8 @@ Factory_Trader::_cxx_export (char const * name,
   // @@ ACE_CHECK*
 }
 
-
 CORBA::Object_ptr
-Factory_Trader::query (std::string const &constraint)
+Factory_Trader::query (std::string const & constraint)
 {
   try
     {
@@ -187,7 +181,7 @@ Factory_Trader::query (std::string const &constraint)
           else
             ORBSVCS_ERROR ((LM_ERROR, "Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
         }
-      return nullptr;
+      return {};
     }
   catch (CORBA::Exception const &ex)
     {
@@ -195,5 +189,5 @@ Factory_Trader::query (std::string const &constraint)
         "Factory_Trader::query: Failed.\n");
     }
   // @@ ACE_CHECK_RETURN (?)
-  return nullptr;
+  return {};
 }

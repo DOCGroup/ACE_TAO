@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Get_Opt.h"
 
@@ -21,9 +20,6 @@ Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
   : debug_level_ (debug_level)
 {
 }
-
-Life_Cycle_Service_i::~Life_Cycle_Service_i () = default;
-
 
 CORBA::Boolean
 Life_Cycle_Service_i::supports (CosLifeCycle::Key const &)
@@ -39,7 +35,7 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
     ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
     // Exceptions are forwarded, not handled !!
 
-  if (factory_trader_ptr_ != nullptr)
+  if (this->factory_trader_ptr_)
     {
       Criteria_Evaluator const criteria_evaluator (the_criteria);
 
@@ -71,7 +67,6 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
 
       // Now we have a proper reference to a Generic Factory
       // the create_object call will be forwarded to this factory
-
 
       // Check if it is a valid Generic Factory reference
       if (CORBA::is_nil (generic_factory.in ()))
@@ -131,7 +126,7 @@ Life_Cycle_Service_i::register_factory (char const * name,
                                         char const * description,
                                         CORBA::Object_ptr object)
 {
-  if (this->factory_trader_ptr_ == nullptr)
+  if (!this->factory_trader_ptr_)
     this->factory_trader_ptr_ = std::make_unique<Factory_Trader> (this->debug_level_);
   // we have an proper reference to the Factory Trader
 

@@ -9,24 +9,21 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "LifeCycle_Service.h"
 
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-Life_Cycle_Service_Server::Life_Cycle_Service_Server () = default;
-
 Life_Cycle_Service_Server::~Life_Cycle_Service_Server ()
 {
   try
     {
       // Unbind the Factory Finder.
-      CosNaming::Name generic_Factory_Name (2);
-      generic_Factory_Name.length (2);
-      generic_Factory_Name[0].id = CORBA::string_dup ("LifeCycle_Service");
-      this->namingContext_var_->unbind (generic_Factory_Name);
+      CosNaming::Name generic_factory_name (2);
+      generic_factory_name.length (2);
+      generic_factory_name[0].id = CORBA::string_dup ("LifeCycle_Service");
+      this->namingContext_var_->unbind (generic_factory_name);
     }
   catch (CORBA::Exception const &ex)
     {
@@ -43,8 +40,8 @@ Life_Cycle_Service_Server::init (int argc,
   // Copy command line parameter.
   ACE_Argv_Type_Converter command(argc, argv);
 
-  retval = this->orb_manager_.init (command.get_argc(),
-                                    command.get_TCHAR_argv());
+  retval = this->orb_manager_.init (command.get_argc (),
+                                    command.get_TCHAR_argv ());
 
   if (retval == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -58,8 +55,7 @@ Life_Cycle_Service_Server::init (int argc,
   if (retval == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
 
-
-  this->parse_args (command.get_argc(), command.get_TCHAR_argv());
+  this->parse_args (command.get_argc (), command.get_TCHAR_argv ());
 
   Life_Cycle_Service_i *servant {};
   ACE_NEW_RETURN (servant,
@@ -82,18 +78,17 @@ Life_Cycle_Service_Server::init (int argc,
                     ACE_TEXT("LifeCycle_Service: Trying to get a reference to the Naming Service.\n")));
 
       // Get the Naming Service object reference.
-      CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService");
+      CORBA::Object_var naming_obj_var =
+        this->orb_manager_.orb ()->resolve_initial_references ("NameService");
 
-      if (CORBA::is_nil (namingObj_var.in ()))
+      if (CORBA::is_nil (naming_obj_var.in ()))
         ORBSVCS_ERROR ((LM_ERROR,
                    " LifeCycle_Service: Unable get the Naming Service.\n"));
 
       // Narrow the object reference to a Naming Context.
-      namingContext_var_ = CosNaming::NamingContext::_narrow (namingObj_var.in ());
+      this->namingContext_var_ = CosNaming::NamingContext::_narrow (naming_obj_var.in ());
 
-
-      if (CORBA::is_nil (namingContext_var_.in ()))
+      if (CORBA::is_nil (this->namingContext_var_.in ()))
         ORBSVCS_ERROR ((LM_ERROR,
                    "LifeCycle_Service: Unable get the Naming Service.\n"));
 
@@ -101,14 +96,14 @@ Life_Cycle_Service_Server::init (int argc,
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT("LifeCycle_Service: Have a proper reference to the Naming Service.\n")));
 
-      CosNaming::Name life_Cycle_Service_Name (1);
-      life_Cycle_Service_Name.length (1);
-      life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
+      CosNaming::Name life_cycle_service_name (1);
+      life_cycle_service_name.length (1);
+      life_cycle_service_name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
       CORBA::Object_var const tmp = servant->_this ();
 
-      namingContext_var_->bind (life_Cycle_Service_Name,
-                                tmp.in ());
+      this->namingContext_var_->bind (life_cycle_service_name,
+                                      tmp.in ());
 
       if (this->debug_level_ >= 2)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -123,7 +118,6 @@ Life_Cycle_Service_Server::init (int argc,
   return 0;
 }
 
-
 int
 Life_Cycle_Service_Server::run ()
 {
@@ -131,19 +125,18 @@ Life_Cycle_Service_Server::run ()
     ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT("\nLifeCycle Service: Life_Cycle_Service_Server is running\n")));
 
-  orb_manager_.orb()->run ();
+  this->orb_manager_.orb ()->run ();
 
   return 0;
 }
-
 
 u_int
 Life_Cycle_Service_Server::parse_args (int argc,
                                        ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("?d:"));
-  int opt;
-  int exit_code = 0;
+  int opt {};
+  int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
     switch (opt)

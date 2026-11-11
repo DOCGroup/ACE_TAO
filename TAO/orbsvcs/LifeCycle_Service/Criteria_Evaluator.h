@@ -35,12 +35,12 @@ public:
 
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation () const
     {
-      return nullptr;
+      return {};
     }
 
   char * getPreferences () const
     {
-      return nullptr;
+      return {};
     }
 
 private:

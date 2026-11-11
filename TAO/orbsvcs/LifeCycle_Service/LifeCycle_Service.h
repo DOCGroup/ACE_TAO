@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LIFECYCLE_SERVICE_H
 #define LIFECYCLE_SERVICE_H
 
@@ -29,7 +28,7 @@
 class Life_Cycle_Service_Server
 {
 public:
-  Life_Cycle_Service_Server ();
+  Life_Cycle_Service_Server () = default;
 
   Life_Cycle_Service_Server (Life_Cycle_Service_Server const &) = delete;
   Life_Cycle_Service_Server (Life_Cycle_Service_Server &&) = delete;
