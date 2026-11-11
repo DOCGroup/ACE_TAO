@@ -436,7 +436,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 #endif
 
   const ACE_Service_Type *srp {};
-  for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; i++)
+  for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; ++i)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
       const ACE_Static_Svc_Descriptor *assd =

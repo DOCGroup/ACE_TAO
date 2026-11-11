@@ -50,7 +50,7 @@ ACE_Asynch_Pseudo_Task::svc ()
   sigset_t RT_signals;
 
   ACE_OS::sigemptyset (&RT_signals);
-  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; si++)
+  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; ++si)
     ACE_OS::sigaddset (&RT_signals, si);
 
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &RT_signals, nullptr) != 0)

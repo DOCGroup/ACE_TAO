@@ -217,7 +217,7 @@ ACE_Task_Base::cleanup (void *object, void *)
   // hook does something crazy like "delete this".
   {
     ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, t->lock_));
-    t->thr_count_--;
+    --t->thr_count_;
     if (0 == t->thr_count_)
       t->last_thread_id_ = ACE_Thread::self ();
   }

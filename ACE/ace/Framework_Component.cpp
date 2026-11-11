@@ -68,7 +68,7 @@ ACE_Framework_Repository::close ()
   if (this->component_vector_ != nullptr)
     {
       // Delete components in reverse order.
-      for (int i = this->current_size_ - 1; i >= 0; i--)
+      for (int i = this->current_size_ - 1; i >= 0; --i)
         if (this->component_vector_[i])
           {
             ACE_Framework_Component *s =
@@ -137,7 +137,7 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
   int i;
 
   // Check to see if it's already registered
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     if (this->component_vector_[i] &&
         fc->this_ == this->component_vector_[i]->this_)
       {
@@ -163,7 +163,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   int i;
 
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     if (this->component_vector_[i] &&
         ACE_OS::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
@@ -196,7 +196,7 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
   int i;
   int retval = -1;
 
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     if (this->component_vector_[i] &&
         ACE_OS::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {

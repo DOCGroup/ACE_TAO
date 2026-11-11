@@ -95,7 +95,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
 
       for (size_t i = starting_frame;
            i < stack_size && num_frames > 0;
-           i++, num_frames--)
+           ++i, --num_frames)
         {
           // this could be more efficient by remembering where we left off in buf_
           char *symp = &stack_syms[i][0];

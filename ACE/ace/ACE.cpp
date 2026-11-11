@@ -307,7 +307,7 @@ ACE::hash_pjw (const char *str, size_t len)
 {
   u_long hash = 0;
 
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i < len; ++i)
     {
       const char temp = str[i];
       hash = (hash << 4) + (temp * 13);
@@ -336,7 +336,7 @@ ACE::hash_pjw (const wchar_t *str, size_t len)
 {
   u_long hash = 0;
 
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i < len; ++i)
     {
       // @@ UNICODE: Does this function do the correct thing with wchar's?
 
@@ -930,7 +930,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, int);
@@ -1716,7 +1716,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, int);
@@ -2315,11 +2315,11 @@ ACE::format_hexdump (const char *buffer,
   size_t i;
 
   size_t const lines = size / bytes_per_line;
-  for (i = 0; i < lines; i++)
+  for (i = 0; i < lines; ++i)
     {
       size_t j;
 
-      for (j = 0 ; j < bytes_per_line; j++)
+      for (j = 0 ; j < bytes_per_line; ++j)
         {
           c = (u_char) buffer[(i * bytes_per_line) + j];
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
@@ -2345,7 +2345,7 @@ ACE::format_hexdump (const char *buffer,
 
   if (size % bytes_per_line)
     {
-      for (i = 0 ; i < size % bytes_per_line; i++)
+      for (i = 0 ; i < size % bytes_per_line; ++i)
         {
           c = (u_char) buffer[size - size % bytes_per_line + i];
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
@@ -2359,7 +2359,7 @@ ACE::format_hexdump (const char *buffer,
           textver[i] = ACE_OS::ace_isprint (c) ? c : u_char ('.');
         }
 
-      for (i = size % bytes_per_line; i < bytes_per_line; i++)
+      for (i = size % bytes_per_line; i < bytes_per_line; ++i)
         {
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
                            ACE_TEXT ("   "));
@@ -2724,7 +2724,7 @@ ACE::daemonize (const ACE_TCHAR pathname[],
   // Close down the I/O handles.
   if (close_all_handles)
     {
-      for (int i = ACE::max_handles () - 1; i >= 0; i--)
+      for (int i = ACE::max_handles () - 1; i >= 0; --i)
         ACE_OS::close (i);
 
       int fd = ACE_OS::open ("/dev/null", O_RDWR, 0);

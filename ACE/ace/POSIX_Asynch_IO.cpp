@@ -907,7 +907,7 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 
   int retval = 0;
 
-  for (; ; retval++)
+  for (; ; ++retval)
     {
       ACE_POSIX_Asynch_Accept_Result* result {};
 
@@ -1447,7 +1447,7 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (bool flg_notify,
 
   set.reset ();
 
-  for (; iter.next (me) != 0;  retval++ , iter.advance ())
+  for (; iter.next (me) != 0;  ++retval, iter.advance ())
     {
        ACE_HANDLE handle = me->ext_id_;
        ACE_POSIX_Asynch_Connect_Result* result = me->int_id_ ;

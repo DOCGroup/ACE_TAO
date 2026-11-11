@@ -84,7 +84,7 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
 
       new_stream.set_handle (new_io.get_handle ());
-      new_stream.reference_count_++;
+      ++new_stream.reference_count_;
 
       // Transfer address ownership.
       new_io.get_local_addr (new_stream.local_addr_);

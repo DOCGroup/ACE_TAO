@@ -937,7 +937,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
         // Increment iovec counter if there's more to do.
         if (msg_len > 0)
-          iovcnt++;
+          ++iovcnt;
       }
     if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -2632,7 +2632,7 @@ ACE_WIN32_Asynch_Connect::cancel_uncompleted (bool flg_notify,
 
   set.reset ();
 
-  for (; iter.next (me) != 0; retval++, iter.advance ())
+  for (; iter.next (me) != 0; ++retval, iter.advance ())
     {
        ACE_HANDLE handle = me->ext_id_;
        ACE_WIN32_Asynch_Connect_Result* result = me->int_id_ ;
@@ -3327,7 +3327,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 
         // Increment iovec counter if there's more to do.
         if (msg_space > 0)
-          iovcnt++;
+          ++iovcnt;
       }
     if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -3653,7 +3653,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 
             // Increment iovec counter if there's more to do.
             if (msg_len > 0)
-              iovcnt++;
+              ++iovcnt;
           }
       }
     while (msg_len > 0 && iovcnt < ACE_IOV_MAX);

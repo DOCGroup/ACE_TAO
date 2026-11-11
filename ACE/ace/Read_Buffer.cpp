@@ -164,7 +164,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use
   // memcpy() ;-)
-  for (size_t j = slot; j > 0; j--)
+  for (size_t j = slot; j > 0; --j)
     *--result = buf[j - 1];
 
   return result;

@@ -480,7 +480,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
               else
                 max_num = count_;
 
-              for (int i = max_num ; i > 1 ;i--)
+              for (int i = max_num ; i > 1 ;--i)
                 {
                   ACE_OS::snprintf (backup, MAXPATHLEN + 1, ACE_TEXT ("%s.%d"), this->filename_, i);
                   ACE_OS::snprintf (to_backup, MAXPATHLEN + 1, ACE_TEXT ("%s.%d"), this->filename_, i - 1);

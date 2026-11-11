@@ -197,7 +197,7 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 
   for (int i = ACE_DIV_BY_WORDSIZE (max - 1);
        i >= 0;
-       i--)
+       --i)
     this->size_ += ACE_Handle_Set::count_bits (maskp[i]);
 
   this->set_max (max);
@@ -223,7 +223,7 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 
       for (i = ACE_DIV_BY_WORDSIZE (current_max - 1);
            maskp[i] == 0;
-           i--)
+           --i)
         continue;
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
@@ -297,7 +297,7 @@ ACE_Handle_Set_Iterator::operator () ()
 
       // Increment the iterator and advance to the next bit in this
       // word.
-      this->handle_index_++;
+      ++this->handle_index_;
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 
       // If we've examined all the bits in this word, we'll go onto
@@ -312,7 +312,7 @@ ACE_Handle_Set_Iterator::operator () ()
           for (this->handle_index_ = ACE_MULT_BY_WORDSIZE(++this->word_num_);
                this->handle_index_ < maxhandlep1
                  && maskp[this->word_num_] == 0;
-               this->word_num_++)
+               ++this->word_num_)
             this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 
           // If the bit index becomes >= the maxhandlep1 that means
@@ -336,7 +336,7 @@ ACE_Handle_Set_Iterator::operator () ()
       // <operator()>).
       for (;
            ACE_BIT_DISABLED (this->word_val_, 1);
-           this->handle_index_++)
+           ++this->handle_index_)
         this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 
       return result;
@@ -374,7 +374,7 @@ ACE_Handle_Set_Iterator::operator () ()
 
        // Move index to least significative bit.
        while (lsb >>= 1)
-         this->handle_index_++;
+         ++this->handle_index_;
      }
    else
      {
@@ -389,7 +389,7 @@ ACE_Handle_Set_Iterator::operator () ()
         // Move index to bit distance between new lsb and old lsb.
         do
           {
-            this->handle_index_++;
+            ++this->handle_index_;
             n &= n >> 1;
           }
         while (n != 0);
@@ -440,7 +440,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
     for (this->word_val_ = maskp[this->word_num_];
          ACE_BIT_DISABLED (this->word_val_, 1)
            && this->handle_index_ < maxhandlep1;
-         this->handle_index_++)
+               ++this->handle_index_)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 #elif !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0)
@@ -496,7 +496,7 @@ ACE_Handle_Set_Iterator::reset_state ()
     for (this->word_val_ = maskp[this->word_num_];
          ACE_BIT_DISABLED (this->word_val_, 1)
            && this->handle_index_ < maxhandlep1;
-         this->handle_index_++)
+         ++this->handle_index_)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 #elif !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0)

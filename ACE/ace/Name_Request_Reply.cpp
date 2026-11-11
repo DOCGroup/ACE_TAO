@@ -267,7 +267,7 @@ ACE_Name_Request::encode (void *&buf)
     (this->transfer_.name_len_ + this->transfer_.value_len_)
     / sizeof (ACE_WCHAR_T);
 
-  for (size_t i = 0; i < nv_data_len; i++)
+  for (size_t i = 0; i < nv_data_len; ++i)
     this->transfer_.data_[i] =
       static_cast<ACE_WCHAR_T> (ACE_HTONS (this->transfer_.data_[i]));
 
@@ -311,7 +311,7 @@ ACE_Name_Request::decode ()
     (this->transfer_.name_len_ + this->transfer_.value_len_)
     / sizeof (ACE_WCHAR_T);
 
-  for (size_t i = 0; i < nv_data_len; i++)
+  for (size_t i = 0; i < nv_data_len; ++i)
     this->transfer_.data_[i] =
       static_cast<ACE_WCHAR_T> (ACE_NTOHS (this->transfer_.data_[i]));
 

@@ -287,7 +287,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 
   size_t current;
   size_t last = buffer->size_ + (buffer->eof_ ? 1 : 0);
-  for (current = buffer->index_; current < last; current++)
+  for (current = buffer->index_; current < last; ++current)
     {
       static const char* separators = " \t\r\n:*(){}";
       char c = (buffer->eof_ && current == buffer->size_ ?
@@ -517,7 +517,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                       {
                         static const ACE_TCHAR* path_parts =
                                                 ACE_TEXT ("/\\:%.~-");
-                        for (const ACE_TCHAR* p = path_parts; *p != '\0'; p++)
+                        for (const ACE_TCHAR* p = path_parts; *p != '\0'; ++p)
                           {
                             if (ACE_OS::strchr (ace_yylval->ident_, *p) != nullptr)
                               {
@@ -647,7 +647,7 @@ ACE_Svc_Conf_Lexer::locate_bom (char* source,
     { 3, "\xef\xbb\xbf",     ACE_Encoding_Converter_Factory::ACE_UTF_8    },
   };
 
-  for (size_t i = 0; i < sizeof (boms) / sizeof (bom); i++)
+  for (size_t i = 0; i < sizeof (boms) / sizeof (bom); ++i)
     {
       if (source_size >= boms[i].length_)
         {

@@ -103,7 +103,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
       len = size;
     }
 
-    for (size_t i = 0; i < len; i++)
+    for (size_t i = 0; i < len; ++i)
     {
       // first we cast the sockaddr to sockaddr_in
       // since we only support ipv4 at this time.
@@ -246,7 +246,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
       len = size;
     }
 
-    for (size_t i = 0; i < len; i++)
+    for (size_t i = 0; i < len; ++i)
     {
       // first we cast the sockaddr to sockaddr_in
       // since we only support ipv4 at this time.

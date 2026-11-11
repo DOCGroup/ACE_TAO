@@ -119,7 +119,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
       ACE_CapEntry *ce;
 
       // Skip blanks
-      while (*buf && ACE_OS::ace_isspace(*buf)) buf++;
+      while (*buf && ACE_OS::ace_isspace(*buf)) ++buf;
       // If we get end of line return
 
       if (*buf == ACE_TEXT ('\0'))
@@ -128,9 +128,9 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
       if (*buf == ACE_TEXT ('#'))
         {
           while (*buf && *buf != ACE_TEXT ('\n'))
-            buf++;
+            ++buf;
           if (*buf == ACE_TEXT ('\n'))
-            buf++;
+            ++buf;
           continue;
         }
       while(*buf && *buf != ACE_TEXT ('=')

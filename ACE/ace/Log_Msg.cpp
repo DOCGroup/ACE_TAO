@@ -1056,7 +1056,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           for (const ACE_TCHAR *s = ACE_Log_Msg::program_name_;
                bspace > 1 && (*bp = *s) != '\0';
                ++s, --bspace)
-            bp++;
+            ++bp;
 
           *bp++ = '|';
           --bspace;
@@ -1383,7 +1383,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       // Yup.
                       // Print a single character signifying the severity of the message
                       fp = format;
-                      fp++;
+                      ++fp;
 
 # if defined (ACE_USES_WCHAR)
 

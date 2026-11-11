@@ -724,7 +724,7 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon2, ACE_Token_Manager::instance ()->mutex (), -1);
 
   if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-    this->num_writers_++;
+    ++this->num_writers_;
 
   // Does _anyone_ own the token?
   if (this->owner () == nullptr)
@@ -761,7 +761,7 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
       ACE_Token_Manager::instance ()->check_deadlock (caller->proxy ()) == 1)
     {
       if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-        this->num_writers_--;
+        --this->num_writers_;
       errno = EDEADLK;
       ACE_RETURN (-1);
     }
@@ -808,7 +808,7 @@ ACE_RW_Token::tryacquire (ACE_TPQ_Entry *caller)
 
   if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
     {
-      this->num_writers_++;
+      ++this->num_writers_;
     }
 
   // Does _anyone_ own the token?
@@ -841,7 +841,7 @@ ACE_RW_Token::tryacquire (ACE_TPQ_Entry *caller)
   else // Writer.
     // We're going to fail, so decrement the num_writers.
     {
-      this->num_writers_--;
+      --this->num_writers_;
     }
 
 
@@ -912,7 +912,7 @@ ACE_RW_Token::release (ACE_TPQ_Entry *caller)
     }
 
   if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-    num_writers_--;
+    --num_writers_;
 
   // Recursive release.
   if (caller->nesting_level () > 0)

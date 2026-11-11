@@ -47,7 +47,7 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
 
   ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
 
-  for (size_t i = 0; i < this->top_; i++)
+  for (size_t i = 0; i < this->top_; ++i)
     this->stack_[i] = s.stack_[i];
 }
 
@@ -67,7 +67,7 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
         }
       this->top_ = s.top_;
 
-      for (size_t i = 0; i < this->top_; i++)
+      for (size_t i = 0; i < this->top_; ++i)
         this->stack_[i] = s.stack_[i];
     }
 }
@@ -105,7 +105,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE
     top_ (s.top_)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
-  for (size_t i = 0; i < this->top_; i++)
+  for (size_t i = 0; i < this->top_; ++i)
     this->stack_[i] = s.stack_[i];
 }
 
@@ -118,7 +118,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
     {
       this->top_ = s.top_;
 
-      for (size_t i = 0; i < this->top_; i++)
+      for (size_t i = 0; i < this->top_; ++i)
         this->stack_[i] = s.stack_[i];
     }
 }
@@ -967,7 +967,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
     {
       this->search_structure_[first_free].item_ = item;
       this->search_structure_[first_free].is_free_ = false;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else /* No more room! */
@@ -1220,7 +1220,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
   ACE_NEW (this->search_structure_,
            typename ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
 
-  for (size_t i = 0; i < this->cur_size_; i++)
+  for (size_t i = 0; i < this->cur_size_; ++i)
     this->search_structure_[i] = bs.search_structure_[i];
 }
 
@@ -1241,7 +1241,7 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
 
       this->cur_size_ = bs.cur_size_;
 
-      for (size_t i = 0; i < this->cur_size_; i++)
+      for (size_t i = 0; i < this->cur_size_; ++i)
         this->search_structure_[i] = bs.search_structure_[i];
     }
 }
@@ -1260,7 +1260,7 @@ ACE_Bounded_Set<T>::find (const T &item) const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::find");
 
-  for (size_t i = 0; i < this->cur_size_; i++)
+  for (size_t i = 0; i < this->cur_size_; ++i)
     if (this->search_structure_[i].item_ == item
         && !this->search_structure_[i].is_free_)
       return 0;
@@ -1275,7 +1275,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
   int first_free = -1;   // Keep track of first free slot.
   size_t i;
 
-  for (i = 0; i < this->cur_size_; i++)
+  for (i = 0; i < this->cur_size_; ++i)
     // First, make sure we don't allow duplicates.
 
     if (this->search_structure_[i].item_ == item
@@ -1294,7 +1294,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
     {
       this->search_structure_[i].item_ = item;
       this->search_structure_[i].is_free_ = false;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else /* No more room! */
@@ -1308,7 +1308,7 @@ template <class T> int
 ACE_Bounded_Set<T>::remove (const T &item)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::remove");
-  for (size_t i = 0; i < this->cur_size_; i++)
+  for (size_t i = 0; i < this->cur_size_; ++i)
     if (this->search_structure_[i].item_ == item)
       {
         // Mark this entry as being free.

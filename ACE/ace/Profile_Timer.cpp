@@ -142,7 +142,7 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
 
   while (tdiff.tv_usec < 0)
     {
-      tdiff.tv_sec--;
+      --tdiff.tv_sec;
       tdiff.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
 }
@@ -265,7 +265,7 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
 
   while (tdiff.tv_usec < 0)
     {
-      tdiff.tv_sec--;
+      --tdiff.tv_sec;
       tdiff.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
 }

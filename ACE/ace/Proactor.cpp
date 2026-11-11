@@ -458,7 +458,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
       return 0;
 
     // First time you are in. Increment the thread count.
-    this->event_loop_thread_count_ ++;
+    ++this->event_loop_thread_count_;
   }
 
   // Run the event loop.
@@ -486,7 +486,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Decrement the thread count.
-    this->event_loop_thread_count_ --;
+    --this->event_loop_thread_count_;
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
@@ -515,7 +515,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
       return 0;
 
     // First time you are in. Increment the thread count.
-    this->event_loop_thread_count_ ++;
+    ++this->event_loop_thread_count_;
   }
 
   // Run the event loop.
@@ -542,7 +542,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Decrement the thread count.
-    this->event_loop_thread_count_ --;
+    --this->event_loop_thread_count_;
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)

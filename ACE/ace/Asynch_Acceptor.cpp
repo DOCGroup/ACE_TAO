@@ -142,7 +142,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   if (number_of_initial_accepts == -1)
     number_of_initial_accepts = backlog;
 
-  for (int i = 0; i < number_of_initial_accepts; i++)
+  for (int i = 0; i < number_of_initial_accepts; ++i)
     {
       // Initiate accepts.
       if (this->accept (bytes_to_read) == -1)

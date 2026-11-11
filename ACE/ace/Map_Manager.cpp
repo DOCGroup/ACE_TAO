@@ -512,7 +512,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
     new (&(temp[i])) ENTRY (this->search_structure_[i]);
 
   // Construct the new elements.
-  for (i = this->total_size_; i < new_size; i++)
+  for (i = this->total_size_; i < new_size; ++i)
     {
       // Call the constructor for each element in the array using
       // operator placement new.  Note that this requires a default
@@ -572,7 +572,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
   // Free up the structure.
   if (this->search_structure_ != 0)
     {
-      for (ACE_UINT32 i = 0; i < this->total_size_; i++)
+      for (ACE_UINT32 i = 0; i < this->total_size_; ++i)
         // Explicitly call the destructor.
         {
           ENTRY *ss = &this->search_structure_[i];

@@ -612,7 +612,7 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
           ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_PER_DLL) &&
           ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_PER_DLL) ))
       {
-        for (int i = this->current_size_ - 1; i >= 0; i--)
+        for (int i = this->current_size_ - 1; i >= 0; --i)
           {
             if (this->handle_vector_[i] &&
                 this->handle_vector_[i]->refcount () == 0)
@@ -653,7 +653,7 @@ ACE_DLL_Manager::close ()
   if (this->handle_vector_ != nullptr)
     {
       // Delete components in reverse order.
-      for (int i = this->current_size_ - 1; i >= 0; i--)
+      for (int i = this->current_size_ - 1; i >= 0; --i)
         {
           if (this->handle_vector_[i])
             {
@@ -682,7 +682,7 @@ ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
 {
   ACE_TRACE ("ACE_DLL_Manager::find_dll");
 
-  for (int i = 0; i < this->current_size_; i++)
+  for (int i = 0; i < this->current_size_; ++i)
     if (this->handle_vector_[i] &&
         ACE_OS::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
       {

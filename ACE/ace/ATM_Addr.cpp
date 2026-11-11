@@ -393,7 +393,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   if (addrlen < ATM_ADDR_SIZE + 1)
           return -1;
 
-  for (i = 0; i < ATM_ADDR_SIZE; i++) {
+  for (i = 0; i < ATM_ADDR_SIZE; ++i) {
     buffer[ i * 3 ] = '\0';
           ACE_OS::sprintf (buffer, ACE_TEXT ("%s%02x."),
                      buffer,

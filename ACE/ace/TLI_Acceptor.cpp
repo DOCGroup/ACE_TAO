@@ -118,7 +118,7 @@ ACE_TLI_Request_Queue::dequeue (ACE_TLI_Request *&ptr)
   ACE_TRACE ("ACE_TLI_Request_Queue::dequeue");
   ptr = this->tail_->next_;
   this->tail_->next_ = ptr->next_;
-  this->current_count_--;
+  --this->current_count_;
   return 0;
 }
 
@@ -173,7 +173,7 @@ ACE_TLI_Request_Queue::close ()
   ACE_TRACE ("ACE_TLI_Request_Queue::close");
   int res = 0;
 
-  for (int i = 0; i < this->size_; i++)
+  for (int i = 0; i < this->size_; ++i)
     {
       ACE_TLI_Request &item = this->base_[i];
 
@@ -201,7 +201,7 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
 
   // Initialize the ACE_Queue and the free list.
 
-  for (int i = 0; i < this->size_; i++)
+  for (int i = 0; i < this->size_; ++i)
     {
       ACE_TLI_Request *item = &this->base_[i];
       this->free (item);
@@ -259,7 +259,7 @@ ACE_TLI_Request_Queue::enqueue (const char device[],
           temp->next_ = this->tail_->next_;
           this->tail_->next_ = temp;
           this->tail_ = temp;
-          this->current_count_++;
+          ++this->current_count_;
           return 0;
         }
     }
@@ -295,7 +295,7 @@ ACE_TLI_Request_Queue::remove (int sequence_number)
     {
       prev->next_ = temp->next_;
       ACE_OS::t_close (temp->handle_);
-      this->current_count_--;
+      --this->current_count_;
       this->free (temp);
       return 0;
     }

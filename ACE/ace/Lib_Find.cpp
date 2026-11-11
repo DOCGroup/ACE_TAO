@@ -125,7 +125,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
   if (!has_suffix)
     ACE_OS::strcpy (searchfilename + len_searchfilename, decorator);
 
-  for (int tag = 1; tag >= 0; tag --)
+  for (int tag = 1; tag >= 0; --tag)
     {
       if (tag == 0)
         searchfilename [len_searchfilename] = 0;
@@ -472,7 +472,7 @@ ACE::strrepl (char *s, char search, char replace)
 
   size_t replaced = 0;
 
-  for (size_t i = 0; s[i] != '\0'; i++)
+  for (size_t i = 0; s[i] != '\0'; ++i)
     if (s[i] == search)
       {
         s[i] = replace;
@@ -560,7 +560,7 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
 
   size_t replaced = 0;
 
-  for (size_t i = 0; s[i] != '\0'; i++)
+  for (size_t i = 0; s[i] != '\0'; ++i)
     if (s[i] == search)
       {
         s[i] = replace;

@@ -217,7 +217,7 @@ ACE_OS::fopen (const wchar_t *filename,
 #else
   int hmode = _O_TEXT;
 
-  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
     fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);

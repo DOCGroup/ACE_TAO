@@ -322,7 +322,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
 {
   ACE_SHLIB_HANDLE new_handle = adll.get_handle (0);
 
-  for (size_t i = begin; i < end; i++)
+  for (size_t i = begin; i < end; ++i)
     {
       ACE_Service_Type *type =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
@@ -569,7 +569,7 @@ ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
     ignore_suspended_ (ignored_suspended)
 {
   while (!(done() || valid()))
-    this->next_++;
+    ++this->next_;
 }
 
 /// Obtains a pointer to the next valid service in the table.  If there
@@ -597,7 +597,7 @@ ACE_Service_Repository_Iterator::advance ()
 
   if (done()) return 0;
 
-  do this->next_++; while (!(done () || valid ()));
+  do ++this->next_; while (!(done () || valid ()));
 
   return !done();
 }

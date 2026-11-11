@@ -90,7 +90,7 @@ ACE_Process_Manager::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %d"), this->max_process_table_size_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
 
-  for (size_t i = 0; i < this->current_count_; i++)
+  for (size_t i = 0; i < this->current_count_; ++i)
     this->process_table_[i].dump ();
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -576,7 +576,7 @@ ACE_Process_Manager::remove_proc (size_t i)
 
   this->process_table_[i].process_ = nullptr;
 
-  this->current_count_--;
+  --this->current_count_;
 
   if (this->current_count_ > 0)
     // Compact the table by moving the last item into the slot vacated

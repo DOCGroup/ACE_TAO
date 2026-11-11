@@ -31,7 +31,7 @@ MQX_Filesystem::MQX_Filesystem ()
   current_fs_name_[0] = '\0';
 
   // Initialize files_
-  for (unsigned i = 0; i < FOPEN_MAX; i++)
+  for (unsigned i = 0; i < FOPEN_MAX; ++i)
     {
       files_[i].fd = -1;
       files_[i].mqx_file = 0;
@@ -400,7 +400,7 @@ MQX_Filesystem::rename (const char *oldpath, const char *newpath)
 MQX_Filesystem::File *
 MQX_Filesystem::get_file (int fd)
 {
-  for (int i = 0; i < FOPEN_MAX; i++)
+  for (int i = 0; i < FOPEN_MAX; ++i)
     {
       if (files_[i].fd == fd) return &files_[i];
     }
@@ -417,7 +417,7 @@ MQX_Filesystem::get_new_file ()
     {
     file->mqx_file = 0;
     // Get Unused File Descriptor
-    for (int fd = last_fd_ + 1; fd != last_fd_; fd++)
+    for (int fd = last_fd_ + 1; fd != last_fd_; ++fd)
       {
         if (get_file (fd) == 0)
           {

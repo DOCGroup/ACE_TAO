@@ -232,7 +232,7 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
     {
        u_int counter = 0;
        // Loop through all possible keys and check whether a key is free
-       for ( ;counter < ACE_TSS_THREAD_KEYS_MAX; counter++)
+       for ( ;counter < ACE_TSS_THREAD_KEYS_MAX; ++counter)
          {
             ACE_thread_key_t localkey = counter;
             // If the key is not set as used, we can give out this key, if not
@@ -1745,7 +1745,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
     return -1;
 
-  cv->waiters_--;
+  --cv->waiters_;
 
   bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
@@ -4849,7 +4849,7 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
   if (length > 0)
     {
       // We use <= to make sure that we get the last argument
-      for (size_t i = 0; i <= length; i++)
+      for (size_t i = 0; i <= length; ++i)
         {
           // Is it a double quote that hasn't been escaped?
           if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))

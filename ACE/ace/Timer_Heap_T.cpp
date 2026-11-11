@@ -482,7 +482,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reheap_down (
       if (child + 1 < this->cur_size_
           && this->heap_[child + 1]->get_timer_value ()
           < this->heap_[child]->get_timer_value ())
-        child++;
+        ++child;
 
       // Perform a <copy> if the child has a larger timeout value than
       // the <moved_node>.
@@ -543,7 +543,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::insert (
   this->reheap_up (new_node,
                    this->cur_size_,
                    ACE_HEAP_PARENT (this->cur_size_));
-  this->cur_size_++;
+  ++this->cur_size_;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>

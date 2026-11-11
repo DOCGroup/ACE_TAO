@@ -171,7 +171,7 @@ ACE_OS::argv_to_string (int argc,
       buf_len += ACE_OS::strlen (argv_p[i]);
 
       // Add one for the extra space between each string.
-      buf_len++;
+      ++buf_len;
     }
 
   // Step through all argv params and copy each one into buf; separate
@@ -423,7 +423,7 @@ ACE_OS::num_processors_online ()
   CPUSET_ZERO (cpuset);
   cpuset = vxCpuEnabledGet();
   unsigned int const maxcpu = vxCpuConfiguredGet();
-  for (unsigned int i =0; i < maxcpu; i++)
+  for (unsigned int i =0; i < maxcpu; ++i)
     {
       if (CPUSET_ISSET (cpuset, i))
         {

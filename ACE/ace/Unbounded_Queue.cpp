@@ -236,7 +236,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
 
   size_t i;
 
-  for (i = 0; i < this->cur_size_; i++)
+  for (i = 0; i < this->cur_size_; ++i)
     {
       if (i == slot)
         break;

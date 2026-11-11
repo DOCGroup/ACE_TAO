@@ -175,13 +175,13 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
         }
 
         // set the local port # assigned by the os to every secondary addr
-        for (size_t i = 1; i < num_addresses; i++)
+        for (size_t i = 1; i < num_addresses; ++i)
         {
           local_inet_addrs[i].sin_port = portst.sin_port;
         }
 
         // copy all of the secondary addrs into a sockaddr structure
-        for (size_t i = 0; i < num_addresses - 1; i++)
+        for (size_t i = 0; i < num_addresses - 1; ++i)
         {
           ACE_OS::memcpy(&(local_sockaddr[i]),
                          &(local_inet_addrs[i + 1]),

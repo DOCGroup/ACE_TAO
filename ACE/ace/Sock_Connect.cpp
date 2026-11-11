@@ -529,7 +529,7 @@ get_ip_interfaces_win32 (size_t &count,
 # if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
-  for (i = 0; i < n_v6_interfaces; i++)
+  for (i = 0; i < n_v6_interfaces; ++i)
     {
       struct sockaddr_in6 *addr6p;
 
@@ -1012,7 +1012,7 @@ ip_check (int &ipvn_enabled, int pf)
       recursing = false;
 
       bool found = false;
-      for (size_t i = 0; !found && i < if_cnt; i++)
+      for (size_t i = 0; !found && i < if_cnt; ++i)
         {
           found = (if_addrs[i].get_type () == pf);
         }

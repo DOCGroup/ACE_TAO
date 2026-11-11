@@ -365,13 +365,13 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                                sockaddr_in[num_addresses - 1]);
 
                 // all of the secondary addresses need the local port set
-                for (size_t i = 1; i < num_addresses; i++)
+                for (size_t i = 1; i < num_addresses; ++i)
                 {
                   local_inet_addrs[i].sin_port = local_inet_addrs[0].sin_port;
                 }
 
                 // copy only the sockaddrs that we need to bindx
-                for (size_t i = 0; i < num_addresses - 1; i++)
+                for (size_t i = 0; i < num_addresses - 1; ++i)
                 {
                   ACE_OS::memcpy(&(local_sockaddr[i]),
                                  &(local_inet_addrs[i + 1]),

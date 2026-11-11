@@ -296,7 +296,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
   ACE_CString::size_type pos {};
   bool match {};
 
-  for (; pos < vlist.length (); pos++)
+  for (; pos < vlist.length (); ++pos)
     {
       vlist[pos] = ACE_OS::ace_tolower (vlist[pos]);
     }

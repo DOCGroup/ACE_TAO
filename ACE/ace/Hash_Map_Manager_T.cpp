@@ -416,7 +416,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   // Handle initial case specially.
   else if (this->index_ == -1)
     {
-      this->index_++;
+      ++this->index_;
       return this->forward_i ();
     }
   else if (this->index_ >= static_cast<ssize_t> (this->map_man_->total_size_))

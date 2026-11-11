@@ -22,7 +22,7 @@ ACE_Thread::spawn_n (size_t n,
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
    {
       ACE_thread_t t_id;
       // Bail out if error occurs.
@@ -58,7 +58,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i = 0;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
     {
       ACE_thread_t t_id;
       ACE_hthread_t t_handle;

@@ -119,7 +119,7 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                 return const_cast<char*> (buf + bi);
 
               --fi;
-              tm->tm_mon--;
+              --tm->tm_mon;
 
               if (buf[bi] != '/')
                 return const_cast<char*> (buf + bi);
@@ -161,7 +161,7 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                      (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366))
                 return const_cast<char*> (buf + bi);
 
-              tm->tm_yday--;
+              --tm->tm_yday;
               break;
 
             case 'm':                        /* an escaped % */
@@ -169,7 +169,7 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                      (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
                 return const_cast<char*> (buf + bi);
 
-              tm->tm_mon--;
+              --tm->tm_mon;
               break;
 
             case 'M':                        /* minute (0-59) */

@@ -974,7 +974,7 @@ ACE_WFMO_Reactor::register_handler (const ACE_Sig_Set &sigset,
   int result = 0;
 
 #if (ACE_NSIG > 0)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if (sigset.is_member (s)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
@@ -1007,7 +1007,7 @@ ACE_WFMO_Reactor::remove_handler (const ACE_Sig_Set &sigset)
   int result = 0;
 
 #if (ACE_NSIG > 0)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;

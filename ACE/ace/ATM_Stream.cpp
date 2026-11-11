@@ -65,7 +65,7 @@ ACE_ATM_Stream::get_peer_name () const
   }
 
   char buffer[256];
-  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; index++) {
+  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; ++index) {
     buffer[ index * 3 ] = '\0';
     ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
   }

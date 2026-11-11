@@ -235,7 +235,7 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
   if (value < 0 && radix == 10)
     {
       string[0] = '-';
-      b++;
+      ++b;
     }
 
   // Convert to base <radix>, but in reverse order

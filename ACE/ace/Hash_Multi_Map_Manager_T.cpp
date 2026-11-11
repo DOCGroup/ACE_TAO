@@ -336,7 +336,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
   ACE_DES_FREE_TEMPLATE2 (entry, this->entry_allocator_->free,
                           ACE_Hash_Multi_Map_Entry, EXT_ID, INT_ID);
 
-  this->cur_size_--;
+  --this->cur_size_;
   return 0;
 }
 
@@ -471,7 +471,7 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
   // Handle initial case specially.
   else if (this->index_ == -1)
     {
-      this->index_++;
+      ++this->index_;
       return this->forward_i ();
     }
   else if (this->index_ >= static_cast<ssize_t> (this->map_man_->total_size_))
@@ -500,7 +500,7 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
     return -1;
   else if (this->index_ == static_cast<ssize_t> (this->map_man_->total_size_))
     {
-      this->index_--;
+      --this->index_;
       return this->reverse_i ();
     }
   else if (this->index_ < 0)
@@ -543,7 +543,7 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
   // Handle initial case specially.
   else if (this->index_ == -1)
     {
-      this->index_++;
+      ++this->index_;
       return this->forward_i ();
     }
   else if (this->index_ >= (ssize_t) this->map_man_->total_size_)
@@ -572,7 +572,7 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
     return -1;
   else if (this->index_ == (ssize_t) this->map_man_->total_size_)
     {
-      this->index_--;
+      --this->index_;
       return this->reverse_i ();
     }
   else if (this->index_ < 0)

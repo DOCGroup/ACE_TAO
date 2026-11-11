@@ -397,7 +397,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (!options.handle_inheritance ())
           {
             // Set close-on-exec for all FDs except standard handles
-            for (int i = ACE::max_handles () - 1; i >= 0; i--)
+            for (int i = ACE::max_handles () - 1; i >= 0; --i)
               {
                 if (i == ACE_STDIN || i == ACE_STDOUT || i == ACE_STDERR)
                   continue;
@@ -448,7 +448,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           {
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
-            for (size_t i = 0; procenv[i] != nullptr; i++)
+            for (size_t i = 0; procenv[i] != nullptr; ++i)
               if (ACE_OS::putenv (procenv[i]) != 0)
                 return ACE_INVALID_PID;
 
@@ -888,7 +888,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
     {
       if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
         return -1;
-      i++;
+      ++i;
     }
 
 #if defined (ACE_WIN32)

@@ -226,7 +226,7 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2) == 0)
         {
@@ -251,7 +251,7 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (ACE_WCHAR_T)) == 0)
         {

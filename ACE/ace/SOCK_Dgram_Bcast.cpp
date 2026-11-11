@@ -321,7 +321,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
       else
         total_bytes += bytes_sent;
 
-      iterations++;
+      ++iterations;
     }
 
   return iterations == 0 ? 0 : total_bytes / iterations;

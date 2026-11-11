@@ -704,7 +704,7 @@ ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_WIN32_Wakeup_Completion *wakeup_completion = nullptr;
 
-  for (ssize_t ci = 0; ci < how_many; ci++)
+  for (ssize_t ci = 0; ci < how_many; ++ci)
     {
       ACE_NEW_RETURN
         (wakeup_completion,

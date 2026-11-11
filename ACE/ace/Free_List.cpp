@@ -63,7 +63,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
     {
       element->set_next (this->free_list_);
       this->free_list_ = element;
-      this->size_++;
+      ++this->size_;
     }
   else
     delete element;
@@ -88,7 +88,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::remove ()
   if (temp != 0)
     {
       this->free_list_ = this->free_list_->get_next ();
-      this->size_--;
+      --this->size_;
     }
 
   return temp;
@@ -130,13 +130,13 @@ ACE_Locked_Free_List<T, ACE_LOCK>::resize (size_t newsize)
 template <class T, class ACE_LOCK> void
 ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 {
-  for (; n > 0; n--)
+  for (; n > 0; --n)
     {
       T *temp {};
       ACE_NEW (temp, T);
       temp->set_next (this->free_list_);
       this->free_list_ = temp;
-      this->size_++;
+      ++this->size_;
     }
 }
 
@@ -146,12 +146,12 @@ template <class T, class ACE_LOCK> void
 ACE_Locked_Free_List<T, ACE_LOCK>::dealloc (size_t n)
 {
   for (; this->free_list_ != 0 && n > 0;
-       n--)
+       --n)
     {
       T *temp = this->free_list_;
       this->free_list_ = this->free_list_->get_next ();
       delete temp;
-      this->size_--;
+      --this->size_;
     }
 }
 

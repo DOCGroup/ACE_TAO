@@ -136,7 +136,7 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
   int ret_aio = 0;
   int ret_que = 0;
 
-  for (;; ret_aio++)
+  for (;; ++ret_aio)
     {
       ACE_POSIX_Asynch_Result * asynch_result =
           this->find_completed_aio (error_status,

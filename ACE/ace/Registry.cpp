@@ -612,7 +612,7 @@ ACE_Registry::make_string (const Name &const_name)
   // Iterator through the components of name
   for (Name::iterator iterator = name.begin ();
        iterator != name.end ();
-       iterator++)
+       ++iterator)
     {
       if (iterator != name.begin ())
         // If this is not the first component, we will add separators
@@ -937,8 +937,8 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
           // Object found
           {
             // Readjust counters
-            this->index_++;
-            how_many--;
+            ++this->index_;
+            --how_many;
 
             // Add to list
             // Create binding
@@ -1007,8 +1007,8 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
           // Object found
           {
             // Readjust counters
-            this->index_++;
-            how_many--;
+            ++this->index_;
+            --how_many;
 
             // Add to list
             // Create binding

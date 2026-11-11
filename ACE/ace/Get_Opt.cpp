@@ -226,7 +226,7 @@ ACE_Get_Opt::nextchar_i ()
 
   // If it's a long option, and we allow long options advance nextchar_.
   if (*this->nextchar_ == '-' && this->long_opts_.size () != 0)
-    this->nextchar_++;
+    ++this->nextchar_;
 
   return 0;
 }
@@ -246,7 +246,7 @@ ACE_Get_Opt::long_option_i ()
   // Advance to the end of the long option name so we can use
   // it to get the length for a string compare.
   while (*s && *s != '=')
-    s++;
+    ++s;
 
   size_t len = s - this->nextchar_;
   // set last_option_ to nextchar_, up to the '='.
@@ -283,7 +283,7 @@ ACE_Get_Opt::long_option_i ()
                     ACE_TEXT ("%s: option `%s' is ambiguous\n"),
                     this->argv_[0], this->argv_[this->optind]));
       this->nextchar_ = nullptr;
-      this->optind++;
+      ++this->optind;
       return '?';
     }
 
@@ -291,7 +291,7 @@ ACE_Get_Opt::long_option_i ()
     {
       // Okay, we found a good one (either a single hit or an exact match).
       option_index = indfound;
-      this->optind++;
+      ++this->optind;
       if (*s)
         {
           // s must point to '=' which means there's an argument (well
@@ -353,7 +353,7 @@ ACE_Get_Opt::long_option_i ()
                     ACE_TEXT ("%s: illegal long option '--%s'\n"),
                     this->argv_[0], this->nextchar_));
       this->nextchar_ = nullptr;
-      this->optind++;
+      ++this->optind;
       return '?';
     }
   return this->short_option_i ();
@@ -402,7 +402,7 @@ ACE_Get_Opt::short_option_i ()
           if (*this->nextchar_ != '\0')
             {
               this->optarg = this->nextchar_;
-              this->optind++;
+              ++this->optind;
             }
           else
             this->optarg = nullptr;
@@ -415,7 +415,7 @@ ACE_Get_Opt::short_option_i ()
             {
               // Found argument in same argv-element.
               this->optarg = this->nextchar_;
-              this->optind++;
+              ++this->optind;
             }
           else if (this->optind == this->argc_)
             {
@@ -646,11 +646,11 @@ ACE_Get_Opt::permute_args ()
 
   this->optind = this->optind - nnonopts;
 
-  for (i = 0; i < ncycle; i++)
+  for (i = 0; i < ncycle; ++i)
     {
       cstart = this->nonopt_end_ + i;
       pos = cstart;
-      for (j = 0; j < cyclelen; j++)
+      for (j = 0; j < cyclelen; ++j)
         {
           if (pos >= this->nonopt_end_)
             pos -= nnonopts;
@@ -680,7 +680,7 @@ ACE_Get_Opt::permute ()
   while (this->optind < this->argc_
          && (this->argv_[this->optind][0] != '-'
              || this->argv_[this->optind][1] == '\0'))
-    this->optind++;
+    ++this->optind;
 
   // Got an option, so mark this as the end of the non options.
   this->nonopt_end_ = this->optind;

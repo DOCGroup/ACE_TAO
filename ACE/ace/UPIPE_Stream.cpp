@@ -52,7 +52,7 @@ ACE_UPIPE_Stream::close ()
   ACE_TRACE ("ACE_UPIPE_Stream::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  this->reference_count_--;
+  --this->reference_count_;
 
   if (this->reference_count_ == 0)
     {

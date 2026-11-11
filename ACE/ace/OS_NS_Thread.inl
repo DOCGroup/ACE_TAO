@@ -854,7 +854,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 
       // At this point, we can safely increment the nesting_level_ no
       // matter how we got here!
-      m->nesting_level_++;
+      ++m->nesting_level_;
 
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
@@ -902,7 +902,7 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
       // If we already own the lock, then increment the nesting level
       // and proceed.
     else if (ACE_OS::thr_equal (t_id, m->owner_id_))
-      m->nesting_level_++;
+      ++m->nesting_level_;
     else
     {
       errno = EBUSY;
@@ -950,7 +950,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
       else
 #    endif /* ACE_NDEBUG */
 {
-  m->nesting_level_--;
+  --m->nesting_level_;
   if (m->nesting_level_ == 0)
   {
               // This may not be strictly necessary, but it does put
@@ -1004,17 +1004,17 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
       // Give preference to writers who are waiting.
       while (rw->ref_count_ < 0 || rw->num_waiting_writers_ > 0)
         {
-          rw->num_waiting_readers_++;
+          ++rw->num_waiting_readers_;
           if (ACE_OS::cond_wait (&rw->waiting_readers_, &rw->lock_) == -1)
             {
               result = -2; // -2 means that we need to release the mutex.
               break;
             }
-          rw->num_waiting_readers_--;
+          --rw->num_waiting_readers_;
         }
     }
   if (result == 0)
-    rw->ref_count_++;
+    ++rw->ref_count_;
   if (result != -1)
     ACE_OS::mutex_unlock (&rw->lock_);
 #   if defined (ACE_HAS_PTHREADS)
@@ -1057,7 +1057,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
         }
       else
         {
-          rw->ref_count_++;
+          ++rw->ref_count_;
           result = 0;
         }
 
@@ -1165,7 +1165,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
               // but something went wrong
             }
           rw->important_writer_ = false;
-          rw->num_waiting_writers_--;
+          --rw->num_waiting_writers_;
         }
       if (result == 0)
         {
@@ -1211,7 +1211,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
     return -1;
 
   if (rw->ref_count_ > 0) // Releasing a reader.
-    rw->ref_count_--;
+    --rw->ref_count_;
   else if (rw->ref_count_ == -1) // Releasing a writer.
     rw->ref_count_ = 0;
   else
@@ -1277,7 +1277,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
     {
       while (rw->ref_count_ != 0)
         {
-          rw->num_waiting_writers_++;
+          ++rw->num_waiting_writers_;
 
           if (ACE_OS::cond_wait (&rw->waiting_writers_, &rw->lock_) == -1)
             {
@@ -1285,7 +1285,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
               break;
             }
 
-          rw->num_waiting_writers_--;
+          --rw->num_waiting_writers_;
         }
     }
   if (result == 0)
@@ -1882,7 +1882,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
       else
         result = 0;
 
-      s->count_++;
+      ++s->count_;
       ACE_OS::mutex_unlock (&s->lock_);
     }
   return result;
@@ -1916,7 +1916,7 @@ ACE_OS::sema_post (ACE_sema_t *s, u_int release_count)
   // first initialized.  Posix doesn't seem to have
   // this restriction.  Should we impose the restriction in
   // our semaphore simulation?
-  for (size_t i = 0; i < release_count; i++)
+  for (size_t i = 0; i < release_count; ++i)
     if (ACE_OS::sema_post (s) == -1)
       return -1;
 
@@ -2030,7 +2030,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     {
       // Keep track of the number of waiters so that we can signal
       // them properly in <ACE_OS::sema_post>.
-      s->waiters_++;
+      ++s->waiters_;
 
       // Wait until the semaphore count is > 0.
       while (s->count_ == 0)
@@ -2180,7 +2180,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     {
       // Keep track of the number of waiters so that we can signal
       // them properly in <ACE_OS::sema_post>.
-      s->waiters_++;
+      ++s->waiters_;
 
       // Wait until the semaphore count is > 0 or until we time out.
       while (s->count_ == 0)
