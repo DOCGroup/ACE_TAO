@@ -38,10 +38,9 @@ CORBA::Boolean
 IIOPEndpointValue_i::is_equivalent_i (CORBA::UShort port,
                                       char const* host) const
 {
-  bool is_eq = this->port_ == port;
-  if (is_eq)
-    is_eq = (this->host_.in()[0] == '\0' ||
-            ACE_OS::strcasecmp(host, this->host_.in()) == 0);
+  bool const is_eq = this->port_ == port
+    && (this->host_.in()[0] == '\0'
+        || ACE_OS::strcasecmp (host, this->host_.in ()) == 0);
   return is_eq;
 }
 
@@ -53,34 +52,12 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
   if (iacc == nullptr)
     return false;
 
-#if 0
-  // @@@ mesnier_p@ociweb.com @@@
-  // This test was originally intended to validate that there is an
-  // acceptor available which supports the target endpoint. However,
-  // variablility in the definition of a "hostname" makes this hard
-  // to determine, without adding more overhead, probably to the
-  // IIOP_Acceptor class.
-  // I'm not sure this level of validation is really required, so
-  // for now I'm just leaving it out.
-
-  ACE_INET_Addr const *eps = iacc->endpoints ();
-  CORBA::ULong eps_count = iacc->endpoint_count ();
-  for (CORBA::ULong eps_idx {}; eps_idx < eps_count; ++ eps_idx)
-    {
-      char hostname[513];
-      eps[eps_idx].get_host_name(hostname,512);
-      if (this->is_equivalent_i(eps[eps_idx].get_port_number(),hostname))
-        return true;
-    }
-  return false;
-#else
   // @@@ mesnier_p@ociweb.com @@@
   // Rather than blindly returning true, we need to reject defaulted
   // endpoint hosts except when the ORB has more than one protocol
   // acceptor defined;
 
   return is_multi_prot || this->host_.in()[0] != '\0';
-#endif /* 0 */
 }
 
 char *
