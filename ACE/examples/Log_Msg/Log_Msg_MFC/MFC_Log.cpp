@@ -12,19 +12,10 @@
 #include "ace/Log_Record.h"
 #include "ace/Time_Value.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-MFC_Log::MFC_Log ()
-{
-}
-
 void
 MFC_Log::log (ACE_Log_Record& log_record)
 {
-  unsigned long priority = log_record.type();
-  ACE_TCHAR Message[512];
+  ACE_TCHAR Message[512] {};
 
   ACE_OS::sprintf (Message,
                    ACE_TEXT ("%d.%03ld %s"),
@@ -35,8 +26,4 @@ MFC_Log::log (ACE_Log_Record& log_record)
 #if defined (ACE_WIN32)
   ACE_TEXT_OutputDebugString(Message);
 #endif /* ACE_WIN32 */
-}
-
-MFC_Log::~MFC_Log ()
-{
 }
