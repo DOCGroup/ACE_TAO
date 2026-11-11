@@ -1,10 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #include "tao/Monitor/Monitor_Impl.h"
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
+
+#include <memory>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -66,8 +67,9 @@ NotificationServiceMonitor_i::get_statistic (const char* name)
   ACE_NEW_THROW_EX (data,
                     Monitor::Data,
                     CORBA::NO_MEMORY ());
-  this->get_data (registry, name, *data);
-  return data;
+  std::unique_ptr<Monitor::Data> safe_data (data);
+  this->get_data (registry, name, *safe_data);
+  return safe_data.release ();
 }
 
 Monitor::DataList*
@@ -112,12 +114,13 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
   // It is technically possible for the list of statistics names
   // to change at this point.  So, I'm bypassing the call to
   // clear_statistics() to avoid a possible exception.
-  CORBA::ULong length = names.length();
+  CORBA::ULong const length = names.length ();
+  std::unique_ptr<Monitor::DataList> safe_data (data);
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      Monitor_Base* statistic = registry->get (names[i].in ());
+      Monitor_Base* const statistic = registry->get (names[i].in ());
 
       if (statistic != nullptr)
         {
@@ -125,7 +128,7 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
         }
     }
 
-  return data;
+  return safe_data.release ();
 }
 
 void
@@ -146,7 +149,7 @@ NotificationServiceMonitor_i::clear_statistics (
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      Monitor_Base* statistic = registry->get (names[i].in ());
+      Monitor_Base* const statistic = registry->get (names[i].in ());
 
       if (statistic != nullptr)
         {

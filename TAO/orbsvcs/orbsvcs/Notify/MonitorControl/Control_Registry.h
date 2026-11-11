@@ -55,7 +55,8 @@ public:
   /// Throws Map_Error if the object is null or if there
   /// is a fatal error adding it to the map.
   /// Returns true if the object is successfully added to the map.
-  /// Returns false otherwise.
+  /// Returns false otherwise. Ownership transfers to the registry only
+  /// when this method returns true; otherwise the caller retains ownership.
   bool add (TAO_NS_Control* type);
 
   /// Removes an object from the map.

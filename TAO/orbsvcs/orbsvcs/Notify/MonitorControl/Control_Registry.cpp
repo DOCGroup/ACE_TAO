@@ -32,7 +32,7 @@ TAO_Control_Registry::add (TAO_NS_Control* type)
       throw Map_Error (Map_Error::MAP_ERROR_INVALID_VALUE);
     }
 
-  int status = this->map_.bind(type->name(), type);
+  int status = this->map_.bind (type->name (), type);
 
   if (status == -1)
     {
@@ -52,8 +52,8 @@ TAO_Control_Registry::remove (const ACE_CString& name)
 {
   ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, false);
 
-  Map::data_type type = nullptr;
-  int status = this->map_.unbind(name, type);
+  Map::data_type type {};
+  int status = this->map_.unbind (name, type);
 
   if (status != 0)
     {
@@ -85,8 +85,9 @@ TAO_Control_Registry::names ()
           while (itr.next (entry))
             {
               this->name_cache_.length (length + 1);
-              this->name_cache_[length++] =
-                        CORBA::string_dup (entry->key ().c_str ());
+              this->name_cache_[length] =
+                CORBA::string_dup (entry->key ().c_str ());
+              ++length;
               itr.advance ();
             }
         }
@@ -100,7 +101,7 @@ TAO_Control_Registry::get (const ACE_CString& name) const
 {
   ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, nullptr);
 
-  Map::data_type type = nullptr;
+  Map::data_type type {};
   this->map_.find (name, type);
   return type;
 }

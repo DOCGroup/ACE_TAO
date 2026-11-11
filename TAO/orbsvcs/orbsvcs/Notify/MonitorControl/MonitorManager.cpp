@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
@@ -15,12 +14,11 @@
 #include "ace/Get_Opt.h"
 
 #include <cstdio>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MonitorManager::TAO_MonitorManager ()
-{
-}
+TAO_MonitorManager::TAO_MonitorManager () = default;
 
 int
 TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
@@ -232,7 +230,7 @@ TAO_MonitorManager::ORBTask::svc ()
                               1);
           }
 
-        iortable->bind(ACE_TEXT_ALWAYS_CHAR(mc_orb_name_.c_str()), ior.in ());
+        iortable->bind (ACE_TEXT_ALWAYS_CHAR (mc_orb_name_.c_str ()), ior.in ());
 
         if (this->use_name_svc_)
           {
@@ -240,15 +238,17 @@ TAO_MonitorManager::ORBTask::svc ()
             nc.init (this->orb_.in ());
             CosNaming::Name name (1);
             name.length (1);
-            name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(mc_orb_name_.c_str()));
+            name[0].id = CORBA::string_dup (
+              ACE_TEXT_ALWAYS_CHAR (mc_orb_name_.c_str ()));
             nc->rebind (name, monitor.in ());
           }
 
         if (this->ior_output_.length () > 0)
           {
-            FILE* fp = ACE_OS::fopen (this->ior_output_.c_str (), "w");
+            std::unique_ptr<FILE, int (*) (FILE *)> fp (
+              ACE_OS::fopen (this->ior_output_.c_str (), "w"), ACE_OS::fclose);
 
-            if (fp == nullptr)
+            if (!fp)
               {
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "
@@ -256,11 +256,8 @@ TAO_MonitorManager::ORBTask::svc ()
                                    this->ior_output_.c_str ()),
                                   1);
               }
-            else
-              {
-                std::fprintf (fp, "%s", ior.in ());
-                ACE_OS::fclose (fp);
-              }
+
+            std::fprintf (fp.get (), "%s", ior.in ());
           }
       }
 
