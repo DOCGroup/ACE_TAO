@@ -9,6 +9,18 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
+struct Monitor_Reference_Releaser
+{
+  void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
+  {
+    if (monitor != nullptr)
+      monitor->remove_ref ();
+  }
+};
+
+using Monitor_Reference = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
+                                          Monitor_Reference_Releaser>;
+
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -26,10 +38,12 @@ public:
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::Monitor_Control::Monitor_Base * const memory_monitor =
-      mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
+    Monitor_Reference const memory_monitor (
+      mgr->admin ().monitor_point ("OS/Memory/TotalUsage"));
 
     if (memory_monitor != nullptr)
       {
@@ -44,7 +58,6 @@ public:
             MC_Test_Utilities::display_memory_usage (data);
           }
 
-        memory_monitor->remove_ref ();
       }
 
     return 0;
@@ -59,8 +72,15 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   /// Set the timer for memory usage check at 2 sec.
-  Monitor_Base * const memory_usage_monitor =
-    create_os_monitor<MEMORY_USAGE_MONITOR> (nullptr, ACE_Time_Value (2));
+  MC_ADMINMANAGER * const mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+
+  Monitor_Reference const memory_usage_monitor (
+    create_os_monitor<MEMORY_USAGE_MONITOR> (nullptr, ACE_Time_Value (2)));
+  if (memory_usage_monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create memory monitor\n"), 1);
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -92,8 +112,6 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-
-  memory_usage_monitor->remove_ref ();
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
