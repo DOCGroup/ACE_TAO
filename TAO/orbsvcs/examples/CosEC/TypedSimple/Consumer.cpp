@@ -83,15 +83,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const str =
         orb->object_to_string (typed_consumer.in ());
 
-      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
-        ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                           ior_output_file),
-                          1);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file),
+                            1);
 
-      ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+        ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+      }
 
       // Wait for events.
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Waiting on orb->run for events...\n")));
