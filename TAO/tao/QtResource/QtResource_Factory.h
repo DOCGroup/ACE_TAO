@@ -42,16 +42,16 @@ namespace TAO
   public:
     explicit QtResource_Factory (QApplication *qapp);
 
-  protected:
-    /// Create or obtain current reactor implementation
-    ACE_Reactor_Impl *reactor_impl () override;
-
-  private:
     QtResource_Factory (QtResource_Factory const &) = delete;
     QtResource_Factory &operator= (QtResource_Factory const &) = delete;
     QtResource_Factory (QtResource_Factory &&) = delete;
     QtResource_Factory &operator= (QtResource_Factory &&) = delete;
 
+  protected:
+    /// Create or obtain current reactor implementation
+    ACE_Reactor_Impl *reactor_impl () override;
+
+  private:
     /// Reactor created by this factory.
     ACE_QtReactor *reactor_impl_ {};
 
