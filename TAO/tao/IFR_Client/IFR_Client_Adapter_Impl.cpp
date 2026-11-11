@@ -121,6 +121,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
       TAO::Unknown_IDL_Type *unk {};
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (params[i].type.in ()));
+      // Any::replace takes ownership of this implementation.
       value.replace (unk);
 
       // Convert the parameter mode to an arg mode
