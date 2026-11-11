@@ -15,8 +15,8 @@ StructuredEventConsumer_i::push_structured_event (
   CORBA::ULong const length = event.filterable_data.length ();
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      event.filterable_data[i].value >>= value;
-      std::cout << event.filterable_data[i].name << "\t" << value << std::endl;
+      if (event.filterable_data[i].value >>= value)
+        std::cout << event.filterable_data[i].name << "\t" << value << std::endl;
     }
 
   std::cerr << "MessengerConsumer: success" << std::endl;
@@ -25,10 +25,10 @@ StructuredEventConsumer_i::push_structured_event (
 void
 StructuredEventConsumer_i::disconnect_structured_push_consumer ()
 {
-  CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
-  PortableServer::Current_var current = PortableServer::Current::_narrow (obj.in ());
-  PortableServer::POA_var poa = current->get_POA ();
-  PortableServer::ObjectId_var object_id = current->get_object_id ();
+  CORBA::Object_var const obj = orb_->resolve_initial_references ("POACurrent");
+  PortableServer::Current_var const current = PortableServer::Current::_narrow (obj.in ());
+  PortableServer::POA_var const poa = current->get_POA ();
+  PortableServer::ObjectId_var const object_id = current->get_object_id ();
   poa->deactivate_object (object_id.in ());
 }
 

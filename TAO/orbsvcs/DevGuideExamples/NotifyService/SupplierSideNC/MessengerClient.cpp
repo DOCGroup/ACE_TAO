@@ -1,26 +1,27 @@
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
+
 #include <iostream>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      CORBA::Object_var naming_obj = orb->resolve_initial_references ("NameService");
-      CosNaming::NamingContext_var naming_context =
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      CORBA::Object_var const naming_obj = orb->resolve_initial_references ("NameService");
+      CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
-      CosNaming::Name name;
+      CosNaming::Name name {};
       name.length (1);
       name[0].id = CORBA::string_dup ("MessengerService");
-      CORBA::Object_var messenger_object = naming_context->resolve (name);
+      CORBA::Object_var const messenger_object = naming_context->resolve (name);
       if (CORBA::is_nil (messenger_object.in ()))
         {
           std::cerr << "Nil Messenger reference" << std::endl;
           return 1;
         }
 
-      Messenger_var messenger = Messenger::_narrow (messenger_object.in ());
+      Messenger_var const messenger = Messenger::_narrow (messenger_object.in ());
       if (CORBA::is_nil (messenger.in ()))
         {
           std::cerr << "Argument is not a Messenger reference" << std::endl;
@@ -35,6 +36,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       messenger->send_message ("person@company.com",
                                "OCI's Distribution of TAO",
                                message.inout ());
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {

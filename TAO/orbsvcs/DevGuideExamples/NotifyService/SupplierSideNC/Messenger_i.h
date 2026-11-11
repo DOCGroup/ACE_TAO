@@ -24,7 +24,7 @@ public:
                                char *&message) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
 };
 

@@ -20,19 +20,19 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 {
   try
     {
-      CORBA::Object_var poa_obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (poa_obj.in ());
+      CORBA::Object_var const poa_obj = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_obj.in ());
 
-      CORBA::Object_var naming_obj =
+      CORBA::Object_var const naming_obj =
         orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         std::cerr << "Unable to find naming service" << std::endl;
 
-      CosNaming::NamingContext_var naming_context =
+      CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
+      CosNotifyChannelAdmin::EventChannelFactory_var const notify_factory =
         TAO_Notify_EventChannelFactory_i::create (poa.in ());
 
       if (CORBA::is_nil (notify_factory.in ()))
@@ -45,7 +45,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
       CosNotification::QoSProperties initial_qos {};
       CosNotification::AdminProperties initial_admin {};
 
-      CosNotifyChannelAdmin::EventChannel_var ec =
+      CosNotifyChannelAdmin::EventChannel_var const ec =
         notify_factory->create_channel (initial_qos, initial_admin, id);
 
       if (CORBA::is_nil (ec.in ()))
@@ -54,7 +54,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
           return;
         }
 
-      CosNaming::Name name;
+      CosNaming::Name name {};
       name.length (1);
       name[0].id = CORBA::string_dup ("MyEventChannel");
       naming_context->rebind (name, ec.in ());
@@ -63,7 +63,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
       CosNotifyChannelAdmin::InterFilterGroupOperator const ifgop =
         CosNotifyChannelAdmin::AND_OP;
 
-      CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
+      CosNotifyChannelAdmin::SupplierAdmin_var const supplier_admin =
         ec->new_for_suppliers (ifgop, adminid);
 
       if (CORBA::is_nil (supplier_admin.in ()))
@@ -71,17 +71,17 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 
       CosNotifyChannelAdmin::ProxyID supplieradmin_proxy_id {};
 
-      CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
+      CosNotifyChannelAdmin::ProxyConsumer_var const proxy_consumer =
         supplier_admin->obtain_notification_push_consumer (
           CosNotifyChannelAdmin::STRUCTURED_EVENT,
           supplieradmin_proxy_id);
 
-      PortableServer::Servant_var<StructuredEventSupplier_i> servant =
+      PortableServer::Servant_var<StructuredEventSupplier_i> const servant =
         new StructuredEventSupplier_i (orb_.in ());
 
-      PortableServer::ObjectId_var object_id = poa->activate_object (servant.in ());
-      CORBA::Object_var supplier_obj = poa->id_to_reference (object_id.in ());
-      CosNotifyComm::StructuredPushSupplier_var supplier =
+      PortableServer::ObjectId_var const object_id = poa->activate_object (servant.in ());
+      CORBA::Object_var const supplier_obj = poa->id_to_reference (object_id.in ());
+      CosNotifyComm::StructuredPushSupplier_var const supplier =
         CosNotifyComm::StructuredPushSupplier::_narrow (supplier_obj.in ());
 
       consumer_proxy_ = CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (
@@ -130,13 +130,13 @@ CORBA::Boolean Messenger_i::send_message (char const *user_name,
   catch (CosNotifyComm::InvalidEventType const &)
     {
       std::cerr << "Invalid Event Type Exception " << std::endl;
-      return 1;
+      return false;
     }
 
   catch (CORBA::Exception const &ex)
     {
       std::cerr << ex << std::endl;
-      return 1;
+      return false;
     }
-  return 0;
+  return true;
 }
