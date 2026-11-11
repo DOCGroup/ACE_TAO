@@ -140,16 +140,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
-    // We must make sure that our file descriptor limit does not exceed
-    // the size allowed (in the fd set) by the reactor.  If it does, this
-    // test will fail (in a different way than expected) which is a
-    // completely different bug than this test is designed to address
-    // (see Bug #3326).
-    //
-    // We must also make sure that this happens before creating the first
-    // ORB.  Otherwise, the reactor will be created with a maximum size of
-    // the current rlimit for file desriptors (which will later on be
-    // increased).
+    // Give this test a deterministic descriptor limit so it can exhaust
+    // the select reactor capacity regardless of the shell's inherited limit.
+    // Do this before creating the ORB because the reactor reads the limit
+    // during initialization.
     rlimit rlim {};
     if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rlim) == 0)
       {
@@ -157,11 +151,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
              << rlim.rlim_cur << " max = " << rlim.rlim_max
              << " reactor max = "
              << ACE_DEFAULT_SELECT_REACTOR_SIZE << endl;
-        if (rlim.rlim_cur < static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE) &&
-            rlim.rlim_max > static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
+        if (rlim.rlim_cur != static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE) &&
+            rlim.rlim_max >= static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
           {
             rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
-            rlim.rlim_max = ACE_DEFAULT_SELECT_REACTOR_SIZE;
             ACE_OS::setrlimit (RLIMIT_NOFILE, &rlim);
             cout << "server set rlimit_nofile" << endl;
           }
