@@ -29,7 +29,7 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Factory
 {
 public:
   TAO_UTF16_BOM_Factory () = default;
-  ~TAO_UTF16_BOM_Factory () override;
+  ~TAO_UTF16_BOM_Factory () override = default;
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// ncs returns the translator's native codeset ID.

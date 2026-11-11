@@ -20,6 +20,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
 
+#include <memory>
+#include <new>
+
 // These numbers are assigned by the OpenGroup, a database is
 // available at
 //
@@ -168,11 +171,11 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
   if (service_cntx.get_context(context))
     {
       // Convert the Service Context to Codeset Context
-      const char *buffer =
+      char const *buffer =
         reinterpret_cast<const char*> (context.context_data.get_buffer ());
 
       TAO_InputCDR cdr (buffer,context.context_data.length ());
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
 
       if (cdr >> TAO_InputCDR::to_boolean (byte_order))
         {
@@ -219,17 +222,17 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 
   // Generating codeset context
   // Assuming the TCS values from Transport will be defaulted
-  TAO_Codeset_Translator_Factory *tf =
+  TAO_Codeset_Translator_Factory * const char_tf =
     dynamic_cast<TAO_Codeset_Translator_Factory*>(trans.char_translator());
 
   codeset_cntx.char_data =
-    tf ? tf->tcs () : this->codeset_info_.ForCharData.native_code_set;
+    char_tf ? char_tf->tcs () : this->codeset_info_.ForCharData.native_code_set;
 
-  tf =
+  TAO_Codeset_Translator_Factory * const wchar_tf =
     dynamic_cast<TAO_Codeset_Translator_Factory*>(trans.wchar_translator());
 
   codeset_cntx.wchar_data =
-    tf ? tf->tcs () : this->codeset_info_.ForWcharData.native_code_set;
+    wchar_tf ? wchar_tf->tcs () : this->codeset_info_.ForWcharData.native_code_set;
 
   if (TAO_debug_level > 2)
     {
@@ -256,27 +259,27 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 }
 
 /// Checks whether the NCS is a part of CCS
-int
+bool
 TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
-                                    CONV_FRAME::CodeSetComponent &cs_comp)
+                                    CONV_FRAME::CodeSetComponent const &cs_comp) const
 {
-  for (CORBA::ULong i = 0L;
+  for (CORBA::ULong i {};
        i < cs_comp.conversion_code_sets.length ();
        ++i )
     {
       if (id == cs_comp.conversion_code_sets[i])
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
 /// Find the Intersection of Client and Server CCS's
 CONV_FRAME::CodeSetId
-TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
-                                       CONV_FRAME::CodeSetComponent &cs_comp2)
+TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent const &cs_comp1,
+                                       CONV_FRAME::CodeSetComponent const &cs_comp2) const
 {
-  for(CORBA::ULong index = 0L;
+  for (CORBA::ULong index {};
        index < cs_comp1.conversion_code_sets.length();
        ++index )
     {
@@ -289,18 +292,10 @@ TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
   return 0;
 }
 
-int
-TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
-                                    CONV_FRAME::CodeSetId cs2 )
-{
-  // Call the is_compatible method of ACE_Codeset_Registry
-  return ACE_Codeset_Registry::is_compatible(cs1,cs2);
-}
-
 /// returns the TCS for Char / Wchar
 CONV_FRAME::CodeSetId
-TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
-                                   CONV_FRAME::CodeSetComponent &local)
+TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent const &remote,
+                                   CONV_FRAME::CodeSetComponent const &local) const
 {
   if (remote.native_code_set == local.native_code_set)
     {
@@ -317,11 +312,12 @@ TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
       return local.native_code_set;
     }
 
-  CONV_FRAME::CodeSetId tcs;
-
-  if ((tcs = this->intersectionOf (remote, local)) == 0)
+  CONV_FRAME::CodeSetId const tcs = this->intersectionOf (remote, local);
+  if (tcs == 0)
     {
-      if (isCompatible (local.native_code_set, remote.native_code_set))
+      if (ACE_Codeset_Registry::is_compatible (
+            local.native_code_set,
+            remote.native_code_set))
         {
           return remote.native_code_set;
         }
@@ -377,10 +373,14 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
     }
 #endif
   //
-  TAO_Codeset_Service_Context_Handler *h {};
-  ACE_NEW (h,
-           TAO_Codeset_Service_Context_Handler());
-  core.service_context_registry ().bind (IOP::CodeSets, h);
+  std::unique_ptr<TAO_Codeset_Service_Context_Handler> handler {
+    new (std::nothrow) TAO_Codeset_Service_Context_Handler};
+  if (!handler)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  core.service_context_registry ().bind (IOP::CodeSets, handler.release ());
 
   // add in from the service configurator
   this->codeset_info_.ForCharData.native_code_set =
@@ -476,7 +476,7 @@ TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (this->codeset_info_.ForCharData.native_code_set == tcs)
-    return 0;
+    return nullptr;
   return this->get_translator_i (this->char_descriptor_,tcs);
 }
 
@@ -485,21 +485,21 @@ TAO_Codeset_Manager_i::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (tcs == this->codeset_info_.ForWcharData.native_code_set &&
       tcs != ACE_CODESET_ID_ISO_UTF_16)
-    return 0;
+    return nullptr;
   return this->get_translator_i (this->wchar_descriptor_,tcs);
 }
 
 TAO_Codeset_Translator_Base *
-TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
-                                         CONV_FRAME::CodeSetId tcs)
+TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor const &cd,
+                                         CONV_FRAME::CodeSetId tcs) const
 {
   for (TAO_Codeset_Descriptor::Translator_Node const &tlist : cd.translators ())
     {
-      TAO_Codeset_Translator_Factory *fact = tlist.translator_factory_;
+      TAO_Codeset_Translator_Factory * const fact = tlist.translator_factory_;
       if (fact && tcs == fact->tcs ())
         return fact;
     }
-  return 0;
+  return nullptr;
 }
 
 void

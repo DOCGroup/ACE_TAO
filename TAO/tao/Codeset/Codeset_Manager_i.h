@@ -100,20 +100,16 @@ public:
 
 private:
   // Compute the TCS for Char/WChar asper the CORBA Specification
-  CONV_FRAME::CodeSetId computeTCS (CONV_FRAME::CodeSetComponent &,
-                                    CONV_FRAME::CodeSetComponent &);
+  CONV_FRAME::CodeSetId computeTCS (CONV_FRAME::CodeSetComponent const &,
+                                    CONV_FRAME::CodeSetComponent const &) const;
 
   // Find CodesetId in the codeset component
-  int isElementOf (CONV_FRAME::CodeSetId,
-                   CONV_FRAME::CodeSetComponent & );
+  bool isElementOf (CONV_FRAME::CodeSetId,
+                    CONV_FRAME::CodeSetComponent const &) const;
 
   // find the intersection of CodesetIds between Client and Server CCS
-  CONV_FRAME::CodeSetId intersectionOf (CONV_FRAME::CodeSetComponent &,
-                                        CONV_FRAME::CodeSetComponent &);
-
-  // determine compatibility between two codesets via the codeset
-  // registry
-  int isCompatible (CONV_FRAME::CodeSetId,  CONV_FRAME::CodeSetId);
+  CONV_FRAME::CodeSetId intersectionOf (CONV_FRAME::CodeSetComponent const &,
+                                        CONV_FRAME::CodeSetComponent const &) const;
 
   // traverse the list of codeset factories, populating the list of
   // conversion codeset values with the translated codeset id from
@@ -128,8 +124,8 @@ private:
   // get the translator between our ncs_w and the supplied tcs_w
   TAO_Codeset_Translator_Base *get_wchar_trans (CONV_FRAME::CodeSetId) override;
 
-  TAO_Codeset_Translator_Base * get_translator_i (TAO_Codeset_Descriptor&,
-                                                  CONV_FRAME::CodeSetId);
+  TAO_Codeset_Translator_Base *get_translator_i (TAO_Codeset_Descriptor const &,
+                                                CONV_FRAME::CodeSetId) const;
 
   void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw) override;
 

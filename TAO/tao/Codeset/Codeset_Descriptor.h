@@ -34,7 +34,7 @@ class TAO_Codeset_Export TAO_Codeset_Descriptor
 {
 public:
   TAO_Codeset_Descriptor () = default;
-  ~TAO_Codeset_Descriptor () override;
+  ~TAO_Codeset_Descriptor () override = default;
 
   struct Translator_Node
   {
@@ -53,6 +53,7 @@ public:
 
   void add_translator (ACE_TCHAR const *name) override;
   Translator_List &translators ();
+  Translator_List const &translators () const;
 
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor const &) = delete;
   TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor const &) = delete;

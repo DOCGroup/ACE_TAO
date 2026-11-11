@@ -20,9 +20,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class NCS_TO_TCS>
-TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::~TAO_Codeset_Translator_Factory_T () = default;
-
-template<class NCS_TO_TCS>
 int
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init (int argc, ACE_TCHAR* argv[])
 {

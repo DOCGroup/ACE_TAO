@@ -29,8 +29,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
 
-TAO_UTF16_BOM_Factory::~TAO_UTF16_BOM_Factory () = default;
-
 int
 TAO_UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
 {

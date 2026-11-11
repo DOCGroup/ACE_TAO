@@ -16,8 +16,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 
-TAO_UTF8_Latin1_Factory::~TAO_UTF8_Latin1_Factory () = default;
-
 int
 TAO_UTF8_Latin1_Factory::init (int argc, ACE_TCHAR *argv[])
 {

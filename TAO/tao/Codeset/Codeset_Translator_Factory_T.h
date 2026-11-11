@@ -40,7 +40,7 @@ class TAO_Codeset_Translator_Factory_T
 {
 public:
   TAO_Codeset_Translator_Factory_T () = default;
-  ~TAO_Codeset_Translator_Factory_T () override;
+  ~TAO_Codeset_Translator_Factory_T () override = default;
 
   /// initialize the factory service object. Instantiates the translator.
   int init (int argc, ACE_TCHAR* argv[]) override;

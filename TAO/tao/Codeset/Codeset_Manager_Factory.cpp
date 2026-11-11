@@ -14,8 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory () = default;
-
 bool
 TAO_Codeset_Manager_Factory::is_default () const
 {

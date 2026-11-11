@@ -18,7 +18,7 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
 {
 public:
   TAO_UTF8_Latin1_Factory () = default;
-  ~TAO_UTF8_Latin1_Factory () override;
+  ~TAO_UTF8_Latin1_Factory () override = default;
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// ncs returns the translator's native codeset ID.
