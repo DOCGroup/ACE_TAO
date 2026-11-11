@@ -34,15 +34,15 @@ public:
 
   ~TAO_RTScheduler_Loader () override;
 
-  /// Initialize the RTScheduler loader hooks.
-  int init (int argc, ACE_TCHAR* []) override;
-
-private:
   TAO_RTScheduler_Loader (TAO_RTScheduler_Loader const &) = delete;
   TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader const &) = delete;
   TAO_RTScheduler_Loader (TAO_RTScheduler_Loader &&) = delete;
   TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader &&) = delete;
 
+  /// Initialize the RTScheduler loader hooks.
+  int init (int argc, ACE_TCHAR* []) override;
+
+private:
   /// Set to true after init is called.
   bool initialized_ {};
 };
