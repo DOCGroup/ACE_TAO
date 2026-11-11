@@ -1,11 +1,11 @@
-#include "ace/OS_NS_unistd.h"
-
-#include "ace/Monitor_Control/Monitor_Control.h"
-
-#include "examples/Monitor/MC_Test_Utilities.h"
 #include <array>
 #include <cstddef>
 #include <memory>
+
+#include "ace/OS_NS_unistd.h"
+#include "ace/Monitor_Control/Monitor_Control.h"
+
+#include "examples/Monitor/MC_Test_Utilities.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -47,7 +47,6 @@ public:
           }
 
       }
-
     return 0;
   }
 };
@@ -58,7 +57,6 @@ int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-
   /// Set the timer for memory usage check at 2 sec.
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
@@ -76,10 +74,15 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Run the monitor checker in a separate thread.
   Monitor_Checker monitor_checker {};
-  monitor_checker.activate ();
+  if (monitor_checker.activate () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start monitor checker\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
-  constexpr std::size_t allocation_count = 5;
-  constexpr std::size_t allocation_size = 10 * 1024 * 1024;
+  constexpr std::size_t allocation_count {5};
+  constexpr std::size_t allocation_size {10 * 1024 * 1024};
   std::array<std::unique_ptr<char[]>, allocation_count> allocations {};
 
   for (std::size_t i {}; i < allocations.size () * 2; ++i)
