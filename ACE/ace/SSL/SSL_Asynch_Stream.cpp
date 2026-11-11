@@ -13,6 +13,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "SSL_Asynch_Stream.inl"
@@ -682,19 +683,31 @@ ACE_SSL_Asynch_Stream::notify_close ()
   ACE_NEW_RETURN (close_result,
                   ACE_SSL_Asynch_Result (*this),
                   2);
-  //@@ Not exception safe!
+  std::unique_ptr<ACE_SSL_Asynch_Result> close_result_owner (close_result);
 
- int retval =
-   close_result->post_completion (this->proactor_->implementation ());
+  int retval {};
+#if defined (ACE_WIN32)
+  ACE_WIN32_Proactor * const proactor =
+    dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
+  if (proactor == nullptr)
+    return 2;
 
- if (retval == 0)
-   {
-     this->flags_ |= SF_CLOSE_NTF_SENT;
-     return 0;
-   }
+  retval = proactor->post_completion (close_result);
+  // Win32 post_completion consumes the result on success and failure.
+  close_result_owner.release ();
+#else
+  retval = close_result->post_completion (this->proactor_->implementation ());
+  if (retval == 0)
+    close_result_owner.release ();
+#endif
 
- delete close_result;
- return 2;
+  if (retval == 0)
+    {
+      this->flags_ |= SF_CLOSE_NTF_SENT;
+      return 0;
+    }
+
+  return 2;
 }
 
 // ************************************************************
@@ -715,12 +728,26 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
   this->ext_read_result_->set_bytes_transferred (bytes_transferred);
   this->ext_read_result_->set_error (error);
 
-  int retval =
-    this->ext_read_result_->post_completion (proactor_->implementation ());
+  int retval {};
+#if defined (ACE_WIN32)
+  ACE_WIN32_Proactor * const proactor =
+    dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
+  if (proactor == nullptr)
+    return 2;
+
+  retval = proactor->post_completion (this->ext_read_result_);
+  // Win32 post_completion consumes the result on success and failure.
+  this->ext_read_result_ = nullptr;
+#else
+  retval = this->ext_read_result_->post_completion (
+    this->proactor_->implementation ());
+#endif
 
   if (retval == 0)
     {
+#if !defined (ACE_WIN32)
       this->ext_read_result_ = nullptr;
+#endif
       return 0;  // success
     }
 
@@ -745,13 +772,26 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
   this->ext_write_result_->set_bytes_transferred (bytes_transferred);
   this->ext_write_result_->set_error (error);
 
-  int retval =
-    this->ext_write_result_->post_completion (
-      this->proactor_->implementation ());
+  int retval {};
+#if defined (ACE_WIN32)
+  ACE_WIN32_Proactor * const proactor =
+    dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
+  if (proactor == nullptr)
+    return 2;
+
+  retval = proactor->post_completion (this->ext_write_result_);
+  // Win32 post_completion consumes the result on success and failure.
+  this->ext_write_result_ = nullptr;
+#else
+  retval = this->ext_write_result_->post_completion (
+    this->proactor_->implementation ());
+#endif
 
   if (retval == 0)
     {
+#if !defined (ACE_WIN32)
       this->ext_write_result_ = nullptr;
+#endif
       return 0;  // success
     }
 
