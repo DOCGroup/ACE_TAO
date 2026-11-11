@@ -45,6 +45,11 @@ public :
   /// Default destructor.
   ~ACE_QoS_Session_Factory ();
 
+  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory const &) = delete;
+  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory const &) = delete;
+  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory &&) = delete;
+  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory &&) = delete;
+
   /// Types of sessions for this factory to manage.
   enum ACE_QoS_Session_Type
   {
