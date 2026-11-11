@@ -4,8 +4,7 @@
 #include "ace/Get_Opt.h"
 
 FactoryDriver::FactoryDriver (ACE_TCHAR const *name)
-  : factoryName_ (name),
-    child_poa_name_ ("CosEC_ChildPOA")
+  : factory_name_ (name == nullptr ? ACE_TEXT ("CosEC_Factory") : name)
 {
 }
 
@@ -13,25 +12,25 @@ int
 FactoryDriver::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dr:"));
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case 'r':
-        factoryName_ = get_opts.opt_arg ();
+        this->factory_name_ = get_opts.opt_arg ();
         break;
 
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-r] <Factory Name>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s")
+                           ACE_TEXT (" [-r] <Factory Name>")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -50,79 +49,77 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
       if (this->parse_args (argc, argv) == -1)
         return -1;
 
-      // Ref counted servants are on the heap..
-      ACE_NEW_RETURN (factory_servant_,
-                      TAO_CosEventChannelFactory_i (),
-                      -1);
-
-      CORBA::Object_var poa_object  =
-        orb_->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           -1);
 
       root_poa_ =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa_->the_POAManager ();
-
-
       poa_manager->activate ();
-
 
       // Initialization of the naming service.
       if (naming_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
+                           ACE_TEXT ("(%P|%t) Unable to initialize ")
+                           ACE_TEXT ("the TAO_Naming_Client.\n")),
                           1);
 
-      CosNaming::NamingContext_var context =
+      CosNaming::NamingContext_var const context =
         naming_client_.get_context ();
 
-      if (factory_servant_->init (root_poa_.in (),
-                                  child_poa_name_,
-                                  context.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to initialize "
-                           "the factory.\n"),
-                          1);
+      TAO_CosEventChannelFactory_i *factory_servant {};
+      ACE_NEW_RETURN (factory_servant,
+                      TAO_CosEventChannelFactory_i,
+                      -1);
 
-      // activate the factory in the root poa.
-      factory_ = factory_servant_->_this ();
+      {
+        // Keep the initial servant reference owned through POA activation.
+        PortableServer::ServantBase_var const factory_servant_owner (factory_servant);
 
-      // Give the ownership to the POA.
-      factory_servant_->_remove_ref ();
+        if (factory_servant->init (root_poa_.in (),
+                                   child_poa_name_,
+                                   context.in ()) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to initialize ")
+                             ACE_TEXT ("the factory.\n")),
+                            1);
 
-      CORBA::String_var
-        str = orb_->object_to_string (factory_.in ());
+        // Activate the factory in the root POA.
+        factory_ = factory_servant->_this ();
+      }
+
+      CORBA::String_var const str = orb_->object_to_string (factory_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "CosEvent_Service: The Cos Event Channel Factory IOR is <%s>\n",
+                  ACE_TEXT ("CosEvent_Service: The Cos Event Channel Factory IOR is <%C>\n"),
                   str.in ()));
 
-      CosNaming::Name name (1);
+      CosNaming::Name name;
       name.length (1);
-      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(factoryName_));
-      naming_client_->rebind (name,
-                              factory_.in ());
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->factory_name_.c_str ()));
+      naming_client_->rebind (name, factory_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as %s\n", factoryName_));
+                  ACE_TEXT ("Registered with the naming service as %s\n"),
+                  this->factory_name_.c_str ()));
 
       orb_->run ();
     }
   catch (CORBA::UserException const &ue)
     {
-      ue._tao_print_exception ("cosecfactory: ");
+      ue._tao_print_exception (ACE_TEXT ("cosecfactory: "));
       return 1;
     }
   catch (CORBA::SystemException const &se)
     {
-      se._tao_print_exception ("cosecfactory: ");
+      se._tao_print_exception (ACE_TEXT ("cosecfactory: "));
       return 1;
     }
 

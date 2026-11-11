@@ -27,10 +27,8 @@ class TAO_CosEventChannelFactory_i :
   public virtual POA_CosEventChannelFactory::ChannelFactory
 {
 public:
-  /// Constructor.
-  TAO_CosEventChannelFactory_i ();
+  TAO_CosEventChannelFactory_i () = default;
 
-  /// Destructor.
   ~TAO_CosEventChannelFactory_i () override = default;
   TAO_CosEventChannelFactory_i (TAO_CosEventChannelFactory_i const &) = delete;
   TAO_CosEventChannelFactory_i (TAO_CosEventChannelFactory_i &&) = delete;
@@ -72,10 +70,10 @@ public:
   char *find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel) override;
 protected:
   /// The POA with which we activate all the Event Channels.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 
   /// The naming context to use.
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var naming_ {};
 };
 
 #include /**/ "ace/post.h"

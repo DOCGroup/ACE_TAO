@@ -3,6 +3,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 
+#include <array>
+
 class FactoryClient
 {
   // = TITLE
@@ -12,7 +14,6 @@ class FactoryClient
   //   Test Client for the CosEC factory.
 
 public:
-  // Initialization and termination methods
   FactoryClient () = default;
 
   ~FactoryClient () = default;
@@ -53,19 +54,19 @@ protected:
   // Find a channel.
 
   // = Protected Data members.
-  char const *factory_name_ {"CosEC_Factory"};
+  char const *const factory_name_ {"CosEC_Factory"};
   // The name of the factory registered with the naming service.
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // The ORB that we use.
 
-  CosNaming::NamingContext_var naming_context_;
+  CosNaming::NamingContext_var naming_context_ {};
   // Handle to the name service.
 
-  CosEventChannelFactory::ChannelFactory_var factory_;
+  CosEventChannelFactory::ChannelFactory_var factory_ {};
   // object from naming service.
 
-  bool use_naming_service {};
+  bool use_naming_service_ {};
   // flag to indicate if the naming service should be used.
 };
 
@@ -78,7 +79,7 @@ FactoryClient::init_ORB (int argc, ACE_TCHAR *argv [])
 void
 FactoryClient::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
+  CORBA::Object_var const naming_obj =
     this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
@@ -88,19 +89,19 @@ FactoryClient::resolve_naming_service ()
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-  this->use_naming_service = true;
+  this->use_naming_service_ = true;
 }
 
 void
 FactoryClient::resolve_factory ()
 {
-  ACE_ASSERT (this->use_naming_service == 1);
+  ACE_ASSERT (this->use_naming_service_);
 
-  CosNaming::Name name (1);
+  CosNaming::Name name;
   name.length (1);
   name[0].id = CORBA::string_dup (this->factory_name_);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->naming_context_->resolve (name);
 
   this->factory_ =
@@ -118,30 +119,29 @@ FactoryClient::create_channel (char const *channel_id,
                             CosEventChannelFactory::ChannelFactory_ptr factory)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Trying to create channel %s\n", channel_id));
+              ACE_TEXT ("Trying to create channel %C\n"), channel_id));
 
-  CosEventChannelAdmin::EventChannel_var ec =
-    CosEventChannelAdmin::EventChannel::_nil ();
+  CosEventChannelAdmin::EventChannel_var ec {};
 
   try
     {
       ec = factory->create (channel_id,
-                            this->use_naming_service);
+                            this->use_naming_service_);
 
       ACE_ASSERT (!CORBA::is_nil (ec.in ()));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Created Cos Event Channel \"%s \"\n",
+                  ACE_TEXT ("Created Cos Event Channel \"%C \"\n"),
                   channel_id));
     }
- catch (CORBA::UserException const &ue)
-   {
-     ue._tao_print_exception ("User Exception in createChannel: ");
-     return CosEventChannelAdmin::EventChannel::_nil ();
-   }
+  catch (CORBA::UserException const &ue)
+    {
+      ue._tao_print_exception (ACE_TEXT ("User Exception in createChannel: "));
+      return CosEventChannelAdmin::EventChannel::_nil ();
+    }
   catch (CORBA::SystemException const &se)
     {
-      se._tao_print_exception ("System Exception in createChannel: ");
+      se._tao_print_exception (ACE_TEXT ("System Exception in createChannel: "));
       return CosEventChannelAdmin::EventChannel::_nil ();
     }
 
@@ -152,11 +152,11 @@ void
 FactoryClient::destroy_channel (char const *channel_id)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Destroying Cos Event Channel \"%s \"\n",
+              ACE_TEXT ("Destroying Cos Event Channel \"%C \"\n"),
               channel_id));
 
   this->factory_->destroy (channel_id,
-                           use_naming_service);
+                           this->use_naming_service_);
 }
 
 void
@@ -165,47 +165,46 @@ FactoryClient::find_channel (char const *channel_id)
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "trying to find the Channel \"%s \"\n",
+                  ACE_TEXT ("Trying to find the Channel \"%C \"\n"),
                   channel_id));
 
-      CosEventChannelAdmin::EventChannel_var channel =
+      CosEventChannelAdmin::EventChannel_var const channel =
         this->factory_->find (channel_id);
 
-
-      CORBA::String_var str =
-        orb_->object_to_string (channel.in ());
+      CORBA::String_var const str =
+        this->orb_->object_to_string (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-              "Find returned - %s\n",
+                  ACE_TEXT ("Find returned - %C\n"),
                   str.in ()));
 
       this->find_channel_id (channel.in ());
     }
   catch (CORBA::UserException const &ue)
     {
-      ue._tao_print_exception ("User Exception in findchannel: ");
+      ue._tao_print_exception (ACE_TEXT ("User Exception in findchannel: "));
     }
   catch (CORBA::SystemException const &se)
     {
-      se._tao_print_exception ("System Exception in findchannel: ");
+      se._tao_print_exception (ACE_TEXT ("System Exception in findchannel: "));
     }
 }
 
 void
 FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel)
 {
-  CORBA::String_var str =
-    orb_->object_to_string (channel);
+  CORBA::String_var const str =
+    this->orb_->object_to_string (channel);
 
   ACE_DEBUG ((LM_DEBUG,
-              "trying to find the Channel %s\n",
+              ACE_TEXT ("Trying to find the Channel %C\n"),
               str.in ()));
 
-  char *channel_id =
+  CORBA::String_var const channel_id =
     this->factory_->find_channel_id (channel);
 
   ACE_DEBUG ((LM_DEBUG,
-              "find returned %s\n", channel_id));
+              ACE_TEXT ("find returned %C\n"), channel_id.in ()));
 }
 
 /*
@@ -217,8 +216,8 @@ FactoryClient::run_test ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->factory_.in ()));
 
-  char const *channel_id [3] = {"cosec1", "cosec2", "cosec3"};
-  CosEventChannelAdmin::EventChannel_var cosec [3];
+  std::array<char const *, 3> const channel_id {"cosec1", "cosec2", "cosec3"};
+  std::array<CosEventChannelAdmin::EventChannel_var, 3> cosec {};
 
   // create the first cosec
   cosec[0] = this->create_channel (channel_id[0],
@@ -272,14 +271,14 @@ FactoryClient::run_test ()
 
   // end of testing.
   ACE_DEBUG ((LM_DEBUG,
-              "Factory testing complete\n"));
+              ACE_TEXT ("Factory testing complete\n")));
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The FactoryClient will test the Cos Event Channel Factory\n"));
+              ACE_TEXT ("The FactoryClient will test the Cos Event Channel Factory\n")));
   try
     {
       FactoryClient ft;
@@ -295,9 +294,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       catch (CORBA::Exception const &ex)
         {
-          ex._tao_print_exception ("Failed to resolve the naming service");
+          ex._tao_print_exception (ACE_TEXT ("Failed to resolve the naming service"));
           ACE_DEBUG ((LM_DEBUG,
-                      "Creating a local Factory\n"));
+                      ACE_TEXT ("Creating a local Factory\n")));
           // TBD:
           ft.create_factory ();
         }
@@ -307,13 +306,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (CORBA::UserException const &ue)
     {
       ue._tao_print_exception (
-        "test failed: User Exception in FactoryClient: ");
+        ACE_TEXT ("test failed: User Exception in FactoryClient: "));
       return 1;
     }
   catch (CORBA::SystemException const &se)
     {
       se._tao_print_exception (
-        "test failed: System Exception in FactoryClient: ");
+        ACE_TEXT ("test failed: System Exception in FactoryClient: "));
       return 1;
     }
 
