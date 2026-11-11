@@ -4,6 +4,7 @@
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 
 #include "ace/Dynamic_Service.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_Framework/CSD_POA.inl"
@@ -70,21 +71,22 @@ TAO_CSD_POA::new_POA (String const &name,
                              orb_core,
                              object_adapter),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<TAO_CSD_POA> poa_owner {poa};
 
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
   if (repo)
     {
-      CSD_Framework::Strategy_var strategy = repo->find (std::string (name.c_str ()));
+      CSD_Framework::Strategy_var const strategy = repo->find (std::string (name.c_str ()));
 
       if (! ::CORBA::is_nil (strategy.in ()))
         {
-          poa->set_csd_strategy (strategy.in ());
+          poa_owner->set_csd_strategy (strategy.in ());
         }
     }
 
-  return poa;
+  return poa_owner.release ();
 }
 
 void TAO_CSD_POA::poa_activated_hook ()

@@ -37,7 +37,7 @@ TAO::CSD::Strategy_Base::dispatch_request
       case DISPATCH_REJECTED:
         if (server_request.collocated ())
           {
-             CORBA::NO_IMPLEMENT ex;
+             CORBA::NO_IMPLEMENT const ex;
              ex._raise ();
           }
         else
@@ -48,7 +48,7 @@ TAO::CSD::Strategy_Base::dispatch_request
                 server_request.response_expected() &&
                 !server_request.deferred_reply())
               {
-                CORBA::NO_IMPLEMENT ex;
+                CORBA::NO_IMPLEMENT const ex;
                 server_request.tao_send_reply_exception(ex);
               }
           }
@@ -71,7 +71,6 @@ TAO::CSD::Strategy_Base::dispatch_request
         break;
     }
 }
-
 
 ACE_INLINE
 bool

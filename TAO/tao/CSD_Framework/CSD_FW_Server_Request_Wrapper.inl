@@ -10,7 +10,6 @@ TAO::CSD::FW_Server_Request_Wrapper::FW_Server_Request_Wrapper
 {
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::FW_Server_Request_Wrapper::clone()
@@ -25,7 +24,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone()
     }
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::FW_Server_Request_Wrapper::cancel()
@@ -36,7 +34,7 @@ TAO::CSD::FW_Server_Request_Wrapper::cancel()
       this->request_->response_expected() &&
       !this->request_->deferred_reply())
     {
-          CORBA::NO_IMPLEMENT ex;
+          CORBA::NO_IMPLEMENT const ex;
           this->request_->tao_send_reply_exception(ex);
     }
 }
