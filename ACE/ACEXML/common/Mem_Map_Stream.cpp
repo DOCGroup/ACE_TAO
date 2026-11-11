@@ -5,8 +5,7 @@
 #include "ACEXML/common/Mem_Map_Stream.h"
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream ()
-  : svc_handler_ (nullptr),
-    recv_pos_ (nullptr),
+  : recv_pos_ (nullptr),
     get_pos_ (nullptr),
     end_of_mapping_plus1_ (nullptr)
 {
@@ -133,7 +132,7 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 Svc_Handler *
 ACEXML_Mem_Map_Stream::svc_handler ()
 {
-  return this->svc_handler_;
+  return this->svc_handler_.get ();
 }
 
 size_t
@@ -146,13 +145,16 @@ int
 ACEXML_Mem_Map_Stream::open (Connector *connector,
                              const ACE_INET_Addr &addr)
 {
-  svc_handler_ = nullptr;
+  this->svc_handler_.reset ();
+
+  Svc_Handler *svc_handler {};
+  int const status = connector->connect (svc_handler, addr);
+  this->svc_handler_.reset (svc_handler);
 
   // Connect to the server at <addr>. If the handler has to be
   // connected to the server again, the Caching strategy takes care
   // and uses the same connection.
-  if (connector->connect (svc_handler_,
-                          addr) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
@@ -260,6 +262,5 @@ ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream ()
 {
   // Remove the mapping and the file.
   this->mem_map_.remove ();
-  delete this->svc_handler_;
 }
 

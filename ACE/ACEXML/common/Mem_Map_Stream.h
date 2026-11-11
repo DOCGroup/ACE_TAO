@@ -22,6 +22,7 @@
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
 #include "ACEXML/common/XML_Types.h"
+#include <memory>
 
 using Svc_Handler = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 using Connector = ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
@@ -160,7 +161,7 @@ private:
    *  Connection to peer. The granularity is at the Svc_Handler level.
    *  The Svc_Handler has an SOCK_Stream.
    */
-  Svc_Handler *svc_handler_;
+  std::unique_ptr<Svc_Handler> svc_handler_ {};
 
   /// Memory-mapped file that we're iterating over.
   ACE_Mem_Map mem_map_;
