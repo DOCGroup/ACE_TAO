@@ -5,10 +5,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_TCHAR const *ior_output_file {};
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
@@ -21,9 +21,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("Usage: %s -o <iorfile>\n"),
                            argv[0]),
                           -1);
       }
@@ -37,6 +35,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_TCHAR const *ior_output_file {};
+
 #if TAO_HAS_INTERCEPTORS == 1
 
       PortableInterceptor::ORBInitializer_ptr orb_initializer =
@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             argv,
                                             "server_sum_orb");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return -1;
 
       // Resolve reference to RootPOA
@@ -108,15 +108,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing "
-                               "IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       orb->run ();

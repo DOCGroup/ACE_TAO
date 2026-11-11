@@ -61,18 +61,15 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request)
     operation.in ()->params ();
 
   // Build the NVList based on the info from the IfR
-  CORBA::NVList_ptr arguments = nullptr;
+  CORBA::NVList_ptr arguments {};
   this->orb_->create_list (parameters->length (),
                            arguments);
 
-  CORBA::Flags flags = 0;
+  CORBA::ULong const length = parameters->length ();
 
-  CORBA::ULong length = parameters->length ();
-
-  CORBA::ULong i = 0;
-
-  for (i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i != length; ++i)
     {
+      CORBA::Flags flags {};
       switch (parameters[i].mode)
         {
         case CORBA::PARAM_IN:
@@ -85,10 +82,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request)
           flags = CORBA::ARG_INOUT;
           break;
         }
-    }
 
-  for (i = 0; i != length; ++i)
-    {
       CORBA::Any any;
       any._tao_set_typecode (parameters[i].type.in ());
 
