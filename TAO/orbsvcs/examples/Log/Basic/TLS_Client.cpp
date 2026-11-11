@@ -19,7 +19,7 @@ TLS_Client::init (int argc, ACE_TCHAR *argv [])
 void
 TLS_Client::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
+  CORBA::Object_var const naming_obj =
     this->orb_->resolve_initial_references (naming_service_name);
 
   // Need to check return value for errors.
@@ -37,7 +37,7 @@ TLS_Client::resolve_TLS_Basic_factory ()
   name.length (1);
   name[0].id = CORBA::string_dup (basic_tls_log_factory_name);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->naming_context_->resolve (name);
 
   this->basic_log_factory_ =
@@ -58,7 +58,7 @@ TLS_Client::run_tests ()
 
   DsLogAdmin::LogId logid {};
 
-  DsLogAdmin::BasicLog_var basic_log =
+  DsLogAdmin::BasicLog_var const basic_log =
     this->basic_log_factory_->create (logfullaction,
                                       max_size,
                                       logid);
@@ -89,7 +89,7 @@ TLS_Client::run_tests ()
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Querying the Log: %C\n"), query_1));
   DsLogAdmin::Iterator_var iter_out;
-  DsLogAdmin::RecordList_var rec_list =
+  DsLogAdmin::RecordList_var const rec_list =
     basic_log->query (query_lang, query_1, iter_out);
 
   for (CORBA::ULong j {}; j < rec_list->length (); ++j)

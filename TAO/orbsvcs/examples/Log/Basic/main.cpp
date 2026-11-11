@@ -4,7 +4,7 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TLS_Client client; // Telecom Log Service client
+  TLS_Client client {}; // Telecom Log Service client
 
   try
     {

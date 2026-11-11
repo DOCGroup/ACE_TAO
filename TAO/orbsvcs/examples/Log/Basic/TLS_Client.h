@@ -22,7 +22,7 @@ class TLS_Client
   //   Telecom Log Service Client
   // = DESCRIPTION
   //   This client demonstrates how to use the log service.
- public:
+public:
   TLS_Client () = default;
 
   TLS_Client (TLS_Client const &) = delete;
