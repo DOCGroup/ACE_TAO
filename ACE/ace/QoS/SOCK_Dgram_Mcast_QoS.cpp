@@ -1,6 +1,7 @@
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_socket.h"
+#include <memory>
 
 #if defined (ACE_WIN32)
 #include "ace/Sock_Connect.h"  // needed for subscribe_ifs()
@@ -95,10 +96,12 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
   if (net_if == nullptr)
     {
-      ACE_INET_Addr *if_addrs {};
-      size_t if_cnt;
+      ACE_INET_Addr *if_addrs_raw {};
+      size_t if_cnt {};
 
-      if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+      int const result = ACE::get_ip_interfaces (if_cnt, if_addrs_raw);
+      std::unique_ptr<ACE_INET_Addr[]> if_addrs (if_addrs_raw);
+      if (result != 0)
         return -1;
 
       size_t nr_subscribed = 0;
@@ -134,8 +137,6 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                                  protocolinfo) == 0)
               ++nr_subscribed;
           }
-
-      delete [] if_addrs;
 
       if (nr_subscribed == 0)
         {
