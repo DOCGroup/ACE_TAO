@@ -1,13 +1,15 @@
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_unistd.h"
+
+#include <chrono>
 #include <iostream>
+#include <thread>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       ACE_TCHAR const *url = ACE_TEXT ("corbaloc:rir:/NameService");
       if (argc < 2)
         {
@@ -18,16 +20,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         url = argv[1];
 
-      CORBA::Object_var object = orb->string_to_object (url);
-      CosNaming::NamingContextExt_var root =
-        CosNaming::NamingContextExt::_narrow (object.in ());
+      CORBA::Object_var const naming_object = orb->string_to_object (url);
+      CosNaming::NamingContextExt_var const root =
+        CosNaming::NamingContextExt::_narrow (naming_object.in ());
       if (CORBA::is_nil (root.in ()))
         {
           std::cerr << "Nil Naming Context reference" << std::endl;
           return 1;
         }
 
-      object = CORBA::Object::_nil ();
+      CORBA::Object_var object {};
       while (CORBA::is_nil (object.in ()))
         {
           try
@@ -36,11 +38,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
           catch (CosNaming::NamingContext::NotFound const &)
             {
-              ACE_OS::sleep (1);
+              std::this_thread::sleep_for (std::chrono::seconds (1));
             }
         }
 
-      Messenger_var messenger = Messenger::_narrow (object.in ());
+      Messenger_var const messenger = Messenger::_narrow (object.in ());
       if (CORBA::is_nil (messenger.in ()))
         {
           std::cerr << "Not a Messenger reference" << std::endl;
@@ -50,6 +52,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var message = CORBA::string_dup ("Hello!");
       messenger->send_message ("TAO User", "TAO Test", message.inout ());
       std::cout << "Message was sent" << std::endl;
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {
