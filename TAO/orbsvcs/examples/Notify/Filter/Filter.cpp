@@ -1,26 +1,17 @@
 /* -*- C++ -*-  */
 
 #include "Filter.h"
-#include <atomic>
 
-#define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
-#define NAMING_SERVICE_NAME "NameService"
-#define CA_FILTER "threshold < 20"
-#define SA_FILTER1 "threshold > 10"
-#define SA_FILTER2 "'pc1' in targetlist"
-#define TCL_GRAMMAR "TCL"
-#define EVENTS_TO_SEND 30
-#define EVENTS_EXPECTED_TO_RECEIVE 9*4  // 2 consumers get the same events from 2 suppliers
+constexpr char notify_factory_name[] = "NotifyEventChannelFactory";
+constexpr char naming_service_name[] = "NameService";
+constexpr char consumer_admin_filter[] = "threshold < 20";
+constexpr char supplier_admin_filter_1[] = "threshold > 10";
+constexpr char supplier_admin_filter_2[] = "'pc1' in targetlist";
+constexpr char tcl_grammar[] = "TCL";
+constexpr CORBA::ULong events_to_send = 30;
+constexpr CORBA::ULong events_expected_to_receive = 9 * 4;
 
-std::atomic<int> g_result_count {0};
-
-FilterClient::FilterClient ()
-  :done_ (0)
-{
-  g_result_count.store (0);
-  // No-Op.
-  ifgop_ = CosNotifyChannelAdmin::AND_OP;
-}
+static std::atomic<CORBA::ULong> result_count {};
 
 FilterClient::~FilterClient ()
 {
@@ -52,9 +43,9 @@ FilterClient::run ()
 {
   send_events ();
 
-  if (g_result_count.load () != EVENTS_EXPECTED_TO_RECEIVE)
+  if (result_count.load () != events_expected_to_receive)
     { // if we still need to wait for events, run the orb.
-      while (!this->done_)
+      while (!this->done_.load ())
         if (this->orb_->work_pending ())
           this->orb_->perform_work ();
     }
@@ -63,7 +54,7 @@ FilterClient::run ()
 void
 FilterClient::done ()
 {
-  this->done_ = 1;
+  this->done_.store (true);
 }
 
 void
@@ -71,19 +62,19 @@ FilterClient::init_ORB (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_ptr poa_object  =
-    this->orb_->resolve_initial_references("RootPOA");
+  CORBA::Object_var const poa_object =
+    this->orb_->resolve_initial_references ("RootPOA");
 
-  if (CORBA::is_nil (poa_object))
+  if (CORBA::is_nil (poa_object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to initialize the POA.\n"));
+                  ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")));
       return;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object);
+    PortableServer::POA::_narrow (poa_object.in ());
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     root_poa_->the_POAManager ();
 
   poa_manager->activate ();
@@ -92,8 +83,8 @@ FilterClient::init_ORB (int argc, ACE_TCHAR *argv [])
 void
 FilterClient::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+  CORBA::Object_var const naming_obj =
+    this->orb_->resolve_initial_references (naming_service_name);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -108,9 +99,9 @@ FilterClient::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
-  name[0].id = CORBA::string_dup (NOTIFY_FACTORY_NAME);
+  name[0].id = CORBA::string_dup (notify_factory_name);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->naming_context_->resolve (name);
 
   this->notify_factory_ =
@@ -120,7 +111,7 @@ FilterClient::resolve_Notify_factory ()
 void
 FilterClient::create_EC ()
 {
-  CosNotifyChannelAdmin::ChannelID id;
+  CosNotifyChannelAdmin::ChannelID id {};
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
@@ -132,19 +123,19 @@ FilterClient::create_EC ()
 void
 FilterClient::create_supplieradmin ()
 {
-  CosNotifyChannelAdmin::AdminID adminid = 0;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  CosNotifyFilter::FilterFactory_var ffact =
+  CosNotifyFilter::FilterFactory_var const ffact =
     ec_->default_filter_factory ();
 
   // setup a filter at the consumer admin
-  CosNotifyFilter::Filter_var sa_filter =
-    ffact->create_filter (TCL_GRAMMAR);
+  CosNotifyFilter::Filter_var const sa_filter =
+    ffact->create_filter (tcl_grammar);
 
   ACE_ASSERT (!CORBA::is_nil (sa_filter.in ()));
 
@@ -152,9 +143,9 @@ FilterClient::create_supplieradmin ()
   constraint_list.length (2);
 
   constraint_list[0].event_types.length (0);
-  constraint_list[0].constraint_expr = CORBA::string_dup (SA_FILTER1);
+  constraint_list[0].constraint_expr = CORBA::string_dup (supplier_admin_filter_1);
   constraint_list[1].event_types.length (0);
-  constraint_list[1].constraint_expr = CORBA::string_dup (SA_FILTER2);
+  constraint_list[1].constraint_expr = CORBA::string_dup (supplier_admin_filter_2);
 
   sa_filter->add_constraints (constraint_list);
 
@@ -162,21 +153,21 @@ FilterClient::create_supplieradmin ()
 }
 
 void
-FilterClient:: create_consumeradmin ()
+FilterClient::create_consumeradmin ()
 {
-  CosNotifyChannelAdmin::AdminID adminid = 0;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
-  CosNotifyFilter::FilterFactory_var ffact =
+  CosNotifyFilter::FilterFactory_var const ffact =
     ec_->default_filter_factory ();
 
   // setup a filter at the consumer admin
-  CosNotifyFilter::Filter_var ca_filter =
-    ffact->create_filter (TCL_GRAMMAR);
+  CosNotifyFilter::Filter_var const ca_filter =
+    ffact->create_filter (tcl_grammar);
 
   ACE_ASSERT (!CORBA::is_nil (ca_filter.in ()));
 
@@ -189,7 +180,7 @@ FilterClient:: create_consumeradmin ()
   constraint_list.length (1);
 
   constraint_list[0].event_types.length (0);
-  constraint_list[0].constraint_expr = CORBA::string_dup (CA_FILTER);
+  constraint_list[0].constraint_expr = CORBA::string_dup (consumer_admin_filter);
 
   ca_filter->add_constraints (constraint_list);
 
@@ -200,43 +191,43 @@ void
 FilterClient::create_consumers ()
 {
   // startup the first consumer.
-  ACE_NEW_THROW_EX (consumer_1,
+  ACE_NEW_THROW_EX (consumer_1_,
                     Filter_StructuredPushConsumer (this, "consumer1"),
                     CORBA::NO_MEMORY ());
 
-  consumer_1->connect (consumer_admin_.in ());
+  consumer_1_->connect (consumer_admin_.in ());
 
   // startup the second consumer.
-  ACE_NEW_THROW_EX (consumer_2,
+  ACE_NEW_THROW_EX (consumer_2_,
                     Filter_StructuredPushConsumer (this, "consumer2"),
                     CORBA::NO_MEMORY ());
 
-  consumer_2->connect (consumer_admin_.in ());
+  consumer_2_->connect (consumer_admin_.in ());
 }
 
 void
 FilterClient::create_suppliers ()
 {
   // startup the first supplier
-  ACE_NEW_THROW_EX (supplier_1,
+  ACE_NEW_THROW_EX (supplier_1_,
                     Filter_StructuredPushSupplier ("supplier1"),
                     CORBA::NO_MEMORY ());
 
-  supplier_1->connect (supplier_admin_.in ());
+  supplier_1_->connect (supplier_admin_.in ());
 
   // startup the second supplier
-  ACE_NEW_THROW_EX (supplier_2,
+  ACE_NEW_THROW_EX (supplier_2_,
                     Filter_StructuredPushSupplier ("supplier2"),
                     CORBA::NO_MEMORY ());
 
-  supplier_2->connect (supplier_admin_.in ());
+  supplier_2_->connect (supplier_admin_.in ());
 }
 
 void
 FilterClient::send_events ()
 {
   // operations:
-  CosNotification::StructuredEvent event;
+  CosNotification::StructuredEvent event {};
 
   // EventHeader
 
@@ -259,43 +250,40 @@ FilterClient::send_events ()
   // sequence<Property>: string name, any value
   event.filterable_data.length (4);
   event.filterable_data[0].name = CORBA::string_dup("threshold");
-  event.filterable_data[0].value <<= (CORBA::Long)4;
+  event.filterable_data[0].value <<= static_cast<CORBA::Long> (4);
 
   event.filterable_data[1].name = CORBA::string_dup("temperature");
-  event.filterable_data[1].value <<= (CORBA::Long)70;
+  event.filterable_data[1].value <<= static_cast<CORBA::Long> (70);
 
   event.filterable_data[2].name = CORBA::string_dup("pressure");
-  event.filterable_data[2].value <<= (CORBA::Long)80;
+  event.filterable_data[2].value <<= static_cast<CORBA::Long> (80);
 
   event.filterable_data[3].name = CORBA::string_dup("targetlist");
-  const char* ids[] = { "pc1", "pc2", "pc3" };
-  CORBA::StringSeq idseq(3, 3, const_cast<char**> (ids), 0);
+  char const *ids[] = { "pc1", "pc2", "pc3" };
+  CORBA::StringSeq idseq (3, 3, const_cast<char **> (ids), false);
   event.filterable_data[3].value <<= idseq;
 
   // any
-  event.remainder_of_body <<= (CORBA::Long)4;
+  event.remainder_of_body <<= static_cast<CORBA::Long> (4);
 
-   for (int i = 0; i < EVENTS_TO_SEND; i++)
+  for (CORBA::ULong i {}; i < events_to_send; ++i)
     {
-      event.filterable_data[0].value <<= (CORBA::Long)i;
+      event.filterable_data[0].value <<= static_cast<CORBA::Long> (i);
 
       // any
-      event.remainder_of_body <<= (CORBA::Long)i;
+      event.remainder_of_body <<= static_cast<CORBA::Long> (i);
 
-      supplier_1->send_event (event);
+      supplier_1_->send_event (event);
 
-      supplier_2->send_event (event);
+      supplier_2_->send_event (event);
     }
 }
 
-
-Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filter, const char* my_name)
+Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (
+  FilterClient *filter,
+  char const *my_name)
   :filter_ (filter),
    my_name_ (my_name)
-{
-}
-
-Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer ()
 {
 }
 
@@ -303,10 +291,10 @@ void
 Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::StructuredPushConsumer_var objref =
+  CosNotifyComm::StructuredPushConsumer_var const objref =
     this->_this ();
 
-  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
+  CosNotifyChannelAdmin::ProxySupplier_var const proxysupplier =
     consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -329,62 +317,50 @@ Filter_StructuredPushConsumer::disconnect ()
 }
 
 void
-Filter_StructuredPushConsumer::offer_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/
-    )
+Filter_StructuredPushConsumer::offer_change (
+  CosNotification::EventTypeSeq const & /*added*/,
+  CosNotification::EventTypeSeq const & /*removed*/)
 {
-  // No-Op.
 }
 
 void
-Filter_StructuredPushConsumer::push_structured_event
-   (const CosNotification::StructuredEvent & notification)
+Filter_StructuredPushConsumer::push_structured_event (
+  CosNotification::StructuredEvent const &notification)
 {
-    CORBA::Long val;
+  CORBA::Long val {};
 
-    notification.remainder_of_body >>= val;
+  notification.remainder_of_body >>= val;
 
-    // @@ Pradeep: for your tests try to make sure that you count the
-    // number of expected and sent events to verify that things work
-    // correctly in an automatic way...
+  // @@ Pradeep: for your tests try to make sure that you count the
+  // number of expected and sent events to verify that things work
+  // correctly in an automatic way...
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%C received event, %d\n"), this->my_name_.fast_rep (), val));
 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("event count %u\n"), result_count.load ()));
 
-    ACE_DEBUG ((LM_DEBUG,
-                "%C received event, %d\n", my_name_.fast_rep (), val));
-
-    ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.load ()));
-
-    if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
-      this->filter_->done (); // all events received, we're done.
+  if (++result_count == events_expected_to_receive)
+    this->filter_->done (); // all events received, we're done.
 }
 
 void
-Filter_StructuredPushConsumer::disconnect_structured_push_consumer
-   ()
-{
-  // No-Op.
-}
-
-
-/*****************************************************************/
-
-Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (const char* my_name)
-    :my_name_ (my_name)
+Filter_StructuredPushConsumer::disconnect_structured_push_consumer ()
 {
 }
 
-Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier ()
+Filter_StructuredPushSupplier::Filter_StructuredPushSupplier (char const *my_name)
+  : my_name_ (my_name)
 {
 }
 
 void
 Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
-  CosNotifyComm::StructuredPushSupplier_var objref =
+  CosNotifyComm::StructuredPushSupplier_var const objref =
     this->_this ();
 
-  CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
+  CosNotifyChannelAdmin::ProxyConsumer_var const proxyconsumer =
     supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
@@ -407,30 +383,26 @@ Filter_StructuredPushSupplier::disconnect ()
 }
 
 void
-Filter_StructuredPushSupplier::subscription_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */
-    )
+Filter_StructuredPushSupplier::subscription_change (
+  CosNotification::EventTypeSeq const & /*added*/,
+  CosNotification::EventTypeSeq const & /*removed*/)
 {
-  //No-Op.
 }
 
 void
 Filter_StructuredPushSupplier::send_event
-   (const CosNotification::StructuredEvent& event)
+  (CosNotification::StructuredEvent const &event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              "%C is sending an event\n", my_name_.fast_rep ()));
+              ACE_TEXT ("%C is sending an event\n"), this->my_name_.fast_rep ()));
 
   proxy_consumer_->push_structured_event (event);
 }
 
 void
-Filter_StructuredPushSupplier::disconnect_structured_push_supplier
-   ()
+Filter_StructuredPushSupplier::disconnect_structured_push_supplier ()
 {
-  // No-Op.
 }
 
