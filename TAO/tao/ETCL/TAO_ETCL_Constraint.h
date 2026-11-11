@@ -42,8 +42,6 @@ class TAO_ETCL_Export TAO_ETCL_Literal_Constraint
 public:
   TAO_ETCL_Literal_Constraint ();
 
-  // = Constructors for each of the various types of literals.
-
   explicit TAO_ETCL_Literal_Constraint (CORBA::ULong uinteger);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Long integer);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Boolean boolean);
@@ -68,8 +66,6 @@ public:
   operator ACE_CDR::Double () const;
   operator char const* () const;
   operator TAO::Any_Impl* () const;
-
-  // Return the type represented by this MysteryOperand.
 
   // = Arithmetic operators.
 
@@ -101,6 +97,8 @@ private:
   void copy (TAO_ETCL_Literal_Constraint const &co);
 
   /// Possible literal type not covered by the base class.
+  /// This pointer owns one intrusive reference, managed by copy() and the
+  /// destructor using Any_Impl::_add_ref() and Any_Impl::_remove_ref().
   TAO::Any_Impl *any_ {};
 };
 
