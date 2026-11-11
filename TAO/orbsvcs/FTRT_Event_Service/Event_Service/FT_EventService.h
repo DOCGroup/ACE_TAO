@@ -16,10 +16,12 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "TP_Task.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace POA_RtecScheduler
 {
-    class Scheduler;
+  class Scheduler;
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +34,7 @@ public:
   int run (int argc, ACE_TCHAR *argv[]);
 
 private:
-  int parse_args (int argc, ACE_TCHAR* argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []);
   void setup_scheduler (CosNaming::NamingContext_ptr naming_context);
   int report_factory (CORBA::ORB_ptr orb,
                       FtRtecEventChannelAdmin::EventChannel_ptr ec);
@@ -43,13 +45,12 @@ private:
   FT_EventService (FT_EventService &&) = delete;
   FT_EventService &operator= (FT_EventService &&) = delete;
 
-  bool global_scheduler_ {};
   // Should we use a global scheduler or a local one?
-  POA_RtecScheduler::Scheduler *sched_impl_;
-  // The Scheduler implementation.
-  TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
-  int num_threads_;
-  CORBA::ORB_var orb_;
+  bool global_scheduler_ {};
+  std::unique_ptr<POA_RtecScheduler::Scheduler> sched_impl_ {};
+  TAO_FTEC_Event_Channel::MEMBERSHIP membership_ { TAO_FTEC_Event_Channel::UNSPECIFIED };
+  int num_threads_ { 1 };
+  CORBA::ORB_var orb_ {};
   TP_Task task_;
 };
 
