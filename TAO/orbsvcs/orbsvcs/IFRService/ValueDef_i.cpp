@@ -150,13 +150,12 @@ TAO_ValueDef_i::supported_interfaces_i ()
                                              "count",
                                              count);
   seq->length (count);
-  char *stringified {};
   ACE_TString holder;
   CORBA::Object_var obj;
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
                                                 stringified,
                                                 holder);
@@ -202,15 +201,13 @@ TAO_ValueDef_i::supported_interfaces_i (
                                              "count",
                                              count);
   char *stringified {};
-  char const *supported_id {};
-  char const *supported_path {};
   CORBA::ULong kind = 0;
   bool concrete_seen = false;
   CORBA::DefinitionKind def_kind;
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      supported_path =
+      char const * const supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
             supported_interfaces[i]
           );
@@ -250,7 +247,8 @@ TAO_ValueDef_i::supported_interfaces_i (
                                           CORBA::dk_Value);
 
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      supported_id = supported_interfaces[i]->_interface_repository_id ();
+      char const * const supported_id =
+        supported_interfaces[i]->_interface_repository_id ();
       this->repo_->config ()->set_string_value (supported_key,
                                                 stringified,
                                                 supported_id);
@@ -552,13 +550,11 @@ TAO_ValueDef_i::abstract_base_values_i (
   this->repo_->config ()->set_integer_value (bases_key,
                                              "count",
                                              count);
-  char const *base_id {};
-  char const *base_path {};
   char *stringified {};
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      base_path =
+      char const * const base_path =
         TAO_IFR_Service_Utils::reference_to_path (
             abstract_base_values[i]
           );
@@ -577,7 +573,8 @@ TAO_ValueDef_i::abstract_base_values_i (
                                           this->repo_,
                                           CORBA::dk_Value);
 
-      base_id = abstract_base_values[i]->_interface_repository_id ();
+      char const * const base_id =
+        abstract_base_values[i]->_interface_repository_id ();
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (bases_key,
                                                 stringified,

@@ -279,8 +279,6 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
   this->repo_->config ()->set_integer_value (params_key,
                                              "count",
                                              length);
-  char *type_path {};
-
   for (CORBA::ULong i {}; i < length; ++i)
     {
       ACE_Configuration_Section_Key param_key;
@@ -293,7 +291,7 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
       this->repo_->config ()->set_string_value (param_key,
                                                 "name",
                                                 params[i].name.in ());
-      type_path =
+      char * const type_path =
         TAO_IFR_Service_Utils::reference_to_path (params[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (param_key,

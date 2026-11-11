@@ -323,8 +323,6 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
-  char *member_path {};
-
   // Create a section for each member. We store the member
   // name, its label value, and the path to its database entry.
   for (CORBA::ULong i {}; i < count; ++i)
@@ -340,7 +338,7 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path =
+      char * const member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,

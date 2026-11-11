@@ -110,13 +110,10 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      char const *supported_path {};
-      char *stringified {};
-
       for (i = 0; i < count; ++i)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          supported_path =
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char const * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
@@ -219,12 +216,11 @@ TAO_ComponentContainer_i::create_home_i (
                                                  "count",
                                                  length);
 
-      char *supported_path {};
       char *stringified {};
 
       for (i = 0; i < length; ++i)
         {
-          supported_path =
+          char * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
@@ -360,11 +356,9 @@ TAO_ComponentContainer_i::create_event_i (
                                             1,
                                             bases_key);
 
-      char *base_path {};
-
       for (i = 0; i < length; ++i)
         {
-          base_path =
+          char * const base_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 abstract_base_values[i]
               );
@@ -414,7 +408,6 @@ TAO_ComponentContainer_i::create_event_i (
                                             initializers_key);
 
       CORBA::ULong count = 0;
-      char *path {};
       char *stringified {};
       ACE_Configuration_Section_Key initializer_key;
       ACE_Configuration_Section_Key outer_key;
@@ -461,7 +454,7 @@ TAO_ComponentContainer_i::create_event_i (
                       initializers[i].members[j].name.in ()
                     );
 
-                  path =
+                  char * const path =
                     TAO_IFR_Service_Utils::reference_to_path (
                               initializers[i].members[j].type_def.in ()
                             );

@@ -266,13 +266,12 @@ TAO_HomeDef_i::supported_interfaces_i (
                                              "count",
                                              count);
   retval->length (count);
-  char *stringified {};
   ACE_TString holder;
   CORBA::Object_var obj;
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
                                                 stringified,
                                                 holder);
@@ -318,12 +317,10 @@ TAO_HomeDef_i::supported_interfaces_i (
                                         1,
                                         supported_key);
   char *stringified {};
-  char *path {};
-
   for (CORBA::ULong i {}; i < length; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      path =
+      char * const path =
         TAO_IFR_Service_Utils::reference_to_path (
             supported_interfaces[i]
           );
@@ -572,7 +569,6 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path {};
       char *stringified {};
       ACE_Configuration_Section_Key param_key;
 
@@ -587,7 +583,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
           this->repo_->config ()->set_string_value (param_key,
                                                     "name",
                                                     params[i].name.in ());
-          type_path =
+          char * const type_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 params[i].type_def.in ()
               );

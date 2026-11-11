@@ -188,13 +188,12 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                                              "count",
                                              count);
   exceptions.length (count);
-  char *stringified {};
   ACE_TString holder;
   ACE_Configuration_Section_Key except_key;
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (excepts_key,
                                                 stringified,
                                                 holder);

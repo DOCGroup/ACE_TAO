@@ -252,8 +252,6 @@ TAO_StructDef_i::members_i (CORBA::StructMemberSeq const &members)
                                         "refs",
                                         1,
                                         refs_key);
-  char *path {};
-
   // Create a section for each new member. We just store the
   // member name and the path to its database entry.
   for (CORBA::ULong i {}; i < count; ++i)
@@ -269,7 +267,7 @@ TAO_StructDef_i::members_i (CORBA::StructMemberSeq const &members)
                                                 "name",
                                                 members[i].name.in ());
 
-      path =
+      char * const path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
