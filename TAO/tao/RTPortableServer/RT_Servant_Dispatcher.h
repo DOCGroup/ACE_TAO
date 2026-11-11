@@ -42,6 +42,11 @@ public:
   TAO_RT_Servant_Dispatcher () = default;
   ~TAO_RT_Servant_Dispatcher () override = default;
 
+  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher const &) = delete;
+  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher const &) = delete;
+  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher &&) = delete;
+  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher &&) = delete;
+
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (TAO_Root_POA &poa,
                                   CORBA::Short servant_priority,
@@ -66,11 +71,6 @@ public:
                                  TAO_ORB_Core &orb_core,
                                  TAO_Object_Adapter *object_adapter) override;
 
-private:
-  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher const &) = delete;
-  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher const &) = delete;
-  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher &&) = delete;
-  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

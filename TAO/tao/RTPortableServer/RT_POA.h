@@ -185,6 +185,11 @@ public:
 
   ~TAO_RT_POA () override = default;
 
+  TAO_RT_POA (TAO_RT_POA const &) = delete;
+  TAO_RT_POA &operator= (TAO_RT_POA const &) = delete;
+  TAO_RT_POA (TAO_RT_POA &&) = delete;
+  TAO_RT_POA &operator= (TAO_RT_POA &&) = delete;
+
   void *thread_pool () const override;
 
 protected:
@@ -222,11 +227,6 @@ protected:
                      TAO_PriorityBandedConnectionPolicy *priority_bands);
 
 private:
-  TAO_RT_POA (TAO_RT_POA const &) = delete;
-  TAO_RT_POA &operator= (TAO_RT_POA const &) = delete;
-  TAO_RT_POA (TAO_RT_POA &&) = delete;
-  TAO_RT_POA &operator= (TAO_RT_POA &&) = delete;
-
   TAO_Thread_Pool *thread_pool_ {};
 };
 
