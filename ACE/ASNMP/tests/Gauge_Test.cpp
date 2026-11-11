@@ -33,6 +33,7 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 #include <memory>
+#include "ace/Assert.h"
 #include "ace/OS_main.h"
 #include "asnmp/gauge.h"
 #include "test_config.h"
@@ -82,7 +83,7 @@ TestGuage ()
    Gauge32 g7(ui);
    ACE_ASSERT(g7 == ui);
    Gauge32 const &g7_ref = g7;
-   ACE_ASSERT(static_cast<unsigned long> (g7_ref) == ui);
+   ACE_TEST_ASSERT(static_cast<unsigned long> (g7_ref) == ui);
    std::unique_ptr<Gauge32> g8 = std::make_unique<Gauge32> (g5);
    ACE_ASSERT(g8 != nullptr);
 

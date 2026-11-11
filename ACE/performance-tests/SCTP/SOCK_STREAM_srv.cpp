@@ -177,11 +177,19 @@ static void run_server (ACE_HANDLE handle)
   // remains valid while it is in scope.
   ACE_InputCDR hdrCDR(hdrBuf_a, hdrBufSize);
 
-  ACE_CDR::Boolean byteOrder;
+  ACE_CDR::Boolean byteOrder {};
   ACE_CDR::ULong numIterations;
 
   // extract the data
   hdrCDR >> ACE_InputCDR::to_boolean (byteOrder);
+  if (!hdrCDR.good_bit()){
+    ACE_ERROR((LM_ERROR,
+               ACE_TEXT ("%p\n"),
+               ACE_TEXT ("hdrCDR")));
+
+    return;
+  }
+
   hdrCDR.reset_byte_order(byteOrder);
   hdrCDR >> numIterations;
 

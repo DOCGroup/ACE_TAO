@@ -35,6 +35,7 @@ DAMAGES.
 
 #include <cstring>
 #include <memory>
+#include "ace/Assert.h"
 #include "ace/OS_main.h"
 #include "asnmp/address.h"
 #include "test_config.h"
@@ -45,7 +46,7 @@ static void TestAddressIter ()
   ACE_ASSERT(iter.valid() == 1);
 
   int const expected_count = iter.how_many_addresses();
-  ACE_ASSERT(expected_count > 0);
+  ACE_TEST_ASSERT(expected_count > 0);
 
   IpAddress address;
   int addresses_read {};
@@ -59,7 +60,7 @@ static void TestAddressIter ()
   while (result == 0);
 
   ACE_ASSERT(result == 1);
-  ACE_ASSERT(addresses_read == expected_count);
+  ACE_TEST_ASSERT(addresses_read == expected_count);
 }
 
 static void TestAppleTalkAddress ()
