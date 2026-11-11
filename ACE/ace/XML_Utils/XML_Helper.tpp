@@ -71,13 +71,13 @@ namespace XML
 
     try
     {
-      if (!resolver_)
+      if (resolver_ == nullptr)
       {
         owned_resolver_ = std::make_unique<Resolver> ();
         resolver_ = owned_resolver_.get ();
       }
 
-      if (!e_handler_)
+      if (e_handler_ == nullptr)
       {
         owned_e_handler_ = std::make_unique<Error> ();
         e_handler_ = owned_e_handler_.get ();
@@ -95,7 +95,7 @@ namespace XML
 
       this->initialized_ = true;
     }
-    catch (const xercesc::XMLException &e)
+    catch (xercesc::XMLException const &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
       detail::Transcoded_String cleanup_message (message);
@@ -113,11 +113,11 @@ namespace XML
   }
 
   template <typename Resolver, typename Error>
-  XERCES_CPP_NAMESPACE::DOMDocument *XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *root,
-                                                                              const ACE_TCHAR *ns,
+  XERCES_CPP_NAMESPACE::DOMDocument *XML_Helper<Resolver, Error>::create_dom (ACE_TCHAR const *root,
+                                                                              ACE_TCHAR const *ns,
                                                                               xercesc::DOMDocumentType *doctype) const
   {
-    if (!root || !ns)
+    if (root == nullptr || ns == nullptr)
       return nullptr;
 
     if (!initialized_ || impl_ == nullptr)
@@ -127,9 +127,9 @@ namespace XML
   }
 
   template <typename Resolver, typename Error>
-  XERCES_CPP_NAMESPACE::DOMDocumentType *XML_Helper<Resolver, Error>::create_doctype (const ACE_TCHAR *qn,
-                                                                                      const ACE_TCHAR *pid,
-                                                                                      const ACE_TCHAR *sid) const
+  XERCES_CPP_NAMESPACE::DOMDocumentType *XML_Helper<Resolver, Error>::create_doctype (ACE_TCHAR const *qn,
+                                                                                      ACE_TCHAR const *pid,
+                                                                                      ACE_TCHAR const *sid) const
   {
     if (!initialized_ || impl_ == nullptr)
       throw std::logic_error ("XML_Helper is not initialized");
@@ -137,7 +137,7 @@ namespace XML
   }
 
   template <typename Resolver, typename Error>
-  XERCES_CPP_NAMESPACE::DOMDocument *XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *url) const
+  XERCES_CPP_NAMESPACE::DOMDocument *XML_Helper<Resolver, Error>::create_dom (ACE_TCHAR const *url) const
   {
     if (url == nullptr)
       return nullptr;
@@ -147,7 +147,7 @@ namespace XML
 
     try
     {
-      if (!this->parser_)
+      if (this->parser_ == nullptr)
         this->parser_ = std::make_unique<xercesc::XercesDOMParser> ();
 
       // Perform Namespace processing.
@@ -196,7 +196,7 @@ namespace XML
 
       return this->parser_->getDocument ();
     }
-    catch (const xercesc::DOMException &e)
+    catch (xercesc::DOMException const &e)
     {
       unsigned int const maxChars (2047);
       XMLCh errText[maxChars + 1]{};
@@ -215,7 +215,7 @@ namespace XML
 
       throw std::runtime_error (message);
     }
-    catch (const xercesc::XMLException &e)
+    catch (xercesc::XMLException const &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
       detail::Transcoded_String cleanup_message (message);
@@ -236,7 +236,7 @@ namespace XML
 
     try
     {
-      this->parser_.reset (nullptr);
+      this->parser_.reset ();
 
       if (owned_resolver_)
       {
@@ -254,7 +254,7 @@ namespace XML
       this->initialized_ = false;
       xercesc::XMLPlatformUtils::Terminate ();
     }
-    catch (const xercesc::XMLException &e)
+    catch (xercesc::XMLException const &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
       detail::Transcoded_String cleanup_message (message);
@@ -272,7 +272,7 @@ namespace XML
   template <typename Resolver, typename Error>
   Resolver &XML_Helper<Resolver, Error>::get_resolver ()
   {
-    if (!this->resolver_)
+    if (this->resolver_ == nullptr)
       throw std::logic_error ("XML resolver is not available");
 
     return *this->resolver_;
@@ -281,14 +281,14 @@ namespace XML
   template <typename Resolver, typename Error>
   Error &XML_Helper<Resolver, Error>::get_error_handler ()
   {
-    if (!this->e_handler_)
+    if (this->e_handler_ == nullptr)
       throw std::logic_error ("XML error handler is not available");
 
     return *this->e_handler_;
   }
 
   template <typename Resolver, typename Error>
-  bool XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc, const ACE_TCHAR *file) const
+  bool XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc, ACE_TCHAR const *file) const
   {
     if (!initialized_ || impl_ == nullptr)
       throw std::logic_error ("XML_Helper is not initialized");
@@ -314,15 +314,15 @@ namespace XML
 
     try
     {
-      std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSSerializer, SerializerReleaser> serializer (
+      std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSSerializer, SerializerReleaser> const serializer (
         impl_->createLSSerializer ());
       if (!serializer)
         return false;
       XERCES_CPP_NAMESPACE::DOMConfiguration *const ser_config (serializer->getDomConfig ());
-      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target =
+      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> const format_target =
         std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
 
-      std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser> output (impl_->createLSOutput ());
+      std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser> const output (impl_->createLSOutput ());
       if (!output)
         return false;
 
@@ -333,7 +333,7 @@ namespace XML
 
       return serializer->write (doc, output.get ());
     }
-    catch (const xercesc::XMLException &e)
+    catch (xercesc::XMLException const &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
       detail::Transcoded_String cleanup_message (message);

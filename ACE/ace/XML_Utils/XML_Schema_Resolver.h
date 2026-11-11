@@ -16,7 +16,6 @@
 #include "XML_Utils_Export.h"
 #include "XercesString.h"
 
-#include <string>
 #include <vector>
 #include <xercesc/sax/EntityResolver.hpp>
 
@@ -29,8 +28,9 @@ namespace XML
    * @class XML_Schema_Resolver
    * @brief Resolves schema locations
    *
-   * Template argument Resolver should be a functor with an operation
-   * const ACE_TCHAR * operator () (...arguments from resolveEntity...)
+   * Resolver must accept two XMLCh const pointers and return an XMLCh const
+   * pointer or a Xerces-allocated XMLCh pointer. Mutable results are adopted
+   * and released by XStr.
    */
   template <typename Resolver = NoOp_Resolver>
   class XML_Schema_Resolver : public virtual xercesc::EntityResolver
@@ -42,7 +42,7 @@ namespace XML
 
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
-    xercesc::InputSource *resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId) override;
+    xercesc::InputSource *resolveEntity (XMLCh const *const publicId, XMLCh const *const systemId) override;
 
     Resolver &get_resolver ();
 
@@ -61,7 +61,7 @@ namespace XML
    */
   struct NoOp_Resolver
   {
-    const XMLCh *operator() (const XMLCh *const, const XMLCh *const systemId) const
+    XMLCh const *operator() (XMLCh const *const, XMLCh const *const systemId) const
     {
       return systemId;
     }
@@ -73,9 +73,9 @@ namespace XML
    */
   struct Basic_Resolver
   {
-    explicit Basic_Resolver (const ACE_TCHAR *path);
+    explicit Basic_Resolver (ACE_TCHAR const *path);
 
-    XMLCh *operator() (const XMLCh *const publicId, const XMLCh *const systemId) const;
+    XMLCh *operator() (XMLCh const *const publicId, XMLCh const *const systemId) const;
     XStr path_;
   };
 
@@ -87,11 +87,11 @@ namespace XML
   {
     Environment_Resolver () = default;
 
-    Environment_Resolver (const ACE_TCHAR *variable, const ACE_TCHAR *path);
+    Environment_Resolver (ACE_TCHAR const *variable, ACE_TCHAR const *path);
 
-    void add_path (const ACE_TCHAR *variable, const ACE_TCHAR *path);
+    void add_path (ACE_TCHAR const *variable, ACE_TCHAR const *path);
 
-    XMLCh *operator() (const XMLCh *const publicId, const XMLCh *const systemId) const;
+    XMLCh *operator() (XMLCh const *const publicId, XMLCh const *const systemId) const;
 
     std::vector<XStr> paths_;
   };

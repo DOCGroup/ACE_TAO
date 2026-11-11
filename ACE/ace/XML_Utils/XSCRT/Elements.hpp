@@ -235,7 +235,7 @@ namespace XSCRT
     }
 
     /// Get and set methods for the idref_map_ data member
-    Type *get_idref (const char *name) const
+    Type *get_idref (char const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_CHAR_TO_TCHAR (name));
       std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
@@ -250,7 +250,7 @@ namespace XSCRT
       }
     }
 
-    Type *get_idref (const std::basic_string<ACE_TCHAR> &name) const
+    Type *get_idref (std::basic_string<ACE_TCHAR> const &name) const
     {
       std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i = this->idref_map_.find (name);
       if (i != idref_map_.end ())
@@ -263,7 +263,7 @@ namespace XSCRT
       }
     }
 
-    Type *get_idref (const wchar_t *name) const
+    Type *get_idref (wchar_t const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_WCHAR_TO_TCHAR (name));
       std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
@@ -278,7 +278,7 @@ namespace XSCRT
       }
     }
 
-    void set_idref (const std::basic_string<ACE_TCHAR> &name, Type *new_idref)
+    void set_idref (std::basic_string<ACE_TCHAR> const &name, Type *new_idref)
     {
       this->idref_map_.try_emplace (name, new_idref);
     }

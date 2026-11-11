@@ -78,7 +78,7 @@ namespace XML
     operator XMLCh const * () const
     {
       return _wstr.get ();
-    };
+    }
 
     XMLCh *release ();
 

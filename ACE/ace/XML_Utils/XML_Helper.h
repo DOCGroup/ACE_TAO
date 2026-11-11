@@ -38,6 +38,9 @@ namespace XML
    * @class XML_Helper
    *
    * @brief Helper class for some routine XML stuff.
+   *
+   * Resolver and error-handler pointers supplied to the constructor are
+   * borrowed. When omitted, XML_Helper creates and owns those objects.
    */
   template <typename Resolver = XML_Schema_Resolver<>, typename Error_Handler = XML_Error_Handler>
   class XML_Helper
@@ -52,17 +55,19 @@ namespace XML
     XML_Helper (XML_Helper &&) = delete;
     XML_Helper &operator= (XML_Helper &&) = delete;
 
-    /// Create a DOM tree
-    XERCES_CPP_NAMESPACE::DOMDocument *create_dom (const ACE_TCHAR *uri) const;
+    /// Parse a DOM tree. The parser owns the returned document.
+    XERCES_CPP_NAMESPACE::DOMDocument *create_dom (ACE_TCHAR const *uri) const;
 
-    XERCES_CPP_NAMESPACE::DOMDocument *create_dom (const ACE_TCHAR *root, const ACE_TCHAR *ns,
+    /// Create a DOM tree. The caller owns the returned document and must release it.
+    XERCES_CPP_NAMESPACE::DOMDocument *create_dom (ACE_TCHAR const *root, ACE_TCHAR const *ns,
                                                    XERCES_CPP_NAMESPACE::DOMDocumentType *doctype = nullptr) const;
 
-    XERCES_CPP_NAMESPACE::DOMDocumentType *create_doctype (const ACE_TCHAR *qn, const ACE_TCHAR *pid,
-                                                           const ACE_TCHAR *sid) const;
+    /// Create a document type. The caller owns the returned object and must release it.
+    XERCES_CPP_NAMESPACE::DOMDocumentType *create_doctype (ACE_TCHAR const *qn, ACE_TCHAR const *pid,
+                                                           ACE_TCHAR const *sid) const;
 
-    /// Writes out a DOMDocument to an XML file
-    bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc, const ACE_TCHAR *file) const;
+    /// Write a borrowed DOM document to an XML file.
+    bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc, ACE_TCHAR const *file) const;
 
     bool is_initialized () const;
 
@@ -81,10 +86,13 @@ namespace XML
     void cleanup_parser (bool runtime_started);
 
     bool initialized_{};
+    // Xerces owns impl_; parser_ owns the parser and its parsed document.
     XERCES_CPP_NAMESPACE::DOMImplementation *impl_{};
     mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_{};
 
     std::unique_ptr<Resolver> owned_resolver_{};
+    // resolver_ and e_handler_ either borrow caller objects or point into the
+    // corresponding owned unique_ptr.
     Resolver *resolver_{};
     std::unique_ptr<Error_Handler> owned_e_handler_{};
     Error_Handler *e_handler_{};

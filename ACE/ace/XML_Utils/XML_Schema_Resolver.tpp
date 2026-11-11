@@ -23,14 +23,14 @@ namespace XML
   /// This function is called by the Xerces infrastructure to
   /// actually resolve the location of a schema.
   template <typename Resolver>
-  xercesc::InputSource *XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId,
-                                                                      const XMLCh *const systemId)
+  xercesc::InputSource *XML_Schema_Resolver<Resolver>::resolveEntity (XMLCh const *const publicId,
+                                                                      XMLCh const *const systemId)
   {
     XStr path (resolver_ (publicId, systemId));
     if (path.begin () == nullptr)
       return nullptr;
 
-    // Ownership of these objects is given to other people.
+    // Xerces takes ownership of the returned input source.
     return new xercesc::LocalFileInputSource (path.begin ());
   }
 }
