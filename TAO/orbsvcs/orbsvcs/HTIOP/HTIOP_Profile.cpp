@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
+#include <cstdlib>
 #include <cstring>
 
 static constexpr char the_prefix[] = "htiop";
@@ -152,7 +153,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
-        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
 
       length_host = cp_pos - ior;
     }

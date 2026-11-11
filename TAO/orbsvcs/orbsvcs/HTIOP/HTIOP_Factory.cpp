@@ -4,6 +4,7 @@
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Environment.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "tao/IOPC.h"
@@ -72,13 +73,13 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-inside")) == 0)
         {
           if (++i < argc)
-            this->inside_ = ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i]));
+            this->inside_ = ACE_OS::atoi (argv[i]);
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_port")) == 0)
         {
           if (++i < argc)
             proxy_port = static_cast<unsigned>
-              (ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i])));
+              (ACE_OS::atoi (argv[i]));
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_host")) == 0)
         {
