@@ -77,7 +77,8 @@ public:
   /// Visitor accept method.
   int accept (ETCL_Constraint_Visitor *visitor) override;
 
-  Literal_Type expr_type () const;
+  /// Derived literal types can supply additional expression kinds.
+  virtual Literal_Type expr_type () const;
 
   /// Assignment operator.
   void operator= (ETCL_Literal_Constraint const &co);

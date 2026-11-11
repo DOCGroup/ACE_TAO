@@ -88,6 +88,8 @@ public:
   /// Ensure both operands are of the same simple numeric type.
   Literal_Type widest_type (ETCL_Literal_Constraint const &rhs) override;
 
+  Literal_Type expr_type () const override;
+
   /// Determine the comparable Expression Type from the CORBA type
   static Literal_Type
   comparable_type (CORBA::TypeCode_ptr type);
