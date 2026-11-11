@@ -42,7 +42,7 @@ public:
   Consumer &operator= (Consumer const &) = delete;
   Consumer &operator= (Consumer &&) = delete;
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
   // Run the test
 
 protected:
@@ -57,8 +57,6 @@ protected:
 
   // = StructuredPushSupplier methods
   void push (CORBA::Any const &event) override;
-
-
   void disconnect_push_consumer () override;
 
 private:

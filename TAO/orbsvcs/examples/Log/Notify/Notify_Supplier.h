@@ -18,7 +18,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosNotifyCommS.h"
 
-
 class Filter_StructuredPushSupplier;
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,17 +34,14 @@ class Supplier
   //
 public:
   Supplier () = default;
-  // Constructor
-
   ~Supplier () = default;
-  // Destructor.
 
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;
   Supplier &operator= (Supplier const &) = delete;
   Supplier &operator= (Supplier &&) = delete;
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
   // Run the test
 
 private:
@@ -61,8 +57,6 @@ private:
 
   DsNotifyLogAdmin::NotifyLog_var notify_log_;
 
-  Filter_StructuredPushSupplier* supplier_1 {};
-
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 };
 
@@ -77,7 +71,6 @@ class Filter_StructuredPushSupplier
   //
  public:
   Filter_StructuredPushSupplier () = default;
-  // Constructor.
 
   Filter_StructuredPushSupplier (Filter_StructuredPushSupplier const &) = delete;
   Filter_StructuredPushSupplier (Filter_StructuredPushSupplier &&) = delete;
@@ -91,7 +84,7 @@ class Filter_StructuredPushSupplier
   void disconnect ();
   // Disconnect from the supplier.
 
-  virtual void send_event (CosNotification::StructuredEvent const &event);
+  void send_event (CosNotification::StructuredEvent const &event);
   // Send one event.
 
 protected:
@@ -104,7 +97,6 @@ protected:
 
   // = Protected Methods
   ~Filter_StructuredPushSupplier () override = default;
-  // Destructor
 
   // = NotifySubscribe
   void subscription_change (
@@ -114,6 +106,5 @@ protected:
   // = StructuredPushSupplier method
   void disconnect_structured_push_supplier () override;
 };
-
 
 #endif /* NOTIFY_SUPPLIER_H */
