@@ -1,6 +1,7 @@
 #include "RTEvent_Supplier.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -20,23 +21,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Supplier::run (int argc, ACE_TCHAR* argv[])
+Supplier::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
-      CORBA::Object_var naming_obj =
+      CORBA::Object_var const naming_obj =
         orb->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
@@ -49,7 +50,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       name.length (1);
       name[0].id = CORBA::string_dup (event_tls_log_factory_name);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->naming_context_->resolve (name);
 
       this->event_log_factory_ =
@@ -60,37 +61,37 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // Create a log.
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\nCalling EventLogFactory::create...\n"));
+                  ACE_TEXT ("\nCalling EventLogFactory::create...\n")));
 
-      DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
+      DsLogAdmin::LogFullActionType const logfullaction = DsLogAdmin::halt;
       DsLogAdmin::CapacityAlarmThresholdList threshold {};
-      CORBA::ULongLong max_size = 0; // 0 means "infinite"
+      CORBA::ULongLong const max_size {}; // 0 means "infinite"
 
       DsLogAdmin::LogId logid {};
 
-      RTEventLogAdmin::EventLog_var event_log =
+      RTEventLogAdmin::EventLog_var const event_log =
         this->event_log_factory_->create (logfullaction,
                                           max_size,
                                           threshold,
                                           logid);
       ACE_DEBUG ((LM_DEBUG,
-                  "Create returned logid = %d\n", logid));
+                  ACE_TEXT ("Create returned logid = %u\n"), logid));
 
       // The canonical protocol to connect to the EC
-      RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+      RtecEventChannelAdmin::SupplierAdmin_var const supplier_admin =
         event_log->for_suppliers ();
 
       this->consumer_ =
         supplier_admin->obtain_push_consumer ();
 
-      RtecEventComm::PushSupplier_var supplier =
+      RtecEventComm::PushSupplier_var const supplier =
         this->_this ();
 
       // Simple publication, but usually the helper classes in
       // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
       RtecEventChannelAdmin::SupplierQOS qos {};
       qos.publications.length (1);
-      RtecEventComm::EventHeader& h0 =
+      RtecEventComm::EventHeader &h0 =
         qos.publications[0].event.header;
       h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
       h0.source = 1;                      // first free event source
@@ -113,46 +114,52 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Writing %d records...\n", log_event_count));
+                  ACE_TEXT ("Writing %d records...\n"), log_event_count));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Calling EventLog::get_n_records...\n"));
-      CORBA::ULongLong retval = event_log->get_n_records ();
-
-      ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d\n", retval));
+                  ACE_TEXT ("Calling EventLog::get_n_records...\n")));
+      CORBA::ULongLong const record_count = event_log->get_n_records ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Calling EventLog::get_current_size...\n"));
-      retval = event_log->get_current_size ();
+                  ACE_TEXT ("Number of records in Log = %Q\n"), record_count));
 
-      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Calling EventLog::get_current_size...\n")));
+      CORBA::ULongLong const current_size = event_log->get_current_size ();
 
-      ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", query_1));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Size of data in Log = %Q\n"), current_size));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Querying the Log: %C\n"), query_1));
       DsLogAdmin::Iterator_var iter_out;
-      DsLogAdmin::RecordList_var rec_list =
+      DsLogAdmin::RecordList_var const rec_list =
         event_log->query (query_lang, query_1, iter_out);
 
       for (CORBA::ULong j {}; j < rec_list->length (); ++j)
         ACE_DEBUG ((LM_DEBUG,
-                    "id = %Q, time= %Q\n",
+                    ACE_TEXT ("id = %Q, time= %Q\n"),
                     rec_list[j].id, rec_list[j].time));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Deleting records...\n"));
+                  ACE_TEXT ("Deleting records...\n")));
 
-      retval = event_log->delete_records (query_lang, query_2);
+      event_log->delete_records (query_lang, query_2);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Calling EventLog::get_n_records...\n"));
-      retval = event_log->get_n_records ();
+                  ACE_TEXT ("Calling EventLog::get_n_records...\n")));
+      CORBA::ULongLong const remaining_records = event_log->get_n_records ();
 
-      ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d\n",
-                  retval));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Number of records in Log after delete = %Q\n"),
+                  remaining_records));
 
-      ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
-      retval = event_log->get_current_size ();
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Getting the current_size again...\n")));
+      CORBA::ULongLong const remaining_size = event_log->get_current_size ();
 
-      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Size of data in Log = %Q\n"), remaining_size));
 
       // Disconnect from the EC.
       this->consumer_->disconnect_push_consumer ();
@@ -161,7 +168,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       event_log->destroy ();
 
       // Deactivate this object.
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
 

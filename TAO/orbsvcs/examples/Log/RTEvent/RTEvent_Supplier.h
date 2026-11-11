@@ -32,14 +32,13 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //
 public:
   Supplier () = default;
-  // Constructor
 
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;
   Supplier &operator= (Supplier const &) = delete;
   Supplier &operator= (Supplier &&) = delete;
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
   // Run the test
 
   // = The RtecEventComm::PushSupplier methods

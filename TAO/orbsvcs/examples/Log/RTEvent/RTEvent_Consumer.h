@@ -38,9 +38,8 @@ public:
   Consumer (Consumer &&) = delete;
   Consumer &operator= (Consumer const &) = delete;
   Consumer &operator= (Consumer &&) = delete;
-  // Constructor
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
   // Run the test
 
   // = The RtecEventComm::PushConsumer methods

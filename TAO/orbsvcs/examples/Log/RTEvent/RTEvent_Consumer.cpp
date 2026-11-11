@@ -1,6 +1,7 @@
 #include "RTEvent_Consumer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
 constexpr char naming_service_name[] = "NameService";
@@ -15,27 +16,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Consumer::run (int argc, ACE_TCHAR* argv[])
+Consumer::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the run() method.
       this->orb_ = orb.in ();
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // Obtain the event channel.
-      CORBA::Object_var naming_obj =
+      CORBA::Object_var const naming_obj =
         this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
@@ -49,7 +50,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       name.length (1);
       name[0].id = CORBA::string_dup (event_tls_log_factory_name);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->naming_context_->resolve (name);
 
       this->event_log_factory_ =
@@ -60,19 +61,19 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       this->supplier_ =
         this->event_log_factory_->obtain_push_supplier ();
 
-      RtecEventComm::PushConsumer_var consumer =
+      RtecEventComm::PushConsumer_var const consumer =
         this->_this ();
 
       // Simple subscription, but usually the helper classes in
       // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
       RtecEventChannelAdmin::ConsumerQOS qos {};
       qos.dependencies.length (2);
-      RtecEventComm::EventHeader& h0 =
+      RtecEventComm::EventHeader &h0 =
         qos.dependencies[0].event.header;
       h0.type   = ACE_ES_DISJUNCTION_DESIGNATOR;
       h0.source = ACE_ES_EVENT_SOURCE_ANY;
 
-      RtecEventComm::EventHeader& h1 =
+      RtecEventComm::EventHeader &h1 =
         qos.dependencies[1].event.header;
       h1.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
       h1.source = ACE_ES_EVENT_SOURCE_ANY;
@@ -99,14 +100,12 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (RtecEventComm::EventSet const &events)
+Consumer::push (RtecEventComm::EventSet const &)
 {
-  ACE_UNUSED_ARG (events);
-
   ++this->event_count_;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Consumer (%P|%t): %d log generated events received\n",
+              ACE_TEXT ("Consumer (%P|%t): %u log generated events received\n"),
               this->event_count_));
 }
 
