@@ -46,8 +46,10 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_i
 public:
   explicit TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const &value);
 
-  /// Copy constructor.
   TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const& rhs);
+
+  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i &&) = delete;
+  TAO_EndpointPolicy_i &operator= (TAO_EndpointPolicy_i &&) = delete;
 
   ~TAO_EndpointPolicy_i () override = default;
 
