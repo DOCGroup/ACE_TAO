@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
@@ -51,6 +50,7 @@ public:
 
 private:
   RtecEventComm::EventSourceID id_;
+  // Borrowed from the active ProxyPushConsumer_var in Service::ACE_TMAIN.
   RtecEventChannelAdmin::ProxyPushConsumer_ptr const consumer_proxy_;
 };
 
@@ -80,6 +80,7 @@ public:
   void disconnect_push_consumer () override;
 
 private:
+  // Borrowed from the Supplier objects in Service::ACE_TMAIN.
   Supplier *supplier_impl_;
 };
 
