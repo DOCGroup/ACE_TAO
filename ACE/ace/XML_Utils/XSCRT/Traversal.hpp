@@ -86,7 +86,7 @@ namespace XSCRT
 
       void traverser (DispatcherBase<B> &d)
       {
-        for (auto const &entry : d)
+        for (typename DispatcherBase<B>::TraversalMap::value_type const &entry : d)
         {
           for (TraverserBase<B> *item : entry.second)
           {
@@ -116,7 +116,7 @@ namespace XSCRT
       {
         if (merge_)
         {
-          for (auto const &entry : *this)
+          for (typename DispatcherBase<B>::TraversalMap::value_type const &entry : *this)
           {
             for (TraverserBase<B> *traverser : entry.second)
             {

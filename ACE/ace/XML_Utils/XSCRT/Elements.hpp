@@ -139,9 +139,6 @@ namespace XSCRT
       {
         for (Map_::value_type const &entry : *map_)
         {
-          // std::wcerr << "revoking " << entry.second
-          //            << " to " << container_ << std::endl;
-
           container_->unregister_id (*entry.first);
         }
       }
@@ -153,9 +150,6 @@ namespace XSCRT
         {
           for (Map_::value_type const &entry : *map_)
           {
-            // std::wcerr << "copying " << entry.second
-            //            << " to " << c << std::endl;
-
             c->register_id (*entry.first, entry.second);
             ++registered;
           }

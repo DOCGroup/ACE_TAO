@@ -386,9 +386,6 @@ namespace XMLSchema
     {
       if (container () != this && !empty ())
       {
-        // std::wcerr << "registering " << container ()
-        //            << " as '" << *this
-        //            << "' on " << container () << std::endl;
         container ()->register_id (id_provider_, container ());
         registered_ = true;
       }
@@ -398,9 +395,6 @@ namespace XMLSchema
     {
       if (registered_)
       {
-        // std::wcerr << "un-registering " << container ()
-        //            << " as '" << *this
-        //            << "' on " << container () << std::endl;
         container ()->unregister_id (id_provider_);
         registered_ = false;
       }

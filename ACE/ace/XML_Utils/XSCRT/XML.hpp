@@ -125,11 +125,12 @@ namespace XSCRT
       if (buf == nullptr)
         throw std::bad_alloc ();
 
-      auto const release = [] (char *value)
-      {
-        xercesc::XMLString::release (std::addressof (value));
-      };
-      std::unique_ptr<char, decltype (release)> buffer (buf, release);
+      std::unique_ptr<char, void (*) (char *)> buffer (
+        buf,
+        [] (char *value)
+        {
+          xercesc::XMLString::release (std::addressof (value));
+        });
 
       return std::basic_string<char> (buffer.get ());
     }
@@ -502,9 +503,6 @@ namespace XSCRT
       std::size_t i{};
       while (i < n.length () && n[i] != ':')
         ++i;
-
-      // std::wcerr << "prefix " << n << " "
-      //            << std::wstring (n, i == n.length () ? i : 0, i) << std::endl;
 
       return std::basic_string<C> (n, i == n.length () ? i : 0, i);
     }
