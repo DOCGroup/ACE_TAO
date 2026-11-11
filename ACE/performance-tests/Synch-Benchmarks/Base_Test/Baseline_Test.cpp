@@ -4,6 +4,7 @@
 
 # if defined (ACE_HAS_THREADS)
 
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Repository.h"
 #include "ace/Get_Opt.h"

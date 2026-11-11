@@ -4,7 +4,6 @@
 
 # if defined (ACE_HAS_THREADS)
 
-#include "ace/Log_Msg.h"
 #include "ace/Token.h"
 #include "ace/Process_Mutex.h"
 #include "ace/RW_Mutex.h"

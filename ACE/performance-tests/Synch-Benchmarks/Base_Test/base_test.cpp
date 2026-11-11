@@ -4,8 +4,6 @@
 
 # if defined (ACE_HAS_THREADS)
 
-#include "ace/Log_Msg.h"
-
 class ACE_Svc_Export Baseline_Base_Test : public Baseline_Test_Base
 {
 public:
