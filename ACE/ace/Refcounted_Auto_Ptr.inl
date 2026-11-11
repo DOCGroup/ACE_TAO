@@ -25,7 +25,7 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null () const
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::internal_create (X *p)
 {
-  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *temp = nullptr;
+  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *temp {};
   ACE_NEW_RETURN (temp,
                   (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>) (p),
                   nullptr);

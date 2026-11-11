@@ -132,7 +132,7 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s,
   size_type const new_buf_len = len + 1;
   if (s != nullptr && len != 0 && release && this->buf_len_ < new_buf_len)
     {
-      ACE_CHAR_T *temp = nullptr;
+      ACE_CHAR_T *temp {};
       ACE_ALLOCATOR (temp,
                      (ACE_CHAR_T *) this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T)));
 

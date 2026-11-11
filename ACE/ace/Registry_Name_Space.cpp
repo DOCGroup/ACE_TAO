@@ -166,7 +166,7 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
 
   ACE_BINDING_ITERATOR iterator (binding_set);
 
-  for (ACE_Name_Binding *entry = nullptr;
+  for (ACE_Name_Binding *entry {};
        iterator.next (entry) !=0;
        iterator.advance())
     {
@@ -188,7 +188,7 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
 
   ACE_BINDING_ITERATOR iterator (binding_set);
 
-  for (ACE_Name_Binding *entry = nullptr;
+  for (ACE_Name_Binding *entry {};
        iterator.next (entry) !=0;
        iterator.advance())
     {
@@ -236,7 +236,7 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 
           // Value
           ACE_NS_WString value;
-          char *type = nullptr;
+          char *type {};
           result = this->resolve (key,
                                   value,
                                   type);

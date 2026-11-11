@@ -99,7 +99,7 @@ ACE_Process_Semaphore::release ()
 ACE_Process_Semaphore *
 ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (const ACE_TCHAR *name)
 {
-  ACE_Process_Semaphore *p = nullptr;
+  ACE_Process_Semaphore *p {};
   if (name == nullptr)
     ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, name), nullptr);
   else

@@ -79,7 +79,7 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
     return -1;
   else
     {
-      ACE_UPIPE_Stream *remote_stream = nullptr;
+      ACE_UPIPE_Stream *remote_stream {};
 
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
 

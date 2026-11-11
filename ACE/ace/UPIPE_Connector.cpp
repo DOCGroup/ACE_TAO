@@ -71,7 +71,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
                     ACE_TEXT ("write to pipe failed")));
 
       // Wait for confirmation of stream linking.
-      ACE_Message_Block *mb_p = nullptr;
+      ACE_Message_Block *mb_p {};
 
       // Our part is done, wait for server to confirm connection.
       result = new_stream.recv (mb_p, nullptr);

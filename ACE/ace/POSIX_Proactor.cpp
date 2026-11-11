@@ -285,7 +285,7 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result
    int priority ,
    int signal_number)
 {
-  ACE_Asynch_Read_Dgram_Result_Impl *implementation=nullptr;
+  ACE_Asynch_Read_Dgram_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Read_Dgram_Result(handler_proxy,
                                                      handle,
@@ -326,7 +326,7 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result
    int priority ,
    int signal_number)
 {
-  ACE_Asynch_Write_Dgram_Result_Impl *implementation=nullptr;
+  ACE_Asynch_Write_Dgram_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Write_Dgram_Result(handler_proxy,
                                                       handle,

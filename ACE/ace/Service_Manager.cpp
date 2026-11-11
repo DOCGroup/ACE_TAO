@@ -404,7 +404,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     default:
       {
-        ACE_Event_Handler *old_signal_handler = nullptr;
+        ACE_Event_Handler *old_signal_handler {};
         ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                     this,
                                                     nullptr,

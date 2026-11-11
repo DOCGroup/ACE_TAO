@@ -90,7 +90,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 
   ACE_TCHAR message[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
   ACE_OS::strcpy (message, log_record.msg_data ());
-  ACE_TCHAR *strtokp = nullptr;
+  ACE_TCHAR *strtokp {};
 
   for (ACE_TCHAR *line = ACE_OS::strtok_r (message,
                                            ACE_TEXT ("\n"),

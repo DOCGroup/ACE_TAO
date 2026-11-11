@@ -502,12 +502,12 @@ ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard (ACE_LOCK &lock,
                                                     bool block)
 {
   this->init_key ();
-  Guard_Type *guard = nullptr;
+  Guard_Type *guard {};
   ACE_NEW (guard,
            Write_Guard_Type (lock, block));
 
 #if defined (ACE_HAS_THR_C_DEST)
-  ACE_TSS_Adapter *tss_adapter = nullptr;
+  ACE_TSS_Adapter *tss_adapter {};
   ACE_NEW (tss_adapter,
            ACE_TSS_Adapter ((void *) guard,
                             ACE_TSS_Guard<ACE_LOCK>::cleanup));

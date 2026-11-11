@@ -40,12 +40,12 @@ ACE_QoS_Decorator::ACE_QoS_Decorator (ACE_Event_Handler *event_handler,
   : qos_session_ (qos_session),
     reactor_ (reactor)
 {
-  ACE_QoS_Decorator_Base *decorator_base = nullptr;
+  ACE_QoS_Decorator_Base *decorator_base {};
   ACE_NEW (decorator_base,
            ACE_QoS_Decorator_Base (event_handler));
   this->decorator_base_.reset (decorator_base);
 
-  ACE_QoS_Event_Handler *qos_event_handler = nullptr;
+  ACE_QoS_Event_Handler *qos_event_handler {};
   ACE_NEW (qos_event_handler,
            ACE_QoS_Event_Handler (this->decorator_base_.get ()));
   this->qos_event_handler_.reset (qos_event_handler);

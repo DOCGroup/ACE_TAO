@@ -458,7 +458,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS> int
 ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
 {
   ACE_Message_Queue_Iterator<SYNCH_TRAITS> iterator (*this->msg_queue ());
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block *mblk {};
   ssize_t result = 0;
 
   // Get the first <ACE_Message_Block> so that we can write everything

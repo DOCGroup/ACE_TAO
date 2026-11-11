@@ -15,7 +15,7 @@ template <class ACE_LOCKING_MECHANISM>
 ACE_INLINE
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter ()
 {
-  ACE_LOCKING_MECHANISM *lock = nullptr;
+  ACE_LOCKING_MECHANISM *lock {};
   ACE_NEW (lock, ACE_LOCKING_MECHANISM);
   this->owned_lock_.reset (lock);
   this->lock_ = this->owned_lock_.get ();

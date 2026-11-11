@@ -202,7 +202,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // Note that making a new svc_handler, connecting remotely,
   // binding to the map, and assigning of the hint and recycler
   // should be atomic to the outside world.
-  SVC_HANDLER *potential_handler = nullptr;
+  SVC_HANDLER *potential_handler {};
 
   // Create a new svc_handler
   if (this->make_svc_handler (potential_handler) == -1)
@@ -319,7 +319,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
  int perms,
  int& found)
 {
-  CONNECTION_CACHE_ENTRY *entry = nullptr;
+  CONNECTION_CACHE_ENTRY *entry {};
 
   // Check if the user passed a hint svc_handler
   if (sh != 0)
@@ -672,7 +672,7 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
   // Note that making a new svc_handler, connecting remotely,
   // binding to the map, and assigning of the hint and recycler
   // should be atomic to the outside world.
-  SVC_HANDLER *potential_handler = nullptr;
+  SVC_HANDLER *potential_handler {};
 
   // Create a new svc_handler
   if (this->make_svc_handler (potential_handler) == -1)

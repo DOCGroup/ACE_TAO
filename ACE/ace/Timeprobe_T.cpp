@@ -47,7 +47,7 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
     report_buffer_full_ (0),
     allocator_ (allocator)
 {
-  ACE_timeprobe_t *temp = nullptr;
+  ACE_timeprobe_t *temp {};
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
@@ -143,7 +143,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
   if (size > this->max_size_)
     {
-      ACE_timeprobe_t *temp = nullptr;
+      ACE_timeprobe_t *temp {};
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_NEW_MALLOC_ARRAY (temp,
                             (ACE_timeprobe_t *) this->allocator ()->

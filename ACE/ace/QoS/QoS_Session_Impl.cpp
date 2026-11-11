@@ -48,7 +48,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 
   ACE_QoS_Session *qos_session = static_cast<ACE_QoS_Session *> (args);
 
-  qos_flowspecx_t *csxp = nullptr;
+  qos_flowspecx_t *csxp {};
 
   if (!flow_spec_list)
     {
@@ -78,7 +78,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "No. of TSpecs received : %d %d\n",
                     flow_spec_no, &flow_spec_list->len));
 
-        ACE_Flow_Spec *receiving_fs = nullptr;
+        ACE_Flow_Spec *receiving_fs {};
 
         if (flow_spec_no != 0)
           {
@@ -131,7 +131,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "No. of FlowSpecs received : %d\n",
                     flow_spec_no));
 
-        ACE_Flow_Spec *sending_flow = nullptr;
+        ACE_Flow_Spec *sending_flow {};
 
         if (flow_spec_no != 0)
           {
