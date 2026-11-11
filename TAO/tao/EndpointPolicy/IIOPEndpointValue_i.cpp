@@ -10,23 +10,23 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 IIOPEndpointValue_i::IIOPEndpointValue_i ()
-  :host_(""),
-   port_(0)
+  : host_ (""),
+    port_ {}
 {
 }
 
 IIOPEndpointValue_i::IIOPEndpointValue_i (char const* host, CORBA::UShort port)
-  :host_(host),
-   port_(port)
+  : host_ (host),
+    port_ (port)
 {
-  if (this->addr_.set(port, host) != 0 || host == nullptr || host[0] == 0)
+  if (this->addr_.set (port, host) != 0 || host == nullptr || host[0] == '\0')
     this->addr_.set_type (-1);
 }
 
 CORBA::Boolean
 IIOPEndpointValue_i::is_equivalent (TAO_Endpoint const* endpoint) const
 {
-  TAO_IIOP_Endpoint const* iep =
+  TAO_IIOP_Endpoint const * const iep =
     dynamic_cast<TAO_IIOP_Endpoint const*> (endpoint);
   if (iep == nullptr)
     return false;
@@ -49,7 +49,7 @@ CORBA::Boolean
 IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
                                        bool is_multi_prot) const
 {
-  TAO_IIOP_Acceptor *iacc = dynamic_cast<TAO_IIOP_Acceptor *>(acceptor);
+  TAO_IIOP_Acceptor * const iacc = dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
   if (iacc == nullptr)
     return false;
 

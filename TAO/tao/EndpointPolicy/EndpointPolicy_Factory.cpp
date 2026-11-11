@@ -29,7 +29,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
     {
-      EndpointPolicy::EndpointList const* endpoint_list {};
+      EndpointPolicy::EndpointList const *endpoint_list {};
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
