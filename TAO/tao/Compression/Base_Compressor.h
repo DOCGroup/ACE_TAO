@@ -37,10 +37,10 @@ namespace TAO
     BaseCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                     ::Compression::CompressionLevel compression_level);
 
-    void compress (::Compression::Buffer const& source,
+    void compress (::Compression::Buffer const &source,
                    ::Compression::Buffer &target) override = 0;
 
-    void decompress (::Compression::Buffer const& source,
+    void decompress (::Compression::Buffer const &source,
                      ::Compression::Buffer &target) override = 0;
 
     ::Compression::CompressorFactory_ptr compressor_factory () override;

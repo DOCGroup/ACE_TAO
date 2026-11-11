@@ -7,10 +7,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Object_ptr
 TAO_Compression_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr obj {};
   ACE_NEW_RETURN (obj,
-                      TAO::CompressionManager (),
-                      CORBA::Object::_nil ());
+                  TAO::CompressionManager (),
+                  CORBA::Object::_nil ());
   return obj;
 }
 

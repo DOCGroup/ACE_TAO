@@ -100,7 +100,7 @@ namespace TAO
                                       ::Compression::CompressionLevel
                                       compression_level)
   {
-    ::Compression::CompressorFactory_var factory = this->get_factory (
+    ::Compression::CompressorFactory_var const factory = this->get_factory (
       compressor_id);
 
     return factory->get_compressor (compression_level);
