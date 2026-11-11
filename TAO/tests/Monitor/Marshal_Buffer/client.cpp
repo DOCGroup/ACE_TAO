@@ -54,14 +54,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      Monitor_Base *bytes_sent_monitor =
-        create_os_monitor<BYTES_SENT_MONITOR> (0, ACE_Time_Value (1));
-      Monitor_Base *cpu_load_monitor =
-        create_os_monitor<CPU_LOAD_MONITOR> (0, ACE_Time_Value (1));
-      Monitor_Base *memory_usage_monitor =
-        create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (1));
-      Monitor_Base *num_threads_monitor =
-        create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (1));
+      Monitor_Base_Unique_Ptr bytes_sent_monitor (
+        create_os_monitor<BYTES_SENT_MONITOR> (nullptr, ACE_Time_Value (1)));
+      Monitor_Base_Unique_Ptr cpu_load_monitor (
+        create_os_monitor<CPU_LOAD_MONITOR> (nullptr, ACE_Time_Value (1)));
+      Monitor_Base_Unique_Ptr memory_usage_monitor (
+        create_os_monitor<MEMORY_USAGE_MONITOR> (nullptr, ACE_Time_Value (1)));
+      Monitor_Base_Unique_Ptr num_threads_monitor (
+        create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (1)));
 
       START_PERIODIC_MONITORS;
 
@@ -126,11 +126,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (15);
 
       STOP_PERIODIC_MONITORS;
-
-      bytes_sent_monitor->remove_ref ();
-      cpu_load_monitor->remove_ref ();
-      memory_usage_monitor->remove_ref ();
-      num_threads_monitor->remove_ref ();
 
       orb->destroy ();
     }
