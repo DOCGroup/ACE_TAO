@@ -39,7 +39,7 @@ namespace TAO
   class TAO_FlResource_Export FlResource_Factory : public GUIResource_Factory
   {
   public:
-    FlResource_Factory ();
+    FlResource_Factory () = default;
 
   protected:
     /// Create or obtain current reactor implementation
