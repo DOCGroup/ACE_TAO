@@ -78,7 +78,7 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// Reference of the time server.
-  CosTime::TimeService_var time_service_server_;
+  CosTime::TimeService_var time_service_server_ {};
 };
 
 #endif /* SERVER_I_H */

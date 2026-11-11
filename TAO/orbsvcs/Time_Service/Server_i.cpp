@@ -25,7 +25,7 @@ Server_i::parse_args (int argc,
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_.reset (
-          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a")));
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("a")));
 
         if (!this->ior_output_file_)
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -73,15 +73,11 @@ Server_i::create_server ()
                       -1);
       PortableServer::ServantBase_var const server_impl_owner (server_impl);
 
-      // Register a servant with the child poa.
-      CORBA::String_var server_str =
-        this->orb_manager_.activate_under_child_poa ("server",
-                                                     server_impl);
-
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("server");
+      this->orb_manager_.child_poa ()->activate_object_with_id (id.in (), server_impl);
 
-      CORBA::Object_var server_ref =
+      CORBA::Object_var const server_ref =
         this->orb_manager_.child_poa ()->id_to_reference (id.in ());
 
       this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ());
@@ -91,7 +87,7 @@ Server_i::create_server ()
 
       //Convert the server reference to a string.
 
-      CORBA::String_var objref_server =
+      CORBA::String_var const objref_server =
         this->orb_->object_to_string (server_ref.in ());
 
       // Print the server IOR on the console.
@@ -135,8 +131,7 @@ Server_i::register_server ()
 
       try
         {
-          CosNaming::NamingContext_var server_context =
-            this->naming_client_->bind_new_context(server_context_name);
+          this->naming_client_->bind_new_context (server_context_name);
         }
       catch (CosNaming::NamingContext::AlreadyBound const &)
         {

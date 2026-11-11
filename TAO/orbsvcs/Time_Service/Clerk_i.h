@@ -20,6 +20,7 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -34,11 +35,7 @@
 class Clerk_i
 {
 public:
-  enum {
-    // Pre-allocate slots for this many servers. The capacity grows on
-    // demand.
-    DEFAULT_SERVER_COUNT = 8
-  };
+  static constexpr std::size_t DEFAULT_SERVER_COUNT {8};
 
   Clerk_i () = default;
 
@@ -95,8 +92,8 @@ private:
 
   /// Iterate over the given server context to get the rest of the
   /// server IORs.
-  int next_n_IORs (CosNaming::BindingIterator_var iter,
-                   CosNaming::NamingContext_var server_context);
+  int next_n_IORs (CosNaming::BindingIterator_var const &iter,
+                   CosNaming::NamingContext_var const &server_context);
 
   /**
    * An instance of the name server used for registering the
@@ -107,10 +104,10 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// Reference of the time service clerk.
-  CosTime::TimeService_var time_service_clerk_;
+  CosTime::TimeService_var time_service_clerk_ {};
 
   /// My orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Clerk seeks time periodically after this interval in secs. from the
   /// servers in the network.
