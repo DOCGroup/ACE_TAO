@@ -149,6 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
       std::ofstream readiness_file (ACE_TEXT_ALWAYS_CHAR (output_file));
       readiness_file << "Ready" << std::endl;
+      readiness_file.close ();
       orb->run ();
     }
   catch (CORBA::Exception const &ex)

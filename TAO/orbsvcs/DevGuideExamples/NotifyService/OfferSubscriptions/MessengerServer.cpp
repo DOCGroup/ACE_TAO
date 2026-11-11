@@ -63,6 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (messenger.in ());
       std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
       ior_file << ior.in () << std::endl;
+      ior_file.close ();
       std::cout << "IOR written to file "
                 << ACE_TEXT_ALWAYS_CHAR (ior_output_file) << std::endl;
 

@@ -72,6 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
       ior_file << ior.in () << std::endl;
+      ior_file.close ();
       if (!ior_file)
         {
           std::cerr << "Cannot write IOR output file." << std::endl;

@@ -72,6 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            options.ior_output_file.c_str ()),
                           1);
       ior_file << str.in () << std::endl;
+      ior_file.close ();
       if (!ior_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Failed writing IOR to %s.\n"),
