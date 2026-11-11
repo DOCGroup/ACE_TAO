@@ -174,7 +174,7 @@ public:
    * @return ORB pointer which has been duplicated, so caller
    *         must release pointer when done.
    */
-  CORBA::ORB_ptr orb ();
+  CORBA::ORB_ptr orb () const;
 
   /**
    * Accessor which returns the root poa. Following the normal CORBA
@@ -184,7 +184,7 @@ public:
    * @return Root POA pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POA_ptr root_poa ();
+  PortableServer::POA_ptr root_poa () const;
 
   /**
    * Accessor which returns the child poa. Following the normal CORBA
@@ -194,7 +194,7 @@ public:
    * @return Child POA pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POA_ptr child_poa ();
+  PortableServer::POA_ptr child_poa () const;
 
   /**
    * Accessor which returns the poa manager. Following the normal
@@ -205,7 +205,7 @@ public:
    * @return POAManager pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POAManager_ptr poa_manager ();
+  PortableServer::POAManager_ptr poa_manager () const;
 
   TAO_ORB_Manager (TAO_ORB_Manager const &) = delete;
   TAO_ORB_Manager &operator= (TAO_ORB_Manager const &) = delete;

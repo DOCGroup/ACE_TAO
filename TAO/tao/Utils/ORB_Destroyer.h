@@ -35,7 +35,7 @@ namespace TAO
       using argument = CORBA::ORB_ptr;
 
       /// Destroy the ORB
-      void operator() (CORBA::ORB_ptr orb) noexcept;
+      void operator() (CORBA::ORB_ptr orb) const noexcept;
     };
 
     /**

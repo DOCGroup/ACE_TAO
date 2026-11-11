@@ -203,27 +203,27 @@ TAO_ORB_Manager::run ()
 // Return the corba orb reference.
 
 CORBA::ORB_ptr
-TAO_ORB_Manager::orb ()
+TAO_ORB_Manager::orb () const
 {
   return CORBA::ORB::_duplicate (this->orb_.in ());
 }
 
 // Return the root POA reference
 PortableServer::POA_ptr
-TAO_ORB_Manager::root_poa ()
+TAO_ORB_Manager::root_poa () const
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 // Return the child POA reference
 PortableServer::POA_ptr
-TAO_ORB_Manager::child_poa ()
+TAO_ORB_Manager::child_poa () const
 {
   return PortableServer::POA::_duplicate (this->child_poa_.in ());
 }
 
 PortableServer::POAManager_ptr
-TAO_ORB_Manager::poa_manager ()
+TAO_ORB_Manager::poa_manager () const
 {
   return PortableServer::POAManager::_duplicate (this->poa_manager_.in ());
 }

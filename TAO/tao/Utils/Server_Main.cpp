@@ -31,7 +31,7 @@ TAO::Utils::Server_Main<SERVANT>::Server_Main (std::string const &name)
 
 template <typename SERVANT>
 int
-TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
+TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[]) const
 {
   int result {};
 
@@ -66,12 +66,12 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
           orb->run (tv);
 
           // now run event loop
-          int quit {};
-          while (result == 0 && ! quit )
+          bool quit {};
+          while (result == 0 && !quit)
           {
             ACE_Time_Value work_tv (1, 0);
             orb->perform_work (work_tv);
-            quit = servant.idle (result);
+            quit = servant.idle (result) != 0;
           }
           servant.fini ();
 

@@ -75,7 +75,7 @@ namespace TAO
       Server_Main &operator= (Server_Main &&) = delete;
       ~Server_Main () = default;
 
-      int run (int argc, ACE_TCHAR *argv[]);
+      int run (int argc, ACE_TCHAR *argv[]) const;
 
     private:
       std::string name_;
