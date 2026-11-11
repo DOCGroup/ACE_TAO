@@ -480,7 +480,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   // boolean, becomes true if a required parameter is missing
   bool missingParameter {};
-  char const * missingParameterName = nullptr;
+  char const * missingParameterName {};
 
   FT::FaultNotifier_ptr notifier = nullptr;
   if (! ::TAO::find (decoder, ::FT::FT_NOTIFIER, notifier) )
@@ -513,7 +513,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   FT::FTDomainId domain_id = nullptr;
   // note the cast in the next line makes ANY >>= work.
-  char const * domain_id_string = nullptr;
+  char const * domain_id_string {};
   if (::TAO::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
   {
     // NOTE the assumption that we can assign a char * to a domain id
@@ -531,7 +531,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 //    missingParameterName = ::FT::FT_DOMAIN_ID;
   }
 
-  PortableGroup::Location const * object_location = nullptr;
+  PortableGroup::Location const * object_location {};
   if (! ::TAO::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
       object_location = & this->location_;
@@ -545,7 +545,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
 
   PortableGroup::TypeId object_type = nullptr;
-  char const * object_type_string = nullptr;
+  char const * object_type_string {};
   if (::TAO::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
   {
     object_type = const_cast<char *> (object_type_string);
@@ -576,7 +576,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   // NOTE: ACE_NEW is incompatable with auto_ptr
   // so create a bare pointer first.
-  TAO::Fault_Detector_i * pFD = nullptr;
+  TAO::Fault_Detector_i * pFD {};
 
   ACE_NEW_NORETURN(pFD, TAO::Fault_Detector_i(
     *this,
