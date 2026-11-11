@@ -27,7 +27,7 @@ RTEvent_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv[])
 int
 RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR * argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:o:p:t:x"));
   int opt {};
 
   while ((opt = get_opt ()) != EOF)
@@ -57,13 +57,13 @@ RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR * argv[])
         case '?':
         default:
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      "-n service_name "
-                      "-o ior_file_name "
-                      "-p pid_file_name "
-                      "-t threads "
-                      "-x [disable naming service bind] "
-                      "\n",
+                      ACE_TEXT ("Usage: %s "
+                                "-n service_name "
+                                "-o ior_file_name "
+                                "-p pid_file_name "
+                                "-t threads "
+                                "-x [disable naming service bind] "
+                                "\n"),
                       argv[0]));
           return -1;
         }
@@ -82,6 +82,7 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
     return -1;
 
   // Activate the rtevent log factory
+  // ACE_NEW_THROW_EX needs a raw pointer target; ServantBase_var takes ownership below.
   TAO_RTEventLogFactory_i *rtevent_log_factory {};
   ACE_NEW_THROW_EX (rtevent_log_factory,
                     TAO_RTEventLogFactory_i (),
@@ -92,8 +93,8 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
                                  this->poa_.in ()) != 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) Unable to initialize "
-                         "the factory.\n"),
+                         ACE_TEXT ("(%P|%t) Unable to initialize "
+                                   "the factory.\n")),
                         -1);
     }
 
@@ -193,7 +194,7 @@ RTEvent_Logging_Service::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
