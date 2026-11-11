@@ -11,15 +11,15 @@ namespace TAO
   {
     // synchronized by external locks
     if (!this->reactor_impl_)
-    {
-      ACE_NEW_RETURN (this->reactor_impl_,
-                      ACE_TkReactor (),
-                      nullptr);
+      {
+        ACE_NEW_RETURN (this->reactor_impl_,
+                        ACE_TkReactor (),
+                        nullptr);
 
-      if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - ACE_TkReactor created\n"));
-    }
+        if (TAO_debug_level > 0)
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - ACE_TkReactor created\n"));
+      }
 
     return this->reactor_impl_;
   }

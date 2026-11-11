@@ -39,16 +39,16 @@ namespace TAO
   public:
     TkResource_Factory () = default;
 
-  protected:
-    /// Create or obtain current reactor implementation
-    ACE_Reactor_Impl *reactor_impl () override;
-
-  private:
     TkResource_Factory (TkResource_Factory const &) = delete;
     TkResource_Factory &operator= (TkResource_Factory const &) = delete;
     TkResource_Factory (TkResource_Factory &&) = delete;
     TkResource_Factory &operator= (TkResource_Factory &&) = delete;
 
+  protected:
+    /// Create or obtain current reactor implementation
+    ACE_Reactor_Impl *reactor_impl () override;
+
+  private:
     /// Reactor created by this factory.
     ACE_TkReactor *reactor_impl_ {};
   };
