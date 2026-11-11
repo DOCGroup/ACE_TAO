@@ -386,9 +386,11 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
     }
 
 #if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
-  X509* cert = ::SSL_get1_peer_certificate(peerssl);
+  std::unique_ptr<X509, decltype (&::X509_free)> cert (
+    ::SSL_get1_peer_certificate (peerssl), ::X509_free);
 #else
-  X509* cert = ::SSL_get_peer_certificate(peerssl);
+  std::unique_ptr<X509, decltype (&::X509_free)> cert (
+    ::SSL_get_peer_certificate (peerssl), ::X509_free);
 #endif
 
   if (cert == nullptr)
@@ -396,26 +398,27 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
       return false;
     }
 
-  char *peer {};
-  char **peerarg = ACE::debug () ? &peer : nullptr;
+  char *peer_raw {};
+  std::unique_ptr<char, void (*) (char *)> peer (
+    nullptr,
+    [] (char *value)
+    {
+      ::OPENSSL_free (value);
+    });
+  char **peerarg = ACE::debug () ? &peer_raw : nullptr;
   int const flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
   size_t const len = std::strlen (name);
 
-  int const result = ::X509_check_host (cert, name, len, flags, peerarg);
+  int const result = ::X509_check_host (cert.get (), name, len, flags, peerarg);
+  peer.reset (peer_raw);
 
   if (ACE::debug ())
     {
       ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ACE (%P|%t) SSL_Context::check_host ")
                   ACE_TEXT ("name <%C> returns %d, peer <%C>\n"),
-                  name, result, peer));
+                  name, result, peer.get ()));
     }
-  if (peer != nullptr)
-    {
-      ::OPENSSL_free (peer);
-    }
-
-  ::X509_free (cert);
 
   return result == 1;
 #else
@@ -792,16 +795,16 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
   {
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    BIO * bio {};
-
-    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == nullptr)
+    std::unique_ptr<BIO, decltype (&::BIO_free)> bio (
+      ::BIO_new_file (this->dh_params_.file_name (), "r"), ::BIO_free);
+    if (bio == nullptr)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;
       }
 
-    DH * ret = PEM_read_bio_DHparams (bio, nullptr, nullptr, nullptr);
-    BIO_free (bio);
+    std::unique_ptr<DH, decltype (&::DH_free)> ret (
+      PEM_read_bio_DHparams (bio.get (), nullptr, nullptr, nullptr), ::DH_free);
 
     if (ret == nullptr)
       {
@@ -809,12 +812,11 @@ ACE_SSL_Context::dh_params (const char *file_name,
         return -1;
       }
 
-    if (::SSL_CTX_set_tmp_dh (this->context_, ret) < 0)
+    if (::SSL_CTX_set_tmp_dh (this->context_, ret.get ()) < 0)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;
       }
-    DH_free (ret);
   }
 
   return 0;
