@@ -14,7 +14,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
 
@@ -57,12 +56,12 @@ public:
 
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-private:
   FTRT_ClientORB_Interceptor (FTRT_ClientORB_Interceptor const &) = delete;
   FTRT_ClientORB_Interceptor &operator= (FTRT_ClientORB_Interceptor const &) = delete;
   FTRT_ClientORB_Interceptor (FTRT_ClientORB_Interceptor &&) = delete;
   FTRT_ClientORB_Interceptor &operator= (FTRT_ClientORB_Interceptor &&) = delete;
 
+private:
   CORBA::Long const transaction_depth_;
 };
 

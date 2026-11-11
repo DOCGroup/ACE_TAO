@@ -44,12 +44,12 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   FTRT_ClientORB_Initializer (FTRT_ClientORB_Initializer const &) = delete;
   FTRT_ClientORB_Initializer &operator= (FTRT_ClientORB_Initializer const &) = delete;
   FTRT_ClientORB_Initializer (FTRT_ClientORB_Initializer &&) = delete;
   FTRT_ClientORB_Initializer &operator= (FTRT_ClientORB_Initializer &&) = delete;
 
+private:
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
 };
 
@@ -58,7 +58,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 
