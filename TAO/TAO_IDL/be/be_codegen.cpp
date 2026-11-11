@@ -2392,6 +2392,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (be_global->gen_smart_proxies ())
     {
       this->gen_standard_include (this->client_header_, "tao/SmartProxies/Smart_Proxies.h");
+      this->gen_standard_include (this->client_header_, "tao/TAO_Singleton.h");
     }
 
   // If we have not suppressed Any operator generation and also
