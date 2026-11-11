@@ -63,7 +63,6 @@ public:
           }
 
       }
-
     return 0;
   }
 };
@@ -92,11 +91,21 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Run the monitor checker in a separate thread.
   Monitor_Checker monitor_checker {};
-  monitor_checker.activate ();
+  if (monitor_checker.activate () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start monitor checker\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
   /// Spawn 100 threads, sleep until they finish.
   Worker worker {};
-  worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100);
+  if (worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start worker threads\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
   ACE_OS::sleep (6);
 
