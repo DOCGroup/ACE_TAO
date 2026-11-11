@@ -22,6 +22,10 @@ class ACE_Svc_Export Handle_R_Stream : public ACE_Service_Object, public ACE_SOC
 {
 public:
   Handle_R_Stream ();
+  Handle_R_Stream (Handle_R_Stream const &) = delete;
+  Handle_R_Stream (Handle_R_Stream &&) = delete;
+  Handle_R_Stream &operator= (Handle_R_Stream const &) = delete;
+  Handle_R_Stream &operator= (Handle_R_Stream &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;

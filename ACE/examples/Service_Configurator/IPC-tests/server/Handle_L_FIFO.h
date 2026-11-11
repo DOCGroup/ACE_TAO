@@ -21,6 +21,10 @@ class ACE_Svc_Export Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_
 {
 public:
   Handle_L_FIFO ();
+  Handle_L_FIFO (Handle_L_FIFO const &) = delete;
+  Handle_L_FIFO (Handle_L_FIFO &&) = delete;
+  Handle_L_FIFO &operator= (Handle_L_FIFO const &) = delete;
+  Handle_L_FIFO &operator= (Handle_L_FIFO &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;

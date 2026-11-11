@@ -23,6 +23,10 @@ class ACE_Svc_Export Handle_L_Stream : public ACE_Service_Object, public ACE_LSO
 public:
   Handle_L_Stream ();
   ~Handle_L_Stream ();
+  Handle_L_Stream (Handle_L_Stream const &) = delete;
+  Handle_L_Stream (Handle_L_Stream &&) = delete;
+  Handle_L_Stream &operator= (Handle_L_Stream const &) = delete;
+  Handle_L_Stream &operator= (Handle_L_Stream &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;

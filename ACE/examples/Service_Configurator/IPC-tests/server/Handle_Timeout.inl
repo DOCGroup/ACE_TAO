@@ -5,11 +5,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 
-ACE_INLINE
-Handle_Timeout::Handle_Timeout () : count (0)
-{
-}
-
 ACE_INLINE int
 Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
 {
@@ -78,8 +73,9 @@ ACE_INLINE int
 Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg)
 {
-  if (this->count++ >= 10)
+  if (this->count >= 10)
     return -1; // Automatically cancel periodic timer...
+  ++this->count;
 
   // Cast arg to a long, first, because a pointer is the same
   // size as a long on all current ACE platforms.

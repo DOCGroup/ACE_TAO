@@ -22,6 +22,10 @@ class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_A
 public:
   Handle_Thr_Acceptor ();
   ~Handle_Thr_Acceptor ();
+  Handle_Thr_Acceptor (Handle_Thr_Acceptor const &) = delete;
+  Handle_Thr_Acceptor (Handle_Thr_Acceptor &&) = delete;
+  Handle_Thr_Acceptor &operator= (Handle_Thr_Acceptor const &) = delete;
+  Handle_Thr_Acceptor &operator= (Handle_Thr_Acceptor &&) = delete;
 
   // = Dynamic linking hooks.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -47,6 +51,10 @@ class CLI_Stream : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_MT_SYNCH>
 {
 public:
   explicit CLI_Stream (ACE_Thread_Manager * = nullptr);
+  CLI_Stream (CLI_Stream const &) = delete;
+  CLI_Stream (CLI_Stream &&) = delete;
+  CLI_Stream &operator= (CLI_Stream const &) = delete;
+  CLI_Stream &operator= (CLI_Stream &&) = delete;
 
   int open (void *) override;
   // Open the service.

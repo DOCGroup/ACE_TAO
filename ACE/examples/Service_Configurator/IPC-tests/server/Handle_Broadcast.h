@@ -22,6 +22,10 @@ class ACE_Svc_Export Handle_Broadcast : public ACE_Service_Object, public ACE_SO
 public:
   Handle_Broadcast ();
   ~Handle_Broadcast ();
+  Handle_Broadcast (Handle_Broadcast const &) = delete;
+  Handle_Broadcast (Handle_Broadcast &&) = delete;
+  Handle_Broadcast &operator= (Handle_Broadcast const &) = delete;
+  Handle_Broadcast &operator= (Handle_Broadcast &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;

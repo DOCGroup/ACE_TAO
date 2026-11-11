@@ -18,7 +18,11 @@
 class ACE_Svc_Export Handle_Timeout : public ACE_Service_Object
 {
 public:
-  Handle_Timeout ();
+  Handle_Timeout () = default;
+  Handle_Timeout (Handle_Timeout const &) = delete;
+  Handle_Timeout (Handle_Timeout &&) = delete;
+  Handle_Timeout &operator= (Handle_Timeout const &) = delete;
+  Handle_Timeout &operator= (Handle_Timeout &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;
@@ -27,7 +31,7 @@ private:
   ACE_HANDLE get_handle () const override;
   int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
 
-  int count;
+  int count {};
 };
 
 extern ACE_Service_Object_Type t1;

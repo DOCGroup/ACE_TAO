@@ -22,6 +22,10 @@ class ACE_Svc_Export Handle_L_SPIPE : public ACE_Service_Object, public ACE_SPIP
 {
 public:
   Handle_L_SPIPE ();
+  Handle_L_SPIPE (Handle_L_SPIPE const &) = delete;
+  Handle_L_SPIPE (Handle_L_SPIPE &&) = delete;
+  Handle_L_SPIPE &operator= (Handle_L_SPIPE const &) = delete;
+  Handle_L_SPIPE &operator= (Handle_L_SPIPE &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;

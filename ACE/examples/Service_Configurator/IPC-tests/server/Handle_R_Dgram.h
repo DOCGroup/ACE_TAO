@@ -20,6 +20,10 @@ class ACE_Svc_Export Handle_R_Dgram : public ACE_Service_Object, public ACE_SOCK
 {
 public:
   Handle_R_Dgram ();
+  Handle_R_Dgram (Handle_R_Dgram const &) = delete;
+  Handle_R_Dgram (Handle_R_Dgram &&) = delete;
+  Handle_R_Dgram &operator= (Handle_R_Dgram const &) = delete;
+  Handle_R_Dgram &operator= (Handle_R_Dgram &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;

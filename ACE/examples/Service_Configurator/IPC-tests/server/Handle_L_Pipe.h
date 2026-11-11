@@ -24,6 +24,10 @@ class ACE_Svc_Export Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK
 public:
   Handle_L_Pipe ();
   ~Handle_L_Pipe ();
+  Handle_L_Pipe (Handle_L_Pipe const &) = delete;
+  Handle_L_Pipe (Handle_L_Pipe &&) = delete;
+  Handle_L_Pipe &operator= (Handle_L_Pipe const &) = delete;
+  Handle_L_Pipe &operator= (Handle_L_Pipe &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **, size_t) const override;
   int fini () override;
