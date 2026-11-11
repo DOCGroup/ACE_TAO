@@ -16,7 +16,7 @@ TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -59,7 +59,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
                          ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::PolicyFactory_var policy_factory = temp_factory;
+  PortableInterceptor::PolicyFactory_var const policy_factory = temp_factory;
 
   /// Bind the same policy factory to all BiDir related policy
   /// types since a single policy factory is used to create each of

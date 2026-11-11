@@ -67,7 +67,7 @@ public:
 
 private:
   /// The attribute
-  BiDirPolicy::BidirectionalPolicyValue value_;
+  BiDirPolicy::BidirectionalPolicyValue const value_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

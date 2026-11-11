@@ -32,8 +32,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 
   if (TAO_DEF_GIOP_MINOR >= 2)
     {
-      PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer {};
       PortableInterceptor::ORBInitializer_var bidir_orb_initializer;
 
       try
