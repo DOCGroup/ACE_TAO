@@ -23,7 +23,7 @@ Trading_Shutdown::handle_signal (int,
                                  siginfo_t *,
                                  ucontext_t *)
 {
-  this->trader_.~Trading_Service ();
+  this->trader_.shutdown ();
   ACE_OS::exit (0);
   return 0;
 }
