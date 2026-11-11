@@ -19,7 +19,6 @@
 
 #include "ace/Log_Record.h"
 
-#include <cstring>
 #include <new>
 
 #include "server_loggerd.h"
@@ -173,7 +172,9 @@ Logging_Handler::handle_input (ACE_HANDLE)
 
   log_record.length (length);
 
-  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, stderr);
+  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_.c_str ()),
+                    1,
+                    stderr);
 
   return 0;
 }
@@ -185,28 +186,31 @@ Logging_Handler::open (void *)
 
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
-  else
-    {
-      std::strncpy (this->peer_name_, addr.get_host_name (), MAXHOSTNAMELEN + 1);
 
-      if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                          -1);
-      else if (REACTOR::instance ()->schedule_timer
-               (this,
-                static_cast<void const *> (this),
-                ACE_Time_Value (2),
-                ACE_Time_Value (2)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) connected with %C\n"),
-                    this->peer_name_));
-      return 0;
+  char const *const peer_name = addr.get_host_name ();
+  if (peer_name == nullptr)
+    return -1;
+  this->peer_name_ = peer_name;
+
+  if (REACTOR::instance ()->schedule_timer
+      (this, static_cast<void const *> (this),
+       ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                      -1);
+
+  if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
+    {
+      REACTOR::instance ()->cancel_timer (this);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                        -1);
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) connected with %C\n"),
+              this->peer_name_.c_str ()));
+  return 0;
 }
 
 int

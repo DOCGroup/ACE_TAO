@@ -6,7 +6,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/os_include/os_netdb.h"
+#include <string>
 
 class Options
 {
@@ -54,7 +54,7 @@ protected:
                       void const *arg) override;
 
 private:
-  char peer_name_[MAXHOSTNAMELEN + 1] {};
+  std::string peer_name_;
   // Host we are connected to.
 };
 
