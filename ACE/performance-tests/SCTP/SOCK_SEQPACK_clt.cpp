@@ -11,6 +11,10 @@
 
 #include "ace/os_include/arpa/os_inet.h"
 
+#include <memory>
+#include <new>
+#include <utility>
+
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
 // main() with an error message
@@ -152,24 +156,24 @@ int sendHeader(ACE_SOCK_SEQPACK_Association & stream) {
 
 // conduct the UnMarshalled Octet performance test using separate
 // send_n calls with Nagle's algorithm disabled
-ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPACK_Association & stream){
+ACE_SCTP::HIST runUnmarshalledOctetTest (
+  std::unique_ptr<ACE_CDR::Octet[]> buf,
+  size_t seqLen,
+  ACE_SOCK_SEQPACK_Association & stream)
+{
   ACE_CDR::ULong const testIterations = Options_Manager::test_iterations;
 
   size_t bt;
-  ACE_CDR::ULong cnt = 0;
+  ACE_CDR::ULong cnt {};
   // variables for the timing measurements
   ACE_hrtime_t startTime, endTime;
   ACE_CDR::Double messageLatency_usec = 0.0;
-  ACE_CDR::ULong msgLen = seqLen*ACE_CDR::OCTET_SIZE;
+  ACE_CDR::ULong const msgLen = seqLen * ACE_CDR::OCTET_SIZE;
 
   // explicity configure Nagling. Default is
   // Options_Manager::test_enable_nagle=0 so default configurations is
   // NO NAGLING
-  ACE_CDR::Long nagle;
-  if (Options_Manager::test_enable_nagle)
-    nagle=0;
-  else
-    nagle=1;
+  ACE_CDR::Long nagle = Options_Manager::test_enable_nagle ? 0 : 1;
   if (-1 == stream.set_option(IPPROTO_SCTP, SCTP_NODELAY, &nagle, sizeof nagle))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -177,10 +181,10 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
                       0);
 
   // prime the client and server before starting the test
-  for(cnt=0;cnt<primerIterations;++cnt){
+  for (cnt = 0; cnt < primerIterations; ++cnt){
     // send message size
     // TODO : The message length should be CDR encoded
-    ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
+    ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -188,7 +192,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
                         0);
 
     // send a message
-    if (-1 == stream.send_n (buf, msgLen, 0, &bt))
+    if (-1 == stream.send_n (buf.get (), msgLen, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("send_n")),
@@ -223,10 +227,10 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
                         ACE_TEXT ("ACE_OS::gethrtime()")),
                        0);
 
-    ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
+    ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);
     iov[0].iov_len = ACE_CDR::LONG_SIZE;
-    iov[1].iov_base = reinterpret_cast<char *> (buf);
+    iov[1].iov_base = reinterpret_cast<char *> (buf.get ());
     iov[1].iov_len = msgLen;
 
     if (-1 == stream.sendv_n (iov, 2))
@@ -270,8 +274,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
   // LONGER VALID AND WE CLOSE IT.
   stream.close();
 
-  // allocated by runTest
-  delete[] buf;
   return aceStream_hist;
 }
 
@@ -280,7 +282,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
 ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
 {
   size_t msgLen = 1;
-  for (int i=1; i <= Options_Manager::payload_size_power_of_2; i++)
+  for (int i = 1; i <= Options_Manager::payload_size_power_of_2; ++i)
     msgLen *= 2;
 
 
@@ -292,11 +294,11 @@ ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
 
   // create the forward message buffer
 
-  ACE_CDR::Octet *o_arr;
-  ACE_CDR::ULong seqLen = msgLen/ACE_CDR::OCTET_SIZE;
-  ACE_NEW_RETURN(o_arr,
-                 ACE_CDR::Octet[seqLen],
-                 0);
-  // o_arr is deleted in run_octet_test
-  return(runUnmarshalledOctetTest(o_arr, seqLen, stream));
+  ACE_CDR::ULong const seqLen = msgLen/ACE_CDR::OCTET_SIZE;
+  std::unique_ptr<ACE_CDR::Octet[]> o_arr (
+    new (std::nothrow) ACE_CDR::Octet[seqLen]);
+  if (!o_arr)
+    return 0;
+
+  return runUnmarshalledOctetTest (std::move (o_arr), seqLen, stream);
 }

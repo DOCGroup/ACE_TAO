@@ -16,6 +16,8 @@
 
 #include <memory>
 #include <new>
+#include <utility>
+#include <vector>
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
@@ -36,27 +38,49 @@ extern "C" {
 
 #ifdef ACE_HAS_SCTP
 
+template <typename STREAM>
+struct Stream_Deleter
+{
+  void operator() (STREAM * stream) const
+  {
+    if (stream != nullptr)
+      {
+        stream->close ();
+        delete stream;
+      }
+  }
+};
+
+using Stream_Ptr = std::unique_ptr<ACE_SOCK_SEQPACK_Association,
+                                   Stream_Deleter<ACE_SOCK_SEQPACK_Association>>;
+
 // structure to bundle arguments for thread functions
-struct ArgStruct {
-  ACE_SOCK_SEQPACK_Association * stream;
-  ACE_CDR::ULong numIters;
+struct ArgStruct
+{
+  ArgStruct () = default;
+  ArgStruct (ArgStruct const &) = delete;
+  ArgStruct (ArgStruct &&) = delete;
+  ArgStruct &operator= (ArgStruct const &) = delete;
+  ArgStruct &operator= (ArgStruct &&) = delete;
+
+  Stream_Ptr stream;
+  ACE_CDR::ULong numIters {};
 };
 
 // thread function that serves the client for the UnMarshalled Octet
 // test
 static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
   // unbundle the arguments
-  ArgStruct * args = reinterpret_cast<ArgStruct *> (arg);
-  ACE_SOCK_SEQPACK_Association * dataModeStream = args->stream;
+  std::unique_ptr<ArgStruct> args (static_cast<ArgStruct *> (arg));
+  ACE_SOCK_SEQPACK_Association * const dataModeStream = args->stream.get ();
   ACE_CDR::ULong numIterations = args->numIters;
-  delete args;
 
   // serve the client for numIterations synchronous invocations
   do {
     // READ A MESSAGE FROM THE CLIENT
 
     size_t bt;
-    ACE_CDR::ULong msgBufSize=0;
+    ACE_CDR::ULong msgBufSize {};
     // read the size of the buffer to follow
     if ((dataModeStream->recv_n(&msgBufSize, ACE_CDR::LONG_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
@@ -84,17 +108,13 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     // SEND A REPLY TO THE CLIENT
 
     // send back a 2 byte reply
-    ACE_CDR::Short reply;
+    ACE_CDR::Short reply {};
     if ((dataModeStream->send_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("send_n")),
                        0);
   } while (--numIterations);
-
-  // close and destroy the stream
-  dataModeStream->close();
-  delete dataModeStream;
 
   return 0;
 }
@@ -106,7 +126,7 @@ static void run_server (ACE_HANDLE handle)
   ACE_INET_Addr cli_addr;
   // create a new stream and initialized with the handle returned by
   // accept
-  ACE_SOCK_SEQPACK_Association * dataModeStream = new ACE_SOCK_SEQPACK_Association;
+  Stream_Ptr dataModeStream (new ACE_SOCK_SEQPACK_Association);
   dataModeStream->set_handle (handle);
 
   // Make sure we're not in non-blocking mode.
@@ -147,7 +167,7 @@ static void run_server (ACE_HANDLE handle)
 
   // hdr bufSize is hardcoded to 8 bytes
   // (4 for a CDR-encoded boolean and 4 for a CDR-encoded ULong)
-  ACE_CDR::ULong hdrBufSize = 8;
+  ACE_CDR::ULong const hdrBufSize = 8;
   // allocate a raw buffer large enough to receive the header and be
   // properly aligned for the CDR decoding.
   std::unique_ptr<ACE_CDR::Char[]> hdrBuf (
@@ -169,11 +189,19 @@ static void run_server (ACE_HANDLE handle)
   // remains valid while it is in scope.
   ACE_InputCDR hdrCDR(hdrBuf_a, hdrBufSize);
 
-  ACE_CDR::Boolean byteOrder;
+  ACE_CDR::Boolean byteOrder {};
   ACE_CDR::ULong numIterations;
 
   // extract the data
   hdrCDR >> ACE_InputCDR::to_boolean (byteOrder);
+  if (!hdrCDR.good_bit()){
+    ACE_ERROR((LM_ERROR,
+               ACE_TEXT ("%p\n"),
+               ACE_TEXT ("hdrCDR")));
+
+    return;
+  }
+
   hdrCDR.reset_byte_order(byteOrder);
   hdrCDR >> numIterations;
 
@@ -191,21 +219,23 @@ static void run_server (ACE_HANDLE handle)
               numIterations));
 
   // bundle up the arguments
-  ArgStruct * args = new ArgStruct;
-  args->stream = dataModeStream;
+  std::unique_ptr<ArgStruct> args = std::make_unique<ArgStruct> ();
+  args->stream = std::move (dataModeStream);
   args->numIters = numIterations;
 
 #if defined (ACE_HAS_THREADS)
   // Spawn a new thread and run the new connection in that thread of
   // control using the <server> function as the entry point.
   if (ACE_Thread_Manager::instance ()->spawn (unmarshalledOctetServer,
-                                              reinterpret_cast<void *> (args),
+                                              args.get (),
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("spawn")));
+  else
+    args.release ();
 #else
-  (*unmarshalledOctetServer) (reinterpret_cast<void *> (args));
+  (*unmarshalledOctetServer) (args.release ());
 #endif /* ACE_HAS_THREADS */
 
 }
@@ -273,24 +303,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                        ACE_TEXT ("get_local_addr")),
                       1);
 
-    sockaddr_in *addresses = new sockaddr_in[ 1 + serverAddr.get_num_secondary_addresses() ];
-    serverAddr.get_addresses( addresses, 1 + serverAddr.get_num_secondary_addresses() ) ;
+    size_t const address_count = 1 + serverAddr.get_num_secondary_addresses ();
+    std::vector<sockaddr_in> addresses (address_count);
+    serverAddr.get_addresses (addresses.data (), addresses.size ());
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) Accepting connections, using %C on ")
                 ACE_TEXT ("port %u on interfaces %C"),
                (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP",
                serverAddr.get_port_number(),
-               ACE_OS::inet_ntoa( addresses[0].sin_addr)  ));
+               ACE_OS::inet_ntoa (addresses[0].sin_addr)));
 
-   unsigned int i;
-   for(i=1; i <= serverAddr.get_num_secondary_addresses() ; ++i ) {
+   for (size_t i = 1; i < address_count; ++i) {
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT (" and %C"),
                  ACE_OS::inet_ntoa (addresses[i].sin_addr)));
    }
    ACE_DEBUG((LM_DEBUG, ACE_TEXT ("\n")));
-
-   delete[] addresses;
 
   // this is the stream object that will associated with a completed
   // connection (aka the data mode socket). It will be set when accept
