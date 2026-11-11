@@ -11,7 +11,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
 public:
-  SimpleAddressServer (ACE_INET_Addr const & address);
+  explicit SimpleAddressServer (ACE_INET_Addr const &address);
   void get_addr (RtecEventComm::EventHeader const & header,
                  RtecUDPAdmin::UDP_Addr & address) override;
 
