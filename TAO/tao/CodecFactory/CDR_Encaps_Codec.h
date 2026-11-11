@@ -103,10 +103,10 @@ private:
   TAO_ORB_Core * const orb_core_;
 
   /// Char codeset translator
-  TAO_Codeset_Translator_Base * char_translator_;
+  TAO_Codeset_Translator_Base * const char_translator_;
 
   /// WChar codeset translator
-  TAO_Codeset_Translator_Base * wchar_translator_;
+  TAO_Codeset_Translator_Base * const wchar_translator_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

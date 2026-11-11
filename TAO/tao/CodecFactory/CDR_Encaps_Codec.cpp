@@ -110,8 +110,8 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
 
   std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
-  std::size_t rd_pos = mb.rd_ptr () - mb.base ();
-  std::size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  std::size_t const rd_pos = mb.rd_ptr () - mb.base ();
+  std::size_t const wr_pos = mb.wr_ptr () - mb.base () + data.length ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
@@ -131,7 +131,7 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
       this->wchar_translator_->assign (&cdr);
     }
 
-      CORBA::Boolean byte_order {};
+  CORBA::Boolean byte_order {};
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
@@ -180,7 +180,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
-      TAO::Any_Impl *impl = data.impl ();
+      TAO::Any_Impl * const impl = data.impl ();
 
       if (impl->encoded ())
         {
@@ -269,8 +269,8 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   //       rather than attempt to extract it from the CDR
   //       encapsulation.
 
-  std::size_t rd_pos = mb.rd_ptr () - mb.base ();
-  std::size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  std::size_t const rd_pos = mb.rd_ptr () - mb.base ();
+  std::size_t const wr_pos = mb.wr_ptr () - mb.base () + data.length ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
@@ -326,7 +326,7 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data)
 {
   // @@ TODO: Are there any other conditions we need to check?
 
-  CORBA::TypeCode_var typecode = data.type ();
+  CORBA::TypeCode_var const typecode = data.type ();
   if (this->major_ == 1
       && this->minor_ == 0
       && typecode->equivalent (CORBA::_tc_wstring))
