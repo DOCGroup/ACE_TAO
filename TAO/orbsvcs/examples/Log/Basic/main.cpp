@@ -4,14 +4,12 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TLS_Client client; // Telecom Log Service Client
+  TLS_Client client; // Telecom Log Service client
 
   try
     {
-      client.init (argc, argv); //Init the Client
-
-      client.run_tests (); //Init the Client
-
+      client.init (argc, argv);
+      client.run_tests ();
     }
   catch (CORBA::UserException const &ue)
     {

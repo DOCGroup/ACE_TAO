@@ -21,10 +21,9 @@ class TLS_Client
   // = TITLE
   //   Telecom Log Service Client
   // = DESCRIPTION
-  //   This client demonstates how to use the log service.
+  //   This client demonstrates how to use the log service.
  public:
   TLS_Client () = default;
-  ~TLS_Client () = default;
 
   TLS_Client (TLS_Client const &) = delete;
   TLS_Client (TLS_Client &&) = delete;
@@ -35,12 +34,9 @@ class TLS_Client
   // Init the Client.
 
   void run_tests ();
-  // Run the tests..
+  // Run the tests.
 
  protected:
-  void init_ORB (int argc, ACE_TCHAR *argv []);
-  // Initializes the ORB.
-
   void resolve_naming_service ();
   // Try to get hold of a running naming service.
 
@@ -56,7 +52,5 @@ class TLS_Client
 
   DsLogAdmin::BasicLogFactory_var basic_log_factory_;
   // The basic log factory from the Log Service.
-
-
 };
 #endif /* TLS_CLIENT_H */
