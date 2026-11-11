@@ -33,6 +33,7 @@
 #include "ace/OS_NS_ctype.h"
 
 #include <cstring>
+#include <string>
 
 #include <vector>
 
@@ -120,7 +121,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     CORBA::TypeCode_ptr discriminator_type,
     CORBA::UnionMemberSeq const &members)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -331,7 +332,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               {
                 TAO::Any_Impl * const impl = member.label.impl ();
                 TAO_InputCDR for_reading (
-                  static_cast<ACE_Message_Block *> (0));
+                  static_cast<ACE_Message_Block const *> (nullptr));
 
                 if (impl->encoded ())
                   {
@@ -591,7 +592,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
     char const *name,
     CORBA::EnumMemberSeq const &members)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -691,7 +692,7 @@ TAO_TypeCodeFactory_i::create_fixed_tc (
     CORBA::UShort digits,
     CORBA::UShort scale)
 {
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc {};
   ACE_NEW_THROW_EX (tc,
                     TAO::TypeCode::Fixed<TAO::True_RefCount_Policy> (digits,
                                                                      scale),
@@ -762,7 +763,7 @@ TAO_TypeCodeFactory_i::create_native_tc (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_recursive_tc (char const *id)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (id == nullptr || !this->valid_id (id))
     {
@@ -1096,7 +1097,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc {};
 
   using typecode_type = TAO::TypeCode::Objref<CORBA::String_var,
                                               TAO::True_RefCount_Policy>;
@@ -1115,7 +1116,7 @@ TAO_TypeCodeFactory_i::string_wstring_tc_common (
 
   )
 {
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc {};
   ACE_NEW_THROW_EX (tc,
                     TAO::TypeCode::String<TAO::True_RefCount_Policy> (kind,
                                                                       bound),
@@ -1130,7 +1131,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
     CORBA::TypeCode_ptr element_type,
     CORBA::TCKind kind)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   CORBA::Boolean const valid_element =
     this->valid_content_type (element_type);
@@ -1161,7 +1162,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1271,7 +1272,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
     CORBA::TCKind kind
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1315,7 +1316,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1462,28 +1463,19 @@ TAO_TypeCodeFactory_i::valid_name (char const *name)
 CORBA::Boolean
 TAO_TypeCodeFactory_i::valid_id (char const *id)
 {
-  ACE_CString safety (id,
-                      0,
-                      false);
+  std::string const safety (id);
 
-  ACE_CString::size_type const pos = safety.find (':');
+  std::string::size_type const pos = safety.find (':');
 
-  if (pos == ACE_CString::npos)
+  if (pos == std::string::npos)
     {
       return false;
     }
 
-  ACE_CString format (safety.substr (0, pos));
-
-  if (format == "IDL"
-      || format == "RMI"
-      || format == "DCE"
-      || format == "LOCAL")
-    {
-      return true;
-    }
-
-  return false;
+  return safety.compare (0, pos, "IDL") == 0
+      || safety.compare (0, pos, "RMI") == 0
+      || safety.compare (0, pos, "DCE") == 0
+      || safety.compare (0, pos, "LOCAL") == 0;
 }
 
 CORBA::Boolean
@@ -1527,7 +1519,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     CORBA::ULong enum_val;
     CORBA::ULongLong ulonglong_val;
     CORBA::LongLong longlong_val;
-  } s = {0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  } s {};
 
   // Two cases - one for signed and one for unsigned discriminator types.
   if (disc_kind == CORBA::tk_long
@@ -1877,7 +1869,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind, char const * id)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   switch (kind)
     {
