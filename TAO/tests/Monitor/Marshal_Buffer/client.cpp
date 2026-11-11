@@ -10,6 +10,7 @@
 
 #include "testC.h"
 
+#include <memory>
 #include <string>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
@@ -76,9 +77,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (monitor.in ());
 
-      FILE *output_file = ACE_OS::fopen (monitor_output_file, "w");
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (monitor_output_file, "w"), ACE_OS::fclose);
 
-      if (output_file == nullptr)
+      if (!output_file)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Can't open output file for writing IOR: %s",
@@ -86,10 +88,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      ACE_OS::fprintf (output_file,
+      ACE_OS::fprintf (output_file.get (),
                        "%s",
                        ior.in ());
-      ACE_OS::fclose (output_file);
 
       /// Call orb->run() in a separate thread so the MC interface can
       /// get remote calls.
