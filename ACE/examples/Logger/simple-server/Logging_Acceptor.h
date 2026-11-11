@@ -12,6 +12,7 @@
 #define _CLIENT_ACCEPTOR_H
 
 #include "ace/SOCK_Acceptor.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +33,6 @@ class Logging_Acceptor : public ACE_Event_Handler
 {
   friend class Logging_Handler;
 public:
-  /// Constructor.
   Logging_Acceptor () = default;
   Logging_Acceptor (Logging_Acceptor const &) = delete;
   Logging_Acceptor (Logging_Acceptor &&) = delete;
@@ -50,6 +50,7 @@ private:
 
   /// By making this private we ensure that the <Logging_Acceptor> is
   /// allocated dynamically.
+  friend struct std::default_delete<Logging_Acceptor>;
   ~Logging_Acceptor () = default;
 
   /// Passive connection acceptor factory.

@@ -19,7 +19,8 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
-#include "ace/os_include/os_netdb.h"
+#include <memory>
+#include <string>
 
 /**
  * @class Logging_Handler
@@ -40,11 +41,10 @@ public:
   Logging_Handler &operator= (Logging_Handler const &) = delete;
   Logging_Handler &operator= (Logging_Handler &&) = delete;
 
-  // = Hooks for opening and closing handlers.
+  // Initialize the handler.
   virtual int open ();
-  virtual int close ();
 
-  /// Conversion operators.
+  /// Access the connected stream.
   ACE_SOCK_Stream &peer ();
 
 protected:
@@ -57,11 +57,12 @@ protected:
 
   // = Really should be private...
   /// Ensure dynamic allocation.
+  friend struct std::default_delete<Logging_Handler>;
   ~Logging_Handler () override;
 
 private:
   /// Host we are connected to.
-  char host_name_[MAXHOSTNAMELEN + 1] {};
+  std::string host_name_;
 
   /// Connection with client
   ACE_SOCK_Stream cli_stream_;

@@ -1,4 +1,3 @@
-#include <cstring>
 #include <new>
 
 #include "ace/Log_Msg.h"
@@ -130,7 +129,9 @@ Logging_Handler::handle_input (ACE_HANDLE)
 
   log_record.length (length);
 
-  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->host_name_), 1, stderr);
+  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->host_name_.c_str ()),
+                    1,
+                    stderr);
 
   return 0;
 }
@@ -150,27 +151,31 @@ Logging_Handler::open ()
 
   if (this->cli_stream_.get_remote_addr (addr) == -1)
     return -1;
-  else
-    {
-      std::strncpy (this->host_name_, addr.get_host_name (), MAXHOSTNAMELEN + 1);
 
-      if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                          -1);
-      else if (REACTOR::instance ()->schedule_timer
-               (this, static_cast<void const *> (this),
-                ACE_Time_Value (2),
-                ACE_Time_Value (2)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) connected with %C\n"),
-                    this->host_name_));
-      return 0;
+  char const *const host_name = addr.get_host_name ();
+  if (host_name == nullptr)
+    return -1;
+  this->host_name_ = host_name;
+
+  if (REACTOR::instance ()->schedule_timer
+      (this, static_cast<void const *> (this),
+       ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                      -1);
+
+  if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
+    {
+      REACTOR::instance ()->cancel_timer (this);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                        -1);
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) connected with %C\n"),
+              this->host_name_.c_str ()));
+  return 0;
 }
 
 // Perform termination activities when deregistered from the
@@ -184,8 +189,3 @@ Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 // Perform termination activities when close fails.
-int
-Logging_Handler::close ()
-{
-  return this->handle_close ();
-}

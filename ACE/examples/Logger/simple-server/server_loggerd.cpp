@@ -8,6 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include <memory>
 
 #include "Logging_Acceptor.h"
 #include "Reactor_Singleton.h"
@@ -32,10 +33,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // The reactor owns this dynamically allocated acceptor after registration;
   // handle_close deletes it when the reactor closes the handler.
-  Logging_Acceptor *peer_acceptor {};
-  ACE_NEW_RETURN (peer_acceptor,
+  Logging_Acceptor *raw_acceptor {};
+  ACE_NEW_RETURN (raw_acceptor,
                   Logging_Acceptor,
                   1);
+  std::unique_ptr<Logging_Acceptor> peer_acceptor {raw_acceptor};
 
   ACE_INET_Addr addr (PORT);
 
@@ -56,11 +58,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       -1);
-  else if (REACTOR::instance ()->register_handler (peer_acceptor,
+  else if (REACTOR::instance ()->register_handler (peer_acceptor.get (),
                                                    ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("registering service with ACE_Reactor\n")),
                       -1);
+  peer_acceptor.release ();
 
   // Run forever, performing the logging service.
 
