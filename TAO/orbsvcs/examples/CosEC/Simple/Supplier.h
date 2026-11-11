@@ -6,8 +6,6 @@
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
-
-
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
@@ -27,7 +25,6 @@
 class Supplier : public POA_CosEventComm::PushSupplier
 {
 public:
-  /// Constructor
   Supplier () = default;
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;
@@ -41,8 +38,6 @@ public:
 
   /// The skeleton methods.
   void disconnect_push_supplier () override;
-
-private:
 };
 
 #endif /* SUPPLIER_H */

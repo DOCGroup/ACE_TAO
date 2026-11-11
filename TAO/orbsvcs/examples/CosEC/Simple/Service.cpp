@@ -2,14 +2,13 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_TCHAR const *ior_output_file = ACE_TEXT("ec.ior");
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -21,9 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -32,28 +29,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
   try
     {
-      // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      ACE_TCHAR const *ior_output_file = ACE_TEXT ("ec.ior");
+      if (parse_args (argc, argv, ior_output_file) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Usage: Service [-o IOR_file_name]\n"));
+                      ACE_TEXT ("Usage: Service [-o IOR_file_name]\n")));
           return 1;
         }
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
@@ -66,23 +63,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CosEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (event_channel.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
-        {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
-        }
+      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+        ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                           ior_output_file),
+                          1);
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
@@ -97,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Service");
+      ex._tao_print_exception (ACE_TEXT ("Service"));
       return 1;
     }
   return 0;

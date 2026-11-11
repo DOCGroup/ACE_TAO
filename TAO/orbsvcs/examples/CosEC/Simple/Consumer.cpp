@@ -2,13 +2,11 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://ec.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -20,9 +18,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -31,56 +27,54 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Consumer consumer;
 
   return consumer.run (argc, argv);
 }
 
-// ****************************************************************
-
 int
 Consumer::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
-      // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior = ACE_TEXT ("file://ec.ior");
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.
       this->orb_ = orb.in ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POA_var const poa =
+        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // Obtain the event channel, we could use a naming service, a
       // command line argument or resolve_initial_references(), but
       // this is simpler...
-      object =
+      CORBA::Object_var const event_channel_object =
         orb->string_to_object (ior);
 
-      CosEventChannelAdmin::EventChannel_var event_channel =
-        CosEventChannelAdmin::EventChannel::_narrow (object.in ());
+      CosEventChannelAdmin::EventChannel_var const event_channel =
+        CosEventChannelAdmin::EventChannel::_narrow (event_channel_object.in ());
 
       // The canonical protocol to connect to the EC
-      CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+      CosEventChannelAdmin::ConsumerAdmin_var const consumer_admin =
         event_channel->for_consumers ();
 
-      CosEventChannelAdmin::ProxyPushSupplier_var supplier =
+      CosEventChannelAdmin::ProxyPushSupplier_var const supplier =
         consumer_admin->obtain_push_supplier ();
 
-      CosEventComm::PushConsumer_var consumer =
+      CosEventComm::PushConsumer_var const consumer =
         this->_this ();
 
       supplier->connect_push_consumer (consumer.in ());
@@ -98,7 +92,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Consumer::run");
+      ex._tao_print_exception (ACE_TEXT ("Consumer::run"));
       return 1;
     }
   return 0;
@@ -107,11 +101,11 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 void
 Consumer::push (CORBA::Any const &)
 {
-  this->event_count_ ++;
+  ++this->event_count_;
   if (this->event_count_ % 100 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d events received\n",
+                  ACE_TEXT ("Consumer (%P|%t): %d events received\n"),
                   this->event_count_));
     }
 }

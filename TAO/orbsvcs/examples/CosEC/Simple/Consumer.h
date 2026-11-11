@@ -6,8 +6,6 @@
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
-
-
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
@@ -27,7 +25,6 @@
 class Consumer : public POA_CosEventComm::PushConsumer
 {
 public:
-  /// Constructor
   Consumer () = default;
   Consumer (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;
