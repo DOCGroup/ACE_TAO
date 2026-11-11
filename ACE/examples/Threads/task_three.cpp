@@ -68,7 +68,7 @@ Test_Task::Test_Task ()
 {
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
-  Test_Task::current_count_++;
+  ++Test_Task::current_count_;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
               Test_Task::current_count_));
@@ -95,7 +95,7 @@ Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
 
-  Test_Task::current_count_--;
+  --Test_Task::current_count_;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_Task::close () current_count_ = %d.\n"),
               Test_Task::current_count_));
@@ -112,7 +112,7 @@ Test_Task::svc ()
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
 
-  for (size_t index = 0; index < NUM_INVOCATIONS; index++)
+  for (size_t index = 0; index < NUM_INVOCATIONS; ++index)
     {
       ACE_OS::thr_yield ();
 
@@ -134,12 +134,12 @@ Test_Task::svc ()
 int
 Test_Task::handle_input (ACE_HANDLE)
 {
-  this->handled_++;
+  ++this->handled_;
 
   if (this->handled_ == NUM_INVOCATIONS)
     {
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
-      Test_Task::done_cnt_++;
+      ++Test_Task::done_cnt_;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
                   Test_Task::done_cnt_));
@@ -220,7 +220,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 
   reactor1->owner (ACE_OS::thr_self ());
 
-  for (size_t index = 0; index < TASK_COUNT; index++)
+  for (size_t index = 0; index < TASK_COUNT; ++index)
     {
       t1[index].open (reactor1);
       t2[index].open (reactor2.get ());

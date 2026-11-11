@@ -79,7 +79,7 @@ WFMO_Test::svc ()
       // resource it's not protected via a mutex because the ++
       // operation on Intel is atomic.
 
-      semaphore_count_++;
+      ++semaphore_count_;
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) thread has been signaled.\n"));
 
@@ -108,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   result = ACE_OS::sema_init (&wfmo_test.sema_handles_[1], thread_count + 5);
   ACE_ASSERT (result != -1);
 
-  for (int i = 0; i < MAX_ITERATIONS; i++)
+  for (int i = 0; i < MAX_ITERATIONS; ++i)
     {
       wfmo_test.semaphore_count_ = 0;
 

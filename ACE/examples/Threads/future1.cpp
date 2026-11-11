@@ -333,7 +333,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (matias.open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "failed to open the delegating scheduler\n"), -1);
 
-  for (size_t i = 0; i < n_loops; i++)
+  for (size_t i = 0; i < n_loops; ++i)
     {
       {
         ACE_Future<u_long> fresulta, fresultb, fresultc, fresultd, fresulte;

@@ -22,7 +22,7 @@ static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
   intptr_t const iterations = reinterpret_cast<intptr_t> (arg);
-  for (intptr_t i = 0; i < iterations; i++)
+  for (intptr_t i = 0; i < iterations; ++i)
     {
       if ((i % 1000) == 0)
         {

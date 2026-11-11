@@ -152,7 +152,7 @@ Worker_Task<BARRIER>::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int iter = 1; ;iter++)
+  for (int iter = 1; ; ++iter)
     {
       ACE_Message_Block *mb {};
 
@@ -241,7 +241,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
 
   if (l == 1000)
     n = 1;
-  l++;
+  ++l;
 
   if (l == 0 || (l % 100 == 0))
     ACE_OS::sleep (5);
@@ -259,7 +259,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
       // cout << "\nvor loop, dump of task msg queue:\n" << endl;
       // this->msg_queue ()->dump ();
 
-      for (int i = 0; i < nt_; i++)
+      for (int i = 0; i < nt_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) eof, sending block for thread=%d\n",

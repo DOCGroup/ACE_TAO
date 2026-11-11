@@ -62,7 +62,7 @@ worker (void *c)
   else
     owned_ip.release ();
 
-  for (intptr_t i = 0; i < count; i++)
+  for (intptr_t i = 0; i < count; ++i)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         ACE_ERROR ((LM_ERROR,

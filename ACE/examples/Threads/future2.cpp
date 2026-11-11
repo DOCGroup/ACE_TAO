@@ -389,7 +389,7 @@ test_active_object (int n_iterations)
   // loop 1:
   // do the same test but with the schedulers
   // activated
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 2; ++i)
     {
       if (i == 1)
         {

@@ -101,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   -1);
   std::unique_ptr<std::unique_ptr<Task_Test>[]> task_array {task_array_storage};
 
-  for (int i = 1; i <= n_iterations; i++)
+  for (int i = 1; i <= n_iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) iteration = %d, max_count %d\n",
                   i, max_count.load (std::memory_order_relaxed)));
@@ -111,14 +111,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   n_threads, n_threads == 1 ? "" : "s"));
 
       // Launch the new tasks.
-      for (int j = 0; j < n_threads; j++)
+      for (int j = 0; j < n_threads; ++j)
         {
           Task_Test *task {};
           ACE_NEW_RETURN (task, Task_Test, -1);
           task_array[j].reset (task);
         }
 
-      for (int j = 0; j < n_threads; j++)
+      for (int j = 0; j < n_threads; ++j)
         {
           // Activate the task, i.e., make it an active object.
           if (task_array[j]->open () == -1)
@@ -149,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       // Release the completed tasks before creating the next iteration's tasks.
-      for (int k = 0; k < n_threads; k++)
+      for (int k = 0; k < n_threads; ++k)
         task_array[k].reset ();
     }
 

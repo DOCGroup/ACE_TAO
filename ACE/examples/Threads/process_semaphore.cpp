@@ -28,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Sig_Action sa (handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  for (int i = 0; i < iterations && !done; i++)
+  for (int i = 0; i < iterations && !done; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquiring\n"));
       if (pm.acquire () == -1)

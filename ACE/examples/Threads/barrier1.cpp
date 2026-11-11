@@ -34,7 +34,7 @@ tester (void *arg)
   Tester_Args * const args = static_cast<Tester_Args *> (arg);
   for (int iterations = 1;
        iterations <= args->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) in iteration %d\n", iterations));
 

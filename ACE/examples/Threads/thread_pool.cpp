@@ -103,7 +103,7 @@ Thread_Pool::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (;; count++)
+  for (;; ++count)
     {
       ACE_Message_Block *mb {};
 
@@ -182,7 +182,7 @@ producer (Thread_Pool &thread_pool)
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
-            count++;
+            ++count;
 
           if (count == 0 || (count % 20 == 0))
             ACE_OS::sleep (1);
@@ -207,7 +207,7 @@ producer (Thread_Pool &thread_pool)
           // thread_pool.dump ();
 
                 // Send a shutdown message to the waiting threads and exit.
-          for (size_t i = thread_pool.thr_count (); i > 0; i--)
+          for (size_t i = thread_pool.thr_count (); i > 0; --i)
             {
               //FUZZ: disable check_for_NULL
               ACE_DEBUG ((LM_DEBUG,

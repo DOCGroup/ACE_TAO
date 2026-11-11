@@ -140,7 +140,7 @@ Worker_Task::svc ()
 
   for (size_t iterations = 1;
        iterations <= this->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
                   " (%t) in iteration %d\n",
@@ -197,7 +197,7 @@ Invoker_Task::svc ()
 
   for (task = 0;
        task < this->n_tasks_;
-       task++)
+       ++task)
     {
       ACE_DEBUG ((LM_DEBUG,
                   " (%t) in task %d\n",
@@ -222,7 +222,7 @@ Invoker_Task::svc ()
 
   for (task = 0;
        task < this->n_tasks_;
-       task++)
+       ++task)
     if (thr_mgr->set_grp (worker_tasks[task].get (),
                           1) == -1)
       ACE_ERROR ((LM_DEBUG,

@@ -123,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   -1);
   std::unique_ptr<std::unique_ptr<Test_Task>[]> task_arr {task_array_storage};
 
-  for (int i = 0; i < MAX_ITERATIONS; i++)
+  for (int i = 0; i < MAX_ITERATIONS; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) ********* iteration %d **********\n"
@@ -132,14 +132,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   Test_Task::max_count_.load (std::memory_order_relaxed)));
       Test_Task::max_count_.store (0, std::memory_order_relaxed);
 
-      for (int j = 0; j < num_tasks; j++)
+      for (int j = 0; j < num_tasks; ++j)
         {
           Test_Task *task {};
           ACE_NEW_RETURN (task, Test_Task, -1);
           task_arr[j].reset (task);
         }
 
-      for (int j = 0; j < num_tasks; j++)
+      for (int j = 0; j < num_tasks; ++j)
         {
           if (task_arr[j]->open (task_arr[j].get ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "failed to start Test_Task thread\n"), -1);

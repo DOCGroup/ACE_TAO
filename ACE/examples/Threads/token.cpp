@@ -46,7 +46,7 @@ My_Task::sleep_hook (void *)
 int
 My_Task::svc ()
 {
-  for (size_t i = 0; i < 100; i++)
+  for (size_t i = 0; i < 100; ++i)
     {
       // Wait for up to 1 millisecond past the current time to get the token.
       ACE_Time_Value timeout (ACE_OS::time (0), 1000);

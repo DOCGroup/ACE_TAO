@@ -83,7 +83,7 @@ ExitHandler::handle_timeout (ACE_Time_Value const &,
               "(%P|%t@%T) \"%s\" %s\n",
               name_,
               ACE_ODD (tick_tock) ? "Tock" : "Tick"));
-  tick_tock++;
+  ++tick_tock;
   return 0;
 }
 
@@ -119,7 +119,7 @@ worker (size_t iterations)
 {
   for (size_t i = 0;
        i <= iterations;
-       i++)
+       ++i)
     if (i && (i % 100) == 0)
       {
         ACE_DEBUG ((LM_DEBUG,

@@ -117,7 +117,7 @@ work (ACE_Thread_Manager *thr_mgr,
 
   for (i = 0;
        i < n_tasks;
-       i++)
+       ++i)
     task_array[i].open ();
 
   ACE_OS::sleep (1);
@@ -127,7 +127,7 @@ work (ACE_Thread_Manager *thr_mgr,
               loop_count,
               error_count));
 
-  for (i = 0; i < n_tasks; i++)
+  for (i = 0; i < n_tasks; ++i)
     task_array[i].shutdown ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -137,14 +137,14 @@ work (ACE_Thread_Manager *thr_mgr,
 
   for (i = 0;
 
-       i < n_tasks; i++)
+       i < n_tasks; ++i)
     if (-1 == task_array[i].synch ())
       {
         ACE_ERROR ((LM_ERROR,
                     "Error in synch! loop count = %d, error count = %d\n",
                     loop_count,
                     error_count));
-        error_count++;
+        ++error_count;
       }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -155,7 +155,7 @@ work (ACE_Thread_Manager *thr_mgr,
   // Wait for all the threads to finish.
   thr_mgr->wait ();
 
-  loop_count++;
+  ++loop_count;
 }
 
 int
@@ -165,7 +165,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
   u_int iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
 
-  for (u_int i = 0; i < iterations; i++)
+  for (u_int i = 0; i < iterations; ++i)
     work (ACE_Thread_Manager::instance (),
           n_tasks,
           stack_size);
