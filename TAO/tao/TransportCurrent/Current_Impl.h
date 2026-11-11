@@ -37,61 +37,47 @@ namespace TAO
     class TAO_Transport_Current_Export Current_Impl
       : public virtual Current
       , public virtual ::CORBA::LocalObject
-      {
-      public:
-        Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
+    {
+    public:
+      Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
 
-        /**
-         * These are methods exposed by the
-         * PortableInterceptor::Current interface.
-         */
-        //@{
-        CORBA::Long id () override;
+      Current_Impl (Current_Impl const &) = delete;
+      Current_Impl (Current_Impl &&) = delete;
+      Current_Impl &operator= (Current_Impl const &) = delete;
+      Current_Impl &operator= (Current_Impl &&) = delete;
 
-        CounterT bytes_sent () override;
+      /// Methods exposed by the PortableInterceptor::Current interface.
+      CORBA::Long id () override;
 
-        CounterT bytes_received () override;
+      CounterT bytes_sent () override;
 
-        CounterT messages_sent () override;
+      CounterT bytes_received () override;
 
-        CounterT messages_received () override;
+      CounterT messages_sent () override;
 
-        ::TimeBase::TimeT open_since () override;
-        //@}
+      CounterT messages_received () override;
 
-      protected:
-        /**
-         * Some helper methods
-         */
-        //@{
-        /// A (strategy) method used to obtain the transport ptr
-        TAO_Transport const *transport () const;
+      ::TimeBase::TimeT open_since () override;
 
-        /// A Stats instance. If protocol is unavailable (0) or the
-        /// TAO_HAS_TRANSPORT_CURRENT macro is defined as anything but
-        /// 1, a single static instance will be used.
-        TAO::Transport::Stats const *transport_stats () const;
-        //@}
+    protected:
+      /// A (strategy) method used to obtain the transport pointer.
+      TAO_Transport const *transport () const;
 
-        /// Destructor is protected to enforce the fact this class is
-        /// reference counted, and should not be destroyed using
-        /// delete() by anything other than the reference counting
-        /// mechanism.
-        ~Current_Impl () override;
+      /// A Stats instance. If protocol is unavailable (0) or the
+      /// TAO_HAS_TRANSPORT_CURRENT macro is defined as anything but
+      /// 1, a single static instance will be used.
+      TAO::Transport::Stats const *transport_stats () const;
 
-      private:
-        Current_Impl (Current_Impl const &) = delete;
-        void operator= (Current_Impl const &) = delete;
-        Current_Impl (Current_Impl &&) = delete;
-        void operator= (Current_Impl &&) = delete;
+      /// Protected because instances are reference counted.
+      ~Current_Impl () override = default;
 
-      private:
-        // The ORB (core) that owes us.
-        TAO_ORB_Core * const core_;
+    private:
+      // Borrowed from the ORB that owns this Current object.
+      TAO_ORB_Core * const core_;
 
-        // The ORB's TSS slot id for the Transport ptr
-        std::size_t const tss_slot_id_;
-      };
+      // The ORB's TSS slot id for the Transport pointer.
+      std::size_t const tss_slot_id_;
+    };
   }
 
 }

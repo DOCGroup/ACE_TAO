@@ -35,6 +35,11 @@ namespace TAO
     public:
       explicit Current_ORBInitializer (ACE_TCHAR const *id);
 
+      Current_ORBInitializer (Current_ORBInitializer const &) = delete;
+      Current_ORBInitializer &operator= (Current_ORBInitializer const &) = delete;
+      Current_ORBInitializer (Current_ORBInitializer &&) = delete;
+      Current_ORBInitializer &operator= (Current_ORBInitializer &&) = delete;
+
     protected:
       TAO::Transport::Current_ptr
       make_current_instance (TAO_ORB_Core *c, std::size_t s) override;

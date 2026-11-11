@@ -11,18 +11,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 namespace TAO
 {
   namespace Transport
   {
-    /// Obtains the IIOP_Connection_Handler associated with the
-    /// Transport. Will throw NoContext if the (selected) transport
-    /// () == 0, or if transport->connection_handler () == 0. Will
-    /// throw NoContext, if no transport has been selected yet.
-
     TAO_IIOP_Connection_Handler *
-    IIOP_Current_Impl::handler ()
+    IIOP_Current_Impl::handler () const
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_Transport const * const t = this->transport ();
@@ -54,16 +48,17 @@ namespace TAO
     {
     }
 
-    IIOP_Current_Impl::~IIOP_Current_Impl () = default;
-
-
     CORBA::Long
     IIOP_Current_Impl::id ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
-      // Need to use cast to pacify windows compilers complaining
-      // about the implicit HANDLE -> CORBA::Long conversion.
-      return ACE_Utils::truncate_cast<CORBA::Long> ((intptr_t)this->handler ()->get_handle ());
+      ACE_HANDLE const handle = this->handler ()->get_handle ();
+#if defined (ACE_WIN32)
+      intptr_t const integer_handle = reinterpret_cast<intptr_t> (handle);
+#else
+      intptr_t const integer_handle = static_cast<intptr_t> (handle);
+#endif
+      return ACE_Utils::truncate_cast<CORBA::Long> (integer_handle);
 #else
       throw ::CORBA::NO_IMPLEMENT ();
 #endif
@@ -72,9 +67,8 @@ namespace TAO
     ::SSLIOP::Current_ptr
     IIOP_Current_Impl::ssliop_current ()
     {
-        throw ::CORBA::NO_IMPLEMENT ();
+      throw ::CORBA::NO_IMPLEMENT ();
     }
-
 
     CORBA::Long
     IIOP_Current_Impl::remote_port ()
@@ -145,6 +139,4 @@ namespace TAO
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */

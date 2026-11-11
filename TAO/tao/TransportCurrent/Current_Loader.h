@@ -36,12 +36,19 @@ namespace TAO
       : public ACE_Service_Object
     {
     public:
+      Current_Loader () = default;
+
+      Current_Loader (Current_Loader const &) = delete;
+      Current_Loader &operator= (Current_Loader const &) = delete;
+      Current_Loader (Current_Loader &&) = delete;
+      Current_Loader &operator= (Current_Loader &&) = delete;
+
       /// Initializes object when dynamic linking occurs.
       int init (int argc, ACE_TCHAR *argv[]) override;
 
     protected:
       /// Protected destructor to enforce reference counting discipline
-      ~Current_Loader () override;
+      ~Current_Loader () override = default;
     };
   }
 }

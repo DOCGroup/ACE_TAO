@@ -49,6 +49,11 @@ namespace TAO
     public:
       IIOP_Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
 
+      IIOP_Current_Impl (IIOP_Current_Impl const &) = delete;
+      IIOP_Current_Impl (IIOP_Current_Impl &&) = delete;
+      IIOP_Current_Impl &operator= (IIOP_Current_Impl const &) = delete;
+      IIOP_Current_Impl &operator= (IIOP_Current_Impl &&) = delete;
+
       //@{
       ::CORBA::Long id () override;
 
@@ -64,25 +69,12 @@ namespace TAO
       //@}
 
     protected:
-      /**
-        * Protected destructor to enforce the fact this class is reference
-        * counted, and should not be destroyed using delete() by anything
-        * other than the reference counting mechanism.
-        */
-      ~IIOP_Current_Impl () override;
+      /// Protected because instances are reference counted.
+      ~IIOP_Current_Impl () override = default;
 
     private:
-      /// Returns the IIOP connection handler associated with the
-      /// Transport. Will throw NoContext if the (selected) transport
-      /// () == 0, or if transport->connection_handler () == 0. Will
-      /// throw NoContext, if no transport has been selected yet.
-      TAO_IIOP_Connection_Handler *handler ();
-
-    private:
-      IIOP_Current_Impl (IIOP_Current_Impl const &) = delete;
-      void operator= (IIOP_Current_Impl const &) = delete;
-      IIOP_Current_Impl (IIOP_Current_Impl &&) = delete;
-      void operator= (IIOP_Current_Impl &&) = delete;
+      /// Borrowed from the active transport; throws NoContext if unavailable.
+      TAO_IIOP_Connection_Handler *handler () const;
     };
   }
 }

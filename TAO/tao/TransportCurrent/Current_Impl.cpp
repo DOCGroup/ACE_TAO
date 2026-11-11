@@ -26,8 +26,6 @@ namespace TAO
     {
     }
 
-    Current_Impl::~Current_Impl () = default;
-
     /// Obtains the current transport. Throws a NoContext exception
     /// if, there was no "current" transport selected on the current
     /// thread.
@@ -51,14 +49,16 @@ namespace TAO
     {
       TAO_Transport const * const t = this->transport ();
 
-      return (t == nullptr || t->stats () == nullptr) ? &dummy_transport_stats : t->stats ();
+      TAO::Transport::Stats const * const stats =
+        t == nullptr ? nullptr : t->stats ();
+      return stats == nullptr ? &dummy_transport_stats : stats;
     }
 
     CORBA::Long Current_Impl::id ()
     {
       TAO_Transport const * const t = this->transport ();
 
-      return (t == nullptr) ? 0 : static_cast<CORBA::Long> (t->id ());
+      return t == nullptr ? CORBA::Long {} : static_cast<CORBA::Long> (t->id ());
     }
 
     CounterT Current_Impl::bytes_sent ()

@@ -40,20 +40,22 @@ namespace TAO
     {
     public:
       explicit Current_ORBInitializer_Base (ACE_TCHAR const *id);
-      ~Current_ORBInitializer_Base () override;
+
+      Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
+      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base const &) = delete;
+      Current_ORBInitializer_Base (Current_ORBInitializer_Base &&) = delete;
+      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base &&) = delete;
+
+      ~Current_ORBInitializer_Base () override = default;
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr) override;
 
       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
     protected:
-        virtual TAO::Transport::Current_ptr
-        make_current_instance (TAO_ORB_Core *core, std::size_t tss_slot_id) = 0;
-    protected:
+      virtual TAO::Transport::Current_ptr
+      make_current_instance (TAO_ORB_Core *core, std::size_t tss_slot_id) = 0;
+
       ACE_TString const id_;
-      Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
-      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base const &) = delete;
-      Current_ORBInitializer_Base (Current_ORBInitializer_Base &&) = delete;
-      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base &&) = delete;
     };
   } /* namespace Transport */
 

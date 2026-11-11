@@ -12,10 +12,7 @@ namespace TAO
       ACE_TCHAR const *id)
       : id_ (id)
     {
-      // do nothing
     }
-
-    Current_ORBInitializer_Base::~Current_ORBInitializer_Base () = default;
 
     void
     Current_ORBInitializer_Base::pre_init (
@@ -52,7 +49,6 @@ namespace TAO
     Current_ORBInitializer_Base::post_init (
       PortableInterceptor::ORBInitInfo_ptr)
     {
-      // do nothing
     }
 
   }
