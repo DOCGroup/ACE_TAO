@@ -70,7 +70,6 @@ public:
   // Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl const &) = delete;
   TAO_IFR_Client_Adapter_Impl &operator= (TAO_IFR_Client_Adapter_Impl const &) = delete;
   TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl &&) = delete;

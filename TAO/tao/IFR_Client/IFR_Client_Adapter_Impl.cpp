@@ -62,10 +62,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  else
-    {
-      return CORBA::InterfaceDef::_narrow (result.in ());
-    }
+  return CORBA::InterfaceDef::_narrow (result.in ());
 }
 
 CORBA::InterfaceDef_ptr

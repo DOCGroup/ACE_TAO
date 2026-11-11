@@ -38,6 +38,11 @@ class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
 public:
   ~TAO_Smart_Proxy_Base () override;
 
+  TAO_Smart_Proxy_Base (TAO_Smart_Proxy_Base const &) = delete;
+  TAO_Smart_Proxy_Base &operator= (TAO_Smart_Proxy_Base const &) = delete;
+  TAO_Smart_Proxy_Base (TAO_Smart_Proxy_Base &&) = delete;
+  TAO_Smart_Proxy_Base &operator= (TAO_Smart_Proxy_Base &&) = delete;
+
 protected:
   TAO_Smart_Proxy_Base () = default;
 
@@ -45,12 +50,6 @@ protected:
 
   /// The proxy to which remote/collocated calls are made.
   CORBA::Object_var base_proxy_;
-
-private:
-  TAO_Smart_Proxy_Base (TAO_Smart_Proxy_Base const &) = delete;
-  TAO_Smart_Proxy_Base &operator= (TAO_Smart_Proxy_Base const &) = delete;
-  TAO_Smart_Proxy_Base (TAO_Smart_Proxy_Base &&) = delete;
-  TAO_Smart_Proxy_Base &operator= (TAO_Smart_Proxy_Base &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
