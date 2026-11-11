@@ -50,12 +50,13 @@ namespace TAO_FTRTEC
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
                 RtecEventComm::EventSet const &data);
-  private:
+
       FTEC_Gateway (FTEC_Gateway const &) = delete;
       FTEC_Gateway &operator= (FTEC_Gateway const &) = delete;
       FTEC_Gateway (FTEC_Gateway &&) = delete;
       FTEC_Gateway &operator= (FTEC_Gateway &&) = delete;
 
+  private:
       std::unique_ptr<FTEC_Gateway_Impl> impl_;
   };
 }

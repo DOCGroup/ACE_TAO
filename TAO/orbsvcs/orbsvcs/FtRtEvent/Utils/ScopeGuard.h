@@ -22,13 +22,13 @@ class RefHolder
 public:
   explicit RefHolder (T &ref) : ref_ (ref) {}
   RefHolder (RefHolder const &) = default;
+  RefHolder &operator= (RefHolder const &) = delete;
+  RefHolder &operator= (RefHolder &&) = delete;
+
   operator T &() const
   {
     return ref_;
   }
-private:
-  RefHolder &operator= (RefHolder const &) = delete;
-  RefHolder &operator= (RefHolder &&) = delete;
 };
 
 template <class T>
@@ -39,8 +39,6 @@ inline RefHolder<T> ByRef (T &t)
 
 class ScopeGuardImplBase
 {
-  ScopeGuardImplBase &operator= (ScopeGuardImplBase const &) = delete;
-  ScopeGuardImplBase &operator= (ScopeGuardImplBase &&) = delete;
 protected:
   ~ScopeGuardImplBase () = default;
   ScopeGuardImplBase (ScopeGuardImplBase const &other) noexcept
@@ -64,6 +62,9 @@ protected:
   mutable bool dismissed_ {};
 public:
   ScopeGuardImplBase () noexcept = default;
+  ScopeGuardImplBase &operator= (ScopeGuardImplBase const &) = delete;
+  ScopeGuardImplBase &operator= (ScopeGuardImplBase &&) = delete;
+
   void Dismiss () const noexcept
   {
     dismissed_ = true;
