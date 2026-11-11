@@ -117,7 +117,8 @@ Hello::test_unbounded_var_size_arg (::Test::Unbounded_Var_Size_Arg const &messag
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
                         ACE_TEXT("got unbounded var size arg.\n")));
-  if (std::strcmp (message.get_buffer (), TEST_STR) != 0)
+  if (message.length () != std::strlen (TEST_STR)
+      || std::memcmp (message.get_buffer (), TEST_STR, message.length ()) != 0)
     ERROR_COUNT ("Hello::test_unbounded_var_size_arg")
 }
 
@@ -259,7 +260,8 @@ void Hello::test_args_3 (
     ERROR_COUNT ("Hello::test_args_3")
   if (std::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  if (std::strcmp (arg3.get_buffer (), TEST_STR) != 0)
+  if (arg3.length () != std::strlen (TEST_STR)
+      || std::memcmp (arg3.get_buffer (), TEST_STR, arg3.length ()) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
   {
