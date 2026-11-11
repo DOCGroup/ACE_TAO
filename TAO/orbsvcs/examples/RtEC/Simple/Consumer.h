@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
@@ -48,8 +47,7 @@ private:
   /// Keep track of the number of events received.
   CORBA::ULong event_count_ {};
 
-  /// The orb, just a pointer because the ORB does not outlive the
-  /// run() method...
+  /// Borrowed from the local ORB_var in run(); used only while run() is active.
   CORBA::ORB_ptr orb_ {};
 };
 

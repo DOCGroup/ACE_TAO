@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
@@ -42,8 +41,6 @@ public:
 
   /// The skeleton methods.
   void disconnect_push_supplier () override;
-
-private:
 };
 
 #endif /* SUPPLIER_H */
