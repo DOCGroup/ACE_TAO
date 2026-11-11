@@ -72,6 +72,11 @@ namespace CORBA
     Context () = default;
     ~Context () = default;
 
+    Context (Context const &) = delete;
+    Context &operator= (Context const &) = delete;
+    Context (Context &&) = delete;
+    Context &operator= (Context &&) = delete;
+
     // = Pseudo-object methods
     static Context *_duplicate (Context*);
     static Context *_nil ();
@@ -123,8 +128,12 @@ namespace CORBA
   public:
     ContextList () = default;
 
-    /// Constructor - initialize given a length and an array of
-    /// strings.
+    ContextList (ContextList const &) = delete;
+    ContextList &operator= (ContextList const &) = delete;
+    ContextList (ContextList &&) = delete;
+    ContextList &operator= (ContextList &&) = delete;
+
+    /// Initialize from an array of strings.
     ContextList (CORBA::ULong len, char **ctx_list);
 
     ~ContextList ();
@@ -166,11 +175,6 @@ namespace CORBA
     using _out_type = CORBA::ContextList_out;
 
   private:
-    ContextList (ContextList const &) = delete;
-    ContextList &operator= (ContextList const &) = delete;
-    ContextList (ContextList &&) = delete;
-    ContextList &operator= (ContextList &&) = delete;
-
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 

@@ -54,8 +54,12 @@ namespace CORBA
   public:
     ExceptionList () = default;
 
-    /// Constructor - initialize given a length and an array of
-    /// TypeCodes.
+    ExceptionList (ExceptionList const &) = delete;
+    ExceptionList &operator= (ExceptionList const &) = delete;
+    ExceptionList (ExceptionList &&) = delete;
+    ExceptionList &operator= (ExceptionList &&) = delete;
+
+    /// Initialize from an array of TypeCodes.
     ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
     ~ExceptionList ();
@@ -95,12 +99,6 @@ namespace CORBA
     using _out_type = CORBA::ExceptionList_out;
 
   private:
-    // = Not allowed.
-    ExceptionList (ExceptionList const &) = delete;
-    ExceptionList &operator= (ExceptionList const &) = delete;
-    ExceptionList (ExceptionList &&) = delete;
-    ExceptionList &operator= (ExceptionList &&) = delete;
-
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 
