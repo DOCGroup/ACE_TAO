@@ -7,9 +7,9 @@
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/rle/RLECompressor_Factory.h"
 
+#include <array>
 #include <cstddef>
 #include <cstring>
-#include <memory>
 
 /* This test produces the following output (RLECompressor)
 
@@ -282,11 +282,13 @@ testArray_compressor (::Compression::Compressor_var const& compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    struct COMP_RESULT {
+    struct COMP_RESULT
+    {
         int out_max;             // Maximum compressed buffer length
         int len;                 // We expect this compressed Length
-        ACE_Byte hex[16];        // We expect this compressed Data
-    } comp_result[] = {
+        std::array<ACE_Byte, 16> hex; // We expect this compressed Data
+    };
+    std::array<COMP_RESULT, 17> const comp_result {{
         /*00*/ { 0, 0,
                  {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}},
         /*01*/ { 2, 2,
@@ -321,13 +323,13 @@ testArray_compressor (::Compression::Compressor_var const& compressor)
                {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x81,0x4A}}, //".A.B.C.D.EFGHI.J"
         /*16*/ { 16, 16,
                {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x82,0x4A}}, //".A.B.C.D.EFGHI.J"
-    };
+    }};
 
     char const comp_data[] = "ABBCCCDDEFGHIJJJ";  // Test String with compressor run switching
 
     ACE_HEX_DUMP((LM_INFO, comp_data, (sizeof(comp_data) - 1), ACE_TEXT("Compression Data")));
 
-    for (std::size_t i = 0; i < sizeof(comp_data); i++) {
+    for (std::size_t i = 0; i < comp_result.size (); i++) {
         COMP_RESULT const &result = comp_result[i]; // Get a reference to our result for testing output
 
         Compression::Buffer in_data (
@@ -347,7 +349,7 @@ testArray_compressor (::Compression::Compressor_var const& compressor)
 
         // Now Make sure all is good and we can also expand back to what we had
         if (out_len == result.len) {    // Expected result length?
-            if (std::memcmp (out_ptr, result.hex, out_len) == 0) { // Make sure its what we expected
+            if (std::memcmp (out_ptr, result.hex.data (), out_len) == 0) { // Make sure its what we expected
                 Compression::Buffer out_buf(i);     // Set maximum out space (exactly -> Ignored by TAO)
                 compressor->decompress(out_data, out_buf);
                 if (out_buf.length() == i) {        // Make sure we got our length back
@@ -374,18 +376,16 @@ test128_compressor (::Compression::Compressor_var const& compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    std::unique_ptr<ACE_Byte[]> buff_128 = std::make_unique<ACE_Byte[]> (BUFF_128_SIZE);
-
-    std::memset (buff_128.get (), 0, BUFF_128_SIZE);
+    std::array<ACE_Byte, BUFF_128_SIZE> buff_128 {};
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(buff_128.get()),
+                    reinterpret_cast<char const *> (buff_128.data ()),
                     BUFF_128_SIZE,
                     ACE_TEXT("Original (test128) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(BUFF_128_SIZE);
-    ::CORBA::Octet* in_buf = reinterpret_cast<CORBA::Octet*>(buff_128.get());
+    ::CORBA::ULong const in_len = static_cast<::CORBA::ULong> (BUFF_128_SIZE);
+    ::CORBA::Octet * const in_buf = buff_128.data ();
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
 
@@ -438,18 +438,16 @@ test129A_compressor (::Compression::Compressor_var const& compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    std::unique_ptr<ACE_Byte[]> const buff_129 = std::make_unique<ACE_Byte[]> (BUFF_129_SIZE);
-
-    std::memset (buff_129.get (), 0, BUFF_129_SIZE);
+    std::array<ACE_Byte, BUFF_129_SIZE> buff_129 {};
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(buff_129.get()),
+                    reinterpret_cast<char const *> (buff_129.data ()),
                     BUFF_129_SIZE,
                     ACE_TEXT("Original (test129A) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(BUFF_129_SIZE);
-    ::CORBA::Octet* in_buf = reinterpret_cast< CORBA::Octet*>(buff_129.get());
+    ::CORBA::ULong const in_len = static_cast<::CORBA::ULong> (BUFF_129_SIZE);
+    ::CORBA::Octet * const in_buf = buff_129.data ();
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
 
@@ -502,20 +500,18 @@ test129B_compressor (::Compression::Compressor_var const& compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    std::unique_ptr<ACE_Byte[]> const buff_129 = std::make_unique<ACE_Byte[]> (BUFF_129_SIZE);
+    std::array<ACE_Byte, BUFF_129_SIZE> buff_129 {};
 
-    std::memset (buff_129.get (), 0, BUFF_129_SIZE);
-
-    buff_129.get()[128] = comp_129B_char; // Add a non Repeat Character
+    buff_129[128] = comp_129B_char; // Add a non Repeat Character
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(buff_129.get()),
+                    reinterpret_cast<char const *> (buff_129.data ()),
                     BUFF_129_SIZE,
                     ACE_TEXT("Original (test129B) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(BUFF_129_SIZE);
-    ::CORBA::Octet* in_buf = reinterpret_cast< CORBA::Octet*>(buff_129.get());
+    ::CORBA::ULong const in_len = static_cast<::CORBA::ULong> (BUFF_129_SIZE);
+    ::CORBA::Octet * const in_buf = buff_129.data ();
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
 
@@ -586,16 +582,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         if (::CORBA::is_nil(rleCompressor.in())) {
             ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: Unable to locate TAO::RLECompressor - exiting.\n")),-1);
-        } else if (test256_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test256) - exiting.\n")),-1);
-        } else if (testArray_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (testArray) - exiting.\n")),-1);
-        } else if (test128_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test128) - exiting.\n")),-1);
-        } else if (test129A_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test129A) - exiting.\n")),-1);
-        } else if (test129B_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test129B) - exiting.\n")),-1);
+        } else if (test256_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test256) - exiting.\n")),
+                              -1);
+        } else if (testArray_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (testArray) - exiting.\n")),
+                              -1);
+        } else if (test128_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test128) - exiting.\n")),
+                              -1);
+        } else if (test129A_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test129A) - exiting.\n")),
+                              -1);
+        } else if (test129B_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test129B) - exiting.\n")),
+                              -1);
         }
 
         ACE_DEBUG((LM_INFO, ACE_TEXT("\n********* END TEST RLE ************\n")));
