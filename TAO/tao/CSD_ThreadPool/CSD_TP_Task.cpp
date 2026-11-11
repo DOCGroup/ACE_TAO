@@ -43,8 +43,7 @@ TAO::CSD::TP_Task::add_request(TP_Request* request)
 int
 TAO::CSD::TP_Task::open(void* args)
 {
-  Thread_Counter num = 1;
-  Thread_Counter* tmp = static_cast<Thread_Counter*> (args);
+  Thread_Counter const * const tmp = static_cast<Thread_Counter*> (args);
 
   if (tmp == nullptr)
     {
@@ -56,7 +55,7 @@ TAO::CSD::TP_Task::open(void* args)
       //FUZZ: enable check_for_lack_ACE_OS
     }
 
-  num = *tmp;
+  Thread_Counter const num {*tmp};
 
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
@@ -115,7 +114,7 @@ TAO::CSD::TP_Task::svc()
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
     // Put the thread id into a collection which is used to check whether
     // the orb shutdown is called by one of the threads in the pool.
-    ACE_thread_t thr_id = ACE_OS::thr_self ();
+    ACE_thread_t const thr_id = ACE_OS::thr_self ();
     this->activated_threads_.push_back(thr_id);
     ++this->num_threads_;
     this->active_workers_.signal();
@@ -241,7 +240,7 @@ TAO::CSD::TP_Task::close(u_long flag)
 
       bool calling_thread_in_tp {};
 
-      ACE_thread_t my_thr_id = ACE_OS::thr_self ();
+      ACE_thread_t const my_thr_id = ACE_OS::thr_self ();
 
       // Check whether the calling thread(calling orb shutdown) is one of the
       // threads in the pool. If it is then it should not wait itself.
@@ -258,7 +257,7 @@ TAO::CSD::TP_Task::close(u_long flag)
         }
 
       // Wait until all worker threads have shutdown.
-      size_t target_num_threads = calling_thread_in_tp ? 1 : 0;
+      size_t const target_num_threads = calling_thread_in_tp ? 1 : 0;
       while (this->num_threads_ != target_num_threads)
         {
           this->active_workers_.wait();

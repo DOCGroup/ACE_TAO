@@ -20,11 +20,11 @@ TAO::CSD::TP_Strategy::~TP_Strategy () = default;
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(op->servant());
 
-  TP_Custom_Synch_Request_Handle request = new
-                          TP_Custom_Synch_Request(op, servant_state.in());
+  TP_Custom_Synch_Request_Handle const request {
+    new TP_Custom_Synch_Request(op, servant_state.in())};
 
   if (!this->task_.add_request(request.in()))
     {
@@ -40,11 +40,11 @@ TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(op->servant());
 
-  TP_Custom_Asynch_Request_Handle request = new
-                          TP_Custom_Asynch_Request(op, servant_state.in());
+  TP_Custom_Asynch_Request_Handle const request {
+    new TP_Custom_Asynch_Request(op, servant_state.in())};
 
   return (this->task_.add_request(request.in()))
          ? REQUEST_DISPATCHED : REQUEST_REJECTED;
@@ -80,7 +80,7 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i (
   char const *operation,
   PortableServer::Servant servant)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(servant);
 
   // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
@@ -96,13 +96,13 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i (
   //
   // TBD-CSD: Need to use a Cached Allocator to "create" the
   //          TP_Remote_Request objects.  For now, use the heap.
-  TP_Remote_Request_Handle request =
-                            new TP_Remote_Request(server_request,
-                                                  object_id,
-                                                  poa,
-                                                  operation,
-                                                  servant,
-                                                  servant_state.in());
+  TP_Remote_Request_Handle const request {
+    new TP_Remote_Request(server_request,
+                          object_id,
+                          poa,
+                          operation,
+                          servant,
+                          servant_state.in())};
 
   // Hand the request object to our task so that it can add the request
   // to its "request queue".
@@ -126,7 +126,7 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i (
   char const *operation,
   PortableServer::Servant servant)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(servant);
 
   bool const is_sync_with_server = server_request.sync_with_server();

@@ -47,8 +47,8 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
 
   while (cur != nullptr)
     {
-      TP_Request *prev = cur->prev_;
-      TP_Request *next = cur->next_;
+      TP_Request * const prev = cur->prev_;
+      TP_Request * const next = cur->next_;
 
       // Pass the current request to the visitor.  Also pass-in a reference
       // to the remove_from_queue flag.  The visitor may decide that it
@@ -58,14 +58,14 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
       // should continue (or cease to continue).
       bool remove_from_queue {};
 
-      bool continue_visitation = visitor.visit_request(cur,remove_from_queue);
+      bool const continue_visitation = visitor.visit_request(cur,remove_from_queue);
 
       if (remove_from_queue)
         {
           // Create a local handle to release the current request once
           // the handle falls out of scope.  We need to do this because the
           // queue "owns" a "copy" of each request in the queue.
-          TP_Request_Handle handle = cur;
+          TP_Request_Handle const handle {cur};
 
           if (this->head_ == cur)
             {

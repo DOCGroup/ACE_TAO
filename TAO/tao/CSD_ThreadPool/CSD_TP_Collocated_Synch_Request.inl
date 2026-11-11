@@ -25,7 +25,7 @@ ACE_INLINE
 bool
 TAO::CSD::TP_Collocated_Synch_Request::wait()
 {
-  bool dispatched = this->synch_helper_.wait_while_pending();
+  bool const dispatched = this->synch_helper_.wait_while_pending();
 
   if (dispatched)
     {
@@ -43,7 +43,6 @@ TAO::CSD::TP_Collocated_Synch_Request::wait()
     }
 
   return dispatched;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
