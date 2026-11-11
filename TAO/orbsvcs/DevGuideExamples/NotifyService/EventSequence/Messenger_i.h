@@ -4,26 +4,30 @@
 #include "MessengerS.h"
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"
+
 #include <memory>
 
 class EventSequenceSupplier_i;
 
-class  Messenger_i : public POA_Messenger
+class Messenger_i : public POA_Messenger
 {
 public:
-  Messenger_i (CORBA::ORB_ptr orb);
+  explicit Messenger_i (CORBA::ORB_ptr orb);
+  ~Messenger_i () override = default;
 
-  virtual ~Messenger_i ();
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
-  CORBA::Boolean send_message (
-      const char * user_name,
-      const char * subject,
-      char *& message);
+  CORBA::Boolean send_message (char const *user_name,
+                               char const *subject,
+                               char *&message) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   CosNotifyChannelAdmin::SequenceProxyPushConsumer_var consumer_proxy_;
-  std::unique_ptr<EventSequenceSupplier_i> supplier_;
+  std::unique_ptr<EventSequenceSupplier_i> const supplier_;
 };
 
 #endif

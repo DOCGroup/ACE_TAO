@@ -6,19 +6,19 @@
 class EventSequenceSupplier_i : public POA_CosNotifyComm::SequencePushSupplier
 {
 public:
-    // Constructor
-    EventSequenceSupplier_i(CORBA::ORB_ptr orb);
-    EventSequenceSupplier_i (EventSequenceSupplier_i const &) = delete;
-    EventSequenceSupplier_i (EventSequenceSupplier_i &&) = delete;
-    EventSequenceSupplier_i &operator= (EventSequenceSupplier_i const &) = delete;
-    EventSequenceSupplier_i &operator= (EventSequenceSupplier_i &&) = delete;
+  explicit EventSequenceSupplier_i (CORBA::ORB_ptr orb);
+  EventSequenceSupplier_i (EventSequenceSupplier_i const &) = delete;
+  EventSequenceSupplier_i (EventSequenceSupplier_i &&) = delete;
+  EventSequenceSupplier_i &operator= (EventSequenceSupplier_i const &) = delete;
+  EventSequenceSupplier_i &operator= (EventSequenceSupplier_i &&) = delete;
 
-    void disconnect_sequence_push_supplier () override;
+  void disconnect_sequence_push_supplier () override;
 
-    void subscription_change (CosNotification::EventTypeSeq const & added,
-                              CosNotification::EventTypeSeq const & removed) override;
+  void subscription_change (CosNotification::EventTypeSeq const &added,
+                            CosNotification::EventTypeSeq const &removed) override;
+
 private:
-    CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif
