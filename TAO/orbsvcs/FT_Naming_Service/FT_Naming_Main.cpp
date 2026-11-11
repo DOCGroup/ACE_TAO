@@ -10,15 +10,15 @@
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
 public:
-  Naming_Svc_Shutdown (TAO_FT_Naming_Service& ns);
+  explicit Naming_Svc_Shutdown (TAO_FT_Naming_Service & ns);
 
   void operator() (int which_signal) override;
 private:
-  TAO_FT_Naming_Service& ns_;
+  TAO_FT_Naming_Service & ns_;
 };
 
-Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_FT_Naming_Service& ns)
-  : ns_(ns)
+Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_FT_Naming_Service & ns)
+  : ns_ (ns)
 {
 }
 
@@ -34,28 +34,27 @@ Naming_Svc_Shutdown::operator() (int which_signal)
 
 // Driver function for the TAO FT Naming Service.
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   TAO_FT_Naming_Service naming_service;
 
   // Stuff to insure that we're gracefully shut down...
   Naming_Svc_Shutdown killer (naming_service);
-  Service_Shutdown kill_contractor(killer);
+  Service_Shutdown kill_contractor (killer);
 
   if (naming_service.init (argc, argv) == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Failed to start the Naming Service.\n")),
+                       ACE_TEXT ("Failed to start the Naming Service.\n")),
                       1);
   try
-    {
-      naming_service.run ();
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (ACE_TEXT ("NamingService"));
-      return 1;
-    }
+  {
+    naming_service.run ();
+  }
+  catch (CORBA::Exception const & ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("NamingService"));
+    return 1;
+  }
 
   naming_service.fini ();
 

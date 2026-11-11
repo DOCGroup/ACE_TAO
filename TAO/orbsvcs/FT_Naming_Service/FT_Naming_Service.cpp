@@ -8,17 +8,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Task.h"
 
-// Default Constructor.
-TAO_FT_Naming_Service::TAO_FT_Naming_Service ()
-  : time_ (0),
-    num_threads_ (1)
-{
-}
-
-// Constructor taking command-line arguments.
-TAO_FT_Naming_Service::TAO_FT_Naming_Service (int argc, ACE_TCHAR* argv[])
-  : time_ (0),
-    num_threads_ (1)
+TAO_FT_Naming_Service::TAO_FT_Naming_Service (int argc, ACE_TCHAR * argv[])
 {
   this->init (argc, argv);
 }
@@ -26,7 +16,7 @@ TAO_FT_Naming_Service::TAO_FT_Naming_Service (int argc, ACE_TCHAR* argv[])
 
 // Initialize the state of the TAO_FT_Naming_Service object
 int
-TAO_FT_Naming_Service::init (int argc, ACE_TCHAR* argv[])
+TAO_FT_Naming_Service::init (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -51,7 +41,7 @@ TAO_FT_Naming_Service::init (int argc, ACE_TCHAR* argv[])
       if (result == -1)
         return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("TAO_FT_Naming_Service::init");
       return -1;
@@ -61,10 +51,10 @@ TAO_FT_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_FT_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
+TAO_FT_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -79,11 +69,11 @@ TAO_FT_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
             // Remove the option '-t' from argv []
             // to avoid any confusion that might result.
             for (int i = get_opts.opt_ind (); i != argc; ++i)
-              argv [i-2 ] = argv [i];
+              argv[i - 2] = argv[i];
 
             // Decrement the value of argc to reflect the removal
             // of '-t' option.
-            argc = argc - 2;
+            argc -= 2;
             break;
           }
         case 'n':
@@ -95,11 +85,11 @@ TAO_FT_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
             // Remove the option '-n' from argv []
             // to avoid any confusion that might result.
             for (int i = get_opts.opt_ind (); i != argc; ++i)
-              argv [i-2 ] = argv [i];
+              argv[i - 2] = argv[i];
 
             // Decrement the value of argc to reflect the removal
             // of '-n' option.
-            argc = argc - 2;
+            argc -= 2;
             break;
           }
 
@@ -113,32 +103,30 @@ TAO_FT_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-// Run the ORB event loop.
-
 class ORB_Runner : public ACE_Task_Base
 {
 public:
-  ORB_Runner (CORBA::ORB_ptr o, long t)
-    : orb_(CORBA::ORB::_duplicate (o)),
-      time_(t)
+  ORB_Runner (CORBA::ORB_ptr orb, long timeout)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+    , time_ (timeout)
   {}
 
   int svc () override
   {
-  if (!CORBA::is_nil (orb_.in ()))
-    {
-      if (time_ == 0)
-        {
-          this->orb_->run ();
-        }
-      else
-        {
-          ACE_Time_Value tv (time_);
-          this->orb_->run (tv);
-        }
-    }
+    if (!CORBA::is_nil (this->orb_.in ()))
+      {
+        if (this->time_ == 0)
+          {
+            this->orb_->run ();
+          }
+        else
+          {
+            ACE_Time_Value tv (this->time_);
+            this->orb_->run (tv);
+          }
+      }
 
-  return 0;
+    return 0;
   }
 
 private:
@@ -154,21 +142,22 @@ private:
 int
 TAO_FT_Naming_Service::run ()
 {
-  ORB_Runner runner (this->orb_.in(), time_);
+  ORB_Runner runner (this->orb_.in (), this->time_);
   if (this->num_threads_ == 1)
-    return runner.svc();
+    return runner.svc ();
   else
     {
-      int grpid = runner.activate ( THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-                                    this->num_threads_);
-      if (grpid == -1)
+      int const group_id = runner.activate (
+        THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+        this->num_threads_);
+      if (group_id == -1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("FT_Naming_Service(%P)::run %p\n"),
                           ACE_TEXT ("thread acitvation")));
           return -1;
         }
-      runner.wait();
+      runner.wait ();
     }
   return 0;
 }
@@ -176,7 +165,7 @@ TAO_FT_Naming_Service::run ()
 void
 TAO_FT_Naming_Service::shutdown ()
 {
-  if (!CORBA::is_nil (orb_.in ()))
+  if (!CORBA::is_nil (this->orb_.in ()))
     {
       this->orb_->shutdown (false);
     }
@@ -185,7 +174,7 @@ TAO_FT_Naming_Service::shutdown ()
 int
 TAO_FT_Naming_Service::fini ()
 {
-  this->my_naming_server_.fini();
+  this->my_naming_server_.fini ();
 
   try
   {
@@ -195,13 +184,10 @@ TAO_FT_Naming_Service::fini ()
         this->orb_->destroy ();
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("TAO_FT_Naming_Service::fini");
     return -1;
   }
   return 0;
 }
-
-// Destructor.
-TAO_FT_Naming_Service::~TAO_FT_Naming_Service () = default;
