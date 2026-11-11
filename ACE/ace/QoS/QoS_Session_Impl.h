@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
 public:
-  /// Default destructor.
   ~ACE_RAPI_Session () override;
 
   ACE_RAPI_Session (ACE_RAPI_Session const &) = delete;
@@ -127,8 +126,6 @@ public:
   friend class ACE_QoS_Session_Factory;
 
 private:
-  /// Default constuctor. Constructor is defined private so that only
-  /// the friend factory can instantiate this class.
   ACE_RAPI_Session ();
 
   /// Construct a simplified RAPI Sender TSpec object
@@ -163,7 +160,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
 public:
-  /// Default destructor.
   ~ACE_GQoS_Session () override;
 
   ACE_GQoS_Session (ACE_GQoS_Session const &) = delete;
@@ -249,8 +245,6 @@ public:
   friend class ACE_QoS_Session_Factory;
 
 private:
-  /// Default constructor. Constructor is defined private so that only
-  /// the friend factory can instantiate this class.
   ACE_GQoS_Session ();
 };
 

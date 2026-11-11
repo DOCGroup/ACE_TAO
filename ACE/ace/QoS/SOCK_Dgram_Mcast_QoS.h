@@ -31,15 +31,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
 public:
-  /// Ctor, has same defaults as ACE_SOCK_Dgram_Mcast
-  ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
+  /// Uses the same default options as ACE_SOCK_Dgram_Mcast.
+  explicit ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
 
   // Note that there is no public <open> method.  Therefore, this
   // class cannot be used unless you <subscribe> to a multicast group.
   // If you just want to send (and not listen) to a multicast group,
   // use <ACE_SOCK_Dgram> or <ACE_SOCK_CODgram> instead.
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram_Mcast_QoS ();
 
   // = Multicast group management routines.

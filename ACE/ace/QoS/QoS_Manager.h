@@ -41,10 +41,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_QoS_Manager
 {
 public:
-  /// Default constructor.
   ACE_QoS_Manager ();
 
-  /// Default destructor.
   ~ACE_QoS_Manager ();
 
   // Copies hold an independent snapshot of the session pointer set.

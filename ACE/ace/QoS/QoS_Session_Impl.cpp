@@ -20,7 +20,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int ACE_RAPI_Session::rsvp_error = 0;
+int ACE_RAPI_Session::rsvp_error {};
 
 // Call back function used by RAPI to report RSVP events. This
 // function translates the RAPI QoS parameters into the more generic
@@ -407,7 +407,7 @@ ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
                            0,
                            sending_flowspec->ttl ()) ;
   */
-  if(result!= 0)
+  if (result != 0)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
                       result),
@@ -620,7 +620,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is a GQoS session ID generator.
-int ACE_GQoS_Session::GQoS_session_id = 0;
+int ACE_GQoS_Session::GQoS_session_id {};
 
 ACE_GQoS_Session::ACE_GQoS_Session ()
 {
@@ -666,7 +666,7 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
 
-  u_long ret_bytes = 0;
+  u_long ret_bytes {};
 
   ACE_QoS qos = ace_qos;
   if (ACE_OS::ioctl (socket->get_handle (),

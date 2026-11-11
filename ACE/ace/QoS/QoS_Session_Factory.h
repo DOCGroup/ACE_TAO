@@ -39,10 +39,8 @@ class ACE_QoS_Session;
 class ACE_QoS_Export ACE_QoS_Session_Factory
 {
 public :
-  /// Default constructor.
   ACE_QoS_Session_Factory ();
 
-  /// Default destructor.
   ~ACE_QoS_Session_Factory ();
 
   ACE_QoS_Session_Factory (ACE_QoS_Session_Factory const &) = delete;

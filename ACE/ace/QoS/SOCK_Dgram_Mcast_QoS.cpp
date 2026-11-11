@@ -21,8 +21,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
-// Dummy default constructor...
-
 ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (options opts)
   : ACE_SOCK_Dgram_Mcast (opts)
 {
@@ -104,7 +102,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
       if (result != 0)
         return -1;
 
-      size_t nr_subscribed = 0;
+      size_t nr_subscribed {};
 
       if (if_cnt < 2)
         {
