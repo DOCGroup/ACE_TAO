@@ -9,26 +9,23 @@
 using Magazine_Creator = Magazine *(*) ();
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
+  ACE_DLL dll {};
 
-  ACE_DLL dll;
-
-  int retval = dll.open (ACE_DLL_PREFIX ACE_TEXT("DLL_Today"));
+  int retval {dll.open (ACE_DLL_PREFIX ACE_TEXT("DLL_Today"))};
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p",
                        "dll.open"),
                       -1);
-  Magazine_Creator mc;
+  Magazine_Creator mc {};
 
   // Cast the void* to non-pointer type first - it's not legal to
   // cast a pointer-to-object directly to a pointer-to-function.
-  void *void_ptr = dll.symbol (ACE_TEXT ("create_magazine"));
-  ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+  void *void_ptr {dll.symbol (ACE_TEXT ("create_magazine"))};
+  ptrdiff_t tmp {reinterpret_cast<ptrdiff_t> (void_ptr)};
   mc = reinterpret_cast<Magazine_Creator> (tmp);
 
   if (mc == nullptr)
@@ -39,9 +36,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
     }
 
+  // Destroy the plugin object before unloading its DLL.
   {
-    std::unique_ptr<Magazine> magazine (mc ());
-
+    std::unique_ptr<Magazine> magazine {mc ()};
     magazine->title ();
   }
 
@@ -73,9 +70,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
     }
 
+  // Destroy the plugin object before unloading its DLL.
   {
-    std::unique_ptr<Magazine> magazine (mc ());
-
+    std::unique_ptr<Magazine> magazine {mc ()};
     magazine->title ();
   }
 

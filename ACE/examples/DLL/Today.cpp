@@ -40,9 +40,10 @@ Today::operator delete (void *ptr)
 // take care of exporting the function for Win32 platforms.
 extern "C" ACE_Svc_Export Magazine *create_magazine ();
 
-Magazine *create_magazine ()
+Magazine *
+create_magazine ()
 {
-  Magazine *mag = nullptr;
+  Magazine *mag {};
   ACE_NEW_RETURN (mag, Today, nullptr);
   return mag;
 }

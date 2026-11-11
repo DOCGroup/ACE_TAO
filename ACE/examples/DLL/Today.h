@@ -16,8 +16,8 @@
 #define TODAY_H
 
 #include "ace/os_include/os_stddef.h"
-#include "ace/OS_Memory.h"
 #include "Magazine.h"
+#include <new>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,6 +34,13 @@
 class Today : public Magazine
 {
 public:
+  Today () = default;
+
+  Today (Today const &) = delete;
+  Today (Today &&) = delete;
+  Today &operator= (Today const &) = delete;
+  Today &operator= (Today &&) = delete;
+
   // The virtual abstract class method which returns the title of the
   // magazine.
   void title () override;
