@@ -93,7 +93,7 @@ TAO::FT_Property_Validator::validate_property (
         }
       else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const * factories = nullptr;
+          PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
             throw PortableGroup::InvalidProperty (property.nam, property.val);
           else
@@ -182,7 +182,7 @@ TAO::FT_Property_Validator::validate_criteria (
         }
         else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const * factories = nullptr;
+          PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
             invalid_criteria[p++] = property;
           else
