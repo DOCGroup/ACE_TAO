@@ -31,7 +31,6 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   FTEC_ORBInitializer (FTEC_ORBInitializer const &) = delete;
   FTEC_ORBInitializer &operator= (FTEC_ORBInitializer const &) = delete;
   FTEC_ORBInitializer (FTEC_ORBInitializer &&) = delete;

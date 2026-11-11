@@ -22,7 +22,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FTEC_Basic_Factory : public TAO_EC_Default_Factory
 {
 public:
-    /// Constructor
   TAO_FTEC_Basic_Factory ();
   TAO_FTEC_Basic_Factory(TAO_FTEC_Basic_Factory const&) = delete;
   TAO_FTEC_Basic_Factory(TAO_FTEC_Basic_Factory&&) = delete;

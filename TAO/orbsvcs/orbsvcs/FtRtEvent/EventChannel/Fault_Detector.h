@@ -38,12 +38,12 @@ public:
   FTRT::Location const& my_location() const;
   virtual int connect(FTRT::Location const& location) = 0;
 
-private:
   Fault_Detector(Fault_Detector const&) = delete;
   Fault_Detector(Fault_Detector&&) = delete;
   Fault_Detector& operator=(Fault_Detector const&) = delete;
   Fault_Detector& operator=(Fault_Detector&&) = delete;
 
+private:
   virtual int init_acceptor()=0;
   virtual int parse_conf(int argc, ACE_TCHAR** argv);
 

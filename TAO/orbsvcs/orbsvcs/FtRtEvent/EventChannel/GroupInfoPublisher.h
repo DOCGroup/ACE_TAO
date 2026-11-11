@@ -62,12 +62,12 @@ public:
   void name(const char* nam);
   GroupInfoPublisherBase();
 
-private:
   GroupInfoPublisherBase(GroupInfoPublisherBase const&) = delete;
   GroupInfoPublisherBase(GroupInfoPublisherBase&&) = delete;
   GroupInfoPublisherBase& operator=(GroupInfoPublisherBase const&) = delete;
   GroupInfoPublisherBase& operator=(GroupInfoPublisherBase&&) = delete;
 
+private:
   CosNaming::NamingContext_var naming_context_;
   using Subscribers = std::vector<TAO_FTEC_Become_Primary_Listener*>;
   Subscribers subscribers_;

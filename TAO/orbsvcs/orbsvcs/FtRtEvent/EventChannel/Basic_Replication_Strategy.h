@@ -46,12 +46,12 @@ public:
   int acquire_write () override;
   int release () override;
 
-private:
   Basic_Replication_Strategy (Basic_Replication_Strategy const &) = delete;
   Basic_Replication_Strategy (Basic_Replication_Strategy &&) = delete;
   Basic_Replication_Strategy & operator= (Basic_Replication_Strategy const &) = delete;
   Basic_Replication_Strategy & operator= (Basic_Replication_Strategy &&) = delete;
 
+private:
   FTRT::SequenceNumber sequence_num_ {};
   std::unique_ptr<ACE_SYNCH_RECURSIVE_MUTEX> mutex_;
 };

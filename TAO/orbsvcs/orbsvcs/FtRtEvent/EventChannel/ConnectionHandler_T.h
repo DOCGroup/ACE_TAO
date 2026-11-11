@@ -30,17 +30,18 @@ public:
   int open (void *) override;
   void destroy () override;
   int close (u_long flags = 0) override;
+
+  ConnectionAcceptHandler(ConnectionAcceptHandler const&) = delete;
+  ConnectionAcceptHandler(ConnectionAcceptHandler&&) = delete;
+  ConnectionAcceptHandler& operator=(ConnectionAcceptHandler const&) = delete;
+  ConnectionAcceptHandler& operator=(ConnectionAcceptHandler&&) = delete;
+
 protected:
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask) override;
   ~ConnectionAcceptHandler() override = default;
 private:
-  ConnectionAcceptHandler(ConnectionAcceptHandler const&) = delete;
-  ConnectionAcceptHandler(ConnectionAcceptHandler&&) = delete;
-  ConnectionAcceptHandler& operator=(ConnectionAcceptHandler const&) = delete;
-  ConnectionAcceptHandler& operator=(ConnectionAcceptHandler&&) = delete;
-
   ACE_Reactor* reactor_ {};
 };
 
@@ -62,12 +63,13 @@ public:
 
   int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask) override;
-private:
+
   ConnectionDetectHandler(ConnectionDetectHandler const&) = delete;
   ConnectionDetectHandler(ConnectionDetectHandler&&) = delete;
   ConnectionDetectHandler& operator=(ConnectionDetectHandler const&) = delete;
   ConnectionDetectHandler& operator=(ConnectionDetectHandler&&) = delete;
 
+private:
   TAO_FTEC_Fault_Listener* listener_;
 };
 

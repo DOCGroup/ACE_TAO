@@ -36,6 +36,11 @@ public:
    */
   explicit AMI_Replication_Strategy(bool mt);
   ~AMI_Replication_Strategy() override = default;
+  AMI_Replication_Strategy(AMI_Replication_Strategy const&) = delete;
+  AMI_Replication_Strategy(AMI_Replication_Strategy&&) = delete;
+  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy const&) = delete;
+  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy&&) = delete;
+
   void replicate_request(FTRT::State const& state,
     RollbackOperation rollback,
     FtRtecEventChannelAdmin::ObjectId const& oid) override;
@@ -47,11 +52,6 @@ public:
   int acquire_write () override;
   int release () override;
 private:
-  AMI_Replication_Strategy(AMI_Replication_Strategy const&) = delete;
-  AMI_Replication_Strategy(AMI_Replication_Strategy&&) = delete;
-  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy const&) = delete;
-  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy&&) = delete;
-
   bool mt_;
 };
 

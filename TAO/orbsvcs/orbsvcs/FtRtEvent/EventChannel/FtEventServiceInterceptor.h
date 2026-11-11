@@ -76,12 +76,13 @@ public:
 
   void get_state (FtRtecEventChannelAdmin::CachedOptionResults &state);
   void set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state);
-private:
+
   FtEventServiceInterceptor (FtEventServiceInterceptor const &) = delete;
   FtEventServiceInterceptor &operator= (FtEventServiceInterceptor const &) = delete;
   FtEventServiceInterceptor (FtEventServiceInterceptor &&) = delete;
   FtEventServiceInterceptor &operator= (FtEventServiceInterceptor &&) = delete;
 
+private:
   PortableInterceptor::Current_var pic(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   CORBA::ORB_var orb_;
