@@ -87,7 +87,7 @@ Handle_L_Dgram::handle_input (int)
 {
   ACE_UNIX_Addr sa;
   char buf[8 * 1024]; /* 8 k buffer */
-  int n;
+  int n {};
 
   if ((n = this->recv (buf, sizeof buf, sa)) == -1)
     return -1;
@@ -98,7 +98,7 @@ Handle_L_Dgram::handle_input (int)
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::write (ACE_STDOUT, buf, n);
 
-  if (buf[n - 1] != '\n')
+  if (n > 0 && buf[n - 1] != '\n')
     putchar ('\n');
 
   ACE_OS::puts ("----------------------------------------");

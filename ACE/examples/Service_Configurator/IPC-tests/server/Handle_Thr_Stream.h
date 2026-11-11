@@ -20,7 +20,7 @@ class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_A
   //   configured <ACE_Thread_Strategy>.
 {
 public:
-  Handle_Thr_Acceptor ();
+  Handle_Thr_Acceptor () = default;
   ~Handle_Thr_Acceptor ();
   Handle_Thr_Acceptor (Handle_Thr_Acceptor const &) = delete;
   Handle_Thr_Acceptor (Handle_Thr_Acceptor &&) = delete;
@@ -39,7 +39,7 @@ private:
   ACE_Thread_Strategy<SVC_HANDLER> thr_strategy_;
   // Threading strategy.
 
-  int thr_flags_;
+  int thr_flags_ { THR_DETACHED | THR_NEW_LWP };
   // Threading flags.
 };
 

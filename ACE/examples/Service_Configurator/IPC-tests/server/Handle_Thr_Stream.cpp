@@ -23,12 +23,6 @@
 template <class SVH, PR_AC_1>
 Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor () = default;
 
-template <class SVH, PR_AC_1>
-Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor ()
-  : thr_flags_ (THR_DETACHED | THR_NEW_LWP)
-{
-}
-
 template <class SVH, PR_AC_1> int
 Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
                                          size_t length) const
@@ -60,7 +54,7 @@ template <class SVH, PR_AC_1> int
 Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_INET_Addr local_addr (ACE_DEFAULT_THR_PORT);
-  int n_threads = ACE_DEFAULT_THREADS;
+  int n_threads { ACE_DEFAULT_THREADS };
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:t:"), 0);
 
@@ -142,8 +136,8 @@ template <PR_ST_1> int
 CLI_Stream<PR_ST_2>::svc ()
 {
   char buf[BUFSIZ];
-  char login_name[ACE_MAX_USERID];
-  int bytes;
+  char login_name[ACE_MAX_USERID] {};
+  int bytes {};
 
   ACE_OS::puts ("----------------------------------------");
 
@@ -153,7 +147,7 @@ CLI_Stream<PR_ST_2>::svc ()
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::fflush (stdout);
 
-  time_t t = ACE_OS::time (nullptr);
+  time_t const t = ACE_OS::time (nullptr);
 #if !defined(ACE_LACKS_CUSERID)
   ACE_OS::cuserid (login_name);
 #else

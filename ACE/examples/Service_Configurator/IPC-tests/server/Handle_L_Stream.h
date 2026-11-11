@@ -37,7 +37,7 @@ private:
   int handle_input (ACE_HANDLE fd) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
 
-  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
   static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
   static char *login_name;
   static char login[ACE_MAX_USERID];

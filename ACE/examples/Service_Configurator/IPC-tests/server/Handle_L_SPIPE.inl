@@ -93,7 +93,7 @@ Handle_L_SPIPE::handle_input (int)
   ACE_SPIPE_Stream new_spipe;
   char     buf[PIPE_BUF];
   ACE_Str_Buf  msg (buf, 0, sizeof buf);
-  int      flags = 0;
+  int      flags {};
 
   /* Accept communication requests */
   if (this->ACE_SPIPE_Acceptor::accept (new_spipe) == -1)

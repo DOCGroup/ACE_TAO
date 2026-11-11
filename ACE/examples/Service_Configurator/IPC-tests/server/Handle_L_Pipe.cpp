@@ -20,9 +20,9 @@ int
 Handle_L_Pipe::handle_input (ACE_HANDLE)
 {
   ACE_LSOCK_Stream new_local_stream;
-  int n;
-  ACE_HANDLE fd1 = ACE_INVALID_HANDLE;
-  ACE_HANDLE fd2 = ACE_INVALID_HANDLE;
+  int n {};
+  ACE_HANDLE fd1 { ACE_INVALID_HANDLE };
+  ACE_HANDLE fd2 { ACE_INVALID_HANDLE };
   char buf[BUFSIZ];
 
   if (this->accept (new_local_stream) == -1)

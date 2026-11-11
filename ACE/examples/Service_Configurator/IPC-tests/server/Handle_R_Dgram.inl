@@ -93,7 +93,7 @@ Handle_R_Dgram::handle_input (ACE_HANDLE)
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::write (ACE_STDOUT, buf, n);
 
-  if (buf[n - 1] != '\n')
+  if (n > 0 && buf[n - 1] != '\n')
     putchar ('\n');
 
   ACE_OS::puts ("----------------------------------------");

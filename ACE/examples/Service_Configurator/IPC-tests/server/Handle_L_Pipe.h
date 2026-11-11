@@ -40,7 +40,7 @@ private:
 
   char *upper_case (char s[], int n);
 
-  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
   static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
 };
 

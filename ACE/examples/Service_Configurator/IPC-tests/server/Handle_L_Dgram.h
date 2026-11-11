@@ -36,7 +36,7 @@ private:
   int handle_input (int fd) override;
   int handle_close (int fd, ACE_Reactor_Mask) override;
 
-  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
   static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
 };
 
