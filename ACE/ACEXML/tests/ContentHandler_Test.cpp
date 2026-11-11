@@ -19,6 +19,12 @@
 class Basic_Content_Tester : public ACEXML_DefaultHandler
 {
 public:
+  Basic_Content_Tester () = default;
+  Basic_Content_Tester (Basic_Content_Tester const &) = delete;
+  Basic_Content_Tester (Basic_Content_Tester &&) = delete;
+  Basic_Content_Tester &operator= (Basic_Content_Tester const &) = delete;
+  Basic_Content_Tester &operator= (Basic_Content_Tester &&) = delete;
+
   /**
    * Receive notification of character data.
    */
@@ -30,10 +36,10 @@ public:
     { return Basic_Content_Tester::test_string_; }
 
 private:
-  static ACEXML_Char const *test_string_;
+  static ACEXML_Char const * const test_string_;
 };
 
-ACEXML_Char const * Basic_Content_Tester::test_string_ =
+ACEXML_Char const * const Basic_Content_Tester::test_string_ =
   ACE_TEXT ("<?xml version=\"1.0\"?>")
   ACE_TEXT ("<translation type=\"unfinished\">Example\n")
   ACE_TEXT ("d&apos;internationalisation</translation>");
@@ -142,15 +148,15 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   Basic_Content_Tester tester;
-  ACEXML_StrCharStream *raw_test_stream {};
-  ACE_NEW_RETURN (raw_test_stream, ACEXML_StrCharStream, -1);
-  std::unique_ptr<ACEXML_StrCharStream> test_stream (raw_test_stream);
+  std::unique_ptr<ACEXML_StrCharStream> test_stream =
+    std::make_unique<ACEXML_StrCharStream> ();
   if (test_stream->open (tester.get_test_string (),
                          ACE_TEXT ("test_stream")) < 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create input stream\n")));
       return -1;
     }
+  // ACEXML_InputSource takes ownership of the stream.
   ACEXML_InputSource input (test_stream.release ());
   ACEXML_Parser parser;
   parser.setContentHandler (&tester);
@@ -160,9 +166,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                        false);
     parser.parse (&input);
   }
-  catch (ACEXML_SAXException const& ex)
+  catch (ACEXML_SAXException const &ex)
   {
-    ex.print();
+    ex.print ();
     status = 1;
   }
   return status;

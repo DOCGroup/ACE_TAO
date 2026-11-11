@@ -9,16 +9,14 @@
 
 void dump_utf16 (ACEXML_UTF16 const *data, std::size_t len)
 {
-  std::size_t ptr {};
-
-  while (1)
+  for (std::size_t i {}; i < len; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "%04x", data[ptr]));
+      ACE_DEBUG ((LM_DEBUG, "%04x", data[i]));
 
-      if (++ptr >= len)
-        break;
+      if (i + 1 == len)
+        continue;
 
-      if (ptr % 4 == 0)
+      if ((i + 1) % 4 == 0)
         ACE_DEBUG ((LM_DEBUG, "\n"));
       else
         ACE_DEBUG ((LM_DEBUG, "  "));
@@ -34,7 +32,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   std::size_t x {};
 
-  for (x = 0; temp < 0x10000; x++, temp <<= 1)
+  for (; temp < 0x10000; ++x, temp <<= 1)
     {
       org[x] = static_cast<ACEXML_UTF16> (temp);
     }

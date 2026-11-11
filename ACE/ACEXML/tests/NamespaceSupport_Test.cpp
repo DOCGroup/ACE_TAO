@@ -80,7 +80,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
       ACEXML_Char const **prefix {};
 
-      for (; iter.next (prefix);iter.advance ())
+      for (; iter.next (prefix); iter.advance ())
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
@@ -132,7 +132,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
       ACEXML_Char const **prefix {};
 
-      for (; iter.next (prefix);iter.advance ())
+      for (; iter.next (prefix); iter.advance ())
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
@@ -149,7 +149,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
       ACEXML_Char const **prefix {};
 
-      for (; iter.next (prefix);iter.advance ())
+      for (; iter.next (prefix); iter.advance ())
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
