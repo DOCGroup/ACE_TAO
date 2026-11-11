@@ -14,23 +14,27 @@ class  Messenger_i
 public:
   Messenger_i (CORBA::ORB_ptr orb, long instance);
 
-  virtual ~Messenger_i ();
+  ~Messenger_i () override = default;
 
-  virtual
   CORBA::Long send_message (
       ::CORBA::Long thread,
       ::CORBA::Long iter,
       ::CORBA::Long obj,
-      ::CORBA::Long req);
+      ::CORBA::Long req) override;
 
-  virtual void shutdownOrb ();
+  void shutdownOrb () override;
 
-  bool acknowledgeHit();
+  bool acknowledgeHit ();
+
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
 private:
-  long            instance_;
+  long            instance_ {};
   CORBA::ORB_var  orb_;
-  bool            isHit_;
+  bool            isHit_ {};
 };
 
 
