@@ -13,25 +13,22 @@
 #include "Criteria_Evaluator.h"
 
 #include <cstring>
+#include <memory>
 
-
-Criteria_Evaluator::Criteria_Evaluator (CosLifeCycle::Criteria const & criteria)
-: criteria_ (criteria)
+Criteria_Evaluator::Criteria_Evaluator (CosLifeCycle::Criteria const &criteria)
+  : criteria_ (criteria)
 {
 }
 
-Criteria_Evaluator::~Criteria_Evaluator () = default;
-
 LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const *
-Criteria_Evaluator::getInitialization ()
+Criteria_Evaluator::getInitialization () const
 {
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const * sequence_ptr {};
 
-  CORBA::Any_ptr any_ptr =
-    this->getCriteriaMember ("initialization");
+  CORBA::Any const * const any_ptr = this->getCriteriaMember ("initialization");
 
   if (any_ptr == nullptr)
-    throw LifeCycleService::Criteria_Evaluator::NotAvailable(
+    throw LifeCycleService::Criteria_Evaluator::NotAvailable (
       "No initialization member found.\n");
 
   *any_ptr >>= sequence_ptr;
@@ -39,42 +36,27 @@ Criteria_Evaluator::getInitialization ()
   return sequence_ptr;
 }
 
-char *
-Criteria_Evaluator::getFilter ()
+std::string
+Criteria_Evaluator::getFilter () const
 {
   char const * string {};
-  CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
+  CORBA::Any const * const any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == nullptr)
-    throw LifeCycleService::Criteria_Evaluator::NotAvailable(
+    throw LifeCycleService::Criteria_Evaluator::NotAvailable (
       "No filter member found.\n");
-  *any_ptr >>= string;
-  return CORBA::string_dup (string);
+  if (!(*any_ptr >>= string) || string == nullptr)
+    throw LifeCycleService::Criteria_Evaluator::NotAvailable (
+      "The filter member is not a string.\n");
+  return string;
 }
 
-CORBA::Any *
-Criteria_Evaluator::getCriteriaMember (char const * member_name)
+CORBA::Any const *
+Criteria_Evaluator::getCriteriaMember (char const *member_name) const
 {
-  if (!std::strcmp (member_name, "initialization")
-      && !std::strcmp (member_name, "filter")
-      && !std::strcmp (member_name, "logical location")
-      && !std::strcmp (member_name, "preferences"))
-    return nullptr;
-
-  for (u_int i = 0;
-       i < criteria_.length();
-       i++)
-    if (std::strcmp (member_name,
-                     criteria_[i].name) == 0)
-      {
-        CORBA::Any_ptr value_ptr {};
-
-        // @@ We should use ACE_NEW_THROW_EX + ACE_CHECK_RETURN here.
-        ACE_NEW_RETURN (value_ptr,
-                        CORBA::Any(criteria_[i].value),
-                        0);
-        return value_ptr;
-      }
+  for (CORBA::ULong i {}; i < this->criteria_.length (); ++i)
+    if (std::strcmp (member_name, this->criteria_[i].name) == 0)
+      return std::addressof (this->criteria_[i].value);
 
   return nullptr;
 }

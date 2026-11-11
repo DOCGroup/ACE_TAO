@@ -17,13 +17,11 @@
 
 #include "LifeCycle_Service_i.h"
 
-// Constructor
 Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
   : debug_level_ (debug_level)
 {
 }
 
-// Destructor.
 Life_Cycle_Service_i::~Life_Cycle_Service_i () = default;
 
 
@@ -43,7 +41,7 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
 
   if (factory_trader_ptr_ != nullptr)
     {
-      Criteria_Evaluator criteria_Evaluator(the_criteria);
+      Criteria_Evaluator const criteria_evaluator (the_criteria);
 
       if (this->debug_level_ >= 2)
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: new evaluator.\n"));
@@ -51,17 +49,19 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
       if (this->debug_level_ >= 2)
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
 
-      char * filter = criteria_Evaluator.getFilter ();
+      std::string const filter = criteria_evaluator.getFilter ();
 
       if (this->debug_level_ >= 2)
-        ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",filter));
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",
+                        filter.c_str ()));
 
-      CORBA::Object_ptr genericFactoryObj_ptr = factory_trader_ptr_->query (filter);
+      CORBA::Object_var generic_factory = this->factory_trader_ptr_->query (filter);
 
       if (this->debug_level_ >= 2)
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query was called.\n"));
 
-      if (CORBA::is_nil (genericFactoryObj_ptr))
+      if (CORBA::is_nil (generic_factory.in ()))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Life_Cycle_Service_i::create_object: Factory is nil!\n"),
                           0);
@@ -74,7 +74,7 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
 
 
       // Check if it is a valid Generic Factory reference
-      if (CORBA::is_nil (genericFactoryObj_ptr))
+      if (CORBA::is_nil (generic_factory.in ()))
         throw CosLifeCycle::NoFactory (factory_key);
       else
         {
@@ -82,7 +82,7 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
           try
             {
               genericFactory_var =
-                CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr);
+                CosLifeCycle::GenericFactory::_narrow (generic_factory.in ());
             }
           catch (CORBA::Exception const &)
             {
@@ -131,13 +131,13 @@ Life_Cycle_Service_i::register_factory (char const * name,
                                         char const * description,
                                         CORBA::Object_ptr object)
 {
-  if (factory_trader_ptr_ == nullptr)
-    ACE_NEW (factory_trader_ptr_, Factory_Trader(this->debug_level_));
+  if (this->factory_trader_ptr_ == nullptr)
+    this->factory_trader_ptr_ = std::make_unique<Factory_Trader> (this->debug_level_);
   // we have an proper reference to the Factory Trader
 
   // Just forward the call to the factory trader
   // Exceptions are not handled here, they are returned
-  factory_trader_ptr_->_cxx_export (name, location, description, object);
+  this->factory_trader_ptr_->_cxx_export (name, location, description, object);
 
   if (this->debug_level_ >= 1)
     ORBSVCS_DEBUG ((LM_DEBUG, "LifeCycle Server: Registered %s\n"

@@ -9,11 +9,13 @@
  */
 //=============================================================================
 
+#ifndef CRITERIA_EVALUATOR_H_H
+#define CRITERIA_EVALUATOR_H_H
+
 #include "orbsvcs/CosLifeCycleC.h"
 #include "orbsvcs/LifeCycleServiceC.h"
 
-#ifndef CRITERIA_EVALUATOR_H_H
-#define CRITERIA_EVALUATOR_H_H
+#include <string>
 
 /**
  * @class Criteria_Evaluator
@@ -22,31 +24,30 @@ class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {
 public:
   explicit Criteria_Evaluator (CosLifeCycle::Criteria const & criteria);
-  ~Criteria_Evaluator ();
+  Criteria_Evaluator (Criteria_Evaluator const &) = delete;
+  Criteria_Evaluator (Criteria_Evaluator &&) = delete;
+  Criteria_Evaluator &operator= (Criteria_Evaluator const &) = delete;
+  Criteria_Evaluator &operator= (Criteria_Evaluator &&) = delete;
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const * getInitialization ();
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const * getInitialization () const;
 
-  char * getFilter ();
+  std::string getFilter () const;
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation ()
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation () const
     {
       return nullptr;
     }
 
-  char * getPreferences ()
+  char * getPreferences () const
     {
       return nullptr;
     }
 
 private:
-  CORBA::Any * getCriteriaMember (char const * member_name);
+  CORBA::Any const * getCriteriaMember (char const * member_name) const;
 
   CosLifeCycle::Criteria const & criteria_;
 };
 
 #endif /* CRITERIA_EVALUATOR_H */
-
-
-
-
 
