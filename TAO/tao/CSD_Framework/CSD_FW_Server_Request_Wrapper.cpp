@@ -11,6 +11,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,13 +36,13 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
       //  on the heap.
       if (this->request_->outgoing_ != nullptr)
         {
-          char* buffer = this->request_->outgoing_->begin ()->base ();
+          char * const buffer = this->request_->outgoing_->begin ()->base ();
           delete [] buffer;
           delete this->request_->outgoing_;
         }
       if (this->request_->operation_details_ != nullptr)
         {
-          char* opname =
+          char * const opname =
             const_cast<char*> (this->request_->operation_details_->opname_);
           delete [] opname;
 
@@ -327,14 +328,14 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   CORBA::ULong num_cloned_args {};
   if (from->num_args_ > 0)
     {
-      TAO::Argument* retval = from->args_[0]->clone();
+      TAO::Argument * const retval = from->args_[0]->clone ();
       if (retval != nullptr)
         {
           ACE_NEW_RETURN (cloned_args,
                           TAO::Argument*[from->num_args_],
                           false);
           cloned_args[0] = retval;
-          for (CORBA::ULong i = 1; i < from->num_args_; i++)
+          for (CORBA::ULong i = 1; i < from->num_args_; ++i)
             {
               cloned_args[i] = from->args_[i]->clone();
             }
@@ -349,7 +350,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
 
           // To avoid duplicating and copying the data block, allow the
           // TAO_OutputCDR to share the data block of TAO_InputCDR's message block.
-          ACE_Message_Block *mb = const_cast<ACE_Message_Block *> (cdr->start ());
+          ACE_Message_Block * const mb = const_cast<ACE_Message_Block *> (cdr->start ());
           TAO_OutputCDR outcdr (mb);
 
           if (! from_non_const->marshal_args (outcdr))
@@ -364,7 +365,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
           // held by the message block owned by the TAO_InputCDR.  We need to
           // make sure that the results of marshaling are propagated back to the
           // message block in the TAO_InputCDR.
-          ACE_Message_Block const *begin = outcdr.begin ();
+          ACE_Message_Block const * const begin = outcdr.begin ();
           if (begin == outcdr.current ())
             {
               // A chain was not made, so we can just adjust the read and write
@@ -466,6 +467,7 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
   ACE_NEW_RETURN (repbuf,
                  char[ACE_CDR::DEFAULT_BUFSIZE],
                  nullptr);
+  std::unique_ptr<char[]> repbuf_owner {repbuf};
 
   TAO_GIOP_Message_Version giop_version;
   this->request_->outgoing_->get_version (giop_version);
@@ -481,7 +483,7 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
   // and transfer to global memory when we get flow controlled. We
   // need to work on the message block to get it right!
   ACE_NEW_RETURN (cdr,
-                  TAO_OutputCDR (repbuf,
+                  TAO_OutputCDR (repbuf_owner.get (),
                                  ACE_CDR::DEFAULT_BUFSIZE,
                                  TAO_ENCAP_BYTE_ORDER,
                                  this->request_->orb_core_->input_cdr_buffer_allocator (),
@@ -491,6 +493,7 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
                                  giop_version.major,
                                  giop_version.minor),
                   nullptr);
+  repbuf_owner.release ();
 
   return cdr;
 }

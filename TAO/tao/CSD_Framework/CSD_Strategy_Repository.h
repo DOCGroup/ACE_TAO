@@ -65,7 +65,7 @@ private:
                    CSD_Framework::Strategy_ptr strategy);
     ~Strategy_Node ();
     void add_node (std::unique_ptr<Strategy_Node> node);
-    Strategy_Node *find (std::string const &name);
+    Strategy_Node const *find (std::string const &name) const;
 
     Strategy_Node (Strategy_Node const &) = delete;
     Strategy_Node &operator= (Strategy_Node const &) = delete;

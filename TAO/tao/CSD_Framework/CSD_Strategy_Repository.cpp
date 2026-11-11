@@ -19,7 +19,7 @@ TAO_CSD_Strategy_Repository::find (std::string const &name)
 {
   if (this->strategy_list_head_)
     {
-      Strategy_Node * const node = this->strategy_list_head_->find (name);
+      Strategy_Node const * const node = this->strategy_list_head_->find (name);
       if (node != nullptr)
         return CSD_Framework::Strategy::_duplicate (node->strategy_.in ());
     }
@@ -69,8 +69,8 @@ TAO_CSD_Strategy_Repository::Strategy_Node::add_node (
     this->next_ = std::move (node);
 }
 
-TAO_CSD_Strategy_Repository::Strategy_Node *
-TAO_CSD_Strategy_Repository::Strategy_Node::find (std::string const &name)
+TAO_CSD_Strategy_Repository::Strategy_Node const *
+TAO_CSD_Strategy_Repository::Strategy_Node::find (std::string const &name) const
 {
   if (this->poa_name_ == name)
     return this;
