@@ -11,22 +11,13 @@
 #include "Reactor_Logging_Server_Adapter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
-#include <memory>
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
-  int i;
-  char **array = nullptr;
-  ACE_NEW_RETURN (array, char*[argc], -1);
-  std::unique_ptr<char *[]> char_argv (array);
-
-  for (i = 0; i < argc; ++i)
-    char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
   ACE_NEW_NORETURN (server_, Reactor_Logging_Server<ACCEPTOR>
-                               (i, char_argv.get (),
+                               (argc, argv,
                                 ACE_Reactor::instance ()));
-  for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
   return server_ == nullptr ? -1 : 0;
 }
 

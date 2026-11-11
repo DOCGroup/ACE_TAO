@@ -26,7 +26,7 @@ public:
   int resume () override;
 
 private:
-  Reactor_Logging_Server<ACCEPTOR> *server_ = nullptr;
+  Reactor_Logging_Server<ACCEPTOR> *server_ {};
 };
 
 #include "Reactor_Logging_Server_Adapter.cpp"

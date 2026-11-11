@@ -106,20 +106,12 @@ public:
   TP_Logging_Server &operator= (TP_Logging_Server &&) = delete;
 
   int init (int argc, ACE_TCHAR *argv[]) override {
-    int i;
-    char **array = nullptr;
-    ACE_NEW_RETURN (array, char*[argc], -1);
-    std::unique_ptr<char *[]> char_argv (array);
-
-    for (i = 0; i < argc; ++i)
-      char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
     LOGGING_DISPATCHER *dispatcher = nullptr;
     ACE_NEW_NORETURN
       (dispatcher,
        TP_Logging_Server::LOGGING_DISPATCHER
-       (i, char_argv.get (), ACE_Reactor::instance ()));
+       (argc, argv, ACE_Reactor::instance ()));
     logging_dispatcher_.reset (dispatcher);
-    for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
     if (!logging_dispatcher_) return -1;
     else return TP_LOGGING_TASK::instance ()->open ();
   }

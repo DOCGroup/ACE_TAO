@@ -6,9 +6,11 @@
 
 template <class ACCEPTOR>
 Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
-  (int argc, char *argv[], ACE_Reactor *reactor)
+  (int argc, ACE_TCHAR *argv[], ACE_Reactor *reactor)
   : ACCEPTOR (reactor) {
-  u_short logger_port = argc > 0 ? ACE_OS::atoi (argv[0]) : 0;
+  u_short const logger_port = argc > 0
+    ? static_cast<u_short> (ACE_OS::atoi (argv[0]))
+    : 0;
   typename ACCEPTOR::PEER_ADDR server_addr;
   int result;
 
