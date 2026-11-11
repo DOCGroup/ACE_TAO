@@ -15,10 +15,10 @@
 static ACE_TCHAR const * program_name {};
 
 // Name of rendezvous point.
-static ACE_TCHAR const *rendezvous = ACE_TEXT ("/tmp/foo_pipe");
+static ACE_TCHAR const *rendezvous { ACE_TEXT ("/tmp/foo_pipe") };
 
 // Name of file to send.
-static ACE_TCHAR const *file_name = ACE_TEXT ("local_data");
+static ACE_TCHAR const *file_name { ACE_TEXT ("local_data") };
 
 static void
 print_usage_and_die ()
@@ -54,8 +54,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static int
 do_client_processing (ACE_LSOCK_Stream &sc)
 {
-  ACE_HANDLE fd_read[2];
-  ACE_HANDLE fd_write[2];
+  ACE_HANDLE fd_read[2] {};
+  ACE_HANDLE fd_write[2] {};
   char buf[BUFSIZ];
   int n;
 
@@ -72,7 +72,7 @@ do_client_processing (ACE_LSOCK_Stream &sc)
 
   // Do a silly dup just for fun...
 
-  ACE_HANDLE fd1 = ACE_OS::open (file_name, O_RDONLY);
+  ACE_HANDLE const fd1 = ACE_OS::open (file_name, O_RDONLY);
 
   if (fd1 == ACE_INVALID_HANDLE)
     return -1;

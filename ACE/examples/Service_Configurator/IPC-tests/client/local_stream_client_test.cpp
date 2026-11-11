@@ -13,10 +13,10 @@
 static ACE_TCHAR const * program_name {};
 
 // Name of rendezvous point.
-static ACE_TCHAR const *rendezvous = ACE_TEXT ("/tmp/foo_stream");
+static ACE_TCHAR const *rendezvous { ACE_TEXT ("/tmp/foo_stream") };
 
 // Name of file to send.
-static ACE_TCHAR const *file_name = ACE_TEXT ("local_data");
+static ACE_TCHAR const *file_name { ACE_TEXT ("local_data") };
 
 static void
 print_usage_and_die ()
@@ -53,9 +53,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
-  int fd;
   char buf[BUFSIZ];
-  int n;
+  int n {};
 
   ACE_LSOCK_Stream sc;
   ACE_LSOCK_Connector con;
@@ -67,8 +66,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("connect")),
                       -1);
 
-  if ((fd = ACE_OS::open (file_name,
-                          O_RDONLY)) == -1)
+  ACE_HANDLE const fd = ACE_OS::open (file_name, O_RDONLY);
+  if (fd == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
@@ -88,8 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("recv")),
                       -1);
-  else
-    ACE_OS::write (ACE_STDOUT, buf, n);
+  ACE_OS::write (ACE_STDOUT, buf, n);
 
   if (ACE_OS::close (fd) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

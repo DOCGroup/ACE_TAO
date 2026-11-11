@@ -15,10 +15,10 @@ static ACE_TCHAR const * program_name {};
 // debug state on or off
 static bool debug {};
 
-static ACE_TCHAR const *rendezvous_fifo = ACE_TEXT("/tmp/foo_fifo");
+static ACE_TCHAR const *rendezvous_fifo { ACE_TEXT ("/tmp/foo_fifo") };
 
 // Name of file to send.
-static ACE_TCHAR const *file_name = ACE_TEXT("./local_data");
+static ACE_TCHAR const *file_name { ACE_TEXT ("./local_data") };
 
 static void
 print_usage_and_die ()
@@ -32,7 +32,7 @@ print_usage_and_die ()
 static void
 parse_arguments (int argc, ACE_TCHAR *argv[])
 {
-  int tracing = 1;
+  bool const tracing { true };
   program_name = argv[0];
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("df:"));
@@ -60,7 +60,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_arguments (argc, argv);
 
@@ -89,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Next, send the file's contents.
 
   ACE_Str_Buf msg (cp,
-                   int (mmap.size ()));
+                   static_cast<int> (mmap.size ()));
 
   if (fifo.send (msg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

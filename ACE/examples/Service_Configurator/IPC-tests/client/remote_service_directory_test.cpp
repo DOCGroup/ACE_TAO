@@ -3,17 +3,17 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include <string>
 
 // Port number to use.
-static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
+static unsigned short port_number { ACE_DEFAULT_SERVICE_PORT };
 
 // Name of remote host.
-static ACE_TCHAR const *host_name = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *host_name { ACE_DEFAULT_SERVER_HOST };
 
 // Trigger a remote reconfiguration.
 static bool remote_reconfigure {};
@@ -56,8 +56,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   parse_args (argc, argv);
   // Default is to ask the server for ``help.''
-  static char buf[BUFSIZ] = "help\n";
-  int n;
+  std::string const command = remote_reconfigure ? "reconfigure\n" : "help\n";
+  char response[BUFSIZ];
+  int n {};
   ACE_SOCK_Stream   sc;
   ACE_SOCK_Connector con;
 
@@ -70,14 +71,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        1),
                       -1);
 
-  if (remote_reconfigure)
-    // Remotely instruct the server to reconfigure itself.
-    ACE_OS::strcpy (buf, "reconfigure\n");
-
   // Send the command.
 
-  if (sc.send_n (buf,
-                 ACE_OS::strlen (buf) + 1) == -1)
+  if (sc.send_n (command.c_str (), command.size () + 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n%a",
                        "send",
@@ -85,10 +81,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Next, read the response.
 
-  while ((n = sc.recv (buf,
-                       sizeof buf)) > 0)
+  while ((n = sc.recv (response,
+                       sizeof response)) > 0)
     if (ACE_OS::write (ACE_STDOUT,
-                       buf,
+                       response,
                        n) != n)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n%a",

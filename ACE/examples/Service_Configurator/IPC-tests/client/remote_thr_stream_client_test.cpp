@@ -15,13 +15,13 @@
 static ACE_TCHAR const * program_name {};
 
 // Port number to use.
-static u_short port_number = ACE_DEFAULT_THR_PORT;
+static u_short port_number { ACE_DEFAULT_THR_PORT };
 
 // Name of remote host.
-static ACE_TCHAR const *host_name = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *host_name { ACE_DEFAULT_SERVER_HOST };
 
 // Name of file to send.
-static ACE_TCHAR const *file_name = ACE_TEXT ("./remote_data");
+static ACE_TCHAR const *file_name { ACE_TEXT ("./remote_data") };
 
 static void print_usage_and_die ()
 {
