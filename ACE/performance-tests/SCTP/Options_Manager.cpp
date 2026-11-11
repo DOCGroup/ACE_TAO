@@ -30,16 +30,16 @@ extern "C" {
 
 // Set default values
 ACE_CDR::ULong Options_Manager::test_iterations=1000000;
-ACE_CDR::Boolean Options_Manager::test_enable_nagle=0;
+ACE_CDR::Boolean Options_Manager::test_enable_nagle {};
 ACE_CDR::Long Options_Manager::test_transport_protocol=IPPROTO_SCTP;
 ACE_CDR::Double Options_Manager::histogram_min_bin=0.0;
 ACE_CDR::Double Options_Manager::histogram_max_bin=10000.0;
 ACE_CDR::ULong Options_Manager::histogram_num_outliers=100;
 ACE_CDR::ULong Options_Manager::histogram_bin_count=1000;
-ACE_CDR::UShort Options_Manager::client_port = 0;
+ACE_CDR::UShort Options_Manager::client_port {};
 ACE_CDR::ULong Options_Manager::client_connect_addr=INADDR_ANY;
 ACE_CDR::UShort Options_Manager::server_port = 45453;
-ACE_TCHAR Options_Manager::server_host[Options_Manager::string_len];
+Options_Manager::string_type Options_Manager::server_host {};
 ACE_CDR::ULong Options_Manager::server_accept_addr=INADDR_ANY;
 ACE_CDR::UShort Options_Manager::payload_size_power_of_2=31;
 std::array<ACE_CDR::ULong, Options_Manager::max_num_secondary_connect_addrs>
@@ -48,26 +48,24 @@ std::size_t Options_Manager::num_secondary_connect_addrs {};
 std::array<ACE_CDR::ULong, Options_Manager::max_num_secondary_accept_addrs>
   Options_Manager::secondary_accept_addrs {};
 std::size_t Options_Manager::num_secondary_accept_addrs {};
-ACE_CDR::UShort Options_Manager::_usage = 0;
-ACE_CDR::UShort Options_Manager::_error = 0;
-ACE_TCHAR Options_Manager::__program_name[Options_Manager::string_len];
-ACE_CDR::Boolean Options_Manager::__initialized = false;
-const ACE_TCHAR* Options_Manager::_error_message;
+ACE_CDR::UShort Options_Manager::_usage {};
+ACE_CDR::UShort Options_Manager::_error {};
+Options_Manager::string_type Options_Manager::__program_name {};
+ACE_CDR::Boolean Options_Manager::__initialized {};
+const ACE_TCHAR* Options_Manager::_error_message {};
 
 
 Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * const opts_set)
 {
   if (!__initialized) {
     // Set default values that were not set during static initialization
-    ACE_OS::strcpy(server_host, ACE_LOCALHOST);
+    server_host = ACE_LOCALHOST;
 
     // Remember argv[0]
     if (ACE_OS::strlen(argv[0]) < Options_Manager::string_len)
-      ACE_OS::strcpy(__program_name, argv[0]);
-    else{
-      ACE_OS::strncpy(__program_name, argv[0], (Options_Manager::string_len-1));
-      __program_name[Options_Manager::string_len - 1] = '\0';
-    }
+      __program_name = argv[0];
+    else
+      __program_name.assign (argv[0], Options_Manager::string_len - 1);
 
     // Declare options with ACE_Get_Opt
     int c;
@@ -158,11 +156,10 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // of dotted-decimal ipv4 addresses.
 
             // Create a writable copy of the options argument
-            ACE_TCHAR str[Options_Manager::string_len];
-            ACE_OS::strncpy(str, get_opt->opt_arg(), Options_Manager::string_len);
+            std::basic_string<ACE_TCHAR> str (get_opt->opt_arg ());
 
             // Get a pointer to the first comma in the list
-            ACE_TCHAR *next_secondary_addr = ACE_OS::strchr(str, ',');
+            ACE_TCHAR *next_secondary_addr = ACE_OS::strchr (str.data (), ',');
 
             // If found, the comma is replaced with \0 and pointer
             // updated to point to the string that begins immediately
@@ -175,20 +172,18 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // Obtain the 32-bit, host-byte-order representation of
             // the primary address.
             struct in_addr foo;
-            int aton_retval = ACE_OS::inet_aton(ACE_TEXT_ALWAYS_CHAR (str),
+            int aton_retval = ACE_OS::inet_aton(ACE_TEXT_ALWAYS_CHAR (str.data ()),
                                                 &foo);
 
             // If this representation was not obtained, terminate with
             // an error.
             if (!aton_retval) {
-              ACE_TCHAR error_message[Options_Manager::string_len + 100];
-              ACE_OS::strcpy
-                (error_message,
-                 ACE_TEXT ("Could not make sense of primary address: "));
-              ACE_OS::strcat (error_message, str);
+              std::basic_string<ACE_TCHAR> error_message =
+                ACE_TEXT ("Could not make sense of primary address: ");
+              error_message += str.c_str ();
 
               _error = 1;
-              _error_message = ACE_OS::strdup(error_message);
+              _error_message = ACE_OS::strdup (error_message.c_str ());
               break;
             }
 
@@ -242,13 +237,11 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
                 secondary_connect_addrs[num_secondary_connect_addrs++] =
                   ntohl(foo.s_addr);
               } else {
-                ACE_TCHAR error_message[Options_Manager::string_len + 100];
-                ACE_OS::strcpy
-                  (error_message,
-                   ACE_TEXT ("Could not make sense of secondary address: "));
-                ACE_OS::strcat (error_message, next_secondary_addr);
+                std::basic_string<ACE_TCHAR> error_message =
+                  ACE_TEXT ("Could not make sense of secondary address: ");
+                error_message += next_secondary_addr;
                 _error = 1;
-                _error_message = ACE_OS::strdup(error_message);
+                _error_message = ACE_OS::strdup (error_message.c_str ());
                 break;
               }
 
@@ -271,11 +264,10 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // of dotted-decimal ipv4 addresses.
 
             // Create a writable copy of the options argument
-            ACE_TCHAR str[Options_Manager::string_len];
-            ACE_OS::strncpy(str, get_opt->opt_arg(), Options_Manager::string_len);
+            std::basic_string<ACE_TCHAR> str (get_opt->opt_arg ());
 
             // Get a pointer to the first comma in the list
-            ACE_TCHAR *next_secondary_addr = ACE_OS::strchr(str, ',');
+            ACE_TCHAR *next_secondary_addr = ACE_OS::strchr (str.data (), ',');
 
             // If found, the comma is replaced with \0 and pointer
             // updated to point to the string that begins immediately
@@ -288,20 +280,18 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // Obtain the 32-bit, host-byte-order representation of
             // the primary address.
             struct in_addr foo;
-            int aton_retval = ACE_OS::inet_aton (ACE_TEXT_ALWAYS_CHAR (str),
+            int aton_retval = ACE_OS::inet_aton (ACE_TEXT_ALWAYS_CHAR (str.data ()),
                                                  &foo);
 
             // If this representation was not obtained, terminate with
             // an error.
             if (!aton_retval) {
-              ACE_TCHAR error_message[Options_Manager::string_len + 100];
-              ACE_OS::strcpy
-                (error_message,
-                 ACE_TEXT ("Could not make sense of primary address: "));
-              ACE_OS::strcat (error_message, str);
+              std::basic_string<ACE_TCHAR> error_message =
+                ACE_TEXT ("Could not make sense of primary address: ");
+              error_message += str.c_str ();
 
               _error = 1;
-              _error_message = ACE_OS::strdup(error_message);
+              _error_message = ACE_OS::strdup (error_message.c_str ());
               break;
             }
 
@@ -355,14 +345,12 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
                 secondary_accept_addrs[num_secondary_accept_addrs++] =
                   ntohl(foo.s_addr);
               } else {
-                ACE_TCHAR error_message[Options_Manager::string_len + 100];
-                ACE_OS::strcpy
-                  (error_message,
-                   ACE_TEXT ("Could not make sense of secondary address: "));
-                ACE_OS::strcat (error_message, next_secondary_addr);
+                std::basic_string<ACE_TCHAR> error_message =
+                  ACE_TEXT ("Could not make sense of secondary address: ");
+                error_message += next_secondary_addr;
 
                 _error = 1;
-                _error_message = ACE_OS::strdup(error_message);
+                _error_message = ACE_OS::strdup (error_message.c_str ());
                 break;
               }
 
@@ -378,13 +366,11 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             break;
           }
           case 'H':{
-            ACE_TCHAR const * const str=get_opt->opt_arg();
+            ACE_TCHAR const * const str = get_opt->opt_arg ();
             if (ACE_OS::strlen (str) < Options_Manager::string_len)
-              ACE_OS::strcpy(server_host, str);
-            else{
-              ACE_OS::strncpy(server_host, str, (Options_Manager::string_len-1));
-              server_host[Options_Manager::string_len - 1] = '\0';
-            }
+              server_host = str;
+            else
+              server_host.assign (str, Options_Manager::string_len - 1);
             break;
           }
           case 's':
@@ -456,26 +442,26 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
   // WITH THE DEFAULTS SET AT THE BEGINNING OF THE CONSTRUCTOR.
 
   ACE_OS::fprintf (out, "%s - Measures round trip latency statistics of ACE synchronous\n",
-                   ACE_TEXT_ALWAYS_CHAR (__program_name));
+                   ACE_TEXT_ALWAYS_CHAR (__program_name.c_str ()));
   // indent past program name
-  for (unsigned int i=0;i<ACE_OS::strlen(__program_name);++i)
+  for (std::size_t i = 0; i < __program_name.size (); ++i)
     ACE_OS::fprintf (out, " ");
 
-  if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_clt")) ||
-      ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_srv"))    ) {
+  if (ACE_OS::strstr(__program_name.c_str (), ACE_TEXT ("SOCK_STREAM_clt")) ||
+      ACE_OS::strstr(__program_name.c_str (), ACE_TEXT ("SOCK_STREAM_srv"))) {
     ACE_OS::fprintf (out, "   messaging (SOCK_Stream) using unmarshalled ACE_CDR::Octet.\n");
   } else {
     ACE_OS::fprintf (out, "   messaging (SOCK_SEQPACK) using unmarshalled ACE_CDR::Octet.\n");
   }
 
   ACE_OS::fprintf (out, "USAGE: %s [ -<flag> [<val>] | --<name> [<val>] ]...\n\n",
-                   ACE_TEXT_ALWAYS_CHAR (__program_name));
+                   ACE_TEXT_ALWAYS_CHAR (__program_name.c_str ()));
 
   if (!ACE_OS::strcmp (ACE_TEXT ("client-opts"), opts_set)){
     ACE_OS::fprintf (out,   "  Flag  Args           Option-Name                 Default\n"
                             "   -c   int            test-iterations             1000000\n"
                             "   -n   none           test-enable-nagle           NO NAGLING\n");
-    if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_clt"))) {
+    if (ACE_OS::strstr(__program_name.c_str (), ACE_TEXT ("SOCK_STREAM_clt"))) {
       ACE_OS::fprintf (out, "   -t   str (sctp|tcp) test-transport-protocol     sctp\n");
     }
 
@@ -508,7 +494,7 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
   } else if (!ACE_OS::strcmp(ACE_TEXT ("server-opts"), opts_set)){
     ACE_OS::fprintf (out, "  Flag  Args           Option-Name                 Default\n"
                           "   -n   none           test-enable-nagle           NO NAGLING\n");
-    if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_srv"))) {
+    if (ACE_OS::strstr(__program_name.c_str (), ACE_TEXT ("SOCK_STREAM_srv"))) {
       ACE_OS::fprintf (out, "   -t   str (sctp|tcp) test-transport-protocol     sctp\n");
     }
 
@@ -516,7 +502,7 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
 
     ACE_OS::fprintf (out, "   -p   int            server-port                 45453\n");
 
-    if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_SEQPACK_srv"))) {
+    if (ACE_OS::strstr(__program_name.c_str (), ACE_TEXT ("SOCK_SEQPACK_srv"))) {
       ACE_OS::fprintf (out, "   -a   w.x.y.z,a.b.c.d,...  server-accept-addr    INADDR_ANY\n"
                             "        (comma-separated                                    \n"
                             "         list of one or more                                \n"

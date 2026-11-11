@@ -24,7 +24,9 @@
 */
 
 #include <cfloat>
-#include <cstring>
+#include <list>
+#include <string>
+#include <utility>
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
@@ -32,48 +34,33 @@
 #include "hist.h"
 namespace ACE_SCTP
 {
-hist_t *head_hist, *tail_hist;
+static std::list<hist_t> histograms;
 
-hist_t *histogram(char *name, unsigned int num_bins, double first,
+hist_t *histogram(std::string name, unsigned int num_bins, double first,
                   double last) {
-  ACE_SCTP::hist_t *hist;
-  if ((hist = (hist_t *)ACE_OS::malloc(sizeof(hist_t))) == nullptr) {
-    ACE_OS::fprintf(stderr, "unable to allocate memory for histogram : %s", name);
-    ACE_OS::exit(-1);
-  }
-  if ((hist->hs = (unsigned int *)ACE_OS::malloc(sizeof(unsigned int) * (num_bins+2))) == nullptr){
-    ACE_OS::fprintf(stderr, "unable to allocate memory for histogram : %s", name);
-    ACE_OS::exit(-1);
-  }
-  std::memset(hist->hs, 0, sizeof(unsigned int) * (num_bins+2));
-  hist->name = name;
-  hist->num_bins = num_bins;
-  hist->first = first;
-  hist->last = last;
-  hist->num_points = 0;
-  hist->max_num_outer = hist->num_outer = 0;
-  hist->sum = 0.0;
-  hist->sum2 = 0.0;
-  hist->sum3 = 0.0;
-  hist->sum4 = 0.0;
-  hist->max = DBL_MIN;
-  hist->min = DBL_MAX;
-  hist->outer = nullptr;
-  hist->next = nullptr;
-  hist->skew = 0;
-  hist->firstoptheader = nullptr;
-  if(head_hist == nullptr)
-    head_hist = tail_hist = hist;
-  else {
-    tail_hist->next = hist;
-    tail_hist = tail_hist->next;
-  }
-  return hist;
+  histograms.emplace_back ();
+  hist_t &hist = histograms.back ();
+  hist.name = std::move (name);
+  hist.num_bins = num_bins;
+  hist.first = first;
+  hist.last = last;
+  hist.num_points = 0;
+  hist.num_outer = 0;
+  hist.max_num_outer = 0;
+  hist.sum = 0.0;
+  hist.sum2 = 0.0;
+  hist.sum3 = 0.0;
+  hist.sum4 = 0.0;
+  hist.max = DBL_MIN;
+  hist.min = DBL_MAX;
+  hist.skew = 0;
+  hist.hs.resize (num_bins + 2);
+  return &hist;
 }
 
 
 void set_outer(unsigned int max_num_outer, hist_t *hist) {
-  hist->outer = (double *)ACE_OS::realloc(hist->outer,sizeof(double) * max_num_outer);
+  hist->outer.resize (max_num_outer);
   hist->max_num_outer = max_num_outer;
 }
 
@@ -83,35 +70,13 @@ void enable_skew(hist_t *hist) {
 }
 
 
-void add_field(char *key, char *value, hist_t *hist) {
-  struct optheader *nextoptheader, *trace;
-
-     /* create and prepare nextoptheader */
-  nextoptheader = (struct optheader *) ACE_OS::malloc(sizeof(struct optheader));
-  nextoptheader->key = (char *) ACE_OS::malloc(std::strlen(key)+1);
-  nextoptheader->value = (char *) ACE_OS::malloc(std::strlen(value)+1);
-  nextoptheader->next = nullptr;
-  std::strcpy(nextoptheader->key,key);
-  std::strcpy(nextoptheader->value,value);
-
-     /* tack nextoptheader onto end of optheader list */
-  if (hist->firstoptheader == nullptr) {
-     hist->firstoptheader = nextoptheader;
-  } else {
-     trace = hist->firstoptheader;
-     while (trace->next != nullptr) {
-        trace = trace->next;
-     }
-     trace->next = nextoptheader;
-  }
+void add_field(std::string key, std::string value, hist_t *hist) {
+  hist->optional_headers.emplace_back (std::move (key), std::move (value));
 }
 
 
-void add_field_n(char *key, int value, hist_t *hist) {
-  char textvalue[40];
-
-  ACE_OS::sprintf(textvalue,"%d",value);
-  add_field(key,textvalue,hist);
+void add_field_n(std::string key, int value, hist_t *hist) {
+  add_field (std::move (key), std::to_string (value), hist);
 }
 
 
@@ -152,13 +117,12 @@ void report_to(FILE *strm, hist_t *hist) {
   unsigned int sofar, i;
   double p1, p2, d, mean;
   double variance;
-  struct optheader *trace;
 
   if (hist->num_points == 0) {
-    ACE_OS::fprintf(strm, "\n\n\t\t\t\tHistogram %s is empty\n\n", hist->name);
+    ACE_OS::fprintf(strm, "\n\n\t\t\t\tHistogram %s is empty\n\n", hist->name.c_str ());
     return;
   }
-  ACE_OS::fprintf(strm, "\n\n\t\t\t\tHistogram %s\n", hist->name);
+  ACE_OS::fprintf(strm, "\n\n\t\t\t\tHistogram %s\n", hist->name.c_str ());
   if (hist->skew) ACE_OS::fprintf(strm, "version: %s\n", HIST_VERSION);
   else ACE_OS::fprintf(strm, "version: 1.1\n");
   ACE_OS::fprintf(strm, "minimum: %g\n", hist->min);
@@ -185,15 +149,8 @@ void report_to(FILE *strm, hist_t *hist) {
   }
   ACE_OS::fprintf(strm, "num_points: %u\n", hist->num_points);
   ACE_OS::fprintf(strm, "num_bins: %d %g %g\n", hist->num_bins,hist->first,hist->last);
-  if (hist->firstoptheader != nullptr) {
-     trace = hist->firstoptheader;
-     while(trace->next != nullptr)
-     {
-       ACE_OS::fprintf(strm, "%s: %s\n", trace->key, trace->value);
-       trace = trace->next;
-     }
-     ACE_OS::fprintf(strm, "%s: %s\n", trace->key, trace->value);
-  }
+  for (std::pair<std::string, std::string> const &field : hist->optional_headers)
+    ACE_OS::fprintf (strm, "%s: %s\n", field.first.c_str (), field.second.c_str ());
   ACE_OS::fprintf(strm, "\n");
   sofar = hist->hs[0];
   ACE_OS::fprintf(strm, "\t      Low     -          High     Count  Fraction  Cumulative\n");
@@ -227,9 +184,8 @@ void report_to(FILE *strm, hist_t *hist) {
 }
 
 void report() {
-  hist_t *temp = head_hist;
-  for(; temp; temp = temp->next)
-    report_to(stdout, temp);
+  for (hist_t &hist : histograms)
+    report_to (stdout, &hist);
 }
 
 void stats_init() {

@@ -1,40 +1,38 @@
 #include <stdio.h>
+#include <string>
+#include <utility>
+#include <vector>
 
 #define HIST_VERSION  "1.3"
 
 namespace ACE_SCTP
 {
-  struct optheader {
-    char *key;
-    char *value;
-    struct optheader *next;
-  };
-
   typedef struct hist_s {
-    char *name;
+    std::string name;
     double max, min, sum, sum2, sum3, sum4;
     double first, last;
     unsigned int num_points, num_bins;
-    unsigned int *hs;
+    std::vector<unsigned int> hs;
     unsigned int num_outer, max_num_outer;
-    double *outer;
-    struct hist_s *next;
+    std::vector<double> outer;
     int skew;
-    struct optheader *firstoptheader;
+    std::vector<std::pair<std::string, std::string>> optional_headers;
   } hist_t;
 
-  #define HIST hist_t *
+  // The histogram registry in hist.cpp owns these; pointers remain valid
+  // until the process exits.
+  using HIST = hist_t *;
 
-  hist_t *histogram(char *name, unsigned int num_bins, double first,
+  hist_t *histogram(std::string name, unsigned int num_bins, double first,
                     double last);
 
   void set_outer(unsigned int max_num_outer, hist_t *hist);
 
   void enable_skew(hist_t *hist);
 
-  void add_field(char *key, char *value, hist_t *hist);
+  void add_field(std::string key, std::string value, hist_t *hist);
 
-  void add_field_n(char *key, int value, hist_t *hist);
+  void add_field_n(std::string key, int value, hist_t *hist);
 
   void record(double point, hist_t *hist);
 

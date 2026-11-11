@@ -14,6 +14,7 @@
 
 #include <memory>
 #include <new>
+#include <string>
 #include <utility>
 
 // make sure that the code compiles cleanly even if SCTP is not
@@ -74,7 +75,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // Create the address that we want the client to connect to
   ACE_INET_Addr serverAddr(Options_Manager::server_port,
-                           Options_Manager::server_host);
+                           Options_Manager::server_host.c_str ());
 
   // Create the address that we want the client to connect FROM
   ACE_INET_Addr clientAddr(Options_Manager::client_port,
@@ -113,18 +114,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // create a histogram to store test results
   ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
-  // The histogram created below lives beyond the scope of this
-  // function. So the memory allocated here cannot be cleaned up when
-  // this function goes out of scope. Unfortunately the histogram
-  // implementation does not clean it up either. So it is a small
-  // memory leak.
-  char * histName = (char *) malloc(200);
-
-  ACE_OS::sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
-                  "ACE", messageSize);
+  std::string hist_name =
+    "ACE Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size " +
+    std::to_string (messageSize) + ", Message Type octet)";
 
   // actually create the histogram
-  ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(histName,
+  ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(std::move (hist_name),
                                Options_Manager::histogram_bin_count,
                                Options_Manager::histogram_min_bin,
                                Options_Manager::histogram_max_bin);
