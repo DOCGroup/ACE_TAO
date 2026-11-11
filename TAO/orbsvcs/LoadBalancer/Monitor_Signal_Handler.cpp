@@ -12,7 +12,6 @@ TAO_LB_Monitor_Signal_Handler::TAO_LB_Monitor_Signal_Handler (
 {
 }
 
-
 int
 TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
 {

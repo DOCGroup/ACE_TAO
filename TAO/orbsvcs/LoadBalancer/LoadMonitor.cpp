@@ -12,18 +12,20 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
+#include <string>
+
 struct LoadMonitor_Options
 {
-  ACE_TCHAR const *location_id {};
-  ACE_TCHAR const *location_kind {};
-  ACE_TCHAR const *type {ACE_TEXT ("CPU")};
-  ACE_TCHAR const *style {ACE_TEXT ("PUSH")};
-  ACE_TCHAR const *custom_monitor_ior {};
+  // Borrowed from argv; null location_id requests host-derived location data.
+  ACE_TCHAR const * location_id {};
+  ACE_TCHAR const * location_kind {};
+  std::basic_string<ACE_TCHAR> type {ACE_TEXT ("CPU")};
+  std::basic_string<ACE_TCHAR> style {ACE_TEXT ("PUSH")};
+  // Borrowed from argv; null selects a built-in monitor.
+  ACE_TCHAR const * custom_monitor_ior {};
   // Keep the default push interval consistent with the pull interval.
   long push_interval {TAO_LB_PULL_HANDLER_INTERVAL};
 };
-
-static LoadMonitor_Options options;
 
 void
 usage (ACE_TCHAR const * cmd)
@@ -46,8 +48,8 @@ usage (ACE_TCHAR const * cmd)
 
 void
 parse_args (int argc,
-            ACE_TCHAR *argv[],
-            LoadMonitor_Options &options)
+            ACE_TCHAR * argv[],
+            LoadMonitor_Options & options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
@@ -137,7 +139,7 @@ TAO_LB_run_load_monitor (void * orb_arg)
 CosLoadBalancing::LoadMonitor_ptr
 get_load_monitor (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr root_poa,
-                  LoadMonitor_Options const &options)
+                  LoadMonitor_Options const & options)
 {
   if (options.custom_monitor_ior != nullptr)
     {
@@ -155,7 +157,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
       poa_manager->activate ();
 
-      if (ACE_OS::strcasecmp (options.type, ACE_TEXT ("CPU")) == 0)
+      if (ACE_OS::strcasecmp (options.type.c_str (), ACE_TEXT ("CPU")) == 0)
         {
           TAO_LB_CPU_Load_Average_Monitor * monitor {};
           ACE_NEW_THROW_EX (monitor,
@@ -168,14 +170,14 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
           return monitor->_this ();
         }
-      else if (ACE_OS::strcasecmp (options.type, ACE_TEXT ("Disk")) == 0
-               || ACE_OS::strcasecmp (options.type, ACE_TEXT ("Memory")) == 0
-               || ACE_OS::strcasecmp (options.type, ACE_TEXT ("Network")) == 0)
+      else if (ACE_OS::strcasecmp (options.type.c_str (), ACE_TEXT ("Disk")) == 0
+               || ACE_OS::strcasecmp (options.type.c_str (), ACE_TEXT ("Memory")) == 0
+               || ACE_OS::strcasecmp (options.type.c_str (), ACE_TEXT ("Network")) == 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: \"%s\" load monitor currently ")
                       ACE_TEXT ("unimplemented.\n"),
-                      options.type));
+                      options.type.c_str ()));
 
           throw CORBA::NO_IMPLEMENT ();
         }
@@ -184,7 +186,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: Unrecognized built-in load monitor ")
                       ACE_TEXT ("type: <%s>.\n"),
-                      options.type));
+                      options.type.c_str ()));
 
           throw CORBA::BAD_PARAM ();
         }
@@ -197,9 +199,9 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                        TAO_LB_Push_Handler * handler,
                        ACE_Reactor * reactor,
                        long & timer_id,
-                       LoadMonitor_Options const &options)
+                       LoadMonitor_Options const & options)
 {
-  if (ACE_OS::strcasecmp (options.style, ACE_TEXT ("PULL")) == 0)
+  if (ACE_OS::strcasecmp (options.style.c_str (), ACE_TEXT ("PULL")) == 0)
     {
       PortableGroup::Location_var const location =
         monitor->the_location ();
@@ -207,7 +209,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
       manager->register_load_monitor (location.in (),
                                       monitor);
     }
-  else if (ACE_OS::strcasecmp (options.style, ACE_TEXT ("PUSH")) == 0)
+  else if (ACE_OS::strcasecmp (options.style.c_str (), ACE_TEXT ("PUSH")) == 0)
     {
       ACE_Time_Value const interval (options.push_interval, 0);
       ACE_Time_Value const restart (options.push_interval, 0);
@@ -230,15 +232,16 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: Unrecognized load monitoring ")
                   ACE_TEXT ("style: <%s>.\n"),
-                  options.style));
+                  options.style.c_str ()));
 
       throw CORBA::BAD_PARAM ();
     }
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  LoadMonitor_Options options {};
   try
     {
       // The usual server side boilerplate code.
@@ -248,7 +251,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Check the non-ORB arguments.
       ::parse_args (argc,
                     argv,
-                    ::options);
+                    options);
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -256,10 +259,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      CosLoadBalancing::LoadMonitor_var load_monitor =
+      CosLoadBalancing::LoadMonitor_var const load_monitor =
         ::get_load_monitor (orb.in (),
                             root_poa.in (),
-                            ::options);
+                            options);
 
       PortableGroup::Location_var const location =
         load_monitor->the_location ();
@@ -286,7 +289,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                &push_handler,
                                reactor,
                                timer_id,
-                               ::options);
+                               options);
 
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_monitor,

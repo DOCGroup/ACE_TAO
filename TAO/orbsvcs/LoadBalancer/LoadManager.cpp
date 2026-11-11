@@ -9,6 +9,7 @@
 #include "tao/IORTable/IORTable.h"
 
 #include <memory>
+#include <string>
 
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"
@@ -23,13 +24,11 @@ enum class Default_Strategy
 
 struct LoadManager_Options
 {
-  ACE_TCHAR const *ior_file {ACE_TEXT ("lm.ior")};
+  std::basic_string<ACE_TCHAR> ior_file {ACE_TEXT ("lm.ior")};
   int ping_timeout_milliseconds {2000};
   int ping_interval_seconds {};
   Default_Strategy default_strategy {Default_Strategy::random};
 };
-
-static LoadManager_Options options;
 
 void
 usage (ACE_TCHAR const * cmd)
@@ -50,8 +49,8 @@ usage (ACE_TCHAR const * cmd)
 
 void
 parse_args (int argc,
-            ACE_TCHAR *argv[],
-            LoadManager_Options &options)
+            ACE_TCHAR * argv[],
+            LoadManager_Options & options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:i:t:h"));
 
@@ -129,8 +128,9 @@ TAO_LB_run_load_manager (void * orb_arg)
 #endif  /* linux && ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  LoadManager_Options options {};
   try
     {
       // The usual server side boilerplate code.
@@ -151,12 +151,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Check the non-ORB arguments.
       ::parse_args (argc,
                     argv,
-                    ::options);
+                    options);
 
       TAO_LB_LoadManager * lm {};
       ACE_NEW_THROW_EX (lm,
-        TAO_LB_LoadManager (::options.ping_timeout_milliseconds,
-                            ::options.ping_interval_seconds),
+        TAO_LB_LoadManager (options.ping_timeout_milliseconds,
+                            options.ping_interval_seconds),
                           CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
@@ -178,7 +178,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosLoadBalancing::StrategyInfo strategy_info;
 
-      switch (::options.default_strategy)
+      switch (options.default_strategy)
         {
         case Default_Strategy::round_robin:
           strategy_info.name = CORBA::string_dup ("RoundRobin");
@@ -217,11 +217,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         std::unique_ptr<FILE, int (*) (FILE *)> const lm_ior (
-          ACE_OS::fopen (::options.ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!lm_ior)
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Unable to open IOR output file: %s\n"),
-                                 ::options.ior_file),
+                                 options.ior_file.c_str ()),
                                 -1);
         ACE_OS::fprintf (lm_ior.get (), "%s", str.in ());
       }

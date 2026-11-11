@@ -13,8 +13,8 @@ TAO_LB_Push_Handler::TAO_LB_Push_Handler (
 
 int
 TAO_LB_Push_Handler::handle_timeout (
-  ACE_Time_Value const & /* current_time */,
-  void const * /* arg */)
+  ACE_Time_Value const &,
+  void const *)
 {
   try
     {

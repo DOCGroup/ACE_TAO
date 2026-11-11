@@ -42,8 +42,8 @@ public:
                        CosLoadBalancing::LoadManager_ptr manager);
 
   /// Receive the timeout event.
-  int handle_timeout (ACE_Time_Value const &current_time,
-                      void const *arg) override;
+  int handle_timeout (ACE_Time_Value const & current_time,
+                      void const * arg) override;
 
   TAO_LB_Push_Handler (TAO_LB_Push_Handler const &) = delete;
   TAO_LB_Push_Handler (TAO_LB_Push_Handler &&) = delete;
