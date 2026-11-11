@@ -9,15 +9,19 @@ class Logging_Svc_Shutdown
   : public Shutdown_Functor
 {
 public:
-  Logging_Svc_Shutdown (Event_Logging_Service& svc);
+  explicit Logging_Svc_Shutdown (Event_Logging_Service & svc);
+  Logging_Svc_Shutdown (Logging_Svc_Shutdown const &) = delete;
+  Logging_Svc_Shutdown (Logging_Svc_Shutdown &&) = delete;
+  Logging_Svc_Shutdown &operator= (Logging_Svc_Shutdown const &) = delete;
+  Logging_Svc_Shutdown &operator= (Logging_Svc_Shutdown &&) = delete;
 
   void operator() (int which_signal) override;
 
 private:
-  Event_Logging_Service&        svc_;
+  Event_Logging_Service & svc_;
 };
 
-Logging_Svc_Shutdown::Logging_Svc_Shutdown (Event_Logging_Service& svc)
+Logging_Svc_Shutdown::Logging_Svc_Shutdown (Event_Logging_Service & svc)
   : svc_ (svc)
 {
 }
@@ -30,13 +34,13 @@ Logging_Svc_Shutdown::operator() (int which_signal)
                 "Event_Logging_Service: shutting down on signal %d\n",
                 which_signal));
 
-  (void) this->svc_.shutdown ();
+  this->svc_.shutdown ();
 }
 
 // Driver function for the Event_Logging_Service
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 

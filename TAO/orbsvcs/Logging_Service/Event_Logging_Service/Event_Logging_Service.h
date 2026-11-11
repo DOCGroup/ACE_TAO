@@ -20,6 +20,9 @@
 #include "orbsvcs/DsEventLogAdminC.h"
 #include "orbsvcs/Log/EventLogFactory_i.h"
 
+#include <optional>
+#include <string>
+
 class Event_Logging_Service
   : public ACE_Task_Base
 {
@@ -74,13 +77,13 @@ protected:
   CosNaming::NamingContext_var naming_;
   // A naming context.
 
-  ACE_CString service_name_ {"EventLogFactory"};
+  std::string service_name_ {"EventLogFactory"};
   // The name we use to bind with the NameService
 
-  ACE_TCHAR const * ior_file_name_ {};
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_;
   // The name of the file where we output the factory IOR.
 
-  ACE_TCHAR const * pid_file_name_ {};
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_;
   // The name of the file where we output the process id.
 
   bool bind_to_naming_service_ {true};
