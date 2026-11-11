@@ -9,18 +9,6 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
-struct Monitor_Reference_Releaser
-{
-  void operator() (Monitor_Base *monitor) const
-  {
-    if (monitor != nullptr)
-      monitor->remove_ref ();
-  }
-};
-
-using Monitor_Reference = std::unique_ptr<Monitor_Base,
-                                          Monitor_Reference_Releaser>;
-
 struct Control_Action_Releaser
 {
   void operator() (Control_Action *action) const
@@ -85,7 +73,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    Monitor_Reference const bytes_monitor (
+    Monitor_Base_Unique_Ptr const bytes_monitor (
       mgr->admin ().monitor_point ("OS/Network/BytesReceived"));
 
     if (bytes_monitor != nullptr)
@@ -114,7 +102,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */[])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   /// Set the timer for # of threads check at 2 sec.
-  Monitor_Reference const bytes_monitor (
+  Monitor_Base_Unique_Ptr const bytes_monitor (
     create_os_monitor<BYTES_RECEIVED_MONITOR> (nullptr, ACE_Time_Value (2)));
 
   /// Add two constraints, each with its own triggered action.

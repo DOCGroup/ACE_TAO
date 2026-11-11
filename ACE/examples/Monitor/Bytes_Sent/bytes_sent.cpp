@@ -8,8 +8,6 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-using ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Monitor_Base;
-
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -29,10 +27,12 @@ public:
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
-    Monitor_Base * const bytes_monitor =
-      mgr->admin ().monitor_point ("OS/Network/BytesSent");
+    ACE::Monitor_Control::Monitor_Base_Unique_Ptr const bytes_monitor (
+      mgr->admin ().monitor_point ("OS/Network/BytesSent"));
 
     if (bytes_monitor != nullptr)
       {
@@ -47,8 +47,6 @@ public:
             MC_Test_Utilities::display_bytes_sent (data);
           }
 
-        /// Release the reference returned by the monitor registry.
-        bytes_monitor->remove_ref ();
       }
 
     return 0;
@@ -63,27 +61,28 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   /// Set the timer to sample network bytes sent every two seconds.
-  Monitor_Base * const monitor =
-    create_os_monitor<BYTES_SENT_MONITOR> (nullptr, ACE_Time_Value (2));
+  MC_ADMINMANAGER * const mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
 
-  if (monitor != nullptr)
-    {
-      /// Runs the reactor's event loop in a separate thread so the timer(s)
-      /// can run concurrently with the application.
-      START_PERIODIC_MONITORS;
+  ACE::Monitor_Control::Monitor_Base_Unique_Ptr const monitor (
+    create_os_monitor<BYTES_SENT_MONITOR> (nullptr, ACE_Time_Value (2)));
+  if (monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create bytes-sent monitor\n"), 1);
 
-      /// Run the monitor checker in a separate thread.
-      Monitor_Checker monitor_checker;
-      monitor_checker.activate ();
+  /// Runs the reactor's event loop in a separate thread so the timer(s)
+  /// can run concurrently with the application.
+  START_PERIODIC_MONITORS;
 
-      ACE_OS::sleep (30);
+  /// Run the monitor checker in a separate thread.
+  Monitor_Checker monitor_checker;
+  monitor_checker.activate ();
 
-      /// End the reactor's event loop, stopping the timer(s).
-      STOP_PERIODIC_MONITORS;
+  ACE_OS::sleep (30);
 
-      /// Release the reference returned by create_os_monitor.
-      monitor->remove_ref ();
-    }
+  /// End the reactor's event loop, stopping the timer(s).
+  STOP_PERIODIC_MONITORS;
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 

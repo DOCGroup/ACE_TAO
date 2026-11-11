@@ -14,20 +14,10 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
-struct Monitor_Reference_Releaser
-{
-  void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
-  {
-    if (monitor != nullptr)
-      monitor->remove_ref ();
-  }
-};
-
 // Monitor references from the registry are released with remove_ref().
-using Monitor_Reference = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
-                                          Monitor_Reference_Releaser>;
+using Monitor_Reference = Monitor_Base_Unique_Ptr;
 using Monitor_Group_Reference = std::unique_ptr<Monitor_Group,
-                                                Monitor_Reference_Releaser>;
+                                                Monitor_Base_Deleter>;
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when

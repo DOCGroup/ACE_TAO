@@ -26,6 +26,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/CDR_Base.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ETCL_Constraint;
@@ -134,6 +136,18 @@ namespace ACE
     private:
       ACE_CString name_;
     };
+
+    struct Monitor_Base_Deleter
+    {
+      void operator() (Monitor_Base *monitor) const
+      {
+        if (monitor != nullptr)
+          monitor->remove_ref ();
+      }
+    };
+
+    using Monitor_Base_Unique_Ptr =
+      std::unique_ptr<Monitor_Base, Monitor_Base_Deleter>;
   }
 }
 

@@ -12,18 +12,6 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-struct Monitor_Reference_Releaser
-{
-  void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
-  {
-    if (monitor != nullptr)
-      monitor->remove_ref ();
-  }
-};
-
-using Monitor_Reference = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
-                                          Monitor_Reference_Releaser>;
-
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -57,7 +45,7 @@ public:
       ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
-    Monitor_Reference const mq_monitor (
+    ACE::Monitor_Control::Monitor_Base_Unique_Ptr const mq_monitor (
       mgr->admin ().monitor_point (name_str.c_str ()));
 
     if (mq_monitor != nullptr)

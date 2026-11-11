@@ -9,18 +9,6 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-struct Monitor_Reference_Releaser
-{
-  void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
-  {
-    if (monitor != nullptr)
-      monitor->remove_ref ();
-  }
-};
-
-using Monitor_Reference = std::unique_ptr<ACE::Monitor_Control::Monitor_Base,
-                                          Monitor_Reference_Releaser>;
-
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -42,7 +30,7 @@ public:
       ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
-    Monitor_Reference const cpu_monitor (
+    ACE::Monitor_Control::Monitor_Base_Unique_Ptr const cpu_monitor (
       mgr->admin ().monitor_point ("OS/Processor/CPULoad"));
 
     if (cpu_monitor != nullptr)
@@ -82,7 +70,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   mgr->admin ().reactor (&new_reactor);
 
   /// Set the timer for CPU load check at 2 sec.
-  Monitor_Reference const cpu_monitor (
+  ACE::Monitor_Control::Monitor_Base_Unique_Ptr const cpu_monitor (
     create_os_monitor<CPU_LOAD_MONITOR> (nullptr, ACE_Time_Value (2)));
   if (cpu_monitor == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to create CPU monitor\n"), 1);
