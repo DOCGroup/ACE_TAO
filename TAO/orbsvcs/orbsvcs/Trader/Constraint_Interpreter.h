@@ -84,6 +84,11 @@ public:
 class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter const&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter const&) = delete;
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
+
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference);
 
@@ -134,11 +139,6 @@ public:
   using Ordered_Offers = std::deque<Preference_Info>;
 
 private:
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&) = delete;
-  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
-  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
-
   /// The ordered list of offers.
   Ordered_Offers offers_;
 };

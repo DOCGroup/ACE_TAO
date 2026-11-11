@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
 #define TAO_REGISTER_OFFER_ITERATOR_H
 #include /**/ "ace/pre.h"
@@ -21,7 +20,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,6 +37,11 @@ template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
 {
 public:
+  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator const&) = delete;
+  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator const&) = delete;
+  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator&&) = delete;
+  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator&&) = delete;
+
   /// Takes service type and trader reference in order to
   /// later locate offers using their ids.
   TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE>& db,
@@ -64,11 +67,6 @@ public:
                   CosTrading::Offer const*) override;
 
 private:
-  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator const&) = delete;
-  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator const&) = delete;
-  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator&&) = delete;
-  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator&&) = delete;
-
   /// A reference to the trader is needed for access to the map of offers.
   TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
 

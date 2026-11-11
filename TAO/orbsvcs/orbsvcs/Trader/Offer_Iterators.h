@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OFFER_ITERATORS_H
 #define TAO_OFFER_ITERATORS_H
 #include /**/ "ace/pre.h"
@@ -46,6 +45,11 @@ class TAO_Offer_Iterator
   //   interface.
   // END SPEC
 public:
+  TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
+  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;
+  TAO_Offer_Iterator (TAO_Offer_Iterator&&) = delete;
+  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator&&) = delete;
+
   explicit TAO_Offer_Iterator (TAO_Property_Filter const& property_filter);
 
   ~TAO_Offer_Iterator () override = default;
@@ -91,11 +95,6 @@ public:
   CORBA::Boolean next_n (CORBA::ULong n,
                          CosTrading::OfferSeq_out offers) override = 0;
  protected:
-  TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
-  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;
-  TAO_Offer_Iterator (TAO_Offer_Iterator&&) = delete;
-  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator&&) = delete;
-
   /// The filter through which each returned offer must pass. Used to
   /// strip offers of undesirable properties.
   TAO_Property_Filter pfilter_;
@@ -119,6 +118,11 @@ class TAO_Query_Only_Offer_Iterator
   //
 {
 public:
+  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator const&) = delete;
+  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator const&) = delete;
+  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator&&) = delete;
+  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator&&) = delete;
+
   explicit TAO_Query_Only_Offer_Iterator (TAO_Property_Filter const& pfilter);
 
   ~TAO_Query_Only_Offer_Iterator () override = default;
@@ -136,11 +140,6 @@ public:
                   CosTrading::Offer const* offer) override;
 
 private:
-  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator const&) = delete;
-  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator const&) = delete;
-  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator&&) = delete;
-  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator&&) = delete;
-
   /// Structure that stores pointers to offers
   /// to iterate over.
   std::deque<CosTrading::Offer *> offers_;
@@ -168,6 +167,11 @@ class TAO_Offer_Iterator_Collection :
 //   the trader graph is deep enough.
 {
 public:
+  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection const&) = delete;
+  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection const&) = delete;
+  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection&&) = delete;
+  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection&&) = delete;
+
   TAO_Offer_Iterator_Collection () = default;
 
   ~TAO_Offer_Iterator_Collection () override;
@@ -186,11 +190,6 @@ public:
   void add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter);
 
 private:
-  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection const&) = delete;
-  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection const&) = delete;
-  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection&&) = delete;
-  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection&&) = delete;
-
   using Offer_Iters = std::deque<CosTrading::OfferIterator*>;
 
   /// The iterator collection.
@@ -218,6 +217,11 @@ class TAO_Offer_Id_Iterator :
 //   END SPEC
 {
  public:
+  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator const&) = delete;
+  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator const&) = delete;
+  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator&&) = delete;
+  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&&) = delete;
+
   TAO_Offer_Id_Iterator () = default;
 
   ~TAO_Offer_Id_Iterator () override = default;
@@ -257,11 +261,6 @@ class TAO_Offer_Id_Iterator :
   void insert_id(CosTrading::OfferId new_id);
 
  private:
-  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator const&) = delete;
-  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator const&) = delete;
-  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator&&) = delete;
-  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&&) = delete;
-
   TAO_String_Queue ids_;
 };
 

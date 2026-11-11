@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 #include /**/ "ace/pre.h"
@@ -32,6 +31,11 @@ class TAO_Trading_Serv_Export TAO_Service_Type_Repository
   : public POA_CosTradingRepos::ServiceTypeRepository
 {
 public:
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
+
   /**
    * Parameterize the Service_Type_Repository with a lock to serialize
    * access to the type repository map. A reader/writer lock is
@@ -246,11 +250,6 @@ private:
                         const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
                         Prop_Map &prop_map,
                         Service_Type_Map &super_map);
-
-  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
-  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
-  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
-  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
 
   /// Lock with which to serialize access to the service type map.
   std::unique_ptr<ACE_Lock> lock_;

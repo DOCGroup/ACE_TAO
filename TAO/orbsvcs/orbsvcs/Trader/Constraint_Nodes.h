@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CONSTRAINT_NODES_H
 #define TAO_CONSTRAINT_NODES_H
 #include /**/ "ace/pre.h"
@@ -96,6 +95,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Binary_Constraint : public TAO_Constraint
 {
 public:
+  TAO_Binary_Constraint (TAO_Binary_Constraint const&) = delete;
+  TAO_Binary_Constraint& operator= (TAO_Binary_Constraint const&) = delete;
+  TAO_Binary_Constraint (TAO_Binary_Constraint&&) = delete;
+  TAO_Binary_Constraint& operator= (TAO_Binary_Constraint&&) = delete;
+
   TAO_Binary_Constraint (TAO_Expression_Type op_type,
                          TAO_Constraint* left,
                          TAO_Constraint* right);
@@ -133,11 +137,6 @@ public:
   static int visit_in (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
 
 private:
-  TAO_Binary_Constraint (TAO_Binary_Constraint const&) = delete;
-  TAO_Binary_Constraint& operator= (TAO_Binary_Constraint const&) = delete;
-  TAO_Binary_Constraint (TAO_Binary_Constraint&&) = delete;
-  TAO_Binary_Constraint& operator= (TAO_Binary_Constraint&&) = delete;
-
   /// The operator type
   TAO_Expression_Type op_;
 
@@ -155,6 +154,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Unary_Constraint : public TAO_Constraint
 {
 public:
+  TAO_Unary_Constraint (TAO_Unary_Constraint const&) = delete;
+  TAO_Unary_Constraint& operator= (TAO_Unary_Constraint const&) = delete;
+  TAO_Unary_Constraint (TAO_Unary_Constraint&&) = delete;
+  TAO_Unary_Constraint& operator= (TAO_Unary_Constraint&&) = delete;
+
   TAO_Unary_Constraint (TAO_Expression_Type op_type,
                         TAO_Constraint* operand);
 
@@ -168,11 +172,6 @@ public:
   TAO_Constraint* operand ();
 
 private:
-  TAO_Unary_Constraint (TAO_Unary_Constraint const&) = delete;
-  TAO_Unary_Constraint& operator= (TAO_Unary_Constraint const&) = delete;
-  TAO_Unary_Constraint (TAO_Unary_Constraint&&) = delete;
-  TAO_Unary_Constraint& operator= (TAO_Unary_Constraint&&) = delete;
-
   /// The operator type
   TAO_Expression_Type op_;
 
@@ -189,6 +188,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 {
 public:
+  TAO_Property_Constraint (TAO_Property_Constraint const&) = delete;
+  TAO_Property_Constraint& operator= (TAO_Property_Constraint const&) = delete;
+  TAO_Property_Constraint (TAO_Property_Constraint&&) = delete;
+  TAO_Property_Constraint& operator= (TAO_Property_Constraint&&) = delete;
+
   explicit TAO_Property_Constraint (char const* name);
 
   ~TAO_Property_Constraint () override;
@@ -201,11 +205,6 @@ public:
   const char* name () const;
 
 private:
-  TAO_Property_Constraint (TAO_Property_Constraint const&) = delete;
-  TAO_Property_Constraint& operator= (TAO_Property_Constraint const&) = delete;
-  TAO_Property_Constraint (TAO_Property_Constraint&&) = delete;
-  TAO_Property_Constraint& operator= (TAO_Property_Constraint&&) = delete;
-
   /// The name of the property.
   char* name_;
 };
@@ -228,7 +227,7 @@ public:
   explicit TAO_Literal_Constraint (CORBA::Double doub);
   explicit TAO_Literal_Constraint (char const* str);
 
-  TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
+  TAO_Literal_Constraint (TAO_Literal_Constraint const& lit);
 
   ~TAO_Literal_Constraint () override;
 
@@ -238,7 +237,7 @@ public:
   TAO_Expression_Type expr_type () const override
     { return type_; }
 
-  void operator= (const TAO_Literal_Constraint& co);
+  void operator= (TAO_Literal_Constraint const& co);
 
   // Conversion routines.
   operator CORBA::Boolean () const;
@@ -252,62 +251,62 @@ public:
 
   // = Comparison operators.
   friend TAO_Trading_Serv_Export bool
-    operator< (const TAO_Literal_Constraint& left,
-               const TAO_Literal_Constraint& right);
+    operator< (TAO_Literal_Constraint const& left,
+               TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
-    operator<= (const TAO_Literal_Constraint& left,
-                const TAO_Literal_Constraint& right);
+    operator<= (TAO_Literal_Constraint const& left,
+                TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
-    operator> (const TAO_Literal_Constraint& left,
-               const TAO_Literal_Constraint& right);
+    operator> (TAO_Literal_Constraint const& left,
+               TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
-    operator>= (const TAO_Literal_Constraint& left,
-                const TAO_Literal_Constraint& right);
+    operator>= (TAO_Literal_Constraint const& left,
+                TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
-    operator== (const TAO_Literal_Constraint& left,
-                const TAO_Literal_Constraint& right);
+    operator== (TAO_Literal_Constraint const& left,
+                TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
-    operator!= (const TAO_Literal_Constraint& left,
-                const TAO_Literal_Constraint& right);
+    operator!= (TAO_Literal_Constraint const& left,
+                TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
     operator== (double left,
-                const TAO_Literal_Constraint& right);
+                TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
     operator== (const TAO::String_Manager& left,
-                const TAO_Literal_Constraint& right);
+                TAO_Literal_Constraint const& right);
 
   // = Arithmetic operators.
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint
-    operator+ (const TAO_Literal_Constraint& left,
-               const TAO_Literal_Constraint& right);
+    operator+ (TAO_Literal_Constraint const& left,
+               TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint
-    operator- (const TAO_Literal_Constraint& left,
-               const TAO_Literal_Constraint& right);
+    operator- (TAO_Literal_Constraint const& left,
+               TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint
-    operator* (const TAO_Literal_Constraint& left,
-               const TAO_Literal_Constraint& right);
+    operator* (TAO_Literal_Constraint const& left,
+               TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint
-    operator/ (const TAO_Literal_Constraint& left,
-               const TAO_Literal_Constraint& right);
+    operator/ (TAO_Literal_Constraint const& left,
+               TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint
-    operator- (const TAO_Literal_Constraint& operand);
+    operator- (TAO_Literal_Constraint const& operand);
 
   /// Ensure both operands are of the same simple numeric type.
   static TAO_Expression_Type
-    widest_type (const TAO_Literal_Constraint& left,
-                 const TAO_Literal_Constraint& right);
+    widest_type (TAO_Literal_Constraint const& left,
+                 TAO_Literal_Constraint const& right);
 
   /// Determine the comparable Expression Type from the CORBA type
   static TAO_Expression_Type
@@ -315,7 +314,7 @@ public:
 
  private:
   /// Private copy method.
-  void copy (const TAO_Literal_Constraint& co);
+  void copy (TAO_Literal_Constraint const& co);
 
   union
   {

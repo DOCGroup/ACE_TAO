@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRADER_UTILS_H
 #define TAO_TRADER_UTILS_H
 
@@ -43,6 +42,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Property_Evaluator
 {
 public:
+  TAO_Property_Evaluator (TAO_Property_Evaluator const&) = delete;
+  TAO_Property_Evaluator& operator= (TAO_Property_Evaluator const&) = delete;
+  TAO_Property_Evaluator (TAO_Property_Evaluator&&) = delete;
+  TAO_Property_Evaluator& operator= (TAO_Property_Evaluator&&) = delete;
+
   TAO_Property_Evaluator (CosTrading::PropertySeq const& properties,
                           CORBA::Boolean supports_dp = true);
 
@@ -72,7 +76,6 @@ public:
     */
   CORBA::Any* property_value(int index);
 
-
   /**
    * Returns the type of the property whose index is @a index. If the
    * property is dynamic and the trader supports dynamic properties,
@@ -101,10 +104,6 @@ protected:
   std::unique_ptr<std::unique_ptr<CORBA::Any>[]> dp_cache_;
 
 private:
-  TAO_Property_Evaluator (TAO_Property_Evaluator const&) = delete;
-  TAO_Property_Evaluator& operator= (TAO_Property_Evaluator const&) = delete;
-  TAO_Property_Evaluator (TAO_Property_Evaluator&&) = delete;
-  TAO_Property_Evaluator& operator= (TAO_Property_Evaluator&&) = delete;
 };
 
 /**
@@ -122,6 +121,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
 public:
+  TAO_Property_Evaluator_By_Name (TAO_Property_Evaluator_By_Name const&) = delete;
+  TAO_Property_Evaluator_By_Name& operator= (TAO_Property_Evaluator_By_Name const&) = delete;
+  TAO_Property_Evaluator_By_Name (TAO_Property_Evaluator_By_Name&&) = delete;
+  TAO_Property_Evaluator_By_Name& operator= (TAO_Property_Evaluator_By_Name&&) = delete;
+
   TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq const& properties,
                                   CORBA::Boolean supports_dp = true);
 
@@ -157,11 +161,6 @@ public:
   const CosTrading::Property* get_property (const char* property_name);
 
 private:
-  TAO_Property_Evaluator_By_Name (TAO_Property_Evaluator_By_Name const&) = delete;
-  TAO_Property_Evaluator_By_Name& operator= (TAO_Property_Evaluator_By_Name const&) = delete;
-  TAO_Property_Evaluator_By_Name (TAO_Property_Evaluator_By_Name&&) = delete;
-  TAO_Property_Evaluator_By_Name& operator= (TAO_Property_Evaluator_By_Name&&) = delete;
-
   /// The instance of the above mapping for the offer provided in the
   /// constructor.
   TAO_Lookup_Table table_;
@@ -215,6 +214,11 @@ private:
 class TAO_Policies
 {
 public:
+  TAO_Policies (TAO_Policies const&) = delete;
+  TAO_Policies& operator= (TAO_Policies const&) = delete;
+  TAO_Policies (TAO_Policies&&) = delete;
+  TAO_Policies& operator= (TAO_Policies&&) = delete;
+
   /**
     * This enum represents the relative order that properties are
     * passed from one trader to another. Hence, as recommended by the
@@ -374,7 +378,6 @@ public:
   //discussion in "Link Follow Behavior" on page 16-16 for details.
   // END SPEC
 
-
   /**
    * Determine the link follow policy for a given <link_name>.
    * This method returns the link_follow_rule for a link whose name is
@@ -433,11 +436,6 @@ private:
   /// Reconcile a Boolean property with its debault.
   CORBA::Boolean boolean_prop (POLICY_TYPE pol) const;
 
-  TAO_Policies (TAO_Policies const&) = delete;
-  TAO_Policies& operator= (TAO_Policies const&) = delete;
-  TAO_Policies (TAO_Policies&&) = delete;
-  TAO_Policies& operator= (TAO_Policies&&) = delete;
-
   /// The policies indexable from the enumerated type.
   CosTrading::Policy const* policies_[REQUEST_ID + 1] {};
 
@@ -455,6 +453,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Policy_Creator
 {
 public:
+  TAO_Policy_Creator (TAO_Policy_Creator const&) = delete;
+  TAO_Policy_Creator& operator= (TAO_Policy_Creator const&) = delete;
+  TAO_Policy_Creator (TAO_Policy_Creator&&) = delete;
+  TAO_Policy_Creator& operator= (TAO_Policy_Creator&&) = delete;
+
   explicit TAO_Policy_Creator (int num_policies = 0);
 
   // = Routines to set policies.
@@ -508,11 +511,6 @@ public:
   const CosTrading::PolicySeq& policy_seq () const;
 
 private:
-  TAO_Policy_Creator (TAO_Policy_Creator const&) = delete;
-  TAO_Policy_Creator& operator= (TAO_Policy_Creator const&) = delete;
-  TAO_Policy_Creator (TAO_Policy_Creator&&) = delete;
-  TAO_Policy_Creator& operator= (TAO_Policy_Creator&&) = delete;
-
   /// Method to prepare the next slot in the policies_ sequence for
   /// policy insertion.
   CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
@@ -537,6 +535,11 @@ private:
 class TAO_Offer_Modifier
 {
 public:
+  TAO_Offer_Modifier (TAO_Offer_Modifier const&) = delete;
+  TAO_Offer_Modifier& operator= (TAO_Offer_Modifier const&) = delete;
+  TAO_Offer_Modifier (TAO_Offer_Modifier&&) = delete;
+  TAO_Offer_Modifier& operator= (TAO_Offer_Modifier&&) = delete;
+
   /// Modify an @a offer of type @a type, whose properties are described
   /// by @a type_struct
   TAO_Offer_Modifier (const char* type,
@@ -561,11 +564,6 @@ public:
   void affect_change (const CosTrading::PropertySeq& modifies);
 
 private:
-  TAO_Offer_Modifier (TAO_Offer_Modifier const&) = delete;
-  TAO_Offer_Modifier& operator= (TAO_Offer_Modifier const&) = delete;
-  TAO_Offer_Modifier (TAO_Offer_Modifier&&) = delete;
-  TAO_Offer_Modifier& operator= (TAO_Offer_Modifier&&) = delete;
-
   using Property_Table = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                                   CosTrading::Property*,
                                                   ACE_Hash<CORBA::String_var>,
@@ -609,6 +607,11 @@ private:
 class TAO_Offer_Filter
 {
 public:
+  TAO_Offer_Filter (TAO_Offer_Filter const&) = delete;
+  TAO_Offer_Filter& operator= (TAO_Offer_Filter const&) = delete;
+  TAO_Offer_Filter (TAO_Offer_Filter&&) = delete;
+  TAO_Offer_Filter& operator= (TAO_Offer_Filter&&) = delete;
+
   /// Glean from the TypeStruct and Policy setting the appropriate way
   /// to screen unsuitable offers from consideration.
   explicit TAO_Offer_Filter (TAO_Policies& policies);
@@ -657,11 +660,6 @@ public:
   CORBA::ULong match_card_remaining () const;
 
 private:
-  TAO_Offer_Filter (TAO_Offer_Filter const&) = delete;
-  TAO_Offer_Filter& operator= (TAO_Offer_Filter const&) = delete;
-  TAO_Offer_Filter (TAO_Offer_Filter&&) = delete;
-  TAO_Offer_Filter& operator= (TAO_Offer_Filter&&) = delete;
-
   /// The set of the name of modifiable properties.
   TAO_String_Set not_mod_props_;
 

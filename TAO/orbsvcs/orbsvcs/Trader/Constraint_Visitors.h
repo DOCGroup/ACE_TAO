@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
@@ -114,6 +113,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
 public:
+  TAO_Constraint_Validator (TAO_Constraint_Validator const&) = delete;
+  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator const&) = delete;
+  TAO_Constraint_Validator (TAO_Constraint_Validator&&) = delete;
+  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator&&) = delete;
+
   TAO_Constraint_Validator ();
 
   ~TAO_Constraint_Validator () override;
@@ -194,11 +198,6 @@ private:
   /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
   /// return a string.
   int expr_returns_string (TAO_Expression_Type expr_type);
-
-  TAO_Constraint_Validator (TAO_Constraint_Validator const&) = delete;
-  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator const&) = delete;
-  TAO_Constraint_Validator (TAO_Constraint_Validator&&) = delete;
-  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator&&) = delete;
 };
 
 /**
@@ -222,6 +221,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator const&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator const&) = delete;
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
+
   TAO_Constraint_Evaluator ();
 
   /**
@@ -343,11 +347,6 @@ private:
   /// simple type as <sequence_type>. Return true in this eventuality.
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
-
-  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&) = delete;
-  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&) = delete;
-  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
-  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
 
 protected:
   /// The map of property names to their values for a property.

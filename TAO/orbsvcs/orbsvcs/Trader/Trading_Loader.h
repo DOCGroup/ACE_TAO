@@ -32,6 +32,11 @@
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
 public:
+  TAO_Trading_Loader (TAO_Trading_Loader const&) = delete;
+  TAO_Trading_Loader& operator= (TAO_Trading_Loader const&) = delete;
+  TAO_Trading_Loader (TAO_Trading_Loader&&) = delete;
+  TAO_Trading_Loader& operator= (TAO_Trading_Loader&&) = delete;
+
   TAO_Trading_Loader ();
 
   ~TAO_Trading_Loader () = default;
@@ -93,10 +98,6 @@ protected:
   CORBA::Boolean bootstrapper_;
 
 private:
-  TAO_Trading_Loader (TAO_Trading_Loader const&) = delete;
-  TAO_Trading_Loader& operator= (TAO_Trading_Loader const&) = delete;
-  TAO_Trading_Loader (TAO_Trading_Loader&&) = delete;
-  TAO_Trading_Loader& operator= (TAO_Trading_Loader&&) = delete;
 };
 
 ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)

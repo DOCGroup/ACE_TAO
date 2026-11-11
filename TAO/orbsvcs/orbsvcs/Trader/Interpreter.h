@@ -32,6 +32,12 @@ class TAO_Constraint_Validator;
  */
 class TAO_Trading_Serv_Export TAO_Interpreter
 {
+public:
+  TAO_Interpreter (TAO_Interpreter const&) = delete;
+  TAO_Interpreter& operator= (TAO_Interpreter const&) = delete;
+  TAO_Interpreter (TAO_Interpreter&&) = delete;
+  TAO_Interpreter& operator= (TAO_Interpreter&&) = delete;
+
 protected:
   TAO_Interpreter ();
 
@@ -47,11 +53,6 @@ protected:
   /// successfully builds a tree from the constraints.
   std::unique_ptr<TAO_Constraint> root_;
 private:
-  TAO_Interpreter (TAO_Interpreter const&) = delete;
-  TAO_Interpreter& operator= (TAO_Interpreter const&) = delete;
-  TAO_Interpreter (TAO_Interpreter&&) = delete;
-  TAO_Interpreter& operator= (TAO_Interpreter&&) = delete;
-
   /// This mutex protects the <build_tree> method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
 };

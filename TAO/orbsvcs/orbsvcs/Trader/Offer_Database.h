@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OFFER_DATABASE_H
 #define TAO_OFFER_DATABASE_H
 #include /**/ "ace/pre.h"
@@ -52,6 +51,11 @@ class TAO_Offer_Database
 {
   friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
+  TAO_Offer_Database (TAO_Offer_Database const&) = delete;
+  TAO_Offer_Database& operator= (TAO_Offer_Database const&) = delete;
+  TAO_Offer_Database (TAO_Offer_Database&&) = delete;
+  TAO_Offer_Database& operator= (TAO_Offer_Database&&) = delete;
+
   // Traits
   using offer_iterator = TAO_Service_Offer_Iterator<LOCK_TYPE>;
 
@@ -131,12 +135,6 @@ private:
                               char const*& service_type,
                               CORBA::ULong& id);
 
-  // = Disallow these operations.
-  TAO_Offer_Database (TAO_Offer_Database const&) = delete;
-  TAO_Offer_Database& operator= (TAO_Offer_Database const&) = delete;
-  TAO_Offer_Database (TAO_Offer_Database&&) = delete;
-  TAO_Offer_Database& operator= (TAO_Offer_Database&&) = delete;
-
   LOCK_TYPE db_lock_;
 
   Offer_Database offer_db_;
@@ -155,6 +153,11 @@ template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 {
 public:
+  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator const&) = delete;
+  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator const&) = delete;
+  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator&&) = delete;
+  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator&&) = delete;
+
   using Offer_Database = TAO_Offer_Database<LOCK_TYPE>;
 
   TAO_Service_Offer_Iterator (const char* type,
@@ -176,11 +179,6 @@ public:
   void next_offer ();
 
  private:
-  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator const&) = delete;
-  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator const&) = delete;
-  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator&&) = delete;
-  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator&&) = delete;
-
   /// Lock the top_level map.
   TAO_Offer_Database<LOCK_TYPE>& stm_;
 

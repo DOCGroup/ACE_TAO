@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRADER_INTERFACES_H
 #define TAO_TRADER_INTERFACES_H
 #include /**/ "ace/pre.h"
@@ -60,6 +59,11 @@ class TAO_Lookup :
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
 {
 public:
+  TAO_Lookup (TAO_Lookup const&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup const&) = delete;
+  TAO_Lookup (TAO_Lookup&&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup&&) = delete;
+
   explicit TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Lookup ();
@@ -157,7 +161,7 @@ public:
 private:
   /// Factory method for creating an appropriate Offer Iterator based
   /// on the presence of the Register Interface.
-  TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
+  TAO_Offer_Iterator* create_offer_iterator (TAO_Property_Filter const&);
 
   /// Traverse the type hierarchy to pull the matching offers from all
   /// subtypes of the root type.
@@ -221,7 +225,7 @@ private:
    * suitable for returning to the user.
    */
   void federated_query (const CosTrading::LinkNameSeq& links,
-                        const TAO_Policies& policies,
+                        TAO_Policies const& policies,
                         const CosTrading::Admin::OctetSeq& request_id,
                         TAO_Preference_Interpreter& pref_inter,
                         const char *type,
@@ -239,11 +243,6 @@ private:
 
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   const CosTrading::Admin::OctetSeq*& seq);
-
-  TAO_Lookup (TAO_Lookup const&) = delete;
-  TAO_Lookup& operator= (TAO_Lookup const&) = delete;
-  TAO_Lookup (TAO_Lookup&&) = delete;
-  TAO_Lookup& operator= (TAO_Lookup&&) = delete;
 
   const unsigned int IDS_SAVED;
 
@@ -270,6 +269,11 @@ class TAO_Register :
   public TAO_Support_Attributes<POA_CosTrading::Register>
 {
 public:
+  TAO_Register (TAO_Register const&) = delete;
+  TAO_Register& operator= (TAO_Register const&) = delete;
+  TAO_Register (TAO_Register&&) = delete;
+  TAO_Register& operator= (TAO_Register&&) = delete;
+
   explicit TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Register () override;
@@ -478,11 +482,6 @@ public:
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                             const CosTrading::PropertySeq& properties);
 
-  TAO_Register (TAO_Register const&) = delete;
-  TAO_Register& operator= (TAO_Register const&) = delete;
-  TAO_Register (TAO_Register&&) = delete;
-  TAO_Register& operator= (TAO_Register&&) = delete;
-
  private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
@@ -516,6 +515,11 @@ class TAO_Admin :
   public TAO_Link_Attributes <POA_CosTrading::Admin>
 {
 public:
+  TAO_Admin (TAO_Admin const&) = delete;
+  TAO_Admin& operator= (TAO_Admin const&) = delete;
+  TAO_Admin (TAO_Admin&&) = delete;
+  TAO_Admin& operator= (TAO_Admin&&) = delete;
+
   explicit TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Admin ();
@@ -526,7 +530,6 @@ public:
   /// constraint compliance.
   CORBA::ULong set_def_search_card (CORBA::ULong value) override;
   CORBA::ULong set_max_search_card (CORBA::ULong value) override;
-
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
@@ -567,7 +570,6 @@ public:
                     CosTrading::OfferIdSeq_out ids,
                     CosTrading::OfferIdIterator_out id_itr) override;
 
-
   // BEGIN SPEC
   // The list_offers operation allows the administrator of a trader to
   // perform housekeeping by obtaining a handle on each of the offers
@@ -591,11 +593,6 @@ public:
                      CosTrading::OfferIdIterator_out) override;
 
 private:
-  TAO_Admin (TAO_Admin const&) = delete;
-  TAO_Admin& operator= (TAO_Admin const&) = delete;
-  TAO_Admin (TAO_Admin&&) = delete;
-  TAO_Admin& operator= (TAO_Admin&&) = delete;
-
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
   /// Unique prefix to create a sequence number space.
@@ -607,7 +604,6 @@ private:
   TRADER_LOCK_TYPE lock_;
 };
 
-
 /**
  * @class TAO_Link
  */
@@ -618,6 +614,11 @@ class TAO_Link :
   public TAO_Link_Attributes <POA_CosTrading::Link>
 {
 public:
+  TAO_Link (TAO_Link const&) = delete;
+  TAO_Link& operator= (TAO_Link const&) = delete;
+  TAO_Link (TAO_Link&&) = delete;
+  TAO_Link& operator= (TAO_Link&&) = delete;
+
   explicit TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Link ();
@@ -744,11 +745,6 @@ public:
   // END SPEC
 
 private:
-  TAO_Link (TAO_Link const&) = delete;
-  TAO_Link& operator= (TAO_Link const&) = delete;
-  TAO_Link (TAO_Link&&) = delete;
-  TAO_Link& operator= (TAO_Link&&) = delete;
-
   using Links = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                         CosTrading::Link::LinkInfo,
                                         ACE_Hash<CORBA::String_var>,
@@ -771,6 +767,11 @@ class TAO_Proxy :
   public TAO_Support_Attributes <POA_CosTrading::Proxy>
 {
 public:
+  TAO_Proxy (TAO_Proxy const&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy const&) = delete;
+  TAO_Proxy (TAO_Proxy&&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy&&) = delete;
+
   explicit TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Proxy ();
@@ -795,11 +796,6 @@ public:
                      CosTrading::OfferIdIterator_ptr&);
 
 private:
-  TAO_Proxy (TAO_Proxy const&) = delete;
-  TAO_Proxy& operator= (TAO_Proxy const&) = delete;
-  TAO_Proxy (TAO_Proxy&&) = delete;
-  TAO_Proxy& operator= (TAO_Proxy&&) = delete;
-
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };
 
