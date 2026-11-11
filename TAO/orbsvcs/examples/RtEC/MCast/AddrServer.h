@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef ADDRSERVER_H
 #define ADDRSERVER_H
 #include /**/ "ace/pre.h"

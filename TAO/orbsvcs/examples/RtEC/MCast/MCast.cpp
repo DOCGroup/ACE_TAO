@@ -10,15 +10,13 @@
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_TCHAR const *udp_mcast_address =
-    ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
-
-int parse_args (int argc, ACE_TCHAR *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &udp_mcast_address);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
@@ -46,12 +44,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
       // -ORB options from the command line.
-      if (parse_args (argc, argv) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Usage: Service [-m udp_mcast_addr]\n"));
-          return 1;
-        }
+      ACE_TString udp_mcast_address {
+        ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT (":10001")};
+      if (parse_args (argc, argv, udp_mcast_address) == -1)
+        return 1;
 
       // This is the standard code to get access to the POA and
       // activate it.
@@ -116,11 +112,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // First we convert the string into an INET address, then we
       // convert that into the right IDL structure:
-      ACE_INET_Addr udp_addr (udp_mcast_address);
+      ACE_INET_Addr udp_addr (udp_mcast_address.c_str ());
       ACE_DEBUG ((LM_DEBUG,
-                  "Multicast address is: %s\n",
-                  udp_mcast_address));
-      RtecUDPAdmin::UDP_Addr addr;
+                  ACE_TEXT ("Multicast address is: %s\n"),
+                  udp_mcast_address.c_str ()));
+      RtecUDPAdmin::UDP_Addr addr {};
       addr.ipaddr = udp_addr.get_ip_address ();
       addr.port   = udp_addr.get_port_number ();
 
@@ -131,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
-      TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
+      TAO_ECG_Refcounted_Endpoint endpoint (new TAO_ECG_UDP_Out_Endpoint);
       if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Cannot open send endpoint\n"),
@@ -140,7 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Now we setup the sender:
       PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
-        TAO_ECG_UDP_Sender::create();
+        TAO_ECG_UDP_Sender::create ();
       sender->init (event_channel.in (),
                     address_server.in (),
                     endpoint);
@@ -148,8 +144,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Now we connect the sender as a consumer of events, it will
       // receive any event from any source and send it to the "right"
       // multicast group, as defined by the address server set above:
-      RtecEventChannelAdmin::ConsumerQOS sub;
-      sub.is_gateway = 1;
+      RtecEventChannelAdmin::ConsumerQOS sub {};
+      sub.is_gateway = true;
 
       sub.dependencies.length (1);
       sub.dependencies[0].event.header.type =
@@ -161,7 +157,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // To receive events we need to setup an event handler:
       PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
-        TAO_ECG_UDP_Receiver::create();
+        TAO_ECG_UDP_Receiver::create ();
       TAO_ECG_Mcast_EH mcast_eh (&(*receiver));
 
       // The event handler uses the ORB reactor to wait for multicast
@@ -194,11 +190,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // multicast groups that each receive subscribes to).
       // In a future version the event channel could perform some of
       // those tasks automatically
-      RtecEventChannelAdmin::SupplierQOS pub;
+      RtecEventChannelAdmin::SupplierQOS pub {};
       pub.publications.length (1);
       pub.publications[0].event.header.type   = ACE_ES_EVENT_ANY;
       pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
-      pub.is_gateway = 1;
+      pub.is_gateway = true;
 
       receiver->connect (pub);
 
@@ -226,21 +222,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Wait for events, including incoming multicast data.
       // We could also use orb->run(), but that will not let us
       // terminate the application in a nice way.
+      ACE_Time_Value const sleep_timeout {0, 100000};
       for (int i = 0; i != 1000; ++i)
         {
-          CORBA::Boolean there_is_work =
-            orb->work_pending ();
-          if (there_is_work)
+          if (orb->work_pending ())
             {
               // We use a TAO extension. The CORBA mechanism does not
               // provide any decent way to control the duration of
               // perform_work() or work_pending(), so just calling
               // them results in a spin loop.
-              ACE_Time_Value tv (0, 50000);
-              orb->perform_work (tv);
+              ACE_Time_Value perform_work_timeout {0, 50000};
+              orb->perform_work (perform_work_timeout);
             }
-          ACE_Time_Value tv (0, 100000);
-          ACE_OS::sleep (tv);
+          ACE_OS::sleep (sleep_timeout);
           supplier.perform_push ();
         }
 
@@ -255,7 +249,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Now let us close the Receiver
       receiver->shutdown ();
 
-      int r = mcast_eh.shutdown ();
+      int const r = mcast_eh.shutdown ();
 
       if (r == -1)
         {
@@ -310,13 +304,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &udp_mcast_address)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("m:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("m:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'm':
         udp_mcast_address = get_opts.opt_arg ();
@@ -325,10 +320,8 @@ int parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-m udp_mcast_address]"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage:  %s [-m udp_mcast_address]\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line

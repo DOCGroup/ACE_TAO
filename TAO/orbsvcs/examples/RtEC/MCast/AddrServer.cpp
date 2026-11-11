@@ -16,5 +16,5 @@ void
 AddrServer::get_address (RtecEventComm::EventHeader const &,
                          RtecUDPAdmin::UDP_Address_out addr)
 {
-  addr.v4_addr(this->addr_);
+  addr.v4_addr (this->addr_);
 }
