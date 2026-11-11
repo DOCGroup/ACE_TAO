@@ -56,12 +56,6 @@ namespace ACE
     private:
       /// Overridden reset, calls platform-specific reset.
       void clear_i () override;
-
-#if defined (ACE_LINUX)
-      FILE *file_ptr_ {};
-      char buf_[1024] {};
-      unsigned long nthreads_ {};
-#endif
     };
   }
 }

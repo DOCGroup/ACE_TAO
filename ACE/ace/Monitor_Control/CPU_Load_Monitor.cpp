@@ -11,6 +11,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +35,7 @@ namespace ACE
       this->update_i ();
       this->receive (this->value_);
 #elif defined (ACE_LINUX)
-      this->access_proc_stat (&this->idle_);
+      this->access_proc_stat (this->idle_);
 #elif defined (ACE_HAS_KSTAT)
       this->access_kstats (&this->idle_);
 #endif
@@ -86,7 +87,7 @@ namespace ACE
       /// All data in this file are stored as running 'jiffy' totals, so we
       /// get values here in the constructor to subtract for the difference
       /// in subsequent calls.
-      this->access_proc_stat (&this->prev_idle_);
+      this->access_proc_stat (this->prev_idle_);
 
       this->prev_total_ =
         this->user_ + this->wait_ + this->kernel_ + this->prev_idle_;
@@ -95,25 +96,23 @@ namespace ACE
 
 #if defined (ACE_LINUX)
     void
-    CPU_Load_Monitor::access_proc_stat (unsigned long *which_idle)
+    CPU_Load_Monitor::access_proc_stat (unsigned long &which_idle)
     {
-      this->file_ptr_ = ACE_OS::fopen (ACE_TEXT ("/proc/stat"),
-                                       ACE_TEXT ("r"));
+      std::unique_ptr<FILE, int (*) (FILE *)> file_ptr (
+        ACE_OS::fopen (ACE_TEXT ("/proc/stat"), ACE_TEXT ("r")), ACE_OS::fclose);
 
-      if (this->file_ptr_ == nullptr)
+      if (!file_ptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("CPU load - opening /proc/stat failed\n")));
           return;
         }
 
-      char const *item {};
-      char const *arg {};
-
-      while (std::fgets (buf_, sizeof (buf_), file_ptr_) != nullptr)
+      char buf[1024] {};
+      while (std::fgets (buf, sizeof (buf), file_ptr.get ()) != nullptr)
         {
-          item = std::strtok (this->buf_, " \t\n");
-          arg = std::strtok (nullptr, "\n");
+          char const * const item = std::strtok (buf, " \t\n");
+          char const * const arg = std::strtok (nullptr, "\n");
 
           if (item == nullptr || arg == nullptr)
             {
@@ -127,12 +126,10 @@ namespace ACE
                            &this->user_,
                            &this->wait_,
                            &this->kernel_,
-                           which_idle);
+                           &which_idle);
               break;
             }
         }
-
-      std::fclose (this->file_ptr_);
     }
 #endif
   }

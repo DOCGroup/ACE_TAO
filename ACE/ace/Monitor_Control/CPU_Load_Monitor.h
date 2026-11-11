@@ -61,7 +61,7 @@ namespace ACE
       void init ();
 
 #if defined (ACE_LINUX)
-      void access_proc_stat (unsigned long *which_idle);
+      void access_proc_stat (unsigned long &which_idle);
 #endif
 
       /// Linux implementation
@@ -72,10 +72,6 @@ namespace ACE
       unsigned long idle_ {};
       unsigned long prev_idle_ {};
       double prev_total_ {};
-#endif
-#if defined (ACE_LINUX)
-      FILE *file_ptr_ {};
-      char buf_[1024] {};
 #endif
     };
   }

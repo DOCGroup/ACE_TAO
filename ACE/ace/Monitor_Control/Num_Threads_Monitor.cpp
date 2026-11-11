@@ -11,6 +11,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,10 +34,10 @@ namespace ACE
       this->update_i ();
       this->receive (this->value_);
 #elif defined (ACE_LINUX)
-      this->file_ptr_ = ACE_OS::fopen (ACE_TEXT ("/proc/self/status"),
-                                       ACE_TEXT ("r"));
+      std::unique_ptr<FILE, int (*) (FILE *)> file_ptr (
+        ACE_OS::fopen (ACE_TEXT ("/proc/self/status"), ACE_TEXT ("r")), ACE_OS::fclose);
 
-      if (this->file_ptr_ == nullptr)
+      if (!file_ptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Num threads - opening ")
@@ -44,13 +45,12 @@ namespace ACE
           return;
         }
 
-      char const *item {};
-      char const *arg {};
-
-      while (std::fgets (buf_, sizeof (buf_), file_ptr_) != nullptr)
+      char buf[1024] {};
+      unsigned long nthreads {};
+      while (std::fgets (buf, sizeof (buf), file_ptr.get ()) != nullptr)
         {
-          item = std::strtok (this->buf_, " \t\n");
-          arg = std::strtok (nullptr, "\n");
+          char const * const item = std::strtok (buf, " \t\n");
+          char const * const arg = std::strtok (nullptr, "\n");
 
           if (item == nullptr || arg == nullptr)
             {
@@ -59,15 +59,13 @@ namespace ACE
 
           if (std::strcmp (item, "Threads:") == 0)
             {
-              std::sscanf (arg, "%lu", &this->nthreads_);
+              std::sscanf (arg, "%lu", &nthreads);
               break;
             }
         }
 
       /// Stores value and timestamp with thread-safety.
-      this->receive (static_cast<double> (this->nthreads_));
-
-      std::fclose (this->file_ptr_);
+      this->receive (static_cast<double> (nthreads));
 #endif
     }
 
