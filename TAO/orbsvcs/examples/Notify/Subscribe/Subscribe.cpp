@@ -1,28 +1,21 @@
 /* -*- C++ -*-  */
 #include "Subscribe.h"
-#include <atomic>
+#include <cstring>
 
-#define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
-#define NAMING_SERVICE_NAME "NameService"
+constexpr char notify_factory_name[] = "NotifyEventChannelFactory";
+constexpr char naming_service_name[] = "NameService";
 
-#define DOMAIN_A "domain_a"
-#define DOMAIN_B "domain_b"
-#define DOMAIN_C "domain_c"
+constexpr char domain_a[] = "domain_a";
+constexpr char domain_b[] = "domain_b";
+constexpr char domain_c[] = "domain_c";
 
-#define TYPE_A "type_a"
-#define TYPE_B "type_b"
-#define TYPE_C "type_c"
+constexpr char type_a[] = "type_a";
+constexpr char type_b[] = "type_b";
+constexpr char type_c[] = "type_c";
 
-#define EVENT_COUNT 4 // number of events we expect the consumer to get from the EC
+constexpr CORBA::ULong event_count = 4; // Expected events delivered to the consumers.
 
-std::atomic<int> g_result_count {0}; // we wait for 4 events.
-
-Subscribe::Subscribe ()
-  : done_ (0)
-{
-  // No-Op.
-  ifgop_ = CosNotifyChannelAdmin::OR_OP;
-}
+static std::atomic<CORBA::ULong> result_count {};
 
 Subscribe::~Subscribe ()
 {
@@ -47,9 +40,9 @@ Subscribe::run ()
 {
   this->send_events ();
 
-  if (g_result_count.load () != EVENT_COUNT) // if we still need to wait for events, run the orb.
-    { // if we still need to wait for events, run the orb.
-      while (!this->done_)
+  if (result_count.load () != event_count)
+    {
+      while (!this->done_.load ())
         if (this->orb_->work_pending ())
           this->orb_->perform_work ();
     }
@@ -58,7 +51,7 @@ Subscribe::run ()
 void
 Subscribe::done ()
 {
-  this->done_ = 1;
+  this->done_.store (true);
 }
 
 void
@@ -66,19 +59,19 @@ Subscribe::init_ORB (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_ptr poa_object  =
-    this->orb_->resolve_initial_references("RootPOA");
+  CORBA::Object_var const poa_object =
+    this->orb_->resolve_initial_references ("RootPOA");
 
-  if (CORBA::is_nil (poa_object))
+  if (CORBA::is_nil (poa_object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to initialize the POA.\n"));
+                  ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")));
       return;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object);
+    PortableServer::POA::_narrow (poa_object.in ());
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     root_poa_->the_POAManager ();
 
   poa_manager->activate ();
@@ -87,8 +80,8 @@ Subscribe::init_ORB (int argc, ACE_TCHAR *argv [])
 void
 Subscribe::resolve_naming_service ()
 {
-  CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+  CORBA::Object_var const naming_obj =
+    this->orb_->resolve_initial_references (naming_service_name);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -103,9 +96,9 @@ Subscribe::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
-  name[0].id = CORBA::string_dup (NOTIFY_FACTORY_NAME);
+  name[0].id = CORBA::string_dup (notify_factory_name);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->naming_context_->resolve (name);
 
   this->notify_factory_ =
@@ -115,7 +108,7 @@ Subscribe::resolve_Notify_factory ()
 void
 Subscribe::create_EC ()
 {
-  CosNotifyChannelAdmin::ChannelID id;
+  CosNotifyChannelAdmin::ChannelID id {};
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
@@ -127,7 +120,7 @@ Subscribe::create_EC ()
 void
 Subscribe::create_supplieradmin ()
 {
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid);
@@ -136,9 +129,9 @@ Subscribe::create_supplieradmin ()
 }
 
 void
-Subscribe:: create_consumeradmin ()
+Subscribe::create_consumeradmin ()
 {
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid);
@@ -149,20 +142,20 @@ Subscribe:: create_consumeradmin ()
 void
 Subscribe::create_consumers ()
 {
-  consumer_1_ = new Subscribe_StructuredPushConsumer (this);
+  consumer_1_ = std::make_unique<Subscribe_StructuredPushConsumer> (this);
   consumer_1_->connect (this->consumer_admin_.in ());
 
-  consumer_2_ = new Subscribe_StructuredPushConsumer (this);
+  consumer_2_ = std::make_unique<Subscribe_StructuredPushConsumer> (this);
   consumer_2_->connect (this->consumer_admin_.in ());
 }
 
 void
 Subscribe::create_suppliers ()
 {
-  supplier_1_ = new Subscribe_StructuredPushSupplier ();
+  supplier_1_ = std::make_unique<Subscribe_StructuredPushSupplier> ();
   supplier_1_->connect (this->supplier_admin_.in ());
 
-  supplier_2_ = new Subscribe_StructuredPushSupplier ();
+  supplier_2_ = std::make_unique<Subscribe_StructuredPushSupplier> ();
   supplier_2_->connect (this->supplier_admin_.in ());
 }
 
@@ -174,8 +167,8 @@ Subscribe::send_events ()
   CosNotification::EventTypeSeq removed (0);
   added.length (1);
 
-  added[0].domain_name =  CORBA::string_dup (DOMAIN_A);
-  added[0].type_name = CORBA::string_dup (TYPE_A);
+  added[0].domain_name = CORBA::string_dup (domain_a);
+  added[0].type_name = CORBA::string_dup (type_a);
 
   this->consumer_admin_->subscription_change (added, removed);
 
@@ -184,8 +177,8 @@ Subscribe::send_events ()
   CosNotification::EventTypeSeq removed_1 (0);
   added_1.length (1);
 
-  added_1[0].domain_name =  CORBA::string_dup (DOMAIN_B);
-  added_1[0].type_name = CORBA::string_dup (TYPE_B);
+  added_1[0].domain_name = CORBA::string_dup (domain_b);
+  added_1[0].type_name = CORBA::string_dup (type_b);
   removed_1.length (0);
 
   this->consumer_1_->get_proxy_supplier ()->subscription_change (added_1, removed_1);
@@ -200,8 +193,8 @@ Subscribe::send_events ()
   CosNotification::EventTypeSeq removed_2 (0);
   added_2.length (1);
 
-  added_2[0].domain_name =  CORBA::string_dup (DOMAIN_C);
-  added_2[0].type_name = CORBA::string_dup (TYPE_C);
+  added_2[0].domain_name = CORBA::string_dup (domain_c);
+  added_2[0].type_name = CORBA::string_dup (type_c);
   removed_2.length (0);
 
   this->consumer_2_->get_proxy_supplier ()->subscription_change (added_2, removed_2);
@@ -213,67 +206,59 @@ Subscribe::send_events ()
 
   // Create the events - one of each type
   // Event 1
-  CosNotification::StructuredEvent event1;
+  CosNotification::StructuredEvent event1 {};
   event1.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup(DOMAIN_A);
+    CORBA::string_dup (domain_a);
   event1.header.fixed_header.event_type.type_name =
-    CORBA::string_dup(TYPE_A);
-  event1.header.fixed_header.event_name = CORBA::string_dup("");
+    CORBA::string_dup (type_a);
+  event1.header.fixed_header.event_name = CORBA::string_dup ("");
   event1.header.variable_header.length (0); // put nothing here
   event1.filterable_data.length (0);
-  event1.remainder_of_body <<= (CORBA::Long)10;
+  event1.remainder_of_body <<= static_cast<CORBA::Long> (10);
 
   // Event 2
-  CosNotification::StructuredEvent event2;
+  CosNotification::StructuredEvent event2 {};
   event2.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup(DOMAIN_B);
+    CORBA::string_dup (domain_b);
   event2.header.fixed_header.event_type.type_name =
-    CORBA::string_dup(TYPE_B);
-  event2.header.fixed_header.event_name = CORBA::string_dup("");
+    CORBA::string_dup (type_b);
+  event2.header.fixed_header.event_name = CORBA::string_dup ("");
   event2.header.variable_header.length (0); // put nothing here
   event2.filterable_data.length (0);
-  event2.remainder_of_body <<= (CORBA::Long)10;
+  event2.remainder_of_body <<= static_cast<CORBA::Long> (10);
 
   // event 3
-  CosNotification::StructuredEvent event3;
+  CosNotification::StructuredEvent event3 {};
   event3.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup(DOMAIN_C);
+    CORBA::string_dup (domain_c);
   event3.header.fixed_header.event_type.type_name =
-    CORBA::string_dup(TYPE_C);
-  event3.header.fixed_header.event_name = CORBA::string_dup("");
+    CORBA::string_dup (type_c);
+  event3.header.fixed_header.event_name = CORBA::string_dup ("");
   event3.header.variable_header.length (0); // put nothing here
   event3.filterable_data.length (0);
-  event3.remainder_of_body <<= (CORBA::Long)10;
+  event3.remainder_of_body <<= static_cast<CORBA::Long> (10);
 
- // let supplier 1 send all these events
-  for (int i = 0; i < 1; ++i)
-    {
-      supplier_1_->send_event (event1);
-      supplier_1_->send_event (event2);
-      supplier_1_->send_event (event3);
-    }
+  // Let supplier 1 send all three events.
+  supplier_1_->send_event (event1);
+  supplier_1_->send_event (event2);
+  supplier_1_->send_event (event3);
 }
 
-/*****************************************************************/
-Subscribe_StructuredPushConsumer::Subscribe_StructuredPushConsumer (Subscribe* subscribe)
+Subscribe_StructuredPushConsumer::Subscribe_StructuredPushConsumer (Subscribe *subscribe)
   : expected_subscription_ (2),
     subscribe_ (subscribe)
 {
 }
 
-Subscribe_StructuredPushConsumer::~Subscribe_StructuredPushConsumer ()
-{
-}
-
 void
-Subscribe_StructuredPushConsumer::connect
-   (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+Subscribe_StructuredPushConsumer::connect (
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::StructuredPushConsumer_var objref =
+  CosNotifyComm::StructuredPushConsumer_var const objref =
     this->_this ();
 
-  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
+  CosNotifyChannelAdmin::ProxySupplier_var const proxysupplier =
     consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -296,47 +281,45 @@ Subscribe_StructuredPushConsumer::disconnect ()
 }
 
 void
-Subscribe_StructuredPushConsumer::offer_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/)
+Subscribe_StructuredPushConsumer::offer_change (
+  CosNotification::EventTypeSeq const & /*added*/,
+  CosNotification::EventTypeSeq const & /*removed*/)
 {
-  // No-Op.
 }
 
 void
-Subscribe_StructuredPushConsumer::push_structured_event
-   (const CosNotification::StructuredEvent & notification)
+Subscribe_StructuredPushConsumer::push_structured_event (
+  CosNotification::StructuredEvent const &notification)
 {
-  const char* domain_name =
+  char const * const domain_name =
     notification.header.fixed_header.event_type.domain_name;
 
-  const char* type_name =
+  char const * const type_name =
     notification.header.fixed_header.event_type.type_name;
 
-  bool found = false;
+  bool found {};
 
-  for (CORBA::ULong i = 0; i < expected_subscription_.length (); i++)
-  {
-    if ( ACE_OS::strcmp (expected_subscription_[i].domain_name, domain_name) == 0)
+  for (CORBA::ULong i {}; i < this->expected_subscription_.length (); ++i)
+    if (std::strcmp (this->expected_subscription_[i].domain_name, domain_name) == 0)
       found = true;
-  }
 
   if (found)
-    ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received subscribed event, domain = %s, type =  %s\n",
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Structured Subscribe Consumer %d received subscribed event, domain = %C, type = %C\n"),
                 this->proxy_supplier_id_, domain_name, type_name));
   else
-    ACE_ERROR ((LM_ERROR, "Error: Structured Subscribe Consumer %d received not subscribed event , domain = %s, type =  %s\n",
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: Structured Subscribe Consumer %d received not subscribed event, "
+                          "domain = %C, type = %C\n"),
                 this->proxy_supplier_id_, domain_name, type_name));
 
-  if (++g_result_count == EVENT_COUNT)
-    subscribe_->done ();
+  if (++result_count == event_count)
+    this->subscribe_->done ();
 }
 
 void
-Subscribe_StructuredPushConsumer::disconnect_structured_push_consumer
-   ()
+Subscribe_StructuredPushConsumer::disconnect_structured_push_consumer ()
 {
-  // No-Op.
 }
 
 CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr
@@ -347,22 +330,14 @@ Subscribe_StructuredPushConsumer::get_proxy_supplier ()
 
 /*****************************************************************/
 
-Subscribe_StructuredPushSupplier::Subscribe_StructuredPushSupplier ()
-{
-}
-
-Subscribe_StructuredPushSupplier::~Subscribe_StructuredPushSupplier ()
-{
-}
-
 void
-Subscribe_StructuredPushSupplier::connect
-   (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)
+Subscribe_StructuredPushSupplier::connect (
+  CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
-  CosNotifyComm::StructuredPushSupplier_var objref =
+  CosNotifyComm::StructuredPushSupplier_var const objref =
     this->_this ();
 
-  CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
+  CosNotifyChannelAdmin::ProxyConsumer_var const proxyconsumer =
     supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
@@ -385,16 +360,15 @@ Subscribe_StructuredPushSupplier::disconnect ()
 }
 
 void
-Subscribe_StructuredPushSupplier::subscription_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */)
+Subscribe_StructuredPushSupplier::subscription_change (
+  CosNotification::EventTypeSeq const & /*added*/,
+  CosNotification::EventTypeSeq const & /*removed*/)
 {
-  //No-Op.
 }
 
 void
-Subscribe_StructuredPushSupplier::send_event
-   (const CosNotification::StructuredEvent& event)
+Subscribe_StructuredPushSupplier::send_event (
+  CosNotification::StructuredEvent const &event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -402,9 +376,7 @@ Subscribe_StructuredPushSupplier::send_event
 }
 
 void
-Subscribe_StructuredPushSupplier::disconnect_structured_push_supplier
-   ()
+Subscribe_StructuredPushSupplier::disconnect_structured_push_supplier ()
 {
-  // No-Op.
 }
 
