@@ -47,7 +47,6 @@ public:
           }
 
       }
-
     return 0;
   }
 };
@@ -58,7 +57,6 @@ int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-
   /// The Admin class will own the reactor and destroy it. We are
   /// passing a vanilla reactor to show how it works, but in real
   /// life it could be some specialized reactor.
@@ -81,7 +79,12 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Run the monitor checker in a separate thread.
   Monitor_Checker monitor_checker {};
-  monitor_checker.activate ();
+  if (monitor_checker.activate () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start monitor checker\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
   /// Make sure the monitor checker is spawned before doing anything.
   ACE_OS::sleep (1);
