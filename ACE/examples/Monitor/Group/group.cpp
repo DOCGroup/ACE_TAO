@@ -47,6 +47,8 @@ public:
     // ACE_Dynamic_Service returns a borrowed pointer from the service repository.
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<Monitor_Admin_Manager>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     Monitor_Reference cpu_monitor (
       mgr->admin ().monitor_point ("OS/Processor/CPULoad"));
@@ -56,6 +58,8 @@ public:
 
     Monitor_Reference bytes_monitor (
       mgr->admin ().monitor_point ("OS/Network/BytesSent"));
+    if (cpu_monitor == nullptr || memory_monitor == nullptr || bytes_monitor == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Unable to find a monitor point\n"), -1);
 
     // Query each monitor every 2 seconds and display its data.
     for (int i = 0; i < 10; ++i)
@@ -88,12 +92,19 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-  // Create these future group members without automatic update.
-  Monitor_Reference cpu_load_monitor (create_os_monitor<CPU_LOAD_MONITOR> ());
-  Monitor_Reference bytes_sent_monitor (create_os_monitor<BYTES_SENT_MONITOR> ());
-  Monitor_Reference memory_usage_monitor (create_os_monitor<MEMORY_USAGE_MONITOR> ());
+  MC_ADMINMANAGER * const mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
 
-  Monitor_Group_Reference group (new Monitor_Group ("Test_Group"));
+  // Create these future group members without automatic update.
+  Monitor_Reference const cpu_load_monitor (create_os_monitor<CPU_LOAD_MONITOR> ());
+  Monitor_Reference const bytes_sent_monitor (create_os_monitor<BYTES_SENT_MONITOR> ());
+  Monitor_Reference const memory_usage_monitor (create_os_monitor<MEMORY_USAGE_MONITOR> ());
+  if (cpu_load_monitor == nullptr || bytes_sent_monitor == nullptr || memory_usage_monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create group monitor members\n"), 1);
+
+  Monitor_Group_Reference const group (new Monitor_Group ("Test_Group"));
 
   group->add_member (cpu_load_monitor.get ());
   group->add_member (bytes_sent_monitor.get ());
@@ -101,8 +112,6 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   // Register the group as an auto-updated monitor point.
   // ACE_Dynamic_Service returns a borrowed pointer from the service repository.
-  MC_ADMINMANAGER * const mgr =
-    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   bool const good_add = mgr->admin ().monitor_point (group.get (), ACE_Time_Value (2));
 
   if (!good_add)
