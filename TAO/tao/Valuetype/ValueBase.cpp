@@ -901,7 +901,7 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
       {
         return false;
       }
-    CORBA::Long offset= -strm.offset (pos);
+    CORBA::Long const offset = -strm.offset (pos);
     if (TAO_debug_level)
       {
         TAOLIB_DEBUG ((LM_DEBUG,

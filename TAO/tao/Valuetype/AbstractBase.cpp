@@ -392,7 +392,7 @@ CORBA::AbstractBase::create_object (TAO_Stub *stub)
 
       TAO_Stub_Auto_Ptr safe_stub (stub);
 
-      CORBA::Object_ptr obj =
+      CORBA::Object_ptr const obj =
         stub->orb_core ()->create_object (stub);
 
       safe_stub.release ();

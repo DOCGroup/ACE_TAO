@@ -61,8 +61,8 @@ struct unbounded_valuetype_allocation_traits
   {
     if(buffer != nullptr)
     {
-      value_type * begin = buffer - 1;
-      value_type * end = reinterpret_cast<value_type*>(*begin);
+      value_type * const begin = buffer - 1;
+      value_type * const end = reinterpret_cast<value_type*> (*begin);
       valuetype_traits::release_range(buffer, end);
 
       buffer = begin;
