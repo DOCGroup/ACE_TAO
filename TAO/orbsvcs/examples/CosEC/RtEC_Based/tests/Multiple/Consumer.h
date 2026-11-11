@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef COSECCONSUMER_H_
 #define COSECCONSUMER_H_
 
@@ -32,7 +31,6 @@ class Consumer : public POA_CosEventComm::PushConsumer, public Multiple
 {
 public:
   // = Initializatiopn and termination methods.
-  /// Constructor.
   Consumer () = default;
   Consumer (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;
@@ -67,10 +65,10 @@ public:
 
 private:
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+  CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_ {};
 
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
+  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_ {};
 
   /// The number of Events to receive before switching off.
   int event_count_ {1};

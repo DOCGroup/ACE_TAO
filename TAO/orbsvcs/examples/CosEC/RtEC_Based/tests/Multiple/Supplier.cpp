@@ -5,8 +5,8 @@
 int
 Supplier::parse_args (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:c:"));
-  int opt;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:c:"));
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -23,9 +23,8 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv [])
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      " -n <COS Event Service name>"
-                      "\n",
+                      ACE_TEXT ("Usage: %s ")
+                      ACE_TEXT (" -n <COS Event Service name>\n"),
                       argv[0]));
           return -1;
         }
@@ -60,7 +59,7 @@ Supplier::connect ()
   this->consumer_proxy_ =
     this->supplier_admin_->obtain_push_consumer ();
 
-  CosEventComm::PushSupplier_var objref = this->_this ();
+  CosEventComm::PushSupplier_var const objref = this->_this ();
 
   this->consumer_proxy_->connect_push_supplier (objref.in ());
 }
@@ -89,10 +88,10 @@ Supplier::disconnect_push_supplier ()
 {
   // Deactivate this object.
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
@@ -104,37 +103,37 @@ Supplier::run ()
   try
     {
       // Create an Any type to pass to the Cos EC.
-      CORBA::Any any;
-      any <<= CORBA::Long (50);
+      CORBA::Any any {};
+      any <<= static_cast<CORBA::Long> (50);
 
-      this->open (this->cos_ec_);
+      this->open (this->cos_ec_.in ());
 
       this->connect ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P):sending %d events...\n",
+                  ACE_TEXT ("(%P):sending %d events...\n"),
                   this->event_count_));
 
       for (int count = this->event_count_;
            count != 0;
-           count--)
+           --count)
         {
           this->send_event (any);
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P):Done!. exiting now..\n"));
+                  ACE_TEXT ("(%P):Done!. exiting now..\n")));
 
       this->close ();
     }
   catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Exception in CosEC_Multiple::run\n");
+      ex._tao_print_exception (ACE_TEXT ("Exception in CosEC_Multiple::run\n"));
     }
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supp;
 

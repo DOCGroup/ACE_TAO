@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef COSECSUPPLIER_H_
 #define COSECSUPPLIER_H_
 
@@ -21,7 +20,7 @@
 #include "Multiple.h"
 
 class Supplier : public POA_CosEventComm::PushSupplier,
-                      public Multiple
+                 public Multiple
 {
   // = TITLE
   //   Supplier
@@ -31,7 +30,6 @@ class Supplier : public POA_CosEventComm::PushSupplier,
   //   the CosEC and sends events to it.
 public:
   // = Initializatiopn and termination methods.
-  /// Constructor.
   Supplier () = default;
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;
@@ -63,10 +61,10 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv []) override;
 private:
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+  CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_ {};
 
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::SupplierAdmin_var supplier_admin_;
+  CosEventChannelAdmin::SupplierAdmin_var supplier_admin_ {};
 
   /// The number of Events to send to the EC.
   int event_count_ {1};
