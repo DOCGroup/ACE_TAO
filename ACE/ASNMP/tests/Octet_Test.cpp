@@ -77,47 +77,47 @@ static void TestOctet()
 {
   char const * const str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
   OctetStr o1;
-  ACE_ASSERT(o1.valid() == 1);
-  ACE_ASSERT(o1.length() == 0);
-  ACE_ASSERT(o1.data() != nullptr);
-  ACE_ASSERT (std::strcmp (o1.to_string_hex (), "") == 0);
+  ACE_TEST_ASSERT(o1.valid() == 1);
+  ACE_TEST_ASSERT(o1.length() == 0);
+  ACE_TEST_ASSERT(o1.data() != nullptr);
+  ACE_TEST_ASSERT (std::strcmp (o1.to_string_hex (), "") == 0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"\") [%s]\n",
     o1.to_string()));
   o1.set_data (reinterpret_cast<SmiBYTE const *> (str));
-  ACE_ASSERT (o1.length () == std::strlen (str));
-  ACE_ASSERT (std::memcmp (str, o1.data (), o1.length ()) == 0);
+  ACE_TEST_ASSERT (o1.length () == std::strlen (str));
+  ACE_TEST_ASSERT (std::memcmp (str, o1.data (), o1.length ()) == 0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"str\") [%s]\n",
     o1.to_string()));
 
   OctetStr o2(str);
-  ACE_ASSERT(o2.valid() == 1);
-  ACE_ASSERT(o2.data() != nullptr);
+  ACE_TEST_ASSERT(o2.valid() == 1);
+  ACE_TEST_ASSERT(o2.data() != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o2(\"str\") [%s]\n",
     o2.to_string()));
 
   OctetStr o3(str, 4);  // test setting less than full string length
-  ACE_ASSERT(o3.valid() == 1);
-  ACE_ASSERT(o3.length() == 4);
+  ACE_TEST_ASSERT(o3.valid() == 1);
+  ACE_TEST_ASSERT(o3.length() == 4);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o3(\"A te\") [%s]\n",
     o3.to_string()));
 
   OctetStr o4(o3);  // test setting less than full string length
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o4(\"A te\") [%s]\n",
     o4.to_string()));
-  ACE_ASSERT(o4.valid() == 1);
-  ACE_ASSERT(o4.length() == 4);
+  ACE_TEST_ASSERT(o4.valid() == 1);
+  ACE_TEST_ASSERT(o4.length() == 4);
 
   OctetStr o5;
   o5 = str;
-  ACE_ASSERT(o5.valid() == 1);
-  ACE_ASSERT(o5.length() == std::strlen(str));
+  ACE_TEST_ASSERT(o5.valid() == 1);
+  ACE_TEST_ASSERT(o5.length() == std::strlen(str));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o5(\"str\") [%s]\n",
     o5.to_string()));
 
   OctetStr o6;
   o6 = o5;
-  ACE_ASSERT(o6.valid() == 1);
-  ACE_ASSERT(o5.length() == o6.length());
+  ACE_TEST_ASSERT(o6.valid() == 1);
+  ACE_TEST_ASSERT(o5.length() == o6.length());
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o6(\"str\") [%s]\n",
     o6.to_string()));
 
@@ -125,16 +125,16 @@ static void TestOctet()
   o6 = "";
   o6 += str;
   o6 += '#';
-  ACE_ASSERT(o6[0] == static_cast<SmiBYTE> ('A'));
+  ACE_TEST_ASSERT(o6[0] == static_cast<SmiBYTE> ('A'));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o6(\"str\") [%s]\n",
     o6.to_string()));
 
-   ACE_ASSERT(!(o3 < o3));
-   ACE_ASSERT(!(o3 > o3));
-   ACE_ASSERT(o3 >= o3);
-   ACE_ASSERT(o3 <= o3);
-   ACE_ASSERT(o3 == o3);
-   ACE_ASSERT(!(o3 != o3));
+   ACE_TEST_ASSERT(!(o3 < o3));
+   ACE_TEST_ASSERT(!(o3 > o3));
+   ACE_TEST_ASSERT(o3 >= o3);
+   ACE_TEST_ASSERT(o3 <= o3);
+   ACE_TEST_ASSERT(o3 == o3);
+   ACE_TEST_ASSERT(!(o3 != o3));
 }
 
 int

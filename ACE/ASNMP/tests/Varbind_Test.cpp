@@ -83,7 +83,7 @@ static void VbTest()
 #if !defined (ACE_WIN32)
 
   Vb v1;
-  ACE_ASSERT(v1.valid() == 0);
+  ACE_TEST_ASSERT(v1.valid() == 0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) VarBinad:v1(\"/\") [%s]\n",
     v1.to_string()));
 
@@ -91,117 +91,117 @@ static void VbTest()
   set_exception_status( &v1, 10);
 
   Vb v2(v1);
-  ACE_ASSERT(v2.valid() == 0);
+  ACE_TEST_ASSERT(v2.valid() == 0);
   Oid o1("1.2.3"), o2;
   v2.set_oid(o1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) VarBinad:v2(\"1.2.3/\") [%s]\n",
     v2.to_string()));
 
   v2.get_oid(o2);
-  ACE_ASSERT(o2 == o1);
-  ACE_ASSERT(v2.valid() == 0);
+  ACE_TEST_ASSERT(o2 == o1);
+  ACE_TEST_ASSERT(v2.valid() == 0);
   v2.set_null();
-  ACE_ASSERT(v2.valid() == 0);
+  ACE_TEST_ASSERT(v2.valid() == 0);
   v2.get_oid(o2);
 
   Vb v3;
   TimeTicks t(0), t1;
-  ACE_ASSERT (std::strcmp (t.to_string (), "0:00:00.00") == 0);
+  ACE_TEST_ASSERT (std::strcmp (t.to_string (), "0:00:00.00") == 0);
   v3.set_oid(o1);
   v3.set_value(t);
-  ACE_ASSERT(v3.valid() == 1);
+  ACE_TEST_ASSERT(v3.valid() == 1);
   v3.get_value(t1);
-  ACE_ASSERT(t == t1);
+  ACE_TEST_ASSERT(t == t1);
 
   Vb v4;
   v4.set_oid(o1);
   v4.set_value(o1);
-  ACE_ASSERT(v4.valid() == 1);
+  ACE_TEST_ASSERT(v4.valid() == 1);
   v4.get_value(o2);
-  ACE_ASSERT(o1 == o2);
+  ACE_TEST_ASSERT(o1 == o2);
 
   Vb v5;
   Counter32 c1(12), c2;
   v5.set_oid(o1);
   v5.set_value(c1);
-  ACE_ASSERT(v5.valid() == 1);
+  ACE_TEST_ASSERT(v5.valid() == 1);
   v5.get_value(c2);
-  ACE_ASSERT(c1 == c2);
+  ACE_TEST_ASSERT(c1 == c2);
 
   Vb v6;
   Counter64 c3(12345678901234ULL), c4;
   v6.set_oid(o1);
   v6.set_value(c3);
-  ACE_ASSERT(v6.valid() == 1);
+  ACE_TEST_ASSERT(v6.valid() == 1);
   v6.get_value(c4);
-  ACE_ASSERT(c3 == c4);
+  ACE_TEST_ASSERT(c3 == c4);
 
   Vb v7;
   Gauge32 g1(0123456), g2;
   v7.set_oid(o1);
   v7.set_value(g1);
-  ACE_ASSERT(v7.valid() == 1);
+  ACE_TEST_ASSERT(v7.valid() == 1);
   v7.get_value(g2);
-  ACE_ASSERT(g1 == g2);
+  ACE_TEST_ASSERT(g1 == g2);
 
   Vb v8;
   SnmpInt32 i1(0123456), i2;
   v8.set_oid(o1);
   v8.set_value(i1);
-  ACE_ASSERT(v8.valid() == 1);
+  ACE_TEST_ASSERT(v8.valid() == 1);
   v8.get_value(i2);
-  ACE_ASSERT(i1 == i2);
+  ACE_TEST_ASSERT(i1 == i2);
 
   Vb v9;
   SnmpUInt32 u1(0123456), u2;
   v9.set_oid(o1);
   v9.set_value(u1);
-  ACE_ASSERT(v9.valid() == 1);
+  ACE_TEST_ASSERT(v9.valid() == 1);
   v9.get_value(u2);
-  ACE_ASSERT(u1 == u2);
+  ACE_TEST_ASSERT(u1 == u2);
 
   Vb v10;
   OctetStr s1(" abcdefghighlmnopqrstuvwxyz!@#$%^&*()"), s2;
   v10.set_oid(o1);
   v10.set_value(s1);
-  ACE_ASSERT(v10.valid() == 1);
+  ACE_TEST_ASSERT(v10.valid() == 1);
   v10.get_value(s2);
-  ACE_ASSERT(s1 == s2);
-  ACE_ASSERT(s1.length() == s2.length());
+  ACE_TEST_ASSERT(s1 == s2);
+  ACE_TEST_ASSERT(s1.length() == s2.length());
 
   // test assignment over all datatypes
   v10 = v5;
-  ACE_ASSERT(v10 == v5);
+  ACE_TEST_ASSERT(v10 == v5);
 
   Vb v11(o1, s1, SNMP_CLASS_SUCCESS);
-  ACE_ASSERT(v11.valid() == 1);
+  ACE_TEST_ASSERT(v11.valid() == 1);
   v11.get_oid(o2);
-  ACE_ASSERT(o1 == o2);
+  ACE_TEST_ASSERT(o1 == o2);
   v11.get_value(s2);
-  ACE_ASSERT(s1 == s2);
+  ACE_TEST_ASSERT(s1 == s2);
 
   Pdu pdu;
   pdu += v5;
   pdu += v10;
-  ACE_ASSERT(pdu.get_vb_count() == 2);
+  ACE_TEST_ASSERT(pdu.get_vb_count() == 2);
 
   Pdu copied_pdu (pdu);
   Vb copied_vb;
-  ACE_ASSERT(copied_pdu.get_vb_count() == 2);
-  ACE_ASSERT(copied_pdu.get_vb (copied_vb, 1) == 1);
-  ACE_ASSERT(copied_vb == v10);
+  ACE_TEST_ASSERT(copied_pdu.get_vb_count() == 2);
+  ACE_TEST_ASSERT(copied_pdu.get_vb (copied_vb, 1) == 1);
+  ACE_TEST_ASSERT(copied_vb == v10);
 
-  ACE_ASSERT(copied_pdu.delete_vb (0) == 1);
-  ACE_ASSERT(copied_pdu.get_vb_count() == 1);
-  ACE_ASSERT(copied_pdu.get_vb (copied_vb, 0) == 1);
-  ACE_ASSERT(copied_vb == v10);
+  ACE_TEST_ASSERT(copied_pdu.delete_vb (0) == 1);
+  ACE_TEST_ASSERT(copied_pdu.get_vb_count() == 1);
+  ACE_TEST_ASSERT(copied_pdu.get_vb (copied_vb, 0) == 1);
+  ACE_TEST_ASSERT(copied_vb == v10);
 
   Vb varbinds[] {v5, v10};
   Pdu list_pdu;
-  ACE_ASSERT(list_pdu.set_vblist (varbinds, 2) == 1);
-  ACE_ASSERT(list_pdu.get_vb_count() == 2);
-  ACE_ASSERT(list_pdu.trim (1) == 1);
-  ACE_ASSERT(list_pdu.get_vb_count() == 1);
+  ACE_TEST_ASSERT(list_pdu.set_vblist (varbinds, 2) == 1);
+  ACE_TEST_ASSERT(list_pdu.get_vb_count() == 2);
+  ACE_TEST_ASSERT(list_pdu.trim (1) == 1);
+  ACE_TEST_ASSERT(list_pdu.get_vb_count() == 1);
 
   Pdu request;
   request.set_type (sNMP_PDU_GET);
@@ -211,12 +211,12 @@ static void VbTest()
   request += request_vb;
   UdpTarget target {IpAddress ("127.0.0.1")};
   wpdu encoded (request, target);
-  ACE_ASSERT(encoded.valid() == 1);
+  ACE_TEST_ASSERT(encoded.valid() == 1);
 
   wpdu copied_wire (encoded.get_buffer());
-  ACE_ASSERT(copied_wire.valid() == 1);
-  ACE_ASSERT(copied_wire.get_buffer().iov_len == encoded.get_buffer().iov_len);
-  ACE_ASSERT(std::memcmp (copied_wire.get_buffer().iov_base,
+  ACE_TEST_ASSERT(copied_wire.valid() == 1);
+  ACE_TEST_ASSERT(copied_wire.get_buffer().iov_len == encoded.get_buffer().iov_len);
+  ACE_TEST_ASSERT(std::memcmp (copied_wire.get_buffer().iov_base,
                           encoded.get_buffer().iov_base,
                           encoded.get_buffer().iov_len) == 0);
 #endif /*if ACE_WIN32*/

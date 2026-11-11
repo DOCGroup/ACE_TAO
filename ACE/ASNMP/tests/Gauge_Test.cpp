@@ -69,23 +69,23 @@ TestGuage ()
 
    // constructors
    Gauge32 g1;
-   ACE_ASSERT(g1 == def);
+   ACE_TEST_ASSERT(g1 == def);
    Gauge32 g2(l);
-   ACE_ASSERT(g2 == static_cast<unsigned long> (l));
+   ACE_TEST_ASSERT(g2 == static_cast<unsigned long> (l));
    Gauge32 g3(nl);
-   ACE_ASSERT(g3 == static_cast<unsigned long> (nl));
+   ACE_TEST_ASSERT(g3 == static_cast<unsigned long> (nl));
    Gauge32 g4(ul);
-   ACE_ASSERT(g4 == ul);
+   ACE_TEST_ASSERT(g4 == ul);
    Gauge32 g5(i);
-   ACE_ASSERT(g5 == static_cast<unsigned long> (i));
+   ACE_TEST_ASSERT(g5 == static_cast<unsigned long> (i));
    Gauge32 g6(ni);
-   ACE_ASSERT(g6 == static_cast<unsigned long> (ni));
+   ACE_TEST_ASSERT(g6 == static_cast<unsigned long> (ni));
    Gauge32 g7(ui);
-   ACE_ASSERT(g7 == ui);
+   ACE_TEST_ASSERT(g7 == ui);
    Gauge32 const &g7_ref = g7;
    ACE_TEST_ASSERT(static_cast<unsigned long> (g7_ref) == ui);
    std::unique_ptr<Gauge32> g8 = std::make_unique<Gauge32> (g5);
-   ACE_ASSERT(g8 != nullptr);
+   ACE_TEST_ASSERT(g8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%lu]\n",
     static_cast<unsigned long> (g1)));
@@ -104,15 +104,15 @@ TestGuage ()
 
   // assignent
   g1 = g2;  // obj
-  ACE_ASSERT(g1 == g2);
+  ACE_TEST_ASSERT(g1 == g2);
   g1 = g1; // self
-  ACE_ASSERT(g1 == g1);
+  ACE_TEST_ASSERT(g1 == g1);
   g1 = def; // unsigned long
-  ACE_ASSERT(g1 == def);
+  ACE_TEST_ASSERT(g1 == def);
   g1 = us; // unsigned short
-  ACE_ASSERT(g1 == static_cast<unsigned long> (us));
+  ACE_TEST_ASSERT(g1 == static_cast<unsigned long> (us));
   g1 = si; // unsigned short
-  ACE_ASSERT(g1 == static_cast<unsigned long> (si));
+  ACE_TEST_ASSERT(g1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32*/
 }
 
