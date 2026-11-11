@@ -58,9 +58,9 @@ public:
                     TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) override;
 
   /// Factory method for creating new POA's.
-  TAO_Root_POA *create_Root_POA (const ACE_CString &name,
+  TAO_Root_POA *create_Root_POA (ACE_CString const &name,
                                  PortableServer::POAManager_ptr poa_manager,
-                                 const TAO_POA_Policy_Set &policies,
+                                 TAO_POA_Policy_Set const &policies,
                                  ACE_Lock &lock,
                                  TAO_SYNCH_MUTEX &thread_lock,
                                  TAO_ORB_Core &orb_core,

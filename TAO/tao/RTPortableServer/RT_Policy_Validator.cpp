@@ -98,7 +98,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
               TAO_Acceptor_Registry &acceptor_registry =
                 resources.acceptor_registry ();
 
-              for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptor_registry.acceptors ())
+              for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
                 {
                   if (acceptor->tag () == protocol_type)
                     {
@@ -119,7 +119,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
           TAO_Acceptor_Registry &acceptor_registry =
             resources.acceptor_registry ();
 
-          for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptor_registry.acceptors ())
+          for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
             {
               if (acceptor->tag () == protocol_type)
                 {
@@ -450,7 +450,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
                                                                             TAO_Acceptor_Registry &acceptor_registry,
                                                                             TAO_ORB_Core &orb_core)
 {
-  for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptor_registry.acceptors ())
+  for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
     {
       if (acceptor == nullptr)
         continue;

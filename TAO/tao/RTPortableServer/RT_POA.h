@@ -49,12 +49,12 @@ class TAO_RTPortableServer_Export TAO_RT_POA
 {
 public:
   // RTCORBA specific methods
-  CORBA::Object_ptr create_reference_with_priority (const char * intf,
+  CORBA::Object_ptr create_reference_with_priority (char const *intf,
                                                     RTCORBA::Priority priority) override;
 
 #if !defined (CORBA_E_MICRO)
-  CORBA::Object_ptr create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
-                                                           const char * intf,
+  CORBA::Object_ptr create_reference_with_id_and_priority (PortableServer::ObjectId const &oid,
+                                                           char const *intf,
                                                            RTCORBA::Priority priority) override;
 #endif
 
@@ -62,18 +62,18 @@ public:
                                                             RTCORBA::Priority priority) override;
 
 #if !defined (CORBA_E_MICRO)
-  void activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
+  void activate_object_with_id_and_priority (PortableServer::ObjectId const &oid,
                                              PortableServer::Servant p_servant,
                                              RTCORBA::Priority priority) override;
 #endif
   // End RTCORBA specific methods
 
   // Standard POA interface methods
-  PortableServer::POA_ptr create_POA (const char *adapter_name,
+  PortableServer::POA_ptr create_POA (char const *adapter_name,
                                       PortableServer::POAManager_ptr poa_manager,
-                                      const CORBA::PolicyList &policies) override;
+                                      CORBA::PolicyList const &policies) override;
 
-  PortableServer::POA_ptr find_POA (const char *adapter_name,
+  PortableServer::POA_ptr find_POA (char const *adapter_name,
                                     CORBA::Boolean activate_it) override;
 
   void destroy (CORBA::Boolean etherealize_objects,
@@ -143,17 +143,17 @@ public:
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant) override;
 
 #if !defined (CORBA_E_MICRO)
-  void activate_object_with_id (const PortableServer::ObjectId &id,
+  void activate_object_with_id (PortableServer::ObjectId const &id,
                                 PortableServer::Servant p_servant) override;
 #endif
 
-  void deactivate_object (const PortableServer::ObjectId &oid) override;
+  void deactivate_object (PortableServer::ObjectId const &oid) override;
 
-  CORBA::Object_ptr create_reference (const char *intf) override;
+  CORBA::Object_ptr create_reference (char const *intf) override;
 
 #if !defined (CORBA_E_MICRO)
-  CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
-                                              const char *intf) override;
+  CORBA::Object_ptr create_reference_with_id (PortableServer::ObjectId const &oid,
+                                              char const *intf) override;
 #endif
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant) override;
@@ -164,9 +164,9 @@ public:
 
   PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference) override;
 
-  PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid) override;
+  PortableServer::Servant id_to_servant (PortableServer::ObjectId const &oid) override;
 
-  CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid) override;
+  CORBA::Object_ptr id_to_reference (PortableServer::ObjectId const &oid) override;
 
   CORBA::OctetSeq *id () override;
 
@@ -174,9 +174,9 @@ public:
 
   CORBA::PolicyList *client_exposed_policies (CORBA::Short object_priority) override;
 
-  TAO_RT_POA (const String &name,
+  TAO_RT_POA (String const &name,
               PortableServer::POAManager_ptr poa_manager,
-              const TAO_POA_Policy_Set &policies,
+              TAO_POA_Policy_Set const &policies,
               TAO_Root_POA *parent,
               ACE_Lock &lock,
               TAO_SYNCH_MUTEX &thread_lock,
@@ -189,17 +189,17 @@ public:
 
 protected:
   /// Template method for creating new POA's of this type.
-  TAO_Root_POA *new_POA (const String &name,
+  TAO_Root_POA *new_POA (String const &name,
                          PortableServer::POAManager_ptr poa_manager,
-                         const TAO_POA_Policy_Set &policies,
+                         TAO_POA_Policy_Set const &policies,
                          TAO_Root_POA *parent,
                          ACE_Lock &lock,
                          TAO_SYNCH_MUTEX &thread_lock,
                          TAO_ORB_Core &orb_core,
                          TAO_Object_Adapter *object_adapter) override;
 
-  TAO_Stub *key_to_stub_i (const TAO::ObjectKey &key,
-                           const char *type_id,
+  TAO_Stub *key_to_stub_i (TAO::ObjectKey const &key,
+                           char const *type_id,
                            CORBA::Short priority) override;
 
   void validate_priority (RTCORBA::Priority priority);
@@ -212,8 +212,8 @@ protected:
 
   size_t endpoint_count ();
 
-  TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
-                                const char *type_id,
+  TAO_Stub *create_stub_object (TAO::ObjectKey const &object_key,
+                                char const *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_PriorityBandedConnectionPolicy *priority_bands);

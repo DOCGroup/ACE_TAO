@@ -30,9 +30,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
+TAO_RT_POA::TAO_RT_POA (TAO_Root_POA::String const &name,
                         PortableServer::POAManager_ptr poa_manager,
-                        const TAO_POA_Policy_Set &policies,
+                        TAO_POA_Policy_Set const &policies,
                         TAO_Root_POA *parent,
                         ACE_Lock &lock,
                         TAO_SYNCH_MUTEX &thread_lock,
@@ -52,9 +52,9 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
 }
 
 TAO_Root_POA *
-TAO_RT_POA::new_POA (const String &name,
+TAO_RT_POA::new_POA (String const &name,
                      PortableServer::POAManager_ptr poa_manager,
-                     const TAO_POA_Policy_Set &policies,
+                     TAO_POA_Policy_Set const &policies,
                      TAO_Root_POA *parent,
                      ACE_Lock &lock,
                      TAO_SYNCH_MUTEX &thread_lock,
@@ -206,8 +206,8 @@ TAO_RT_POA::validate_policies ()
 }
 
 TAO_Stub *
-TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
-                           const char *type_id,
+TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
+                           char const *type_id,
                            CORBA::Short priority)
 {
   // Client exposed policies.
@@ -307,8 +307,8 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
 }
 
 TAO_Stub *
-TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
-                                const char *type_id,
+TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
+                                char const *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_PriorityBandedConnectionPolicy *priority_bands)
@@ -455,7 +455,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
       else
         priority = object_priority;
 
-      const CORBA::ULong current_length =
+      CORBA::ULong const current_length =
         client_exposed_policies->length ();
       client_exposed_policies->length (current_length + 1);
 
@@ -475,15 +475,15 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 
 // Standard POA interfaces
 PortableServer::POA_ptr
-TAO_RT_POA::create_POA (const char *adapter_name,
+TAO_RT_POA::create_POA (char const *adapter_name,
                         PortableServer::POAManager_ptr poa_manager,
-                        const CORBA::PolicyList &policies)
+                        CORBA::PolicyList const &policies)
 {
   return this->TAO_Regular_POA::create_POA (adapter_name, poa_manager, policies);
 }
 
 PortableServer::POA_ptr
-TAO_RT_POA::find_POA (const char *adapter_name, CORBA::Boolean activate_it)
+TAO_RT_POA::find_POA (char const *adapter_name, CORBA::Boolean activate_it)
 {
   return this->TAO_Regular_POA::find_POA (adapter_name, activate_it);
 }
@@ -629,7 +629,7 @@ TAO_RT_POA::activate_object (PortableServer::Servant p_servant)
 
 #if !defined (CORBA_E_MICRO)
 void
-TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
+TAO_RT_POA::activate_object_with_id (PortableServer::ObjectId const &id,
                                      PortableServer::Servant p_servant)
 {
   this->TAO_Regular_POA::activate_object_with_id (id, p_servant);
@@ -637,21 +637,21 @@ TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 #endif
 
 void
-TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid)
+TAO_RT_POA::deactivate_object (PortableServer::ObjectId const &oid)
 {
   this->TAO_Regular_POA::deactivate_object (oid);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::create_reference (const char *intf)
+TAO_RT_POA::create_reference (char const *intf)
 {
   return this->TAO_Regular_POA::create_reference (intf);
 }
 
 #if !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
-TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
-                                      const char *intf)
+TAO_RT_POA::create_reference_with_id (PortableServer::ObjectId const &oid,
+                                      char const *intf)
 {
   return this->TAO_Regular_POA::create_reference_with_id (oid, intf);
 }
@@ -682,13 +682,13 @@ TAO_RT_POA::reference_to_id (CORBA::Object_ptr reference)
 }
 
 PortableServer::Servant
-TAO_RT_POA::id_to_servant (const PortableServer::ObjectId &oid)
+TAO_RT_POA::id_to_servant (PortableServer::ObjectId const &oid)
 {
   return this->TAO_Regular_POA::id_to_servant (oid);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::id_to_reference (const PortableServer::ObjectId &oid)
+TAO_RT_POA::id_to_reference (PortableServer::ObjectId const &oid)
 {
   return this->TAO_Regular_POA::id_to_reference (oid);
 }

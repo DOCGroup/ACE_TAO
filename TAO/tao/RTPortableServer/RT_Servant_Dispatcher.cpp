@@ -101,7 +101,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             {
               // Extract the target priority
               TAO_InputCDR cdr (reinterpret_cast
-                                <const char*>
+                                <char const *>
                                  (context->context_data.get_buffer ()),
                                 context->context_data.length ());
               CORBA::Boolean byte_order;
@@ -342,7 +342,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
                                                 CORBA::COMPLETED_NO);
             }
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           // Eat up the exception.
           ex._tao_print_exception (
@@ -354,9 +354,9 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
 }
 
 TAO_Root_POA *
-TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
+TAO_RT_Servant_Dispatcher::create_Root_POA (ACE_CString const &name,
                                             PortableServer::POAManager_ptr poa_manager,
-                                            const TAO_POA_Policy_Set &policies,
+                                            TAO_POA_Policy_Set const &policies,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,

@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Object_ptr
-TAO_RT_POA::create_reference_with_priority (const char * intf,
+TAO_RT_POA::create_reference_with_priority (char const *intf,
                                             RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
@@ -22,8 +22,8 @@ TAO_RT_POA::create_reference_with_priority (const char * intf,
 
 #if !defined (CORBA_E_MICRO)
 ACE_INLINE CORBA::Object_ptr
-TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
-                                                   const char * intf,
+TAO_RT_POA::create_reference_with_id_and_priority (PortableServer::ObjectId const &oid,
+                                                   char const *intf,
                                                    RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
@@ -69,7 +69,7 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
 
 #if !defined (CORBA_E_MICRO)
 ACE_INLINE void
-TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
+TAO_RT_POA::activate_object_with_id_and_priority (PortableServer::ObjectId const &oid,
                                                   PortableServer::Servant servant,
                                                   RTCORBA::Priority priority)
 {
