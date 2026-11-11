@@ -50,6 +50,11 @@ public:
   TAO_TypeCodeFactory_i () = default;
   ~TAO_TypeCodeFactory_i () override = default;
 
+  TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i const &) = delete;
+  TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i const &) = delete;
+  TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i &&) = delete;
+  TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i &&) = delete;
+
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);
 
@@ -216,10 +221,6 @@ private:
   CORBA::TypeCode_ptr make_recursive_tc (CORBA::TCKind kind,
                                          char const * id);
 
-  TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i const &src) = delete;
-  TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i const &src) = delete;
-  TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i &&) = delete;
-  TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
