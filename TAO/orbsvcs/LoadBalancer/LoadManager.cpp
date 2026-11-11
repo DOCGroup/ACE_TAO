@@ -8,13 +8,11 @@
 
 #include "tao/IORTable/IORTable.h"
 
+#include <memory>
+
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"
 #endif /* ACE_LINUX && ACE_HAS_THREADS */
-
-static ACE_TCHAR const *lm_ior_file = ACE_TEXT("lm.ior");
-static int ping_timeout_milliseconds = 2000;
-static int ping_interval_seconds = 0;
 
 enum class Default_Strategy
 {
@@ -22,6 +20,16 @@ enum class Default_Strategy
   random,
   least_loaded
 };
+
+struct LoadManager_Options
+{
+  ACE_TCHAR const *ior_file {ACE_TEXT ("lm.ior")};
+  int ping_timeout_milliseconds {2000};
+  int ping_interval_seconds {};
+  Default_Strategy default_strategy {Default_Strategy::random};
+};
+
+static LoadManager_Options options;
 
 void
 usage (ACE_TCHAR const * cmd)
@@ -43,39 +51,39 @@ usage (ACE_TCHAR const * cmd)
 void
 parse_args (int argc,
             ACE_TCHAR *argv[],
-            Default_Strategy & default_strategy)
+            LoadManager_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:i:t:h"));
 
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
         case 'o':
-          ::lm_ior_file = get_opts.opt_arg ();
+          options.ior_file = get_opts.opt_arg ();
           break;
 
         case 's':
           if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                   ACE_TEXT("RoundRobin")) == 0)
-            default_strategy = Default_Strategy::round_robin;
+            options.default_strategy = Default_Strategy::round_robin;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("Random")) == 0)
-            default_strategy = Default_Strategy::random;
+            options.default_strategy = Default_Strategy::random;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("LeastLoaded")) == 0)
-            default_strategy = Default_Strategy::least_loaded;
+            options.default_strategy = Default_Strategy::least_loaded;
           else
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
           break;
         case 'i':
-          ::ping_interval_seconds = ACE_OS::atoi (get_opts.opt_arg ());
+          options.ping_interval_seconds = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case 't':
-          ::ping_timeout_milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
+          options.ping_timeout_milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
           break;
 
         case 'h':
@@ -127,38 +135,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // The usual server side boilerplate code.
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      // Select the default built-in strategy.
-      Default_Strategy default_strategy = Default_Strategy::random;
-
       // Check the non-ORB arguments.
       ::parse_args (argc,
                     argv,
-                    default_strategy);
+                    ::options);
 
       TAO_LB_LoadManager * lm {};
       ACE_NEW_THROW_EX (lm,
-        TAO_LB_LoadManager(::ping_timeout_milliseconds,
-                           ::ping_interval_seconds),
+        TAO_LB_LoadManager (::options.ping_timeout_milliseconds,
+                            ::options.ping_interval_seconds),
                           CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      PortableServer::ServantBase_var safe_lm = lm;
+      PortableServer::ServantBase_var const safe_lm = lm;
 
       // Initialize the LoadManager servant.
       lm->initialize (orb->orb_core ()->reactor (),
@@ -173,7 +178,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosLoadBalancing::StrategyInfo strategy_info;
 
-      switch (default_strategy)
+      switch (::options.default_strategy)
         {
         case Default_Strategy::round_robin:
           strategy_info.name = CORBA::string_dup ("RoundRobin");
@@ -195,24 +200,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       lm->set_default_properties (props);
 
-      CosLoadBalancing::LoadManager_var load_manager =
+      CosLoadBalancing::LoadManager_var const load_manager =
         lm->_this ();
 
-      CORBA::String_var str =
+      CORBA::String_var const str =
         orb->object_to_string (load_manager.in ());
 
       // to support corbaloc
       // Get a reference to the IOR table.
-      CORBA::Object_var tobj = orb->resolve_initial_references ("IORTable");
+      CORBA::Object_var const tobj = orb->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var table = IORTable::Table::_narrow (tobj.in ());
+      IORTable::Table_var const table = IORTable::Table::_narrow (tobj.in ());
 
       // bind your stringified IOR in the IOR table
       table->bind ("LoadManager", str.in ());
 
-      FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
-      ACE_OS::fprintf (lm_ior, "%s", str.in ());
-      ACE_OS::fclose (lm_ior);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const lm_ior (
+          ACE_OS::fopen (::options.ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!lm_ior)
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to open IOR output file: %s\n"),
+                                 ::options.ior_file),
+                                -1);
+        ACE_OS::fprintf (lm_ior.get (), "%s", str.in ());
+      }
 
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_manager,

@@ -45,12 +45,12 @@ public:
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *arg) override;
 
-private:
   TAO_LB_Push_Handler (TAO_LB_Push_Handler const &) = delete;
   TAO_LB_Push_Handler (TAO_LB_Push_Handler &&) = delete;
-  TAO_LB_Push_Handler & operator= (TAO_LB_Push_Handler const &) = delete;
-  TAO_LB_Push_Handler & operator= (TAO_LB_Push_Handler &&) = delete;
+  TAO_LB_Push_Handler &operator= (TAO_LB_Push_Handler const &) = delete;
+  TAO_LB_Push_Handler &operator= (TAO_LB_Push_Handler &&) = delete;
 
+private:
   /// Reference to the LoadMonitor.
   CosLoadBalancing::LoadMonitor_var monitor_;
 

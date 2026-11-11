@@ -55,31 +55,31 @@ public:
    * spawning the synchronous signal handler.
    */
   int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
-                        int n_threads = 1,
-                        int force_active = 0,
-                        long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                        int grp_id = -1,
-                        ACE_Task_Base *task = nullptr,
-                        ACE_hthread_t thread_handles[] = nullptr,
-                        void *stack[] = nullptr,
-                        size_t stack_size[] = nullptr,
-                        ACE_thread_t thread_ids[] = nullptr,
-                        char const *thr_name[] = nullptr) override;
+                int n_threads = 1,
+                int force_active = 0,
+                long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                int grp_id = -1,
+                ACE_Task_Base *task = nullptr,
+                ACE_hthread_t thread_handles[] = nullptr,
+                void *stack[] = nullptr,
+                size_t stack_size[] = nullptr,
+                ACE_thread_t thread_ids[] = nullptr,
+                char const *thr_name[] = nullptr) override;
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
+
+  TAO_LB_Signal_Handler (TAO_LB_Signal_Handler const &) = delete;
+  TAO_LB_Signal_Handler (TAO_LB_Signal_Handler &&) = delete;
+  TAO_LB_Signal_Handler &operator= (TAO_LB_Signal_Handler const &) = delete;
+  TAO_LB_Signal_Handler &operator= (TAO_LB_Signal_Handler &&) = delete;
 
 protected:
   /// Template method that initiates the cleanup process.
   virtual int perform_cleanup (int signum);
 
 private:
-  TAO_LB_Signal_Handler (TAO_LB_Signal_Handler const &) = delete;
-  TAO_LB_Signal_Handler (TAO_LB_Signal_Handler &&) = delete;
-  TAO_LB_Signal_Handler & operator= (TAO_LB_Signal_Handler const &) = delete;
-  TAO_LB_Signal_Handler & operator= (TAO_LB_Signal_Handler &&) = delete;
-
 #ifdef ACE_HAS_THREADS
   /// Block all signals before spawning the threads.  Then, unblock
   /// these signals when this handler is destroyed.
