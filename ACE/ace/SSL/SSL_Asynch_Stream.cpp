@@ -93,29 +93,12 @@ ACE_SSL_Asynch_Result::complete (size_t /* bytes_transferred */,
 ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
   ACE_SSL_Context * context)
-  : type_         (s_type),
-    proactor_     (nullptr),
-    ext_handler_  (nullptr),
-    ext_read_result_ (nullptr),
-    ext_write_result_(nullptr),
-    flags_        (0),
-    ssl_          (nullptr),
-    handshake_complete_(false),
-    bio_          (nullptr),
-    bio_istream_  (),
-    bio_inp_msg_  (),
-    bio_inp_errno_(0),
-    bio_inp_flag_ (0),
-    bio_ostream_  (),
-    bio_out_msg_  (),
-    bio_out_errno_(0),
-    bio_out_flag_ (0),
-    mutex_ ()
+  : type_ (s_type)
 {
   ACE_TRACE ("ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream");
   // was honestly copied from ACE_SSL_SOCK_Stream :)
 
-  ACE_SSL_Context * ctx =
+  ACE_SSL_Context * const ctx =
     (context == nullptr ? ACE_SSL_Context::instance () : context);
 
   this->ssl_ = ::SSL_new (ctx->context ());
