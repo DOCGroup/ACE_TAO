@@ -93,6 +93,9 @@ namespace XSCRT
       return *this;
     }
 
+    Type (Type &&) = delete;
+    Type &operator= (Type &&) = delete;
+
   public:
     Type const *container () const
     {
@@ -136,7 +139,7 @@ namespace XSCRT
 
       // container_ is borrowed; it points to an ancestor in the parsed graph.
       // Revoke registrations from our old container.
-      if (container_ != nullptr && map_.get ())
+      if (container_ != nullptr && map_)
       {
         for (Map_::value_type const &entry : *map_)
         {
@@ -202,7 +205,7 @@ namespace XSCRT
 
     void unregister_id (IdentityProvider const &id)
     {
-      if (map_.get ())
+      if (map_)
       {
         Map_::iterator const it (map_->find (std::addressof (id)));
 
@@ -222,7 +225,7 @@ namespace XSCRT
 
     Type *lookup_id (IdentityProvider const &id) const
     {
-      if (map_.get ())
+      if (map_)
       {
         Map_::const_iterator const it (map_->find (std::addressof (id)));
 
@@ -326,7 +329,7 @@ namespace XSCRT
     {
     }
 
-    FundamentalType (X const &x)
+    explicit FundamentalType (X const &x)
       : x_ (x)
     {
     }

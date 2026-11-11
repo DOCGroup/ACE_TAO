@@ -4,6 +4,7 @@
 #define XSCRT_TRAVERSAL_HPP
 
 #include <cstddef>
+#include <cstdlib>
 #include <map>
 #include <memory>
 #include <set>
@@ -44,6 +45,7 @@ namespace XSCRT
       }
 
     public:
+      // Registered traversers are borrowed and must outlive their dispatcher.
       using Traversers = std::vector<TraverserBase<B> *>;
       using TraversalMap = std::map<TypeId, Traversers>;
       using Iterator = typename TraversalMap::const_iterator;
@@ -153,6 +155,12 @@ namespace XSCRT
     {
       using Type = T;
 
+      // The dispatcher stores this object's address.
+      Traverser (Traverser const &) = delete;
+      Traverser (Traverser &&) = delete;
+      Traverser &operator= (Traverser const &) = delete;
+      Traverser &operator= (Traverser &&) = delete;
+
       Traverser ()
       {
         DispatcherBase<B>::map (TypeId (typeid (Type)), *this);
@@ -160,12 +168,12 @@ namespace XSCRT
 
       virtual void traverse (Type &)
       {
-        abort ();
+        std::abort ();
       }
 
       virtual void traverse (Type const &)
       {
-        abort ();
+        std::abort ();
       }
 
     protected:

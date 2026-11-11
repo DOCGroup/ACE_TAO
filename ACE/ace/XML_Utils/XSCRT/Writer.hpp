@@ -3,8 +3,8 @@
 #ifndef XSCRT_WRITER_HPP
 #define XSCRT_WRITER_HPP
 
+#include <cstdlib>
 #include <stack>
-#include <string>
 
 #include "ace/XML_Utils/XSCRT/XML.hpp"
 
@@ -23,7 +23,7 @@ namespace XSCRT
     // This c-tor should never be called.
     Writer ()
     {
-      abort ();
+      std::abort ();
     }
 
   public:
@@ -56,6 +56,7 @@ namespace XSCRT
   private:
     std::stack<XML::Element<C>> stack_;
 
+    // The active attribute is borrowed from the caller.
     XML::Attribute<C> *attr__{};
 
   private:

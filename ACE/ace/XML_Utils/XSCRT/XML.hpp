@@ -390,6 +390,7 @@ namespace XSCRT
 
     private:
       xercesc::DOMElement *e_{};
+      // The DOM element is owned by its document.
       xercesc::DOMElement const *ce_{};
 
       string_ name_;
@@ -485,6 +486,7 @@ namespace XSCRT
 
     private:
       xercesc::DOMAttr *a_{};
+      // The DOM attribute is owned by its document.
       xercesc::DOMAttr const *ca_{};
 
       string_ name_;
