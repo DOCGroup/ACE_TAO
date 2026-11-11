@@ -34,6 +34,7 @@ TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   TAO_BiDIR_Service_Context_Handler* h {};
   ACE_NEW (h,
            TAO_BiDIR_Service_Context_Handler());
+  // The service-context registry takes ownership of the handler.
   tao_info->orb_core ()->service_context_registry ().bind (IOP::BI_DIR_IIOP, h);
 }
 

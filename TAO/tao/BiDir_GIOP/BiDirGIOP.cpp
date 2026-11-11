@@ -17,7 +17,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 
   this->initialized_ = true;
 
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+  ACE_Service_Gestalt * const gestalt = ACE_Service_Config::current ();
 
   ACE_Service_Object * const bidir_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
@@ -89,6 +89,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   // is out of the critical invocation processing path, I plan to keep
   // the design simple and not try to avoid an inefficiency of such
   // small proportions.
+  // add_validator takes ownership of the validator.
   val.add_validator (validator);
 }
 
