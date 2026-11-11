@@ -69,7 +69,7 @@ public:
   {
     ACE_GUARD (ACE_Thread_Mutex, leader_mon, this->leader_lock_);
     this->shutdown_.store (true);
-    leader_active (0);
+    leader_active (ACE_thread_t {});
 
     ACE_GUARD (ACE_Thread_Mutex, follower_mon, this->followers_lock_);
     while (!this->followers_.is_empty ())
@@ -98,7 +98,7 @@ private:
   bool leader_active () const
   {
     ACE_TRACE ("LF_ThreadPool::leader_active");
-    return this->current_leader_ != 0;
+    return this->current_leader_ != ACE_thread_t {};
   }
 
   void leader_active (ACE_thread_t const leader)
@@ -224,7 +224,7 @@ LF_ThreadPool::elect_new_leader ()
 
   ACE_GUARD_RETURN
     (ACE_Thread_Mutex, leader_mon, this->leader_lock_, -1);
-  leader_active (0);
+  leader_active (ACE_thread_t {});
 
   // Wake up a follower
   if (!followers_.is_empty ())

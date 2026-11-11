@@ -104,14 +104,14 @@ public:
 
   virtual ~IManager () = default;
 
-  virtual int return_to_work (Worker *worker) = 0;
+  virtual int return_to_work (Worker &worker) = 0;
 };
 
 // Listing 3 code/ch16
 class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  explicit Worker (IManager *manager)
+  explicit Worker (IManager &manager)
     : manager_ (manager), queue_ (msg_queue ())
   { }
   Worker (Worker const &) = delete;
@@ -141,7 +141,7 @@ public:
           break;
 
         // Return to work.
-        this->manager_->return_to_work (this);
+        this->manager_.return_to_work (*this);
       }
 
     return 0;
@@ -150,7 +150,7 @@ public:
   ACE_thread_t thread_id () const;
 
 private:
-  IManager *const manager_; // Borrowed; Manager owns the pool and outlives its workers.
+  IManager &manager_; // Manager owns the pool and outlives its workers.
   ACE_thread_t thread_id_ {};
   ACE_Activation_Queue queue_;
 };
@@ -219,13 +219,13 @@ public:
 
   int shut_down ();
 
-  int return_to_work (Worker *worker) override
+  int return_to_work (Worker &worker) override
   {
     ACE_GUARD_RETURN
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, -1);
     ACE_DEBUG
       ((LM_DEBUG, ACE_TEXT ("(%t) Worker returning to work.\n")));
-    this->workers_.enqueue_tail (worker);
+    this->workers_.enqueue_tail (&worker);
     this->workers_cond_.signal ();
 
     return 0;
@@ -252,7 +252,7 @@ private:
     for (int i = 0; i < POOL_SIZE; ++i)
       {
         Worker *worker_raw {};
-        ACE_NEW_RETURN (worker_raw, Worker (this), -1);
+        ACE_NEW_RETURN (worker_raw, Worker (*this), -1);
         std::unique_ptr<Worker> worker {worker_raw};
         if (this->workers_.enqueue_tail (worker.get ()) == -1)
           return -1;
@@ -268,9 +268,9 @@ private:
     return shutdown_;
   }
 
-  ACE_thread_t thread_id (Worker *worker)
+  ACE_thread_t thread_id (Worker &worker)
   {
-    return worker->thread_id ();
+    return worker.thread_id ();
   }
 
 private:
@@ -293,7 +293,7 @@ Manager::shut_down ()
       iter.next (worker_ptr);
       Worker *const worker = *worker_ptr;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Attempting shutdown of %d\n"),
-                  thread_id (worker)));
+                  thread_id (*worker)));
 
       Exit *req {};
       ACE_NEW_RETURN (req, Exit (), -1);
@@ -307,7 +307,7 @@ Manager::shut_down ()
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Worker %d shut down.\n"),
-                  thread_id (worker)));
+                  thread_id (*worker)));
       std::unique_ptr<Worker> worker_owner {worker};
 
     }
