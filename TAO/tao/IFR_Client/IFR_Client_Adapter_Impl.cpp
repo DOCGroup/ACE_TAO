@@ -40,7 +40,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
     char const *repo_id)
 {
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     orb->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (obj.in ()))
@@ -48,16 +48,15 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::Repository_var repo =
-    CORBA::Repository::_narrow (obj.in ()
-                               );
+  CORBA::Repository_var const repo =
+    CORBA::Repository::_narrow (obj.in ());
 
   if (CORBA::is_nil (repo.in ()))
     {
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::Contained_var result = repo->lookup_id (repo_id);
+  CORBA::Contained_var const result = repo->lookup_id (repo_id);
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -112,9 +111,9 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 
   // Get the parameters (if any) from the OperationDef, and for each
   // parameter add a corresponding entry to the result.
-  CORBA::ParDescriptionSeq_var params = opDef->params ();
+  CORBA::ParDescriptionSeq_var const params = opDef->params ();
 
-  CORBA::ULong paramCount = params->length ();
+  CORBA::ULong const paramCount = params->length ();
 
   for (CORBA::ULong i {}; i < paramCount; ++i)
     {
@@ -126,7 +125,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 
       // Convert the parameter mode to an arg mode
       CORBA::Flags flags {};
-      switch(params[i].mode)
+      switch (params[i].mode)
         {
         case CORBA::PARAM_IN:
           flags = CORBA::ARG_IN;
@@ -139,12 +138,12 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
           break;
         default:
           // Shouldn't happen
-          throw ::CORBA::INTERNAL();
+          throw ::CORBA::INTERNAL ();
         }
 
       // Add an argument to the NVList.
       result->add_value (params[i].name.in (), value, flags);
-   }
+    }
 }
 
 #endif /*TAO_HAS_MINIMUM_CORBA*/
