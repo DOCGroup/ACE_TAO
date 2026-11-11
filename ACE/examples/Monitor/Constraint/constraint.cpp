@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <memory>
 
 #include "ace/OS_NS_unistd.h"
@@ -13,8 +14,7 @@ struct Control_Action_Releaser
 {
   void operator() (Control_Action *action) const
   {
-    if (action != nullptr)
-      action->remove_ref ();
+    action->remove_ref ();
   }
 };
 
@@ -71,6 +71,8 @@ public:
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
     Monitor_Base_Unique_Ptr const bytes_monitor (
@@ -80,7 +82,7 @@ public:
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i {}; i < 10; ++i)
+        for (std::size_t i {}; i < 10; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -100,22 +102,28 @@ int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */[])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-
   /// Set the timer for # of threads check at 2 sec.
+  MC_ADMINMANAGER * const mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+
   Monitor_Base_Unique_Ptr const bytes_monitor (
     create_os_monitor<BYTES_RECEIVED_MONITOR> (nullptr, ACE_Time_Value (2)));
+  if (bytes_monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create bytes-received monitor\n"), 1);
 
   /// Add two constraints, each with its own triggered action.
 
   Control_Action_Reference const trigger8k (new Trigger8k);
   long const id8 = bytes_monitor->add_constraint ("value > 8192", trigger8k.get ());
 
-  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %d\n", id8));
+  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %q\n", static_cast<ACE_INT64> (id8)));
 
   Control_Action_Reference const trigger16k (new Trigger16k);
   long const id16 = bytes_monitor->add_constraint ("value > 16384", trigger16k.get ());
 
-  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %d\n", id16));
+  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %q\n", static_cast<ACE_INT64> (id16)));
 
   /// Create a query and register it to be called periodically.
   Monitor_Query query ("OS/Network/BytesReceived");
@@ -132,8 +140,13 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */[])
   /// Run the monitor checker in a separate thread. This class will
   /// fetch the monitor's value directly, and its output will be
   /// separate from the output from triggered actions.
-  Monitor_Checker monitor_checker;
-  monitor_checker.activate ();
+  Monitor_Checker monitor_checker {};
+  if (monitor_checker.activate () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start monitor checker\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
   ACE_OS::sleep (20);
 
