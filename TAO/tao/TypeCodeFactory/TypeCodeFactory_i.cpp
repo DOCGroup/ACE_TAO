@@ -103,9 +103,9 @@ TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_struct_tc (
-    const char *id,
-    const char *name,
-    const CORBA::StructMemberSeq &members)
+    char const *id,
+    char const *name,
+    CORBA::StructMemberSeq const &members)
 {
   return this->struct_except_tc_common (id,
                                         name,
@@ -115,10 +115,10 @@ TAO_TypeCodeFactory_i::create_struct_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_union_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA::UnionMemberSeq &members)
+    CORBA::UnionMemberSeq const &members)
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
@@ -587,9 +587,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_enum_tc (
-    const char *id,
-    const char *name,
-    const CORBA::EnumMemberSeq &members)
+    char const *id,
+    char const *name,
+    CORBA::EnumMemberSeq const &members)
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
@@ -640,8 +640,8 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_alias_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr original_type)
 {
   return this->alias_value_box_tc_common (id,
@@ -652,9 +652,9 @@ TAO_TypeCodeFactory_i::create_alias_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_exception_tc (
-    const char *id,
-    const char *name,
-    const CORBA::StructMemberSeq &members)
+    char const *id,
+    char const *name,
+    CORBA::StructMemberSeq const &members)
 {
   return this->struct_except_tc_common (id,
                                         name,
@@ -664,8 +664,8 @@ TAO_TypeCodeFactory_i::create_exception_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_interface_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -720,11 +720,11 @@ TAO_TypeCodeFactory_i::create_array_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_value_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members
+    CORBA::ValueMemberSeq const &members
   )
 {
   return this->value_event_tc_common (id,
@@ -737,8 +737,8 @@ TAO_TypeCodeFactory_i::create_value_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_value_box_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr boxed_type
   )
 {
@@ -750,8 +750,8 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_native_tc (
-    const char *id,
-    const char *name
+    char const *id,
+    char const *name
   )
 {
   return this->create_tc_common (id,
@@ -760,7 +760,7 @@ TAO_TypeCodeFactory_i::create_native_tc (
 }
 
 CORBA::TypeCode_ptr
-TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
+TAO_TypeCodeFactory_i::create_recursive_tc (char const *id)
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
@@ -778,8 +778,8 @@ TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_abstract_interface_tc (
-    const char *id,
-    const char *name
+    char const *id,
+    char const *name
   )
 {
   return this->create_tc_common (id,
@@ -789,8 +789,8 @@ TAO_TypeCodeFactory_i::create_abstract_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_local_interface_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -799,8 +799,8 @@ TAO_TypeCodeFactory_i::create_local_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_component_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -808,7 +808,7 @@ TAO_TypeCodeFactory_i::create_component_tc (
 }
 
 CORBA::TypeCode_ptr
-TAO_TypeCodeFactory_i::create_home_tc (const char *id, const char *name)
+TAO_TypeCodeFactory_i::create_home_tc (char const *id, char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -817,11 +817,11 @@ TAO_TypeCodeFactory_i::create_home_tc (const char *id, const char *name)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_event_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members)
+    CORBA::ValueMemberSeq const &members)
 {
   return this->value_event_tc_common (id,
                                       name,
@@ -837,7 +837,7 @@ void
 TAO_TypeCodeFactory_i::compute_default_label (
   CORBA::TCKind kind,
   CORBA::ULong skip_slot,
-  const CORBA::UnionMemberSeq &members,
+  CORBA::UnionMemberSeq const &members,
   TAO::TypeCode::Case_Dynamic *& the_case)
 {
   // One to hold the current default value, one to
@@ -1079,8 +1079,8 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_tc_common (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TCKind kind
 
   )
@@ -1154,9 +1154,9 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::struct_except_tc_common (
-    const char *id,
-    const char *name,
-    const CORBA::StructMemberSeq & members,
+    char const *id,
+    char const *name,
+    CORBA::StructMemberSeq const & members,
     CORBA::TCKind kind
 
   )
@@ -1265,8 +1265,8 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::alias_value_box_tc_common (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr underlying_type,
     CORBA::TCKind kind
   )
@@ -1306,11 +1306,11 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::value_event_tc_common (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members,
+    CORBA::ValueMemberSeq const &members,
     CORBA::TCKind kind
 
   )
@@ -1353,7 +1353,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
             CORBA::COMPLETED_NO);
         }
 
-      const char * const member_name = members[index].name;
+      char const * const member_name = members[index].name;
 
       if (member_name == nullptr || !this->valid_name (member_name))
         {
@@ -1429,7 +1429,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::valid_name (const char *name)
+TAO_TypeCodeFactory_i::valid_name (char const *name)
 {
   // Empty string is valid for name.
   if (*name == '\0')
@@ -1442,7 +1442,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
       return false;
     }
 
-  const char *tmp = name + 1;
+  char const *tmp = name + 1;
 
   for (; *tmp; ++tmp)
     {
@@ -1460,7 +1460,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::valid_id (const char *id)
+TAO_TypeCodeFactory_i::valid_id (char const *id)
 {
   ACE_CString safety (id,
                       0,
@@ -1506,7 +1506,7 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc)
 
 CORBA::Boolean
 TAO_TypeCodeFactory_i::unique_label_values (
-  const CORBA::UnionMemberSeq &members,
+  CORBA::UnionMemberSeq const &members,
   CORBA::TypeCode_ptr disc_tc,
   CORBA::ULong default_index_slot)
 {

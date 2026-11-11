@@ -44,34 +44,34 @@ public:
   ~TAO_TypeCodeFactory_Adapter_Impl () override = default;
 
   CORBA::TypeCode_ptr create_struct_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_union_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members) override;
+      CORBA::UnionMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_enum_tc (
-      const char *id,
-      const char *name,
-      const CORBA::EnumMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::EnumMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_alias_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr original_type) override;
 
   CORBA::TypeCode_ptr create_exception_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound) override;
@@ -92,46 +92,46 @@ public:
       CORBA::TypeCode_ptr element_type) override;
 
   CORBA::TypeCode_ptr create_value_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) override;
+      CORBA::ValueMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_value_box_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr boxed_type) override;
 
   CORBA::TypeCode_ptr create_native_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id) override;
+      char const *id) override;
 
   CORBA::TypeCode_ptr create_abstract_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_local_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_component_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_home_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_event_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) override;
+      CORBA::ValueMemberSeq const &members) override;
 
   /**
    * @name TAO-specific TypeCode factory methods.

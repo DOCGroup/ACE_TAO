@@ -54,34 +54,34 @@ public:
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);
 
   CORBA::TypeCode_ptr create_struct_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_union_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members) override;
+      CORBA::UnionMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_enum_tc (
-      const char *id,
-      const char *name,
-      const CORBA::EnumMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::EnumMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_alias_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr original_type) override;
 
   CORBA::TypeCode_ptr create_exception_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound) override;
@@ -102,58 +102,58 @@ public:
       CORBA::TypeCode_ptr element_type) override;
 
   CORBA::TypeCode_ptr create_value_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) override;
+      CORBA::ValueMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_value_box_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr boxed_type) override;
 
   CORBA::TypeCode_ptr create_native_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id) override;
+      char const *id) override;
 
   CORBA::TypeCode_ptr create_abstract_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_local_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_component_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_home_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_event_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) override;
+      CORBA::ValueMemberSeq const &members) override;
 
 private:
   /// Finds a legal default label value.
   void compute_default_label (CORBA::TCKind kind,
                               CORBA::ULong skip_slot,
-                              const CORBA::UnionMemberSeq &members,
+                              CORBA::UnionMemberSeq const &members,
                               TAO::TypeCode::Case_Dynamic *& the_case);
 
   /// Called for all types that take just an id and a name.
   CORBA::TypeCode_ptr create_tc_common (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TCKind kind);
 
   /// Code for strings and wstrings is identical except for TCKind.
@@ -169,32 +169,32 @@ private:
 
   /// Code for structs and unions is identical except for TCKind.
   CORBA::TypeCode_ptr struct_except_tc_common (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members,
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members,
       CORBA::TCKind kind);
 
   /// Code for aliases and boxed valuetypes is identical except for TCKind.
   CORBA::TypeCode_ptr alias_value_box_tc_common (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr underlying_type,
       CORBA::TCKind kind);
 
   CORBA::TypeCode_ptr value_event_tc_common (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members,
+      CORBA::ValueMemberSeq const &members,
       CORBA::TCKind kind);
 
   /// If any of these fail, we raise a spec-defined minor code
   /// of BAD_PARAM or BAD_TYPECODE.
-  CORBA::Boolean valid_name (const char *name);
-  CORBA::Boolean valid_id (const char *id);
+  CORBA::Boolean valid_name (char const *name);
+  CORBA::Boolean valid_id (char const *id);
   CORBA::Boolean valid_content_type (CORBA::TypeCode_ptr tc);
-  CORBA::Boolean unique_label_values (const CORBA::UnionMemberSeq &members,
+  CORBA::Boolean unique_label_values (CORBA::UnionMemberSeq const &members,
                                       CORBA::TypeCode_ptr disc_tc,
                                       CORBA::ULong default_index_slot);
   CORBA::Boolean valid_disc_type (CORBA::TypeCode_ptr tc);
