@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
+#include <string>
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -15,34 +16,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Copy command line parameter.
-      ACE_Argv_Type_Converter command_line(argc, argv);
+      ACE_Argv_Type_Converter command_line (argc, argv);
 
       // Initialize ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, "internet");
 
-      CORBA::Object_var naming_obj =
+      CORBA::Object_var const naming_obj =
         orb->resolve_initial_references ("NameService");
 
-      if (CORBA::is_nil(naming_obj.in ()))
+      if (CORBA::is_nil (naming_obj.in ()))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to find the Naming Service\n"),
                           1);
 
-      CosNaming::NamingContext_var naming_context =
+      CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      char const *name = "ScheduleService";
-      if (command_line.get_argc() > 1)
-        {
-          name = command_line.get_ASCII_argv()[1];
-        }
-      ACE_Scheduler_Factory::use_config (naming_context.in (), name);
+      std::string const name = command_line.get_argc () > 1
+        ? command_line.get_ASCII_argv ()[1]
+        : "ScheduleService";
+      ACE_Scheduler_Factory::use_config (naming_context.in (), name.c_str ());
 
-      RtecScheduler::RT_Info_Set_var infos;
-      RtecScheduler::Dependency_Set_var deps;
-      RtecScheduler::Config_Info_Set_var configs;
-      RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
+      RtecScheduler::RT_Info_Set_var infos {};
+      RtecScheduler::Dependency_Set_var deps {};
+      RtecScheduler::Config_Info_Set_var configs {};
+      RtecScheduler::Scheduling_Anomaly_Set_var anomalies {};
 
       ACE_Scheduler_Factory::server ()->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
