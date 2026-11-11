@@ -19,26 +19,26 @@ TAO_DiffServ_Network_Priority_Hook::update_network_priority (
 {
   for (CORBA::ULong i {}; i < policy_set.num_policies (); ++i)
     {
-      CORBA::Policy_var policy = policy_set.get_policy_by_index (i);
+      CORBA::Policy_var const policy = policy_set.get_policy_by_index (i);
 
       if (policy->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
         {
-          ::TAO::NetworkPriorityPolicy_var npp =
+          ::TAO::NetworkPriorityPolicy_var const npp =
             ::TAO::NetworkPriorityPolicy::_narrow (policy.in ());
 
           if (!CORBA::is_nil (npp.in ()))
             {
-              TAO::NetworkPriorityModel network_priority_model =
+              TAO::NetworkPriorityModel const network_priority_model =
                 npp->network_priority_model ();
 
               poa.cached_policies ().network_priority_model (
                 TAO::Portable_Server::Cached_Policies::NetworkPriorityModel (
                   network_priority_model));
 
-              TAO::DiffservCodepoint request_diffserv_codepoint  =
+              TAO::DiffservCodepoint const request_diffserv_codepoint =
                 npp->request_diffserv_codepoint ();
 
-              TAO::DiffservCodepoint reply_diffserv_codepoint  =
+              TAO::DiffservCodepoint const reply_diffserv_codepoint =
                 npp->reply_diffserv_codepoint ();
 
               poa.cached_policies ().request_diffserv_codepoint (
@@ -58,10 +58,10 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
 
-  TAO_Network_Priority_Protocols_Hooks *nph =
+  TAO_Network_Priority_Protocols_Hooks * const nph =
    poa.orb_core ().get_network_priority_protocols_hooks ();
 
-  TAO::Portable_Server::Cached_Policies::NetworkPriorityModel npm =
+  TAO::Portable_Server::Cached_Policies::NetworkPriorityModel const npm =
     poa.cached_policies ().network_priority_model ();
 
   if (npm == TAO::Portable_Server::Cached_Policies::
@@ -78,7 +78,7 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
       dscp_codepoint = poa.cached_policies ().reply_diffserv_codepoint ();
     }
 
-  TAO_Connection_Handler *connection_handler =
+  TAO_Connection_Handler * const connection_handler =
     req.transport ()->connection_handler ();
   connection_handler->set_dscp_codepoint (dscp_codepoint);
 }

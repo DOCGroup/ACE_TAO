@@ -31,10 +31,10 @@ TAO_DiffServ_Service_Context_Handler::generate_service_context (
 {
   if (stub != nullptr)
     {
-      CORBA::Policy_var cnpp =
+      CORBA::Policy_var const cnpp =
         stub->get_cached_policy (TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY);
 
-      TAO::NetworkPriorityPolicy_var cnp =
+      TAO::NetworkPriorityPolicy_var const cnp =
          TAO::NetworkPriorityPolicy::_narrow (cnpp.in ());
 
       if (!CORBA::is_nil (cnp.in ()))

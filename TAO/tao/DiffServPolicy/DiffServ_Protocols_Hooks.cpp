@@ -55,7 +55,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO::DiffservCodepoint diffserv_codepoint {};
   CORBA::Policy_var server_nw_priority_policy;
 
-  CORBA::Policy_var client_nw_priority_policy =
+  CORBA::Policy_var const client_nw_priority_policy =
     stub->get_cached_policy (
         TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY);
 
@@ -83,7 +83,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
         }
       else
         {
-          TAO::NetworkPriorityPolicy_var npp =
+          TAO::NetworkPriorityPolicy_var const npp =
             TAO::NetworkPriorityPolicy::_narrow (
               server_nw_priority_policy.in ());
 
@@ -105,7 +105,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
     }
   else
     {
-      TAO::NetworkPriorityPolicy_var client_nw_priority =
+      TAO::NetworkPriorityPolicy_var const client_nw_priority =
         TAO::NetworkPriorityPolicy::_narrow (client_nw_priority_policy.in ());
 
       if (!CORBA::is_nil (client_nw_priority.in ()))
