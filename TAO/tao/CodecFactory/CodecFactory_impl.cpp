@@ -23,7 +23,7 @@ TAO_CodecFactory::create_codec_with_codesets (IOP::Encoding_1_2 const& enc)
   CONV_FRAME::CodeSetId ncsc {};
   CONV_FRAME::CodeSetId ncsw {};
 
-  TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager ();
+  TAO_Codeset_Manager * const csm = this->orb_core_->codeset_manager ();
 
   if (csm != nullptr)
     {
@@ -81,7 +81,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
   //        hardcode its Codec.  This may change once TAO starts to
   //        support messaging formats other than GIOP.
 
-  IOP::Codec_ptr codec = IOP::Codec::_nil ();
+  IOP::Codec_ptr codec {};
 
   switch (encoding_format)
     {
