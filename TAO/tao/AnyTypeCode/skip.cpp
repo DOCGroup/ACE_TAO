@@ -254,8 +254,9 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   // get the count of profiles that follow
   continue_skipping = stream->read_ulong (profiles);
 
-  while (profiles-- != 0 && continue_skipping)
+  while (profiles != 0 && continue_skipping)
       {
+        --profiles;
         CORBA::ULong tag {};
 
         // get the profile ID tag
@@ -650,8 +651,9 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
       break;
 
     default:
-      while (bounds-- && continue_skipping)
+      while (bounds != 0 && continue_skipping)
         {
+          --bounds;
           continue_skipping =
             TAO_Marshal_Object::perform_skip (tc2.in (), stream);
         }
@@ -732,8 +734,9 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
       break;
 
     default:
-      while (bounds-- && continue_skipping)
+      while (bounds != 0 && continue_skipping)
         {
+          --bounds;
           int const stop =
             TAO_Marshal_Object::perform_skip (tc2.in (), stream);
           if (stop == TAO::TRAVERSE_STOP)
@@ -904,7 +907,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
           while (num_types > 0)
             {
               stream->skip_string();
-              num_types--;
+              --num_types;
             }
         }
       else if (!adapter->is_type_info_implied (value_tag))

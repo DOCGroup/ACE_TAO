@@ -283,8 +283,9 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                                       : 0);
 
   // No profiles means a NIL objref.
-  while (profiles-- != 0 && continue_append)
+  while (profiles != 0 && continue_append)
     {
+      --profiles;
       CORBA::ULong tag {};
 
       // get the profile ID tag
@@ -814,8 +815,9 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
           break;
 
         default:
-          while (bounds-- && retval == TAO::TRAVERSE_CONTINUE)
+          while (bounds != 0 && retval == TAO::TRAVERSE_CONTINUE)
             {
+              --bounds;
               retval = TAO_Marshal_Object::perform_append (tc2.in (), src, dest);
             }
           break;
@@ -997,8 +999,9 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
       }
       break;
     default:
-      while (bounds-- && retval == TAO::TRAVERSE_CONTINUE)
+      while (bounds != 0 && retval == TAO::TRAVERSE_CONTINUE)
         {
+          --bounds;
           retval = TAO_Marshal_Object::perform_append (tc2.in (), src, dest);
         }
       break;
