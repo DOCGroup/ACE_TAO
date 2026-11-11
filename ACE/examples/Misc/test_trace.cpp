@@ -37,6 +37,20 @@
 #include "ace/Task.h"
 #include "ace/Trace.h"
 
+static void
+start_tracing_handler (int signum)
+{
+  ACE_UNUSED_ARG (signum);
+  ACE_Trace::start_tracing ();
+}
+
+static void
+stop_tracing_handler (int signum)
+{
+  ACE_UNUSED_ARG (signum);
+  ACE_Trace::stop_tracing ();
+}
+
 class My_Task : public ACE_Task_Base
 {
 public:
@@ -87,7 +101,7 @@ exithook ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const size_t MAX_DEPTH = argc == 1 ? 10 : ACE_OS::atoi (argv[1]);
+  size_t const MAX_DEPTH = argc == 1 ? 10 : ACE_OS::atoi (argv[1]);
 
   ACE_OS::atexit (exithook);
 
@@ -96,17 +110,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TRACE ("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])");
 
-  ACE_Sig_Action sig1 ((ACE_SignalHandler) ACE_Trace::start_tracing,
-                       SIGUSR1);
+  ACE_Sig_Action sig1 (start_tracing_handler, SIGUSR1);
   ACE_UNUSED_ARG (sig1);
-  ACE_Sig_Action sig2 ((ACE_SignalHandler) ACE_Trace::stop_tracing,
-                       SIGUSR2);
+  ACE_Sig_Action sig2 (stop_tracing_handler, SIGUSR2);
   ACE_UNUSED_ARG (sig2);
 
   My_Task task (MAX_DEPTH);
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  int n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
+  int const n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
 
   if (task.activate (THR_BOUND | THR_DETACHED, n_threads) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -117,9 +129,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  const int MAX_ITERATIONS = argc > 3 ? ACE_OS::atoi (argv[3]) : 10;
+  int const MAX_ITERATIONS = argc > 3 ? ACE_OS::atoi (argv[3]) : 10;
 
-  for (int i = 0; i < MAX_ITERATIONS; i++)
+  for (int i = 0; i < MAX_ITERATIONS; ++i)
     task.svc ();
 #endif /* ACE_MT_SAFE */
 
