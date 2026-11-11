@@ -233,13 +233,8 @@ NotificationServiceMonitor_i::get_data (
       // statistic was available.  However, we have failed to
       // retrieve it.  The only reason that could happen is if
       // some one removed the statistic from the registry.
-      Monitor::Numeric num;
-      num.count = 0;
-      num.average = 0;
-      num.sum_of_squares = 0;
-      num.minimum = 0;
-      num.maximum = 0;
-      num.last = 0;
+      Monitor::Numeric num {};
+      data.data_union.num (num);
     }
   else
     {
