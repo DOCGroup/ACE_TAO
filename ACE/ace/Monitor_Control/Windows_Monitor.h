@@ -41,6 +41,7 @@ namespace ACE
       friend class Windows_Multi_Instance_Monitor;
 
     public:
+      ~Windows_Monitor ();
       Windows_Monitor (Windows_Monitor const &) = delete;
       Windows_Monitor (Windows_Monitor &&) = delete;
       Windows_Monitor &operator= (Windows_Monitor const &) = delete;

@@ -16,6 +16,12 @@ namespace ACE
       this->init ();
     }
 
+    Windows_Monitor::~Windows_Monitor ()
+    {
+      if (this->query_ != nullptr)
+        PdhCloseQuery (this->query_);
+    }
+
     void
     Windows_Monitor::update_i ()
     {
@@ -42,11 +48,19 @@ namespace ACE
       /// Create a query and a counter here so it doesn't have
       /// to be done with each update.
 
+      if (this->query_ != nullptr)
+        {
+          PdhCloseQuery (this->query_);
+          this->query_ = nullptr;
+          this->counter_ = nullptr;
+        }
+
       this->status_ = ACE_TEXT_PdhOpenQuery (nullptr, 0, &this->query_);
 
       if (ERROR_SUCCESS != this->status_)
         {
           ACELIB_ERROR ((LM_DEBUG, ACE_TEXT ("PdhOpenQuery failed\n")));
+          return;
         }
 
       this->status_ =
@@ -60,6 +74,9 @@ namespace ACE
           ACELIB_ERROR ((LM_DEBUG,
                       ACE_TEXT ("PdhAddCounter %s failed\n"),
                       this->path_.c_str ()));
+          PdhCloseQuery (this->query_);
+          this->query_ = nullptr;
+          this->counter_ = nullptr;
         }
     }
   }
