@@ -77,7 +77,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   clientAddr.set(optsMgr.client_port,
                  optsMgr.client_connect_addr,
                  1,
-                 optsMgr.secondary_connect_addrs,
+                 optsMgr.secondary_connect_addrs.data (),
                  optsMgr.num_secondary_connect_addrs);
 
   // object that manages the connection to the server

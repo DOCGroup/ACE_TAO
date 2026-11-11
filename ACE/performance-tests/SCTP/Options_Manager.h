@@ -6,6 +6,9 @@
 #ifndef OPTIONS_MANAGER_H
 #define OPTIONS_MANAGER_H
 
+#include <array>
+#include <cstddef>
+
 #ifndef ACE_CDR_BASE_H
 #include "ace/CDR_Base.h"
 #endif
@@ -40,14 +43,14 @@ public:
   static ACE_CDR::UShort payload_size_power_of_2;
 
   // Secondary client_connect_addrs for SCTP SOCK_SEQPACK test
-  enum { max_num_secondary_connect_addrs = 100 };
-  static ACE_CDR::ULong secondary_connect_addrs[max_num_secondary_connect_addrs];
-  static ACE_CDR::UShort num_secondary_connect_addrs;
+  static constexpr std::size_t max_num_secondary_connect_addrs = 100;
+  static std::array<ACE_CDR::ULong, max_num_secondary_connect_addrs> secondary_connect_addrs;
+  static std::size_t num_secondary_connect_addrs;
 
   // Secondary server_accept_addrs for SCTP SOCK_SEQPACK test
-  enum { max_num_secondary_accept_addrs = 100 };
-  static ACE_CDR::ULong secondary_accept_addrs[max_num_secondary_accept_addrs];
-  static ACE_CDR::UShort num_secondary_accept_addrs;
+  static constexpr std::size_t max_num_secondary_accept_addrs = 100;
+  static std::array<ACE_CDR::ULong, max_num_secondary_accept_addrs> secondary_accept_addrs;
+  static std::size_t num_secondary_accept_addrs;
 
   static ACE_CDR::UShort _error;
   static const ACE_TCHAR* _error_message;

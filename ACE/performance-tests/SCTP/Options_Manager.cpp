@@ -42,10 +42,12 @@ ACE_CDR::UShort Options_Manager::server_port = 45453;
 ACE_TCHAR Options_Manager::server_host[Options_Manager::string_len];
 ACE_CDR::ULong Options_Manager::server_accept_addr=INADDR_ANY;
 ACE_CDR::UShort Options_Manager::payload_size_power_of_2=31;
-ACE_CDR::ULong Options_Manager::secondary_connect_addrs[max_num_secondary_connect_addrs];
-ACE_CDR::UShort Options_Manager::num_secondary_connect_addrs = 0;
-ACE_CDR::ULong Options_Manager::secondary_accept_addrs[max_num_secondary_accept_addrs];
-ACE_CDR::UShort Options_Manager::num_secondary_accept_addrs = 0;
+std::array<ACE_CDR::ULong, Options_Manager::max_num_secondary_connect_addrs>
+  Options_Manager::secondary_connect_addrs {};
+std::size_t Options_Manager::num_secondary_connect_addrs {};
+std::array<ACE_CDR::ULong, Options_Manager::max_num_secondary_accept_addrs>
+  Options_Manager::secondary_accept_addrs {};
+std::size_t Options_Manager::num_secondary_accept_addrs {};
 ACE_CDR::UShort Options_Manager::_usage = 0;
 ACE_CDR::UShort Options_Manager::_error = 0;
 ACE_TCHAR Options_Manager::__program_name[Options_Manager::string_len];
@@ -71,7 +73,8 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
     int c;
     std::unique_ptr<ACE_Get_Opt> get_opt;
     if (!ACE_OS::strcmp(ACE_TEXT ("client-opts"), opts_set)){
-      get_opt.reset (new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h")));
+      get_opt = std::make_unique<ACE_Get_Opt> (
+        argc, argv, ACE_TEXT ("c:nt:m:M:x:b:C:i:p:H:s:h"));
 
       get_opt->long_option (ACE_TEXT ("test_iterations"),         'c',
                             ACE_Get_Opt::ARG_REQUIRED);
@@ -98,7 +101,8 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
                             ACE_Get_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("help"),                    'h');
     } else if (!ACE_OS::strcmp (ACE_TEXT ("server-opts"), opts_set)){
-      get_opt.reset (new ACE_Get_Opt(argc, argv, ACE_TEXT("nt:p:a:u")));
+      get_opt = std::make_unique<ACE_Get_Opt> (
+        argc, argv, ACE_TEXT ("nt:p:a:u"));
       get_opt->long_option (ACE_TEXT ("test_enable_nagle"),       'n');
       get_opt->long_option (ACE_TEXT ("test_transport_protocol"), 't',
                             ACE_Get_Opt::ARG_REQUIRED);

@@ -277,7 +277,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   serverAddr.set(optsMgr.server_port,
                  optsMgr.server_accept_addr,
                  1,
-                 optsMgr.secondary_accept_addrs,
+                 optsMgr.secondary_accept_addrs.data (),
                  optsMgr.num_secondary_accept_addrs);
 
   // this operation creates a socket, binds the specified internet
