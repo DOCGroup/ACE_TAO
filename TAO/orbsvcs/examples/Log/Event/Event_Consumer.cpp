@@ -15,7 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Consumer::run (int argc, ACE_TCHAR* argv[])
+Consumer::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -64,7 +64,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       this->supplier_->connect_push_consumer (consumer.in ());
 
-      orb_->run ();
+      this->orb_->run ();
 
       // We don't do any cleanup, it is hard to do it after shutdown,
       // and would complicate the example; plus it is almost

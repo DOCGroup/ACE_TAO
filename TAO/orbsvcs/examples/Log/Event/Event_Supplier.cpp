@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Supplier::run (int argc, ACE_TCHAR* argv[])
+Supplier::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {

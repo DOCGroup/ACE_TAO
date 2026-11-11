@@ -39,7 +39,7 @@ public:
   Consumer &operator= (Consumer const &) = delete;
   Consumer &operator= (Consumer &&) = delete;
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
   // Run the test
 
   // = The CosEventComm::PushConsumer methods
@@ -55,8 +55,7 @@ private:
   // Keep track of the number of events received.
 
   CORBA::ORB_var orb_;
-  // The orb, just a pointer because the ORB does not outlive the
-  // run() method...
+  // Keep an ORB reference for the disconnect callback.
 
   CosNaming::NamingContext_var naming_context_;
   // Handle to the name service.
