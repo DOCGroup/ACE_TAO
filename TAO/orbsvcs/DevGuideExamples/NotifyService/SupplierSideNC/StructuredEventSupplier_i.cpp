@@ -10,11 +10,10 @@ void
 StructuredEventSupplier_i::disconnect_structured_push_supplier ()
 {
   CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
-  PortableServer::Current_var current =
-    PortableServer::Current::_narrow (obj.in());
+  PortableServer::Current_var current = PortableServer::Current::_narrow (obj.in ());
   PortableServer::POA_var poa = current->get_POA ();
-  PortableServer::ObjectId_var objectId = current->get_object_id ();
-  poa->deactivate_object (objectId.in());
+  PortableServer::ObjectId_var object_id = current->get_object_id ();
+  poa->deactivate_object (object_id.in ());
 }
 
 void

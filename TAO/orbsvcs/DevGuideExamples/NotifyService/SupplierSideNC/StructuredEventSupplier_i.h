@@ -6,7 +6,7 @@
 class StructuredEventSupplier_i : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-    StructuredEventSupplier_i (CORBA::ORB_ptr orb);
+    explicit StructuredEventSupplier_i (CORBA::ORB_ptr orb);
 
     StructuredEventSupplier_i (StructuredEventSupplier_i const &) = delete;
     StructuredEventSupplier_i (StructuredEventSupplier_i &&) = delete;
@@ -15,8 +15,8 @@ public:
 
     void disconnect_structured_push_supplier () override;
 
-    void subscription_change (CosNotification::EventTypeSeq const & added,
-                              CosNotification::EventTypeSeq const & removed) override;
+    void subscription_change (CosNotification::EventTypeSeq const &added,
+                              CosNotification::EventTypeSeq const &removed) override;
 
 private:
     CORBA::ORB_var orb_;
