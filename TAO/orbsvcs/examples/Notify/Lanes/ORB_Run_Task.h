@@ -22,17 +22,19 @@ class TAO_Notify_ORB_Run_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects);
-
-  /// Destructor
-  ~TAO_Notify_ORB_Run_Task ();
+  explicit TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects);
+  ~TAO_Notify_ORB_Run_Task () override = default;
+  TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Run_Task const&) = delete;
+  TAO_Notify_ORB_Run_Task& operator= (TAO_Notify_ORB_Run_Task const&) = delete;
+  TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Run_Task&&) = delete;
+  TAO_Notify_ORB_Run_Task& operator= (TAO_Notify_ORB_Run_Task&&) = delete;
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 };
 
 #include /**/ "ace/post.h"

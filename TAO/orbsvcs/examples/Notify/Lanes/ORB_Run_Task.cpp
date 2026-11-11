@@ -1,12 +1,7 @@
 #include "ORB_Run_Task.h"
 
-
 TAO_Notify_ORB_Run_Task::TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
-{
-}
-
-TAO_Notify_ORB_Run_Task::~TAO_Notify_ORB_Run_Task ()
 {
 }
 
@@ -15,11 +10,11 @@ TAO_Notify_ORB_Run_Task::svc ()
 {
   try
     {
-      this->orb_objects_.current_->the_priority (0);
+      this->orb_objects_.current_->the_priority (RTCORBA::Priority {});
 
       this->orb_objects_.orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 

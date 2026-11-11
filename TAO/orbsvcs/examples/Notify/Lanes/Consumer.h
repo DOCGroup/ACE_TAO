@@ -14,7 +14,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
-#include "ace/SString.h"
+#include <string>
 
 /**
  * @class TAO_Notify_Lanes_Consumer
@@ -27,41 +27,44 @@ class TAO_Notify_Lanes_Consumer
 {
 public:
   /// Constructor
-  TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
+  explicit TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
+  TAO_Notify_Lanes_Consumer (TAO_Notify_Lanes_Consumer const&) = delete;
+  TAO_Notify_Lanes_Consumer& operator= (TAO_Notify_Lanes_Consumer const&) = delete;
+  TAO_Notify_Lanes_Consumer (TAO_Notify_Lanes_Consumer&&) = delete;
+  TAO_Notify_Lanes_Consumer& operator= (TAO_Notify_Lanes_Consumer&&) = delete;
 
   /// Init
-  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type);
-
-  /// Run
-  void run ();
+  void init (PortableServer::POA_ptr poa,
+             CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
+             std::string const& event_type);
 
 protected:
   // = Data members
 
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 
   /// The proxy that we are connected to.
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_ {};
 
   /// The proxy_supplier id.
-  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
   // POA.
-  PortableServer::POA_var default_POA_;
+  PortableServer::POA_var default_POA_ {};
 
   // The Consumer Admin
-  CosNotifyChannelAdmin::ConsumerAdmin_var admin_;
+  CosNotifyChannelAdmin::ConsumerAdmin_var admin_ {};
 
   /// The Type the Consumer should subscribe to.
-  ACE_CString event_type_;
+  std::string event_type_;
 
   // = Methods
   /// Destructor
-  virtual ~TAO_Notify_Lanes_Consumer ();
+  ~TAO_Notify_Lanes_Consumer () override = default;
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
@@ -74,15 +77,13 @@ protected:
   void deactivate ();
 
   // = NotifyPublish method
-  virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void offer_change (CosNotification::EventTypeSeq const& added,
+                     CosNotification::EventTypeSeq const& removed) override;
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (CosNotification::StructuredEvent const& notification) override;
 
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 };
 
 #include /**/ "ace/post.h"
