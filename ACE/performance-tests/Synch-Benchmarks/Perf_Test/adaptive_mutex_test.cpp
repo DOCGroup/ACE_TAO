@@ -8,6 +8,11 @@
 class ACE_Svc_Export Adaptive_Mutex_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
+  Adaptive_Mutex_Test () = default;
+  Adaptive_Mutex_Test (Adaptive_Mutex_Test const &) = delete;
+  Adaptive_Mutex_Test (Adaptive_Mutex_Test &&) = delete;
+  Adaptive_Mutex_Test &operator= (Adaptive_Mutex_Test const &) = delete;
+  Adaptive_Mutex_Test &operator= (Adaptive_Mutex_Test &&) = delete;
   int init (int, ACE_TCHAR *[]) override;
 };
 

@@ -7,6 +7,11 @@
 class ACE_Svc_Export Cond_Brdcast_Test : public Benchmark_Performance
 {
 public:
+  Cond_Brdcast_Test () = default;
+  Cond_Brdcast_Test (Cond_Brdcast_Test const &) = delete;
+  Cond_Brdcast_Test (Cond_Brdcast_Test &&) = delete;
+  Cond_Brdcast_Test &operator= (Cond_Brdcast_Test const &) = delete;
+  Cond_Brdcast_Test &operator= (Cond_Brdcast_Test &&) = delete;
   int svc () override;
 
 private:
@@ -25,7 +30,7 @@ ACE_Condition_Thread_Mutex Cond_Brdcast_Test::notempty (Cond_Brdcast_Test::mutex
 int
 Cond_Brdcast_Test::svc ()
 {
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   // Special case for first thread...
@@ -35,9 +40,9 @@ Cond_Brdcast_Test::svc ()
         mutex.acquire ();
         while (resources > 0)
         notfull.wait ();
-        performance_test_options.thr_work_count[ni]++;
+        ++performance_test_options.thr_work_count[ni];
         resources = performance_test_options.thr_count () - 1;
-        buffer++;
+        ++buffer;
         notempty.broadcast ();
         mutex.release ();
       }
@@ -47,8 +52,8 @@ Cond_Brdcast_Test::svc ()
         mutex.acquire ();
         while (resources == 0)
         notempty.wait ();
-        performance_test_options.thr_work_count[ni]++;
-        buffer++;
+        ++performance_test_options.thr_work_count[ni];
+        ++buffer;
         if (--resources == 0)
         notfull.signal ();
         mutex.release ();

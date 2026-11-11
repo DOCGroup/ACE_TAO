@@ -9,6 +9,11 @@
 class ACE_Svc_Export Adaptive_Sema_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
+  Adaptive_Sema_Test () = default;
+  Adaptive_Sema_Test (Adaptive_Sema_Test const &) = delete;
+  Adaptive_Sema_Test (Adaptive_Sema_Test &&) = delete;
+  Adaptive_Sema_Test &operator= (Adaptive_Sema_Test const &) = delete;
+  Adaptive_Sema_Test &operator= (Adaptive_Sema_Test &&) = delete;
   int init (int, ACE_TCHAR *[]) override;
 
 private:

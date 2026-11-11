@@ -8,6 +8,11 @@
 class ACE_Svc_Export Sema_Test : public Benchmark_Performance
 {
 public:
+  Sema_Test () = default;
+  Sema_Test (Sema_Test const &) = delete;
+  Sema_Test (Sema_Test &&) = delete;
+  Sema_Test &operator= (Sema_Test const &) = delete;
+  Sema_Test &operator= (Sema_Test &&) = delete;
   int svc () override;
 
 private:
@@ -19,14 +24,14 @@ ACE_Semaphore Sema_Test::sema (1);
 int
 Sema_Test::svc ()
 {
-  int ni      = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   while (!this->done ())
     {
       sema.acquire ();
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+      ++performance_test_options.thr_work_count[ni];
+      ++buffer;
       sema.release ();
     }
 

@@ -23,7 +23,7 @@
 class ACE_Svc_Export Performance_Test_Options
 {
 public:
-  Performance_Test_Options ();
+  Performance_Test_Options () = default;
   Performance_Test_Options (Performance_Test_Options const &) = delete;
   Performance_Test_Options (Performance_Test_Options &&) = delete;
   Performance_Test_Options &operator= (Performance_Test_Options const &) = delete;

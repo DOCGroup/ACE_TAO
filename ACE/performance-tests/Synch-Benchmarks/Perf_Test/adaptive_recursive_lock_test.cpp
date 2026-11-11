@@ -9,6 +9,11 @@
 class ACE_Svc_Export Adaptive_Recursive_Lock_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
+  Adaptive_Recursive_Lock_Test () = default;
+  Adaptive_Recursive_Lock_Test (Adaptive_Recursive_Lock_Test const &) = delete;
+  Adaptive_Recursive_Lock_Test (Adaptive_Recursive_Lock_Test &&) = delete;
+  Adaptive_Recursive_Lock_Test &operator= (Adaptive_Recursive_Lock_Test const &) = delete;
+  Adaptive_Recursive_Lock_Test &operator= (Adaptive_Recursive_Lock_Test &&) = delete;
   int init (int, ACE_TCHAR *[]) override;
 };
 

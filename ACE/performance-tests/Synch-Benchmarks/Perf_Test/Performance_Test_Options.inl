@@ -7,7 +7,6 @@
 // remain inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
-
 inline bool
 Performance_Test_Options::do_print_summary () const
 {

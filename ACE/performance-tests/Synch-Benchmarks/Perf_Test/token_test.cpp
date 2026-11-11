@@ -8,6 +8,11 @@
 class ACE_Svc_Export Token_Test : public Benchmark_Performance
 {
 public:
+  Token_Test () = default;
+  Token_Test (Token_Test const &) = delete;
+  Token_Test (Token_Test &&) = delete;
+  Token_Test &operator= (Token_Test const &) = delete;
+  Token_Test &operator= (Token_Test &&) = delete;
   int svc () override;
 
 private:
@@ -21,14 +26,14 @@ Token_Test::svc ()
 {
   // Extract out the unique thread-specific value to be used as an
   // index...
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   while (!this->done ())
     {
       token.acquire ();
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+      ++performance_test_options.thr_work_count[ni];
+      ++buffer;
       token.release ();
     }
   /* NOTREACHED */

@@ -11,6 +11,11 @@
 class ACE_Svc_Export Memory_Test : public Benchmark_Performance
 {
 public:
+  Memory_Test () = default;
+  Memory_Test (Memory_Test const &) = delete;
+  Memory_Test (Memory_Test &&) = delete;
+  Memory_Test &operator= (Memory_Test const &) = delete;
+  Memory_Test &operator= (Memory_Test &&) = delete;
   int svc () override;
 };
 
@@ -27,7 +32,7 @@ Memory_Test::svc ()
   while (!this->done ())
     {
       ACE_OS::memcpy (to.get (), from.get (), length);
-      performance_test_options.thr_work_count[ni]++;
+      ++performance_test_options.thr_work_count[ni];
     }
   /* NOTREACHED */
   return 0;

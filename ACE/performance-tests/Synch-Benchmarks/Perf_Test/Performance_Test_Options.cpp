@@ -11,12 +11,12 @@ Performance_Test_Options performance_test_options;
 size_t
 Performance_Test_Options::count () const
 {
-  size_t total = 0;
+  size_t total {};
 
   if (performance_test_options.verbose ())
     ACE_DEBUG ((LM_DEBUG, "Thread work count size = %d\n", performance_test_options.thr_wc_size));
 
-  for (int i = 0; i < performance_test_options.thr_wc_size; i++)
+  for (int i {}; i < performance_test_options.thr_wc_size; ++i)
     {
       if (performance_test_options.thr_work_count[i] != 0)
         {
@@ -35,13 +35,11 @@ Performance_Test_Options::init ()
   std::fill (this->thr_work_count.begin (), this->thr_work_count.end (), 0);
 }
 
-Performance_Test_Options::Performance_Test_Options () = default;
-
 void
 Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("a:A:bBc:C:dDe:F:g:H:i:L:l:M:m:n:Np:P:s:S:t:T:uvX:Z:"), 0);
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -57,7 +55,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'c':                 // Not used. (# of connections.)
         {
-          long connections = ACE_OS::atoi (get_opt.opt_arg ());
+          long const connections = ACE_OS::atoi (get_opt.opt_arg ());
 
           if (connections < 0)
             this->physical_connections (size_t (-connections));
@@ -258,9 +256,9 @@ Performance_Test_Options::print_results ()
   ACE_Profile_Timer::Rusage rusage;
   this->_itimer.elapsed_rusage (rusage);
 
-  size_t total    = this->count ();
-  double nbytes   = total * this->msg_size ();
-  double cpu_time = et.user_time + et.system_time;
+  size_t const total = this->count ();
+  double const nbytes = total * this->msg_size ();
+  double const cpu_time = et.user_time + et.system_time;
 
 #if 0
   mutex_timer.print_total ("ACE_Thread_Mutex overhead:", mutex_counter, 2);

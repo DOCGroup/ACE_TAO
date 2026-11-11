@@ -10,6 +10,11 @@
 class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance
 {
 public:
+  SYSVSema_Test () = default;
+  SYSVSema_Test (SYSVSema_Test const &) = delete;
+  SYSVSema_Test (SYSVSema_Test &&) = delete;
+  SYSVSema_Test &operator= (SYSVSema_Test const &) = delete;
+  SYSVSema_Test &operator= (SYSVSema_Test &&) = delete;
   int init (int, ACE_TCHAR *[]) override;
   int fini () override;
   int svc () override;
@@ -17,7 +22,6 @@ public:
 private:
   static std::unique_ptr<ACE_SV_Semaphore_Simple> sema;
 };
-
 
 std::unique_ptr<ACE_SV_Semaphore_Simple> SYSVSema_Test::sema;
 
@@ -44,14 +48,14 @@ SYSVSema_Test::fini ()
 int
 SYSVSema_Test::svc ()
 {
-  int ni      = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   while (!this->done ())
     {
       SYSVSema_Test::sema->acquire ();
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+      ++performance_test_options.thr_work_count[ni];
+      ++buffer;
       SYSVSema_Test::sema->release ();
     }
 
