@@ -134,6 +134,7 @@ namespace XSCRT
 
       Map_::size_type registered{};
 
+      // container_ is borrowed; it points to an ancestor in the parsed graph.
       // Revoke registrations from our old container.
       if (container_ != nullptr && map_.get ())
       {
@@ -178,7 +179,7 @@ namespace XSCRT
     {
       if (!map_)
       {
-        map_ = std::unique_ptr<Map_> (new Map_);
+        map_ = std::make_unique<Map_> ();
       }
 
       std::pair<Map_::iterator, bool> const insertion (map_->try_emplace (std::addressof (id), t));
@@ -284,7 +285,7 @@ namespace XSCRT
     }
 
   private:
-    // Data member to handle unbounded IDREF attributes and elements
+    // IDREF targets and the parent container are borrowed from the parsed graph.
     std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *> idref_map_{};
 
     Type *container_{};
@@ -299,6 +300,7 @@ namespace XSCRT
 
     using Map_ = std::map<IdentityProvider const *, Type *, IdentityComparator>;
 
+    // Owns the registration map; its IdentityProvider keys and Type values are borrowed.
     std::unique_ptr<Map_> map_{};
   };
 

@@ -53,6 +53,7 @@ namespace XSCRT
     }
 
   private:
+    // These node collections belong to the DOM element passed to the parser.
     xercesc::DOMNodeList const *e_;
     XMLSize_t ei_{};
 
