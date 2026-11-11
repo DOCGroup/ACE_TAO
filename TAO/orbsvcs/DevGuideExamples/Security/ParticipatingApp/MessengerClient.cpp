@@ -34,12 +34,12 @@ static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 ---------------------------------------
 #endif
 
-ACE_TCHAR const * ior = ACE_TEXT ("file://Messenger.ior");
+static ACE_TCHAR const *ior = ACE_TEXT ("file://Messenger.ior");
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -55,92 +55,59 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage:  %s "
                            "-k <ior> "
                            "\n",
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
   return 0;
 }
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    CORBA::ORB_var orb =
-      CORBA::ORB_init( argc, argv );
+  try
+    {
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-    CORBA::Object_var obj =
-      orb->string_to_object( ior );
+      CORBA::Object_var const object = orb->string_to_object (ior);
+      Messenger_var const messenger = Messenger::_narrow (object.in ());
+      CORBA::String_var message = CORBA::string_dup ("Terminating messenger service!");
+      messenger->send_message ("Chief of Security", "New Directive", message.inout ());
+      messenger->shutdown ("Chief of Security");
 
-    Messenger_var messenger =
-      Messenger::_narrow( obj.in() );
+      Security::QOP const qop = Security::SecQOPIntegrityAndConfidentiality;
+      CORBA::Any want_protection {};
+      want_protection <<= qop;
+      CORBA::Policy_var const policy = orb->create_policy (Security::SecQOPPolicy, want_protection);
 
-    CORBA::String_var message =
-      CORBA::string_dup( "Terminating messenger service!" );
+      Security::EstablishTrust establish_trust {};
+      establish_trust.trust_in_client = false;
+      establish_trust.trust_in_target = true;
+      CORBA::Any want_trust {};
+      want_trust <<= establish_trust;
+      CORBA::Policy_var const policy2 = orb->create_policy (Security::SecEstablishTrustPolicy, want_trust);
 
-    messenger->send_message( "Chief of Security",
-                             "New Directive",
-                             message.inout() );
+      CORBA::PolicyList policy_list {};
+      policy_list.length (2);
+      policy_list[0] = CORBA::Policy::_duplicate (policy.in ());
+      policy_list[1] = CORBA::Policy::_duplicate (policy2.in ());
 
-    messenger->shutdown("Chief of Security");
+      CORBA::Object_var const object_with_policy =
+        object->_set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
+      Messenger_var const secure_messenger = Messenger::_narrow (object_with_policy.in ());
+      message = CORBA::string_dup ("Terminating messenger service!");
+      secure_messenger->send_message ("Chief of Security", "New Directive", message.inout ());
+      secure_messenger->shutdown ("Chief of Security");
 
-    Security::QOP qop =
-      Security::SecQOPIntegrityAndConfidentiality;
-
-    CORBA::Any want_protection;
-    want_protection <<= qop;
-
-    CORBA::Policy_var policy =
-      orb->create_policy (Security::SecQOPPolicy,
-                          want_protection);
-
-    Security::EstablishTrust establish_trust;
-    establish_trust.trust_in_client = false;
-    establish_trust.trust_in_target = true;
-
-    CORBA::Any want_trust;
-    want_trust <<= establish_trust;
-
-    CORBA::Policy_var policy2 =
-      orb->create_policy (Security::SecEstablishTrustPolicy,
-                          want_trust);
-
-
-    CORBA::PolicyList policy_list (2);
-    policy_list.length (1);
-    policy_list[0] =
-      CORBA::Policy::_duplicate (policy.in ());
-    policy_list.length (2);
-    policy_list[1] =
-      CORBA::Policy::_duplicate (policy2.in ());
-
-
-    CORBA::Object_var object =
-      obj->_set_policy_overrides (policy_list,
-                                  CORBA::SET_OVERRIDE);
-
-    Messenger_var messenger2 =
-      Messenger::_narrow( object.in() );
-
-    message =
-      CORBA::string_dup( "Terminating messenger service!" );
-
-    messenger2->send_message( "Chief of Security",
-                             "New Directive",
-                             message.inout() );
-
-    messenger2->shutdown("Chief of Security");
-
-    orb->destroy();
-  }
-  catch (CORBA::Exception const & ex)
-  {
-    ex._tao_print_exception("Client: main block");
-    return 1;
-  }
+      orb->destroy ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Client: main block");
+      return 1;
+    }
 
   return 0;
 }
