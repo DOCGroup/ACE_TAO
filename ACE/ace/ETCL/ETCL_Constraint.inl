@@ -2,14 +2,6 @@
 // ****************************************************************
 
 ACE_INLINE
-ETCL_Literal_Constraint::ETCL_Literal_Constraint ()
-  : type_ (ACE_ETCL_UNKNOWN)
-{
-}
-
-// ****************************************************************
-
-ACE_INLINE
 ETCL_Identifier::ETCL_Identifier (char const *value)
   : string_ (value)
 {

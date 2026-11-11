@@ -20,52 +20,49 @@ ETCL_Constraint::accept (ETCL_Constraint_Visitor * /* visitor */)
 
 // ****************************************************************
 
-ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ETCL_Literal_Constraint const &lit)
-  : ETCL_Constraint(),
-    type_ (ACE_ETCL_UNKNOWN)
+void
+ETCL_Literal_Constraint::String_Deleter::operator() (char *str) const noexcept
 {
-  this->copy (lit);
+  ACE::strdelete (str);
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::ULong uinteger) : type_ (ACE_ETCL_UNSIGNED)
+    ACE_CDR::ULong uinteger)
+  : op_ (uinteger)
 {
-  this->op_.uinteger_ = uinteger;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Long integer) : type_ (ACE_ETCL_SIGNED)
+    ACE_CDR::Long integer)
+  : op_ (integer)
 {
-  this->op_.integer_ = integer;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
     ACE_CDR::Boolean boolean)
-  : type_ (ACE_ETCL_BOOLEAN)
+  : op_ (boolean)
 {
-  this->op_.bool_ = boolean;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Double doub) : type_ (ACE_ETCL_DOUBLE)
+    ACE_CDR::Double doub)
+  : op_ (doub)
 {
-  this->op_.double_ = doub;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    char const *str) : type_ (ACE_ETCL_STRING)
+    char const *str)
+  : op_ (String_Owner (ACE::strnew (str)))
 {
-  this->op_.str_ = ACE::strnew (str);
 }
 
-ETCL_Literal_Constraint::~ETCL_Literal_Constraint ()
+ETCL_Literal_Constraint::ETCL_Literal_Constraint (
+    ETCL_Literal_Constraint const &lit)
+  : op_ (ETCL_Literal_Constraint::copy_value (lit.op_))
 {
-  if (this->type_ == ACE_ETCL_STRING)
-    {
-      ACE::strdelete (this->op_.str_);
-    }
 }
+
+ETCL_Literal_Constraint::~ETCL_Literal_Constraint () = default;
 
 int
 ETCL_Literal_Constraint::accept (ETCL_Constraint_Visitor *visitor)
@@ -76,37 +73,49 @@ ETCL_Literal_Constraint::accept (ETCL_Constraint_Visitor *visitor)
 Literal_Type
 ETCL_Literal_Constraint::expr_type () const
 {
-  return this->type_;
+  if (std::holds_alternative<String_Owner> (this->op_))
+    return ACE_ETCL_STRING;
+  if (std::holds_alternative<ACE_CDR::ULong> (this->op_))
+    return ACE_ETCL_UNSIGNED;
+  if (std::holds_alternative<ACE_CDR::Long> (this->op_))
+    return ACE_ETCL_SIGNED;
+  if (std::holds_alternative<ACE_CDR::Boolean> (this->op_))
+    return ACE_ETCL_BOOLEAN;
+  if (std::holds_alternative<ACE_CDR::Double> (this->op_))
+    return ACE_ETCL_DOUBLE;
+  return ACE_ETCL_UNKNOWN;
+}
+
+ETCL_Literal_Constraint::operator ACE_CDR::Boolean () const
+{
+  return (this->expr_type () == ACE_ETCL_BOOLEAN) ? std::get<ACE_CDR::Boolean> (this->op_) : false;
 }
 
 void
 ETCL_Literal_Constraint::operator= (ETCL_Literal_Constraint const &co)
 {
-  this->copy (co);
-}
-
-ETCL_Literal_Constraint::operator ACE_CDR::Boolean () const
-{
-  return (this->type_ == ACE_ETCL_BOOLEAN) ? this->op_.bool_ : false;
+  if (this != &co)
+    this->op_ = ETCL_Literal_Constraint::copy_value (co.op_);
 }
 
 ETCL_Literal_Constraint::operator ACE_CDR::ULong () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_UNSIGNED:
-      return this->op_.uinteger_;
+      return std::get<ACE_CDR::ULong> (this->op_);
     case ACE_ETCL_SIGNED:
     case ACE_ETCL_INTEGER:
-      return
-        (this->op_.integer_ > 0) ? static_cast<ACE_CDR::ULong> (this->op_.integer_) : 0;
+      {
+        ACE_CDR::Long const integer = std::get<ACE_CDR::Long> (this->op_);
+        return integer > 0 ? static_cast<ACE_CDR::ULong> (integer) : 0;
+      }
     case ACE_ETCL_DOUBLE:
-      return
-        (this->op_.double_ > 0) ?
-        ((this->op_.double_ > ACE_UINT32_MAX) ?
-         ACE_UINT32_MAX :
-         static_cast<ACE_CDR::ULong> (this->op_.double_))
-        : 0;
+      {
+        ACE_CDR::Double const doub = std::get<ACE_CDR::Double> (this->op_);
+        return doub > 0 ?
+          (doub > ACE_UINT32_MAX ? ACE_UINT32_MAX : static_cast<ACE_CDR::ULong> (doub)) : 0;
+      }
     default:
       return 0;
   }
@@ -114,24 +123,22 @@ ETCL_Literal_Constraint::operator ACE_CDR::ULong () const
 
 ETCL_Literal_Constraint::operator ACE_CDR::Long () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_SIGNED:
     case ACE_ETCL_INTEGER:
-      return this->op_.integer_;
+      return std::get<ACE_CDR::Long> (this->op_);
     case ACE_ETCL_UNSIGNED:
       return
-        (this->op_.uinteger_ > static_cast<ACE_CDR::ULong> (ACE_INT32_MAX)) ?
-        ACE_INT32_MAX : static_cast<ACE_CDR::Long> (this->op_.uinteger_);
+        (std::get<ACE_CDR::ULong> (this->op_) > static_cast<ACE_CDR::ULong> (ACE_INT32_MAX)) ?
+        ACE_INT32_MAX : static_cast<ACE_CDR::Long> (std::get<ACE_CDR::ULong> (this->op_));
     case ACE_ETCL_DOUBLE:
-      return
-        (this->op_.double_ > 0) ?
-         ((this->op_.double_ > ACE_INT32_MAX) ?
-          ACE_INT32_MAX :
-          static_cast<ACE_CDR::Long> (this->op_.double_)) :
-          ((this->op_.double_ < ACE_INT32_MIN) ?
-           ACE_INT32_MIN :
-           static_cast<ACE_CDR::Long> (this->op_.double_));
+      {
+        ACE_CDR::Double const doub = std::get<ACE_CDR::Double> (this->op_);
+        return doub > 0 ?
+          (doub > ACE_INT32_MAX ? ACE_INT32_MAX : static_cast<ACE_CDR::Long> (doub)) :
+          (doub < ACE_INT32_MIN ? ACE_INT32_MIN : static_cast<ACE_CDR::Long> (doub));
+      }
     default:
       return 0;
   }
@@ -139,15 +146,15 @@ ETCL_Literal_Constraint::operator ACE_CDR::Long () const
 
 ETCL_Literal_Constraint::operator ACE_CDR::Double () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_DOUBLE:
-      return this->op_.double_;
+      return std::get<ACE_CDR::Double> (this->op_);
     case ACE_ETCL_SIGNED:
     case ACE_ETCL_INTEGER:
-      return static_cast<ACE_CDR::Double> (this->op_.integer_);
+      return static_cast<ACE_CDR::Double> (std::get<ACE_CDR::Long> (this->op_));
     case ACE_ETCL_UNSIGNED:
-      return static_cast<ACE_CDR::Double> (this->op_.uinteger_);
+      return static_cast<ACE_CDR::Double> (std::get<ACE_CDR::ULong> (this->op_));
     default:
       return 0.0;
   }
@@ -155,10 +162,10 @@ ETCL_Literal_Constraint::operator ACE_CDR::Double () const
 
 ETCL_Literal_Constraint::operator char const * () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_STRING:
-      return this->op_.str_;
+      return std::get<String_Owner> (this->op_).get ();
     default:
       return nullptr;
   }
@@ -394,15 +401,15 @@ ETCL_Literal_Constraint::operator/ (ETCL_Literal_Constraint const &rhs)
 ETCL_Literal_Constraint
 ETCL_Literal_Constraint::operator- ()
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_DOUBLE:
-      return ETCL_Literal_Constraint (- this->op_.double_);
+      return ETCL_Literal_Constraint (- std::get<ACE_CDR::Double> (this->op_));
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
-      return ETCL_Literal_Constraint (- this->op_.integer_);
+      return ETCL_Literal_Constraint (- std::get<ACE_CDR::Long> (this->op_));
     case ACE_ETCL_UNSIGNED:
-      return ETCL_Literal_Constraint (-static_cast<ACE_CDR::Long> (this->op_.uinteger_));
+      return ETCL_Literal_Constraint (-static_cast<ACE_CDR::Long> (std::get<ACE_CDR::ULong> (this->op_)));
     default:
       return ETCL_Literal_Constraint (ACE_CDR::Long {});
   }
@@ -414,53 +421,35 @@ ETCL_Literal_Constraint::widest_type (ETCL_Literal_Constraint const &rhs)
   Literal_Type const rhs_type = rhs.expr_type ();
   Literal_Type return_value = rhs_type;
 
-  if (rhs_type != this->type_)
+  if (rhs_type != this->expr_type ())
     {
-      if (rhs_type > this->type_)
+      if (rhs_type > this->expr_type ())
         {
           return_value = rhs_type;
         }
       else
         {
-          return_value = this->type_;
+          return_value = this->expr_type ();
         }
     }
 
   return return_value;
 }
 
-void
-ETCL_Literal_Constraint::copy (ETCL_Literal_Constraint const &lit)
+ETCL_Literal_Constraint::Value
+ETCL_Literal_Constraint::copy_value (ETCL_Literal_Constraint::Value const &value)
 {
-  if (this->type_ == ACE_ETCL_STRING)
-    {
-      ACE::strdelete (this->op_.str_);
-    }
-
-  this->type_ = lit.type_;
-
-  switch (this->type_)
-  {
-  case ACE_ETCL_STRING:
-    this->op_.str_ = ACE::strnew (lit.op_.str_);
-    break;
-  case ACE_ETCL_DOUBLE:
-    this->op_.double_ = lit.op_.double_;
-    break;
-  case ACE_ETCL_UNSIGNED:
-    this->op_.uinteger_ = lit.op_.uinteger_;
-    break;
-  case ACE_ETCL_INTEGER:
-  case ACE_ETCL_SIGNED:
-    this->op_.integer_ = lit.op_.integer_;
-    break;
-  case ACE_ETCL_BOOLEAN:
-    this->op_.bool_ = lit.op_.bool_;
-    break;
-  default:
-    this->type_ = ACE_ETCL_UNKNOWN;
-    break;
-  }
+  if (String_Owner const *str = std::get_if<String_Owner> (&value))
+    return String_Owner (ACE::strnew (str->get ()));
+  if (ACE_CDR::ULong const *uinteger = std::get_if<ACE_CDR::ULong> (&value))
+    return *uinteger;
+  if (ACE_CDR::Long const *integer = std::get_if<ACE_CDR::Long> (&value))
+    return *integer;
+  if (ACE_CDR::Boolean const *boolean = std::get_if<ACE_CDR::Boolean> (&value))
+    return *boolean;
+  if (ACE_CDR::Double const *doub = std::get_if<ACE_CDR::Double> (&value))
+    return *doub;
+  return {};
 }
 
 // ****************************************************************

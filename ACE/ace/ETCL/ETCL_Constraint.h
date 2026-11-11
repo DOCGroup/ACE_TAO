@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include <memory>
+#include <variant>
 
 #include "ace/SString.h"
 
@@ -60,7 +61,7 @@ class ACE_ETCL_Export ETCL_Literal_Constraint
   : public ETCL_Constraint
 {
 public:
-  ETCL_Literal_Constraint ();
+  ETCL_Literal_Constraint () = default;
 
   explicit ETCL_Literal_Constraint (ACE_CDR::ULong uinteger);
   explicit ETCL_Literal_Constraint (ACE_CDR::Long integer);
@@ -71,7 +72,7 @@ public:
   ETCL_Literal_Constraint (ETCL_Literal_Constraint const &lit);
   ETCL_Literal_Constraint (ETCL_Literal_Constraint &&) = delete;
 
-  ~ETCL_Literal_Constraint() override;
+  ~ETCL_Literal_Constraint () override;
 
   /// Visitor accept method.
   int accept (ETCL_Constraint_Visitor *visitor) override;
@@ -134,21 +135,22 @@ public:
   widest_type (ETCL_Literal_Constraint const &rhs);
 
 protected:
-  /// Private copy method.
-  void copy (ETCL_Literal_Constraint const &co);
-
-  /// Union of the possible literal types.
-  union
+  struct ACE_ETCL_Export String_Deleter
   {
-    char *str_; // Managed with ACE::strnew and ACE::strdelete.
-    ACE_CDR::ULong uinteger_;
-    ACE_CDR::Long integer_;
-    ACE_CDR::Boolean bool_;
-    ACE_CDR::Double double_;
-  } op_ {};
+    void operator() (char *str) const noexcept;
+  };
 
-  /// The actual types of the ETCL_Literal_Constraint.
-  Literal_Type type_;
+  using String_Owner = std::unique_ptr<char, String_Deleter>;
+  using Value = std::variant<std::monostate,
+                             String_Owner,
+                             ACE_CDR::ULong,
+                             ACE_CDR::Long,
+                             ACE_CDR::Boolean,
+                             ACE_CDR::Double>;
+
+  static Value copy_value (Value const &value);
+
+  Value op_ {};
 };
 
 // ****************************************************************
