@@ -30,11 +30,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_Concurrency_Loader () = default;
 
-  /// Destructor
   ~TAO_Concurrency_Loader () override = default;
+
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader const &) = delete;
+  TAO_Concurrency_Loader &operator= (TAO_Concurrency_Loader const &) = delete;
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
+  TAO_Concurrency_Loader &operator= (TAO_Concurrency_Loader &&) = delete;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -49,16 +52,9 @@ public:
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, ACE_TCHAR *argv[]) override;
 
-
- protected:
+protected:
   /// Instance of the TAO_Concurrency_Server
   TAO_Concurrency_Server concurrency_server_;
-
-private:
-  TAO_Concurrency_Loader (TAO_Concurrency_Loader const &) = delete;
-  TAO_Concurrency_Loader &operator = (TAO_Concurrency_Loader const &) = delete;
-  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
-  TAO_Concurrency_Loader &operator = (TAO_Concurrency_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
