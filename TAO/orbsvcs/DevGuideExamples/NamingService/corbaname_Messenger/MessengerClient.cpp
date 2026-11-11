@@ -1,12 +1,13 @@
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
+
 #include <iostream>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       ACE_TCHAR const *url = ACE_TEXT ("corbaname:rir:#example/Messenger");
       if (argc < 2)
         {
@@ -17,8 +18,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         url = argv[1];
 
-      CORBA::Object_var object = orb->string_to_object (url);
-      Messenger_var messenger = Messenger::_narrow (object.in ());
+      CORBA::Object_var const object = orb->string_to_object (url);
+      Messenger_var const messenger = Messenger::_narrow (object.in ());
       if (CORBA::is_nil (messenger.in ()))
         {
           std::cerr << "Not a Messenger reference" << std::endl;
@@ -28,6 +29,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var message = CORBA::string_dup ("Hello!");
       messenger->send_message ("TAO User", "TAO Test", message.inout ());
       std::cout << "Message was sent" << std::endl;
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {
