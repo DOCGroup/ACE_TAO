@@ -16,9 +16,9 @@
 #include "ace/os_include/os_netdb.h"
 #include <cstring>
 
-int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
+int Logging_Handler::recv_log_record (ACE_Message_Block_Unique_Ptr &mblk)
 {
-  mblk = nullptr;
+  mblk.reset ();
   // Put <logging_peer>'s hostname in new message block.
   ACE_INET_Addr peer_addr;
   logging_peer_.get_remote_addr (peer_addr);
@@ -62,7 +62,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
               payload->wr_ptr (length);   // Reflect additional bytes
               // Chain the payload to mblk via the continuation field.
               message_block->cont (payload_owner.release ());
-              mblk = message_block_owner.release ();
+              mblk.reset (message_block_owner.release ());
               return length;
             }
           }
@@ -72,11 +72,11 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 }
 
 
-int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
+int Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
 {
   // Peer hostname is in the <mblk> and the log record data
   // is in its continuation.
-  if (log_file_->send_n (mblk) == -1)
+  if (log_file_ == nullptr || log_file_->send_n (&mblk) == -1)
     {
       return -1;
     }
@@ -84,7 +84,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
   if (ACE::debug ())
     {
       // Build a CDR stream from the log record data.
-      ACE_InputCDR cdr (mblk->cont ());
+      ACE_InputCDR cdr (mblk.cont ());
       ACE_CDR::Boolean byte_order {};
       // Extract the byte-order and length, ending up at the start
       // of the log record itself. Use the byte order to properly
@@ -98,24 +98,23 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
               ACE_Log_Record log_record;
               if (cdr >> log_record)
                 {
-                  log_record.print (mblk->rd_ptr (), 1, cerr);
+                  log_record.print (mblk.rd_ptr (), 1, cerr);
                 }
             }
         }
     }
 
-  return ACE_Utils::truncate_cast<int> (mblk->total_length ());
+  return ACE_Utils::truncate_cast<int> (mblk.total_length ());
 }
 
 
 int Logging_Handler::log_record ()
 {
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block_Unique_Ptr mblk;
   if (recv_log_record (mblk) == -1)
     return -1;
   else {
-    ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
-    int result = write_log_record (mblk);
+    int const result = write_log_record (*mblk);
     return result == -1 ? -1 : 0;
   }
 }

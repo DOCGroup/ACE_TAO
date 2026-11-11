@@ -126,16 +126,15 @@ protected:
 
 int CLD_Handler::handle_input (ACE_HANDLE handle)
 {
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block_Unique_Ptr mblk;
   Logging_Handler logging_handler (handle);
 
   if (logging_handler.recv_log_record (mblk) != -1)
     {
-      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
-      ACE_Message_Block * const payload = mblk_owner->cont ();
+      ACE_Message_Block * const payload = mblk->cont ();
       if (msg_queue_.enqueue_tail (payload) != -1)
         {
-          mblk_owner->cont (nullptr);
+          mblk->cont (nullptr);
           return 0; // Success return.
         }
     }

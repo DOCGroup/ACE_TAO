@@ -8,15 +8,14 @@
 #include "TP_Logging_Server.h"
 
 int TP_Logging_Handler::handle_input (ACE_HANDLE) {
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block_Unique_Ptr mblk;
   if (logging_handler_.recv_log_record (mblk) != -1) {
-    ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
     ACE_Message_Block *log_blk = nullptr;
     ACE_NEW_RETURN
       (log_blk, ACE_Message_Block
                   (reinterpret_cast<char *> (this)), -1);
     ACE_Message_Block_Unique_Ptr log_blk_owner {log_blk};
-    log_blk_owner->cont (mblk_owner.release ());
+    log_blk_owner->cont (mblk.release ());
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     if (TP_LOGGING_TASK::instance ()->put (log_blk_owner.get ()) == -1)
       return -1;
@@ -54,7 +53,7 @@ int TP_Logging_Task::svc () {
     ACE_Message_Block_Unique_Ptr log_blk_owner {log_blk};
     TP_Logging_Handler *tp_handler = reinterpret_cast<TP_Logging_Handler *> (log_blk->rd_ptr ());
     Logging_Handler logging_handler (tp_handler->log_file ());
-    logging_handler.write_log_record (log_blk->cont ());
+    logging_handler.write_log_record (*log_blk->cont ());
 
     tp_handler->handle_close (ACE_INVALID_HANDLE, 0);
   }
