@@ -5,7 +5,7 @@
 
 class test_impl : public virtual POA_test
 {
-  virtual char * test_op (const char * in_arg);
+  virtual char * test_op (const char * in_arg) override;
 };
 
 #endif /* TAO_TEST_I_H */
