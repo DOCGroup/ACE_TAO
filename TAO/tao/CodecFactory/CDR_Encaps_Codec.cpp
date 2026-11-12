@@ -40,8 +40,6 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
-  // ----------------------------------------------------------------
-
   TAO_OutputCDR cdr (static_cast<size_t> (0), // size
                      static_cast<int> (TAO_ENCAP_BYTE_ORDER),
                      nullptr,               // buffer_allocator
@@ -51,11 +49,11 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
                      this->major_,
                      this->minor_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
       this->char_translator_->assign (&cdr);
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
       this->wchar_translator_->assign (&cdr);
     }
@@ -121,11 +119,11 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
                     this->minor_,
                     this->orb_core_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
       this->char_translator_->assign (&cdr);
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
       this->wchar_translator_->assign (&cdr);
     }
@@ -158,7 +156,6 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
-  // ----------------------------------------------------------------
   TAO_OutputCDR cdr (static_cast<size_t> (0), // size
                      static_cast<int> (TAO_ENCAP_BYTE_ORDER),
                      nullptr,               // buffer_allocator
@@ -168,11 +165,11 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
                      this->major_,
                      this->minor_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
       this->char_translator_->assign (&cdr);
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
       this->wchar_translator_->assign (&cdr);
     }
@@ -280,11 +277,11 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
                     this->minor_,
                     this->orb_core_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
       this->char_translator_->assign (&cdr);
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
       this->wchar_translator_->assign (&cdr);
     }

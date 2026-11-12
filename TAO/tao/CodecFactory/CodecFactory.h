@@ -48,7 +48,7 @@ public:
   TAO_CodecFactory_Loader &operator= (TAO_CodecFactory_Loader &&) = delete;
 };
 
-static int
+static int const
 TAO_Requires_CodecFactory_Initializer = TAO_CodecFactory_Loader::Initializer ();
 
 ACE_STATIC_SVC_DECLARE (TAO_CodecFactory_Loader)
