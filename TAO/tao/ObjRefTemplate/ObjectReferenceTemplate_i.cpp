@@ -20,8 +20,6 @@ namespace TAO
   {
   }
 
-  ObjectReferenceTemplate::~ObjectReferenceTemplate () = default;
-
   ::CORBA::ValueBase *
   ObjectReferenceTemplate::_copy_value ()
   {

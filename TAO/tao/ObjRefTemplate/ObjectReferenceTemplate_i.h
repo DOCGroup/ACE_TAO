@@ -94,7 +94,7 @@ namespace TAO
      * Protected destructor to enforce proper memory management via
      * reference counting.
      */
-    ~ObjectReferenceTemplate () override;
+    ~ObjectReferenceTemplate () override = default;
 
   private:
     std::string server_id_;
