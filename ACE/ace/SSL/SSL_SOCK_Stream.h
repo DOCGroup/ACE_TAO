@@ -321,7 +321,7 @@ protected:
                   const ACE_Time_Value *timeout) const;
 
   /// The SSL session.
-  SSL *ssl_;
+  SSL *ssl_ {};
 
   /// The stream which works under the ssl connection.
   ACE_SOCK_Stream stream_;

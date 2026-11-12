@@ -49,6 +49,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
 public:
+  ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor const &) = delete;
+  ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor const &) = delete;
+  ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor &&) = delete;
+  ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor &&) = delete;
+
   /// Default constructor.
   ACE_SSL_SOCK_Acceptor ();
 

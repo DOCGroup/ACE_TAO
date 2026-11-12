@@ -54,6 +54,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {
 public:
+  ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Connector const &) = delete;
+  ACE_SSL_SOCK_Connector &operator= (ACE_SSL_SOCK_Connector const &) = delete;
+  ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Connector &&) = delete;
+  ACE_SSL_SOCK_Connector &operator= (ACE_SSL_SOCK_Connector &&) = delete;
+
   /// Default constructor.
   ACE_SSL_SOCK_Connector ();
 

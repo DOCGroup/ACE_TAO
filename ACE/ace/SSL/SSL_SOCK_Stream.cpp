@@ -18,8 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
-  : ssl_ (nullptr),
-    stream_ ()
+  : stream_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 

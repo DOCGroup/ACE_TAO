@@ -60,6 +60,11 @@ public:
   //@}
 
 protected:
+  ACE_SSL_SOCK (ACE_SSL_SOCK const &) = delete;
+  ACE_SSL_SOCK &operator= (ACE_SSL_SOCK const &) = delete;
+  ACE_SSL_SOCK (ACE_SSL_SOCK &&) = delete;
+  ACE_SSL_SOCK &operator= (ACE_SSL_SOCK &&) = delete;
+
   /// Default constructor is private to prevent instances of this class
   /// from being defined.
   ACE_SSL_SOCK ();

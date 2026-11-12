@@ -67,7 +67,7 @@ static BIO_METHOD methods_ACE =
 # define BIO_get_data(b) b->ptr
 # define BIO_get_shutdown(b) b->shutdown
 #else
-static BIO_METHOD* methods_ACE;
+static BIO_METHOD* methods_ACE {};
 # define BIO_set_num(b, val)
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L || (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L) */
 
