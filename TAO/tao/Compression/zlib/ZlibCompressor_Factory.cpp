@@ -21,34 +21,35 @@ Zlib_CompressorFactory::get_compressor (
                                     ::Compression::CompressionLevel(Z_BEST_COMPRESSION), // Max value
                                     compression_level); // Argument value
 
-    ::Compression::Compressor_ptr compressor {};
+    ::Compression::Compressor_var compressor;
 
-    {   // Ensure scoped lock for compressor Map container
-
+    {
+        // Keep the map access locked until the selected compressor has its own reference.
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
 
-        try {
-            // Try and locate the compressor (we may already have it)
+        try
+          {
             ZlibCompressorMap::iterator it = this->compressors_.find(compression_level);
 
             if (it == this->compressors_.end())
-            {  // Does not yet exist so create it
-                ACE_NEW_RETURN (compressor,
-                                ::TAO::ZlibCompressor (this, compression_level),
-                                nullptr);
-                it = this->compressors_.insert(ZlibCompressorMap::value_type(compression_level, compressor)).first;
-            }
+              {
+                compressor = new ::TAO::ZlibCompressor (this, compression_level);
+                it = this->compressors_.insert (
+                  ZlibCompressorMap::value_type (compression_level, compressor)).first;
+              }
 
-            compressor = (*it).second.in();
-        } catch (...) {
-            TAOLIB_ERROR_RETURN((LM_ERROR,
-                ACE_TEXT("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),
-                int (compression_level)), nullptr);
-        }
+            compressor = (*it).second.in ();
+          }
+        catch (...)
+          {
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                  ACE_TEXT ("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),
+                                  int (compression_level)), nullptr);
+          }
 
-    }   // End of scoped container locking
+    }
 
-    return ::Compression::Compressor::_duplicate(compressor);
+    return ::Compression::Compressor::_duplicate (compressor.in ());
 }
 
 }
