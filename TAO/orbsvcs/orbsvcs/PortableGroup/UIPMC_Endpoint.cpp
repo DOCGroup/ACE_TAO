@@ -33,10 +33,7 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (ACE_INET_Addr const &addr)
   this->object_addr (addr);
 }
 
-TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint ()
-{
-  delete this->next_;
-}
+TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint () = default;
 
 void
 TAO_UIPMC_Endpoint::object_addr (ACE_INET_Addr const &addr)
@@ -91,7 +88,7 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 TAO_Endpoint *
 TAO_UIPMC_Endpoint::next ()
 {
-  return this->next_;
+  return this->next_.get ();
 }
 
 TAO_Endpoint *
@@ -151,7 +148,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
   TAO_UIPMC_Endpoint *latest = this;
   CORBA::ULong count = static_cast<CORBA::ULong> (preferred.size());
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   while (i < count)
     {
@@ -182,29 +179,33 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       ++i;
       if (i < count)
         {
-          TAO_Endpoint * const tmp_ep = latest->duplicate ();
-          latest->next_ = dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
-          if (latest->next_ == nullptr)
+          std::unique_ptr<TAO_Endpoint> tmp_ep (latest->duplicate ());
+          TAO_UIPMC_Endpoint * const next_ep =
+            dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep.get ());
+          if (next_ep == nullptr)
             {
-              delete tmp_ep;
               return i;
             }
 
-          latest = latest->next_;
+          tmp_ep.release ();
+          latest->next_.reset (next_ep);
+          latest = latest->next_.get ();
         }
     }
 
   if (count > 0 &&
       !oc->orb_params ()->enforce_pref_interfaces ())
     {
-      TAO_Endpoint * const tmp_ep = latest->duplicate ();
-      latest->next_ = dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
-      if (latest->next_ == nullptr)
+      std::unique_ptr<TAO_Endpoint> tmp_ep (latest->duplicate ());
+      TAO_UIPMC_Endpoint * const next_ep =
+        dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep.get ());
+      if (next_ep == nullptr)
         {
-          delete tmp_ep;
           return count;
         }
 
+      tmp_ep.release ();
+      latest->next_.reset (next_ep);
       latest->next_->preferred_path_.host = static_cast<char const *> (nullptr);
       ++count;
     }

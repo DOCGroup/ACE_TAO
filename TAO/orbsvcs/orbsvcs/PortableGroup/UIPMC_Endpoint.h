@@ -25,6 +25,8 @@
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
 
+#include <memory>
+
 #include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -118,7 +120,7 @@ private:
 
   /// UIPMC Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_UIPMC_Endpoint *next_ {};
+  std::unique_ptr<TAO_UIPMC_Endpoint> next_ {};
 
   /// Preferred interface name (if set)
   CORBA::String_var preferred_if_;
