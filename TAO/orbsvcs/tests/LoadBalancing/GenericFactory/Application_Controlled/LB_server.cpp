@@ -2,12 +2,15 @@
 #include "Basic.h"
 
 #include "TestC.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
-  : argc_ (argc)
-  , argv_ (argv)
-  , ior_output_file_(ACE_TEXT("obj.ior"))
+  : argc_ (argc),
+    argv_ (argv),
+    ior_output_file_ (ACE_TEXT ("obj.ior"))
 {
 }
 
@@ -16,13 +19,17 @@ LB_server::destroy ()
 {
   try
     {
-      this->lm_->delete_object (this->fcid_.in ());
+      if (!CORBA::is_nil (this->lm_.in ()) &&
+          !CORBA::is_nil (this->object_group_.in ()))
+        this->lm_->delete_object (this->fcid_.in ());
 
-      this->root_poa_->destroy (1, 1);
+      if (!CORBA::is_nil (this->root_poa_.in ()))
+        this->root_poa_->destroy (1, 1);
 
-      this->orb_->destroy ();
+      if (!CORBA::is_nil (this->orb_.in ()))
+        this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception caught while destroying LB_server\n");
@@ -32,46 +39,46 @@ LB_server::destroy ()
 }
 
 CORBA::ORB_ptr
-LB_server::orb ()
+LB_server::orb () const
 {
   return this->orb_.in ();
 }
 
 CORBA::Object_ptr
-LB_server::object_group ()
+LB_server::object_group () const
 {
   return this->object_group_.in ();
 }
 
 CosLoadBalancing::LoadManager_ptr
-LB_server::load_manager ()
+LB_server::load_manager () const
 {
   return this->lm_.in ();
 }
 
 int
-LB_server::write_ior_to_file (const char *ior)
+LB_server::write_ior_to_file (char const *ior) const
 {
-  FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (this->ior_output_file_, ACE_TEXT ("w")),
+    ACE_OS::fclose);
 
-  if (output_file == 0)
+  if (!output_file)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR:"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR\n"),
+                        -1);
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior);
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", ior);
   return 0;
 }
 
 int
-LB_server::parse_args (int argc, ACE_TCHAR *argv[])
+LB_server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -82,13 +89,10 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
+                           this->argv_[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -97,36 +101,32 @@ LB_server::start_orb_and_poa ()
 {
   try
     {
-      // Initialise the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+                          -1);
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager ();
-
       poa_manager->activate ();
 
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("LoadManager");
-
-      this->lm_ =
-        CosLoadBalancing::LoadManager::_narrow (obj.in ());
+      this->lm_ = CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->lm_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Load Manager Reference\n"),
-                          1);
+                          -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
@@ -138,12 +138,12 @@ LB_server::start_orb_and_poa ()
 int
 LB_server::create_object_group ()
 {
+  if (this->parse_args () != 0)
+    return -1;
+
   try
     {
-      const char *repository_id = "IDL:Test/Basic:1.0";
-
-      if (this->parse_args (argc_, argv_) != 0)
-                    return -1;
+      char const * const repository_id = "IDL:Test/Basic:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -154,7 +154,7 @@ LB_server::create_object_group ()
       property.nam[0].id =
         CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
 
-      PortableGroup::MembershipStyleValue msv =
+      PortableGroup::MembershipStyleValue const msv =
         PortableGroup::MEMB_APP_CTRL;
       property.val <<= msv;
 
@@ -165,9 +165,10 @@ LB_server::create_object_group ()
       CORBA::String_var ior =
         this->orb_->object_to_string (this->object_group_.in ());
 
-      this->write_ior_to_file (ior.in ());
+      if (this->write_ior_to_file (ior.in ()) != 0)
+        return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception raised while creating object group");
@@ -178,7 +179,7 @@ LB_server::create_object_group ()
 }
 
 int
-LB_server::register_servant (Basic *servant, const char *loc)
+LB_server::register_servant (Basic *servant, std::string const &loc)
 {
   try
     {
@@ -188,13 +189,13 @@ LB_server::register_servant (Basic *servant, const char *loc)
       PortableGroup::Location location (1);
       location.length (1);
 
-      location[0].id = CORBA::string_dup (loc);
+      location[0].id = CORBA::string_dup (loc.c_str ());
 
       this->lm_->add_member (this->object_group_.in (),
                              location,
                              basic.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised while registering servant");
       return -1;
