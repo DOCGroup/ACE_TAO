@@ -33,7 +33,7 @@ class TAO_DynamicAny_Export TAO_DynValueCommon_i
 public:
   explicit TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
 
-  ~TAO_DynValueCommon_i () override;
+  ~TAO_DynValueCommon_i () override = default;
 
   TAO_DynValueCommon_i (TAO_DynValueCommon_i const &src) = delete;
   TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i const &src) = delete;

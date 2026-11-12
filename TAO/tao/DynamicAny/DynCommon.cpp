@@ -30,8 +30,6 @@ TAO_DynCommon::TAO_DynCommon (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynCommon::~TAO_DynCommon () = default;
-
 CORBA::TypeCode_ptr
 TAO_DynCommon::type ()
 {

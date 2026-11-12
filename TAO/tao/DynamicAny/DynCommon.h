@@ -28,7 +28,7 @@ class TAO_DynamicAny_Export TAO_DynCommon
 public:
   explicit TAO_DynCommon (CORBA::Boolean allow_truncation);
 
-  ~TAO_DynCommon () override;
+  ~TAO_DynCommon () override = default;
 
   TAO_DynCommon (TAO_DynCommon const &) = delete;
   TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
