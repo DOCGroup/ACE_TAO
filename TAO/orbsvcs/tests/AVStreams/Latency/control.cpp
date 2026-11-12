@@ -47,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case '?':

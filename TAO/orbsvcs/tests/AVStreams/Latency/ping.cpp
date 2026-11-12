@@ -6,6 +6,9 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
 ACE_TString ior_output_file { ACE_TEXT ("ping.ior") };
 bool respond { true };
@@ -104,15 +107,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                       poa.in ());
 
       // Register the video mmdevice object with the ORB
-      Reactive_Strategy *reactive_strategy {};
-      ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy,
-                      1);
+      std::unique_ptr<Reactive_Strategy> reactive_strategy =
+        std::make_unique<Reactive_Strategy> ();
       reactive_strategy->init (orb.in (), poa.in ());
       TAO_MMDevice *mmdevice_impl {};
       ACE_NEW_RETURN (mmdevice_impl,
-                      TAO_MMDevice (reactive_strategy),
+                      TAO_MMDevice (reactive_strategy.get ()),
                       1);
+      PortableServer::ServantBase_var safe_mmdevice = mmdevice_impl;
 
       AVStreams::MMDevice_var mmdevice =
         mmdevice_impl->_this ();
@@ -125,25 +127,28 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the ior to it
       if (!ior_output_file.empty ())
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w"));
-          if (output_file == nullptr)
+          using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+          File_Ptr output_file (ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")),
+                                std::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file %s for writing IOR: %C",
                                ior_output_file.c_str (),
                                ior.in ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          std::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       Ping_Recv_FDev *ping_fdev_impl {};
       ACE_NEW_RETURN (ping_fdev_impl,
                       Ping_Recv_FDev ("Ping"),
                       1);
+      PortableServer::ServantBase_var safe_ping_fdev = ping_fdev_impl;
       Pong_Send_FDev *pong_fdev_impl {};
       ACE_NEW_RETURN (pong_fdev_impl,
                       Pong_Send_FDev ("Pong"),
                       1);
+      PortableServer::ServantBase_var safe_pong_fdev = pong_fdev_impl;
 
       AVStreams::FDev_var ping_fdev =
         ping_fdev_impl->_this ();
@@ -207,7 +212,7 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
                                    ACE_Addr const &)
 {
-  this->count_++;
+  ++this->count_;
 
   ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame %d\n", this->count_));
 
@@ -222,7 +227,7 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
           if (i->length () < sizeof(stamp))
             return 0;
 
-          ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
+          std::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
 
           ACE_hrtime_t const now = ACE_OS::gethrtime ();
           if (recv_base == 0)
