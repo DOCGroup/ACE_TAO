@@ -66,37 +66,29 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
   if (!this->config_initialized_)
     {
       TAO_DTP_Config_Registry * const config_repo =
-      ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
-        ("DTP_Config_Registry");
+        ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
+          (ACE_TEXT ("DTP_Config_Registry"));
 
       if (config_repo == nullptr)
         {
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
-              ACE_TEXT ("cannot retrieve configuration repo\n")));
+                             ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
+                             ACE_TEXT ("cannot retrieve configuration repo\n")));
             }
           return false;
         }
-      else
+
+      TAO_DTP_Definition config_entry {};
+      if (!config_repo->find (this->dynamic_tp_config_name_, config_entry))
         {
-          TAO_DTP_Definition config_entry;
-          if (!config_repo->find (this->dynamic_tp_config_name_, config_entry))
-            {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
-                          ACE_TEXT ("warning: config not found...using ")
-                          ACE_TEXT ("defaults!\n")));
-            }
-          this->set_dtp_config (config_entry);
-          //this->dtp_task_.set_init_pool_threads(config_entry.init_threads_);
-          //this->dtp_task_.set_min_pool_threads(config_entry.min_threads_);
-          //this->dtp_task_.set_max_pool_threads(config_entry.max_threads_);
-          //this->dtp_task_.set_thread_idle_time(config_entry.timeout_);
-          //this->dtp_task_.set_thread_stack_size(config_entry.stack_size_);
-          //this->dtp_task_.set_max_request_queue_depth(config_entry.queue_depth_);
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
+                         ACE_TEXT ("warning: config not found...using ")
+                         ACE_TEXT ("defaults!\n")));
         }
+      this->set_dtp_config (config_entry);
 
     }
   return (this->dtp_task_.open () == 0);
