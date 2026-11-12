@@ -144,7 +144,7 @@ public:
   /**
    * Initialize an AttributesImpl that holds @a size attributes.
    */
-  ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
+  explicit ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
   ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
   virtual ~ACEXML_AttributesImpl ();
 
