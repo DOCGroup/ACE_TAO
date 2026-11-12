@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_SIMPLE_THREE_STAGE_SENDER_H
+#define TAO_AVSTREAMS_SIMPLE_THREE_STAGE_SENDER_H
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -80,6 +82,7 @@ public:
   /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
+  /// Retain the stream controller reference returned during setup.
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
@@ -122,3 +125,5 @@ private:
   /// Protocol object borrowed from the AVStreams endpoint strategy.
   TAO_AV_Protocol_Object *protocol_object_ {};
 };
+
+#endif /* TAO_AVSTREAMS_SIMPLE_THREE_STAGE_SENDER_H */

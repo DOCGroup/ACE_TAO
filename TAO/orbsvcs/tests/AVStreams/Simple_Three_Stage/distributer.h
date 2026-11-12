@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_SIMPLE_THREE_STAGE_DISTRIBUTER_H
+#define TAO_AVSTREAMS_SIMPLE_THREE_STAGE_DISTRIBUTER_H
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -33,14 +35,12 @@ public:
   Distributer_Receiver_Callback (Distributer_Receiver_Callback &&) = delete;
   Distributer_Receiver_Callback &operator= (Distributer_Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Receive a frame from the sender and forward it to the receiver.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Shut down the receiver stream when the sender finishes.
   int handle_destroy () override;
 
 private:
@@ -64,7 +64,7 @@ public:
   Distributer_Receiver_StreamEndPoint (Distributer_Receiver_StreamEndPoint &&) = delete;
   Distributer_Receiver_StreamEndPoint &operator= (Distributer_Receiver_StreamEndPoint &&) = delete;
 
-  // Create a receiver application callback.
+  /// Return the receiver's application callback.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
@@ -125,7 +125,6 @@ class Distributer
 public:
   Distributer () = default;
 
-  ~Distributer () = default;
   Distributer (Distributer const &) = delete;
   Distributer &operator= (Distributer const &) = delete;
   Distributer (Distributer &&) = delete;
@@ -139,14 +138,14 @@ public:
   void bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
                          ACE_CString const &mmdevice_name);
 
-  /// Get the stream control of the receiver
+  /// Return the receiver's stream controller servant.
   TAO_StreamCtrl *receiver_streamctrl ();
 
-  /// Accessor methods to set/get our sender protocol object
+  /// Set and return the sender protocol object borrowed from AVStreams.
   int sender_protocol_object  (TAO_AV_Protocol_Object *object);
   TAO_AV_Protocol_Object *sender_protocol_object ();
 
-  // Flag to know when we are done.
+  /// Get or set whether the stream has finished.
   bool done () const;
   void done (bool);
 
@@ -184,3 +183,5 @@ protected:
   /// Flag to know when we are done.
   bool done_ {};
 };
+
+#endif /* TAO_AVSTREAMS_SIMPLE_THREE_STAGE_DISTRIBUTER_H */
