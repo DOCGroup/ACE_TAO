@@ -129,7 +129,7 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
   if (raw_oid && oid_len > 0) {
     ACE_NEW(smival.value.oid.ptr, SmiUINT32[ oid_len]);
     smival.value.oid.len = oid_len;
-    for (size_t i=0; i < oid_len; i++)
+    for (size_t i=0; i < oid_len; ++i)
       smival.value.oid.ptr[i] = raw_oid[i];
   }
 }
@@ -230,7 +230,7 @@ Oid& Oid::operator+=( const char *a)
     return *this;
 
   if ( *a=='.')
-    a++;
+    ++a;
   size_t sz = std::strlen (a);
 
   if (valid()) {
@@ -540,7 +540,7 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
 
   size_t new_size = how_many - start;
   if (new_size == 0)
-     new_size++;
+     ++new_size;
   new_oid.smival.value.oid.len = new_size;
   ACE_NEW_RETURN(new_oid.smival.value.oid.ptr,
         SmiUINT32 [ new_oid.smival.value.oid.len], -1);
@@ -582,11 +582,14 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
     number = 0;
     // skip over the dot
     if (*string=='.')
-        string++;
+        ++string;
 
             // grab a digit token and convert it to a long int
     while (ACE_OS::ace_isdigit(*string))
-      number=number*10 + *(string++)-'0';
+      {
+        number = number * 10 + *string - '0';
+        ++string;
+      }
 
                 // check for invalid chars
     if (*string!=0 && *string!='.') {
@@ -596,7 +599,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
 
     // stuff the value into the array
     temp[index] = static_cast<SmiUINT32> (number);
-    index++;  // bump the counter
+    ++index;  // bump the counter
   }
 
 
@@ -670,7 +673,7 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
       return -1;                              // less than
     if ( this->smival.value.oid.ptr[z] > o.smival.value.oid.ptr[z])
       return 1;                               // greater than
-    z++;
+    ++z;
   }
 
   // if we truncated the len then these may not be equal
@@ -703,13 +706,15 @@ int Oid::right_comparison( const unsigned long n, const Oid &o) const
    if ( this->length() < n)
       return -1;
 
-   int start = (int) this->length();
-   int end = (int) start - (int) n;
-   for ( int z=start;z< end;z--)
+   size_t const this_length = this->length ();
+   size_t const other_length = o.length ();
+   for (size_t offset = 0; offset < n; ++offset)
    {
-       if ( o.smival.value.oid.ptr[z] < this->smival.value.oid.ptr[z])
+       size_t const this_index = this_length - offset - 1;
+       size_t const other_index = other_length - offset - 1;
+       if (this->smival.value.oid.ptr[this_index] < o.smival.value.oid.ptr[other_index])
           return -1;
-       if ( o.smival.value.oid.ptr[z] > this->smival.value.oid.ptr[z])
+       if (this->smival.value.oid.ptr[this_index] > o.smival.value.oid.ptr[other_index])
           return 1;
    }
 
@@ -743,7 +748,7 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
     return -1;
 
   // loop through and build up a string
-  for (index=0; index < srcOid->len; index++) {
+  for (index=0; index < srcOid->len; ++index) {
     // convert data element to a string
     if (ACE_OS::sprintf( szNumber,"%lu", srcOid->ptr[index]) == -1)
       return -1;
@@ -753,8 +758,11 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
       return -2;
 
     // if not at end, pad with a dot
-    if (totLen!=0)
-      string[totLen++] = '.';
+    if (totLen != 0)
+      {
+        string[totLen] = '.';
+        ++totLen;
+      }
 
     // copy the string token into the main string
     std::strcpy (string + totLen, szNumber);

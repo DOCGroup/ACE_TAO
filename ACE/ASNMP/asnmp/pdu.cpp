@@ -145,7 +145,7 @@ Pdu &Pdu::operator+= (Vb &vb)
   validity_ = 1;
 
   // up the vb count
-  vb_count_++;
+  ++vb_count_;
 
   // return self reference
   return *this;
@@ -194,7 +194,7 @@ int Pdu::get_vblist (Vb *pvbs, int pvb_count)
 
    // loop through all vbs_ and assign to params
    int z;
-   for (z = 0; z < pvb_count; z++)
+   for (z = 0; z < pvb_count; ++z)
       pvbs[z] = *vbs_[z];
 
    return 1;
@@ -408,9 +408,9 @@ int Pdu::trim (int p)
    while ( lp != 0)   {
      if ( vb_count_ > 0) {
          vbs_[vb_count_ - 1].reset ();
-         vb_count_--;
+         --vb_count_;
      }
-     lp--;
+     --lp;
    }
    return 1;
 }
@@ -423,18 +423,18 @@ int Pdu::delete_vb (int p)
       return 0;
 
    // safe to remove it
-   for ( int z=p;z < (vb_count_-1);z++) {
+   for (int z = p; z < (vb_count_ - 1); ++z) {
       vbs_[z] = std::move (vbs_[z + 1]);
    }
    vbs_[vb_count_ - 1].reset ();
-   vb_count_--;
+   --vb_count_;
 
    return 1;
 }
 
 void Pdu::delete_all_vbs ()
 {
-  for ( int z = 0; z < vb_count_; z++)
+  for (int z = 0; z < vb_count_; ++z)
     vbs_[z].reset ();
    vb_count_ = 0;
 }
