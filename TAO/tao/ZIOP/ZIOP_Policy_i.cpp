@@ -23,7 +23,7 @@ CompressorIdLevelListPolicy::CompressorIdLevelListPolicy ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdLevelListPolicy ()
   , ::CORBA::LocalObject ()
-  , value_ (0)
+  , value_ {}
 {
 }
 
@@ -51,7 +51,7 @@ CompressorIdLevelListPolicy::clone () const
   CompressorIdLevelListPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressorIdLevelListPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -136,7 +136,7 @@ CompressionEnablingPolicy::clone () const
   CompressionEnablingPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressionEnablingPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -225,7 +225,7 @@ CompressionLowValuePolicy::clone () const
   CompressionLowValuePolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressionLowValuePolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -295,7 +295,7 @@ CompressionMinRatioPolicy::clone () const
   CompressionMinRatioPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressionMinRatioPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 

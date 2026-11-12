@@ -27,8 +27,14 @@ class TAO_ZIOP_Service_Context_Handler :
   public TAO_Service_Context_Handler
 {
 public:
-  int process_service_context (TAO_Transport& transport,
-                               const IOP::ServiceContext& context,
+  TAO_ZIOP_Service_Context_Handler () = default;
+  TAO_ZIOP_Service_Context_Handler (TAO_ZIOP_Service_Context_Handler const &) = delete;
+  TAO_ZIOP_Service_Context_Handler &operator= (TAO_ZIOP_Service_Context_Handler const &) = delete;
+  TAO_ZIOP_Service_Context_Handler (TAO_ZIOP_Service_Context_Handler &&) = delete;
+  TAO_ZIOP_Service_Context_Handler &operator= (TAO_ZIOP_Service_Context_Handler &&) = delete;
+
+  int process_service_context (TAO_Transport &transport,
+                               IOP::ServiceContext const &context,
                                TAO_ServerRequest *request) override;
   int generate_service_context (
     TAO_Stub *stub,

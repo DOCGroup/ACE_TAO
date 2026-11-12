@@ -80,11 +80,7 @@ private:
   CORBA::Policy *effective_compression_enabling_policy ();
   CORBA::Policy *effective_compression_id_list_policy ();
 
-  // The following attribute are used to cache
-  // the different kind of policies and avoid to
-  // parse the MProfile's policy list each time we
-  // are asked about a given policy.
-
+  /// Cache policy references to avoid reparsing the MProfile policy list.
   CORBA::Policy_var compression_enabling_policy_;
 
   CORBA::Policy_var compression_id_list_policy_;

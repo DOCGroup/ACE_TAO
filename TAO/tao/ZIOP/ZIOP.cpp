@@ -25,7 +25,7 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 
       try
         {
-          /// Register the BiDir ORBInitializer.
+          /// Register the ZIOP ORB initializer.
           ACE_NEW_THROW_EX (tmp_orb_initializer,
                             TAO_ZIOP_ORBInitializer (this),
                             CORBA::NO_MEMORY (
@@ -92,7 +92,7 @@ TAO_ZIOP_Loader::Initializer ()
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_ZIOP_Loader);
 }
 
-const char *
+char const *
 TAO_ZIOP_Loader::ziop_compressorid_name (::Compression::CompressorId st)
 {
   switch (st)
@@ -114,10 +114,12 @@ TAO_ZIOP_Loader::ziop_compressorid_name (::Compression::CompressorId st)
 }
 
 void
-TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
-                                size_t len, size_t original_data_length,
-                                ::Compression::CompressorId  compressor_id,
-                                ::Compression::CompressionLevel compression_level)
+TAO_ZIOP_Loader::dump_msg (char const *type,
+                            u_char const *ptr,
+                            size_t len,
+                            size_t original_data_length,
+                            ::Compression::CompressorId compressor_id,
+                            ::Compression::CompressionLevel compression_level)
 {
   if (TAO_debug_level < 10)
     {
@@ -142,14 +144,14 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
               static_cast <int> (compression_level)));
 
   TAOLIB_HEX_DUMP ((LM_DEBUG,
-                 (const char *) ptr,
+                 reinterpret_cast<char const *> (ptr),
                  len,
                  ACE_TEXT ("ZIOP message")));
 }
 
 bool
 TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
-                             const ::Compression::Buffer &source,
+                             ::Compression::Buffer const &source,
                              ::Compression::Buffer &target)
 {
   try
@@ -278,7 +280,7 @@ CORBA::ULong
 TAO_ZIOP_Loader::compression_low_value (CORBA::Policy_ptr policy) const
 {
   // Default if no policy specified (No minimum, i.e. policy ignored).
-  CORBA::ULong result = 0u;
+  CORBA::ULong result {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   if (!CORBA::is_nil (policy))
@@ -326,7 +328,7 @@ TAO_ZIOP_Loader::compression_minratio_value (CORBA::Policy_ptr policy) const
 
 bool
 TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
-                           const ::Compression::Buffer &source,
+                           ::Compression::Buffer const &source,
                            ::Compression::Buffer &target)
 {
   try
@@ -346,7 +348,8 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
 }
 
 ::Compression::CompressionRatio
-TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& compressed)
+TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq const &uncompressed,
+                            CORBA::OctetSeq const &compressed)
 {
   // All ratios are computed via (ratio = Compressed_size / Uncompressed_size)
   // and so are valid between ("Smaller Size" 0.0 < ratio < 1.0 "Full size").
@@ -356,7 +359,7 @@ TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& comp
 }
 
 bool
-TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio &this_ratio,
+TAO_ZIOP_Loader::check_min_ratio (::Compression::CompressionRatio const &this_ratio,
                                   ::Compression::CompressionRatio overall_ratio,
                                   ::Compression::CompressionRatio min_ratio) const
 {

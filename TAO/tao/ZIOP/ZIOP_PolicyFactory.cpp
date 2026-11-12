@@ -104,7 +104,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
 CORBA::Policy_ptr
 TAO_ZIOP_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
+  CORBA::Policy_ptr policy {};
 
   switch (type)
   {

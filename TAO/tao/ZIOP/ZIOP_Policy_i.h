@@ -91,7 +91,7 @@ public:
   /// Returns a copy of this CompressionEnablingPolicy.
   CompressionEnablingPolicy *clone () const;
 
-  /// = The ZIOP::BidirectionalPolicy methods
+  /// The compression-enabled policy methods.
   ::CORBA::Boolean compression_enabled () override;
 
   CORBA::PolicyType policy_type () override;
@@ -133,7 +133,7 @@ public:
   /// Returns a copy of this CompressionLowValuePolicy.
   CompressionLowValuePolicy *clone () const;
 
-  /// = The ZIOP::BidirectionalPolicy methods
+  /// Returns the low compression threshold.
   ::CORBA::ULong low_value () override;
 
   CORBA::PolicyType policy_type () override;

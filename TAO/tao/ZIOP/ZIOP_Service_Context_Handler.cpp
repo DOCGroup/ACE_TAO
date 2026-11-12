@@ -11,13 +11,14 @@
 #include "tao/Messaging_PolicyValueC.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_ZIOP_Service_Context_Handler::process_service_context (
-  TAO_Transport&,
-  const IOP::ServiceContext &ctx,
+  TAO_Transport &,
+  IOP::ServiceContext const &ctx,
   TAO_ServerRequest *req)
 {
   // Ensure this context is actually for us to decode.
@@ -28,8 +29,8 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 1
   // Create an input CDR from the context buffer
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (ctx.context_data.get_buffer ()),
-                    ctx.context_data.length () );
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (ctx.context_data.get_buffer ()),
+                    ctx.context_data.length ());
   CORBA::Boolean byte_order {};
   if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
     {
@@ -48,7 +49,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
   for (CORBA::ULong i {}; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
     {
       TAO_InputCDR policy_cdr (
-        reinterpret_cast<const char*> (policy_value_seq[i].pvalue.get_buffer ()),
+        reinterpret_cast<char const *> (policy_value_seq[i].pvalue.get_buffer ()),
         policy_value_seq[i].pvalue.length ());
 
       if (policy_cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -93,7 +94,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 int
 TAO_ZIOP_Service_Context_Handler::generate_service_context (
   TAO_Stub *stub,
-  TAO_Transport&,
+  TAO_Transport &,
   TAO_Operation_Details &opdetails,
   TAO_Target_Specification &,
   TAO_OutputCDR &)

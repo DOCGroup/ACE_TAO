@@ -11,7 +11,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_ORBInitializer::TAO_ZIOP_ORBInitializer (TAO_ZIOP_Loader* loader) : loader_ (loader)
+TAO_ZIOP_ORBInitializer::TAO_ZIOP_ORBInitializer (TAO_ZIOP_Loader *loader)
+  : loader_ (loader)
 {
 }
 
@@ -96,11 +97,6 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
           // should do no more work in this ORBInitializer.
           return;
         }
-      throw;
-    }
-  catch (...)
-    {
-      // Rethrow any other exceptions...
       throw;
     }
 }
