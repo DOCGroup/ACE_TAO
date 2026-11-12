@@ -204,7 +204,7 @@ ACEXML_Parser::parse_doctypedecl ()
     {
       this->fatal_error(ACE_TEXT ("Invalid DOCTYPE name"));
     }
-  int const count = this->skip_whitespace_count (&nextch);
+  size_t const count = this->skip_whitespace_count (&nextch);
 
   if (nextch == 'S' || nextch == 'P') // ExternalID defined
     {
@@ -277,7 +277,7 @@ ACEXML_Parser::parse_internal_dtd ()
           this->fatal_error (ACE_TEXT ("Invalid Reference in internal DTD"));
           break;
         case 0:
-          this->pop_context (0);
+          this->pop_context (false);
           break;
         default:
           this->fatal_error (ACE_TEXT ("Invalid content in internal subset"));
@@ -364,7 +364,7 @@ ACEXML_Parser::parse_external_subset ()
           this->parse_PE_reference ();
           break;
         case 0:
-          nrelems = this->pop_context (0);
+          nrelems = this->pop_context (false);
           if (nrelems == 1)
             return 0;
           break;
@@ -419,7 +419,7 @@ ACEXML_Parser::parse_conditional_section ()
       if (fwd == 0)
         {
           this->get(); // Consume the 0
-          this->pop_context (0);
+          this->pop_context (false);
         }
     }
   else
@@ -441,7 +441,7 @@ int
 ACEXML_Parser::parse_ignoresect ()
 {
   ACEXML_Char nextch = this->skip_whitespace();
-  int count {};
+  size_t count {};
   bool done {};
   do {
     switch (nextch)
@@ -838,7 +838,7 @@ ACEXML_Parser::parse_content (ACEXML_Char const *startname,
       switch (ch)
         {
           case 0:
-            this->pop_context (1);
+            this->pop_context (true);
             break;
           case '<':
             // Push out old 'characters' event.
@@ -1154,7 +1154,7 @@ ACEXML_Parser::parse_attlist_decl ()
     {
       this->fatal_error(ACE_TEXT ("Expecting keyword 'ATTLIST'"));
     }
-  int count = check_for_PE_reference ();
+  size_t count = this->check_for_PE_reference ();
   if (!count)
     {
       this->fatal_error(ACE_TEXT ("Expecting space between ATTLIST and ")
@@ -1206,16 +1206,16 @@ ACEXML_Parser::parse_attlist_decl ()
   return 0;
 }
 
-int
+size_t
 ACEXML_Parser::check_for_PE_reference ()
 {
   ACEXML_Char fwd = '\xFF';
   // Skip any leading whitespaces and store the number of such chars skipped
-  int const count = this->skip_whitespace_count (&fwd);
+  size_t const count = this->skip_whitespace_count (&fwd);
   if (fwd == 0)
     {
       this->get(); // Consume the 0
-      this->pop_context (0);
+      this->pop_context (false);
       fwd = this->peek();
     }
   if (fwd == '%')
@@ -1466,7 +1466,7 @@ ACEXML_Parser::parse_atttype ()
               {
                 this->fatal_error(ACE_TEXT ("Expecting keyword `NOTATION'"));
               }
-            int const count = this->check_for_PE_reference ();
+            size_t const count = this->check_for_PE_reference ();
             if (!count)
               {
                 this->fatal_error (ACE_TEXT ("Expecting space between keyword ")
@@ -1531,7 +1531,7 @@ ACEXML_Parser::parse_notation_decl ()
     {
       this->fatal_error(ACE_TEXT ("Expecting Keyword 'NOTATION'"));
     }
-  int count = this->check_for_PE_reference ();
+  size_t count = this->check_for_PE_reference ();
   if (!count)
     {
       this->fatal_error (ACE_TEXT ("Expecting a space between keyword NOTATION")
@@ -1595,7 +1595,7 @@ ACEXML_Parser::parse_element_decl ()
     {
       this->fatal_error (ACE_TEXT ("Expecting keyword ELEMENT"));
     }
-  int count = this->check_for_PE_reference ();
+  size_t count = this->check_for_PE_reference ();
   if (!count)
     {
       this->fatal_error (ACE_TEXT ("Expecting a space between keyword ELEMENT")
@@ -1962,7 +1962,7 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str)
             this->fatal_error (ACE_TEXT ("Illegal '<' in AttValue"));
             break;
           case 0:
-            this->pop_context (1);
+            this->pop_context (true);
             break;
           default:
             this->obstack_.grow (ch);
@@ -2264,7 +2264,7 @@ ACEXML_Parser::parse_entity_value (ACEXML_Char *&str)
             this->obstack_.grow (ch);
             break;
           case 0:
-            this->pop_context (0);
+            this->pop_context (false);
             break;
           default:
             this->obstack_.grow (ch);
@@ -2528,7 +2528,7 @@ ACEXML_Parser::push_context (ACEXML_Parser_Context* context)
 }
 
 size_t
-ACEXML_Parser::pop_context (int GE_ref)
+ACEXML_Parser::pop_context (bool GE_ref)
 {
   size_t const nrelems = this->ctx_stack_.size ();
   if (nrelems <= 1)
@@ -2548,21 +2548,21 @@ ACEXML_Parser::pop_context (int GE_ref)
       this->fatal_error (ACE_TEXT ("Unable to read top element of input stack"));
     }
   ACEXML_Char *reference {};
-  if (GE_ref == 1 && this->GE_reference_.size() > 0)
+  if (GE_ref && this->GE_reference_.size() > 0)
     {
       if (this->GE_reference_.pop (reference) < 0)
         {
           this->fatal_error (ACE_TEXT ("Internal Parser Error"));
         }
     }
-  else if (GE_ref == 0 && this->PE_reference_.size() > 0)
+  else if (!GE_ref && this->PE_reference_.size() > 0)
     {
       if (this->PE_reference_.pop (reference) < 0)
         {
           this->fatal_error (ACE_TEXT ("Internal Parser Error"));
         }
     }
-  if (this->external_entity_ && (GE_ref == 0 || GE_ref == 1))
+  if (this->external_entity_)
     --this->external_entity_;
 
   this->content_handler_->setDocumentLocator (this->current_->getLocator());

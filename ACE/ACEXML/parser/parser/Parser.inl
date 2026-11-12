@@ -178,10 +178,10 @@ ACEXML_Parser::skip_whitespace ()
   return ch;
 }
 
-ACEXML_INLINE int
+ACEXML_INLINE size_t
 ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
 {
-  int wscount {};
+  size_t wscount {};
   ACEXML_Char dummy {};
   ACEXML_Char &forward = (peeky == nullptr ? dummy : *peeky);
 

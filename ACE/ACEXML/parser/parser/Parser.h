@@ -586,7 +586,7 @@ private:
    *
    * @sa skip_whitespace
    */
-  int skip_whitespace_count (ACEXML_Char *peek = nullptr);
+  size_t skip_whitespace_count (ACEXML_Char *peek = nullptr);
 
   /**
    * Skip an equal sign.
@@ -657,7 +657,7 @@ private:
   /**
    *  Pop the top element in the stack and replace current context with that.
    */
-  size_t pop_context (int GE_ref);
+  size_t pop_context (bool GE_ref);
 
   /**
    *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
@@ -684,7 +684,7 @@ private:
    *
    * @retval Number of whitespace characters skipped.
    */
-  int check_for_PE_reference ();
+  size_t check_for_PE_reference ();
 
   /**
    *  Reset the parser state.
