@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    client.cpp
@@ -17,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      NContextExt_Client_i client;
+      NContextExt_Client_i client {};
 
       if (client.init (argc, argv) != 0)
         return 1;
@@ -29,6 +28,4 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("client");
       return 1;
     }
-
-  return 0;
 }

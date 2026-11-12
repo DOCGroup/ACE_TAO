@@ -40,7 +40,7 @@ public:
 
 private:
   /// Parses the arguments passed on the command line.
-  int parse_args ();
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /**
    * Prints the values of the original name, strigified name and
@@ -58,17 +58,11 @@ private:
   /// Generates a random name
   CORBA::String_var get_name ();
 
-  /// # of arguments on the command line.
-  int argc_ {};
-
-  /// arguments from command line.
-  ACE_TCHAR **argv_ {};
-
   /// Naming context
-  CosNaming::NamingContextExt_var naming_context_;
+  CosNaming::NamingContextExt_var naming_context_ {};
 
-  /// Flag to check if '-v' option is set.
-  bool view_ {true};
+  /// Whether to print the converted names.
+  bool print_values_ {};
 };
 
 #endif /* NCONTEXTEXT_CLIENT_I_H */
