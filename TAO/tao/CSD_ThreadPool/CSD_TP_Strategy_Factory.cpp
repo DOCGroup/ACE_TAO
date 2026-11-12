@@ -93,7 +93,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
           ACE_NEW_RETURN (strategy,
                           TP_Strategy (num_threads, serialize_servants),
                           -1);
-          CSD_Framework::Strategy_var objref = strategy;
+          CSD_Framework::Strategy_var const objref = strategy;
           repo->add_strategy (poa_name, strategy);
         }
       else
