@@ -724,7 +724,6 @@ TAO_Root_POA::servant_to_reference (PortableServer::Servant servant)
   return this->servant_to_reference_i (servant);
 }
 
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAList *
 TAO_Root_POA::the_children ()
@@ -753,7 +752,6 @@ TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
 
   return this->id_to_reference_i (oid, true);
 }
-
 
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
@@ -2633,6 +2631,5 @@ TAO_Root_POA::get_active_object_map() const
   return this->active_policy_strategies_.servant_retention_strategy()->
     get_active_object_map();
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

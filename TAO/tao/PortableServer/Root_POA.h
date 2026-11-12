@@ -33,7 +33,6 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
-
 // Object_Key
 #include "tao/Object_KeyC.h"
 
@@ -617,7 +616,6 @@ protected:
   /// Set the object reference factory
   void set_obj_ref_factory (
     PortableInterceptor::ObjectReferenceFactory *current_factory);
-
 
   TAO_Servant_Location locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant);
