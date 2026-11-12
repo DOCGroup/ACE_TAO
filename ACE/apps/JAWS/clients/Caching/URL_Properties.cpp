@@ -16,7 +16,10 @@ ace_url_wstring (ACE_UINT16 const *value)
   ACE_NS_WString result;
   if (value != nullptr)
     while (*value != 0)
-      result += static_cast<ACE_WSTRING_TYPE> (*value++);
+      {
+        result += static_cast<ACE_WSTRING_TYPE> (*value);
+        ++value;
+      }
   return result;
 }
 
@@ -51,7 +54,7 @@ ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
   ACE_UINT16 *wptr = (ACE_UINT16 *) buf;
   size_t i;
 
-  for (i= 0; i <= wstr.length (); i++)
+  for (i= 0; i <= wstr.length (); ++i)
     wptr[i] = htons (wstr[i]);
 
   return i * sizeof (ACE_UINT16);
@@ -63,7 +66,7 @@ ACE_WString_Helper::decode (void *buf)
   ACE_UINT16 *wptr = (ACE_UINT16 *) buf;
   size_t i;
 
-  for (i = 0; wptr[i] != 0; i++)
+  for (i = 0; wptr[i] != 0; ++i)
     wptr[i] = ntohs (wptr[i]);
 
   return (i + 1) * sizeof (ACE_UINT16);
@@ -170,7 +173,7 @@ ACE_URL_Offer::dump () const
   else
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
 
-  for (size_t i = 0; i < this->prop_.size (); i++)
+  for (size_t i = 0; i < this->prop_.size (); ++i)
     this->prop_[i].dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

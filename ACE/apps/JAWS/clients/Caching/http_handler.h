@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -16,6 +15,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
+#include <cstdio>
 
 /**
  * @class HTTP_Handler
@@ -42,10 +42,10 @@ public:
   char const *filename () const;
 
 private:
-  char request_[BUFSIZ];
+  char request_[BUFSIZ] {};
   size_t request_size_ {};
 
-  char filename_[BUFSIZ];
+  char filename_[BUFSIZ] {};
   size_t response_size_ {};
 };
 

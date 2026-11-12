@@ -18,7 +18,10 @@ ace_url_wstring (ACE_UINT16 const *value)
   ACE_NS_WString result;
   if (value != nullptr)
     while (*value != 0)
-      result += static_cast<ACE_WSTRING_TYPE> (*value++);
+      {
+        result += static_cast<ACE_WSTRING_TYPE> (*value);
+        ++value;
+      }
   return result;
 }
 
@@ -263,12 +266,12 @@ ACE_URL_Locator_Request::dump () const
 
   ACE_DEBUG ((LM_DEBUG, "Property sequence 1: %x\n", this->seq1_));
   if (this->seq1_ != 0)
-    for (i = 0; i < this->seq1_->size (); i++)
+    for (i = 0; i < this->seq1_->size (); ++i)
       (*this->seq1_)[i].dump ();
 
   ACE_DEBUG ((LM_DEBUG, "Property sequence 2: %x\n", this->seq2_));
   if (this->seq2_ != 0)
-    for (i = 0; i < this->seq2_->size (); i++)
+    for (i = 0; i < this->seq2_->size (); ++i)
       (*this->seq2_)[i].dump();
 
   ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
@@ -460,7 +463,7 @@ ACE_URL_Locator_Reply::dump () const
 
   ACE_DEBUG ((LM_DEBUG, "Offer sequence: %x\n", this->offers_));
   if (this->offers_ != 0)
-    for (size_t i = 0; i < this->offers_->size (); i++)
+    for (size_t i = 0; i < this->offers_->size (); ++i)
       (*this->offers_)[i].dump();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

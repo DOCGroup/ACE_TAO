@@ -7,16 +7,14 @@
  */
 //=============================================================================
 
-
 #include "ace/Filecache.h"
 #include "http_handler.h"
-#include <cstdio>
 #include <cstring>
+#include <cstdio>
 
 HTTP_Handler::HTTP_Handler (char const *path)
 {
   // How long is the request going to be?
-  this->request_[0] = '\0';
   this->request_size_ =
     std::strlen ("GET ")
     + std::strlen (path)
@@ -24,9 +22,17 @@ HTTP_Handler::HTTP_Handler (char const *path)
 
   // Make the request.
   if (this->request_size_ < sizeof (this->request_))
-    std::sprintf (this->request_,
-                  "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
-                  path);
+    {
+      int const request_length =
+        std::snprintf (this->request_, sizeof this->request_,
+                       "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
+                       path);
+      if (request_length < 0
+          || static_cast<size_t> (request_length) >= sizeof this->request_)
+        this->request_size_ = 0;
+      else
+        this->request_size_ = static_cast<size_t> (request_length);
+    }
   else
     this->request_size_ = 0;
 
@@ -40,7 +46,11 @@ HTTP_Handler::HTTP_Handler (char const *path)
   else
     last = last + 1;
 
-  std::sprintf (this->filename_, "%s", last);
+  int const filename_length =
+    std::snprintf (this->filename_, sizeof this->filename_, "%s", last);
+  if (filename_length < 0
+      || static_cast<size_t> (filename_length) >= sizeof this->filename_)
+    this->request_size_ = 0;
 }
 
 int
@@ -70,7 +80,9 @@ HTTP_Handler::svc ()
 
   ACE_DEBUG ((LM_DEBUG, "[%t] sending request --\n%s", this->request_));
 
-  this->peer ().send_n (this->request_, this->request_size_);
+  if (this->peer ().send_n (this->request_, this->request_size_)
+      != static_cast<ssize_t> (this->request_size_))
+    ACE_ERROR_RETURN ((LM_ERROR, "Failed to send HTTP request\n"), -1);
 
   // Read in characters until encounter \r\n\r\n
   bool done {};
@@ -131,13 +143,16 @@ HTTP_Handler::svc ()
   int size {};
   if (contentlength
       && (::sscanf (contentlength, "\nContent-%*[lL]ength: %d ",
-                    &size) == 1))
+                    &size) == 1)
+      && size >= 0)
     {
-      this->response_size_ = size;
+      this->response_size_ = static_cast<size_t> (size);
       ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_),
                                 this->response_size_);
 
-      this->peer ().recv_n (afh.address (), this->response_size_);
+      if (this->peer ().recv_n (afh.address (), this->response_size_)
+          != static_cast<ssize_t> (this->response_size_))
+        ACE_ERROR_RETURN ((LM_ERROR, "Failed to receive HTTP response body\n"), -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "  ``%s'' is now cached.\n",
@@ -170,9 +185,9 @@ HTTP_Handler::filename () const
 int
 HTTP_Connector::connect (char const *url)
 {
-  char host[BUFSIZ];
+  char host[BUFSIZ] {};
   u_short port {};
-  char path[BUFSIZ];
+  char path[BUFSIZ] {};
 
   if (this->parseurl (url, host, &port, path) == -1)
     {

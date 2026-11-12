@@ -71,13 +71,10 @@ public:
   ACE_URL_Property (ACE_UINT16 const *name,
                     ACE_UINT16 const *value);
 
-  /// Copy constructor.
   ACE_URL_Property (ACE_URL_Property const &) = default;
 
-  /// Destructor.
   ~ACE_URL_Property () = default;
 
-  /// Assignment operator.
   ACE_URL_Property &operator= (ACE_URL_Property const &) = default;
 
   /// Equals operator.
@@ -143,13 +140,10 @@ public:
   /// Create an offer.
   explicit ACE_URL_Offer (size_t size = 1, char const *url = nullptr);
 
-  /// Copy ctor.
   ACE_URL_Offer (ACE_URL_Offer const &) = default;
 
-  /// Default destructor.
   ~ACE_URL_Offer () = default;
 
-  /// Assignment operator.
   ACE_URL_Offer &operator= (ACE_URL_Offer const &) = default;
 
   /// Equality operator.

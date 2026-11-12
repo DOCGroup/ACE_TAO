@@ -11,7 +11,7 @@
 
 
 #ifndef ACE_ID_GENERATOR_H
-#define ACE_ID_GENERATOR_h
+#define ACE_ID_GENERATOR_H
 
 #include "ace/config-all.h"
 

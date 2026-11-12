@@ -72,7 +72,6 @@ public:
   /// Human readable error status.
   static const char * const err_name[];
 
-  /// Default destructor.
   virtual ~ACE_URL_Locator () = 0;
 
   /**

@@ -42,10 +42,8 @@ class ACE_Svc_Export ACE_URL_Record
   friend class ACE_URL_Local_Locator;
   friend class ACE_Node<ACE_URL_Record>;
 public:
-  /// ctor.
-  ACE_URL_Record (ACE_URL_Offer *offer);
+  explicit ACE_URL_Record (ACE_URL_Offer *offer);
 
-  /// dtor.
   ~ACE_URL_Record ();
 
   /// Two records are equal if they have the same offer id.
@@ -78,7 +76,6 @@ private:
  */
 class ACE_Svc_Export ACE_URL_Local_Locator
 {
-  /// Default destructor.
   virtual ~ACE_URL_Local_Locator ();
 
   /**

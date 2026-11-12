@@ -10,11 +10,10 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "http_handler.h"
+#include <cstdio>
 #include <cstring>
 
 int
@@ -27,7 +26,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   //     Report status.
   // * Accept shell escape character.
 
-  char buf[BUFSIZ];
+  char buf[BUFSIZ] {};
 
   ACE_DEBUG ((LM_DEBUG, "* "));
 
@@ -36,18 +35,18 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       char *s = buf;
 
       // get rid of trailing '\n'
-      int len = std::strlen (s);
+      size_t const len = std::strlen (s);
 
       if (len > 0 && s[len - 1] == '\n')
         s[len - 1] = 0;
 
       while (ACE_OS::ace_isspace (*s))
-        s++;
+        ++s;
 
       if (*s == '!')
         {
           do
-          s++;
+            ++s;
           while (ACE_OS::ace_isspace (*s));
 
           // Shell command.

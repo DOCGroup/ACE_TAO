@@ -27,10 +27,8 @@
 class ACE_Svc_Export ACE_URL_Locator_Request
 {
 public:
-  /// Default ctor.
   ACE_URL_Locator_Request ();
 
-  /// Default dtor.
   ~ACE_URL_Locator_Request ();
 
   /**
@@ -146,10 +144,8 @@ protected:
 class ACE_Svc_Export ACE_URL_Locator_Reply
 {
 public:
-  /// Default ctor.
   ACE_URL_Locator_Reply ();
 
-  /// Default dtor.
   ~ACE_URL_Locator_Reply ();
 
   /// Setup a reply message for EXPORT, WITHDRAW, or MODIFY operations.
