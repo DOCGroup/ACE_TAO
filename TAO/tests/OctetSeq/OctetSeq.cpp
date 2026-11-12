@@ -23,20 +23,28 @@
 #include <cstring>
 #include <memory>
 
+struct Options
+{
+  int iterations {64};
+  int low {128};
+  int high {65536};
+  int step {32};
+  bool quiet {};
+};
+
 static int
 test_write_octet (TAO_OutputCDR &cdr,
                   char * /* buf */,
                   size_t bufsize)
 {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-  ACE_Message_Block mb (/* buf, */ bufsize);
+  ACE_Message_Block mb (bufsize);
   mb.wr_ptr (bufsize);
   Test::OctetSeq os (bufsize, &mb);
 #else
   Test::OctetSeq os (bufsize);
   os.length (bufsize);
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
 
   if (!(cdr << os))
     return -1;
@@ -131,13 +139,13 @@ run (char *buf, size_t bufsize,
       double const write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
       double const read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
 
-      count++;
+      ++count;
       sum_read += read_average;
       sum_write += write_average;
       if (!quiet)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%s: %d %.3f %.3f\n",
+                      "%s: %B %.3f %.3f\n",
                       name, x, write_average, read_average));
         }
     }
@@ -151,90 +159,97 @@ run (char *buf, size_t bufsize,
   return 0;
 }
 
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
+{
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("qn:l:h:s:"));
+  int opt {};
+
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+        {
+        case 'n':
+          options.iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'l':
+          options.low = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'h':
+          options.high = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 's':
+          options.step = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'q':
+          options.quiet = true;
+          break;
+
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Usage: %s "
+                             "-l low "
+                             "-h high "
+                             "-s step "
+                             "-n n "
+                             "-q\n"
+                             "Writes and then reads octet sequences to a CDR stream "
+                             "starting from <low> up to <high> incrementing "
+                             "by <step>, at each step run <n> iterations to "
+                             "average.\n",
+                             argv[0]),
+                            -1);
+        }
+    }
+
+  return 0;
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv);
 
-      int n {64};
-      int lo {128};
-      int hi {65536};
-      int s {32};
-
-      bool quiet {};
-
-      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("qn:l:h:s:"));
-      int opt {};
-
-      while ((opt = get_opt ()) != EOF)
-        {
-          switch (opt)
-            {
-            case 'n':
-              n = ACE_OS::atoi (get_opt.opt_arg ());
-              break;
-            case 'l':
-              lo = ACE_OS::atoi (get_opt.opt_arg ());
-              break;
-            case 'h':
-              hi = ACE_OS::atoi (get_opt.opt_arg ());
-              break;
-            case 's':
-              s = ACE_OS::atoi (get_opt.opt_arg ());
-              break;
-            case 'q':
-              quiet = true;
-              break;
-
-            case '?':
-            default:
-              ACE_DEBUG ((LM_DEBUG,
-                          "Usage: %s "
-                          "-l low "
-                          "-h high "
-                          "-s step "
-                          "-n n "
-                          "\n"
-                          "Writes and then reads octet sequences to a CDR stream "
-                          "starting from <low> up to <high> incrementing "
-                          "by <step>, at each step run <n> iterations to "
-                          "average."
-                          "\n",
-                          argv[0]));
-              return -1;
-            }
-        }
+      Options options {};
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
 
       ACE_DEBUG ((LM_DEBUG, "Running:\n"
                   "  low: %d\n"
                   "  hi : %d\n"
                   "  s  : %d\n"
                   "  n  : %d\n",
-                  lo, hi, s, n));
+                  options.low, options.high, options.step, options.iterations));
 
       // Create a "big" buffer and fill it up.
-      std::unique_ptr<char[]> const buf = std::make_unique<char[]> (hi);
+      std::unique_ptr<char[]> const buf =
+        std::make_unique<char[]> (options.high);
       CORBA::Long const l = 0xdeadbeef;
-      for (int i = 0; i < hi / static_cast<int> (sizeof (l)); ++i)
+      for (int i = 0; i < options.high / static_cast<int> (sizeof (l)); ++i)
         {
           std::memcpy (buf.get () + sizeof (l) * i, &l, sizeof (l));
         }
 
-      if (run (buf.get (), hi,
-               n, lo, s, quiet,
+      if (run (buf.get (), options.high,
+               options.iterations, options.low, options.step, options.quiet,
                ACE_TEXT ("OCTET"), test_write_octet, test_read_octet) != 0)
         return 1;
 
-      if (run (buf.get (), hi,
-               n, lo, s, quiet,
+      if (run (buf.get (), options.high,
+               options.iterations, options.low, options.step, options.quiet,
                ACE_TEXT ("CHAR"), test_write_char, test_read_char) != 0)
         return 1;
+
+      orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("OctetSeq");
+      return 1;
     }
 
   return 0;
