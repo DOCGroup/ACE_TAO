@@ -13,10 +13,11 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/High_Res_Timer.h"
 
+#include <array>
 #include <cstdio>
+#include <string>
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
@@ -31,8 +32,6 @@ public:
   My_Test_Object (My_Test_Object &&) = delete;
   My_Test_Object &operator= (My_Test_Object const &) = delete;
   My_Test_Object &operator= (My_Test_Object &&) = delete;
-  ~My_Test_Object () override = default;
-
   // = Interface implementation accessor methods.
 
   void id (CORBA::Short id) override;
@@ -62,6 +61,12 @@ My_Test_Object::id (CORBA::Short id)
   id_ = id;
 }
 
+static std::string
+indexed_name (std::string const &prefix, int value)
+{
+  return prefix + std::to_string (value);
+}
+
 // This function runs the test.
 
 struct Client_Options
@@ -76,39 +81,44 @@ struct Client_Options
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Client_Options options;
+  Client_Options options {};
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
   int c {};
-  int value {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'b':
-        value = ACE_OS::atoi (get_opts.opt_arg ());
-        if (value < 2)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Invalid context breath, must be 2 or more\n")),
-                            1);
-        options.context_breadth = value;
-        break;
+        {
+          int const value = ACE_OS::atoi (get_opts.opt_arg ());
+          if (value < 2)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Invalid context breadth, must be 2 or more\n")),
+                              1);
+          options.context_breadth = value;
+          break;
+        }
       case 'd':
-        value = ACE_OS::atoi (get_opts.opt_arg ());
-        if (value < 2)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Invalid depth, must be 2 or more\n")),
-                            1);
-        options.context_depth = value;
-        break;
+        {
+          int const value = ACE_OS::atoi (get_opts.opt_arg ());
+          if (value < 2)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Invalid depth, must be 2 or more\n")),
+                              1);
+          options.context_depth = value;
+          break;
+        }
       case 'o':
-        value = ACE_OS::atoi (get_opts.opt_arg ());
-        if (value < 2)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Invalid object breath, must be 2 or more\n")),
-                            1);
-        options.object_breadth = value;
-        break;
+        {
+          int const value = ACE_OS::atoi (get_opts.opt_arg ());
+          if (value < 2)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Invalid object breadth, must be 2 or more\n")),
+                              1);
+          options.object_breadth = value;
+          break;
+        }
       case 'p':
         options.ns1_ior = get_opts.opt_arg ();
         break;
@@ -117,10 +127,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s")
-                           ACE_TEXT (" [-b <breath of context tree>]")
+                           ACE_TEXT ("usage:")
+                           ACE_TEXT (" [-b <breadth of context tree>]")
                            ACE_TEXT (" [-d <depth of context tree>]")
-                           ACE_TEXT (" [-o <breath of object tree>]")
+                           ACE_TEXT (" [-o <breadth of object tree>]")
                            ACE_TEXT (" -p <ior of first name server>")
                            ACE_TEXT (" -q <ior of second name server>")
                            ACE_TEXT ("\n")),
@@ -171,28 +181,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  // Create a bunch of objects in one context
+  // Create a bunch of objects in one context.
   // Note: strings to the naming service must be char, not wchar
   try
     {
     // Bind one context level under root.
-    CosNaming::Name level1;
+    CosNaming::Name level1 {};
     level1.length (1);
     level1[0].id = CORBA::string_dup ("level1_context");
-    CosNaming::NamingContext_var level1_context;
-    level1_context = root_context_1->bind_new_context (level1);
+    CosNaming::NamingContext_var const level1_context =
+      root_context_1->bind_new_context (level1);
 
     for (int i = 0; i < options.object_breadth; ++i)
       {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object * const impl1 = new My_Test_Object (static_cast<CORBA::Short> (i + 1));
+      // owner_transfer owns the servant; impl1 is borrowed for _this ().
       PortableServer::ServantBase_var const owner_transfer (impl1);
       Test_Object_var const obj1 = impl1->_this ();
 
       level1.length (2);
-      char wide_name[32] {};
-      std::snprintf (wide_name, sizeof wide_name, "obj_%d", i);
-      level1[1].id = CORBA::string_dup (wide_name);
+      std::string const wide_name = indexed_name ("obj_", i);
+      level1[1].id = CORBA::string_dup (wide_name.c_str ());
       root_context_1->bind (level1, obj1.in ());
       }
 
@@ -210,13 +220,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     for (int i = 0; i < options.context_depth; ++i)
       {
       // Bind level1 context under root.
-      CosNaming::Name deep;
+      CosNaming::Name deep {};
       deep.length (1);
-      char deep_name[32] {};
-      std::snprintf (deep_name, sizeof deep_name, "deep_%d", i);
-      deep[0].id = CORBA::string_dup (deep_name);
-      CosNaming::NamingContext_var deep_context;
-      deep_context = next_context->bind_new_context (deep);
+      std::string const deep_name = indexed_name ("deep_", i);
+      deep[0].id = CORBA::string_dup (deep_name.c_str ());
+      CosNaming::NamingContext_var const deep_context =
+        next_context->bind_new_context (deep);
       next_context = deep_context;
       }
     }
@@ -232,13 +241,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     for (int i = 0; i < options.context_breadth; ++i)
       {
       // Bind all level of context under root.
-      CosNaming::Name wide;
+      CosNaming::Name wide {};
       wide.length (1);
-      char wide_name[32] {};
-      std::snprintf (wide_name, sizeof wide_name, "wide_%d", i);
-      wide[0].id = CORBA::string_dup (wide_name);
-      CosNaming::NamingContext_var wide_context;
-      wide_context = root_context_1->bind_new_context (wide);
+      std::string const wide_name = indexed_name ("wide_", i);
+      wide[0].id = CORBA::string_dup (wide_name.c_str ());
+      CosNaming::NamingContext_var const wide_context =
+        root_context_1->bind_new_context (wide);
       }
     }
   catch (CORBA::Exception const &ex)
@@ -251,48 +259,46 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Remove the second to last object from the Naming Context
-    CosNaming::Name wide1;
+    CosNaming::Name wide1 {};
     wide1.length (2);
     wide1[0].id = CORBA::string_dup ("level1_context");
-    char wide_name[32] {};
-    std::snprintf (wide_name, sizeof wide_name, "obj_%d", options.object_breadth - 2);
-    wide1[1].id = CORBA::string_dup (wide_name);
+    std::string const wide_name = indexed_name ("obj_", options.object_breadth - 2);
+    wide1[1].id = CORBA::string_dup (wide_name.c_str ());
     root_context_1->unbind (wide1);
 
     // Remove the second to last context from the wide root Naming Context
-    CosNaming::Name wide2;
+    CosNaming::Name wide2 {};
     wide2.length (1);
-    std::snprintf (wide_name, sizeof wide_name, "wide_%d", options.context_breadth - 2);
-    wide2[0].id = CORBA::string_dup (wide_name);
-    CORBA::Object_var result_obj_ref = root_context_1->resolve (wide2);
-    CosNaming::NamingContext_var result_object =
+    std::string const wide_context_name = indexed_name ("wide_", options.context_breadth - 2);
+    wide2[0].id = CORBA::string_dup (wide_context_name.c_str ());
+    CORBA::Object_var const result_obj_ref = root_context_1->resolve (wide2);
+    CosNaming::NamingContext_var const result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Problems with resolving wide context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          -1);
-    result_object->destroy();
+    result_object->destroy ();
     root_context_1->unbind (wide2);
 
     // Remove the last context from the deep Naming Context
-    CosNaming::Name deep;
+    CosNaming::Name deep {};
     deep.length (options.context_depth);
-    char deep_name[32] {};
     for (int i = 0; i < options.context_depth; ++i)
       {
-        std::snprintf (deep_name, sizeof deep_name, "deep_%d", i);
-        deep[i].id = CORBA::string_dup (deep_name);
+        std::string const deep_name = indexed_name ("deep_", i);
+        deep[i].id = CORBA::string_dup (deep_name.c_str ());
       }
-    result_obj_ref = root_context_1->resolve (deep);
-    result_object =
-      CosNaming::NamingContext::_narrow (result_obj_ref.in ());
-    if (CORBA::is_nil (result_object.in ()))
+    CORBA::Object_var const deep_obj_ref = root_context_1->resolve (deep);
+    CosNaming::NamingContext_var const deep_object =
+      CosNaming::NamingContext::_narrow (deep_obj_ref.in ());
+    if (CORBA::is_nil (deep_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Problems with resolving deep context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          -1);
-    result_object->destroy ();
+    deep_object->destroy ();
     root_context_1->unbind (deep);
     }
   catch (CORBA::Exception const &ex)
@@ -306,14 +312,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Access the last object from the Naming Context
-    CosNaming::Name wide;
+    CosNaming::Name wide {};
     wide.length (2);
     wide[0].id = CORBA::string_dup ("level1_context");
-    char wide_name[32] {};
-    std::snprintf (wide_name, sizeof wide_name, "obj_%d", options.object_breadth - 1);
-    wide[1].id = CORBA::string_dup (wide_name);
-    CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
-    Test_Object_var result_object = Test_Object::_narrow (result_obj_ref.in ());
+    std::string const wide_name = indexed_name ("obj_", options.object_breadth - 1);
+    wide[1].id = CORBA::string_dup (wide_name.c_str ());
+    CORBA::Object_var const result_obj_ref = root_context_2->resolve (wide);
+    Test_Object_var const result_object = Test_Object::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Problems with resolving object from ")
@@ -329,13 +334,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Access the deleted second to last object from the Naming Context
-    CosNaming::Name wide;
+    CosNaming::Name wide {};
     wide.length (2);
     wide[0].id = CORBA::string_dup ("level1_context");
-    char wide_name[32] {};
-    std::snprintf (wide_name, sizeof wide_name, "obj_%d", options.object_breadth - 2);
-    wide[1].id = CORBA::string_dup (wide_name);
-    CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
+    std::string const wide_name = indexed_name ("obj_", options.object_breadth - 2);
+    wide[1].id = CORBA::string_dup (wide_name.c_str ());
+    CORBA::Object_var const result_obj_ref = root_context_2->resolve (wide);
     ACE_ERROR_RETURN ((LM_ERROR,
                     ACE_TEXT ("Problems with resolving object from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
@@ -349,13 +353,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Access the last context from the wide Naming Context
-    CosNaming::Name wide;
+    CosNaming::Name wide {};
     wide.length (1);
-    char wide_name[32] {};
-    std::snprintf (wide_name, sizeof wide_name, "wide_%d", options.context_breadth - 1);
-    wide[0].id = CORBA::string_dup (wide_name);
-    CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
-    CosNaming::NamingContext_var result_object =
+    std::string const wide_name = indexed_name ("wide_", options.context_breadth - 1);
+    wide[0].id = CORBA::string_dup (wide_name.c_str ());
+    CORBA::Object_var const result_obj_ref = root_context_2->resolve (wide);
+    CosNaming::NamingContext_var const result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -372,12 +375,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Access the deleted second to last object from the Naming Context
-    CosNaming::Name wide;
+    CosNaming::Name wide {};
     wide.length (2);
-    char wide_name[32] {};
-    std::snprintf (wide_name, sizeof wide_name, "wide_%d", options.context_breadth - 2);
-    wide[0].id = CORBA::string_dup (wide_name);
-    CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
+    std::string const wide_name = indexed_name ("wide_", options.context_breadth - 2);
+    wide[0].id = CORBA::string_dup (wide_name.c_str ());
+    CORBA::Object_var const result_obj_ref = root_context_2->resolve (wide);
     ACE_ERROR_RETURN ((LM_ERROR,
                     ACE_TEXT ("Problems with resolving wide context from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
@@ -391,15 +393,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Access the deleted last context from the deep Naming Context
-    CosNaming::Name deep;
+    CosNaming::Name deep {};
     deep.length (options.context_depth);
-    char deep_name[32] {};
     for (int i = 0; i < options.context_depth; ++i)
       {
-        std::snprintf (deep_name, sizeof deep_name, "deep_%d", i);
-        deep[i].id = CORBA::string_dup (deep_name);
+        std::string const deep_name = indexed_name ("deep_", i);
+        deep[i].id = CORBA::string_dup (deep_name.c_str ());
       }
-    CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
+    CORBA::Object_var const result_obj_ref = root_context_1->resolve (deep);
     ACE_ERROR_RETURN ((LM_ERROR,
                     ACE_TEXT ("Problems with resolving deep context from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
@@ -413,16 +414,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Access the second to last object from the Naming Context
-    CosNaming::Name deep;
+    CosNaming::Name deep {};
     deep.length (options.context_depth - 1);
-    char deep_name[32] {};
     for (int i = 0; i < options.context_depth - 1; ++i)
       {
-        std::snprintf (deep_name, sizeof deep_name, "deep_%d", i);
-        deep[i].id = CORBA::string_dup (deep_name);
+        std::string const deep_name = indexed_name ("deep_", i);
+        deep[i].id = CORBA::string_dup (deep_name.c_str ());
       }
-    CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
-    CosNaming::NamingContext_var result_object =
+    CORBA::Object_var const result_obj_ref = root_context_1->resolve (deep);
+    CosNaming::NamingContext_var const result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -442,7 +442,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
     // Bind one context level under root.
-    CosNaming::Name level1;
+    CosNaming::Name level1 {};
     level1.length (1);
     level1[0].id = CORBA::string_dup ("perf_context");
     CosNaming::NamingContext_var const perf_context =
@@ -450,6 +450,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Instantiate a dummy object and bind it under the new context.
     My_Test_Object * const impl1 = new My_Test_Object (1);
+    // owner_transfer owns the servant; impl1 is borrowed for _this ().
     PortableServer::ServantBase_var const owner_transfer (impl1);
     Test_Object_var const obj1 = impl1->_this ();
 
@@ -457,66 +458,66 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_High_Res_Timer::global_scale_factor_type const gsf =
       ACE_High_Res_Timer::global_scale_factor ();
 
-    ACE_hrtime_t start = ACE_OS::gethrtime ();
+    ACE_hrtime_t const bind_start = ACE_OS::gethrtime ();
 
     // Test how long it takes to bind
     for (int i = 0; i < test_runs; ++i)
       {
       level1.length (1);
-      char wide_name[32] {};
-      std::snprintf (wide_name, sizeof wide_name, "obj_%d", i);
-      level1[0].id = CORBA::string_dup (wide_name);
+      std::array<char, 32> wide_name {};
+      std::snprintf (wide_name.data (), wide_name.size (), "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name.data ());
       perf_context->bind (level1, obj1.in ());
       }
 
-    ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
+    ACE_hrtime_t const bind_elapsed_time = ACE_OS::gethrtime () - bind_start;
     // convert to microseconds
-    ACE_UINT32 usecs = static_cast<ACE_UINT32> (elapsed_time / gsf);
-    double secs = static_cast<double> (usecs) / 1000000.0;
+    ACE_UINT32 const bind_usecs = static_cast<ACE_UINT32> (bind_elapsed_time / gsf);
+    double const bind_secs = static_cast<double> (bind_usecs) / 1000000.0;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Bound %i objects in %.2f secs\n"),
-                test_runs, secs));
+                test_runs, bind_secs));
 
     // Test how long it takes to resolve
-    start = ACE_OS::gethrtime ();
+    ACE_hrtime_t const resolve_start = ACE_OS::gethrtime ();
     for (int i = 0; i < test_runs; ++i)
       {
       level1.length (1);
-      char wide_name[32] {};
-      std::snprintf (wide_name, sizeof wide_name, "obj_%d", i);
-      level1[0].id = CORBA::string_dup (wide_name);
+      std::array<char, 32> wide_name {};
+      std::snprintf (wide_name.data (), wide_name.size (), "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name.data ());
       CORBA::Object_var const result_obj_ref = perf_context->resolve (level1);
       }
 
-    elapsed_time = ACE_OS::gethrtime () - start;
+    ACE_hrtime_t const resolve_elapsed_time = ACE_OS::gethrtime () - resolve_start;
     // convert to microseconds
-    usecs = static_cast<ACE_UINT32> (elapsed_time / gsf);
-    secs = static_cast<double> (usecs) / 1000000.0;
+    ACE_UINT32 const resolve_usecs = static_cast<ACE_UINT32> (resolve_elapsed_time / gsf);
+    double const resolve_secs = static_cast<double> (resolve_usecs) / 1000000.0;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Resolved %i objects in %.2f secs\n"),
-                test_runs, secs));
+                test_runs, resolve_secs));
 
     // Test how long it takes to unbind
-    start = ACE_OS::gethrtime ();
+    ACE_hrtime_t const unbind_start = ACE_OS::gethrtime ();
     for (int i = 0; i < test_runs; ++i)
       {
       level1.length (1);
-      char wide_name[32] {};
-      std::snprintf (wide_name, sizeof wide_name, "obj_%d", i);
-      level1[0].id = CORBA::string_dup (wide_name);
+      std::array<char, 32> wide_name {};
+      std::snprintf (wide_name.data (), wide_name.size (), "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name.data ());
       perf_context->unbind (level1);
       }
 
-    elapsed_time = ACE_OS::gethrtime () - start;
+    ACE_hrtime_t const unbind_elapsed_time = ACE_OS::gethrtime () - unbind_start;
     // convert to microseconds
-    usecs = static_cast<ACE_UINT32> (elapsed_time / gsf);
-    secs = static_cast<double> (usecs) / 1000000.0;
+    ACE_UINT32 const unbind_usecs = static_cast<ACE_UINT32> (unbind_elapsed_time / gsf);
+    double const unbind_secs = static_cast<double> (unbind_usecs) / 1000000.0;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Unbound %i objects in %.2f secs\n"),
-                test_runs, secs));
+                test_runs, unbind_secs));
     }
   catch (CORBA::Exception const &ex)
     {
