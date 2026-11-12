@@ -14,7 +14,7 @@ TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory () = default;
 int
 TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Time_Value connect_timeout(0,0);
+  ACE_Time_Value connect_timeout {};
 
   for (int count {}; count < argc; ++count)
     {
@@ -23,7 +23,7 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
           count < argc-1)
         {
           ++count;
-          long const ms = ACE_OS::strtol(argv[count],0,10);
+          long const ms = ACE_OS::strtol (argv[count], nullptr, 10);
           connect_timeout.msec (ms);
         }
     }

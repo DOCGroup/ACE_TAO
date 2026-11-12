@@ -10,7 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-#include "ace/OS_NS_ctype.h"
+#include <cctype>
 #include <cstring>
 #include <cstdio>
 #include <memory>
@@ -102,9 +102,9 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
   // version is one that we accept.
 
   // Check for version
-  if (ACE_OS::ace_isdigit (string [0]) &&
+  if (std::isdigit (static_cast<unsigned char> (string [0])) &&
       string[1] == '.' &&
-      ACE_OS::ace_isdigit (string [2]) &&
+      std::isdigit (static_cast<unsigned char> (string [2])) &&
       string[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that
