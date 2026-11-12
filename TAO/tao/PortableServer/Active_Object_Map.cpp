@@ -417,6 +417,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
   CORBA::Short priority,
   TAO_Active_Object_Map_Entry *&entry)
 {
+  std::unique_ptr<TAO_Active_Object_Map_Entry> entry_owner;
   int result =
     this->active_object_map_->user_id_map_->find (user_id, entry);
 
@@ -444,6 +445,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
       ACE_NEW_RETURN (entry,
                       TAO_Active_Object_Map_Entry,
                       -1);
+      entry_owner.reset (entry);
       entry->user_id_ = user_id;
       entry->servant_ = servant;
       entry->priority_ = priority;
@@ -466,7 +468,6 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
                 {
                   this->active_object_map_->user_id_map_->unbind (entry->user_id_);
                   this->active_object_map_->id_hint_strategy_->unbind (*entry);
-                  delete entry;
                 }
               else
                 {
@@ -479,13 +480,16 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
           else
             {
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
-              delete entry;
             }
         }
+    }
+
+  if (entry_owner)
+    {
+      if (result == 0)
+        entry_owner.release ();
       else
-        {
-          delete entry;
-        }
+        entry = nullptr;
     }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -636,6 +640,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
   CORBA::Short priority,
   TAO_Active_Object_Map_Entry *&entry)
 {
+  std::unique_ptr<TAO_Active_Object_Map_Entry> entry_owner;
   int result = this->active_object_map_->user_id_map_->find (user_id, entry);
 
   if (result == 0)
@@ -650,6 +655,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
       ACE_NEW_RETURN (entry,
                       TAO_Active_Object_Map_Entry,
                       -1);
+      entry_owner.reset (entry);
       entry->user_id_ = user_id;
       entry->servant_ = servant;
       entry->priority_ = priority;
@@ -665,7 +671,6 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
           if (result != 0)
             {
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
-              delete entry;
             }
           else
             {
@@ -675,10 +680,14 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
             }
         }
+    }
+
+  if (entry_owner)
+    {
+      if (result == 0)
+        entry_owner.release ();
       else
-        {
-          delete entry;
-        }
+        entry = nullptr;
     }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -926,6 +935,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
   ACE_NEW_RETURN (entry,
                   TAO_Active_Object_Map_Entry,
                   -1);
+  std::unique_ptr<TAO_Active_Object_Map_Entry> entry_owner (entry);
 
   int result =
     this->active_object_map_->user_id_map_->bind_create_key (entry,
@@ -950,7 +960,6 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
             {
               this->active_object_map_->user_id_map_->unbind (entry->user_id_);
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
-              delete entry;
             }
           else
             {
@@ -963,13 +972,13 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
       else
         {
           this->active_object_map_->user_id_map_->unbind (entry->user_id_);
-          delete entry;
         }
     }
+
+  if (result == 0)
+    entry_owner.release ();
   else
-    {
-      delete entry;
-    }
+    entry = nullptr;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
@@ -1003,6 +1012,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
   ACE_NEW_RETURN (entry,
                   TAO_Active_Object_Map_Entry,
                   -1);
+  std::unique_ptr<TAO_Active_Object_Map_Entry> entry_owner (entry);
   int result =
     this->active_object_map_->user_id_map_->bind_create_key (entry,
                                                              entry->user_id_);
@@ -1016,7 +1026,6 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
       if (result != 0)
         {
           this->active_object_map_->user_id_map_->unbind (entry->user_id_);
-          delete entry;
         }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
@@ -1024,10 +1033,11 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
         this->active_object_map_->user_id_map_->current_size ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
     }
+
+  if (result == 0)
+    entry_owner.release ();
   else
-    {
-      delete entry;
-    }
+    entry = nullptr;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
