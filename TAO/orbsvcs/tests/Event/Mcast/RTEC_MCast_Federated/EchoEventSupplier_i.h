@@ -12,7 +12,7 @@ public:
   // Constructor
   EchoEventSupplier_i(CORBA::ORB_ptr orb);
 
-  virtual void disconnect_push_supplier();
+  void disconnect_push_supplier () override;
 
 private:
   CORBA::ORB_var orb_;

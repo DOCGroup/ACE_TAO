@@ -10,10 +10,10 @@ class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
 public:
   SimpleAddressServer (const ACE_INET_Addr& address);
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address);
+                         RtecUDPAdmin::UDP_Addr& address) override;
 
   virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6);
+                            RtecUDPAdmin::UDP_Address_out addr6) override;
 
 private:
   ACE_INET_Addr addr_;
