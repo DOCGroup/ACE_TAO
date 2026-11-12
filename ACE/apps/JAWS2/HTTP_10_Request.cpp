@@ -1,20 +1,7 @@
-#include "JAWS/JAWS.h"
 #include "HTTP_10_Request.h"
 #include "ace/OS_NS_pwd.h"
-
-
-static int dummy;
-
-JAWS_HTTP_10_Request::JAWS_HTTP_10_Request ()
-  : path_ (0)
-{
-}
-
-JAWS_HTTP_10_Request::~JAWS_HTTP_10_Request ()
-{
-  ACE_OS::free (this->path_);
-  this->path_ = 0;
-}
+#include "ace/OS_NS_stdlib.h"
+#include <cstring>
 
 const char *
 JAWS_HTTP_10_Request::method () const
@@ -43,12 +30,9 @@ JAWS_HTTP_10_Request::type () const
 const char *
 JAWS_HTTP_10_Request::path () const
 {
-  if (this->path_ == 0)
-    {
-      JAWS_HTTP_10_Request *mutable_this = (JAWS_HTTP_10_Request *)this;
-      mutable_this->path (this->uri ());
-    }
-  return this->path_;
+  if (this->path_.empty ())
+    this->set_path (this->uri ());
+  return this->path_.empty () ? nullptr : this->path_.c_str ();
 }
 
 void
@@ -60,58 +44,54 @@ JAWS_HTTP_10_Request::set_status (int s)
 void
 JAWS_HTTP_10_Request::path (const char *uri_string)
 {
-  char const *file_name = uri_string;
-  char buf[MAXPATHLEN + 1];
-  buf[0] = '\0';
+  this->set_path (uri_string);
+}
 
-  if (file_name == 0) return;
+void
+JAWS_HTTP_10_Request::set_path (char const *uri_string) const
+{
+  this->path_.clear ();
+  if (uri_string == nullptr || uri_string[0] != '/')
+    return;
 
-  if (*file_name == '/')
+  if (uri_string[1] == '~')
     {
-      file_name++;
-      if (*file_name == '~')
+      char const * const username = uri_string + 2;
+      char const * const slash = std::strchr (username, '/');
+      std::string const user (username,
+                              slash == nullptr
+                                ? std::strlen (username)
+                                : static_cast<std::string::size_type> (slash - username));
+      std::string home;
+
+      if (user.empty ())
         {
-          char *ptr = buf;
-
-          while (*++file_name && *file_name != '/')
-            *ptr++ = *file_name;
-
-          *ptr = '\0';
-
-          if (ptr == buf)
-            ACE_OS::strcpy (buf, ACE_OS::getenv ("HOME"));
-          else
-            {
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
-              char pw_buf[BUFSIZ];
-              struct passwd pw_struct;
-              if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf, sizeof (pw_buf))
-                  == 0)
-                return;
-              ACE_OS::strcpy (buf, pw_struct.pw_dir);
-#endif /* NOT ACE_WIN32 AND NOT VXWORKS */
-            }
-
-          ACE_OS::strcat (buf, "/");
-#if 0
-          ACE_OS::strcat (buf, HTTP_Config::instance ()->user_dir ());
-#else
-          ACE_OS::strcat (buf, ".www-docs");
-#endif
-          ACE_OS::strcat (buf, file_name);
+          char const * const home_environment = ACE_OS::getenv ("HOME");
+          if (home_environment == nullptr)
+            return;
+          home = home_environment;
         }
       else
         {
-          // With a starting '/' but no '~'
-#if 0
-          ACE_OS::strcat (buf, HTTP_Config::instance ()->document_root ());
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
+          char pw_buf[BUFSIZ] {};
+          struct passwd pw_struct {};
+          struct passwd *pw_result {};
+          if (ACE_OS::getpwnam_r (user.c_str (), &pw_struct, pw_buf,
+                                  sizeof pw_buf, &pw_result) != 0
+              || pw_result == nullptr
+              || pw_result->pw_dir == nullptr)
+            return;
+          home = pw_result->pw_dir;
 #else
-          ACE_OS::strcat (buf, ".");
-#endif
-          ACE_OS::strcat (buf, file_name - 1);
+          return;
+#endif /* NOT ACE_WIN32 AND NOT VXWORKS */
         }
-    }
 
-  if (*buf != '\0')
-    this->path_ = ACE_OS::strdup (buf);
+      this->path_ = home + "/.www-docs";
+      if (slash != nullptr)
+        this->path_ += slash;
+    }
+  else
+    this->path_ = std::string (".") + uri_string;
 }
