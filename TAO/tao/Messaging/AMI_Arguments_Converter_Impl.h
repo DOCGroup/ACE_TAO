@@ -50,14 +50,14 @@ public:
 
   void convert_request (TAO_ServerRequest & server_request,
                         TAO::Argument * const args[],
-                        std::size_t nargs) override;
+                        size_t nargs) override;
 
   void dsi_convert_request (TAO_ServerRequest & server_request,
                             TAO_OutputCDR & output) override;
 
   void convert_reply (TAO_ServerRequest & server_request,
                       TAO::Argument * const args[],
-                      std::size_t nargs) override;
+                      size_t nargs) override;
 
   void dsi_convert_reply (TAO_ServerRequest & server_request,
                           TAO_InputCDR & input) override;

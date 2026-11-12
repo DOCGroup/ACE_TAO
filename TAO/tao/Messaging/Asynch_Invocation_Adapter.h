@@ -65,7 +65,7 @@ namespace TAO
         Argument **args,
         int arg_number,
         char const *operation,
-        std::size_t op_len,
+        size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
         bool has_in_args = true);
