@@ -6,7 +6,6 @@
  *  @author  George Edwards <g.edwards@vanderbilt.edu>
  */
 
-
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 #define TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 

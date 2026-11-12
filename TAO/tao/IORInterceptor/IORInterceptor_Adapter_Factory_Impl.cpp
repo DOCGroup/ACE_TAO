@@ -20,8 +20,6 @@ TAO_IORInterceptor_Adapter_Factory_Impl::create ()
   return nia;
 }
 
-
-
 // Initialization and registration of dynamic service object.
 
 int

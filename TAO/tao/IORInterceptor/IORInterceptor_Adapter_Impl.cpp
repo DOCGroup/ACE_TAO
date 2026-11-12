@@ -51,11 +51,11 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA *poa)
                        CORBA::COMPLETED_NO));
 
   // The var owns the reference; tao_info remains a non-owning typed alias.
-  PortableInterceptor::IORInfo_var info = tao_info;
+  PortableInterceptor::IORInfo_var const info = tao_info;
 
   // Release the POA during IORInterceptor calls to avoid potential
   // deadlocks.
-  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
+  TAO::Portable_Server::Non_Servant_Upcall const non_servant_upcall (*poa);
   ACE_UNUSED_ARG (non_servant_upcall);
 
   for (size_t i {}; i < interceptor_count; ++i)
@@ -101,7 +101,6 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA *poa)
   // prevent the user from peforming "illegal" operations.
   tao_info->invalidate ();
 }
-
 void
 TAO_IORInterceptor_Adapter_Impl::components_established (
   PortableInterceptor::IORInfo_ptr info)
