@@ -16,10 +16,10 @@ public:
   //@{
   /// Logs each event.  Initiates shutdown after receiving 100 events
   /// of each type.
-  virtual void push (const RtecEventComm::EventSet &events);
+  void push (RtecEventComm::EventSet const &events) override;
 
   /// No-op.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
   /// Helper - destroys EC, shutdowns the ORB and prints number of
