@@ -23,7 +23,7 @@ namespace TAO
 
     for (CORBA::ULong i {}; i < plen; ++i)
       {
-        CORBA::Policy_var policy = CORBA::Policy::_duplicate (policies[i]);
+        CORBA::Policy_var const policy = CORBA::Policy::_duplicate (policies[i]);
 
         if (CORBA::is_nil (policy.in ()))
           {
@@ -47,7 +47,7 @@ namespace TAO
             processing_mode_applied = true;
 
             // Narrow the Policy to the ProcessingModePolicy interface.
-            PortableInterceptor::ProcessingModePolicy_var pm_policy =
+            PortableInterceptor::ProcessingModePolicy_var const pm_policy =
                     PortableInterceptor::ProcessingModePolicy::_narrow (
                                                  policy.in ());
 

@@ -26,7 +26,7 @@ class TAO_PI_Server_Export TAO_PI_Server_Loader : public ACE_Service_Object
 public:
   TAO_PI_Server_Loader () = default;
 
-  ~TAO_PI_Server_Loader () override;
+  ~TAO_PI_Server_Loader () override = default;
 
   /// Initialize the PI_Server loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

@@ -8,8 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PI_Server_Loader::~TAO_PI_Server_Loader () = default;
-
 int
 TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 {
@@ -36,7 +34,7 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());

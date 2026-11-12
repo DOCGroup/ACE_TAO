@@ -414,7 +414,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                             exceptions,
                             nexceptions);
 
-      PortableInterceptor::ReplyStatus status =
+      PortableInterceptor::ReplyStatus const status =
         server_request.pi_reply_status ();
 
       // Only re-throw the exception if it hasn't been transformed by
