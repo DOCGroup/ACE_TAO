@@ -48,8 +48,6 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
   return 0;
 }
 
-
-
 ACE_FACTORY_DEFINE (TAO_PI_Server, TAO_PI_Server_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_PI_Server_Loader,
                        ACE_TEXT ("PI_Server_Loader"),

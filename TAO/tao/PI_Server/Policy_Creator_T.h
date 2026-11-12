@@ -31,7 +31,7 @@ namespace TAO
         CORBA::Any const &val
         )
     {
-      if ((val >>= value) == 0)
+      if (!(val >>= value))
         throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
       ACE_NEW_THROW_EX (policy,

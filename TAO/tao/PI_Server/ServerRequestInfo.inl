@@ -49,5 +49,4 @@ TAO::ServerRequestInfo::server_request ()
   return this->server_request_;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

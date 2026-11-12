@@ -27,7 +27,6 @@ TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create ()
   return obj;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_TEXT ("ServerRequestInterceptor_Adapter_Factory"),
                        ACE_SVC_OBJ_T,
