@@ -1,13 +1,6 @@
 #include "Counting_Supplier.h"
 #include "ace/OS_NS_unistd.h"
 
-
-CEC_Counting_Supplier::CEC_Counting_Supplier ()
-  :  event_count (0),
-     disconnect_count (0)
-{
-}
-
 void
 CEC_Counting_Supplier::connect (
     CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
@@ -48,17 +41,17 @@ CEC_Counting_Supplier::push (const CORBA::Any&)
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  CORBA::Any event;
-  event <<= CORBA::Long(0);
+  CORBA::Any event {};
+  event <<= CORBA::Long {0};
 
   this->consumer_proxy_->push (event);
-  this->event_count++;
+  ++this->event_count;
 }
 
 void
 CEC_Counting_Supplier::disconnect_push_supplier ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -68,10 +61,8 @@ CEC_Counting_Supplier::disconnect_push_supplier ()
 CEC_Counting_Supplier_Task::
     CEC_Counting_Supplier_Task (CEC_Counting_Supplier *s,
                                 int milliseconds)
-  :  supplier_ (s),
-     stop_flag_ (0),
-     push_count_ (0),
-     milliseconds_ (milliseconds)
+  : supplier_ (s),
+    milliseconds_ (milliseconds)
 {
 }
 
@@ -93,51 +84,48 @@ void
 CEC_Counting_Supplier_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->stop_flag_ = 1;
+  this->stop_flag_ = true;
 }
 
 CORBA::ULong
-CEC_Counting_Supplier_Task::push_count ()
+CEC_Counting_Supplier_Task::push_count () const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   return this->push_count_;
 }
 
 void
 CEC_Counting_Supplier_Task::run ()
 {
-  CORBA::Any event;
-  event <<= CORBA::Long(0);
+  CORBA::Any event {};
+  event <<= CORBA::Long {0};
 
-  int stop = 0;
-  do {
-    this->supplier_->push (event);
+  bool stop {};
+  do
+    {
+      this->supplier_->push (event);
 
-    if (this->milliseconds_ != 0)
+      if (this->milliseconds_ != 0)
+        {
+          ACE_Time_Value tv (0, 1000 * this->milliseconds_);
+          ACE_OS::sleep (tv);
+        }
+      else
+        {
+          // Sleep briefly to avoid spinning.
+          ACE_OS::sleep (0);
+        }
+
       {
-        ACE_Time_Value tv (0, 1000 * this->milliseconds_);
-        ACE_OS::sleep (tv);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+        ++this->push_count_;
+        stop = this->stop_flag_;
       }
-    else
-      {
-        // Sleep for a short time to avoid spinning... kind of klugy
-        ACE_OS::sleep (0);
-      }
-
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-
-    this->push_count_++;
-
-    stop = this->stop_flag_;
-  } while (stop == 0);
+    }
+  while (!stop);
 }
 
 // ****************************************************************
-
-CEC_Pull_Counting_Supplier::CEC_Pull_Counting_Supplier ()
-  :  event_count (0),
-     disconnect_count (0)
-{
-}
 
 void
 CEC_Pull_Counting_Supplier::connect (
@@ -185,10 +173,11 @@ CEC_Pull_Counting_Supplier::pull ()
       ACE_OS::sleep (1);
     }
 
-  this->event_count++;
-  CORBA::Any event;
-  event <<= CORBA::Long(0);
+  ++this->event_count;
+  CORBA::Any event {};
+  event <<= CORBA::Long {0};
 
+  // The CORBA operation transfers ownership of the returned Any.
   return new CORBA::Any (event);
 }
 
@@ -201,25 +190,26 @@ CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
   if (this->event_count % 2)
     {
       // No event
-      has_event = 0;
+      has_event = false;
     }
   else
     {
       // We have an event
-      has_event = 1;
-      this->event_count++;
-   }
+      has_event = true;
+      ++this->event_count;
+    }
 
   CORBA::Any event;
-  event <<= CORBA::Long(0);
+  event <<= CORBA::Long {0};
 
+  // CORBA takes ownership of the returned Any.
   return new CORBA::Any (event);
 }
 
 void
 CEC_Pull_Counting_Supplier::disconnect_pull_supplier ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPullConsumer::_nil ();
 }

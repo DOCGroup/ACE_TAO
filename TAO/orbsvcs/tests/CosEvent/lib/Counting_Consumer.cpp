@@ -1,10 +1,8 @@
 #include "Counting_Consumer.h"
 #include "ace/OS_NS_unistd.h"
 
-CEC_Counting_Consumer::CEC_Counting_Consumer (const char* name)
-  : event_count (0),
-    disconnect_count (0),
-    name_ (name)
+CEC_Counting_Consumer::CEC_Counting_Consumer (std::string const &name)
+  : name_ (name)
 {
 }
 
@@ -46,19 +44,19 @@ CEC_Counting_Consumer::disconnect ()
 void
 CEC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 {
-  int diff = this->event_count - expected_count;
+  int const diff = this->event_count - expected_count;
   if (diff > tolerance || diff < -tolerance)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ERROR - %s unexpected number of events  <%d>\n",
-                  this->name_,
+                  this->name_.c_str (),
                   this->event_count));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s - number of events <%d> within margins\n",
-                  this->name_,
+                  this->name_.c_str (),
                   this->event_count));
     }
 }
@@ -66,13 +64,13 @@ CEC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 void
 CEC_Counting_Consumer::push (const CORBA::Any&)
 {
-  this->event_count ++;
+  ++this->event_count;
 #if 0
   if (this->event_count % 10 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s (%P|%t): %d events received\n",
-                  this->name_,
+                  this->name_.c_str (),
                   this->event_count));
     }
 #endif /* 0 */
@@ -81,17 +79,15 @@ CEC_Counting_Consumer::push (const CORBA::Any&)
 void
 CEC_Counting_Consumer::disconnect_push_consumer ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->supplier_proxy_ =
     CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 // ****************************************************************
 
-CEC_Pull_Counting_Consumer::CEC_Pull_Counting_Consumer (const char* name)
-  : event_count (0),
-    disconnect_count (0),
-    name_ (name)
+CEC_Pull_Counting_Consumer::CEC_Pull_Counting_Consumer (std::string const &name)
+  : name_ (name)
 {
 }
 
@@ -135,9 +131,9 @@ CEC_Pull_Counting_Consumer::pull ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
-      return 0;
+      return nullptr;
     }
-  this->event_count++;
+  ++this->event_count;
   return this->supplier_proxy_->pull ();
 }
 
@@ -146,15 +142,15 @@ CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
-      has_event = 0;
-      return 0;
+      has_event = false;
+      return nullptr;
     }
 
   CORBA::Any_var event =
     this->supplier_proxy_->try_pull (has_event);
 
   if (has_event)
-    this->event_count++;
+    ++this->event_count;
 
   return event._retn ();
 }
@@ -162,19 +158,19 @@ CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event)
 void
 CEC_Pull_Counting_Consumer::dump_results (int expected_count, int tolerance)
 {
-  int diff = this->event_count - expected_count;
+  int const diff = this->event_count - expected_count;
   if (diff > tolerance || diff < -tolerance)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ERROR - %s unexpected number of events  <%d>\n",
-                  this->name_,
+                  this->name_.c_str (),
                   this->event_count));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s - number of events <%d> within margins\n",
-                  this->name_,
+                  this->name_.c_str (),
                   this->event_count));
     }
 }
@@ -182,7 +178,7 @@ CEC_Pull_Counting_Consumer::dump_results (int expected_count, int tolerance)
 void
 CEC_Pull_Counting_Consumer::disconnect_pull_consumer ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->supplier_proxy_ =
     CosEventChannelAdmin::ProxyPullSupplier::_nil ();
 }
@@ -192,10 +188,8 @@ CEC_Pull_Counting_Consumer::disconnect_pull_consumer ()
 CEC_Counting_Consumer_Task::
     CEC_Counting_Consumer_Task (CEC_Pull_Counting_Consumer *s,
                                 int milliseconds)
-  :  consumer_ (s),
-     stop_flag_ (0),
-     pull_count_ (0),
-     milliseconds_ (milliseconds)
+  : consumer_ (s),
+    milliseconds_ (milliseconds)
 {
 }
 
@@ -217,44 +211,43 @@ void
 CEC_Counting_Consumer_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->stop_flag_ = 1;
+  this->stop_flag_ = true;
 }
 
 CORBA::ULong
-CEC_Counting_Consumer_Task::pull_count ()
+CEC_Counting_Consumer_Task::pull_count () const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   return this->pull_count_;
 }
 
 void
 CEC_Counting_Consumer_Task::run ()
 {
-  CORBA::Any event;
-  event <<= CORBA::Long(0);
+  bool stop {};
+  do
+    {
+      CORBA::Boolean has_event {};
+      CORBA::Any_var event =
+        this->consumer_->try_pull (has_event);
 
-  int stop = 0;
-  do {
-    CORBA::Boolean has_event;
-    CORBA::Any_var event =
-      this->consumer_->try_pull (has_event);
+      if (this->milliseconds_ != 0)
+        {
+          ACE_Time_Value tv (0, 1000 * this->milliseconds_);
+          ACE_OS::sleep (tv);
+        }
+      else
+        {
+          // Sleep briefly to avoid spinning.
+          ACE_OS::sleep (0);
+        }
 
-    if (this->milliseconds_ != 0)
-      {
-        ACE_Time_Value tv (0, 1000 * this->milliseconds_);
-        ACE_OS::sleep (tv);
-      }
-    else
-      {
-        // Sleep for a short time to avoid spinning... kind of klugy
-        ACE_OS::sleep (0);
-      }
-
-    if (has_event)
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-        this->pull_count_++;
+        if (has_event)
+          ++this->pull_count_;
+        stop = this->stop_flag_;
       }
-
-    stop = this->stop_flag_;
-  } while (stop == 0);
+    }
+  while (!stop);
 }

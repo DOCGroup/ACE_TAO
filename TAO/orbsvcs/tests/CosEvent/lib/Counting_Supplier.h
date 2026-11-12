@@ -31,8 +31,11 @@
 class CEC_Test_Export CEC_Counting_Supplier : public POA_CosEventComm::PushSupplier
 {
 public:
-  /// Constructor
-  CEC_Counting_Supplier ();
+  CEC_Counting_Supplier () = default;
+  CEC_Counting_Supplier (CEC_Counting_Supplier const &) = delete;
+  CEC_Counting_Supplier (CEC_Counting_Supplier &&) = delete;
+  CEC_Counting_Supplier &operator= (CEC_Counting_Supplier const &) = delete;
+  CEC_Counting_Supplier &operator= (CEC_Counting_Supplier &&) = delete;
 
   // = The CosEventComm::PushSupplier methods
 
@@ -47,10 +50,10 @@ public:
   void disconnect_push_supplier () override;
 
   /// Count the number of events sent
-  CORBA::ULong event_count;
+  CORBA::ULong event_count {};
 
   /// Count the number of disconnect_push_supplier calls
-  CORBA::ULong disconnect_count;
+  CORBA::ULong disconnect_count {};
 
 private:
   /// Our proxy
@@ -63,31 +66,35 @@ public:
   /// Create the task...
   CEC_Counting_Supplier_Task (CEC_Counting_Supplier *supplier,
                               int milliseconds = 0);
+  CEC_Counting_Supplier_Task (CEC_Counting_Supplier_Task const &) = delete;
+  CEC_Counting_Supplier_Task (CEC_Counting_Supplier_Task &&) = delete;
+  CEC_Counting_Supplier_Task &operator= (CEC_Counting_Supplier_Task const &) = delete;
+  CEC_Counting_Supplier_Task &operator= (CEC_Counting_Supplier_Task &&) = delete;
 
   // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   void stop ();
-  CORBA::ULong push_count ();
+  CORBA::ULong push_count () const;
 
   /// Run a single iteration of the test
   void run ();
 
 private:
-  /// The supplier we are turning into an active object
-  CEC_Counting_Supplier *supplier_;
+  /// Borrowed supplier; it outlives this task and the task is joined first.
+  CEC_Counting_Supplier * const supplier_;
 
-  /// Set to 1 when the test must stop
-  int stop_flag_;
+  /// Set when the test must stop.
+  bool stop_flag_ {};
 
   /// Count the number of push() calls
-  CORBA::ULong push_count_;
+  CORBA::ULong push_count_ {};
 
-  /// If not zero then pause for <milliseconds> before sending each
+  /// If nonzero, pause for <milliseconds> before each
   /// event.
-  int milliseconds_;
+  int const milliseconds_;
 
-  TAO_SYNCH_MUTEX lock_;
+  mutable TAO_SYNCH_MUTEX lock_;
 };
 
 // ****************************************************************
@@ -102,8 +109,11 @@ private:
 class CEC_Test_Export CEC_Pull_Counting_Supplier : public POA_CosEventComm::PullSupplier
 {
 public:
-  /// Constructor
-  CEC_Pull_Counting_Supplier ();
+  CEC_Pull_Counting_Supplier () = default;
+  CEC_Pull_Counting_Supplier (CEC_Pull_Counting_Supplier const &) = delete;
+  CEC_Pull_Counting_Supplier (CEC_Pull_Counting_Supplier &&) = delete;
+  CEC_Pull_Counting_Supplier &operator= (CEC_Pull_Counting_Supplier const &) = delete;
+  CEC_Pull_Counting_Supplier &operator= (CEC_Pull_Counting_Supplier &&) = delete;
 
   // = The CosEventComm::PullSupplier methods
 
@@ -117,10 +127,10 @@ public:
   void disconnect_pull_supplier () override;
 
   /// Count the number of events sent
-  CORBA::ULong event_count;
+  CORBA::ULong event_count {};
 
   /// Count the number of disconnect_pull_supplier calls
-  CORBA::ULong disconnect_count;
+  CORBA::ULong disconnect_count {};
 
 private:
   /// Our proxy
