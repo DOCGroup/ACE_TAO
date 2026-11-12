@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ORT_Adapter_Impl.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ORT_ADAPTER_IMPL_H
 #define TAO_ORT_ADAPTER_IMPL_H

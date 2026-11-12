@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ORT_Adapter_Factory_Impl.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ORT_ADAPTER_FACTORY_IMPL_H
 #define TAO_ORT_ADAPTER_FACTORY_IMPL_H

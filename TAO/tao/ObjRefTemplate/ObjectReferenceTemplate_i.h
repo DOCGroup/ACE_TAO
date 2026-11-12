@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ObjectReferenceTemplate_i.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_REFERENCE_TEMPLATE_I_H
 #define TAO_OBJECT_REFERENCE_TEMPLATE_I_H
