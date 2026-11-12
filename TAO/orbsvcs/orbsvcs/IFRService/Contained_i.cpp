@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-char const *TAO_Contained_i::tmp_name_holder_ = nullptr;
+char const *TAO_Contained_i::tmp_name_holder_ {};
 
 TAO_Contained_i::TAO_Contained_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
@@ -993,7 +993,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
                                                  "count",
                                                  count);
 
-      for (u_int i = 0; i < count; ++i)
+      for (u_int i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);

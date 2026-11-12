@@ -31,10 +31,8 @@
 class be_visitor_attribute : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_attribute (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_attribute () override;
   be_visitor_attribute (be_visitor_attribute const &) = delete;
   be_visitor_attribute (be_visitor_attribute &&) = delete;

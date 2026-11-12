@@ -31,10 +31,8 @@
 class be_visitor_args_arglist : public be_visitor_args
 {
 public:
-  /// constructor
   explicit be_visitor_args_arglist (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_args_arglist () override;
   be_visitor_args_arglist (be_visitor_args_arglist const &) = delete;
   be_visitor_args_arglist (be_visitor_args_arglist &&) = delete;

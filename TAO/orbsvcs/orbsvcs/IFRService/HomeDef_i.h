@@ -42,10 +42,8 @@ class TAO_IFRService_Export TAO_HomeDef_i
   //    Represents a home definition, containing factory and finder.
   //
 public:
-  /// Constructor
   explicit TAO_HomeDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_HomeDef_i () override;
 
   /// Return our definition kind.

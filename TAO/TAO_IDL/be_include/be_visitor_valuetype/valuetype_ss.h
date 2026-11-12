@@ -27,10 +27,8 @@
 class be_visitor_valuetype_ss : public be_visitor_valuetype
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_ss (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_ss () override;
   be_visitor_valuetype_ss (be_visitor_valuetype_ss const &) = delete;
   be_visitor_valuetype_ss (be_visitor_valuetype_ss &&) = delete;

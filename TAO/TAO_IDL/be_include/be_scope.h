@@ -32,13 +32,11 @@ class UTL_ExceptList;
 class be_scope : public virtual UTL_Scope
 {
 public:
-  /// Default constructor.
   be_scope ();
 
   /// Constructor that sets the node type.
   explicit be_scope (AST_Decl::NodeType nt);
 
-  /// Destructor.
   ~be_scope () override;
 
   /// Overridden in be_operation and be_factory.

@@ -30,10 +30,8 @@
 class be_visitor_operation_rettype : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_operation_rettype (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_rettype () override;
   be_visitor_operation_rettype (be_visitor_operation_rettype const &) = delete;
   be_visitor_operation_rettype (be_visitor_operation_rettype &&) = delete;

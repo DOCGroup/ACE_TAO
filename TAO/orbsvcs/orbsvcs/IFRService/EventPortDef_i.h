@@ -39,10 +39,8 @@ class TAO_IFRService_Export TAO_EventPortDef_i
   : public virtual TAO_Contained_i
 {
 public:
-  //// Constructor
   explicit TAO_EventPortDef_i (TAO_Repository_i *repo);
 
-  //// Destructor
   ~TAO_EventPortDef_i () override;
 
   virtual CORBA::ComponentIR::EventDef_ptr event ();

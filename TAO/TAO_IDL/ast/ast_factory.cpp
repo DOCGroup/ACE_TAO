@@ -193,7 +193,7 @@ AST_Factory::compute_argument_attr ()
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
-              this->argument_count_++;
+              ++this->argument_count_;
 
               AST_Argument * const arg = dynamic_cast<AST_Argument*> (d);
 
@@ -263,7 +263,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
           this->pd_exceptions->nconc (el);
         }
 
-      this->pd_n_exceptions++;
+      ++this->pd_n_exceptions;
     }
 
   return nullptr;

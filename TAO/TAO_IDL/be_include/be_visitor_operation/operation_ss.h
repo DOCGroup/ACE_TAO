@@ -28,10 +28,8 @@
 class be_visitor_operation_ss : public be_visitor_operation
 {
 public:
-  /// constructor
   explicit be_visitor_operation_ss (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_ss () override;
   be_visitor_operation_ss (be_visitor_operation_ss const &) = delete;
   be_visitor_operation_ss (be_visitor_operation_ss &&) = delete;

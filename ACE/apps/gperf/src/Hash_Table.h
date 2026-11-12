@@ -47,7 +47,6 @@
 class Hash_Table
 {
 public:
-  /// Constructor
   explicit Hash_Table (size_t s);
 
   Hash_Table (Hash_Table const &) = delete;
@@ -55,7 +54,6 @@ public:
   Hash_Table &operator= (Hash_Table const &) = delete;
   Hash_Table &operator= (Hash_Table &&) = delete;
 
-  /// Destructor
   ~Hash_Table ();
 
   List_Node *find (List_Node *item, int ignore_length);

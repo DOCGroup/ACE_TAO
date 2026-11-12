@@ -23,10 +23,8 @@
 class be_visitor_array : public be_visitor_decl
 {
 public:
-  /// Constructor
   explicit be_visitor_array (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_array () override;
   be_visitor_array (be_visitor_array const &) = delete;
   be_visitor_array (be_visitor_array &&) = delete;

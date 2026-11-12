@@ -28,10 +28,8 @@ class TAO_OutStream;
 class be_visitor_sequence_cs : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_sequence_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_sequence_cs () override  = default;
 
   be_visitor_sequence_cs (const be_visitor_sequence_cs &) = delete;

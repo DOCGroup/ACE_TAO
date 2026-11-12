@@ -1991,7 +1991,7 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
 void
 UTL_ScopeActiveIterator::next ()
 {
-  this->il++;
+  ++this->il;
 }
 
 // Get current item.

@@ -206,7 +206,7 @@ TAO_UnionDef_i::members_i ()
                                              "count",
                                              count);
 
-  for (u_int i = 0; i < count; ++i)
+  for (u_int i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -237,7 +237,7 @@ TAO_UnionDef_i::members_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (key_queue.size ());
 
-  CORBA::UnionMemberSeq *members = nullptr;
+  CORBA::UnionMemberSeq *members {};
   ACE_NEW_THROW_EX (members,
                     CORBA::UnionMemberSeq (size),
                     CORBA::NO_MEMORY ());
@@ -248,12 +248,12 @@ TAO_UnionDef_i::members_i ()
   ACE_TString name, path;
   ACE_Configuration_Section_Key next_key, entry_key;
   CORBA::Object_var obj;
-  TAO_IDLType_i *impl = nullptr;
+  TAO_IDLType_i *impl {};
 
   // Store to replace below.
   ACE_Configuration_Section_Key key_holder = this->section_key_;
 
-  for (CORBA::ULong k = 0; k < size; ++k)
+  for (CORBA::ULong k {}; k < size; ++k)
     {
       next_key = key_queue.front ();
       key_queue.pop_front ();
@@ -323,11 +323,9 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
-  char *member_path = nullptr;
-
   // Create a section for each member. We store the member
   // name, its label value, and the path to its database entry.
-  for (CORBA::ULong i = 0; i < count; i++)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -340,7 +338,7 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path =
+      char * const member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
@@ -412,7 +410,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
       TAO_OutputCDR cdr;
       cdr.write_ulong (static_cast<CORBA::ULong> (value));
       TAO_InputCDR in_cdr (cdr);
-      TAO::Unknown_IDL_Type *impl = nullptr;
+      TAO::Unknown_IDL_Type *impl {};
       ACE_NEW (impl,
                TAO::Unknown_IDL_Type (tc.in (),
                                       in_cdr));

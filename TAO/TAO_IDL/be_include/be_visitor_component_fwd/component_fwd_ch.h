@@ -24,10 +24,8 @@
 class be_visitor_component_fwd_ch : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_component_fwd_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_component_fwd_ch () override;
   be_visitor_component_fwd_ch (be_visitor_component_fwd_ch const &) = delete;
   be_visitor_component_fwd_ch (be_visitor_component_fwd_ch &&) = delete;

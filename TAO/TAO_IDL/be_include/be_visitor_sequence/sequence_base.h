@@ -32,10 +32,8 @@
 class be_visitor_sequence_base : public be_visitor_decl
 {
 public:
-  /// Constructor
   explicit be_visitor_sequence_base (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_sequence_base () override;
 
   be_visitor_sequence_base (const be_visitor_sequence_base &) = delete;

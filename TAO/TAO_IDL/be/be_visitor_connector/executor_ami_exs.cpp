@@ -66,7 +66,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
              os_ << provides->provides_type ()->local_name ();
              os_ << suffix << " ())" << be_uidt_nl;
             }
-          port_nr++;
+          ++port_nr;
         }
     }
 

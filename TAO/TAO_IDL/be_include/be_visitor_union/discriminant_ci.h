@@ -27,10 +27,8 @@
 class be_visitor_union_discriminant_ci : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_union_discriminant_ci (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_union_discriminant_ci () override  = default;
 
   be_visitor_union_discriminant_ci (be_visitor_union_discriminant_ci const &) = delete;

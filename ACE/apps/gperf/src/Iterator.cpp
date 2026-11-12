@@ -64,11 +64,11 @@ Iterator::operator() ()
         switch (*str)
           {
           default: return error_value;
-          case ',': str++; break;
-          case '$': str++; return end_word;
+          case ',': ++str; break;
+          case '$': ++str; return end_word;
           case '0': case '1': case '2': case '3': case '4':
           case '5': case '6': case '7': case '8': case '9':
-            for (curr_value = 0; ACE_OS::ace_isdigit (*str); str++)
+            for (curr_value = 0; ACE_OS::ace_isdigit (*str); ++str)
               {
                 curr_value = curr_value * 10 + *str - '0';
               }

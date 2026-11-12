@@ -37,7 +37,6 @@
 class Gen_Perf
 {
 public:
-  /// Constructor.
   Gen_Perf ();
 
   Gen_Perf (Gen_Perf const &) = delete;
@@ -45,7 +44,6 @@ public:
   Gen_Perf &operator= (Gen_Perf const &) = delete;
   Gen_Perf &operator= (Gen_Perf &&) = delete;
 
-  /// Destructor
   ~Gen_Perf ();
 
   /// Attempt to generate a perfect hash function.

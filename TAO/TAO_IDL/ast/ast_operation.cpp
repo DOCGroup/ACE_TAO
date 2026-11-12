@@ -257,7 +257,7 @@ AST_Operation::compute_argument_attr ()
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
-              this->argument_count_++;
+              ++this->argument_count_;
 
               AST_Argument * const arg = dynamic_cast<AST_Argument*> (d);
 

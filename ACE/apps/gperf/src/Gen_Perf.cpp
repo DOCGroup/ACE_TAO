@@ -56,26 +56,29 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 
   while (*set1 && *set2)
     if (*set1 == *set2)
-      set1++, set2++;
+      {
+        ++set1;
+        ++set2;
+      }
     else
       {
         *set3 = *set1 < *set2 ? *set1++ : *set2++;
         if (set3 == base || *set3 != *(set3 - 1))
-          set3++;
+          ++set3;
       }
 
   while (*set1)
     {
       *set3 = *set1++;
       if (set3 == base || *set3 != *(set3 - 1))
-        set3++;
+        ++set3;
     }
 
   while (*set2)
     {
       *set3 = *set2++;
       if (set3 == base || *set3 != *(set3 - 1))
-        set3++;
+        ++set3;
     }
   *set3 = '\0';
   return ACE_Utils::truncate_cast<int> (set3 - base);
@@ -88,14 +91,16 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 void
 Gen_Perf::sort_set (char *union_set, int len)
 {
-  for (int i = 0, j = len - 1; i < j; i++)
+  for (int i = 0, j = len - 1; i < j; ++i)
     {
-      int curr, tmp;
+      int curr;
+      unsigned char tmp;
 
-      for (curr = i + 1, tmp = (int) union_set[curr];
+      for (curr = i + 1, tmp = static_cast<unsigned char> (union_set[curr]);
            curr > 0
-           && Vectors::occurrences[tmp] < Vectors::occurrences[(int) union_set[curr - 1]];
-           curr--)
+           && Vectors::occurrences[Vectors::character_index (tmp)] <
+             Vectors::occurrences[Vectors::character_index (union_set[curr - 1])];
+           --curr)
         union_set[curr] = union_set[curr - 1];
 
       union_set[curr] = static_cast<char> (tmp);
@@ -109,7 +114,7 @@ Gen_Perf::hash (List_Node *key_node)
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
   for (char const ptr : key_node->keysig)
-      sum += Vectors::asso_values[static_cast<int> (ptr)];
+      sum += Vectors::asso_values[Vectors::character_index (ptr)];
 
   key_node->hash_value = sum;
   return sum;
@@ -124,7 +129,8 @@ Gen_Perf::hash (List_Node *key_node)
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  int const original_char = Vectors::asso_values[(int) c];
+  std::size_t const index = Vectors::character_index (c);
+  int const original_char = Vectors::asso_values[index];
   int total_iterations = 0;
 
   if (!option[FAST])
@@ -143,8 +149,8 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   for (int i = total_iterations - 1; i >= 0; --i)
     {
-      Vectors::asso_values[(int) c] =
-        (Vectors::asso_values[(int) c]
+      Vectors::asso_values[index] =
+        (Vectors::asso_values[index]
          + (option.jump () ? option.jump () : ACE_OS::rand ()))
         & (option.asso_max () - 1);
 
@@ -177,7 +183,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
     }
 
   // Restore original values, no more tries.
-  Vectors::asso_values[(int) c] = original_char;
+  Vectors::asso_values[index] = original_char;
 
   // If we're this far it's time to try the next character....
   return 1;
@@ -203,7 +209,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   // continue normal action.
   ++fewest_collisions;
 
-  for (char *temp = this->union_set.get (); *temp != '\0'; temp++)
+  for (char *temp = this->union_set.get (); *temp != '\0'; ++temp)
     if (affects_prev (*temp, curr) == 0)
       {
         if (option[DEBUGGING])
@@ -211,7 +217,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
                       " by changing asso_value['%c'] (char #%d) to %d\n",
                       *temp,
                       temp - this->union_set.get () + 1,
-                      Vectors::asso_values[(int) *temp]));
+                      Vectors::asso_values[Vectors::character_index (*temp)]));
         // Good, doesn't affect previous hash values, we'll take it.
         return 0;
       }
@@ -320,7 +326,7 @@ Gen_Perf::compute_binary_search ()
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
-       curr = curr->next, hash_value++)
+       curr = curr->next, ++hash_value)
     {
       curr->hash_value = hash_value;
     }
@@ -340,7 +346,7 @@ Gen_Perf::compute_linear_search ()
   int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
        curr != nullptr;
-       curr = curr->next, hash_value++)
+       curr = curr->next, ++hash_value)
     {
       curr->hash_value = hash_value;
     }
@@ -367,7 +373,7 @@ Gen_Perf::compute_perfect_hash ()
               return -1;
             break;
           }
-      num_done++;
+      ++num_done;
     }
 
   // Make one final check, just to make sure nothing weird happened...
@@ -385,7 +391,7 @@ Gen_Perf::compute_perfect_hash ()
               // Keep track of the number of "dynamic" links (i.e., keys
               // that hash to the same value) so that we can use it later
               // when generating the output.
-              this->key_list.total_duplicates++;
+              ++this->key_list.total_duplicates;
             }
           else
             {
@@ -449,7 +455,7 @@ Gen_Perf::~Gen_Perf ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
-      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; i++)
+      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
         if (Vectors::occurrences[i])
           ACE_DEBUG ((LM_DEBUG,
                       "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",

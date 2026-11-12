@@ -25,10 +25,8 @@
 class be_visitor_valuetype_any_op_ch : public be_visitor_valuetype
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_any_op_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_any_op_ch () override;
   be_visitor_valuetype_any_op_ch (be_visitor_valuetype_any_op_ch const &) = delete;
   be_visitor_valuetype_any_op_ch (be_visitor_valuetype_any_op_ch &&) = delete;

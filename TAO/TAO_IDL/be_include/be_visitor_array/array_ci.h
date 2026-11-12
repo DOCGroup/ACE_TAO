@@ -22,10 +22,8 @@
 class be_visitor_array_ci : public be_visitor_array
 {
 public:
-  /// constructor
   explicit be_visitor_array_ci (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_array_ci () override = default;
   be_visitor_array_ci (be_visitor_array_ci const &) = delete;
   be_visitor_array_ci (be_visitor_array_ci &&) = delete;

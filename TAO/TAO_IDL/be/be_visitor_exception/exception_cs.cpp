@@ -279,7 +279,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   if (node->full_name () == "CORBA::InvalidPolicies"
       || node->full_name () == "CORBA::PolicyError")
     {
-      // The generated TAO error-return call takes an int status value, so emit 0 rather than nullptr.
+      // ACE_ERROR_RETURN also passes its return value as an int status, so use 0 for this pointer return.
       *os << "// TAO extension - the virtual _type method." << be_nl
           << "::CORBA::TypeCode_ptr " << node->name ()
           << "::_tao_type () const" << be_nl

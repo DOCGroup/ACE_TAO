@@ -46,10 +46,8 @@ class TAO_Container_i;
 class TAO_IFRService_Export TAO_IRObject_i : public POA_CORBA::IRObject
 {
 public:
-  /// Constructor.
   explicit TAO_IRObject_i (TAO_Repository_i *repo);
 
-  /// Destructor.
   ~TAO_IRObject_i () override;
 
   CORBA::DefinitionKind def_kind () override;

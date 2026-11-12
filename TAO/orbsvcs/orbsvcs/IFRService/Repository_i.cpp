@@ -464,7 +464,7 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
   this->repo_poa_ = repo_poa;
 
   // Create the appropriate lock.
-  ACE_Lock *lock = nullptr;
+  ACE_Lock *lock {};
   if (OPTIONS::instance ()->enable_locking ())
     {
       ACE_NEW_THROW_EX (lock,
@@ -578,7 +578,7 @@ TAO_Repository_i::create_sections ()
 
       u_int const num_pkinds = this->num_pkinds ();
 
-      for (u_int i = 0; i < num_pkinds; ++i)
+      for (u_int i {}; i < num_pkinds; ++i)
         {
           ACE_Configuration_Section_Key key;
           CORBA::PrimitiveKind pkind = static_cast<CORBA::PrimitiveKind> (i);
@@ -719,7 +719,7 @@ TAO_Repository_i::create_servants_and_poas ()
                                  poa_manager.in (), \
                                  policies); \
 \
-  TAO_ ## name ## _i * name ## _impl = nullptr; \
+  TAO_ ## name ## _i * name ## _impl {}; \
   ACE_NEW_RETURN (name ## _impl, \
                   TAO_ ## name ## _i (this), \
                   -1); \
@@ -742,7 +742,7 @@ TAO_Repository_i::create_servants_and_poas ()
 
   CORBA::ULong length = policies.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy ();

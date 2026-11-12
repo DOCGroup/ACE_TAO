@@ -39,10 +39,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_ValueMemberDef_i : public virtual TAO_Contained_i
 {
 public:
-  /// Constructor
   explicit TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
 
-  /// Destructor
   ~TAO_ValueMemberDef_i () override;
 
   /// Return our definition kind.

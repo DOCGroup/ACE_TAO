@@ -78,8 +78,7 @@ List_Node::List_Node (char const *input, int len)
     for (char const ch : this->key)
       {
         this->keysig.push_back (ch);
-        int const i = static_cast<int> (ch);
-        ++Vectors::occurrences[i];
+        ++Vectors::occurrences[Vectors::character_index (ch)];
       }
   else
     {
@@ -98,7 +97,7 @@ List_Node::List_Node (char const *input, int len)
           else // Out of range of KEY length, so we'll just skip it.
             continue;
           this->keysig.push_back (ch);
-          ++Vectors::occurrences[static_cast<int> (ch)];
+          ++Vectors::occurrences[Vectors::character_index (ch)];
         }
 
       // Didn't get any hits and user doesn't want to consider the

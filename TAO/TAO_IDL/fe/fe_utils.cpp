@@ -190,8 +190,7 @@ FE_Utils::string_to_scoped_name (std::string const& name)
 
           std::unique_ptr<Identifier> id =
             std::make_unique<Identifier> (local_name);
-          Scoped_Name_Owner sn (std::make_unique<UTL_ScopedName> (
-                                  id.get (), nullptr).release ());
+          Scoped_Name_Owner sn (new UTL_ScopedName (id.get (), nullptr));
           id.release ();
 
           // Either make it the head of a new list or the tail of

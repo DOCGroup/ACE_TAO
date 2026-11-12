@@ -24,10 +24,8 @@
 class be_visitor_interface_is : public be_visitor_interface
 {
 public:
-  /// constructor
   explicit be_visitor_interface_is (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_interface_is () override;
   be_visitor_interface_is (be_visitor_interface_is const &) = delete;
   be_visitor_interface_is (be_visitor_interface_is &&) = delete;

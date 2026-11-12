@@ -27,10 +27,8 @@
 class be_visitor_obv_module : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_obv_module (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_obv_module () override;
   be_visitor_obv_module (be_visitor_obv_module const &) = delete;
   be_visitor_obv_module (be_visitor_obv_module &&) = delete;

@@ -70,14 +70,14 @@ TAO_EnumDef_i::members_i ()
                                              "count",
                                              count);
 
-  CORBA::EnumMemberSeq *retval = nullptr;
+  CORBA::EnumMemberSeq *retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::EnumMemberSeq (count),
                     CORBA::NO_MEMORY ());
 
   retval->length (count);
 
-  for (u_int i = 0; i < count; ++i)
+  for (u_int i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -119,7 +119,7 @@ TAO_EnumDef_i::members_i (CORBA::EnumMemberSeq const &members)
                                              "count",
                                              count);
 
- for (CORBA::ULong i = 0; i < count; ++i)
+ for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);

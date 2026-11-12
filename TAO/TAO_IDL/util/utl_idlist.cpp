@@ -326,7 +326,7 @@ UTL_IdList::get_string_copy () const
           result.append ("::");
         }
       result.append (item_list->head ()->get_string ());
-      n++;
+      ++n;
       item_list = static_cast<UTL_IdList const *> (item_list->tail ());
     }
 

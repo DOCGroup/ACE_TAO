@@ -26,10 +26,8 @@
 class be_visitor_valuetype : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype () override;
   be_visitor_valuetype (be_visitor_valuetype const &) = delete;
   be_visitor_valuetype (be_visitor_valuetype &&) = delete;

@@ -36,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export Options
 {
 public:
-  /// Default Constructor
   Options ();
 
   /// dtor

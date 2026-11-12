@@ -28,10 +28,8 @@
 class be_visitor_typedef_any_op_cs : public be_visitor_typedef
 {
 public:
-  /// constructor
   explicit be_visitor_typedef_any_op_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_typedef_any_op_cs () override  = default;
 
   be_visitor_typedef_any_op_cs (be_visitor_typedef_any_op_cs const &) = delete;

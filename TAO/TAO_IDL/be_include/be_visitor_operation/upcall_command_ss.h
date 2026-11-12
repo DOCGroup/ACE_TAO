@@ -20,10 +20,8 @@ class be_visitor_operation_upcall_command_ss
   : public be_visitor_operation
 {
 public:
-  /// constructor
   explicit be_visitor_operation_upcall_command_ss (be_visitor_context * ctx);
 
-  /// destructor
   ~be_visitor_operation_upcall_command_ss () override;
   be_visitor_operation_upcall_command_ss (be_visitor_operation_upcall_command_ss const &) = delete;
   be_visitor_operation_upcall_command_ss (be_visitor_operation_upcall_command_ss &&) = delete;

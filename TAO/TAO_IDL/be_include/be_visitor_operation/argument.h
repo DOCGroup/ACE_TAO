@@ -29,10 +29,8 @@
 class be_visitor_operation_argument : public be_visitor_operation
 {
 public:
-  /// constructor
   explicit be_visitor_operation_argument (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_operation_argument () override;
   be_visitor_operation_argument (be_visitor_operation_argument const &) = delete;
   be_visitor_operation_argument (be_visitor_operation_argument &&) = delete;

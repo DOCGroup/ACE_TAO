@@ -26,10 +26,8 @@
 class be_visitor_valuetype_cdr_op_ci : public be_visitor_valuetype
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_cdr_op_ci (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_cdr_op_ci () override;
   be_visitor_valuetype_cdr_op_ci (be_visitor_valuetype_cdr_op_ci const &) = delete;
   be_visitor_valuetype_cdr_op_ci (be_visitor_valuetype_cdr_op_ci &&) = delete;

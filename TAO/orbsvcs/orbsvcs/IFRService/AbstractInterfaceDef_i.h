@@ -36,10 +36,8 @@ class TAO_IFRService_Export TAO_AbstractInterfaceDef_i
   : public virtual TAO_InterfaceDef_i
 {
 public:
-  /// Constructor
   explicit TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_AbstractInterfaceDef_i () override;
 
   /// Return our definition kind.

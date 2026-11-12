@@ -37,10 +37,8 @@ class TAO_IFRService_Export TAO_ExceptionDef_i : public virtual TAO_Contained_i,
                                                  public virtual TAO_Container_i
 {
 public:
-  /// Constructor
   explicit TAO_ExceptionDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ExceptionDef_i () override;
 
   /// Return our definition kind.

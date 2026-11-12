@@ -29,10 +29,8 @@ class be_visitor_valuetype_marshal_cs : public be_visitor_scope
   int unmarshal_state (be_valuetype *node);
 
 public:
-  /// constructor
   explicit be_visitor_valuetype_marshal_cs (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_marshal_cs () override;
   be_visitor_valuetype_marshal_cs (be_visitor_valuetype_marshal_cs const &) = delete;
   be_visitor_valuetype_marshal_cs (be_visitor_valuetype_marshal_cs &&) = delete;

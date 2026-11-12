@@ -36,10 +36,8 @@ class TAO_IFRService_Export TAO_ValueBoxDef_i : public virtual TAO_TypedefDef_i
 {
 public:
 public:
-  /// Constructor
   explicit TAO_ValueBoxDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ValueBoxDef_i () override;
 
   /// Return our definition kind.

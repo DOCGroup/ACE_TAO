@@ -25,10 +25,8 @@
 class be_visitor_valuetype_init_arglist_ch : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_valuetype_init_arglist_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_valuetype_init_arglist_ch () override;
   be_visitor_valuetype_init_arglist_ch (be_visitor_valuetype_init_arglist_ch const &) = delete;
   be_visitor_valuetype_init_arglist_ch (be_visitor_valuetype_init_arglist_ch &&) = delete;

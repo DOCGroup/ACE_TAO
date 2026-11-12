@@ -27,10 +27,8 @@
 class be_visitor_sequence_ch : public be_visitor_decl
 {
 public:
-  /// constructor
   explicit be_visitor_sequence_ch (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_sequence_ch () override  = default;
 
   be_visitor_sequence_ch (const be_visitor_sequence_ch &) = delete;

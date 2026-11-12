@@ -75,7 +75,6 @@ public:
 class be_visitor_cdr_op_field_decl : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_cdr_op_field_decl (be_visitor_context *ctx);
 
   be_visitor_cdr_op_field_decl (const be_visitor_cdr_op_field_decl &) = delete;

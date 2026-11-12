@@ -605,7 +605,7 @@ AST_Structure::operator[] (std::size_t const index)
         {
           return si.item ();
         }
-      i++;
+      ++i;
     }
   return nullptr;
 }

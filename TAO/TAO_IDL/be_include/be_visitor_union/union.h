@@ -25,10 +25,8 @@
 class be_visitor_union : public be_visitor_scope
 {
 public:
-  /// constructor
   explicit be_visitor_union (be_visitor_context *ctx);
 
-  /// destructor
   ~be_visitor_union () override  = default;
 
   be_visitor_union (be_visitor_union const &) = delete;

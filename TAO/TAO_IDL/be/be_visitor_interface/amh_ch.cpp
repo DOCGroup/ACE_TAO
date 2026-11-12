@@ -44,7 +44,7 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
     {
       *os << be_idt;
 
-      for (int i = 0; i < node->n_inherits (); i++)
+      for (int i = 0; i < node->n_inherits (); ++i)
         {
           *os << "public virtual "
               << node->inherits ()[i]->name ();

@@ -42,10 +42,8 @@ class TAO_IFRService_Export TAO_ExtLocalInterfaceDef_i
   //    Mixes in IDL3 attribute exceptions.
   //
 public:
-  /// Constructor
   explicit TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo);
 
-  /// Destructor
   ~TAO_ExtLocalInterfaceDef_i () override;
 
   void destroy () override;

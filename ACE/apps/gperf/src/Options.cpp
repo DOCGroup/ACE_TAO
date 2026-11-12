@@ -118,7 +118,7 @@ Options::print_options ()
   else
     print_option (nullptr);
 
-  for (int i = 1; argv_ != nullptr && i < argc_; i++)
+  for (int i = 1; argv_ != nullptr && i < argc_; ++i)
     print_option (argv_[i]);
 
   ACE_OS::printf ("*/\n");
@@ -133,14 +133,14 @@ Options::key_sort (char *base, int len)
 {
   int j = 0;
   int i = 0;
-  for (i = 0, j = len - 1; i < j; i++)
+  for (i = 0, j = len - 1; i < j; ++i)
     {
       int curr = 0;
       int tmp = 0;
 
       for (curr = i + 1, tmp = base[curr];
            curr > 0 && tmp >= base[curr - 1];
-           curr--)
+           --curr)
         if ((base[curr] = base[curr - 1]) == tmp)
           // Oh no, a duplicate!!!
           return 0;
@@ -251,7 +251,7 @@ Options::~Options ()
                        "maximum keysig size = %d\nkey positions are:\n",
                        total_keysig_size_);
 
-      for (ptr = key_positions_.data (); *ptr != EOS; ptr++)
+      for (ptr = key_positions_.data (); *ptr != EOS; ++ptr)
         if (*ptr == WORD_END)
           ACE_OS::fprintf (stderr, "$\n");
         else
@@ -528,7 +528,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
                 for (l_key_pos = key_positions_.data ();
                      (value = expand ()) != EOS;
-                     l_key_pos++)
+                     ++l_key_pos)
                   if (value == BAD_VALUE)
                     ACE_ERROR_RETURN ((LM_ERROR,
                                        "Illegal key value or range, use 1,2,3-%d,'$' or '*'.\n%r",

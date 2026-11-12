@@ -73,7 +73,7 @@ TAO_ValueDef_i::describe ()
 CORBA::Contained::Description *
 TAO_ValueDef_i::describe_i ()
 {
-  CORBA::ValueDescription *vd = nullptr;
+  CORBA::ValueDescription *vd {};
   ACE_NEW_RETURN (vd,
                   CORBA::ValueDescription,
                   0);
@@ -81,7 +81,7 @@ TAO_ValueDef_i::describe_i ()
 
   this->fill_value_description (safe_vd.inout ());
 
-  CORBA::Contained::Description *cd = nullptr;
+  CORBA::Contained::Description *cd {};
   ACE_NEW_RETURN (cd,
                   CORBA::Contained::Description,
                   0);
@@ -126,7 +126,7 @@ TAO_ValueDef_i::supported_interfaces ()
 CORBA::InterfaceDefSeq *
 TAO_ValueDef_i::supported_interfaces_i ()
 {
-  CORBA::InterfaceDefSeq *seq = nullptr;
+  CORBA::InterfaceDefSeq *seq {};
   ACE_NEW_RETURN (seq,
                   CORBA::InterfaceDefSeq,
                   0);
@@ -150,13 +150,12 @@ TAO_ValueDef_i::supported_interfaces_i ()
                                              "count",
                                              count);
   seq->length (count);
-  char *stringified = nullptr;
   ACE_TString holder;
   CORBA::Object_var obj;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
                                                 stringified,
                                                 holder);
@@ -201,16 +200,14 @@ TAO_ValueDef_i::supported_interfaces_i (
   this->repo_->config ()->set_integer_value (supported_key,
                                              "count",
                                              count);
-  char *stringified = nullptr;
-  char const *supported_id = nullptr;
-  char const *supported_path = nullptr;
+  char *stringified {};
   CORBA::ULong kind = 0;
   bool concrete_seen = false;
   CORBA::DefinitionKind def_kind;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
-      supported_path =
+      char const * const supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
             supported_interfaces[i]
           );
@@ -250,7 +247,8 @@ TAO_ValueDef_i::supported_interfaces_i (
                                           CORBA::dk_Value);
 
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      supported_id = supported_interfaces[i]->_interface_repository_id ();
+      char const * const supported_id =
+        supported_interfaces[i]->_interface_repository_id ();
       this->repo_->config ()->set_string_value (supported_key,
                                                 stringified,
                                                 supported_id);
@@ -270,7 +268,7 @@ TAO_ValueDef_i::initializers ()
 CORBA::InitializerSeq *
 TAO_ValueDef_i::initializers_i ()
 {
-  CORBA::InitializerSeq *iseq = nullptr;
+  CORBA::InitializerSeq *iseq {};
   ACE_NEW_RETURN (iseq,
                   CORBA::InitializerSeq,
                   0);
@@ -294,12 +292,12 @@ TAO_ValueDef_i::initializers_i ()
                                              "count",
                                              count);
   iseq->length (count);
-  char *stringified = nullptr;
+  char *stringified {};
   ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
@@ -328,7 +326,7 @@ TAO_ValueDef_i::initializers_i ()
       retval[i].members.length (arg_count);
       CORBA::Object_var obj;
 
-      for (CORBA::ULong j = 0; j < arg_count; ++j)
+      for (CORBA::ULong j {}; j < arg_count; ++j)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
@@ -471,7 +469,7 @@ TAO_ValueDef_i::abstract_base_values ()
 CORBA::ValueDefSeq *
 TAO_ValueDef_i::abstract_base_values_i ()
 {
-  CORBA::ValueDefSeq *vd_seq = nullptr;
+  CORBA::ValueDefSeq *vd_seq {};
   ACE_NEW_RETURN (vd_seq,
                   CORBA::ValueDefSeq,
                   0);
@@ -495,11 +493,11 @@ TAO_ValueDef_i::abstract_base_values_i ()
                                              "count",
                                              count);
   vd_seq->length (count);
-  char *stringified = nullptr;
+  char *stringified {};
   ACE_TString holder;
   CORBA::Object_var obj;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (bases_key,
@@ -552,13 +550,11 @@ TAO_ValueDef_i::abstract_base_values_i (
   this->repo_->config ()->set_integer_value (bases_key,
                                              "count",
                                              count);
-  char const *base_id = nullptr;
-  char const *base_path = nullptr;
-  char *stringified = nullptr;
+  char *stringified {};
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
-      base_path =
+      char const * const base_path =
         TAO_IFR_Service_Utils::reference_to_path (
             abstract_base_values[i]
           );
@@ -577,7 +573,8 @@ TAO_ValueDef_i::abstract_base_values_i (
                                           this->repo_,
                                           CORBA::dk_Value);
 
-      base_id = abstract_base_values[i]->_interface_repository_id ();
+      char const * const base_id =
+        abstract_base_values[i]->_interface_repository_id ();
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (bases_key,
                                                 stringified,
@@ -770,11 +767,11 @@ TAO_ValueDef_i::is_a_i (char const *id)
   this->repo_->config ()->get_integer_value (bases_key,
                                              "count",
                                              count);
-  char *stringified = nullptr;
+  char *stringified {};
   ACE_Configuration_Section_Key base_key;
   bool success = false;
 
-  for (CORBA::ULong i = 0; i < count; ++i)
+  for (CORBA::ULong i {}; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (bases_key,
@@ -813,7 +810,7 @@ TAO_ValueDef_i::describe_value ()
 CORBA::ValueDef::FullValueDescription *
 TAO_ValueDef_i::describe_value_i ()
 {
-  CORBA::ValueDef::FullValueDescription *fv_desc = nullptr;
+  CORBA::ValueDef::FullValueDescription *fv_desc {};
   ACE_NEW_RETURN (fv_desc,
                   CORBA::ValueDef::FullValueDescription,
                   0);
@@ -860,10 +857,10 @@ TAO_ValueDef_i::describe_value_i ()
                                           ops_key);
   CORBA::ULong count = 0;
   CORBA::ULong param_count = 0;
-  char *stringified = nullptr;
+  char *stringified {};
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
-  TAO_IDLType_i *idl_type = nullptr;
+  TAO_IDLType_i *idl_type {};
   CORBA::Object_var obj;
 
   if (status == 0)
@@ -1520,7 +1517,7 @@ TAO_ValueDef_i::create_operation_i (
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path = nullptr;
+      char *type_path {};
 
       for (i = 0; i < length; ++i)
         {
@@ -1578,7 +1575,7 @@ TAO_ValueDef_i::create_operation_i (
       this->repo_->config ()->set_integer_value (excepts_key,
                                                  "count",
                                                  length);
-      char *type_path = nullptr;
+      char *type_path {};
 
       for (i = 0; i < length; ++i)
         {
