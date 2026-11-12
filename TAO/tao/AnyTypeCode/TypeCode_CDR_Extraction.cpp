@@ -111,6 +111,10 @@ namespace
     TAO_InputCDRByteOrderGuard (TAO_InputCDR & cdr):
       cdr_ (cdr),
       byte_order_ (cdr.byte_order ()) {}
+    TAO_InputCDRByteOrderGuard (TAO_InputCDRByteOrderGuard const &) = delete;
+    TAO_InputCDRByteOrderGuard & operator= (TAO_InputCDRByteOrderGuard const &) = delete;
+    TAO_InputCDRByteOrderGuard (TAO_InputCDRByteOrderGuard &&) = delete;
+    TAO_InputCDRByteOrderGuard & operator= (TAO_InputCDRByteOrderGuard &&) = delete;
     ~TAO_InputCDRByteOrderGuard ()
     {
       cdr_.reset_byte_order (byte_order_);
@@ -359,7 +363,7 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
 {
   // The remainder of a tk_objref TypeCode is encoded in a CDR
   // encapsulation.
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -447,7 +451,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
   // The remainder of a tk_struct/tk_except TypeCode is encoded in
   // a CDR encapsulation.
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -551,7 +555,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
   // The remainder of a tk_enum TypeCode is encoded in a CDR
   // encapsulation.
 
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -831,7 +835,7 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
 {
   // The remainder of a tk_enum TypeCode is encoded in a CDR
   // encapsulation.
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -914,7 +918,7 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
 
   // The remainder of a tk_sequence TypeCode is encoded in a CDR
   // encapsulation.
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -956,7 +960,7 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
 {
   // The remainder of a tk_alias or tk_value_box TypeCode is encoded
   // in a CDR encapsulation.
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -1092,7 +1096,7 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
 {
   // The remainder of a tk_value/tk_event TypeCode is encoded in a
   // CDR encapsulation
-  TAO_InputCDRByteOrderGuard boguard (cdr);
+  TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
     return false;
 
@@ -1387,7 +1391,7 @@ namespace
 
       // Currently all recursive TypeCodes have complex parameter
       // lists, meaning they are encoded as CDR encapsulations.
-      TAO_InputCDRByteOrderGuard boguard (indir_stream);
+      TAO_InputCDRByteOrderGuard const boguard (indir_stream);
       if (!start_cdr_encap_extraction (indir_stream))
       {
         return false;
