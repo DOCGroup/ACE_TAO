@@ -294,13 +294,16 @@ TAO_Object_Adapter::~TAO_Object_Adapter ()
 }
 
 /* static */
-ACE_Lock *
+std::unique_ptr<ACE_Lock>
 TAO_Object_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)
 {
-  ACE_Lock *the_lock {};
-  ACE_NEW_RETURN (the_lock,
-                  ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
-                  0);
+  std::unique_ptr<ACE_Lock> the_lock (
+    new (std::nothrow) ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock));
+  if (!the_lock)
+    {
+      errno = ENOMEM;
+      return {};
+    }
   return the_lock;
 }
 

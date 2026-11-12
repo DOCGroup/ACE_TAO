@@ -193,7 +193,7 @@ protected:
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
 
-  static ACE_Lock *create_lock (TAO_SYNCH_MUTEX &thread_lock);
+  static std::unique_ptr<ACE_Lock> create_lock (TAO_SYNCH_MUTEX &thread_lock);
 
   virtual void do_dispatch (TAO_ServerRequest& req,
                             TAO::Portable_Server::Servant_Upcall& upcall);
