@@ -69,9 +69,8 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       if (max_wait_time != nullptr)
         t = max_wait_time->sec () + max_wait_time->usec () / 1000000.0F;
 
-      while (t > 0) {
+      while (t > 0)
         t = Fl::wait (t);
-      }
 
       // Reset the width, in case it changed during the upcalls.
       width = this->handler_rep_.max_handlep1 ();
@@ -97,7 +96,7 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 }
 
 void
-ACE_FlReactor::fl_io_proc (int fd, void* reactor)
+ACE_FlReactor::fl_io_proc (int const fd, void *const reactor)
 {
   ACE_FlReactor *const self = static_cast<ACE_FlReactor *> (reactor);
   ACE_HANDLE const handle = static_cast<ACE_HANDLE> (fd);
@@ -116,15 +115,14 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
   if (self->wait_set_.ex_mask_.is_set (handle))
     wait_set.ex_mask_.set_bit (handle);
 
-  int const result = ACE_OS::select (fd + 1,
-                                     wait_set.rd_mask_,
-                                     wait_set.wr_mask_,
-                                     wait_set.ex_mask_, &zero);
-
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
   // - Use only that one file event (removes events for other files).
-  if (result > 0)
+  if (ACE_OS::select (fd + 1,
+                      wait_set.rd_mask_,
+                      wait_set.wr_mask_,
+                      wait_set.ex_mask_,
+                      &zero) > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
         dispatch_set.rd_mask_.set_bit (handle);
@@ -138,7 +136,7 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
 }
 
 void
-ACE_FlReactor::fl_timeout_proc (void* reactor)
+ACE_FlReactor::fl_timeout_proc (void *const reactor)
 {
   ACE_FlReactor *const self = static_cast<ACE_FlReactor *> (reactor);
 
@@ -156,9 +154,9 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_FlReactor::register_handler_i");
 
-  int const result = ACE_Select_Reactor::register_handler_i (handle,
-                                                             handler, mask);
-  if (result == -1)
+  if (ACE_Select_Reactor::register_handler_i (handle,
+                                               handler,
+                                               mask) == -1)
     return -1;
 
   int condition {};
@@ -206,7 +204,7 @@ ACE_FlReactor::remove_handler_i (ACE_HANDLE handle,
   // ACE_Select_Reactor and then with X.  Now we are now doing things
   // in reverse order.
 
-  // First clean up the corresponding X11Input.
+  // First clean up the corresponding FL input handler.
   Fl::remove_fd (static_cast<int> (handle));
 
   // Now let the reactor do its work.
@@ -228,14 +226,13 @@ ACE_FlReactor::remove_handler_i (ACE_Handle_Set const &handles,
 void
 ACE_FlReactor::reset_timeout ()
 {
-  ACE_Time_Value const *max_wait_time =
-    this->timer_queue_->calculate_timeout (0);
-
-  if (max_wait_time != nullptr)
+  if (ACE_Time_Value const *const max_wait_time =
+        this->timer_queue_->calculate_timeout (nullptr);
+      max_wait_time != nullptr)
     {
-      float const t = max_wait_time->sec ()
+      float const timeout = max_wait_time->sec ()
         + max_wait_time->usec () / 1000000.0F;
-      Fl::add_timeout (t,
+      Fl::add_timeout (timeout,
                        ACE_FlReactor::fl_timeout_proc,
                        this);
     }
