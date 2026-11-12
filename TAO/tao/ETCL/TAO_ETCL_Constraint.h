@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_ETCL_Constraint.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Jeff Parsons (parsons@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_ETCL_CONSTRAINT_H
 #define TAO_ETCL_CONSTRAINT_H

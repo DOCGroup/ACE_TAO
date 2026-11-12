@@ -122,7 +122,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any *any)
     case ACE_ETCL_BOOLEAN:
       {
         CORBA::Boolean boolean {};
-        CORBA::Any::to_boolean tmp (boolean);
+        CORBA::Any::to_boolean const tmp (boolean);
         (*any) >>= tmp;
         this->op_ = boolean;
       }
@@ -463,7 +463,7 @@ TAO_ETCL_Literal_Constraint::widest_type (
     {
       TAO_ETCL_Literal_Constraint const &actual =
         dynamic_cast<TAO_ETCL_Literal_Constraint const &> (rhs);
-      CORBA::TypeCode_var tc = actual.any_->type ();
+      CORBA::TypeCode_var const tc = actual.any_->type ();
       rhs_type = TAO_ETCL_Literal_Constraint::comparable_type (tc.in ());
       return return_value;
     }
