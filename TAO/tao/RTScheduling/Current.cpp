@@ -522,12 +522,12 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
   stack [0] = stack_size;
   if (this->activate (flags,
                       1,
-                      0, // force_active
+                      false, // force_active
                       native_priority, // priority
                       -1, // grp_id
-                      0, // ACE_Task_Base
-                      0, // thread_handles
-                      0, // stack
+                      nullptr, // ACE_Task_Base
+                      nullptr, // thread_handles
+                      nullptr, // stack
                       stack // stack_size
                       ) == -1)
     {
