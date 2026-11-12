@@ -68,7 +68,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
       // string
       ACE_CString::size_type pos_seperator {};
 
-      ACE_CString corbaname_str (corbaname, nullptr, 1);
+      ACE_CString corbaname_str (corbaname, nullptr, true);
 
       pos_seperator = corbaname_str.find ("#", 0);
 
@@ -85,7 +85,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
       // CORBALOC assumes "NameService" for the object key if none
       // is provided, so just pass everything between "corbaname:"
       // and "#" as the address
-      ACE_CString corbaloc_addr ("corbaloc:", nullptr, 1);
+      ACE_CString corbaloc_addr ("corbaloc:", nullptr, true);
       corbaloc_addr += corbaname_str.substring (0, pos_seperator);
 
       // Obtain a reference to the naming context

@@ -81,8 +81,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       // this data.
       CORBA::ULong const max = params.svc_ctx_.maximum ();
       CORBA::ULong const len = params.svc_ctx_.length ();
-      IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
-      this->reply_service_info_.replace (max, len, context_list, 1);
+      IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (true);
+      this->reply_service_info_.replace (max, len, context_list, true);
 
       if (TAO_debug_level >= 4)
         {

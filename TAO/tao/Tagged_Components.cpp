@@ -193,8 +193,8 @@ TAO_Tagged_Components::set_component_i (IOP::TaggedComponent& component)
         {
           CORBA::ULong max = component.component_data.maximum ();
           CORBA::ULong len = component.component_data.length ();
-          CORBA::Octet* buf = component.component_data.get_buffer (1);
-          this->components_[i].component_data.replace (max, len, buf, 1);
+          CORBA::Octet* buf = component.component_data.get_buffer (true);
+          this->components_[i].component_data.replace (max, len, buf, true);
           return;
         }
     }
@@ -212,8 +212,8 @@ TAO_Tagged_Components::add_component_i (IOP::TaggedComponent& component)
   this->components_[l].tag = component.tag;
   CORBA::ULong max = component.component_data.maximum ();
   CORBA::ULong len = component.component_data.length ();
-  CORBA::Octet* buf = component.component_data.get_buffer (1);
-  this->components_[l].component_data.replace (max, len, buf, 1);
+  CORBA::Octet* buf = component.component_data.get_buffer (true);
+  this->components_[l].component_data.replace (max, len, buf, true);
 }
 
 void

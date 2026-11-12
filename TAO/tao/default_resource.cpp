@@ -781,7 +781,7 @@ TAO_Default_Resource_Factory::get_reactor ()
 {
   ACE_Reactor *reactor {};
   ACE_NEW_RETURN (reactor,
-                  ACE_Reactor (this->allocate_reactor_impl (), 1),
+                  ACE_Reactor (this->allocate_reactor_impl (), true),
                   nullptr);
 
   if (reactor->initialized () == 0)

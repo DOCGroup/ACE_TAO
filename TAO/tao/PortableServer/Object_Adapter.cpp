@@ -427,7 +427,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
       try
         {
-          current = parent->find_POA_i (*iterator, 1);
+          current = parent->find_POA_i (*iterator, true);
         }
       catch (const PortableServer::POA::AdapterNonExistent&)
         {

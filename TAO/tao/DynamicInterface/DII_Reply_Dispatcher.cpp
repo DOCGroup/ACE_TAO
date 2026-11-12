@@ -55,8 +55,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   // this data.
   CORBA::ULong const max = params.svc_ctx_.maximum ();
   CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext* const context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* const context_list = params.svc_ctx_.get_buffer (true);
+  this->reply_service_info_.replace (max, len, context_list, true);
 
   if (TAO_debug_level >= 4)
     {
@@ -163,8 +163,8 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
   // this data.
   CORBA::ULong const max = params.svc_ctx_.maximum ();
   CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext* const context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* const context_list = params.svc_ctx_.get_buffer (true);
+  this->reply_service_info_.replace (max, len, context_list, true);
 
   if (TAO_debug_level >= 4)
     {

@@ -2103,7 +2103,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
       // The constructor sets the proxy broker as the
       // Remote one.
       ACE_NEW_RETURN (x,
-                      CORBA::Object (stub, 0),
+                      CORBA::Object (stub, false),
                       nullptr);
     }
 

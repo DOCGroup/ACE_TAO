@@ -106,8 +106,8 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context)
         {
           CORBA::ULong const max = context.context_data.maximum ();
           CORBA::ULong const len = context.context_data.length ();
-          CORBA::Octet * const buf = context.context_data.get_buffer (1);
-          this->service_context_[i].context_data.replace (max, len, buf, 1);
+          CORBA::Octet * const buf = context.context_data.get_buffer (true);
+          this->service_context_[i].context_data.replace (max, len, buf, true);
           return;
         }
     }
@@ -125,8 +125,8 @@ TAO_Service_Context::add_context_i (IOP::ServiceContext &context)
   this->service_context_[l].context_id = context.context_id;
   CORBA::ULong const max = context.context_data.maximum ();
   CORBA::ULong const len = context.context_data.length ();
-  CORBA::Octet * const buf = context.context_data.get_buffer (1);
-  this->service_context_[l].context_data.replace (max, len, buf, 1);
+  CORBA::Octet * const buf = context.context_data.get_buffer (true);
+  this->service_context_[l].context_data.replace (max, len, buf, true);
 }
 
 void
