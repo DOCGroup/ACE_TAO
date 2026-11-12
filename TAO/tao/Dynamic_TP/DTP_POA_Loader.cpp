@@ -54,7 +54,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
       return -1;
     }
 
-  repo->init(0,0);
+  repo->init (0, nullptr);
 
   for (int curarg {}; curarg < argc; ++curarg)
     {
