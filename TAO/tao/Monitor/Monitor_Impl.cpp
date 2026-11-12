@@ -21,7 +21,7 @@ public:
   TAO_Control_Action (TAO_Control_Action &&) = delete;
   TAO_Control_Action &operator= (TAO_Control_Action &&) = delete;
 
-  void execute (char const* /* command */) override
+  void execute (char const * /* command */) override
   {
     try
       {
@@ -40,6 +40,7 @@ private:
 
 struct TAO_Monitor_Point_Deleter
 {
+  // The registry returns an intrusive reference that must be released.
   void operator() (ACE::Monitor_Control::Monitor_Base *monitor) const
   {
     monitor->remove_ref ();
@@ -48,6 +49,7 @@ struct TAO_Monitor_Point_Deleter
 
 struct TAO_Control_Action_Deleter
 {
+  // Monitor constraints retain intrusive references to their actions.
   void operator() (ACE::Monitor_Control::Control_Action *action) const
   {
     action->remove_ref ();
@@ -58,11 +60,6 @@ using TAO_Monitor_Point_Ptr = std::unique_ptr<ACE::Monitor_Control::Monitor_Base
                                               TAO_Monitor_Point_Deleter>;
 using TAO_Control_Action_Ptr = std::unique_ptr<ACE::Monitor_Control::Control_Action,
                                                TAO_Control_Action_Deleter>;
-
-Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
 
 ::Monitor::NameList *
 Monitor_Impl::get_statistic_names (char const *filter)
@@ -103,19 +100,19 @@ Monitor_Impl::get_statistics (::Monitor::NameList const &names)
                     CORBA::NO_MEMORY ());
   std::unique_ptr<::Monitor::DataList> datalist_owner (datalist);
 
-  /// Get an instance of the MC service singleton.
+  // Get an instance of the MC service singleton.
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
-      /// Call on the administrator class to look up the desired monitors.
+      // Look up the requested monitor.
       TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
         {
-          CORBA::ULong const length = datalist->length();
+          CORBA::ULong const length = datalist->length ();
           datalist->length (length + 1);
           ::Monitor::Data data {};
           TAO_Monitor::get_monitor_data (monitor.get (), data, false);
@@ -135,19 +132,19 @@ Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
                     CORBA::NO_MEMORY ());
   std::unique_ptr<::Monitor::DataList> datalist_owner (datalist);
 
-  /// Get an instance of the MC service singleton.
+  // Get an instance of the MC service singleton.
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
-      /// Call on the administrator class to look up the desired monitors.
+      // Look up the requested monitor.
       TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
         {
-          CORBA::ULong const length = datalist->length();
+          CORBA::ULong const length = datalist->length ();
           datalist->length (length + 1);
           ::Monitor::Data data {};
           TAO_Monitor::get_monitor_data (monitor.get (), data, true);
@@ -161,7 +158,7 @@ Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
 void
 TAO_Monitor::get_monitor_data (
    ACE::Monitor_Control::Monitor_Base *monitor,
-   Monitor::Data& data,
+   Monitor::Data &data,
    bool clear)
 {
   // If it's not a counter, we need to make sure that we have
@@ -230,13 +227,13 @@ Monitor_Impl::clear_statistics (::Monitor::NameList const &names)
   std::unique_ptr<::Monitor::NameList> namelist_owner (namelist);
   namelist->length (0UL);
 
-  /// Get an instance of the MC service singleton.
+  // Get an instance of the MC service singleton.
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
-      /// Call on the administrator class to look up the desired monitors.
+      // Look up the requested monitor.
       TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
@@ -270,7 +267,7 @@ Monitor_Impl::register_constraint (
 
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
-      /// Call on the administrator class to look up the desired monitors.
+      // Look up the requested monitor.
       TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (names[index]));
 
@@ -298,7 +295,7 @@ Monitor_Impl::unregister_constraints (
 
   for (CORBA::ULong index {}; index < constraint.length (); ++index)
     {
-      /// Call on the administrator class to look up the desired monitors.
+      // Look up the requested monitor.
       TAO_Monitor_Point_Ptr monitor (
         mgr->admin ().monitor_point (constraint[index].itemname.in ()));
 

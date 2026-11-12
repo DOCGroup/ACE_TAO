@@ -28,13 +28,14 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
 
       Monitor_Impl *servant {};
       ACE_NEW_RETURN (servant,
-                      Monitor_Impl (orb),
+                      Monitor_Impl (),
                       CORBA::Object::_nil ());
 
+      // Keep a local reference until the POA retains the servant.
+      PortableServer::ServantBase_var safe_servant = servant;
       PortableServer::ObjectId_var id =
         poa->activate_object (servant);
 
-      PortableServer::ServantBase_var safe_servant = servant;
       obj = servant->_this ();
 
       return obj._retn ();
