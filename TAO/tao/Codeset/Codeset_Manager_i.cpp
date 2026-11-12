@@ -200,8 +200,8 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
     {
       ACE_CString tcs_c_locale;
       ACE_CString tcs_w_locale;
-      ACE_Codeset_Registry::registry_to_locale (tcs_c, tcs_c_locale, 0, 0);
-      ACE_Codeset_Registry::registry_to_locale (tcs_w, tcs_w_locale, 0, 0);
+      ACE_Codeset_Registry::registry_to_locale (tcs_c, tcs_c_locale, nullptr, nullptr);
+      ACE_Codeset_Registry::registry_to_locale (tcs_w, tcs_w_locale, nullptr, nullptr);
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("process_service_context, ")
@@ -238,8 +238,10 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
     {
       ACE_CString tcs_c_locale;
       ACE_CString tcs_w_locale;
-      ACE_Codeset_Registry::registry_to_locale (codeset_cntx.char_data, tcs_c_locale, 0, 0);
-      ACE_Codeset_Registry::registry_to_locale (codeset_cntx.wchar_data, tcs_w_locale, 0, 0);
+      ACE_Codeset_Registry::registry_to_locale (
+        codeset_cntx.char_data, tcs_c_locale, nullptr, nullptr);
+      ACE_Codeset_Registry::registry_to_locale (
+        codeset_cntx.wchar_data, tcs_w_locale, nullptr, nullptr);
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("generate_service_context, ")
@@ -338,7 +340,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
   TAO_Codeset_Translator_Factory *fact =
     ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF8_Latin1_Factory");
-  if (fact == 0)
+  if (fact == nullptr)
     ACE_Service_Config::process_directive
       (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF8_Latin1_Factory",
                                       "TAO_Codeset",
@@ -356,7 +358,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
 
   fact = ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF16_BOM_Factory");
-  if (fact == 0)
+  if (fact == nullptr)
     ACE_Service_Config::process_directive
       (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF16_BOM_Factory",
                                       "TAO_Codeset",
@@ -380,6 +382,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
       errno = ENOMEM;
       return;
     }
+  // Transfer ownership to the service-context registry.
   core.service_context_registry ().bind (IOP::CodeSets, handler.release ());
 
   // add in from the service configurator
@@ -415,8 +418,8 @@ int
 TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                                  CONV_FRAME::CodeSetComponent& cs_comp)
 {
-  cs_comp.conversion_code_sets.length
-    (static_cast<CORBA::ULong> (cd.num_translators()));
+  cs_comp.conversion_code_sets.length (
+    static_cast<CORBA::ULong> (cd.num_translators ()));
 
   CORBA::ULong index {};
   for (TAO_Codeset_Descriptor::Translator_Node &tlist : cd.translators ())
@@ -496,7 +499,7 @@ TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor const &cd,
   for (TAO_Codeset_Descriptor::Translator_Node const &tlist : cd.translators ())
     {
       TAO_Codeset_Translator_Factory * const fact = tlist.translator_factory_;
-      if (fact && tcs == fact->tcs ())
+      if (fact != nullptr && tcs == fact->tcs ())
         return fact;
     }
   return nullptr;

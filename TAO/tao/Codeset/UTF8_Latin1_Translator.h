@@ -47,10 +47,9 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Translator
 public:
   TAO_UTF8_Latin1_Translator () = default;
 
-  /// Virtual destruction
   ~TAO_UTF8_Latin1_Translator () override = default;
 
-  // = Documented in $ACE_ROOT/ace/CDR_Stream.h
+  /// @see ACE_Char_Codeset_Translator
   ACE_CDR::Boolean read_char (ACE_InputCDR &,
                               ACE_CDR::Char &) override;
   ACE_CDR::Boolean read_string (ACE_InputCDR &,

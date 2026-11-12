@@ -35,12 +35,12 @@ TAO_UTF8_Latin1_Factory::tcs () const
   return this->create_translator () ? this->translator_->tcs () : 0;
 }
 
-// Assign either a reference to the existing translator or a new translator
-// for input CDR streams
+/// Assign either a reference to the existing translator or a new translator
+/// for input CDR streams
 void
 TAO_UTF8_Latin1_Factory::assign (TAO_InputCDR *cdr) const
 {
-  if (cdr)
+  if (cdr != nullptr)
     {
       if (this->create_translator ())
         {
@@ -49,12 +49,12 @@ TAO_UTF8_Latin1_Factory::assign (TAO_InputCDR *cdr) const
     }
 }
 
-// Assign either a reference to the existing translator or a new translator
-// for output CDR streams
+/// Assign either a reference to the existing translator or a new translator
+/// for output CDR streams
 void
 TAO_UTF8_Latin1_Factory::assign (TAO_OutputCDR *cdr) const
 {
-  if (cdr)
+  if (cdr != nullptr)
     {
       if (this->create_translator ())
         {

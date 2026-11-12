@@ -22,6 +22,7 @@
 
 #include "tao/Codeset_Descriptor_Base.h"
 
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -49,7 +50,7 @@ public:
   void ncs (ACE_TCHAR const *name) override;
   ACE_CDR::ULong ncs () const;
   int max_bytes () const;
-  int num_translators () const;
+  size_t num_translators () const;
 
   void add_translator (ACE_TCHAR const *name) override;
   Translator_List &translators ();

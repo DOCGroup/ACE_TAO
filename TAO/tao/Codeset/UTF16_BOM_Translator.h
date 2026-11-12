@@ -39,10 +39,9 @@ public:
   /// @param forceBE: true forces all wchar, warray, and wstrings to big-endian byte order
   explicit TAO_UTF16_BOM_Translator (bool forceBE);
 
-  /// Virtual destruction
   ~TAO_UTF16_BOM_Translator () override = default;
 
-  // = Documented in $ACE_ROOT/ace/CDR_Stream.h
+  /// @see ACE_WChar_Codeset_Translator
   ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
                                ACE_CDR::WChar &) override;
   ACE_CDR::Boolean read_wstring (ACE_InputCDR &,

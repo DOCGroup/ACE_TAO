@@ -35,35 +35,34 @@ TAO_UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
   TAO_Codeset_Translator_Factory::init (argc, argv);
 
   for (int narg {}; narg < argc;)
-  {
-    int consumed = parse_one_arg (argc - narg, &argv[narg]);
-    if (consumed > 0)
     {
-      narg += consumed;
+      int const consumed = this->parse_one_arg (argc - narg, &argv[narg]);
+      if (consumed > 0)
+        {
+          narg += consumed;
+        }
+      else
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Factory parameter error: %s\n")
+                         ACE_TEXT ("Usage: TAO_UTF16_BOM_Factory \"-forceBE\"\n"),
+                         argv[narg]));
+          return -1;
+        }
     }
-    else
-    {
-      TAOLIB_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Factory parameter error: %s\n")
-        ACE_TEXT ("Usage: TAO_UTF16_BOM_Factory \"-forceBE\"\n")
-        , argv[narg]
-        ));
-      return -1;
-    }
-  }
   return 0;
 }
 
 int
 TAO_UTF16_BOM_Factory::parse_one_arg (int argc, ACE_TCHAR *argv[])
 {
-  int consumed {};
-  if ((argc > 0) && (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-forcebe")) == 0))
-  {
-    this->forceBE_ = true;
-    consumed = 1;
-  }
-  return consumed;
+  if (argc > 0 &&
+      ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-forcebe")) == 0)
+    {
+      this->forceBE_ = true;
+      return 1;
+    }
+  return 0;
 }
 
 CONV_FRAME::CodeSetId
@@ -78,12 +77,12 @@ TAO_UTF16_BOM_Factory::tcs () const
   return this->create_translator () ? this->translator_->tcs () : 0;
 }
 
-// Assign either a reference to the existing translator or a new translator
-// for input CDR streams
+/// Assign either a reference to the existing translator or a new translator
+/// for input CDR streams
 void
 TAO_UTF16_BOM_Factory::assign (TAO_InputCDR *cdr) const
 {
-  if (cdr)
+  if (cdr != nullptr)
     {
       if (this->create_translator ())
         {
@@ -92,12 +91,12 @@ TAO_UTF16_BOM_Factory::assign (TAO_InputCDR *cdr) const
     }
 }
 
-// Assign either a reference to the existing translator or a new translator
-// for output CDR streams
+/// Assign either a reference to the existing translator or a new translator
+/// for output CDR streams
 void
 TAO_UTF16_BOM_Factory::assign (TAO_OutputCDR *cdr) const
 {
-  if (cdr)
+  if (cdr != nullptr)
     {
       if (this->create_translator ())
         {

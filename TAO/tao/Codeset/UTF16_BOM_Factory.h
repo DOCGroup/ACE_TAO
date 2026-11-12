@@ -25,7 +25,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Export TAO_UTF16_BOM_Factory
-  : public  TAO_Codeset_Translator_Factory
+  : public TAO_Codeset_Translator_Factory
 {
 public:
   TAO_UTF16_BOM_Factory () = default;

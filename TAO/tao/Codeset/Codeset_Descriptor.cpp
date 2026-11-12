@@ -17,6 +17,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
+#include <cstdlib>
 #include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -26,12 +27,12 @@ TAO_Codeset_Descriptor::ncs (ACE_TCHAR const *name)
 {
   ACE_CDR::ULong n {};
   if (ACE_Codeset_Registry::locale_to_registry
-      (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
+      (ACE_TEXT_ALWAYS_CHAR (name), n) == 0)
     {
       n = static_cast<ACE_CDR::ULong> (
-            ACE_OS::strtoul (ACE_TEXT_ALWAYS_CHAR (name), nullptr, 0));
+            std::strtoul (ACE_TEXT_ALWAYS_CHAR (name), nullptr, 0));
     }
-  this->ncs(n);
+  this->ncs (n);
 }
 
 void
@@ -39,13 +40,13 @@ TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong n)
 {
   this->ncs_ = n;
   // Validate the CodesetId
-  this->max_bytes_ = ACE_Codeset_Registry::get_max_bytes(n);
+  this->max_bytes_ = ACE_Codeset_Registry::get_max_bytes (n);
   if (this->max_bytes_ == 0)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR((LM_ERROR,
-                   ACE_TEXT("(%P|%t) TAO_Codeset_Descriptor::ncs, ")
-                   ACE_TEXT("unknown codeset id 0x%x\n"),
+                   ACE_TEXT ("(%P|%t) TAO_Codeset_Descriptor::ncs, ")
+                   ACE_TEXT ("unknown codeset id 0x%x\n"),
                    n));
       this->ncs_ = 0;
     }
@@ -57,10 +58,10 @@ TAO_Codeset_Descriptor::ncs () const
   return this->ncs_;
 }
 
-int
+size_t
 TAO_Codeset_Descriptor::num_translators () const
 {
-  return static_cast<int> (this->translators_.size ());
+  return this->translators_.size ();
 }
 
 int
