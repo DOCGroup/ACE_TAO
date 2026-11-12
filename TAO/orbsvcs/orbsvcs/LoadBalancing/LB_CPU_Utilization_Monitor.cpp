@@ -9,52 +9,47 @@
 
 #include <cstring>
 #include <cstdio>
+#include <memory>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-double calc_cpu_loading ()
+static double calc_cpu_loading ()
 {
-  static char buf[1024];
+  char buf[1024] {};
   static unsigned long prev_idle {};
   static double prev_total {};
 
-  FILE *file_ptr {};
-  char *item {};
-  char *arg {};
-  unsigned long delta_idle {};
+  std::unique_ptr<FILE, int (*) (FILE *)> file_ptr (
+    ACE_OS::fopen ("/proc/stat", "r"), ACE_OS::fclose);
+  if (!file_ptr)
+    return 0.0;
+
   unsigned long user {};
   unsigned long nice {};
   unsigned long idle {};
   unsigned long sys {};
 
-  double percent_cpu_load {};
-
-  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == nullptr)
-          return percent_cpu_load;
-
-  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != nullptr)
-  {
-    item = ACE_OS::strtok (buf, " \t\n");
-    arg = ACE_OS::strtok (nullptr, "\n");
-
-    if (item == nullptr || arg == nullptr)
-            continue;
-    if (item[0] == 'c' && std::strlen (item) == 3)
+  while (ACE_OS::fgets (buf, sizeof (buf), file_ptr.get ()) != nullptr)
     {
-      sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
-      break;
+      char * const item = ACE_OS::strtok (buf, " \t\n");
+      char * const arg = ACE_OS::strtok (nullptr, "\n");
+
+      if (item == nullptr || arg == nullptr)
+        continue;
+      if (item[0] == 'c' && std::strlen (item) == 3)
+        {
+          std::sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
+          break;
+        }
     }
 
-
-  }
-
-  ACE_OS::fclose (file_ptr);
-
-  delta_idle = idle - prev_idle;
+  double const delta_idle_value = static_cast<double> (idle - prev_idle);
   double const total = static_cast<double> (user + nice + sys + idle);
   double const time_passed = total - prev_total;
-
-  percent_cpu_load = 100.0 - (delta_idle / time_passed * 100.0);
+  double const percent_cpu_load = time_passed > 0.0
+    ? 100.0 - (delta_idle_value / time_passed * 100.0)
+    : 0.0;
 
   prev_idle = idle;
   prev_total = total;
@@ -70,19 +65,15 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (char const * loc
 
   if (location_id == nullptr)
     {
-      char host[MAXHOSTNAMELEN + 1];
+      char host[MAXHOSTNAMELEN + 1] {};
       if (ACE_OS::hostname (host, sizeof (host)) != 0)
         {
           // Couldn't determine hostname.  Use the current time
           // instead.
-          CORBA::ULong t = static_cast<CORBA::ULong> (ACE_OS::time ());
+          CORBA::ULong const t = static_cast<CORBA::ULong> (ACE_OS::time ());
+          std::string const time_string = std::to_string (t);
 
-          // A 64 byte buffer is more than enough to contain the
-          // string representation of a 32 bit unsigned integer.
-          char buf[64] = { '\0' };
-          std::sprintf (buf, "%u", t);
-
-          this->location_[0].id = CORBA::string_dup (buf);
+          this->location_[0].id = CORBA::string_dup (time_string.c_str ());
           this->location_[0].kind = CORBA::string_dup ("Creation Time");
         }
       else
@@ -120,11 +111,8 @@ TAO_LB_CPU_Utilization_Monitor::the_location ()
 CosLoadBalancing::LoadList *
 TAO_LB_CPU_Utilization_Monitor::loads ()
 {
-  CORBA::Float load {};
-
 #if defined (ACE_LINUX)
-  double load_double = calc_cpu_loading ();
-  load = load_double;
+  CORBA::Float const load = static_cast<CORBA::Float> (calc_cpu_loading ());
 
   CosLoadBalancing::LoadList * tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -147,8 +135,6 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   return load_list._retn ();
 
 #else
-
-  ACE_UNUSED_ARG (load);
   throw CORBA::NO_IMPLEMENT ();
 
 #endif  /* linux */

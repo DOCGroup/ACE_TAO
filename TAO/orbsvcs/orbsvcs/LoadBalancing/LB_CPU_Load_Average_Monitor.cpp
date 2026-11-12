@@ -6,6 +6,8 @@
 #include "ace/os_include/os_netdb.h"
 
 #include <cstdio>
+#include <memory>
+#include <string>
 #if defined(__NetBSD__) || defined (__APPLE__)
 #include <sys/sysctl.h>
 #endif
@@ -21,19 +23,15 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
 
   if (location_id == nullptr)
     {
-      char host[MAXHOSTNAMELEN + 1];
+      char host[MAXHOSTNAMELEN + 1] {};
       if (ACE_OS::hostname (host, sizeof (host)) != 0)
         {
           // Couldn't determine hostname.  Use the current time
           // instead.
-          CORBA::ULong t = static_cast<CORBA::ULong> (ACE_OS::time ());
+          CORBA::ULong const t = static_cast<CORBA::ULong> (ACE_OS::time ());
+          std::string const time_string = std::to_string (t);
 
-          // A 64 byte buffer is more than enough to contain the
-          // string representation of a 32 bit unsigned integer.
-          char buf[64] = { '\0' };
-          std::sprintf (buf, "%u", t);
-
-          this->location_[0].id = CORBA::string_dup (buf);
+          this->location_[0].id = CORBA::string_dup (time_string.c_str ());
           this->location_[0].kind = CORBA::string_dup ("Creation Time");
         }
       else
@@ -111,7 +109,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
   //
   // @todo Make this configurable so that the load average over the
   //       last 5 and 15 minutes can be used instead.
-  double loadavg[1];
+  double loadavg[1] {};
 
 # if defined (ACE_LINUX) \
      && ((defined (__GLIBC__) && defined (__GLIBC_MINOR__) \
@@ -123,18 +121,22 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
   // defined.
 
   // Obtain the load average directly from the `/proc' filesystem.
-  FILE * s = ACE_OS::fopen ("/proc/loadavg", "r");
+  std::unique_ptr<FILE, int (*) (FILE *)> s (
+    ACE_OS::fopen ("/proc/loadavg", "r"), ACE_OS::fclose);
 
-  if (s == nullptr)
+  if (!s)
     throw CORBA::NO_IMPLEMENT (
       CORBA::SystemException::_tao_minor_code (
         TAO::VMCID,
         errno),
       CORBA::COMPLETED_NO);
 
-  fscanf (s, "%f", &loadavg[0]);
-
-  (void) ACE_OS::fclose (s);
+  if (std::fscanf (s.get (), "%lf", loadavg) != 1)
+    throw CORBA::NO_IMPLEMENT (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        errno),
+      CORBA::COMPLETED_NO);
 
   int const samples = 1;
 
@@ -170,20 +172,17 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 
 #elif defined (__NetBSD__) || defined (__APPLE__)
 
-  double loadavg[1];
+  double loadavg[1] {};
 
   int const samples = ::getloadavg (loadavg, 1);
 
   if (samples == 1)
     {
-      int mib[2], num_processors;
-      size_t len;
+      int mib[2] { CTL_HW, HW_NCPU };
+      int num_processors {};
+      size_t len = sizeof (num_processors);
 
-      mib[0] = CTL_HW;
-      mib[1] = HW_NCPU;
-      len = sizeof(num_processors);
-
-      sysctl(mib, 2, &num_processors, &len, 0, 0);
+      sysctl (mib, 2, &num_processors, &len, nullptr, 0);
 
       ACE_ASSERT (num_processors > 0);
 
