@@ -133,7 +133,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
                                 ACE_TEXT ("-ORBReactorRegistry no longer supported\n")),
                                 -1);
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorLock"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorLock"))) != nullptr)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                          ACE_TEXT ("TAO_Advanced_Resource_Factory - obsolete -ORBReactorLock ")
@@ -146,7 +146,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorType"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorType"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("select_mt")) == 0)
             this->reactor_type_ = TAO_REACTOR_SELECT_MT;
@@ -190,7 +190,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBInputCDRAllocator"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBInputCDRAllocator"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("null")) == 0)
             {
@@ -209,7 +209,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMHResponseHandlerAllocator"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMHResponseHandlerAllocator"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("null")) == 0)
             {
@@ -226,7 +226,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMIResponseHandlerAllocator"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMIResponseHandlerAllocator"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("null")) == 0)
             {
@@ -243,7 +243,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorThreadQueue"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorThreadQueue"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("LIFO")) == 0)
             this->threadqueue_type_ = TAO_THREAD_QUEUE_LIFO;
