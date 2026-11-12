@@ -101,7 +101,7 @@ static void TestSnmpTarget()
     c1.to_string()));
 
   IpAddress ip("127.0.0.1");
-  UdpTarget c2(ip);
+  UdpTarget c2 {UdpAddress (ip)};
   ACE_TEST_ASSERT(c2.valid() == 1);
   c2.get_address (ga);
   ACE_TEST_ASSERT(ga.valid() == 1);

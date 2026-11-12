@@ -70,7 +70,7 @@ class ASNMP_Export Snmp : public transaction_result
   Pdu *pdu_ {};
   unsigned hold_req_id_ {};
 public:
-  Snmp (unsigned short port = INADDR_ANY);
+  explicit Snmp (unsigned short port = INADDR_ANY);
   ~Snmp () override;
   Snmp (Snmp const &) = delete;
   Snmp (Snmp &&) = delete;

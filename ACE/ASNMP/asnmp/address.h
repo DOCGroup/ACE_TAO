@@ -208,7 +208,7 @@ public:
   IpAddress( const IpAddress  &ipaddr);
 
   /// construct an IP address with a GenAddress
-  IpAddress( const GenAddress &genaddr);
+  explicit IpAddress (GenAddress const &genaddr);
 
   /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
   ~IpAddress() override;
@@ -345,17 +345,17 @@ class  ASNMP_Export UdpAddress : public IpAddress
 {
 public:
   /// default constructor with a dotted string in the form of addr:port
-  UdpAddress( const char *inaddr = "");
+  explicit UdpAddress (char const *inaddr = "");
 
   /// construct an Udp address with another Udp address
   UdpAddress( const UdpAddress &udpaddr);
 
   /// construct a Udp address with a GenAddress
-  UdpAddress( const GenAddress &genaddr);
+  explicit UdpAddress (GenAddress const &genaddr);
 
   /// construct a Udp address with an IpAddress
   /// default port # to zero
-  UdpAddress( const IpAddress &ipaddr);
+  explicit UdpAddress (IpAddress const &ipaddr);
 
   ~UdpAddress() override;
 
@@ -419,7 +419,7 @@ public:
   MacAddress( const MacAddress  &macaddr);
 
   /// construct a MacAddress with a GenAddress
-  MacAddress( const GenAddress &genaddr);
+  explicit MacAddress (GenAddress const &genaddr);
 
   ~MacAddress() override;
 
@@ -482,7 +482,7 @@ public:
    NetbiosAddress( const NetbiosAddress& nbaddr);
 
    /// construct with a GenAddress
-   NetbiosAddress( const GenAddress& genaddr);
+   explicit NetbiosAddress (GenAddress const &genaddr);
 
    ~NetbiosAddress() override;
 
@@ -539,7 +539,7 @@ public:
   DecNetAddress( const DecNetAddress& decaddr);
 
   /// construct with a GenAddress
-  DecNetAddress( const GenAddress& genaddr);
+  explicit DecNetAddress (GenAddress const &genaddr);
 
   ~DecNetAddress() override;
 
@@ -587,7 +587,7 @@ public:
   AppleTalkAddress( const AppleTalkAddress& atkaddr);
 
   /// construct with a GenAddress
-  AppleTalkAddress( const GenAddress& genaddr);
+  explicit AppleTalkAddress (GenAddress const &genaddr);
 
   ~AppleTalkAddress() override;
 
@@ -648,7 +648,7 @@ public:
   IpxAddress( const IpxAddress  &ipxaddr);
 
   /// construct with a GenAddress
-  IpxAddress( const GenAddress &genaddr);
+  explicit IpxAddress (GenAddress const &genaddr);
 
   ~IpxAddress() override;
 
@@ -713,11 +713,11 @@ public:
   IpxSockAddress( const IpxSockAddress &ipxaddr);
 
   ///constructor with a GenAddress
-  IpxSockAddress( const GenAddress &genaddr);
+  explicit IpxSockAddress (GenAddress const &genaddr);
 
   ///constructor with a IpxAddress
   /// default socket # is 0
-  IpxSockAddress( const IpxAddress &ipxaddr);
+  explicit IpxSockAddress (IpxAddress const &ipxaddr);
 
   ~IpxSockAddress() override;
 
@@ -776,7 +776,7 @@ public:
   explicit GenAddress (char const *addr = "");
 
   /// constructor with an Address
-  GenAddress (Address const &addr);
+  explicit GenAddress (Address const &addr);
 
   /// constructor with another GenAddress
   GenAddress (GenAddress const &addr);

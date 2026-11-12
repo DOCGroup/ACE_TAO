@@ -11,8 +11,8 @@ agent_impl::agent_impl (unsigned short port, char const *rd, char const *wr)
   : sagent (port)
 {
   ACE_TRACE ("agent_impl::agent_impl");
-  tgt_.set_read_community (rd);
-  tgt_.set_write_community (wr);
+  tgt_.set_read_community (OctetStr (rd));
+  tgt_.set_write_community (OctetStr (wr));
   agent_clock_.start ();
 }
 

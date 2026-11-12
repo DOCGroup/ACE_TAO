@@ -81,7 +81,7 @@ getapp::getapp (int argc, char *argv[])
    if ( argc < 2)
      return;
 
-   address_ = argv[argc - 1];
+   address_ = UdpAddress (argv[argc - 1]);
    if (!address_.valid ()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
      << argv[argc - 1] << "\n";

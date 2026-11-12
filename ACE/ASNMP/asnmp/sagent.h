@@ -65,7 +65,7 @@ public:
   int respond(Pdu& pdu, UdpTarget& tgt);
 
 protected:
-  sagent(unsigned short port = DEF_AGENT_PORT);
+  explicit sagent (unsigned short port = DEF_AGENT_PORT);
   ~sagent() override;
 
 private:

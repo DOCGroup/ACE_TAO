@@ -209,7 +209,7 @@ static void VbTest()
   request_vb.set_oid (o1);
   request_vb.set_null ();
   request += request_vb;
-  UdpTarget target {IpAddress ("127.0.0.1")};
+  UdpTarget target {UdpAddress (IpAddress ("127.0.0.1"))};
   wpdu encoded (request, target);
   ACE_TEST_ASSERT(encoded.valid() == 1);
 
