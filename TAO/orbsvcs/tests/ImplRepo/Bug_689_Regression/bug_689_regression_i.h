@@ -7,11 +7,11 @@ class bug_689_regression_i: public POA_bug_689_regression
 {
 public:
   bug_689_regression_i (CORBA::ORB_ptr orb);
-  ~bug_689_regression_i ();
+  ~bug_689_regression_i () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void noop ();
+  void noop () override;
 
 private:
   CORBA::ORB_var orb_;
