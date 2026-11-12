@@ -22,7 +22,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Activate the POA Manager
       poa_manager->activate ();
 
-      // Create the servant
+      // Keep the servant alive until after the POA is destroyed below.
       corbaname_Status_i status_i;
 
       // Activate it to obtain the reference
@@ -37,7 +37,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
 
       // Bind Status to the Naming Context
-      CosNaming::Name name;
+      CosNaming::Name name {};
       name.length (1);
       name[0].id = CORBA::string_dup ("STATUS");
 
@@ -50,9 +50,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (CORBA::SystemException const &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("CORBA exception raised in server!"));
+      return 1;
     }
 
   return 0;

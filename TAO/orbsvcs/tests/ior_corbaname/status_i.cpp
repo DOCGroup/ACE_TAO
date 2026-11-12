@@ -3,7 +3,6 @@
 CORBA::Boolean
 corbaname_Status_i::print_status ()
 {
-  // If the client makes a succesful request, return a true value
-  // indicating that it has successfully reached the server.
+  // A false result lets the client verify that the server handled the request.
   return false;
 }

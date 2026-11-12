@@ -10,21 +10,13 @@
  */
 //=============================================================================
 
-
 #include "ior_corbaname_client_i.h"
-
-#include <string>
 
 int
 IOR_corbaname_Client_i::run ()
 {
   try
     {
-      CosNaming::Name name (1);
-
-      name.length (1);
-      name[0].id = CORBA::string_dup ("STATUS");
-
       // The corbaname URL contains the host at which an NamingContext
       // Object can be found and also the stringified form of an entry
       // in the Naming Service separated by '#'. For simplicity,
@@ -33,13 +25,8 @@ IOR_corbaname_Client_i::run ()
       // <name>. "#" refers to the seperator between the host and the
       // entry.
 
-      std::string corbaname_url (ACE_TEXT_ALWAYS_CHAR (this->name_service_address_.c_str ()));
-
-      // Append the seperator '#' to the host.
-      corbaname_url += "#";
-
-      // Append the stringified name to the resultant.
-      corbaname_url += "STATUS";
+      ACE_TString corbaname_url (this->name_service_address_);
+      corbaname_url += ACE_TEXT ("#STATUS");
 
       // Resolve the stringified name.
       CORBA::Object_var const factory_object =

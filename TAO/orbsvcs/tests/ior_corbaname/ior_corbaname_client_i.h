@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #if !defined (IOR_CORBANAME_CLIENT_I_H)
 #define IOR_CORBANAME_CLIENT_I_H
 
@@ -33,7 +32,6 @@ public:
   IOR_corbaname_Client_i (IOR_corbaname_Client_i &&) = delete;
   IOR_corbaname_Client_i &operator= (IOR_corbaname_Client_i const &) = delete;
   IOR_corbaname_Client_i &operator= (IOR_corbaname_Client_i &&) = delete;
-  ~IOR_corbaname_Client_i () = default;
 
   /// Execute the client example code.
   int run ();
@@ -41,7 +39,7 @@ public:
   /// Initialize the client communication endpoint with the server.
   int init (int argc, ACE_TCHAR **argv);
 
- private:
+private:
   CORBA::ORB_var orb_ {};
   ACE_TString name_service_address_ {};
 };

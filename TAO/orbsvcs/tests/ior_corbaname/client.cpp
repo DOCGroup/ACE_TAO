@@ -9,14 +9,13 @@
  */
 //=============================================================================
 
-
 #include "ior_corbaname_client_i.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      IOR_corbaname_Client_i client;
+      IOR_corbaname_Client_i client {};
 
       if (client.init (argc, argv) == -1)
         return 1;
