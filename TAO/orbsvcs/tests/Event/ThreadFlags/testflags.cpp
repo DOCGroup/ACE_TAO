@@ -4,10 +4,10 @@
 
 #include "orbsvcs/Event/EC_Thread_Flags.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_Thread.h"
-#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include <array>
+#include <cstddef>
 
 /*
   Here are the scenarios we need to test:
@@ -43,55 +43,60 @@ struct ThreadFlagsTest
     BOTH = 0x3
   };
 
-  ThreadFlagsTest (char const* sym, How assign, ExpectedValues ev);
+  constexpr ThreadFlagsTest (char const *sym, How assign, ExpectedValues ev)
+    : sym_ (sym),
+      assign_ (assign),
+      expected_values_ (ev)
+  {
+  }
+
+  ThreadFlagsTest (ThreadFlagsTest const &) = delete;
+  ThreadFlagsTest &operator= (ThreadFlagsTest const &) = delete;
+  ThreadFlagsTest (ThreadFlagsTest &&) = delete;
+  ThreadFlagsTest &operator= (ThreadFlagsTest &&) = delete;
 
   // Execute the test and pass back an ExpectedValues struct where the
   // values are zero if the values were not as expected or non-zero if
   // they were as expected.  Return value is zero for success, or
   // the bitmask of the "How" version of the test that failed.
-  int runtest (ExpectedValues& results) const;
+  int runtest (ExpectedValues &results) const;
 
-  char const* sym_;
+  char const *sym_;
   How const assign_;
   ExpectedValues const expected_values_;
 };
 
-ThreadFlagsTest::ThreadFlagsTest (char const* sym,
-                                  How assign,
-                                  ExpectedValues ev)
-  : sym_ (sym),
-    assign_ (assign),
-    expected_values_ (ev)
-{
-}
-
 int
-ThreadFlagsTest::runtest (ExpectedValues& results) const
+ThreadFlagsTest::runtest (ExpectedValues &results) const
 {
-  int r {};
+  int result {};
   if (assign_ & INIT)
     {
-      TAO_EC_Thread_Flags f(sym_);
-      if ( ((results.flags = f.flags()) == expected_values_.flags) &&
-           ((results.scope = f.scope()) == expected_values_.scope) &&
-           ((results.sched = f.sched()) == expected_values_.sched) )
-        ; // we succeeded, do nothing
-      else
-        r |= INIT;
+      TAO_EC_Thread_Flags flags (sym_);
+      results.flags = flags.flags ();
+      results.scope = flags.scope ();
+      results.sched = flags.sched ();
+
+      if (results.flags != expected_values_.flags
+          || results.scope != expected_values_.scope
+          || results.sched != expected_values_.sched)
+        result |= INIT;
     }
   if (assign_ & ASSIGN)
     {
-      TAO_EC_Thread_Flags f;
-      f = sym_;
-      if ( ((results.flags = f.flags()) == expected_values_.flags) &&
-           ((results.scope = f.scope()) == expected_values_.scope) &&
-           ((results.sched = f.sched()) == expected_values_.sched) )
-        ; // we succeeded, do nothing
-      else
-        r |= ASSIGN;
+      TAO_EC_Thread_Flags flags {};
+      flags = sym_;
+      results.flags = flags.flags ();
+      results.scope = flags.scope ();
+      results.sched = flags.sched ();
+
+      if (results.flags != expected_values_.flags
+          || results.scope != expected_values_.scope
+          || results.sched != expected_values_.sched)
+        result |= ASSIGN;
     }
 
-  return r;
+  return result;
 }
 
 // ExpectedValues set indicating the default values
@@ -106,16 +111,20 @@ print_results (int const how, ExpectedValues const& expected, ExpectedValues con
     (how == ThreadFlagsTest::BOTH) ? "BOTH" :
     "unk?";
 
-  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%x,%x,%x} got {%x,%x,%x}",
+  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%lx,%lx,%lx} got {%lx,%lx,%lx}",
               op,
-              expected.flags, expected.scope, expected.sched,
-              actuals.flags, actuals.scope, actuals.sched));
+              static_cast<unsigned long> (expected.flags),
+              static_cast<unsigned long> (expected.scope),
+              static_cast<unsigned long> (expected.sched),
+              static_cast<unsigned long> (actuals.flags),
+              static_cast<unsigned long> (actuals.scope),
+              static_cast<unsigned long> (actuals.sched)));
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  std::array<ThreadFlagsTest, 22> const static_tests {{
+  constexpr std::array<ThreadFlagsTest, 22> static_tests {{
     // Test 1
     ThreadFlagsTest (nullptr, ThreadFlagsTest::BOTH, DEFAULTS),
     // Test 2
@@ -165,69 +174,56 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }};
 
   int returnval {};
-  size_t const numtests = static_tests.size ();
-  if (argc > 1)
+  std::size_t const numtests = static_tests.size ();
+  std::size_t const requested_tests = argc > 1
+    ? static_cast<std::size_t> (argc - 1)
+    : numtests;
+  for (std::size_t i {}; i < requested_tests; ++i)
     {
-      ACE_TCHAR* which_test {};
-      while (nullptr != (which_test = *++argv))
+      ACE_TCHAR *end {};
+      long const parsed_test = argc > 1
+        ? ACE_OS::strtol (argv[i + 1], &end, 0)
+        : static_cast<long> (i);
+
+      if (argc > 1 && (end == argv[i + 1] || *end != ACE_TEXT ('\0')))
         {
-          size_t const testnum = ACE_OS::strtol (which_test, nullptr, 0);
-          if (testnum < numtests)
-            {
-              ExpectedValues results;
-              ThreadFlagsTest const& t = static_tests[testnum];
-              ACE_DEBUG ((LM_DEBUG, "Test #%d for %s...", testnum, t.sym_));
-              int const r = t.runtest (results);
-              if (r != 0)
-                {
-                  returnval = 1;
-                  ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
-                  if (r & ThreadFlagsTest::INIT)
-                    print_results (ThreadFlagsTest::INIT, t.expected_values_, results);
-
-                  if (r & ThreadFlagsTest::ASSIGN)
-                    print_results (ThreadFlagsTest::ASSIGN, t.expected_values_, results);
-
-                  ACE_DEBUG ((LM_DEBUG, "\n"));
-                }
-              else
-                {
-                  ACE_DEBUG ((LM_DEBUG, "ok.\n"));
-                }
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%d is not a valid test number\n", testnum));
-            }
-        }
-    }
-  else
-    {
-      for (size_t i {}; i < numtests; ++i)
-        {
-          ExpectedValues results;
-          ThreadFlagsTest const& t = static_tests[i];
-          ACE_DEBUG ((LM_DEBUG, "Test #%d for %s...", i, t.sym_));
-          int const r = t.runtest (results);
-          if (r != 0)
-            {
-              returnval = 1;
-              ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
-              if (r & ThreadFlagsTest::INIT)
-                print_results (ThreadFlagsTest::INIT, t.expected_values_, results);
-
-              if (r & ThreadFlagsTest::ASSIGN)
-                print_results (ThreadFlagsTest::ASSIGN, t.expected_values_, results);
-
-              ACE_DEBUG ((LM_DEBUG, "\n"));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG, "ok.\n"));
-            }
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Invalid test index: %s\n"),
+                      argv[i + 1]));
+          returnval = 1;
+          continue;
         }
 
+      if (parsed_test < 0 || static_cast<std::size_t> (parsed_test) >= numtests)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Invalid test number\n")));
+          returnval = 1;
+          continue;
+        }
+
+      std::size_t const test_number = static_cast<std::size_t> (parsed_test);
+      ExpectedValues results;
+      ThreadFlagsTest const &test = static_tests[test_number];
+      ACE_DEBUG ((LM_DEBUG, "Test #%B for %s...", test_number,
+                  test.sym_ == nullptr ? "(null)" : test.sym_));
+      int const result = test.runtest (results);
+      if (result != 0)
+        {
+          returnval = 1;
+          ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
+          if (result & ThreadFlagsTest::INIT)
+            print_results (ThreadFlagsTest::INIT, test.expected_values_, results);
+
+          if (result & ThreadFlagsTest::ASSIGN)
+            print_results (ThreadFlagsTest::ASSIGN, test.expected_values_, results);
+
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "ok.\n"));
+        }
     }
 
   return returnval;
