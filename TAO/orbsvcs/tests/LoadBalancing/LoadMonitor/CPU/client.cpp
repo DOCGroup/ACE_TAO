@@ -3,20 +3,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_TCHAR const* location = ACE_TEXT("MyLocation");
-
 constexpr int MAX_RETRIES = 10;
 constexpr CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *& location)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("l:"));
 
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'l':
         location = get_opts.opt_arg ();
@@ -24,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s -l <ior>\n",
+                           "Usage:  %s -l <location>\n",
                            argv[0]),
                           -1);
       }
@@ -32,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void
+static void
 check_loads (CosLoadBalancing::LoadList const& loads)
 {
   if (loads.length () != 1)
@@ -61,6 +59,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      ACE_TCHAR const * location = ACE_TEXT("MyLocation");
+      if (parse_args (argc, argv, location) != 0)
+        return 1;
+
       // Obtain a reference to the LoadManager.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("LoadManager");
@@ -83,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Boolean retrieved_load = false;
 
       // Try a few times until a load is capable of being retrieved.
-      for (int i = 0; i < MAX_RETRIES && !retrieved_load; ++i)
+      for (int i {}; i < MAX_RETRIES && !retrieved_load; ++i)
         {
           try
             {
