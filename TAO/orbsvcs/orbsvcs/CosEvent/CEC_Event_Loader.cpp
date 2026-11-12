@@ -28,8 +28,32 @@
 #include "tao/debug.h"
 
 #include <cstdio>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+static void
+write_ior_file (CORBA::ORB_ptr orb,
+                ACE_TCHAR const *filename,
+                CORBA::Object_ptr object)
+{
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (file)
+    {
+      CORBA::String_var const ior = orb->object_to_string (object);
+      std::fprintf (file.get (), "%s\n", ior.in ());
+    }
+}
+
+static void
+write_pid_file (ACE_TCHAR const *filename)
+{
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (file)
+    std::fprintf (file.get (), "%ld\n", static_cast<long> (ACE_OS::getpid ()));
+}
 
 int
 TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
@@ -37,13 +61,13 @@ TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
   try
     {
       // ORB initialization boiler plate...
-      this->orb_=
+      this->orb_ =
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var const obj =
         this->create_object (this->orb_.in (), argc, argv);
 
-      if (CORBA::is_nil (obj.in() ))
+      if (CORBA::is_nil (obj.in ()))
         return -1;
     }
   catch (CORBA::Exception const &ex)
@@ -76,7 +100,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       // service and under what name...
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtdb"));
       int opt;
-      ACE_TCHAR const *service_name = ACE_TEXT("CosEventService");
+      ACE_TCHAR const *service_name = ACE_TEXT ("CosEventService");
       ACE_TCHAR const *ior_file {};
       ACE_TCHAR const *pid_file {};
       this->bind_to_naming_service_ = true;
@@ -199,29 +223,10 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
         this->ec_impl_->_this ();
 
       if (ior_file != nullptr)
-        {
-          CORBA::String_var const ior =
-            orb->object_to_string (event_channel.in ());
-
-          FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
-          if (iorf != nullptr)
-            {
-              std::fprintf (iorf, "%s\n", ior.in ());
-              ACE_OS::fclose (iorf);
-            }
-        }
+        write_ior_file (orb, ior_file, event_channel.in ());
 
       if (pid_file != nullptr)
-        {
-          FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
-          if (pidf != nullptr)
-            {
-              std::fprintf (pidf,
-                               "%ld\n",
-                               static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pidf);
-            }
-        }
+        write_pid_file (pid_file);
 
       // ****************************************************************
 
@@ -329,29 +334,10 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             this->typed_ec_impl_->_this ();
 
           if (ior_file != nullptr)
-            {
-              CORBA::String_var const ior =
-                orb->object_to_string (event_channel.in ());
-
-              FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
-              if (iorf != nullptr)
-                {
-                  std::fprintf (iorf, "%s\n", ior.in ());
-                  ACE_OS::fclose (iorf);
-                }
-            }
+            write_ior_file (orb, ior_file, event_channel.in ());
 
           if (pid_file != nullptr)
-            {
-              FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
-              if (pidf != nullptr)
-                {
-                  std::fprintf (pidf,
-                                   "%ld\n",
-                                   static_cast<long> (ACE_OS::getpid ()));
-                  ACE_OS::fclose (pidf);
-                }
-            }
+            write_pid_file (pid_file);
 
           // ****************************************************************
 
