@@ -23,9 +23,9 @@ public:
   /// Create the task...
   MTD_Task (CosEventChannelAdmin::EventChannel_ptr ec,
             bool use_callbacks);
-  MTD_Task (MTD_Task const&) = delete;
+  MTD_Task (MTD_Task const &) = delete;
   MTD_Task (MTD_Task&&) = delete;
-  MTD_Task& operator= (MTD_Task const&) = delete;
+  MTD_Task& operator= (MTD_Task const &) = delete;
   MTD_Task& operator= (MTD_Task&&) = delete;
 
   // = Check the ACE_Task_Base documentation.
@@ -36,11 +36,11 @@ public:
 
 private:
   /// The event channel used on the test
-  CosEventChannelAdmin::EventChannel_var event_channel;
+  CosEventChannelAdmin::EventChannel_var const event_channel;
 
   /// Does the event channel send any callback messages when a client
   /// diconnects
-  bool use_callbacks_;
+  bool const use_callbacks_;
 };
 
 #endif /* EC_DISCONNECT_H */

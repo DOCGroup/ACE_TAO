@@ -30,14 +30,13 @@ class RND_Consumer
   : public POA_CosEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  explicit RND_Consumer (RND_Driver* driver);
-  RND_Consumer (RND_Consumer const&) = delete;
-  RND_Consumer (RND_Consumer&&) = delete;
-  RND_Consumer& operator= (RND_Consumer const&) = delete;
-  RND_Consumer& operator= (RND_Consumer&&) = delete;
+  explicit RND_Consumer (RND_Driver *driver);
+  RND_Consumer (RND_Consumer const &) = delete;
+  RND_Consumer (RND_Consumer &&) = delete;
+  RND_Consumer &operator= (RND_Consumer const &) = delete;
+  RND_Consumer &operator= (RND_Consumer &&) = delete;
 
-  void push (CORBA::Any const& event) override;
+  void push (CORBA::Any const & event) override;
   void disconnect_push_consumer () override;
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin);
@@ -46,7 +45,7 @@ public:
 protected:
   /// The driver
   /// Non-owning; the driver outlives its consumers.
-  RND_Driver* driver_ {};
+  RND_Driver * const driver_ {};
 
   /// The supplier.
   CosEventChannelAdmin::ProxyPushSupplier_var proxy_;
@@ -56,7 +55,7 @@ protected:
 };
 
 inline
-RND_Consumer::RND_Consumer (RND_Driver* driver)
+RND_Consumer::RND_Consumer (RND_Driver *driver)
   : driver_ (driver)
 {
 }
@@ -67,12 +66,11 @@ class RND_Supplier
   , public ACE_Task_Base
 {
 public:
-  /// Constructor
   RND_Supplier () = default;
-  RND_Supplier (RND_Supplier const&) = delete;
-  RND_Supplier (RND_Supplier&&) = delete;
-  RND_Supplier& operator= (RND_Supplier const&) = delete;
-  RND_Supplier& operator= (RND_Supplier&&) = delete;
+  RND_Supplier (RND_Supplier const &) = delete;
+  RND_Supplier (RND_Supplier &&) = delete;
+  RND_Supplier &operator= (RND_Supplier const &) = delete;
+  RND_Supplier &operator= (RND_Supplier &&) = delete;
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin);
   void disconnect ();
@@ -94,25 +92,23 @@ private:
   TAO_SYNCH_MUTEX lock_;
 };
 
-// ****************************************************************
-
 class RND_Driver
 {
 public:
   RND_Driver ();
-  RND_Driver (RND_Driver const&) = delete;
-  RND_Driver (RND_Driver&&) = delete;
-  RND_Driver& operator= (RND_Driver const&) = delete;
-  RND_Driver& operator= (RND_Driver&&) = delete;
+  RND_Driver (RND_Driver const &) = delete;
+  RND_Driver (RND_Driver &&) = delete;
+  RND_Driver &operator= (RND_Driver const &) = delete;
+  RND_Driver &operator= (RND_Driver &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR *argv[]);
 
   /// The main timer has expired
-  void timer (CORBA::Any const& e);
+  void timer (CORBA::Any const & e);
 
   /// One of the consumers has received an event
-  void event (CORBA::Any const& e);
+  void event (CORBA::Any const & e);
 
 private:
   /// The supplier

@@ -6,13 +6,11 @@
 #include "ace/OS_NS_unistd.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RND_Driver driver;
   return driver.run (argc, argv);
 }
-
-// ****************************************************************
 
 static void
 deactivate_servant (PortableServer::Servant servant)
@@ -34,16 +32,14 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
-
-      // ****************************************************************
 
       ACE_Arg_Shifter arg_shifter (argc, argv);
 
       while (arg_shifter.is_anything_left ())
         {
-          ACE_TCHAR const* arg = arg_shifter.get_current ();
+          ACE_TCHAR const * const arg = arg_shifter.get_current ();
 
           if (ACE_OS::strcasecmp (arg, ACE_TEXT("-suppliers")) == 0)
             {
@@ -51,8 +47,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  ACE_TCHAR const* opt = arg_shifter.get_current ();
-                  int n = ACE_OS::atoi (opt);
+                  ACE_TCHAR const * const opt = arg_shifter.get_current ();
+                  int const n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nsuppliers_ = n;
                   arg_shifter.consume_arg ();
@@ -64,8 +60,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  ACE_TCHAR const* opt = arg_shifter.get_current ();
-                  int n = ACE_OS::atoi (opt);
+                  ACE_TCHAR const * const opt = arg_shifter.get_current ();
+                  int const n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nconsumers_ = n;
                   arg_shifter.consume_arg ();
@@ -77,8 +73,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  ACE_TCHAR const* opt = arg_shifter.get_current ();
-                  int n = ACE_OS::atoi (opt);
+                  ACE_TCHAR const * const opt = arg_shifter.get_current ();
+                  int const n = ACE_OS::atoi (opt);
                   if (n >= 0)
                     this->max_recursion_ = n;
                   arg_shifter.consume_arg ();
@@ -88,17 +84,13 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
             arg_shifter.ignore_arg ();
         }
 
-      // ****************************************************************
-
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
-
-      // ****************************************************************
 
       TAO_CEC_EventChannel_Attributes attributes (poa.in (),
                                                   poa.in ());
@@ -108,10 +100,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
       TAO_CEC_EventChannel ec_impl (attributes);
       ec_impl.activate ();
 
-      CosEventChannelAdmin::EventChannel_var event_channel =
+      CosEventChannelAdmin::EventChannel_var const event_channel =
         ec_impl._this ();
-
-      // ****************************************************************
 
       // Obtain the consumer admin..
       this->consumer_admin_ =
@@ -121,11 +111,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
       this->supplier_admin_ =
         event_channel->for_suppliers ();
 
-      // ****************************************************************
-
       this->supplier_.connect (this->supplier_admin_.in ());
-
-      // ****************************************************************
 
       ACE_NEW_RETURN (this->consumers_,
                       RND_Consumer*[this->nconsumers_],
@@ -136,11 +122,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
                           RND_Consumer (this),
                           1);
 
-          CORBA::Object_var obj =
+          CORBA::Object_var const obj =
             this->consumers_[i]->_this ();
         }
-
-      // ****************************************************************
 
       ACE_NEW_RETURN (this->suppliers_,
                       RND_Supplier*[this->nsuppliers_],
@@ -152,11 +136,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
                           1);
           this->suppliers_[j]->activate ();
 
-          CORBA::Object_var obj =
+          CORBA::Object_var const obj =
             this->suppliers_[j]->_this ();
         }
-
-      // ****************************************************************
 
       constexpr int event_count_limit {500};
       for (int event_count {}; event_count != event_count_limit; ++event_count)
@@ -168,8 +150,6 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      // ****************************************************************
-
       {
         for (int k {}; k != this->nsuppliers_; ++k)
           {
@@ -180,13 +160,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
         this->suppliers_ = nullptr;
       }
 
-      // ****************************************************************
-
       // We destroy now to verify that the callbacks work and do not
       // produce any problems.
       event_channel->destroy ();
-
-      // ****************************************************************
 
       {
         for (int k {}; k != this->nconsumers_; ++k)
@@ -198,19 +174,13 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
         this->consumers_ = nullptr;
       }
 
-      // ****************************************************************
-
       deactivate_servant (&ec_impl);
-
-      // ****************************************************************
 
       poa->destroy (true, true);
 
-      // ****************************************************************
-
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Random");
       return 1;
@@ -219,13 +189,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 }
 
 void
-RND_Driver::timer (CORBA::Any const& e)
+RND_Driver::timer (CORBA::Any const & e)
 {
-  int r = ACE_OS::rand ();
-  if (r < 0)
-    r = -r;
-
-  int const n = r % 20;
+  int const n = ACE_OS::rand () % 20;
 
   switch (n)
     {
@@ -234,11 +200,10 @@ RND_Driver::timer (CORBA::Any const& e)
       {
         CORBA::Long recursion {};
         e >>= recursion;
-        // ACE_DEBUG ((LM_DEBUG, "Pushing an event\n"));
         if (recursion < this->max_recursion_)
           {
-            CORBA::Any new_event;
-            recursion++;
+            CORBA::Any new_event {};
+            ++recursion;
             new_event <<= recursion;
             this->supplier_.push (new_event);
           }
@@ -250,14 +215,11 @@ RND_Driver::timer (CORBA::Any const& e)
     case 3:
     case 4:
     case 5:
-      // ACE_DEBUG ((LM_DEBUG, "Received event\n"));
       break;
 
     case 6:
       {
         int const n = ACE_OS::rand () % this->nsuppliers_;
-
-        // ACE_DEBUG ((LM_DEBUG, "Connecting supplier %d\n", n));
 
         this->suppliers_[n]->connect (this->supplier_admin_.in ());
       }
@@ -267,8 +229,6 @@ RND_Driver::timer (CORBA::Any const& e)
       {
         int const n = ACE_OS::rand () % this->nconsumers_;
 
-        // ACE_DEBUG ((LM_DEBUG, "Connecting consumer %d\n", n));
-
         this->consumers_[n]->connect (this->consumer_admin_.in ());
       }
       break;
@@ -276,8 +236,6 @@ RND_Driver::timer (CORBA::Any const& e)
     case 8:
       {
         int const n = ACE_OS::rand () % this->nsuppliers_;
-
-        // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", n));
 
         this->suppliers_[n]->disconnect ();
       }
@@ -287,8 +245,6 @@ RND_Driver::timer (CORBA::Any const& e)
       {
         int const n = ACE_OS::rand () % this->nconsumers_;
 
-        // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", n));
-
         this->consumers_[n]->disconnect ();
       }
       break;
@@ -296,12 +252,10 @@ RND_Driver::timer (CORBA::Any const& e)
 }
 
 void
-RND_Driver::event (CORBA::Any const& e)
+RND_Driver::event (CORBA::Any const & e)
 {
   this->timer (e);
 }
-
-// ****************************************************************
 
 void
 RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin)
@@ -315,7 +269,7 @@ RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin)
         this->proxy_ = admin->obtain_push_supplier ();
       }
     proxy =
-      CosEventChannelAdmin::ProxyPushSupplier::_duplicate(this->proxy_.in ());
+      CosEventChannelAdmin::ProxyPushSupplier::_duplicate (this->proxy_.in ());
   }
   CosEventComm::PushConsumer_var me =
     this->_this ();
@@ -335,7 +289,7 @@ RND_Consumer::disconnect ()
 }
 
 void
-RND_Consumer::push (CORBA::Any const& event)
+RND_Consumer::push (CORBA::Any const & event)
 {
   this->driver_->event (event);
 }
@@ -344,8 +298,6 @@ void
 RND_Consumer::disconnect_push_consumer ()
 {
 }
-
-// ****************************************************************
 
 void
 RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin)
@@ -360,7 +312,7 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin)
       }
 
     proxy =
-      CosEventChannelAdmin::ProxyPushConsumer::_duplicate(this->proxy_.in ());
+      CosEventChannelAdmin::ProxyPushConsumer::_duplicate (this->proxy_.in ());
   }
   CosEventComm::PushSupplier_var me;
 
@@ -387,7 +339,7 @@ RND_Supplier::disconnect ()
 void
 RND_Supplier::push_new_event ()
 {
-  CORBA::Any event;
+  CORBA::Any event {};
   CORBA::Long recursion {};
   event <<= recursion;
 
@@ -405,7 +357,7 @@ RND_Supplier::push (CORBA::Any &event)
       return;
 
     proxy =
-      CosEventChannelAdmin::ProxyPushConsumer::_duplicate(this->proxy_.in ());
+      CosEventChannelAdmin::ProxyPushConsumer::_duplicate (this->proxy_.in ());
   }
 
   proxy->push (event);
@@ -426,12 +378,12 @@ RND_Supplier::svc ()
     {
       try
         {
-          ACE_Time_Value tv (0, 10000);
+          ACE_Time_Value const tv (0, 10000);
           ACE_OS::sleep (tv);
 
           this->push_new_event ();
         }
-      catch (CORBA::Exception const&)
+      catch (CORBA::Exception const &)
         {
         }
       if (i * 100 / niterations >= percent)
