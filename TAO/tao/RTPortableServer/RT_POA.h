@@ -216,8 +216,8 @@ protected:
                                 TAO_Acceptor_Filter *filter,
                                 TAO_PriorityBandedConnectionPolicy *priority_bands);
 
-  int lane_required (TAO_Thread_Lane *lane,
-                     TAO_PriorityBandedConnectionPolicy *priority_bands);
+  bool lane_required (TAO_Thread_Lane *lane,
+                      TAO_PriorityBandedConnectionPolicy *priority_bands);
 
 private:
   TAO_Thread_Pool *thread_pool_ {};

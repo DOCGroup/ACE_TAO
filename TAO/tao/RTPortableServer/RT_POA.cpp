@@ -380,12 +380,12 @@ TAO_RT_POA::endpoint_count ()
   return profile_count;
 }
 
-int
+bool
 TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
                            TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
   if (priority_bands == nullptr)
-    return 1;
+    return true;
 
   RTCORBA::PriorityBands &bands =
     priority_bands->priority_bands_rep ();
@@ -396,10 +396,10 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
     {
       if (bands[i].low <= lane->lane_priority () &&
           bands[i].high >= lane->lane_priority ())
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::PolicyList *
