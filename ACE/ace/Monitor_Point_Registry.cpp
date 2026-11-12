@@ -33,9 +33,12 @@ namespace ACE
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-        type->add_ref ();
-
         status = this->map_.bind (type->name (), type);
+
+        if (status == 0)
+          {
+            type->add_ref ();
+          }
       }
 
       if (status == -1)

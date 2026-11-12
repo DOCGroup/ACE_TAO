@@ -108,7 +108,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
                     CORBA::NO_MEMORY ());
   if (!event_channel_->register_statistic (this->queue_item_stat_name_, this->queue_item_count_))
     {
-      delete this->queue_item_count_;
+      this->queue_item_count_->remove_ref ();
       this->queue_item_count_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
@@ -121,7 +121,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
                     CORBA::NO_MEMORY ());
   if (!event_channel_->register_statistic (this->overflow_stat_name_, this->overflows_))
     {
-      delete this->overflows_;
+      this->overflows_->remove_ref ();
       this->overflows_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }

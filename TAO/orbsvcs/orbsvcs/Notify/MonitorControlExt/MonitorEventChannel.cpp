@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
 
 #include "ace/Monitor_Point_Registry.h"
@@ -219,7 +218,7 @@ public:
   {
   }
 
-  bool execute (const char* command) override
+  bool execute (char const* command) override
   {
     if (std::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
       {
@@ -251,7 +250,7 @@ public:
   {
   }
 
-  bool execute (const char* command) override
+  bool execute (char const* command) override
   {
     bool status = true;
 
@@ -816,7 +815,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
                         CORBA::NO_MEMORY ());
       if (!this->register_statistic (stat_name, overflows))
         {
-          delete overflows;
+          overflows->remove_ref ();
           ORBSVCS_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
                       stat_name.c_str ()));
         }

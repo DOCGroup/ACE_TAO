@@ -1051,6 +1051,13 @@ project(Hash Map Bucket Iterator Test) : acetest {
   }
 }
 
+project(Monitor Point Registry Test) : acetest {
+  exename = Monitor_Point_Registry_Test
+  Source_Files {
+    Monitor_Point_Registry_Test.cpp
+  }
+}
+
 project(INET Addr Test) : acetest {
   exename = INET_Addr_Test
   Source_Files {

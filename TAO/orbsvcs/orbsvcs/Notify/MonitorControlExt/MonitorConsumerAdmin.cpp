@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
 
 #include "ace/Monitor_Size.h"
@@ -94,7 +93,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
                     CORBA::NO_MEMORY ());
   if (!mec->register_statistic (this->overflow_stat_name_, this->overflows_))
     {
-      delete this->overflows_;
+      this->overflows_->remove_ref ();
       this->overflows_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
