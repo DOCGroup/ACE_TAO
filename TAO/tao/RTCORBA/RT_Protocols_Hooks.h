@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   RT_Protocols_Hooks.h
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_RT_PROTOCOLS_HOOKS_H
 #define TAO_RT_PROTOCOLS_HOOKS_H

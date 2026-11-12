@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Thread_Pool.h
  *
  *  @author Irfan Pyarali
  *  @author Johnny Willemsen
  */
-// ===================================================================
 
 #ifndef TAO_THREAD_POOL_H
 #define TAO_THREAD_POOL_H

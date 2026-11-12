@@ -426,7 +426,7 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
                                    long thread_flags)
 {
   // Overwritten parameters.
-  int force_active = 1;
+  int const force_active {1};
 
   // Default parameters.
   int default_grp_id = -1;
@@ -492,7 +492,6 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     allow_request_buffering_ (allow_request_buffering),
     max_buffered_requests_ (max_buffered_requests),
     max_request_buffer_size_ (max_request_buffer_size),
-    // lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time),
     with_lanes_ (false)
 {
@@ -527,7 +526,6 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     allow_request_buffering_ (allow_request_buffering),
     max_buffered_requests_ (max_buffered_requests),
     max_request_buffer_size_ (max_request_buffer_size),
-    // lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time),
     with_lanes_ (true)
 {

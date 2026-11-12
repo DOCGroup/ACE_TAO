@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Network_Priority_Mapping.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
-//=============================================================================
 
 
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_H
@@ -54,6 +52,5 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_H */
-
 
 

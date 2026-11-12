@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file rtcorba_typedefs.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RTCORBA_TYPEDEFS_H
 #define TAO_RTCORBA_TYPEDEFS_H

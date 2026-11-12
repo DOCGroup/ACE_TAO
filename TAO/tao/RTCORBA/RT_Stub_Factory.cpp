@@ -29,8 +29,6 @@ TAO_RT_Stub_Factory::create_stub (char const *repository_id,
 }
 
 
-// ****************************************************************
-
 ACE_STATIC_SVC_DEFINE (TAO_RT_Stub_Factory,
                        ACE_TEXT ("RT_Stub_Factory"),
                        ACE_SVC_OBJ_T,

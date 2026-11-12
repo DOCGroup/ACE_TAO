@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   RT_Policy_i.h
  *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
-//=============================================================================
 
 
 #ifndef TAO_RT_POLICY_I_H
@@ -102,7 +100,6 @@ private:
   RTCORBA::Priority server_priority_ {};
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_ThreadpoolPolicy
@@ -148,7 +145,6 @@ private:
   RTCORBA::ThreadpoolId id_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_PrivateConnectionPolicy
@@ -190,7 +186,6 @@ protected:
   ~TAO_PrivateConnectionPolicy () override;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_PriorityBandedConnectionPolicy
@@ -258,7 +253,6 @@ private:
   RTCORBA::PriorityBands priority_bands_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_ServerProtocolPolicy
@@ -312,7 +306,6 @@ private:
   RTCORBA::ProtocolList protocols_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_ClientProtocolPolicy
@@ -346,8 +339,6 @@ public:
 
   void destroy () override;
 
-  // = CDR Encoder/Decoder.
-
   /// This method writes a CDR representation of the current object.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
@@ -379,7 +370,6 @@ private:
   RTCORBA::ProtocolList protocols_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_TCP_Protocol_Properties
@@ -436,8 +426,6 @@ protected:
   ~TAO_TCP_Protocol_Properties () override;
 
 private:
-  // = Attributes.
-
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
   CORBA::Boolean keep_alive_;
@@ -446,7 +434,6 @@ private:
   CORBA::Boolean enable_network_priority_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_UnixDomain_Protocol_Properties
@@ -497,12 +484,10 @@ protected:
   ~TAO_UnixDomain_Protocol_Properties () override;
 
 private:
-  // = Attributes.
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_SharedMemory_Protocol_Properties
@@ -525,8 +510,6 @@ public:
                                         CORBA::Long preallocate_buffer_size,
                                         char const *mmap_filename,
                                         char const *mmap_lockname);
-
-  // = IDL interface methods.
 
   CORBA::Long send_buffer_size () override;
 
@@ -586,7 +569,6 @@ protected:
   ~TAO_SharedMemory_Protocol_Properties () override;
 
 private:
-  // = Attributes.
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
   CORBA::Boolean keep_alive_;
@@ -597,7 +579,6 @@ private:
   ACE_CString mmap_lockname_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_UserDatagram_Protocol_Properties
@@ -639,14 +620,12 @@ protected:
   ~TAO_UserDatagram_Protocol_Properties () override;
 
 private:
-  // = Attributes.
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
 
   CORBA::Boolean enable_network_priority_;
 };
 
-//*************************************************************************
 
 /**
  * @class TAO_StreamControl_Protocol_Properties
@@ -703,8 +682,6 @@ protected:
   ~TAO_StreamControl_Protocol_Properties () override;
 
 private:
-  // = Attributes.
-
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
   CORBA::Boolean keep_alive_;
@@ -713,14 +690,12 @@ private:
   CORBA::Boolean enable_network_priority_;
 };
 
-//*************************************************************************
 
 class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
   : public RTCORBA::GIOPProtocolProperties,
     public ::CORBA::LocalObject
 {
 public:
-  // = CDR encoding methods
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
@@ -733,7 +708,6 @@ protected:
   TAO_GIOP_Protocol_Properties () = default;
 };
 
-//*************************************************************************
 
 class TAO_RTCORBA_Export TAO_Protocol_Properties_Factory
 {

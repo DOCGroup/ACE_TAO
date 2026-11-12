@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     RT_PolicyFactory.h
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_RT_POLICY_FACTORY_H

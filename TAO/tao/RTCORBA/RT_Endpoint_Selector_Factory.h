@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RT_Endpoint_Selector_Factory.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef RT_ENDPOINT_SELECTOR_FACTORY_H
@@ -33,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RT_Invocation_Endpoint_Selector;
 
-// ****************************************************************
 /**
  * @class RT_Endpoint_Selector_Factory
  *

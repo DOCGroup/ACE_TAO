@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RT_Invocation_Endpoint_Selectors.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H

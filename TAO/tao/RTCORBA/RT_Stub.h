@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Stub.h
  *
@@ -9,7 +8,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RT_STUB_H_
 #define TAO_RT_STUB_H_
@@ -93,12 +91,13 @@ private:
   /// in object's IOR.
   CORBA::Policy_ptr exposed_client_protocol ();
 
-  // = Methods for obtaining effective policies.
-  //
-  //   Effective policy is the one that would be used if a request
-  //   were made.  The policy is determined by obtaining the effective
-  //   override for a given policy type, and then reconciling it with
-  //   the policy value exported in the Object's IOR.
+  /**
+   * Methods for obtaining effective policies.
+   *
+   * The effective policy is the one that would be used for a request. It is
+   * determined by obtaining the effective override for a policy type and
+   * reconciling it with the policy value exported in the object's IOR.
+   */
 
   CORBA::Policy_ptr effective_priority_banded_connection ();
   CORBA::Policy_ptr effective_client_protocol ();

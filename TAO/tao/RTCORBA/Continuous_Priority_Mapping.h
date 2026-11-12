@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Continuous_Priority_Mapping.h
  *
  *  @author Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_CONTINUOUS_PRIORITY_MAPPING_H
 #define TAO_CONTINUOUS_PRIORITY_MAPPING_H

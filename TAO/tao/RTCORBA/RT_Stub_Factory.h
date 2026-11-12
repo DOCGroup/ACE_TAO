@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Stub_Factory.h
  *
@@ -11,7 +10,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RT_STUB_FACTORY_H_
 #define TAO_RT_STUB_FACTORY_H_

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Network_Priority_Mapping_Manager.h
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
-//=============================================================================
 
 
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H

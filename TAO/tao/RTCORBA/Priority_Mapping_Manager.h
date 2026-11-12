@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Priority_Mapping_Manager.h
  *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
-//=============================================================================
 
 
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H

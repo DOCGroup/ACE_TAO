@@ -29,8 +29,6 @@ RT_Endpoint_Selector_Factory::get_selector ()
 }
 
 
-// ****************************************************************
-
 ACE_STATIC_SVC_DEFINE (RT_Endpoint_Selector_Factory,
                        ACE_TEXT ("RT_Endpoint_Selector_Factory"),
                        ACE_SVC_OBJ_T,

@@ -1,9 +1,7 @@
 // -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// *************************************************************
 // Inline operations for class TAO_Priority_Mapping_Manager_var
-// *************************************************************
 
 ACE_INLINE
 TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var ()
@@ -137,9 +135,7 @@ TAO_Priority_Mapping_Manager_var::upcast (void *src)
 }
 
 
-// *************************************************************
 // Inline operations for class TAO_Priority_Mapping_Manager_out
-// *************************************************************
 
 ACE_INLINE
 TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (
