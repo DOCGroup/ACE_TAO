@@ -45,6 +45,7 @@
 #define EC_MCAST_H
 
 #include <array>
+#include <cstddef>
 #include "ace/SString.h"
 #include <atomic>
 #include <memory>
@@ -97,22 +98,22 @@ public:
   CORBA::UShort mcast_port () const;
   // The port used by this federation to receive mcast messages.
 
-  int supplier_types () const;
+  std::size_t supplier_types () const;
   // The number of different event types published by this federation.
 
-  char const* supplier_name (CORBA::ULong i) const;
+  char const* supplier_name (std::size_t i) const;
   // The name (mcast addr in A.B.C.D format) of the event type <i>
 
-  CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
+  CORBA::ULong supplier_ipaddr (std::size_t i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
-  int consumer_types () const;
+  std::size_t consumer_types () const;
   // The number of different event types consumed by this federation.
 
-  char const* consumer_name (CORBA::ULong i) const;
+  char const* consumer_name (std::size_t i) const;
   // The name (mcast addr in A.B.C.D format) of the event type <i>
 
-  CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
+  CORBA::ULong consumer_ipaddr (std::size_t i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
   void open (TAO_ECG_UDP_Out_Endpoint *endoint,
@@ -266,9 +267,7 @@ public:
   ECM_Local_Federation (ECM_Local_Federation&&) = delete;
   ECM_Local_Federation& operator= (ECM_Local_Federation const&) = delete;
   ECM_Local_Federation& operator= (ECM_Local_Federation&&) = delete;
-  // Constructor.
   ~ECM_Local_Federation () = default;
-  // Destructor
 
   void open (int event_count,
              RtecEventChannelAdmin::EventChannel_ptr event_channel);
@@ -301,20 +300,20 @@ public:
   void dump_results () const;
   // Report the results back to the user...
 
-  void subscribed_bit (int i, CORBA::Boolean x);
-  CORBA::Boolean subscribed_bit (int i) const;
+  void subscribed_bit (std::size_t i, CORBA::Boolean x);
+  CORBA::Boolean subscribed_bit (std::size_t i) const;
   // Set&Get the subscribed bit; this defines the subset of events
   // that we actually publish.
 
   // = Delegate on the federation description
   char const* name () const;
   CORBA::UShort mcast_port () const;
-  int supplier_types () const;
-  char const* supplier_name (CORBA::ULong i) const;
-  CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
-  int consumer_types () const;
-  char const* consumer_name (CORBA::ULong i) const;
-  CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
+  std::size_t supplier_types () const;
+  char const* supplier_name (std::size_t i) const;
+  CORBA::ULong supplier_ipaddr (std::size_t i) const;
+  std::size_t consumer_types () const;
+  char const* consumer_name (std::size_t i) const;
+  CORBA::ULong consumer_ipaddr (std::size_t i) const;
 
 private:
   ECM_Federation* federation_;
@@ -347,10 +346,6 @@ private:
   int event_count_;
   // How many messages will we send before stop the simulation.
 
-  ACE_Time_Value last_publication_change_;
-  // The last time we changed our publication list, we don't change it
-  // too often.
-
   ACE_Time_Value last_subscription_change_;
   // The last time we changed our publication, so we don't change too
   // often.
@@ -372,9 +367,6 @@ private:
 
   CORBA::ULong subscription_change_period_;
   // The (average) period between subscription changes, in usecs
-
-  CORBA::ULong publication_change_period_;
-  // The (average) period between publication changes, in usecs
 
   std::vector<CORBA::Boolean> subscription_subset_;
   // The events we are actually subscribed to.
@@ -398,8 +390,8 @@ class ECM_Driver
   //   receive and send multicast messages, etc.
   //
 public:
-  ECM_Driver ();
-  ~ECM_Driver ();
+  ECM_Driver () = default;
+  ~ECM_Driver () = default;
   ECM_Driver (ECM_Driver const&) = delete;
   ECM_Driver (ECM_Driver&&) = delete;
   ECM_Driver& operator= (ECM_Driver const&) = delete;
@@ -447,17 +439,16 @@ private:
   void close_receivers ();
   // Close all the receivers to cleanup resources.
 
-  int shutdown ();
-  // Called when the main thread.
-
   int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line arguments
 
   int parse_config_file ();
   // parse the command line arguments
 
-  int parse_name_list (FILE* file, int n, std::vector<std::string>& names,
-                       char const* error_msg);
+  int parse_name_list (FILE *file,
+                       std::size_t count,
+                       std::vector<std::string> &names,
+                       char const *error_msg);
   // parse one of the lists of names in the federation definition.
 
   int skip_blanks (FILE* file,
@@ -468,49 +459,43 @@ private:
   // Dump the results to the standard output.
 
 private:
-  int event_period_;
+  int event_period_ {250000};
   // The events are generated using this interval, in microseconds.
 
-  int event_count_;
+  int event_count_ {100};
   // How many events will the suppliers send
 
-  ACE_TCHAR const* config_filename_;
+  ACE_TString config_filename_ {};
   // The name of the file where we read the configuration.
 
-  ACE_TCHAR const* pid_filename_;
+  ACE_TString pid_filename_ {};
   // The name of a file where the process stores its pid
 
-  int local_federations_count_;
+  CORBA::ORB_var orb_ {};
+  // The ORB, so it outlives the federations that use it.
+
+  TAO_ECG_UDP_Out_Endpoint endpoint_;
+  // This socket is shared by all the federations to send multicast events.
+
+  std::size_t all_federations_count_ {};
+  // The total number of federations we belong to.
+
+  std::array<std::unique_ptr<ECM_Federation>, MAX_FEDERATIONS> all_federations_ {};
+  // All federations outlive the local federations that borrow them.
+
+  std::size_t local_federations_count_ {};
   // How many federations are running in this process (or, if you
   // prefer, in how many federations does this process participate).
 
-  std::array<std::unique_ptr<ECM_Local_Federation>, MAX_LOCAL_FEDERATIONS> local_federations_;
+  std::array<std::unique_ptr<ECM_Local_Federation>, MAX_LOCAL_FEDERATIONS> local_federations_ {};
   // The local federations.
 
-  std::array<std::string, MAX_LOCAL_FEDERATIONS> local_names_;
+  std::array<std::string, MAX_LOCAL_FEDERATIONS> local_names_ {};
   // The names of the local federations.
-
-  int all_federations_count_;
-  // The total number of federations we belong to.
-
-  std::array<std::unique_ptr<ECM_Federation>, MAX_FEDERATIONS> all_federations_;
-  // All the federations.
 
   std::atomic<CORBA::ULong> federations_running_ {0};
   // Keep track of how many federations are active so we can shutdown
   // once they are all destroyed.
-
-  ACE_hrtime_t test_start_;
-  ACE_hrtime_t test_stop_;
-  // Measure the test elapsed time as well as mark the beginning of
-  // the frames.
-
-  CORBA::ORB_var orb_;
-  // The ORB, so we can shut it down.
-
-  TAO_ECG_UDP_Out_Endpoint endpoint_;
-  // This socket is shared by all the federations to send the
-  // multicast events.
 };
 
 #if defined (__ACE_INLINE__)
