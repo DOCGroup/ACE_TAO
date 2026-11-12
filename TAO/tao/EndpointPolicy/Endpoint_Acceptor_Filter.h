@@ -9,7 +9,6 @@
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 
-
 #ifndef TAO_ENDPOINT_ACCEPTOR_FILTER_H
 #define TAO_ENDPOINT_ACCEPTOR_FILTER_H
 

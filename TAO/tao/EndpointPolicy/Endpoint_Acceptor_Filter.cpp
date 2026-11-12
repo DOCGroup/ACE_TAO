@@ -78,6 +78,9 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
               TAO_Endpoint_Value_Impl const* const evi =
                 dynamic_cast<TAO_Endpoint_Value_Impl const*> (evb);
 
+              if (evi == nullptr)
+                continue;
+
               epmatch = evi->is_equivalent(ep_in_pfile);
             }
 
@@ -146,6 +149,5 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
 
   return 0;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

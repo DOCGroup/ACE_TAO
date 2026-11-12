@@ -6,7 +6,6 @@
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 
-
 #ifndef TAO_ENDPOINTPOLICY_I_H
 #define TAO_ENDPOINTPOLICY_I_H
 
@@ -27,7 +26,6 @@
 #endif /* _MSC_VER */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 /**
  * @class TAO_EndpointPolicy_i
@@ -69,7 +67,6 @@ private:
   /// The attribute
   EndpointPolicy::EndpointList value_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

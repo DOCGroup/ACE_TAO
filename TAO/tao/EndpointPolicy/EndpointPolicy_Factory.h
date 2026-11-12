@@ -6,7 +6,6 @@
  * @author  Yan Dai <dai_y@ociweb.com>
  */
 
-
 #ifndef TAO_ENDPOINTPOLICY_FACTORY_H
 #define TAO_ENDPOINTPOLICY_FACTORY_H
 

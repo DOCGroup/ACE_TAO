@@ -6,7 +6,6 @@
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 
-
 #ifndef TAO_ENDPOINTPOLICY_ORB_INITIALIZER_H
 #define TAO_ENDPOINTPOLICY_ORB_INITIALIZER_H
 

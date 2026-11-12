@@ -21,7 +21,6 @@ TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core *orb_core)
 {
 }
 
-
 CORBA::Policy_ptr
 TAO_EndpointPolicy_Factory::create_policy (
     CORBA::PolicyType type,
@@ -94,6 +93,5 @@ TAO_EndpointPolicy_Factory::create_policy (
   else
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

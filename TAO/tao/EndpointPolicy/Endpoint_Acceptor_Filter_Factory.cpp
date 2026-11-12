@@ -50,7 +50,6 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
   return filter;
 }
 
-
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Endpoint_Acceptor_Filter_Factory,
                        ACE_TEXT ("TAO_Acceptor_Filter_Factory"),

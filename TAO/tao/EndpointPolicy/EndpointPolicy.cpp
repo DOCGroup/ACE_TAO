@@ -55,7 +55,6 @@ TAO_EndpointPolicy_Initializer::init (int, ACE_TCHAR* [])
   return 0;
 }
 
-
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 ACE_STATIC_SVC_DEFINE (TAO_EndpointPolicy_Initializer,
                        ACE_TEXT ("EndpointPolicy_Initializer"),

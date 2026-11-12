@@ -41,7 +41,6 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-
   PortableInterceptor::PolicyFactory_var const policy_factory =
     policy_factory_ptr;
 

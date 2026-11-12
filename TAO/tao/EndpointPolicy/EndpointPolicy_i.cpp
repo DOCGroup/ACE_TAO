@@ -67,5 +67,4 @@ TAO_EndpointPolicy_i::_tao_cached_type () const
   return TAO_CACHED_POLICY_ENDPOINT;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
