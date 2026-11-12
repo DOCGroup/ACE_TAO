@@ -16,7 +16,6 @@
 
 #include "tao/BiDir_GIOP/bidirgiop_export.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -38,10 +37,8 @@ class TAO_BiDirPolicy_Validator;
 class TAO_BIDIRGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
-  /// Constructor
   TAO_BiDirGIOP_Loader () = default;
 
-  /// Destructor
   ~TAO_BiDirGIOP_Loader () override = default;
 
   /// Initialize the BiDIR loader hooks.
@@ -53,26 +50,24 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader const &) = delete;
   TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader const &) = delete;
   TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader &&) = delete;
   TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader &&) = delete;
 
+private:
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
-  bool initialized_ {false};
+  bool initialized_ {};
 };
 
-static bool
+static bool const
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
 ACE_FACTORY_DECLARE (TAO_BIDIRGIOP, TAO_BiDirGIOP_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #define TAO_BIDIRGIOP_SAFE_INCLUDE
 #include "tao/BiDir_GIOP/BiDirPolicyC.h"

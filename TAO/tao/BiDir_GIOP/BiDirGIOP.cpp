@@ -17,7 +17,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 
   this->initialized_ = true;
 
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+  ACE_Service_Gestalt * const gestalt = ACE_Service_Config::current ();
 
   ACE_Service_Object * const bidir_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
@@ -32,8 +32,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 
   if (TAO_DEF_GIOP_MINOR >= 2)
     {
-      PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer {};
       PortableInterceptor::ORBInitializer_var bidir_orb_initializer;
 
       try
@@ -52,7 +51,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ());
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {
@@ -72,7 +71,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   if (TAO_DEF_GIOP_MINOR < 2)
     return;
 
-  TAO_BiDirPolicy_Validator *validator = nullptr;
+  TAO_BiDirPolicy_Validator *validator {};
   ACE_NEW_THROW_EX (validator,
                     TAO_BiDirPolicy_Validator (val.orb_core ()),
                     CORBA::NO_MEMORY (
@@ -89,6 +88,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   // is out of the critical invocation processing path, I plan to keep
   // the design simple and not try to avoid an inefficiency of such
   // small proportions.
+  // add_validator takes ownership of the validator.
   val.add_validator (validator);
 }
 

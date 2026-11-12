@@ -11,16 +11,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    CORBA::Any const& value)
+    CORBA::Any const &value)
 {
-  CORBA::Policy_ptr policy = nullptr;
+  CORBA::Policy_ptr policy {};
 
   if (type == BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE)
     {
-      BiDirPolicy::BidirectionalPolicyValue val;
+      BiDirPolicy::BidirectionalPolicyValue val {};
 
       // Extract the value from the any.
-      if ((value >>= val) == 0)
+      if (!(value >>= val))
         {
           throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
