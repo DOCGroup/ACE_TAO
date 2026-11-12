@@ -32,8 +32,6 @@ public:
 
   ~TAO_Async_Table_Adapter () override;
 
-  // = The TAO_Adapter methods, please check tao/Adapter.h for the
-  // documentation
   void open () override;
 
   int dispatch (TAO::ObjectKey &key,
@@ -50,8 +48,6 @@ protected:
   void find_object (::IORTable::Locate_ResponseHandler rh,
                     TAO::ObjectKey &key);
 };
-
-// ****************************************************************
 
 class TAO_Async_IORTable_Export TAO_Async_Table_Adapter_Factory :
   public TAO_Table_Adapter_Factory

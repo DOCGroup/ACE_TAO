@@ -37,8 +37,6 @@ public:
 
   ~TAO_Table_Adapter () override;
 
-  // = The TAO_Adapter methods, please check tao/Adapter.h for the
-  // documentation
   void open () override;
   void close (int wait_for_completion) override;
   void check_close (int wait_for_completion) override;
@@ -76,8 +74,6 @@ protected:
   TAO_SYNCH_MUTEX thread_lock_;
   std::unique_ptr<ACE_Lock> lock_;
 };
-
-// ****************************************************************
 
 class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
