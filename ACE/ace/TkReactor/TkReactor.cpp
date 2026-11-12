@@ -58,13 +58,13 @@ ACE_TkReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                                          ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_TkReactor::wait_for_multiple_events");
-  int nfound;
+  int nfound {};
 
   do
     {
       max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
 
-      size_t width = this->handler_rep_.max_handlep1 ();
+      size_t const width = this->handler_rep_.max_handlep1 ();
       handle_set.rd_mask_ = this->wait_set_.rd_mask_;
       handle_set.wr_mask_ = this->wait_set_.wr_mask_;
       handle_set.ex_mask_ = this->wait_set_.ex_mask_;
