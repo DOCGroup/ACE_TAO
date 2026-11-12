@@ -39,26 +39,26 @@ public:
   Receiver_Callback (Receiver_Callback &&) = delete;
   Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Method that is called when there is data to be received from a
+  /// sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Called when the sender is done sending data and wants to close
+  /// down the connection.
   int handle_destroy () override;
 
   int flowname (std::string const &flow_name);
 
 private:
   /// Keeping a count of the incoming frames.
-  std::size_t frame_count_ {1};
+  std::size_t frame_count_ {};
 
   std::string flowname_;
 
   /// File handle of the file into which received data is written.
-  std::unique_ptr<FILE, int (*) (FILE *)> output_file_ {nullptr, ACE_OS::fclose};
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file_ {nullptr, std::fclose};
 };
 
 /**
@@ -77,7 +77,7 @@ public:
   Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
   Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
 
-  // Create a receiver application callback.
+  /// Create a receiver application callback.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 

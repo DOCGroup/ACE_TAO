@@ -48,7 +48,7 @@ Sender::shutdown ()
   AVStreams::flowSpec stop_spec;
   this->streamctrl_->destroy (stop_spec);
 
-      // Shut the orb down.
+  // Shut the orb down.
   TAO_AV_CORE::instance ()->orb ()->shutdown (false);
 }
 
@@ -84,7 +84,7 @@ Sender::parse_args (int argc,
   return 0;
 }
 
-// Method to get the object reference of the receiver
+/// Method to get the object reference of the receiver.
 int
 Sender::bind_to_receiver ()
 {
@@ -133,16 +133,15 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
+  this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
 
   if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
                        this->options_.filename.c_str ()),
                       -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "File opened successfully\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "File opened successfully\n"));
 
   // Resolve the object reference of the receiver from the Naming Service.
   result = this->bind_to_receiver ();
@@ -214,7 +213,7 @@ Sender::init (int argc,
   return 0;
 }
 
-// Method to send data at the specified rate
+/// Method to send data at the specified rate.
 int
 Sender::pace_data ()
 {
@@ -235,13 +234,13 @@ Sender::pace_data ()
       ACE_High_Res_Timer elapsed_timer;
 
       // Continue to send data till the file is read to the end.
-      while (1)
+      while (true)
         {
           // Read from the file into a message block.
-          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                               1,
-                                               this->mb_.size (),
-                                               this->input_file_.get ());
+          std::size_t const n = std::fread (this->mb_.wr_ptr (),
+                                            1,
+                                            this->mb_.size (),
+                                            this->input_file_.get ());
 
           if (n == 0)
             {
@@ -298,12 +297,12 @@ Sender::pace_data ()
           // Start timer before sending the frame.
           elapsed_timer.start ();
 
-          ProtocolObject_SetItor end = this->protocol_object_.end ();
+          ProtocolObject_SetItor const end = this->protocol_object_.end ();
           for (ProtocolObject_SetItor begin = this->protocol_object_.begin ();
                begin != end; ++begin)
             {
               // Send frame.
-              int result =
+              int const result =
                 (*begin)->send_frame (&this->mb_);
 
               if (result < 0)
@@ -360,9 +359,8 @@ ACE_TMAIN (int argc,
                                       root_poa.in ());
 
       // Initialize the Sender.
-      int result = 0;
-      result = SENDER::instance ()->init (argc,
-                                          argv);
+      int result = SENDER::instance ()->init (argc,
+                                              argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,

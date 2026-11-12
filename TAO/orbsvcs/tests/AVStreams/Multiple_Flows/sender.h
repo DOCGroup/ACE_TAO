@@ -116,7 +116,7 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// File handle of the file read from.
-  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, ACE_OS::fclose};
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, std::fclose};
 
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_ {BUFSIZ};

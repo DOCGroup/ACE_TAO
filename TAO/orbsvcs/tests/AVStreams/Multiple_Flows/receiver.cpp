@@ -7,7 +7,7 @@
 
 static int endstream {};
 
-// Create a singleton instance of the Sender.
+// Create a singleton instance of the Receiver.
 
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
@@ -50,7 +50,7 @@ Receiver_Callback::flowname (std::string const &flow_name)
   this->flowname_ = flow_name;
 
   // Make sure we have a valid <output_file>
-  this->output_file_.reset (ACE_OS::fopen (this->flowname_.c_str (), "wb"));
+  this->output_file_.reset (std::fopen (this->flowname_.c_str (), "wb"));
   if (!this->output_file_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output file %C\n",
@@ -74,7 +74,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   //
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::receive_frame for frame %B for flow %C\n",
-              this->frame_count_++,
+              ++this->frame_count_,
               this->flowname_.c_str ()));
 
   if (!this->output_file_)
@@ -83,10 +83,10 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result = ACE_OS::fwrite (frame->rd_ptr (),
-                                                 1,
-                                                 frame->length (),
-                                                 this->output_file_.get ());
+      std::size_t const result = std::fwrite (frame->rd_ptr (),
+                                              1,
+                                              frame->length (),
+                                              this->output_file_.get ());
 
       if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -107,7 +107,7 @@ Receiver_Callback::handle_destroy ()
               "Receiver_Callback::handle_destroy\n"));
 
   this->output_file_.reset ();
-  endstream++;
+  ++endstream;
 
   return 0;
 }
@@ -154,14 +154,12 @@ Receiver::init (int argc,
   if (result != 0)
     return result;
 
-    // Parse the command line arguments
+  // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
     return result;
-
-
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
