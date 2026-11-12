@@ -25,7 +25,7 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (
                     TAO_CSD_POA (name,
                                  poa_manager,
                                  policies,
-                                 0,
+                                 nullptr,
                                  lock,
                                  thread_lock,
                                  orb_core,
@@ -33,7 +33,7 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (
                     CORBA::NO_MEMORY ());
   std::unique_ptr<TAO_CSD_POA> poa_owner {poa};
 
-  TAO_CSD_Strategy_Repository *repo =
+  TAO_CSD_Strategy_Repository * const repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
   if (repo == nullptr)

@@ -15,7 +15,7 @@ bool
 TAO::CSD::Strategy_Proxy::custom_strategy
                           (CSD_Framework::Strategy_ptr strategy)
 {
-  if (this->strategy_impl_)
+  if (this->strategy_impl_ != nullptr)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR((LM_ERROR,

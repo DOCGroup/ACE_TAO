@@ -35,8 +35,7 @@ public:
   TAO_CSD_Object_Adapter_Factory (TAO_CSD_Object_Adapter_Factory &&) = delete;
   TAO_CSD_Object_Adapter_Factory &operator= (TAO_CSD_Object_Adapter_Factory &&) = delete;
 
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
+  /// The TAO_Adapter_Factory methods are documented in tao/Adapter.h.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
   int init (int argc,

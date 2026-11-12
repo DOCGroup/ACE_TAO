@@ -253,9 +253,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   if (request->operation_details_ != nullptr)
     {
       ACE_ASSERT (request->incoming_ == nullptr);
-      if (this->clone (request->operation_details_,
-                       clone_obj->operation_details_,
-                       clone_obj->incoming_) == false)
+      if (!this->clone (request->operation_details_,
+                        clone_obj->operation_details_,
+                        clone_obj->incoming_))
         {
           return 0;
         }

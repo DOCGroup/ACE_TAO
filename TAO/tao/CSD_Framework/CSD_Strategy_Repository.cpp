@@ -17,7 +17,7 @@ TAO_CSD_Strategy_Repository::init (int, ACE_TCHAR **)
 CSD_Framework::Strategy_ptr
 TAO_CSD_Strategy_Repository::find (std::string const &name)
 {
-  if (this->strategy_list_head_)
+  if (this->strategy_list_head_ != nullptr)
     {
       Strategy_Node const * const node = this->strategy_list_head_->find (name);
       if (node != nullptr)
@@ -63,7 +63,7 @@ void
 TAO_CSD_Strategy_Repository::Strategy_Node::add_node (
   std::unique_ptr<Strategy_Node> node)
 {
-  if (this->next_)
+  if (this->next_ != nullptr)
     this->next_->add_node (std::move (node));
   else
     this->next_ = std::move (node);
@@ -74,7 +74,7 @@ TAO_CSD_Strategy_Repository::Strategy_Node::find (std::string const &name) const
 {
   if (this->poa_name_ == name)
     return this;
-  if (this->next_)
+  if (this->next_ != nullptr)
     return this->next_->find (name);
   return nullptr;
 }

@@ -42,7 +42,6 @@ class TAO_CSD_FW_Export TAO_CSD_Strategy_Repository : public ACE_Service_Object
 public:
   TAO_CSD_Strategy_Repository() = default;
 
-  /// Virtual Destructor.
   ~TAO_CSD_Strategy_Repository() override;
 
   int init (int argc, ACE_TCHAR ** argv) override;

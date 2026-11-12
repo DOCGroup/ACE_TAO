@@ -12,7 +12,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
 TAO_CSD_POA::TAO_CSD_POA (String const &name,
                           PortableServer::POAManager_ptr poa_manager,
                           TAO_POA_Policy_Set const &policies,
@@ -37,7 +36,6 @@ TAO_CSD_POA::TAO_CSD_POA (String const &name,
   this->sds_proxy_.reset (sds_proxy);
 }
 
-// Implementation skeleton destructor
 TAO_CSD_POA::~TAO_CSD_POA () = default;
 
 void TAO_CSD_POA::set_csd_strategy (::CSD_Framework::Strategy_ptr strategy)
@@ -73,10 +71,10 @@ TAO_CSD_POA::new_POA (String const &name,
                     CORBA::NO_MEMORY ());
   std::unique_ptr<TAO_CSD_POA> poa_owner {poa};
 
-  TAO_CSD_Strategy_Repository *repo =
+  TAO_CSD_Strategy_Repository * const repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
-  if (repo)
+  if (repo != nullptr)
     {
       CSD_Framework::Strategy_var const strategy = repo->find (std::string (name.c_str ()));
 

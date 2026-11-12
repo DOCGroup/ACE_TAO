@@ -69,7 +69,6 @@ namespace TAO
         DISPATCH_DEFERRED
       };
 
-      /// Virtual Destructor.
       virtual ~Strategy_Base ();
 
       Strategy_Base (Strategy_Base const &) = delete;
@@ -82,7 +81,6 @@ namespace TAO
       CORBA::Boolean apply_to (PortableServer::POA_ptr poa) override;
 
     protected:
-      /// Default Constructor.
       Strategy_Base() = default;
 
       /// Subclass provides implementation to dispatch a remote request.
