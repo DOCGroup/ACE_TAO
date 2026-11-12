@@ -238,11 +238,9 @@ TAO::CSD::TP_Task::close(u_long flag)
 
       // Check whether the calling thread(calling orb shutdown) is one of the
       // threads in the pool. If it is then it should not wait itself.
-      size_t const size = this->activated_threads_.size ();
-
-      for (size_t i {}; i < size; ++i)
+      for (ACE_thread_t const thread_id : this->activated_threads_)
         {
-          if (this->activated_threads_[i] == my_thr_id)
+          if (thread_id == my_thr_id)
             {
               calling_thread_in_tp = true;
               this->deferred_shutdown_initiated_ = true;
