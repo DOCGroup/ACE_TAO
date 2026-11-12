@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CHAR_IBM1047_ISO8859_TRANSLATOR_H
 #define TAO_CHAR_IBM1047_ISO8859_TRANSLATOR_H
 #include /**/ "ace/pre.h"
@@ -31,7 +30,7 @@ extern IBM1047_ISO8859_Export char from_IBM1047[257];
 // ****************************************************************
 
 /**
- * @class ACE_Char_IBM1047_ISO8859
+ * @class IBM1047_ISO8859
  *
  * @brief Codeset translation specialization.
  *
@@ -42,14 +41,12 @@ extern IBM1047_ISO8859_Export char from_IBM1047[257];
 class IBM1047_ISO8859_Export IBM1047_ISO8859 : public ACE_Char_Codeset_Translator
 {
 public:
-  /// A do nothing constructor.
-  IBM1047_ISO8859 ();
+  IBM1047_ISO8859 () = default;
   IBM1047_ISO8859 (IBM1047_ISO8859 const &) = delete;
   IBM1047_ISO8859 (IBM1047_ISO8859 &&) = delete;
   IBM1047_ISO8859 &operator= (IBM1047_ISO8859 const &) = delete;
   IBM1047_ISO8859 &operator= (IBM1047_ISO8859 &&) = delete;
 
-  /// Virtual destruction
   ~IBM1047_ISO8859 () override;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h

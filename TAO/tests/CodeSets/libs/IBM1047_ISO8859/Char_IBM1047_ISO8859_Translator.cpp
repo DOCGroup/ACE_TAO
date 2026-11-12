@@ -11,14 +11,13 @@
  */
 //=============================================================================
 
-
 #include "Char_IBM1047_ISO8859_Translator.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 // ****************************************************************
-
-IBM1047_ISO8859::IBM1047_ISO8859 () = default;
 
 IBM1047_ISO8859::~IBM1047_ISO8859 () = default;
 
@@ -28,35 +27,38 @@ IBM1047_ISO8859::read_char (ACE_InputCDR &in,
 {
   if (this->read_1 (in, reinterpret_cast<ACE_CDR::Octet*> (&x)))
     {
-      x = to_IBM1047[(int) x];
-      return 1;
+      x = to_IBM1047[static_cast<unsigned char> (x)];
+      return true;
     }
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
 IBM1047_ISO8859::read_string (ACE_InputCDR& in,
                               ACE_CDR::Char *& x)
 {
-  ACE_CDR::ULong len;
+  ACE_CDR::ULong len {};
+  if (!in.read_ulong (len))
+    return false;
 
-  in.read_ulong (len);
-
-  if (len > 0)
+  if (len > 0 && len <= in.length ())
     {
-      //      ACE_DEBUG ((LM_DEBUG,"read_string: len = %u\n",len));
-      ACE_NEW_RETURN (x,
+      x = nullptr;
+      ACE_CDR::Char *buffer {};
+      ACE_NEW_RETURN (buffer,
                       ACE_CDR::Char[len],
                       false);
+      std::unique_ptr<ACE_CDR::Char[]> owned_buffer (buffer);
 
-      if (this->read_char_array (in, x, len))
-        return 1;
+      if (!this->read_char_array (in, buffer, len))
+        return false;
 
-      delete [] x;
+      x = owned_buffer.release ();
+      return true;
     }
 
   x = nullptr;
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
@@ -72,13 +74,13 @@ IBM1047_ISO8859::read_char_array (ACE_InputCDR &in,
     {
       for (ACE_CDR::ULong i = 0; i != len; ++i)
         {
-          x[i] = (unsigned char)to_IBM1047[(unsigned char)x[i]];
+          x[i] = to_IBM1047[static_cast<unsigned char> (x[i])];
         }
 
-      return 1;
+      return true;
     }
 
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
@@ -86,7 +88,8 @@ IBM1047_ISO8859::write_char (ACE_OutputCDR &out,
                              ACE_CDR::Char x)
 {
   return this->write_1 (out,
-                        reinterpret_cast<ACE_CDR::Octet const *> (&from_IBM1047[(int) x]));
+                        reinterpret_cast<ACE_CDR::Octet const *> (
+                          &from_IBM1047[static_cast<unsigned char> (x)]));
 }
 
 ACE_CDR::Boolean
@@ -99,7 +102,7 @@ IBM1047_ISO8859::write_string (ACE_OutputCDR &out,
       return this->write_char_array (out, x, len + 1);
     }
 
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
@@ -107,15 +110,15 @@ IBM1047_ISO8859::write_char_array (ACE_OutputCDR &out,
                                    ACE_CDR::Char const *x,
                                    ACE_CDR::ULong len)
 {
-  char *buf;
+  char *buf {};
 
   if (this->adjust (out, len, 1, buf) == 0)
     {
-      ACE_OS::memcpy (buf, x, len);
+      std::memcpy (buf, x, len);
 
       for (ACE_CDR::ULong i = 0; i != len; ++i)
         {
-          buf[i] = (unsigned char)from_IBM1047[(unsigned char)buf[i]];
+          buf[i] = from_IBM1047[static_cast<unsigned char> (buf[i])];
         }
 
       return true;

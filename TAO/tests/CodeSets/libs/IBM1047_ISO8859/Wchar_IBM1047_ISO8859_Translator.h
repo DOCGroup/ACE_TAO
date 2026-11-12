@@ -30,7 +30,7 @@ extern IBM1047_ISO8859_Export ACE_CDR::WChar Wchar_from_IBM1047[257];
 // ****************************************************************
 
 /**
- * @class ACE_Char_IBM1047_ISO8859
+ * @class WIBM1047_ISO8859
  *
  * @brief Codeset translation specialization.
  *
@@ -41,14 +41,12 @@ extern IBM1047_ISO8859_Export ACE_CDR::WChar Wchar_from_IBM1047[257];
 class IBM1047_ISO8859_Export WIBM1047_ISO8859 : public ACE_WChar_Codeset_Translator
 {
 public:
-  /// A do nothing constructor.
-  WIBM1047_ISO8859 ();
+  WIBM1047_ISO8859 () = default;
   WIBM1047_ISO8859 (WIBM1047_ISO8859 const &) = delete;
   WIBM1047_ISO8859 (WIBM1047_ISO8859 &&) = delete;
   WIBM1047_ISO8859 &operator= (WIBM1047_ISO8859 const &) = delete;
   WIBM1047_ISO8859 &operator= (WIBM1047_ISO8859 &&) = delete;
 
-  /// Virtual destruction
   ~WIBM1047_ISO8859 () override;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h

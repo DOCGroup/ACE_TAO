@@ -109,6 +109,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ++error_count;
         }
+
+      CORBA::Char const high_byte = static_cast<CORBA::Char> (0x80);
+      CORBA::Char const high_byte_reply = server->op3 (high_byte);
+      if (static_cast<unsigned char> (high_byte) !=
+          static_cast<unsigned char> (high_byte_reply))
+        {
+          ACE_ERROR ((LM_ERROR, "High byte char round trip failed\n"));
+          ++error_count;
+        }
+
 #if defined (ACE_HAS_WCHAR)
       ACE_CDR::WChar const * const wide_string =
         L"Wide String";

@@ -90,6 +90,11 @@ public:
     return CORBA::wstring_dup (s1);
   };
 
+  CORBA::Char op3 (CORBA::Char c) override
+  {
+    return c;
+  }
+
   //FUZZ: disable check_for_lack_ACE_OS
   void shutdown () override
   {
