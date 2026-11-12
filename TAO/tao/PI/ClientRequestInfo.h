@@ -213,7 +213,7 @@ private:
       IOP::ServiceId id);
 
 private:
-  /// Pointer to the invocation object.
+  /// Non-owning pointer to the invocation currently being intercepted.
   TAO::Invocation_Base *invocation_;
 
   /// The "Request Scope Current" (RSC) object, as required by

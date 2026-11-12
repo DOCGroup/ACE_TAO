@@ -6,7 +6,6 @@
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
 
-
 #ifndef PI_DLL_RESIDENT_ORB_INITIALIZER_H
 #define PI_DLL_RESIDENT_ORB_INITIALIZER_H
 
@@ -70,6 +69,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* PI_DLL_RESIDENT_ORB_INITIALIZER_H */
-
-
 

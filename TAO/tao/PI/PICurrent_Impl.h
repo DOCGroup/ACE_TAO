@@ -25,7 +25,6 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Array_Base.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.

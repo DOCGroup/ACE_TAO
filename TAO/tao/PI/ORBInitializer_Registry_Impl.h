@@ -27,7 +27,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Array_Base.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -92,7 +91,6 @@ namespace TAO
     ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
   };
 }
-
 
 ACE_STATIC_SVC_DECLARE (ORBInitializer_Registry)
 ACE_FACTORY_DECLARE (TAO_PI, ORBInitializer_Registry)

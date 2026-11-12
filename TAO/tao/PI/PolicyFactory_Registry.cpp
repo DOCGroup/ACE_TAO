@@ -100,5 +100,4 @@ TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType type) const
   return (this->factories_.find (type) == 0);
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

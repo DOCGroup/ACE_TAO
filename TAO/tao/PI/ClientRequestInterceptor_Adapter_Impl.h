@@ -23,7 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/PI/Interceptor_List_T.h"

@@ -20,7 +20,6 @@
 #include "tao/PI/PI_includeC.h"
 #include "tao/LocalObject.h"
 
-
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -193,9 +192,7 @@ public:
 
   static TAO_ORBInitInfo_ptr _narrow (CORBA::Object_ptr obj);
 
-
   static TAO_ORBInitInfo_ptr _unchecked_narrow (CORBA::Object_ptr obj);
-
 
   static TAO_ORBInitInfo_ptr _nil ()
     {
@@ -222,14 +219,14 @@ private:
   TAO_ORBInitInfo &operator= (TAO_ORBInitInfo &&) = delete;
 
 private:
-  /// Reference to the ORB Core.
+  /// Borrowed ORB Core; this object is valid only during ORB initialization.
   TAO_ORB_Core *orb_core_;
 
   /// The number of arguments in the argument vector passed to
   /// CORBA::ORB_init().
   int argc_;
 
-  /// The argument vector passed to CORBA::ORB_init().
+  /// Borrowed argument vector passed to CORBA::ORB_init().
   char **argv_;
 
   /// Reference to the CodecFactory returned by

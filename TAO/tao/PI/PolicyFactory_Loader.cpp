@@ -30,7 +30,6 @@ TAO_PolicyFactory_Loader::Initializer ()
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_PolicyFactory_Loader);
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_PolicyFactory_Loader,
                        ACE_TEXT ("PolicyFactory_Loader"),
                        ACE_SVC_OBJ_T,

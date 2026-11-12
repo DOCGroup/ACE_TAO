@@ -28,7 +28,6 @@ TAO_PICurrent_Loader::create_object (CORBA::ORB_ptr orb,  int, ACE_TCHAR *[])
   return obj;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
                        ACE_TEXT ("PICurrent_Loader"),
                        ACE_SVC_OBJ_T,

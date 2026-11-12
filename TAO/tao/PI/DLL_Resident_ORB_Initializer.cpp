@@ -38,7 +38,6 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::~DLL_Resident_ORB_Initializer
   // then the ACE_DLL can release the dll on the way out.
 }
 
-
 void
 PortableInterceptor::DLL_Resident_ORB_Initializer::pre_init (
     ::PortableInterceptor::ORBInitInfo_ptr info)
@@ -52,6 +51,5 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::post_init (
 {
   initializer_->post_init (info);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
