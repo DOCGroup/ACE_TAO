@@ -58,7 +58,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RTScheduler_Manager () = default;
+  ~TAO_RTScheduler_Manager () override = default;
 
 private:
   TAO_ORB_Core *orb_ {};
