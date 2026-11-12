@@ -145,7 +145,7 @@ Test_Supplier::svc ()
 
       // Now copy over each byte.
       char* base = mb.data_block ()->base ();
-      for(CORBA::ULong i = 0; i < (CORBA::ULong)this->event_size_; i++)
+      for (CORBA::ULong i {}; i < static_cast<CORBA::ULong> (this->event_size_); ++i)
         {
           event[0].data.payload[i] = base[i];
         }
@@ -187,7 +187,7 @@ Test_Supplier::svc ()
       ACE_hrtime_t const request_start = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      request_start);
-      this->consumer_proxy ()->push(event);
+      this->consumer_proxy ()->push (event);
       ACE_hrtime_t const end = ACE_OS::gethrtime ();
       this->throughput_.sample (end - test_start,
                                 end - request_start);
@@ -212,7 +212,7 @@ Test_Supplier::disconnect_push_supplier ()
 {
 }
 
-int Test_Supplier::supplier_id () const
+RtecEventComm::EventSourceID Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }

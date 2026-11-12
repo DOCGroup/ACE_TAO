@@ -1,13 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This test to measure how many events per minute can the EC
-//   process, it also serves as an example how how to encode complex
-//   data types in a octet sequence.
-//
-// ============================================================================
+/**
+ * @file ECT_Consumer_Driver.h
+ * @brief Driver for the remote Event Channel throughput consumer.
+ */
 
 #ifndef ECT_CONSUMER_DRIVER_H
 #define ECT_CONSUMER_DRIVER_H
@@ -27,16 +22,11 @@
 #include <array>
 #include <memory>
 
+/// Connects consumers to a remote event channel and reports throughput.
 class ECT_Consumer_Driver : public ECT_Driver
 {
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
 public:
   ECT_Consumer_Driver () = default;
-  ~ECT_Consumer_Driver () override = default;
 
   ECT_Consumer_Driver (ECT_Consumer_Driver const&) = delete;
   ECT_Consumer_Driver (ECT_Consumer_Driver&&) = delete;
@@ -45,25 +35,23 @@ public:
 
   static constexpr int MAX_CONSUMERS {16};
 
+  /// Connect to the named services, receive events, and print results.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Execute the test.
 
+  /// Called after a consumer receives all supplier shutdown events.
   void shutdown_consumer () override;
-  // Callback method for consumers, each consumer will call this
-  // method once it receives all the shutdown events from the
-  // suppliers.
 
 private:
+  /// Parse test-specific command-line options.
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line args
 
+  /// Connect and disconnect all configured consumers.
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_consumers ();
-  // Connect and disconnect the consumers.
 
+  /// Print per-consumer and aggregate throughput results.
   void dump_results ();
-  // Print out the results
 
 private:
   struct Options
@@ -77,15 +65,14 @@ private:
     ACE_TCHAR const* pid_file_name {};
   } options_;
 
-  /// These pointers own consumers; POA references are released by disconnect().
+  /// Own consumers; disconnect() releases their POA references.
   std::array<std::unique_ptr<Test_Consumer>, MAX_CONSUMERS> consumers_ {};
 
+  /// ORB used by this driver.
   CORBA::ORB_var orb_ {};
-  // A reference to the ORB, to shut it down properly.
 
   TAO_SYNCH_MUTEX lock_;
   int active_count_ {};
-  // How many consumers are still receiving events.
 };
 
 #endif /* ECT_CONSUMER_DRIVER_H */

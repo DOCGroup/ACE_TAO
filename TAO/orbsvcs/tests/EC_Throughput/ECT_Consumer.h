@@ -1,13 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This test to measure how many events per minute can the EC
-//   process, it also serves as an example how how to encode complex
-//   data types in a octet sequence.
-//
-// ============================================================================
+/**
+ * @file ECT_Consumer.h
+ * @brief Event Channel throughput test consumer.
+ */
 
 #ifndef ECT_CONSUMER_H
 #define ECT_CONSUMER_H
@@ -25,18 +20,11 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Throughput_Stats.h"
 
+/// Receives a continuous range of event types and records throughput.
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Receive the events.
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of events. It subscribes for a
-  //   continous ranges of event types, this permits studying the
-  //   effect of the number of subscriptions for each particular kind
-  //   of event on the EC.
-  //
 public:
+  /// Create a consumer associated with its coordinating driver.
   explicit Test_Consumer (ECT_Driver& driver,
                           int n_suppliers,
                           int stall_length = 0);
@@ -46,51 +34,51 @@ public:
   Test_Consumer& operator= (Test_Consumer const&) = delete;
   Test_Consumer& operator= (Test_Consumer&&) = delete;
 
+  /// Connect this consumer to the event channel.
   void connect (RtecScheduler::Scheduler_ptr scheduler,
                 char const* name,
                 int type_start,
                 int type_count,
                 RtecEventChannelAdmin::EventChannel_ptr ec);
-  // This method connects the consumer to the EC.
-
+  /// Disconnect this consumer from the event channel and deactivate it.
   void disconnect ();
-  // Disconnect from the EC.
 
+  /// Print this consumer's throughput statistics.
   void dump_results (ACE_TCHAR const* name,
                      ACE_Basic_Stats::scale_factor_type global_scale_factor);
-  // Print out the results
 
+  /// Add this consumer's measurements to aggregate statistics.
   void accumulate (ACE_Throughput_Stats& stats) const;
-  // Add our throughput and latency statistics to <stats>
 
+  /// Process a batch of received events.
   void push (RtecEventComm::EventSet const& events) override;
+  /// Handle disconnection by the event-channel proxy.
   void disconnect_push_consumer () override;
-  // The skeleton methods.
 
 private:
+  /// Driver notified after all suppliers send shutdown events.
   ECT_Driver& driver_;
 
+  /// Number of suppliers whose shutdown events are expected.
   int n_suppliers_;
-  // The number of suppliers that are feeding this consumer, we
-  // terminate once we receive a shutdown event from each supplier.
 
+  /// Proxy used to receive events from the event channel.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // We talk to the EC using this proxy.
 
   TAO_SYNCH_MUTEX lock_;
+  /// Number of events received.
   int recv_count_ {};
+  /// Time at which the first event arrived.
   ACE_hrtime_t first_event_ {};
-  // How many events we have received.
 
+  /// Accumulated throughput and latency measurements.
   ACE_Throughput_Stats throughput_;
-  // Used for reporting stats.
 
+  /// Number of shutdown events received so far.
   int shutdown_count_ {};
-  // How many shutdown events we have received.
 
+  /// Seconds to wait after receiving the first event.
   int stall_length_;
-  // How long (in seconds) we wait to continue processing
-  // after receiving the first push.
 };
 
 #endif /* ECT_CONSUMER_H */

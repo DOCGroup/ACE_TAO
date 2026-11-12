@@ -19,6 +19,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 #include <memory>
+#include <string>
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -102,12 +103,12 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 
       if (this->options_.pid_file_name != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->options_.pid_file_name, "w");
+          std::unique_ptr<FILE, int (*) (FILE *)> pid (
+            ACE_OS::fopen (this->options_.pid_file_name, "w"), ACE_OS::fclose);
           if (pid != nullptr)
             {
-              ACE_OS::fprintf (pid, "%ld\n",
+              ACE_OS::fprintf (pid.get (), "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pid);
             }
         }
 
@@ -287,8 +288,8 @@ ECT_Throughput::connect_consumers
   }
   for (int i {}; i < this->options_.n_consumers; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02d", i);
+      std::string const name = std::string ("consumer_")
+        + (i < 10 ? "0" : "") + std::to_string (i);
 
       this->consumers_[i] = std::make_unique<Test_Consumer> (
         *this,
@@ -298,7 +299,7 @@ ECT_Throughput::connect_consumers
         + i * this->options_.consumer_type_shift;
 
       this->consumers_[i]->connect (scheduler,
-                                    buf,
+                                    name.c_str (),
                                     start,
                                     this->options_.consumer_type_count,
                                     channel);
@@ -312,15 +313,15 @@ ECT_Throughput::connect_suppliers
 {
   for (int i {}; i < this->options_.n_suppliers; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02d", i);
+      std::string const name = std::string ("supplier_")
+        + (i < 10 ? "0" : "") + std::to_string (i);
 
       this->suppliers_[i] = std::make_unique<Test_Supplier> ();
 
       int const start = this->options_.supplier_type_start
         + i * this->options_.supplier_type_shift;
       this->suppliers_[i]->connect (scheduler,
-                                    buf,
+                                    name.c_str (),
                                     this->options_.burst_count,
                                     this->options_.burst_size,
                                     this->options_.event_size,

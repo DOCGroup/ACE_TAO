@@ -1,12 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This is a helper class for the throughput tests of the Event
-//   Channel.
-//
-// ============================================================================
+/**
+ * @file ECT_Supplier_Driver.h
+ * @brief Driver for the remote Event Channel throughput supplier.
+ */
 
 #ifndef ECT_SUPPLIER_DRIVER_H
 #define ECT_SUPPLIER_DRIVER_H
@@ -25,44 +21,39 @@
 #include <array>
 #include <memory>
 
+/// Connects suppliers to a remote event channel and generates events.
 class ECT_Supplier_Driver : public ECT_Driver
 {
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
 public:
   ECT_Supplier_Driver () = default;
-  ~ECT_Supplier_Driver () override = default;
 
   ECT_Supplier_Driver (ECT_Supplier_Driver const&) = delete;
   ECT_Supplier_Driver (ECT_Supplier_Driver&&) = delete;
   ECT_Supplier_Driver& operator= (ECT_Supplier_Driver const&) = delete;
   ECT_Supplier_Driver& operator= (ECT_Supplier_Driver&&) = delete;
 
+  /// Required base callback; a supplier-only driver has no consumers.
   void shutdown_consumer () override;
-  // Not used....
 
   static constexpr int MAX_SUPPLIERS {16};
 
+  /// Connect suppliers, generate events, and report throughput.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Execute the test.
 
 private:
+  /// Parse test-specific command-line options.
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line args
 
+  /// Connect and disconnect all configured suppliers.
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_suppliers ();
-  // Connect the suppliers.
 
+  /// Start all supplier tasks.
   void activate_suppliers ();
-  // Activate the suppliers, i.e. they start generating events.
 
+  /// Print per-supplier and aggregate throughput results.
   void dump_results ();
-  // Dump the results for each supplier.
 
 private:
   struct Options
@@ -77,7 +68,7 @@ private:
     ACE_TCHAR const* pid_file_name {};
   } options_;
 
-  /// These pointers own suppliers; POA references are released by disconnect().
+  /// Own suppliers; disconnect() releases their POA references.
   std::array<std::unique_ptr<Test_Supplier>, MAX_SUPPLIERS> suppliers_ {};
 };
 

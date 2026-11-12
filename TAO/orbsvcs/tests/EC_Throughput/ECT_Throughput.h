@@ -1,13 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This is a helper class for the throughput tests of the Event
-//   Channel.
-//   Used for the collocated test.
-//
-// ============================================================================
+/**
+ * @file ECT_Throughput.h
+ * @brief Driver for the collocated Event Channel throughput test.
+ */
 
 #ifndef ECT_THROUGHPUT_H
 #define ECT_THROUGHPUT_H
@@ -23,12 +18,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Runs a collocated event-channel throughput test.
 class ECT_Throughput : public ECT_Driver
 {
 public:
   ECT_Throughput () = default;
-  ~ECT_Throughput () override = default;
-
   ECT_Throughput (ECT_Throughput const&) = delete;
   ECT_Throughput (ECT_Throughput&&) = delete;
   ECT_Throughput& operator= (ECT_Throughput const&) = delete;
@@ -37,33 +31,31 @@ public:
   static constexpr int MAX_CONSUMERS {16};
   static constexpr int MAX_SUPPLIERS {16};
 
+  /// Parse options, run the test, and report throughput statistics.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Execute the test.
 
+  /// Called when a consumer receives all supplier shutdown events.
   void shutdown_consumer () override;
-  // Callback method for consumers, each consumer will call this
-  // method once it receives all the shutdown events from the
-  // suppliers.
 
 private:
+  /// Parse test-specific command-line options.
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line args
 
+  /// Connect and disconnect the configured consumers.
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_consumers ();
-  // Connect and disconnect the consumers.
 
+  /// Connect and disconnect the configured suppliers.
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_suppliers ();
-  // Connect the suppliers.
 
+  /// Start the supplier tasks.
   void activate_suppliers ();
-  // Activate the suppliers, i.e. they start generating events.
 
+  /// Print per-supplier and aggregate throughput results.
   void dump_results ();
-  // Dump the results for each supplier.
 
 private:
   struct Options
@@ -85,17 +77,16 @@ private:
     int thr_create_flags {THR_NEW_LWP | THR_BOUND | THR_SCHED_FIFO};
   } options_;
 
-  /// These pointers own consumers; POA references are released by disconnect().
+  /// Own consumers; disconnect() releases their POA references.
   std::array<std::unique_ptr<Test_Consumer>, MAX_CONSUMERS> consumers_ {};
-  /// These pointers own suppliers; POA references are released by disconnect().
+  /// Own suppliers; disconnect() releases their POA references.
   std::array<std::unique_ptr<Test_Supplier>, MAX_SUPPLIERS> suppliers_ {};
 
+  /// ORB used to shut down the collocated test.
   CORBA::ORB_var orb_ {};
-  // A reference to the ORB, to shut it down properly.
 
   TAO_SYNCH_MUTEX lock_;
   int active_count_ {};
-  // How many consumers are still receiving events.
 };
 
 #endif /* ECT_TRHOUGHPUT_H */

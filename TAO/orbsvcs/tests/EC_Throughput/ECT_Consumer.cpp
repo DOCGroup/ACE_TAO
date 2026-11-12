@@ -50,7 +50,6 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
       qos.insert_type (type_start + i, rt_info);
     }
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
@@ -118,7 +117,7 @@ Test_Consumer::push (RtecEventComm::EventSet const& events)
       ACE_DEBUG ((LM_DEBUG, "ECT_Consumer (%P|%t) finished stalling\n"));
     }
 
-  this->recv_count_ += events.length ();
+  this->recv_count_ += static_cast<int> (events.length ());
 
   if (TAO_debug_level > 0
       && this->recv_count_ % 100 == 0)
@@ -130,13 +129,13 @@ Test_Consumer::push (RtecEventComm::EventSet const& events)
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
-  for (u_int i {}; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       RtecEventComm::Event const& e = events[i];
 
       if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
-          this->shutdown_count_++;
+          ++this->shutdown_count_;
           if (this->shutdown_count_ >= this->n_suppliers_)
             {
               // We stop the timer as soon as we realize it is time to
