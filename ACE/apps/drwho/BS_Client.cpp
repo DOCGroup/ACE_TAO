@@ -16,12 +16,15 @@ BS_Client::BS_Client ()
                 Options::program_name));
   else
     {
-      ACE_NEW (this->protocol_record_,
-               Protocol_Record[this->count_]);
-      ACE_NEW (this->sorted_record_,
-               Protocol_Record *[this->count_]);
+      Protocol_Record *protocol_records {};
+      ACE_NEW (protocol_records, Protocol_Record[this->count_]);
+      this->protocol_record_.reset (protocol_records);
 
-      for (int i = 0; i < this->count_; i++)
+      Protocol_Record **sorted_records {};
+      ACE_NEW (sorted_records, Protocol_Record *[this->count_]);
+      this->sorted_record_.reset (sorted_records);
+
+      for (int i = 0; i < this->count_; ++i)
         {
           Protocol_Record *prp = &this->protocol_record_[i];
 
@@ -31,10 +34,10 @@ BS_Client::BS_Client ()
             (prp->key_name1_, prp->key_name2_);
         }
 
-      ACE_OS::qsort (this->sorted_record_,
+      ACE_OS::qsort (this->sorted_record_.get (),
                      this->count_,
-                     sizeof *this->sorted_record_,
-                     (ACE_COMPARE_FUNC)Binary_Search::name_compare);
+                     sizeof (Protocol_Record *),
+                     Binary_Search::name_compare);
     }
 }
 
@@ -44,20 +47,11 @@ BS_Client::BS_Client ()
 // binary search.
 
 Protocol_Record *
-BS_Client::insert (const char *key_name, int)
+BS_Client::insert (char const *key_name, int)
 {
-#if 0
-  Protocol_Record *pr = (Protocol_Record *)
-    ACE_OS::bsearch ((const void *) key_name,
-                     (const void *) this->sorted_record_,
-                     this->count_,
-                     sizeof ...,
-                     int (*compar)(const void *, const void *) ACE_OS::strcmp);
-  return pr;
-#else
   int lo = 0;
   int hi = this->count_ - 1;
-  Protocol_Record **sorted_buffer = this->sorted_record_;
+  Protocol_Record **sorted_buffer = this->sorted_record_.get ();
 
   while (lo <= hi)
     {
@@ -74,7 +68,6 @@ BS_Client::insert (const char *key_name, int)
     }
 
   return nullptr;
-#endif /* 0 */
 }
 
 Protocol_Record *

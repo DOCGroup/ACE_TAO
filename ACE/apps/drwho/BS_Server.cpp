@@ -10,19 +10,21 @@
 // packet.  Note that we assume that the client sends the login names
 // in sorted order, so we don't bother sorting them!
 
-BS_Server::BS_Server (const char *packet)
+BS_Server::BS_Server (char const *packet)
 {
-  const char *buf_ptr = packet + MAXUSERIDNAMELEN;
+  char const *buf_ptr = packet + MAXUSERIDNAMELEN;
 
   this->count_ = std::atoi (packet);
-  this->buffer_ = buf_ptr;
 
-  ACE_NEW (this->protocol_record_,
-           Protocol_Record[this->count_]);
-  ACE_NEW (this->sorted_record_,
-           Protocol_Record *[this->count_]);
+  Protocol_Record *protocol_records {};
+  ACE_NEW (protocol_records, Protocol_Record[this->count_]);
+  this->protocol_record_.reset (protocol_records);
 
-  for (int i = 0; i < this->count_; i++)
+  Protocol_Record **sorted_records {};
+  ACE_NEW (sorted_records, Protocol_Record *[this->count_]);
+  this->sorted_record_.reset (sorted_records);
+
+  for (int i = 0; i < this->count_; ++i)
     {
       Protocol_Record *rec_ptr = &this->protocol_record_[i];
 
@@ -51,18 +53,18 @@ BS_Server::BS_Server (const char *packet)
 // up because the whod files tend to cluster userids together. */
 
 Protocol_Record *
-BS_Server::insert (const char *key_name, int max_len)
+BS_Server::insert (char const *key_name, int max_len)
 {
   static char last_lookup[MAXHOSTNAMELEN];
   static int mid = 0;
   static int result = 0;
-  Protocol_Record **buffer = this->sorted_record_;
+  Protocol_Record **buffer = this->sorted_record_.get ();
 
   // First check the cache...
   if (std::strncmp (last_lookup, key_name, max_len) == 0)
     {
       if (result == 0)
-        return 0;
+        return nullptr;
     }
   else
     {
@@ -91,7 +93,7 @@ BS_Server::insert (const char *key_name, int max_len)
             || std::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
         {
           result = 0;
-          return 0;
+          return nullptr;
         }
     }
 

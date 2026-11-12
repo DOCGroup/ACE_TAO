@@ -25,14 +25,19 @@ class BS_Server : public Binary_Search
 {
 public:
   // = Initialization.
-  explicit BS_Server (const char *packet);
+  explicit BS_Server (char const *packet);
+
+  BS_Server (BS_Server const &) = delete;
+  BS_Server &operator= (BS_Server const &) = delete;
+  BS_Server (BS_Server &&) = delete;
+  BS_Server &operator= (BS_Server &&) = delete;
 
   /**
    * This function is used to merge the <key_name> from server
    * <host_name> into the sorted list of userids kept on the client's
    * side.
    */
-  virtual Protocol_Record *insert (const char *key_name,
+  Protocol_Record *insert (char const *key_name,
                                    int max_len = MAXUSERIDNAMELEN) override;
 
   /**

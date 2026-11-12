@@ -25,13 +25,18 @@ public:
   // = Initialization.
   BS_Client ();
 
+  BS_Client (BS_Client const &) = delete;
+  BS_Client &operator= (BS_Client const &) = delete;
+  BS_Client (BS_Client &&) = delete;
+  BS_Client &operator= (BS_Client &&) = delete;
+
   /**
    * This function is used to merge the <key_name> from server
    * <host_name> into the sorted list of userids kept on the client's
    * side.  Since we *know* we are going to find the name we use the
    * traditional binary search.
    */
-  virtual Protocol_Record *insert (const char *key_name,
+  Protocol_Record *insert (char const *key_name,
                                    int max_len = MAXUSERIDNAMELEN) override;
 
   /**

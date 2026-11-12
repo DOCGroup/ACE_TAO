@@ -7,10 +7,11 @@
 // login names for two friends.
 
 int
-Binary_Search::name_compare (const void *s1, const void *s2)
+Binary_Search::name_compare (void const *s1, void const *s2)
 {
-  return std::strcmp ((*(Protocol_Record **) s1)->key_name1_,
-                      (*(Protocol_Record **) s2)->key_name1_);
+  Protocol_Record * const *left = static_cast<Protocol_Record * const *> (s1);
+  Protocol_Record * const *right = static_cast<Protocol_Record * const *> (s2);
+  return std::strcmp ((*left)->key_name1_, (*right)->key_name1_);
 }
 
 // Returns the next friend in the sequence of sorted friends.  Note
@@ -23,12 +24,12 @@ Binary_Search::get_next_entry ()
   // Reset the iterator if we are starting from the beginning.
 
   if (this->current_ptr_ == nullptr)
-    this->current_ptr_ = this->sorted_record_;
+    this->current_ptr_ = this->sorted_record_.get ();
 
   // Now check to see if we've hit the end, in which case we set
   // things up for the next round!
 
-  if (this->current_ptr_ < this->sorted_record_ + this->count_)
+  if (this->current_ptr_ < this->sorted_record_.get () + this->count_)
     return *this->current_ptr_++;
   else
     {
@@ -72,8 +73,4 @@ Binary_Search::~Binary_Search ()
 
 // Used to initialize the values for the iterators...
 
-Binary_Search::Binary_Search ()
-  : current_ptr_ (nullptr),
-    current_index_ (0)
-{
-}
+Binary_Search::Binary_Search () = default;
