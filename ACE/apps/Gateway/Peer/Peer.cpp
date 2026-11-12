@@ -105,7 +105,7 @@ int
 Peer_Handler::transmit_stdin ()
 {
   // If return value is -1, then first_time_ must be reset to true.
-  int result = 0;
+  int result {};
   if (this->connection_id_ != -1)
     {
       ACE_Message_Block *mb {};
@@ -329,17 +329,21 @@ int
 Peer_Handler::recv (ACE_Message_Block *&mb)
 {
   if (this->msg_frag_ == nullptr)
-    // No existing fragment...
-    ACE_NEW_RETURN (this->msg_frag_,
-                    ACE_Message_Block (sizeof (Event)),
-                    -1);
+    {
+      // No existing fragment...
+      ACE_Message_Block *fragment {};
+      ACE_NEW_RETURN (fragment,
+                      ACE_Message_Block (sizeof (Event)),
+                      -1);
+      this->msg_frag_.reset (fragment);
+    }
 
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
-  ssize_t header_received = 0;
+  ssize_t header_received {};
 
-  const size_t HEADER_SIZE = sizeof (Event_Header);
-  ssize_t header_bytes_left_to_read =
-    HEADER_SIZE - this->msg_frag_->length ();
+  size_t const header_size = sizeof (Event_Header);
+  ssize_t const header_bytes_left_to_read =
+    header_size - this->msg_frag_->length ();
 
   if (header_bytes_left_to_read > 0)
     {
@@ -356,7 +360,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("attempted to read %d bytes\n"),
                       header_bytes_left_to_read));
-          this->msg_frag_ = this->msg_frag_->release ();
+          this->msg_frag_.reset ();
           return header_received;
         }
 
@@ -364,7 +368,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       this->msg_frag_->wr_ptr (header_received);
 
       // At this point we may or may not have the ENTIRE header.
-      if (this->msg_frag_->length () < HEADER_SIZE)
+      if (this->msg_frag_->length () < header_size)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Partial header received: only %d bytes\n"),
@@ -399,7 +403,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   // <event->header_.len_> we complete the
   // <data_bytes_left_to_read>...
 
-  ssize_t data_bytes_left_to_read =
+  ssize_t const data_bytes_left_to_read =
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
   // peer().recv() should not be called when data_bytes_left_to_read is 0.
@@ -418,10 +422,10 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       ACE_FALLTHROUGH;
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
-      {
-      this->msg_frag_ = this->msg_frag_->release ();
-      return 0;
-      }
+        {
+          this->msg_frag_.reset ();
+          return 0;
+        }
       ACE_FALLTHROUGH;
     default:
       // Set the write pointer at 1 past the end of the event.
@@ -438,10 +442,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
           // Set the read pointer to the beginning of the event.
           this->msg_frag_->rd_ptr (this->msg_frag_->base ());
 
-          mb = this->msg_frag_;
-
-          // Reset the pointer to indicate we've got an entire event.
-          this->msg_frag_ = nullptr;
+          mb = this->msg_frag_.release ();
         }
 
       ACE_DEBUG ((LM_DEBUG,

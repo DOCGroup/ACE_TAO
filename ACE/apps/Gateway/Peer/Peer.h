@@ -38,11 +38,11 @@
  */
 //=============================================================================
 
-
 #ifndef PEER_H
 #define PEER_H
 
 #include "ace/Service_Config.h"
+#include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -143,8 +143,8 @@ protected:
 
   /// Keep track of event fragments that arrive in non-blocking recv's
   /// from the gatewayd.
-  /// This handler owns the fragment until it is released or passed on.
-  ACE_Message_Block *msg_frag_ {};
+  /// This handler owns the fragment until it is transferred to the caller.
+  ACE_Message_Block_Unique_Ptr msg_frag_;
 
   /// The total number of bytes sent/received to the gatewayd thus far.
   size_t total_bytes_ {};
