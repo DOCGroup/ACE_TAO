@@ -10,6 +10,7 @@
 #include "tao/ORB_Constants.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -289,7 +290,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                 "Request from Distributable Thread\n"));
 
   RTScheduling::Current::IdType_var guid_var;
-  char *name {};
+  CORBA::String_var name;
   CORBA::Policy_var sched_param {};
   CORBA::Policy_var implicit_sched_param {};
 
@@ -302,6 +303,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                              TAO::VMCID,
                              ENOMEM),
                            CORBA::COMPLETED_NO));
+  std::unique_ptr<TAO_RTScheduler_Current_i> current_owner {new_current};
 
   // Scheduler retrieves scheduling parameters
   // from request and populates the out
@@ -309,7 +311,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   RTScheduling::Scheduler_var scheduler = new_current->scheduler();
   scheduler->receive_request (ri,
                               guid_var.out (),
-                              name,
+                              name.out (),
                               sched_param.out (),
                               implicit_sched_param.out ());
 
@@ -350,7 +352,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Create new temporary current. Note that the new <sched_param> is
   // the current <implicit_sched_param> and there is no segment name.
   new_current->id (guid);
-  new_current->name (name);
+  new_current->name (name.in ());
   new_current->scheduling_parameter (sched_param.in ());
   new_current->implicit_scheduling_parameter (implicit_sched_param.in ());
   new_current->DT (dt.in ());
@@ -360,7 +362,9 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // current->implementation (new_current)
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
-  tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
+  tss->rtscheduler_previous_current_impl_ =
+    this->current_->implementation (current_owner.get ());
+  current_owner.release ();
 }
 
 void
