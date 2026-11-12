@@ -17,6 +17,7 @@ class Message_Block;
 class HTTP_Handler_Factory;
 
 #include "ace/Asynch_IO.h"
+#include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -114,7 +115,7 @@ public:
 
 private:
   /// This points to the request sent by the client
-  ACE_Message_Block *request_data_;
+  ACE_Message_Block_Unique_Ptr request_data_;
 
   /// I/O handle to the client
   ACE_HANDLE handle_;

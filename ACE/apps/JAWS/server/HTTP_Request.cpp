@@ -44,7 +44,6 @@ HTTP_Request::HTTP_Request ()
     version_ (nullptr),
     path_ (nullptr),
     cgi_ (false),
-    cgi_env_ (nullptr),
     cgi_args_ (nullptr),
     query_string_ (nullptr),
     path_info_ (nullptr),
@@ -71,7 +70,6 @@ HTTP_Request::~HTTP_Request ()
   ACE_OS::free (this->query_string_);
   ACE_OS::free (this->path_info_);
 
-  delete [] this->cgi_env_;
 }
 
 int
@@ -211,10 +209,10 @@ HTTP_Request::cgi () const
   return this->cgi_;
 }
 
-const char **
+char const *const *
 HTTP_Request::cgi_env () const
 {
-  return (const char **)this->cgi_env_;
+  return this->cgi_env_.empty () ? nullptr : this->cgi_env_.data ();
 }
 
 const char *
@@ -413,7 +411,7 @@ int
 HTTP_Request::cgi (char *uri_string)
 {
   this->cgi_ = false;
-  this->cgi_env_ = nullptr;
+  this->cgi_env_.clear ();
   this->cgi_args_ = nullptr;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi (%s)\n", uri_string));
@@ -584,23 +582,24 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
 
           if (std::strchr (cgi_question, '='))
             {
-              ACE_NEW (this->cgi_env_, char *[count+1]);
+              this->cgi_env_.reserve (count + 1);
 
               int i = 0;
               ptr = cgi_question;
               do
                 {
-                  this->cgi_env_ [i++] = ptr;
+                  this->cgi_env_.push_back (ptr);
+                  ++i;
 
                   while (*ptr++)
                       if (*ptr == '&' || *ptr == '=')
                         *ptr = '\0';
 
-                  HTTP_Helper::HTTP_decode_string (this->cgi_env_[i-1]);
+                  HTTP_Helper::HTTP_decode_string (this->cgi_env_[i - 1]);
                 }
               while (i < count);
 
-              this->cgi_env_[count] = nullptr;
+              this->cgi_env_.push_back (nullptr);
             }
           else
             {

@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Parse_Headers.h"
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
@@ -76,7 +77,7 @@ public:
   const char *cgi_args () const;
 
   /// The environment variables passed to the CGI request
-  const char **cgi_env () const;
+  char const *const *cgi_env () const;
 
   /// The cgi request query string
   const char *query_string () const;
@@ -178,7 +179,9 @@ private:
   char *path_;
 
   bool cgi_;
-  char **cgi_env_;
+  // Environment strings borrow storage from uri_; the vector owns only the
+  // pointer table passed to the CGI environment builder.
+  std::vector<char *> cgi_env_;
   char *cgi_args_;
 
   char *query_string_;

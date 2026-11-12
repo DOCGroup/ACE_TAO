@@ -10,7 +10,9 @@
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
 #include "JAWS_IO.h"
+#include <cstdio>
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_JAWS_BASELINE)
 static char * const EMPTY_HEADER = "";
@@ -123,28 +125,39 @@ HTTP_Response::error_response (int status_code, const char *log_message)
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
 
-  int length;
+  int length = std::snprintf (buf2,
+                              sizeof buf2,
+                              error_message,
+                              status_code,
+                              HTTP_Status_Code::instance ()[status_code],
+                              log_message == nullptr ? "" : log_message);
   const char *error_header = error_header1;
+
+  if (length < 0)
+    return;
+  if (length >= static_cast<int> (sizeof buf2))
+    length = sizeof buf2 - 1;
 
   if (status_code == HTTP_Status_Code::STATUS_UNAUTHORIZED)
     error_header = error_header2;
-
-  length =
-    ACE_OS::sprintf (buf2, error_message,
-                     status_code, HTTP_Status_Code::instance ()[status_code],
-                     log_message);
 
   if (this->request_.version () == nullptr
       || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     buf = buf2;
   else
     {
-      length =
-        ACE_OS::sprintf (buf1, error_header,
-                         this->request_.version(), status_code,
-                         HTTP_Status_Code::instance ()[status_code],
-                         length,
-                         buf2);
+      length = std::snprintf (buf1,
+                              sizeof buf1,
+                              error_header,
+                              this->request_.version (),
+                              status_code,
+                              HTTP_Status_Code::instance ()[status_code],
+                              length,
+                              buf2);
+      if (length < 0)
+        return;
+      if (length >= static_cast<int> (sizeof buf1))
+        length = sizeof buf1 - 1;
       buf = buf1;
     }
 
@@ -206,9 +219,9 @@ HTTP_Response::normal_response ()
           ACE_Mem_Map mmapfile;
           const char *hvv = hv + 6;
           // Skip past the string "Basic "
-          char *buf = new char [std::strlen (hv)];
-          char *auth
-            = HTTP_Helper::HTTP_decode_base64 (std::strcpy (buf, hvv));
+          std::unique_ptr<char[]> buf (new char[std::strlen (hvv) + 1]);
+          char *auth = HTTP_Helper::HTTP_decode_base64 (
+            std::strcpy (buf.get (), hvv));
 
           if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
               && auth != nullptr
@@ -221,7 +234,6 @@ HTTP_Response::normal_response ()
           else
             this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                                   "Invalid authorization attempt");
-          delete [] buf;
         }
       break;
 
