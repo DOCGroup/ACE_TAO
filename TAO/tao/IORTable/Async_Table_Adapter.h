@@ -30,7 +30,7 @@ class TAO_Async_IORTable_Export TAO_Async_Table_Adapter : public TAO_Table_Adapt
 public:
   explicit TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
-  ~TAO_Async_Table_Adapter () override;
+  ~TAO_Async_Table_Adapter () override = default;
 
   void open () override;
 

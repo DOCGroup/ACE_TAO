@@ -25,8 +25,6 @@ TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO_Table_Adapter::~TAO_Table_Adapter () = default;
-
 /* static */
 std::unique_ptr<ACE_Lock>
 TAO_Table_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)

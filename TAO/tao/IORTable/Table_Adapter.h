@@ -35,7 +35,7 @@ class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 public:
   explicit TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
-  ~TAO_Table_Adapter () override;
+  ~TAO_Table_Adapter () override = default;
 
   void open () override;
   void close (int wait_for_completion) override;
