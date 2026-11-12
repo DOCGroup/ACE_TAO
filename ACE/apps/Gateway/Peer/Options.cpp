@@ -1,5 +1,7 @@
 #define ACE_BUILD_SVC_DLL
 
+#include <cstdlib>
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
@@ -25,7 +27,7 @@ Options::Options ()
   char * const timeout = ACE_OS::getenv ("TIMEOUT");
 
   if (timeout != nullptr)
-    this->timeout_ = ACE_OS::atoi (timeout);
+    this->timeout_ = std::atoi (timeout);
 }
 
 Options *

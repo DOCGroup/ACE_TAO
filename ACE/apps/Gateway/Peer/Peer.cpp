@@ -67,7 +67,7 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
                         size_t n,
                         int event_type)
 {
-  Event *event = (Event *) mb->rd_ptr ();
+  Event * const event = reinterpret_cast<Event *> (mb->rd_ptr ());
 
   // Initialize the header.
   new (&event->header_) Event_Header (n,
@@ -108,18 +108,19 @@ Peer_Handler::transmit_stdin ()
   int result {};
   if (this->connection_id_ != -1)
     {
-      ACE_Message_Block *mb {};
+      ACE_Message_Block *message_block {};
 
-      ACE_NEW_RETURN (mb,
+      ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (sizeof (Event)),
                       -1);
+      ACE_Message_Block_Unique_Ptr message (message_block);
 
       // Cast the message block payload into an <Event> pointer.
-      Event *event = (Event *) mb->rd_ptr ();
+      Event * const event = reinterpret_cast<Event *> (message->rd_ptr ());
 
-      ssize_t n = ACE_OS::read (ACE_STDIN,
-                                event->data_,
-                                sizeof event->data_);
+      ssize_t const n = ACE_OS::read (ACE_STDIN,
+                                     event->data_,
+                                     sizeof event->data_);
       switch (n)
         {
         case 0:
@@ -131,34 +132,23 @@ Peer_Handler::transmit_stdin ()
           ACE_Reactor::instance ()->remove_handler
             (ACE_STDIN,
              ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
-          mb->release ();
-          result = 0; //
           break;
-          /* NOTREACHED */
         case -1:
-          mb->release ();
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("read")));
-          result = 0; //
           break;
-          /* NOTREACHED */
         default:
-          // Do not return directly, save the return value.
-          result = this->transmit (mb, n, ROUTING_EVENT);
+          result = this->transmit (message.release (), n, ROUTING_EVENT);
           break;
-          /* NOTREACHED */
         }
-
-      // Do not return at here, but at exit of function.
-      /*return 0;*/
     }
   else
-  {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Must transmit over an opened channel.\n")));
-    result = -1; // Save return value at here, return at exit of function.
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Must transmit over an opened channel.\n")));
+      result = -1;
+    }
   // If transmit error, the stdin-thread will be cancelled, so should
   // reset first_time_ to true, which will register_stdin_handler again.
   if (result == -1)
@@ -338,7 +328,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       this->msg_frag_.reset (fragment);
     }
 
-  Event *event = (Event *) this->msg_frag_->rd_ptr ();
+  Event * const event = reinterpret_cast<Event *> (this->msg_frag_->rd_ptr ());
   ssize_t header_received {};
 
   size_t const header_size = sizeof (Event_Header);
@@ -407,7 +397,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
   // peer().recv() should not be called when data_bytes_left_to_read is 0.
-  ssize_t data_received = !data_bytes_left_to_read ? 0 :
+  ssize_t const data_received = !data_bytes_left_to_read ? 0 :
     this->peer ().recv (this->msg_frag_->wr_ptr (),
                         data_bytes_left_to_read);
 
@@ -542,18 +532,21 @@ Peer_Handler::await_connection_id ()
 int
 Peer_Handler::subscribe ()
 {
-  ACE_Message_Block *mb {};
+  ACE_Message_Block *message_block {};
 
-  ACE_NEW_RETURN (mb,
+  ACE_NEW_RETURN (message_block,
                   ACE_Message_Block (sizeof (Event)),
                   -1);
+  ACE_Message_Block_Unique_Ptr message (message_block);
 
-  Subscription *subscription =
-    (Subscription *) ((Event *) mb->rd_ptr ())->data_;
+  Event * const event = reinterpret_cast<Event *> (message->rd_ptr ());
+  Subscription * const subscription =
+    reinterpret_cast<Subscription *> (event->data_);
   subscription->connection_id_ =
     Options::instance ()->connection_id ();
 
-  return this->transmit (mb, sizeof *subscription, SUBSCRIPTION_EVENT);
+  return this->transmit (message.release (), sizeof *subscription,
+                         SUBSCRIPTION_EVENT);
 }
 
 // Action that receives events from the Gateway.
@@ -563,7 +556,8 @@ Peer_Handler::await_events ()
 {
   ACE_Message_Block *mb {};
 
-  ssize_t n = this->recv (mb);
+  ssize_t const n = this->recv (mb);
+  ACE_Message_Block_Unique_Ptr message (mb);
 
   switch (n)
     {
@@ -587,8 +581,8 @@ Peer_Handler::await_events ()
         // We got a valid event, so let's process it now!  At the
         // moment, we just print out the event contents...
 
-        Event *event = (Event *) mb->rd_ptr ();
-        this->total_bytes_ += mb->length ();
+        Event * const event = reinterpret_cast<Event *> (message->rd_ptr ());
+        this->total_bytes_ += message->length ();
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("route id = %d, cur len = %d, total len = %d\n"),
@@ -600,7 +594,6 @@ Peer_Handler::await_events ()
                       ACE_TEXT ("data_ = %*s\n"),
                       event->header_.len_ - 2,
                       event->data_));
-        mb->release ();
         return 0;
       }
     }
