@@ -41,17 +41,18 @@ namespace TAO
   public:
     FlResource_Factory () = default;
 
-  protected:
-    /// Create or obtain current reactor implementation
-    ACE_Reactor_Impl *reactor_impl () override;
-
-  private:
     FlResource_Factory (FlResource_Factory const &) = delete;
     FlResource_Factory &operator= (FlResource_Factory const &) = delete;
     FlResource_Factory (FlResource_Factory &&) = delete;
     FlResource_Factory &operator= (FlResource_Factory &&) = delete;
 
-    /// Reactor created by this factory.
+  protected:
+    /// Create or obtain current reactor implementation
+    ACE_Reactor_Impl *reactor_impl () override;
+
+  private:
+    /// Reactor created here; ownership transfers to the ACE_Reactor
+    /// returned by get_reactor().
     ACE_FlReactor *reactor_impl_ {};
   };
 }
