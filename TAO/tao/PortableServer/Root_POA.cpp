@@ -1026,7 +1026,7 @@ TAO_Root_POA::adapter_name_i ()
 
       // If this condition asserts, the POA hierarchy was modified
       // (i.e. reduced in size) by another thread!
-      ACE_ASSERT ((ilen > 0 ? !CORBA::is_nil (poa.in ()) : 1));
+      ACE_ASSERT (ilen == 0 || !CORBA::is_nil (poa.in ()));
     }
 
   return safe_names._retn ();

@@ -134,7 +134,7 @@ namespace TAO
       void setup (::TAO_Root_POA *impl, const TAO::ObjectKey &key);
 
     private:
-      // = Hidden because we don't allow these
+      /// Copying and moving this current context is prohibited.
       POA_Current_Impl (POA_Current_Impl const &) = delete;
       POA_Current_Impl &operator= (POA_Current_Impl const &) = delete;
       POA_Current_Impl (POA_Current_Impl &&) = delete;

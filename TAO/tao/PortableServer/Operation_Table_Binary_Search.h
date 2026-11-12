@@ -34,7 +34,6 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Do nothing destructor.
   ~TAO_Binary_Search_OpTable () override = default;
 
   /// See the documentation in the base class for details.
@@ -51,8 +50,7 @@ public:
             TAO::Operation_Skeletons const skel_ptr) override;
 
 private:
-  /// Method that should defined by the subclasses. GPERF program
-  /// will generate this routine routines.
+  /// Implemented by subclasses, including gperf-generated lookup tables.
   virtual TAO_operation_db_entry const *lookup (char const *str) = 0;
 };
 

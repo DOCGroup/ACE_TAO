@@ -268,7 +268,6 @@ public:
 class TAO_Id_Uniqueness_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Id_Uniqueness_Strategy () = default;
 
   /// Must be used with UNIQUE_ID policy.
@@ -423,7 +422,6 @@ public:
 class TAO_Lifespan_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Lifespan_Strategy () = default;
 
   /// Can be used with any policy.
@@ -494,7 +492,6 @@ public:
 class TAO_Id_Assignment_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Id_Assignment_Strategy () = default;
 
   /// Must be used with SYSTEM_ID policy.
@@ -580,7 +577,6 @@ public:
 class TAO_Id_Hint_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Id_Hint_Strategy () = default;
 
   /// Find the user id from the system id.
@@ -623,7 +619,6 @@ class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
 public:
   explicit TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
-  /// Virtual destructor.
   ~TAO_Active_Hint_Strategy () override = default;
 
   int
@@ -665,7 +660,6 @@ public:
 class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
 public:
-  /// Virtual destructor.
   ~TAO_No_Hint_Strategy () override = default;
 
   int

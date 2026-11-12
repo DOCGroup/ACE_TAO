@@ -35,7 +35,6 @@ class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Do nothing destructor.
   ~TAO_Perfect_Hash_OpTable () override = default;
 
   /// See the documentation in the base class for details.

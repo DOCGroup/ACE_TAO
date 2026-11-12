@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Regular_POA.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REGULAR_POA_H
 #define TAO_REGULAR_POA_H
@@ -58,9 +56,7 @@ protected:
 
   char root_key_type () override;
 
-  /// The parent of this POA, be aware that in case this pointer is nill,
-  /// we are a parent. This can be achieved by deriving from this Regular_POA
-  /// and pass a nill pointer as parent with the constructor.
+  /// The parent of this POA. A null pointer indicates that this POA is a root.
   TAO_Root_POA *parent_;
 };
 

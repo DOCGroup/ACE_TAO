@@ -45,8 +45,7 @@ public:
             TAO::Operation_Skeletons const skelptr) override;
 
 private:
-  // = Method that should defined by the subclasses. GPERF program
-  //   will generate this routine routines.
+  /// Implemented by subclasses, including gperf-generated lookup tables.
   virtual TAO_operation_db_entry const *lookup (char const *str) = 0;
 };
 
