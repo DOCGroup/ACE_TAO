@@ -24,7 +24,6 @@ TAO_AMH_DSI_Response_Handler::_duplicate (TAO_AMH_DSI_Response_Handler_ptr x)
   return x;
 }
 
-
 // Inline operations for class TAO_AMH_DSI_Response_Handler_var
 ACE_INLINE
 TAO_AMH_DSI_Response_Handler_var::TAO_AMH_DSI_Response_Handler_var ()

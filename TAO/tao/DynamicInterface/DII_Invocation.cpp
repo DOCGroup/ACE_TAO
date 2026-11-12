@@ -142,7 +142,6 @@ namespace TAO
     throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
   }
 
-
   DII_Deferred_Invocation::DII_Deferred_Invocation (
       CORBA::Object_ptr otarget,
       Profile_Transport_Resolver &resolver,

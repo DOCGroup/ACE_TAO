@@ -158,7 +158,7 @@ TAO_DynamicImplementation::_dispatch (
       if (request.response_expected () && !request.sync_with_server ())
         {
           if (request.collocated ()
-               && request.operation_details ()->cac () != 0)
+               && request.operation_details ()->cac () != nullptr)
             {
               // If we have a cac it will handle the exception and no
               // need to do any further processing

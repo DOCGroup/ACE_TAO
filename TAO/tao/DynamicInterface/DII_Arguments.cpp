@@ -39,7 +39,6 @@ namespace TAO
     (*any) <<= *this->x_->value ();
   }
 
-
   CORBA::Boolean
   NVList_Argument::marshal (TAO_OutputCDR &cdr)
   {

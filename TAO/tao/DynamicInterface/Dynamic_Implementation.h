@@ -8,7 +8,6 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 
-
 #ifndef TAO_DYNAMIC_IMPLEMENTATION_H
 #define TAO_DYNAMIC_IMPLEMENTATION_H
 

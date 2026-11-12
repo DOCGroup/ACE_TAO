@@ -132,7 +132,6 @@ TAO_DII_Arguments_Converter_Impl::handle_corba_exception (
   exception->_raise ();
 }
 
-
 // Initialization and registration of dynamic service object.
 
 int

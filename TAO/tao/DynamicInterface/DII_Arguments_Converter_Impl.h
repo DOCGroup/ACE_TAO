@@ -6,7 +6,6 @@
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 
-
 #ifndef TAO_DII_ARGUMENTS_CONVERTER_IMPL_H
 #define TAO_DII_ARGUMENTS_CONVERTER_IMPL_H
 
@@ -23,7 +22,6 @@
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 /**
  * @class TAO_DII_Arguments_Converter_Impl
@@ -67,9 +65,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 ACE_STATIC_SVC_DECLARE (TAO_DII_Arguments_Converter_Impl)
 ACE_FACTORY_DECLARE (TAO_DynamicInterface, TAO_DII_Arguments_Converter_Impl)
 
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_DII_ARGUMENTS_CONVERTER_IMPL_H */
-
 

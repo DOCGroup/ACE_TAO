@@ -57,7 +57,6 @@ tao_TAO_AMH_DSI_Exception_Holder_remove_ref (TAO_AMH_DSI_Exception_Holder *p)
   CORBA::remove_ref (p);
 }
 
-
 TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var ()
   : ptr_ (nullptr)
 {
@@ -306,7 +305,6 @@ TAO_AMH_DSI_Response_Handler::_nil ()
 {
   return nullptr;
 }
-
 
 TAO_AMH_DSI_Response_Handler::TAO_AMH_DSI_Response_Handler (
     TAO_ServerRequest & sr)

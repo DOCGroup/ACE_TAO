@@ -9,7 +9,6 @@
  *  @author  Portions Copyright 1997-2003 by Washington University
  */
 
-
 #ifndef TAO_UNKNOWN_USER_EXCEPTION_H
 #define TAO_UNKNOWN_USER_EXCEPTION_H
 

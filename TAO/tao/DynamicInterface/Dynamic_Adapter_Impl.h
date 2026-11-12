@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 /**
  *  @file    Dynamic_Adapter_Impl.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-
 
 #ifndef TAO_DYNAMIC_ADAPTER_IMPL_H
 #define TAO_DYNAMIC_ADAPTER_IMPL_H
