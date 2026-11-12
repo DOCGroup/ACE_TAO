@@ -150,6 +150,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 
 private:
   RTCORBA::Current_var rt_current_;
+  // Borrowed from the ORB; the ORB owns the core.
   TAO_ORB_Core* orb_ {};
   DT_Hash_Map dt_hash_;
 };
@@ -272,13 +273,17 @@ public:
 
 private:
   RTScheduling::Scheduler_var scheduler_;
+  // Borrowed from the ORB; the ORB owns the core.
   TAO_ORB_Core* orb_ {};
   RTScheduling::Current::IdType guid_ {};
   CORBA::String_var name_;
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
+  // Links this context to the prior TSS context; cleanup_current manages the
+  // allocated contexts in this chain.
   TAO_RTScheduler_Current_i* previous_current_ {};
+  // Borrowed from the enclosing TAO_RTScheduler_Current.
   DT_Hash_Map* dt_hash_ {};
 };
 
@@ -307,6 +312,7 @@ public:
   int svc () override;
 
 private:
+  // The ORB outlives a spawned scheduling task.
   TAO_ORB_Core* orb_ {};
   // Ownership transfers to the worker's TSS current, which self-deletes.
   std::unique_ptr<TAO_RTScheduler_Current_i> current_;

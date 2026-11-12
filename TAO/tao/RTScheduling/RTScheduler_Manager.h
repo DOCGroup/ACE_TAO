@@ -61,6 +61,7 @@ protected:
   ~TAO_RTScheduler_Manager () override = default;
 
 private:
+  // Borrowed from the ORB that creates this manager.
   TAO_ORB_Core *orb_ {};
   RTScheduling::Scheduler_var rtscheduler_;
 };
