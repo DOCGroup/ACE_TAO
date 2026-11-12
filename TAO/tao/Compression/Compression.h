@@ -50,7 +50,7 @@ public:
   TAO_Compression_Loader &operator= (TAO_Compression_Loader &&) = delete;
 };
 
-static int TAO_Requires_Compression_Initializer =
+static int const TAO_Requires_Compression_Initializer =
   TAO_Compression_Loader::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL

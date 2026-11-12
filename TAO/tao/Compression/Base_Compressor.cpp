@@ -56,8 +56,8 @@ namespace TAO
       if (this->uncompressed_bytes_ > 0)
         {
           return_value =
-            static_cast< ::Compression::CompressionRatio>
-              ((::Compression::CompressionRatio) this->compressed_bytes_ / this->uncompressed_bytes_);
+            static_cast< ::Compression::CompressionRatio> (this->compressed_bytes_)
+            / this->uncompressed_bytes_;
         }
     }
     return return_value;
