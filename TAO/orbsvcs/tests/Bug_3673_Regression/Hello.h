@@ -1,6 +1,5 @@
-
-#ifndef HELLO_H
-#define HELLO_H
+#ifndef TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_HELLO_H
+#define TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_HELLO_H
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
@@ -10,7 +9,7 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;
@@ -29,4 +28,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-#endif /* HELLO_H */
+#endif /* TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_HELLO_H */

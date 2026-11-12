@@ -3,10 +3,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include <memory>
+#include <string>
 
 struct Server_Options
 {
-  ACE_TCHAR const *ior_output_file { ACE_TEXT ("test.ior") };
+  std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("test.ior")};
 };
 
 class TestTask : public ACE_Task_Base
@@ -101,16 +102,18 @@ TestTask::svc ()
                   ACE_TEXT ("'example' context of NS B bound in Naming Service A\n")));
 
       CORBA::String_var const ior = this->orb_->object_to_string (obj.in ());
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (this->options_.ior_output_file, ACE_TEXT ("w")),
-        ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
-                           this->options_.ior_output_file,
-                           ior.in ()),
-                          1);
-      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (this->options_.ior_output_file.c_str (), ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
+                             this->options_.ior_output_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Wrote IOR file\n")));
 

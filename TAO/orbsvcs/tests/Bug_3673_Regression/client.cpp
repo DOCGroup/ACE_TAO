@@ -2,9 +2,11 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 
+#include <string>
+
 struct Client_Options
 {
-  ACE_TCHAR const *ior {ACE_TEXT ("file://shutdown.ior")};
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://shutdown.ior")};
   bool shutdown_nsmain {};
   int test_count {10};
 };
@@ -36,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Client_Options options;
+      Client_Options options {};
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (options, argc, argv) != 0)
@@ -93,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (options.shutdown_nsmain)
         {
-          CORBA::Object_var const shutdown_tmp = orb->string_to_object (options.ior);
+          CORBA::Object_var const shutdown_tmp = orb->string_to_object (options.ior.c_str ());
 
           Test::NsShutdown_var const shutdown =
             Test::NsShutdown::_narrow (shutdown_tmp.in ());

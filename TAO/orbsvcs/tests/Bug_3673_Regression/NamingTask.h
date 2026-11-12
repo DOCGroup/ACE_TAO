@@ -1,5 +1,5 @@
-#ifndef NAMINGTASK_H
-#define NAMINGTASK_H
+#ifndef TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_NAMING_TASK_H
+#define TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_NAMING_TASK_H
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB.h"
@@ -30,4 +30,4 @@ private:
   CORBA::String_var ior_ {};
 };
 
-#endif
+#endif /* TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_NAMING_TASK_H */

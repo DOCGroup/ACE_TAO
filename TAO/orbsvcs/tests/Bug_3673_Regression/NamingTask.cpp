@@ -2,22 +2,23 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <array>
 #include <vector>
 
 NamingTask::NamingTask (char const *orbname, int argc, ACE_TCHAR **argv, unsigned short port)
 {
   std::vector<ACE_TCHAR *> my_argv (argc + 2);
-  ACE_TCHAR buf[128] {};
+  std::array<ACE_TCHAR, 128> buf {};
   int my_argc {};
   for (; my_argc < argc; ++my_argc)
     my_argv[my_argc] = argv[my_argc];
-  ACE_OS::snprintf (buf,
-                    sizeof (buf) / sizeof (buf[0]),
+  ACE_OS::snprintf (buf.data (),
+                    buf.size (),
                     ACE_TEXT ("iiop://localhost:%hu"),
                     port);
   ACE_TCHAR endpoint_option[] = ACE_TEXT ("-ORBEndpoint");
   my_argv[my_argc++] = endpoint_option;
-  my_argv[my_argc++] = buf;
+  my_argv[my_argc++] = buf.data ();
 
   this->orb_ = CORBA::ORB_init (my_argc, my_argv.data (), orbname);
 }

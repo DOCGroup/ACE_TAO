@@ -4,11 +4,12 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 #include <memory>
+#include <string>
 
 struct Options
 {
-  ACE_TCHAR const *ior_output_file {ACE_TEXT ("ns.ior")};
-  ACE_TCHAR const *ior_shutdown_file {ACE_TEXT ("shutdown.ior")};
+  std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("ns.ior")};
+  std::basic_string<ACE_TCHAR> ior_shutdown_file {ACE_TEXT ("shutdown.ior")};
   bool shutdown_ns {};
 };
 
@@ -70,8 +71,8 @@ TestTask::svc ()
       this->namingServiceB_.waitInit ();
 
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (this->options_.ior_output_file, ACE_TEXT ("w")),
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (this->options_.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -140,13 +141,13 @@ TestTask::svc ()
       CORBA::String_var const ior = this->orb_->object_to_string (obj.in ());
 
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (this->options_.ior_shutdown_file, ACE_TEXT ("w")),
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (this->options_.ior_shutdown_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
-                             this->options_.ior_shutdown_file,
+                             this->options_.ior_shutdown_file.c_str (),
                              ior.in ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
