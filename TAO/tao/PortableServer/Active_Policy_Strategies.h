@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Active_Policy_Strategies.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
 #define TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
 

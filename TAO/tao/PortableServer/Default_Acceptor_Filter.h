@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Acceptor_Filter.h
  *
@@ -9,9 +7,6 @@
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DEFAULT_ACCEPTOR_FILTER_H
 #define TAO_DEFAULT_ACCEPTOR_FILTER_H
 

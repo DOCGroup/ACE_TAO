@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TypeCode_SArg_Traits.h
  *
  *  @author  Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_TYPECODE_SARG_TRAITS_H
 #define TAO_TYPECODE_SARG_TRAITS_H
 
@@ -34,9 +30,6 @@ namespace CORBA
   using TypeCode_var = TAO_Pseudo_Var_T<TypeCode>;
   using TypeCode_out = TAO_Pseudo_Out_T<TypeCode>;
 }
-
-// --------------------------------------------------------------
-
 namespace TAO
 {
   template <typename T> class SArg_Traits;

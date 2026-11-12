@@ -617,7 +617,7 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
               // Check our state
               this->check_state ();
 
-              CORBA::Boolean success {false};
+              CORBA::Boolean success {};
 
               {
                 // ATTENTION: Trick locking here, see class header for details
@@ -1106,9 +1106,9 @@ TAO_Root_POA::activate_object_i (PortableServer::Servant servant,
 PortableServer::ObjectId *
 TAO_Root_POA::activate_object (PortableServer::Servant servant)
 {
-  while (1)
+  while (true)
     {
-      bool wait_occurred_restart_call {false};
+      bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (nullptr);
@@ -1132,9 +1132,9 @@ void
 TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                        PortableServer::Servant servant)
 {
-  while (1)
+  while (true)
     {
-      bool wait_occurred_restart_call {false};
+      bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD;
@@ -1203,7 +1203,7 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
         static_cast <TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-      while (1)
+      while (true)
         {
           // If wait_for_completion is TRUE and the current thread is
           // in an invocation context dispatched from some POA
@@ -1393,9 +1393,9 @@ TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
   TAO::ObjectKey_var key = reference->_key ();
 
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root {false};
-  CORBA::Boolean is_persistent {false};
-  CORBA::Boolean is_system_id {false};
+  CORBA::Boolean is_root {};
+  CORBA::Boolean is_persistent {};
+  CORBA::Boolean is_system_id {};
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int const result = this->parse_key (key.in (),
@@ -1867,9 +1867,9 @@ TAO_Root_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
                                    PortableServer::ObjectId &user_id)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root {false};
-  CORBA::Boolean is_persistent {false};
-  CORBA::Boolean is_system_id {false};
+  CORBA::Boolean is_root {};
+  CORBA::Boolean is_persistent {};
+  CORBA::Boolean is_system_id {};
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   return TAO_Root_POA::parse_key (object_key,
@@ -2078,7 +2078,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                   TAO_Acceptor_Filter *filter,
                                   TAO_Acceptor_Registry &acceptor_registry)
 {
-  bool error {false};
+  bool error {};
 
   // Count the number of endpoints.
   size_t const profile_count = acceptor_registry.endpoint_count ();

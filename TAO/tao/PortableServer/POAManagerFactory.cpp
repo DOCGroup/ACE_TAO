@@ -158,7 +158,6 @@ TAO_POAManager_Factory::register_poamanager (
     PortableServer::POAManager::_duplicate (poamanager));
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

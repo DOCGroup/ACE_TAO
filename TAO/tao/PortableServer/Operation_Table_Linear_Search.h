@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table_Linear_Search.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPERATION_TABLE_LINEAR_SEARCH_H
 #define TAO_OPERATION_TABLE_LINEAR_SEARCH_H
 

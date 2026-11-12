@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Servant_Location.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_Servant_Location_H
 #define TAO_Servant_Location_H
 

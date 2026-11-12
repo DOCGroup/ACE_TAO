@@ -11,4 +11,3 @@ Collocated_Arguments_Converter::~Collocated_Arguments_Converter () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-

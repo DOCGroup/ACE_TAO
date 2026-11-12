@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Active_Object_Map.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
-
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
 
@@ -128,7 +123,6 @@ public:
   int
   find_servant_using_user_id (const PortableServer::ObjectId &user_id,
                               PortableServer::Servant &servant);
-
 
   /// Can be used with any policy.
   int
@@ -253,7 +247,7 @@ public:
 
   /// Flag to see if we are using active maps in this active object
   /// map.
-  bool using_active_maps_ {false};
+  bool using_active_maps_ {};
 
   /// Size of the system id produced by the map.
   static size_t system_id_size_;

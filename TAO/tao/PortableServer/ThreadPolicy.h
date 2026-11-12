@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ThreadPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_THREADPOLICY_H
 #define TAO_PORTABLESERVER_THREADPOLICY_H
 #include /**/ "ace/pre.h"

@@ -53,7 +53,6 @@ TAO_Linear_Search_OpTable::find (char const *opname,
   return 0;
 }
 
-
 int
 TAO_Linear_Search_OpTable::find (char const *opname,
                                  TAO_Collocated_Skeleton &skelfunc,

@@ -1,11 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ServantRetentionStrategyNonRetain.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"

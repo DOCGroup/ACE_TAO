@@ -1,11 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ServantRetentionStrategyRetain.cpp
  */
-//=============================================================================
-
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/PortableServer/ServantRetentionStrategyRetain.h"
@@ -292,7 +288,6 @@ namespace TAO
                                                   servant,
                                                   active_object_map_entry);
 
-
       if (result == 0)
         {
           servant_upcall.active_object_map_entry (active_object_map_entry);
@@ -345,7 +340,7 @@ namespace TAO
       PortableServer::Servant servant,
       bool &wait_occurred_restart_call)
     {
-      bool deactivated {false};
+      bool deactivated {};
       int servant_in_map =
         this->active_object_map_->is_servant_in_map (servant, deactivated);
 
@@ -389,7 +384,7 @@ namespace TAO
       bool &priorities_match,
       bool &wait_occurred_restart_call)
     {
-      bool deactivated {false};
+      bool deactivated {};
       bool user_id_in_map =
         this->active_object_map_->is_user_id_in_map (id,
                                                       priority,

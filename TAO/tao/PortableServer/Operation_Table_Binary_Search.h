@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table_Binary_Search.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPERATION_TABLE_BINARY_SEARCH_H
 #define TAO_OPERATION_TABLE_BINARY_SEARCH_H
 

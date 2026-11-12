@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ServantRetentionStrategyNonRetain.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #define TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #include /**/ "ace/pre.h"

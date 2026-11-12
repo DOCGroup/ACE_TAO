@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    PortableServer_Functions.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_FUNCTIONS_H
 #define TAO_PORTABLESERVER_FUNCTIONS_H
 

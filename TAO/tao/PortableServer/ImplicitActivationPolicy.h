@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ImplicitActivationPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_H
 #define TAO_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_H
 #include /**/ "ace/pre.h"

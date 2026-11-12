@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Non_Servant_Upcall.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_NONSERVANT_UPCALL_H
 #define TAO_NONSERVANT_UPCALL_H
 

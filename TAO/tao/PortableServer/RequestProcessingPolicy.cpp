@@ -58,7 +58,6 @@ namespace TAO
       return TAO_POLICY_POA_SCOPE;
     }
 
-
   }
 }
 

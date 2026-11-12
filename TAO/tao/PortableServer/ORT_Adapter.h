@@ -1,12 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ORT_Adapter.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 #ifndef TAO_ORT_ADAPTER_H
 #define TAO_ORT_ADAPTER_H
 

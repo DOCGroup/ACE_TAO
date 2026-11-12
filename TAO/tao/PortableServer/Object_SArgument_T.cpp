@@ -29,9 +29,6 @@ TAO::In_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S_ptr,
          typename S_var,
          template <typename> class Insert_Policy>
@@ -63,9 +60,6 @@ TAO::Inout_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S_ptr,
          typename S_var,
          typename S_out,
@@ -90,9 +84,6 @@ TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out,Insert_Policy>::interceptor_value 
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S_ptr,
          typename S_var,
          template <typename> class Insert_Policy>

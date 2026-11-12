@@ -41,7 +41,7 @@ TAO_Root_POA::get_adapter_template ()
       return this->ort_adapter_->get_adapter_template();
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
@@ -52,7 +52,7 @@ TAO_Root_POA::get_adapter_template_i ()
       return this->ort_adapter_->get_adapter_template ();
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
@@ -65,7 +65,7 @@ TAO_Root_POA::get_obj_ref_factory ()
       return this->ort_adapter_->get_obj_ref_factory();
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -215,7 +215,7 @@ TAO_Root_POA::get_adapter_state ()
 ACE_INLINE void *
 TAO_Root_POA::thread_pool () const
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE TAO_SYNCH_CONDITION &

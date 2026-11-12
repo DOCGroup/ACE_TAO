@@ -37,9 +37,9 @@ namespace TAO
       const char *operation,
       CORBA::Object_out forward_to)
     {
-      while (1)
+      while (true)
         {
-          bool wait_occurred_restart_call {false};
+          bool wait_occurred_restart_call {};
 
           int const result =
             this->prepare_for_upcall_i (key,

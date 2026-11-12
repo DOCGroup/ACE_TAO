@@ -18,7 +18,6 @@ TAO_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& )
   return filter;
 }
 
-
 int
 TAO_Acceptor_Filter_Factory::initialize ()
 {
@@ -38,5 +37,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Acceptor_Filter_Factory,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
-
 

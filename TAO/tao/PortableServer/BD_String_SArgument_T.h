@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    BD_String_SArgument_T.h
  *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
-//=============================================================================
-
-
 #ifndef TAO_BD_STRING_SARGUMENT_T_H
 #define TAO_BD_STRING_SARGUMENT_T_H
 
@@ -22,7 +17,6 @@
 
 #include "tao/Argument.h"
 #include "tao/Any_Insert_Policy_T.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

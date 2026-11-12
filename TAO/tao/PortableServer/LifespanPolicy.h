@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LifespanPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_POA_LIFESPANPOLICY_H
 #define TAO_POA_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"

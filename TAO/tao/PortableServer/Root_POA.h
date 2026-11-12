@@ -732,15 +732,15 @@ protected:
   /// The object adapter we belong to
   TAO_Object_Adapter *object_adapter_;
 
-  CORBA::Boolean cleanup_in_progress_ {false};
+  CORBA::Boolean cleanup_in_progress_ {};
 
   CORBA::ULong outstanding_requests_ {};
 
   TAO_SYNCH_CONDITION outstanding_requests_condition_;
 
-  CORBA::Boolean wait_for_completion_pending_ {false};
+  CORBA::Boolean wait_for_completion_pending_ {};
 
-  CORBA::Boolean waiting_destruction_ {false};
+  CORBA::Boolean waiting_destruction_ {};
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
@@ -759,9 +759,9 @@ public:
     PortableServer::ObjectId_var *system_id_ {};
     const char *type_id_ {};
     TAO_ServantBase *servant_ {};
-    CORBA::Boolean collocated_ {false};
+    CORBA::Boolean collocated_ {};
     CORBA::Short priority_ {TAO_INVALID_PRIORITY};
-    bool indirect_ {false};
+    bool indirect_ {};
 
     void set (PortableServer::ObjectId_var &system_id,
               const char *type_id,

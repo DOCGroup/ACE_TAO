@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
 
@@ -63,9 +59,6 @@ struct TAO_operation_db_entry
   /// Collocated skeleton pointers.
   TAO_Collocated_Skeleton direct_skel_ptr;
 };
-
-// --------------------------
-
 namespace TAO
 {
   /**

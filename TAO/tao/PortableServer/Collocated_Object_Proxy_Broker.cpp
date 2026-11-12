@@ -208,8 +208,6 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 }
-
-// -----------------------------------------------------
 TAO::Collocated_Object_Proxy_Broker *
 the_tao_collocated_object_proxy_broker ()
 {

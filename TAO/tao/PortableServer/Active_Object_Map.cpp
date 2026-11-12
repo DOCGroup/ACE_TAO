@@ -352,7 +352,7 @@ TAO_Active_Object_Map::is_user_id_in_map (
   bool &deactivated)
 {
   TAO_Active_Object_Map_Entry *entry {};
-  bool result {false};
+  bool result {};
   int const find_result = this->user_id_map_->find (user_id, entry);
 
   if (find_result == 0)
@@ -497,7 +497,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
     {
       CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
       CORBA::String_var repository_id (
-          servant ? servant->_repository_id () : 0);
+          servant ? servant->_repository_id () : nullptr);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), user_id.length ());
 
@@ -695,7 +695,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
     {
       CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
       CORBA::String_var repository_id (
-          servant ? servant->_repository_id () : 0);
+          servant ? servant->_repository_id () : nullptr);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), user_id.length ());
 
@@ -986,7 +986,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
       CORBA::String_var idstr (
           PortableServer::ObjectId_to_string (entry->user_id_));
       CORBA::String_var repository_id (
-          servant ? servant->_repository_id () : 0);
+          servant ? servant->_repository_id () : nullptr);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
@@ -1045,7 +1045,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
       CORBA::String_var idstr (
           PortableServer::ObjectId_to_string (entry->user_id_));
       CORBA::String_var repository_id (
-          servant ? servant->_repository_id () : 0);
+          servant ? servant->_repository_id () : nullptr);
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 

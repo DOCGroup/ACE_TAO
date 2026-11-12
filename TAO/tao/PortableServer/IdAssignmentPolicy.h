@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file IdAssignmentPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_IDASSIGNMENTPOLICY_H
 #define TAO_PORTABLESERVER_IDASSIGNMENTPOLICY_H
 #include /**/ "ace/pre.h"

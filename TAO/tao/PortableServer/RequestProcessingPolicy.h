@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file RequestProcessingPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_REQUESTPROCESSINGPOLICY_H
 #define TAO_PORTABLESERVER_REQUESTPROCESSINGPOLICY_H
 #include /**/ "ace/pre.h"

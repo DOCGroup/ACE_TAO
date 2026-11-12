@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_Adapter.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_OBJECT_ADAPTER_H
 #define TAO_OBJECT_ADAPTER_H
 
@@ -145,8 +141,7 @@ public:
   /// Initialize the default set of POA policies.
   void init_default_policies (TAO_POA_Policy_Set &policies);
 
-  // = The TAO_Adapter methods, please check tao/Adapter.h for the
-  // documentation
+  /// TAO_Adapter methods are documented in tao/Adapter.h.
   void open () override;
   void close (int wait_for_completion) override;
   void check_close (int wait_for_completion) override;

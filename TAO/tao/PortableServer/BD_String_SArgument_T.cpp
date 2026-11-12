@@ -41,9 +41,6 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -89,9 +86,6 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -122,9 +116,6 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>

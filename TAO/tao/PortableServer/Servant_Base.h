@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Servant_Base.h
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_BASE_H
 #define TAO_SERVANT_BASE_H
 

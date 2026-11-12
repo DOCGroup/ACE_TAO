@@ -30,9 +30,6 @@ TAO::In_Var_Array_SArgument_T<S_forany,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -68,9 +65,6 @@ TAO::Inout_Var_Array_SArgument_T<S_forany,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S_var,
          typename S_forany,
          template <typename> class Insert_Policy>
@@ -100,9 +94,6 @@ TAO::Out_Var_Array_SArgument_T<S_var,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S_var,
          typename S_forany,
          template <typename> class Insert_Policy>

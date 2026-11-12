@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file get_arg.h
  *
@@ -20,8 +18,6 @@
  *
  *  @author  Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_GET_ARG_H
 #define TAO_GET_ARG_H
 
@@ -29,7 +25,6 @@
 
 #include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/operation_details.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

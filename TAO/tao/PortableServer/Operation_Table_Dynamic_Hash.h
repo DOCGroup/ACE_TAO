@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table_Dynamic_Hash.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPERATION_TABLE_DYNAMIC_HASH_H
 #define TAO_OPERATION_TABLE_DYNAMIC_HASH_H
 

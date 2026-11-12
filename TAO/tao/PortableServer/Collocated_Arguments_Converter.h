@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Collocated_Arguments_Converter.h
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_COLLOCATED_ARGUMENTS_CONVERTER_H
 #define TAO_COLLOCATED_ARGUMENTS_CONVERTER_H
 
@@ -24,7 +19,6 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 #include "ace/Service_Object.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

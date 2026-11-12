@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    POAManagerFactory.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_POAMANAGERFACTORY_H
 #define TAO_POAMANAGERFACTORY_H
 #include /**/ "ace/pre.h"

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ServantRetentionPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_SERVANTRETENTIONPOLICY_H
 #define TAO_PORTABLESERVER_SERVANTRETENTIONPOLICY_H
 #include /**/ "ace/pre.h"

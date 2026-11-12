@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file RequestProcessingStrategy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_REQUEST_PROCESSING_STRATEGY_H
 #define TAO_REQUEST_PROCESSING_STRATEGY_H
 #include /**/ "ace/pre.h"

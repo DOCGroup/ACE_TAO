@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LifespanStrategyPersistent.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_LIFESPANSTRATEGYPERSISTENT_H
 #define TAO_LIFESPANSTRATEGYPERSISTENT_H
 #include /**/ "ace/pre.h"
