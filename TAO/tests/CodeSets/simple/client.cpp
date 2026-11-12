@@ -20,18 +20,20 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
+#include <climits>
 #include <cstring>
 #include <cwchar>
 
 struct Options
 {
   ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  bool test_supplementary_character {};
 };
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:w"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -41,11 +43,16 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
         options.ior = get_opts.opt_arg ();
         break;
 
+      case 'w':
+        options.test_supplementary_character = true;
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
+                           "[-w] "
                            "\n",
                            argv [0]),
                           -1);
@@ -138,6 +145,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       static_cast<int> (wide_reply.in ()[0])));
           ++error_count;
         }
+
+#if WCHAR_MAX > 0xFFFF
+      if (options.test_supplementary_character)
+        {
+          ACE_CDR::WChar const * const supplementary_string = L"\U0001F600";
+          CORBA::WString_var const supplementary_reply =
+            server->op2 (supplementary_string);
+          if (supplementary_reply.in () == nullptr ||
+              std::wcscmp (supplementary_string, supplementary_reply.in ()) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Supplementary wide character round trip failed\n"));
+              ++error_count;
+            }
+        }
+#endif /* WCHAR_MAX > 0xFFFF */
 
 #endif /* ACE_HAS_WCHAR */
 

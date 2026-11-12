@@ -23,8 +23,11 @@ $client->DeleteFile($iorbase);
 
 my $svc_conf = "svc" . $PerlACE::svcconf_ext;
 my $base_conf = "cs_test" . $PerlACE::svcconf_ext;
+my $wcs_conf = "wcs_test" . $PerlACE::svcconf_ext;
 my $client_conf = $client->LocalFile ($base_conf);
 my $server_conf = $server->LocalFile ($base_conf);
+my $client_wcs_conf = $client->LocalFile ($wcs_conf);
+my $server_wcs_conf = $server->LocalFile ($wcs_conf);
 my $client_svc_conf = $client->LocalFile ($svc_conf);
 my $server_svc_conf = $server->LocalFile ($svc_conf);
 
@@ -42,6 +45,14 @@ if ($server->PutFile ($svc_conf) == -1) {
 }
 if ($client->PutFile ($svc_conf) == -1) {
     print STDERR "ERROR: cannot set file <$client_svc_conf>\n";
+    exit 1;
+}
+if ($server->PutFile ($wcs_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_wcs_conf>\n";
+    exit 1;
+}
+if ($client->PutFile ($wcs_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_wcs_conf>\n";
     exit 1;
 }
 
@@ -105,6 +116,38 @@ if ($client_status != 0) {
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 if ($server_status != 0) {
     print STDERR "ERROR: server 2 returned $server_status\n";
+    $status = 1;
+}
+
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
+print STDOUT "\nClient and server using the UCS4 to UTF-16 translator\n\n";
+
+$SV->Arguments ("-o $server_iorfile -ORBDottedDecimalAddresses 1 -ORBSvcConf $server_wcs_conf");
+$CL->Arguments ("-k file://$client_iorfile -ORBSvcConf $client_wcs_conf -w");
+
+$server_status = $SV->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: Starting server 3 returned $server_status\n";
+    exit 1;
+}
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+if ($client_status != 0) {
+    print STDERR "ERROR: client 3 returned $client_status\n";
+    $status = 1;
+}
+
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+if ($server_status != 0) {
+    print STDERR "ERROR: server 3 returned $server_status\n";
     $status = 1;
 }
 
