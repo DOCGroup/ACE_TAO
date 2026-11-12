@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "ftp.h"
 #include "tao/debug.h"
 
@@ -22,10 +24,10 @@ FTP_Client_Callback::handle_timeout (void *)
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame\n"));
   char *buf = mb.rd_ptr ();
 
-  std::size_t const n = ACE_OS::fread (buf,
-                                       1,
-                                       mb.size (),
-                                       CLIENT::instance ()->file ());
+  std::size_t const n = std::fread (buf,
+                                    1,
+                                    mb.size (),
+                                    CLIENT::instance ()->file ());
   if (n == 0)
     {
       if (std::feof (CLIENT::instance ()->file ()))
@@ -113,7 +115,7 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
           this->options_.use_sfp = true;
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown option\n"));
