@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_QOS_SESSION_H
 #define ACE_QOS_SESSION_H
 #include /**/ "ace/pre.h"
@@ -16,6 +15,7 @@
 #include "ACE_QoS_Export.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_QoS.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,8 +60,6 @@ public:
     ACE_QOS_BOTH
   };
 
-
-  /// to shutup g++.
   virtual ~ACE_QoS_Session () = default;
 
   ACE_QoS_Session () = default;
@@ -119,12 +117,11 @@ public:
   /// Get the file descriptor on which RSVP events will occur.
   virtual ACE_HANDLE rsvp_events_handle () = 0;
 
+  /// Set the last QoS event.
   virtual void  rsvp_event_type (RSVP_Event_Type event_type) = 0;
-  ///Set the RAPI event that last occurred
 
+  /// Get the last QoS event.
   virtual RSVP_Event_Type rsvp_event_type () = 0;
-  ///Get the RAPI event that last occurred
-
 
   /// Get the destination address for this session.
   virtual ACE_INET_Addr dest_addr () const = 0;
@@ -138,12 +135,11 @@ public:
   /// Set the source port for this session.
   virtual void source_port (u_short const &source_port) = 0;
 
-  //Set the source host
+  /// Returns the borrowed source address, or nullptr if none is set.
   virtual ACE_INET_Addr *source_addr () const = 0;
 
-  /// Set the source port for this session.
+  /// Takes ownership of source_addr.
   virtual void source_addr (ACE_INET_Addr *source_addr) = 0;
-
 
   /**
    * Returns the version of the underlying RSVP implementation. Is
@@ -162,8 +158,8 @@ protected:
   /// Destination address for this session.
   ACE_INET_Addr dest_addr_ {};
 
-  /// Source address for this session.
-  ACE_INET_Addr *src_addr_ {};
+  /// Owned source address for this session.
+  std::unique_ptr<ACE_INET_Addr> src_addr_;
 
   /// Is this a TCP or a UDP session.
   ACE_Protocol_ID protocol_id_ {};
@@ -174,8 +170,8 @@ protected:
   /// Specifies if this is a sending/receiving/both session.
   ACE_End_Point_Type flags_ {ACE_QOS_SENDER};
 
+  /// The last QoS event that occurred.
   RSVP_Event_Type rsvp_event_type_ {RSVP_PATH_EVENT};
-  //Has the last rsvp event that occurred
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

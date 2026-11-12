@@ -68,7 +68,6 @@ ACE_RAPI_Session::flags (ACE_End_Point_Type flags)
   this->flags_ = flags;
 }
 
-
 // Get the destination address for this RAPI session.
 ACE_INLINE ACE_INET_Addr
 ACE_RAPI_Session::dest_addr () const
@@ -100,13 +99,14 @@ ACE_RAPI_Session::source_port (u_short const &source_port)
 ACE_INLINE ACE_INET_Addr *
 ACE_RAPI_Session::source_addr () const
 {
-  return this->src_addr_;
+  return this->src_addr_.get ();
 }
 
 ACE_INLINE void
 ACE_RAPI_Session::source_addr (ACE_INET_Addr *source_addr)
 {
-  this->src_addr_ = source_addr;
+  if (source_addr != this->src_addr_.get ())
+    this->src_addr_.reset (source_addr);
 }
 
 // RAPI version. Returned value = 100 * major-version + minor-version.
@@ -207,13 +207,14 @@ ACE_GQoS_Session::source_port (u_short const &source_port)
 ACE_INLINE ACE_INET_Addr *
 ACE_GQoS_Session::source_addr () const
 {
-  return this->src_addr_;
+  return this->src_addr_.get ();
 }
 
 ACE_INLINE void
 ACE_GQoS_Session::source_addr (ACE_INET_Addr *source_addr)
 {
-  this->src_addr_ = source_addr;
+  if (source_addr != this->src_addr_.get ())
+    this->src_addr_.reset (source_addr);
 }
 
 // GQoS version.

@@ -183,7 +183,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "Code=%d  Val=%d  Node= %s\n",
                     errcode,
                     errvalue,
-                    ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+                    ACE_OS::inet_ntoa (reinterpret_cast<sockaddr_in *> (errnode)->sin_addr)));
         qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_ERROR);
       }
       break;
@@ -195,7 +195,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "Code=%d  Val=%d  Node= %s\n",
                     errcode,
                     errvalue,
-                    ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+                    ACE_OS::inet_ntoa (reinterpret_cast<sockaddr_in *> (errnode)->sin_addr)));
         qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_ERROR);
       }
       break;
@@ -225,8 +225,10 @@ ACE_RAPI_Session::ACE_RAPI_Session ()
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
   //this->source_port (DEFAULT_SOURCE_SENDER_PORT);
-  ACE_NEW (this->src_addr_,
+  ACE_INET_Addr *source_addr {};
+  ACE_NEW (source_addr,
            ACE_INET_Addr ("0"));
+  this->src_addr_.reset (source_addr);
 }
 
 // Open a RAPI QoS session [dest IP, dest port, Protocol ID].
@@ -248,11 +250,11 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   // the callback function. The callback function uses this argument to
   // update the QoS of this session based on the RSVP event it receives.
 
-  if ((this->session_id_ = rapi_session((struct sockaddr *) dest_addr.get_addr (),
+  if ((this->session_id_ = rapi_session (static_cast<sockaddr *> (dest_addr.get_addr ()),
                                         protocol_id,
                                         0,
                                         rsvp_callback,
-                                        (void *) this,
+                                        this,
                                         &rsvp_error)) == NULL_SID)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        "rapi_session () call fails. Error\n"),
@@ -284,14 +286,14 @@ ACE_RAPI_Session::close ()
   return 0;
 }
 
-//Get the most recent RSVP event that occurred
+/// Returns the most recent QoS event.
 ACE_QoS_Session::RSVP_Event_Type
 ACE_RAPI_Session::rsvp_event_type ()
 {
   return this->rsvp_event_type_;
 }
 
-//Set the most recent RSVP event that occurred
+/// Sets the most recent QoS event.
 void
 ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {
@@ -387,10 +389,9 @@ ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
 
   // Set the Sender TSpec for this QoS session.
 
-
   int result = rapi_sender(this->session_id_,
                            0,
-                           (sockaddr *) this->src_addr_->get_addr (),
+                           static_cast<sockaddr *> (this->src_addr_->get_addr ()),
                            0,
                            t_spec,
                            0,
@@ -453,7 +454,6 @@ ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
       return 0;
     }
 
-
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
 
   if (flow_spec == nullptr)
@@ -499,7 +499,7 @@ ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
                    // of the resevation, by means of a confirmation upcall of
                    // type RAPI_RESV_CONFIRM.
                    //                   (sockaddr *)receiver_addr.get_addr (),
-                   (sockaddr *)&Receiver_host,
+                   reinterpret_cast<sockaddr *> (&Receiver_host),
                    RAPI_RSTYLE_WILDCARD,
                    // This applies the flowspec to all the senders. Given this,
                    // @@I am passing the filter_spec to be null, hoping this will work.
@@ -562,7 +562,6 @@ ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
 
   return (t_spec);
 }
-
 
 // Construct a simplified RAPI flowspec object from ACE_Flow_Spec.
 // Note the form of the FlowSpec is simplified as against the
@@ -691,14 +690,14 @@ ACE_GQoS_Session::update_qos ()
   return 0;
 }
 
-//Get the most recent RSVP event that occurred
+/// Returns the most recent QoS event.
 ACE_QoS_Session::RSVP_Event_Type
 ACE_GQoS_Session::rsvp_event_type ()
 {
   return this->rsvp_event_type_;
 }
 
-//Set the most recent RSVP event that occurred
+/// Sets the most recent QoS event.
 void
 ACE_GQoS_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {

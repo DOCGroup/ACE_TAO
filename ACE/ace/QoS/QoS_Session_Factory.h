@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_QOS_SESSION_FACTORY_H
 #define ACE_QOS_SESSION_FACTORY_H
 #include /**/ "ace/pre.h"

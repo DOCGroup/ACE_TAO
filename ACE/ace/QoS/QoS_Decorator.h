@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef QOS_DECORATOR_H
 #define QOS_DECORATOR_H
 #include /**/ "ace/pre.h"

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SOCK_DGRAM_MCAST_QOS_H
 #define ACE_SOCK_DGRAM_MCAST_QOS_H
 #include /**/ "ace/pre.h"
@@ -41,7 +40,11 @@ public:
 
   ~ACE_SOCK_Dgram_Mcast_QoS ();
 
-  // = Multicast group management routines.
+  ACE_SOCK_Dgram_Mcast_QoS (ACE_SOCK_Dgram_Mcast_QoS const &) = delete;
+  ACE_SOCK_Dgram_Mcast_QoS &operator= (ACE_SOCK_Dgram_Mcast_QoS const &) = delete;
+  ACE_SOCK_Dgram_Mcast_QoS (ACE_SOCK_Dgram_Mcast_QoS &&) = delete;
+  ACE_SOCK_Dgram_Mcast_QoS &operator= (ACE_SOCK_Dgram_Mcast_QoS &&) = delete;
+
   /**
    * This is a QoS-enabled method for joining a multicast group, which
    * passes <qos_params> via <ACE_OS::join_leaf>.  The network
@@ -73,8 +76,6 @@ public:
                  ACE_SOCK_GROUP g = 0,
                  u_long flags = 0,
                  ACE_QoS_Session *qos_session = nullptr);
-
-  // = Data transfer routines.
 
   /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
   /// I/O (uses <WSASentTo>).  Returns 0 on success.
@@ -110,8 +111,6 @@ public:
             int reuse_addr = 0);
 
 private:
-  // = Disable public <open> method to ensure class used properly.
-
   /// Subscribe to the multicast interface using QoS-enabled semantics.
   int subscribe_ifs (ACE_INET_Addr const &mcast_addr,
                      ACE_QoS_Params const &qos_params,

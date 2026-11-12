@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_QOS_SESSION_IMPL_H
 #define ACE_QOS_SESSION_IMPL_H
 #include /**/ "ace/pre.h"
@@ -94,10 +93,10 @@ public:
   /// Get the RAPI file descriptor for RSVP events.
   ACE_HANDLE rsvp_events_handle () override;
 
-  ///Set the RAPI event that last occurred
+  /// Set the last QoS event.
   void rsvp_event_type (RSVP_Event_Type event_type) override;
 
-  ///Get the RAPI event that last occurred
+  /// Get the last QoS event.
   RSVP_Event_Type rsvp_event_type () override;
 
   /// Get the destination address for this RAPI session.
@@ -112,10 +111,10 @@ public:
   /// Set the source port for this session.
   void source_port (u_short const &source_port) override;
 
-  //Set the source host
+  /// Returns the borrowed source address, or nullptr if none is set.
   ACE_INET_Addr *source_addr () const override;
 
-  /// Set the source port for this session.
+  /// Takes ownership of source_addr.
   void source_addr (ACE_INET_Addr *source_addr) override;
 
   /// RAPI version. Returned value = 100 * major-version + minor-version.
@@ -216,10 +215,10 @@ public:
   /// Set the source port for this session.
   void source_port (u_short const &source_port) override;
 
-  //Set the source host
+  /// Returns the borrowed source address, or nullptr if none is set.
   ACE_INET_Addr *source_addr () const override;
 
-  /// Set the source port for this session.
+  /// Takes ownership of source_addr.
   void source_addr (ACE_INET_Addr *source_addr) override;
 
   /// Get the GQoS session id.
@@ -231,11 +230,11 @@ public:
   /// Get the file descriptor of the underlying socket.
   ACE_HANDLE rsvp_events_handle () override;
 
+  /// Set the last QoS event.
   void rsvp_event_type (RSVP_Event_Type event_type) override;
-  ///Set the RAPI event that last occurred
 
+  /// Get the last QoS event.
   RSVP_Event_Type rsvp_event_type () override;
-  ///Get the RAPI event that last occurred
 
   /// GQoS version.
   int version () override;

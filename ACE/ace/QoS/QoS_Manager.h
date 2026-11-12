@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_QOS_MANAGER_H
 #define ACE_QOS_MANAGER_H
 #include /**/ "ace/pre.h"
@@ -23,7 +22,6 @@
 #include "ace/Containers_T.h"
 #include "ACE_QoS_Export.h"
 #include "QoS_Session.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

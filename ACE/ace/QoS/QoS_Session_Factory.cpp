@@ -47,6 +47,13 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
                     ACE_GQoS_Session,
                     nullptr);
 
+  if (qos_session == nullptr)
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("Unsupported QoS session type\n")));
+      return nullptr;
+    }
+
   std::unique_ptr<ACE_QoS_Session> qos_session_owner (qos_session);
   if (this->add_session (qos_session_owner.get ()) == -1)
     {

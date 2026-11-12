@@ -27,6 +27,8 @@ ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (options opts)
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS");
 }
 
+ACE_SOCK_Dgram_Mcast_QoS::~ACE_SOCK_Dgram_Mcast_QoS () = default;
+
 int
 ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
                                 ACE_QoS_Params const &qos_params,
@@ -60,7 +62,6 @@ ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
 
   return this->open_i (addr, 0, reuse_addr);
 }
-
 
 int
 ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
