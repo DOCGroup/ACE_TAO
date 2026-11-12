@@ -9,6 +9,9 @@
  */
 //=============================================================================
 
+#ifndef TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_RECEIVER_H
+#define TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_RECEIVER_H
+
 #include <cstddef>
 
 #include "orbsvcs/Naming/Naming_Client.h"
@@ -16,7 +19,7 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
-// = AVStreams calls this class when data shows up from a sender.
+/// Callback for incoming AVStreams data and stream shutdown.
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
@@ -40,14 +43,14 @@ public:
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
+  /// Number of frames received.
   std::size_t frame_count_ {};
-  /// Keeping a count of the incoming frames.
 
-  /// Related stream control.
+  /// Stream controller associated with this flow.
   AVStreams::StreamCtrl_ptr streamctrl_ {};
 };
 
-// = AVStreams calls this class during connection setup.
+/// Endpoint that creates the receiver callback during connection setup.
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
@@ -62,34 +65,35 @@ public:
                     TAO_AV_Callback *&callback) override;
 
 private:
+  /// Callback used by AVStreams.
   Receiver_Callback callback_;
-  /// Receiver application callback.
 };
 
-// = This class receives data from a AV sender and writes it to a file.
+/// Receives data from an AVStreams sender and writes it to a file.
 class Receiver
 {
 public:
   Receiver () = default;
 
-  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
   Receiver &operator= (Receiver &&) = delete;
 
+  /// Initialize the receiver and register it with the Naming Service.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  /// Initialize data components.
 
 protected:
+  /// Naming Service client.
   TAO_Naming_Client naming_client_;
-  /// The Naming Service Client.
 
+  /// Endpoint strategy used by the receiver.
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
-  /// The endpoint reactive strategy.
 
+  /// Receiver MMDevice servant.
   TAO_MMDevice *mmdevice_ {};
-  /// Receiver MMDevice.
 };
+
+#endif /* TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_RECEIVER_H */

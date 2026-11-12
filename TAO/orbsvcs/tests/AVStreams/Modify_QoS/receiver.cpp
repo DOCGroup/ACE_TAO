@@ -1,9 +1,10 @@
+#include <cstdio>
 #include <memory>
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
-static std::unique_ptr<FILE, int (*) (FILE *)> output_file {nullptr, ACE_OS::fclose};
+static std::unique_ptr<FILE, int (*) (FILE *)> output_file {nullptr, std::fclose};
 // File handle of the file into which received data is written.
 
 static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
@@ -101,10 +102,10 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     {
       // Write the received data to the file.
       std::size_t const written =
-        ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
-                        1,
-                        output_file.get ());
+        std::fwrite (frame->rd_ptr (),
+                     frame->length (),
+                     1,
+                     output_file.get ());
 
       if (written != 1)
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -95,7 +95,7 @@ Sender::parse_args (int argc,
           this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -245,10 +245,10 @@ Sender::pace_data ()
       while (1)
         {
           // Read from the file into a message block.
-          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                               1,
-                                               this->mb_.size (),
-                                               this->input_file_.get ());
+          std::size_t const n = std::fread (this->mb_.wr_ptr (),
+                                            1,
+                                            this->mb_.size (),
+                                            this->input_file_.get ());
 
           if (n == 0)
             {
