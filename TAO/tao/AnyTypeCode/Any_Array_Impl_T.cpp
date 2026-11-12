@@ -59,7 +59,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (CORBA::Any const & any,
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
-      if (_tao_equiv == false)
+      if (!_tao_equiv)
         {
           return false;
         }

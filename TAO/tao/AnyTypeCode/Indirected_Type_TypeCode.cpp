@@ -35,7 +35,7 @@ TAO::TypeCode::Indirected_Type::tao_duplicate ()
   {
     this->recursive_tc_->tao_duplicate ();
   }
-  this->refcount_ += 1;
+  ++this->refcount_;
 }
 
 void

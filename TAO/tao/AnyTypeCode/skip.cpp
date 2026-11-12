@@ -858,7 +858,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   // first-time/nested skips so that we won't attempt to
   // skip rep_id several times.
   //
-  if (this->nested_processing_ == false)
+  if (!this->nested_processing_)
     {
       this->nested_processing_ = true;
 
