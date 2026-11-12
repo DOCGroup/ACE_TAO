@@ -22,16 +22,12 @@
 class test_i : public virtual POA_ForwardRequestTest::test
 {
 public:
-  /// Constructor.
   test_i (CORBA::Short num,
           CORBA::ORB_ptr orb);
-  test_i (test_i const&) = delete;
-  test_i (test_i&&) = delete;
-  test_i& operator= (test_i const&) = delete;
-  test_i& operator= (test_i&&) = delete;
-
-  /// Destructor.
-  ~test_i () override = default;
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// Return the number assigned to this object.
   CORBA::Short number () override;
@@ -41,10 +37,10 @@ public:
 
 private:
   /// The number assigned to this object.
-  CORBA::Short number_;
+  CORBA::Short const number_;
 
   /// Pseudo-reference to the ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif  /* TEST_I_H */

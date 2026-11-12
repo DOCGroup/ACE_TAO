@@ -2,6 +2,8 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <cstdlib>
 #include <memory>
 
 #if TAO_HAS_INTERCEPTORS
@@ -14,22 +16,26 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
-static int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior_file)
+struct Server_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_TString ior_file {};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_file = get_opts.opt_arg ();
+        options.ior_file = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-o IOR\n",
+                           ACE_TEXT ("Usage: %s -o IOR\n"),
                            argv[0]),
                           -1);
       }
@@ -37,63 +43,56 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior_file)
   return 0;
 }
 
-void
-add_ft_prop (CORBA::ORB_ptr o,
+static bool
+write_ior (ACE_TCHAR const *file_name, char const *ior)
+{
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (file_name, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!output_file)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Cannot open output file for writing IOR\n")));
+      return false;
+    }
+
+  if (std::fprintf (output_file.get (), "%s", ior) < 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")));
+      return false;
+    }
+
+  return true;
+}
+
+static void
+add_ft_prop (CORBA::ORB_ptr orb,
              CORBA::Object_ptr obj1,
              CORBA::Object_ptr obj2)
 {
-  // Get an object reference for the ORBs IORManipultion object!
-  CORBA::Object_var iorm_object =
-    o->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                   nullptr);
+  CORBA::Object_var const iorm_object =
+    orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
-  TAO_IOP::TAO_IOR_Manipulation_var iorm =
+  TAO_IOP::TAO_IOR_Manipulation_var const iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
   FT::TagFTGroupTaggedComponent ft_tag_component;
+  ft_tag_component.component_version.major = 1;
+  ft_tag_component.component_version.minor = 0;
+  ft_tag_component.group_domain_id = "version_testing";
+  ft_tag_component.object_group_id = 10;
+  ft_tag_component.object_group_ref_version = 1;
 
-  // Property values
-  // Major and Minor revision numbers
-  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
-  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
-
-  // Domain id
-  char const* id = "version_testing";
-  ft_tag_component.group_domain_id = id;
-
-  // Object group id
-  ft_tag_component.object_group_id = static_cast<CORBA::ULongLong> (10);
-
-  // Version
-  ft_tag_component.object_group_ref_version = static_cast<CORBA::ULong> (1);
-
-  // Construct the IOGR Property class
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
-  // Set the property for object 1
-  CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                              obj1);
-
-  if (retval)
+  if (iorm->set_property (&iogr_prop, obj1))
     {
-      retval = iorm->set_primary (&iogr_prop,
-                                  obj1,
-                                  obj1);
+      iorm->set_primary (&iogr_prop, obj1, obj1);
     }
 
-  // Set the property for object 2
-  // Change the version. That is the point of this test
-  // Version
-  ft_tag_component.object_group_ref_version = static_cast<CORBA::ULong> (5);
+  ft_tag_component.object_group_ref_version = 5;
 
-  retval = iorm->set_property (&iogr_prop,
-                               obj2);
-
-  if (retval)
+  if (iorm->set_property (&iogr_prop, obj2))
     {
-      retval = iorm->set_primary (&iogr_prop,
-                                  obj2,
-                                  obj2);
+      iorm->set_primary (&iogr_prop, obj2, obj2);
     }
 }
 
@@ -101,10 +100,10 @@ static void
 test_colocal (ForwardRequestTest::test_ptr server)
 {
   CORBA::ULong number {};
-  for (int i {1}; i <= 25; ++i)
+  for (CORBA::ULong i {1}; i <= 25; ++i)
     {
       ACE_DEBUG ((LM_INFO,
-                  "CLIENT: Issuing colocal request %d.\n",
+                  "CLIENT: Issuing colocal request " ACE_UINT32_FORMAT_SPECIFIER ".\n",
                   i));
       CORBA::ULong const retval =
         server->number ();
@@ -115,12 +114,12 @@ test_colocal (ForwardRequestTest::test_ptr server)
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR: colocal invocation returned invalid"
                       " value, location-forwarding must have failed.\n"));
-          ACE_OS::abort ();
+          std::abort ();
         }
 
       number += retval;
       ACE_DEBUG ((LM_INFO,
-                  "CLIENT: Number %d .\n",
+                  "CLIENT: Number " ACE_UINT32_FORMAT_SPECIFIER ".\n",
                   number));
     }
 
@@ -128,29 +127,30 @@ test_colocal (ForwardRequestTest::test_ptr server)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR: Did not forward to new location\n"));
-      ACE_OS::abort ();
+      std::abort ();
     }
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const* ior_file {};
   try
     {
-      Server_ORBInitializer *temp_initializer {};
-      ACE_NEW_RETURN (temp_initializer,
-                      Server_ORBInitializer,
-                      -1);  // No exceptions yet!
+      Server_Options options {};
+      Server_ORBInitializer *initializer {};
+      ACE_NEW_RETURN (initializer, Server_ORBInitializer, -1);
       PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+        initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, "Server ORB");
 
-      CORBA::Object_var poa_object =
+      if (parse_args (argc, argv, options) != 0 || options.ior_file.empty ())
+        return 1;
+
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -158,43 +158,39 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv, ior_file) != 0)
-        return -1;
+      CORBA::PolicyList const policies {};
 
-      CORBA::PolicyList policies;  // Empty policy list.
-
-      // Servant 1
       test_i servant1 (1, orb.in ());
       test_i servant2 (317, orb.in ());
 
-      PortableServer::POA_var first_poa =
+      PortableServer::POA_var const first_poa =
         root_poa->create_POA ("first POA",
                               poa_manager.in (),
                               policies);
 
-      PortableServer::ObjectId_var oid1 =
+      PortableServer::ObjectId_var const oid1 =
         first_poa->activate_object (&servant1);
 
-      PortableServer::ObjectId_var oid2 =
+      PortableServer::ObjectId_var const oid2 =
         first_poa->activate_object (&servant2);
 
-      CORBA::Object_var obj1 =
+      CORBA::Object_var const obj1 =
         first_poa->servant_to_reference (&servant1);
 
-      CORBA::Object_var obj2 =
+      CORBA::Object_var const obj2 =
         first_poa->servant_to_reference (&servant2);
 
       add_ft_prop (orb.in (),
                    obj1.in (),
                    obj2.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (obj1.in ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -204,10 +200,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Set the forward references in the server request interceptor.
-      PortableInterceptor::ServerRequestInterceptor_var
-        server_interceptor = temp_initializer->server_interceptor ();
+      PortableInterceptor::ServerRequestInterceptor_var const
+        server_interceptor = initializer->server_interceptor ();
 
-      ForwardRequestTest::ServerRequestInterceptor_var interceptor =
+      ForwardRequestTest::ServerRequestInterceptor_var const interceptor =
         ForwardRequestTest::ServerRequestInterceptor::_narrow (
            server_interceptor.in ());
 
@@ -220,31 +216,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       interceptor->forward_references (obj1.in (),
                                        obj2.in ());
 
-      // Run co-local test
-        {
-          ForwardRequestTest::test_var server =
-            ForwardRequestTest::test::_narrow (obj1.in ());
-          test_colocal (server.in ());
+      // Exercise the collocated forwarding path before remote requests.
+      ForwardRequestTest::test_var server =
+        ForwardRequestTest::test::_narrow (obj1.in ());
+      test_colocal (server.in ());
 
-          // Reset interceptor for remote tests
-          interceptor->reset ();
-        }
+      interceptor->reset ();
 
-      // Write each IOR to a file.
+      if (!write_ior (options.ior_file.c_str (), ior.in ()))
+        return 1;
 
-      // IOR 1
-      {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_file, "w"), ACE_OS::fclose);
-        if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ior.in ()),
-                            1);
-        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
-      }
-
-      // Run the ORB event loop.
       orb->run ();
 
       root_poa->destroy (true, true);
@@ -265,7 +246,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #else
 
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

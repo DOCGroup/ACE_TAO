@@ -6,7 +6,35 @@
 #include "tao/CDR.h"
 #include "testS.h"
 
-static constexpr CORBA::ULong expected_version = 5;
+static constexpr CORBA::ULong expected_version {5};
+
+static void
+check_group_version (PortableInterceptor::ServerRequestInfo_ptr request_info)
+{
+  IOP::ServiceContext_var const service_context =
+    request_info->get_request_service_context (IOP::FT_GROUP_VERSION);
+  TAO_InputCDR cdr (
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ()),
+    service_context->context_data.length ());
+
+  CORBA::Boolean byte_order {};
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return;
+
+  cdr.reset_byte_order (static_cast<int> (byte_order));
+
+  CORBA::ULong version {};
+  if ((cdr >> version) == 0)
+    return;
+
+  if (version != expected_version)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: (%P|%t) Version does not match the expected value (%u != %u)\n",
+                  version,
+                  expected_version));
+    }
+}
 
 void
 Server_Request_Interceptor::reset ()
@@ -27,19 +55,8 @@ Server_Request_Interceptor::forward_references (
         EINVAL),
       CORBA::COMPLETED_NO);
 
-  ACE_TCHAR* argv[] {nullptr};
-  int argc {};
-
-  // Fetch the ORB having been initialized in main()
-  CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "Server ORB");
-
-  CORBA::String_var str1 = orb->object_to_string (obj1);
-
-  CORBA::String_var str2 = orb->object_to_string (obj2);
-
-  this->obj_[0] = orb->string_to_object (str1.in ());
-  this->obj_[1] = orb->string_to_object (str2.in ());
+  this->obj_[0] = CORBA::Object::_duplicate (obj1);
+  this->obj_[1] = CORBA::Object::_duplicate (obj2);
 }
 
 char *
@@ -59,48 +76,10 @@ void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  this->request_count_++;
-
-/*  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) receive_request_service_context called [%d] times\n",
-              this->request_count_));
-              */
+  ++this->request_count_;
 
   if (this->forward_request_thrown_)
-    {
-      IOP::ServiceContext_var svc =
-        ri->get_request_service_context (IOP::FT_GROUP_VERSION);
-
-      // extract the group component
-      TAO_InputCDR cdr (reinterpret_cast<char const*> (svc->context_data.get_buffer ()),
-                        svc->context_data.length ());
-
-      CORBA::Boolean byte_order {};
-
-      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        {
-          return;
-        }
-
-      cdr.reset_byte_order (static_cast<int> (byte_order));
-
-      FT::TagFTGroupTaggedComponent group_component;
-
-      //cdr >> group_component.component_version;
-      //cdr >> group_component.group_domain_id.inout ();
-      //cdr >> group_component.object_group_id;
-      cdr >> group_component.object_group_ref_version;
-
-      if (group_component.object_group_ref_version != expected_version)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: (%P|%t) Version does not match the"
-                      "expected value (%u != %u)\n",
-                      group_component.object_group_ref_version,
-                      expected_version));
-        }
-
-    }
+    check_group_version (ri);
 }
 
 void
@@ -110,7 +89,7 @@ Server_Request_Interceptor::receive_request (
   if (this->request_count_ == 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "SERVER (%P|%t) Request %d will be forwarded "
+                  "SERVER (%P|%t) Request " ACE_UINT32_FORMAT_SPECIFIER " will be forwarded "
                   "to object 1\n"        // "object 1" as in "obj_[0]"
                   "SERVER (%P|%t) via "
                   "receive_request_service_contexts().\n",
@@ -124,38 +103,7 @@ Server_Request_Interceptor::receive_request (
 
   if (this->forward_request_thrown_)
     {
-      IOP::ServiceContext_var svc =
-        ri->get_request_service_context (IOP::FT_GROUP_VERSION);
-
-      // extract the group component
-      TAO_InputCDR cdr (reinterpret_cast<char const*> (svc->context_data.get_buffer ()),
-                        svc->context_data.length ());
-
-      CORBA::Boolean byte_order {};
-
-      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        {
-          return;
-        }
-
-      cdr.reset_byte_order (static_cast<int> (byte_order));
-
-      FT::TagFTGroupTaggedComponent group_component;
-
-      //cdr >> group_component.component_version;
-      //cdr >> group_component.group_domain_id.inout ();
-      //cdr >> group_component.object_group_id;
-      cdr >> group_component.object_group_ref_version;
-
-      if (group_component.object_group_ref_version != expected_version)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: (%P|%t) Version does not match the "
-                      "expected value (%u != %u)\n",
-                      group_component.object_group_ref_version,
-                      expected_version));
-        }
-
+      check_group_version (ri);
     }
 }
 

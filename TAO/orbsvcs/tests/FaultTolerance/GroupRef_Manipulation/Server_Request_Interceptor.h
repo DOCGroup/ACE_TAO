@@ -39,15 +39,11 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   Server_Request_Interceptor () = default;
-  Server_Request_Interceptor (Server_Request_Interceptor const&) = delete;
-  Server_Request_Interceptor (Server_Request_Interceptor&&) = delete;
-  Server_Request_Interceptor& operator= (Server_Request_Interceptor const&) = delete;
-  Server_Request_Interceptor& operator= (Server_Request_Interceptor&&) = delete;
-
-  /// Destructor.
-  ~Server_Request_Interceptor () override = default;
+  Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
 
   /// Set the references to which requests will be forwarded.
   void forward_references (CORBA::Object_ptr obj1,
@@ -66,7 +62,7 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  char * name () override;
+  char *name () override;
 
   void destroy () override;
 

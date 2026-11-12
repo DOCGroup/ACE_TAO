@@ -6,17 +6,22 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include <cstring>
 
-static int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior)
+struct Client_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_TString ior {};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -30,54 +35,41 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const* ior {};
-
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Client ORB");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, "Client ORB");
+      Client_Options options {};
 
-      if (parse_args (argc, argv, ior) != 0)
+      if (parse_args (argc, argv, options) != 0 || options.ior.empty ())
         return -1;
 
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during
       // this test.
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
 
-      ForwardRequestTest::test_var server =
+      ForwardRequestTest::test_var const server =
         ForwardRequestTest::test::_narrow (object.in ());
 
-      // Before and after the LOCATION_FORWARD_PERM the marshaled
-      // object reference must differ.
-
-      // Create a stringified/marshaled snapshot of Object reference
-      CORBA::String_var marshaled_obj_snapshot1 =
-          orb->object_to_string (server.in ());
-
       if (CORBA::is_nil (server.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             ior),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR, "Object reference is nil\n"), 1);
+
+      CORBA::String_var const marshaled_obj_snapshot1 =
+        orb->object_to_string (server.in ());
 
       CORBA::ULong number {};
-      for (int i = 1; i <= 25; ++i)
+      for (CORBA::ULong i {1}; i <= 25; ++i)
         {
           ACE_DEBUG ((LM_INFO,
-                      "CLIENT: Issuing request %d.\n",
+                      "CLIENT: Issuing request " ACE_UINT32_FORMAT_SPECIFIER ".\n",
                       i));
 
           number += server->number ();
 
           ACE_DEBUG ((LM_INFO,
-                      "CLIENT: Number %d .\n",
+                      "CLIENT: Number " ACE_UINT32_FORMAT_SPECIFIER ".\n",
                       number));
         }
 
@@ -91,8 +83,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // One of the request triggerd a LOCATION_FORWARD_PERM, in
       // consequence the marshaled representation of "server" should
       // look different now, compare to snapshot1.
-      CORBA::String_var marshaled_obj_snapshot2 =
-          orb->object_to_string (server.in ());
+      CORBA::String_var const marshaled_obj_snapshot2 =
+        orb->object_to_string (server.in ());
 
       if (std::strcmp (marshaled_obj_snapshot1.in (),
                        marshaled_obj_snapshot2.in ()) == 0)
@@ -105,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
