@@ -32,7 +32,7 @@ namespace TAO
 
         for (size_t i {}; i < this->interceptor_list_.size (); ++i)
           {
-            ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+            ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
               this->interceptor_list_.registered_interceptor (i);
 
             if (registered.details_.should_be_processed (is_remote_request))
@@ -76,7 +76,7 @@ namespace TAO
         // invoked in another "ending" interception point.
         --invocation.stack_size ();
 
-        ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+        ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
           this->interceptor_list_.registered_interceptor (
             invocation.stack_size ());
 
@@ -117,7 +117,7 @@ namespace TAO
             // being invoked in another "ending" interception point.
             --invocation.stack_size ();
 
-            ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+            ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
               this->interceptor_list_.registered_interceptor (
                 invocation.stack_size ());
 
@@ -147,7 +147,7 @@ namespace TAO
 
         this->receive_exception (invocation);
 
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->pi_reply_status (invocation);
 
         // Only re-throw the exception if it hasn't been transformed by
@@ -186,7 +186,7 @@ namespace TAO
           // being invoked in another "ending" interception point.
           --invocation.stack_size ();
 
-          ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+          ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
             this->interceptor_list_.registered_interceptor (
               invocation.stack_size ());
 
@@ -216,7 +216,7 @@ namespace TAO
 
         this->receive_exception (invocation);
 
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->pi_reply_status (invocation);
 
         // Only re-throw the exception if it hasn't been transformed by

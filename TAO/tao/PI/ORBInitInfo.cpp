@@ -20,8 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ORBInitInfo::~TAO_ORBInitInfo () = default;
-
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
@@ -122,7 +120,7 @@ TAO_ORBInitInfo::codec_factory ()
 
       if (loader != nullptr)
         {
-          CORBA::Object_var cf =
+          CORBA::Object_var const cf =
             loader->create_object (this->orb_core_->orb (), 0, nullptr);
 
           this->codec_factory_ = IOP::CodecFactory::_narrow (cf.in ());
