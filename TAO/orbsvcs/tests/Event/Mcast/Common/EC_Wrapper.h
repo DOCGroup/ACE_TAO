@@ -6,6 +6,8 @@
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ECMcastTests_export.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -33,6 +35,11 @@ public:
 
   /// Destructor.  Destroys the Event Channel implementation.
   ~EC_Wrapper () override;
+
+  EC_Wrapper (EC_Wrapper const&) = delete;
+  EC_Wrapper (EC_Wrapper&&) = delete;
+  EC_Wrapper& operator= (EC_Wrapper const&) = delete;
+  EC_Wrapper& operator= (EC_Wrapper&&) = delete;
 
   /// Create and initialize underlying EC servant.
   int init (CORBA::ORB_ptr orb,
@@ -65,14 +72,10 @@ private:
   void destroy_ec ();
 
   /// Event Channel implementation.
-  /*
-   * Once Event Channel implementation is made reference-counted, this
-   * pointer should turn into a Servant_var.
-   */
-  TAO_EC_Event_Channel *ec_impl_;
+  std::unique_ptr<TAO_EC_Event_Channel> ec_impl_ {};
 
   /// A reference to the ORB, so we can shut it down.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* EC_WRAPPER_H */
