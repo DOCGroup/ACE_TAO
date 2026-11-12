@@ -1,15 +1,8 @@
 #include "Options.h"
 #include "Hash_Table.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_Memory.h"
-#include <algorithm>
 
-Hash_Table::Hash_Table ()
-{
-  ACE_NEW (this->hash_table,
-           Protocol_Record *[this->hash_table_size]);
-  std::fill_n (this->hash_table, this->hash_table_size, nullptr);
-}
+Hash_Table::Hash_Table () = default;
 
 // Iterate through the hash table returning one node at a time...
 
@@ -23,7 +16,7 @@ Hash_Table::get_next_entry ()
 
   if (this->current_ptr == nullptr)
     {
-      for (; this->current_index < this->hash_table_size; this->current_index++)
+      for (; this->current_index < HASH_TABLE_SIZE; ++this->current_index)
         if (this->hash_table[this->current_index] != nullptr)
           {
             Protocol_Record *prp = this->hash_table[this->current_index++];
@@ -56,10 +49,12 @@ Hash_Table::~Hash_Table ()
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Hash_Table\n"));
 
-  for (int i = 0; i < this->hash_table_size; i++)
+  for (int i = 0; i < HASH_TABLE_SIZE; ++i)
     for (Protocol_Record *prp = this->hash_table[i];
          prp != nullptr; )
       {
-        prp = prp->next_;
+        Protocol_Record *next = prp->next_;
+        delete prp;
+        prp = next;
       }
 }
