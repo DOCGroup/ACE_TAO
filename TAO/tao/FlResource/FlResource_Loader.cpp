@@ -16,11 +16,11 @@ namespace TAO
       new (std::nothrow) FlResource_Factory ()
     };
 
-    if (!factory)
-    {
-      errno = ENOMEM;
-      return;
-    }
+    if (factory == nullptr)
+      {
+        errno = ENOMEM;
+        return;
+      }
 
     TAO_ORB_Core::set_gui_resource_factory (factory.release ());
   }
