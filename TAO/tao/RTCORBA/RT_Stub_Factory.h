@@ -45,7 +45,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RT_Stub_Factory : public TAO_Stub_Factory
 {
 public:
-  // -- Ctor/Dtor --
   ~TAO_RT_Stub_Factory () override;
 
   /// Creates a Stub Object.
