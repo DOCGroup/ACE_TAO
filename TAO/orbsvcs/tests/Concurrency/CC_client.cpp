@@ -147,21 +147,26 @@ CC_Client::run ()
 
   if(this->use_script_file_ && success == CC_SUCCESS)
     {
-      cmdlist = new CC_CommandList();
-      FILE *f;
+      std::unique_ptr<CC_CommandList> command_list =
+        std::make_unique<CC_CommandList> ();
+      cmdlist = command_list.get ();
+      std::unique_ptr<FILE, int (*) (FILE *)> script_file (nullptr,
+                                                            ACE_OS::fclose);
 
       // Open the command file for parsing if the filename!=stdin
       if(ACE_OS::strcmp(this->script_file_, ACE_TEXT("stdin"))!=0)
         {
-          f = ACE_OS::fopen(this->script_file_, "r");
-          if(f==0)
+          script_file.reset (ACE_OS::fopen (this->script_file_, "r"));
+          if (!script_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to open %s\n",
                                this->script_file_),
                               -1);
-          ace_cc_yyin = f;
+          ace_cc_yyin = script_file.get ();
         }
       ace_cc_yyparse();
+      ace_cc_yyin = nullptr;
+      cmdlist = nullptr;
     }
 
   // Other tests go here

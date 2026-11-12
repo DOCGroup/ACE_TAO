@@ -14,6 +14,9 @@
 
 
 #include "orbsvcs/CosConcurrencyControlC.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 #ifndef _CC_COMMAND_H_
 #define _CC_COMMAND_H_
@@ -83,8 +86,7 @@ class CC_Start_Cmd : public CC_Command
   /// Constructor
   explicit CC_Start_Cmd (char const* config_file_name);
 
-  /// Destructor
-  ~CC_Start_Cmd() override;
+  ~CC_Start_Cmd() override = default;
 
   /// Start the child process. The current version does not wait for the
   /// process to terminate.
@@ -92,7 +94,7 @@ class CC_Start_Cmd : public CC_Command
 
 private:
   /// The name of the script file
-  char *cfg_name_;
+  std::string cfg_name_;
 };
 
 /**
@@ -110,8 +112,7 @@ class CC_CreateLockSet_Cmd : public CC_Command
   /// Constructor
   explicit CC_CreateLockSet_Cmd (char const* lock_set_name);
 
-  /// Destructor
-  ~CC_CreateLockSet_Cmd () override;
+  ~CC_CreateLockSet_Cmd () override = default;
 
   /// Executes the command, i.e. creates the lock set and binds the name
   /// in the naming service.
@@ -119,7 +120,7 @@ class CC_CreateLockSet_Cmd : public CC_Command
 
 private:
   /// The name used to bind in the naming service.
-  char *name_;
+  std::string name_;
 };
 
 /**
@@ -137,8 +138,7 @@ class CC_Lock_Cmd:public CC_Command
   CC_Lock_Cmd(char const* lock_set_name,
               CosConcurrencyControl::lock_mode mode);
 
-  /// Destructor
-  ~CC_Lock_Cmd() override;
+  ~CC_Lock_Cmd() override = default;
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and executes the lock command on that lock set.
@@ -146,7 +146,7 @@ class CC_Lock_Cmd:public CC_Command
 
 private:
   /// The name to look up in the naming service.
-  char *name_;
+  std::string name_;
 
   /// The mode of the lock.
   CosConcurrencyControl::lock_mode mode_;
@@ -167,8 +167,7 @@ class CC_UnLock_Cmd:public CC_Command
   CC_UnLock_Cmd(char const* lock_set_name,
                 CosConcurrencyControl::lock_mode mode);
 
-  /// Destructor
-  ~CC_UnLock_Cmd() override;
+  ~CC_UnLock_Cmd() override = default;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
@@ -179,7 +178,7 @@ class CC_UnLock_Cmd:public CC_Command
 
 private:
   /// The name to look up in the naming service.
-  char *name_;
+  std::string name_;
 
   /// The mode of the lock.
   CosConcurrencyControl::lock_mode mode_;
@@ -200,8 +199,7 @@ class CC_TryLock_Cmd:public CC_Command
   CC_TryLock_Cmd(char const* lock_set_name,
                  CosConcurrencyControl::lock_mode mode);
 
-  /// Destructor
-  ~CC_TryLock_Cmd() override;
+  ~CC_TryLock_Cmd() override = default;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
@@ -212,7 +210,7 @@ class CC_TryLock_Cmd:public CC_Command
 
 private:
   /// The name to look up in the naming service.
-  char *name_;
+  std::string name_;
 
   /// The mode of the lock.
   CosConcurrencyControl::lock_mode mode_;
@@ -234,8 +232,7 @@ class CC_ChangeMode_Cmd:public CC_Command
                      CosConcurrencyControl::lock_mode held_mode,
                      CosConcurrencyControl::lock_mode new_mode);
 
-  /// Destructor
-  ~CC_ChangeMode_Cmd() override;
+  ~CC_ChangeMode_Cmd() override = default;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
@@ -246,7 +243,7 @@ class CC_ChangeMode_Cmd:public CC_Command
 
 private:
   /// The name to look up in the naming service.
-  char *name_;
+  std::string name_;
 
   /// The mode of the held lock
   CosConcurrencyControl::lock_mode held_mode_;
@@ -321,15 +318,14 @@ class CC_Wait_Cmd:public CC_Command
   /// Constructor.
   explicit CC_Wait_Cmd (char const* prompt);
 
-  /// Destructor.
-  ~CC_Wait_Cmd() override;
+  ~CC_Wait_Cmd() override = default;
 
   /// Executes the command.
   int execute() override;
 
 private:
   /// The prompt to print on the screen
-  char *prompt_;
+  std::string prompt_;
 };
 
 /**
@@ -347,8 +343,7 @@ class CC_Excep_Cmd : public CC_Command
   /// Constructor.
   explicit CC_Excep_Cmd (char const* excep);
 
-  /// Destructor.
-  ~CC_Excep_Cmd() override;
+  ~CC_Excep_Cmd() override = default;
 
   /**
    * Executes the command. Checks to see if the excep_ class variable is set,
@@ -359,7 +354,7 @@ class CC_Excep_Cmd : public CC_Command
 
 private:
   /// The string representation of the expected exception
-  char *ex_;
+  std::string ex_;
 };
 
 /**
@@ -399,15 +394,14 @@ public:
   /// Constructor.
   explicit CC_Print_Cmd (char const* message);
 
-  /// Destructor.
-  ~CC_Print_Cmd() override;
+  ~CC_Print_Cmd() override = default;
 
   /// Executes the command.
   int execute() override;
 
 private:
   /// Holds the message to print
-  char *msg_;
+  std::string msg_;
 };
 
 /**
@@ -425,8 +419,7 @@ public:
   /// Constructor
   explicit CC_Lookup_Cmd (char const* lock_set_name);
 
-  /// Destructor
-  ~CC_Lookup_Cmd() override;
+  ~CC_Lookup_Cmd() override = default;
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and sets the cc_lockset_ variable.
@@ -434,47 +427,7 @@ public:
 
 private:
   /// The name to look up in the naming service.
-  char *name_;
-};
-
-/**
- * @class CC_CommandElem
- *
- * @brief Defines a class for a command element
- *
- * This class implements a command element used in the command list
- * below. The class is a simple tupple holding a pointer to the command
- * and a pointer to the next element in the list.
- */
-class CC_CommandElem
-{
- public:
-  /// Constructor.
-  CC_CommandElem (CC_Command *cmd, CC_CommandElem *next);
-
-  /// Destructor.
-  ~CC_CommandElem() = default;
-
-  CC_CommandElem (CC_CommandElem const&) = delete;
-  CC_CommandElem (CC_CommandElem&&) = delete;
-  CC_CommandElem& operator= (CC_CommandElem const&) = delete;
-  CC_CommandElem& operator= (CC_CommandElem&&) = delete;
-
-  /// Returns a pointer to the command in this element
-  CC_Command *GetCommand();
-
-  /// Returns the pointer to the next element
-  CC_CommandElem *GetNext();
-
-  /// Sets the next pointer
-  void SetNext(CC_CommandElem *next);
-
- private:
-  /// Pointer to the next element
-  CC_CommandElem *next_;
-
-  /// Pointer to the command element
-  CC_Command *cmd_;
+  std::string name_;
 };
 
 /**
@@ -510,11 +463,8 @@ class CC_CommandList
   void setrepeat(int times);
 
  private:
-  ///  The head of the command list
-  CC_CommandElem *head_;
-
-  /// The last inserted element
-  CC_CommandElem *last_;
+  /// Takes ownership of the command.
+  std::vector<std::unique_ptr<CC_Command>> commands_;
 
   /// The number of times the script should be repeated
   int times_;
