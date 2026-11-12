@@ -5,6 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <atomic>
+#include <cstring>
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
@@ -485,7 +486,7 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     // only used to validate assert, which is
     // compiled out for nondebug builds.
     ACE_ASSERT (id != 0);
-    ACE_ASSERT (ACE_OS::strcmp (infos[index].constraint_expression.constraint_expr.in (), constraint_expr) == 0);
+    ACE_ASSERT (std::strcmp (infos[index].constraint_expression.constraint_expr.in (), constraint_expr) == 0);
 
     CosNotification::EventTypeSeq& events = infos[index].constraint_expression.event_types;
     ACE_UNUSED_ARG (events);
@@ -493,8 +494,8 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     // compiled out for nondebug builds.
     ACE_ASSERT (events.length () == 1);
 
-    ACE_ASSERT (ACE_OS::strcmp (events[0].domain_name.in (), DOMAIN_NAME) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (events[0].type_name.in (), TYPE_NAME) == 0);
+    ACE_ASSERT (std::strcmp (events[0].domain_name.in (), DOMAIN_NAME) == 0);
+    ACE_ASSERT (std::strcmp (events[0].type_name.in (), TYPE_NAME) == 0);
   }
 
   if (modify_constraint_)
