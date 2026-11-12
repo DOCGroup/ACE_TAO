@@ -93,12 +93,12 @@ static void TestGenAddr()
   ACE_TEST_ASSERT(ga6.valid() == 1);
   GenAddress ga7("01234567.89ABcDeF0123"); // ipx address
   ACE_TEST_ASSERT(ga7.valid() == 1);
-  IpAddress ip("1.2.3.4");
+  IpAddress const ip ("1.2.3.4");
   ACE_TEST_ASSERT(ip.valid() == 1);
   GenAddress ga8(ip); // Address conversion
   ACE_TEST_ASSERT(ga8.valid() == 1);
 
-  char const *ptr = static_cast<char const *> (ga8);
+  char const * const ptr = static_cast<char const *> (ga8);
 
   ACE_TEST_ASSERT(ga1 != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga1(\"1.2.3.4\") [%s]\n",
@@ -129,18 +129,15 @@ static void TestGenAddr()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga5=ga3(\"localhost\") [%s]\n",
     ga5.to_string()));
 
-  addr_type a = ga2.get_type();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga2.get_type(\"0\") [%d]\n",
-     a));
+     ga2.get_type()));
   // udp address string
-  a = ga6.get_type();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga2.get_type(\"2\") [%d]\n",
-     a));
+     ga6.get_type()));
 
   // udp address string
-  a = ga7.get_type();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress:ga2.get_type(\"1\") [%d]\n",
-     a));
+     ga7.get_type()));
 
   ga1.reset ();
 }
@@ -215,22 +212,22 @@ static void TestIpAddress()
 
   // other routines
   int status = 1;
-  char const *ptr = ia5.resolve_hostname(status);
-  ACE_TEST_ASSERT(ptr != nullptr);
-  ACE_TEST_ASSERT(status == 0 ? ptr[0] != '\0' : ptr[0] == '\0');
+  char const * const ia5_hostname = ia5.resolve_hostname(status);
+  ACE_TEST_ASSERT(ia5_hostname != nullptr);
+  ACE_TEST_ASSERT(status == 0 ? ia5_hostname[0] != '\0' : ia5_hostname[0] == '\0');
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia5.resolve_hostname():(\"\") [%s]\n",
-    ptr));
+    ia5_hostname));
 
   // now lets try one we setup with a hostname
-  ptr = ia3.resolve_hostname(status);
+  char const * const localhost_hostname = ia3.resolve_hostname(status);
   ACE_TEST_ASSERT(status == 0);
-  ACE_TEST_ASSERT(ptr != nullptr);
+  ACE_TEST_ASSERT(localhost_hostname != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia3.resolve_hostname()(\"localhost\") [%s]\n",
-    ptr));
+    localhost_hostname));
 
-   ptr = static_cast<char const *> (ia5);
+  char const * const ia5_string = static_cast<char const *> (ia5);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:(const char *)(\"255.255.255.255\") [%s]\n",
-    ptr));
+    ia5_string));
 
    ia2 = ia3;
    ACE_TEST_ASSERT(ia2 == ia3);
@@ -394,7 +391,7 @@ static void TestIpxAddress()
   ACE_TEST_ASSERT(mac.valid() == 1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa4:get_hostid(\"01:23:45:67:89:ab\") [%s]\n", mac.to_string()));
 
-  char const *ptr = static_cast<char const *> (xa7);
+  char const * const ptr = static_cast<char const *> (xa7);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa7-ptr(\"01234567-012345-6789AB\") [%s]\n", ptr));
 }
 
@@ -461,12 +458,12 @@ static void TestMacAddress()
     ma4.to_string()));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MacAddress:ma5(\"\") [%s]\n",
     ma5.to_string()));
-  char const *ptr = static_cast<char const *> (ma5);
+  char const * const ptr = static_cast<char const *> (ma5);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MacAddress:ma5(\"\") [%s]\n",
     ptr));
 
   // hashFunction crashes if not usedwith valid fn
-  int x = ma2.hashFunction();
+  int const x = ma2.hashFunction();
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MacAddress:ma2.hashFunction(\"483201\") [%d]\n",
     x));

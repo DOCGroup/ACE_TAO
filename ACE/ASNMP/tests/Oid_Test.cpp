@@ -130,8 +130,8 @@ static void OidTest()
   // compare methods
   ACE_TEST_ASSERT(d7.left_comparison( d7.length(), d7) == 0);
   ACE_TEST_ASSERT(d4.right_comparison( d4.length(), d4) == 0);
-  Oid d9 ("1.3.4");
-  Oid d10 ("1.3.5");
+  Oid const d9 ("1.3.4");
+  Oid const d10 ("1.3.5");
   ACE_TEST_ASSERT (d4.right_comparison (2, d9) == 0);
   ACE_TEST_ASSERT (d4.right_comparison (2, d10) == -1);
   ACE_TEST_ASSERT (d10.right_comparison (2, d4) == 1);

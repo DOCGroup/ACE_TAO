@@ -100,7 +100,7 @@ static void TestSnmpTarget()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c1(\"\") [%s]\n",
     c1.to_string()));
 
-  IpAddress ip("127.0.0.1");
+  IpAddress const ip ("127.0.0.1");
   UdpTarget c2 {UdpAddress (ip)};
   ACE_TEST_ASSERT(c2.valid() == 1);
   c2.get_address (ga);
