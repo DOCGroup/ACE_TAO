@@ -3,6 +3,8 @@
 #include "QoS_Session_Impl.h"
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QoS_Session_Factory)
@@ -45,15 +47,15 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
                     ACE_GQoS_Session,
                     nullptr);
 
-  if (this->add_session (qos_session) == -1)
+  std::unique_ptr<ACE_QoS_Session> qos_session_owner (qos_session);
+  if (this->add_session (qos_session_owner.get ()) == -1)
     {
-      delete qos_session;
       ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Error in adding session\n")),
                         0);
     }
 
-  return qos_session;
+  return qos_session_owner.release ();
 }
 
 // Destroy the QoS Session.
