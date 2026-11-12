@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    COIOP_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_CONNECTOR_H
 #define TAO_COIOP_CONNECTOR_H
@@ -31,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Endpoint;
 class TAO_COIOP_Endpoint;
 
-// ****************************************************************
 
 /**
  * @class TAO_COIOP_Connector

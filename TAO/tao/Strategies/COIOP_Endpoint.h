@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     COIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 
 #ifndef TAO_COIOP_ENDPOINT_H
@@ -71,7 +69,6 @@ public:
   CORBA::ULong hash () override;
   //@}
 
-  // = COIOP_Endpoint-specific methods.
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.

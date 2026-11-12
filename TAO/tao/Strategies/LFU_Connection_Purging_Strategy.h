@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ================================================================
 /**
  *  @file   LFU_Connection_Purging_Strategy.h
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
-// ================================================================
 
 #ifndef TAO_LFU_PURGING_STRATEGY_H
 #define TAO_LFU_PURGING_STRATEGY_H
@@ -19,7 +17,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

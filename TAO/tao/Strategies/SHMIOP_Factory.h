@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SHMIOP_Factory.h
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SHMIOP_FACTORY_H
 #define TAO_SHMIOP_FACTORY_H
@@ -40,7 +38,6 @@ public:
 
   ~TAO_SHMIOP_Protocol_Factory () override;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 

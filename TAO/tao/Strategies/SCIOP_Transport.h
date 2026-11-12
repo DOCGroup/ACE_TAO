@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SCIOP_Transport.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-// ===================================================================
 
 #ifndef TAO_SCIOP_TRANSPORT_H
 #define TAO_SCIOP_TRANSPORT_H

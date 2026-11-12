@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SHMIOP_Connection_Handler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SHMIOP_CONNECT_H
 #define TAO_SHMIOP_CONNECT_H
@@ -27,7 +25,6 @@
 #include "tao/Connection_Handler.h"
 #include "tao/Strategies/SHMIOP_Transport.h"
 
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

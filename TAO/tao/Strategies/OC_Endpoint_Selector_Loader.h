@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   OC_Endpoint_Selector_Loader.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_OC_ENDPOINT_LOADER_H
 #define TAO_OC_ENDPOINT_LOADER_H
@@ -25,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward references
 class TAO_Optimized_Connection_Endpoint_Selector;
 
-// ****************************************************************
 
 /**
  * @class TAO_OC_Endpoint_Selector_Loader

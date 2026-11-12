@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  * @file UIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  * @author  Marina Spivak <marina@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef TAO_UIOP_ENDPOINT_H
 #define TAO_UIOP_ENDPOINT_H
@@ -66,7 +64,6 @@ public:
   CORBA::ULong hash () override;
   //@}
 
-  // = UIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
   ACE_UNIX_Addr const &object_addr () const;

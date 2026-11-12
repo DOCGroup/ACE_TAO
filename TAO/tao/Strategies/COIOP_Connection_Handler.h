@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   COIOP_Connection_Handler.h
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COIOP_CONNECTION_HANDLER_H
 #define TAO_COIOP_CONNECTION_HANDLER_H
@@ -30,7 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
 
 /**
  * @class TAO_COIOP_Connection_Handler

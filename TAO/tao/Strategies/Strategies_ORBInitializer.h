@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Strategies_ORBInitializer.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 
 #ifndef TAO_STRATEGIES_ORB_INITIALIZER_H

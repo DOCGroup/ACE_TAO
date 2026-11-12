@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SCIOP_Connection_Handler.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-// ===================================================================
 
 #ifndef TAO_SCIOP_CONNECTION_HANDLER_H
 #define TAO_SCIOP_CONNECTION_HANDLER_H
@@ -41,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_SCIOP_SVC_HANDLER =
   ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 
-// ****************************************************************
 
 /**
  * @class TAO_SCIOP_Connection_Handler

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UIOP_Connector.h
  *
@@ -9,7 +8,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_UIOP_CONNECTOR_H

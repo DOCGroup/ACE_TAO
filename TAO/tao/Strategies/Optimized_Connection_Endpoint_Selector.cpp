@@ -13,7 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
 
 ACE_Time_Value TAO_Optimized_Connection_Endpoint_Selector::timeout_;
 

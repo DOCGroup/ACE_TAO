@@ -651,8 +651,6 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (const ACE_TCHAR *option
 }
 
 
-// ****************************************************************
-
 ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
                        ACE_TEXT ("Advanced_Resource_Factory"),
                        ACE_SVC_OBJ_T,
@@ -661,5 +659,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 
-// ****************************************************************
 TAO_END_VERSIONED_NAMESPACE_DECL

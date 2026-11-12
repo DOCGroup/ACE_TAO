@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  * @file SHMIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef TAO_SHMIOP_ENDPOINT_H
 #define TAO_SHMIOP_ENDPOINT_H
@@ -87,7 +85,6 @@ public:
   CORBA::ULong hash () override;
   //@}
 
-  // = SHMIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;

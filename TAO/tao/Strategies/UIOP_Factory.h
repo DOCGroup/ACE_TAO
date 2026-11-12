@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   UIOP_Factory.h
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>Ossama Othman <othman@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_UIOP_FACTORY_H
@@ -38,7 +36,6 @@ public:
 
   ~TAO_UIOP_Protocol_Factory () override;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SCIOP_Connector.h
  *
@@ -9,7 +8,6 @@
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-//=============================================================================
 
 #ifndef TAO_SCIOP_CONNECTOR_H
 #define TAO_SCIOP_CONNECTOR_H
@@ -35,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SCIOP_Endpoint;
 
-// ****************************************************************
 
 /**
  * @class TAO_SCIOP_Connector
@@ -53,8 +50,6 @@ public:
 
   ~TAO_SCIOP_Connector () override;
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
   TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
@@ -77,8 +72,6 @@ public:
                                                            ACE_SOCK_SEQPACK_CONNECTOR>;
 
 protected:
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,

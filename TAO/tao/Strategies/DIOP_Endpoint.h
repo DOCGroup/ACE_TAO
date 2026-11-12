@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     DIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
 
 
 #ifndef TAO_DIOP_ENDPOINT_H
@@ -85,7 +83,6 @@ public:
 
   // Allocates memory and returns a copy of <this>
 
-  // = DIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;

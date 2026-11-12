@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//===========================================================================
 /**
  *  @file     SCIOP_Endpoint.h
  *
@@ -9,7 +8,6 @@
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-//==========================================================================
 
 
 #ifndef TAO_SCIOP_ENDPOINT_H
@@ -68,8 +66,7 @@ public:
 
   ~TAO_SCIOP_Endpoint () = default;
 
-  // = Implementation of abstract TAO_Endpoint methods.  See
-  // Endpoint.h for their documentation.
+  /// Implements TAO_Endpoint methods documented in Endpoint.h.
 
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
@@ -82,7 +79,6 @@ public:
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
 
-  // = SCIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;

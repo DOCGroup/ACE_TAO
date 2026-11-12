@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   UIOP_Connection_Handler.h
  *
@@ -8,7 +7,6 @@
  *   UIOP_Connect.h
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 #ifndef TAO_UIOP_CONNECTION_HANDLER_H
 #define TAO_UIOP_CONNECTION_HANDLER_H
 
@@ -30,7 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
 
 /**
  * @class TAO_UIOP_Connection_Handler

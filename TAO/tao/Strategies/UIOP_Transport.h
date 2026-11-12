@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   UIOP_Transport.h
  *
@@ -8,7 +7,6 @@
  *  @author Ossama Othman <ossama@ece.uci.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_UIOP_TRANSPORT_H
 #define TAO_UIOP_TRANSPORT_H

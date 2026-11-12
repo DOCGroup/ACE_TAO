@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SHMIOP_Transport.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SHMIOP_TRANSPORT_H
 #define TAO_SHMIOP_TRANSPORT_H

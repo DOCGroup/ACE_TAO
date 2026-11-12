@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SHMIOP_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_SHMIOP_CONNECTOR_H
@@ -37,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SHMIOP_Endpoint;
 
-// ****************************************************************
 
 /**
  * @class TAO_SHMIOP_Connector

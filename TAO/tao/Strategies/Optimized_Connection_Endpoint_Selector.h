@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Optimized_Connection_Endpoint_Selector.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_OPTIMIZED_CONNECTION_ENDPOINT_SELECTOR_H
 #define TAO_OPTIMIZED_CONNECTION_ENDPOINT_SELECTOR_H

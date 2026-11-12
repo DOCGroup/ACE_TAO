@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIOP_Profile.h
  *
@@ -9,7 +8,6 @@
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_UIOP_PROFILE_H

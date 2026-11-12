@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   DIOP_Factory.h
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
 
 
 #ifndef TAO_DIOP_FACTORY_H
@@ -39,7 +37,6 @@ public:
 
   ~TAO_DIOP_Protocol_Factory () override = default;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 

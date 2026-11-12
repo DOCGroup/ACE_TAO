@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// ===================================================================
 /**
  *  @file   SHMIOP_Acceptor.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SHMIOP_ACCEPTOR_H
 #define TAO_SHMIOP_ACCEPTOR_H

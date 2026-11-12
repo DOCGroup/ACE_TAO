@@ -40,7 +40,6 @@ public:
 
   ~TAO_Advanced_Resource_Factory () override;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 
