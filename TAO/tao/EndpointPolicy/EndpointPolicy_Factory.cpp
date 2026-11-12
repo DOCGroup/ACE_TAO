@@ -34,7 +34,7 @@ TAO_EndpointPolicy_Factory::create_policy (
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-      TAO_Acceptor_Registry & registry =
+      TAO_Acceptor_Registry const& registry =
         this->orb_core_->lane_resources ().acceptor_registry ();
 
       CORBA::ULong const num_eps = endpoint_list->length ();
