@@ -10,14 +10,12 @@ TAO::CSD::TP_Request::TP_Request(PortableServer::Servant servant,
   this->servant_->_add_ref ();
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Request::prepare_for_queue()
 {
   this->prepare_for_queue_i();
 }
-
 
 ACE_INLINE
 PortableServer::Servant
@@ -26,7 +24,6 @@ TAO::CSD::TP_Request::servant()
   // Used for chaining so we do not return a new "copy".
   return this->servant_.in();
 }
-
 
 ACE_INLINE
 bool
@@ -43,7 +40,6 @@ TAO::CSD::TP_Request::is_ready() const
   return !this->servant_state_->busy_flag();
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Request::mark_as_busy()
@@ -53,7 +49,6 @@ TAO::CSD::TP_Request::mark_as_busy()
       this->servant_state_->busy_flag(true);
     }
 }
-
 
 ACE_INLINE
 void
@@ -65,7 +60,6 @@ TAO::CSD::TP_Request::mark_as_ready()
     }
 }
 
-
 ACE_INLINE
 bool
 TAO::CSD::TP_Request::is_target(PortableServer::Servant servant)
@@ -74,15 +68,12 @@ TAO::CSD::TP_Request::is_target(PortableServer::Servant servant)
   return (servant == this->servant_.in());
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Request::dispatch()
 {
   this->dispatch_i();
-
 }
-
 
 ACE_INLINE
 void

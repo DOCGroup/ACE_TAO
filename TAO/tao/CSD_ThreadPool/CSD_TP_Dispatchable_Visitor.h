@@ -54,7 +54,7 @@ namespace TAO
 
       /// Reset this visitor object in order to re-use it for another
       /// visitation of the request queue.  This sets the visitor's "result"
-      /// (the TP_Request* data member) to its default value (a nil handle).
+      /// (the TP_Request* data member) to its default value (a null handle).
       void reset();
 
       /// Returns true to continue visitation.  Returns false to stop
@@ -63,10 +63,9 @@ namespace TAO
       /// remove_flag alone otherwise.
       bool visit_request(TP_Request* request, bool& remove_flag) override;
 
-      /// This returns a "copy" of the located request, or 0 if no request
+      /// This returns a "copy" of the located request, or nullptr if no request
       /// was located.
       TP_Request* request();
-
 
     private:
       /// A handle to the located request.

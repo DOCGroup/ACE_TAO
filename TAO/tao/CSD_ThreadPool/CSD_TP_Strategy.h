@@ -21,7 +21,6 @@
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -159,7 +158,6 @@ namespace TAO
       */
       TP_Servant_State::HandleType get_servant_state
                                       (PortableServer::Servant servant);
-
 
       /// This is the active object used by the worker threads.
       /// The request queue is owned/managed by the task object.

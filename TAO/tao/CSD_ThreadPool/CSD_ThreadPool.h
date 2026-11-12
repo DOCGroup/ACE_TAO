@@ -12,7 +12,6 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Export.h"
 #include "tao/Versioned_Namespace.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

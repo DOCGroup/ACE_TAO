@@ -30,7 +30,6 @@ namespace TAO
     using TP_Custom_Request_Operation_Handle =
       TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request_Operation>;
 
-
     /**
      * @class TP_Custom_Request_Operation
      *

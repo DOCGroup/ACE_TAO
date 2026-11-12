@@ -20,7 +20,6 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
 {
 }
 
-
 ACE_INLINE
 bool
 TAO::CSD::TP_Collocated_Synch_Request::wait()

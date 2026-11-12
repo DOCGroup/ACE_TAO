@@ -9,7 +9,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Core.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -66,7 +65,6 @@ TAO_CSD_ThreadPool::init ()
         "initializing the CSD Framework");
       return 1;
     }
-
 
   return ACE_Service_Config::process_directive (
             ace_svc_desc_TAO_CSD_TP_Strategy_Factory);

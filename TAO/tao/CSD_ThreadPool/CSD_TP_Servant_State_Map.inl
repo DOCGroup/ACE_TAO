@@ -17,7 +17,6 @@ TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant)
   return value._retn();
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant)
@@ -35,7 +34,6 @@ TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant)
 
   ACE_ASSERT (result == 0);
 }
-
 
 ACE_INLINE
 void

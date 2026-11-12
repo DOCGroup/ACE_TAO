@@ -18,7 +18,6 @@
 
 #include "tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

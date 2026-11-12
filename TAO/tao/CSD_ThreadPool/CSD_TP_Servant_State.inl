@@ -8,7 +8,6 @@ TAO::CSD::TP_Servant_State::busy_flag() const
   return this->busy_flag_;
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Servant_State::busy_flag(bool new_value)

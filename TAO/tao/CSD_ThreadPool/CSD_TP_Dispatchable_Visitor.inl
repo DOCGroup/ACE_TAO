@@ -10,7 +10,6 @@ TAO::CSD::TP_Dispatchable_Visitor::reset()
   this->request_ = nullptr;
 }
 
-
 ACE_INLINE
 TAO::CSD::TP_Request*
 TAO::CSD::TP_Dispatchable_Visitor::request()

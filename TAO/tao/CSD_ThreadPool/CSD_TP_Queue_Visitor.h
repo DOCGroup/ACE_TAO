@@ -25,7 +25,6 @@ namespace TAO
   {
     class TP_Request;
 
-
     /**
      * @class TP_Queue_Visitor
      *

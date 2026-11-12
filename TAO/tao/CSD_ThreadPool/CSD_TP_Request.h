@@ -31,7 +31,6 @@ namespace TAO
 
     class TP_Queue;
 
-
     /**
      * @class TP_Request
      *
