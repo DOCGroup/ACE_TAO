@@ -15,6 +15,7 @@
 #include "tao/debug.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
+#include <algorithm>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -305,9 +306,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
   ACE_NEW_RETURN (stack_size_array,
                   size_t[count],
                   -1);
-  for (size_t index {}; index != count; ++index)
-    stack_size_array[index] =
-      this->definition_.stack_size_;
+  std::fill_n (stack_size_array, count, this->definition_.stack_size_);
 
   // Make sure the dynamically created stack size array is properly
   // deleted.

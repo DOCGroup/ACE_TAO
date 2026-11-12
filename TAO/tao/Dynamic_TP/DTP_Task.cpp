@@ -1,5 +1,6 @@
 #include "tao/Dynamic_TP/DTP_Task.h"
 
+#include <algorithm>
 #include <memory>
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -179,10 +180,7 @@ TAO_DTP_Task::open (void * /* args */)
   else
     {
       std::unique_ptr<size_t[]> stack_sz_arr {std::make_unique<size_t[]> (num)};
-      for (int z {}; z < num; ++z)
-        {
-          stack_sz_arr[z] = this->thread_stack_size_;
-        }
+      std::fill_n (stack_sz_arr.get (), num, this->thread_stack_size_);
 
       if (this->activate (THR_NEW_LWP | THR_DETACHED,
                           num,

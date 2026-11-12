@@ -40,7 +40,7 @@ class TAO_DTP_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_DTP_ORBInitializer ();
+  TAO_DTP_ORBInitializer () = default;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
