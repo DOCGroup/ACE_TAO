@@ -123,7 +123,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 {
   // Check for an invalid native priority
   if ((this->min_ < this->max_ && (native_priority < this->min_ || native_priority > this->base_native_priority_ )) ||
-      (this->min_ > this->max_ && (native_priority < this->base_corba_priority_ || native_priority > this->min_)))
+      (this->min_ > this->max_ && (native_priority < this->base_native_priority_ || native_priority > this->min_)))
   {
      if (TAO_debug_level > 2)
      {
@@ -157,53 +157,20 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
      }
      else
      {
-        // Start at the max priority and search until we reach the base priority
-        int last_priority = this->base_native_priority_;
-        while (true)
-        {
-           int const previous_priority = ACE_Sched_Params::previous_priority (this->policy_,
-                                                                              last_priority,
-                                                                              ACE_SCOPE_THREAD);
-           last_priority = previous_priority;
+        int current_priority = this->base_native_priority_;
+        int priority_ndx {};
+        while (current_priority != native_priority && current_priority != this->min_)
+          {
+            current_priority = ACE_Sched_Params::previous_priority (this->policy_,
+                                                                    current_priority,
+                                                                    ACE_SCOPE_THREAD);
+            ++priority_ndx;
+          }
 
-           if (last_priority == this->min_)
-           {
-              break;
-           }
-
-           if ( this->min_ < this->max_ )
-           {
-              if (base_native_priority_ >= previous_priority) break;
-           }
-           else
-           {
-              if (base_native_priority_ <= previous_priority) break;
-           }
-        }
-
-        int priority_ndx = 1;
-        while (true)
-        {
-           if (last_priority == this->min_)
-           {
-              break;
-           }
-
-           if ( this->min_ < this->max_ )
-           {
-              if (native_priority >= last_priority) break;
-           }
-           else
-           {
-              if (native_priority <= last_priority) break;
-           }
-
-           int const previous_priority = ACE_Sched_Params::previous_priority (this->policy_,
-                                                                              last_priority,
-                                                                              ACE_SCOPE_THREAD);
-           last_priority = previous_priority;
-           ++priority_ndx;
-        }
+        if (current_priority != native_priority)
+          {
+            return false;
+          }
 
         corba_priority = static_cast<RTCORBA::Priority>
           (base_corba_priority_ - priority_ndx);

@@ -9,7 +9,7 @@ test_non_contiguous_priority_mapping ()
 {
   int const policy = ACE_SCHED_FIFO;
   int const base_native_priority = ACE_Sched_Params::priority_max (policy);
-  int const base_corba_priority = RTCORBA::maxPriority;
+  int const base_corba_priority = 100;
   TAO_Multi_Priority_Mapping mapping (base_native_priority,
                                       base_corba_priority,
                                       1,
