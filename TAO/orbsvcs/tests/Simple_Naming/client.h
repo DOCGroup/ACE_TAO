@@ -1,5 +1,8 @@
 /* -*- C++ -*- */
 
+#ifndef TAO_ORBSVCS_TESTS_SIMPLE_NAMING_CLIENT_H
+#define TAO_ORBSVCS_TESTS_SIMPLE_NAMING_CLIENT_H
+
 //=============================================================================
 /**
  *  @file    client.h
@@ -9,7 +12,6 @@
  *  @author   Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
@@ -46,7 +48,7 @@ public:
   Naming_Test &operator= (Naming_Test &&) = delete;
 
 protected:
-  Naming_Test (PortableServer::POA_ptr poa);
+  explicit Naming_Test (PortableServer::POA_ptr poa);
 
   PortableServer::POA_var poa_ {};
 };
@@ -62,7 +64,7 @@ protected:
 class Simple_Test : public Naming_Test
 {
 public:
-  Simple_Test (PortableServer::POA_ptr poa);
+  explicit Simple_Test (PortableServer::POA_ptr poa);
 
   /// Execute the simple test code.
   int execute (TAO_Naming_Client &root_context) override;
@@ -138,7 +140,7 @@ class Tree_Test : public Naming_Test
 {
 public:
   /// Execute the tree test code.
-  Tree_Test (PortableServer::POA_ptr poa);
+  explicit Tree_Test (PortableServer::POA_ptr poa);
   int execute (TAO_Naming_Client &root_context) override;
 };
 
@@ -158,7 +160,7 @@ class Iterator_Test : public Naming_Test
 {
 public:
   /// Execute the iterator test code.
-  Iterator_Test (PortableServer::POA_ptr poa);
+  explicit Iterator_Test (PortableServer::POA_ptr poa);
   int execute (TAO_Naming_Client &root_context) override;
 };
 
@@ -185,7 +187,7 @@ class Exceptions_Test : public Naming_Test
 {
 public:
   /// Execute the exceptions test code.
-  Exceptions_Test (PortableServer::POA_ptr poa);
+  explicit Exceptions_Test (PortableServer::POA_ptr poa);
   int execute (TAO_Naming_Client &root_context) override;
 
 private:
@@ -216,7 +218,7 @@ class Destroy_Test : public Naming_Test
 {
 public:
   /// Execute the destroy test code.
-  Destroy_Test (PortableServer::POA_ptr poa);
+  explicit Destroy_Test (PortableServer::POA_ptr poa);
   int execute (TAO_Naming_Client &root_context) override;
 
 private:
@@ -244,9 +246,6 @@ public:
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa,
                          File_Handle ior_output_file);
-
-  /// Destructor.
-  ~Persistent_Test_Begin () override = default;
 
   /// Execute the persistent test (part 1) code.
   int execute (TAO_Naming_Client &root_context) override;
@@ -280,9 +279,6 @@ public:
                        PortableServer::POA_ptr poa,
                        ACE_TCHAR const *ior);
 
-  /// Destructor.
-  ~Persistent_Test_End () override = default;
-
   /// Execute the persistent test (part 2).
   int execute (TAO_Naming_Client &root_context) override;
 
@@ -311,9 +307,6 @@ public:
   Persistent_List_Test (CORBA::ORB_ptr orb,
                         PortableServer::POA_ptr poa);
 
-  /// Destructor.
-  ~Persistent_List_Test () override = default;
-
   /// Execute the persistent test (part 3).
   int execute (TAO_Naming_Client &root_context) override;
 
@@ -337,11 +330,7 @@ private:
 class CosNaming_Client
 {
 public:
-  /// Constructor.
   CosNaming_Client () = default;
-
-  /// Destructor.
-  ~CosNaming_Client () = default;
 
   /// Execute client example code.
   int run ();
@@ -381,3 +370,5 @@ private:
   /// Our naming client helper class.
   TAO_Naming_Client naming_client_;
 };
+
+#endif /* TAO_ORBSVCS_TESTS_SIMPLE_NAMING_CLIENT_H */
