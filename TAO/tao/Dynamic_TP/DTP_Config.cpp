@@ -224,7 +224,7 @@ TAO_DTP_Config::parse_long (int &curarg,
 
   ACE_TCHAR *err {};
   value = ACE_OS::strtol (str, &err, 10);
-  if (err && *err != 0)
+  if (err != nullptr && *err != '\0')
     {
       this->report_option_value_error (match, str);
       return -1;
