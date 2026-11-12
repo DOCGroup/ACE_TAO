@@ -7,11 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTScheduler_Loader::TAO_RTScheduler_Loader ()
-  : initialized_ (false)
-{
-}
-
 TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader () = default;
 
 int
@@ -29,7 +24,7 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
 
   this->initialized_ = true;
 
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+  ACE_Service_Gestalt * const gestalt = ACE_Service_Config::current ();
 
   ACE_Service_Object * const rts_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (

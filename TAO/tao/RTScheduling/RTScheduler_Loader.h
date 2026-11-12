@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
 {
 public:
-  TAO_RTScheduler_Loader ();
+  TAO_RTScheduler_Loader () = default;
 
   ~TAO_RTScheduler_Loader () override;
 
