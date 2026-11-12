@@ -73,7 +73,7 @@ namespace TAO
       bool &wait_occurred_restart_call)
     {
       // Acquire the object adapter lock first.
-      int result = this->object_adapter_->lock ().acquire ();
+      int const result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
         // Locking error.
         throw ::CORBA::OBJ_ADAPTER ();
@@ -359,7 +359,7 @@ namespace TAO
       //
       // Note that the object adapter lock is acquired before
       // <POA::outstanding_requests_> is decreased.
-      CORBA::ULong outstanding_requests =
+      CORBA::ULong const outstanding_requests =
         this->poa_->decrement_outstanding_requests ();
 
       // Check if all pending requests are over.

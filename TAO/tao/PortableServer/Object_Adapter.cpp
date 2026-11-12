@@ -409,9 +409,9 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
 #if (TAO_HAS_MINIMUM_POA == 0) &&  !defined (CORBA_E_MICRO)
 
-  iteratable_poa_name ipn (folded_name);
+  iteratable_poa_name const ipn (folded_name);
   iteratable_poa_name::iterator iterator = ipn.begin ();
-  iteratable_poa_name::iterator end = ipn.end ();
+  iteratable_poa_name::iterator const end = ipn.end ();
 
   TAO_Root_POA *parent = this->root_;
   if (parent == nullptr || parent->name () != *iterator)
@@ -555,8 +555,8 @@ TAO_Object_Adapter::open ()
                     TAO_POAManager_Factory (*this),
                     CORBA::NO_MEMORY ());
 
-  ::CORBA::PolicyList policy;
-  PortableServer::POAManager_var poa_manager
+  ::CORBA::PolicyList const policy;
+  PortableServer::POAManager_var const poa_manager
     = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME, policy);
 #else
   PortableServer::POAManager_ptr poa_manager_ptr;
@@ -604,7 +604,7 @@ TAO_Object_Adapter::open ()
   policies.validate_policies (this->validator (), this->orb_core_);
 
   // Construct a new POA
-  TAO_Root_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
+  TAO_Root_POA::String const root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   this->root_ =
     this->servant_dispatcher_->create_Root_POA (root_poa_name,
                                                 poa_manager.in (),
@@ -620,7 +620,7 @@ TAO_Object_Adapter::open ()
   this->root_->_add_ref ();
 
   // Lock access for the duration of this transaction.
-  TAO::Portable_Server::POA_Guard poa_guard (*this->root_);
+  TAO::Portable_Server::POA_Guard const poa_guard (*this->root_);
 
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -1020,7 +1020,7 @@ TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (
   TAO_Root_POA *poa,
   poa_name_out system_name)
 {
-  int result =
+  int const result =
     this->object_adapter_->persistent_poa_name_map_->bind (folded_name, poa);
   if (result == 0)
     ACE_NEW_RETURN (system_name,
@@ -1069,11 +1069,11 @@ TAO_Object_Adapter::poa_name_iterator::operator!= (const poa_name_iterator &rhs)
 ACE_CString
 TAO_Object_Adapter::poa_name_iterator::operator* () const
 {
-  CORBA::ULong start_at =
+  CORBA::ULong const start_at =
     this->last_separator_ +
     TAO_Root_POA::name_separator_length ();
 
-  CORBA::ULong how_many =
+  CORBA::ULong const how_many =
     this->position_
     - this->last_separator_
     - TAO_Root_POA::name_separator_length ();

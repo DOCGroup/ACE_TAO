@@ -83,7 +83,7 @@ TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA ()
 {
-  CORBA::Object_var object = TAO_ORB_Core_instance ()->root_poa ();
+  CORBA::Object_var const object = TAO_ORB_Core_instance ()->root_poa ();
 
   return PortableServer::POA::_narrow (object.in ());
 }
@@ -451,9 +451,9 @@ TAO_ServantBase::_create_stub ()
     }
   else
     {
-      PortableServer::POA_var poa = this->_default_POA ();
+      PortableServer::POA_var const poa = this->_default_POA ();
 
-      CORBA::Object_var object = poa->servant_to_reference (this);
+      CORBA::Object_var const object = poa->servant_to_reference (this);
 
       // Get the stub object
       stub = object->_stubobj ();

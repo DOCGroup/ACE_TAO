@@ -31,7 +31,7 @@ TAO_POA_Policy_Set::add_client_exposed_fixed_policies (
        i < this->num_policies ();
        ++i)
     {
-      CORBA::Policy_var policy = this->get_policy_by_index (i);
+      CORBA::Policy_var const policy = this->get_policy_by_index (i);
 
       // If this policy is client exposed, add it to the list.
       if (policy->_tao_scope () & TAO_POLICY_CLIENT_EXPOSED)
@@ -60,7 +60,7 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
        i < this->impl_.num_policies ();
        ++i)
     {
-      CORBA::Policy_var policy = this->impl_.get_policy_by_index (i);
+      CORBA::Policy_var const policy = this->impl_.get_policy_by_index (i);
 
       CORBA::PolicyType const type = policy->policy_type ();
 

@@ -21,7 +21,7 @@ namespace PortableServer
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
-    CORBA::ULong buffer_size = static_cast <CORBA::ULong>
+    CORBA::ULong const buffer_size = static_cast <CORBA::ULong>
                                            (std::strlen (string));
 
     // Create the buffer for the Id
@@ -36,7 +36,7 @@ namespace PortableServer
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
-                                              1),
+                                              true),
                     nullptr);
 
     return id;

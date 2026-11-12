@@ -47,7 +47,7 @@ namespace TAO
       public ACE_Service_Object
     {
     public:
-      ~ImR_Client_Adapter () override;
+      ~ImR_Client_Adapter () override = default;
 
       /// ImplRepo helper method, notify the ImplRepo on startup
       virtual void imr_notify_startup (TAO_Root_POA *poa) = 0;

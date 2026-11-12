@@ -78,7 +78,7 @@ TAO_POAManager_Factory::create_POAManager (
 TAO_POAManager_Factory::list ()
 {
   ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
-  CORBA::ULong number_of_poamanagers = static_cast <CORBA::ULong>
+  CORBA::ULong const number_of_poamanagers = static_cast <CORBA::ULong>
                                               (this->poamanager_set_.size ());
   ACE_NEW_THROW_EX (poamanagers,
                     PortableServer::POAManagerFactory::POAManagerSeq (
@@ -111,7 +111,7 @@ TAO_POAManager_Factory::find (const char * id)
        ++iterator)
     {
       ::PortableServer::POAManager_ptr manager = *iterator;
-      CORBA::String_var poamanagerid = manager->get_id ();
+      CORBA::String_var const poamanagerid = manager->get_id ();
 
       if (std::strcmp (id, poamanagerid.in()) == 0)
         {

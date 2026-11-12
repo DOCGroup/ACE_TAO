@@ -21,7 +21,7 @@ namespace TAO
     RequestProcessingStrategyServantLocator::strategy_cleanup()
     {
       {
-        Non_Servant_Upcall non_servant_upcall (*this->poa_);
+        Non_Servant_Upcall const non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
         this->servant_locator_ = PortableServer::ServantLocator::_nil ();
@@ -162,7 +162,7 @@ namespace TAO
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           try

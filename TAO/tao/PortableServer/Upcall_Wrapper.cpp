@@ -93,7 +93,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
         // Don't bother performing the upcall if an interceptor caused a
         // location forward.
-        CORBA::Object_var forward_to = server_request.forward_location ();
+        CORBA::Object_var const forward_to = server_request.forward_location ();
         if (!server_request.is_forwarded ())
           {
             if (interceptor_adapter != nullptr)
@@ -127,7 +127,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           // emptied by the send_other() interception point.  Note that
           // we'd still need to avoid resetting the reply status to
           // SUCCESSFUL, however.
-          CORBA::Object_var forward_to_after = server_request.forward_location ();
+          CORBA::Object_var const forward_to_after = server_request.forward_location ();
           if (!server_request.is_forwarded ())
             {
               // No location forward by interceptors and successful upcall.

@@ -35,7 +35,7 @@ class TAO_PortableServer_Export Collocated_Arguments_Converter :
   public ACE_Service_Object
 {
 public:
-  ~Collocated_Arguments_Converter () override;
+  ~Collocated_Arguments_Converter () override = default;
 
   virtual void convert_request (TAO_ServerRequest & server_request,
                                 TAO::Argument * const args[],

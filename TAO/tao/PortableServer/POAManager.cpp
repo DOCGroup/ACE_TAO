@@ -152,7 +152,7 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 void
 TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state)
 {
-  PortableInterceptor::AdapterState adapter_state =
+  PortableInterceptor::AdapterState const adapter_state =
     static_cast<PortableInterceptor::AdapterState> (state);
 
   TAO_IORInterceptor_Adapter *ior_adapter =

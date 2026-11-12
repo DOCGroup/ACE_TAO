@@ -27,7 +27,7 @@ namespace TAO
       : public ACE_Service_Object
     {
     public:
-      virtual ~StrategyFactory ();
+      ~StrategyFactory () override = default;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

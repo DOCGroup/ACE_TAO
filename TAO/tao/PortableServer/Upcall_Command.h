@@ -36,7 +36,7 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Command
   {
   public:
-    virtual ~Upcall_Command ();
+    virtual ~Upcall_Command () = default;
 
     /// Execute the upcall.
     virtual void execute () = 0;

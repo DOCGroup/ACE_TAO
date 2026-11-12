@@ -30,7 +30,7 @@ namespace PortableServer
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
-                                              1),
+                                              true),
                     nullptr);
 
     return id;

@@ -341,7 +341,7 @@ namespace TAO
       bool &wait_occurred_restart_call)
     {
       bool deactivated {};
-      int servant_in_map =
+      int const servant_in_map =
         this->active_object_map_->is_servant_in_map (servant, deactivated);
 
       if (!servant_in_map)
@@ -385,7 +385,7 @@ namespace TAO
       bool &wait_occurred_restart_call)
     {
       bool deactivated {};
-      bool user_id_in_map =
+      bool const user_id_in_map =
         this->active_object_map_->is_user_id_in_map (id,
                                                       priority,
                                                       priorities_match,
@@ -446,7 +446,7 @@ namespace TAO
       // cannot remove entries while iterating through the map.
       std::vector<TAO_Active_Object_Map_Entry *> map_entries;
       map_entries.reserve (this->active_object_map_->current_size ());
-      TAO_Active_Object_Map::user_id_map::iterator end
+      TAO_Active_Object_Map::user_id_map::iterator const end
         = this->active_object_map_->user_id_map_->end ();
 
       for (TAO_Active_Object_Map::user_id_map::iterator iter
@@ -454,7 +454,7 @@ namespace TAO
             iter != end;
             ++iter)
         {
-          TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
+          TAO_Active_Object_Map::user_id_map::value_type const map_pair = *iter;
           TAO_Active_Object_Map_Entry *active_object_map_entry = map_pair.second ();
 
           if (!active_object_map_entry->deactivated_)
@@ -533,7 +533,7 @@ namespace TAO
           this->poa_->servant_activated_hook (servant, user_id_bound.in ());
 
           // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // If this operation causes the object to be activated, _add_ref
@@ -613,7 +613,7 @@ namespace TAO
           this->poa_->servant_activated_hook (servant, system_id_bound.in ());
 
           // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // If this operation causes the object to be activated, _add_ref
@@ -683,7 +683,7 @@ namespace TAO
           throw PortableServer::POA::WrongPolicy ();
         }
 
-      bool may_activate =
+      bool const may_activate =
         this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
@@ -719,7 +719,7 @@ namespace TAO
       this->poa_->servant_activated_hook (servant, user_id.in ());
 
       // ATTENTION: Trick locking here, see class header for details
-      Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall const non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // The implementation of activate_object will invoke _add_ref at
@@ -757,7 +757,7 @@ namespace TAO
       // active in this POA (there is a servant bound to it in the Active
       // Object Map), the ObjectAlreadyActive exception is raised.
       bool priorities_match {true};
-      bool result =
+      bool const result =
         this->is_user_id_in_map (id,
                                  priority,
                                  priorities_match,
@@ -824,7 +824,7 @@ namespace TAO
       this->poa_->servant_activated_hook (servant, id);
 
       // ATTENTION: Trick locking here, see class header for details
-      Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall const non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // The implementation of activate_object_with_id will invoke
@@ -931,7 +931,7 @@ namespace TAO
       TAO::Portable_Server::Servant_Upcall &servant_upcall)
     {
       TAO_Active_Object_Map_Entry *entry {};
-      int result = this->active_object_map_->
+      int const result = this->active_object_map_->
         rebind_using_user_id_and_system_id (servant,
                                             user_id,
                                             system_id,
