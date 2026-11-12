@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DTP_POA_Strategy.h
  *
  *  @author  Marc Neeley <neeleym@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_DYNAMIC_TP_POA_STRATEGY_H
 #define TAO_DYNAMIC_TP_POA_STRATEGY_H

@@ -48,7 +48,6 @@ TAO_DTP_Config_Registry::rebind (std::string const &name,
   return registry_.rebind (name, entry);
 }
 
-//-------------------------------------------------------------------------
 
 TAO_DTP_Config::TAO_DTP_Config () = default;
 

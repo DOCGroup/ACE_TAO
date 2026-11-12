@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file DTP_Thread_Pool.h
  *
@@ -8,7 +7,6 @@
  *  @author Johnny Willemsen
  *  @author Phil Mesnier
  */
-// ===================================================================
 
 #ifndef TAO_DTP_THREAD_POOL_H
 #define TAO_DTP_THREAD_POOL_H

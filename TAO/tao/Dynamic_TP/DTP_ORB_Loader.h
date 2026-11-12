@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DTP_ORB_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_DYNAMIC_TP_ORB_LOADER_H
 #define TAO_DYNAMIC_TP_ORB_LOADER_H
