@@ -19,7 +19,6 @@
 
 #include "tao/Invocation_Adapter.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
@@ -44,6 +43,8 @@ namespace TAO
     : public Invocation_Adapter
   {
   public:
+    AbstractBase_Invocation_Adapter () = delete;
+
     AbstractBase_Invocation_Adapter (
         CORBA::AbstractBase_ptr target,
         Argument **args,
