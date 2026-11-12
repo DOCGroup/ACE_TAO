@@ -10,7 +10,6 @@
 #define JAWS_HASH_BUCKET_DLCSTACK_ITERATOR \
         JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>
 
-
 // Why Hash_Bucket?
 //
 // This is an attempt to simplify the creation of high-performance
@@ -29,7 +28,11 @@ public:
   explicit JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
                          JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
 
-  ~JAWS_Hash_Bucket_Item ();
+  ~JAWS_Hash_Bucket_Item () = default;
+  JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item const &) = delete;
+  JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item &&) = delete;
+  JAWS_Hash_Bucket_Item &operator= (JAWS_Hash_Bucket_Item const &) = delete;
+  JAWS_Hash_Bucket_Item &operator= (JAWS_Hash_Bucket_Item &&) = delete;
 
   EXT_ID ext_id_;
   // Key used to look up an entry.
@@ -43,7 +46,6 @@ public:
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev_;
   // Pointer to the prev item in the bucket of overflow nodes.
 };
-
 
 template <class EXT_ID, class INT_ID> class JAWS_Hash_Bucket_DLCStack_Iterator;
 
@@ -60,9 +62,12 @@ class JAWS_Hash_Bucket_DLCStack
 public:
   explicit JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = nullptr);
   ~JAWS_Hash_Bucket_DLCStack ();
+  JAWS_Hash_Bucket_DLCStack (JAWS_Hash_Bucket_DLCStack const &) = delete;
+  JAWS_Hash_Bucket_DLCStack (JAWS_Hash_Bucket_DLCStack &&) = delete;
+  JAWS_Hash_Bucket_DLCStack &operator= (JAWS_Hash_Bucket_DLCStack const &) = delete;
+  JAWS_Hash_Bucket_DLCStack &operator= (JAWS_Hash_Bucket_DLCStack &&) = delete;
 
-  int is_empty () const;
-  // Returns 1 if the container is empty, otherwise returns 0.
+  bool is_empty () const;
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *push (const EXT_ID &ext_id,
                                               const INT_ID &int_id);
@@ -91,12 +96,15 @@ private:
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *tail_;
 };
 
-
 template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_DLCStack_Iterator
 {
 public:
-  JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
+  explicit JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
+  JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_Hash_Bucket_DLCStack_Iterator const &) = delete;
+  JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_Hash_Bucket_DLCStack_Iterator &&) = delete;
+  JAWS_Hash_Bucket_DLCStack_Iterator &operator= (JAWS_Hash_Bucket_DLCStack_Iterator const &) = delete;
+  JAWS_Hash_Bucket_DLCStack_Iterator &operator= (JAWS_Hash_Bucket_DLCStack_Iterator &&) = delete;
 
   int first ();
   // Moves to first element in the set, clears done flag.  Returns 0
@@ -137,7 +145,6 @@ private:
   int done_;
 };
 
-
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
 class JAWS_Hash_Bucket_Manager
 {
@@ -145,7 +152,11 @@ public:
   explicit JAWS_Hash_Bucket_Manager (ACE_Allocator *alloc = nullptr);
   int open (ACE_Allocator *alloc = nullptr);
 
-  ~JAWS_Hash_Bucket_Manager ();
+  ~JAWS_Hash_Bucket_Manager () = default;
+  JAWS_Hash_Bucket_Manager (JAWS_Hash_Bucket_Manager const &) = delete;
+  JAWS_Hash_Bucket_Manager (JAWS_Hash_Bucket_Manager &&) = delete;
+  JAWS_Hash_Bucket_Manager &operator= (JAWS_Hash_Bucket_Manager const &) = delete;
+  JAWS_Hash_Bucket_Manager &operator= (JAWS_Hash_Bucket_Manager &&) = delete;
   int close ();
 
   int find (const EXT_ID &ext_id) const;

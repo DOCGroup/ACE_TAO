@@ -20,6 +20,10 @@ public:
   // mod on the hashed value.  This might be bogus though.
 
   virtual ~JAWS_Cache_Hash ();
+  JAWS_Cache_Hash (JAWS_Cache_Hash const &) = delete;
+  JAWS_Cache_Hash (JAWS_Cache_Hash &&) = delete;
+  JAWS_Cache_Hash &operator= (JAWS_Cache_Hash const &) = delete;
+  JAWS_Cache_Hash &operator= (JAWS_Cache_Hash &&) = delete;
 
   int find (const EXT_ID &ext_id) const;
   int find (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id) const;

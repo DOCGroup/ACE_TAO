@@ -10,29 +10,30 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::JAWS_Cache_List (ACE_Allocator *alloc,
   : allocator_ (alloc),
     maxsize_ (maxsize),
     size_ (0),
-    head_ (0),
-    tail_ (0)
+    item_ {},
+    head_ {},
+    tail_ {}
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::~JAWS_Cache_List ()
 {
-  while (this->head_ != 0)
+  while (this->head_ != nullptr)
     this->remove (this->head_);
 
-  this->allocator_ = 0;
+  this->allocator_ = nullptr;
 }
 
-template <class EXT_ID, class FACT, class H_FN, class E_FN> int
+template <class EXT_ID, class FACT, class H_FN, class E_FN> bool
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::is_empty () const
 {
   return (this->size_ == 0);
 }
 
-template <class EXT_ID, class FACT, class H_FN, class E_FN> int
+template <class EXT_ID, class FACT, class H_FN, class E_FN> bool
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::is_full () const
 {
   return (this->size_ == this->maxsize_);
@@ -62,10 +63,11 @@ template <class EXT_ID, class FACT, class H_FN, class E_FN> void
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_List_Item *item)
 {
   /* ASSERT: this->size_ < this->maxsize_ */
-  item->next_ = 0;
-  item->prev_ = 0;
+  item->next_ = nullptr;
+  item->prev_ = nullptr;
 
-  if (this->size_++ == 0)
+  ++this->size_;
+  if (this->size_ == 1)
     this->head_ = this->tail_ = item;
   else
     {
@@ -97,38 +99,38 @@ template <class EXT_ID, class FACT, class H_FN, class E_FN> void
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove_i ()
 {
   /* ASSERT: this->size_ > 0 */
-  this->size_--;
+  --this->size_;
   this->item_ = this->head_;
   if (this->head_ == this->tail_)
     {
-      this->head_ = this->tail_ = 0;
+      this->head_ = this->tail_ = nullptr;
       return;
     }
 
   this->head_ = this->head_->next_;
-  this->head_->prev_ = 0;
-  this->item_->next_ = 0;
+  this->head_->prev_ = nullptr;
+  this->item_->next_ = nullptr;
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> void
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove_i (Cache_List_Item *item)
 {
-  this->size_--;
+  --this->size_;
   this->item_ = item;
 
-  if (item->next_ == 0 && item->prev_ == 0)
+  if (item->next_ == nullptr && item->prev_ == nullptr)
     {
-      this->head_ = this->tail_ = 0;
+      this->head_ = this->tail_ = nullptr;
     }
-  else if (item->next_ == 0)
+  else if (item->next_ == nullptr)
     {
       this->tail_ = item->prev_;
-      this->tail_->next_ = 0;
+      this->tail_->next_ = nullptr;
     }
-  else if (item->prev_ == 0)
+  else if (item->prev_ == nullptr)
     {
       this->head_ = item->next_;
-      this->head_->prev_ = 0;
+      this->head_->prev_ = nullptr;
     }
   else
     {
@@ -136,8 +138,8 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove_i (Cache_List_Item *item)
       item->prev_->next_ = item->next_;
     }
 
-  item->next_ = 0;
-  item->prev_ = 0;
+  item->next_ = nullptr;
+  item->prev_ = nullptr;
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
@@ -151,31 +153,30 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
 
   ext_id = this->item_->ext_id_;
   int_id = this->item_->int_id_;
-  int_id->heap_item (0);
-
+  int_id->heap_item (nullptr);
 
   ACE_DES_FREE_TEMPLATE4(this->item_, this->allocator_->free,
                          JAWS_Cache_List_Item,
                          EXT_ID, FACT, H_FN, E_FN);
 
-  this->item_ = 0;
+  this->item_ = nullptr;
   return 0;
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
 {
-  if (item == 0)
+  if (item == nullptr)
     return 0;
 
   this->remove_i ((Cache_List_Item *) item);
-  this->item_->int_id_->heap_item (0);
+  this->item_->int_id_->heap_item (nullptr);
 
   ACE_DES_FREE_TEMPLATE4(this->item_, this->allocator_->free,
                          JAWS_Cache_List_Item,
                          EXT_ID, FACT, H_FN, E_FN);
 
-  this->item_ = 0;
+  this->item_ = nullptr;
 
   return 0;
 }
@@ -183,18 +184,17 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 {
-  if (item == 0)
+  if (item == nullptr)
     return 0;
 
   Cache_List_Item *real_item = (Cache_List_Item *) item;
 
   this->remove_i (real_item);
   this->insert_i (real_item);
-  this->item_ = 0;
+  this->item_ = nullptr;
 
   return 0;
 }
-
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 JAWS_Cache_List_Item<EXT_ID,FACT,H_FN,E_FN>::
@@ -206,10 +206,9 @@ JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> unsigned int
-JAWS_Cache_List_Item<EXT_ID,FACT,H_FN,E_FN>::priority ()
+JAWS_Cache_List_Item<EXT_ID,FACT,H_FN,E_FN>::priority () const
 {
   return this->int_id_->priority ();
 }
-
 
 #endif /* JAWS_CACHE_LIST_T_CPP */

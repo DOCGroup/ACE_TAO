@@ -12,7 +12,6 @@ class JAWS_Cache_Manager;
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_Heap_Item;
 
-
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class JAWS_Cache_Heap
 // Roll my own heap here.  Eventually, a heap should be its own
@@ -27,9 +26,13 @@ public:
   // willing to manage
 
   ~JAWS_Cache_Heap ();
+  JAWS_Cache_Heap (JAWS_Cache_Heap const &) = delete;
+  JAWS_Cache_Heap (JAWS_Cache_Heap &&) = delete;
+  JAWS_Cache_Heap &operator= (JAWS_Cache_Heap const &) = delete;
+  JAWS_Cache_Heap &operator= (JAWS_Cache_Heap &&) = delete;
 
-  int is_empty () const;
-  int is_full () const;
+  bool is_empty () const;
+  bool is_full () const;
 
   size_t size () const;
   size_t maxsize () const;
@@ -66,9 +69,8 @@ private:
   size_t maxsize_;
   size_t size_;
 
-  Cache_Heap_Item **heap_;
+  Cache_Heap_Item **heap_ {};
 };
-
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class JAWS_Cache_Heap_Item
@@ -77,7 +79,7 @@ class JAWS_Cache_Heap_Item
 
 public:
   JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  unsigned int priority ();
+  unsigned int priority () const;
 
 private:
   EXT_ID ext_id_;

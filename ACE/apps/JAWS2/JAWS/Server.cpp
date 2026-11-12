@@ -1,5 +1,4 @@
 #include "ace/config-lite.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 
 #if (ACE_NTRACE != 1)
@@ -13,7 +12,8 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Pipeline_Tasks.h"
-
+#include <cstring>
+#include <memory>
 
 JAWS_Server::JAWS_Server ()
   : port_ (5432),
@@ -90,22 +90,18 @@ int
 JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
                    JAWS_Dispatch_Policy *policy)
 {
-  if (policy == 0)
-    policy = &this->policy_;
+  JAWS_Dispatch_Policy * const selected_policy =
+    policy == nullptr ? &this->policy_ : policy;
 
-  JAWS_Data_Block *db = new JAWS_Data_Block;
-  if (db == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) JAWS_Server::open, could not create Data_Block\n"));
-      return -1;
-    }
+  std::unique_ptr<JAWS_Data_Block, ACE_Message_Block_Unique_Ptr_Deleter> const db {
+    new JAWS_Data_Block
+  };
 
   // initialize data block
 
   db->task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
-  db->policy (policy);
-  db->io_handler (0);
+  db->policy (selected_policy);
+  db->io_handler (nullptr);
 
   db->task ()->next (protocol);
 
@@ -118,8 +114,8 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
       if (this->concurrency_ == 1)
         n = 1;
 
-      for (int i = 0; i < n * this->ratio_ - n; i++)
-        db->task ()->put (db);
+      for (int i = 0; i < n * this->ratio_ - n; ++i)
+        db->task ()->put (db.get ());
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
     }
@@ -127,11 +123,9 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
   // The message block should contain an INET_Addr, and call the
   // io->accept (INET_Addr) method!
 
-  policy->concurrency ()->put (db);
+  selected_policy->concurrency ()->put (db.get ());
 
   ACE_Thread_Manager::instance ()->wait ();
-
-  db->release ();
 
   return 0;
 }
@@ -155,12 +149,12 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
         this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'c':
-        if (ACE_OS::strcmp (getopt.opt_arg (), "PER_REQUEST") == 0)
+        if (std::strcmp (getopt.opt_arg (), "PER_REQUEST") == 0)
           this->concurrency_ = 1;
         else this->concurrency_ = 0;
         break;
       case 'd':
-        if (ACE_OS::strcmp (getopt.opt_arg (), "ASYNCH") == 0)
+        if (std::strcmp (getopt.opt_arg (), "ASYNCH") == 0)
           this->dispatch_ = 1;
         else this->dispatch_ = 0;
         break;
@@ -171,11 +165,11 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
         this->maxthreads_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'f':
-        if (ACE_OS::strcmp (getopt.opt_arg (), "THR_BOUND") == 0)
+        if (std::strcmp (getopt.opt_arg (), "THR_BOUND") == 0)
           this->flags_ |= THR_BOUND;
-        else if (ACE_OS::strcmp (getopt.opt_arg (), "THR_DAEMON") == 0)
+        else if (std::strcmp (getopt.opt_arg (), "THR_DAEMON") == 0)
           this->flags_ |= THR_DAEMON;
-        else if (ACE_OS::strcmp (getopt.opt_arg (), "THR_DETACHED") == 0)
+        else if (std::strcmp (getopt.opt_arg (), "THR_DETACHED") == 0)
           this->flags_ |= THR_DETACHED;
         break;
       case 'r':

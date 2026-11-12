@@ -15,25 +15,25 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (size_t number) const
 {
   size_t d = 3;
 
-  if (number <= 2) return (number == 2);
+  if (number <= 2) return number == 2;
 
-  if (number % 2 == 0) return 0;
+  if (number % 2 == 0) return false;
 
   while (d <= number/d)
     {
-      if (number % d == 0) return 0;
+      if (number % d == 0) return false;
       d += 2;
     }
 
-  return 1;
+  return true;
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::new_cachebucket (size_t hash_idx)
 {
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     {
-      size_t alloc_size = sizeof (CACHE_BUCKET_MANAGER);
+      size_t const alloc_size = sizeof (CACHE_BUCKET_MANAGER);
       ACE_NEW_MALLOC_RETURN (this->hashtable_[hash_idx],
                              (CACHE_BUCKET_MANAGER *)
                              this->allocator_->malloc (alloc_size),
@@ -47,25 +47,25 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::JAWS_Cache_Hash (ACE_Allocator *alloc,
                                                           size_t size)
   : allocator_ (alloc),
-    hashtable_ (0)
+    hashtable_ {}
 {
   while (!this->isprime (size))
-    size++;
+    ++size;
 
   this->size_ = size;
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
-  size_t memsize = this->size_ * sizeof (CACHE_BUCKET_MANAGER *);
+  size_t const memsize = this->size_ * sizeof (CACHE_BUCKET_MANAGER *);
 
   this->hashtable_
     = (CACHE_BUCKET_MANAGER **) this->allocator_->malloc (memsize);
 
   if (this->hashtable_)
     {
-      for (size_t i = 0; i < this->size_; i++)
-        this->hashtable_[i] = 0;
+      for (size_t i = 0; i < this->size_; ++i)
+        this->hashtable_[i] = nullptr;
     }
   else
     {
@@ -79,7 +79,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash ()
 {
   if (this->hashtable_)
     {
-      for (size_t i = 0; i < this->size_; i++)
+      for (size_t i = 0; i < this->size_; ++i)
         {
           if (this->hashtable_[i])
             {
@@ -90,25 +90,22 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash ()
                                      JAWS_Cache_Object *,
                                      EQ_FUNC);
 
-
-
-
-              this->hashtable_[i] = 0;
+              this->hashtable_[i] = nullptr;
             }
         }
       this->allocator_->free (this->hashtable_);
-      this->hashtable_ = 0;
+      this->hashtable_ = nullptr;
     }
 
-  this->allocator_ = 0;
+  this->allocator_ = nullptr;
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id) const
 {
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     return -1;
 
   return this->hashtable_[hash_idx]->find (ext_id);
@@ -118,9 +115,9 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id,
                                                 JAWS_Cache_Object *&int_id) const
 {
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     return -1;
 
   return this->hashtable_[hash_idx]->find (ext_id, int_id);
@@ -131,9 +128,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
                                                 JAWS_Cache_Object *const &int_id)
 {
   int result;
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
@@ -153,9 +150,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
                                                    JAWS_Cache_Object *&int_id)
 {
   int result;
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
@@ -177,9 +174,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
                                                   JAWS_Cache_Object *&old_int_id)
 {
   int result;
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
@@ -196,13 +193,12 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
   return result;
 }
 
-
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id)
 {
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     return -1;
 
   return this->hashtable_[hash_idx]->unbind (ext_id);
@@ -212,21 +208,18 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
                                                   JAWS_Cache_Object *&int_id)
 {
-  unsigned long hash_idx = this->hash (ext_id);
+  unsigned long const hash_idx = this->hash (ext_id);
 
-  if (this->hashtable_[hash_idx] == 0)
+  if (this->hashtable_[hash_idx] == nullptr)
     return -1;
 
   return this->hashtable_[hash_idx]->unbind (ext_id, int_id);
 }
-
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> size_t
 JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size () const
 {
   return this->size_;
 }
-
-
 
 #endif /* JAWS_CACHEHASH_T_CPP */

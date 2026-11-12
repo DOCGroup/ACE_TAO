@@ -7,7 +7,7 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Reaper.h"
 #include <memory>
-
+#include <vector>
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
@@ -200,7 +200,7 @@ JAWS_Concurrency_Base::activate_hook ()
 }
 
 JAWS_Dispatcher::JAWS_Dispatcher ()
-  : policy_(0)
+  : policy_ {}
 {
 }
 
@@ -230,30 +230,28 @@ JAWS_Thread_Pool_Task::make (long flags, int nthreads, int maxthreads)
   this->nthreads_ = nthreads;
   this->maxthreads_ = maxthreads;
 
-  ACE_thread_t *thr_names = new ACE_thread_t[nthreads];
+  std::vector<ACE_thread_t> thr_names (nthreads);
 
   if (this->activate (flags | THR_SUSPENDED,
                       nthreads,
                       0,          // force active
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,         // group id
-                      0,          // ACE_Task_Base
-                      0,          // thread handles
-                      0,          // stack
-                      0,          // stack size
-                      thr_names) == -1)
+                      nullptr,    // ACE_Task_Base
+                      nullptr,    // thread handles
+                      nullptr,    // stack
+                      nullptr,    // stack size
+                      thr_names.data ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
 
-  for (int i = 0; i < nthreads; i++)
+  for (int i = 0; i < nthreads; ++i)
     {
       JAWS_Thread_ID thr_id(thr_names[i]);
       JAWS_IO_Handler *dummy {};
 
       JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
     }
-
-  delete[] thr_names;
 
   this->thr_mgr_->resume_all ();
 
@@ -300,10 +298,10 @@ JAWS_Thread_Per_Task::activate_hook ()
                       force_active,
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,         // group id
-                      0,          // ACE_Task_Base
-                      0,          // thread handle
-                      0,          // stack
-                      0,          // stack size
+                      nullptr,    // ACE_Task_Base
+                      nullptr,    // thread handle
+                      nullptr,    // stack
+                      nullptr,    // stack size
                       &thr_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
