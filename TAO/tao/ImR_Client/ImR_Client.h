@@ -64,8 +64,8 @@ namespace TAO
       /// ImplRepo helper method, create an IMR-ified object for a
       /// key with a given type
       CORBA::Object_ptr imr_key_to_object (TAO_Root_POA *poa,
-                                            const TAO::ObjectKey &key,
-                                            const char *type_id) const override;
+                                            TAO::ObjectKey const &key,
+                                            char const *type_id) const override;
     private:
       /// Implementation Repository Server Object
       ServerObject_i *server_object_ {};

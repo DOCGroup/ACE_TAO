@@ -7,7 +7,6 @@
  *  @author  Darrell Brunsch
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_SERVEROBJECT_I_H
 #define TAO_SERVEROBJECT_I_H

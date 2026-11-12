@@ -17,22 +17,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace
 {
-  char* find_delimiter (char* const ior, const char delimiter)
+  char *find_delimiter (char * const ior, char const delimiter)
   {
+    if (ior == nullptr)
+      return nullptr;
+
     // Search for "corbaloc:" alone, without the protocol.  This code
     // should be protocol neutral.
-    const char corbaloc[] = "corbaloc:";
+    char const corbaloc[] = "corbaloc:";
     char *pos = std::strstr (ior, corbaloc);
+    if (pos == nullptr)
+      return nullptr;
+
     pos = std::strchr (pos + sizeof (corbaloc), ':');
+    if (pos == nullptr)
+      return nullptr;
+
     pos = std::strchr (pos + 1, delimiter);
 
     return pos;
   }
 
-  CORBA::Object_ptr combine (TAO_ORB_Core& orb_core,
-                             const TAO_Profile& profile,
-                             const char* const key_str,
-                             const char* type_id)
+  CORBA::Object_ptr combine (TAO_ORB_Core &orb_core,
+                             TAO_Profile const &profile,
+                             char const * const key_str,
+                             char const *type_id)
   {
     CORBA::String_var profile_str = profile.to_string ();
 
@@ -42,9 +51,9 @@ namespace
                        ACE_TEXT ("TAO_ImR_Client (%P|%t) - IMR partial IOR <%C>\n"),
                        profile_str.in ()));
       }
-    char* const pos = find_delimiter (profile_str.inout (),
-                                      profile.object_key_delimiter ());
-    if (pos)
+    char * const pos = find_delimiter (profile_str.inout (),
+                                       profile.object_key_delimiter ());
+    if (pos != nullptr)
       pos[1] = 0;  // Crop the string.
     else
       {
@@ -53,7 +62,7 @@ namespace
             TAOLIB_ERROR ((LM_ERROR,
                            ACE_TEXT ("TAO_ImR_Client (%P|%t) - Could not parse ImR IOR, skipping ImRification\n")));
           }
-        return CORBA::Object::_nil();
+        return CORBA::Object::_nil ();
       }
 
     ACE_CString ior (profile_str.in ());
@@ -68,24 +77,24 @@ namespace
                        ior.c_str ()));
       }
     CORBA::Object_ptr obj = orb_core.orb ()->string_to_object (ior.c_str ());
-    obj->_stubobj()->type_id = type_id;
+    obj->_stubobj ()->type_id = type_id;
     return obj;
   }
 
   class ImRifyProfiles
   {
   public:
-    ImRifyProfiles (const TAO_MProfile& base_profiles,
-                    const TAO_Profile* const profile_in_use,
-                    TAO_ORB_Core& orb_core,
-                    const char* const key_str,
-                    const char* type_id)
+    ImRifyProfiles (TAO_MProfile const &base_profiles,
+                    TAO_Profile const * const profile_in_use,
+                    TAO_ORB_Core &orb_core,
+                    char const * const key_str,
+                    char const *type_id)
     : base_profiles_ (base_profiles),
       profile_in_use_ (profile_in_use),
       orb_core_ (orb_core),
       key_str_ (key_str),
       type_id_ (type_id),
-      objs_ (base_profiles.profile_count()),
+      objs_ (base_profiles.profile_count ()),
       list_buffer_ (std::make_unique<CORBA::Object_ptr[]> (
                       base_profiles.profile_count ())),
       ior_list_ (base_profiles.profile_count (),
@@ -107,7 +116,7 @@ namespace
         }
 
       CORBA::Object_var IORM = orb_core_.orb ()
-        ->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+        ->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
       if (CORBA::is_nil (IORM.in ()))
         {
@@ -124,9 +133,9 @@ namespace
 
       try
         {
-          return iorm->merge_iors(ior_list_);
+          return iorm->merge_iors (ior_list_);
         }
-      catch (const ::CORBA::Exception& )
+      catch (::CORBA::Exception const &)
         {
           return default_obj ("could not ImRify object with all profiles");
         }
@@ -137,7 +146,7 @@ namespace
     ImRifyProfiles (ImRifyProfiles &&) = delete;
     ImRifyProfiles &operator= (ImRifyProfiles &&) = delete;
 
-    bool combine_profile(const CORBA::ULong i)
+    bool combine_profile (CORBA::ULong i)
     {
       try
         {
@@ -151,16 +160,16 @@ namespace
 
           return true;
         }
-      catch (const ::CORBA::Exception& )
+      catch (::CORBA::Exception const &)
         {
           return false;
         }
     }
 
-    CORBA::Object_ptr default_obj(const char* desc)
+    CORBA::Object_ptr default_obj (char const *desc)
     {
-      const CORBA::ULong pcount = base_profiles_.profile_count ();
-      const char* info = "because couldn't find ImR profile_in_use in profiles";
+      CORBA::ULong const pcount = base_profiles_.profile_count ();
+      char const *info = "because couldn't find ImR profile_in_use in profiles";
 
       // identify the profile in use to see if we can default to
       // that profiles partial ImR-ification
@@ -170,7 +179,7 @@ namespace
             {
               // if there is no object then try one last time to combine
               // the profile
-              if (CORBA::is_nil(objs_[i].in ()) && !combine_profile (i))
+              if (CORBA::is_nil (objs_[i].in ()) && !combine_profile (i))
                 {
                   info = "because couldn't ImR-ify profile_in_use";
                   break;
@@ -178,10 +187,10 @@ namespace
 
               if (TAO_debug_level > 0)
                 {
-                  TAOLIB_ERROR((LM_ERROR,
-                    ACE_TEXT("TAO_ImR_Client (%P|%t) - ERROR: %C. ")
-                    ACE_TEXT("Defaulting to ImR-ifying profile_in_use\n"),
-                    desc));
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: %C. ")
+                                 ACE_TEXT ("Defaulting to ImR-ifying profile_in_use\n"),
+                                 desc));
                 }
               return objs_[i]._retn ();
             }
@@ -189,20 +198,20 @@ namespace
 
       if (TAO_debug_level > 0)
         {
-          TAOLIB_ERROR((LM_ERROR,
-                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: %C, ")
-                    ACE_TEXT ("but cannot default to ImR-ifying profile_in_use %C\n"),
-                    desc,
-                    info));
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: %C, ")
+                         ACE_TEXT ("but cannot default to ImR-ifying profile_in_use %C\n"),
+                         desc,
+                         info));
         }
       return CORBA::Object::_nil();
     }
 
-    const TAO_MProfile& base_profiles_;
-    const TAO_Profile* const profile_in_use_;
-    TAO_ORB_Core& orb_core_;
-    const char* const key_str_;
-    const char* const type_id_;
+    TAO_MProfile const &base_profiles_;
+    TAO_Profile const * const profile_in_use_;
+    TAO_ORB_Core &orb_core_;
+    char const * const key_str_;
+    char const * const type_id_;
     std::vector<CORBA::Object_var> objs_;
     std::unique_ptr<CORBA::Object_ptr[]> list_buffer_;
     TAO_IOP::TAO_IOR_Manipulation::IORList ior_list_;
@@ -216,7 +225,7 @@ namespace TAO
     ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl () = default;
 
     void
-    ImR_Client_Adapter_Impl::imr_notify_startup (TAO_Root_POA* poa )
+    ImR_Client_Adapter_Impl::imr_notify_startup (TAO_Root_POA *poa)
     {
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
 
@@ -305,27 +314,29 @@ namespace TAO
         }
       CORBA::ORB_var orb = root_poa->_get_orb ();
       CORBA::String_var full_ior = orb->object_to_string (obj.in ());
-      TAO_Profile& profile = *(svr->_stubobj ()->profile_in_use ());
-      CORBA::String_var ior = profile.to_string();
+      TAO_Profile &profile = *(svr->_stubobj ()->profile_in_use ());
+      CORBA::String_var ior = profile.to_string ();
       if (TAO_debug_level > 0)
         {
-          TAOLIB_DEBUG((LM_INFO,
+          TAOLIB_DEBUG ((LM_INFO,
                         "TAO_ImR_Client (%P|%t) - full_ior <%C>\nior <%C>\n",
-                        full_ior.in(),
-                        ior.in()));
+                        full_ior.in (),
+                        ior.in ()));
         }
-      char* const pos = find_delimiter (ior.inout (),
-                                        profile.object_key_delimiter ());
+      char * const pos = find_delimiter (ior.inout (),
+                                         profile.object_key_delimiter ());
+      if (pos == nullptr)
+        throw ::CORBA::INTERNAL ();
 
-      const ACE_CString partial_ior (ior.in (), (pos - ior.in ()) + 1);
+      ACE_CString const partial_ior (ior.in (), (pos - ior.in ()) + 1);
 
       if (TAO_debug_level > 0)
-      {
-        CORBA::String_var poaname = poa->the_name ();
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - Informing IMR that <%C> is running at <%C>\n"),
-                    poaname.in(), partial_ior.c_str ()));
-      }
+        {
+          CORBA::String_var poaname = poa->the_name ();
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO_ImR_Client (%P|%t) - Informing IMR that <%C> is running at <%C>\n"),
+                         poaname.in (), partial_ior.c_str ()));
+        }
 
       try
         {
@@ -333,15 +344,15 @@ namespace TAO
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          ACE_CString const serverId = poa->orb_core ().server_id ();
+          ACE_CString const server_id = poa->orb_core ().server_id ();
           ACE_CString name;
-          if (serverId.empty ())
+          if (server_id.empty ())
             {
               name = poa->name ();
             }
           else
             {
-              name = serverId + ":" + poa->name ();
+              name = server_id + ":" + poa->name ();
             }
 
           imr_locator->server_is_running (name.c_str (),
@@ -367,7 +378,7 @@ namespace TAO
     }
 
     void
-    ImR_Client_Adapter_Impl::imr_notify_shutdown (TAO_Root_POA* poa )
+    ImR_Client_Adapter_Impl::imr_notify_shutdown (TAO_Root_POA *poa)
     {
       // Notify the Implementation Repository about shutting down.
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
@@ -432,7 +443,7 @@ namespace TAO
             this->server_object_->_default_POA ();
 
           TAO_Root_POA *root_poa =
-            dynamic_cast <TAO_Root_POA*> (default_poa.in ());
+            dynamic_cast<TAO_Root_POA *> (default_poa.in ());
 
           if (!root_poa)
             {
@@ -448,8 +459,6 @@ namespace TAO
         }
     }
 
-    // *********************************************************************
-
     // Initialization and registration of dynamic service object.
 
     int
@@ -463,11 +472,11 @@ namespace TAO
     }
 
     CORBA::Object_ptr
-    ImR_Client_Adapter_Impl::imr_key_to_object(TAO_Root_POA* poa,
-                                               const TAO::ObjectKey &key,
-                                               const char* type_id) const
+    ImR_Client_Adapter_Impl::imr_key_to_object (TAO_Root_POA *poa,
+                                                TAO::ObjectKey const &key,
+                                                char const *type_id) const
     {
-      TAO_ORB_Core& orb_core = poa->orb_core ();
+      TAO_ORB_Core &orb_core = poa->orb_core ();
       // Check to see if we alter the IOR.
       CORBA::Object_var imr = orb_core.implrepo_service ();
 
@@ -480,20 +489,20 @@ namespace TAO
               TAOLIB_DEBUG ((LM_DEBUG,
                              ACE_TEXT ("TAO_ImR_Client (%P|%t) - Missing ImR IOR, will not use the ImR\n")));
             }
-          return CORBA::Object::_nil();
+          return CORBA::Object::_nil ();
         }
 
-      const TAO_MProfile& base_profiles = imr->_stubobj ()->base_profiles ();
+      TAO_MProfile const &base_profiles = imr->_stubobj ()->base_profiles ();
       CORBA::String_var key_str;
       TAO::ObjectKey::encode_sequence_to_string (key_str.inout (), key);
 
       // if there is only one profile, no need to use IORManipulation
-      if (base_profiles.profile_count() == 1)
+      if (base_profiles.profile_count () == 1)
         {
-          return combine(orb_core,
-                         *base_profiles.get_profile(0),
-                         key_str.in(),
-                         type_id);
+          return combine (orb_core,
+                          *base_profiles.get_profile (0),
+                          key_str.in (),
+                          type_id);
         }
 
       // need to combine each profile in the ImR with the key and
