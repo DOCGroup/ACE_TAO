@@ -558,7 +558,7 @@ TAO_Storable_Naming_Context::new_context ()
         // acquire a lock on the file that holds our counter
         if (gfl_->open () != 0)
           {
-            delete gfl_.release ();
+            gfl_.reset ();
             throw CORBA::PERSIST_STORE ();
           }
         if (gfl_->flock (0, 0, 0) != 0)
@@ -1094,23 +1094,22 @@ TAO_Storable_Naming_Context::recreate_all (
   // Create the stream for the counter used to uniquely create context names
   // Pass false for use_backup since access to this file is not wrapped
   // around a Storable_File_Guard derived class.
-  gfl_.reset(pers_factory->
-             create_stream (file_name,
-                            "crw"));
-  if (gfl_->open() != 0)
+  gfl_.reset (pers_factory->create_stream (file_name,
+                                           "crw"));
+  if (gfl_->open () != 0)
     {
-      delete gfl_.release();
-      throw CORBA::PERSIST_STORE();
+      gfl_.reset ();
+      throw CORBA::PERSIST_STORE ();
     }
 
   // get the counter from disk
   TAO_NS_Persistence_Global global;
-  TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
-  rw.read_global(global);
-  gcounter_ = global.counter();
+  TAO_Storable_Naming_Context_ReaderWriter rw (*gfl_);
+  rw.read_global (global);
+  gcounter_ = global.counter ();
   if (redundant_)
     {
-      gfl_->close();
+      gfl_->close ();
     }
 
   return result._retn ();

@@ -416,13 +416,13 @@ TAO_Naming_Server::init_with_orb (int argc,
 
   if (this->pid_file_name_ != nullptr)
     {
-      FILE *pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
-      if (pidf != nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> pidf (
+        ACE_OS::fopen (this->pid_file_name_, ACE_TEXT ("w")), ACE_OS::fclose);
+      if (pidf)
         {
-          ACE_OS::fprintf (pidf,
+          ACE_OS::fprintf (pidf.get (),
                            "%ld\n",
                            static_cast<long> (ACE_OS::getpid ()));
-          ACE_OS::fclose (pidf);
         }
     }
 
@@ -903,8 +903,9 @@ TAO_Naming_Server::write(size_t ndx) const
       return -1;
     }
 
-  FILE *iorf = ACE_OS::fopen (b->filename_.c_str(), ACE_TEXT("w"));
-  if (iorf == nullptr)
+  std::unique_ptr<FILE, int (*) (FILE *)> iorf (
+    ACE_OS::fopen (b->filename_.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!iorf)
     {
       if (TAO_debug_level > 0)
         {
@@ -916,8 +917,7 @@ TAO_Naming_Server::write(size_t ndx) const
         }
       return -1;
     }
-  ACE_OS::fprintf (iorf, "%s\n", b->ior_.c_str());
-  ACE_OS::fclose (iorf);
+  ACE_OS::fprintf (iorf.get (), "%s\n", b->ior_.c_str ());
 
   return 0;
 }
