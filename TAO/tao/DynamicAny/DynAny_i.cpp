@@ -436,9 +436,9 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
             rstatus = rhs_n->any_ >>= rhs_v;
             lstatus = this->any_ >>= lhs_v;
 
-            if ((rstatus && lstatus) == 0)
+            if (!(rstatus && lstatus))
               {
-                return 0;
+                return false;
               }
           }
         else
@@ -446,9 +446,9 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
             rstatus = rhs_n->any_ >>= CORBA::Any::to_string (rhs_v, bound);
             lstatus = this->any_ >>= CORBA::Any::to_string (lhs_v, bound);
 
-            if ((rstatus && lstatus) == 0)
+            if (!(rstatus && lstatus))
               {
-                return 0;
+                return false;
               }
           }
 
@@ -470,9 +470,9 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
             rstatus = rhs_n->any_ >>= rhs_v;
             lstatus = this->any_ >>= lhs_v;
 
-            if ((rstatus && lstatus) == 0)
+            if (!(rstatus && lstatus))
               {
-                return 0;
+                return false;
               }
           }
         else
@@ -482,9 +482,9 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
             lstatus = this->any_ >>= CORBA::Any::to_wstring (lhs_v,
                                                              bound);
 
-            if ((rstatus && lstatus) == 0)
+            if (!(rstatus && lstatus))
               {
-                return 0;
+                return false;
               }
           }
 
@@ -507,15 +507,15 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
-                      return 0;
+                      return false;
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -526,17 +526,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -547,17 +547,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -568,17 +568,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -589,17 +589,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (ACE::is_inequal (lvalues[i], rvalues[i]))
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -610,17 +610,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (ACE::is_inequal (lvalues[i], rvalues[i]))
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -631,17 +631,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -652,17 +652,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -673,17 +673,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -694,17 +694,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -715,17 +715,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -736,20 +736,19 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
-
 
             case CORBA::tk_longdouble:
               {
@@ -758,17 +757,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 if (lvalues->length() != rvalues->length())
                   {
-                    return 0;
+                    return false;
                   }
 
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
                       {
-                        return 0;
+                        return false;
                       }
                   }
-                return 1; // If we get to here, all was equal
+                return true;
               }
               break;
 
@@ -783,7 +782,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       break; // Cannot happen...
     }
 
-  return 0;
+  return false;
 }
 
 void

@@ -15,8 +15,6 @@
 #include "tao/DynamicAny/DynUnion_i.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"
 
-#include <memory>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 DynamicAny::DynAny_ptr
@@ -108,7 +106,8 @@ TAO_DynAnyFactory::create_multiple_anys (
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      retseq[i]= *values[i]->to_any ();
+      CORBA::Any_var any = values[i]->to_any ();
+      retseq[i] = any.in ();
     }
 
   return retseq._retn ();

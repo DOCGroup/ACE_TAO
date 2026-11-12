@@ -123,7 +123,7 @@ TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_DynSequence_i *> (_tao_objref);
@@ -260,7 +260,6 @@ TAO_DynSequence_i::get_elements ()
     {
       CORBA::Any_var tmp =
         this->da_members_[i]->to_any ();
-
 
       safe_retval[i] = tmp.in ();
     }
@@ -484,7 +483,6 @@ TAO_DynSequence_i::from_any (CORBA::Any const& any)
           TAO_InputCDR tmp_in (out);
           cdr = tmp_in;
         }
-
 
       CORBA::ULong arg_length;
 

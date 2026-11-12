@@ -474,7 +474,7 @@ TAO_DynCommon::get_string ()
 
       // We will have caught a type mismatch above, so if this fails,
       // it must be for some other reason.
-      if ((this->any_ >>= CORBA::Any::to_string (retval, bound)) == 0)
+      if (!(this->any_ >>= CORBA::Any::to_string (retval, bound)))
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }
@@ -502,7 +502,7 @@ TAO_DynCommon::get_reference ()
     {
       CORBA::Object_var retval;
 
-      if ((this->any_ >>= CORBA::Any::to_object (retval.inout ())) == 0)
+      if (!(this->any_ >>= CORBA::Any::to_object (retval.inout ())))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
@@ -529,7 +529,7 @@ TAO_DynCommon::get_typecode ()
     {
       CORBA::TypeCode_ptr retval;
 
-      if ((this->any_ >>= retval) == 0)
+      if (!(this->any_ >>= retval))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
@@ -574,7 +574,7 @@ TAO_DynCommon::get_wchar ()
     {
       CORBA::WChar retval;
 
-      if ((this->any_ >>= CORBA::Any::to_wchar (retval)) == 0)
+      if (!(this->any_ >>= CORBA::Any::to_wchar (retval)))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
@@ -636,7 +636,7 @@ TAO_DynCommon::get_any ()
     {
       CORBA::Any const *tmp {};
 
-      if ((this->any_ >>= tmp) == 0)
+      if (!(this->any_ >>= tmp))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
@@ -728,7 +728,7 @@ TAO_DynCommon::seek (CORBA::Long slot)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  if (this->has_components_ == 0)
+  if (!this->has_components_)
     {
       ACE_UNUSED_ARG (slot);
       this->current_position_ = -1;
