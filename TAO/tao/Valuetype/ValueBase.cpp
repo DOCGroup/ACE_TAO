@@ -505,7 +505,6 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
       return false;
     }
 
-
   if (TAO_OBV_GIOP_Flags::has_codebase_url (value_tag))
     { // Demarshal the codebase url (but we won't be using it).
 
@@ -705,8 +704,6 @@ CORBA::ValueBase::_tao_stream_v (std::ostream &strm) const
   return strm << "CORBA::ValueBase";
 }
 #endif /* GEN_OSTREAM_OPS */
-
-// =================== methods for chunking ====================
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
@@ -1405,8 +1402,6 @@ CORBA::ValueBase::truncation_hook ()
   throw ::CORBA::INTERNAL ();
 }
 
-// ================== Typecode initializations ==================
-
 namespace TAO
 {
   namespace TypeCode
@@ -1445,8 +1440,6 @@ namespace CORBA
   TypeCode_ptr const _tc_EventBase = std::addressof (TAO::TypeCode::tc_EventBase);
 }
 
-// member functions for CORBA::DefaultValueRefCountBase ============
-
 CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase () = default;
 
 void
@@ -1469,8 +1462,6 @@ CORBA::DefaultValueRefCountBase::_refcount_value ()
 {
   return this->refcount_;
 }
-
-// ===========================================================
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm,
@@ -1498,7 +1489,6 @@ operator<< (std::ostream &strm,
 }
 #endif /* GEN_OSTREAM_OPS */
 
-// =============== Template Specializations =====================
 namespace TAO
 {
   void

@@ -100,7 +100,6 @@ private:
   implementation_type impl_;
 };
 
-
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool marshal_sequence (
     stream &strm,
@@ -145,6 +144,5 @@ private:
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif // guard_bounded_valuetype_sequence_hpp

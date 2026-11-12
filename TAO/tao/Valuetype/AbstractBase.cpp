@@ -227,7 +227,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
   abs = nullptr;
   CORBA::Boolean discriminator {false};
-  ACE_InputCDR::to_boolean tb (discriminator);
+  ACE_InputCDR::to_boolean const tb (discriminator);
   TAO_ORB_Core *orb_core {};
 
   if (strm >> tb)
@@ -402,8 +402,6 @@ CORBA::AbstractBase::create_object (TAO_Stub *stub)
 
   return CORBA::Object::_nil ();
 }
-
-// ================== Typecode initializations ==================
 
 namespace TAO
 {

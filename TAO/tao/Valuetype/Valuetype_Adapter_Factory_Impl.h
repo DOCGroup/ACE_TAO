@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Valuetype_Adapter_Factory_Impl.h
  *
  *  @author  Kees van Marle <kvmarle@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_VALUETYPE_ADAPTER_FACTORY_IMPL_H
 #define TAO_VALUETYPE_ADAPTER_FACTORY_IMPL_H

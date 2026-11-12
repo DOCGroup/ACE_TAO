@@ -51,14 +51,12 @@ TAO_OBV_GIOP_Flags::is_indirection_tag (CORBA::Long tag)
   return tag == Indirection_tag;
 }
 
-
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_indirection (CORBA::Long value)
 {
   return (0x80000000L < static_cast<unsigned>(value) &&
           static_cast<unsigned>(value) <= (0xFFFFFFFFL - 4));
 }
-
 
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_block_size (CORBA::Long value)

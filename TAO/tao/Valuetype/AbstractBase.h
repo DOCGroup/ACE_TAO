@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     AbstractBase.h
  *
  *  @author  Jeff Parsons  <parsons@cs.wust.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ABSTRACTBASE_H
 #define TAO_ABSTRACTBASE_H

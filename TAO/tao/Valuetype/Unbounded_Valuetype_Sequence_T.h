@@ -144,5 +144,4 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #endif // guard_unbounded_valuetype_sequence_hpp

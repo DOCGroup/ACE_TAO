@@ -24,8 +24,6 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
     }
 }
 
-// ===========================================================
-
 CORBA::ValueFactoryBase::~ValueFactoryBase () = default;
 
 void
@@ -50,7 +48,6 @@ CORBA::ValueFactoryBase::create_for_unmarshal_abstract ()
   return nullptr;
 }
 
-// =============== Template Specializations =====================
 namespace TAO
 {
   using namespace CORBA;

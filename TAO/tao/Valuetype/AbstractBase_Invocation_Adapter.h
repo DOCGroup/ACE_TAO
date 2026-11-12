@@ -1,12 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AbstractBase_Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
+
 #ifndef TAO_ABSTRACTBASE_INVOCATION_ADAPTER_H
 #define TAO_ABSTRACTBASE_INVOCATION_ADAPTER_H
 
