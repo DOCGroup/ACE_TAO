@@ -21,15 +21,16 @@ Bzip2Compressor::compress (
   // Ensure maximum is at least a bit bigger than input length.
   target.length (static_cast <CORBA::ULong> ((source.length () * 1.01) + 600));
 
-  unsigned int max_length = static_cast <unsigned int> ( target.maximum () );
+  unsigned int max_length = static_cast<unsigned int> (target.maximum ());
 
-  int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
-                                  &max_length,
-                                  reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),
-                                  source.length (),
-                                  9,
-                                  1,
-                                  this->compression_level () * 25);
+  int const retval = ::BZ2_bzBuffToBuffCompress (
+    reinterpret_cast<char *> (target.get_buffer ()),
+    &max_length,
+    reinterpret_cast<char *> (const_cast<CORBA::Octet *> (source.get_buffer ())),
+    source.length (),
+    9,
+    1,
+    this->compression_level () * 25);
 
   if (retval != BZ_OK)
     throw ::Compression::CompressionException (retval, "");
@@ -45,14 +46,14 @@ Bzip2Compressor::decompress (
   ::Compression::Buffer const & source,
   ::Compression::Buffer & target)
 {
-  unsigned int max_length = static_cast <unsigned int> (target.maximum ());
-  // todo, check 0,1 values
-  int const retval = ::BZ2_bzBuffToBuffDecompress (reinterpret_cast <char*>(target.get_buffer ()),
-                                 &max_length,
-                                 reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),
-                                 source.length (),
-                                 0,
-                                 1);
+  unsigned int max_length = static_cast<unsigned int> (target.maximum ());
+  int const retval = ::BZ2_bzBuffToBuffDecompress (
+    reinterpret_cast<char *> (target.get_buffer ()),
+    &max_length,
+    reinterpret_cast<char *> (const_cast<CORBA::Octet *> (source.get_buffer ())),
+    source.length (),
+    false,
+    1);
 
   if (retval != BZ_OK)
     throw ::Compression::CompressionException (retval, "");
