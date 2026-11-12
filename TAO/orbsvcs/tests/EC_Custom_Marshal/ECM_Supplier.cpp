@@ -1,8 +1,9 @@
 #include "ace/Get_Opt.h"
-#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
+#include <string>
 
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
@@ -16,13 +17,14 @@
 
 
 ECMS_Driver::ECMS_Driver ()
-  : n_suppliers_ (1),
+  : suppliers_ {},
+    n_suppliers_ (1),
     event_count_ (100),
     event_period_ (100),
     event_size_ (32),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
     event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
-    pid_file_name_ (0)
+    pid_file_name_ {}
 {
 }
 
@@ -69,20 +71,22 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_a_,
                   this->event_b_,
 
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
+                  this->pid_file_name_ != nullptr
+                    ? this->pid_file_name_
+                    : ACE_TEXT ("nil")));
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_ != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
-          if (pid != 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> pid (
+            ACE_OS::fopen (this->pid_file_name_, "w"), ACE_OS::fclose);
+          if (pid != nullptr)
             {
-              ACE_OS::fprintf (pid, "%ld\n",
+              ACE_OS::fprintf (pid.get (), "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pid);
             }
         }
 
-      int min_priority =
+      int const min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
       // Enable FIFO scheduling
 
@@ -163,21 +167,20 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 }
 
 int
-ECMS_Driver::supplier_task (Test_Supplier *supplier,
-                            void* /* cookie */)
+ECMS_Driver::supplier_task (Test_Supplier& supplier)
 {
   try
     {
       ACE_Time_Value tv (0, this->event_period_);
 
-      CORBA::ULong n = this->event_size_;
+      CORBA::ULong const n = static_cast<CORBA::ULong> (this->event_size_);
 
-      ECM_IDLData::Info info;
+      ECM_IDLData::Info info {};
       info.mobile_name = CORBA::string_dup ("test");
       info.mobile_speed = 1;
       info.trajectory.length (n);
 
-      ECM_Data other;
+      ECM_Data other {};
       other.description = CORBA::string_dup ("some data");
 
       for (CORBA::ULong j = 0; j < n; ++j)
@@ -197,7 +200,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       // but we want to show that chaining works!
       TAO_OutputCDR cdr;
 
-      CORBA::Boolean byte_order = TAO_ENCAP_BYTE_ORDER;
+      CORBA::Boolean const byte_order = TAO_ENCAP_BYTE_ORDER;
       cdr << CORBA::Any::from_boolean (byte_order);
 
       // The typecode name standard, the encode method is not (in
@@ -211,19 +214,19 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       if (!cdr.good_bit ())
         ACE_ERROR ((LM_ERROR, "Problem marshalling C++ data\n"));
 
-      const ACE_Message_Block* mb = cdr.begin ();
+      ACE_Message_Block const* const mb = cdr.begin ();
       // NOTE: total_length () return the length of the complete
       // chain.
-      CORBA::ULong mblen = cdr.total_length ();
+      CORBA::ULong const mblen = cdr.total_length ();
 
       for (CORBA::Long i = 0; i < this->event_count_; ++i)
         {
           RtecEventComm::EventSet event (1);
           event.length (1);
-          event[0].header.source = supplier->supplier_id ();
+          event[0].header.source = supplier.supplier_id ();
           event[0].header.ttl = 1;
 
-          ACE_hrtime_t t = ACE_OS::gethrtime ();
+          ACE_hrtime_t const t = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
 
           if (i == static_cast<CORBA::Long> (this->event_count_) - 1)
@@ -244,13 +247,13 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 
           // Now copy over each byte.
           char* base = mb->data_block ()->base ();
-          for(CORBA::ULong i = 0; i < mblen; i++)
+          for (CORBA::ULong i {}; i < mblen; ++i)
             {
               event[0].data.payload[i] = base[i];
             }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-          supplier->consumer_proxy ()->push(event);
+          supplier.consumer_proxy ()->push (event);
 
           // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
@@ -271,14 +274,14 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 void
 ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel)
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->n_suppliers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02d", i);
+      std::string const name = std::string ("supplier_")
+        + (i < 10 ? "0" : "") + std::to_string (i);
 
-      ACE_NEW (this->suppliers_[i], Test_Supplier (this));
+      this->suppliers_[i] = std::make_unique<Test_Supplier> (*this);
 
-      this->suppliers_[i]->connect (buf,
+      this->suppliers_[i]->connect (name.c_str (),
                                     this->event_a_,
                                     this->event_b_,
                                     channel);
@@ -288,7 +291,7 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel)
 void
 ECMS_Driver::activate_suppliers ()
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->activate ();
     }
@@ -297,9 +300,10 @@ ECMS_Driver::activate_suppliers ()
 void
 ECMS_Driver::disconnect_suppliers ()
 {
-  for (int i = 0; i < this->n_suppliers_; ++i)
+  for (int i {}; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->disconnect ();
+      this->suppliers_[i].reset ();
     }
 }
 
@@ -331,12 +335,18 @@ ECMS_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 
         case 'h':
           {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            std::string event_types (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+            char* state {};
+            char* first = ACE_OS::strtok_r (event_types.data (), ",", &state);
+            char* second = ACE_OS::strtok_r (nullptr, ",", &state);
+            char* extra = ACE_OS::strtok_r (nullptr, ",", &state);
+            if (first == nullptr || second == nullptr || extra != nullptr)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Expected two comma-separated event types\n"),
+                                -1);
 
-            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (first);
+            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (second);
           }
           break;
 
@@ -377,10 +387,10 @@ ECMS_Driver::parse_args (int argc, ACE_TCHAR *argv [])
                   "reset to default (%d)\n",
                   argv[0], this->event_size_,
                   32));
-      this->event_count_ = 32;
+      this->event_size_ = 32;
     }
 
-  if (this->n_suppliers_ <= 0)
+  if (this->n_suppliers_ <= 0 || this->n_suppliers_ > MAX_SUPPLIERS)
     {
       this->n_suppliers_ = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -392,9 +402,11 @@ ECMS_Driver::parse_args (int argc, ACE_TCHAR *argv [])
   return 0;
 }
 
-Test_Supplier::Test_Supplier (ECMS_Driver *driver)
-  :  driver_ (driver),
-     supplier_ (this)
+Test_Supplier::Test_Supplier (ECMS_Driver& driver)
+  : driver_ (driver),
+    supplier_id_ {},
+    consumer_proxy_ {},
+    supplier_ (this)
 {
 }
 
@@ -461,12 +473,16 @@ Test_Supplier::disconnect ()
     {
       throw;
     }
+
+  PortableServer::POA_var poa = this->supplier_._default_POA ();
+  PortableServer::ObjectId_var id = poa->servant_to_id (&this->supplier_);
+  poa->deactivate_object (id.in ());
 }
 
 int
 Test_Supplier::svc ()
 {
-  return this->driver_->supplier_task (this, this->cookie_);
+  return this->driver_.supplier_task (*this);
 }
 
 void
@@ -476,7 +492,7 @@ Test_Supplier::disconnect_push_supplier ()
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
-int Test_Supplier::supplier_id () const
+RtecEventComm::EventSourceID Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
