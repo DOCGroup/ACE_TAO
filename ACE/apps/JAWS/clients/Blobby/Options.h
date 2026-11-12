@@ -10,19 +10,16 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_BLOBBY_OPTIONS_H
 #define ACE_BLOBBY_OPTIONS_H
 
-#include "Blob.h"
-#include "Blob_Handler.h"
-#include "ace/Get_Opt.h"
+#include "ace/config-all.h"
+#include "ace/Default_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ARGV.h"
 #include <string>
 
 class Options

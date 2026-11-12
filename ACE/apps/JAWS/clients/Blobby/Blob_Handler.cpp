@@ -6,7 +6,6 @@
 #include <memory>
 #include <new>
 
-// Always use this constructor
 ACE_Blob_Handler::ACE_Blob_Handler (ACE_Message_Block * mb,
                                     size_t length,
                                     size_t offset,
@@ -14,8 +13,7 @@ ACE_Blob_Handler::ACE_Blob_Handler (ACE_Message_Block * mb,
   mb_ (mb),
   length_ (length),
   offset_ (offset),
-  filename_ (filename),
-  bytecount_ (0)
+  filename_ (filename)
 {
 }
 
@@ -31,7 +29,6 @@ ACE_Blob_Handler::open (void *)
   return 0;
 }
 
-// No-op
 int
 ACE_Blob_Handler::close (u_long flags)
 {
@@ -39,15 +36,12 @@ ACE_Blob_Handler::close (u_long flags)
   return 0;
 }
 
-
-// Always overridden by the derived classes
 int
 ACE_Blob_Handler::send_request ()
 {
   return -1;
 }
 
-// Always overridden by the derived classes
 int
 ACE_Blob_Handler::receive_reply ()
 {
@@ -62,14 +56,12 @@ ACE_Blob_Handler::byte_count () const
   return bytecount_;
 }
 
-// Reader **************************************************
-
 ACE_Blob_Reader::ACE_Blob_Reader (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
                                   ACE_TCHAR const *filename,
-                                  const char *request_prefix,
-                                  const char *request_suffix) :
+                                  char const *request_prefix,
+                                  char const *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -89,15 +81,16 @@ ACE_Blob_Reader::send_request ()
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int len = std::sprintf (mesg, "%s %s %s",
-                          request_prefix_,
-                          ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
-                          request_suffix_);
+  int const len = std::snprintf (mesg, sizeof mesg, "%s %s %s",
+                                 request_prefix_,
+                                 ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
+                                 request_suffix_);
+  if (len < 0 || static_cast<size_t> (len) >= sizeof mesg)
+    ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
     ACE_ERROR_RETURN((LM_ERROR,"Error sending request"), -1);
-
 
   return 0;
 }
@@ -230,14 +223,12 @@ ACE_Blob_Reader::receive_reply ()
   return 0;
 }
 
-// Writer **************************************************
-
 ACE_Blob_Writer::ACE_Blob_Writer (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
                                   ACE_TCHAR const *filename,
-                                  const char *request_prefix,
-                                  const char *request_suffix) :
+                                  char const *request_prefix,
+                                  char const *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -255,26 +246,30 @@ ACE_Blob_Writer::send_request ()
   // Determine the length of the header message we will be sending to
   // the server. Note that we add 32 for safety -- this corresponds to
   // the number of bytes needed for the length field.
-  size_t mesglen =
+  size_t const buffer_size =
     std::strlen (request_prefix_)
     + ACE_OS::strlen (filename_.c_str ())
     + std::strlen (request_suffix_)
     + 32; // safety
 
   // Allocate a buffer to hold the header
-  std::unique_ptr<char[]> mesg (new (std::nothrow) char[mesglen]);
+  std::unique_ptr<char[]> mesg (new (std::nothrow) char[buffer_size]);
   if (!mesg)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Unable to allocate request header"), -1);
 
-  // Create the header, store the actual length in mesglen.
-  mesglen = std::sprintf (mesg.get (), "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
-                          request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
-                          request_suffix_, length_);
+  // Create the header and store its actual length.
+  int const message_length =
+    std::snprintf (mesg.get (), buffer_size,
+                   "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
+                   request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
+                   request_suffix_, length_);
+  if (message_length < 0 || static_cast<size_t> (message_length) >= buffer_size)
+    ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
 
   // Send the header followed by the data
 
   // First send the header
-  if (peer ().send_n (mesg.get (), mesglen) == -1)
+  if (peer ().send_n (mesg.get (), message_length) == -1)
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error sending request"), -1);
 
   // "Consume" the offset by moving the read pointer of the message
@@ -315,7 +310,7 @@ ACE_Blob_Writer::receive_reply ()
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Did not receive a HTTP/1.0 response"), -1);
 
   // Get the return code.
-  int return_code = ACE_OS::atoi (ACE_OS::strtok_r (nullptr, " \t", &lasts));
+  int const return_code = ACE_OS::atoi (ACE_OS::strtok_r (nullptr, " \t", &lasts));
 
   // Check if the transaction succeeded. The only success codes are in
   // the range of 200-299 (HTTP specification).

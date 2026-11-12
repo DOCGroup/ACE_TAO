@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_BLOB_H
 #define ACE_BLOB_H
 
@@ -44,7 +43,7 @@ class ACE_Blob
 {
 public:
   ACE_Blob () = default;
-  ~ACE_Blob ();
+  ~ACE_Blob () = default;
 
   ACE_Blob (ACE_Blob const &) = delete;
   ACE_Blob (ACE_Blob &&) = delete;
@@ -56,7 +55,6 @@ public:
   int open (ACE_TCHAR const *filename,
             ACE_TCHAR const *hostname = ACE_DEFAULT_SERVER_HOST,
             u_short port = 80);
-
 
   /**
    * starts a connection, and reads a file from the server,
@@ -74,8 +72,7 @@ public:
    */
   int write (ACE_Message_Block *mb, size_t length, size_t offset);
 
-
-  /// Frees memory allocated for filename.
+  /// Clears the filename.
   int close ();
 
 private:

@@ -1,8 +1,7 @@
-#include "ace/Get_Opt.h"
-#include "ace/ARGV.h"
-#include "Blob.h"
-#include "Blob_Handler.h"
 #include "Options.h"
+#include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
 
 Options *
 Options::instance ()

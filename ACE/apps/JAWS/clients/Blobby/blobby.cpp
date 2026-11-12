@@ -15,17 +15,19 @@
  */
 //=============================================================================
 
-
 #include "Options.h"
+#include "Blob.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Options is a singleton
-  Options *options = Options::instance ();
+  Options * const options = Options::instance ();
   options->parse_args (argc, argv);
 
   // Explain what is going to happen
@@ -73,12 +75,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   else
     {
-      int total = options->length_ + options->offset_;
+      int const total = options->length_ + options->offset_;
       ACE_Message_Block mb (total);
 
       // Open the file to be sent
-      ACE_HANDLE h = ACE_OS::open (options->filename_.c_str (), O_RDONLY);
-      if (h == ACE_INVALID_HANDLE)
+      std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> input_file (
+        ACE_OS::fopen (options->filename_.c_str (), ACE_TEXT ("rb")),
+        &ACE_OS::fclose);
+      if (!input_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("file open error")),
@@ -92,14 +96,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           -1);
 
       // Read from the file
-      if (ACE_OS::read (h, mb.wr_ptr (), total) != total)
+      if (ACE_OS::fread (mb.wr_ptr (), 1, total, input_file.get ()) != static_cast<size_t> (total))
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("file read error")),
                           -1);
-
-      // Close the file
-      ACE_OS::close (h);
 
       // Adjust the offset
       mb.wr_ptr (mb.size ());
