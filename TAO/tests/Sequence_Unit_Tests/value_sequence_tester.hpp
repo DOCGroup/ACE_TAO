@@ -106,7 +106,7 @@ struct value_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    int z = 0;
+    int z {};
 
     CHECK_THROW(z = y[32], std::range_error);
     CHECK_THROW(x[32] = z, std::range_error);
@@ -232,7 +232,7 @@ struct value_sequence_tester
 
   int test_all()
   {
-    int status = 0;
+    int status {};
 
     status +=this->test_default_constructor();
     status +=this->test_copy_constructor_from_default();

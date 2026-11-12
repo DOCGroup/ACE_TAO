@@ -40,7 +40,7 @@ struct Tester
       CHECK_EQUAL(CORBA::ULong(8), x.length());
       CHECK_EQUAL(true, x.release());
 
-      tested_sequence y(x);
+      tested_sequence const y(x);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       CHECK_EQUAL(CORBA::ULong(16), y.maximum());
       CHECK_EQUAL(CORBA::ULong(8), y.length());
@@ -81,7 +81,7 @@ struct Tester
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
-      tested_sequence x(16);
+      tested_sequence const x(16);
 
       CHECK_EQUAL(CORBA::ULong(16), x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -390,7 +390,7 @@ struct Tester
 
   int test_all()
   {
-    int status = 0;
+    int status {};
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
@@ -415,7 +415,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   try
     {
       Tester tester;

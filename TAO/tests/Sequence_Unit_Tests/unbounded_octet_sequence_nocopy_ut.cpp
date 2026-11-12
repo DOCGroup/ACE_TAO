@@ -18,9 +18,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
-#include "ace/OS_NS_stdio.h"
-
-
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
@@ -45,7 +42,7 @@ struct Tester
       CHECK_EQUAL(CORBA::ULong(8), x.length());
       CHECK_EQUAL(true, x.release());
 
-      tested_sequence y(x);
+      tested_sequence const y(x);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       CHECK_EQUAL(CORBA::ULong(16), y.maximum());
       CHECK_EQUAL(CORBA::ULong(8), y.length());
@@ -88,7 +85,7 @@ struct Tester
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
-      tested_sequence x(16);
+      tested_sequence const x(16);
 
       CHECK_EQUAL(CORBA::ULong(16), x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -174,13 +171,12 @@ struct Tester
     return buf;
   }
 
-  ACE_Message_Block * alloc_and_init_mb()
+  ACE_Message_Block_Unique_Ptr alloc_and_init_mb()
   {
-    char buf[9];
-    ACE_OS::sprintf (buf, "%s", "testing ");
-    size_t n = (ACE_OS::strlen (buf) + 1) * sizeof (char);
-    ACE_Message_Block * mb = new ACE_Message_Block (n);
-    mb->copy ((char *) buf, n);
+    char const buf[] = "testing ";
+    size_t const n = sizeof (buf);
+    ACE_Message_Block_Unique_Ptr mb {new ACE_Message_Block (n)};
+    mb->copy (buf, n);
 
     return mb;
   }
@@ -387,31 +383,26 @@ struct Tester
   int test_no_copy_octet()
   {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    ACE_Message_Block * mb = alloc_and_init_mb();
-    tested_sequence a (8, mb);
+    ACE_Message_Block_Unique_Ptr const mb {alloc_and_init_mb ()};
+    tested_sequence a (8, mb.get ());
     CHECK_EQUAL(CORBA::Octet( 't'), a[0]);
     CHECK_EQUAL(CORBA::Octet( 'g'), a[6]);
 
-    char upperbuf[256];
-    ACE_OS::sprintf (upperbuf, "%s", "THIS IS A TEST");
-    size_t n = (ACE_OS::strlen (upperbuf) + 1) * sizeof (char);
-    ACE_Message_Block * upper_mb {};
-    ACE_NEW_RETURN (upper_mb,
-        ACE_Message_Block (n), 1);
-    // Copy buf into the Message_Block and update the wr_ptr ().
-    upper_mb->copy ((char *) upperbuf, n);
-    a.replace (n, upper_mb);
+    char const upperbuf[] = "THIS IS A TEST";
+    size_t const n = sizeof (upperbuf);
+    ACE_Message_Block_Unique_Ptr const upper_mb {new ACE_Message_Block (n)};
+    // Copy the string into the Message_Block and update the write pointer.
+    upper_mb->copy (upperbuf, n);
+    a.replace (n, upper_mb.get ());
     CHECK_EQUAL(CORBA::Octet( 'T'), a[0]);
     CHECK_EQUAL(CORBA::Octet( 'S'), a[6]);
-    delete upper_mb;
-    delete mb;
 #endif
     return 0;
   }
 
   int test_all()
   {
-    int status = 0;
+    int status {};
     status += this->test_no_copy_octet();
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
@@ -437,7 +428,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   try
     {
       {

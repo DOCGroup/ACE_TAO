@@ -293,7 +293,7 @@ struct Tester
 
   int test_all()
   {
-    int status = 0;
+    int status {};
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();
     status += this->test_regression_2201();
@@ -313,7 +313,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   try
     {
       {

@@ -62,12 +62,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       }
       x = b.get_buffer();
 
-      int_sequence e(c);
+      int_sequence const e(c);
 
       using Foo_sequence = TAO::bounded_value_sequence<Foo,TEST_FOO_MAX>;
 
       Foo_sequence u;
-      Foo_sequence v(u);
+      Foo_sequence const v(u);
       u = v;
     }
   catch (const ::CORBA::Exception &)

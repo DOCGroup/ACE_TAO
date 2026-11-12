@@ -59,7 +59,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         s_sequence::freebuf(s_sequence::allocbuf(64));
       }
 
-      s_sequence e(c);
+      s_sequence const e(c);
     }
   catch (const ::CORBA::Exception &)
     {

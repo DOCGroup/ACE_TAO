@@ -9,10 +9,10 @@
  */
 #include "tao/String_Traits_T.h"
 
-#include "ace/OS_NS_string.h"
-
 #include "test_macros.h"
 
+#include <cwchar>
+#include <cstring>
 #include <sstream>
 
 template<typename charT>
@@ -36,7 +36,12 @@ struct string_sequence_test_helpers<char>
 
   static bool compare_test_string(char const * value)
   {
-    return ACE_OS::strcmp(test_string(), value) == 0;
+    return std::strcmp (test_string (), value) == 0;
+  }
+
+  static bool equal(char const * lhs, char const * rhs)
+  {
+    return std::strcmp (lhs, rhs) == 0;
   }
 
   inline static char * to_string(CORBA::ULong i)
@@ -51,12 +56,12 @@ struct string_sequence_test_helpers<char>
   {
     std::ostringstream os;
     os << i;
-    return ACE_OS::strcmp(os.str().c_str(), value) == 0;
+    return std::strcmp (os.str ().c_str (), value) == 0;
   }
 
   inline static bool compare_empty(char const * value)
   {
-    return ACE_OS::strcmp(value, "") == 0;
+    return std::strcmp (value, "") == 0;
   }
 };
 
@@ -81,7 +86,12 @@ struct string_sequence_test_helpers<CORBA::WChar>
 
   static bool compare_test_string(CORBA::WChar const * value)
   {
-    return ACE_OS::strcmp(test_string(), value) == 0;
+    return std::wcscmp (test_string (), value) == 0;
+  }
+
+  static bool equal(CORBA::WChar const * lhs, CORBA::WChar const * rhs)
+  {
+    return std::wcscmp (lhs, rhs) == 0;
   }
 
   inline static CORBA::WChar * to_string(CORBA::ULong i)
@@ -96,12 +106,12 @@ struct string_sequence_test_helpers<CORBA::WChar>
   {
     std::wostringstream os;
     os << i;
-    return ACE_OS::strcmp(os.str().c_str(), value) == 0;
+    return std::wcscmp (os.str ().c_str (), value) == 0;
   }
 
   inline static bool compare_empty(CORBA::WChar const * value)
   {
-    return ACE_OS::strcmp(value, L"") == 0;
+    return std::wcscmp (value, L"") == 0;
   }
 };
 #endif /* ACE_HAS_WCHAR */
@@ -186,10 +196,10 @@ struct string_sequence_tester
 
     character_type const * t = y[4];
 
-    FAIL_RETURN_IF_NOT(ACE_OS::strcmp(text, x[4]) == 0,
+    FAIL_RETURN_IF_NOT(helper::equal (text, x[4]),
         "Mismatched values expected=" << text
         << ", got=" << x[4]);
-    FAIL_RETURN_IF_NOT(ACE_OS::strcmp(text, y[4]) == 0,
+    FAIL_RETURN_IF_NOT(helper::equal (text, y[4]),
         "Mismatched values expected=" << text
         << ", got=" << y[4]);
     CHECK(text != t);
@@ -222,7 +232,7 @@ struct string_sequence_tester
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
 
-    CORBA::ULong max = 0;
+    CORBA::ULong max {};
     {
       tested_sequence b(a);
       FAIL_RETURN_IF_NOT(d.expect(16), d);
@@ -231,7 +241,7 @@ struct string_sequence_tester
       CHECK_EQUAL(a.length(), b.length());
       for(CORBA::ULong i = 0; i != a.length(); ++i)
       {
-        FAIL_RETURN_IF_NOT(ACE_OS::strcmp(a[i], b[i]) == 0,
+        FAIL_RETURN_IF_NOT(helper::equal (a[i], b[i]),
             "Mismatched elements at index=" << i
             << ", a=" << a[i]
             << ", b=" << b[i]);
@@ -296,7 +306,7 @@ struct string_sequence_tester
 
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
-    CORBA::ULong max = 0;
+    CORBA::ULong max {};
     {
       tested_sequence b;
       b = a;
@@ -309,7 +319,7 @@ struct string_sequence_tester
       CHECK_EQUAL(a.release(), b.release());
       for(CORBA::ULong i = 0; i != a.length(); ++i)
       {
-        FAIL_RETURN_IF_NOT(ACE_OS::strcmp(a[i], b[i]) == 0,
+        FAIL_RETURN_IF_NOT(helper::equal (a[i], b[i]),
             "Mismatched elements at index " << i);
       }
       r.reset();
@@ -443,7 +453,7 @@ struct string_sequence_tester
     a[0] = helper::test_string();
 
     CHECK_EQUAL(buffer, b.get_buffer());
-    FAIL_RETURN_IF_NOT(ACE_OS::strcmp(a[0], buffer[0]) == 0,
+    FAIL_RETURN_IF_NOT(helper::equal (a[0], buffer[0]),
         "Mismatched elements a[0]=" << a[0]
         << ", buffer[0]=" << buffer[0]);
     return 0;
@@ -451,7 +461,7 @@ struct string_sequence_tester
 
   int test_all ()
   {
-  int status=0;
+  int status {};
   status += this->test_default_constructor();
   status += this->test_copy_constructor_from_default();
   status += this->test_index_accessor();

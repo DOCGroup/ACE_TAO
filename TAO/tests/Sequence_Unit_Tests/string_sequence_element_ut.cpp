@@ -153,7 +153,7 @@ struct Tester
       tested_element x(xe, true);
 
       string_type ye = helper <charT>::dup_sample1 ();
-      tested_element y(ye, true);
+      tested_element const y(ye, true);
 
       d.reset ();
       r.reset ();
@@ -252,12 +252,12 @@ struct Tester
     {
       string_type xe =
         tested_element_traits::duplicate (helper <charT>::sample0 ());
-      tested_element x(xe, true);
+      tested_element const x(xe, true);
 
       d.reset ();
       r.reset ();
 
-      tested_element y (x);
+      tested_element const y (x);
 
       FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
@@ -288,7 +288,7 @@ struct Tester
       d.reset ();
       r.reset ();
 
-      tested_element y (x);
+      tested_element const y (x);
 
       x = y;
 
@@ -325,7 +325,7 @@ struct Tester
       tested_element x(xe, true);
       FAIL_RETURN_IF_NOT(d.expect(1), d);
 
-      string_var y (helper <charT>::sample0());
+      string_var const y (helper <charT>::sample0());
 
       FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0), r);

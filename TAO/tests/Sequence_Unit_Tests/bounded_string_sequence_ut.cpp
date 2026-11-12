@@ -327,7 +327,7 @@ struct Tester
 
   int test_all ()
   {
-    int status = 0;
+    int status {};
 
     using common = string_sequence_tester<tested_sequence>;
     common X;
@@ -352,7 +352,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   try
     {

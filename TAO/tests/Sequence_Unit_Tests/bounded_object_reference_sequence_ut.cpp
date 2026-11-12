@@ -37,7 +37,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence x;
+      tested_sequence const x;
 
       CHECK_EQUAL(TMAX, x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -55,7 +55,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      CORBA::ULong maximum = 32;
+      CORBA::ULong const maximum = 32;
       tested_sequence::value_type * data = tested_sequence::allocbuf(maximum);
       a.reset();
       tested_sequence x(maximum / 2, data, true);
@@ -79,7 +79,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      CORBA::ULong maximum = 64;
+      CORBA::ULong const maximum = 64;
       tested_sequence::value_type * data = tested_sequence::allocbuf(maximum);
       a.reset();
       {
@@ -109,9 +109,9 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence x;
+      tested_sequence const x;
 
-      tested_sequence y(x);
+      tested_sequence const y(x);
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
     FAIL_RETURN_IF_NOT(f.expect(0), f);
@@ -368,7 +368,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   Tester mytester;
 
   try

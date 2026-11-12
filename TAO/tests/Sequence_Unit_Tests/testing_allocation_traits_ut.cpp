@@ -133,7 +133,7 @@ struct Tester
 
   int test_all()
   {
-    int status = 0;
+    int status {};
     status += this->test_default_buffer_allocation_value();
     status += this->test_default_buffer_allocation_unbounded();
     status += this->test_default_buffer_allocation_bounded();
@@ -150,7 +150,7 @@ struct Foo { int y; };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   try
     {

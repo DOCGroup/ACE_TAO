@@ -8,9 +8,10 @@
 #include "testing_string_traits.hpp"
 #include "tao/CORBA_String.h"
 
-#include "ace/OS_NS_string.h"
-
 #include "test_macros.h"
+
+#include <cstring>
+#include <cwchar>
 
 using namespace TAO::details;
 
@@ -38,7 +39,7 @@ struct helper<char>
     return string_traits<char,true>::duplicate(sample1());
   }
   static bool equal(char const * lhs, char const * rhs) {
-    return ACE_OS::strcmp(lhs, rhs) == 0;
+    return std::strcmp (lhs, rhs) == 0;
   }
 };
 
@@ -61,7 +62,7 @@ struct helper<CORBA::WChar>
     return string_traits<CORBA::WChar,true>::duplicate(sample1());
   }
   static bool equal(CORBA::WChar const * lhs, CORBA::WChar const * rhs) {
-    return ACE_OS::strcmp(lhs, rhs) == 0;
+    return std::wcscmp (lhs, rhs) == 0;
   }
 };
 

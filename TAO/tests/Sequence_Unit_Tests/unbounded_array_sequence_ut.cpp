@@ -40,7 +40,7 @@ int test_default_constructor()
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   status += test_default_constructor ();
 

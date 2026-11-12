@@ -61,7 +61,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       s_sequence e(c);
 
-      CORBA::String_var w(const_cast<char const*>("World"));
+      CORBA::String_var const w(const_cast<char const*>("World"));
       try
         {
           e[0] = w;

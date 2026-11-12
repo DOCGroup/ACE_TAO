@@ -58,12 +58,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       }
       x = b.get_buffer();
 
-      int_sequence e(c);
+      int_sequence const e(c);
 
       using Foo_sequence = TAO::unbounded_value_sequence<Foo>;
 
       Foo_sequence u;
-      Foo_sequence v(32);
+      Foo_sequence const v(32);
       u = v;
     }
   catch (const ::CORBA::Exception &)
