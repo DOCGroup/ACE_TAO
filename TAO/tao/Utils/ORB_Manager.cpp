@@ -177,7 +177,7 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv)
 int
 TAO_ORB_Manager::fini ()
 {
-  this->poa_->destroy (1, 1);
+  this->poa_->destroy (true, true);
 
   this->child_poa_   = PortableServer::POA::_nil();
   this->poa_         = PortableServer::POA::_nil();
@@ -234,7 +234,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager ()
     {
       if (!CORBA::is_nil (this->poa_.in ()))
         {
-          this->poa_->destroy (1,1);
+          this->poa_->destroy (true, true);
         }
       if (!CORBA::is_nil (this->orb_.in ()))
         {

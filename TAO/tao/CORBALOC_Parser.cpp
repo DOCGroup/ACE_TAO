@@ -250,7 +250,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   separator = std::strchr (addr_base,'@');
   if (separator != nullptr && separator < addr_tail)
     {
-      canonical_endpoint.set (addr_base,(separator - addr_base)+1,1);
+      canonical_endpoint.set (addr_base,(separator - addr_base)+1,true);
       addr_base = separator + 1;
     }
   else
@@ -292,14 +292,14 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   if (separator != nullptr && separator < addr_tail)
     {
       // we have a port number
-      raw_host.set (addr_base, (separator - addr_base), 1);
-      raw_port.set (separator, (addr_tail - separator), 1);
+      raw_host.set (addr_base, (separator - addr_base), true);
+      raw_port.set (separator, (addr_tail - separator), true);
     }
   else
     {
       // we must default port #
       if (addr_base < addr_tail)
-        raw_host.set (addr_base, (addr_tail - addr_base),1);
+        raw_host.set (addr_base, (addr_tail - addr_base), true);
       raw_port.set (":2809");
     }
 

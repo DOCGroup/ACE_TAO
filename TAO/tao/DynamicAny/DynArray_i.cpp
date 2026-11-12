@@ -273,7 +273,7 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
     {
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
-      this->set_flag (this->da_members_[i].in (), 0);
+      this->set_flag (this->da_members_[i].in (), false);
 
       safe_retval[i] =
         DynamicAny::DynAny::_duplicate (this->da_members_[i].in ());
@@ -512,7 +512,7 @@ TAO_DynArray_i::destroy ()
       // Do a deep destroy.
       for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
-          this->set_flag (da_members_[i].in (), 1);
+          this->set_flag (da_members_[i].in (), true);
 
           this->da_members_[i]->destroy ();
         }
@@ -536,7 +536,7 @@ TAO_DynArray_i::current_component ()
 
   CORBA::ULong index = static_cast<CORBA::ULong> (this->current_position_);
 
-  this->set_flag (this->da_members_[index].in (), 0);
+  this->set_flag (this->da_members_[index].in (), false);
 
   return DynamicAny::DynAny::_duplicate (this->da_members_[index].in ());
 }

@@ -468,7 +468,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     {
       ACE_CString tmp;
       size_t len = pos - host;
-      tmp.set (this->endpoint_.host (), len, 1);
+      tmp.set (this->endpoint_.host (), len, true);
       encap.write_string (tmp.c_str ());
     }
   else
