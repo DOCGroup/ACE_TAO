@@ -15,7 +15,7 @@ TAO_DiffServPolicy_Initializer::static_init ()
     "DS_Network_Priority_Protocols_Hooks");
   ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DS_Network_Priority_Protocols_Hooks);
-  ACE_Service_Config::process_directive  (
+  ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DiffServPolicy_Initializer);
   return 0;
 }
@@ -27,9 +27,8 @@ TAO_DiffServPolicy_Initializer::init (int, ACE_TCHAR* [])
 
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-      /// Register the EndpointPolicy ORBInitializer.
+      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer {};
+      // Register the DiffServ ORB initializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_DiffServPolicy_ORBInitializer,
                         CORBA::NO_MEMORY (
@@ -53,9 +52,6 @@ TAO_DiffServPolicy_Initializer::init (int, ACE_TCHAR* [])
 
   return 0;
 }
-
-
-/////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
 ACE_STATIC_SVC_DEFINE (TAO_DiffServPolicy_Initializer,

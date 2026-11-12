@@ -84,7 +84,6 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   connection_handler->set_dscp_codepoint (dscp_codepoint);
 }
 
-
 ACE_FACTORY_DEFINE (TAO_DiffServPolicy, TAO_DiffServ_Network_Priority_Hook)
 ACE_STATIC_SVC_DEFINE (TAO_DiffServ_Network_Priority_Hook,
                        ACE_TEXT ("TAO_Network_Priority_Hook"),

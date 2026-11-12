@@ -61,7 +61,6 @@ protected:
   TAO_ORB_Core * orb_core_ {};
 };
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy,
                                TAO_DS_Network_Priority_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_DiffServPolicy,

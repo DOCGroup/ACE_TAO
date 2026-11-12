@@ -39,17 +39,15 @@ class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// default constructor.
   TAO_Server_Network_Priority_Policy () = default;
 
   TAO_Server_Network_Priority_Policy (
-     TAO::DiffservCodepoint const &request_diffserv_codepoint,
-     TAO::DiffservCodepoint const &reply_diffserv_codepoint,
-     TAO::NetworkPriorityModel &network_priority_model);
+    TAO::DiffservCodepoint const &request_diffserv_codepoint,
+    TAO::DiffservCodepoint const &reply_diffserv_codepoint,
+    TAO::NetworkPriorityModel &network_priority_model);
 
-  /// Copy constructor.
   TAO_Server_Network_Priority_Policy (
-     TAO_Server_Network_Priority_Policy const &rhs);
+    TAO_Server_Network_Priority_Policy const &rhs);
 
   /// Returns a copy of <this>.
   TAO_Server_Network_Priority_Policy *clone () const;
@@ -90,7 +88,6 @@ protected:
   ~TAO_Server_Network_Priority_Policy () override;
 
 private:
-  /// The attributes
   TAO::DiffservCodepoint request_diffserv_codepoint_ {};
   TAO::DiffservCodepoint reply_diffserv_codepoint_ {};
   TAO::NetworkPriorityModel network_priority_model_ {TAO::NO_NETWORK_PRIORITY};

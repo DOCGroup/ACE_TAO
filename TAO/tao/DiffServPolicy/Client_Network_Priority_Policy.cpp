@@ -19,7 +19,7 @@ TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
 }
 
 TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
-   TAO_Client_Network_Priority_Policy const &rhs)
+  TAO_Client_Network_Priority_Policy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::NetworkPriorityPolicy ()
@@ -70,7 +70,7 @@ TAO_Client_Network_Priority_Policy::request_diffserv_codepoint ()
 
 void
 TAO_Client_Network_Priority_Policy::request_diffserv_codepoint (
-   TAO::DiffservCodepoint req_dscp)
+  TAO::DiffservCodepoint req_dscp)
 {
   this->request_diffserv_codepoint_ = req_dscp;
 }
@@ -83,7 +83,7 @@ TAO_Client_Network_Priority_Policy::reply_diffserv_codepoint ()
 
 void
 TAO_Client_Network_Priority_Policy::reply_diffserv_codepoint (
-   TAO::DiffservCodepoint reply_dscp)
+  TAO::DiffservCodepoint reply_dscp)
 {
   this->reply_diffserv_codepoint_ = reply_dscp;
 }

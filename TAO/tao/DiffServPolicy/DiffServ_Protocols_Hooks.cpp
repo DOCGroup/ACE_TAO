@@ -120,7 +120,6 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   return dscp;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_DS_Network_Priority_Protocols_Hooks,
                        ACE_TEXT ("DS_Network_Priority_Protocols_Hooks"),
                        ACE_SVC_OBJ_T,

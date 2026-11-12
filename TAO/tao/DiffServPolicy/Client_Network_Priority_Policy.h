@@ -42,13 +42,12 @@ public:
   TAO_Client_Network_Priority_Policy () = default;
 
   TAO_Client_Network_Priority_Policy (
-     TAO::DiffservCodepoint request_diffserv_codepoint,
-     TAO::DiffservCodepoint reply_diffserv_codepoint,
-     TAO::NetworkPriorityModel network_priority_model);
+    TAO::DiffservCodepoint request_diffserv_codepoint,
+    TAO::DiffservCodepoint reply_diffserv_codepoint,
+    TAO::NetworkPriorityModel network_priority_model);
 
-  /// Copy constructor.
   TAO_Client_Network_Priority_Policy (
-     TAO_Client_Network_Priority_Policy const &rhs);
+    TAO_Client_Network_Priority_Policy const &rhs);
 
   /// Returns a copy of <this>.
   TAO_Client_Network_Priority_Policy *clone () const;
@@ -80,7 +79,6 @@ public:
   TAO_Policy_Scope _tao_scope () const override;
 
 private:
-  /// The attribute
   TAO::DiffservCodepoint request_diffserv_codepoint_ {};
   TAO::DiffservCodepoint reply_diffserv_codepoint_ {};
   TAO::NetworkPriorityModel network_priority_model_ {TAO::NO_NETWORK_PRIORITY};

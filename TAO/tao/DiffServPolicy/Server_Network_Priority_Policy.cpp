@@ -22,7 +22,7 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
 TAO_Server_Network_Priority_Policy::~TAO_Server_Network_Priority_Policy () = default;
 
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
-   TAO_Server_Network_Priority_Policy const &rhs)
+  TAO_Server_Network_Priority_Policy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::NetworkPriorityPolicy ()

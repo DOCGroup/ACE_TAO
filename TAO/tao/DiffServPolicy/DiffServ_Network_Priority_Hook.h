@@ -50,13 +50,11 @@ public:
   TAO_DiffServ_Network_Priority_Hook &operator= (TAO_DiffServ_Network_Priority_Hook &&) = delete;
 };
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy,
                                TAO_DiffServ_Network_Priority_Hook)
 ACE_FACTORY_DECLARE (TAO_DiffServPolicy, TAO_DiffServ_Network_Priority_Hook)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 
