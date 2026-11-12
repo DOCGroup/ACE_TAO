@@ -198,48 +198,6 @@ TAO::TypeCode::Union<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
-//   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
-//                                              CORBA::TypeCode_var> > elem_type;
-
-//   ACE_Array_Base<elem_type> tc_cases (this->ncases_);
-
-//   if (this->ncases_ > 0)
-//     {
-//       // Dynamically construct a new array of cases stripped of
-//       // member names.
-
-//       static char const empty_name[] = "";
-
-//       for (CORBA::ULong i = 0; i < this->ncases_; ++i)
-//         {
-//           // Member names will be stripped, i.e. not embedded within
-//           // the compact TypeCode.
-//           tc_cases[i].name = empty_name;
-//           tc_cases[i].type =
-//             this->cases_[i]->type ()->get_compact_typecode ();
-//         }
-//     }
-
-//   // Create the compact union TypeCode.
-//   TAO_TypeCodeFactory_Adapter * adapter =
-//     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-//       TAO_ORB_Core::typecodefactory_adapter_name ());
-
-//   if (adapter == 0)
-//     {
-//       throw ::CORBA::INTERNAL ();
-//     }
-
-//   return
-//     adapter->create_union_tc (
-//       this->base_attributes_.id (),
-//       "",  /* empty name */
-//       Traits<char const *>::get_typecode (this->discriminant_type_),
-//       tc_cases,
-//       this->ncases_,
-//       this->default_index_,
-//       "",
-//       Traits<char const *>::get_typecode (this->default_case_.type));
   throw ::CORBA::NO_IMPLEMENT ();
 }
 

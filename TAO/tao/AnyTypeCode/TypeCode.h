@@ -116,7 +116,7 @@ namespace CORBA
      */
     static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
 
-    /// Returns a NULL typecode.
+    /// Returns a null TypeCode.
     static CORBA::TypeCode_ptr _nil ();
 
     /**

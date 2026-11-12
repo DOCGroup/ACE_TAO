@@ -8,8 +8,6 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::String (
   : ::CORBA::TypeCode (kind)
   , ::TAO::Null_RefCount_Policy ()
   , length_ (length)
-{
-  // ACE_ASSERT (kind == CORBA::tk_string || kind == CORBA::tk_wstring);
-}
+{}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
