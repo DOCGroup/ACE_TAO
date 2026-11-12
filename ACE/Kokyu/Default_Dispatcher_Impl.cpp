@@ -1,28 +1,18 @@
 #include "Default_Dispatcher_Impl.h"
 
 #include "ace/Sched_Params.h"
-#include <utility>
-#include <memory>
-
 #if ! defined (__ACE_INLINE__)
 #include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 namespace Kokyu
 {
-Default_Dispatcher_Impl::Default_Dispatcher_Impl ()
-  : ntasks_ (0),
-    activated_ (false)
-{
-}
+Default_Dispatcher_Impl::Default_Dispatcher_Impl () = default;
 
 int
 Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 {
-  //create and init the dispatcher tasks here
-
-  ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
-  int size = ACE_Utils::truncate_cast<int> (attrs.config_info_set_.size ());
+  int const size = ACE_Utils::truncate_cast<int> (attrs.config_info_set_.size ());
 
   if (size == 0)
     {
@@ -34,27 +24,21 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
   Dispatcher_Task_Auto_Ptr *tasks_array {};
   ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
-  //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
-  tasks_.reset(tasks_array);
+  this->tasks_.reset (tasks_array);
 
-  //ACE_DEBUG ((LM_DEBUG, "task array unique_ptr set\n" ));
-
-  ConfigInfoSet& config_set =
+  ConfigInfoSet &config_set =
     const_cast<ConfigInfoSet&> (attrs.config_info_set_);
-  ConfigInfoSet::ITERATOR iter(config_set);
-  int i=0;
-
-  ConfigInfo* config;
-  for (;i<size && iter.next (config);iter.advance ())
+  ConfigInfoSet::ITERATOR iter (config_set);
+  ConfigInfo *config {};
+  int i {};
+  for (; i < size && iter.next (config); iter.advance (), ++i)
     {
-      //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
       Dispatcher_Task *task {};
       ACE_NEW_RETURN (task,
                       Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance()),
                       -1);
-      std::unique_ptr<Dispatcher_Task> tmp_task_unique_ptr (task);
-      tasks_[i++] = std::move(tmp_task_unique_ptr);
+      this->tasks_[i].reset (task);
     }
 
   this->thr_creation_flags_ = attrs.thread_creation_flags ();
@@ -71,15 +55,15 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 int
 Default_Dispatcher_Impl::activate_i ()
 {
-  int i;
-
   if (this->activated_)
-    return 0;
-
-  for(i=0; i<ntasks_; ++i)
     {
-      Priority_t priority =
-        tasks_[i]->get_curr_config_info ().thread_priority_;
+      return 0;
+    }
+
+  for (int i {}; i < this->ntasks_; ++i)
+    {
+      Priority_t const priority =
+        this->tasks_[i]->get_curr_config_info ().thread_priority_;
 
       if (this->tasks_[i]->activate (this->thr_creation_flags_,
                                      1, 1, priority) == -1)
@@ -98,16 +82,16 @@ Default_Dispatcher_Impl::activate_i ()
 Dispatcher_Task*
 Default_Dispatcher_Impl::find_task_with_preemption_prio (Priority_t prio)
 {
-  int i;
-
-  if (prio >=0)
-  {
-    for( i=0; i<ntasks_; ++i)
+  if (prio >= 0)
     {
-      if ( tasks_[i]->preemption_priority () == prio)
-        return  tasks_[i].get();
+      for (int i {}; i < this->ntasks_; ++i)
+        {
+          if (this->tasks_[i]->preemption_priority () == prio)
+            {
+              return this->tasks_[i].get ();
+            }
+        }
     }
-  }
 
   return nullptr;
 }
@@ -120,13 +104,13 @@ Default_Dispatcher_Impl::dispatch_i (Dispatch_Command const *cmd,
   if (qos_info.preemption_priority_ < 0)
     return -1;
 
-  Dispatcher_Task* task =
-    find_task_with_preemption_prio (qos_info.preemption_priority_);
+  Dispatcher_Task *task =
+    this->find_task_with_preemption_prio (qos_info.preemption_priority_);
 
   //@@VS - We should insert this into the lowest prio queue.
   //How do we know that the last queue is the lowest prio queue.
   if (task == nullptr)
-    task = tasks_[ntasks_-1].get ();
+    task = this->tasks_[this->ntasks_ - 1].get ();
 
   return task->enqueue (cmd, qos_info);
 }
@@ -138,22 +122,20 @@ Default_Dispatcher_Impl::shutdown_i ()
   //consistent cut through the queues
 
   //post shutdown command to all tasks
-  int i;
-
-  for(i=0; i<ntasks_; ++i)
+  for (int i {}; i < this->ntasks_; ++i)
     {
-      QoSDescriptor qos_info;
+      QoSDescriptor const qos_info {};
       Shutdown_Task_Command *raw_shutdown_cmd {};
       ACE_NEW_RETURN (raw_shutdown_cmd, Shutdown_Task_Command, -1);
       std::unique_ptr<Shutdown_Task_Command> shutdown_cmd (raw_shutdown_cmd);
-      if (tasks_[i]->enqueue (shutdown_cmd.get (), qos_info) == 0)
+      if (this->tasks_[i]->enqueue (shutdown_cmd.get (), qos_info) == 0)
         shutdown_cmd.release ();
     }
 
   //wait for all tasks to exit
-  for (i=0; i<ntasks_; ++i)
+  for (int i {}; i < this->ntasks_; ++i)
     {
-      tasks_[i]->wait ();
+      this->tasks_[i]->wait ();
     }
 
   return 0;

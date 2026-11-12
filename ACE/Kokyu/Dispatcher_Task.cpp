@@ -7,12 +7,6 @@
 #include "Dispatcher_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-namespace
-//anonymous namespace - use this to avoid polluting the global namespace
-{
-  constexpr int ALLOC_POOL_CHUNKS = 200;
-}
-
 namespace Kokyu
 {
 using Dispatch_Queue_Item_Allocator =
@@ -24,41 +18,72 @@ Dispatcher_Task::initialize ()
   switch(curr_config_info_.dispatching_type_)
     {
     case FIFO_DISPATCHING:
+      {
+      ACE_Message_Queue<ACE_SYNCH> *queue {};
       ACE_NEW_RETURN (
-          this->the_queue_,
+          queue,
           ACE_Message_Queue<ACE_SYNCH>,
           -1);
+      this->owned_queue_.reset (queue);
       break;
+      }
 
     case DEADLINE_DISPATCHING:
+      {
+      ACE_Deadline_Message_Strategy *strategy_raw {};
+      ACE_NEW_RETURN (strategy_raw,
+                      ACE_Deadline_Message_Strategy (
+                        this->curr_config_info_.reordering_flags_.static_bit_field_mask_,
+                        this->curr_config_info_.reordering_flags_.static_bit_field_shift_,
+                        this->curr_config_info_.reordering_flags_.dynamic_priority_max_,
+                        this->curr_config_info_.reordering_flags_.dynamic_priority_offset_),
+                      -1);
+      std::unique_ptr<ACE_Deadline_Message_Strategy> strategy (strategy_raw);
+      ACE_Dynamic_Message_Queue<ACE_SYNCH> *deadline_queue {};
       ACE_NEW_RETURN (
-          this->the_queue_,
-          ACE_Dynamic_Message_Queue<ACE_SYNCH> (deadline_msg_strategy_),
+          deadline_queue,
+          ACE_Dynamic_Message_Queue<ACE_SYNCH> (*strategy),
           -1);
+      strategy.release ();
+      this->owned_queue_.reset (deadline_queue);
       break;
+      }
 
     case LAXITY_DISPATCHING:
+      {
+      ACE_Laxity_Message_Strategy *strategy_raw {};
+      ACE_NEW_RETURN (strategy_raw,
+                      ACE_Laxity_Message_Strategy (
+                        this->curr_config_info_.reordering_flags_.static_bit_field_mask_,
+                        this->curr_config_info_.reordering_flags_.static_bit_field_shift_,
+                        this->curr_config_info_.reordering_flags_.dynamic_priority_max_,
+                        this->curr_config_info_.reordering_flags_.dynamic_priority_offset_),
+                      -1);
+      std::unique_ptr<ACE_Laxity_Message_Strategy> strategy (strategy_raw);
+      ACE_Dynamic_Message_Queue<ACE_SYNCH> *laxity_queue {};
       ACE_NEW_RETURN (
-           this->the_queue_,
-           ACE_Dynamic_Message_Queue<ACE_SYNCH> (laxity_msg_strategy_),
+           laxity_queue,
+           ACE_Dynamic_Message_Queue<ACE_SYNCH> (*strategy),
            -1);
+      strategy.release ();
+      this->owned_queue_.reset (laxity_queue);
       break;
+      }
 
     default:
       return -1;
     }
 
-  if (this->the_queue_ != nullptr)
-    {
-      this->msg_queue(this->the_queue_);
-    }
+  this->msg_queue (this->owned_queue_.get ());
 
   if (this->allocator_ == nullptr)
     {
-      ACE_NEW_RETURN (this->allocator_,
-                      Dispatch_Queue_Item_Allocator(ALLOC_POOL_CHUNKS),
+      Dispatch_Queue_Item_Allocator *allocator {};
+      ACE_NEW_RETURN (allocator,
+                      Dispatch_Queue_Item_Allocator (ALLOC_POOL_CHUNKS),
                       -1);
-      own_allocator_ = true;
+      this->owned_allocator_.reset (allocator);
+      this->allocator_ = allocator;
     }
 
   return 0;
@@ -67,30 +92,25 @@ Dispatcher_Task::initialize ()
 int
 Dispatcher_Task::svc ()
 {
-  bool done = false;
+  ACE_hthread_t thr_handle {};
+  ACE_Thread::self (thr_handle);
+  int prio {};
 
-    ACE_hthread_t thr_handle;
-    ACE_Thread::self (thr_handle);
-    int prio;
+  if (ACE_Thread::getprio (thr_handle, prio) == -1)
+    {
+      if (errno == ENOTSUP)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("getprio not supported on this platform\n")));
+          return 0;
+        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("getprio failed")),
+                        -1);
+    }
 
-    if (ACE_Thread::getprio (thr_handle, prio) == -1)
-      {
-        if (errno == ENOTSUP)
-          {
-            ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT ("getprio not supported on this platform\n")
-                       ));
-            return 0;
-          }
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("getprio failed")),
-                          -1);
-      }
-
-    //ACE_DEBUG ((LM_DEBUG, "(%t) Dispatcher Thread started prio=%d\n", prio));
-
-  while (!done)
+  for (;;)
     {
       ACE_Message_Block *mb {};
 
@@ -107,9 +127,7 @@ Dispatcher_Task::svc ()
             }
         }
 
-      //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
-
-      Dispatch_Queue_Item *qitem =
+      Dispatch_Queue_Item * const qitem =
         dynamic_cast<Dispatch_Queue_Item*> (mb);
 
       if (qitem == nullptr)
@@ -118,10 +136,10 @@ Dispatcher_Task::svc ()
           continue;
         }
 
-      Dispatch_Command* command = qitem->command ();
+      Dispatch_Command * const command = qitem->command ();
 
-      ACE_ASSERT(command != nullptr);
-      int result = command->execute ();
+      ACE_ASSERT (command != nullptr);
+      int const result = command->execute ();
 
       if (command->can_be_deleted ())
         command->destroy ();
@@ -129,7 +147,7 @@ Dispatcher_Task::svc ()
       ACE_Message_Block::release (mb);
 
       if (result == -1)
-        done = true;
+        break;
     }
   return 0;
 }
@@ -138,45 +156,26 @@ int
 Dispatcher_Task::enqueue (Dispatch_Command const *cmd,
                           QoSDescriptor const &qos_info)
 {
-  void* buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
+  void * const buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == nullptr)
     return -1;
 
-  ACE_Message_Block *mb =
+  // ACE_Message_Block::release returns this allocator-backed block to the pool.
+  ACE_Message_Block * const mb =
     new (buf) Dispatch_Queue_Item (cmd,
                                    qos_info,
                                    &(this->data_block_),
                                    ACE_Message_Block::DONT_DELETE,
                                    this->allocator_);
 
-  this->putq (mb);
+  if (this->putq (mb) == -1)
+    {
+      ACE_Message_Block::release (mb);
+      return -1;
+    }
 
   return 0;
-}
-
-int Dispatcher_Task::get_native_prio ()
-{
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-  int prio;
-
-  if (ACE_Thread::getprio (thr_handle, prio) == -1)
-  {
-    if (errno == ENOTSUP)
-    {
-      ACE_DEBUG((LM_DEBUG,
-                 ACE_TEXT ("getprior not supported on this platform\n")
-               ));
-      return 0;
-    }
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("getprio failed")),
-                      -1);
-  }
-
-  return prio;
 }
 
 void Dispatch_Queue_Item::init_i (QoSDescriptor const &qos_info)

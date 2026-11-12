@@ -32,7 +32,7 @@ namespace Kokyu
     using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
   protected:
-    ACE_hthread_t thr_handle_;
+    ACE_hthread_t thr_handle_ {};
     Guid_t guid_;
     DSRT_QoSDescriptor qos_;
     ACE_Time_Value insertion_time_;

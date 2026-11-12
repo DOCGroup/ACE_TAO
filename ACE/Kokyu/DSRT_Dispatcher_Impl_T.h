@@ -65,7 +65,7 @@ namespace Kokyu
         (DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item1,
          DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item2)
       {
-        int rc = qos_comparator_ (item1->qos (), item2->qos ());
+        int const rc = qos_comparator_ (item1->qos (), item2->qos ());
 
 #ifdef KOKYU_DSRT_LOGGING
         ACE_DEBUG ((LM_DEBUG,

@@ -63,25 +63,25 @@ namespace Kokyu
   struct Kokyu_Export Reordering_Queue_Attributes
   {
     Reordering_Queue_Attributes ();
-    unsigned long static_bit_field_mask_;
-    unsigned long static_bit_field_shift_;
-    unsigned long dynamic_priority_max_;
-    unsigned long dynamic_priority_offset_;
+    unsigned long static_bit_field_mask_ {};
+    unsigned long static_bit_field_shift_ {};
+    unsigned long dynamic_priority_max_ {0x7FFFFFFFUL};
+    unsigned long dynamic_priority_offset_ {0x08000000UL};
   };
 
   struct Kokyu_Export ConfigInfo
   {
-    Priority_t preemption_priority_;
+    Priority_t preemption_priority_ {};
 
     // OS priority of the dispatching thread associated with the queue
-    Priority_t thread_priority_;
+    Priority_t thread_priority_ {};
 
     // type of dispatching queue
-    Dispatching_Type_t dispatching_type_;
+    Dispatching_Type_t dispatching_type_ {FIFO_DISPATCHING};
 
     //allocator to be used for dynamic memory allocation. If each
     //thread gets its own memory pool, contention will be less
-    ACE_Allocator *allocator_; // Borrowed; it must outlive tasks using this configuration.
+    ACE_Allocator *allocator_ {}; // Borrowed; it must outlive tasks using this configuration.
 
     Reordering_Queue_Attributes reordering_flags_;
 
@@ -94,7 +94,7 @@ namespace Kokyu
   {
   public:
     ConfigInfoSet config_info_set_;
-    bool immediate_activation_;
+    bool immediate_activation_ {};
 
   public:
     Dispatcher_Attributes ();
@@ -103,18 +103,18 @@ namespace Kokyu
     int thread_creation_flags () const;
 
   private:
-    int sched_policy_;
-    int sched_scope_;
-    int base_thread_creation_flags_;
+    int sched_policy_ {ACE_SCHED_FIFO};
+    int sched_scope_ {ACE_SCOPE_THREAD};
+    int base_thread_creation_flags_ {THR_NEW_LWP | THR_BOUND | THR_JOINABLE};
   };
 
 
   struct Kokyu_Export QoSDescriptor
   {
-    Priority_t preemption_priority_;
-    Deadline_t deadline_;
-    Execution_Time_t execution_time_;
-    Importance_t importance_;
+    Priority_t preemption_priority_ {};
+    Deadline_t deadline_ {};
+    Execution_Time_t execution_time_ {};
+    Importance_t importance_ {};
   };
 
   enum Block_Flag_t {BLOCK, UNBLOCK};
@@ -127,8 +127,8 @@ namespace Kokyu
     Dispatch_Command &operator= (Dispatch_Command const &) = delete;
     Dispatch_Command &operator= (Dispatch_Command &&) = delete;
 
-    Dispatch_Command (bool dont_delete = false,
-                      ACE_Allocator *allocator = nullptr);
+    explicit Dispatch_Command (bool dont_delete = false,
+                               ACE_Allocator *allocator = nullptr);
     //dont_delete indicates whether this object needs to be deleted once processed.
     //allocator indicates the ACE_Allocator, if any, from which this object was created.
     //This same allocator has to be used for the deletion also
@@ -168,13 +168,13 @@ namespace Kokyu
   struct Kokyu_Export DSRT_ConfigInfo
   {
     //not used currently
-    DSRT_Sched_Type_t sched_strategy_;
+    DSRT_Sched_Type_t sched_strategy_ {DSRT_FP};
 
-    ACE_Sched_Params::Policy sched_policy_;
-    int sched_scope_;
+    ACE_Sched_Params::Policy sched_policy_ {ACE_SCHED_RR};
+    int sched_scope_ {ACE_SCOPE_THREAD};
 
     //type of implementation
-    DSRT_Dispatcher_Impl_t impl_type_;
+    DSRT_Dispatcher_Impl_t impl_type_ {DSRT_CV_BASED};
 
     DSRT_ConfigInfo ();
   };

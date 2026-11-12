@@ -70,7 +70,7 @@ namespace Kokyu
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
 
-    /// Supply this interface with an appripriate implementation.
+    /// Takes ownership of the implementation.
     void implementation (Dispatcher_Impl *);
 
     int activate ();

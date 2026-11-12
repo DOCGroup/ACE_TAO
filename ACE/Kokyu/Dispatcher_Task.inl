@@ -2,31 +2,13 @@ namespace Kokyu
 {
 ACE_INLINE
 Dispatcher_Task::Dispatcher_Task (ConfigInfo const &config_info,
-                                  ACE_Thread_Manager* thr_manager)
-  :  ACE_Task<ACE_SYNCH> (thr_manager),
+                                  ACE_Thread_Manager *thr_manager)
+  : ACE_Task<ACE_SYNCH> (thr_manager),
      curr_config_info_ (config_info),
-     allocator_ (config_info.allocator_),
-     own_allocator_ (false),
-     the_queue_ (nullptr),
-     deadline_msg_strategy_ (config_info.reordering_flags_.static_bit_field_mask_,
-                             config_info.reordering_flags_.static_bit_field_shift_,
-                             config_info.reordering_flags_.dynamic_priority_max_,
-                             config_info.reordering_flags_.dynamic_priority_offset_),
-     laxity_msg_strategy_ (config_info.reordering_flags_.static_bit_field_mask_,
-                           config_info.reordering_flags_.static_bit_field_shift_,
-                           config_info.reordering_flags_.dynamic_priority_max_,
-                           config_info.reordering_flags_.dynamic_priority_offset_)
+     owned_allocator_ {},
+     allocator_ (config_info.allocator_)
 {
    this->initialize();
-}
-
-ACE_INLINE
-Dispatcher_Task::~Dispatcher_Task ()
-{
-   if (own_allocator_)
-   {
-      delete allocator_;
-   }
 }
 
 ACE_INLINE
@@ -72,8 +54,8 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
 }
 
 ACE_INLINE
-Dispatch_Command*
-Dispatch_Queue_Item::command()
+Dispatch_Command *
+Dispatch_Queue_Item::command ()
 {
   return const_cast<Dispatch_Command*> (command_);
 }

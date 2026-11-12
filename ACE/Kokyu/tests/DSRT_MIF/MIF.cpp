@@ -180,6 +180,10 @@ int ACE_TMAIN (int, ACE_TCHAR **)
                         "EC (%P|%t) cannot activate task\n"));
     }
 
+  mytask1.wait ();
+  mytask2.wait ();
+  mytask3.wait ();
+
   disp->shutdown ();
 
   ACE_DEBUG ((LM_DEBUG, "main thread exiting\n"));
