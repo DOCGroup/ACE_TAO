@@ -51,19 +51,16 @@ JAWS_FILE::mem_map (int length,
       if (this->map_ == nullptr)
         {
           this->map_ = std::make_unique<ACE_Mem_Map> ();
-          if (this->map_ != nullptr)
+          int const r = this->map_->map (this->get_handle (),
+                                         static_cast<size_t> (length),
+                                         prot,
+                                         share,
+                                         addr,
+                                         offset,
+                                         sa);
+          if (r < 0)
             {
-              int r = this->map_->map (this->get_handle (),
-                                       static_cast<size_t> (length),
-                                       prot,
-                                       share,
-                                       addr,
-                                       offset,
-                                       sa);
-              if (r < 0)
-                {
-                  this->map_.reset ();
-                }
+              this->map_.reset ();
             }
         }
     }

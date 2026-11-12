@@ -3,6 +3,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
+#include "ace/SString.h"
 #include "ace/Unbounded_Queue.h"
 #include <memory>
 
@@ -78,12 +79,10 @@ private:
 
 JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)
   : faddr_ (config_file)
-  , strings_ ()
-  , symbols_ ()
+  , strings_ (std::make_unique<JAWS_strings> ())
+  , symbols_ (std::make_unique<JAWS_Symbol_Table> (
+      JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE))
 {
-  this->strings_ = std::make_unique<JAWS_strings> ();
-  this->symbols_ = std::make_unique<JAWS_Symbol_Table> (
-    JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE);
   this->parse_file ();
 }
 
@@ -137,7 +136,7 @@ JAWS_Config_File_Impl::parse_file ()
                 {
                   if (*p == '\n')
                     break;
-                  p++;
+                  ++p;
                 }
 
               if (p == buffer.wr_ptr ())
@@ -178,13 +177,13 @@ JAWS_Config_File_Impl::parse_file ()
           ACE_TCHAR *value {};
 
           name = line.rd_ptr ();
-          for (p = name; *p != '\0'; p++)
+          for (p = name; *p != '\0'; ++p)
             {
               if (*p == '=')
                 {
-                  line.rd_ptr (p+1);
+                  line.rd_ptr (p + 1);
                   while (p != name && (p[-1] == ' ' || p[-1] == '\t'))
-                    p--;
+                    --p;
                   *p = '\0';
                 }
             }
@@ -193,10 +192,10 @@ JAWS_Config_File_Impl::parse_file ()
             {
               value = line.rd_ptr ();
               while (*value == ' ' || *value == '\t')
-                value++;
+                ++value;
               p = line.wr_ptr ();
               while (p != value && (p[-1] == ' ' || p[-1] == '\t'))
-                p--;
+                --p;
               *p = '\0';
 
               sym_name = this->strings_->duplicate (name);
@@ -227,7 +226,7 @@ JAWS_Config_File_Impl::parse_file ()
                  end_of_current_line - buffer.rd_ptr ());
       p = line.wr_ptr ();
       while (p != line.rd_ptr () && (p[-1] == ' ' || p[-1] == '\t'))
-        p--;
+        --p;
       line.wr_ptr (p);
       line.wr_ptr ()[0] = '\0';
       buffer.rd_ptr (end_of_current_line + 1);
@@ -264,11 +263,9 @@ JAWS_Config_File_Impl::dump ()
 JAWS_Config_File::JAWS_Config_File (ACE_TCHAR const *config_file,
                                     ACE_TCHAR const *config_dir)
 {
-  ACE_TCHAR filename[MAXPATHLEN];
-  ACE_OS::strcpy (filename, config_dir);
-  ACE_OS::strcat (filename, config_file);
-
-  this->impl_ = std::make_unique<JAWS_Config_File_Impl> (filename);
+  ACE_TString filename (config_dir);
+  filename += config_file;
+  this->impl_ = std::make_unique<JAWS_Config_File_Impl> (filename.c_str ());
 }
 
 JAWS_Config_File::~JAWS_Config_File () = default;
