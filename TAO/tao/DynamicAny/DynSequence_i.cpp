@@ -150,7 +150,6 @@ TAO_DynSequence_i::get_element_type ()
   return retval;
 }
 
-
 CORBA::ULong
 TAO_DynSequence_i::get_length ()
 {

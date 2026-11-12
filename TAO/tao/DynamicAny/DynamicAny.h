@@ -45,7 +45,6 @@ public:
 static int
 TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
 
-
 ACE_STATIC_SVC_DECLARE (TAO_DynamicAny_Loader)
 ACE_FACTORY_DECLARE (TAO_DynamicAny, TAO_DynamicAny_Loader)
 

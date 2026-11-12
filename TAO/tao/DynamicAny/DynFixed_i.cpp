@@ -11,6 +11,7 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
+#include <array>
 #include <cctype>
 #include <string>
 
@@ -46,7 +47,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
       return false;
     }
   int const length = (digits + 2) / 2;
-  ACE_CDR::Octet octets[16];
+  std::array<ACE_CDR::Octet, 16> octets {};
   for (int i {}; i < length; ++i)
     {
       if (!cdr.read_octet (octets[i]))

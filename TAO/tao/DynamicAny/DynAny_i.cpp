@@ -799,7 +799,6 @@ TAO_DynAny_i::destroy ()
     }
 }
 
-
 DynamicAny::DynAny_ptr
 TAO_DynAny_i::current_component ()
 {

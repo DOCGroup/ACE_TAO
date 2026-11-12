@@ -54,7 +54,6 @@ public:
 
   static TAO_DynSequence_i *_narrow (CORBA::Object_ptr obj);
 
-
   CORBA::ULong get_length () override;
 
   void set_length (CORBA::ULong len) override;
@@ -66,8 +65,6 @@ public:
   DynamicAny::DynAnySeq * get_elements_as_dyn_any () override;
 
   void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
-
-
 
   void from_any (CORBA::Any const& value) override;
 

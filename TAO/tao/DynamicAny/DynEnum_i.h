@@ -53,7 +53,6 @@ public:
 
   static TAO_DynEnum_i *_narrow (CORBA::Object_ptr obj);
 
-
   char * get_as_string () override;
 
   void set_as_string (char const* value) override;
@@ -61,7 +60,6 @@ public:
   CORBA::ULong get_as_ulong () override;
 
   void set_as_ulong (CORBA::ULong value) override;
-
 
   void from_any (CORBA::Any const& value) override;
 

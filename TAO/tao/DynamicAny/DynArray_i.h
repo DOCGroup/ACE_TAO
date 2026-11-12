@@ -54,7 +54,6 @@ public:
 
   static TAO_DynArray_i *_narrow (CORBA::Object_ptr obj);
 
-
   DynamicAny::AnySeq * get_elements () override;
 
   void set_elements (DynamicAny::AnySeq const& value) override;
@@ -62,7 +61,6 @@ public:
   DynamicAny::DynAnySeq * get_elements_as_dyn_any () override;
 
   void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
-
 
   void from_any (CORBA::Any const& value) override;
 

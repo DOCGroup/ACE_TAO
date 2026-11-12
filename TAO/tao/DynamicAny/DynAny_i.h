@@ -52,7 +52,6 @@ public:
 
   static TAO_DynAny_i *_narrow (CORBA::Object_ptr obj);
 
-
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;

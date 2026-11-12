@@ -52,7 +52,6 @@ public:
 
   static TAO_DynUnion_i *_narrow (CORBA::Object_ptr obj);
 
-
   DynamicAny::DynAny_ptr get_discriminator () override;
 
   void set_discriminator (DynamicAny::DynAny_ptr d) override;
@@ -70,7 +69,6 @@ public:
   char * member_name () override;
 
   CORBA::TCKind member_kind () override;
-
 
   void from_any (CORBA::Any const& value) override;
 

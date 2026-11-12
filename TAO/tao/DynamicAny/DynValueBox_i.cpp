@@ -9,7 +9,6 @@
 
 #include "tao/CDR.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynValueBox_i::TAO_DynValueBox_i (CORBA::Boolean allow_truncation)

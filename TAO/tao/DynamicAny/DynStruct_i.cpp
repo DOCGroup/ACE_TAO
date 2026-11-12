@@ -53,7 +53,6 @@ TAO_DynStruct_i::init (CORBA::Any const& any)
   this->set_from_any (any);
 }
 
-
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void

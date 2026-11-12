@@ -9,7 +9,6 @@
 
 #include "tao/CDR.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynArray_i::~TAO_DynArray_i () = default;
@@ -304,7 +303,6 @@ TAO_DynArray_i::set_elements_as_dyn_any (
       val_type = values[i]->type ();
 
       equivalent = val_type->equivalent (element_type.in ());
-
 
       if (equivalent)
         {

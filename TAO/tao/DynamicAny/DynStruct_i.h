@@ -54,7 +54,6 @@ public:
 
   static TAO_DynStruct_i *_narrow (CORBA::Object_ptr obj);
 
-
   DynamicAny::FieldName current_member_name () override;
 
   CORBA::TCKind current_member_kind () override;
@@ -67,7 +66,6 @@ public:
 
   void set_members_as_dyn_any (
       DynamicAny::NameDynAnyPairSeq const& value) override;
-
 
   void from_any (CORBA::Any const& value) override;
 
