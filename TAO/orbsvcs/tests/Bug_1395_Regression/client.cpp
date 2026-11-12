@@ -3,11 +3,12 @@
 
 struct Client_Options
 {
-  ACE_TCHAR const *ior {ACE_TEXT("file://test.ior")};
+  // Borrowed from argv for the duration of main.
+  ACE_TCHAR const *ior { ACE_TEXT ("file://test.ior") };
   bool shutdown_server {};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:s"));

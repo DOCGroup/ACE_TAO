@@ -7,6 +7,7 @@
 
 struct Server_Options
 {
+  // Borrowed from argv for the duration of main.
   ACE_TCHAR const *ior_output_file {};
 };
 
@@ -34,7 +35,7 @@ private:
   CORBA::ORB_var orb_ {};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));

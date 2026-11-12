@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#if !defined BUG_1395_REGRESSION_TEST_I_H
- #define BUG_1395_REGRESSION_TEST_I_H
+#ifndef BUG_1395_REGRESSION_TEST_I_H
+#define BUG_1395_REGRESSION_TEST_I_H
 
 #include "tao/PortableServer/PortableServer.h"
 
@@ -29,4 +29,4 @@ protected:
   CORBA::PolicyList policies_ {};
 };
 
-#endif /* ! BUG_1395_REGRESSION_TEST_I_H */
+#endif /* BUG_1395_REGRESSION_TEST_I_H */
