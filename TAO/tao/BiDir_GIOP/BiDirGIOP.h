@@ -16,7 +16,6 @@
 
 #include "tao/BiDir_GIOP/bidirgiop_export.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -65,12 +64,10 @@ private:
 static bool const
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 
-
 ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
 ACE_FACTORY_DECLARE (TAO_BIDIRGIOP, TAO_BiDirGIOP_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #define TAO_BIDIRGIOP_SAFE_INCLUDE
 #include "tao/BiDir_GIOP/BiDirPolicyC.h"
