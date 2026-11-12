@@ -42,12 +42,12 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_BiDir_ORBInitializer (TAO_BiDir_ORBInitializer const &) = delete;
   TAO_BiDir_ORBInitializer &operator= (TAO_BiDir_ORBInitializer const &) = delete;
   TAO_BiDir_ORBInitializer (TAO_BiDir_ORBInitializer &&) = delete;
   TAO_BiDir_ORBInitializer &operator= (TAO_BiDir_ORBInitializer &&) = delete;
 
+private:
   /// Register BiDir policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

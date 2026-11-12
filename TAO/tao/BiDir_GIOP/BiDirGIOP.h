@@ -38,10 +38,8 @@ class TAO_BiDirPolicy_Validator;
 class TAO_BIDIRGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
-  /// Constructor
   TAO_BiDirGIOP_Loader () = default;
 
-  /// Destructor
   ~TAO_BiDirGIOP_Loader () override = default;
 
   /// Initialize the BiDIR loader hooks.
@@ -53,18 +51,18 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader const &) = delete;
   TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader const &) = delete;
   TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader &&) = delete;
   TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader &&) = delete;
 
+private:
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
-  bool initialized_ {false};
+  bool initialized_ {};
 };
 
-static bool
+static bool const
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 
 
