@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file PI_ORBInitializer.h
  *
  *  @author Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PI_ORB_INITIALIZER_H
 #define TAO_PI_ORB_INITIALIZER_H

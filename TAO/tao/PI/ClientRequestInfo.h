@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ClientRequestInfo.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INFO_H
 #define TAO_CLIENT_REQUEST_INFO_H

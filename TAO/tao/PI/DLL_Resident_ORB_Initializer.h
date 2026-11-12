@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file DLL_Resident_ORB_Initializer.h
  *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
-//=============================================================================
 
 
 #ifndef PI_DLL_RESIDENT_ORB_INITIALIZER_H

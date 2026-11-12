@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Interceptor_List_T.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_INTERCEPTOR_LIST_H
 #define TAO_INTERCEPTOR_LIST_H

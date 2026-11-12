@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PI_PolicyFactory.h
  *
  * @author Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PI_POLICY_FACTORY_H
 #define TAO_PI_POLICY_FACTORY_H

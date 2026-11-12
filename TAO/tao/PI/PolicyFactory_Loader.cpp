@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file PolicyFactory_Loader.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
 
 #include "tao/PI/PolicyFactory_Loader.h"
 #include "tao/PI/PolicyFactory_Registry.h"

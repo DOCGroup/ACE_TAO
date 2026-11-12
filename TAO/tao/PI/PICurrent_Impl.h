@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   PICurrent_Impl.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 #ifndef TAO_PI_CURRENT_IMPL_H
 #define TAO_PI_CURRENT_IMPL_H
@@ -77,7 +75,7 @@ namespace TAO
 
     /// Set the callback PICurrent_Impl object that will be notified
     /// of this object's impending destruction or change.
-    /// Set to 0 to clear. (NOTE Only handles a SINGLE object at
+    /// Set to nullptr to clear. (NOTE Only handles a SINGLE object at
     /// at time, does NOT warn previous callback that this has
     /// been changed.)
     void set_callback_for_impending_change (PICurrent_Impl *p);
@@ -99,20 +97,23 @@ namespace TAO
     PICurrent_Impl &operator= (PICurrent_Impl &&) = delete;
 
   private:
-    /// Allow for stack of PICurrent_Impl as required.
+    /// Borrowed ORB core used to integrate this entry with the TSS stack.
     TAO_ORB_Core   *orb_core_;
     size_t    tss_slot_;
+
+    /// The push_ and pop_ links own the adjacent request-scope stack entries;
+    /// destruction recursively deletes the linked entries.
     PICurrent_Impl *pop_;
     PICurrent_Impl *push_ {};
 
     /// CORBA::Any values in the underlying "slot table."
     Table slot_table_;
 
-    /// Access to logical copy from a PICurrent_Impl in another
+    /// Non-owning access to a logical copy from a PICurrent_Impl in another
     /// scope, i.e. either the request scope or the thread scope.
     PICurrent_Impl *lazy_copy_ {};
 
-    /// PICurrent_Impl object that will be notified of this object's
+    /// Non-owning PICurrent_Impl object that will be notified of this object's
     /// impending destruction or change to its slot_table_. This is
     /// the PICurrent_Impl that has access to our slot_table_ via its
     /// lazy_copy_ pointer. As necessary this allows that object's

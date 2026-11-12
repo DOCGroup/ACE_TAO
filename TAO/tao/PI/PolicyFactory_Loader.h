@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
 
-//=============================================================================
 /**
  *  @file    PolicyFactory_Loader.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 
 #ifndef TAO_POLICYFACTORY_LOADER_H

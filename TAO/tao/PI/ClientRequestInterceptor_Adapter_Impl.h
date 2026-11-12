@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ClientRequestInterceptor_Adapter_Impl.h
  *
@@ -12,7 +11,6 @@
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
 #define TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H

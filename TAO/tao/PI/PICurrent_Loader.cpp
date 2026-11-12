@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file PICurrent_Loader.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
 
 #include "tao/PI/PICurrent_Loader.h"
 

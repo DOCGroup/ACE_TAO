@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file DLL_Resident_ORB_Initializer.cpp
  *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"
 

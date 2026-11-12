@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// =================================================================
 /**
  * @file ClientRequestInterceptor_Factory_Impl.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
 
 #include "tao/PI/ClientRequestInterceptor_Factory_Impl.h"
 

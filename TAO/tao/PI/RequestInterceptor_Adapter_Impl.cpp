@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RequestInterceptor_Adapter_Impl.cpp
  *
  *   This file an adapter class to simplify the support of
  *   interceptors.
  */
-//=============================================================================
 
 #include "tao/PI/RequestInterceptor_Adapter_Impl.h"
 

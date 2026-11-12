@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   ProcessingModePolicy.h
  *
  *  @author Tim Bradley (bradley_t@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_PROCESSING_MODE_POLICY_H
 #define TAO_PROCESSING_MODE_POLICY_H

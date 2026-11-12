@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ClientRequestDetails.h
  *
@@ -13,7 +12,6 @@
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_DETAILS_H
 #define TAO_CLIENT_REQUEST_DETAILS_H

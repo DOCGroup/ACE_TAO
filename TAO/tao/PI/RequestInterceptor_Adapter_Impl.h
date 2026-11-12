@@ -1,10 +1,8 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RequestInterceptor_Adapter_Impl.h
  */
-//=============================================================================
 
 #ifndef TAO_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
 #define TAO_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H

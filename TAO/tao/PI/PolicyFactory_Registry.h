@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   PolicyFactory_Registry.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_POLICY_FACTORY_REGISTRY_H
 #define TAO_POLICY_FACTORY_REGISTRY_H
