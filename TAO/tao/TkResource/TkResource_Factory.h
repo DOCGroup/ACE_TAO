@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   TkResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_TKRESOURCE_FACTORY_H
 #define TAO_TKRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -49,7 +47,7 @@ namespace TAO
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    /// Reactor created by this factory.
+    /// Raw pointer cached while ACE_Reactor owns the implementation.
     ACE_TkReactor *reactor_impl_ {};
   };
 }
