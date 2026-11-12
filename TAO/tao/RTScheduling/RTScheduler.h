@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file RTScheduler.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_RTSCHEDULER_H_
 #define TAO_RTSCHEDULER_H_

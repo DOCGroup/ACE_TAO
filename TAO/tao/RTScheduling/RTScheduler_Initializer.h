@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file RTScheduler_Initializer.h
  *
  *  @author Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_RTSCHEDULER_INITIALIZER_H
 #define TAO_RTSCHEDULER_INITIALIZER_H

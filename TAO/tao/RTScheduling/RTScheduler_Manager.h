@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RTScheduler_Manager.h
  *
  *  @author Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_RTSCHEDULER_MANAGER_H
 #define TAO_RTSCHEDULER_MANAGER_H
