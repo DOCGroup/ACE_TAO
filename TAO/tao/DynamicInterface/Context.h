@@ -77,16 +77,13 @@ namespace CORBA
     Context (Context &&) = delete;
     Context &operator= (Context &&) = delete;
 
-    // = Pseudo-object methods
     static Context *_duplicate (Context*);
     static Context *_nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 
-    // = All the spec-required functions below will just throw a
-    //   CORBA::NO_IMPLEMENT exception and do nothing else.
+    /// These specification-required operations throw CORBA::NO_IMPLEMENT.
 
     char const* context_name () const;
 
@@ -153,10 +150,10 @@ namespace CORBA
     /// Return null pointer of this type.
     static ContextList_ptr _nil ();
 
-    /// Add a string to the list.
+    /// Duplicate a string and add it to the list.
     void add (char *ctx);
 
-    /// Add and consume a string to the list.
+    /// Transfer ownership of a string to the list.
     void add_consume (char *ctx);
 
     /// Return the typecode at slot i. Raises the "Bounds" exception.
@@ -178,7 +175,7 @@ namespace CORBA
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 
-    /// Internal list of context strings.
+    /// Owns strings duplicated by add() or transferred by add_consume().
     ACE_Unbounded_Queue<char *> ctx_list_;
   };
 } // End CORBA namespace.

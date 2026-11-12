@@ -71,8 +71,6 @@ namespace CORBA
     /// Return the repository ID of the Exception.
     char const* _rep_id () const override;
 
-    // = TAO specific extension.
-
     /// This class has a specific typecode.
     CORBA::TypeCode_ptr _tao_type () const override;
 

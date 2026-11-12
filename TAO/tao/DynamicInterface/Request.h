@@ -164,7 +164,6 @@ namespace CORBA
     static CORBA::Request* _duplicate (CORBA::Request*);
     static CORBA::Request* _nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 

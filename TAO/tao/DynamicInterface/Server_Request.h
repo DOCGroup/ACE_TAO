@@ -78,14 +78,10 @@ namespace CORBA
     /// sent when this returns, and reclaim memory it allocated.
     void set_exception (CORBA::Any const& value);
 
-    // = Get various universal call attributes.
-
-    // e.g., who made the call, the target of the call, what ORB and OA
-    // that target object uses.
-    //
-    // NOTE: none of these report exceptions; unavailability of any of
-    // this stuff is a catastrophic error since this is all part of the
-    // basic CORBA Object Model.
+    /// For example, these attributes identify who made the call, its
+    /// target, and the ORB and object adapter used by that target.
+    /// Their unavailability is a catastrophic error under the CORBA
+    /// object model.
 
     /// Marshal outgoing parameters.
     void dsi_marshal ();
@@ -103,7 +99,6 @@ namespace CORBA
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
     static ServerRequest_ptr _nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 
