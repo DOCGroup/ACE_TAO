@@ -170,8 +170,7 @@ private:
   /// Mutex to ensure the AMH-RH method call is thread-safe.
   TAO_SYNCH_MUTEX mutex_;
 
-  /// Allocator used to allocate this object. If zero then we are allocated
-  /// from the heap
+  /// Allocator used to release this object; nullptr means heap allocation.
   TAO_AMH_BUFFER_ALLOCATOR* allocator_ {};
 };
 
@@ -182,12 +181,9 @@ namespace TAO
    *
    * @brief Functor for refcounting of TAO_AMH_Response_Handler
    *
-   * This is used to safely handle the destruction of
-   * TAO_AMH_Response_Handler objects which are created on the
-   * heap. We cannot use auto_ptr <> since it calls delete on the
-   * pointer, and calling delete on TAO_AMH_Response_Handler *
-   * will not work. Hence this functor will be used with Auto_Functor
-   * class to handle the memory safely.
+   * The handler can use an ACE allocator or the heap, so destruction must
+   * go through _remove_ref() instead of delete. This functor lets
+   * Auto_Functor use the correct deallocation path.
    *
    * @todo Ideally, this class can be a generic class. But that
    * requires quite a bit of cleanup within TAO to be more useful.

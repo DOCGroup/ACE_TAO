@@ -117,14 +117,8 @@ namespace TAO
         ace_mon.release();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        // NOTE: We don't need to do the auto_ptr <> trick. We got here
-        // in the first place since the message was sent properly,
-        // which implies a reply would be available. Therefore the
-        // reply dispatcher should be available for another thread to
-        // collect and dispatch the reply. In MT cases, things are
-        // more hairy. Just imagine what happens when another thread
-        // is collecting the reply when we are happily invoking
-        // interceptors?
+        // No cleanup transfer is needed here: the successful send leaves
+        // the reply dispatcher available for another thread to collect.
 
         // Nothing great on here. If we get a restart during send or a
         // proper send, we are supposed to call receiver_other ()
