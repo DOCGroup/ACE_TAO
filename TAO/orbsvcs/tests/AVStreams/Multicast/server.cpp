@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "server.h"
 
 static bool done {};
@@ -160,7 +162,7 @@ Server::write_output (char const *buffer, std::size_t length)
   if (!this->fp_)
     return 0;
 
-  return ACE_OS::fwrite (buffer, 1, length, this->fp_.get ());
+  return std::fwrite (buffer, 1, length, this->fp_.get ());
 }
 
 void

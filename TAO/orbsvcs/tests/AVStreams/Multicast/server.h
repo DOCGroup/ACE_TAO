@@ -21,6 +21,7 @@
 
 class FTP_Server_Callback;
 
+/// Creates the server callback for incoming AVStreams flows.
 class FTP_Server_StreamEndPoint
   : public TAO_Server_StreamEndPoint
 {
@@ -35,9 +36,11 @@ public:
                     TAO_AV_Callback *&callback) override;
 
 private:
+  /// Callback whose lifetime is owned by this endpoint.
   std::unique_ptr<FTP_Server_Callback> callback_ {};
 };
 
+/// Writes received AVStreams frames to the server output file.
 class FTP_Server_Callback
   : public TAO_AV_Callback
 {
@@ -63,10 +66,14 @@ public:
   Server &operator= (Server const &) = delete;
   Server (Server &&) = delete;
   Server &operator= (Server &&) = delete;
+  /// Initialize server endpoints, output file, and Naming Service bindings.
   int init (int argc,
             ACE_TCHAR *argv[]);
+  /// Process ORB work until a stream is stopped.
   int run ();
+  /// Write a received byte range to the output file.
   std::size_t write_output (char const *buffer, std::size_t length);
+  /// Close the output file.
   void close_file ();
 
 protected:
@@ -77,13 +84,18 @@ protected:
 
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
+  /// Parse the command-line options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
+  /// Server command-line options.
   Options options_;
+  /// Naming Service client.
   TAO_Naming_Client my_naming_client_;
+  /// Endpoint strategy accepting the incoming flow.
   TAO_AV_Endpoint_Reactive_Strategy_B<FTP_Server_StreamEndPoint,
                                       TAO_VDev,
                                       AV_Null_MediaCtrl> reactive_strategy_;
-  File_Ptr fp_ {nullptr, ACE_OS::fclose};
+  /// Output file owned by the server.
+  File_Ptr fp_ {nullptr, std::fclose};
 };
 
 using FTP_SERVER = ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>;
