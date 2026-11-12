@@ -16,7 +16,8 @@
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -198,15 +199,13 @@ namespace TAO
 
       sys_id->length(8);
 
-      long const count = this->sys_id_count_;
-      ++this->sys_id_count_;
+      // Only uniqueness is needed; this counter does not synchronize other state.
+      std::uint32_t const count =
+        this->sys_id_count_.fetch_add (1, std::memory_order_relaxed);
       ACE_Time_Value const now = ACE_OS::gettimeofday();
-
-      ACE_UINT32 *id_ptr = reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer());
-
-      *id_ptr = count;
-      ++id_ptr;
-      *id_ptr = static_cast<ACE_UINT32>(now.sec());
+      std::uint32_t const seconds = static_cast<std::uint32_t> (now.sec ());
+      std::uint32_t const id_components[] {count, seconds};
+      std::memcpy (sys_id->get_buffer (), id_components, sizeof (id_components));
 
       system_id = sys_id;
 

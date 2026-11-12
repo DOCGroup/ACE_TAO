@@ -20,6 +20,7 @@
 
 #include "tao/PortableServer/Servant_Location.h"
 #include <atomic>
+#include <cstdint>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -118,7 +119,7 @@ namespace TAO
 
     protected:
       TAO_Root_POA *poa_ {};
-      std::atomic<uint32_t> sys_id_count_ { 0 };
+      std::atomic<std::uint32_t> sys_id_count_ { 0 };
     };
   }
 }
