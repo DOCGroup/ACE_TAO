@@ -22,6 +22,7 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
+#include <cstring>
 
 
 CC_Client::~CC_Client ()
@@ -294,19 +295,19 @@ CC_Client::run_extended_tests (ACE_TCHAR *params)
   // Unlocks the lock set. Now test 2 will continue.
   // ./CC_client -e '3:Name'
 
-  if (ACE_OS::strcmp (cmd, "1") == 0)
+  if (std::strcmp (cmd, "1") == 0)
     {
       Test_Setup_LockSet t1 (naming_service_.get (), arg1);
       success = t1.run ();
     }
 
-  if (ACE_OS::strcmp (cmd, "2") == 0)
+  if (std::strcmp (cmd, "2") == 0)
     {
       Test_Use_Already_Created_LockSet t2 (naming_service_.get (), arg1);
       success = t2.run ();
     }
 
-  if (ACE_OS::strcmp (cmd, "3") == 0)
+  if (std::strcmp (cmd, "3") == 0)
     {
       Test_Unlock_Already_Created_LockSet t3 (naming_service_.get (), arg1);
       success = t3.run ();

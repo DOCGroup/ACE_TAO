@@ -19,6 +19,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 CC_Command::~CC_Command() = default;
 
@@ -38,7 +39,7 @@ CC_Command::GetLockSet (char const* lock_set_name)
 
   try
     {
-      if(ACE_OS::strcmp(lock_set_name, "")!=0)
+      if (std::strcmp (lock_set_name, "") != 0)
         {
           CORBA::Object_var ccls_obj =
             CC_naming_service::Instance()->get_obj_from_name ("",
@@ -145,7 +146,7 @@ int CC_CreateLockSet_Cmd::execute()
     {
       CosConcurrencyControl::LockSet_ptr lock_set =
         CC_TestUtils::create_lock_set();
-      if(ACE_OS::strcmp(name_,"")!=0)// Do not bind an empty name
+      if (std::strcmp (name_, "") != 0) // Do not bind an empty name
         {
           CC_naming_service::Instance()->bind_name(name_,
                                                    lock_set);
@@ -437,7 +438,7 @@ CC_Excep_Cmd::execute()
     return 0; // CC_FAIL
 
   // If there is an exception check that it's the expected one
-  if(ACE_OS::strcmp(excep_->_rep_id (), ex_)==0)
+  if (std::strcmp (excep_->_rep_id (), ex_) == 0)
     {
       delete excep_;
       excep_ = nullptr;
