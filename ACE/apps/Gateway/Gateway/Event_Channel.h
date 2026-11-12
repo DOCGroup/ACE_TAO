@@ -8,9 +8,10 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_EVENT_CHANNEL
 #define ACE_EVENT_CHANNEL
+
+#include <memory>
 
 #include "Connection_Handler_Connector.h"
 #include "Connection_Handler_Acceptor.h"
@@ -74,7 +75,7 @@ public:
   /// Subscribe the <Consumer_Dispatch_Set> to receive events that
   /// match <Event_Key>.
   int subscribe (Event_Key const &event_addr,
-                 Consumer_Dispatch_Set *cds);
+                 std::unique_ptr<Consumer_Dispatch_Set> cds);
 
   // = Event processing entry point.
   /// Pass <mb> to the Event Channel so it can forward it to Consumers.

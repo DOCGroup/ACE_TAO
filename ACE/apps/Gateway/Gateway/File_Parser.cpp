@@ -18,7 +18,7 @@ File_Parser<ENTRY>::~File_Parser () = default;
 template <class ENTRY> int
 File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 {
-  this->infile_ = ACE_OS::fopen (filename, ACE_TEXT ("r"));
+  this->infile_.reset (ACE_OS::fopen (filename, ACE_TEXT ("r")));
   if (this->infile_ == nullptr)
     return -1;
   else
@@ -28,7 +28,11 @@ File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 template <class ENTRY> int
 File_Parser<ENTRY>::close ()
 {
-  return ACE_OS::fclose (this->infile_);
+  if (!this->infile_)
+    return -1;
+
+  FILE * const file = this->infile_.release ();
+  return ACE_OS::fclose (file);
 }
 
 template <class ENTRY> FP_RETURN_TYPE
@@ -73,12 +77,12 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
 template <class ENTRY> FP_RETURN_TYPE
 File_Parser<ENTRY>::readword (char buf[])
 {
-  int wordlength = 0;
-  int c;
+  int wordlength {};
+  int c {};
 
   // Skip over leading delimiters and get word.
 
-  while ((c = ACE_OS::getc (this->infile_)) != EOF && c != '\n')
+  while ((c = ACE_OS::getc (this->infile_.get ())) != EOF && c != '\n')
     if (this->delimiter (c))
       {
         // We've reached the end of a "word".
@@ -86,7 +90,10 @@ File_Parser<ENTRY>::readword (char buf[])
           break;
       }
     else
-      buf[wordlength++] = c;
+      {
+        buf[wordlength] = c;
+        ++wordlength;
+      }
 
   buf[wordlength] = '\0';
 
@@ -95,7 +102,7 @@ File_Parser<ENTRY>::readword (char buf[])
     // gets processed.
     if (wordlength > 0)
       {
-        ACE_OS::ungetc (c, this->infile_);
+        ACE_OS::ungetc (c, this->infile_.get ());
         return FPRT::RT_SUCCESS;
       }
     else
@@ -107,7 +114,7 @@ File_Parser<ENTRY>::readword (char buf[])
       // if the EOLINE is just a delimiter, don't return EOLINE
       // so that the word gets processed
       if (wordlength > 0)
-        ACE_OS::ungetc (c, this->infile_);
+        ACE_OS::ungetc (c, this->infile_.get ());
       else
         return FPRT::RT_EOLINE;
     }
@@ -141,9 +148,9 @@ File_Parser<ENTRY>::skipline ()
 {
   // Skip the remainder of the line.
 
-  int c;
+  int c {};
 
-  while ((c = ACE_OS::getc (this->infile_)) != '\n' && c != EOF)
+  while ((c = ACE_OS::getc (this->infile_.get ())) != '\n' && c != EOF)
     continue;
 
   return c;

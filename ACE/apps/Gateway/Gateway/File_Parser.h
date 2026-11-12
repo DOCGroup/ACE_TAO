@@ -8,11 +8,13 @@
  */
 //=============================================================================
 
-
 #ifndef _FILE_PARSER
 #define _FILE_PARSER
 
+#include <memory>
+
 #include "ace/Basic_Types.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,6 +48,15 @@ public:
 template <class ENTRY>
 class File_Parser
 {
+  struct File_Deleter
+  {
+    void operator() (FILE *file) const
+    {
+      if (file != nullptr)
+        ACE_OS::fclose (file);
+    }
+  };
+
 public:
   File_Parser () = default;
 
@@ -90,8 +101,8 @@ protected:
   /// character.
   int skipline ();
 
-  /// Pointer to the file we're reading.
-  FILE *infile_ {};
+  /// Owns the file being read and closes it if the parser exits early.
+  std::unique_ptr<FILE, File_Deleter> infile_;
 };
 
 #include "File_Parser.cpp"

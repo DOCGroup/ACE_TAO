@@ -41,8 +41,8 @@ Event_Channel::compute_performance_statistics ()
                   "(%t) suspending all threads..."));
     }
 
-  size_t total_bytes_in = 0;
-  size_t total_bytes_out = 0;
+  size_t total_bytes_in {};
+  size_t total_bytes_out {};
 
   // Iterate through the connection map summing up the number of bytes
   // sent/received.
@@ -150,7 +150,7 @@ Event_Channel::subscription_event (ACE_Message_Block *data)
 
   for (ACE_INT32 i = 0;
        i < subscription->total_consumers_;
-       i++)
+       ++i)
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) consumers_[%d] = %d\n",
                 i,
@@ -518,9 +518,9 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 
 int
 Event_Channel::subscribe (Event_Key const &event_addr,
-                          Consumer_Dispatch_Set *cds)
+                          std::unique_ptr<Consumer_Dispatch_Set> cds)
 {
-  int result = this->efd_.bind (event_addr, cds);
+  int result = this->efd_.bind (event_addr, cds.get ());
 
   // Bind with consumer map, keyed by peer address.
   switch (result)
@@ -539,7 +539,8 @@ Event_Channel::subscribe (Event_Key const &event_addr,
                         -1);
       /* NOTREACHED */
     case 0:
-      // Success.
+      // The discriminator now owns the dispatch set.
+      cds.release ();
       return 0;
     default:
       ACE_ERROR_RETURN ((LM_DEBUG,

@@ -1,5 +1,8 @@
 #define ACE_BUILD_SVC_DLL
 
+#include <memory>
+#include <utility>
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -175,7 +178,7 @@ Gateway::parse_connection_config_file ()
   // File that contains the proxy configuration information.
   Connection_Config_File_Parser connection_file;
   bool file_empty = true;
-  int line_number = 0;
+  int line_number {};
 
   if (connection_file.open (Options::instance ()->connection_config_file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -261,7 +264,7 @@ Gateway::parse_consumer_config_file ()
   // File that contains the consumer event forwarding information.
   Consumer_Config_File_Parser consumer_file;
   bool file_empty = true;
-  int line_number = 0;
+  int line_number {};
 
   if (consumer_file.open (Options::instance ()->consumer_config_file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -285,23 +288,24 @@ Gateway::parse_consumer_config_file ()
                       cci_entry.type_,
                       cci_entry.total_consumers_));
 
-          for (int i = 0; i < cci_entry.total_consumers_; i++)
+          for (int i = 0; i < cci_entry.total_consumers_; ++i)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) destination[%d] = %d\n"),
                         i,
                         cci_entry.consumers_[i]));
         }
 
-      Consumer_Dispatch_Set *dispatch_set;
-      ACE_NEW_RETURN (dispatch_set,
+      Consumer_Dispatch_Set *dispatch_set_raw {};
+      ACE_NEW_RETURN (dispatch_set_raw,
                       Consumer_Dispatch_Set,
                       -1);
+      std::unique_ptr<Consumer_Dispatch_Set> dispatch_set (dispatch_set_raw);
 
       Event_Key event_addr (cci_entry.connection_id_,
                             cci_entry.type_);
 
       // Add the Consumers to the Dispatch_Set.
-      for (int i = 0; i < cci_entry.total_consumers_; i++)
+      for (int i = 0; i < cci_entry.total_consumers_; ++i)
         {
           Connection_Handler *connection_handler {};
 
@@ -317,7 +321,7 @@ Gateway::parse_consumer_config_file ()
                         cci_entry.consumers_[i]));
         }
 
-      this->event_channel_.subscribe (event_addr, dispatch_set);
+      this->event_channel_.subscribe (event_addr, std::move (dispatch_set));
     }
 
   if (file_empty)
