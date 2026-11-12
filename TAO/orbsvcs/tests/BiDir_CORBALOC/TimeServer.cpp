@@ -3,7 +3,9 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_time.h"
+
+#include <cstdlib>
+#include <ctime>
 
 class Time_impl :
   public POA_TimeModule::Time
@@ -23,9 +25,9 @@ public:
 TimeModule::TimeOfDay
 Time_impl::get_gmt ()
 {
-  time_t const time_now = ACE_OS::time (nullptr);
-  // ACE_OS::gmtime returns C runtime-owned storage.
-  tm const * const time_value = ACE_OS::gmtime (&time_now);
+  std::time_t const time_now = std::time (nullptr);
+  // std::gmtime returns C runtime-owned storage.
+  std::tm const * const time_value = std::gmtime (&time_now);
 
   TimeModule::TimeOfDay tod {};
   if (time_value == nullptr)
@@ -41,7 +43,7 @@ Time_impl::get_gmt ()
 void
 Time_impl::Shutdown ()
 {
-  ACE_OS::exit (0);
+  std::exit (0);
 }
 
 int
@@ -89,10 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CosNaming::NamingContext::_narrow (name_obj.in ());
 
       if (CORBA::is_nil (naming_context.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error fetching naming context\n"));
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Error fetching naming context\n"),
+                          -1);
 
       CosNaming::Name service_name (1);
       service_name.length (1);
