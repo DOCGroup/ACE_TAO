@@ -58,8 +58,9 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
 
+  // The ORB core owns the protocol hooks; this pointer is only borrowed here.
   TAO_Network_Priority_Protocols_Hooks * const nph =
-   poa.orb_core ().get_network_priority_protocols_hooks ();
+    poa.orb_core ().get_network_priority_protocols_hooks ();
 
   TAO::Portable_Server::Cached_Policies::NetworkPriorityModel const npm =
     poa.cached_policies ().network_priority_model ();
