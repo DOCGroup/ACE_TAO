@@ -31,8 +31,6 @@ TAO_AMH_DSI_Exception_Holder::TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex
 {
 }
 
-TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder () = default;
-
 ::CORBA::ValueBase *
 TAO_AMH_DSI_Exception_Holder::_copy_value ()
 {
@@ -298,7 +296,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
-  std::unique_ptr< ::CORBA::Exception> safety (this->exception_);
+  std::unique_ptr< ::CORBA::Exception> const safety (this->exception_);
   this->exception_->_raise ();
 }
 
@@ -316,8 +314,6 @@ TAO_AMH_DSI_Response_Handler::TAO_AMH_DSI_Response_Handler (
     orb_core_ (sr.orb_core ())
 {
 }
-
-TAO_AMH_DSI_Response_Handler::~TAO_AMH_DSI_Response_Handler () = default;
 
 void
 TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,

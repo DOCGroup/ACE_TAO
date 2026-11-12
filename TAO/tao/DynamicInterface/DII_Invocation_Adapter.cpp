@@ -43,8 +43,6 @@ namespace TAO
   {
   }
 
-  DII_Invocation_Adapter::~DII_Invocation_Adapter () = default;
-
   void
   DII_Invocation_Adapter::invoke (TAO::Exception_Data const* /*ex_data*/,
                                   unsigned long ex_count)
@@ -56,7 +54,7 @@ namespace TAO
     ACE_NEW_THROW_EX (exception_data,
                       TAO::Exception_Data[ex_count],
                       CORBA::NO_MEMORY ());
-    std::unique_ptr<TAO::Exception_Data[]> ex_data (exception_data);
+    std::unique_ptr<TAO::Exception_Data[]> const ex_data (exception_data);
     for (unsigned long l {}; l < ex_count; ++l)
     {
       CORBA::TypeCode_var const xtc = this->exception_list_->item (l);

@@ -130,7 +130,7 @@ CORBA::ServerRequest::set_result (CORBA::Any const& value)
 void
 CORBA::ServerRequest::set_exception (CORBA::Any const& value)
 {
-  CORBA::TypeCode_var tc = value.type ();
+  CORBA::TypeCode_var const tc = value.type ();
 
   CORBA::TCKind const kind = tc->kind ();
 

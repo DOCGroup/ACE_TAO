@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Boolean
 TAO_DynamicImplementation::_is_a (char const *logical_type_id)
 {
-  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var const id = this->get_id_from_primary_interface ();
 
   return std::strcmp (logical_type_id, id.in ()) == 0;
 }
@@ -55,7 +55,7 @@ TAO_DynamicImplementation::_get_interface ()
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var const id = this->get_id_from_primary_interface ();
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
@@ -93,14 +93,14 @@ TAO_DynamicImplementation::_create_stub ()
       throw PortableServer::POA::WrongPolicy ();
     }
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     poa_current_impl->get_POA ();
 
-  CORBA::PolicyList_var client_exposed_policies =
+  CORBA::PolicyList_var const client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
         poa_current_impl->priority ());
 
-  CORBA::RepositoryId_var pinterface =
+  CORBA::RepositoryId_var const pinterface =
     this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 
   return
@@ -139,7 +139,7 @@ TAO_DynamicImplementation::_dispatch (
   CORBA::ServerRequest *dsi_request_ptr {};
   ACE_NEW (dsi_request_ptr,
            CORBA::ServerRequest (request));
-  CORBA::ServerRequest_var dsi_request (dsi_request_ptr);
+  CORBA::ServerRequest_var const dsi_request (dsi_request_ptr);
 
   try
     {
@@ -189,7 +189,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface ()
       throw PortableServer::POA::WrongPolicy ();
     }
 
-  PortableServer::POA_var poa = poa_current_impl->get_POA ();
+  PortableServer::POA_var const poa = poa_current_impl->get_POA ();
 
   return this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 }

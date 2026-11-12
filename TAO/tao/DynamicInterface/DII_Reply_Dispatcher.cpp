@@ -90,7 +90,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed ()
   try
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+      CORBA::COMM_FAILURE const comm_failure (0, CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
@@ -199,14 +199,14 @@ TAO_DII_Asynch_Reply_Dispatcher::connection_closed ()
   try
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+      CORBA::COMM_FAILURE const comm_failure (0, CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
       comm_failure._tao_encode (out_cdr);
 
       // Turn into an output CDR
-      TAO_InputCDR cdr (out_cdr);
+      TAO_InputCDR const cdr (out_cdr);
       CORBA::Request::_tao_reply_stub (
           this->reply_cdr_,
           this->callback_,

@@ -88,7 +88,7 @@ namespace TAO
                             CORBA::Request *r,
                             Invocation_Mode mode = TAO_DII_INVOCATION);
 
-    ~DII_Invocation_Adapter () override;
+    ~DII_Invocation_Adapter () override = default;
 
     DII_Invocation_Adapter (DII_Invocation_Adapter const &) = delete;
     DII_Invocation_Adapter &operator= (DII_Invocation_Adapter const &) = delete;

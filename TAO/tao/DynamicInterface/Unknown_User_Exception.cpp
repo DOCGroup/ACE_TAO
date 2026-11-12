@@ -20,22 +20,18 @@ CORBA::UnknownUserException::UnknownUserException ()
 
 CORBA::UnknownUserException::UnknownUserException (CORBA::Any &ex)
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
-                         "UnknownUserException")
+                         "UnknownUserException"),
+    exception_ (std::make_unique<CORBA::Any> (ex))
 {
-  CORBA::Any *exception {};
-  ACE_NEW (exception, CORBA::Any (ex));
-  this->exception_.reset (exception);
 }
 
 CORBA::UnknownUserException::UnknownUserException (
     CORBA::UnknownUserException const& e
   )
   : CORBA::UserException (e._rep_id (),
-                         e._name ())
+                         e._name ()),
+    exception_ (std::make_unique<CORBA::Any> (*e.exception_))
 {
-  CORBA::Any *exception {};
-  ACE_NEW (exception, CORBA::Any (*e.exception_));
-  this->exception_.reset (exception);
 }
 
 CORBA::UnknownUserException::~UnknownUserException () = default;
