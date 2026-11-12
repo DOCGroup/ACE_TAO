@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RTSCHEDULER_INITIALIZER_H
 #define TAO_RTSCHEDULER_INITIALIZER_H
 

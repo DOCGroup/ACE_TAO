@@ -105,7 +105,6 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-
   TAO_RTScheduler_Manager_var safe_manager = manager;
 
   info->register_initial_reference ("RTSchedulerManager", manager);

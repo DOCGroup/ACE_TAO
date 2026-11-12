@@ -48,7 +48,7 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
-      /// Register the RTCORBA ORBInitializer.
+      // Register the RTCORBA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_RTScheduler_ORB_Initializer,
                         CORBA::NO_MEMORY (
@@ -71,8 +71,6 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
 
   return 0;
 }
-
-/////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_RTScheduler, TAO_RTScheduler_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_RTScheduler_Loader,

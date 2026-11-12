@@ -4,10 +4,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// *************************************************************
-// Inline operations for class TAO_RTScheduler_Manager_var
-// *************************************************************
-
 ACE_INLINE
 TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var ()
   : ptr_ (TAO_RTScheduler_Manager::_nil ())
@@ -27,7 +23,7 @@ TAO_RTScheduler_Manager_var::ptr () const
 
 ACE_INLINE
 TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (
-  const ::TAO_RTScheduler_Manager_var &p) // copy constructor
+  const ::TAO_RTScheduler_Manager_var &p)
   : TAO_Base_var (),
     ptr_ (TAO_RTScheduler_Manager::_duplicate (p.ptr ()))
 {}
@@ -59,13 +55,13 @@ TAO_RTScheduler_Manager_var::operator= (const ::TAO_RTScheduler_Manager_var &p)
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_var::operator const ::TAO_RTScheduler_Manager_ptr &() const // cast
+TAO_RTScheduler_Manager_var::operator const ::TAO_RTScheduler_Manager_ptr &() const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_var::operator ::TAO_RTScheduler_Manager_ptr &() // cast
+TAO_RTScheduler_Manager_var::operator ::TAO_RTScheduler_Manager_ptr &()
 {
   return this->ptr_;
 }
@@ -139,11 +135,6 @@ TAO_RTScheduler_Manager_var::upcast (void *src)
   return *tmp;
 }
 
-
-// *************************************************************
-// Inline operations for class TAO_RTScheduler_Manager_out
-// *************************************************************
-
 ACE_INLINE
 TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manager_ptr &p)
   : ptr_ (p)
@@ -152,7 +143,7 @@ TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manage
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manager_var &p) // constructor from _var
+TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manager_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
@@ -160,7 +151,7 @@ TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manage
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (const ::TAO_RTScheduler_Manager_out &p) // copy constructor
+TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (const ::TAO_RTScheduler_Manager_out &p)
   : ptr_ (const_cast<TAO_RTScheduler_Manager_out &> (p).ptr_)
 {}
 
@@ -186,13 +177,13 @@ TAO_RTScheduler_Manager_out::operator= (TAO_RTScheduler_Manager_ptr p)
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_out::operator ::TAO_RTScheduler_Manager_ptr &() // cast
+TAO_RTScheduler_Manager_out::operator ::TAO_RTScheduler_Manager_ptr &()
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_RTScheduler_Manager_ptr &
-TAO_RTScheduler_Manager_out::ptr () // ptr
+TAO_RTScheduler_Manager_out::ptr ()
 {
   return this->ptr_;
 }
@@ -203,7 +194,6 @@ TAO_RTScheduler_Manager_out::operator-> ()
   return this->ptr_;
 }
 
-///////////////////////////////////////////////////////////////////////////
 ACE_INLINE
 TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (TAO_ORB_Core* orb)
   : orb_ (orb)

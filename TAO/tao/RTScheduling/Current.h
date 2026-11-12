@@ -103,9 +103,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   RTScheduling::DistributableThread_ptr
     lookup(const RTScheduling::Current::IdType & id) override;
 
-  // returns a null reference if
-  // the distributable thread is
-  // not known to the local scheduler
+  /// Returns a null reference if the distributable thread is not known to the
+  /// local scheduler.
   RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
            CORBA::VoidData data,
@@ -164,10 +163,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_var
   : private TAO_Base_var
 {
 public:
-  TAO_RTScheduler_Current_var (); // default constructor
+  TAO_RTScheduler_Current_var ();
   TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_ptr p) : ptr_ (p) {}
-  TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &); // copy constructor
-  ~TAO_RTScheduler_Current_var (); // destructor
+  TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &);
+  ~TAO_RTScheduler_Current_var ();
 
   TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
   TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
@@ -175,7 +174,6 @@ public:
 
   operator const TAO_RTScheduler_Current_ptr &() const;
   operator TAO_RTScheduler_Current_ptr &();
-  // in, inout, out, _retn
   TAO_RTScheduler_Current_ptr in () const;
   TAO_RTScheduler_Current_ptr &inout ();
   TAO_RTScheduler_Current_ptr &out ();
@@ -241,7 +239,6 @@ public:
 
   virtual RTScheduling::Current::IdType *id ();
 
-
   void id (RTScheduling::Current::IdType guid);
 
   virtual CORBA::Policy_ptr scheduling_parameter ();
@@ -287,7 +284,6 @@ private:
   DT_Hash_Map* dt_hash_ {};
 };
 
-// This class provides an entry point for the// new DT.
 class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
@@ -314,6 +310,7 @@ public:
 
 private:
   TAO_ORB_Core* orb_ {};
+  // Ownership transfers to the worker's TSS current, which self-deletes.
   std::unique_ptr<TAO_RTScheduler_Current_i> current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_ {};

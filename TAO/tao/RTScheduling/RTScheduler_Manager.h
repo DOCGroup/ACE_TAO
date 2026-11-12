@@ -48,7 +48,6 @@ public:
   using _ptr_type = TAO_RTScheduler_Manager_ptr;
   using _var_type = TAO_RTScheduler_Manager_var;
 
-  // the static operations
   static TAO_RTScheduler_Manager_ptr _duplicate (TAO_RTScheduler_Manager_ptr obj);
   static TAO_RTScheduler_Manager_ptr _narrow (CORBA::Object_ptr obj);
   static TAO_RTScheduler_Manager_ptr _nil ()
@@ -72,16 +71,15 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_RTScheduler_Manager_var (); // default constructor
+  TAO_RTScheduler_Manager_var ();
   TAO_RTScheduler_Manager_var (TAO_RTScheduler_Manager_ptr);
-  TAO_RTScheduler_Manager_var (const TAO_RTScheduler_Manager_var &); // copy constructor
-  ~TAO_RTScheduler_Manager_var (); // destructor
+  TAO_RTScheduler_Manager_var (const TAO_RTScheduler_Manager_var &);
+  ~TAO_RTScheduler_Manager_var ();
 
   TAO_RTScheduler_Manager_var &operator= (TAO_RTScheduler_Manager_ptr);
   TAO_RTScheduler_Manager_var &operator= (const TAO_RTScheduler_Manager_var &);
   TAO_RTScheduler_Manager_ptr operator-> () const;
 
-  /// in, inout, out, _retn
   operator const TAO_RTScheduler_Manager_ptr &() const;
   operator TAO_RTScheduler_Manager_ptr &();
   TAO_RTScheduler_Manager_ptr in () const;

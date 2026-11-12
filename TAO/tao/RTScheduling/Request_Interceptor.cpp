@@ -390,7 +390,6 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       else TAOLIB_DEBUG ((LM_DEBUG,
                        "Thread Not Cancelled\n"));
 
-
       // Inform scheduler that upcall is complete.
       RTScheduling::Scheduler_var scheduler = current->scheduler ();
       scheduler->send_reply (ri);
