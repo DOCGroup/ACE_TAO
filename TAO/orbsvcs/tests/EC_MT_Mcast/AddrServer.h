@@ -11,20 +11,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @brief Provides a fixed multicast address for event types.
+ *
+ * The event channel can use multiple multicast groups. This simple
+ * implementation maps each event type to the same IP address and port,
+ * supplied at construction.
+ */
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
-  // = TITLE
-  //   A simple AddrServer
-  //
-  // = DESCRIPTION
-  //   The EC is able to use multiple multicast groups to transmit its
-  //   data, the is given control over the mapping between the Event
-  //   (type,source) pair and the (ipaddr,port) pair using a
-  //   AddrServer.
-  //   This class implements a very simple server that simply maps the
-  //   <type> component to the <ipaddr> and uses a fixed <port>,
-  //   provided at initialization time.
-  //
 public:
   explicit AddrServer (ACE_INET_Addr const& addr);
   AddrServer (AddrServer const&) = delete;
