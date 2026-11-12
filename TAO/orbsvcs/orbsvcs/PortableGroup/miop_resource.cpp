@@ -240,7 +240,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                    ACE_TEXT ("-ORBSendThrottle")) == 0)
         {
           if (++curarg < argc)
-            this->enable_throttling_= static_cast<bool> (ACE_OS::atoi (argv[curarg]));
+            this->enable_throttling_ = ACE_OS::atoi (argv[curarg]) != 0;
           else
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
@@ -253,7 +253,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                    ACE_TEXT ("-ORBEagerDequeue")) == 0)
         {
           if (++curarg < argc)
-            this->enable_eager_dequeue_= static_cast<bool> (ACE_OS::atoi (argv[curarg]));
+            this->enable_eager_dequeue_ = ACE_OS::atoi (argv[curarg]) != 0;
           else
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")

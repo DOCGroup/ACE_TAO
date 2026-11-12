@@ -6,7 +6,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/target_specification.h"
-#include "ace/OS_NS_ctype.h"
+#include <cctype>
+#include <cstdlib>
 #include <cstring>
 #include <cstdio>
 
@@ -38,10 +39,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
   , endpoint_ ()
   , tagged_profile_ ()
 {
-  // The default for component version is 1.0.
-  this->component_version_.major = 1;
-  this->component_version_.minor = 0;
-
   this->addressing_mode_ = default_addressing_mode_;
 }
 
@@ -54,10 +51,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (ACE_INET_Addr const &addr,
   , endpoint_ (addr)
   , tagged_profile_ ()
 {
-  // The default for component version is 1.0.
-  this->component_version_.major = 1;
-  this->component_version_.minor = 0;
-
   this->addressing_mode_ = default_addressing_mode_;
 }
 
@@ -178,9 +171,9 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   // version is one that we accept.
 
   // Check for MIOP version
-  if (ACE_OS::ace_isdigit (string [0]) &&
+  if (std::isdigit (static_cast<unsigned char> (string [0])) &&
       string[1] == '.' &&
-      ACE_OS::ace_isdigit (string [2]) &&
+      std::isdigit (static_cast<unsigned char> (string [2])) &&
       string[3] == '@')
     {
       char const
@@ -210,9 +203,9 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
 
   // Parse the group component version.
   GIOP::Version component_version;
-  if (ACE_OS::ace_isdigit (string [0]) &&
+  if (std::isdigit (static_cast<unsigned char> (string [0])) &&
       string[1] == '.' &&
-      ACE_OS::ace_isdigit (string [2]) &&
+      std::isdigit (static_cast<unsigned char> (string [2])) &&
       string[3] == '-')
     {
       component_version.major = string [0] - '0';
@@ -237,7 +230,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   // Look for the group domain delimitor.
   char const *pos = std::strchr (string, '-');
 
-  if (pos == 0)
+  if (pos == nullptr)
     {
       // The group_domain_id is mandatory, so throw an
       // exception if it isn't found.
@@ -258,9 +251,9 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   string = pos + 1;
   pos = std::strchr (string, '-');
 
-  bool parse_group_ref_version_flag = false;
+  bool parse_group_ref_version_flag {};
 
-  if (pos != 0)
+  if (pos != nullptr)
     {
       // String was terminated by a '-', so there's a group
       // reference version to be parsed.
@@ -271,7 +264,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
       // Look for a slash as the separator.
       pos = std::strchr (string, '/');
 
-      if (pos == 0)
+      if (pos == nullptr)
         {
           // The Group ID is mandatory, so throw an exception.
           throw CORBA::INV_OBJREF (
@@ -298,16 +291,16 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
 
   // Convert the group_id into numerical form.
   PortableGroup::ObjectGroupId group_id =
-    ACE_OS::strtoull (str_group_id.c_str (), 0, 10);
+    std::strtoull (str_group_id.c_str (), nullptr, 10);
 
-  bool has_ref_version = false;
-  PortableGroup::ObjectGroupRefVersion ref_version = 0;
+  bool has_ref_version {};
+  PortableGroup::ObjectGroupRefVersion ref_version {};
   if (parse_group_ref_version_flag)
     {
       // Try to find the group version.  It is terminated by a '/'.
       string = pos + 1;
       pos = std::strchr (string, '/');
-      if (pos == 0)
+      if (pos == nullptr)
         {
           // The group version was expected but not found,
           // so throw an exception.
@@ -332,7 +325,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
       ACE_CString str_group_ref_ver (string, pos - string);
 
       ref_version =
-        ACE_OS::strtoul (str_group_ref_ver.c_str (), 0, 10);
+        std::strtoul (str_group_ref_ver.c_str (), nullptr, 10);
       has_ref_version = true;
     }
 
@@ -341,7 +334,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   string = pos + 1;
   pos = std::strrchr (string, ':');
 
-  if (pos == 0)
+  if (pos == nullptr)
     {
       // The multicast address is mandatory, so throw an exception,
       // since it wasn't found.
@@ -373,7 +366,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
       pos = std::strchr (string, ']');
-      if (pos == 0)
+      if (pos == nullptr)
         {
           // No valid IPv6 address specified.
           if (TAO_debug_level)

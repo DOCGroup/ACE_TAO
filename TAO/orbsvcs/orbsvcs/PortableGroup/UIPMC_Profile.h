@@ -133,7 +133,7 @@ private:
   IOP::TaggedProfile tagged_profile_;
 
   /// Group component version.
-  GIOP::Version component_version_;
+  GIOP::Version component_version_ {1, 0};
 
   /// Group Domain ID.
   ACE_CString group_domain_id_;
