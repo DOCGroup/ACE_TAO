@@ -110,13 +110,10 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      char const *supported_path {};
-      char *stringified {};
-
       for (i = 0; i < count; ++i)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          supported_path =
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char const * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
@@ -219,16 +216,13 @@ TAO_ComponentContainer_i::create_home_i (
                                                  "count",
                                                  length);
 
-      char *supported_path {};
-      char *stringified {};
-
       for (i = 0; i < length; ++i)
         {
-          supported_path =
+          char * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
                                                     supported_path);
@@ -360,11 +354,9 @@ TAO_ComponentContainer_i::create_event_i (
                                             1,
                                             bases_key);
 
-      char *base_path {};
-
       for (i = 0; i < length; ++i)
         {
-          base_path =
+          char * const base_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 abstract_base_values[i]
               );
@@ -388,11 +380,9 @@ TAO_ComponentContainer_i::create_event_i (
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
                                                  length);
-      char *supported_path {};
-
       for (i = 0; i < length; ++i)
         {
-          supported_path =
+          char * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supported_interfaces[i]
               );
@@ -414,8 +404,6 @@ TAO_ComponentContainer_i::create_event_i (
                                             initializers_key);
 
       CORBA::ULong count = 0;
-      char *path {};
-      char *stringified {};
       ACE_Configuration_Section_Key initializer_key;
       ACE_Configuration_Section_Key outer_key;
       ACE_Configuration_Section_Key inner_key;
@@ -423,7 +411,7 @@ TAO_ComponentContainer_i::create_event_i (
 
       for (i = 0; i < length; ++i)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
                                                 1,
@@ -449,7 +437,7 @@ TAO_ComponentContainer_i::create_event_i (
 
               for (CORBA::ULong j {}; j < count; ++j)
                 {
-                  stringified = TAO_IFR_Service_Utils::int_to_string (j);
+                  char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (outer_key,
                                                         stringified,
                                                         1,
@@ -461,7 +449,7 @@ TAO_ComponentContainer_i::create_event_i (
                       initializers[i].members[j].name.in ()
                     );
 
-                  path =
+                  char * const path =
                     TAO_IFR_Service_Utils::reference_to_path (
                               initializers[i].members[j].type_def.in ()
                             );
@@ -493,7 +481,7 @@ TAO_ComponentContainer_i::create_event_i (
                       excep_path
                     );
 
-                  stringified = TAO_IFR_Service_Utils::int_to_string (k);
+                  char * const stringified = TAO_IFR_Service_Utils::int_to_string (k);
                   this->repo_->config ()->set_string_value (outer_key,
                                                             stringified,
                                                             excep_path);

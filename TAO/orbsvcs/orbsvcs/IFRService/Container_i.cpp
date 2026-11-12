@@ -922,7 +922,6 @@ TAO_Container_i::create_struct_i (char const *id,
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
-  char *member_path {};
 
   // Create a section for each member. We just store the
   // member name and the path to its database entry.
@@ -939,7 +938,7 @@ TAO_Container_i::create_struct_i (char const *id,
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path =
+      char * const member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
@@ -1256,12 +1255,10 @@ TAO_Container_i::create_interface_i (char const *id,
                                             "inherited",
                                             1,
                                             inherited_key);
-      char *inherited_path {};
-
       // Store the path to each base interface.
       for (CORBA::ULong i {}; i < length; ++i)
         {
-          inherited_path =
+          char * const inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 base_interfaces[i]
               );
@@ -1752,8 +1749,6 @@ TAO_Container_i::create_ext_value_i (
   if (length > 0)
     {
       ACE_Configuration_Section_Key initializers_key, initializer_key;
-      char *stringified {};
-
       this->repo_->config ()->open_section (new_key,
                                             "initializers",
                                             0,
@@ -1761,7 +1756,7 @@ TAO_Container_i::create_ext_value_i (
 
       for (CORBA::ULong i {}; i < length; ++i)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
                                                 0,
@@ -2412,12 +2407,9 @@ TAO_Container_i::create_value_common (
                                                  length);
 
       ACE_TString base_id;
-      char const *base_path {};
-      char *stringified {};
-
       for (CORBA::ULong i {}; i < length; ++i)
         {
-          base_path =
+          char const * const base_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 abstract_base_values[i]
               );
@@ -2441,7 +2433,7 @@ TAO_Container_i::create_value_common (
               "id",
               base_id
             );
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (bases_key,
                                                     stringified,
                                                     base_id);
@@ -2461,14 +2453,13 @@ TAO_Container_i::create_value_common (
                                                  "count",
                                                  length);
       ACE_TString supported_id;
-      char const *supported_path {};
       CORBA::ULong kind = 0;
       bool concrete_seen = false;
       CORBA::DefinitionKind def_kind;
 
       for (CORBA::ULong i {}; i < length; ++i)
         {
-          supported_path =
+          char const * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supported_interfaces[i]
               );

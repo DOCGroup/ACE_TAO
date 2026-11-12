@@ -114,12 +114,11 @@ TAO_InterfaceDef_i::describe_i ()
   CORBA::RepositoryIdSeq repo_ids (length);
   repo_ids.length (length);
 
-  char *base_path {};
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
     {
-      base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
+      char * const base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
@@ -260,13 +259,12 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
                                         inherited_key);
 
   CORBA::String_var name;
-  char *inherited_path {};
   PortableServer::ObjectId_var oid;
   ACE_Configuration_Section_Key base_key;
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      inherited_path =
+      char * const inherited_path =
         TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -727,8 +725,6 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path {};
-
       for (i = 0; i < length; ++i)
         {
           // Oneway operations cannot have INOUT or OUT parameters.
@@ -747,7 +743,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
           this->repo_->config ()->set_string_value (param_key,
                                                     "name",
                                                     params[i].name.in ());
-          type_path =
+          char * const type_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 params[i].type_def.in ()
               );
@@ -1044,7 +1040,6 @@ TAO_InterfaceDef_i::inherited_attributes (
 
   size_t size = path_queue.size ();
   ACE_Configuration_Section_Key base_key, attrs_key, attr_key;
-  int status {};
   ACE_TString path_name;
   u_int count {};
 
@@ -1053,7 +1048,7 @@ TAO_InterfaceDef_i::inherited_attributes (
       path_name = path_queue.front ();
       path_queue.pop_front ();
 
-      status =
+      int const status =
         this->repo_->config ()->expand_path (this->repo_->root_key (),
                                              path_name,
                                              base_key,

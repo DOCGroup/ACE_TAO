@@ -58,14 +58,13 @@ TAO_ExtValueDef_i::ext_initializers_i (
                                              "count",
                                              count);
   iseq->length (count);
-  char *stringified {};
   ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
                                             stringified,
                                             0,
@@ -94,7 +93,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
       for (CORBA::ULong j {}; j < arg_count; ++j)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (j);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
                                                 0,
@@ -901,11 +900,9 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
                                              "count",
                                              length);
   char *stringified {};
-  char *type_path {};
-
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      type_path =
+      char * const type_path =
         TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
