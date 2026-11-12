@@ -11,13 +11,13 @@
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
+#include <algorithm>
 #include <random>
 #include <cstdlib>
 
 /// Max number of bytes on each message block
-constexpr size_t max_block_length = 256;
+constexpr size_t max_block_length {256};
 
 static TAO_Queued_Message *
 create_new_message (std::mt19937 &random_generator)
@@ -66,22 +66,21 @@ static void del_message (TAO_Queued_Message *&head,
   // bytes_transferred() method until all messages are removed.
 
   size_t total_length = current->message_length ();
+  std::uniform_int_distribution<size_t> bytes_distribution (1, 256);
   while (total_length > 0)
     {
       // select how many bytes we want to 'send' in this iteration.
-      std::uniform_int_distribution<size_t> bytes_distribution (1, 256);
-      size_t t = bytes_distribution (random_generator);
-
-      if (t > total_length)
-        t = total_length;
-
-      current->bytes_transferred (t);
-      total_length -= t;
+      size_t const bytes_to_send =
+        (std::min) (bytes_distribution (random_generator), total_length);
+      size_t remaining_in_write = bytes_to_send;
+      current->bytes_transferred (remaining_in_write);
+      total_length -= bytes_to_send;
     }
   if (!current->all_data_sent ())
     {
       ACE_ERROR ((LM_DEBUG,
                   "ERROR: inconsistent state in Queued_Message\n"));
+      current->destroy ();
       std::exit (1);
     }
   current->destroy ();
@@ -97,24 +96,24 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   ACE_hrtime_t const current_hrtime = ACE_OS::gethrtime ();
   ACE_UINT32 const seed =
     ACE_CU64_TO_CU32(current_hrtime);
-  std::mt19937 random_generator (seed);
+  std::mt19937 random_generator {seed};
 
   ACE_DEBUG ((LM_DEBUG, "Running test SEED = %u\n", seed));
 
   // These are non-owning links into the intrusive queue.
-  TAO_Queued_Message *head = nullptr;
-  TAO_Queued_Message *tail = nullptr;
+  TAO_Queued_Message *head {};
+  TAO_Queued_Message *tail {};
 
-  int add_count = 0;
-  int del_count = 0;
+  int add_count {};
+  int del_count {};
 
-  constexpr int iterations = 100;
+  constexpr int iterations {100};
   std::uniform_int_distribution<int> percentage_distribution (0, 99);
 
-  for (int i = 0; i != iterations; ++i)
+  for (int i {}; i != iterations; ++i)
     {
       push_back_message (head, tail, random_generator);
-      add_count++;
+      ++add_count;
 
       if (percentage_distribution (random_generator) > 90)
         {
@@ -122,7 +121,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
           if (head != nullptr)
             {
               del_message (head, tail, random_generator);
-              del_count++;
+              ++del_count;
             }
         }
     }
@@ -133,17 +132,17 @@ ACE_TMAIN(int, ACE_TCHAR *[])
       if (percentage_distribution (random_generator) > 90)
         {
           push_back_message (head, tail, random_generator);
-          add_count++;
+          ++add_count;
         }
       if (percentage_distribution (random_generator) > 90)
         {
           push_front_message (head, tail, random_generator);
-          add_count++;
+          ++add_count;
         }
       if (head != nullptr)
         {
           del_message (head, tail, random_generator);
-          del_count++;
+          ++del_count;
         }
     }
 
@@ -151,7 +150,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   while (head != nullptr)
     {
       del_message (head, tail, random_generator);
-      del_count++;
+      ++del_count;
     }
 
   if (tail != nullptr)
