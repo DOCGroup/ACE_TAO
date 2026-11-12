@@ -7,12 +7,15 @@
 #include "NamingTask.h"
 #include <string>
 
-std::string server_orb;
-std::string client_orb;
-CORBA::Boolean result {};
+struct Test_Options
+{
+  std::string server_orb {};
+  std::string client_orb {};
+  bool expected_success {};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static void
+parse_args (int argc, ACE_TCHAR *argv[], Test_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("sk:o:n"));
   int c {};
@@ -21,11 +24,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 's':
-        result = true;
+        options.expected_success = true;
         break;
       case 'n':
-        server_orb = "server_orb";
-        client_orb = "client_orb";
+        options.server_orb = "server_orb";
+        options.client_orb = "client_orb";
         break;
       case 'k':
       case 'o':
@@ -33,17 +36,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case '?':
       default:
-        // This is a hack but that is okay!
-        return 0;
+        return;
       }
-  return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) == -1)
-    return -1;
+  Test_Options options {};
+  parse_args (argc, argv, options);
 
   try
     {
@@ -57,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
-                         server_orb.c_str ());
+                         options.server_orb.c_str ());
 
       ACE_Manual_Event me;
       Server_Task server_task (name_service.root (),
@@ -79,12 +80,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const corb =
         CORBA::ORB_init (catc.get_argc (),
                          catc.get_TCHAR_argv (),
-                         client_orb.c_str ());
+                         options.client_orb.c_str ());
 
       Client_Task client_task (name_service.root (),
-                               corb.in (),
                                ACE_Thread_Manager::instance (),
-                               result);
+                               options.expected_success);
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
                                 1,
@@ -99,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Now that all threads have completed we can destroy the ORB
       sorb->destroy ();
-      if (server_orb != client_orb)
+      if (options.server_orb != options.client_orb)
         {
           corb->destroy ();
         }

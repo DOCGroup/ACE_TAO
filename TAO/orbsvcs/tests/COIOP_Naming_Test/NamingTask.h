@@ -24,8 +24,8 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  std::atomic<bool> initialized_ { false };
-  CosNaming::NamingContext_var root_;
+  std::atomic<bool> initialized_ {};
+  CosNaming::NamingContext_var root_ {};
 };
 
 #endif

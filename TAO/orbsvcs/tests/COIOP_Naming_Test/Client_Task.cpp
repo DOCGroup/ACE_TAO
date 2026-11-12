@@ -3,13 +3,11 @@
 #include "TestC.h"
 
 Client_Task::Client_Task (CosNaming::NamingContext_ptr root_context,
-                          CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
-                          CORBA::Boolean result)
+                          bool expected_success)
   : ACE_Task_Base (thr_mgr)
   , root_context_ (CosNaming::NamingContext::_duplicate (root_context))
-  , corb_ (CORBA::ORB::_duplicate (corb))
-  , result_ (result)
+  , expected_success_ (expected_success)
 {
 }
 
@@ -18,7 +16,7 @@ Client_Task::svc ()
 {
   try
     {
-      CosNaming::Name name;
+      CosNaming::Name name {};
       name.length (1);
       name[0].id = CORBA::string_dup ("Hello");
 
@@ -39,7 +37,7 @@ Client_Task::svc ()
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) - string returned <%C>\n"),
                   the_string.in ()));
 
-      if (!this->result_)
+      if (!this->expected_success_)
         {
           // We would expect the call to fail, so we have an error now
           ACE_ERROR ((LM_ERROR,
@@ -50,7 +48,7 @@ Client_Task::svc ()
     }
   catch (CORBA::TRANSIENT const & ex)
     {
-      if (!this->result_)
+      if (!this->expected_success_)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) - caught expected exception\n")));
           // When collocation has been disabled we expect a transient

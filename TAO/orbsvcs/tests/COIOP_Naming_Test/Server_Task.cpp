@@ -38,11 +38,12 @@ Server_Task::svc ()
                       Hello (this->sorb_.in (), ACE_Thread::self ()),
                       1);
 
+      // The servant var owns hello_impl; the raw pointer is borrowed for _this ().
       PortableServer::ServantBase_var const owner_transfer (hello_impl);
 
       Test::Hello_var const hello = hello_impl->_this ();
 
-      CosNaming::Name name;
+      CosNaming::Name name {};
       name.length (1);
       name[0].id = CORBA::string_dup ("Hello");
       this->root_context_->rebind (name, hello.in ());

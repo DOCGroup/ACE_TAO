@@ -23,16 +23,16 @@ Hello::get_string ()
 
   if (self_ID == this_ID)
     {
-      if (this->orb_->orb_core ()->optimize_collocation_objects () &&
-          this->orb_->orb_core ()->use_global_collocation ())
+      if (this->orb_->orb_core ()->optimize_collocation_objects ()
+          && this->orb_->orb_core ()->use_global_collocation ())
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: A remote call has been made "
                                " exiting ..\n")));
           ACE_OS::abort ();
         }
-      else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
-          !this->orb_->orb_core ()->use_global_collocation ())
+      else if (this->orb_->orb_core ()->optimize_collocation_objects ()
+               && !this->orb_->orb_core ()->use_global_collocation ())
         {
           // The ORB table is a process-wide singleton; this pointer is borrowed.
           TAO::ORB_Table * const orb_table =

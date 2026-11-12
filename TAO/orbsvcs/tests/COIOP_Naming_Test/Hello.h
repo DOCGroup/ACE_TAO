@@ -25,9 +25,9 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
-  ACE_thread_t thr_id_;
+  ACE_thread_t const thr_id_;
 };
 
 #include /**/ "ace/post.h"
