@@ -38,7 +38,6 @@
 class UTF16_UCS2_Export UTF16_UCS2_Translator : public ACE_WChar_Codeset_Translator
 {
 public:
-  /// constructor
   /// @param tcs: the target codeset id to use (and report)
   explicit UTF16_UCS2_Translator (
       CONV_FRAME::CodeSetId tcs = ACE_CODESET_ID_ISO_UCS_2_LEVEL_1);
@@ -47,7 +46,6 @@ public:
   UTF16_UCS2_Translator &operator= (UTF16_UCS2_Translator const &) = delete;
   UTF16_UCS2_Translator &operator= (UTF16_UCS2_Translator &&) = delete;
 
-  /// Virtual destruction
   ~UTF16_UCS2_Translator () override;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -82,7 +80,6 @@ private:
   ACE_CDR::Boolean write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
                                                 ACE_CDR::WChar const *x,
                                                 ACE_CDR::ULong length);
-
 
   ACE_CDR::Boolean write_wchar_i (ACE_OutputCDR &,
                                   ACE_CDR::WChar);
