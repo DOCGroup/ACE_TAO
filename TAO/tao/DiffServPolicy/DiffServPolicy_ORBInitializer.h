@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file DiffServPolicy_ORBInitializer.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_DIFFSERV_POLICY_ORB_INITIALIZER_H
 #define TAO_DIFFSERV_POLICY_ORB_INITIALIZER_H
 

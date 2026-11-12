@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file DiffServ_Service_Context_Handler.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
-
 #ifndef TAO_DIFFSERV_SERVICE_CONTEXT_HANDLER_H
 #define TAO_DIFFSERV_SERVICE_CONTEXT_HANDLER_H
 #include /**/ "ace/pre.h"

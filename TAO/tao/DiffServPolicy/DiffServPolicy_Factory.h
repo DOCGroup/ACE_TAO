@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     DiffServPolicy_Factory.h
  *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_DIFFSERV_POLICY_FACTORY_H
 #define TAO_DIFFSERV_POLICY_FACTORY_H
 

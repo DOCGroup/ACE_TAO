@@ -1,12 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Server_Network_Priority_Policy.h
  */
-//=============================================================================
-
-
 #ifndef TAO_SERVER_NETWORK_PRIORITY_POLICY_H
 #define TAO_SERVER_NETWORK_PRIORITY_POLICY_H
 

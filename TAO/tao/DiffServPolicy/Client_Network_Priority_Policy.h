@@ -1,12 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Client_Network_Priority_Policy.h
  */
-//=============================================================================
-
-
 #ifndef TAO_CLIENT_NETWORK_PRIORITY_POLICY_H
 #define TAO_CLIENT_NETWORK_PRIORITY_POLICY_H
 

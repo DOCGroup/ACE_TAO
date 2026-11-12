@@ -1,14 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DiffServ_Network_Priority_Hook.h
  *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *           Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_DIFFSERV_NETWORK_PRIORITY_HOOK_H
 #define TAO_DIFFSERV_NETWORK_PRIORITY_HOOK_H
 
