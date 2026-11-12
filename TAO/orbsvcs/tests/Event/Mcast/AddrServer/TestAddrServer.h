@@ -11,11 +11,11 @@ public:
   TestAddrServer_i (const ACE_INET_Addr& addr,
                     const ACE_INET_Addr& addr6);
 
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address);
+  void get_addr (const RtecEventComm::EventHeader& header,
+                 RtecUDPAdmin::UDP_Addr& address) override;
 
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                               RtecUDPAdmin::UDP_Address_out addr6);
+  void get_address (const RtecEventComm::EventHeader& header,
+                    RtecUDPAdmin::UDP_Address_out addr6) override;
 
 private:
   ACE_INET_Addr addr_;
