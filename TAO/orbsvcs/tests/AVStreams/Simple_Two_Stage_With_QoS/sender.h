@@ -21,6 +21,7 @@ using Sender_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 class Sender;
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
+/// Supplies the sender's callback and negotiated protocol object.
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
@@ -44,6 +45,7 @@ private:
 using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<
   Sender_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
 
+/// Configures and runs the AVStreams sender.
 class Sender
 {
 public:
@@ -73,14 +75,14 @@ private:
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
   AVStreams::MMDevice_var receiver_mmdevice_;
-  // Borrowed from streamctrl_owner_, which keeps the servant alive.
+  /// Borrowed from streamctrl_owner_, which keeps the servant alive.
   TAO_StreamCtrl *streamctrl_ {};
   PortableServer::ServantBase_var streamctrl_owner_;
   TAO_Naming_Client naming_client_;
   Options options_;
   Sender_File_Ptr input_file_ {nullptr, ACE_OS::fclose};
   ACE_Message_Block mb_ {BUFSIZ};
-  // Borrowed from the endpoint's protocol factory.
+  /// Borrowed from the endpoint's protocol factory.
   TAO_AV_Protocol_Object *protocol_object_ {};
   ACE_Time_Value inter_frame_time_;
   CORBA::ULong peak_bandwidth_ {18400};

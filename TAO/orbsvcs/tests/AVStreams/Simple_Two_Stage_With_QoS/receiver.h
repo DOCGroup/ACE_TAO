@@ -19,6 +19,7 @@ using Receiver_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 class Receiver;
 using RECEIVER = ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>;
 
+/// Receives and handles frames delivered by AVStreams.
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
@@ -37,6 +38,7 @@ private:
   int frame_count_ {};
 };
 
+/// Supplies AVStreams with the receiver callback.
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
@@ -56,6 +58,7 @@ private:
 using RECEIVER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_B<
   Receiver_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
 
+/// Configures and runs the AVStreams receiver.
 class Receiver
 {
 public:
