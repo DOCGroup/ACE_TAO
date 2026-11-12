@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_POA.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_RT_POA_H
 #define TAO_RT_POA_H
@@ -48,7 +46,6 @@ class TAO_RTPortableServer_Export TAO_RT_POA
   , public virtual TAO_Regular_POA
 {
 public:
-  // RTCORBA specific methods
   CORBA::Object_ptr create_reference_with_priority (char const *intf,
                                                     RTCORBA::Priority priority) override;
 
@@ -66,9 +63,7 @@ public:
                                              PortableServer::Servant p_servant,
                                              RTCORBA::Priority priority) override;
 #endif
-  // End RTCORBA specific methods
 
-  // Standard POA interface methods
   PortableServer::POA_ptr create_POA (char const *adapter_name,
                                       PortableServer::POAManager_ptr poa_manager,
                                       CORBA::PolicyList const &policies) override;
@@ -169,8 +164,6 @@ public:
   CORBA::Object_ptr id_to_reference (PortableServer::ObjectId const &oid) override;
 
   CORBA::OctetSeq *id () override;
-
-  // End standard POA interface methods.
 
   CORBA::PolicyList *client_exposed_policies (CORBA::Short object_priority) override;
 

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Object_Adapter_Factory.h
  *
  *  @author  Frank Hunleth
  */
-// ===================================================================
 
 #ifndef TAO_RT_OBJECT_ADAPTER_FACTORY_H
 #define TAO_RT_OBJECT_ADAPTER_FACTORY_H
@@ -42,7 +40,6 @@ public:
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_RT_Object_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Object_Adapter_Factory)

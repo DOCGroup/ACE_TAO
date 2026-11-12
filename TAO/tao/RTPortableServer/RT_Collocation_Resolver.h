@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Collocation_Resolver.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_RT_COLLOCATION_RESOLVER_H
 #define TAO_RT_COLLOCATION_RESOLVER_H
@@ -51,7 +49,6 @@ public:
   CORBA::Boolean is_collocated (CORBA::Object_ptr object) const override;
 
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)

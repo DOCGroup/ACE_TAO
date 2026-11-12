@@ -434,7 +434,7 @@ TAO_DTP_Thread_Pool_Manager::TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core
 
 TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager ()
 {
-  // Delete all the pools.
+  // The map owns each raw pool pointer; delete them before destroying the map.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)

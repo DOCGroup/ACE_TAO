@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DTP_POA_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_DYNAMIC_TP_POA_LOADER_H
 #define TAO_DYNAMIC_TP_POA_LOADER_H

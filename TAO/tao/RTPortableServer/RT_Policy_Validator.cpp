@@ -426,7 +426,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
   TAO_ServerProtocolPolicy *server_protocol_policy {};
   ACE_NEW_RETURN (server_protocol_policy,
                   TAO_ServerProtocolPolicy (protocols),
-                  0);
+                  nullptr);
 
   return server_protocol_policy;
 }
@@ -484,7 +484,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     RTCORBA::ThreadpoolPolicy::_narrow (policy.in ());
 
   if (CORBA::is_nil (thread_pool_policy.in ()))
-    return 0;
+    return nullptr;
 
   RTCORBA::ThreadpoolId thread_pool_id = thread_pool_policy->threadpool ();
 

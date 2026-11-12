@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Acceptor_Filters.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_RT_ACCEPTOR_FILTER_H
 #define TAO_RT_ACCEPTOR_FILTER_H

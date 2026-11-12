@@ -453,7 +453,6 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
   return safe_client_exposed_policies._retn ();
 }
 
-
 // Standard POA interfaces
 PortableServer::POA_ptr
 TAO_RT_POA::create_POA (char const *adapter_name,
@@ -475,7 +474,6 @@ TAO_RT_POA::destroy (CORBA::Boolean etherealize_objects,
 {
   this->TAO_Regular_POA::destroy (etherealize_objects, wait_for_completion);
 }
-
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -526,7 +524,6 @@ TAO_RT_POA::create_servant_retention_policy (
 {
   return this->TAO_Regular_POA::create_servant_retention_policy (value);
 }
-
 
 PortableServer::RequestProcessingPolicy_ptr
 TAO_RT_POA::create_request_processing_policy (
