@@ -21,7 +21,6 @@
 
 #include "tao/TAO_Server_Request.h"
 
-
 void
 _is_a_amh_Upcall_Command::execute ()
 {
@@ -81,7 +80,6 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
   server_request.tao_send_reply ();
 }
 
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 _non_existent_amh_Upcall_Command::execute ()
@@ -131,7 +129,6 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
                          );
   server_request.tao_send_reply ();
 }
-
 
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
@@ -213,7 +210,6 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
 }
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-
 void
 _repository_id_amh_Upcall_Command::execute ()
 {
@@ -264,5 +260,4 @@ TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
   server_request.tao_send_reply ();
 }
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
 

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_MESSAGING_QUEUEING_STRATEGIES_H
 #define TAO_MESSAGING_QUEUEING_STRATEGIES_H
 
@@ -25,7 +24,6 @@
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
 #include "tao/Transport_Queueing_Strategies.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
