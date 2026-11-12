@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ServerInterceptorAdapter.h
  *
@@ -11,7 +10,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVER_INTERCEPTOR_ADAPTER_H
 #define TAO_SERVER_INTERCEPTOR_ADAPTER_H

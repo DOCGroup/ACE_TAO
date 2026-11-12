@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Policy_Creator_T.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLESERVER_POLICY_CREATOR_T_H
 #define TAO_PORTABLESERVER_POLICY_CREATOR_T_H

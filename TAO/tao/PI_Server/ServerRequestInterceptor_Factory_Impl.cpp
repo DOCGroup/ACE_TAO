@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file ServerRequestInterceptor_Factory_Impl.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
 
 #include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"
 

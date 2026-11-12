@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PortableServer_PolicyFactory.h
  *
  * @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLESERVER_POLICY_FACTORY_H
 #define TAO_PORTABLESERVER_POLICY_FACTORY_H

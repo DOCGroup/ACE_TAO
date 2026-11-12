@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file PortableServer_ORBInitializer.h
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLESERVER_ORB_INITIALIZER_H
 #define TAO_PORTABLESERVER_ORB_INITIALIZER_H

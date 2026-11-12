@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   PICurrent_Guard.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 #ifndef TAO_PI_CURRENT_GUARD_H
 #define TAO_PI_CURRENT_GUARD_H
@@ -77,11 +75,11 @@ namespace TAO
     PICurrent_Guard (PICurrent_Guard &&) = delete;
     PICurrent_Guard &operator= (PICurrent_Guard &&) = delete;
 
-    /// The PICurrent implementation whose slot table will be copied.
+    /// Non-owning source PICurrent implementation whose slot table is copied.
     PICurrent_Impl *src_ {};
 
-    /// The PICurrent implementation whose slot table will be filled
-    /// with the contents of another PICurrent's slot table.
+    /// Non-owning destination PICurrent implementation whose slot table is
+    /// filled with the source slot table contents.
     PICurrent_Impl *dest_ {};
   };
 }

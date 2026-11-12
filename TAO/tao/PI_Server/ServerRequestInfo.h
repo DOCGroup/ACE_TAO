@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ServerRequestInfo.h
  *
@@ -10,7 +9,6 @@
  * @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  * @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_SERVER_REQUEST_INFO_H
 #define TAO_SERVER_REQUEST_INFO_H
