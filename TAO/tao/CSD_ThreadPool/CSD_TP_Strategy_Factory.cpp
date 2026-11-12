@@ -52,7 +52,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
                               ACE_TEXT("-CSDtp")) == 0)
         {
           std::string poa_name;
-          unsigned long num_threads = 1;
+          unsigned long num_threads {1};
           bool serialize_servants {true};
 
           ++curarg;

@@ -120,7 +120,7 @@ TAO::CSD::TP_Task::svc()
   TP_Dispatchable_Visitor dispatchable_visitor;
 
   // Start the "GetWork-And-PerformWork" loop for the current worker thread.
-  while (1)
+  while (true)
     {
       TP_Request_Handle request;
 

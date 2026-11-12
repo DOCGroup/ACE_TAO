@@ -37,7 +37,7 @@ namespace TAO
      *
      * An method is provided to retrieve a "copy" of the "dispatchable"
      * request that was saved off during visitation.  A nil reference
-     * (ie, a NULL pointer) will be returned if no dispatchable request
+     * (ie, a null pointer) will be returned if no dispatchable request
      * was found.
      *
      */

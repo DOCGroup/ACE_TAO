@@ -18,11 +18,11 @@ TAO::CSD::TP_Queue::put(TP_Request* request)
 
   if (this->tail_ == nullptr)
     {
-      // The tail_ is a NULL pointer only when the queue is empty.
+      // A null tail_ pointer indicates that the queue is empty.
       // Make the request be the only element in the queue.
       this->head_ = this->tail_ = request;
 
-      // Make sure the request's prev_ and next_ pointers are set to NULL.
+      // Make sure the request's prev_ and next_ pointers are set to null.
       request->prev_ = request->next_ = nullptr;
     }
   else
@@ -34,7 +34,6 @@ TAO::CSD::TP_Queue::put(TP_Request* request)
       this->tail_->next_ = request;
       this->tail_ = request;
     }
-
 }
 
 void
@@ -80,7 +79,7 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
                 }
               else
                 {
-                  // Set the (new) head_ request's prev_ pointer to be NULL.
+                  // Set the new head_ request's prev_ pointer to nullptr.
                   this->head_->prev_ = nullptr;
                 }
             }
@@ -91,7 +90,7 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
               // the queue currently contains at least two requests -
               // the current request (cur), and the previous request (prev).
               // The point is that we can now assume that the 'prev' pointer
-              // is never NULL in this case.
+              // cannot be null in this case.
               this->tail_ = prev;
               this->tail_->next_ = nullptr;
             }
@@ -100,7 +99,7 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
               // The current request is not at the front or at the back.
               // This implies that there are at least three requests in
               // the queue.  We can assume that the 'next' and 'prev'
-              // pointers are never NULL in this case.
+              // pointers cannot be null in this case.
               prev->next_ = next;
               next->prev_ = prev;
             }
