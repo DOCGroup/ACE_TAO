@@ -39,8 +39,7 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Custom_Request : public TP_Request
     {
     public:
-      ~TP_Custom_Request() override;
-
+      ~TP_Custom_Request() override = default;
       TP_Custom_Request (TP_Custom_Request const &) = delete;
       TP_Custom_Request &operator= (TP_Custom_Request const &) = delete;
       TP_Custom_Request (TP_Custom_Request &&) = delete;

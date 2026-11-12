@@ -14,9 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy::~TP_Strategy () = default;
-
-
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
 {
@@ -36,7 +33,6 @@ TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
   return (request->wait()) ? REQUEST_EXECUTED : REQUEST_CANCELLED;
 }
 
-
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
 {
@@ -50,7 +46,6 @@ TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
          ? REQUEST_DISPATCHED : REQUEST_REJECTED;
 }
 
-
 bool
 TAO::CSD::TP_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
@@ -58,7 +53,6 @@ TAO::CSD::TP_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
   // Activates the worker threads, and waits until all have been started.
   return (this->task_.open(&(this->num_threads_)) == 0);
 }
-
 
 void
 TAO::CSD::TP_Strategy::poa_deactivated_event_i()
@@ -70,7 +64,6 @@ TAO::CSD::TP_Strategy::poa_deactivated_event_i()
   // thread is going away".
   this->task_.close(1);
 }
-
 
 TAO::CSD::Strategy_Base::DispatchResult
 TAO::CSD::TP_Strategy::dispatch_remote_request_i (
@@ -116,7 +109,6 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i (
 
     return TAO::CSD::Strategy_Base::DISPATCH_HANDLED;
 }
-
 
 TAO::CSD::Strategy_Base::DispatchResult
 TAO::CSD::TP_Strategy::dispatch_collocated_request_i (
@@ -210,7 +202,6 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i (
   return DISPATCH_HANDLED;
 }
 
-
 void
 TAO::CSD::TP_Strategy::servant_activated_event_i (
   PortableServer::Servant servant,
@@ -222,7 +213,6 @@ TAO::CSD::TP_Strategy::servant_activated_event_i (
       this->servant_state_map_.insert(servant);
     }
 }
-
 
 void
 TAO::CSD::TP_Strategy::servant_deactivated_event_i (
@@ -239,14 +229,12 @@ TAO::CSD::TP_Strategy::servant_deactivated_event_i (
     }
 }
 
-
 void
 TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->task_.cancel_servant(servant);
 }
-
 
 TAO::CSD::TP_Servant_State::HandleType
 TAO::CSD::TP_Strategy::get_servant_state(PortableServer::Servant servant)

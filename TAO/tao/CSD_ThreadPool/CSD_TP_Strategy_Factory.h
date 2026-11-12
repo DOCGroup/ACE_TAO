@@ -38,8 +38,7 @@ namespace TAO
       public:
         TP_Strategy_Factory() = default;
 
-        ~TP_Strategy_Factory() override;
-
+        ~TP_Strategy_Factory() override = default;
         int init (int argc, ACE_TCHAR* argv[]) override;
 
         TP_Strategy_Factory (TP_Strategy_Factory const &) = delete;

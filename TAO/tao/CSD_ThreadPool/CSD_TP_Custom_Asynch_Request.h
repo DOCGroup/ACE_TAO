@@ -43,8 +43,7 @@ namespace TAO
       TP_Custom_Asynch_Request(TP_Custom_Request_Operation* op,
                                TP_Servant_State*            servant_state);
 
-      ~TP_Custom_Asynch_Request() override;
-
+      ~TP_Custom_Asynch_Request() override = default;
       TP_Custom_Asynch_Request (TP_Custom_Asynch_Request const &) = delete;
       TP_Custom_Asynch_Request &operator= (TP_Custom_Asynch_Request const &) = delete;
       TP_Custom_Asynch_Request (TP_Custom_Asynch_Request &&) = delete;

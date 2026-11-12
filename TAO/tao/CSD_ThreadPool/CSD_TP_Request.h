@@ -45,8 +45,7 @@ namespace TAO
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-      virtual ~TP_Request();
-
+      ~TP_Request() override = default;
       /// Prepare the request to be placed into the request queue.
       void prepare_for_queue();
 

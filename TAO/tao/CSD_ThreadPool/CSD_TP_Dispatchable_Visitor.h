@@ -46,8 +46,7 @@ namespace TAO
     public:
       TP_Dispatchable_Visitor() = default;
 
-      ~TP_Dispatchable_Visitor() override;
-
+      ~TP_Dispatchable_Visitor() override = default;
       TP_Dispatchable_Visitor (TP_Dispatchable_Visitor const &) = delete;
       TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor const &) = delete;
       TP_Dispatchable_Visitor (TP_Dispatchable_Visitor &&) = delete;

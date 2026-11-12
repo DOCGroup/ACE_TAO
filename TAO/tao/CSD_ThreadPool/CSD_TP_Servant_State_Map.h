@@ -42,8 +42,7 @@ namespace TAO
     public:
       TP_Servant_State_Map() = default;
 
-      ~TP_Servant_State_Map();
-
+      ~TP_Servant_State_Map() = default;
       /// Accessor for the servant busy flag.
       TP_Servant_State* find(PortableServer::Servant servant);
 

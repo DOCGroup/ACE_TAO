@@ -49,8 +49,7 @@ namespace TAO
                             PortableServer::Servant         servant,
                             TP_Servant_State*               servant_state);
 
-      ~TP_Collocated_Asynch_Request() override;
-
+      ~TP_Collocated_Asynch_Request() override = default;
       TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request const &) = delete;
       TP_Collocated_Asynch_Request &operator= (TP_Collocated_Asynch_Request const &) = delete;
       TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request &&) = delete;

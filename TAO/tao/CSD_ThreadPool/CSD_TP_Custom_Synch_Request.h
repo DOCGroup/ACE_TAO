@@ -43,8 +43,7 @@ namespace TAO
       TP_Custom_Synch_Request(TP_Custom_Request_Operation* op,
                               TP_Servant_State*            servant_state);
 
-      ~TP_Custom_Synch_Request() override;
-
+      ~TP_Custom_Synch_Request() override = default;
       TP_Custom_Synch_Request (TP_Custom_Synch_Request const &) = delete;
       TP_Custom_Synch_Request &operator= (TP_Custom_Synch_Request const &) = delete;
       TP_Custom_Synch_Request (TP_Custom_Synch_Request &&) = delete;

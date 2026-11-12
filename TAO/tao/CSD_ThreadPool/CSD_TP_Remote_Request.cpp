@@ -6,14 +6,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Remote_Request::~TP_Remote_Request () = default;
-
 void
 TAO::CSD::TP_Remote_Request::prepare_for_queue_i()
 {
   this->do_clone();
 }
-
 
 void
 TAO::CSD::TP_Remote_Request::dispatch_i()
@@ -35,7 +32,6 @@ TAO::CSD::TP_Remote_Request::dispatch_i()
       // doing anything with it.
     }
 }
-
 
 void
 TAO::CSD::TP_Remote_Request::cancel_i()

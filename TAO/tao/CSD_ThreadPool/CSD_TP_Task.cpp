@@ -9,9 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Task::~TP_Task () = default;
-
-
 bool
 TAO::CSD::TP_Task::add_request(TP_Request* request)
 {
@@ -38,7 +35,6 @@ TAO::CSD::TP_Task::add_request(TP_Request* request)
 
   return true;
 }
-
 
 int
 TAO::CSD::TP_Task::open(void* args)
@@ -103,7 +99,6 @@ TAO::CSD::TP_Task::open(void* args)
 
   return 0;
 }
-
 
 int
 TAO::CSD::TP_Task::svc()
@@ -207,7 +202,6 @@ TAO::CSD::TP_Task::svc()
     }
 }
 
-
 int
 TAO::CSD::TP_Task::close(u_long flag)
 {
@@ -273,7 +267,6 @@ TAO::CSD::TP_Task::close(u_long flag)
 
   return 0;
 }
-
 
 void
 TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant)

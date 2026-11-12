@@ -8,8 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Queue::~TP_Queue () = default;
-
 void
 TAO::CSD::TP_Queue::put(TP_Request* request)
 {
@@ -38,7 +36,6 @@ TAO::CSD::TP_Queue::put(TP_Request* request)
     }
 
 }
-
 
 void
 TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)

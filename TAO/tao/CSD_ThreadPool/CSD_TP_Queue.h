@@ -55,8 +55,7 @@ namespace TAO
     public:
       TP_Queue() = default;
 
-      ~TP_Queue();
-
+      ~TP_Queue() = default;
       /// Place a request at the end of the queue.
       void put(TP_Request* request);
 

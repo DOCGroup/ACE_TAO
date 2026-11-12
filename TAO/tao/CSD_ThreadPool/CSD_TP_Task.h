@@ -73,8 +73,7 @@ namespace TAO
     public:
       TP_Task();
 
-      ~TP_Task() override;
-
+      ~TP_Task() override = default;
       /// Put a request object on to the request queue.
       /// Returns true if successful, false otherwise (it has been "rejected").
       bool add_request(TP_Request* request);

@@ -40,8 +40,7 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Corba_Request : public TP_Request
     {
     public:
-      ~TP_Corba_Request() override;
-
+      ~TP_Corba_Request() override = default;
       TP_Corba_Request (TP_Corba_Request const &) = delete;
       TP_Corba_Request &operator= (TP_Corba_Request const &) = delete;
       TP_Corba_Request (TP_Corba_Request &&) = delete;

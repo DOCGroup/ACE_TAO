@@ -55,8 +55,7 @@ namespace TAO
 
       TP_Servant_State() = default;
 
-      virtual ~TP_Servant_State();
-
+      ~TP_Servant_State() override = default;
       /// Accessor for the servant busy flag.
       bool busy_flag() const;
 

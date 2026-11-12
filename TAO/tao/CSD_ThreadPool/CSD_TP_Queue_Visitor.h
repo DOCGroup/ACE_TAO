@@ -41,8 +41,7 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue_Visitor
     {
     public:
-      virtual ~TP_Queue_Visitor();
-
+      virtual ~TP_Queue_Visitor() = default;
       TP_Queue_Visitor (TP_Queue_Visitor const &) = delete;
       TP_Queue_Visitor &operator= (TP_Queue_Visitor const &) = delete;
       TP_Queue_Visitor (TP_Queue_Visitor &&) = delete;

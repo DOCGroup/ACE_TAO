@@ -47,8 +47,7 @@ namespace TAO
                       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-      virtual ~TP_Custom_Request_Operation();
-
+      ~TP_Custom_Request_Operation() override = default;
       /// Invoked by a worker thread to perform the operation.
       void execute();
 

@@ -54,8 +54,7 @@ namespace TAO
       explicit TP_Strategy(Thread_Counter num_threads = 1,
                            bool serialize_servants = true);
 
-      ~TP_Strategy() override;
-
+      ~TP_Strategy() override = default;
       /// Set the number of threads in the pool (must be > 0).
       void set_num_threads(Thread_Counter num_threads);
 

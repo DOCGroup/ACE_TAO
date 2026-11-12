@@ -53,8 +53,7 @@ namespace TAO
                             PortableServer::Servant         servant,
                             TP_Servant_State*               servant_state);
 
-      ~TP_Collocated_Synch_Request() override;
-
+      ~TP_Collocated_Synch_Request() override = default;
       TP_Collocated_Synch_Request (TP_Collocated_Synch_Request const &) = delete;
       TP_Collocated_Synch_Request &operator= (TP_Collocated_Synch_Request const &) = delete;
       TP_Collocated_Synch_Request (TP_Collocated_Synch_Request &&) = delete;

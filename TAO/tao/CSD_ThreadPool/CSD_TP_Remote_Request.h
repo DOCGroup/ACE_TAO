@@ -60,8 +60,7 @@ namespace TAO
                         PortableServer::Servant         servant,
                         TP_Servant_State*               servant_state);
 
-      ~TP_Remote_Request() override;
-
+      ~TP_Remote_Request() override = default;
       TP_Remote_Request (TP_Remote_Request const &) = delete;
       TP_Remote_Request &operator= (TP_Remote_Request const &) = delete;
       TP_Remote_Request (TP_Remote_Request &&) = delete;

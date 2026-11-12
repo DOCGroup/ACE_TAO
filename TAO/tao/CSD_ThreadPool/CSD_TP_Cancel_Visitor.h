@@ -50,8 +50,7 @@ namespace TAO
       /// target the supplied servant.
       explicit TP_Cancel_Visitor(PortableServer::Servant servant);
 
-      ~TP_Cancel_Visitor() override;
-
+      ~TP_Cancel_Visitor() override = default;
       TP_Cancel_Visitor (TP_Cancel_Visitor const &) = delete;
       TP_Cancel_Visitor &operator= (TP_Cancel_Visitor const &) = delete;
       TP_Cancel_Visitor (TP_Cancel_Visitor &&) = delete;
