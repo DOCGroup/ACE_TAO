@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Current_Loader.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_TRANSPORT_CURRENT_LOADER_H
 #define TAO_TRANSPORT_CURRENT_LOADER_H
@@ -53,7 +50,6 @@ namespace TAO
   }
 }
 
-
 #if defined (TAO_AS_STATIC_LIBS)
 namespace TAO
 {
@@ -72,7 +68,6 @@ ACE_FACTORY_DECLARE (TAO_Transport_Current,
                      TAO_Transport_Current_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 

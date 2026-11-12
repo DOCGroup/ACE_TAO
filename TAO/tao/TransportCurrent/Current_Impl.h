@@ -12,7 +12,6 @@
 #include "tao/TransportCurrent/TCC.h"
 #include "tao/LocalObject.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
@@ -84,7 +83,6 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-
 
 #include /**/ "ace/post.h"
 

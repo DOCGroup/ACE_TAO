@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Current_ORBInitializer_Base.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef CURRENT_ORBINITIALIZER_BASE_H
 #define CURRENT_ORBINITIALIZER_BASE_H
@@ -25,7 +22,6 @@
 #include "tao/TransportCurrent/TCC.h"
 
 #include "tao/TransportCurrent/Transport_Current_Export.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

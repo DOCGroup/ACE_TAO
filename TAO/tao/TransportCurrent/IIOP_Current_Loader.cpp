@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file IIOP_Current_Loader.cpp
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-// =================================================================
-
 
 #include "ace/Service_Config.h"
 #include "tao/ORBInitializer_Registry.h"

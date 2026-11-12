@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file Current_Loader.cpp
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-// =================================================================
 
 #include "ace/Service_Config.h"
 
@@ -51,7 +49,6 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #if defined (TAO_AS_STATIC_LIBS)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -72,7 +69,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 

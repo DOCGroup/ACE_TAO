@@ -22,7 +22,6 @@
 #include "tao/TransportCurrent/TC_IIOPC.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;

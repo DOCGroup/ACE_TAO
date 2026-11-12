@@ -137,6 +137,5 @@ namespace TAO
   }
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
