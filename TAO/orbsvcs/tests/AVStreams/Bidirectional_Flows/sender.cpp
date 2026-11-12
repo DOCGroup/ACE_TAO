@@ -2,6 +2,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_stdio.h"
 #include <cstddef>
 #include <memory>
 
@@ -48,10 +49,10 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result = ACE_OS::fwrite (frame->rd_ptr (),
-                                                 1,
-                                                 frame->length (),
-                                                 output_file);
+      std::size_t const result = std::fwrite (frame->rd_ptr (),
+                                              1,
+                                              frame->length (),
+                                              output_file);
 
       if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -130,7 +131,7 @@ Sender::parse_args (int argc,
   return 0;
 }
 
-// Method to get the object reference of the receiver
+/// Resolve the receiver object reference from the Naming Service.
 int
 Sender::bind_to_receiver ()
 {
@@ -179,7 +180,7 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
+  this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
 
   if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -259,7 +260,7 @@ Sender::init (int argc,
   return 0;
 }
 
-// Method to send data at the specified rate
+/// Send input data at the configured frame rate.
 int
 Sender::pace_data ()
 {
@@ -285,10 +286,10 @@ Sender::pace_data ()
       while (true)
         {
           // Read from the file into a message block.
-          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                               1,
-                                               this->mb_.size (),
-                                               this->input_file_.get ());
+          std::size_t const n = std::fread (this->mb_.wr_ptr (),
+                                            1,
+                                            this->mb_.size (),
+                                            this->input_file_.get ());
 
           if (n == 0)
             {
@@ -373,7 +374,7 @@ ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
-  File_Ptr output_file_owner (nullptr, ACE_OS::fclose);
+  File_Ptr output_file_owner (nullptr, std::fclose);
 
   try
     {

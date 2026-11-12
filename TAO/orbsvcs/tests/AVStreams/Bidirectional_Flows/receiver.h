@@ -7,7 +7,6 @@
 #include <memory>
 #include <string>
 
-#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -41,14 +40,12 @@ public:
   Receiver_Callback (Receiver_Callback &&) = delete;
   Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Receive a frame from the sender and return the next frame.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Handle stream shutdown requested by the sender.
   int handle_destroy () override;
 
 private:
@@ -75,12 +72,11 @@ public:
   Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
   Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
 
-  // Create a receiver application callback.
+  /// Return the receiver callback for AVStreams upcalls.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
-  /// Set protocol object corresponding to the transport protocol
-  /// chosen.
+  /// Set the protocol object selected for the transport.
   int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
@@ -116,6 +112,7 @@ public:
   /// Get the protocol object corresponding to the selected transport protocol.
   TAO_AV_Protocol_Object *protocol_object () const;
 
+  /// Return the input file owned by this receiver.
   FILE *input_file () const;
 
 protected:
@@ -126,11 +123,11 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  // Borrowed from the AVStreams transport setup; this object does not own it.
+  /// Borrowed from AVStreams transport setup; this object does not own it.
   TAO_AV_Protocol_Object *protocol_object_ {};
 
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
-  File_Ptr input_file_ {nullptr, ACE_OS::fclose};
+  File_Ptr input_file_ {nullptr, std::fclose};
 
   struct Options
   {

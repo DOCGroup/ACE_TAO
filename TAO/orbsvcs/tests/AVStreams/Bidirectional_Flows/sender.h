@@ -7,7 +7,6 @@
 #include <memory>
 #include <string>
 
-#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -40,8 +39,7 @@ public:
   Sender_Callback (Sender_Callback &&) = delete;
   Sender_Callback &operator= (Sender_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Receive a frame sent back by the receiver.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
@@ -65,13 +63,11 @@ public:
   Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
   Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
 
-  /// Create the application callback and return its handle to
-  /// AVStreams for further application callbacks.
+  /// Return the sender callback for AVStreams upcalls.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
-  /// Set protocol object corresponding to the transport protocol
-  /// chosen.
+  /// Set the protocol object selected for the transport.
   int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
@@ -102,22 +98,24 @@ public:
   Sender (Sender &&) = delete;
   Sender &operator= (Sender &&) = delete;
 
-  /// Method to initialize the various data components.
+  /// Initialize sender state and establish the bidirectional stream.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
-  /// Method to pace and send data from a file.
+  /// Pace and send data from the input file.
   int pace_data ();
 
   /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
+  /// Return whether the input file has reached its end.
   bool eof () const;
 
+  /// Destroy the AVStreams flow and shut down the ORB.
   void shutdown ();
 
 private:
-  /// Method to parse the command line arguments.
+  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Method that binds the sender to the receiver.
@@ -129,7 +127,7 @@ private:
   /// The receiver MMDevice that the sender connects to.
   AVStreams::MMDevice_var receiver_mmdevice_;
 
-  /// Stream controller
+  /// Stream controller used to create and destroy the stream.
   TAO_StreamCtrl *streamctrl_ {};
 
   /// Number of frames sent.
@@ -140,7 +138,7 @@ private:
 
   /// File handle of the file read from.
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
-  File_Ptr input_file_ {nullptr, ACE_OS::fclose};
+  File_Ptr input_file_ {nullptr, std::fclose};
 
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_ {BUFSIZ};
@@ -154,7 +152,7 @@ private:
 
   Options options_;
 
-  // Borrowed from the AVStreams transport setup; this object does not own it.
+  /// Borrowed from AVStreams transport setup; this object does not own it.
   TAO_AV_Protocol_Object *protocol_object_ {};
 
   bool eof_ {};

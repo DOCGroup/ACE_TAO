@@ -1,5 +1,6 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include <cstddef>
 #include <cstring>
 #include <memory>
@@ -48,10 +49,10 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result = ACE_OS::fwrite (frame->rd_ptr (),
-                                                 1,
-                                                 frame->length (),
-                                                 output_file);
+      std::size_t const result = std::fwrite (frame->rd_ptr (),
+                                              1,
+                                              frame->length (),
+                                              output_file);
 
       if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -62,10 +63,10 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     }
 
   // Read from the file into a message block.
-  std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                       1,
-                                       this->mb_.size (),
-                                       RECEIVER::instance ()->input_file ());
+  std::size_t const n = std::fread (this->mb_.wr_ptr (),
+                                    1,
+                                    this->mb_.size (),
+                                    RECEIVER::instance ()->input_file ());
 
   if (n == 0)
     {
@@ -170,7 +171,7 @@ Receiver::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
+  this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
 
   if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -231,7 +232,7 @@ ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
-  File_Ptr output_file_owner (nullptr, ACE_OS::fclose);
+  File_Ptr output_file_owner (nullptr, std::fclose);
 
   try
     {
