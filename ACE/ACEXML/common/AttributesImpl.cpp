@@ -1,24 +1,25 @@
 // -*- C++ -*-
 
 #include "ACEXML/common/AttributesImpl.h"
+#include <cerrno>
+#include <new>
+#include <stdexcept>
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/AttributesImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_AttributesImpl::ACEXML_AttributesImpl (int size)
-  : attrs_ (size)
+  : attrs_ ()
 {
-  this->attrs_.size (0);        // attrs array contains nothing
+  this->attrs_.reserve (static_cast<size_t> (size));
 }
 
-ACEXML_AttributesImpl::ACEXML_AttributesImpl (const
-                                              ACEXML_AttributesImpl &attrs)
+ACEXML_AttributesImpl::ACEXML_AttributesImpl (
+  ACEXML_AttributesImpl const &attrs)
   : ACEXML_Attributes (attrs),
-    attrs_ (attrs.attrs_.size ())
+    attrs_ (attrs.attrs_)
 {
-  for (size_t i = 0; i < attrs.attrs_.size (); i++)
-    this->attrs_[i] = attrs.attrs_[i];
 }
 
 ACEXML_AttributesImpl::~ACEXML_AttributesImpl () = default;
@@ -32,15 +33,21 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
 {
   if (this->isDuplicate (uri, localName, qName))
     return -1;
-  size_t length = this->attrs_.size ();
-  this->attrs_.size (length+1);
-  this->setAttribute (length,
-                      uri,
-                      localName,
-                      qName,
-                      type,
-                      value);
-  return static_cast<int> (length);
+  try
+    {
+      this->attrs_.emplace_back (uri, localName, qName, type, value);
+    }
+  catch (std::bad_alloc const &)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  catch (std::length_error const &)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  return static_cast<int> (this->attrs_.size () - 1);
 }
 
 int
@@ -48,10 +55,21 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
 {
   if (this->isDuplicate (att.uri(), att.localName(), att.qName()))
     return -1;
-  size_t length = this->attrs_.size ();
-  this->attrs_.size (length+1);
-  this->attrs_[length] = att;
-  return static_cast<int> (length);
+  try
+    {
+      this->attrs_.push_back (att);
+    }
+  catch (std::bad_alloc const &)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  catch (std::length_error const &)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  return static_cast<int> (this->attrs_.size () - 1);
 }
 
 int
@@ -59,7 +77,7 @@ ACEXML_AttributesImpl::isDuplicate (const ACEXML_Char *uri,
                                     const ACEXML_Char *localName,
                                     const ACEXML_Char *qName)
 {
-  for (size_t i = 0; i < this->attrs_.size(); ++i)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
       if (ACE_OS::strcmp (this->attrs_[i].localName(), localName) == 0)
         {
@@ -78,13 +96,13 @@ ACEXML_AttributesImpl::isDuplicate (const ACEXML_Char *uri,
 int
 ACEXML_AttributesImpl::removeAttribute (size_t index)
 {
-  size_t length = this->attrs_.size ();
+  size_t const length = this->attrs_.size ();
 
   if (index >= length)
     return -1;
 
-  this->attrs_[index] = this->attrs_[length - 1];
-  this->attrs_.size (length - 1);
+  this->attrs_[index] = this->attrs_.back ();
+  this->attrs_.pop_back ();
 
   return 0;
 }
@@ -92,7 +110,7 @@ ACEXML_AttributesImpl::removeAttribute (size_t index)
 int
 ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
 {
-  for (size_t i = 0; i < this->attrs_.size (); i++)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
       return static_cast<int> (i);
 
@@ -103,7 +121,7 @@ int
 ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
                                  const ACEXML_Char *localPart)
 {
-  for (size_t i = 0; i < this->attrs_.size (); i++)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
       return static_cast<int> (i);
@@ -144,7 +162,7 @@ ACEXML_AttributesImpl::getType (size_t index)
 const ACEXML_Char *
 ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
 {
-  for (size_t i = 0; i < this->attrs_.size (); i++)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
       return this->attrs_[i].type ();
 
@@ -155,7 +173,7 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
                                 const ACEXML_Char *localPart)
 {
-  for (size_t i = 0; i < this->attrs_.size (); i++)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
       return this->attrs_[i].type ();
@@ -182,7 +200,7 @@ ACEXML_AttributesImpl::getValue (size_t index)
 const ACEXML_Char *
 ACEXML_AttributesImpl::getValue (const ACEXML_Char *qName)
 {
-  for (size_t i = 0; i < this->attrs_.size (); i++)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
       return this->attrs_[i].value ();
 
@@ -193,7 +211,7 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
                                  const ACEXML_Char *localPart)
 {
-  for (size_t i = 0; i < this->attrs_.size (); i++)
+  for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
       return this->attrs_[i].value ();

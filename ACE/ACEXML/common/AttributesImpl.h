@@ -19,8 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/Attributes.h"
-#include "ace/Containers_T.h"
 #include <memory>
+#include <vector>
 
 #if !defined ACEXML_AttributesImpl_Default_Size
 #define ACEXML_AttributesImpl_Default_Size 20
@@ -109,9 +109,9 @@ private:
 };
 
 /**
- * @typedef ACE_Array<ACEXML_Attribute> ACEXML_Attribute_Array
+ * @typedef std::vector<ACEXML_Attribute> ACEXML_Attribute_Array
  */
-using ACEXML_Attribute_Array = ACE_Array<ACEXML_Attribute>;
+using ACEXML_Attribute_Array = std::vector<ACEXML_Attribute>;
 
 /**
  * @class ACEXML_AttributesImpl AttributesImpl.h "ACEXML/common/AttributesImpl.h"
@@ -145,7 +145,7 @@ public:
    * Initialize an AttributesImpl that holds @a size attributes.
    */
   explicit ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
-  ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
+  ACEXML_AttributesImpl (ACEXML_AttributesImpl const &attrs);
   virtual ~ACEXML_AttributesImpl ();
 
   /**
