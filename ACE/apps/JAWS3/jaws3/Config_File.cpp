@@ -21,20 +21,20 @@ class JAWS_strings
 public:
   ~JAWS_strings ()
   {
-    void *p;
+    ACE_TCHAR *p {};
     while (this->queue_.dequeue_head (p) != -1)
       ACE_OS::free (p);
   }
 
-  const ACE_TCHAR * duplicate (const ACE_TCHAR *s)
+  ACE_TCHAR const * duplicate (ACE_TCHAR const *s)
   {
-    void **x;
+    ACE_TCHAR **x {};
     ACE_TCHAR const *d {};
-    ACE_Unbounded_Queue_Iterator<void *> iter (this->queue_);
+    ACE_Unbounded_Queue_Iterator<ACE_TCHAR *> iter (this->queue_);
 
     while (iter.next (x))
       {
-        d = (const ACE_TCHAR *) *x;
+        d = *x;
         if (ACE_OS::strcmp (d, s) == 0)
           break;
         d = nullptr;
@@ -43,15 +43,16 @@ public:
 
     if (d == nullptr)
       {
-        d = ACE_OS::strdup (s);
-        this->queue_.enqueue_tail ((void *) d);
+        ACE_TCHAR * const duplicate = ACE_OS::strdup (s);
+        this->queue_.enqueue_tail (duplicate);
+        d = duplicate;
       }
 
     return d;
   }
 
 private:
-  ACE_Unbounded_Queue<void *> queue_;
+  ACE_Unbounded_Queue<ACE_TCHAR *> queue_;
 };
 
 
