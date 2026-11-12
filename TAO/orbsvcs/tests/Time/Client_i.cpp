@@ -9,8 +9,10 @@
 #include "ace/Malloc_Base.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <array>
 #include <memory>
 
+// The allocator is owned by ACE_Read_Buffer and must outlive this deleter.
 struct Read_Buffer_Deleter
 {
   ACE_Allocator *allocator {};
@@ -169,7 +171,7 @@ int
 Client_i::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
-  ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
+  ACE_HANDLE const f_handle = ACE_OS::open (filename, O_RDONLY);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -271,14 +273,15 @@ Client_i::obtain_initial_references ()
       ACE_DEBUG ((LM_DEBUG,
                   "DONE\n"));
 
-      char host_name[MAXHOSTNAMELEN] {};
+      std::array<char, MAXHOSTNAMELEN> host_name {};
 
-      ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
+      ACE_OS::hostname (host_name.data (), host_name.size ());
 
       CosNaming::Name clerk_name;
       clerk_name.length (2);
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
-      std::string const name = std::string ("Clerk:") + host_name;
+      std::string name ("Clerk:");
+      name += host_name.data ();
       clerk_name[1].id = CORBA::string_dup (name.c_str ());
 
       ACE_DEBUG ((LM_DEBUG,

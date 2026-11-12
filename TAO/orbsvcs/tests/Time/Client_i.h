@@ -1,5 +1,8 @@
 // -*- C++ -*-
 
+#ifndef TAO_ORBSVCS_TESTS_TIME_CLIENT_I_H
+#define TAO_ORBSVCS_TESTS_TIME_CLIENT_I_H
+
 //=============================================================================
 /**
  *  @file    Client_i.h
@@ -92,3 +95,5 @@ private:
   /// Remember our orb.
   CORBA::ORB_var orb_ {};
 };
+
+#endif /* TAO_ORBSVCS_TESTS_TIME_CLIENT_I_H */

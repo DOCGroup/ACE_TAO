@@ -6,7 +6,7 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Client_i client;
+  Client_i client {};
 
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Time Service Client\n"));
