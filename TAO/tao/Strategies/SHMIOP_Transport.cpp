@@ -18,8 +18,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport () = default;
-
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SHMEM_PROFILE,
@@ -48,7 +46,7 @@ TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
   bytes_transferred = 0;
   for (int i {}; i < iovcnt; ++i)
     {
-      ssize_t retval =
+      ssize_t const retval =
         this->connection_handler_->peer ().send (iov[i].iov_base,
                                                  iov[i].iov_len,
                                                  max_wait_time);
@@ -308,7 +306,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
+  ssize_t const n = this->send_message_shared (stub,
                                          message_semantics,
                                          stream.begin (),
                                          max_wait_time);

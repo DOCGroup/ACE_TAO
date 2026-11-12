@@ -44,7 +44,7 @@ TAO_DIOP_Protocol_Factory::make_acceptor ()
 
   ACE_NEW_RETURN (acceptor,
                   TAO_DIOP_Acceptor,
-                  0);
+                  nullptr);
 
   return acceptor;
 }
@@ -62,7 +62,7 @@ TAO_DIOP_Protocol_Factory::make_connector ()
 
   ACE_NEW_RETURN (connector,
                   TAO_DIOP_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 

@@ -327,7 +327,7 @@ TAO_DIOP_Connection_Handler::release_os_resources ()
 int
 TAO_DIOP_Connection_Handler::add_transport_to_cache ()
 {
-  ACE_INET_Addr addr;
+  ACE_INET_Addr const addr;
 
   // This function is called by the acceptor to add this
   // transport to the transport cache.  This is really
@@ -420,7 +420,7 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
       if (tph != nullptr)
         {
-          CORBA::Long codepoint = tph->get_dscp_codepoint ();
+          CORBA::Long const codepoint = tph->get_dscp_codepoint ();
 
           tos = (int)(codepoint) << 2;
           this->set_tos (tos);

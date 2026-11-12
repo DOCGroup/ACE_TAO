@@ -119,12 +119,12 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   ACE_NEW_RETURN (svc_handler,
                   TAO_DIOP_Connection_Handler (this->orb_core ()),
-                  0);
+                  nullptr);
 
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  u_short port {};
+  u_short const port {};
   const ACE_UINT32 ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr (port, ia_any);
 
@@ -210,7 +210,7 @@ TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_DIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   if (pfile->decode (cdr) == -1)
     {

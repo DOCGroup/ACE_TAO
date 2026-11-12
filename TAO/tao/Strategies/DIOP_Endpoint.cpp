@@ -164,7 +164,7 @@ TAO_DIOP_Endpoint::duplicate ()
                                      this->port_,
                                      this->object_addr_,
                                      this->priority ()),
-                  0);
+                  nullptr);
 
   return endpoint;
 }

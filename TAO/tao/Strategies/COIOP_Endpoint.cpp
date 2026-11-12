@@ -59,7 +59,7 @@ TAO_COIOP_Endpoint::duplicate ()
 
   ACE_NEW_RETURN (endpoint,
                   TAO_COIOP_Endpoint (this->uuid_),
-                  0);
+                  nullptr);
 
   return endpoint;
 }

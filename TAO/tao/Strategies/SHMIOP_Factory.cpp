@@ -26,8 +26,6 @@ TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory ()
 {
 }
 
-TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory () = default;
-
 int
 TAO_SHMIOP_Protocol_Factory::match_prefix (std::string const &prefix)
 {
@@ -54,7 +52,7 @@ TAO_SHMIOP_Protocol_Factory::make_acceptor ()
 
   ACE_NEW_RETURN (acceptor,
                   TAO_SHMIOP_Acceptor,
-                  0);
+                  nullptr);
 
   acceptor->set_mmap_options (this->mmap_prefix_.get (),
                               this->min_bytes_);
@@ -101,7 +99,7 @@ TAO_SHMIOP_Protocol_Factory::make_connector ()
 
   ACE_NEW_RETURN (connector,
                   TAO_SHMIOP_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 

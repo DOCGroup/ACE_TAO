@@ -57,7 +57,7 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                          CORBA::Short priority)
 {
   // @@ we only make one for now
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
     return -1;

@@ -48,7 +48,7 @@ TAO_UIOP_Endpoint::duplicate ()
   ACE_NEW_RETURN (endpoint,
                   TAO_UIOP_Endpoint (this->object_addr_,
                                      this->priority ()),
-                  0);
+                  nullptr);
 
   return endpoint;
 }

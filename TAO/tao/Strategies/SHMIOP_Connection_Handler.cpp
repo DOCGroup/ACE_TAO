@@ -181,7 +181,7 @@ TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_SHMIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  int const result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -203,7 +203,7 @@ TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // will delete this. At that point this->reset_state() is in no
   // man's territory and that causes SEGV on some platforms (Windows!)
 
-  TAO_Auto_Reference<TAO_SHMIOP_Connection_Handler> safeguard (*this);
+  TAO_Auto_Reference<TAO_SHMIOP_Connection_Handler> const safeguard (*this);
 
   // NOTE: Perhaps not the best solution, as it feels like the upper
   // layers should be responsible for this?
@@ -211,7 +211,7 @@ TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
   // we should call close().
-  int ret = this->close ();
+  int const ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   return ret;
 }

@@ -44,7 +44,7 @@ class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 public:
   TAO_COIOP_Connector ();
 
-  ~TAO_COIOP_Connector () = default;
+  ~TAO_COIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods

@@ -63,7 +63,7 @@ TAO_COIOP_Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_COIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   int const r = pfile->decode (cdr);
   if (r == -1)

@@ -143,7 +143,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
       // No rendezvous point specified
     }
 
-  CORBA::ULong length = cp - start;
+  CORBA::ULong const length = cp - start;
 
   CORBA::String_var rendezvous = CORBA::string_alloc (length);
 
@@ -239,7 +239,7 @@ TAO_UIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                             this->ref_object_key_->object_key ());
 
-  u_int buflen = (8 /* "corbaloc" */ +
+  u_int const buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
                   std::strlen (::prefix_) +
                   1 /* colon separator */ +
@@ -279,7 +279,7 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   // Get rendezvous_point
   int const read_result = cdr.read_string (rendezvous);
-  std::unique_ptr<char[]> rendezvous_owner (rendezvous);
+  std::unique_ptr<char[]> const rendezvous_owner (rendezvous);
   if (read_result == 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));

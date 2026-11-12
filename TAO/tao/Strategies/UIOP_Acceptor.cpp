@@ -65,7 +65,7 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return 0;
 
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
     return -1;
@@ -222,7 +222,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
+  ACE_Auto_String_Free const tempname (ACE_OS::tempnam (0, "TAO"));
 
   if (tempname.get () == nullptr)
     return -1;
@@ -377,7 +377,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // Get rendezvous_point
   int const read_result = cdr.read_string (rendezvous);
-  std::unique_ptr<char[]> rendezvous_owner (rendezvous);
+  std::unique_ptr<char[]> const rendezvous_owner (rendezvous);
   if (read_result == 0)
     {
       TAOLIB_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
@@ -443,7 +443,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt =
+          ACE_CString const opt =
             options.substring (begin, end - begin);
 
           ACE_CString::size_type const slot = opt.find ("=");
@@ -457,7 +457,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                               -1);
 
           const ACE_CString name (opt.substring (0, slot));
-          ACE_CString value = opt.substring (slot + 1);
+          ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;
 

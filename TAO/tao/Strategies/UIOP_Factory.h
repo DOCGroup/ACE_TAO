@@ -34,7 +34,7 @@ class TAO_Strategies_Export TAO_UIOP_Protocol_Factory : public TAO_Protocol_Fact
 public:
   TAO_UIOP_Protocol_Factory ();
 
-  ~TAO_UIOP_Protocol_Factory () override;
+  ~TAO_UIOP_Protocol_Factory () override = default;
 
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;

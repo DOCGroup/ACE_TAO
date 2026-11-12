@@ -64,7 +64,7 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  ~TAO_SCIOP_Endpoint () = default;
+  ~TAO_SCIOP_Endpoint () override = default;
 
   /// Implements TAO_Endpoint methods documented in Endpoint.h.
 

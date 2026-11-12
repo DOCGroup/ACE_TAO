@@ -187,7 +187,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   else if (cp_pos != nullptr)
     {
       // A port number or port name was specified.
-      CORBA::ULong length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
+      CORBA::ULong const length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
@@ -244,7 +244,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
   if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
-      ACE_INET_Addr host_addr;
+      ACE_INET_Addr const host_addr;
 
       char tmp_host [MAXHOSTNAMELEN + 1];
 
@@ -371,7 +371,7 @@ TAO_DIOP_Profile::to_string () const
        1 /* colon separator */ +
        1 /* object key separator */ +
        std::strlen (key.in ()));
-  size_t pfx_len = (
+  size_t const pfx_len = (
        std::strlen (::the_prefix) /* "diop" */ +
        1 /* colon separator */);
 
@@ -410,7 +410,7 @@ TAO_DIOP_Profile::to_string () const
         {
           // Don't publish scopeid if included.
           ACE_CString tmp (endp->host ());
-          ACE_CString::size_type pos = tmp.find ('%');
+          ACE_CString::size_type const pos = tmp.find ('%');
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1);
@@ -467,7 +467,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
       (pos = std::strchr (host = this->endpoint_.host (), '%')) != nullptr)
     {
       ACE_CString tmp;
-      size_t len = pos - host;
+      size_t const len = pos - host;
       tmp.set (this->endpoint_.host (), len, true);
       encap.write_string (tmp.c_str ());
     }
@@ -516,7 +516,7 @@ TAO_DIOP_Profile::encode_endpoints ()
         {
           // Don't publish scopeid if included.
           ACE_CString tmp (endpoint->host ());
-          ACE_CString::size_type pos = tmp.find ('%');
+          ACE_CString::size_type const pos = tmp.find ('%');
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1);

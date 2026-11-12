@@ -17,8 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint () = default;
-
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
@@ -112,7 +110,7 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
 int
 TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  size_t actual_len =
+  size_t const actual_len =
     std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + std::strlen ("65536")         // max port
@@ -150,7 +148,7 @@ TAO_SHMIOP_Endpoint::duplicate ()
                                        this->port_,
                                        this->object_addr_,
                                        this->priority ()),
-                  0);
+                  nullptr);
 
   return endpoint;
 }

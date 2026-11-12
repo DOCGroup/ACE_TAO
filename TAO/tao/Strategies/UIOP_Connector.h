@@ -52,7 +52,7 @@ public:
    */
   TAO_UIOP_Connector ();
 
-  ~TAO_UIOP_Connector () override;
+  ~TAO_UIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods

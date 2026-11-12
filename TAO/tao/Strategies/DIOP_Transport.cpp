@@ -152,7 +152,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t const n = this->recv (message_block.rd_ptr (),
                           message_block.space (),
                           max_wait_time);
 

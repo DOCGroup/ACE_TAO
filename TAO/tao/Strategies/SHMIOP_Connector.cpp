@@ -18,8 +18,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector () = default;
-
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector ()
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
@@ -164,7 +162,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_SHMIOP_Connection_Handler *svc_handler {};
 
   // Connect.
-  int result = this->base_connector_.connect (svc_handler,
+  int const result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
 
@@ -214,7 +212,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                 svc_handler->peer ().get_handle ()));
 
   // Add the handler to Cache
-  int retval =
+  int const retval =
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
 
@@ -272,9 +270,9 @@ TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
-  int r = pfile->decode (cdr);
+  int const r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();

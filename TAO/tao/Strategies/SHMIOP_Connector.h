@@ -50,7 +50,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 public:
   TAO_SHMIOP_Connector ();
 
-  ~TAO_SHMIOP_Connector () override;
+  ~TAO_SHMIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods

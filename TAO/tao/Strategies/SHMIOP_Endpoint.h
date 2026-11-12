@@ -64,7 +64,7 @@ public:
                        CORBA::UShort port,
                        CORBA::Short priority);
 
-  ~TAO_SHMIOP_Endpoint () override;
+  ~TAO_SHMIOP_Endpoint () override = default;
 
   /**
    * @name TAO_Endpoint Methods

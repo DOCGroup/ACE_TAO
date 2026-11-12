@@ -47,8 +47,7 @@ public:
   TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_COIOP_Transport () = default;
+  ~TAO_COIOP_Transport () override = default;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,

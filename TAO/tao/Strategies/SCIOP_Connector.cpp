@@ -23,8 +23,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Connector::~TAO_SCIOP_Connector () = default;
-
 TAO_SCIOP_Connector::TAO_SCIOP_Connector ()
   : TAO_Connector (TAO_TAG_SCIOP_PROFILE),
     connect_strategy_ (),
@@ -326,7 +324,7 @@ TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SCIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   int const r = pfile->decode (cdr);
   if (r == -1)

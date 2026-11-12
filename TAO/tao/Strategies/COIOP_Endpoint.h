@@ -49,7 +49,7 @@ public:
   /// does not require any address resolution processing.
   explicit TAO_COIOP_Endpoint (ACE_Utils::UUID const &uuid);
 
-  ~TAO_COIOP_Endpoint () = default;
+  ~TAO_COIOP_Endpoint () override = default;
 
   /**
    * @name TAO_Endpoint Methods

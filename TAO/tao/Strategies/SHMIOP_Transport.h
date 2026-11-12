@@ -50,8 +50,7 @@ public:
   TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_SHMIOP_Transport () override;
+  ~TAO_SHMIOP_Transport () override = default;
 
 protected:
   /**

@@ -17,8 +17,6 @@ TAO_UIOP_Protocol_Factory::TAO_UIOP_Protocol_Factory ()
 {
 }
 
-TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory () = default;
-
 int
 TAO_UIOP_Protocol_Factory::match_prefix (std::string const &prefix)
 {
@@ -45,7 +43,7 @@ TAO_UIOP_Protocol_Factory::make_acceptor ()
 
   ACE_NEW_RETURN (acceptor,
                   TAO_UIOP_Acceptor,
-                  0);
+                  nullptr);
 
   return acceptor;
 }
@@ -63,7 +61,7 @@ TAO_UIOP_Protocol_Factory::make_connector ()
 
   ACE_NEW_RETURN (connector,
                   TAO_UIOP_Connector,
-                  0);
+                  nullptr);
 
   return connector;
 }

@@ -147,7 +147,7 @@ TAO_SCIOP_Endpoint::duplicate ()
   // @@NOTE: Not at all exception safe
   ACE_NEW_RETURN (endpoint,
                   TAO_SCIOP_Endpoint (*this),
-                  0);
+                  nullptr);
 
   return endpoint;
 }

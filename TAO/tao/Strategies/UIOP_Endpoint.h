@@ -41,10 +41,10 @@ public:
   /// Default constructor.
   TAO_UIOP_Endpoint ();
 
-  TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
-                     CORBA::Short priority = TAO_INVALID_PRIORITY);
+  explicit TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
+                              CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  ~TAO_UIOP_Endpoint () = default;
+  ~TAO_UIOP_Endpoint () override = default;
 
   /**
    * @name TAO_Endpoint Methods

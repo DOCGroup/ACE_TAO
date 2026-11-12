@@ -72,7 +72,7 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                        CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -462,7 +462,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  unsigned short port = address.get_port_number ();
+  unsigned short const port = address.get_port_number ();
   for (CORBA::ULong j {}; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
@@ -536,7 +536,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
                                   int *def_type)
 {
   {
-    ACE_INET_Addr tmp;
+    ACE_INET_Addr const tmp;
     addr.set (tmp);
     specified_hostname.clear();
   }
@@ -786,8 +786,8 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 #endif /* ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_IPV6)
-  bool ipv4_only = def_type == AF_INET;
-  bool ipv6_only = (def_type == AF_INET6) ||
+  bool const ipv4_only = def_type == AF_INET;
+  bool const ipv6_only = (def_type == AF_INET6) ||
     orb_core->orb_params ()->connect_ipv6_only ();
 #if defined (ACE_WIN32)
   if (this->default_address_.get_type () == AF_INET)
@@ -1038,7 +1038,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
         }
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end - begin);
+          ACE_CString const opt = options.substring (begin, end - begin);
 
           ACE_CString::size_type const slot = opt.find ("=");
 
@@ -1050,8 +1050,8 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
                                opt.c_str ()),
                               -1);
 
-          ACE_CString name = opt.substring (0, slot);
-          ACE_CString value = opt.substring (slot + 1);
+          ACE_CString const name = opt.substring (0, slot);
+          ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;
 

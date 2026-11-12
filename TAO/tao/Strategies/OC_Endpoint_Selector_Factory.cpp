@@ -11,8 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory () = default;
 
-TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory () = default;
-
 int
 TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 {

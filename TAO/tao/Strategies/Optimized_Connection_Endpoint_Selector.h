@@ -46,7 +46,7 @@ class TAO_Strategies_Export TAO_Optimized_Connection_Endpoint_Selector
 public:
   explicit TAO_Optimized_Connection_Endpoint_Selector (ACE_Time_Value const &tv);
 
-  ~TAO_Optimized_Connection_Endpoint_Selector () override;
+  ~TAO_Optimized_Connection_Endpoint_Selector () override = default;
 
   static void hook (TAO_ORB_Core *,
                     TAO_Stub *,

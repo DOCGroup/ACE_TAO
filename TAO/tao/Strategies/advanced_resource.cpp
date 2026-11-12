@@ -79,7 +79,8 @@ TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory ()
 
 TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory ()
 {
-  TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
+  // The resource factory owns the protocol factories registered in this set.
+  TAO_ProtocolFactorySetItor const end = this->protocol_factories_.end ();
 
   for (TAO_ProtocolFactorySetItor iterator =
          this->protocol_factories_.begin ();
@@ -406,7 +407,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
                                    0,
                                    nullptr,
                                    this->reactor_mask_signals_),
-                      0);
+                      nullptr);
       break;
 
     case TAO_REACTOR_SELECT_ST:
@@ -418,7 +419,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
                                              0,
                                              nullptr,
                                              this->reactor_mask_signals_),
-                      0);
+                      nullptr);
       break;
 
     case TAO_REACTOR_WFMO:

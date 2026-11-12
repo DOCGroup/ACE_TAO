@@ -48,7 +48,7 @@ class TAO_Strategies_Export TAO_SCIOP_Connector : public TAO_Connector
 public:
   TAO_SCIOP_Connector ();
 
-  ~TAO_SCIOP_Connector () override;
+  ~TAO_SCIOP_Connector () override = default;
 
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;

@@ -42,7 +42,7 @@ TAO_SCIOP_Protocol_Factory::make_acceptor ()
 
   ACE_NEW_RETURN (acceptor,
                   TAO_SCIOP_Acceptor,
-                  0);
+                  nullptr);
 
   return acceptor;
 }
@@ -60,7 +60,7 @@ TAO_SCIOP_Protocol_Factory::make_connector ()
 
   ACE_NEW_RETURN (connector,
                   TAO_SCIOP_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 

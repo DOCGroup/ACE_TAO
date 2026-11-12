@@ -36,7 +36,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Protocol_Factory
 public:
   TAO_SHMIOP_Protocol_Factory ();
 
-  ~TAO_SHMIOP_Protocol_Factory () override;
+  ~TAO_SHMIOP_Protocol_Factory () override = default;
 
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;

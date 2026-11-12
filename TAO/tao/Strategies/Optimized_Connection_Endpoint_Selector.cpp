@@ -34,10 +34,6 @@ TAO_Optimized_Connection_Endpoint_Selector (ACE_Time_Value const &tv)
     }
 }
 
-TAO_Optimized_Connection_Endpoint_Selector::
-~TAO_Optimized_Connection_Endpoint_Selector () = default;
-
-
 void
 TAO_Optimized_Connection_Endpoint_Selector::hook (TAO_ORB_Core *,
                                                   TAO_Stub *,
@@ -59,7 +55,7 @@ TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
 
   r->profile(p);
   effective_endpoint = p->endpoint ();
-  size_t endpoint_count = p->endpoint_count();
+  size_t const endpoint_count = p->endpoint_count();
   for (size_t i {}; i < endpoint_count; ++i)
     {
       TAO_Base_Transport_Property desc (effective_endpoint);

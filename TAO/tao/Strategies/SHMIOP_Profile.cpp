@@ -192,7 +192,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   this->endpoint_.host_ = tmp._retn ();
 
-  ACE_INET_Addr host_addr;
+  ACE_INET_Addr const host_addr;
 
   if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
@@ -323,7 +323,7 @@ TAO_SHMIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->ref_object_key_->object_key ());
 
-  size_t buflen = (8 /* corbaloc */ +
+  size_t const buflen = (8 /* corbaloc */ +
                    1 /* colon separator */ +
                    std::strlen (::prefix_) +
                    1 /* colon separator */ +
@@ -430,7 +430,7 @@ TAO_SHMIOP_Profile::encode_endpoints ()
        iterator != nullptr;
        iterator = iterator->cont ())
     {
-      size_t i_length = iterator->length ();
+      size_t const i_length = iterator->length ();
       std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;

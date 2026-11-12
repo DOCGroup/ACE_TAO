@@ -61,7 +61,7 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  ~TAO_DIOP_Endpoint () = default;
+  ~TAO_DIOP_Endpoint () override = default;
 
   /**
    * @name TAO_Endpoint Methods

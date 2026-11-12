@@ -20,8 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Connector::~TAO_UIOP_Connector () = default;
-
 TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
@@ -166,7 +164,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_UIOP_Connection_Handler *svc_handler {};
 
   // Connect.
-  int result =
+  int const result =
     this->base_connector_.connect (svc_handler,
                                    remote_address,
                                    synch_options);
@@ -240,7 +238,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                 svc_handler->peer ().get_handle ()));
 
   // Add the handler to Cache
-  int retval =
+  int const retval =
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
   // Failure in adding to cache.
@@ -299,7 +297,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   const int r = pfile->decode (cdr);
   if (r == -1)
