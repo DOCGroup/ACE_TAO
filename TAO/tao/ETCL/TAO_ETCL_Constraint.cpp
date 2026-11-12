@@ -457,7 +457,7 @@ TAO_ETCL_Literal_Constraint::widest_type (
   ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type rhs_type = rhs.expr_type ();
-  Literal_Type return_value = rhs_type;
+  Literal_Type const return_value = rhs_type;
 
   if (rhs_type == ACE_ETCL_COMPONENT)
     {

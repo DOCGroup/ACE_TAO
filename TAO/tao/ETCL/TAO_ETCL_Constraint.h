@@ -67,8 +67,6 @@ public:
   operator char const* () const;
   operator TAO::Any_Impl* () const;
 
-  // = Arithmetic operators.
-
   TAO_ETCL_Literal_Constraint
   operator+ (TAO_ETCL_Literal_Constraint const &rhs);
 
