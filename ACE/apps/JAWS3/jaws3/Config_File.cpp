@@ -163,7 +163,7 @@ JAWS_Config_File_Impl::parse_file ()
         {
           end_of_current_line = buffer.rd_ptr ();
           while (*end_of_current_line != '\n')
-            end_of_current_line++;
+            ++end_of_current_line;
         }
 
       // If buffer is not pointing to a continuation line, or there is
