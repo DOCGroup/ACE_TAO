@@ -18,6 +18,7 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include "ace/ARGV.h"
 
 #include <cstring>
 
@@ -91,30 +92,28 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
 void
 TAO_FT_Naming_Replication_Manager::init_orb ()
 {
-  int argc = 8;
-  ACE_TCHAR *argv[11];
-  argv[0] = ACE_OS::strdup (ACE_TEXT (""));
-  argv[1] = ACE_OS::strdup (ACE_TEXT ("-ORBIgnoreDefaultSvcConfFile"));
-  argv[2] = ACE_OS::strdup (ACE_TEXT ("-ORBGestalt"));
-  argv[3] = ACE_OS::strdup (ACE_TEXT ("Local"));
-  argv[4] = ACE_OS::strdup (ACE_TEXT ("-ORBSvcConfDirective"));
-  argv[5] = ACE_OS::strdup (ACE_TEXT ("static Client_Strategy_Factory \"-ORBConnectStrategy Blocked -ORBDefaultSyncScope server\""));
-  argv[6] = ACE_OS::strdup (ACE_TEXT ("-ORBDottedDecimalAddresses"));
-  argv[7] = ACE_OS::strdup (ACE_TEXT ("1"));
+  ACE_ARGV orb_args;
+  if (orb_args.add (ACE_TEXT ("")) == -1
+      || orb_args.add (ACE_TEXT ("-ORBIgnoreDefaultSvcConfFile")) == -1
+      || orb_args.add (ACE_TEXT ("-ORBGestalt")) == -1
+      || orb_args.add (ACE_TEXT ("Local")) == -1
+      || orb_args.add (ACE_TEXT ("-ORBSvcConfDirective")) == -1
+      || orb_args.add (ACE_TEXT ("static Client_Strategy_Factory \"-ORBConnectStrategy Blocked -ORBDefaultSyncScope server\""), true) == -1
+      || orb_args.add (ACE_TEXT ("-ORBDottedDecimalAddresses")) == -1
+      || orb_args.add (ACE_TEXT ("1")) == -1)
+    throw CORBA::NO_MEMORY ();
+
+  ACE_TString endpoint;
   if (endpoint_.length ())
     {
-      argv[8] = ACE_OS::strdup (ACE_TEXT ("-ORBListenEndpoints"));
-      argv[9] = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR (endpoint_.c_str ()));
-      argc += 2;
+      endpoint = ACE_TEXT_CHAR_TO_TCHAR (endpoint_.c_str ());
+      if (orb_args.add (ACE_TEXT ("-ORBListenEndpoints")) == -1
+          || orb_args.add (endpoint.c_str ()) == -1)
+        throw CORBA::NO_MEMORY ();
     }
-  else
-    {
-      argv[8] = nullptr;
-      argv[9] = nullptr;
-    }
-  argv[10] = nullptr;
 
-  this->orb_ = CORBA::ORB_init (argc, argv, "replicator_orb");
+  int argc = orb_args.argc ();
+  this->orb_ = CORBA::ORB_init (argc, orb_args.argv (), "replicator_orb");
   this->reactor_ = this->orb_->orb_core ()->reactor ();
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("RootPOA");
   PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
