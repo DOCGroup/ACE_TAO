@@ -24,15 +24,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * A (local) implementation for the RtecScheduler::Scheduler service.
+ *
+ * This class implements a servant for the
+ * RtecScheduler::Scheduler service, using the Scheduler classes
+ * distributed with the EC.
+ */
+
 class TAO_RTSched_Export ACE_Config_Scheduler
-: public POA_RtecScheduler::Scheduler
-  // = TITLE
-  //   A (local) implementation for the RtecScheduler::Scheduler service.
-  //
-  // = DESCRIPTION
-  //   This class implements a servant for the
-  //   RtecScheduler::Scheduler service, using the Scheduler classes
-  //   distributed with the EC.
+  : public POA_RtecScheduler::Scheduler
 {
 public:
   ACE_Config_Scheduler ();

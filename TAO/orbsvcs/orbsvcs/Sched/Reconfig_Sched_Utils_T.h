@@ -28,16 +28,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Reconfig Sched Entry Visitor classes //
 //////////////////////////////////////////
 
+/**
+ * A base class for scheduler entry visitors that use a
+ * dependency map to traverse a dependency graph over entries.
+ *
+ * This class holds the maps and a constructor that
+ * derived classes may call to pass them in.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Dependency_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor
-  // = TITLE
-  //   A base class for scheduler entry visitors that use a
-  //   dependency map to traverse a dependency graph over entries.
-  //
-  // = DESCRIPTION
-  //   This class hold the maps and a constructor that
-  //   derived classes may call to pass them in.
 {
 public:
   /// Type of map used for O(1) lookup of RT_Info
@@ -103,16 +104,17 @@ protected:
 };
 
 
+/**
+ * A scheduler entry visitor that marks nodes with DFS start
+ * and finish times.
+ *
+ * This class does DFS traversal marking of each node it visits,
+ * as appropriate according to DFS state markers.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_DFS_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-  // = TITLE
-  //   A scheduler entry visitor that marks nodes with DFS start
-  //   and finish times.
-  //
-  // = DESCRIPTION
-  //   This class does DFS traversal marking of each node it visits,
-  //   as appropriate according to DFS state markers.
 {
 public:
   TAO_RSE_DFS_Visitor
@@ -153,16 +155,17 @@ private:
 };
 
 
+/**
+ * A scheduler entry visitor that checks for cycles in the graph.
+ *
+ * This class, when applied to nodes in the transpose of the DFS graph as
+ * ordered for the strongly connected components algorithm, will
+ * flag cycles in the graph.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_SCC_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-  // = TITLE
-  //   A scheduler entry visitor that checks for cycles in the graph.
-  //
-  // = DESCRIPTION
-  //   This class, when applied to nodes in the transpose of the DFS graph as
-  //   ordered for the strongly connected components algorithm, will
-  //   flag cycles in the graph.
 {
 public:
   TAO_RSE_SCC_Visitor
@@ -237,17 +240,18 @@ private:
   bool in_a_cycle_ {};
 };
 
+/**
+ * A scheduler entry visitor that propagates aggregate execution
+ * times from called to calling nodes in a topologically ordered
+ * graph.
+ *
+ * This class computes the aggregate execution time of each node
+ * and its dependants, according to its dependencies.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Reverse_Propagation_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-  // = TITLE
-  //   A scheduler entry visitor that propagates aggregate execution
-  //   times from called to calling nodes in a topologically ordered
-  //   graph.
-  //
-  // = DESCRIPTION
-  //   This class computes the aggregate execution time of each node
-  //   and its dependants, according to its dependencies.
 {
 public:
   TAO_RSE_Reverse_Propagation_Visitor
@@ -266,17 +270,18 @@ protected:
 };
 
 
+/**
+ * A scheduler entry visitor that propagates effective periods and
+ * execution time multipliers between nodes in a topologically
+ * ordered graph.
+ *
+ * This class computes the effective period of each node, according to
+ * its dependencies, and the period and threads it specifies.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Forward_Propagation_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-  // = TITLE
-  //   A scheduler entry visitor that propagates effective periods and
-  //   execution time multipliers between nodes in a topologically
-  //   ordered graph.
-  //
-  // = DESCRIPTION
-  //   This class computes the effective period of each node, according to
-  //   its dependencies, and the period and threads it specifies.
 {
 public:
   TAO_RSE_Forward_Propagation_Visitor
@@ -331,17 +336,18 @@ private:
   int thread_specification_errors_;
 };
 
+/**
+ * An entry visitor that assigns static priority and subpriority
+ * values to entries in an array already sorted in static
+ * <priority, subpriority> order.
+ *
+ * The visitor uses the parameterized strategy type to determine
+ * priority and subpriority boundaries.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Priority_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor
-  // = TITLE
-  //   An entry visitor that assigns static priority and subpriority
-  //   values to entries in an array already sorted in static
-  //   <priority, subpriority> order.
-  //
-  // = DESCRIPTION
-  //   The visitor uses the parameterized strategy type to determine
-  //   priority and subpriority boundaries.
 {
 public:
   TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
@@ -386,20 +392,20 @@ private:
   TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
 };
 
+/**
+ * A tuple visitor that accumulates utilization separately for
+ * critical and non-critical operations.  Operation tuples that
+ * fit within the threshold defined for their criticality level
+ * are admitted to the schedule, by updating the corresponding
+ * RT_Info with the tuple data.
+ *
+ * The visitor uses the parameterized strategy type to determine
+ * whether or not a given operation is critical.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY>
 class TAO_Tuple_Admission_Visitor :
   public TAO_RT_Info_Tuple_Visitor
-  // = TITLE
-
-  //   A tuple visitor that accumulates utilization separately for
-  //   critical and non-critical operations.  Operation tuples that
-  //   fit within the threashold defined for their criticality level
-  //   are admitted to the schedule, by updating the corresponding
-  //   RT_Info with the tuple data.
-  //
-  // = DESCRIPTION
-  //   The visitor uses the parameterized strategy type to determine
-  //   whether or not a given operation is critical.
 {
 public:
   TAO_Tuple_Admission_Visitor (CORBA::Double const & critical_utilization_threshold,
@@ -451,17 +457,18 @@ private:
   CORBA::Double noncritical_utilization_threshold_;
 };
 
+/**
+ * A scheduler entry visitor that propagates criticality
+ * from called to calling nodes in a topologically ordered
+ * graph.
+ *
+ * This class computes the criticality of each node
+ * and its dependants, according to its dependencies.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Criticality_Propagation_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-  // = TITLE
-  //   A scheduler entry visitor that propagates criticality
-  //   from called to calling nodes in a topologically ordered
-  //   graph.
-  //
-  // = DESCRIPTION
-  //   This class computes the criticality of each node
-  //   and its dependants, according to its dependencies.
 {
 public:
   TAO_RSE_Criticality_Propagation_Visitor

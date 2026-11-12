@@ -23,23 +23,23 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * A servant for RtecScheduler::Scheduler that can be initialized
+ * and run solely with precomputed scheduling information, but is also
+ * designed to perform efficient recomputation of scheduling info
+ * in the face of run-time changes to RT_Infos in the schedule.
+ *
+ * This class implements the TAO scheduling service.  It has
+ * the ability to accept and use precomputed scheduling information
+ * with deterministic performance once the schedule is fully configured.
+ * It also provides efficient and flexible lookup and computation
+ * during schedule configuration, so that it can be used during
+ * both schedule configuration and run-time phases of operation.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_Reconfig_Scheduler :
   public POA_RtecScheduler::Scheduler
-  // = TITLE
-  //   A servant for RtecScheduler::Scheduler that can be initialized
-  //   and run solely with precomputed scheduling information, but is also
-  //   designed to perform efficient recomputation of scheduling info
-  //   in the face of run-time changes to RT_Infos in the schedule.
-  //
-  // = DESCRIPTION
-  //   This class implements the TAO scheduling service.  It has
-  //   the ability to accept and use precomputed scheduling information
-  //   with deterministic performance once the schedule is fully configured.
-  //   It also provides efficient and flexible lookup and computation
-  //   during schedule configuration, so that it can be used during
-  //   both schedule configuration and run-time phases of operation.
-  //
 {
 public:
   /// Type of map used for O(1) lookup of RT_Infos by their handles.

@@ -30,14 +30,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * A wrapper class for the IDL-generated RT_Info operation descriptors.
+ *
+ * This class provides (re)initialization methods and a validity flag
+ * for the underlying IDL-generated RT_Info descriptor.
+ */
+
 struct TAO_RTSched_Export TAO_RT_Info_Ex
   : public RtecScheduler::RT_Info
-  // = TITLE
-  //   A wrapper class for the IDL-generated RT_Info operation descriptors.
-  //
-  // = DESCRIPTION
-  //   This class provides (re)initialization methods and a validity flag
-  //   for the underlying IDL-generated RT_Info descriptor.
 {
   TAO_RT_Info_Ex ();
 
@@ -62,17 +63,18 @@ struct TAO_RTSched_Export TAO_RT_Info_Ex
 };
 
 
+/**
+ * An implementation class used to wrap available operation descriptors.
+ * Each operation may have one or more tuples describing different rates,
+ * etc., for the same operation.
+ *
+ * This class enables admission control within the Reconfig Scheduler,
+ * which offers improved performance compared to admission control
+ * outside the scheduler.
+ */
+
 struct TAO_RTSched_Export TAO_RT_Info_Tuple
   : public TAO_RT_Info_Ex
-  // = TITLE
-  //   An implementation class used to wrap available operation descriptors.
-  //   Each operation may have one or more tuples describing different rates,
-  //   etc., for the same operation.
-  //
-  // = DESCRIPTION
-  //   This class enables admission control within the Reconfig Scheduler,
-  //   which offers improved performance compared to admission control
-  //   outside the scheduler.
 {
   TAO_RT_Info_Tuple () = default;
 
@@ -406,14 +408,15 @@ public:
 };
 
 
+/**
+ * A scheduler entry visitor that resets nodes.
+ *
+ * This class resets each node it visits to an initial state
+ * prior to the first DFS traversal for topological sorting.
+ */
+
 class TAO_RTSched_Export TAO_RSE_Reset_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor
-  // = TITLE
-  //   A scheduler entry visitor that resets nodes.
-  //
-  // = DESCRIPTION
-  //   This class resets each node it visits to an initial state
-  //   prior to the first DFS traversal for topological sorting.
 {
 public:
   TAO_RSE_Reset_Visitor () = default;
@@ -479,21 +482,22 @@ public:
                                   TAO_Reconfig_Scheduler_Entry &);
 };
 
+/**
+ * A scheduling strategy that implements the Maximum Urgency First
+ * scheduling algorithm with Fair Admission of Indexed Rates
+ * (FAIR).
+ *
+ * The strategy assigns static thread and global priority according
+ * to operation criticality, assigns static subpriority according to
+ * importance and then topological order, and assigns a dispatching
+ * configuration with a minimum laxity dispatching queue for each
+ * distinct criticality level.  It admits operation tuples in order
+ * of ascending rate index, where the lowest rate for an operation
+ * has index 0, the next higher rate has index 1, etc.
+ */
+
 class TAO_RTSched_Export TAO_MUF_FAIR_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Maximum Urgency First
-  //   scheduling algorithm with Fair Admission of Indexed Rates
-  //   (FAIR).
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority according
-  //   to operation criticality, assigns static subpriority according to
-  //   importance and then topological order, and assigns a dispatching
-  //   configuration with a minimum laxity dispatching queue for each
-  //   distinct criticality level.  It admits operation tuples in order
-  //   of ascending rate index, where the lowest rate for an operation
-  //   has index 0, the next higher rate has index 1, etc.
 {
 public:
   /**
@@ -533,23 +537,24 @@ public:
                             TAO_Reconfig_Scheduler_Entry &);
 };
 
+/**
+ * A scheduling strategy that implements the Boeing RMS-Dynamic
+ * scheduling algorithm, and the Honeywell MNO admission control
+ * algorithm.
+ *
+ * The strategy assigns static thread and global priority
+ * according to criticality and rate, assigns static subpriority
+ * according to importance and then topological order, and assigns
+ * a dispatching configuration with a static dispatching queue for
+ * each high criticality rate, and a single minimum laxity
+ * dispatching queue for all low criticality operations.  It
+ * admits the lowest rate-index tuple for each operation, then
+ * admits operations at their highest admissible rates in priority
+ * order.
+ */
+
 class TAO_RTSched_Export TAO_RMS_FAIR_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Boeing RMS-Dynamic
-  //   scheduling algorithm, and the Honeywell MNO admission control
-  //   algorithm.
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority
-  //   according to criticality and rate, assigns static subpriority
-  //   according to importance and then topological order, and assigns
-  //   a dispatching configuration with a static dispatching queue for
-  //   each high criticality rate, and a single minimum laxity
-  //   dispatching queue for all low criticality operations.  It
-  //   admits the lowest rate-index tuple for each operation, then
-  //   admits operations at their highest admissible rates in priority
-  //   order.
 {
 public:
   /**
@@ -604,23 +609,24 @@ public:
                             TAO_Reconfig_Scheduler_Entry &);
 };
 
+/**
+ * A scheduling strategy that implements the Boeing RMS-Dynamic
+ * scheduling algorithm, and the Honeywell MNO admission control
+ * algorithm.
+ *
+ * The strategy assigns static thread and global priority
+ * according to criticality and rate, assigns static subpriority
+ * according to importance and then topological order, and assigns
+ * a dispatching configuration with a static dispatching queue for
+ * each high criticality rate, and a single minimum laxity
+ * dispatching queue for all low criticality operations.  It
+ * admits the lowest rate-index tuple for each operation, then
+ * admits operations at their highest admissible rates in priority
+ * order.
+ */
+
 class TAO_RTSched_Export TAO_RMS_MLF_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Boeing RMS-Dynamic
-  //   scheduling algorithm, and the Honeywell MNO admission control
-  //   algorithm.
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority
-  //   according to criticality and rate, assigns static subpriority
-  //   according to importance and then topological order, and assigns
-  //   a dispatching configuration with a static dispatching queue for
-  //   each high criticality rate, and a single minimum laxity
-  //   dispatching queue for all low criticality operations.  It
-  //   admits the lowest rate-index tuple for each operation, then
-  //   admits operations at their highest admissible rates in priority
-  //   order.
 {
 public:
   /**
