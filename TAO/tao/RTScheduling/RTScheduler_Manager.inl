@@ -195,7 +195,7 @@ TAO_RTScheduler_Manager_out::operator-> ()
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (TAO_ORB_Core* orb)
+TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (TAO_ORB_Core *orb)
   : orb_ (orb)
 {
 }

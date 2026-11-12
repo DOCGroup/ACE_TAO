@@ -31,7 +31,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
 public:
   TAO_RTScheduler_Manager () = default;
 
-  TAO_RTScheduler_Manager (TAO_ORB_Core* orb);
+  explicit TAO_RTScheduler_Manager (TAO_ORB_Core *orb);
 
   TAO_RTScheduler_Manager (TAO_RTScheduler_Manager const &) = delete;
   TAO_RTScheduler_Manager &operator= (TAO_RTScheduler_Manager const &) = delete;
