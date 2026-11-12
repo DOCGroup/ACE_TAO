@@ -91,6 +91,11 @@ public:
 
   virtual ~ACE_Scheduler () = default;
 
+  ACE_Scheduler (ACE_Scheduler const &) = delete;
+  ACE_Scheduler (ACE_Scheduler &&) = delete;
+  ACE_Scheduler &operator= (ACE_Scheduler const &) = delete;
+  ACE_Scheduler &operator= (ACE_Scheduler &&) = delete;
+
   // = Utility function for outputting the textual representation of a
   //   status_t value to a FILE.
   static void output (FILE *, status_t);
@@ -287,11 +292,6 @@ private:
   status_t status_ {NOT_SCHEDULED};
   u_int output_level_ {};
 
-  // the following functions are not implememented
-  ACE_Scheduler (ACE_Scheduler const &) = delete;
-  ACE_Scheduler (ACE_Scheduler &&) = delete;
-  ACE_Scheduler &operator= (ACE_Scheduler const &) = delete;
-  ACE_Scheduler &operator= (ACE_Scheduler &&) = delete;
 };
 
 using Scheduler = ACE_Scheduler;

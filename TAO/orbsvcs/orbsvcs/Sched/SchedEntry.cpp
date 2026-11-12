@@ -136,7 +136,7 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
        ! iter.done ();
        iter.advance ())
     {
-      Task_Entry_Link **link;
+      Task_Entry_Link **link {};
       if (iter.next (link) == 0 || link == nullptr || *link == nullptr ||
           (*link)->dependency_type () == dt)
         return -1;
@@ -341,7 +341,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       // The link matches the dependency type given.
       if ((*link)->dependency_type () == dt)
         {
-          Dispatch_Proxy_Iterator *proxy_ptr;
+          Dispatch_Proxy_Iterator *proxy_ptr {};
           ACE_NEW_RETURN (proxy_ptr,
                           Dispatch_Proxy_Iterator ((*link)->caller ().dispatches_,
                                                    (*link)->caller ().effective_period_,
@@ -393,7 +393,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           // conjunctive merge strategy class.
 
           // Obtain a pointer to the current dispatch proxy iterator.
-          Dispatch_Proxy_Iterator **proxy_iter;
+          Dispatch_Proxy_Iterator **proxy_iter {};
           if (conj_set_iter.next (proxy_iter) == 0
               || proxy_iter == nullptr
               || *proxy_iter == nullptr)
@@ -416,7 +416,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             more_dispatches = false;
         }
 
-      Dispatch_Entry *entry_ptr;
+      Dispatch_Entry *entry_ptr {};
       ACE_NEW_RETURN (entry_ptr,
                       Dispatch_Entry (arrival,
                                       deadline,
@@ -485,7 +485,7 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
 
       for (set_iter.first (); set_iter.done () == 0; set_iter.advance ())
         {
-          Dispatch_Entry_Link *link;
+          Dispatch_Entry_Link *link {};
 
           if (set_iter.next (link) == 0)
             return -1;
@@ -562,7 +562,7 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
       // should be one of the decisions factored out into the
       // disjunctive merge strategy class.
 
-      Dispatch_Entry *entry_ptr;
+      Dispatch_Entry *entry_ptr {};
       ACE_NEW_RETURN (entry_ptr,
                       Dispatch_Entry (src_iter.arrival (),
                                       src_iter.deadline (),
@@ -826,7 +826,7 @@ Dispatch_Proxy_Iterator::retreat ()
 RtecScheduler::Time
 Dispatch_Proxy_Iterator::arrival () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
@@ -843,7 +843,7 @@ Dispatch_Proxy_Iterator::arrival () const
 RtecScheduler::Time
 Dispatch_Proxy_Iterator::deadline () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
@@ -860,7 +860,7 @@ Dispatch_Proxy_Iterator::deadline () const
 Dispatch_Proxy_Iterator::Preemption_Priority
 Dispatch_Proxy_Iterator::priority () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
 
   if (iter_.done ()
       || iter_.next(link) == 0
@@ -875,7 +875,7 @@ Dispatch_Proxy_Iterator::priority () const
 Dispatch_Proxy_Iterator::OS_Priority
 Dispatch_Proxy_Iterator::OS_priority () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)

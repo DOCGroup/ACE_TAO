@@ -220,7 +220,7 @@ void
 TAO_Reconfig_Scheduler_Entry::
 remove_tuples (u_long tuple_flags)
 {
-  TAO_RT_Info_Tuple **tuple_ptr_ptr;
+  TAO_RT_Info_Tuple **tuple_ptr_ptr {};
 
   if (tuple_flags & ORIGINAL)
     {
@@ -271,7 +271,7 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
   // Recompute rate indices.
 
   tuple.rate_index = 0;
-  TAO_RT_Info_Tuple **tuple_ptr_ptr;
+  TAO_RT_Info_Tuple **tuple_ptr_ptr {};
 
   TUPLE_SET_ITERATOR tuple_iter (*set_ptr);
 
@@ -337,7 +337,7 @@ update_tuple (TAO_RT_Info_Ex &info,
 
   // Find and update the first matching tuple, if any.
 
-  TAO_RT_Info_Tuple **tuple_ptr_ptr;
+  TAO_RT_Info_Tuple **tuple_ptr_ptr {};
   TUPLE_SET_ITERATOR tuple_iter (*set_ptr);
 
   while (tuple_iter.done () == 0)
@@ -378,7 +378,7 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
 {
   // Iterate over the tuples, adding them to the pointer array.
 
-  TAO_RT_Info_Tuple **tuple_ptr_ptr;
+  TAO_RT_Info_Tuple **tuple_ptr_ptr {};
   TUPLE_SET_ITERATOR tuple_iter (orig_tuple_subset_);
 
   while (tuple_iter.done () == 0)

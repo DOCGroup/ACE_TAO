@@ -671,7 +671,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       return 1;
     }
 
-  TAO_RT_Info_Tuple **tuple_ptr_ptr;
+  TAO_RT_Info_Tuple **tuple_ptr_ptr {};
 
   TUPLE_SET_ITERATOR orig_tuple_iter (entry.orig_tuple_subset ());
 

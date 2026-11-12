@@ -220,7 +220,7 @@ ACE_Scheduler::dispatch_configuration (Preemption_Priority const &p_priority,
                                        Dispatching_Type & d_type)
 {
   // look up the stored configuration info for the given priority level
-  Config_Info *config_info;
+  Config_Info *config_info {};
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,

@@ -183,7 +183,7 @@ ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
 ACE_DynScheduler::Scheduling_Anomaly *
 ACE_DynScheduler::create_anomaly (ACE_DynScheduler::status_t status)
 {
-  ACE_DynScheduler::Scheduling_Anomaly * anomaly;
+  ACE_DynScheduler::Scheduling_Anomaly * anomaly {};
   ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, nullptr);
 
   anomaly->severity = anomaly_severity (status);
@@ -473,7 +473,7 @@ ACE_DynScheduler::dispatch_configuration (Preemption_Priority const & p_priority
                                           Dispatching_Type & d_type)
 {
   // look up the stored configuration info for the given priority level
-  Config_Info *config_info;
+  Config_Info *config_info {};
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -530,7 +530,7 @@ ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
     return ST_UNKNOWN_PRIORITY;
   }
 
-  Config_Info** entry;
+  Config_Info** entry {};
   ACE_Unbounded_Set_Iterator <Config_Info *> i (*config_info_entries_);
   while (i.next (entry) != 0)
     {
@@ -1472,7 +1472,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
         const TimeBase::TimeT zero {};
         for (u_int j {}; j < thread_count; ++j)
         {
-          Dispatch_Entry *dispatch_ptr;
+          Dispatch_Entry *dispatch_ptr {};
           const TimeBase::TimeT effective_period =
             task_entries_ [i].effective_period ();
           ACE_NEW_RETURN(dispatch_ptr,
@@ -1647,7 +1647,7 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*thread_delineators_);
   for (u_int i {}; i < threads_; ++i, iter.advance ())
   {
-    Dispatch_Entry** dispatch_entry;
+    Dispatch_Entry** dispatch_entry {};
 
     if (! iter.next (dispatch_entry))
     {
@@ -1685,7 +1685,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
   for (u_int i {}; i < dispatch_entry_count_; ++i, iter.advance ())
   {
-    Dispatch_Entry** dispatch_entry;
+    Dispatch_Entry** dispatch_entry {};
 
     if (! iter.next (dispatch_entry))
     {
@@ -1782,7 +1782,7 @@ ACE_DynScheduler::create_timeline ()
     }
 
     // iterate through the set of dispatch entries that need to be rescheduled
-    Dispatch_Entry *rescheduled_entry;
+    Dispatch_Entry *rescheduled_entry {};
     while (!reschedule_queue.empty ())
     {
       rescheduled_entry = reschedule_queue.front ();
@@ -1808,7 +1808,7 @@ ACE_DynScheduler::create_timeline ()
          current_frame_offset < frame_size_;
                         current_frame_offset += task_period)
     {
-      Dispatch_Entry *new_dispatch_entry;
+      Dispatch_Entry *new_dispatch_entry {};
 
       // create a new dispatch entry at the current sub-frame offset
       // Just use low 32 bits of arrival and deadline.  This will

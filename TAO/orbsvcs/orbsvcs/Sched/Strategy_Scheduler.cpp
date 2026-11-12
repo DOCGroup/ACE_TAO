@@ -74,7 +74,7 @@ ACE_Strategy_Scheduler::assign_priorities (
   dispatches[0]->priority (current_scheduler_priority);
 
   // Store the dispatch configuration for the highest priority level.
-  Config_Info *config_ptr;
+  Config_Info *config_ptr {};
   ACE_NEW_RETURN (config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
   config_ptr->preemption_priority = current_scheduler_priority;
   config_ptr->thread_priority = current_OS_priority;

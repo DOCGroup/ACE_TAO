@@ -71,6 +71,11 @@ public:
                 Preemption_Priority &preemption_prio,
                 mode_t = CURRENT_MODE) const override;
 
+  Scheduler_Generic (Scheduler_Generic const &) = delete;
+  Scheduler_Generic (Scheduler_Generic &&) = delete;
+  Scheduler_Generic &operator= (Scheduler_Generic const &) = delete;
+  Scheduler_Generic &operator= (Scheduler_Generic &&) = delete;
+
 private:
   /// The number of task handles dispensed so far.
   u_int handles_ {};
@@ -126,10 +131,6 @@ private:
   /// Display the schedule, task-by-task.
   void print_schedule ();
 
-  Scheduler_Generic (Scheduler_Generic const &) = delete;
-  Scheduler_Generic (Scheduler_Generic &&) = delete;
-  Scheduler_Generic &operator= (Scheduler_Generic const &) = delete;
-  Scheduler_Generic &operator= (Scheduler_Generic &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

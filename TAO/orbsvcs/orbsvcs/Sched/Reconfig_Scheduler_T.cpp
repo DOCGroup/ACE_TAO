@@ -199,7 +199,7 @@ init (int config_count,
   std::unique_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
   for (i = 0; i < config_count; ++i)
     {
-      RtecScheduler::Config_Info* new_config_info;
+      RtecScheduler::Config_Info* new_config_info {};
       ACE_NEW_THROW_EX (new_config_info,
                         RtecScheduler::Config_Info,
                         CORBA::NO_MEMORY ());
@@ -246,7 +246,7 @@ init (int config_count,
     }
 
   // Add RT_Infos to scheduler
-  TAO_RT_Info_Ex* new_rt_info;
+  TAO_RT_Info_Ex* new_rt_info {};
   for (int num_rt_infos {}; num_rt_infos < rt_info_count; ++num_rt_infos)
     {
       new_rt_info = create_i (rt_info [num_rt_infos].entry_point,
@@ -482,7 +482,7 @@ get (RtecScheduler::handle_t handle)
     }
 
   // Allocate a new RT_Info
-  RtecScheduler::RT_Info* new_info;
+  RtecScheduler::RT_Info* new_info {};
   ACE_NEW_THROW_EX (new_info,
                     RtecScheduler::RT_Info,
                     CORBA::NO_MEMORY ());

@@ -109,8 +109,13 @@ public:
   // public member functions //
   /////////////////////////////
 
-    /// public dtor
+  /// public dtor
   virtual ~ACE_DynScheduler ();
+
+  ACE_DynScheduler (ACE_DynScheduler const &) = delete;
+  ACE_DynScheduler (ACE_DynScheduler &&) = delete;
+  ACE_DynScheduler &operator= (ACE_DynScheduler const &) = delete;
+  ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
   // = Utility function for outputting the textual
   //   representation of a status_t value.
@@ -461,12 +466,6 @@ private:
 
   /// calculate utilization, frame size, etc.
   status_t calculate_utilization_params ();
-
-  // the following functions are not implememented
-  ACE_DynScheduler (ACE_DynScheduler const &) = delete;
-  ACE_DynScheduler (ACE_DynScheduler &&) = delete;
-  ACE_DynScheduler &operator= (ACE_DynScheduler const &) = delete;
-  ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
   //////////////////////////
   // private data members //

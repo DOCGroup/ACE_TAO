@@ -41,6 +41,11 @@ public:
 
   ~ACE_Strategy_Scheduler () override = default;
 
+  ACE_Strategy_Scheduler (ACE_Strategy_Scheduler const &) = delete;
+  ACE_Strategy_Scheduler (ACE_Strategy_Scheduler &&) = delete;
+  ACE_Strategy_Scheduler &operator= (ACE_Strategy_Scheduler const &) = delete;
+  ACE_Strategy_Scheduler &operator= (ACE_Strategy_Scheduler &&) = delete;
+
     /// = Assigns priorities to the sorted dispatch schedule,
     ///   according to the strategy's priority comparison operator.
   status_t assign_priorities (
@@ -67,10 +72,6 @@ private:
     /// = Strategy for comparing and sorting dispatch entries.
   ACE_Scheduler_Strategy &strategy_;
 
-  ACE_Strategy_Scheduler (ACE_Strategy_Scheduler const &) = delete;
-  ACE_Strategy_Scheduler (ACE_Strategy_Scheduler &&) = delete;
-  ACE_Strategy_Scheduler &operator= (ACE_Strategy_Scheduler const &) = delete;
-  ACE_Strategy_Scheduler &operator= (ACE_Strategy_Scheduler &&) = delete;
 };
 
 
@@ -196,6 +197,11 @@ public:
 
   ~ACE_MUF_Scheduler_Strategy () override = default;
 
+  ACE_MUF_Scheduler_Strategy (ACE_MUF_Scheduler_Strategy const &) = delete;
+  ACE_MUF_Scheduler_Strategy (ACE_MUF_Scheduler_Strategy &&) = delete;
+  ACE_MUF_Scheduler_Strategy &operator= (ACE_MUF_Scheduler_Strategy const &) = delete;
+  ACE_MUF_Scheduler_Strategy &operator= (ACE_MUF_Scheduler_Strategy &&) = delete;
+
     /// = Returns an instance of the strategy.
   static ACE_MUF_Scheduler_Strategy *instance ();
 
@@ -238,11 +244,6 @@ protected:
                                 Dispatch_Entry const &second_entry) override;
 
 private:
-  ACE_MUF_Scheduler_Strategy (ACE_MUF_Scheduler_Strategy const &) = delete;
-  ACE_MUF_Scheduler_Strategy (ACE_MUF_Scheduler_Strategy &&) = delete;
-  ACE_MUF_Scheduler_Strategy &operator= (ACE_MUF_Scheduler_Strategy const &) = delete;
-  ACE_MUF_Scheduler_Strategy &operator= (ACE_MUF_Scheduler_Strategy &&) = delete;
-
     // = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void const *arg1, void const *arg2);
 
@@ -266,6 +267,11 @@ public:
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
   ~ACE_RMS_Scheduler_Strategy () override = default;
+
+  ACE_RMS_Scheduler_Strategy (ACE_RMS_Scheduler_Strategy const &) = delete;
+  ACE_RMS_Scheduler_Strategy (ACE_RMS_Scheduler_Strategy &&) = delete;
+  ACE_RMS_Scheduler_Strategy &operator= (ACE_RMS_Scheduler_Strategy const &) = delete;
+  ACE_RMS_Scheduler_Strategy &operator= (ACE_RMS_Scheduler_Strategy &&) = delete;
 
     /// Returns an instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance ();
@@ -301,11 +307,6 @@ protected:
                                 Dispatch_Entry const &second_entry) override;
 
 private:
-  ACE_RMS_Scheduler_Strategy (ACE_RMS_Scheduler_Strategy const &) = delete;
-  ACE_RMS_Scheduler_Strategy (ACE_RMS_Scheduler_Strategy &&) = delete;
-  ACE_RMS_Scheduler_Strategy &operator= (ACE_RMS_Scheduler_Strategy const &) = delete;
-  ACE_RMS_Scheduler_Strategy &operator= (ACE_RMS_Scheduler_Strategy &&) = delete;
-
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void const *arg1, void const *arg2);
 
@@ -329,6 +330,11 @@ public:
     ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
   ~ACE_MLF_Scheduler_Strategy () override = default;
+
+  ACE_MLF_Scheduler_Strategy (ACE_MLF_Scheduler_Strategy const &) = delete;
+  ACE_MLF_Scheduler_Strategy (ACE_MLF_Scheduler_Strategy &&) = delete;
+  ACE_MLF_Scheduler_Strategy &operator= (ACE_MLF_Scheduler_Strategy const &) = delete;
+  ACE_MLF_Scheduler_Strategy &operator= (ACE_MLF_Scheduler_Strategy &&) = delete;
 
     /// = Returns an instance of the strategy.
   static ACE_MLF_Scheduler_Strategy *instance ();
@@ -365,11 +371,6 @@ protected:
                                 Dispatch_Entry const &second_entry) override;
 
 private:
-  ACE_MLF_Scheduler_Strategy (ACE_MLF_Scheduler_Strategy const &) = delete;
-  ACE_MLF_Scheduler_Strategy (ACE_MLF_Scheduler_Strategy &&) = delete;
-  ACE_MLF_Scheduler_Strategy &operator= (ACE_MLF_Scheduler_Strategy const &) = delete;
-  ACE_MLF_Scheduler_Strategy &operator= (ACE_MLF_Scheduler_Strategy &&) = delete;
-
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void const *arg1, void const *arg2);
 
