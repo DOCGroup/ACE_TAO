@@ -71,7 +71,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
           return;
         }
 
-      TAO::ConnectionTimeoutPolicy_var p =
+      TAO::ConnectionTimeoutPolicy_var const p =
         TAO::ConnectionTimeoutPolicy::_narrow (policy.in ());
 
       TimeBase::TimeT const t = p->relative_expiry ();

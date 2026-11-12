@@ -37,10 +37,10 @@ namespace TAO
 
     try
       {
-        CORBA::Policy_var bcp_policy =
+        CORBA::Policy_var const bcp_policy =
           stub->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
 
-        TAO::BufferingConstraintPolicy_var bcpv =
+        TAO::BufferingConstraintPolicy_var const bcpv =
           TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ());
 
         TAO_Buffering_Constraint_Policy * const bcp =

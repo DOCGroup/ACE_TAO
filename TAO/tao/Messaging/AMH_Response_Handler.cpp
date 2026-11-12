@@ -41,7 +41,7 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
   // up, release the transport and return.
   try
     {
-      CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
+      CORBA::NO_RESPONSE const ex (CORBA::SystemException::_tao_minor_code
                              (TAO_AMH_REPLY_LOCATION_CODE,
                               EFAULT),
                              CORBA::COMPLETED_NO);
@@ -130,7 +130,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply ()
   }
 
   // Send the message.
-  int result = this->transport_->send_message (this->_tao_out,
+  int const result = this->transport_->send_message (this->_tao_out,
                                                nullptr,
                                                nullptr,
                                                TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));

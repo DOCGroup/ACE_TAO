@@ -58,13 +58,13 @@ public:
   /// Cancel this timer, remove it from the reactor
   virtual void cancel ();
 
-  /// The transport mux strategy dispatching the reply
+  /// Borrowed while the timeout is scheduled.
   TAO_Transport_Mux_Strategy *tms_ {};
 
   /// Remember the ID of the request.
   CORBA::ULong request_id_ {};
 
-  /// Our reactor
+  /// Non-owning reactor pointer; the reactor outlives this handler.
   ACE_Reactor *reactor_;
 };
 

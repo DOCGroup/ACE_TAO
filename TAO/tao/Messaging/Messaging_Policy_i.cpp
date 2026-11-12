@@ -74,7 +74,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
           return;
         }
 
-      Messaging::RelativeRoundtripTimeoutPolicy_var p =
+      Messaging::RelativeRoundtripTimeoutPolicy_var const p =
         Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ());
 
       TimeBase::TimeT const t = p->relative_expiry ();
@@ -233,7 +233,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
           scope = orb_core->default_sync_scope ();
           return;
         }
-      Messaging::SyncScopePolicy_var p =
+      Messaging::SyncScopePolicy_var const p =
         Messaging::SyncScopePolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (p.in ()))

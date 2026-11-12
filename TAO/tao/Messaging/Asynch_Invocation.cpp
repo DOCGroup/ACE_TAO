@@ -67,7 +67,7 @@ namespace TAO
           this->resolver_.transport ()->out_stream ();
 
         {
-          CDR_Byte_Order_Guard cdr_guard (cdr, this->_tao_byte_order ());
+          CDR_Byte_Order_Guard const cdr_guard (cdr, this->_tao_byte_order ());
 
           // Oneway semantics.  See comments for below send_message()
           // call.
