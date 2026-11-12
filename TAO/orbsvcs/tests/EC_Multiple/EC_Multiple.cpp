@@ -1286,7 +1286,6 @@ Test_Supplier::activate (char const* name,
                             timeout,
                             rt_info);
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
@@ -1416,7 +1415,6 @@ Test_Consumer::open (char const* name,
   qos.insert_type (event_a, rt_info);
   qos.insert_type (event_b, rt_info);
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
