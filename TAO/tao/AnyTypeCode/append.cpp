@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     append.cpp
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.  and Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Marshal.h"

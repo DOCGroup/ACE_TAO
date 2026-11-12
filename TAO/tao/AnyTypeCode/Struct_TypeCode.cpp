@@ -9,7 +9,6 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Struct_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Basic_Impl_T.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_BASIC_IMPL_T_H
 #define TAO_ANY_BASIC_IMPL_T_H

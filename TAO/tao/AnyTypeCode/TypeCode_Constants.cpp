@@ -34,12 +34,8 @@ namespace TAO
     Empty_Param tc_TypeCode   (CORBA::tk_TypeCode);
     Empty_Param tc_Principal  (CORBA::tk_Principal);
 
-    // --------------
-
     String<TAO::Null_RefCount_Policy> tc_string  (CORBA::tk_string, 0);
     String<TAO::Null_RefCount_Policy> tc_wstring (CORBA::tk_wstring, 0);
-
-    // --------------
 
     char const tc_object_id[]   = "IDL:omg.org/CORBA/Object:1.0";
     char const tc_object_name[] = "Object";
@@ -64,10 +60,7 @@ namespace TAO
   }  // End TypeCode namespace
 }  // End TAO namespace
 
-// ------------------------------------------------------------------
 // OMG defined TypeCode constants
-// ------------------------------------------------------------------
-
 namespace CORBA
 {
   // Notice that these are constant TypeCode references/pointers, not

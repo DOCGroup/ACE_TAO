@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_Traits.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_TRAITS_H
 #define TAO_TYPECODE_TRAITS_H
@@ -85,8 +83,6 @@ namespace TAO
         return tc.in ();
       }
     };
-
-    // ---------------
 
     // Traits based on TypeCode type template parameters.
 

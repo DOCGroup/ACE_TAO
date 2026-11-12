@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Objref_TypeCode_Static.h
  *
@@ -15,7 +14,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJREF_TYPECODE_STATIC_H
 #define TAO_OBJREF_TYPECODE_STATIC_H
@@ -30,7 +28,6 @@
 
 #include "tao/AnyTypeCode/TypeCode_Base_Attributes.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

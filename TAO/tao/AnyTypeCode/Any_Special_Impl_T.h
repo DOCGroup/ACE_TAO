@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Special_Impl_T.h
  *
  *  @author  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_SPECIAL_IMPL_T_H
 #define TAO_ANY_SPECIAL_IMPL_T_H

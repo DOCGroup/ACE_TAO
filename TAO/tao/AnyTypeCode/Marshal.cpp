@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Marshal.cpp
  *
@@ -10,7 +9,6 @@
  *  @author Aniruddha S. Gokhale
  *  @author Copyright 1994-1995 by Sun Microsystems Inc.
  */
-//=============================================================================
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/TypeCode.h"

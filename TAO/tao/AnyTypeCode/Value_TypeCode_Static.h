@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Value_TypeCode_Static.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_VALUE_TYPECODE_STATIC_H
 #define TAO_VALUE_TYPECODE_STATIC_H

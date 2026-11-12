@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    String_TypeCode_Static.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_STRING_TYPECODE_STATIC_H
 #define TAO_STRING_TYPECODE_STATIC_H
@@ -88,7 +86,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/String_TypeCode_Static.inl"

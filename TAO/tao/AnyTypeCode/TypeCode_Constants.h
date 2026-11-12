@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   TypeCode_Constants.h
  *
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_CONSTANTS_H
 #define TAO_TYPECODE_CONSTANTS_H
@@ -105,7 +103,7 @@ namespace CORBA
   TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED); \
   TAO_SYSTEM_EXCEPTION(THREAD_CANCELLED);
 
-  // = Typecode constants for system exceptions.
+  /// TypeCode constants for system exceptions.
 #define TAO_SYSTEM_EXCEPTION(name) \
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ ## name
   TAO_SYSTEM_EXCEPTION_LIST

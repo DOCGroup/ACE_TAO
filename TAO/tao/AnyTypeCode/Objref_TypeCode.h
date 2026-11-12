@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Objref_TypeCode.h
  *
@@ -15,7 +14,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJREF_TYPECODE_H
 #define TAO_OBJREF_TYPECODE_H

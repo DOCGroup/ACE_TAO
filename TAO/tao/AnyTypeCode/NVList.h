@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    NVList.h
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Aniruddha Gokhale <gokhale@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
@@ -36,7 +34,7 @@ namespace CORBA
 {
   enum
   {
-    // = Flags for NVList add methods
+    /// Flags for NVList add methods.
     ARG_IN                  = 0x01,
     ARG_OUT                 = 0x02,
     ARG_INOUT               = 0x04,
@@ -44,11 +42,11 @@ namespace CORBA
     OUT_LIST_MEMORY         = 0x10,
     DEPENDENT_LIST          = 0x20,
 
-    // = (Unused) flags for Context methods
+    /// Unused flags for Context methods.
     CTX_RESTRICT_SCOPE      = 0x40,
     CTX_DELETE_DESCENDENTS  = 0x80,
 
-    // = Flags for deferred synchronous methods
+    /// Flags for deferred synchronous methods.
     INV_NO_RESPONSE         = 0x100,
     INV_TERM_ON_ERR         = 0x200,
     RESP_NO_WAIT            = 0x400
@@ -97,7 +95,6 @@ namespace CORBA
     NamedValue &operator= (NamedValue const &) = delete;
     NamedValue &operator= (NamedValue &&) = delete;
 
-    // = Reference counting.
     ULong _incr_refcount ();
     ULong _decr_refcount ();
 
@@ -131,8 +128,6 @@ namespace CORBA
     /// optional IDL name of the parameter
     char *name_ {};
   };
-
-  // ****************************************************************
 
   using NVList_var = TAO_Pseudo_Var_T<NVList>;
   using NVList_out = TAO_Pseudo_Out_T<NVList>;
@@ -190,7 +185,6 @@ namespace CORBA
     static NVList * _duplicate (NVList *);
     static NVList * _nil ();
 
-    // = Reference counting.
     ULong _incr_refcount ();
     ULong _decr_refcount ();
 
@@ -199,7 +193,7 @@ namespace CORBA
     NVList &operator= (NVList const &) = delete;
     NVList &operator= (NVList &&) = delete;
 
-    // = TAO Extensions:
+    /// TAO extensions.
 
     /**
      * Set the incoming CDR stream, this is used by TAO to perform lazy

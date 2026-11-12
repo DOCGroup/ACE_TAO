@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     skip.cpp
  *
@@ -9,8 +8,6 @@
  *
  *  @author  Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/TypeCode.h"

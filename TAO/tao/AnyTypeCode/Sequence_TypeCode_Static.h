@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Sequence_TypeCode_Static.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SEQUENCE_TYPECODE_STATIC_H
 #define TAO_SEQUENCE_TYPECODE_STATIC_H

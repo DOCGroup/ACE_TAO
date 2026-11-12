@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Unknown_IDL_Type.h
  *
  *  @author Carlos O'Ryan
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_ANY_UNKNOWN_IDL_TYPE_H
 #define TAO_ANY_UNKNOWN_IDL_TYPE_H

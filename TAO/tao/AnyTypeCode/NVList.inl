@@ -41,8 +41,6 @@ CORBA::NamedValue::_nil ()
   return nullptr;
 }
 
-// *************************************************************
-
 ACE_INLINE
 CORBA::ULong
 CORBA::NVList::count () const

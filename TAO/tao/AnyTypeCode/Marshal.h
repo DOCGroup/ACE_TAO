@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Marshal.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Aniruddha S. Gokhale
  */
-//=============================================================================
-
 
 #ifndef TAO_MARSHAL_H
 #define TAO_MARSHAL_H
@@ -35,7 +32,6 @@ namespace CORBA
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-// = Forward declarations.
 class TAO_Marshal_Object;
 class TAO_Marshal_Primitive;
 class TAO_Marshal_Any;

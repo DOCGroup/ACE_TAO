@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Union_TypeCode_Static.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_UNION_TYPECODE_STATIC_H
 #define TAO_UNION_TYPECODE_STATIC_H

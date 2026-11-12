@@ -195,7 +195,6 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::
   (*any) <<= value;
 }
 
-
 void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::BooleanSeq const & value)
 {

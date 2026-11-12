@@ -11,8 +11,6 @@ CORBA::release<> (CORBA::TypeCode_ptr obj)
     }
 }
 
-// --------------------------------------------------------------
-
 ACE_INLINE
 CORBA::TypeCode::TypeCode (CORBA::TCKind k)
   : kind_ (k)

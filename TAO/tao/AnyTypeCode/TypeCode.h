@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode.h
  *
@@ -10,7 +9,6 @@
  *  @author DOC group at Vanderbilt University, Washington University
  *          and the University of California at Irvine.
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
@@ -479,7 +477,6 @@ namespace CORBA
   };
 }  // End namespace CORBA
 
-
 TAO_AnyTypeCode_Export CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
 
@@ -525,8 +522,6 @@ namespace TAO
    */
   TAO_AnyTypeCode_Export
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc);
-
-  // ---------------------------------------------------------------
 
   // Used in generated code if CORBA::TypeCode is an argument or
   // return type.

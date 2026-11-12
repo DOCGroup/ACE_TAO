@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_SystemException.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
 #ifndef TAO_ANY_SYSTEMEXCEPTION_H
 #define TAO_ANY_SYSTEMEXCEPTION_H
 

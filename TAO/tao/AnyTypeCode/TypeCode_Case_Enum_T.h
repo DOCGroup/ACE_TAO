@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_Case_Enum_T.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_CASE_ENUM_T_H
 #define TAO_TYPECODE_CASE_ENUM_T_H
@@ -86,7 +84,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Enum_T.inl"

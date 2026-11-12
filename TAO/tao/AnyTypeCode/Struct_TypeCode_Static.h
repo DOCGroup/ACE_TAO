@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Struct_TypeCode_Static.h
  *
@@ -10,7 +9,6 @@
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_STRUCT_TYPECODE_STATIC_H
 #define TAO_STRUCT_TYPECODE_STATIC_H

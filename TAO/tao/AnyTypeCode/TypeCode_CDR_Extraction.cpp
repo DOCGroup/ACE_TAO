@@ -117,19 +117,13 @@ namespace
     }
   };
 
-  // ---------------------------------------------------------
-
   CORBA::ULong const TYPECODE_INDIRECTION = 0xffffffffU;
-
-  // ---------------------------------------------------------
 
   // Use an ACE::Value_Ptr to provide exception safety and proper
   // copying semantics.
   using union_elem_type = ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
                                                               CORBA::TypeCode_var> >;
   using union_case_array_type = std::vector<union_elem_type>;
-
-  // ------------------------------------------------------------
 
   /// Demarshal a TypeCode.
   bool tc_demarshal (
@@ -1276,8 +1270,6 @@ TAO::TypeCodeFactory::tc_event_factory (CORBA::TCKind kind,
   return tc_value_factory (kind, cdr, tc, indirect_infos, direct_infos);
 }
 
-// ---------------------------------------------------------------
-
 namespace
 {
   bool
@@ -1491,8 +1483,6 @@ namespace
     return true;
   }
 }
-
-// ----------------------------------------------------------------
 
 CORBA::Boolean
 operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)

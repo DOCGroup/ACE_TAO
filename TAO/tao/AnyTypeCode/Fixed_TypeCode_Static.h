@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Fixed_TypeCode_Static.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_FIXED_TYPECODE_STATIC_H
 #define TAO_FIXED_TYPECODE_STATIC_H

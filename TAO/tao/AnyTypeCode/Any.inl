@@ -7,10 +7,7 @@ CORBA::Any::impl () const
   return this->impl_;
 }
 
-// *************************************************************
 // Inline operations for class CORBA::Any_var
-// *************************************************************
-
 ACE_INLINE
 CORBA::Any_var::Any_var () = default;
 
@@ -78,10 +75,7 @@ CORBA::Any_var::ptr () const
   return this->ptr_;
 }
 
-// *************************************************************
 // CORBA::Any_var insertion operators
-// *************************************************************
-
 namespace CORBA
 {
 
@@ -193,10 +187,7 @@ operator <<= (CORBA::Any_var &lhs, CORBA::Any::from_wstring rhs)
   lhs.inout () <<= rhs;
 }
 
-// *************************************************************
 // CORBA::Any_var extraction operators
-// *************************************************************
-
 ACE_INLINE CORBA::Boolean
 operator >>= (CORBA::Any_var const &lhs, CORBA::Short &rhs)
 {
@@ -313,10 +304,7 @@ operator >>= (CORBA::Any_var const &lhs, CORBA::Any::to_object rhs)
 
 }
 
-// *************************************************************
 // Inline operations for class CORBA::Any_out
-// *************************************************************
-
 ACE_INLINE
 CORBA::Any_out::Any_out (CORBA::Any *&s)
   : ptr_ (s)

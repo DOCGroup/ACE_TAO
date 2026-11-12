@@ -201,8 +201,6 @@ CORBA::TypeCode::concrete_base_type_i () const
   throw ::CORBA::TypeCode::BadKind ();
 }
 
-// ---------------------------------------------------------------
-
 CORBA::TypeCode::Bounds::Bounds ()
   : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0",
                           "Bounds")
@@ -255,8 +253,6 @@ CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &)
 {
 }
 
-// ****************************************************************
-
 CORBA::TypeCode::BadKind::BadKind ()
   : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0",
                           "BadKind")
@@ -301,8 +297,6 @@ CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &)
 {
 }
 
-// ---------------------------------------------------------------
-
 bool
 TAO::TypeCode::marshal (TAO_OutputCDR & cdr,
                         CORBA::TypeCode_ptr tc,
@@ -330,16 +324,12 @@ TAO::TypeCode::aligned_offset (CORBA::ULong offset)
                                                  ACE_CDR::LONG_ALIGN));
 }
 
-// ---------------------------------------------------------------
-
 CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr,
             CORBA::TypeCode_ptr const tc)
 {
   return TAO::TypeCode::marshal (cdr, tc, 0);
 }
-
-// ---------------------------------------------------------------
 
 #if defined (GEN_OSTREAM_OPS)
 
@@ -351,8 +341,6 @@ operator<< (std::ostream & strm,
 }
 
 #endif /* GEN_OSTREAM_OPS */
-
-// ---------------------------------------------------------------
 
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
@@ -382,8 +370,6 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
 
   return CORBA::TypeCode::_duplicate (tc);
 }
-
-// =========================================================
 
 // Traits specializations for CORBA::TypeCode.
 namespace TAO
@@ -427,8 +413,6 @@ namespace TAO
     CORBA::release (p);
   }
 }
-
-// =========================================================
 
 CORBA::TCKind
 TAO::unaliased_kind (CORBA::TypeCode_ptr tc)

@@ -66,9 +66,6 @@ namespace TAO
   } // End TypeCode namespace
 }  // End TAO namespace
 
-// ----------------------------------------------------------------
-
-
 template <typename DiscriminatorType,
           typename StringType,
           typename TypeCodeType>

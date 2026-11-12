@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Recursive_Type_TypeCode.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_RECURSIVE_TYPE_TYPECODE_H
 #define TAO_RECURSIVE_TYPE_TYPECODE_H
@@ -164,7 +162,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"

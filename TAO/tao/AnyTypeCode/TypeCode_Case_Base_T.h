@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_Case_Base_T.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_CASE_H
 #define TAO_TYPECODE_CASE_H
@@ -167,7 +165,6 @@ namespace ACE
 } // End namespace ACE.
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Indirected_Type_TypeCode.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Martin Corino
  */
-//=============================================================================
 
 #ifndef TAO_INDIRECTED_TYPE_TYPECODE_H
 #define TAO_INDIRECTED_TYPE_TYPECODE_H
@@ -141,7 +139,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Indirected_Type_TypeCode.inl"

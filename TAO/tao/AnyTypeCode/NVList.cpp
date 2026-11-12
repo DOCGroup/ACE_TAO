@@ -48,8 +48,6 @@ CORBA::NamedValue::~NamedValue ()
   // the any will be destroyed by itself
 }
 
-// ****************************************************************
-
 CORBA::ULong
 CORBA::NVList::_incr_refcount ()
 {

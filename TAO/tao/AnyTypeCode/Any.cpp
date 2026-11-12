@@ -197,8 +197,6 @@ CORBA::Any::checked_to_abstract_base (CORBA::AbstractBase_ptr &_tao_elem) const
   return this->impl_->to_abstract_base (_tao_elem);
 }
 
-// ****************************************************************
-
 CORBA::Any_var::Any_var (CORBA::Any_var const &r)
 {
   if (r.ptr_)
@@ -235,8 +233,6 @@ CORBA::Any_var::operator= (CORBA::Any_var const &r)
 
   return *this;
 }
-
-// ***********************************************************************
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR &cdr, CORBA::Any const &any)
@@ -288,8 +284,6 @@ operator<< (std::ostream &strm, CORBA::Any const &)
 }
 
 #endif /* GEN_OSTREAM_OPS */
-
-// =======================================================================
 
 // Insertion of the special basic types.
 
@@ -744,7 +738,6 @@ operator >>= (CORBA::Any const &any, std::wstring &str)
 
 }
 
-// ================================================================
 // Any_Impl_T template specializations.
 
 namespace TAO
