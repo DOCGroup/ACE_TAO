@@ -56,10 +56,8 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
-  // = LocalObject methods.
   static TAO_DynEnum_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynEnum.
 
   char * get_as_string () override;
 
@@ -69,7 +67,6 @@ public:
 
   void set_as_ulong (CORBA::ULong value) override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
 
   void from_any (CORBA::Any const& value) override;
 

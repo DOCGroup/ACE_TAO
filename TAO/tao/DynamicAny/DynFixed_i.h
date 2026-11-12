@@ -51,14 +51,11 @@ public:
   void init (CORBA::Any const& any);
   void init (CORBA::TypeCode_ptr tc);
 
-  // = LocalObject methods.
   static TAO_DynFixed_i *_narrow (CORBA::Object_ptr obj);
 
-  // = DynFixed operations.
   char * get_value () override;
   CORBA::Boolean set_value (char const* value) override;
 
-  // = DynAny operations.
   void from_any (CORBA::Any const& value) override;
   CORBA::Any * to_any () override;
   CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;

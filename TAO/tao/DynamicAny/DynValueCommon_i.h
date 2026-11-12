@@ -44,13 +44,11 @@ public:
   TAO_DynValueCommon_i (TAO_DynValueCommon_i &&) = delete;
   TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i &&) = delete;
 
-  // = LocalObject methods.
   static TAO_DynValueCommon_i *_narrow (CORBA::Object_ptr obj);
 
   /// Called by DynValue and DynValueBox init() functions.
   void init_common ();
 
-  // = Functions specific to DynValueCommon.
   CORBA::Boolean is_null () override;
 
   void set_to_null () override;

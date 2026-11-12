@@ -40,7 +40,6 @@ public:
   TAO_DynCommon (TAO_DynCommon &&) = delete;
   TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
 
-  // = Some functions common to all Dynamic Any types.
 
   CORBA::TypeCode_ptr type () override;
 

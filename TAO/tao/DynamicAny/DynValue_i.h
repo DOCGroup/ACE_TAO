@@ -55,10 +55,8 @@ public:
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
 
-  // = LocalObject methods.
   static TAO_DynValue_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynValue.
   DynamicAny::FieldName current_member_name () override;
 
   CORBA::TCKind current_member_kind () override;
@@ -72,7 +70,6 @@ public:
   void set_members_as_dyn_any (
       DynamicAny::NameDynAnyPairSeq const& value) override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
@@ -87,7 +84,6 @@ public:
 
   CORBA::ValueBase * get_val () override;
 
-  // = DynValueCommon needed to be provided here
   void set_to_value () override;
 
 private:

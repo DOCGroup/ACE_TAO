@@ -54,10 +54,8 @@ public:
   /// Constructor taking a typecode argument.
   void init (CORBA::TypeCode_ptr tc);
 
-  // = LocalObject methods.
   static TAO_DynUnion_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynUnion.
 
   DynamicAny::DynAny_ptr get_discriminator () override;
 
@@ -77,7 +75,6 @@ public:
 
   CORBA::TCKind member_kind () override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
 
   void from_any (CORBA::Any const& value) override;
 

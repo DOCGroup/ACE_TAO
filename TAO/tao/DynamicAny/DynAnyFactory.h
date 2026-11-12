@@ -45,7 +45,6 @@ public:
   TAO_DynAnyFactory (TAO_DynAnyFactory &&) = delete;
   TAO_DynAnyFactory &operator= (TAO_DynAnyFactory &&) = delete;
 
-  // = The DynamicAnyFactory methods.
   DynamicAny::DynAny_ptr create_dyn_any (CORBA::Any const& value) override;
 
   DynamicAny::DynAny_ptr create_dyn_any_from_type_code (

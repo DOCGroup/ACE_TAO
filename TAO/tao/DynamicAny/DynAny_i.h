@@ -54,10 +54,8 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
-  // = LocalObject methods.
   static TAO_DynAny_i *_narrow (CORBA::Object_ptr obj);
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
 
   void from_any (CORBA::Any const& value) override;
 

@@ -154,7 +154,6 @@ TAO_DynSequence_i::get_element_type ()
   return retval;
 }
 
-// = Functions specific to DynSequence.
 
 CORBA::ULong
 TAO_DynSequence_i::get_length ()
