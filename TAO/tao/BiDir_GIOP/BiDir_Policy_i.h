@@ -50,7 +50,6 @@ public:
   /// Returns a copy of this.
   TAO_BidirectionalPolicy *clone () const;
 
-  /// = The BiDir::BidirectionalPolicy methods
   BiDirPolicy::BidirectionalPolicyValue value () override;
 
   CORBA::PolicyType policy_type () override;
