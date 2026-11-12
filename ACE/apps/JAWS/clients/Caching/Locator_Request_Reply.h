@@ -52,13 +52,13 @@ public:
 
   /// Modify a previously registered offer.
   int modify_offer (const ACE_WString &offer_id,
-                    const char *url = 0,
+                    const char *url = nullptr,
                     const ACE_URL_Property_Seq &del = 0,
                     const ACE_URL_Property_Seq &modify = 0);
 
   /// Modify a previously registered offer.
   int modify_offer (const ACE_WString &offer_id,
-                    const ACE_WString *url = 0,
+                    const ACE_WString *url = nullptr,
                     const ACE_URL_Property_Seq &del = 0,
                     const ACE_URL_Property_Seq &modify = 0);
 

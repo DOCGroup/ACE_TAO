@@ -103,9 +103,9 @@ class ACE_Svc_Export ACE_URL_Local_Locator
 
   /// Modify a previously registered offer.
   virtual int modify_offer (const ACE_WString &offer_id,
-                            const ACE_WString *url = 0,
-                            const ACE_URL_Property_Seq *del = 0,
-                            const ACE_URL_Property_Seq *modify = 0);
+                            const ACE_WString *url = nullptr,
+                            const ACE_URL_Property_Seq *del = nullptr,
+                            const ACE_URL_Property_Seq *modify = nullptr);
 
 protected:
   ACE_Unbounded_Set<ACE_URL_Record> repository_;

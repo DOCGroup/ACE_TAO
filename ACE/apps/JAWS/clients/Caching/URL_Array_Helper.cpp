@@ -19,18 +19,20 @@ size_t ace_array_size (const T &x)
 template <class T>
 size_t ace_array_encode (void *buf, const T &x)
 {
-  size_t len = 0;
+  size_t len {};
+  char * const bytes = static_cast<char *> (buf);
   for (size_t i = 0; i < x.size (); ++i)
-      len+= x[i].encode ((void *) ((char *) buf + len));
-  return len ;
+    len += x[i].encode (bytes + len);
+  return len;
 }
 
 template <class T>
 size_t ace_array_decode (void *buf, T &x)
 {
-  size_t len = 0;
+  size_t len {};
+  char * const bytes = static_cast<char *> (buf);
   for (size_t i = 0; i < x.size (); ++i)
-      len += x[i].decode ((void *) ((char *) buf + len));
+    len += x[i].decode (bytes + len);
   return len;
 }
 

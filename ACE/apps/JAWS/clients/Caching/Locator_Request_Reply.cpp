@@ -10,18 +10,23 @@
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
+#include <cstring>
 #include <memory>
 
 static ACE_NS_WString
-ace_url_wstring (ACE_UINT16 const *value)
+ace_url_wstring_from_buffer (char const *buffer)
 {
   ACE_NS_WString result;
-  if (value != nullptr)
-    while (*value != 0)
-      {
-        result += static_cast<ACE_WSTRING_TYPE> (*value);
-        ++value;
-      }
+  ACE_UINT16 value {};
+  size_t offset {};
+  do
+    {
+      std::memcpy (&value, buffer + offset, sizeof (value));
+      if (value != 0)
+        result += static_cast<ACE_WSTRING_TYPE> (value);
+      offset += sizeof (value);
+    }
+  while (value != 0);
   return result;
 }
 
@@ -82,7 +87,7 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
   ACE_NEW_RETURN (this->seq1_, ACE_URL_Property_Seq (del), -1);
   ACE_NEW_RETURN (this->seq2_, ACE_URL_Property_Seq (modify), -1);
 
-  if (url != 0)
+  if (url != nullptr)
     static_cast<ACE_WString &> (this->url_) = *url;
 
   static_cast<ACE_WString &> (this->id_) = offer_id;
@@ -91,12 +96,23 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
 }
 
 #define ENCODE_UINT32(ADDR,LEN,V) \
-   * (ACE_UINT32 *) (ADDR+LEN) = htonl (V); \
-   LEN += sizeof (ACE_UINT32);
+  do \
+    { \
+      ACE_UINT32 const encoded_value = htonl (static_cast<ACE_UINT32> (V)); \
+      std::memcpy ((ADDR) + (LEN), &encoded_value, sizeof (encoded_value)); \
+      LEN += sizeof (encoded_value); \
+    } \
+  while (false)
 
 #define DECODE_UINT32(ADDR,LEN,V) \
-   V = ntohl (* (ACE_UINT32 *) (ADDR+LEN)); \
-   LEN += sizeof (ACE_UINT32);
+  do \
+    { \
+      ACE_UINT32 encoded_value {}; \
+      std::memcpy (&encoded_value, (ADDR) + (LEN), sizeof (encoded_value)); \
+      V = ntohl (encoded_value); \
+      LEN += sizeof (encoded_value); \
+    } \
+  while (false)
 
 size_t
 ACE_URL_Locator_Request::encode ()
@@ -123,17 +139,17 @@ ACE_URL_Locator_Request::encode ()
   ENCODE_UINT32 (this->buffer_, total_length, this->valid_ptr_);
   // Encode valide pointer flag.
 
-  if (this->seq1_ != 0)
+  if (this->seq1_ != nullptr)
     {
       ENCODE_UINT32 (this->buffer_, total_length, this->seq1_->size ());
       total_length += ace_array_encode (this->buffer_ + total_length, *this->seq1_);
     }
-  if (this->seq2_ != 0)
+  if (this->seq2_ != nullptr)
     {
       ENCODE_UINT32 (this->buffer_, total_length, this->seq2_->size ());
       total_length += ace_array_encode (this->buffer_ + total_length, *this->seq2_);
     }
-  if (this->offer_ != 0)
+  if (this->offer_ != nullptr)
     total_length += this->offer_->encode (this->buffer_ + total_length);
 
   total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
@@ -150,11 +166,11 @@ ACE_URL_Locator_Request::decode (void *buffer)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::decode");
 
-  if (buffer == 0)
+  if (buffer == nullptr)
     return 0;
   // Check if we have a valid buffer available.
 
-  char *cbuffer = (char *) buffer;
+  char *cbuffer = static_cast<char *> (buffer);
 
   size_t buf_size;
   size_t total_length = 0;
@@ -195,10 +211,10 @@ ACE_URL_Locator_Request::decode (void *buffer)
     }
 
   size_t id_length = ACE_WString_Helper::decode (cbuffer + total_length);
-  this->id_ = ace_url_wstring (reinterpret_cast<ACE_UINT16 *> (cbuffer + total_length));
+  this->id_ = ace_url_wstring_from_buffer (cbuffer + total_length);
   total_length += id_length;
   size_t url_length = ACE_WString_Helper::decode (cbuffer + total_length);
-  this->url_ = ace_url_wstring (reinterpret_cast<ACE_UINT16 *> (cbuffer + total_length));
+  this->url_ = ace_url_wstring_from_buffer (cbuffer + total_length);
   total_length += url_length;
 
   ACE_ASSERT (total_length == buf_size);
@@ -219,17 +235,17 @@ ACE_URL_Locator_Request::size ()
   this->valid_ptr_ = 0;
   // Check valid pointers and mark corresponding flag in <valid_prt>.
 
-  if (this->seq1_ != 0)
+  if (this->seq1_ != nullptr)
     {
       this->valid_ptr_ |= VALID_SEQ1;
       total_length += ace_array_size (*this->seq1_);
     }
-  if (this->seq2_ != 0)
+  if (this->seq2_ != nullptr)
     {
       this->valid_ptr_ |= VALID_SEQ2;
       total_length += ace_array_size (*this->seq2_);
     }
-  if (this->offer_ != 0)
+  if (this->offer_ != nullptr)
     {
       this->valid_ptr_ |= VALID_OFFER;
       total_length += this->offer_->size ();
@@ -265,17 +281,17 @@ ACE_URL_Locator_Request::dump () const
   ACE_DEBUG ((LM_DEBUG, "Valid pointer pattern: %x\n", this->valid_ptr_));
 
   ACE_DEBUG ((LM_DEBUG, "Property sequence 1: %x\n", this->seq1_));
-  if (this->seq1_ != 0)
+  if (this->seq1_ != nullptr)
     for (i = 0; i < this->seq1_->size (); ++i)
       (*this->seq1_)[i].dump ();
 
   ACE_DEBUG ((LM_DEBUG, "Property sequence 2: %x\n", this->seq2_));
-  if (this->seq2_ != 0)
+  if (this->seq2_ != nullptr)
     for (i = 0; i < this->seq2_->size (); ++i)
       (*this->seq2_)[i].dump();
 
   ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
-  if (this->offer_ != 0)
+  if (this->offer_ != nullptr)
     this->offer_->dump ();
 
   if (this->id_.length () > 0)
@@ -353,10 +369,10 @@ ACE_URL_Locator_Reply::encode ()
   ENCODE_UINT32 (this->buffer_, total_length, this->valid_ptr_);
   // Encode valid pointers mask.
 
-  if (this->offer_ != 0)
+  if (this->offer_ != nullptr)
     total_length += this->offer_->encode (this->buffer_ + total_length);
 
-  if (this->offers_ != 0)
+  if (this->offers_ != nullptr)
     {
       ENCODE_UINT32 (this->buffer_, total_length, this->offers_->size ());
       total_length += ace_array_encode (this->buffer_ + total_length, *this->offers_);
@@ -371,11 +387,11 @@ ACE_URL_Locator_Reply::decode (void *buffer)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::decode");
 
-  if (buffer == 0)
+  if (buffer == nullptr)
     return 0;
   // Check if we have a buffer available.
 
-  char *cbuffer = (char *) buffer;
+  char *cbuffer = static_cast<char *> (buffer);
 
   size_t buf_size;
   size_t total_length = 0;
@@ -423,12 +439,12 @@ ACE_URL_Locator_Reply::size ()
   // <status_>, <num_offers_>, and <valid_ptr_>.
 
   this->valid_ptr_ = 0;
-  if (this->offer_ != 0)
+  if (this->offer_ != nullptr)
     {
       this->valid_ptr_ |= VALID_OFFER;
       total_length += this->offer_->size ();
     }
-  if (this->offers_ != 0)
+  if (this->offers_ != nullptr)
     {
       this->valid_ptr_ |= VALID_OFFERS;
       total_length += ace_array_size (*this->offers_);
@@ -458,11 +474,11 @@ ACE_URL_Locator_Reply::dump () const
   ACE_DEBUG ((LM_DEBUG, "Valid pointer pattern: %x\n", this->valid_ptr_));
 
   ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
-  if (this->offer_ != 0)
+  if (this->offer_ != nullptr)
     this->offer_->dump ();
 
   ACE_DEBUG ((LM_DEBUG, "Offer sequence: %x\n", this->offers_));
-  if (this->offers_ != 0)
+  if (this->offers_ != nullptr)
     for (size_t i = 0; i < this->offers_->size (); ++i)
       (*this->offers_)[i].dump();
 
