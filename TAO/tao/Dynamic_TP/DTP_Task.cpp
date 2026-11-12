@@ -179,7 +179,7 @@ TAO_DTP_Task::open (void * /* args */)
     }
   else
     {
-      std::unique_ptr<size_t[]> stack_sz_arr {std::make_unique<size_t[]> (num)};
+      std::unique_ptr<size_t[]> const stack_sz_arr {std::make_unique<size_t[]> (num)};
       std::fill_n (stack_sz_arr.get (), num, this->thread_stack_size_);
 
       if (this->activate (THR_NEW_LWP | THR_DETACHED,
@@ -331,7 +331,7 @@ TAO_DTP_Task::svc ()
                               this->busy_threads_.load()));
                 }
 
-              ACE_Time_Value tmp_sec = this->thread_idle_time_.to_absolute_time();
+              ACE_Time_Value const tmp_sec = this->thread_idle_time_.to_absolute_time();
 
               {
                 ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);

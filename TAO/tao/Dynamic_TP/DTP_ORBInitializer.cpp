@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -72,7 +72,7 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 void
 TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   TAO_Thread_Lane_Resources_Manager &tlrm =
     tao_info->orb_core ()->thread_lane_resources_manager();
@@ -83,7 +83,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   char const * const dtp_name =
     tao_info->orb_core ()->orb_params ()->dynamic_thread_pool_config_name ();
 
-  if (dtp_name != nullptr && dtp_name[0] != 0)
+  if (dtp_name != nullptr && dtp_name[0] != '\0')
     {
       if (TAO_debug_level > 0)
         {

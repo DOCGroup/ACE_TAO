@@ -228,7 +228,7 @@ TAO_DTP_Thread_Pool::create_initial_threads ()
                   count));
     }
 
-  int result = this->create_threads_i (count);
+  int const result = this->create_threads_i (count);
   if (result == 0)
     {
       this->waiter_.activate (THR_NEW_LWP | THR_JOINABLE);
@@ -310,7 +310,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 
   // Make sure the dynamically created stack size array is properly
   // deleted.
-  std::unique_ptr<size_t[]> auto_stack_size_array (stack_size_array);
+  std::unique_ptr<size_t[]> const auto_stack_size_array (stack_size_array);
 
   TAO_ORB_Core &orb_core = manager_.orb_core ();
 
@@ -318,7 +318,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
     thread_flags |
     orb_core.orb_params ()->thread_creation_flags ();
 
-  int default_priority {};
+  int const default_priority {};
   int result {};
   // Activate the threads.
   if (TAO_debug_level > 7)

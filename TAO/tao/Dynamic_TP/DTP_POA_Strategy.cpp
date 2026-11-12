@@ -27,7 +27,7 @@ TAO_DTP_POA_Strategy::custom_synch_request (
                   TAO::CSD::TP_Custom_Synch_Request (op, servant_state.in ()),
                   REQUEST_REJECTED);
 
-  TAO::CSD::TP_Custom_Synch_Request_Handle request = req_ptr;
+  TAO::CSD::TP_Custom_Synch_Request_Handle const request = req_ptr;
 
   if (!this->dtp_task_.add_request (request.in ()))
     {
@@ -51,7 +51,7 @@ TAO_DTP_POA_Strategy::custom_asynch_request (
                   TAO::CSD::TP_Custom_Asynch_Request (op, servant_state.in ()),
                   REQUEST_REJECTED);
 
-  TAO::CSD::TP_Custom_Asynch_Request_Handle request = req_ptr;
+  TAO::CSD::TP_Custom_Asynch_Request_Handle const request = req_ptr;
 
   return (this->dtp_task_.add_request (request.in ()))
             ? REQUEST_DISPATCHED : REQUEST_REJECTED;
@@ -139,7 +139,7 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
                                                servant_state.in ()),
                   TAO::CSD::Strategy_Base::DISPATCH_REJECTED);
 
-  TAO::CSD::TP_Remote_Request_Handle request = req_ptr;
+  TAO::CSD::TP_Remote_Request_Handle const request = req_ptr;
 
   // Hand the request object to our task so that it can add the request
   // to its "request queue".

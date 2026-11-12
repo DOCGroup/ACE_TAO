@@ -84,8 +84,6 @@ TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-/////////////////////////////////////////////////////////////////////
-
 ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_ORB_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_DTP_ORB_Loader,
                        ACE_TEXT ("DTP_ORB_Loader"),

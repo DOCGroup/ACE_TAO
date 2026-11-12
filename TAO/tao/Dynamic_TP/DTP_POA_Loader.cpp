@@ -166,8 +166,6 @@ TAO_DTP_POA_Loader::report_option_value_error (ACE_TCHAR const *name,
     }
 }
 
-/////////////////////////////////////////////////////////////////////
-
 ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_POA_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_DTP_POA_Loader,
                        ACE_TEXT ("DTP_POA_Loader"),

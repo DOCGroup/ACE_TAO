@@ -41,7 +41,7 @@ TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources ()
 
   params->get_endpoint_set (TAO_DEFAULT_LANE, endpoint_set);
 
-  bool ignore_address {};
+  bool const ignore_address {};
 
   int const result =
     this->default_lane_resources_->open_acceptor_registry (endpoint_set,
@@ -105,7 +105,7 @@ TAO_DTP_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_mana
   /// Create the RT Thread Lane Resources Manager.
   ACE_NEW_RETURN (manager,
                   TAO_DTP_Thread_Lane_Resources_Manager (core),
-                  0);
+                  nullptr);
 
   return manager;
 }

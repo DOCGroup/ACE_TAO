@@ -278,8 +278,6 @@ TAO_DTP_Config::report_option_value_error (ACE_TCHAR const *option_name,
     }
 }
 
-/////////////////////////////////////////////////////////////////////
-
 ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
 ACE_STATIC_SVC_DEFINE (TAO_DTP_Config_Registry,
                        ACE_TEXT ("DTP_Config_Registry"),
