@@ -15,9 +15,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_POA_Strategy::~TAO_DTP_POA_Strategy () = default;
-
-
 TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_synch_request(
   TAO::CSD::TP_Custom_Request_Operation* op)
@@ -100,7 +97,6 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
           //this->dtp_task_.set_thread_stack_size(config_entry.stack_size_);
           //this->dtp_task_.set_max_request_queue_depth(config_entry.queue_depth_);
         }
-
 
     }
   return (this->dtp_task_.open () == 0);

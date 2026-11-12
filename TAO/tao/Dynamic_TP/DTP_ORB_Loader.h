@@ -31,9 +31,9 @@ class TAO_ORB_Core;
 class TAO_Dynamic_TP_Export TAO_DTP_ORB_Loader : public ACE_Service_Object
 {
 public:
-  TAO_DTP_ORB_Loader ();
+  TAO_DTP_ORB_Loader () = default;
 
-  ~TAO_DTP_ORB_Loader () override;
+  ~TAO_DTP_ORB_Loader () override = default;
 
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

@@ -29,9 +29,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Dynamic_TP_Export TAO_DTP_POA_Loader : public ACE_Service_Object
 {
 public:
-  TAO_DTP_POA_Loader ();
+  TAO_DTP_POA_Loader () = default;
 
-  ~TAO_DTP_POA_Loader () override;
+  ~TAO_DTP_POA_Loader () override = default;
 
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

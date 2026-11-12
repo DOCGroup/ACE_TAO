@@ -141,7 +141,7 @@ public:
                        CORBA::ULong id,
                        TAO_DTP_Definition &definition);
 
-  ~TAO_DTP_Thread_Pool ();
+  ~TAO_DTP_Thread_Pool () = default;
 
   /// Open the pool.
   void open ();

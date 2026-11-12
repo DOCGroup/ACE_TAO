@@ -19,8 +19,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool () = default;
-
 TAO_DTP_New_Leader_Generator::TAO_DTP_New_Leader_Generator (
   TAO_DTP_Thread_Pool &p)
   : pool_ (p)
@@ -409,7 +407,6 @@ TAO_DTP_Thread_Pool::shutting_down ()
   this->shutdown_ = true;
 }
 
-
 void
 TAO_DTP_Thread_Pool::wait ()
 {
@@ -440,7 +437,6 @@ TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager ()
        ++iterator)
     delete (*iterator).int_id_;
 }
-
 
 void
 TAO_DTP_Thread_Pool_Manager::wait ()

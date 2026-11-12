@@ -55,8 +55,8 @@ public:
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
 {
 public:
-  TAO_DTP_Config_Registry ();
-  ~TAO_DTP_Config_Registry () override;
+  TAO_DTP_Config_Registry () = default;
+  ~TAO_DTP_Config_Registry () override = default;
 
   int init (int argc, ACE_TCHAR* []) override;
 
@@ -80,9 +80,9 @@ private:
 class TAO_Dynamic_TP_Export TAO_DTP_Config : public ACE_Service_Object
 {
 public:
-  TAO_DTP_Config ();
+  TAO_DTP_Config () = default;
 
-  ~TAO_DTP_Config () override;
+  ~TAO_DTP_Config () override = default;
 
   /// Read a definition parameter set from the supplied args.
   /// A repeated -TPName is ignored unless -TPOverwrite is also set.

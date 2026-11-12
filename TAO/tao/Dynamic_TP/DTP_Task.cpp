@@ -14,8 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_Task::~TAO_DTP_Task () = default;
-
 TAO_DTP_Task::TAO_DTP_Task ()
   : aw_lock_ (),
     queue_lock_ (),
@@ -416,7 +414,6 @@ TAO_DTP_Task::svc ()
   return 0;
 }
 
-
 int
 TAO_DTP_Task::close (u_long flag)
 {
@@ -464,7 +461,6 @@ TAO_DTP_Task::close (u_long flag)
   }
   return 0;
 }
-
 
 void
 TAO_DTP_Task::set_init_pool_threads (size_t thr_count)

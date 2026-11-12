@@ -12,12 +12,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Core.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_DTP_POA_Loader::~TAO_DTP_POA_Loader () = default;
-
-TAO_DTP_POA_Loader::TAO_DTP_POA_Loader () = default;
 
 int
 TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
@@ -35,7 +30,6 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   TAO_CSD_Strategy_Repository * repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
     ("TAO_CSD_Strategy_Repository");
-
 
   /* Now create a POA Configuration Map Registry to look up what
      thread pool settings are associated with each POA
@@ -108,7 +102,6 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 int
 TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
                                   TAO_CSD_Strategy_Repository *repo)
@@ -173,9 +166,7 @@ TAO_DTP_POA_Loader::report_option_value_error (ACE_TCHAR const *name,
     }
 }
 
-
 /////////////////////////////////////////////////////////////////////
-
 
 ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_POA_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_DTP_POA_Loader,
@@ -187,6 +178,5 @@ ACE_STATIC_SVC_DEFINE (TAO_DTP_POA_Loader,
                        0)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

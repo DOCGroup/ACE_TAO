@@ -68,7 +68,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   explicit TAO_DTP_POA_Strategy(TAO_DTP_Definition * tp_config,
                               bool     serialize_servants = true);
 
-  ~TAO_DTP_POA_Strategy () override;
+  ~TAO_DTP_POA_Strategy () override = default;
 
   /// Turn on/off serialization of servants.
   void set_servant_serialization(bool serialize_servants);
