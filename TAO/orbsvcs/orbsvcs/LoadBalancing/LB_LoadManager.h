@@ -42,7 +42,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadManager
     public ACE_Task_Base
 {
 public:
-  /// Constructor.
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
@@ -271,7 +270,6 @@ public:
                    PortableServer::POA_ptr root_poa);
 
 protected:
-  /// Destructor.
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.

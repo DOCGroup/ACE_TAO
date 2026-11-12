@@ -629,58 +629,6 @@ TAO_LB_LoadManager::create_object (
   return obj;
 }
 
-#if 0
-void
-TAO_LB_LoadManager::process_criteria (
-  const PortableGroup::Criteria & the_criteria)
-{
-  // List of invalid criteria.  If this list has a length greater than
-  // zero, then the PortableGroup::InvalidCriteria exception will
-  // be thrown.
-  PortableGroup::Criteria invalid_criteria;
-
-  int found_factory = 0; // If factory was found in the_criteria, then
-                         // set to 1.
-
-  // Parse the criteria.
-  CORBA::ULong criteria_count = the_criteria.length ();
-  for (CORBA::ULong i {}; i < criteria_size; ++i)
-    {
-      CORBA::UShort initial_number_replicas = 0;
-      PortableGroup::FactoryInfos factory_infos;
-
-      // Obtain the InitialNumberMembers from the_criteria.
-      if (this->get_initial_number_replicas (type_id,
-                                             the_criteria[i],
-                                             initial_number_replicas) != 0)
-        {
-          CORBA::ULong len = invalid_criteria.length ();
-          invalid_criteria.length (len + 1);
-          invalid_criteria[len] = the_criteria[i];
-        }
-
-      // Obtain the FactoryInfos from the_criteria.  This method also
-      // ensures that GenericFactories at different locations are used.
-      else if (this->get_factory_infos (type_id,
-                                        the_criteria[i],
-                                        factory_infos) == 0)
-        found_factory = 1;
-
-      // Unknown property
-      else
-        throw PortableGroup::InvalidProperty (
-          the_criteria[i].nam,
-          the_criteria[i].val);
-    }
-
-  if (invalid_criteria.length () != 0)
-    throw PortableGroup::InvalidCriteria (invalid_criteria);
-
-  if (found_factory == 0)
-    throw PortableGroup::NoFactory ();
-}
-#endif  /* 0 */
-
 void
 TAO_LB_LoadManager::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &

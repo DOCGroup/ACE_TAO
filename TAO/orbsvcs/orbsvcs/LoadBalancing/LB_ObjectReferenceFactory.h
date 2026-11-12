@@ -50,7 +50,6 @@ class TAO_LB_ObjectReferenceFactory
   , public virtual OBV_TAO_LB::ObjectReferenceFactory
 {
  public:
-  /// Constructor
   TAO_LB_ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf,
     CORBA::StringSeq const & object_groups,
@@ -89,7 +88,6 @@ class TAO_LB_ObjectReferenceFactory
   TAO_LB_ObjectReferenceFactory & operator= (TAO_LB_ObjectReferenceFactory &&) = delete;
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
    * reference counting.

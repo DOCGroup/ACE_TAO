@@ -58,7 +58,6 @@ class TAO_LB_LoadAverage
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
   explicit TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
 
   /**
@@ -100,7 +99,6 @@ public:
   TAO_LB_LoadAverage & operator= (TAO_LB_LoadAverage &&) = delete;
 
 protected:
-  /// Destructor.
   ~TAO_LB_LoadAverage () override = default;
 
   /// Return the effective load.

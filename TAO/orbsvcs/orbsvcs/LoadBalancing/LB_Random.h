@@ -35,7 +35,6 @@ class TAO_LB_Random
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
   /**
    * Seeds the OS' random number generator.
    */

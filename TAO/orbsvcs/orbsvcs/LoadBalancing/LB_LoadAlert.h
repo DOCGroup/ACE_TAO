@@ -28,7 +28,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadAlert
   : public virtual POA_CosLoadBalancing::LoadAlert
 {
 public:
-  /// Constructor.
   TAO_LB_LoadAlert ();
 
   /**
@@ -56,7 +55,6 @@ public:
   TAO_LB_LoadAlert & operator= (TAO_LB_LoadAlert &&) = delete;
 
 // protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.

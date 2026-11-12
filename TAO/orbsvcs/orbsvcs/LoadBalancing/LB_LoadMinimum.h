@@ -77,7 +77,6 @@ class TAO_LB_LoadMinimum
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
   explicit TAO_LB_LoadMinimum (PortableServer::POA_ptr poa);
 
   /**
@@ -119,7 +118,6 @@ public:
   TAO_LB_LoadMinimum & operator= (TAO_LB_LoadMinimum &&) = delete;
 
 protected:
-  /// Destructor.
   ~TAO_LB_LoadMinimum () override = default;
 
   /// Retrieve the least loaded location from the given list of

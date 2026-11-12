@@ -41,7 +41,6 @@ class TAO_LB_MemberLocator
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   explicit TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
 
   /**
@@ -75,7 +74,7 @@ public:
   //@}
 
 private:
-  /// The load balancer/manager implementation.
+  /// Borrowed manager; its lifetime must exceed that of this POA-owned locator.
   TAO_LB_LoadManager * load_manager_;
 };
 

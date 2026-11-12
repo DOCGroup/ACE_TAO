@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 struct TAO_LB_LoadAlertInfo
 {
-  /// Constructor.
   TAO_LB_LoadAlertInfo () = default;
 
   /// Reference to the LoadAlert object.

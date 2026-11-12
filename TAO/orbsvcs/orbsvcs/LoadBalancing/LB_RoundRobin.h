@@ -40,7 +40,6 @@ class TAO_LB_RoundRobin
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
   explicit TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
   /**
@@ -79,7 +78,6 @@ public:
   TAO_LB_RoundRobin & operator= (TAO_LB_RoundRobin &&) = delete;
 
 protected:
-  /// Destructor
   ~TAO_LB_RoundRobin () override;
 
 private:

@@ -41,7 +41,6 @@ class TAO_LoadBalancing_Export TAO_LB_CPU_Load_Average_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-  /// Constructor
   /**
    * If no location is supplied the hostname or IP address is used by
    * default.
@@ -78,7 +77,6 @@ public:
   //@}
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.

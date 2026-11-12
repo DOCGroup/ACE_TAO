@@ -51,7 +51,6 @@ class TAO_LB_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_LB_IORInterceptor (CORBA::StringSeq const & object_groups,
                          CORBA::StringSeq const & repository_ids,
                          char const * location,
