@@ -15,7 +15,7 @@ JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
   , data_ (data)
   , mb_ (& this->db_)
 {
-  this->db_.base ((char *) this, 0 /* an infinite queue */);
+  this->db_.base (reinterpret_cast<char *> (this), 0 /* an infinite queue */);
 }
 
 

@@ -1,5 +1,5 @@
-#include "ace/OS_NS_stdlib.h"
 #include "ace/Message_Block.h"
+#include <cstdlib>
 
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
@@ -16,15 +16,15 @@ JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency ()
 {
   char const *value = JAWS_Options::instance ()->getenv ("JAWS_TPOOL_THREADS");
   if (value != nullptr)
-    this->number_of_threads_ = ACE_OS::atoi (value);
+    this->number_of_threads_ = std::atoi (value);
   else
-    this->number_of_threads_ = ACE_OS::atoi (JAWS_DEFAULT_TPOOL_THREADS);
+    this->number_of_threads_ = std::atoi (JAWS_DEFAULT_TPOOL_THREADS);
 
   if (this->number_of_threads_ <= 0)
     this->number_of_threads_ = 5;
 
-  int r;
-  r = this->activate ( THR_BOUND | THR_JOINABLE, this->number_of_threads_);
+  int const r = this->activate ( THR_BOUND | THR_JOINABLE,
+                                 this->number_of_threads_);
 
   if (r < 0)
     {
@@ -60,7 +60,7 @@ JAWS_TPOOL_Concurrency::getq (JAWS_Protocol_Handler *&ph)
 
   if (result != -1)
     {
-      ph = (JAWS_Protocol_Handler *) mb->base ();
+      ph = reinterpret_cast<JAWS_Protocol_Handler *> (mb->base ());
 
       if (ph == nullptr)
         {

@@ -1,5 +1,5 @@
-#include "ace/OS_NS_stdlib.h"
 #include "ace/Message_Block.h"
+#include <cstdlib>
 
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
@@ -21,28 +21,28 @@ JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MIN_THYBRID_THREADS");
   if (value != nullptr)
-    this->min_number_of_threads_ = ACE_OS::atoi (value);
+    this->min_number_of_threads_ = std::atoi (value);
   else
     this->min_number_of_threads_ =
-      ACE_OS::atoi (JAWS_DEFAULT_MIN_THYBRID_THREADS);
+      std::atoi (JAWS_DEFAULT_MIN_THYBRID_THREADS);
 
   if (this->min_number_of_threads_ <= 0)
     this->min_number_of_threads_ = 1;
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MAX_THYBRID_THREADS");
   if (value != nullptr)
-    this->max_number_of_threads_ = ACE_OS::atoi (value);
+    this->max_number_of_threads_ = std::atoi (value);
   else
     this->max_number_of_threads_ =
-      ACE_OS::atoi (JAWS_DEFAULT_MAX_THYBRID_THREADS);
+      std::atoi (JAWS_DEFAULT_MAX_THYBRID_THREADS);
 
   if (this->max_number_of_threads_ <= 0)
     this->max_number_of_threads_ = -1;
   else if (this->max_number_of_threads_ < this->min_number_of_threads_)
     this->max_number_of_threads_ = this->min_number_of_threads_;
 
-  int r;
-  r = this->activate (THR_BOUND | THR_JOINABLE, this->min_number_of_threads_);
+  int const r = this->activate (THR_BOUND | THR_JOINABLE,
+                                this->min_number_of_threads_);
   if (r < 0)
     {
       this->shutdown_task_ = true;
@@ -57,7 +57,7 @@ JAWS_THYBRID_Concurrency::putq (JAWS_Protocol_Handler *ph)
     return -1;
 
   JAWS_CONCURRENCY_TASK *task = this;
-  int result = task->putq (& ph->mb_);
+  int const result = task->putq (& ph->mb_);
 
   if (result != -1)
     {
@@ -65,11 +65,10 @@ JAWS_THYBRID_Concurrency::putq (JAWS_Protocol_Handler *ph)
           && (this->max_number_of_threads_ < 0
               || this->thr_count () < (size_t) this->max_number_of_threads_))
         {
-          int r;
-          r = this->activate ( THR_BOUND | THR_JOINABLE
-                             , 1 // number of threads
-                             , 1 // force active
-                             );
+          int const r = this->activate ( THR_BOUND | THR_JOINABLE
+                                       , 1 // number of threads
+                                       , 1 // force active
+                                       );
           if (r < 0)
             {
               // ACE_ERROR
@@ -107,7 +106,7 @@ JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
 
   if (result != -1)
     {
-      ph = (JAWS_Protocol_Handler *) mb->base ();
+      ph = reinterpret_cast<JAWS_Protocol_Handler *> (mb->base ());
 
       if (ph == nullptr)
         {

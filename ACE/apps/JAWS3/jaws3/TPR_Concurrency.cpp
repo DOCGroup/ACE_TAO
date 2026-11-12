@@ -14,8 +14,7 @@ JAWS_TPR_Concurrency::JAWS_TPR_Concurrency ()
   : shutdown_task_ (false)
   , error_ (false)
 {
-  int r;
-  r = this->activate (THR_BOUND | THR_JOINABLE);
+  int const r = this->activate (THR_BOUND | THR_JOINABLE);
   if (r < 0)
     {
       this->error_ = true;
@@ -30,15 +29,14 @@ JAWS_TPR_Concurrency::putq (JAWS_Protocol_Handler *ph)
     return -1;
 
   JAWS_CONCURRENCY_TASK *task = this;
-  int result = task->putq (& ph->mb_);
+  int const result = task->putq (& ph->mb_);
 
   if (result != -1)
     {
-      int r;
-      r = this->activate ( THR_BOUND | THR_JOINABLE
-                         , 1 // number of threads
-                         , 1 // force active
-                         );
+      int const r = this->activate ( THR_BOUND | THR_JOINABLE
+                                   , 1 // number of threads
+                                   , 1 // force active
+                                   );
       if (r < 0)
         {
           // ACE_ERROR
@@ -68,11 +66,11 @@ JAWS_TPR_Concurrency::getq (JAWS_Protocol_Handler *&ph)
     }
 
   ACE_Message_Block *mb {};
-  int result = task->getq (mb);
+  int const result = task->getq (mb);
 
   if (result != -1)
     {
-      ph = (JAWS_Protocol_Handler *) mb->base ();
+      ph = reinterpret_cast<JAWS_Protocol_Handler *> (mb->base ());
 
       if (ph == nullptr)
         {
