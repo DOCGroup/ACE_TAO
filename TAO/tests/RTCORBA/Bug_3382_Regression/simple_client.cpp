@@ -1,11 +1,61 @@
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Multi_Priority_Mapping.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "ace/Sched_Params.h"
+
+static bool
+test_non_contiguous_priority_mapping ()
+{
+  int const policy = ACE_SCHED_FIFO;
+  int const base_native_priority = ACE_Sched_Params::priority_max (policy);
+  int const base_corba_priority = RTCORBA::maxPriority;
+  TAO_Multi_Priority_Mapping mapping (base_native_priority,
+                                      base_corba_priority,
+                                      1,
+                                      false,
+                                      policy);
+
+  RTCORBA::NativePriority native_priority {-1};
+  if (!mapping.to_native (base_corba_priority - 1, native_priority) ||
+      native_priority != ACE_Sched_Params::previous_priority (policy,
+                                                               base_native_priority,
+                                                               ACE_SCOPE_THREAD))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Non-contiguous mapping failed for one priority step\n"));
+      return false;
+    }
+
+  int expected_native_priority = base_native_priority;
+  for (int i {}; i < 3; ++i)
+    {
+      expected_native_priority =
+        ACE_Sched_Params::previous_priority (policy,
+                                             expected_native_priority,
+                                             ACE_SCOPE_THREAD);
+    }
+
+  if (!mapping.to_native (base_corba_priority - 3, native_priority) ||
+      native_priority != expected_native_priority)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Non-contiguous mapping failed for three priority steps\n"));
+      return false;
+    }
+
+  return true;
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result {};
+
+  if (!test_non_contiguous_priority_mapping ())
+    {
+      result = -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG, "Testing : "));
 
