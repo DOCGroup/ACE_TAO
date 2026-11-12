@@ -58,7 +58,7 @@ Admin_Client::run ()
     {
       if (this->all_tests_)
         {
-          for (std::size_t i {}; i < NUMBER_OF_TESTS; ++i)
+          for (size_t i {}; i < NUMBER_OF_TESTS; ++i)
             {
               // Each test is run twice to make sure everything
               // gets destroyed properly. If not, we get a
@@ -110,7 +110,7 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
           this->all_tests_ = false;
           ACE_TCHAR const * const name = opts.opt_arg ();
 
-          for (std::size_t i {}; i < NUMBER_OF_TESTS; ++i)
+          for (size_t i {}; i < NUMBER_OF_TESTS; ++i)
             {
               if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (name), this->test_names_[i]) == 0)
                 {

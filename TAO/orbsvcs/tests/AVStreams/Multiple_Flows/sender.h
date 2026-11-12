@@ -110,7 +110,7 @@ private:
   TAO_StreamCtrl *streamctrl_ {};
 
   /// Number of frames sent.
-  std::size_t frame_count_ {};
+  size_t frame_count_ {};
 
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;

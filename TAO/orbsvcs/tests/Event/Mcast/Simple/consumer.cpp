@@ -30,7 +30,7 @@ private:
   void disconnect ();
 
   /// Number of events pushed to us by EC.
-  std::size_t n_events_ {};
+  size_t n_events_ {};
 
   /// Cache these pointers for cleanup.
   CORBA::ORB_var orb_;

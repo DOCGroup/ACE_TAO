@@ -197,7 +197,7 @@ Sender::pace_data ()
       while (1)
         {
           // Read from the file into a message block.
-          std::size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+          size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
                                                1,
                                                this->mb_.size (),
                                                this->input_file_.get ());

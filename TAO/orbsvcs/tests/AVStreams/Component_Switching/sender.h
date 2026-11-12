@@ -134,7 +134,7 @@ private:
   TAO_MMDevice *sender_mmdevice_ {};
 
   /// Number of frames sent.
-  std::size_t frame_count_ {};
+  size_t frame_count_ {};
 
   /// File handle of the input file.
   std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, std::fclose};

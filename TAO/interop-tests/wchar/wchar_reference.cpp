@@ -114,7 +114,7 @@ wchar_reference::match_warray (short key, ACE_OS::WChar const *test) const
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("match_warray: key %d\n"),key));
-  for (std::size_t i = 0; i < WARRAY_LENGTH; ++i)
+  for (size_t i = 0; i < WARRAY_LENGTH; ++i)
     {
       if (verbose_)
         ACE_DEBUG ((LM_DEBUG,

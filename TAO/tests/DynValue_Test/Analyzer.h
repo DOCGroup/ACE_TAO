@@ -12,7 +12,7 @@
 class DynAnyAnalyzer
 {
 private:
-  std::size_t level_ {1};
+  size_t level_ {1};
   CORBA::ORB_var orb_;
   DynamicAny::DynAnyFactory_var dany_fact_ {};
 
@@ -40,7 +40,7 @@ private:
 
   void tab (char const *p)
   {
-    for (std::size_t i = 0; i < level_; ++i)
+    for (size_t i = 0; i < level_; ++i)
       ACE_DEBUG ((LM_DEBUG, ".."));
     ACE_DEBUG ((LM_DEBUG, "%C", p));
   }

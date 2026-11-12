@@ -53,7 +53,7 @@ public:
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (std::size_t i {}; i < 5; ++i)
+        for (size_t i {}; i < 5; ++i)
           {
             ACE_OS::sleep (2);
 

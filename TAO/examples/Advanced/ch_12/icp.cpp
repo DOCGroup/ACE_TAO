@@ -33,7 +33,7 @@ struct DeviceState
 
 using StateMap = std::map<unsigned long, DeviceState>;
 
-constexpr std::size_t MAXSTR {32};  // Max len of string including NUL
+constexpr size_t MAXSTR {32};  // Max len of string including NUL
 
 constexpr long MIN_TEMP {40};      // 40 F ==  4.44 C
 constexpr long MAX_TEMP {90};      // 90 F == 32.22 C
@@ -202,7 +202,7 @@ int
 ICP_get (unsigned long id,
          char const *attr,
          void *value,
-         std::size_t len)
+         size_t len)
 {
   // Look for id in state map
   StateMap::const_iterator pos = dstate.find (id);

@@ -23,7 +23,7 @@ struct Orb_Work_State
   std::atomic_bool terminate_threads {};
 };
 
-static constexpr std::size_t pool_size {2};
+static constexpr size_t pool_size {2};
 static constexpr CORBA::ULong data_items {60000};
 
 static void *

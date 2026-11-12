@@ -13,8 +13,8 @@ TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (
     TAO_AV_Transport *transport)
   : TAO_AV_Protocol_Object (callback, transport),
     frame_ (std::make_unique<ACE_Message_Block> (
-      std::max (static_cast<std::size_t> (BUFSIZ),
-                4 * static_cast<std::size_t> (this->transport_->mtu ())) +
+      std::max (static_cast<size_t> (BUFSIZ),
+                4 * static_cast<size_t> (this->transport_->mtu ())) +
       sizeof (ACE_hrtime_t)))
 {
 }
@@ -66,7 +66,7 @@ TimeStamp_Protocol_Object::send_frame (iovec const *iov,
 
 int
 TimeStamp_Protocol_Object::send_frame (char const *buffer,
-                                       std::size_t length)
+                                       size_t length)
 {
   int const result = this->transport_->send (buffer, length, 0);
   return result < 0 ? result : 0;

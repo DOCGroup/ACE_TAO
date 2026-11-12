@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef CLERK_I_H
 #define CLERK_I_H
 
@@ -35,7 +34,7 @@
 class Clerk_i
 {
 public:
-  static constexpr std::size_t DEFAULT_SERVER_COUNT {8};
+  static constexpr size_t DEFAULT_SERVER_COUNT {8};
 
   Clerk_i () = default;
 

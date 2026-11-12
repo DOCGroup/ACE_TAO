@@ -23,7 +23,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   //FUZZ: enable check_for_lack_ACE_OS
 
   Message msg {};
-  for (std::size_t i {}; i < payload_size; ++i)
+  for (size_t i {}; i < payload_size; ++i)
     {
       msg.payload[i] = static_cast<unsigned short> (i);
     }

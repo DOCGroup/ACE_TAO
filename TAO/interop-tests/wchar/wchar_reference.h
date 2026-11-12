@@ -17,8 +17,8 @@
 
 #include <cstddef>
 
-constexpr std::size_t NUM_KEYS = 1;
-constexpr std::size_t WARRAY_LENGTH = 10;
+constexpr size_t NUM_KEYS = 1;
+constexpr size_t WARRAY_LENGTH = 10;
 
 #include "ace/OS_NS_wchar.h"
 

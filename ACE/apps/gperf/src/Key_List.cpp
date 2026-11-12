@@ -55,7 +55,7 @@ string_compare_prefix (bool const case_insensitive)
 char const *
 generated_size_type ()
 {
-  return "std::size_t";
+  return "size_t";
 }
 
 char const *
@@ -565,8 +565,8 @@ Key_List::output_cpp17_constants (bool static_storage)
 
   if (use_word_lengths)
     {
-      ACE_OS::printf ("%sconstexpr std::size_t MIN_WORD_LENGTH {%d};\n"
-                      "%sconstexpr std::size_t MAX_WORD_LENGTH {%d};\n",
+      ACE_OS::printf ("%sconstexpr size_t MIN_WORD_LENGTH {%d};\n"
+                      "%sconstexpr size_t MAX_WORD_LENGTH {%d};\n",
                       storage, min_key_len, storage, max_key_len);
       emitted = true;
     }
@@ -916,7 +916,6 @@ Key_List::output_keyword_table ()
 
   if (0 < head->hash_value)
     ACE_OS::printf ("      ");
-
 
   int column_defaults;
 
@@ -1664,9 +1663,9 @@ Key_List::output_lookup_function ()
                   "            return %s;\n", generated_null_pointer ());
         }
       ACE_OS::printf ("          else\n            {\n");
-      ACE_OS::printf ("              std::size_t const offset = slot > 0\n"
-                      "                ? key + static_cast<std::size_t> (slot) - MAX_HASH_VALUE\n"
-                      "                : key + MAX_HASH_VALUE - static_cast<std::size_t> (-slot);\n");
+      ACE_OS::printf ("              size_t const offset = slot > 0\n"
+                      "                ? key + static_cast<size_t> (slot) - MAX_HASH_VALUE\n"
+                      "                : key + MAX_HASH_VALUE - static_cast<size_t> (-slot);\n");
       if (this->array_type_ == Key_List::default_array_type)
         {
           char const *base_type = option[CONSTANT]
@@ -2041,7 +2040,6 @@ Key_List::string_sort ()
   this->head = merge_sort (head);
   key_sort = 0;
 }
-
 
 // Dumps the key list to stderr stream.
 

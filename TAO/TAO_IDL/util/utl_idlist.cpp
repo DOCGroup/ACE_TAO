@@ -314,10 +314,10 @@ UTL_IdList::get_string_copy () const
    * Absolute Names have "::" as the first item in the idlist, so delimiters
    * have to start be inserted depending on if the name is absolute or not
    */
-  std::size_t const delimiter_start = is_absolute () ? 1 : 0;
+  size_t const delimiter_start = is_absolute () ? 1 : 0;
 
   std::string result;
-  std::size_t n {};
+  size_t n {};
   UTL_IdList const *item_list = this;
   while (item_list != nullptr)
     {

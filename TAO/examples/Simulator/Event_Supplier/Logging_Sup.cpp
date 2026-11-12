@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Logging_Sup.h"
 #include "NavWeapC.h"
 
@@ -36,7 +35,6 @@ constexpr char usage [] =
 "                 [-f name of scheduler input data file]\n"
 "                 [-d name of scheduler header dump file]\n"
 "                 [-s to suppress data updates by EC]]\n";
-
 
 Logging_Supplier::Logging_Supplier (int argc, ACE_TCHAR** argv)
 : argc_(argc),
@@ -79,7 +77,7 @@ Logging_Supplier::start_generating_events ()
     }
 
   CORBA::Any any;
-  std::size_t schedule_index = 0;
+  size_t schedule_index = 0;
 
   do
   {
@@ -229,7 +227,7 @@ Logging_Supplier::load_schedule_data
 void
 Logging_Supplier::insert_event_data (CORBA::Any &data,
                                      std::vector<Schedule_Viewer_Data *> const &schedule_data,
-                                     std::size_t &schedule_index)
+                                     size_t &schedule_index)
 {
   static u_long last_completion = 0;
 
@@ -284,7 +282,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.computation_time =  ORBSVCS_Time::zero ();
         navigation_.update_data =       update_data_;
 
-
         // because the scheduler data does not supply these values
         navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         navigation_.overhead = (double) (ACE_OS::rand() % 10);
@@ -316,7 +313,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
             weapons_.deadline_time = FIVE_HZ_PERIOD;
           }
 
-
         weapons_.number_of_weapons = 2;
         weapons_.weapon1_identifier = CORBA::string_alloc (30);
         std::strcpy (weapons_.weapon1_identifier.inout (),"Photon Torpedoes");
@@ -340,7 +336,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.computation_time =  ORBSVCS_Time::zero ();
         weapons_.update_data =       update_data_;
 
-
         data <<= weapons_;
       }
       else {
@@ -349,7 +344,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
                     "unrecognized operation name [%s]",
                     (*sched_data)->operation_name));
       }
-
 
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
@@ -470,7 +464,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb_Manager.init (argc,
                         argv);
-
 
       // Create the demo supplier.
       Logging_Supplier *event_Supplier_ptr;

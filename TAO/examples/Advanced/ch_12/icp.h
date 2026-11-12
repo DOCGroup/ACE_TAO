@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _ICP_H
 #define _ICP_H
 
@@ -25,7 +24,7 @@ extern "C"
   int ICP_get (unsigned long id,
                char const *attr,
                void *value,
-               std::size_t len);
+               size_t len);
   // Set attribute
   int ICP_set (unsigned long id,
                char const *attr,

@@ -16,7 +16,7 @@ send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer)
   events[0].header.ttl = 1;
   events[0].header.source = SOURCE_ID;
 
-  for (std::size_t i {}; i < 100; ++i)
+  for (size_t i {}; i < 100; ++i)
     {
       // Send 1 event of each type.
       events[0].header.type = A_EVENT_TYPE;

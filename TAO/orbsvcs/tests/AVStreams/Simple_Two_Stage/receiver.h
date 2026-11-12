@@ -52,13 +52,13 @@ public:
   int dump_samples (ACE_TCHAR const *file);
 
 private:
-  static constexpr std::size_t max_stats_samples {1000010};
+  static constexpr size_t max_stats_samples {1000010};
 
   /// Keeping a count of the incoming frames.
   int frame_count_ {};
-  std::size_t bytes_received_ {};
+  size_t bytes_received_ {};
   std::array<int, max_stats_samples> samples_ {};
-  std::size_t samples_count_ {};
+  size_t samples_count_ {};
   bool first_sample_ {true};
   ACE_Time_Value previous_sample_time_ {};
 

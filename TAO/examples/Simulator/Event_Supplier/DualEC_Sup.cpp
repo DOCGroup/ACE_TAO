@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"
 
@@ -272,7 +271,6 @@ DualEC_Supplier::Terminator::shutdown ()
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
-
 // Run the ORB event loop.
 
 ACE_THR_FUNC_RETURN
@@ -281,7 +279,6 @@ DualEC_Supplier::run_orb (void *)
   TAO_ORB_Core_instance ()->orb ()->run ();
   return 0;
 }
-
 
 // Run navigation event generation thread.
 
@@ -303,7 +300,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
       CORBA::Any any;
 
       long total_sent = 0;
-      std::size_t nav_index = 0;
+      size_t nav_index = 0;
 
       do
       {
@@ -356,7 +353,6 @@ DualEC_Supplier::run_nav_thread (void *arg)
   return 0;
 }
 
-
 // Run weapons event generation thread.
 
 ACE_THR_FUNC_RETURN
@@ -377,7 +373,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
       CORBA::Any any;
 
       long total_sent = 0;
-      std::size_t weap_index = 0;
+      size_t weap_index = 0;
 
       do
       {
@@ -418,7 +414,6 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
   return 0;
 }
-
 
 // Create two scheduling service instances, register
 // them with the Naming Service.
@@ -470,7 +465,6 @@ DualEC_Supplier::create_schedulers ()
             this->sched_hi_->
               create (this->rt_info_dummy_hi_.entry_point);
 
-
           this->sched_hi_->
             set (this->sched_hi_rt_info_hi_,
                  static_cast<RtecScheduler::Criticality_t> (this->rt_info_dummy_hi_.criticality),
@@ -483,11 +477,9 @@ DualEC_Supplier::create_schedulers ()
                  this->rt_info_dummy_hi_.threads,
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type));
 
-
           this->sched_hi_rt_info_lo_ =
             this->sched_hi_->
               create (this->rt_info_dummy_lo_.entry_point);
-
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_lo_,
@@ -501,11 +493,9 @@ DualEC_Supplier::create_schedulers ()
                  this->rt_info_dummy_lo_.threads,
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type));
 
-
           this->sched_hi_rt_info_hi_ =
             this->sched_lo_->
               create (this->rt_info_dummy_hi_.entry_point);
-
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_hi_,
@@ -519,11 +509,9 @@ DualEC_Supplier::create_schedulers ()
                  this->rt_info_dummy_hi_.threads,
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type));
 
-
           this->sched_hi_rt_info_lo_ =
             this->sched_lo_->
               create (this->rt_info_dummy_lo_.entry_point);
-
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_lo_,
@@ -546,7 +534,6 @@ DualEC_Supplier::create_schedulers ()
 
   return 0;
 }
-
 
 // Create two event service instances, registers
 // them with the Naming Service.
@@ -658,7 +645,6 @@ DualEC_Supplier::start_generating_events ()
       // Compute the scheduling information, based on the provided RT_Infos.
       this->compute_schedules ();
 
-
       // Load the scheduling data for the simulation.
       this->load_schedule_data ();
 
@@ -758,7 +744,6 @@ DualEC_Supplier::load_schedule_data ()
                       return;
                     }
 
-
                   if ((std::strcmp(data.operation_name, "high_20") == 0) ||
                       (std::strcmp(data.operation_name, "low_20") == 0))
                     {
@@ -846,7 +831,6 @@ DualEC_Supplier::load_schedule_data ()
     }
 }
 
-
 // Get command line options.
 
 unsigned int
@@ -923,7 +907,6 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                                argv[0]),
                                1);
           break;
-
 
         case 'w':
           temp = ACE_OS::atoi (get_opt.opt_arg ());
@@ -1004,7 +987,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "%s: ACE_OS::sched_params failed\n", argv[0]));
     }
 
-
   try
     {
       // Initialize ORB.
@@ -1012,7 +994,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb_Manager.init (argc,
                         argv);
-
 
       // Create the demo supplier.
       DualEC_Supplier *event_Supplier_ptr;

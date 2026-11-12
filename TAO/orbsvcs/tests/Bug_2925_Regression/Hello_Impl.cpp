@@ -32,7 +32,7 @@ Hello_Impl::shutdown ()
 }
 
 MessageLog::MessageLog (int num)
-  : received_ (static_cast<std::size_t> (num))
+  : received_ (static_cast<size_t> (num))
 {
 }
 
@@ -41,9 +41,9 @@ MessageLog::register_message_recv (int message_num)
 {
   ACE_GUARD (ACE_Mutex, guard, this->mutex_);
   if (message_num >= 0 &&
-      static_cast<std::size_t> (message_num) < this->received_.size ())
+      static_cast<size_t> (message_num) < this->received_.size ())
     {
-      ++this->received_[static_cast<std::size_t> (message_num)];
+      ++this->received_[static_cast<size_t> (message_num)];
     }
 }
 
@@ -52,7 +52,7 @@ MessageLog::report_statistics ()
 {
   ACE_GUARD_RETURN (ACE_Mutex, guard, this->mutex_, -1);
   int count {};
-  for (std::size_t i = 0; i < this->received_.size (); ++i)
+  for (size_t i = 0; i < this->received_.size (); ++i)
     {
       count += this->received_[i];
 

@@ -7,9 +7,9 @@
 #include <cstddef>
 #include <cstring>
 
-void dump_utf16 (ACEXML_UTF16 const *data, std::size_t len)
+void dump_utf16 (ACEXML_UTF16 const *data, size_t len)
 {
-  for (std::size_t i {}; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "%04x", data[i]));
 
@@ -30,7 +30,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   std::array<ACEXML_UTF16, 18> org {};
   ACEXML_UCS4 temp {1};
 
-  std::size_t x {};
+  size_t x {};
 
   for (; temp < 0x10000; ++x, temp <<= 1)
     {

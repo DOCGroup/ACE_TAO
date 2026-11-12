@@ -57,7 +57,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::end ()
   return Iterator (this->impl_.end ());
 }
 
-template<class PROXY> ACE_INLINE std::size_t
+template<class PROXY> ACE_INLINE size_t
 TAO_ESF_Proxy_RB_Tree<PROXY>::size () const
 {
   return this->impl_.current_size ();

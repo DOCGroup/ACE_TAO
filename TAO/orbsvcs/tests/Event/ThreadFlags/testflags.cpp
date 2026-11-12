@@ -174,11 +174,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }};
 
   int returnval {};
-  std::size_t const numtests = static_tests.size ();
-  std::size_t const requested_tests = argc > 1
-    ? static_cast<std::size_t> (argc - 1)
+  size_t const numtests = static_tests.size ();
+  size_t const requested_tests = argc > 1
+    ? static_cast<size_t> (argc - 1)
     : numtests;
-  for (std::size_t i {}; i < requested_tests; ++i)
+  for (size_t i {}; i < requested_tests; ++i)
     {
       ACE_TCHAR *end {};
       long const parsed_test = argc > 1
@@ -194,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           continue;
         }
 
-      if (parsed_test < 0 || static_cast<std::size_t> (parsed_test) >= numtests)
+      if (parsed_test < 0 || static_cast<size_t> (parsed_test) >= numtests)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Invalid test number\n")));
@@ -202,7 +202,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           continue;
         }
 
-      std::size_t const test_number = static_cast<std::size_t> (parsed_test);
+      size_t const test_number = static_cast<size_t> (parsed_test);
       ExpectedValues results;
       ThreadFlagsTest const &test = static_tests[test_number];
       ACE_DEBUG ((LM_DEBUG, "Test #%B for %s...", test_number,

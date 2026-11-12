@@ -14,7 +14,7 @@
 #include <memory>
 
 ACE_TString ior_output_file { ACE_TEXT ("pong.ior") };
-std::size_t message_size { 64 };
+size_t message_size { 64 };
 bool respond { true };
 AVStreams::protocolSpec pong_protocols;
 AVStreams::protocolSpec ping_protocols;
@@ -63,7 +63,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
             message_size = 64;
           }
           else
-            message_size = static_cast<std::size_t> (requested_message_size);
+            message_size = static_cast<size_t> (requested_message_size);
         }
         break;
 

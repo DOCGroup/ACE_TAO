@@ -37,7 +37,7 @@ public:
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (std::size_t i {}; i < 10; ++i)
+        for (size_t i {}; i < 10; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -81,11 +81,11 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
       return 1;
     }
 
-  constexpr std::size_t allocation_count {5};
-  constexpr std::size_t allocation_size {10 * 1024 * 1024};
+  constexpr size_t allocation_count {5};
+  constexpr size_t allocation_size {10 * 1024 * 1024};
   std::array<std::unique_ptr<char[]>, allocation_count> allocations {};
 
-  for (std::size_t i {}; i < allocations.size () * 2; ++i)
+  for (size_t i {}; i < allocations.size () * 2; ++i)
     {
       ACE_OS::sleep (2);
 

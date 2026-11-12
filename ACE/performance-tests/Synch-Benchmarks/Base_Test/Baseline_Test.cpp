@@ -46,7 +46,7 @@ Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
                                "%d is not a valid value for iteration\n",
                                tmp), -1);
           else
-            this->iteration_ = static_cast<std::size_t> (tmp);
+            this->iteration_ = static_cast<size_t> (tmp);
         }
         break;
 
@@ -109,7 +109,7 @@ Baseline_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Baseline_Test_Options::reset_params (std::size_t iteration,
+Baseline_Test_Options::reset_params (size_t iteration,
                                      Baseline_Yield_Method yield)
 {
   this->current_iteration_ = 0;

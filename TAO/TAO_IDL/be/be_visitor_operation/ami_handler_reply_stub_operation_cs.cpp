@@ -145,7 +145,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
 
   std::string exception_data_arg = "0";
-  std::size_t excep_count {};
+  size_t excep_count {};
 
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
@@ -347,7 +347,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
 
       *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
     }
-
 
   // Invoke the callback method
   *os << "// Invoke the call back method." << be_nl

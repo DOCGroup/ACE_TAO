@@ -65,7 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_SCOPE_UTL_SCOPE_HH
 #define _UTL_SCOPE_UTL_SCOPE_HH
 
-
 // This is the base class for name scoping. Each entity which can
 // be directly contained in a naming scope has an add() function
 // defined for it. The functions defined on the base scoping class
@@ -548,7 +547,7 @@ private:
   UTL_Scope::ScopeIterationKind stage;
 
   // What location in stage?
-  std::size_t il;
+  size_t il;
 };
 
 #include "utl_scope_T.cpp"

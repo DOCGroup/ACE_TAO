@@ -10,7 +10,7 @@
 #endif /* __ACE_INLINE__ */
 
 int
-Task_Stats::init (std::size_t max_samples)
+Task_Stats::init (size_t max_samples)
 {
   std::vector<Sample> samples;
   try
@@ -48,7 +48,7 @@ Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg)
   // first dump what the caller has to say.
   ACE_OS::fprintf (output_file.get (), "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
-  for (std::size_t i = 0; i < this->samples_count_; ++i)
+  for (size_t i = 0; i < this->samples_count_; ++i)
     {
       ACE_OS::fprintf (output_file.get (),
                        "%u \t %d\n",

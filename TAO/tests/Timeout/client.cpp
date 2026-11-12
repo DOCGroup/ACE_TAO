@@ -48,7 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 enum class TO_TYPE { none, orb, thread, object, count };
-constexpr std::size_t to_type_count = static_cast<std::size_t> (TO_TYPE::count);
+constexpr size_t to_type_count = static_cast<size_t> (TO_TYPE::count);
 constexpr char const * to_type_names[to_type_count] = {"none", "orb", "thread", "object"};
 
 static std::array<int, to_type_count> timeout_count {};
@@ -57,7 +57,7 @@ static std::array<int, to_type_count> in_time_count {};
 void
 send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb, Simple_Server_ptr server, CORBA::Long t)
 {
-  std::size_t const index = static_cast<std::size_t> (ctype);
+  size_t const index = static_cast<size_t> (ctype);
   try
     {
       server->echo (0, t);
@@ -215,7 +215,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int timeout_count_total {};
       int in_time_count_total {};
-      for (std::size_t i = 0; i < to_type_count; ++i)
+      for (size_t i = 0; i < to_type_count; ++i)
         {
           timeout_count_total += timeout_count[i];
           in_time_count_total += in_time_count[i];

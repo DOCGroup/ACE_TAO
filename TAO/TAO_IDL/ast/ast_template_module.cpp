@@ -49,7 +49,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       return false;
     }
 
-  std::size_t slot {};
+  size_t slot {};
 
   for (AST_Decl *d : *args)
     {

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H
 #include /**/ "ace/pre.h"
@@ -174,7 +173,7 @@ public:
   using const_pointer = const T *;
   using reference = T &;
   using const_reference = const T &;
-  using size_type = std::size_t;
+  using size_type = size_t;
   using difference_type = std::ptrdiff_t;
   template <typename U> struct rebind { using other = ACE_Allocator_Std_Adapter<U>; };
 
@@ -183,7 +182,7 @@ public:
   template <typename U>
   ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}
 
-  static T* allocate(std::size_t n)
+  static T* allocate(size_t n)
   {
     void* raw_mem = ACE_Allocator::instance()->malloc(n * sizeof(T));
 #if !defined (ACE_INTEGRITY) || _HAS_EXCEPTIONS
@@ -192,7 +191,7 @@ public:
     return static_cast<T*>(raw_mem);
   }
 
-  static void deallocate(T* ptr, std::size_t)
+  static void deallocate(T* ptr, size_t)
   {
     ACE_Allocator::instance()->free(ptr);
   }

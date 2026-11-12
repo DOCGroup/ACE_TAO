@@ -109,7 +109,7 @@ private:
   TAO_StreamCtrl *streamctrl_ {};
 
   /// Number of frames sent.
-  std::size_t frame_count_ {};
+  size_t frame_count_ {};
 
   /// Command-line settings for the sender.
   Options options_;

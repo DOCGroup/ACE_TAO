@@ -1,4 +1,4 @@
-ACE_INLINE std::size_t
+ACE_INLINE size_t
 Baseline_Test_Base::iteration () const
 {
   return this->iteration_;

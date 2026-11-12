@@ -58,7 +58,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result =
+      size_t const result =
         ACE_OS::fwrite (frame->rd_ptr (),
                         1,
                         frame->length (),
@@ -90,13 +90,13 @@ Receiver_Callback::dump_samples (ACE_TCHAR const *file)
                        ACE_TEXT ("Stats file cannot be opened\n")),
                       -1);
 
-  for (std::size_t i = 0; i < this->samples_count_; ++i)
+  for (size_t i = 0; i < this->samples_count_; ++i)
     this->stats_.sample (static_cast<ACE_UINT64> (this->samples_ [i]));
 
   this->stats_.dump_results (
     ACE_TEXT ("Inter Frame Arrival Time Statistics "), stats_file.get (), 1);
 
-  for (std::size_t i = 0; i < this->samples_count_; ++i)
+  for (size_t i = 0; i < this->samples_count_; ++i)
     std::fprintf (stats_file.get (), "%d\n", this->samples_ [i]);
 
   ACE_DEBUG ((LM_DEBUG,

@@ -329,7 +329,7 @@ testArray_compressor (::Compression::Compressor_var const& compressor)
 
     ACE_HEX_DUMP((LM_INFO, comp_data, (sizeof(comp_data) - 1), ACE_TEXT("Compression Data")));
 
-    for (std::size_t i = 0; i < comp_result.size (); i++) {
+    for (size_t i = 0; i < comp_result.size (); i++) {
         COMP_RESULT const &result = comp_result[i]; // Get a reference to our result for testing output
 
         Compression::Buffer in_data (

@@ -44,16 +44,15 @@ ACE_CDR::ULong Options_Manager::server_accept_addr=INADDR_ANY;
 ACE_CDR::UShort Options_Manager::payload_size_power_of_2=31;
 std::array<ACE_CDR::ULong, Options_Manager::max_num_secondary_connect_addrs>
   Options_Manager::secondary_connect_addrs {};
-std::size_t Options_Manager::num_secondary_connect_addrs {};
+size_t Options_Manager::num_secondary_connect_addrs {};
 std::array<ACE_CDR::ULong, Options_Manager::max_num_secondary_accept_addrs>
   Options_Manager::secondary_accept_addrs {};
-std::size_t Options_Manager::num_secondary_accept_addrs {};
+size_t Options_Manager::num_secondary_accept_addrs {};
 ACE_CDR::UShort Options_Manager::_usage {};
 ACE_CDR::UShort Options_Manager::_error {};
 Options_Manager::string_type Options_Manager::__program_name {};
 ACE_CDR::Boolean Options_Manager::__initialized {};
 const ACE_TCHAR* Options_Manager::_error_message {};
-
 
 Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * const opts_set)
 {
@@ -444,7 +443,7 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
   ACE_OS::fprintf (out, "%s - Measures round trip latency statistics of ACE synchronous\n",
                    ACE_TEXT_ALWAYS_CHAR (__program_name.c_str ()));
   // indent past program name
-  for (std::size_t i = 0; i < __program_name.size (); ++i)
+  for (size_t i = 0; i < __program_name.size (); ++i)
     ACE_OS::fprintf (out, " ");
 
   if (ACE_OS::strstr(__program_name.c_str (), ACE_TEXT ("SOCK_STREAM_clt")) ||

@@ -37,7 +37,7 @@ constexpr int SMALL_OCTET_SEQ_LENGTH = 16;
 constexpr int LARGE_OCTET_SEQ_LENGTH = 4096;
 constexpr int SMALL_LONG_SEQ_LENGTH = 4;
 constexpr int LARGE_LONG_SEQ_LENGTH = 1024;
-constexpr std::size_t NUMBER_OF_TESTS = 10;
+constexpr size_t NUMBER_OF_TESTS = 10;
 
 /**
  * @class DII_Cubit_Client
@@ -716,7 +716,7 @@ DII_Cubit_Client::run ()
   // Order and format of test calls matches that of SII (IDL) tests
   // for easy comparison.
 
-  for (std::size_t j = 0; j < NUMBER_OF_TESTS; j++)
+  for (size_t j = 0; j < NUMBER_OF_TESTS; j++)
     {
       this->call_count_ = 0;
 

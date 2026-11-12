@@ -25,7 +25,7 @@ public:
                  AST_Type_List const& supports,
                  long n_supports,
                  AST_Interface_List const& supports_flat,
-                 std::size_t n_supports_flat);
+                 size_t n_supports_flat);
 
   ~AST_Component () override;
 

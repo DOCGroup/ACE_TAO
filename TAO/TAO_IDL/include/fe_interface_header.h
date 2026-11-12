@@ -98,9 +98,9 @@ public:
   // Data Accessors.
   UTL_ScopedName *name () const;
   AST_Type_List const& inherits () const;
-  std::size_t n_inherits () const;
+  size_t n_inherits () const;
   AST_Interface_List const& inherits_flat () const;
-  std::size_t n_inherits_flat () const;
+  size_t n_inherits_flat () const;
 
   bool is_local () const;
   // See if we are a local interface.

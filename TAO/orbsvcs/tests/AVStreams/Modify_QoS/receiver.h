@@ -44,7 +44,7 @@ public:
 
 private:
   /// Keeping a count of the incoming frames.
-  std::size_t frame_count_ {};
+  size_t frame_count_ {};
 
   /// Related stream control.
   AVStreams::StreamCtrl_ptr streamctrl_ {};

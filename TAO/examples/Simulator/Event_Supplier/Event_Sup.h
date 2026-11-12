@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef EVENT_SUP_H
 #define EVENT_SUP_H
 
@@ -64,12 +63,11 @@ public:
   /// Load the scheduling information into memory
   void load_schedule_data (std::vector<Schedule_Viewer_Data *> &schedule_data);
 
-
 private:
   /// just a helper to put all the information into the CORBA::Any
   void insert_event_data (CORBA::Any &data,
                           std::vector<Schedule_Viewer_Data *> const &schedule_data,
-                          std::size_t &schedule_index);
+                          size_t &schedule_index);
 
   unsigned int get_options (int argc, ACE_TCHAR *argv []);
 

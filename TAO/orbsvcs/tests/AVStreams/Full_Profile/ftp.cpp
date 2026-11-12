@@ -15,7 +15,7 @@ FTP_Client_Callback::handle_timeout (void *)
     {
       ACE_Message_Block mb (BUFSIZ);
       ACE_DEBUG ((LM_DEBUG, "FTP_Client_Callback::handle_timeout\n"));
-      std::size_t const bytes_read =
+      size_t const bytes_read =
         std::fread (mb.wr_ptr (), 1, mb.size (), CLIENT::instance ()->file ());
 
       if (bytes_read == 0)

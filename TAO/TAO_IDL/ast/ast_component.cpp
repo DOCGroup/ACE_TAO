@@ -21,7 +21,7 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                               AST_Type_List const& supports,
                               long n_supports,
                               AST_Interface_List const& supports_flat,
-                              std::size_t n_supports_flat)
+                              size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_component,
@@ -101,7 +101,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 
   // OK, loop through supported interfaces.
 
-  for (std::size_t j {}; j < supported.size (); ++j)
+  for (size_t j {}; j < supported.size (); ++j)
     {
       if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {

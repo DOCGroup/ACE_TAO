@@ -28,17 +28,17 @@ int ACE_TMAIN (int, ACE_TCHAR **)
   char const *command_sequence = "CommandSeq#14";
   int const written = std::snprintf (mb->wr_ptr (), mb->space (), "%s",
                                      command_sequence);
-  if (written < 0 || static_cast<std::size_t> (written) >= mb->space ())
+  if (written < 0 || static_cast<size_t> (written) >= mb->space ())
     return -1;
   // Move the wr_ptr() forward in the buffer by the
   // amount of data we just put in.
-  mb->wr_ptr (static_cast<std::size_t> (written) + 1);
+  mb->wr_ptr (static_cast<size_t> (written) + 1);
 // Listing 2
 // Listing 3 code/ch12
   ACE_DEBUG ((LM_DEBUG,
              ACE_TEXT ("Command Sequence --> %C\n"),
              mb->rd_ptr ()));
-  mb->rd_ptr (static_cast<std::size_t> (written) + 1);
+  mb->rd_ptr (static_cast<size_t> (written) + 1);
   mb.reset ();
 // Listing 3
 // Listing 4 code/ch12

@@ -371,7 +371,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   std::unique_ptr<AST_Expression> v;
   std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> v_list;
 
-  for (std::size_t i {}; i < node->n_dims (); ++i)
+  for (size_t i {}; i < node->n_dims (); ++i)
     {
       // ACE_NEW_RETURN requires a raw output pointer; adopt it into v immediately.
       AST_Param_Holder *ph = node->dims ()[i]->param_holder ();
@@ -636,7 +636,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 
   FE_Utils::T_PARAMLIST_INFO const& t_params =
     *this->ctx_->template_params ();
-  for (std::size_t i {}; i < t_params.size (); ++i)
+  for (size_t i {}; i < t_params.size (); ++i)
     {
       FE_Utils::T_Param_Info const& item = t_params[i];
 
@@ -714,7 +714,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
         {
           std::string const& head (tmp->local_name ()->get_string ());
 
-          std::size_t const start = name.find (head) + 2;
+          size_t const start = name.find (head) + 2;
 
           std::string const tail = name.substr (start + head.length ());
 

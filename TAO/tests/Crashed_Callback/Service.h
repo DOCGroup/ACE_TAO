@@ -35,17 +35,17 @@ private:
   /**
    * @return Number of exceptions raised
    */
-  std::size_t call_are_you_there (Test::Crashed_Callback_ptr callback);
+  size_t call_are_you_there (Test::Crashed_Callback_ptr callback);
 
   /// Call the test_oneway method mutiple times.
   /**
    * @return Number of exceptions raised
    */
-  std::size_t call_test_oneway (Test::Crashed_Callback_ptr callback);
+  size_t call_test_oneway (Test::Crashed_Callback_ptr callback);
 
 private:
   /// Count the number of tests executed
-  std::size_t test_count_ {};
+  size_t test_count_ {};
 };
 
 #include /**/ "ace/post.h"

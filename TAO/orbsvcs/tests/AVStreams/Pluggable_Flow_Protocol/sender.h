@@ -79,7 +79,7 @@ private:
   Sender_File_Ptr input_file_ {nullptr, std::fclose};
   ACE_Message_Block mb_ {BUFSIZ};
   TAO_AV_Protocol_Object *protocol_object_ {};
-  std::size_t frame_count_ {};
+  size_t frame_count_ {};
 };
 
 #endif /* TAO_AV_TIMESTAMP_SENDER_H */

@@ -300,7 +300,7 @@ bool TestServer::verifyEnvironment () const
   }
 
   // Check env vars
-  for (std::size_t i {}; i < options_.expected_env.size (); ++i)
+  for (size_t i {}; i < options_.expected_env.size (); ++i)
   {
     char const *realValue = std::getenv (options_.expected_env[i].first.c_str ());
     if (realValue == nullptr)

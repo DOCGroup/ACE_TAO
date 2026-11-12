@@ -33,7 +33,7 @@ public:
 
   int svc () override
   {
-    constexpr std::size_t monitor_samples = 10;
+    constexpr size_t monitor_samples = 10;
     std::ostringstream name_stream;
     name_stream << "Message_Queue_" << ACE_OS::getpid () << '_' << this->addr_;
     std::string const name_str = name_stream.str ();
@@ -54,7 +54,7 @@ public:
 
         /// Query the monitor for its data every second, and call the
         /// appropriate display function.
-        for (std::size_t i {}; i < monitor_samples; ++i)
+        for (size_t i {}; i < monitor_samples; ++i)
           {
             ACE_OS::sleep (1);
 
@@ -75,8 +75,8 @@ int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-  constexpr std::size_t iterations = 10;
-  constexpr std::size_t enqueue_iterations = 6;
+  constexpr size_t iterations = 10;
+  constexpr size_t enqueue_iterations = 6;
 
   /// Create a message queue with a built-in monitor (since ACE was
   /// compiled with monitors enabled) and add the monitor to the
@@ -92,7 +92,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   Monitor_Checker monitor_checker (&monitored_queue);
   monitor_checker.activate ();
 
-  for (std::size_t i {}; i < iterations; ++i)
+  for (size_t i {}; i < iterations; ++i)
     {
       ACE_OS::sleep (1);
 

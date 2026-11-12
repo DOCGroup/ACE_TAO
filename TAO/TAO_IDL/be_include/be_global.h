@@ -78,8 +78,8 @@ public:
   // To switch between changing or non-changing standard include
   // files (e.g. tao/corba.h)  so that #include statements can be
   // generated with ""s or <>s respectively.
-  void changing_standard_include_files (std::size_t changing);
-  std::size_t changing_standard_include_files ();
+  void changing_standard_include_files (size_t changing);
+  size_t changing_standard_include_files ();
 
   // Helper functions that generate the file names for the C++ mapping
   // generated code.
@@ -615,7 +615,6 @@ public:
   /// Set the gen_static_desc_operations_ member.
   void gen_static_desc_operations (bool val);
 
-
   /**
    * Set the directory where all the IDL-Compiler-Generated files are
    * to be kept. Default is current directory from which the
@@ -954,8 +953,8 @@ public:
   unsigned long tab_size () const;
   void tab_size (unsigned long val);
 
-  std::size_t max_line_length () const;
-  void max_line_length (std::size_t val);
+  size_t max_line_length () const;
+  void max_line_length (size_t val);
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
@@ -972,7 +971,7 @@ private:
    * files (e.g. tao/corba.h)  so that #include statements can be
    * generated with ""s or <>s respectively.
    */
-  std::size_t changing_standard_include_files_ {1};
+  size_t changing_standard_include_files_ {1};
 
   // Macros and includes used to export classes from generated code.
   std::string skel_export_macro_;
@@ -1146,7 +1145,6 @@ private:
     * value for output_dir_ is used.
     */
   std::string exec_output_dir_;
-
 
   /// do we support Any operators?
   bool any_support_ {true};
@@ -1348,7 +1346,7 @@ private:
   unsigned int tab_size_ {2};
 
   /// Maximum generated line length used by compact formatting decisions.
-  std::size_t max_line_length_ {120};
+  size_t max_line_length_ {120};
 
   /// Are we generating STL types?
   bool alt_mapping_ {};

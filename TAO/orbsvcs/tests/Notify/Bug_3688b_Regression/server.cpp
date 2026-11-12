@@ -56,7 +56,7 @@ publish ()
 
   broadcaster.send_data ();
 
-  std::size_t const received_count = listener.received_data.size ();
+  size_t const received_count = listener.received_data.size ();
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) listener.received_data.size()=%B\n"),
               received_count));

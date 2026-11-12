@@ -94,8 +94,8 @@ Server::write_frame (ACE_Message_Block *frame)
 {
   while (frame != nullptr)
     {
-      std::size_t const bytes_to_write = frame->length ();
-      std::size_t const bytes_written = std::fwrite (frame->rd_ptr (),
+      size_t const bytes_to_write = frame->length ();
+      size_t const bytes_written = std::fwrite (frame->rd_ptr (),
                                                      1,
                                                      bytes_to_write,
                                                      this->output_file_.get ());

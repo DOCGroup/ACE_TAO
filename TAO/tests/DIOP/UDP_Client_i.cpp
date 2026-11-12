@@ -9,7 +9,7 @@ UDP_Client_i::UDP_Client_i (CORBA::ORB_ptr orb,
                             UDP_ptr udp,
                             UDP_ptr udpHandler,
                             unsigned int msec,
-                            std::size_t iterations)
+                            size_t iterations)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , udp_ (UDP::_duplicate (udp))
   , udpHandler_ (UDP::_duplicate (udpHandler))
@@ -28,7 +28,7 @@ UDP_Client_i::svc ()
       CORBA::String_var const corba_client_name =
         CORBA::string_dup (client_name.c_str ());
 
-      for (std::size_t i = 0;
+      for (size_t i = 0;
            i < iterations_;
            i++)
         {
@@ -63,7 +63,6 @@ UDP_Client_i::svc ()
       ex._tao_print_exception ("\tException");
       return -1;
     }
-
 
   return 0;
 }

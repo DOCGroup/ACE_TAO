@@ -2,7 +2,6 @@
 
 // The types defined in ACE_CDR are more complete that those in Basic_Types.h
 
-
 #ifndef OPTIONS_MANAGER_H
 #define OPTIONS_MANAGER_H
 
@@ -46,14 +45,14 @@ public:
   static ACE_CDR::UShort payload_size_power_of_2;
 
   // Secondary client_connect_addrs for SCTP SOCK_SEQPACK test
-  static constexpr std::size_t max_num_secondary_connect_addrs = 100;
+  static constexpr size_t max_num_secondary_connect_addrs = 100;
   static std::array<ACE_CDR::ULong, max_num_secondary_connect_addrs> secondary_connect_addrs;
-  static std::size_t num_secondary_connect_addrs;
+  static size_t num_secondary_connect_addrs;
 
   // Secondary server_accept_addrs for SCTP SOCK_SEQPACK test
-  static constexpr std::size_t max_num_secondary_accept_addrs = 100;
+  static constexpr size_t max_num_secondary_accept_addrs = 100;
   static std::array<ACE_CDR::ULong, max_num_secondary_accept_addrs> secondary_accept_addrs;
-  static std::size_t num_secondary_accept_addrs;
+  static size_t num_secondary_accept_addrs;
 
   static ACE_CDR::UShort _error;
   static const ACE_TCHAR* _error_message;

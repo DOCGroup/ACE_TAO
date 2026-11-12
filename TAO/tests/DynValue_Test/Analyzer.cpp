@@ -102,7 +102,7 @@ DynAnyAnalyzer::get_correct_base_type (
   // derived type until that type's members are exhausted
   // and so on until we reach the member we have asked for.
 
-  std::size_t current_base = base_types.size ();
+  size_t current_base = base_types.size ();
   if (current_base == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -198,7 +198,7 @@ DynAnyAnalyzer::analyze (
         BaseTypesList_t base_types;
         get_base_types (tc.in (), base_types);
 
-        for (std::size_t i = 0; i < base_types.size (); ++i)
+        for (size_t i = 0; i < base_types.size (); ++i)
           {
             if (i)
               {

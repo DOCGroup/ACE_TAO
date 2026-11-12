@@ -390,7 +390,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   // from the ORB, its reference count is increased.
 
   CORBA::ValueFactory_var factory;
-  CORBA::Boolean requires_truncation {false};
+  CORBA::Boolean requires_truncation {};
   size_t const num_ids = ids.size ();
   char const *id = (num_ids) ? ids[0].c_str () : "{Null}";
   for (size_t i = 0u; i < num_ids; ++i)

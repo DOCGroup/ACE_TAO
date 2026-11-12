@@ -21,7 +21,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 
-constexpr std::size_t NUMBER_OF_TESTS = 11;
+constexpr size_t NUMBER_OF_TESTS = 11;
 
 /**
  * @class Admin_Client
@@ -104,7 +104,7 @@ private:
   bool all_tests_ {true};
 
   /// Array index of the selected test function.
-  std::size_t which_test_ {};
+  size_t which_test_ {};
 
   /// # of times to run each test.
   CORBA::ULong iterations_ {1};

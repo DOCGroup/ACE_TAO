@@ -100,7 +100,7 @@ namespace XSCRT
       {
         if (s == nullptr)
           return String_Ptr (nullptr, Deleter{});
-        std::size_t const n (xercesc::XMLString::stringLen (s));
+        size_t const n (xercesc::XMLString::stringLen (s));
         String_Ptr r (new XMLCh[n + 1], Deleter{});
         std::copy (s, s + n + 1, r.get ());
         return r;
@@ -136,10 +136,10 @@ namespace XSCRT
         return std::basic_string<wchar_t> ();
 
       std::basic_string<wchar_t> result;
-      std::size_t const length (xercesc::XMLString::stringLen (s));
+      size_t const length (xercesc::XMLString::stringLen (s));
       result.reserve (length);
 
-      for (std::size_t i{}; i < length; ++i)
+      for (size_t i{}; i < length; ++i)
       {
         std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
 
@@ -180,9 +180,9 @@ namespace XSCRT
     inline XMLCh *transcode (std::basic_string<wchar_t> const &s)
     {
       std::unique_ptr<XMLCh[]> result (new XMLCh[s.length () * 2 + 1]);
-      std::size_t out{};
+      size_t out{};
 
-      for (std::size_t i{}; i < s.length (); ++i)
+      for (size_t i{}; i < s.length (); ++i)
       {
         std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
 
@@ -496,7 +496,7 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> prefix (std::basic_string<C> const &n)
     {
-      std::size_t i{};
+      size_t i{};
       while (i < n.length () && n[i] != ':')
         ++i;
 
@@ -506,7 +506,7 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> uq_name (std::basic_string<C> const &n)
     {
-      std::size_t i{};
+      size_t i{};
       while (i < n.length () && n[i] != ':')
         ++i;
 

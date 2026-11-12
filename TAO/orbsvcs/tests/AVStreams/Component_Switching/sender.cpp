@@ -241,7 +241,7 @@ Sender::pace_data ()
       while (true)
         {
           // Read from the file into a message block.
-          std::size_t const bytes_read =
+          size_t const bytes_read =
             std::fread (this->mb_.wr_ptr (),
                         1,
                         this->mb_.size (),

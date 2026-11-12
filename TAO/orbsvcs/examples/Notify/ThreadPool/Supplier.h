@@ -18,7 +18,7 @@
 #include <array>
 #include <cstddef>
 
-constexpr std::size_t test_max_consumers = 10;
+constexpr size_t test_max_consumers = 10;
 
 /**
  * @class TAO_Notify_ThreadPool_Supplier

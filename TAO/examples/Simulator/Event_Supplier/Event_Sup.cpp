@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "Event_Sup.h"
 #include "NavWeapC.h"
 
@@ -33,7 +32,6 @@ constexpr char usage [] =
 "                 [-O[RBport] ORB port number]\n"
 "                 [-m <count> of messages to send [100]\n"
 "                 [-f name of schedler input data file]]\n";
-
 
 Event_Supplier::Event_Supplier (int argc, ACE_TCHAR** argv)
 : argc_(argc),
@@ -74,7 +72,7 @@ Event_Supplier::start_generating_events ()
     }
 
   CORBA::Any any;
-  std::size_t schedule_index = 0;
+  size_t schedule_index = 0;
 
   do
   {
@@ -196,7 +194,6 @@ Event_Supplier::load_schedule_data
                        oper_name,
                        BUFSIZ-1);
 
-
       data->utilitzation = (double)(20.0+ACE_OS::rand() %10);
       data->overhead = (double)(ACE_OS::rand() %20);
 
@@ -225,7 +222,7 @@ Event_Supplier::load_schedule_data
 void
 Event_Supplier::insert_event_data (CORBA::Any &data,
                                    std::vector<Schedule_Viewer_Data *> const &schedule_data,
-                                   std::size_t &schedule_index)
+                                   size_t &schedule_index)
 {
   static u_long last_completion = 0;
 
@@ -264,7 +261,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.completion_time =  (*sched_data)->completion_time;
         navigation_.computation_time = (*sched_data)->computation_time;
         navigation_.update_data =      0;
-
 
         // because the scheduler data does not supply these values
         navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
@@ -324,7 +320,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                     (*sched_data)->operation_name));
       }
 
-
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
 
@@ -351,7 +346,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                 "(%t)Error in Event_Supplier::insert_event_data.\n"));
   }
 }
-
 
 // Function get_options.
 
@@ -429,7 +423,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb_Manager.init (argc,
                         argv);
-
 
       // Create the demo supplier.
       Event_Supplier *event_Supplier_ptr;

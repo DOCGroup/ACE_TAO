@@ -101,7 +101,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const written =
+      size_t const written =
         std::fwrite (frame->rd_ptr (),
                      frame->length (),
                      1,

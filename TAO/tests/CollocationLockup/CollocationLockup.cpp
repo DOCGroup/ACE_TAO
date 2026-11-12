@@ -18,8 +18,8 @@
 
 namespace
 {
-  constexpr std::size_t N_THREADS = 20;
-  constexpr std::size_t N_ITERATIONS = 100;
+  constexpr size_t N_THREADS = 20;
+  constexpr size_t N_ITERATIONS = 100;
 }
 
 class A_i : public virtual POA_A
@@ -138,7 +138,7 @@ TestThread (void *arg)
 
   try
     {
-      for (std::size_t i {}; i < N_ITERATIONS; ++i)
+      for (size_t i {}; i < N_ITERATIONS; ++i)
         {
           CORBA::Object_var const obj {naming_service->resolve ()};
           C_var const b {C::_narrow (obj.in ())};

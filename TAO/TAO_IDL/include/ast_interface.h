@@ -92,7 +92,7 @@ public:
                  AST_Type_List const& ih,
                  long nih,
                  AST_Interface_List const& ih_flat,
-                 std::size_t nih_flat,
+                 size_t nih_flat,
                  bool local,
                  bool abstract);
 
@@ -111,13 +111,12 @@ public:
 
   AST_Interface_List const& inherits_flat () const;
 
-  std::size_t n_inherits_flat () const;
+  size_t n_inherits_flat () const;
 
   std::deque<AST_Type *> &get_insert_queue ();
   std::deque<AST_Type *> &get_del_queue ();
 
   AST_Operation *be_add_operation (AST_Operation *);
-
 
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in

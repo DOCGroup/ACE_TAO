@@ -49,7 +49,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result = std::fwrite (frame->rd_ptr (),
+      size_t const result = std::fwrite (frame->rd_ptr (),
                                               1,
                                               frame->length (),
                                               output_file);
@@ -63,7 +63,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     }
 
   // Read from the file into a message block.
-  std::size_t const n = std::fread (this->mb_.wr_ptr (),
+  size_t const n = std::fread (this->mb_.wr_ptr (),
                                     1,
                                     this->mb_.size (),
                                     RECEIVER::instance ()->input_file ());

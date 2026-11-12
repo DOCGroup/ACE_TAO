@@ -21,7 +21,7 @@
 class ID_Check_i : public POA_ID_Check
 {
 public:
-  ID_Check_i (std::size_t num, PortableServer::Current_ptr current);
+  ID_Check_i (size_t num, PortableServer::Current_ptr current);
   ~ID_Check_i () override = default;
 
   ID_Check_i (ID_Check_i const &) = delete;
@@ -29,7 +29,7 @@ public:
   ID_Check_i (ID_Check_i &&) = delete;
   ID_Check_i &operator= (ID_Check_i &&) = delete;
 
-  void set_id (std::size_t index, PortableServer::ObjectId_var oid);
+  void set_id (size_t index, PortableServer::ObjectId_var oid);
 
   CORBA::Boolean check_servant_id (CORBA::Short index) override;
 
@@ -38,14 +38,14 @@ private:
   PortableServer::Current_var current_;
 };
 
-ID_Check_i::ID_Check_i (std::size_t num, PortableServer::Current_ptr current)
+ID_Check_i::ID_Check_i (size_t num, PortableServer::Current_ptr current)
   : oids_ (num),
     current_ (PortableServer::Current::_duplicate (current))
 {
 }
 
 void
-ID_Check_i::set_id (std::size_t index, PortableServer::ObjectId_var oid)
+ID_Check_i::set_id (size_t index, PortableServer::ObjectId_var oid)
 {
   this->oids_[index] = oid;
 }
@@ -53,20 +53,20 @@ ID_Check_i::set_id (std::size_t index, PortableServer::ObjectId_var oid)
 CORBA::Boolean
 ID_Check_i::check_servant_id (CORBA::Short index)
 {
-  if (index < 0 || static_cast<std::size_t> (index) >= this->oids_.size ())
+  if (index < 0 || static_cast<size_t> (index) >= this->oids_.size ())
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("check_servant_id: requested index outside of range\n")));
       return false;
     }
   PortableServer::ObjectId_var const oid = this->current_->get_object_id ();
-  std::size_t const object_index = static_cast<std::size_t> (index);
+  size_t const object_index = static_cast<size_t> (index);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("check_servant_id: index = %d current objectid ")
               ACE_TEXT ("len %u octets: "),
               index, oid->length ()));
-  for (std::size_t i = 0; i < oid->length () && i < 16; ++i)
+  for (size_t i = 0; i < oid->length () && i < 16; ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%02x "),
                 static_cast<unsigned int> (oid[i])));
@@ -74,7 +74,7 @@ ID_Check_i::check_servant_id (CORBA::Short index)
 
   if (oid->length () != this->oids_[object_index]->length ())
     return false;
-  for (std::size_t i = 0; i < oid->length (); ++i)
+  for (size_t i = 0; i < oid->length (); ++i)
     {
       if (oid[i] != this->oids_[object_index][i])
         {
@@ -151,7 +151,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           policy->destroy ();
         }
 
-      std::size_t const objcount = 30;
+      size_t const objcount = 30;
 
       ID_Check_i servant (objcount, current.in ());
       sys_id_poa->set_servant (&servant);
@@ -164,7 +164,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::vector<ID_Check_var> refs (objcount);
       PortableServer::ObjectId_var obj_id;
 
-      for (std::size_t i = 0; i < objcount; ++i)
+      for (size_t i = 0; i < objcount; ++i)
         {
           if (i < objcount / 2)
             {
@@ -184,8 +184,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      std::size_t successes {};
-      for (std::size_t i = 0; i < objcount; ++i)
+      size_t successes {};
+      for (size_t i = 0; i < objcount; ++i)
         {
           successes += refs[i]->check_servant_id (static_cast<CORBA::Short> (i)) ? 1 : 0;
         }

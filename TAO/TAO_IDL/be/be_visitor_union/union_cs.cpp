@@ -16,7 +16,6 @@ be_visitor_union_cs::be_visitor_union_cs (be_visitor_context *ctx)
 {
 }
 
-
 // Visit the Union_cs node and its scope.
 int be_visitor_union_cs::visit_union (be_union *node)
 {
@@ -130,7 +129,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
           be_union_branch * const branch =
             dynamic_cast<be_union_branch*> (default_si.item ());
 
-          for (std::size_t i = 0;
+          for (size_t i = 0;
                branch != nullptr && i < branch->label_list_length ();
                ++i)
             {

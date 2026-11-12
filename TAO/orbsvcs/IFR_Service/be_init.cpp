@@ -30,7 +30,7 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 
           // If the arg ends with either .idl or .pidl, we're done.
 
-          std::size_t const len = tmp.length ();
+          size_t const len = tmp.length ();
           if (len >= 4 && tmp.compare (len - 4, 4, ACE_TEXT (".idl")) == 0)
             {
               return 0;

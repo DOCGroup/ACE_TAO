@@ -35,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       std::array<PortableServer::Servant_var<Basic>, locations.size ()> servants {};
-      for (std::size_t i {}; i < locations.size (); ++i)
+      for (size_t i {}; i < locations.size (); ++i)
         {
           Basic *servant {};
           ACE_NEW_RETURN (servant,

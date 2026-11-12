@@ -93,7 +93,7 @@ class My_Authenticator
                       << "User: " << auth.user () << std::endl
                       << "Password: \t\t\t (Enter password or press enter for default)\rPassword: ";
             std::array<char, 80> buf {};
-            std::size_t n {};
+            size_t n {};
             int ch {};
             while (n < buf.size () - 1 &&
                    (ch = std::cin.get ()) != '\n' &&
@@ -138,7 +138,7 @@ class My_FTP_RequestHandler
 
     void after_read (char_type const * /*buffer*/, int length_read) override
       {
-        this->read_length_ += static_cast<std::size_t> (length_read);
+        this->read_length_ += static_cast<size_t> (length_read);
         std::cout << "\r [" << this->read_length_ << "/???]";
       }
 
@@ -149,7 +149,7 @@ class My_FTP_RequestHandler
       }
 
   private:
-    std::size_t read_length_ {};
+    size_t read_length_ {};
 };
 
 int

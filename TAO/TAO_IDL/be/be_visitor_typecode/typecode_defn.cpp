@@ -92,7 +92,6 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
   return 0;
 }
 
-
 int
 be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
 {
@@ -293,17 +292,17 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   // Namespace begin.
   this->gen_begin_NS_for_anon ();
 
-  std::size_t const ndims = node->n_dims ();
+  size_t const ndims = node->n_dims ();
 
-  for (std::size_t i = 0; i < ndims; ++i)
+  for (size_t i = 0; i < ndims; ++i)
     {
       os << "TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *, "
             "TAO::Null_RefCount_Policy>"
          << " " << node->flat_name ();
 
-      std::size_t const inner_ndims = ndims - i - 1;
+      size_t const inner_ndims = ndims - i - 1;
 
-      for (std::size_t j = inner_ndims; j < ndims; ++j)
+      for (size_t j = inner_ndims; j < ndims; ++j)
         {
           os << "_" << node->dims ()[j]->ev ()->u.ulval;
         }

@@ -88,12 +88,12 @@ Receiver::init (int argc,
 int
 Receiver::receive_frame (ACE_Message_Block *frame)
 {
-  std::size_t const frame_length = frame->length ();
+  size_t const frame_length = frame->length ();
   if (frame_length < sizeof (ACE_hrtime_t))
     ACE_ERROR_RETURN ((LM_ERROR, "Received frame is shorter than its timestamp\n"), -1);
 
-  std::size_t const payload_length = frame_length - sizeof (ACE_hrtime_t);
-  std::size_t const bytes_written = std::fwrite (frame->rd_ptr (),
+  size_t const payload_length = frame_length - sizeof (ACE_hrtime_t);
+  size_t const bytes_written = std::fwrite (frame->rd_ptr (),
                                                  1,
                                                  payload_length,
                                                  this->output_file_.get ());

@@ -12,7 +12,7 @@
 #include "ace/svc_export.h"
 #include "ace/Barrier.h"
 
-constexpr std::size_t DEFAULT_ITERATIONS = 1000000;
+constexpr size_t DEFAULT_ITERATIONS = 1000000;
 
 enum class Baseline_Yield_Method
 {
@@ -57,7 +57,7 @@ public:
   virtual void yield () const;
   // Yield to other thread.
 
-  std::size_t iteration () const;
+  size_t iteration () const;
   // Access methods.
 
 protected:
@@ -66,7 +66,7 @@ protected:
   Baseline_Yield_Method yield_method_ {Baseline_Yield_Method::sleep_zero};
   // Should we your thr_yield or sleep (0).
 
-  std::size_t iteration_ {DEFAULT_ITERATIONS};
+  size_t iteration_ {DEFAULT_ITERATIONS};
   // Total number of operations.  <iterations_>
 
   Lock_Type what_ {Lock_Type::lock};
@@ -90,7 +90,7 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse and set the Baseline_Test options and flags.
 
-  void reset_params (std::size_t iteration, Baseline_Yield_Method yield);
+  void reset_params (size_t iteration, Baseline_Yield_Method yield);
   // Reset test parameters for next round.
 
   bool test_try_lock () const;
@@ -116,10 +116,10 @@ private:
   Baseline_Yield_Method current_yield_method_ {Baseline_Yield_Method::sleep_zero};
   // yield or sleep.
 
-  std::size_t current_iteration_ {};
+  size_t current_iteration_ {};
   // Number of iteration.
 
-  std::size_t total_iteration_ {DEFAULT_ITERATIONS};
+  size_t total_iteration_ {DEFAULT_ITERATIONS};
   // Total number of target iteration.
 
   ACE_High_Res_Timer timer;

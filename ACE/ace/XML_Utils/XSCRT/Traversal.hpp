@@ -69,10 +69,10 @@ namespace XSCRT
         }
       };
 
-      using LevelMap = std::map<ExtendedTypeInfo, std::size_t, TypeInfoComparator>;
+      using LevelMap = std::map<ExtendedTypeInfo, size_t, TypeInfoComparator>;
       using TypeInfoSet = std::set<ExtendedTypeInfo, TypeInfoComparator>;
 
-      static std::size_t compute_levels (ExtendedTypeInfo const &ti, std::size_t cur, LevelMap &map);
+      static size_t compute_levels (ExtendedTypeInfo const &ti, size_t cur, LevelMap &map);
 
       static void flatten_tree (ExtendedTypeInfo const &ti, TypeInfoSet &set);
 

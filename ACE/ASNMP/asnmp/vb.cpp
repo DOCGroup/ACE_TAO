@@ -339,7 +339,7 @@ char const *Vb::to_string_oid ()
 // generate string with name/ value format
 char const *Vb::to_string ()
 {
-  std::size_t len = std::strlen (iv_vb_oid_.to_string ());
+  size_t len = std::strlen (iv_vb_oid_.to_string ());
   char const * const ptr = iv_vb_value_ != nullptr ? iv_vb_value_->to_string () : "";
   len += std::strlen (ptr) + 3 + 1; // " / " + null
   std::unique_ptr<char[]> buffer {new (std::nothrow) char[len]};

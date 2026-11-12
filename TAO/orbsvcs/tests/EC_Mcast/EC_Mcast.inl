@@ -17,14 +17,14 @@ ECM_Federation::mcast_port () const
   return this->mcast_port_;
 }
 
-ACE_INLINE std::size_t
+ACE_INLINE size_t
 ECM_Federation::supplier_types () const
 {
   return this->supplier_names_.size ();
 }
 
 ACE_INLINE char const*
-ECM_Federation::supplier_name (std::size_t i) const
+ECM_Federation::supplier_name (size_t i) const
 {
   if (i < this->supplier_names_.size ())
     return this->supplier_names_[i].c_str ();
@@ -32,21 +32,21 @@ ECM_Federation::supplier_name (std::size_t i) const
 }
 
 ACE_INLINE CORBA::ULong
-ECM_Federation::supplier_ipaddr (std::size_t i) const
+ECM_Federation::supplier_ipaddr (size_t i) const
 {
   if (i < this->supplier_ipaddr_.size ())
     return this->supplier_ipaddr_[i];
   return 0;
 }
 
-ACE_INLINE std::size_t
+ACE_INLINE size_t
 ECM_Federation::consumer_types () const
 {
   return this->consumer_names_.size ();
 }
 
 ACE_INLINE char const*
-ECM_Federation::consumer_name (std::size_t i) const
+ECM_Federation::consumer_name (size_t i) const
 {
   if (i < this->consumer_names_.size ())
     return this->consumer_names_[i].c_str ();
@@ -54,7 +54,7 @@ ECM_Federation::consumer_name (std::size_t i) const
 }
 
 ACE_INLINE CORBA::ULong
-ECM_Federation::consumer_ipaddr (std::size_t i) const
+ECM_Federation::consumer_ipaddr (size_t i) const
 {
   if (i < this->consumer_ipaddr_.size ())
     return this->consumer_ipaddr_[i];
@@ -79,38 +79,38 @@ ECM_Local_Federation::mcast_port () const
   return this->federation_->mcast_port ();
 }
 
-ACE_INLINE std::size_t
+ACE_INLINE size_t
 ECM_Local_Federation::supplier_types () const
 {
   return this->federation_->supplier_types ();
 }
 
 ACE_INLINE char const*
-ECM_Local_Federation::supplier_name (std::size_t i) const
+ECM_Local_Federation::supplier_name (size_t i) const
 {
   return this->federation_->supplier_name (i);
 }
 
 ACE_INLINE CORBA::ULong
-ECM_Local_Federation::supplier_ipaddr (std::size_t i) const
+ECM_Local_Federation::supplier_ipaddr (size_t i) const
 {
   return this->federation_->supplier_ipaddr (i);
 }
 
-ACE_INLINE std::size_t
+ACE_INLINE size_t
 ECM_Local_Federation::consumer_types () const
 {
   return this->federation_->consumer_types ();
 }
 
 ACE_INLINE char const*
-ECM_Local_Federation::consumer_name (std::size_t i) const
+ECM_Local_Federation::consumer_name (size_t i) const
 {
   return this->federation_->consumer_name (i);
 }
 
 ACE_INLINE CORBA::ULong
-ECM_Local_Federation::consumer_ipaddr (std::size_t i) const
+ECM_Local_Federation::consumer_ipaddr (size_t i) const
 {
   return this->federation_->consumer_ipaddr (i);
 }

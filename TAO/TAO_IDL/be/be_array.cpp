@@ -25,7 +25,7 @@
 #include <string>
 
 be_array::be_array (UTL_ScopedName *n,
-                    std::size_t ndims,
+                    size_t ndims,
                     UTL_ExprList *dims,
                     bool local,
                     bool abstract)
@@ -57,7 +57,7 @@ be_array::be_array (UTL_ScopedName *n,
 int
 be_array::create_name ()
 {
-  std::size_t i;
+  size_t i;
 
   // Retrieve the base type.
   // The name always starts this way.
@@ -188,7 +188,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
                           unsigned short slice)
 {
    // Loop index.
-   std::size_t i;
+   size_t i;
 
   // Print our dimensions.
   for (i = (slice ? 1 : 0); i < this->n_dims (); ++i)
@@ -246,8 +246,8 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "\";" <<  be_nl_2;
 
-  std::size_t const ndims = this->n_dims ();
-  std::size_t i {};
+  size_t const ndims = this->n_dims ();
+  size_t i {};
 
   for (i = 0; i < ndims; ++i)
     {

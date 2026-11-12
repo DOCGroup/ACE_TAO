@@ -104,7 +104,7 @@ csdb_generator::read_line ()
   *cpos = 0;
   if (cpos == this->source_line_.data ())
     return 0;
-  for (std::size_t i = 0; i < tags_.size (); ++i)
+  for (size_t i = 0; i < tags_.size (); ++i)
     {
       cpos = std::strstr (this->source_line_.data (), tags_[i]);
       if (cpos == nullptr) // not found

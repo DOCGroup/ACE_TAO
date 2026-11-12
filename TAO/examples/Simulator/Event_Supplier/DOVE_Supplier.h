@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,7 +23,6 @@
 #include <cstddef>
 #include <memory>
 #include <vector>
-
 
 #ifndef DOVE_SUPPLIER_H
 #define DOVE_SUPPLIER_H
@@ -121,7 +119,7 @@ private:
 
   std::vector<std::unique_ptr<Connection_Params>> connection_params_list_;
   Connection_Params *current_connection_params_ {};
-  std::size_t current_connection_index_ {};
+  size_t current_connection_index_ {};
 
   // = ORB, ORB Services adminstration references.
   CosNaming::NamingContext_var namingContext_var_;

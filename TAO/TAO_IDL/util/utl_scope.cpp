@@ -2020,7 +2020,7 @@ UTL_ScopeActiveIterator::item ()
 bool
 UTL_ScopeActiveIterator::is_done ()
 {
-  std::size_t limit =
+  size_t limit =
     (stage == UTL_Scope::IK_decls)
       ? iter_source->pd_decls.size ()
       : iter_source->pd_local_types.size ();

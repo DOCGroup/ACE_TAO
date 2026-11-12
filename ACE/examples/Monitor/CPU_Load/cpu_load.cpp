@@ -37,7 +37,7 @@ public:
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (std::size_t i {}; i < 10; ++i)
+        for (size_t i {}; i < 10; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -89,7 +89,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   /// Make sure the monitor checker is spawned before doing anything.
   ACE_OS::sleep (1);
 
-  for (std::size_t i {}; i < 10; ++i)
+  for (size_t i {}; i < 10; ++i)
     {
       /// Alternate between letting the CPU sleep and keeping it
       /// busy.
@@ -99,7 +99,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
         }
       else
         {
-          for (std::size_t j {}; j < 5050505; ++j)
+          for (size_t j {}; j < 5050505; ++j)
             {
               (void) ACE::gcd (2419233733UL, 567715713UL);
             }

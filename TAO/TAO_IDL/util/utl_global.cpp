@@ -470,7 +470,7 @@ IDL_GlobalData::set_indent (std::unique_ptr<UTL_Indenter> i)
 long
 IDL_GlobalData::seen_include_file_before (std::string const& filename)
 {
-  for (std::size_t i {}; i < this->pd_include_file_names_.size (); ++i)
+  for (size_t i {}; i < this->pd_include_file_names_.size (); ++i)
     {
       if (filename == this->pd_include_file_names_[i])
         {
@@ -501,7 +501,7 @@ IDL_GlobalData::include_file_names () const
   return this->pd_include_file_names_;
 }
 
-std::size_t
+size_t
 IDL_GlobalData::n_include_file_names () const
 {
   return this->pd_include_file_names_.size ();
@@ -531,7 +531,7 @@ IDL_GlobalData::included_idl_files ()
   return this->included_idl_files_;
 }
 
-std::size_t
+size_t
 IDL_GlobalData::n_included_idl_files ()
 {
   return this->included_idl_files_.size ();
@@ -566,7 +566,7 @@ IDL_GlobalData::temp_dir (std::string const& s)
 {
   this->temp_dir_ = s;
 
-  std::size_t const separator_length = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
+  size_t const separator_length = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
   if (this->temp_dir_.size () <= separator_length
       || this->temp_dir_.compare (this->temp_dir_.size () - separator_length,
                                    separator_length,

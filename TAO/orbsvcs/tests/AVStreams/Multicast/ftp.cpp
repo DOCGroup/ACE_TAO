@@ -23,7 +23,7 @@ FTP_Client_Callback::handle_timeout (void *)
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame\n"));
   char *buf = mb.rd_ptr ();
   FILE * const input_file = CLIENT::instance ()->file ();
-  std::size_t const n = std::fread (buf, 1, mb.size (), input_file);
+  size_t const n = std::fread (buf, 1, mb.size (), input_file);
   if (n == 0)
     {
       if (std::ferror (input_file))

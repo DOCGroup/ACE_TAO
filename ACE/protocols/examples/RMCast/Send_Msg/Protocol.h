@@ -5,8 +5,8 @@
 
 #include <cstddef>
 
-constexpr std::size_t payload_size = 702;
-constexpr std::size_t message_count = 80000;
+constexpr size_t payload_size = 702;
+constexpr size_t message_count = 80000;
 
 struct Message
 {

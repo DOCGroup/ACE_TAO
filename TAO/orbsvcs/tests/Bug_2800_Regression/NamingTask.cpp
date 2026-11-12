@@ -12,7 +12,7 @@ NamingTask::NamingTask (ACE_TCHAR const *orbname, int argc, ACE_TCHAR **argv, un
                     ACE_TEXT ("iiop://localhost:%u"), static_cast<unsigned int> (port));
   ACE_TCHAR endpoint_option[] = ACE_TEXT ("-ORBEndpoint");
   std::vector<ACE_TCHAR *> my_argv;
-  my_argv.reserve (static_cast<std::size_t> (argc) + 2);
+  my_argv.reserve (static_cast<size_t> (argc) + 2);
   for (int i = 0; i < argc; ++i)
     my_argv.push_back (argv[i]);
   my_argv.push_back (endpoint_option);

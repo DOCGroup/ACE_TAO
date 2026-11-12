@@ -148,7 +148,7 @@ static ACE_THR_FUNC_RETURN
 run_writer (void *argument)
 {
   Four_Tokens const * const ft = static_cast<Four_Tokens const *> (argument);
-  std::size_t acquire_number {};
+  size_t acquire_number {};
 
   for (int iteration {}; iteration < ft->iterations; ++iteration)
     {
@@ -295,7 +295,7 @@ rwlock_test (Options const &options)
     ACE_TEXT ("writer first 3")
   }};
 
-  for (std::size_t index {}; index < readers.size (); ++index)
+  for (size_t index {}; index < readers.size (); ++index)
     {
       Two_Tokens &reader = readers[index];
       reader.iterations = options.iterations;

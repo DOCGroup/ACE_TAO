@@ -132,13 +132,13 @@ private:
   Timeout_Handler timeout_handler_;
 
   /// Number of heartbeats we sent so far.
-  std::size_t n_timeouts_ {};
+  size_t n_timeouts_ {};
 
   /// Info we keep on each HEARTBEAT source.
   struct HEARTBEAT_SOURCE_ENTRY {
     pid_t pid {};
     std::array<char, MAXHOSTNAMELEN + 1> hostname {};
-    std::size_t total {};
+    size_t total {};
   };
 
   /// Stores info on all heartbeats we received so far.
@@ -409,8 +409,8 @@ Heartbeat_Application::push (RtecEventComm::EventSet const &events)
 
       // Update heartbeat database.
       bool found {};
-      std::size_t const size = this->heartbeats_.size ();
-      for (std::size_t j {}; j < size; ++j)
+      size_t const size = this->heartbeats_.size ();
+      for (size_t j {}; j < size; ++j)
         {
           if (this->heartbeats_[j].pid == pid
               && std::strcmp (this->heartbeats_[j].hostname.data (), host)
@@ -503,7 +503,7 @@ Heartbeat_Application::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               "%d@%s Received following heartbeats:\n",
               pid, hostname.data ()));
-  for (std::size_t i {}; i < this->heartbeats_.size (); ++i)
+  for (size_t i {}; i < this->heartbeats_.size (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Host %s, pid %d - total of %B\n",

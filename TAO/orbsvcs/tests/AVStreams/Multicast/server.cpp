@@ -33,7 +33,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != nullptr)
     {
-      std::size_t const written = FTP_SERVER::instance ()->write_output (
+      size_t const written = FTP_SERVER::instance ()->write_output (
         frame->rd_ptr (), frame->length ());
       if (written != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
@@ -156,8 +156,8 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-std::size_t
-Server::write_output (char const *buffer, std::size_t length)
+size_t
+Server::write_output (char const *buffer, size_t length)
 {
   if (!this->fp_)
     return 0;

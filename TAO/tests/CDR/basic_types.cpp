@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "tao/ORB.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
@@ -54,13 +53,13 @@ test_std_string_bounds ()
     }
 #endif
 
-  std::size_t const max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
+  size_t const max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
   if (!TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length - 1, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 4) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 3))
     ACE_ERROR_RETURN ((LM_ERROR, "Incorrect std::string length validation\n"), 1);
-  if (sizeof (std::size_t) > sizeof (ACE_CDR::ULong) &&
+  if (sizeof (size_t) > sizeof (ACE_CDR::ULong) &&
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length + 1, 0))
     ACE_ERROR_RETURN ((LM_ERROR, "Unrepresentable CDR length accepted\n"), 1);
 

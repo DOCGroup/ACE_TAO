@@ -68,7 +68,7 @@ public:
 
 private:
   /// Number of received frames.
-  std::size_t frame_count_ {1};
+  size_t frame_count_ {1};
 
   /// Flow name associated with this callback.
   ACE_CString flowname_;

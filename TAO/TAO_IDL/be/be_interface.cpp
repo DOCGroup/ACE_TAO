@@ -53,7 +53,7 @@ be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type_List const& ih,
                             long nih,
                             AST_Interface_List const& ih_flat,
-                            std::size_t nih_flat,
+                            size_t nih_flat,
                             bool local,
                             bool abstract)
   : COMMON_Base (local,
@@ -279,8 +279,8 @@ be_interface::relative_name (std::string const& localname,
 
   while (!def_curr.empty () && !use_curr.empty ())
     {
-      std::size_t const def_separator = def_curr.find ("::");
-      std::size_t const use_separator = use_curr.find ("::");
+      size_t const def_separator = def_curr.find ("::");
+      size_t const use_separator = use_curr.find ("::");
       std::string const def_component = def_curr.substr (0, def_separator);
       std::string const use_component = use_curr.substr (0, use_separator);
 
@@ -301,7 +301,6 @@ be_interface::relative_name (std::string const& localname,
 
   return def_curr;
 }
-
 
 // Am I in some kind of a multiple inheritance?
 int
@@ -357,7 +356,7 @@ be_interface::redefine (AST_Interface *from)
       // replace each interface that has been forward
       // declared, since the pointer existing in the queue
       // will be deleted after redefine() returns.
-      for (std::size_t slot = 0; slot < q.size (); ++slot)
+      for (size_t slot = 0; slot < q.size (); ++slot)
         {
           if (q[slot] == bi)
             {
@@ -380,7 +379,6 @@ be_interface::gen_def_ctors (TAO_OutStream *os)
                 "(%N:%l) be_interface::gen_def_ctors "
                 "error inheritance graph\n"));
 }
-
 
 int
 be_interface::gen_def_ctors_helper (be_interface* node,
@@ -413,7 +411,6 @@ be_interface::gen_def_ctors_helper (be_interface* node,
 
    return 1;
 }
-
 
 void
 be_interface::gen_stub_ctor (TAO_OutStream *os)
@@ -878,7 +875,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
         // QNX can't handle individual file names (path components)
         // longer than 48 characters.
 #if defined(__QNX__)
-        std::size_t const temp_dir_len = temp_dir.size ();
+        size_t const temp_dir_len = temp_dir.size ();
 
         if (temp_file.size () > temp_dir_len + 47)
           {
@@ -1656,11 +1653,11 @@ be_interface::gen_perfect_hash_class_definition (std::string const &flat_name)
       << ": public TAO_Perfect_Hash_OpTable" << be_uidt_nl
       << "{" << be_nl
       << "private:" << be_idt_nl
-      << "std::size_t hash (char const *str, std::size_t len) override;"
+      << "size_t hash (char const *str, size_t len) override;"
       << be_uidt_nl
       << "public:" << be_idt_nl
       << "TAO_operation_db_entry const * lookup "
-      << "(char const *str, std::size_t len) override;"
+      << "(char const *str, size_t len) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1926,7 +1923,6 @@ be_interface::gen_binary_search_instance (std::string const &flat_name)
       << "tao_" << flat_name << "_optable;";
 }
 
-
 // Create an instance of this perfect hash table.
 void
 be_interface::gen_linear_search_instance (std::string const &flat_name)
@@ -2013,7 +2009,6 @@ be_interface::gen_abstract_init_helper (be_interface *node,
       << "_tao_collocated," << be_nl
       << "servant" << be_uidt_nl
       << ")" << be_uidt;
-
 
   return 0;
 }
@@ -2175,9 +2170,9 @@ be_interface::enqueue_base_component_r (AST_Component *node)
   (void) this->insert_non_dup (base);
 
   AST_Type_List const& supports = base->supports ();
-  std::size_t const n_supports = supports.size ();
+  size_t const n_supports = supports.size ();
 
-  for (std::size_t j = 0; j < n_supports; ++j)
+  for (size_t j = 0; j < n_supports; ++j)
     {
       (void) this->insert_non_dup (supports[j]);
     }
@@ -2198,9 +2193,9 @@ be_interface::enqueue_base_home_r (AST_Home *node)
   (void) this->insert_non_dup (base);
 
   AST_Type_List const& supports = base->supports ();
-  std::size_t const n_supports = supports.size ();
+  size_t const n_supports = supports.size ();
 
-  for (std::size_t j = 0; j < n_supports; ++j)
+  for (size_t j = 0; j < n_supports; ++j)
     {
       (void) this->insert_non_dup (supports[j]);
     }
@@ -2221,9 +2216,9 @@ be_interface::dds_connector_traits_done (bool val)
 void
 be_interface::gen_stub_inheritance (TAO_OutStream *os)
 {
-  std::size_t i {};
+  size_t i {};
   AST_Type_List const& parents = this->inherits ();
-  std::size_t const nparents = parents.size ();
+  size_t const nparents = parents.size ();
   bool has_concrete_parent {};
   bool const i_am_abs = this->is_abstract ();
 
@@ -2284,11 +2279,11 @@ void
 be_interface::gen_skel_inheritance (TAO_OutStream *os)
 {
   AST_Type_List const& parents = this->inherits ();
-  std::size_t const n_parents = parents.size ();
+  size_t const n_parents = parents.size ();
   AST_Type *parent {};
   bool has_concrete_parent {};
 
-  for (std::size_t i = 0; i < n_parents; ++i)
+  for (size_t i = 0; i < n_parents; ++i)
     {
       parent = parents[i];
 
@@ -2496,7 +2491,6 @@ be_interface::full_direct_proxy_impl_name () const
   return this->full_direct_proxy_impl_name_;
 }
 
-
 std::string const&
 be_interface::client_enclosing_scope () const
 {
@@ -2505,7 +2499,7 @@ be_interface::client_enclosing_scope () const
       std::string const& full_name = this->full_name ();
       std::string const& name = this->local_name ();
 
-      std::size_t const length = full_name.size () - name.size ();
+      size_t const length = full_name.size () - name.size ();
       this->client_scope_ = full_name.substr (0, length);
       this->client_scope_computed_ = true;
     }
@@ -2524,7 +2518,7 @@ be_interface::server_enclosing_scope () const
       std::string const& name =
         this->local_coll_name (be_interface::DIRECT);
 
-      std::size_t const length = full_name.size () - name.size ();
+      size_t const length = full_name.size () - name.size ();
       this->server_scope_ = full_name.substr (0, length);
       this->server_scope_computed_ = true;
     }

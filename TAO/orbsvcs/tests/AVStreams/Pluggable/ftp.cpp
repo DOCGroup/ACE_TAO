@@ -199,7 +199,7 @@ Client::pace_data ()
       for (;;)
         {
           this->mb_.reset ();
-          std::size_t const bytes_read = std::fread (this->mb_.wr_ptr (),
+          size_t const bytes_read = std::fread (this->mb_.wr_ptr (),
                                                      1,
                                                      this->mb_.size (),
                                                      this->fp_.get ());

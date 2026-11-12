@@ -129,7 +129,7 @@ Gen_Perf::hash (List_Node *key_node)
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  std::size_t const index = Vectors::character_index (c);
+  size_t const index = Vectors::character_index (c);
   int const original_char = Vectors::asso_values[index];
   int total_iterations = 0;
 

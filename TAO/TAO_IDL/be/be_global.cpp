@@ -62,12 +62,12 @@ BE_GlobalData::~BE_GlobalData () = default;
 // generated with ""s or <>s respectively, for the standard include
 // files (e.g. tao/corba.h)
 void
-BE_GlobalData::changing_standard_include_files (std::size_t changing)
+BE_GlobalData::changing_standard_include_files (size_t changing)
 {
   this->changing_standard_include_files_ = changing;
 }
 
-std::size_t
+size_t
 BE_GlobalData::changing_standard_include_files ()
 {
   return this->changing_standard_include_files_;
@@ -100,9 +100,9 @@ be_change_idl_file_extension (std::string const& idl_file,
     ".PIDL"
   };
 
-  constexpr std::size_t nextensions = sizeof (extensions) / sizeof (extensions[0]);
+  constexpr size_t nextensions = sizeof (extensions) / sizeof (extensions[0]);
 
-  for (std::size_t k = 0; k < nextensions; ++k)
+  for (size_t k = 0; k < nextensions; ++k)
     {
       base = input.find (extensions[k]);
 
@@ -324,7 +324,6 @@ BE_GlobalData::be_get_ciao_svnt_template_header (std::string const& idl_file_nam
                                        be_global->ciao_svnt_header_template_ending (),
                                        base_name_only);
 }
-
 
 std::string
 BE_GlobalData::be_get_ciao_svnt_source (std::string const& idl_file_name,
@@ -1182,7 +1181,6 @@ BE_GlobalData::gen_ostream_operators (bool val)
   this->gen_ostream_operators_ = val;
 }
 
-
 bool
 BE_GlobalData::gen_static_desc_operations () const
 {
@@ -1642,7 +1640,6 @@ BE_GlobalData::gen_lwccm () const
 {
   return this->gen_lwccm_;
 }
-
 
 void
 BE_GlobalData::opt_tc (bool val)
@@ -2442,14 +2439,14 @@ BE_GlobalData::tab_size (unsigned long val)
   this->tab_size_ = val;
 }
 
-std::size_t
+size_t
 BE_GlobalData::max_line_length () const
 {
   return this->max_line_length_;
 }
 
 void
-BE_GlobalData::max_line_length (std::size_t val)
+BE_GlobalData::max_line_length (size_t val)
 {
   this->max_line_length_ = val;
 }
@@ -3189,9 +3186,9 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'I')
           {
-            std::size_t const options = std::strlen (av[i]) - 3;
-            std::size_t j;
-            std::size_t const k = i;
+            size_t const options = std::strlen (av[i]) - 3;
+            size_t j;
+            size_t const k = i;
             // Generate implementation files.
             be_global->gen_impl_files (true);
 

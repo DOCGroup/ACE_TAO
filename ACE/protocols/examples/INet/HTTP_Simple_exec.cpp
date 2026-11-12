@@ -136,13 +136,13 @@ class My_HTTP_RequestHandler
           {
             this->in_length_ = this->response ().get_content_length ();
           }
-        this->read_length_ += static_cast<std::size_t> (length_read);
+        this->read_length_ += static_cast<size_t> (length_read);
         std::cout << "\r [" << this->read_length_ << '/';
         if (this->in_length_ > 0)
           {
             std::cout << this->in_length_ << "] "
                       << ((this->read_length_ * 100) /
-                          static_cast<std::size_t> (this->in_length_)) << "%";
+                          static_cast<size_t> (this->in_length_)) << "%";
           }
         else
           std::cout << "???]";
@@ -158,7 +158,7 @@ class My_HTTP_RequestHandler
 
   private:
     int in_length_ {};
-    std::size_t read_length_ {};
+    size_t read_length_ {};
 };
 
 int

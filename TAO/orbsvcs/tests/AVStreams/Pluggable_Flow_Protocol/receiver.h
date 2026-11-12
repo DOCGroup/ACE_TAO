@@ -84,7 +84,7 @@ private:
   RECEIVER_ENDPOINT_STRATEGY reactive_strategy_;
   Receiver_File_Ptr output_file_ {nullptr, std::fclose};
   Options options_;
-  std::size_t frame_count_ {};
+  size_t frame_count_ {};
   bool done_ {};
 };
 

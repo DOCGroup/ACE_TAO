@@ -99,7 +99,7 @@ constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
 
 static std::basic_string<ACE_TCHAR> output_arg_format;
-static std::size_t output_arg_index {};
+static size_t output_arg_index {};
 
 constexpr ACE_TCHAR TCHAR_DIR_DOT[] = ACE_TEXT(".");
 
@@ -119,7 +119,7 @@ static constexpr bool copy_input_file {true};
 
 // Lines can be 1024 chars long intially -
 // it will expand as required.
-constexpr std::size_t LINEBUF_SIZE = 1024;
+constexpr size_t LINEBUF_SIZE = 1024;
 std::string drv_line;
 
 static void
@@ -192,7 +192,7 @@ DRV_cpp_expand_output_arg (std::string const& filename)
       std::basic_string<ACE_TCHAR> const tchar_filename (
         ACE_TEXT_CHAR_TO_TCHAR (filename.c_str ()));
       std::basic_string<ACE_TCHAR> output_arg (output_arg_format);
-      std::size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
+      size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
 
       if (placeholder != std::basic_string<ACE_TCHAR>::npos)
         {
@@ -235,7 +235,7 @@ DRV_get_line (FILE *file)
       drv_line.append (buffer);
 
       // Check for line continuation escape...
-      std::size_t len = drv_line.size ();
+      size_t len = drv_line.size ();
       if (2 <= len &&
           '\n' == drv_line [len - 1] &&
           '\\' == drv_line [len - 2])
@@ -286,8 +286,8 @@ DRV_cpp_init ()
   ACE_ARGV direct_input_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS));
 
-  for (std::size_t i {};
-       i < static_cast<std::size_t> (direct_input_arglist.argc ());
+  for (size_t i {};
+       i < static_cast<size_t> (direct_input_arglist.argc ());
        ++i)
     {
       DRV_cpp_putarg (ACE_TEXT_ALWAYS_CHAR (direct_input_arglist[i]));
@@ -378,8 +378,8 @@ DRV_cpp_init ()
   ACE_ARGV platform_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (platform_cpp_args.c_str ()));
 
-  for (std::size_t i {};
-       i < static_cast<std::size_t> (platform_arglist.argc ());
+  for (size_t i {};
+       i < static_cast<size_t> (platform_arglist.argc ());
        ++i)
     {
       // Check for an argument that specifies
@@ -444,7 +444,7 @@ DRV_sweep_dirs (std::string const& rel_path,
                             -1);
         }
 
-      std::size_t len {};
+      size_t len {};
 
       switch (stat_buf.st_mode & S_IFMT)
         {
@@ -1035,7 +1035,7 @@ DRV_copy_input (FILE *fin,
 static std::string
 DRV_stripped_name (std::string const& filename)
 {
-  std::size_t const separator = filename.find_last_of ("/\\");
+  size_t const separator = filename.find_last_of ("/\\");
   return separator == std::string::npos
     ? filename
     : filename.substr (separator + 1);
@@ -1233,7 +1233,6 @@ DRV_pre_proc (std::string const& myfile)
                   tmp_file.c_str (),
                   t_file.c_str ()));
 
-
       (void) ACE_OS::unlink (tmp_ifile.c_str ());
       (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
@@ -1303,7 +1302,6 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: spawn of \"%s\" failed\n",
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
-
 
       (void) ACE_OS::unlink (t_file.c_str ());
       (void) ACE_OS::unlink (t_ifile.c_str ());
@@ -1401,7 +1399,7 @@ DRV_pre_proc (std::string const& myfile)
     {
       FILE *const preproc = ACE_OS::fopen (t_file.c_str (), "r");
       char buffer[ACE_MAXLOGMSGLEN];
-      std::size_t bytes;
+      size_t bytes;
 
       if (preproc == nullptr)
         {

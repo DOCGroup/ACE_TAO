@@ -118,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_THROW_EX (callback, DII_ReplyHandler (got_reply), CORBA::NO_MEMORY ());
       do_primary_test (server, callback, options.ior.c_str ());
 
-      for (std::size_t i = 0; i < 100 && !got_reply; ++i)
+      for (size_t i = 0; i < 100 && !got_reply; ++i)
         {
           ACE_Time_Value timeout (0, 10000);
           orb->perform_work (timeout);

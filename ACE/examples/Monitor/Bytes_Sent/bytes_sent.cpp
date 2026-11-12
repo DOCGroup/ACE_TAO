@@ -22,7 +22,7 @@ public:
 
   int svc () override
   {
-    constexpr std::size_t monitor_samples = 15;
+    constexpr size_t monitor_samples = 15;
 
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER * const mgr =
@@ -38,7 +38,7 @@ public:
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (std::size_t i {}; i < monitor_samples; ++i)
+        for (size_t i {}; i < monitor_samples; ++i)
           {
             ACE_OS::sleep (2);
 

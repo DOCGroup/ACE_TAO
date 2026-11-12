@@ -14,7 +14,6 @@ static int endstream {};
 // contains references to static TypeCodes.
 using RECEIVER = ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>;
 
-
 int
 Receiver_StreamEndPoint::get_callback (char const *flow_name,
                                        TAO_AV_Callback *&callback)
@@ -31,7 +30,6 @@ Receiver_StreamEndPoint::get_callback (char const *flow_name,
   callback = callback_owner.release ();
   return 0;
 }
-
 
 int
 Receiver_StreamEndPoint::set_protocol_object (char const *flowname,
@@ -83,7 +81,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result = std::fwrite (frame->rd_ptr (),
+      size_t const result = std::fwrite (frame->rd_ptr (),
                                               1,
                                               frame->length (),
                                               this->output_file_.get ());

@@ -49,7 +49,7 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result = std::fwrite (frame->rd_ptr (),
+      size_t const result = std::fwrite (frame->rd_ptr (),
                                               1,
                                               frame->length (),
                                               output_file);
@@ -199,7 +199,6 @@ Sender::init (int argc,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
 
-
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
@@ -286,7 +285,7 @@ Sender::pace_data ()
       while (true)
         {
           // Read from the file into a message block.
-          std::size_t const n = std::fread (this->mb_.wr_ptr (),
+          size_t const n = std::fread (this->mb_.wr_ptr (),
                                             1,
                                             this->mb_.size (),
                                             this->input_file_.get ());

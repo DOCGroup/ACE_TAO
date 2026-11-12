@@ -251,7 +251,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
               std::string::size_type const excepholder_len =
                 excepholder.size ();
               std::string const& param_name = value_type->full_name ();
-              std::size_t const excepholder_pos = param_name.find (excepholder);
+              size_t const excepholder_pos = param_name.find (excepholder);
               excep_method = excepholder_pos != std::string::npos
                 && excepholder_pos + excepholder_len == param_name.size ();
             }
@@ -370,7 +370,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
          << be_nl;
     }
 
-  std::size_t const count = node->argument_count ();
+  size_t const count = node->argument_count ();
   if (!node->void_return_type ())
     {
       os << "retval =";

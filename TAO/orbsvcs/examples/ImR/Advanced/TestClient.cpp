@@ -153,14 +153,14 @@ int TestClient::svc ()
 {
   // Every invocation of svc increases the thread count.
   int const thread_num = ++instance_;
-  std::size_t const vec_size = iors_.size ();
+  size_t const vec_size = iors_.size ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Client Thread started (%d.%d.%B.%d)\n"),
               thread_num, options_.iterations, vec_size, options_.request_count));
 
   int i {};
-  std::size_t obj_iter {};
+  size_t obj_iter {};
   int request_iter {};
 
   ACE_TString current_ior;

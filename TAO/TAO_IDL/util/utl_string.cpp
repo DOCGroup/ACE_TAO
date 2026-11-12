@@ -88,7 +88,7 @@ UTL_String::strcmp_caseless (
       return false;
     }
 
-  for (std::size_t i {}; i < lhs.size (); ++i)
+  for (size_t i {}; i < lhs.size (); ++i)
     {
       if (lhs[i] != rhs[i])
         {

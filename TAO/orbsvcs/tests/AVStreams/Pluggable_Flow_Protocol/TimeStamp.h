@@ -12,7 +12,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 
-
 class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
 {
 public:
@@ -35,7 +34,7 @@ public:
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
   int send_frame (char const *buf,
-                  std::size_t len) override;
+                  size_t len) override;
 
   /// end the stream.
   int destroy () override;

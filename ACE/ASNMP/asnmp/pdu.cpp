@@ -155,8 +155,8 @@ Pdu &Pdu::operator+= (Vb &vb)
 char const *Pdu::to_string ()
 {
   // determine how big a buffer and allocate it
-  constexpr std::size_t HEADER_STR = 100;
-  std::size_t size = HEADER_STR; // header takes up this much room
+  constexpr size_t HEADER_STR = 100;
+  size_t size = HEADER_STR; // header takes up this much room
 
    for (int z = 0; z < vb_count_; ++z)
        size += std::strlen (vbs_[z]->to_string ()) + 2;
@@ -308,9 +308,9 @@ char const *Pdu::agent_error_reason ()
     char const * const pmsg = Snmp::error_string (get_error_status ());
     char const * const id = bad.to_string_oid ();
     char const * const val = bad.to_string_value ();
-    constexpr std::size_t HDR_SZ = 100;
+    constexpr size_t HDR_SZ = 100;
 
-    std::size_t const size = std::strlen (pmsg) + std::strlen (id) + std::strlen (val);
+    size_t const size = std::strlen (pmsg) + std::strlen (id) + std::strlen (val);
     std::unique_ptr<char[]> buffer {new (std::nothrow) char[size + HDR_SZ]};
     if (!buffer)
       {

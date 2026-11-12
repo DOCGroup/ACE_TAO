@@ -52,7 +52,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != nullptr)
     {
-      std::size_t const written = std::fwrite (frame->rd_ptr (),
+      size_t const written = std::fwrite (frame->rd_ptr (),
                                                frame->length (),
                                                1,
                                                FTP_SERVER::instance ()->file ());

@@ -31,7 +31,7 @@ Slow_Read_Write_Test::Slow_Read_Write_Test (char const *name,
 }
 
 int
-Slow_Read_Write_Test::run_test (std::size_t iterations,
+Slow_Read_Write_Test::run_test (size_t iterations,
                                 FILE *input_fp,
                                 FILE *output_fp)
 {
@@ -40,7 +40,7 @@ Slow_Read_Write_Test::run_test (std::size_t iterations,
 
   this->tm_.start ();
 
-  for (std::size_t iteration = 0; iteration < iterations; ++iteration)
+  for (size_t iteration = 0; iteration < iterations; ++iteration)
     {
       char c {};
 
@@ -62,13 +62,13 @@ Stdio_Test::Stdio_Test (char const *name,
 }
 
 int
-Stdio_Test::run_test (std::size_t iterations,
+Stdio_Test::run_test (size_t iterations,
                       FILE *input_fp,
                       FILE *output_fp)
 {
   this->tm_.start ();
 
-  for (std::size_t iteration = 0; iteration < iterations; ++iteration)
+  for (size_t iteration = 0; iteration < iterations; ++iteration)
     {
       int c;
 
@@ -89,7 +89,7 @@ Block_Read_Write_Test::Block_Read_Write_Test (char const *name,
 }
 
 int
-Block_Read_Write_Test::run_test (std::size_t iterations,
+Block_Read_Write_Test::run_test (size_t iterations,
                                  FILE *input_fp,
                                  FILE *output_fp)
 {
@@ -98,7 +98,7 @@ Block_Read_Write_Test::run_test (std::size_t iterations,
 
   this->tm_.start ();
 
-  for (std::size_t iteration = 0; iteration < iterations; ++iteration)
+  for (size_t iteration = 0; iteration < iterations; ++iteration)
     {
       std::array<char, BUFSIZ> buf;
       ssize_t n;
@@ -123,16 +123,16 @@ Block_Fread_Fwrite_Test::Block_Fread_Fwrite_Test (char const *name,
 }
 
 int
-Block_Fread_Fwrite_Test::run_test (std::size_t iterations,
+Block_Fread_Fwrite_Test::run_test (size_t iterations,
                                    FILE *input_fp,
                                    FILE *output_fp)
 {
   this->tm_.start ();
 
-  for (std::size_t iteration = 0; iteration < iterations; ++iteration)
+  for (size_t iteration = 0; iteration < iterations; ++iteration)
     {
       std::array<char, BUFSIZ> buf;
-      std::size_t n;
+      size_t n;
 
       while ((n = ACE_OS::fread (buf.data (),
                                  1,
@@ -155,7 +155,7 @@ Mmap1_Test::Mmap1_Test (char const *name,
 }
 
 int
-Mmap1_Test::run_test (std::size_t iterations,
+Mmap1_Test::run_test (size_t iterations,
                       FILE *input_fp,
                       FILE *output_fp)
 {
@@ -168,7 +168,7 @@ Mmap1_Test::run_test (std::size_t iterations,
     {
       this->tm_.start ();
 
-      for (std::size_t iteration = 0; iteration < iterations; ++iteration)
+      for (size_t iteration = 0; iteration < iterations; ++iteration)
         {
           if (ACE_OS::write (ACE_OS::fileno (output_fp),
                              src,
@@ -201,12 +201,12 @@ Mmap2_Test::Mmap2_Test (char const *name,
 }
 
 int
-Mmap2_Test::run_test (std::size_t iterations,
+Mmap2_Test::run_test (size_t iterations,
                       FILE *input_fp,
                       FILE *output_fp)
 {
   ACE_Mem_Map map_input (ACE_OS::fileno (input_fp));
-  std::size_t const size = map_input.size ();
+  size_t const size = map_input.size ();
   ACE_Mem_Map map_output (ACE_OS::fileno (output_fp),
                           size,
                           PROT_WRITE,
@@ -220,7 +220,7 @@ Mmap2_Test::run_test (std::size_t iterations,
     {
       this->tm_.start ();
 
-      for (std::size_t iteration = 0; iteration < iterations; ++iteration)
+      for (size_t iteration = 0; iteration < iterations; ++iteration)
         std::memcpy (dst, src, size);
 
       this->tm_.stop ();

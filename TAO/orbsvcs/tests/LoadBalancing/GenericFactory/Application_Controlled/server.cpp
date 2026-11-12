@@ -96,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         basic_servant5,
         basic_servant6
       }};
-      for (std::size_t i {}; i != servants.size (); ++i)
+      for (size_t i {}; i != servants.size (); ++i)
         {
           if (lb_server.register_servant (servants[i], locations[i]) == -1)
             {

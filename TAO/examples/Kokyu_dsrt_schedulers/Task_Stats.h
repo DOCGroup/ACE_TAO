@@ -35,7 +35,7 @@ class Kokyu_DSRT_Schedulers_Export Task_Stats
   ~Task_Stats () = default;
 
   /// Init
-  int init (std::size_t max_samples);
+  int init (size_t max_samples);
 
   /// Record a sample
   int sample (ACE_UINT32 thr_run_time, int thr_count);
@@ -49,7 +49,7 @@ class Kokyu_DSRT_Schedulers_Export Task_Stats
   };
 
   /// The number of samples
-  std::size_t samples_count_ {};
+  size_t samples_count_ {};
 
   /// The execution time and recorded execution count for each sample.
   std::vector<Sample> samples_;

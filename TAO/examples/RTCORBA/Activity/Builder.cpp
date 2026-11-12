@@ -33,7 +33,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           task_count_ = ACE_OS::atoi (current_arg);
           if (task_count_ < 0)
             return -1;
-          task_list_.reserve (static_cast<std::size_t> (task_count_));
+          task_list_.reserve (static_cast<size_t> (task_count_));
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobCount"))))
@@ -41,7 +41,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           job_count_ = ACE_OS::atoi (current_arg);
           if (job_count_ < 0)
             return -1;
-          job_list_.reserve (static_cast<std::size_t> (job_count_));
+          job_list_.reserve (static_cast<size_t> (job_count_));
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POACount"))))
@@ -49,12 +49,12 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           poa_count_ = ACE_OS::atoi (current_arg);
           if (poa_count_ < 0)
             return -1;
-          poa_list_.reserve (static_cast<std::size_t> (poa_count_));
+          poa_list_.reserve (static_cast<size_t> (poa_count_));
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadTask")) == 0)
         {
-          if (this->task_list_.size () < static_cast<std::size_t> (this->task_count_))
+          if (this->task_list_.size () < static_cast<size_t> (this->task_count_))
             {
               arg_shifter.consume_arg ();
 
@@ -72,7 +72,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
         {
-          if (this->job_list_.size () < static_cast<std::size_t> (this->job_count_))
+          if (this->job_list_.size () < static_cast<size_t> (this->job_count_))
             {
               arg_shifter.consume_arg ();
 
@@ -90,7 +90,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
-          if (this->poa_list_.size () < static_cast<std::size_t> (this->poa_count_))
+          if (this->poa_list_.size () < static_cast<size_t> (this->poa_count_))
             {
               arg_shifter.consume_arg ();
 
@@ -149,7 +149,6 @@ Builder::job_list () const
 {
   return this->job_list_;
 }
-
 
 ACE_STATIC_SVC_DEFINE(Builder,
                       ACE_TEXT ("Builder"),

@@ -12,9 +12,9 @@ static constexpr int MAX_LEN = 80;
 class Perfect_Hash
 {
 private:
-  static std::size_t hash (char const *str, std::size_t len);
+  static size_t hash (char const *str, size_t len);
 public:
-  static char const *in_word_set (char const *str, std::size_t len);
+  static char const *in_word_set (char const *str, size_t len);
 };
 
 int

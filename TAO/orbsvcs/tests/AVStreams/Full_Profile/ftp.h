@@ -47,7 +47,7 @@ public:
                     void *&arg) override;
 
 protected:
-  std::size_t count_ {};
+  size_t count_ {};
   ACE_Time_Value timeout_ {2};
 };
 

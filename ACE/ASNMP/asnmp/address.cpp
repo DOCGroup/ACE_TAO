@@ -51,7 +51,6 @@
 Address::~Address()
 = default;
 
-
 //-----------------------------------------------------------------
 // is the address object valid?
 int Address::valid() const
@@ -83,7 +82,6 @@ unsigned char& Address::operator[]( const int position)
     return address_buffer[0];
 }
 
-
 //-----------------------------------------------------------------------
 // overloaded equivlence operator, are two addresses equal?
 bool operator==( const Address &lhs, const Address &rhs)
@@ -98,7 +96,6 @@ bool operator!=( const Address &lhs, const Address &rhs)
 {
   return (!( lhs == rhs));
 }
-
 
 //------------------------------------------------------------------
 // overloaded > operator, is a1 > a2
@@ -125,7 +122,6 @@ bool operator<=( const Address &lhs,const Address &rhs)
   else
     return false;
 }
-
 
 //-----------------------------------------------------------------
 // overloaded < operator, is a1 < a2
@@ -187,7 +183,6 @@ bool operator<=( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) <= 0;
 }
 
-
 //=====================================================================
 //============ IPAddress Implementation ===============================
 //=====================================================================
@@ -218,7 +213,6 @@ IpAddress::IpAddress(const IpAddress &ipaddr)
   IpAddress::format_output();
 }
 
-
 //-------[ default construct, an IP address with a string ]---------------------
 IpAddress::IpAddress( const char *inaddr): Address()
 {
@@ -239,7 +233,6 @@ IpAddress::IpAddress( const char *inaddr): Address()
   valid_flag = parse_address(inaddr);
   IpAddress::format_output();
 }
-
 
 //-----[ construct an IP address with a GenAddress ]---------------------
 IpAddress::IpAddress( const GenAddress &genaddr)
@@ -318,13 +311,11 @@ bool IpAddress::is_private() const
   return false;
 }
 
-
 // convert address into octet string format in network byte order
 void IpAddress::to_octet(OctetStr& octet) const
 {
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
-
 
 bool IpAddress::is_broadcast() const
 {
@@ -382,7 +373,6 @@ IpAddress& IpAddress::operator=( const IpAddress &ipaddress)
   return *this;
 }
 
-
 //--------[ create a new instance of this Value ]-----------------------
 SnmpSyntax *IpAddress::clone() const
 {
@@ -414,7 +404,7 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
     return 0;
 
   char const *token = temp;
-  for (std::size_t index = 0; index < IPV4LEN; ++index)
+  for (size_t index = 0; index < IPV4LEN; ++index)
     {
       char const *token_end = token;
       while (*token_end != '.' && *token_end != '\0')
@@ -772,7 +762,6 @@ UdpAddress::UdpAddress( const GenAddress &genaddr):IpAddress()
   format_output();
 }
 
-
 //--------[ construct a udp from an IpAddress ]--------------------------
 UdpAddress::UdpAddress( const IpAddress &ipaddr):IpAddress(ipaddr)
 {
@@ -785,11 +774,9 @@ UdpAddress::UdpAddress( const IpAddress &ipaddr):IpAddress(ipaddr)
   format_output();
 }
 
-
 //-----[ destructor ]--------------------------------------------------
 UdpAddress::~UdpAddress()
 = default;
-
 
   // copy an instance of this Value
 SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
@@ -838,7 +825,6 @@ UdpAddress& UdpAddress::operator=( const UdpAddress &udpaddr)
   return *this;
 }
 
-
 //-----[ IP Address parse Address ]---------------------------------
 int UdpAddress::parse_address( const char *inaddr)
 {
@@ -869,7 +855,6 @@ int UdpAddress::parse_address( const char *inaddr)
   set_port(port);
   return IpAddress::parse_address( buffer);
 }
-
 
 //----------[ create a new instance of this Value ]------------------------
 SnmpSyntax *UdpAddress::clone() const
@@ -931,7 +916,6 @@ void UdpAddress::format_output()
   else
     output_buffer[0] = 0;
 }
-
 
 //=======================================================================
 //=========== Netbios Address Implementation ============================
@@ -1132,7 +1116,6 @@ SmiUINT32 IpxAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-
 //----------[ default constructor with a string arg ]---------------------------
 IpxAddress::IpxAddress( const char  *inaddr):Address( )
 {
@@ -1157,7 +1140,6 @@ IpxAddress::IpxAddress( const char  *inaddr):Address( )
   IpxAddress::format_output();
 }
 
-
 //-----[ IPX Address copy constructor ]----------------------------------
 IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
   : Address (ipxaddr)
@@ -1173,7 +1155,6 @@ IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
      ACE_OS::memcpy(address_buffer, ipxaddr.address_buffer, IPXLEN);
   IpxAddress::format_output();
 }
-
 
 //----[ construct an IpxAddress from a GenAddress ]---------------------------
 IpxAddress::IpxAddress( const GenAddress &genaddr)
@@ -1205,11 +1186,9 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
   IpxAddress::format_output();
 }
 
-
 //-----[ destructor ]--------------------------------------------------
 IpxAddress::~IpxAddress()
 = default;
-
 
 //-----[ IPX Address general = operator ]-------------------------------
 SnmpSyntax& IpxAddress::operator=( SnmpSyntax &val)
@@ -1246,7 +1225,6 @@ IpxAddress& IpxAddress::operator=( const IpxAddress &ipxaddress)
   IpxAddress::format_output();
   return *this;
 }
-
 
 // create a new instance of this Value
 SnmpSyntax *IpxAddress::clone() const
@@ -1287,7 +1265,6 @@ int IpxAddress::parse_address( const char *inaddr)
   char temp[30];    // don't destroy original
   char unsigned *tmp;
   size_t z, tmplen;
-
 
   // save the orginal source
   if (!inaddr || (std::strlen (inaddr) > (sizeof (temp) - 1))) return 0;
@@ -1409,7 +1386,6 @@ const char * IpxAddress::to_string()
   return (char *)output_buffer;
 }
 
-
 //----[ IPX address format output ]-------------------------------------
 void IpxAddress::format_output()
 {
@@ -1429,7 +1405,6 @@ void IpxAddress::format_output()
   else
     output_buffer[0] = 0;
 }
-
 
 // get the host id portion of an ipx address
 int IpxAddress::get_hostid( MacAddress& mac)
@@ -1456,7 +1431,6 @@ int IpxAddress::get_hostid( MacAddress& mac)
       return 0;
 }
 
-
 //------[ return the type ]----------------------------------
 addr_type IpxAddress::get_type() const
 {
@@ -1467,7 +1441,6 @@ void IpxAddress::to_octet(OctetStr& octet) const
 {
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
-
 
 //========================================================================
 //======== IpxSockAddress Implementation =================================
@@ -1492,7 +1465,6 @@ IpxSockAddress::IpxSockAddress( const IpxSockAddress &ipxaddr):IpxAddress(ipxadd
   format_output();
 }
 
-
 //---------------[ default construct a IpxSockAddress ]--------------
 IpxSockAddress::IpxSockAddress( const char *inaddr):IpxAddress()
 {
@@ -1515,7 +1487,6 @@ IpxSockAddress::IpxSockAddress( const char *inaddr):IpxAddress()
   valid_flag = parse_address( (char *) inaddr);
   format_output();
 }
-
 
 //---------------[ construct a IpxSockAddress from a GenAddress ]----------
 IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
@@ -1554,7 +1525,6 @@ IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
   set_socket(socketid);
   format_output();
 }
-
 
 //------------[ construct an IpxSockAddress from a IpxAddress ]--------------
 IpxSockAddress::IpxSockAddress( const IpxAddress &ipxaddr):IpxAddress(ipxaddr)
@@ -1617,7 +1587,6 @@ IpxSockAddress& IpxSockAddress::operator=( const IpxSockAddress &ipxaddr)
   format_output();
   return *this;
 }
-
 
 //----------[ create a new instance of this Value ]------------------------
 SnmpSyntax *IpxSockAddress::clone() const
@@ -1683,7 +1652,6 @@ int IpxSockAddress::parse_address( const char *inaddr)
    return IpxAddress::parse_address( buffer);
 }
 
-
 //-------------[ set the socket number ]----------------------------------
 void IpxSockAddress::set_socket( const unsigned short s)
 {
@@ -1709,7 +1677,6 @@ addr_type IpxSockAddress::get_type() const
 {
   return type_ipxsock;
 }
-
 
 //========================================================================
 //======== MACAddress Implementation =====================================
@@ -1806,7 +1773,6 @@ MacAddress& MacAddress::operator=( const MacAddress &macaddress)
   return *this;
 }
 
-
 //-----[ MAC Address general = operator ]---------------------------------
 SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
 {
@@ -1851,7 +1817,6 @@ int MacAddress::parse_address( const char *inaddr)
   char unsigned *tmp;
   size_t z;
 
-
   // save the orginal source
   if (!inaddr || (std::strlen (inaddr) > 30)) return 0;
   std::strcpy (temp, inaddr);
@@ -1883,7 +1848,6 @@ int MacAddress::parse_address( const char *inaddr)
   // convert to lower
   for(z=0;z<std::strlen (temp);z++)
     temp[z] = ACE_OS::ace_tolower( temp[z]);
-
 
   // check out the MAC address
   tmp = ( unsigned char *) temp;
@@ -1946,7 +1910,6 @@ addr_type MacAddress::get_type() const
 {
   return type_mac;
 }
-
 
 unsigned int MacAddress::hashFunction() const
 {
@@ -2201,7 +2164,6 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
   format_output();
   return *this;
 }
-
 
 // redefined parse address for macs
 // TODO: Add netbios, appletalk, and decnet addresses here
@@ -2504,7 +2466,6 @@ int DecNetAddress::parse_address( const char *address)
 
   return 1; // valid
 }
-
 
 //------------------------------------------------------------------------
 //---------[ AppleTalk Address Class ]------------------------------------

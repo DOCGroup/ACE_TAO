@@ -16,13 +16,13 @@
 
 constexpr u_short default_logger_port = ACE_DEFAULT_SERVER_PORT;
 ACE_TCHAR const * const default_logger_host = ACE_DEFAULT_SERVER_HOST;
-constexpr std::size_t default_max_iterations = 10;
+constexpr size_t default_max_iterations = 10;
 
 struct Logger_Options
 {
   ACE_TCHAR const *host {default_logger_host};
   u_short port {default_logger_port};
-  std::size_t max_iterations {default_max_iterations};
+  size_t max_iterations {default_max_iterations};
 };
 
 int
@@ -40,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("iterations must not be negative\n")),
                           1);
-      options.max_iterations = static_cast<std::size_t> (parsed_iterations);
+      options.max_iterations = static_cast<size_t> (parsed_iterations);
     }
 
   ACE_SOCK_Stream logger;
@@ -50,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (connector.connect (logger, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
 
-  for (std::size_t i = 0; i < options.max_iterations; ++i)
+  for (size_t i = 0; i < options.max_iterations; ++i)
     {
       ACE_Log_Record log_record (LM_DEBUG,
                                  ACE_OS::time (nullptr),
@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        static_cast<unsigned int> (i + 1));
       log_record.msg_data (buf.data ());
 
-      std::size_t const max_payload_size =
+      size_t const max_payload_size =
         4 // type()
         + 8 // timestamp
         + 4 // process id

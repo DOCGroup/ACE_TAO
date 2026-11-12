@@ -25,7 +25,7 @@ struct Options
   ACE_TCHAR const *input_filename { default_input_filename };
   ACE_TCHAR const *output_filename { default_output_filename };
   bool remove_output { true };
-  std::size_t iteration_count { 100 };
+  size_t iteration_count { 100 };
 };
 
 static Options options {};
@@ -84,7 +84,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("iteration count must not be negative\n")),
                             -1);
-        options.iteration_count = static_cast<std::size_t> (iterations);
+        options.iteration_count = static_cast<size_t> (iterations);
       }
       break;
     case 'o':
@@ -112,7 +112,7 @@ create_test (std::unique_ptr<IO_Test> &test,
 }
 
 static int
-run_tests (std::size_t iterations, FILE *input_fp, FILE *output_fp)
+run_tests (size_t iterations, FILE *input_fp, FILE *output_fp)
 {
   std::array<std::unique_ptr<IO_Test>, 6> test_vector {};
   if (create_test<Stdio_Test> (test_vector[0], "Stdio_Test") == -1

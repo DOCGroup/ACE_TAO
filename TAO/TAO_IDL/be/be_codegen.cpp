@@ -209,7 +209,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
 
       this->gen_stub_hdr_includes ();
 
-      std::size_t const nfiles = idl_global->n_included_idl_files ();
+      size_t const nfiles = idl_global->n_included_idl_files ();
 
       if (nfiles > 0)
         {
@@ -221,7 +221,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
       // We will use the included IDL file names as they appeared
       // in the original main IDL file, not the one which went
       // thru CC preprocessor.
-      for (std::size_t j = 0; j < nfiles; ++j)
+      for (size_t j = 0; j < nfiles; ++j)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
@@ -436,7 +436,7 @@ TAO_CodeGen::start_server_header (const std::string &fname)
   // We will use the included IDL file names as they appeared
   // in the original main IDL file, not the one which went
   // thru CC preprocessor.
-  for (std::size_t j = 0;
+  for (size_t j = 0;
        j < idl_global->n_included_idl_files ();
        ++j)
     {
@@ -784,7 +784,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
   // need to include the *A.h file from all .pidl files here.
   if (be_global->gen_anyop_files ())
     {
-      for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
@@ -974,7 +974,6 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n"
      << be_nl;
-
 
   for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
     {
@@ -1520,14 +1519,12 @@ TAO_CodeGen::start_implementation_header (const std::string &fname)
   return 0;
 }
 
-
 // Get the implementation header stream.
 TAO_OutStream *
 TAO_CodeGen::implementation_header ()
 {
   return this->implementation_header_;
 }
-
 
 // Set the implementation skeleton stream.
 int
@@ -1676,12 +1673,12 @@ TAO_CodeGen::end_implementation_header (const std::string &fname)
     }
 
   std::string macro_name;
-  std::size_t const extension = fname.find_last_of ('.');
-  std::size_t const length = extension == std::string::npos ? 0 : extension;
+  size_t const extension = fname.find_last_of ('.');
+  size_t const length = extension == std::string::npos ? 0 : extension;
   macro_name.reserve (length + 3);
 
   // Convert letters in fname to upper case.
-  for (std::size_t i = 0; i < length; ++i)
+  for (size_t i = 0; i < length; ++i)
     {
       if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
@@ -1769,7 +1766,6 @@ TAO_CodeGen::end_anyop_header ()
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->anyop_header_ << be_global->versioning_end ();
-
 
   if (!be_global->post_include ().empty ())
     {
@@ -2165,13 +2161,13 @@ TAO_CodeGen::gen_ifndef_string (std::string const& fname,
                                 std::string const& prefix,
                                 std::string const& suffix)
 {
-  std::size_t const extension = fname.find_last_of ('.');
-  std::size_t const length = extension == std::string::npos ? 0 : extension;
+  size_t const extension = fname.find_last_of ('.');
+  size_t const length = extension == std::string::npos ? 0 : extension;
   std::string macro_name (prefix);
   macro_name.reserve (prefix.size () + length + suffix.size () + 7);
 
   // Convert letters in fname to upper case.
-  for (std::size_t i = 0; i < length; ++i)
+  for (size_t i = 0; i < length; ++i)
     {
       if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
@@ -2219,7 +2215,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
                                && !be_global->gen_anyop_files (),
                                "tao/AnyTypeCode/Any.h",
                                this->client_header_);
-
 
   if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
     {
@@ -2321,7 +2316,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
         }
     }
 
-
   // DDS/DCPS zero-copy read sequence type support.
   if (idl_global->dcps_support_zero_copy_read ())
     {
@@ -2400,7 +2394,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   // need to include the *A.h file from all .pidl files here.
   if (be_global->any_support () && !be_global->gen_anyop_files ())
     {
-      for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
@@ -2450,7 +2444,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
             }
         }
     }
-
 
   // Must have knowledge of the base class.
   this->gen_seq_file_includes ();
@@ -3252,7 +3245,6 @@ TAO_CodeGen::gen_exec_idl_includes ()
 
   this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_HomeExecutorBase.idl");
 
-
   std::string const container_type (be_global->ciao_container_type ());
   std::string component_file ("ccm/");
   component_file += container_type;
@@ -3285,7 +3277,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
 
       bool skip_incl {};
       // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
-      std::size_t const base = exec_idl_fname.find ("E.idl");
+      size_t const base = exec_idl_fname.find ("E.idl");
       if (base != std::string::npos)
         {
           std::string const test = exec_idl_fname.substr (0, base) + "AE.idl";
@@ -3365,7 +3357,7 @@ TAO_CodeGen::gen_conn_hdr_includes ()
       this->gen_standard_include (this->ciao_conn_header_, "tao/LocalObject.h");
     }
 
-  for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+  for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
     {
       if (j == 0)
         {
@@ -3374,7 +3366,6 @@ TAO_CodeGen::gen_conn_hdr_includes ()
 
       std::string const &idl_name =
         idl_global->included_idl_files ()[j];
-
 
       if (this->is_system_file (idl_name))
         {
@@ -3426,9 +3417,9 @@ TAO_CodeGen::make_rand_extension (std::string &name)
   std::random_device rd;  // non-deterministic generator
   std::mt19937 gen(rd()); // mersenne twister engine
   char constexpr alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  std::uniform_int_distribution<std::size_t> dist(0, sizeof(alphabet) - 2); // exclude null
+  std::uniform_int_distribution<size_t> dist(0, sizeof(alphabet) - 2); // exclude null
 
-  for (std::size_t i = 0; i < 6; ++i)
+  for (size_t i = 0; i < 6; ++i)
     {
       name.push_back (alphabet[dist(gen)]);
     }

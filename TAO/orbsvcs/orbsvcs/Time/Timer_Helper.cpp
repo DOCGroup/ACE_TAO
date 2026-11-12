@@ -20,7 +20,7 @@ int
 Timer_Helper::handle_timeout (ACE_Time_Value const &,
                               void const *)
 {
-  std::size_t no_of_servers {};
+  size_t no_of_servers {};
   CORBA::ULongLong sum {};
 
   // The following are used to keep a track of the inaccuracy

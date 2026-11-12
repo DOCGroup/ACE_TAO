@@ -30,7 +30,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   //FUZZ: enable check_for_lack_ACE_OS
 
   Message expected_msg {};
-  for (std::size_t i {}; i < payload_size; ++i)
+  for (size_t i {}; i < payload_size; ++i)
     {
       expected_msg.payload[i] = static_cast<unsigned short> (i);
     }
@@ -38,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   Status_List received (message_count);
   Status_List damaged (message_count);
   Status_List duplicate (message_count);
-  for (std::size_t i {}; i < message_count; ++i)
+  for (size_t i {}; i < message_count; ++i)
     {
       received.push_back (0);
       damaged.push_back (0);
@@ -108,9 +108,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
   ACE_Time_Value const time = ACE_OS::gettimeofday () - start_time;
 
-  std::size_t lost_count {};
-  std::size_t damaged_count {};
-  std::size_t duplicate_count {};
+  size_t lost_count {};
+  size_t damaged_count {};
+  size_t duplicate_count {};
 
   for (Status_List::Iterator i (received); !i.done (); i.advance ())
     {
@@ -145,9 +145,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         }
     }
 
-  std::size_t const elapsed_msec =
-    static_cast<std::size_t> (time.msec () == 0 ? 1 : time.msec ());
-  std::size_t const throughput = (sizeof (msg) * message_count) / elapsed_msec;
+  size_t const elapsed_msec =
+    static_cast<size_t> (time.msec () == 0 ? 1 : time.msec ());
+  size_t const throughput = (sizeof (msg) * message_count) / elapsed_msec;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("lost       : %B\n")

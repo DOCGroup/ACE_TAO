@@ -244,10 +244,10 @@ Notify_Throughput::init (int argc, ACE_TCHAR* argv [])
   try
     {
       this->consumers_.reserve (this->options_.consumer_count > 0
-                                  ? static_cast<std::size_t> (this->options_.consumer_count)
+                                  ? static_cast<size_t> (this->options_.consumer_count)
                                   : 0);
       this->suppliers_.reserve (this->options_.supplier_count > 0
-                                  ? static_cast<std::size_t> (this->options_.supplier_count)
+                                  ? static_cast<size_t> (this->options_.supplier_count)
                                   : 0);
     }
   catch (std::bad_alloc const&)
@@ -377,7 +377,7 @@ Notify_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
     ACE_ERROR_RETURN ((LM_ERROR, "Payload size must be non-negative\n"), -1);
   try
     {
-      this->payload_.assign (static_cast<std::size_t> (this->options_.payload_size), 'x');
+      this->payload_.assign (static_cast<size_t> (this->options_.payload_size), 'x');
     }
   catch (std::bad_alloc const&)
     {
@@ -459,10 +459,10 @@ Notify_Throughput::run_test ()
 
   for (int i {}; i < this->options_.supplier_count; ++i)
     {
-      this->suppliers_[static_cast<std::size_t> (i)]->
+      this->suppliers_[static_cast<size_t> (i)]->
         TAO_Notify_Tests_StructuredPushSupplier::init (root_poa_.in ());
 
-      if (this->suppliers_[static_cast<std::size_t> (i)]->ACE_Task_Base::activate (
+      if (this->suppliers_[static_cast<size_t> (i)]->ACE_Task_Base::activate (
             THR_NEW_LWP | THR_JOINABLE) != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -515,8 +515,8 @@ Notify_Throughput::dump_results ()
     {
       ACE_OS::sprintf (buf, ACE_TEXT ("Consumer [%02d]"), j);
 
-      this->consumers_[static_cast<std::size_t> (j)]->dump_stats (buf, gsf);
-      this->consumers_[static_cast<std::size_t> (j)]->accumulate_into (throughput);
+      this->consumers_[static_cast<size_t> (j)]->dump_stats (buf, gsf);
+      this->consumers_[static_cast<size_t> (j)]->accumulate_into (throughput);
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -527,8 +527,8 @@ Notify_Throughput::dump_results ()
     {
       ACE_OS::sprintf (buf, ACE_TEXT ("Supplier [%02d]"), i);
 
-      this->suppliers_[static_cast<std::size_t> (i)]->dump_stats (buf, gsf);
-      this->suppliers_[static_cast<std::size_t> (i)]->accumulate_into (suppliers);
+      this->suppliers_[static_cast<size_t> (i)]->dump_stats (buf, gsf);
+      this->suppliers_[static_cast<size_t> (i)]->accumulate_into (suppliers);
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));

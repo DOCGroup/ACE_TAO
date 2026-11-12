@@ -333,7 +333,7 @@ ReplicaController::send_reply (
     cdr << reply.in ();
     cdr << state.in ();
 
-    std::size_t const size = cdr.total_length ();
+    size_t const size = cdr.total_length ();
 
     CORBA::OctetSeq_var msg {};
 

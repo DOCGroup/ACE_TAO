@@ -100,7 +100,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         iors.length (ior_count);
         iors [0] = CORBA::Object::_duplicate (object_primary.in ());
 
-        for (std::size_t cntr {1}; cntr < ior_strs.size (); ++cntr)
+        for (size_t cntr {1}; cntr < ior_strs.size (); ++cntr)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IOR%B: %C\n"), cntr, ior_strs[cntr].c_str ()));
             iors [static_cast<CORBA::ULong> (cntr)] =

@@ -75,7 +75,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                   this->config_filename_.empty () ? ACE_TEXT ("nil") : this->config_filename_.c_str (),
                   this->pid_filename_.empty () ? ACE_TEXT ("nil") : this->pid_filename_.c_str ()));
 
-      for (std::size_t i {}; i < this->local_federations_count_; ++i)
+      for (size_t i {}; i < this->local_federations_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "    name = <%s>\n"
@@ -83,7 +83,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                       "    supplier types:\n",
                       this->local_federations_[i]->name (),
                       this->local_federations_[i]->mcast_port ()));
-          for (std::size_t j {}; j < this->local_federations_[i]->supplier_types (); ++j)
+          for (size_t j {}; j < this->local_federations_[i]->supplier_types (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "    name = <%s>\n"
@@ -93,7 +93,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
             }
           ACE_DEBUG ((LM_DEBUG,
                       "    consumer types:\n"));
-          for (std::size_t j {}; j < this->local_federations_[i]->consumer_types (); ++j)
+          for (size_t j {}; j < this->local_federations_[i]->consumer_types (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "    name = <%s>\n"
@@ -202,7 +202,7 @@ ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation)
 void
 ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  for (std::size_t i {}; i < this->local_federations_count_; ++i)
+  for (size_t i {}; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open (this->event_count_, ec);
     }
@@ -215,7 +215,7 @@ ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
                                     std::memory_order_relaxed);
   RtecEventComm::Time interval = this->event_period_;
   interval *= 10;
-  for (std::size_t i {}; i < this->local_federations_count_; ++i)
+  for (size_t i {}; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->activate (ec, interval);
     }
@@ -224,7 +224,7 @@ ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 void
 ECM_Driver::close_federations ()
 {
-  for (std::size_t i {}; i < this->local_federations_count_; ++i)
+  for (size_t i {}; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->close ();
     }
@@ -248,7 +248,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
   ACE_DEBUG ((LM_DEBUG, "(%P) ECM_Driver::open_senders - "
               "local endpoint = (%s)\n",
               ACE_TEXT_ALWAYS_CHAR (buffer)));
-  for (std::size_t i {}; i < this->all_federations_count_; ++i)
+  for (size_t i {}; i < this->all_federations_count_; ++i)
     {
       TAO_ECG_UDP_Out_Endpoint* clone {};
       ACE_NEW (clone,
@@ -262,7 +262,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
 void
 ECM_Driver::close_senders ()
 {
-  for (std::size_t i {}; i < this->all_federations_count_; ++i)
+  for (size_t i {}; i < this->all_federations_count_; ++i)
     {
       this->all_federations_[i]->close ();
     }
@@ -272,7 +272,7 @@ ECM_Driver::close_senders ()
 void
 ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  for (std::size_t i {}; i < this->local_federations_count_; ++i)
+  for (size_t i {}; i < this->local_federations_count_; ++i)
     {
       TAO_ECG_Refcounted_Endpoint endpoint;
       TAO_ECG_UDP_Out_Endpoint* clone {};
@@ -288,7 +288,7 @@ ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec)
 void
 ECM_Driver::close_receivers ()
 {
-  for (std::size_t i {}; i < this->local_federations_count_; ++i)
+  for (size_t i {}; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->close_receiver ();
     }
@@ -297,7 +297,7 @@ ECM_Driver::close_receivers ()
 void
 ECM_Driver::dump_results ()
 {
-  for (std::size_t i {}; i < this->local_federations_count_; ++i)
+  for (size_t i {}; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->dump_results ();
     }
@@ -335,7 +335,7 @@ ECM_Driver::parse_args (int argc, ACE_TCHAR *argv [])
           {
             std::basic_string<ACE_TCHAR> names (get_opt.opt_arg ());
             ACE_TCHAR* context {};
-            std::size_t count {};
+            size_t count {};
             for (ACE_TCHAR* arg = ACE_OS::strtok_r (
                    names.data (), ACE_TEXT (","), &context);
                  arg != nullptr;
@@ -404,8 +404,8 @@ ECM_Driver::parse_config_file ()
       ACE_ERROR_RETURN ((LM_ERROR,
                          "invalid federation count\n"), -1);
     }
-  this->all_federations_count_ = static_cast<std::size_t> (federation_count);
-  for (std::size_t i {}; i < this->all_federations_count_; ++i)
+  this->all_federations_count_ = static_cast<size_t> (federation_count);
+  for (size_t i {}; i < this->all_federations_count_; ++i)
     {
       if (this->skip_blanks (cfg, "reading federation name"))
         return -1;
@@ -478,9 +478,9 @@ ECM_Driver::parse_config_file ()
                                       std::move (consumer_names)), -1);
       this->all_federations_[i].reset (federation);
     }
-  for (std::size_t j {}; j < this->local_federations_count_; ++j)
+  for (size_t j {}; j < this->local_federations_count_; ++j)
     {
-      std::size_t k {};
+      size_t k {};
       for (; k < this->all_federations_count_; ++k)
         {
           if (this->local_names_[j] == this->all_federations_[k]->name ())
@@ -504,11 +504,11 @@ ECM_Driver::parse_config_file ()
 
 int
 ECM_Driver::parse_name_list (FILE* file,
-                             std::size_t count,
+                             size_t count,
                              std::vector<std::string>& names,
                              char const* error_msg)
 {
-  for (std::size_t i {}; i < count; ++i)
+  for (size_t i {}; i < count; ++i)
     {
       if (this->skip_blanks (file, error_msg))
         {
@@ -565,12 +565,12 @@ ECM_Federation::ECM_Federation (std::string name,
 {
   sender_ = TAO_ECG_UDP_Sender::create (true);
 
-  for (std::size_t i {}; i < this->supplier_names_.size (); ++i)
+  for (size_t i {}; i < this->supplier_names_.size (); ++i)
     {
       ACE_INET_Addr addr (u_short(0), this->supplier_names_[i].c_str (), AF_INET);
       this->supplier_ipaddr_[i] = addr.get_ip_address ();
     }
-  for (std::size_t i {}; i < this->consumer_names_.size (); ++i)
+  for (size_t i {}; i < this->consumer_names_.size (); ++i)
     {
       ACE_INET_Addr addr (u_short(0), this->consumer_names_[i].c_str (), AF_INET);
       this->consumer_ipaddr_[i] = addr.get_ip_address ();
@@ -595,7 +595,7 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
-  for (std::size_t i {}; i < this->consumer_types (); ++i)
+  for (size_t i {}; i < this->consumer_types (); ++i)
     {
       qos.insert_type (this->consumer_ipaddr (i), 0);
     }
@@ -633,7 +633,7 @@ ECM_Supplier::open (char const* name,
               this->supplier_id_));
 
   ACE_SupplierQOS_Factory qos;
-  for (std::size_t i {}; i < this->federation_->supplier_types (); ++i)
+  for (size_t i {}; i < this->federation_->supplier_types (); ++i)
     {
       qos.insert (this->supplier_id_,
                   this->federation_->supplier_ipaddr (i),
@@ -750,7 +750,7 @@ ECM_Consumer::connect (unsigned int *seed)
   qos.start_disjunction_group ();
   qos.insert_type (ACE_ES_EVENT_SHUTDOWN, 0);
   ECM_Federation const* federation = this->federation_->federation ();
-  for (std::size_t i {}; i < federation->consumer_types (); ++i)
+  for (size_t i {}; i < federation->consumer_types (); ++i)
     {
       unsigned int x = ACE_OS::rand_r (seed);
       if (x < RAND_MAX / 2)
@@ -893,7 +893,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
       this->driver_->federation_has_shutdown (this);
       return;
     }
-  std::size_t const i = static_cast<std::size_t> (this->event_count_) %
+  size_t const i = static_cast<size_t> (this->event_count_) %
     this->federation_->supplier_types ();
   s.header.type = this->federation_->supplier_ipaddr (i);
 
@@ -934,7 +934,7 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 
       this->recv_count_++;
 
-      std::size_t j {};
+      size_t j {};
       for (; j < this->federation_->consumer_types (); ++j)
         {
           CORBA::ULong type = e.header.type;
@@ -973,7 +973,7 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   this->mcast_eh_->open (ec);
 
   ACE_SupplierQOS_Factory qos;
-  for (std::size_t i {}; i < this->consumer_types (); ++i)
+  for (size_t i {}; i < this->consumer_types (); ++i)
     {
       qos.insert (source,
                   this->consumer_ipaddr (i),
@@ -1021,7 +1021,7 @@ ECM_Local_Federation::dump_results () const
 }
 
 void
-ECM_Local_Federation::subscribed_bit (std::size_t i, CORBA::Boolean x)
+ECM_Local_Federation::subscribed_bit (size_t i, CORBA::Boolean x)
 {
   if (i >= this->consumer_types ())
     return;
@@ -1029,7 +1029,7 @@ ECM_Local_Federation::subscribed_bit (std::size_t i, CORBA::Boolean x)
 }
 
 CORBA::Boolean
-ECM_Local_Federation::subscribed_bit (std::size_t i) const
+ECM_Local_Federation::subscribed_bit (size_t i) const
 {
   if (i >= this->consumer_types ())
     return 0;

@@ -12,7 +12,6 @@
 // contains references to static TypeCodes.
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
-
 int
 Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
@@ -151,7 +150,6 @@ Sender::init (int argc,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
 
-
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
@@ -237,7 +235,7 @@ Sender::pace_data ()
       while (true)
         {
           // Read from the file into a message block.
-          std::size_t const n = std::fread (this->mb_.wr_ptr (),
+          size_t const n = std::fread (this->mb_.wr_ptr (),
                                             1,
                                             this->mb_.size (),
                                             this->input_file_.get ());
@@ -311,7 +309,6 @@ Sender::pace_data ()
                                    "Sender::pace_data send\n"),
                                   -1);
             }
-
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender::pace_data frame %B was sent successfully\n",

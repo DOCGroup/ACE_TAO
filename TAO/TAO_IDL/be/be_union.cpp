@@ -87,7 +87,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
-  for (std::size_t i = 0; i < this->pd_decls.size (); ++i)
+  for (size_t i = 0; i < this->pd_decls.size (); ++i)
     {
       be_union_branch *ub =
         dynamic_cast<be_union_branch*> (this->pd_decls[i]);
@@ -100,9 +100,9 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       *os << be_nl;
 
-      std::size_t const ll_len = ub->label_list_length ();
+      size_t const ll_len = ub->label_list_length ();
 
-      for (std::size_t j = 0; j < ll_len; ++j)
+      for (size_t j = 0; j < ll_len; ++j)
         {
           // Check if we are printing the default case.
           if (ub->label (j)->label_kind () == AST_UnionLabel::UL_default)

@@ -49,7 +49,7 @@ public:
   Iterator end ();
 
   /// Return the number of elements in the collection
-  std::size_t size () const;
+  size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);

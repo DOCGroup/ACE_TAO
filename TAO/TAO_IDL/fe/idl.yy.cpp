@@ -3864,7 +3864,7 @@ idl_store_pragma (char *buf)
       if (prefix_string)
         {
           std::string const& new_prefix = *prefix_string;
-          std::size_t depth = idl_global->scopes ().depth ();
+          size_t depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
@@ -4464,7 +4464,7 @@ idl_valid_version_part (std::string const& part)
 static bool
 idl_valid_version (std::string const& s)
 {
-  std::size_t const decimal = s.find ('.');
+  size_t const decimal = s.find ('.');
 
   if (decimal == std::string::npos
       || decimal == 0

@@ -33,9 +33,9 @@ private:
 
   /// Number of events of different types pushed to us by EC.
   //@{
-  std::size_t a_events_ {};
-  std::size_t b_events_ {};
-  std::size_t c_events_ {};
+  size_t a_events_ {};
+  size_t b_events_ {};
+  size_t c_events_ {};
   //@}
 
   /// Cache these pointers for cleanup.

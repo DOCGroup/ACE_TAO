@@ -233,7 +233,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else
     // Use the octet sequence payload instead
     char * const tmpstr = const_cast<char *> (ACE_TEXT_ALWAYS_CHAR (ecname));
-    std::size_t const len = std::strlen (tmpstr) + 1;
+    size_t const len = std::strlen (tmpstr) + 1;
     event[0].data.payload.replace (
       len,
       len,

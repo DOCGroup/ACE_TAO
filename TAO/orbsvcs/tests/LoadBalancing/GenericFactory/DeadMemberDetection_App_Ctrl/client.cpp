@@ -15,7 +15,6 @@ struct Client_Options
   bool ping_timedout {};
 };
 
-
 static int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
@@ -48,7 +47,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 static int
 dead_member_rr_test (CORBA::ORB_ptr orb,
@@ -119,7 +117,6 @@ dead_member_rr_test (CORBA::ORB_ptr orb,
 
   return status;
 }
-
 
 static int
 hang_member_rr_test (CORBA::ORB_ptr orb,
@@ -207,7 +204,6 @@ hang_member_rr_test (CORBA::ORB_ptr orb,
   return status;
 }
 
-
 static int
 dead_member_rand_test (CORBA::ORB_ptr orb,
                        Client_Options const &options,
@@ -216,7 +212,7 @@ dead_member_rand_test (CORBA::ORB_ptr orb,
   int status {};
 
   std::array<std::string, 4> locations {};
-  std::size_t location_count {};
+  size_t location_count {};
 
   for (int iter {}; iter < 4; ++iter)
   {
@@ -246,7 +242,7 @@ dead_member_rand_test (CORBA::ORB_ptr orb,
 
       // Any picked member will not be picked again since they exit right after
       // this request.
-      for (std::size_t j {}; j < location_count; ++j)
+      for (size_t j {}; j < location_count; ++j)
         if (location == locations[j])
           status = 1;
 
@@ -279,7 +275,6 @@ dead_member_rand_test (CORBA::ORB_ptr orb,
   return status;
 }
 
-
 static int
 hang_member_rand_test (CORBA::ORB_ptr orb,
                        Client_Options const &options,
@@ -288,7 +283,7 @@ hang_member_rand_test (CORBA::ORB_ptr orb,
   int status {};
 
   std::array<std::string, 4> locations {};
-  std::size_t location_count {};
+  size_t location_count {};
 
   for (int iter {}; iter < 4; ++iter)
   {
@@ -316,7 +311,7 @@ hang_member_rand_test (CORBA::ORB_ptr orb,
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request handled by object at <%C>\n"),
                   location.c_str ()));
 
-      for (std::size_t j {}; j < location_count; ++j)
+      for (size_t j {}; j < location_count; ++j)
         if (location == locations[j])
           status = 1;
 
@@ -369,7 +364,6 @@ hang_member_rand_test (CORBA::ORB_ptr orb,
 
   return status;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

@@ -91,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         "MyLocation 4", "MyLocation 5", "MyLocation 6"
       };
       std::string const &location =
-        locations[static_cast<std::size_t> (options.server_id - 1)];
+        locations[static_cast<size_t> (options.server_id - 1)];
 
       Basic *basic_servant {};
       ACE_NEW_RETURN (basic_servant,

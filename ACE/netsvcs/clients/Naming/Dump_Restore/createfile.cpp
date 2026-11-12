@@ -30,7 +30,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return -1;
 
   ACE_Read_Buffer read_buffer (infile.get (), false, ACE_Allocator::instance ());
-  std::size_t count {};
+  size_t count {};
   for (char *line {};
        (line = read_buffer.read ('\n')) != nullptr;)
     {

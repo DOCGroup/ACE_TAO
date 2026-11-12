@@ -34,7 +34,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      std::size_t const result =
+      size_t const result =
         ACE_OS::fwrite (frame->rd_ptr (),
                         1,
                         frame->length (),

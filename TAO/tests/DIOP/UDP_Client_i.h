@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef UDP_CLIENT_I_H
 #define UDP_CLIENT_I_H
 
@@ -35,7 +34,7 @@ public:
                 UDP_ptr udp,
                 UDP_ptr udpHandler,
                 unsigned int msec,
-                std::size_t iterations);
+                size_t iterations);
   UDP_Client_i (UDP_Client_i const &) = delete;
   UDP_Client_i (UDP_Client_i &&) = delete;
   UDP_Client_i &operator= (UDP_Client_i const &) = delete;
@@ -57,8 +56,7 @@ private:
 
   unsigned int const delay_;
 
-  std::size_t const iterations_;
+  size_t const iterations_;
 };
-
 
 #endif /* UDP_CLIENT_I_H */

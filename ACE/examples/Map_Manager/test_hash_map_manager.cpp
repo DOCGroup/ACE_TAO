@@ -9,7 +9,7 @@
 #include <array>
 #include <cstddef>
 
-constexpr std::size_t max_key_len = 1000;
+constexpr size_t max_key_len = 1000;
 
 using MAP_MANAGER = ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>;
 
@@ -28,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("tablesize must be a positive integer\n")),
                           1);
 
-      std::size_t const total = static_cast<std::size_t> (parsed_total);
+      size_t const total = static_cast<size_t> (parsed_total);
 
       if (!ACE_OS::freopen (argv[2], ACE_TEXT("r"), stdin))
         {

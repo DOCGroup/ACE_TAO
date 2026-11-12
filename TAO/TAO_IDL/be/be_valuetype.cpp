@@ -30,9 +30,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                             long n_inherits,
                             AST_Type *inherits_concrete,
                               AST_Interface_List const& inherits_flat,
-                            std::size_t n_inherits_flat,
+                            size_t n_inherits_flat,
                               AST_Type_List const& supports,
-                            std::size_t n_supports,
+                            size_t n_supports,
                             AST_Type *supports_concrete,
                             bool abstract,
                             bool truncatable,
@@ -91,7 +91,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   // Always the case.
   this->has_constructor (true);
 
-  for (std::size_t i = 0; i < this->n_supports (); ++i)
+  for (size_t i = 0; i < this->n_supports (); ++i)
     {
       be_interface *intf =
         dynamic_cast<be_interface*> (this->pd_supports[i]);
@@ -181,7 +181,6 @@ be_valuetype::FactoryStyle
 be_valuetype::determine_factory_style ()
 {
   FactoryStyle factory_style = FS_UNKNOWN;
-
 
   if (this->is_abstract ())
     {
@@ -288,7 +287,7 @@ be_valuetype::have_operation ()
       // Now traverse inheritance tree.
       AST_Type_List const& inherits = this->inherits ();
 
-      for (std::size_t i = 0; i < inherits.size (); ++i)
+      for (size_t i = 0; i < inherits.size (); ++i)
         {
           be_valuetype *vt = dynamic_cast<be_valuetype*> (inherits[i]);
 
@@ -362,7 +361,7 @@ be_valuetype::have_supported_op (be_interface * node)
       // Now traverse inheritance tree.
       AST_Type_List const& inherits = node->inherits ();
 
-      for (std::size_t i = 0; i < inherits.size (); ++i)
+      for (size_t i = 0; i < inherits.size (); ++i)
         {
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
@@ -640,7 +639,7 @@ be_valuetype::traverse_supports_list_graphs (
 {
   bool const abstract_paths_only = use_abstract_paths && !use_concrete_paths;
 
-  std::size_t const n_supports = this->n_supports ();
+  size_t const n_supports = this->n_supports ();
 
   if (n_supports == 0)
     {
@@ -653,7 +652,7 @@ be_valuetype::traverse_supports_list_graphs (
 
   be_interface *supported_interface {};
 
-  for (std::size_t i = 0; i < n_supports; ++i)
+  for (size_t i = 0; i < n_supports; ++i)
     {
       if (! use_abstract_paths
           && this->pd_supports[i]->is_abstract ())

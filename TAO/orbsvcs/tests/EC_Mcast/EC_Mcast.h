@@ -98,22 +98,22 @@ public:
   CORBA::UShort mcast_port () const;
   // The port used by this federation to receive mcast messages.
 
-  std::size_t supplier_types () const;
+  size_t supplier_types () const;
   // The number of different event types published by this federation.
 
-  char const* supplier_name (std::size_t i) const;
+  char const* supplier_name (size_t i) const;
   // The name (mcast addr in A.B.C.D format) of the event type <i>
 
-  CORBA::ULong supplier_ipaddr (std::size_t i) const;
+  CORBA::ULong supplier_ipaddr (size_t i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
-  std::size_t consumer_types () const;
+  size_t consumer_types () const;
   // The number of different event types consumed by this federation.
 
-  char const* consumer_name (std::size_t i) const;
+  char const* consumer_name (size_t i) const;
   // The name (mcast addr in A.B.C.D format) of the event type <i>
 
-  CORBA::ULong consumer_ipaddr (std::size_t i) const;
+  CORBA::ULong consumer_ipaddr (size_t i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
   void open (TAO_ECG_UDP_Out_Endpoint *endoint,
@@ -300,20 +300,20 @@ public:
   void dump_results () const;
   // Report the results back to the user...
 
-  void subscribed_bit (std::size_t i, CORBA::Boolean x);
-  CORBA::Boolean subscribed_bit (std::size_t i) const;
+  void subscribed_bit (size_t i, CORBA::Boolean x);
+  CORBA::Boolean subscribed_bit (size_t i) const;
   // Set&Get the subscribed bit; this defines the subset of events
   // that we actually publish.
 
   // = Delegate on the federation description
   char const* name () const;
   CORBA::UShort mcast_port () const;
-  std::size_t supplier_types () const;
-  char const* supplier_name (std::size_t i) const;
-  CORBA::ULong supplier_ipaddr (std::size_t i) const;
-  std::size_t consumer_types () const;
-  char const* consumer_name (std::size_t i) const;
-  CORBA::ULong consumer_ipaddr (std::size_t i) const;
+  size_t supplier_types () const;
+  char const* supplier_name (size_t i) const;
+  CORBA::ULong supplier_ipaddr (size_t i) const;
+  size_t consumer_types () const;
+  char const* consumer_name (size_t i) const;
+  CORBA::ULong consumer_ipaddr (size_t i) const;
 
 private:
   ECM_Federation* federation_;
@@ -446,7 +446,7 @@ private:
   // parse the command line arguments
 
   int parse_name_list (FILE *file,
-                       std::size_t count,
+                       size_t count,
                        std::vector<std::string> &names,
                        char const *error_msg);
   // parse one of the lists of names in the federation definition.
@@ -477,13 +477,13 @@ private:
   TAO_ECG_UDP_Out_Endpoint endpoint_;
   // This socket is shared by all the federations to send multicast events.
 
-  std::size_t all_federations_count_ {};
+  size_t all_federations_count_ {};
   // The total number of federations we belong to.
 
   std::array<std::unique_ptr<ECM_Federation>, MAX_FEDERATIONS> all_federations_ {};
   // All federations outlive the local federations that borrow them.
 
-  std::size_t local_federations_count_ {};
+  size_t local_federations_count_ {};
   // How many federations are running in this process (or, if you
   // prefer, in how many federations does this process participate).
 

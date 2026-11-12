@@ -194,7 +194,6 @@ lookup_offer (char const* offer_id,
   return offer;
 }
 
-
 template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (char const* offer_id)
@@ -293,13 +292,12 @@ template <class LOCK_TYPE> CosTrading::OfferId
 TAO_Offer_Database<LOCK_TYPE>::
 generate_offer_id (char const* service_type_name, CORBA::ULong id)
 {
-  std::size_t const total_size = 16 + std::strlen (service_type_name);
+  size_t const total_size = 16 + std::strlen (service_type_name);
   CosTrading::OfferId offer_id =
     CORBA::string_alloc (static_cast<CORBA::ULong> (total_size));
   std::snprintf (offer_id, total_size + 1, "%016u%s", id, service_type_name);
   return offer_id;
 }
-
 
 template <class LOCK_TYPE>
 TAO_Service_Offer_Iterator<LOCK_TYPE>::
@@ -354,7 +352,6 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::has_more_offers ()
 {
   return (this->offer_iter_ != nullptr) ? ! this->offer_iter_->done () : false;
 }
-
 
 template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Service_Offer_Iterator<LOCK_TYPE>::get_offer ()

@@ -253,7 +253,7 @@ Task::svc ()
       std::vector<std::unique_ptr<Worker_Thread>> workers;
       workers.reserve (priorities.size ());
 
-      for (std::size_t i = 0; i < priorities.size (); ++i)
+      for (size_t i = 0; i < priorities.size (); ++i)
         {
           workers.push_back (std::make_unique<Worker_Thread> (
                                thread_manager,
