@@ -27,7 +27,7 @@ namespace TAO
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
     std::unique_ptr<ACE_Reactor> reactor {
-      new (std::nothrow) ACE_Reactor (this->reactor_impl (), 1)
+      new (std::nothrow) ACE_Reactor (this->reactor_impl (), true)
     };
 
     if (!reactor)

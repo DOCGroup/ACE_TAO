@@ -42,7 +42,7 @@ TAO_ServerRequest::operation () const
 ACE_INLINE void
 TAO_ServerRequest::operation (char const *operation,
                               size_t length,
-                              int release)
+                              bool release)
 {
   if (this->release_operation_)
     CORBA::string_free (const_cast <char*> (this->operation_));

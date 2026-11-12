@@ -584,7 +584,7 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     {
       ACE_CString tmp;
       size_t const len = pos - host;
-      tmp.set (this->endpoint_.host (), len, 1);
+      tmp.set (this->endpoint_.host (), len, true);
       encap.write_string (tmp.c_str ());
     }
   else
@@ -641,7 +641,7 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
         {
           ACE_CString tmp;
           size_t const len = pos - host;
-          tmp.set (endpoint->host (), len, 1);
+          tmp.set (endpoint->host (), len, true);
           if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
               || !(out_cdr << tmp.c_str ())
               || !(out_cdr << endpoint->port ()))

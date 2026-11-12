@@ -132,7 +132,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
 
   ACE_CString ior;
 
-  ior.set (string, std::strlen (string), 1);
+  ior.set (string, std::strlen (string), true);
 
   // Find out where the protocol ends
   ACE_CString::size_type ior_index = ior.find ("://");
@@ -301,7 +301,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
     {
-      TAO_Base_Transport_Property desc2(ep,0);
+      TAO_Base_Transport_Property desc2 (ep, false);
       size_t busy_count {};
       if (tcm.find_transport (&desc2, base_transport, busy_count) ==
           TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)

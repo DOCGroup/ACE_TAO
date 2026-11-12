@@ -133,7 +133,7 @@ public:
   char const *operation () const;
 
   /// Set the operation name.
-  void operation (char const *operation, size_t length, int release);
+  void operation (char const *operation, size_t length, bool release);
 
   /// Return the length of the operation.
   size_t operation_length () const;

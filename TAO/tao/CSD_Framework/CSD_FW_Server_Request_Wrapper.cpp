@@ -170,7 +170,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   // ACTION: Method performs deep-copy of string contents.
   clone_obj->operation (CORBA::string_dup (request->operation ()),
                         request->operation_length (),
-                        1);
+                        true);
 
   // TYPE: CORBA::Object_var
   // ACTION: Assignment performs reference-counted copy of object ref.
@@ -298,8 +298,8 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_InputCDR*& from)
 {
   TAO_InputCDR *clone_ptr {};
   ACE_NEW_RETURN (clone_ptr,
-                  TAO_InputCDR(*from),
-                  0);
+                  TAO_InputCDR (*from),
+                  nullptr);
   return clone_ptr;
 }
 
@@ -393,8 +393,8 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
                                         from_non_const->opname_len_,
                                         cloned_args,
                                         num_cloned_args,
-                                        0,
-                                        0),
+                                        false,
+                                        nullptr),
                   false);
 
 
