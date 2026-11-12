@@ -586,15 +586,14 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
 void
 TAO_ServantBase::_add_ref ()
 {
-  ++this->ref_count_;
+  this->ref_count_.fetch_add (1, std::memory_order_relaxed);
 }
 
 void
 TAO_ServantBase::_remove_ref ()
 {
-  CORBA::ULong const new_count = --this->ref_count_;
-
-  if (new_count == 0)
+  // The final decrement acquires prior releases before destroying the servant.
+  if (this->ref_count_.fetch_sub (1, std::memory_order_acq_rel) == 1)
     {
       delete this;
     }
@@ -603,7 +602,7 @@ TAO_ServantBase::_remove_ref ()
 CORBA::ULong
 TAO_ServantBase::_refcount_value () const
 {
-  return this->ref_count_;
+  return this->ref_count_.load (std::memory_order_relaxed);
 }
 
 void

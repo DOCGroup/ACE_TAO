@@ -24,6 +24,7 @@
 #include "tao/Abstract_Servant_Base.h"
 #include <atomic>
 #include <cstddef>
+#include <cstdint>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -206,7 +207,7 @@ protected:
 
 protected:
   /// Reference counter.
-  std::atomic<uint32_t> ref_count_ {1};
+  std::atomic<std::uint32_t> ref_count_ {1};
 
   /// The operation table for this servant.  It is initialized by the
   /// most derived class.
