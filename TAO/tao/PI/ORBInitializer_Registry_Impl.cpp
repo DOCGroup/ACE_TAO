@@ -70,8 +70,8 @@ TAO::ORBInitializer_Registry::fini ()
                     -1);
 
   // Release all initializers in the array
-  std::size_t const initializer_count (this->initializers_.size ());
-  for (std::size_t i = initializer_count; i > 0;)
+  size_t const initializer_count (this->initializers_.size ());
+  for (size_t i = initializer_count; i > 0;)
     {
       --i;
       if (TAO_debug_level > 8)
@@ -96,8 +96,8 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  guard,
                  this->lock_);
 
-      std::size_t const cur_len = this->initializers_.size ();
-      std::size_t const new_len = cur_len + 1;
+      size_t const cur_len = this->initializers_.size ();
+      size_t const new_len = cur_len + 1;
       if (this->initializers_.size (new_len) != 0)
         throw ::CORBA::INTERNAL ();
 
@@ -120,7 +120,7 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  CORBA::COMPLETED_NO);
 }
 
-std::size_t
+size_t
 TAO::ORBInitializer_Registry::pre_init (
   TAO_ORB_Core *orb_core,
   int argc,
@@ -132,7 +132,7 @@ TAO::ORBInitializer_Registry::pre_init (
                     this->lock_,
                     0);
 
-  std::size_t const initializer_count (this->initializers_.size ());
+  size_t const initializer_count (this->initializers_.size ());
 
   if (initializer_count > 0)
     {
@@ -151,7 +151,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (std::size_t i {}; i < initializer_count; ++i)
+      for (size_t i {}; i < initializer_count; ++i)
         {
           this->initializers_[i]->pre_init (orb_init_info_.in ());
         }
@@ -169,7 +169,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
 void
 TAO::ORBInitializer_Registry::post_init (
-  std::size_t pre_init_count,
+  size_t pre_init_count,
   TAO_ORB_Core *orb_core,
   int argc,
   char *argv[],
@@ -196,7 +196,7 @@ TAO::ORBInitializer_Registry::post_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (std::size_t i {}; i < pre_init_count; ++i)
+      for (size_t i {}; i < pre_init_count; ++i)
         {
           this->initializers_[i]->post_init (orb_init_info_.in ());
         }

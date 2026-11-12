@@ -298,7 +298,7 @@ TAO_DynFixed_i::set_value (char const* value)
         }
       integer.insert (0, integer_digits - integer.size (), '0');
     }
-  fraction.append (static_cast<std::size_t> (scale - fraction.size ()), '0');
+  fraction.append (static_cast<size_t> (scale - fraction.size ()), '0');
   std::string canonical = sign + integer;
   if (scale)
     {

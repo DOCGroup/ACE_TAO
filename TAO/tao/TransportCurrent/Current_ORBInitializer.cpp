@@ -25,7 +25,7 @@ namespace TAO
     TAO::Transport::Current_ptr
     Current_ORBInitializer<Impl>::make_current_instance (
       TAO_ORB_Core *core,
-      std::size_t tss_slot_id)
+      size_t tss_slot_id)
     {
       Current_ptr tmp {};
       ACE_NEW_THROW_EX (tmp,

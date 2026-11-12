@@ -27,7 +27,6 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Array_Base.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,7 +49,7 @@ namespace TAO
   {
   public:
     explicit PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
-                    std::size_t tss_slot = 0,
+                    size_t tss_slot = 0,
                     PICurrent_Impl *pop= nullptr);
     ~PICurrent_Impl ();
 
@@ -102,7 +101,7 @@ namespace TAO
   private:
     /// Allow for stack of PICurrent_Impl as required.
     TAO_ORB_Core   *orb_core_;
-    std::size_t    tss_slot_;
+    size_t    tss_slot_;
     PICurrent_Impl *pop_;
     PICurrent_Impl *push_ {};
 

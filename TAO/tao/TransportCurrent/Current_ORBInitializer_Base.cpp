@@ -35,7 +35,7 @@ namespace TAO
 
       // Reserve a TSS slot in the ORB core internal TSS resources for the
       // thread-specific portion of the Current object.
-      std::size_t const tss_slot = tao_info->allocate_tss_slot_id (0);
+      size_t const tss_slot = tao_info->allocate_tss_slot_id (0);
 
       // Create the Current
       Current_var current (this->make_current_instance (tao_info->orb_core (),

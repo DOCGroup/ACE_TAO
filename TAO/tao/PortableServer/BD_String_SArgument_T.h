@@ -23,7 +23,6 @@
 #include "tao/Argument.h"
 #include "tao/Any_Insert_Policy_T.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +35,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           std::size_t BOUND,
+           size_t BOUND,
            template <typename> class Insert_Policy>
   class In_BD_String_SArgument_T : public InArgument
   {
@@ -60,7 +59,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           std::size_t BOUND,
+           size_t BOUND,
            template <typename> class Insert_Policy>
   class Inout_BD_String_SArgument_T : public InoutArgument
   {
@@ -85,7 +84,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           std::size_t BOUND,
+           size_t BOUND,
            template <typename> class Insert_Policy>
   class Out_BD_String_SArgument_T : public OutArgument
   {
@@ -109,7 +108,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           std::size_t BOUND,
+           size_t BOUND,
            template <typename> class Insert_Policy>
   class Ret_BD_String_SArgument_T : public RetArgument
   {
@@ -133,7 +132,7 @@ namespace TAO
    *
    */
   template<typename T_var,
-           std::size_t BOUND,
+           size_t BOUND,
            template <typename> class Insert_Policy>
   struct BD_String_SArg_Traits_T
   {

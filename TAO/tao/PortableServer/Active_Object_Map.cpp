@@ -15,10 +15,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* static */
-std::size_t TAO_Active_Object_Map::system_id_size_ = 0;
+size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
 static void
-hexstring (ACE_CString& hexstr, const char* s, std::size_t l)
+hexstring (ACE_CString& hexstr, const char* s, size_t l)
 {
   static constexpr char hex_chars[] = "0123456789abcdef";
   char buf[2] {};
@@ -58,7 +58,7 @@ TAO_Active_Object_Map::set_system_id_size (
               break;
             }
 
-          std::size_t hint_size {};
+          size_t hint_size {};
 
           if (creation_parameters.use_active_hint_in_ids_)
             hint_size = ACE_Active_Map_Manager_Key::size ();
@@ -1100,7 +1100,7 @@ TAO_Active_Hint_Strategy::find (PortableServer::ObjectId const &system_id,
                                     entry);
 }
 
-std::size_t
+size_t
 TAO_Active_Hint_Strategy::hint_size ()
 {
   return ACE_Active_Map_Manager_Key::size ();
@@ -1150,7 +1150,7 @@ TAO_No_Hint_Strategy::find (PortableServer::ObjectId const &,
   return -1;
 }
 
-std::size_t
+size_t
 TAO_No_Hint_Strategy::hint_size ()
 {
   return 0;

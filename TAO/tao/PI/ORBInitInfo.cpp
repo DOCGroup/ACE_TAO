@@ -308,12 +308,12 @@ TAO_ORBInitInfo::register_policy_factory (
   registry->register_policy_factory (type, policy_factory);
 }
 
-std::size_t
+size_t
 TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 {
   this->check_validity ();
 
-  std::size_t slot_id {};
+  size_t slot_id {};
 
   int const result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
 

@@ -45,12 +45,12 @@ public:
   /// See the documentation in the base class for details.
   int find (char const *opname,
             TAO_Skeleton &skelfunc,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int bind (char const *opname,
             TAO::Operation_Skeletons const skel_ptr) override;
@@ -58,9 +58,9 @@ public:
 private:
   // = Methods that should defined by the subclasses. GPERF program
   //   will generate these routines.
-  virtual std::size_t hash (char const *str, std::size_t len) = 0;
+  virtual size_t hash (char const *str, size_t len) = 0;
 
-  virtual TAO_operation_db_entry const *lookup (char const *str, std::size_t len) = 0;
+  virtual TAO_operation_db_entry const *lookup (char const *str, size_t len) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

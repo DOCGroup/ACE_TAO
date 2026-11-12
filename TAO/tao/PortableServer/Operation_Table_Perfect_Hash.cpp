@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Perfect_Hash_OpTable::find (char const *opname,
                                 TAO_Skeleton &skelfunc,
-                                std::size_t const length)
+                                size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
@@ -54,7 +54,7 @@ int
 TAO_Perfect_Hash_OpTable::find (char const *opname,
                                 TAO_Collocated_Skeleton &skelfunc,
                                 TAO::Collocation_Strategy st,
-                                std::size_t const length)
+                                size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 

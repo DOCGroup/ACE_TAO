@@ -1,6 +1,5 @@
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 
-#include <cstddef>
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Base.h"
@@ -224,7 +223,7 @@ TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory ()
 }
 
 int
-_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (std::size_t)
+_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t)
 {
   _TAO_Object_Proxy_Broker_Factory_function_pointer =
     _TAO_collocation_Object_Proxy_Broker_Factory;
@@ -235,6 +234,6 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (std::size_t)
 static int
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
-    reinterpret_cast<std::size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer));
+    reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer));
 
 TAO_END_VERSIONED_NAMESPACE_DECL

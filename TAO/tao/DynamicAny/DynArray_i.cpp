@@ -9,7 +9,6 @@
 
 #include "tao/CDR.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -412,9 +411,9 @@ TAO_DynArray_i::to_any ()
 
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
-  std::size_t length = this->da_members_.size ();
+  size_t length = this->da_members_.size ();
 
-  for (std::size_t i {}; i < length; ++i)
+  for (size_t i {}; i < length; ++i)
     {
       // Recursive step.
       field_any = this->da_members_[i]->to_any ();

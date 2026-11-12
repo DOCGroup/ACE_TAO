@@ -34,7 +34,6 @@
 #include "ace/Null_Mutex.h"
 #include <vector>
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -112,7 +111,7 @@ public:
   /// The length of CDR stream from the beginning to the current
   /// chunk data starting position.  Used to calculate the chunk size
   /// across multiple chained ACE_Message_Blocks.
-  std::size_t length_to_chunk_octets_pos_ {};
+  size_t length_to_chunk_octets_pos_ {};
   /// The end position of current chunk.
   char *chunk_octets_end_pos_ {};
 };

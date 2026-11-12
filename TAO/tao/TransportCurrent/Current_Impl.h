@@ -12,7 +12,6 @@
 #include "tao/TransportCurrent/TCC.h"
 #include "tao/LocalObject.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,7 +38,7 @@ namespace TAO
       , public virtual ::CORBA::LocalObject
     {
     public:
-      Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
+      Current_Impl (TAO_ORB_Core *core, size_t tss_slot_id);
 
       Current_Impl (Current_Impl const &) = delete;
       Current_Impl (Current_Impl &&) = delete;
@@ -76,7 +75,7 @@ namespace TAO
       TAO_ORB_Core * const core_;
 
       // The ORB's TSS slot id for the Transport pointer.
-      std::size_t const tss_slot_id_;
+      size_t const tss_slot_id_;
     };
   }
 

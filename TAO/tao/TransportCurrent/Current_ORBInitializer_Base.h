@@ -26,7 +26,6 @@
 
 #include "tao/TransportCurrent/Transport_Current_Export.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,7 +52,7 @@ namespace TAO
       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
     protected:
       virtual TAO::Transport::Current_ptr
-      make_current_instance (TAO_ORB_Core *core, std::size_t tss_slot_id) = 0;
+      make_current_instance (TAO_ORB_Core *core, size_t tss_slot_id) = 0;
 
       ACE_TString const id_;
     };

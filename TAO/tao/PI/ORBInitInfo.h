@@ -22,7 +22,6 @@
 #include "tao/PI/PI_includeC.h"
 #include "tao/LocalObject.h"
 
-#include <cstddef>
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -158,7 +157,7 @@ public:
    * An accompanying cleanup function (e.g. a TSS destructor) can also
    * be registered.
    */
-  std::size_t allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup);
+  size_t allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup);
 
   /// Return a pointer to the ORB Core associated with the ORB being
   /// initialized.

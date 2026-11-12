@@ -15,7 +15,6 @@
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
-#include <cstddef>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -86,7 +85,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       std::unique_ptr<ACE_CDR::Char[]> buffer_guard (buffer);
       // pos keeps track of the character position, it will never be
       // greater than len
-      std::size_t pos {};
+      size_t pos {};
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
@@ -142,7 +141,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
 
       // pos keeps track of the character position, it will never be
       // greater than len
-      std::size_t pos {};
+      size_t pos {};
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
@@ -169,7 +168,7 @@ TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
   if (length == 0)
     return 1;
 
-  for (std::size_t i {}; i < length; ++i)
+  for (size_t i {}; i < length; ++i)
     if (!this->read_char(cdr,x[i]))
       return 0;
 
@@ -250,7 +249,7 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
   if (length == 0)
     return true;
 
-  for (std::size_t i {}; i < length; ++i)
+  for (size_t i {}; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
     if (this->write_char (cdr, x[i]) == 0)

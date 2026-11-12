@@ -22,7 +22,6 @@
 #include "tao/TransportCurrent/TC_IIOPC.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,7 +46,7 @@ namespace TAO
       , public virtual Current_Impl
     {
     public:
-      IIOP_Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
+      IIOP_Current_Impl (TAO_ORB_Core *core, size_t tss_slot_id);
 
       IIOP_Current_Impl (IIOP_Current_Impl const &) = delete;
       IIOP_Current_Impl (IIOP_Current_Impl &&) = delete;

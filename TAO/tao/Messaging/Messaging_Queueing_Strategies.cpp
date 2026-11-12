@@ -23,8 +23,8 @@ namespace TAO
   bool
   Eager_Transport_Queueing_Strategy::buffering_constraints_reached (
     TAO_Stub *stub,
-    std::size_t msg_count,
-    std::size_t total_bytes,
+    size_t msg_count,
+    size_t total_bytes,
     bool &must_flush,
     ACE_Time_Value const &current_deadline,
     bool &set_timer,

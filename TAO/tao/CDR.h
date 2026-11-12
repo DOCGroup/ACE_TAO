@@ -74,7 +74,7 @@ namespace CORBA
 }
 
 /// Check the IDL bound and representable CDR length before narrowing.
-inline bool tao_valid_std_string_length (std::size_t length, ACE_CDR::ULong bound)
+inline bool tao_valid_std_string_length (size_t length, ACE_CDR::ULong bound)
 {
   return (bound == 0 || length <= bound) &&
     length < (std::numeric_limits<ACE_CDR::ULong>::max) ();

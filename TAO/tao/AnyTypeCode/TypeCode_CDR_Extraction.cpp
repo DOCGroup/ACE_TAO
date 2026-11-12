@@ -23,7 +23,6 @@
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 
-#include <cstddef>
 #include <vector>
 
 #include "tao/CDR.h"
@@ -63,7 +62,7 @@ namespace
                               TAO::TypeCodeFactory::TC_Info_List & infos)
   {
     // Since we created a new tc, add it to the list.
-    std::size_t const old_size = infos.size ();
+    size_t const old_size = infos.size ();
     if (infos.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
       {
         // Can't increase the list size.
@@ -154,9 +153,9 @@ namespace
     // See comments above for rationale behind using a sequential container instead
     // of a map.
 
-    std::size_t const len = infos.size ();
+    size_t const len = infos.size ();
 
-    for (std::size_t i {}; i < len; ++i)
+    for (size_t i {}; i < len; ++i)
       {
         TAO::TypeCodeFactory::TC_Info & info = infos[i];
 
@@ -164,7 +163,7 @@ namespace
           {
             // We have a matching id, so store the TypeCode in the out
             // list and then compare the others.
-            std::size_t const old_size = tcs.size ();
+            size_t const old_size = tcs.size ();
             if (tcs.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
               return false;
 
@@ -180,9 +179,9 @@ namespace
   // clean up the list by calling release on the typecode pointers.
   void cleanup_tc_info_list (TAO::TypeCodeFactory::TC_Info_List & infos)
   {
-    std::size_t const len = infos.size ();
+    size_t const len = infos.size ();
 
-    for (std::size_t i {}; i < len; ++i)
+    for (size_t i {}; i < len; ++i)
       {
         CORBA::release(infos[i].type);
       }
@@ -512,9 +511,9 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
       safe_master_tc = master_tc;
 
       // Set recursive references for indirected type
-      std::size_t const len = recursive_tc.size ();
+      size_t const len = recursive_tc.size ();
 
-      for (std::size_t i {}; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
 
@@ -792,9 +791,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
       safe_master_tc = master_tc;
 
       // Set recursive references
-      std::size_t const len = recursive_tc.size ();
+      size_t const len = recursive_tc.size ();
 
-      for (std::size_t i {}; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
 
@@ -1166,9 +1165,9 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
       safe_master_tc = master_tc;
 
       // Set recursive references
-      std::size_t const len = recursive_tc.size ();
+      size_t const len = recursive_tc.size ();
 
-      for (std::size_t i {}; i < len; ++i)
+      for (size_t i {}; i < len; ++i)
         {
           TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
 
@@ -1511,12 +1510,12 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
     return true;
   }
 
-  for (std::size_t i {}; i < direct_infos.size(); ++i) {
+  for (size_t i {}; i < direct_infos.size(); ++i) {
     CORBA::TypeCode_ptr& tc_direct = direct_infos[i].type;
 
     TAO::TypeCodeFactory::TC_Info_List recursive_tc;
     if (find_recursive_tc(tc_direct->id(), recursive_tc, indirect_infos)) {
-      std::size_t const len = recursive_tc.size ();
+      size_t const len = recursive_tc.size ();
 
       switch (tc_direct->kind()) {
       case CORBA::tk_struct:
@@ -1532,7 +1531,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
             TAO::True_RefCount_Policy>;
 
           typecode_type * const tc_struct = dynamic_cast<typecode_type *>(tc_direct);
-          for (std::size_t j {}; j < len; ++j)
+          for (size_t j {}; j < len; ++j)
             {
               TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
 
@@ -1557,7 +1556,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                                                       TAO::True_RefCount_Policy>;
 
           typecode_type * const tc_union = dynamic_cast<typecode_type *>(tc_direct);
-          for (std::size_t j {}; j < len; ++j)
+          for (size_t j {}; j < len; ++j)
             {
               TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
 
@@ -1584,7 +1583,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                                                       TAO::True_RefCount_Policy>;
 
           typecode_type * const tc_value = dynamic_cast<typecode_type *>(tc_direct);
-          for (std::size_t j {}; j < len; ++j)
+          for (size_t j {}; j < len; ++j)
             {
               TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
 

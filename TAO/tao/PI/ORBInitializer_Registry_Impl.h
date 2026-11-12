@@ -29,7 +29,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Array_Base.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,14 +67,14 @@ namespace TAO
 
     /// Begin initialization of all registered ORBInitializers before
     /// the ORB itself is initialized.
-    std::size_t pre_init (TAO_ORB_Core *orb_core,
+    size_t pre_init (TAO_ORB_Core *orb_core,
                      int argc,
                      char *argv[],
                      PortableInterceptor::SlotId &slotid) override;
 
     /// Complete initialization of all registered ORBInitializers after
     /// the ORB has been initialized.
-    void post_init (std::size_t pre_init_count,
+    void post_init (size_t pre_init_count,
                     TAO_ORB_Core *orb_core,
                     int argc,
                     char *argv[],

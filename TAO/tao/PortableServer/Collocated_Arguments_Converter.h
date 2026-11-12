@@ -25,7 +25,6 @@
 #include "tao/CDR.h"
 #include "ace/Service_Object.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,14 +45,14 @@ public:
 
   virtual void convert_request (TAO_ServerRequest & server_request,
                                 TAO::Argument * const args[],
-                                std::size_t nargs) = 0;
+                                size_t nargs) = 0;
 
   virtual void dsi_convert_request (TAO_ServerRequest & server_request,
                                     TAO_OutputCDR & output) = 0;
 
   virtual void convert_reply (TAO_ServerRequest & server_request,
                               TAO::Argument * const args[],
-                              std::size_t nargs) = 0;
+                              size_t nargs) = 0;
 
   virtual void dsi_convert_reply (TAO_ServerRequest & server_request,
                                   TAO_InputCDR & input) = 0;

@@ -26,7 +26,6 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,7 +58,7 @@ namespace TAO
       TAO::Argument ** args,
       int num_args,
       char const * op,
-      std::size_t op_len,
+      size_t op_len,
       TAO::Collocation_Strategy strategy);
   };
 }  // End namespace TAO

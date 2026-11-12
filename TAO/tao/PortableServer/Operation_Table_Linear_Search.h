@@ -38,12 +38,12 @@ public:
   /// See the documentation in the base class for details.
   int find (char const *opname,
             TAO_Skeleton &skel_ptr,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int bind (char const *opname,
             TAO::Operation_Skeletons const skelptr) override;

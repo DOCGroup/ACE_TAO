@@ -26,7 +26,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/Transport_Queueing_Strategies.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,8 +50,8 @@ namespace TAO
 
     bool buffering_constraints_reached (
       TAO_Stub *stub,
-      std::size_t msg_count,
-      std::size_t total_bytes,
+      size_t msg_count,
+      size_t total_bytes,
       bool &must_flush,
       ACE_Time_Value const &current_deadline,
       bool &set_timer,
