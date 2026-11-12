@@ -16,32 +16,28 @@ test_non_contiguous_priority_mapping ()
                                       false,
                                       policy);
 
-  RTCORBA::NativePriority native_priority {-1};
-  if (!mapping.to_native (base_corba_priority - 1, native_priority) ||
-      native_priority != ACE_Sched_Params::previous_priority (policy,
-                                                               base_native_priority,
-                                                               ACE_SCOPE_THREAD))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "ERROR: Non-contiguous mapping failed for one priority step\n"));
-      return false;
-    }
-
   int expected_native_priority = base_native_priority;
-  for (int i {}; i < 3; ++i)
+  for (int distance {1}; distance <= 3; ++distance)
     {
       expected_native_priority =
         ACE_Sched_Params::previous_priority (policy,
                                              expected_native_priority,
                                              ACE_SCOPE_THREAD);
-    }
+      RTCORBA::NativePriority native_priority {-1};
+      RTCORBA::Priority mapped_corba_priority {-1};
+      RTCORBA::Priority const expected_corba_priority =
+        base_corba_priority - distance;
 
-  if (!mapping.to_native (base_corba_priority - 3, native_priority) ||
-      native_priority != expected_native_priority)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "ERROR: Non-contiguous mapping failed for three priority steps\n"));
-      return false;
+      if (!mapping.to_native (expected_corba_priority, native_priority) ||
+          native_priority != expected_native_priority ||
+          !mapping.to_CORBA (native_priority, mapped_corba_priority) ||
+          mapped_corba_priority != expected_corba_priority)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Non-contiguous mapping failed at distance %d\n",
+                      distance));
+          return false;
+        }
     }
 
   return true;
