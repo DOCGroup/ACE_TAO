@@ -32,7 +32,7 @@ public:
   static PortableServer::Servant_var<EC_Wrapper> create ();
 
   /// Destructor.  Destroys the Event Channel implementation.
-  virtual ~EC_Wrapper ();
+  ~EC_Wrapper () override;
 
   /// Create and initialize underlying EC servant.
   int init (CORBA::ORB_ptr orb,
@@ -40,18 +40,18 @@ public:
 
   /// RtecEventChannelAdmin::Event_Channel methods.
   //@{
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers ();
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers ();
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
+    for_consumers () override;
+  RtecEventChannelAdmin::SupplierAdmin_ptr
+    for_suppliers () override;
 
   /// Destroy the Event Channel, deactivate from POA, and shut down
   /// the ORB.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  RtecEventChannelAdmin::Observer_Handle
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
+  void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
   //@}
 
 protected:
