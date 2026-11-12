@@ -10,7 +10,6 @@ class Oneway_Receiver
   : public virtual POA_Test::Oneway_Receiver
 {
 public:
-  /// Constructor
   Oneway_Receiver () = default;
 
   Oneway_Receiver (Oneway_Receiver const &) = delete;

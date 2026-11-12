@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      Options options;
+      Options options {};
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
@@ -83,29 +83,37 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int normal_count {};
       int exception_count {};
+      int status {};
       for (int i {}; i != options.iterations; ++i)
         {
           int const result = single_iteration (oneway_receiver.in ());
           if (result)
-            exception_count++;
+            ++exception_count;
           else
-            normal_count++;
+            ++normal_count;
 
           if (i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "Finished iteration %d\n", i));
 
-          // Lets not waste any more time than we have to
+          // Let's not waste any more time than we have to.
           if (exception_count > 10 && normal_count > 0)
             break;
         }
 
       if (exception_count == 0)
-        ACE_ERROR ((LM_ERROR, "ERROR: no exceptions detected\n"));
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: no exceptions detected\n"));
+          status = 1;
+        }
 
       if (normal_count == 0)
-        ACE_ERROR ((LM_ERROR, "ERROR: no request was succesful\n"));
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: no request was successful\n"));
+          status = 1;
+        }
 
       orb->destroy ();
+      return status;
     }
   catch (CORBA::Exception const & ex)
     {

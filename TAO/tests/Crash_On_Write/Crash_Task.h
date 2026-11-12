@@ -13,7 +13,6 @@
 class Crash_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Crash_Task (ACE_Thread_Manager *thr_mgr,
               ACE_Time_Value const &running_time);
 
