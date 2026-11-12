@@ -10,7 +10,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include <cstring>
-#include <memory>
+#include <string>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -54,7 +54,7 @@ namespace
     char * const pos = find_delimiter (profile_str.inout (),
                                        profile.object_key_delimiter ());
     if (pos != nullptr)
-      pos[1] = 0;  // Crop the string.
+      pos[1] = '\0';  // Crop the string.
     else
       {
         if (TAO_debug_level > 0)
@@ -65,7 +65,7 @@ namespace
         return CORBA::Object::_nil ();
       }
 
-    ACE_CString ior (profile_str.in ());
+    std::string ior (profile_str.in ());
 
     // Add the key.
     ior += key_str;
@@ -76,9 +76,9 @@ namespace
                        ACE_TEXT ("TAO_ImR_Client (%P|%t) - ImR-ified IOR <%C>\n"),
                        ior.c_str ()));
       }
-    CORBA::Object_ptr obj = orb_core.orb ()->string_to_object (ior.c_str ());
+    CORBA::Object_var obj = orb_core.orb ()->string_to_object (ior.c_str ());
     obj->_stubobj ()->type_id = type_id;
-    return obj;
+    return obj._retn ();
   }
 
   class ImRifyProfiles
@@ -95,12 +95,11 @@ namespace
       key_str_ (key_str),
       type_id_ (type_id),
       objs_ (base_profiles.profile_count ()),
-      list_buffer_ (std::make_unique<CORBA::Object_ptr[]> (
-                      base_profiles.profile_count ())),
+      list_buffer_ (base_profiles.profile_count ()),
       ior_list_ (base_profiles.profile_count (),
                  base_profiles.profile_count (),
-                 list_buffer_.get (),
-                 0)
+                 list_buffer_.data (),
+                 false)
     {
     }
 
@@ -213,7 +212,8 @@ namespace
     char const * const key_str_;
     char const * const type_id_;
     std::vector<CORBA::Object_var> objs_;
-    std::unique_ptr<CORBA::Object_ptr[]> list_buffer_;
+    /// IORList borrows this pointer array; objs_ owns the referenced objects.
+    std::vector<CORBA::Object_ptr> list_buffer_;
     TAO_IOP::TAO_IOR_Manipulation::IORList ior_list_;
   };
 }
@@ -328,7 +328,7 @@ namespace TAO
       if (pos == nullptr)
         throw ::CORBA::INTERNAL ();
 
-      ACE_CString const partial_ior (ior.in (), (pos - ior.in ()) + 1);
+      std::string const partial_ior (ior.in (), (pos - ior.in ()) + 1);
 
       if (TAO_debug_level > 0)
         {
@@ -345,15 +345,10 @@ namespace TAO
           ACE_UNUSED_ARG (non_servant_upcall);
 
           ACE_CString const server_id = poa->orb_core ().server_id ();
-          ACE_CString name;
-          if (server_id.empty ())
-            {
-              name = poa->name ();
-            }
-          else
-            {
-              name = server_id + ":" + poa->name ();
-            }
+          std::string name (server_id.c_str ());
+          if (!server_id.empty ())
+            name += ':';
+          name += poa->name ().c_str ();
 
           imr_locator->server_is_running (name.c_str (),
                                           partial_ior.c_str (),
