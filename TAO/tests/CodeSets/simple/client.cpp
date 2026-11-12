@@ -17,16 +17,19 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
 #include <cstring>
+#include <cwchar>
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c {};
@@ -35,7 +38,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -51,26 +54,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-wchar_t *
-make_wstring (char const *str)
-{
-  // Short circuit null pointer case
-  if (str == nullptr)
-    return nullptr;
-
-  size_t const len = std::strlen (str) + 1;
-  wchar_t *wstr = new wchar_t[len] {};
-  ACE_DEBUG ((LM_DEBUG,
-              "make_wstring: str = %C\n", str));
-  for (size_t i = 0; i < len; i++)
-    {
-      wstr[i] = static_cast<wchar_t> (str[i]);
-      ACE_DEBUG ((LM_DEBUG,
-                  "wstr[%d] = %d\n", i, (short)wstr[i]));
-    }
-  return wstr;
-}
-
 // ------------------------------------------------------------
 // Client
 // ------------------------------------------------------------
@@ -84,25 +67,26 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Get IOR from command line (or file)
-      if (parse_args (argc, argv) != 0)
+      Options options {};
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // The first arg should be the IOR
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior);
 
       // Get the server
       simple_var const server = simple::_narrow (object.in ());
 
-      char const *bare_string = "Hello World";
+      char const * const bare_string = "Hello World";
 
-      char const *any_string = "Any World";
+      char const * const any_string = "Any World";
       CORBA::Any inarg;
       inarg <<= any_string;
       CORBA::Any_var outarg;
 
       // Invoke the call.
-      CORBA::String_var reply =
+      CORBA::String_var const reply =
         server->op1 (bare_string,
                      inarg,
                      outarg.out ());
@@ -126,13 +110,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ++error_count;
         }
 #if defined (ACE_HAS_WCHAR)
-      wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR(ACE_TEXT ("Wide String")));
-      wchar_t *wide_reply = server->op2 (wide_string);
+      ACE_CDR::WChar const * const wide_string =
+        L"Wide String";
+      CORBA::WString_var const wide_reply = server->op2 (wide_string);
       ACE_DEBUG ((LM_DEBUG,
-                  "sent %W, got %W\n", wide_string, wide_reply));
+                  "sent %W, got %W\n", wide_string, wide_reply.in ()));
+      if (wide_reply.in () == nullptr)
+        {
+          ACE_ERROR ((LM_ERROR, "Wide string round trip returned null\n"));
+          ++error_count;
+        }
+      else if (std::wcscmp (wide_string, wide_reply.in ()) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Wide string round trip mismatch: input first unit %d, reply first unit %d\n",
+                      static_cast<int> (wide_string[0]),
+                      static_cast<int> (wide_reply.in ()[0])));
+          ++error_count;
+        }
 
-      ACE_OS::free (wide_string);
-      CORBA::wstring_free (wide_reply);
 #endif /* ACE_HAS_WCHAR */
 
       server->shutdown ();
