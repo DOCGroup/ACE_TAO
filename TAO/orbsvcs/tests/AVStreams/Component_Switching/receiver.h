@@ -11,10 +11,12 @@
  */
 //=============================================================================
 
+#ifndef TAO_AV_COMPONENT_SWITCHING_RECEIVER_H
+#define TAO_AV_COMPONENT_SWITCHING_RECEIVER_H
+
 #include <cstddef>
 #include <string>
 
-#include "ace/OS_NS_stdio.h"
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -22,9 +24,7 @@
 
 /**
  * @class Signal_Handler
- TITLE
- * This class Handles the SIGINT signal through the Reactor.
- * Useful to gracefully release the process
+ * @brief Handles SIGINT through the Reactor to shut down gracefully.
  */
 class Signal_Handler : public ACE_Event_Handler
 {
@@ -55,8 +55,7 @@ public:
   Receiver_Callback (Receiver_Callback &&) = delete;
   Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
-  /// Method that is called when there is data to be received from a
-  /// sender.
+  /// Receive a frame from a sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
@@ -68,10 +67,10 @@ public:
   void flowname (ACE_CString const &flowname);
 
 private:
-  //// Keeping a count of the incoming frames.
+  /// Number of received frames.
   std::size_t frame_count_ {1};
 
-  //// Flowname of the flow.
+  /// Flow name associated with this callback.
   ACE_CString flowname_;
 };
 
@@ -91,15 +90,15 @@ public:
   Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
   Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
 
-  /// Create a receiver application callback.
+  /// Return the receiver callback for AVStreams upcalls.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
-  //// Called when a distributor tries to connect to the receiver
+  /// Validate a connection request from a distributor.
   CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec) override;
 
 private:
-  //// Receiver application callback.
+  /// Receiver application callback.
   Receiver_Callback callback_;
 };
 
@@ -120,31 +119,31 @@ public:
   Receiver (Receiver &&) = delete;
   Receiver &operator= (Receiver &&) = delete;
 
-  //// Initialize data components.
+  /// Initialize receiver state and establish its stream.
   int init (int argc,
             ACE_TCHAR **argv);
 
-  //// Parse args.
+  /// Parse command-line arguments.
   int parse_args (int argc,
                   ACE_TCHAR **argv);
 
-  //// Name of the output file.
+  /// Return the output file name.
   std::string const &output_file_name () const;
 
   void shut_down ();
 
 protected:
-  //// Connection manager.
+  /// Connection manager.
   Connection_Manager connection_manager_;
 
-  //// The endpoint reactive strategy.
+  /// Endpoint reactive strategy.
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  //// Non-owning pointer to the POA-managed receiver MMDevice servant.
+  /// Non-owning pointer to the POA-managed receiver MMDevice servant.
   TAO_MMDevice *mmdevice_ {};
 
-  //// File name of the file into which received data is written.
+  /// Output file and Naming Service names.
   struct Options
   {
     std::string output_file_name {"output"};
@@ -154,6 +153,8 @@ protected:
 
   Options options_;
 
-  //// Reference to the signal handler.
+  /// Signal handler registered with the reactor.
   Signal_Handler signal_handler_;
 };
+
+#endif /* TAO_AV_COMPONENT_SWITCHING_RECEIVER_H */

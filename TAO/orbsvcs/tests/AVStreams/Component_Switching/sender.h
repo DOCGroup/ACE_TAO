@@ -11,12 +11,14 @@
  */
 //=============================================================================
 
+#ifndef TAO_AV_COMPONENT_SWITCHING_SENDER_H
+#define TAO_AV_COMPONENT_SWITCHING_SENDER_H
+
 #include <cstddef>
 #include <cstdio>
 #include <memory>
 #include <string>
 
-#include "ace/OS_NS_stdio.h"
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -51,7 +53,7 @@ public:
   void flowname (ACE_CString const &flowname);
 
 private:
-  //// Flowname of the callback.
+  /// Callback flow name.
   ACE_CString flowname_;
 };
 
@@ -69,22 +71,19 @@ public:
   Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
   Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
 
-  //// Create the application callback and return its handle to
-  //// AVStreams for further application callbacks.
+  /// Return the sender callback for AVStreams upcalls.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
-  //// Set protocol object corresponding to the transport protocol
-  //// chosen.
+  /// Set the protocol object selected for the transport.
   int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
-  //// Perform application specific actions before accepting new
-  //// connections.
+  /// Handle stream setup before accepting a new connection.
   CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec) override;
 
 protected:
-  //// Application callback.
+  /// Application callback.
   Sender_Callback callback_;
 };
 
@@ -114,33 +113,33 @@ public:
 
   void shut_down ();
 
-  //// Method to initialize the various data components.
+  /// Initialize sender state and establish the streams.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
-  //// Method to pace and send data from a file.
+  /// Pace and send data from the input file.
   int pace_data ();
 
-  //// Accessor to the connection manager.
+  /// Access the connection manager.
   Connection_Manager &connection_manager ();
 
 private:
-  //// Method to parse the command line arguments.
+  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  //// The endpoint strategy used by the sender.
+  /// Endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
 
-  //// Non-owning pointer to the POA-managed sender MMDevice servant.
+  /// Non-owning pointer to the POA-managed sender MMDevice servant.
   TAO_MMDevice *sender_mmdevice_ {};
 
-  //// Number of frames sent.
+  /// Number of frames sent.
   std::size_t frame_count_ {};
 
-  //// File handle of the file read from.
-  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, ACE_OS::fclose};
+  /// File handle of the input file.
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, std::fclose};
 
-  //// Message block into which data is read from a file and then sent.
+  /// Message block used to read and send file data.
   ACE_Message_Block mb_ {BUFSIZ};
 
   struct Options
@@ -152,6 +151,8 @@ private:
 
   Options options_;
 
-  //// Connection manager.
+  /// Connection manager.
   Connection_Manager connection_manager_;
 };
+
+#endif /* TAO_AV_COMPONENT_SWITCHING_SENDER_H */
