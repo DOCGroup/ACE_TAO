@@ -34,7 +34,6 @@
 #include "ace/Null_Mutex.h"
 #include <vector>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define DEFAULT_INDIRECTION_MAP_SIZE 10
