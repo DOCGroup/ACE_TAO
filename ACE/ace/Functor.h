@@ -289,7 +289,7 @@ template<>
 class ACE_Export ACE_Equal_To<const char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -302,7 +302,7 @@ template<>
 class ACE_Export ACE_Equal_To<char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -380,7 +380,7 @@ template<>
 class ACE_Export ACE_Less_Than<const char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -393,7 +393,7 @@ template<>
 class ACE_Export ACE_Less_Than<char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
