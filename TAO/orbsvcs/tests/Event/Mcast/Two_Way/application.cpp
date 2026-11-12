@@ -70,10 +70,10 @@ public:
   /// PushConsumer methods.
   //@{
   /// Update our <heartbeats_> database to reflect newly received heartbeats.
-  virtual void push (const RtecEventComm::EventSet &events);
+  void push (const RtecEventComm::EventSet &events) override;
 
   /// Initiate shutdown().
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
   //@}
 
 private:
@@ -88,8 +88,8 @@ private:
     /// Constructor.
     Timeout_Handler (Heartbeat_Application *recv);
     /// Reactor callback.
-    virtual int handle_timeout (const ACE_Time_Value& tv,
-                                const void* act);
+    int handle_timeout (const ACE_Time_Value& tv,
+                        const void* act) override;
   private:
     /// We callback to this object when a message arrives.
     Heartbeat_Application* receiver_;
