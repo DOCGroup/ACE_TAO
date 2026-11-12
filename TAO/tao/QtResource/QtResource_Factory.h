@@ -52,10 +52,10 @@ namespace TAO
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    /// Reactor created by this factory.
+    /// Non-owning cache; ACE_Reactor owns the implementation after wrapping it.
     ACE_QtReactor *reactor_impl_ {};
 
-    /// QApplication running reactor
+    /// Borrowed QApplication; it must outlive the reactor.
     QApplication * const qapp_;
   };
 }
