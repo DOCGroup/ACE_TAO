@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdio>
 #include <memory>
 #include <string>
 #include <vector>
@@ -170,9 +171,14 @@ using ACE_Select_NULL_LOCK_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Noo
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Select_NULL_LOCK_Reactor *select_reactor = new ACE_Select_NULL_LOCK_Reactor;
-  // The ACE_Reactor owns the implementation; ACE_Reactor::instance owns the reactor.
-  ACE_Reactor::instance (new ACE_Reactor (select_reactor, true), true);
+  std::unique_ptr<ACE_Select_NULL_LOCK_Reactor> select_reactor =
+    std::make_unique<ACE_Select_NULL_LOCK_Reactor> ();
+  std::unique_ptr<ACE_Reactor> reactor =
+    std::make_unique<ACE_Reactor> (select_reactor.get (), true);
+  // The reactor owns its implementation; the singleton owns the reactor.
+  select_reactor.release ();
+  ACE_Reactor::instance (reactor.get (), true);
+  reactor.release ();
 
   // Install signal handlers
   Signal_Handler signal_handler;
@@ -226,16 +232,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Read in the file list and create requests
 
   char buf[BUFSIZ] {};
-  std::unique_ptr<FILE, int (*) (FILE *)> fp (ACE_OS::fopen (filelist_name, "r"), ACE_OS::fclose);
-  if (!fp)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open request file %s\n", filelist_name), 1);
-  while (ACE_OS::fgets (buf, sizeof (buf), fp.get ()) != nullptr)
     {
-      requests.emplace_back ("GET /");
-      requests.back () += buf;
-      requests.back () += "\r\n";
+      std::unique_ptr<FILE, int (*) (FILE *)> fp (
+        std::fopen (filelist_name, "r"), std::fclose);
+      if (!fp)
+        ACE_ERROR_RETURN ((LM_ERROR, "Cannot open request file %s\n", filelist_name), 1);
+      while (std::fgets (buf, sizeof (buf), fp.get ()) != nullptr)
+        {
+          requests.emplace_back ("GET /");
+          requests.back () += buf;
+          requests.back () += "\r\n";
+        }
     }
-  fp.reset ();
   if (requests.empty ())
     ACE_ERROR_RETURN ((LM_ERROR, "Request file %s contains no requests\n", filelist_name), 1);
 
