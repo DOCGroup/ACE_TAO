@@ -9,6 +9,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -168,10 +169,10 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  std::unique_ptr<ACE_UINT32[]> local_ip_addr
-    (new ACE_UINT32[entry->num_local_sec_addrs ()]);
+  std::unique_ptr<ACE_UINT32[]> local_ip_addr =
+    std::make_unique<ACE_UINT32[]> (entry->num_local_sec_addrs ());
   ACE_INET_Addr ip_addr;
-  char** addrs = entry->get_local_sec_addr ();
+  char * const * const addrs = entry->get_local_sec_addr ();
   for (int i {}; i < entry->num_local_sec_addrs (); ++i)
     {
       ACE_CString addr_str (addrs[i]);
@@ -185,7 +186,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   multi_addr.set (local_addr.get_port_number (),
                   local_addr.get_ip_address (),
                   1,
-                  local_ip_addr.get(),
+                  local_ip_addr.get (),
                   entry->num_local_sec_addrs ());
 
   char buf[BUFSIZ];
@@ -472,22 +473,19 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                          0);
 
   ACE_Multihomed_INET_Addr local_addr; //This can be a multihomed address
-  ACE_INET_Addr *addr;
+  ACE_INET_Addr const default_addr ("0");
+  ACE_INET_Addr const *addr = &default_addr;
   if (entry->get_peer_addr () != nullptr)
     {
-      addr = dynamic_cast<ACE_INET_Addr *> (entry->get_peer_addr ());
-    }
-  else
-    {
-      ACE_NEW_RETURN (addr,
-                      ACE_INET_Addr ("0"),
-                      -1);
+      addr = dynamic_cast<ACE_INET_Addr const *> (entry->get_peer_addr ());
+      if (addr == nullptr)
+        return -1;
     }
 
-  std::unique_ptr<ACE_UINT32[]> local_ip_addr
-    (new ACE_UINT32[entry->num_peer_sec_addrs ()]);
+  std::unique_ptr<ACE_UINT32[]> local_ip_addr =
+    std::make_unique<ACE_UINT32[]> (entry->num_peer_sec_addrs ());
   ACE_INET_Addr ip_addr;
-  char** addrs = entry->get_peer_sec_addr ();
+  char * const * const addrs = entry->get_peer_sec_addr ();
   for (int i {}; i < entry->num_peer_sec_addrs (); ++i)
     {
       ACE_CString addr_str (addrs[i]);
@@ -500,7 +498,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
     local_addr.set (addr->get_port_number (),
                     addr->get_ip_address (),
                     1,
-                    local_ip_addr.get(),
+                    local_ip_addr.get (),
                     entry->num_peer_sec_addrs ());
   else
     local_addr.set (addr->get_port_number (),
@@ -525,34 +523,32 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                   "Local Addrs\n"));
       char buf [BUFSIZ];
       size_t size = BUFSIZ;
-      ACE_INET_Addr *peer_addrs {};
-      ACE_NEW_RETURN (peer_addrs,ACE_INET_Addr [size], -1);
-      handler->peer ().get_local_addrs (peer_addrs, size);
+      ACE_INET_Addr *peer_addrs_raw {};
+      ACE_NEW_RETURN (peer_addrs_raw, ACE_INET_Addr[size], -1);
+      std::unique_ptr<ACE_INET_Addr[]> peer_addrs (peer_addrs_raw);
+      handler->peer ().get_local_addrs (peer_addrs.get (), size);
       for (unsigned int i {}; i < size; ++i)
         {
-          peer_addrs [i].addr_to_string (buf,
-                                         BUFSIZ);
+          peer_addrs[i].addr_to_string (buf, BUFSIZ);
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      "%s %d\n",
-                      buf,
-                      size));
+                          "%s %B\n",
+                          buf,
+                          size));
         }
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "Remote Addrs\n"));
 
       size = BUFSIZ;
-      handler->peer ().get_remote_addrs (peer_addrs, size);
+      handler->peer ().get_remote_addrs (peer_addrs.get (), size);
       for (unsigned int i {}; i < size; ++i)
         {
-          peer_addrs [i].addr_to_string (buf,
-                                         BUFSIZ);
+          peer_addrs[i].addr_to_string (buf, BUFSIZ);
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      "%s %d\n",
-                      buf,
-                      size));
+                          "%s %B\n",
+                          buf,
+                          size));
         }
-      //delete peer_addrs;
     }
 
   return 0;
