@@ -66,12 +66,14 @@ Consumer::push (RtecEventComm::EventSet const& events)
       return;
     }
 
-  this->event_count_ += events.length ();
-  if (this->event_count_ % 10000 == 0)
+  CORBA::ULong const event_count =
+    this->event_count_.fetch_add (events.length (), std::memory_order_relaxed)
+    + events.length ();
+  if (event_count % 10000 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d events received\n",
-                  this->event_count_));
+                  "Consumer (%P|%t): %u events received\n",
+                  event_count));
     }
 }
 

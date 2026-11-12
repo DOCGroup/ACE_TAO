@@ -6,6 +6,8 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
+#include <atomic>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -40,7 +42,7 @@ public:
   // The skeleton methods.
 
 private:
-  CORBA::ULong event_count_ {};
+  std::atomic<CORBA::ULong> event_count_ {};
   // Keep track of the number of events received.
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
