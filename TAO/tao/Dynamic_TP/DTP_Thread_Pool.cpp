@@ -548,8 +548,9 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
   // No need to delete thread pool.
   safe_thread_pool.release ();
 
-  // Return current counter and perform post-increment.
-  return this->thread_pool_id_counter_++;
+  CORBA::ULong const current_id = this->thread_pool_id_counter_;
+  ++this->thread_pool_id_counter_;
+  return current_id;
 }
 
 TAO_ORB_Core &

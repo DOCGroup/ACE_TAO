@@ -57,7 +57,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   public TAO::CSD::Strategy_Base
 {
  public:
-  /// Constructors.
   /// This constructor supports situations where dynamic instantiation
   /// of a thread pool for POAs is initiated from a svc.conf file.
   /// A configuration name is passed in such that the object can
@@ -71,7 +70,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   explicit TAO_DTP_POA_Strategy(TAO_DTP_Definition * tp_config,
                               bool     serialize_servants = true);
 
-  /// Virtual Destructor.
   ~TAO_DTP_POA_Strategy () override;
 
   /// Turn on/off serialization of servants.
