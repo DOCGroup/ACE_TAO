@@ -9,13 +9,16 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
-#include <memory>
 
 ACEXML_URL_Addr::ACEXML_URL_Addr ()
-  : path_name_ (nullptr),
-    addr_string_ (nullptr),
-    addr_string_len_ (0)
+  : addr_string_len_ (0)
 {
+}
+
+void
+ACEXML_URL_Addr::Free_Deleter::operator() (ACEXML_Char *ptr) const
+{
+  ACE_OS::free (ptr);
 }
 
 int
@@ -44,19 +47,25 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
   size_t size = this->calculate_length (ipaddr_format);
   if (size > this->addr_string_len_)
     {
-      ACE_ALLOCATOR_RETURN (this->addr_string_,
-                            (ACEXML_Char *) ACE_OS::realloc(this->addr_string_,
-                                                            size), nullptr);
+      ACEXML_Char *resized = static_cast<ACEXML_Char *> (
+        ACE_OS::realloc (this->addr_string_.get (), size));
+      if (resized == nullptr)
+        {
+          errno = ENOMEM;
+          return nullptr;
+        }
+      this->addr_string_.release ();
+      this->addr_string_.reset (resized);
       this->addr_string_len_ = size;
     }
-  ACE_OS::sprintf (this->addr_string_,
+  ACE_OS::sprintf (this->addr_string_.get (),
                    ACE_TEXT ("%s:%d/%s"),
                    ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
                                            ? this->get_host_name ()
                                           : this->get_host_addr ()),
                    this->get_port_number (),
                    this->get_path_name ());
-  return this->addr_string_;
+  return this->addr_string_.get ();
 }
 
 #if defined (ACE_USES_WCHAR)
@@ -118,14 +127,18 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   else
     path_name = url;
 
-  ACE_ALLOCATOR_RETURN (this->path_name_, ACE_OS::strdup (path_name), -1);
+  ACEXML_Char *path_name_copy = ACE_OS::strdup (path_name);
+  if (path_name_copy == nullptr)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  this->path_name_.reset (path_name_copy);
   return result;
 }
 
 ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
   : ACE_INET_Addr (),
-    path_name_ (nullptr),
-    addr_string_ (nullptr),
     addr_string_len_ (0)
 {
   if (this->set (addr) == -1)
@@ -137,20 +150,36 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
 int
 ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
 {
-  ACE_OS::free (this->path_name_);
-  ACE_OS::free (this->addr_string_);
+  if (this == &addr)
+    return 0;
+
+  this->path_name_.reset ();
+  this->addr_string_.reset ();
+  this->addr_string_len_ = 0;
   if (this->ACE_INET_Addr::set (addr) == -1)
     return -1;
   else
     {
       if (addr.path_name_ != nullptr)
-        ACE_ALLOCATOR_RETURN (this->path_name_,
-                              ACE_OS::strdup (addr.path_name_),
-                              -1);
+        {
+          ACEXML_Char *path_name_copy = ACE_OS::strdup (addr.path_name_.get ());
+          if (path_name_copy == nullptr)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
+          this->path_name_.reset (path_name_copy);
+        }
       if (addr.addr_string_ != nullptr)
-        ACE_ALLOCATOR_RETURN (this->addr_string_,
-                              ACE_OS::strdup (addr.addr_string_),
-                              -1);
+        {
+          ACEXML_Char *addr_string_copy = ACE_OS::strdup (addr.addr_string_.get ());
+          if (addr_string_copy == nullptr)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
+          this->addr_string_.reset (addr_string_copy);
+        }
       this->addr_string_len_ = addr.addr_string_len_;
       return 0;
     }
@@ -160,15 +189,13 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_Char *host_name,
                             const ACEXML_Char *path_name,
                             unsigned short port)
   : ACE_INET_Addr (port, host_name),
-    path_name_ (ACE_OS::strdup (path_name)),
-    addr_string_ (nullptr),
     addr_string_len_ (0)
 {
+  this->path_name_.reset (ACE_OS::strdup (path_name));
 }
 
 ACEXML_URL_Addr::~ACEXML_URL_Addr ()
 {
-  ACE_OS::free (this->path_name_);
-  ACE_OS::free (this->addr_string_);
-  this->path_name_ = nullptr;
+  this->path_name_.reset ();
+  this->addr_string_.reset ();
 }

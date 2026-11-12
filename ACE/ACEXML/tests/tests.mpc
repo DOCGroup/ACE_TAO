@@ -13,6 +13,13 @@ project(NamespaceSupport_Test): aceexe, acexml {
   }
 }
 
+project(URL_Addr_Test): aceexe, acexml {
+  exename = URL_Addr_Test
+  Source_Files {
+    URL_Addr_Test.cpp
+  }
+}
+
 project(HttpCharStream_Test): aceexe, acexml {
   exename = HttpCharStream_Test
   Source_Files {

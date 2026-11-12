@@ -20,6 +20,7 @@
 #include "ace/INET_Addr.h"
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/ACEXML_Export.h"
+#include <memory>
 
 /**
  *  @class ACEXML_URL_Addr
@@ -37,6 +38,8 @@ public:
                    unsigned short port = ACE_DEFAULT_HTTP_PORT);
 
   ACEXML_URL_Addr (const ACEXML_URL_Addr &addr);
+  ACEXML_URL_Addr (ACEXML_URL_Addr &&) = delete;
+  ACEXML_URL_Addr &operator= (ACEXML_URL_Addr &&) = delete;
 
   /// Essentially the copy constructor.
   int set (const ACEXML_URL_Addr &addr);
@@ -111,15 +114,22 @@ public:
   int destroy ();
 
 private:
+  struct Free_Deleter
+  {
+    void operator() (ACEXML_Char *ptr) const;
+  };
+
+  using ACEXML_Char_Ptr = std::unique_ptr<ACEXML_Char, Free_Deleter>;
+
   /// Calculate the maximum length of the address string
   size_t calculate_length (int ipaddr_format) const;
 
   /// Our path name.
-  ACEXML_Char *path_name_;
+  ACEXML_Char_Ptr path_name_ {};
 
   /// The dynamically created address string that's used for the
   /// <addr_to_string> method.
-  ACEXML_Char *addr_string_;
+  ACEXML_Char_Ptr addr_string_ {};
 
   /// Current length of the <addr_string_>
   size_t addr_string_len_;
