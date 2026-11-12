@@ -38,7 +38,6 @@ class TAO_Strategies_Export TAO_UIOP_Endpoint : public TAO_Endpoint
 public:
   friend class TAO_UIOP_Profile;
 
-  /// Default constructor.
   TAO_UIOP_Endpoint ();
 
   explicit TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,

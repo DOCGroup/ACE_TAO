@@ -41,7 +41,6 @@ class TAO_Strategies_Export TAO_SHMIOP_Endpoint : public TAO_Endpoint
 public:
   friend class TAO_SHMIOP_Profile;
 
-  /// Default constructor.
   TAO_SHMIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it

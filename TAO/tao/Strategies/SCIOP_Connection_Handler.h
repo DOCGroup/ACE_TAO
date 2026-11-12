@@ -106,7 +106,6 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  //  void handle_close_i ();
   int release_os_resources () override;
   int handle_write_ready (ACE_Time_Value const *timeout) override;
   //@}

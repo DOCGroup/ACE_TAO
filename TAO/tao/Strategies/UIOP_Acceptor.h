@@ -42,9 +42,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_UIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  // TAO_UIOP_Acceptor (ACE_UNIX_Addr &addr);
-  // Create Acceptor object using addr.
-
   /// Create Acceptor object using addr.
   TAO_UIOP_Acceptor ();
 

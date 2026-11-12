@@ -29,9 +29,6 @@ TAO_COIOP_Acceptor::~TAO_COIOP_Acceptor ()
   this->close ();
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
-
 int
 TAO_COIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
                                    TAO_MProfile &mprofile,

@@ -42,7 +42,6 @@ public:
   friend class TAO_COIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
-  /// Default constructor.
   TAO_COIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it

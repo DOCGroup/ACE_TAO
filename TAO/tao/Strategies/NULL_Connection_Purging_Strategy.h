@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy: public TAO_Connection_Purging_Strategy
 {
 public:
-  /// The constructor
   explicit TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
   /// Does nothing.

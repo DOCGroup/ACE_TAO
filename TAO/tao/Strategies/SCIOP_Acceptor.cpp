@@ -42,8 +42,6 @@ TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
       CORBA::string_free (this->hosts_[i]);
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
 int
 TAO_SCIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
                                    TAO_MProfile &mprofile,

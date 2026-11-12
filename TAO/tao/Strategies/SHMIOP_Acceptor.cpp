@@ -33,11 +33,7 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor ()
   this->accept_strategy_.reset ();
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
-//    3) Create multiple profiles for wild carded endpoints (may be multiple
-//       interfaces over which we can receive requests.  Thus a profile
-//       must be made for each one.
+// TODO: Create one profile for each interface used by a wildcard endpoint.
 int
 TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
                                      TAO_MProfile &mprofile,
