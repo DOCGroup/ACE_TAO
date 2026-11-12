@@ -28,11 +28,10 @@
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   explicit Consumer (bool valuetype);
-  Consumer (Consumer const&) = delete;
+  Consumer (Consumer const &) = delete;
   Consumer (Consumer&&) = delete;
-  Consumer& operator= (Consumer const&) = delete;
+  Consumer& operator= (Consumer const &) = delete;
   Consumer& operator= (Consumer&&) = delete;
 
   /// Connect to the Event Channel
@@ -41,13 +40,11 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  // = The RtecEventComm::PushConsumer methods
-
-  /// The skeleton methods.
-  void push (RtecEventComm::EventSet const& events) override;
+  void push (RtecEventComm::EventSet const &events) override;
   void disconnect_push_consumer () override;
 
   CORBA::ULong event_count () const;
+
 private:
   /// Keep track of the number of events received.
   CORBA::ULong event_count_ {};

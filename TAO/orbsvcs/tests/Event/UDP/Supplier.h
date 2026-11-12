@@ -30,11 +30,10 @@
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   explicit Supplier (bool valuetype);
-  Supplier (Supplier const&) = delete;
+  Supplier (Supplier const &) = delete;
   Supplier (Supplier&&) = delete;
-  Supplier& operator= (Supplier const&) = delete;
+  Supplier& operator= (Supplier const &) = delete;
   Supplier& operator= (Supplier&&) = delete;
 
   /// Connect to the event channel
@@ -46,13 +45,10 @@ public:
   /// Push a single event
   void perform_push ();
 
-  // = The RtecEventComm::PushSupplier methods
-
-  /// The skeleton methods.
   void disconnect_push_supplier () override;
 
 private:
-  void insert_into_any (CORBA::Any& any, Components::EventBase* vb);
+  void insert_into_any (CORBA::Any &any, Components::EventBase *vb);
 
   /// The proxy
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;

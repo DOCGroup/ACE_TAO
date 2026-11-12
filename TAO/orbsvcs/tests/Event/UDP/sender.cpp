@@ -18,7 +18,7 @@ static bool valuetype {};
 static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
@@ -116,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // First we convert the string into an INET address, then we
       // convert that into the right IDL structure:
-      ACE_INET_Addr udp_addr (udp_mcast_address);
+      ACE_INET_Addr const udp_addr (udp_mcast_address);
       ACE_DEBUG ((LM_DEBUG,
                   "udp mcast address is: %s\n",
                   udp_mcast_address));
@@ -176,8 +176,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // terminate the application in a nice way.
       for (int i {}; i != 25; ++i)
         {
-          CORBA::Boolean there_is_work =
-            orb->work_pending ();
+          CORBA::Boolean const there_is_work {
+            orb->work_pending ()};
           if (there_is_work)
             {
               // We use a TAO extension. The CORBA mechanism does not
@@ -236,7 +236,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "UDP sender ready\n"));
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

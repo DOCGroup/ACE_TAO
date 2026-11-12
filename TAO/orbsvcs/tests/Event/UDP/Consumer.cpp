@@ -32,12 +32,12 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
   qos.is_gateway = false;
 
   qos.dependencies.length (2);
-  RtecEventComm::EventHeader& h0 =
+  RtecEventComm::EventHeader &h0 =
     qos.dependencies[0].event.header;
   h0.type   = ACE_ES_DISJUNCTION_DESIGNATOR;
   h0.source = 1; // The disjunction has one element
 
-  RtecEventComm::EventHeader& h1 =
+  RtecEventComm::EventHeader &h1 =
     qos.dependencies[1].event.header;
   h1.type   = ACE_ES_EVENT_UNDEFINED;  // first free event type
   h1.source = ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
@@ -53,7 +53,7 @@ Consumer::disconnect ()
       // Disconnect from the proxy
       this->proxy_->disconnect_push_supplier ();
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions
     }
@@ -70,7 +70,7 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (RtecEventComm::EventSet const& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -102,7 +102,7 @@ Consumer::push (RtecEventComm::EventSet const& events)
         }
       else
         {
-          char const* mystring {};
+          char const *mystring {};
           if (events[i].data.any_value >>= mystring)
             {
               ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %C\n",

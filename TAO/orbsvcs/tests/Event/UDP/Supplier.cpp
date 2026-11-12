@@ -22,7 +22,7 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
   qos.is_gateway = false;
 
   qos.publications.length (1);
-  RtecEventComm::EventHeader& h0 =
+  RtecEventComm::EventHeader &h0 =
     qos.publications[0].event.header;
   h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
   h0.source = 1;                      // first free event source
@@ -38,7 +38,7 @@ Supplier::disconnect ()
     {
       this->proxy_->disconnect_push_consumer ();
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -50,7 +50,7 @@ Supplier::disconnect ()
 }
 
 void
-Supplier::insert_into_any (CORBA::Any& any, Components::EventBase* vb)
+Supplier::insert_into_any (CORBA::Any &any, Components::EventBase *vb)
 {
   any <<= vb;
 }
@@ -84,7 +84,7 @@ Supplier::perform_push ()
 
       this->proxy_->push (event);
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
     }
 }
