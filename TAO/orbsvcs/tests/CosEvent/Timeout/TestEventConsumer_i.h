@@ -11,6 +11,10 @@ class TestEventConsumer_i : public virtual POA_CosEventComm::PushConsumer
 {
 public:
   TestEventConsumer_i (CORBA::ORB_ptr orb, bool hang);
+  TestEventConsumer_i (TestEventConsumer_i const &) = delete;
+  TestEventConsumer_i (TestEventConsumer_i &&) = delete;
+  TestEventConsumer_i &operator= (TestEventConsumer_i const &) = delete;
+  TestEventConsumer_i &operator= (TestEventConsumer_i &&) = delete;
 
   // Override operations from PushConsumer interface.
   void push (CORBA::Any const &data) override;
@@ -21,8 +25,11 @@ public:
 
   struct ORB_task : ACE_Task_Base
   {
-    ORB_task (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
-    {}
+    explicit ORB_task (CORBA::ORB_ptr orb);
+    ORB_task (ORB_task const &) = delete;
+    ORB_task (ORB_task &&) = delete;
+    ORB_task &operator= (ORB_task const &) = delete;
+    ORB_task &operator= (ORB_task &&) = delete;
 
     CORBA::ORB_var orb_;
 
@@ -31,13 +38,13 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  bool hang_;
-  unsigned count_;
+  bool const hang_;
+  unsigned count_ {};
   ORB_task orbtask_;
 
   TAO_SYNCH_MUTEX mtx_;
   ACE_Condition<TAO_SYNCH_MUTEX> cond_;
-  bool shutdown_;
+  bool shutdown_ {};
 };
 
 #endif
