@@ -21,7 +21,6 @@ TAO_IORInterceptor_Adapter_Factory_Impl::create ()
 }
 
 
-// *********************************************************************
 
 // Initialization and registration of dynamic service object.
 
