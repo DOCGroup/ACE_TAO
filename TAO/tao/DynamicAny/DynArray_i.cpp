@@ -32,9 +32,9 @@ TAO_DynArray_i::init_common ()
 void
 TAO_DynArray_i::init (const CORBA::Any & any)
 {
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_array)
     {
@@ -43,7 +43,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
 
   this->type_ = tc;
 
-  CORBA::ULong numfields = this->get_tc_length (tc.in ());
+  CORBA::ULong const numfields = this->get_tc_length (tc.in ());
   // Resize the array.
   this->da_members_.size (numfields);
 
@@ -67,11 +67,11 @@ TAO_DynArray_i::init (const CORBA::Any & any)
   else
     {
       impl->marshal_value (out);
-      TAO_InputCDR tmp_in (out);
+      TAO_InputCDR const tmp_in (out);
       cdr = tmp_in;
     }
 
-  CORBA::TypeCode_var field_tc =
+  CORBA::TypeCode_var const field_tc =
     this->get_element_type ();
 
   for (CORBA::ULong i {}; i < numfields; ++i)
@@ -99,7 +99,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
 void
 TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_array)
     {
@@ -108,14 +108,14 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
-  CORBA::ULong numfields = this->get_tc_length (tc);
+  CORBA::ULong const numfields = this->get_tc_length (tc);
 
   // Resize the array.
   this->da_members_.size (numfields);
 
   this->init_common ();
 
-  CORBA::TypeCode_var elemtype = this->get_element_type ();
+  CORBA::TypeCode_var const elemtype = this->get_element_type ();
 
   for (CORBA::ULong i {}; i < numfields; ++i)
     {
@@ -181,7 +181,7 @@ TAO_DynArray_i::get_elements ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
+  CORBA::ULong const length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
   DynamicAny::AnySeq *elements {};
   ACE_NEW_THROW_EX (elements,
@@ -220,13 +220,13 @@ TAO_DynArray_i::set_elements (DynamicAny::AnySeq const& value)
     }
 
   CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var element_type = this->get_element_type ();
+  CORBA::TypeCode_var const element_type = this->get_element_type ();
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check each arg element for type match.
       value_tc = value[i].type ();
-      CORBA::Boolean equivalent =
+      CORBA::Boolean const equivalent =
         value_tc->equivalent (element_type.in ());
 
       if (equivalent)
@@ -286,14 +286,14 @@ TAO_DynArray_i::set_elements_as_dyn_any (
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
+  CORBA::ULong const length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
   if (values.length () != length)
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var element_type = this->get_element_type ();
+  CORBA::TypeCode_var const element_type = this->get_element_type ();
 
   CORBA::TypeCode_var val_type;
   CORBA::Boolean equivalent;
@@ -322,8 +322,8 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ());
+  CORBA::TypeCode_var const tc = any.type ();
+  CORBA::Boolean const equivalent = this->type_.in ()->equivalent (tc.in ());
 
   if (equivalent)
     {
@@ -345,19 +345,19 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
       else
         {
           impl->marshal_value (out);
-          TAO_InputCDR tmp_in (out);
+          TAO_InputCDR const tmp_in (out);
           cdr = tmp_in;
         }
 
-      CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
-      CORBA::ULong arg_length = this->get_tc_length (tc.in ());
+      CORBA::ULong const length = static_cast<CORBA::ULong> (this->da_members_.size ());
+      CORBA::ULong const arg_length = this->get_tc_length (tc.in ());
 
       if (length != arg_length)
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
 
-      CORBA::TypeCode_var field_tc = this->get_element_type ();
+      CORBA::TypeCode_var const field_tc = this->get_element_type ();
 
       for (CORBA::ULong i {}; i < arg_length; ++i)
         {
@@ -396,11 +396,11 @@ TAO_DynArray_i::to_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var field_tc = this->get_element_type ();
+  CORBA::TypeCode_var const field_tc = this->get_element_type ();
 
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
-  size_t length = this->da_members_.size ();
+  size_t const length = this->da_members_.size ();
 
   for (size_t i {}; i < length; ++i)
     {
@@ -424,7 +424,7 @@ TAO_DynArray_i::to_any ()
       else
         {
           field_impl->marshal_value (field_out);
-          TAO_InputCDR tmp_in (field_out);
+          TAO_InputCDR const tmp_in (field_out);
           field_cdr = tmp_in;
         }
 
@@ -458,9 +458,9 @@ TAO_DynArray_i::equal (DynamicAny::DynAny_ptr rhs)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = rhs->type ();
+  CORBA::TypeCode_var const tc = rhs->type ();
 
-  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ());
+  CORBA::Boolean const equivalent = tc->equivalent (this->type_.in ());
 
   if (!equivalent)
     {
@@ -523,7 +523,7 @@ TAO_DynArray_i::current_component ()
       return DynamicAny::DynAny::_nil ();
     }
 
-  CORBA::ULong index = static_cast<CORBA::ULong> (this->current_position_);
+  CORBA::ULong const index = static_cast<CORBA::ULong> (this->current_position_);
 
   this->set_flag (this->da_members_[index].in (), false);
 

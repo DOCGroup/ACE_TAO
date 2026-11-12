@@ -127,7 +127,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
       break;
     case CORBA::tk_longdouble:
       {
-        CORBA::LongDouble temp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+        CORBA::LongDouble const temp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
         this->any_ <<= temp;
         break;
       }
@@ -383,13 +383,13 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::Any const* lhs_v;
         this->any_ >>= lhs_v;
 
-        DynamicAny::DynAny_var rhs_dyn =
+        DynamicAny::DynAny_var const rhs_dyn =
           TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
             rhs_v->_tao_get_typecode (),
             *rhs_v,
             this->allow_truncation_ );
 
-        DynamicAny::DynAny_var lhs_dyn =
+        DynamicAny::DynAny_var const lhs_dyn =
           TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
             lhs_v->_tao_get_typecode (),
             *lhs_v,

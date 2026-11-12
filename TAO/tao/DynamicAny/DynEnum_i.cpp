@@ -33,8 +33,8 @@ TAO_DynEnum_i::init_common ()
 void
 TAO_DynEnum_i::init (CORBA::Any const& any)
 {
-  CORBA::TypeCode_var tc = any.type ();
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TypeCode_var const tc = any.type ();
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_enum)
     {
@@ -72,7 +72,7 @@ TAO_DynEnum_i::init (CORBA::Any const& any)
 void
 TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_enum)
     {
@@ -98,7 +98,7 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 char *
 TAO_DynEnum_i::get_as_string ()
 {
-  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   char const* retval = ct.in ()->member_name (this->value_);
 
@@ -108,9 +108,9 @@ TAO_DynEnum_i::get_as_string ()
 void
 TAO_DynEnum_i::set_as_string (char const* value_as_string)
 {
-  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::ULong count = ct.in ()->member_count ();
+  CORBA::ULong const count = ct.in ()->member_count ();
 
   CORBA::ULong i {};
   char const* temp {};
@@ -144,7 +144,7 @@ TAO_DynEnum_i::get_as_ulong ()
 void
 TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 {
-  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::ULong const max = ct.in ()->member_count ();
 
   if (value_as_ulong < max)
@@ -159,8 +159,8 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 void
 TAO_DynEnum_i::from_any (CORBA::Any const& any)
 {
-  CORBA::TypeCode_var tc = any.type ();
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TypeCode_var const tc = any.type ();
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind == CORBA::tk_enum)
     {
@@ -220,9 +220,9 @@ TAO_DynEnum_i::to_any ()
 CORBA::Boolean
 TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
 {
-  CORBA::TypeCode_var tc = rhs->type ();
+  CORBA::TypeCode_var const tc = rhs->type ();
 
-  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ());
+  CORBA::Boolean const equivalent = tc->equivalent (this->type_.in ());
 
   if (!equivalent)
     {

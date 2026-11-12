@@ -51,13 +51,13 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = dyn_any->type ();
+  CORBA::TypeCode_var const tc = dyn_any->type ();
 
   CORBA::Boolean const equivalent = this->type_.in ()->equivalent (tc.in ());
 
   if (equivalent)
     {
-      CORBA::Any_var any = dyn_any->to_any ();
+      CORBA::Any_var const any = dyn_any->to_any ();
 
       this->from_any (any.in ());
     }
@@ -131,14 +131,14 @@ TAO_DynCommon::insert_string (const char * value)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       cc->insert_string (value);
     }
   else
     {
-      CORBA::TypeCode_var unaliased_tc =
+      CORBA::TypeCode_var const unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
       CORBA::TCKind const kind =
@@ -172,7 +172,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       cc->insert_reference (value);
@@ -278,14 +278,14 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       cc->insert_wstring (value);
     }
   else
     {
-      CORBA::TypeCode_var unaliased_tc =
+      CORBA::TypeCode_var const unaliased_tc =
         this->check_type_and_unalias (CORBA::_tc_wstring);
 
       CORBA::ULong const bound = unaliased_tc->length ();
@@ -317,7 +317,7 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::Any_var any = value->to_any ();
+  CORBA::Any_var const any = value->to_any ();
 
   this->insert_any (any.in ());
 }
@@ -332,14 +332,14 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component (true);
 
       cc->insert_val (value);
     }
   else
     {
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_value)
@@ -449,17 +449,17 @@ TAO_DynCommon::get_string ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       return cc->get_string ();
     }
   else
     {
-      CORBA::TypeCode_var unaliased_tc =
+      CORBA::TypeCode_var const unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         unaliased_tc->kind ();
 
       if (kind != CORBA::tk_string)
@@ -493,7 +493,7 @@ TAO_DynCommon::get_reference ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       return cc->get_reference ();
@@ -521,7 +521,7 @@ TAO_DynCommon::get_typecode ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component ();
+      DynamicAny::DynAny_var const cc = this->check_component ();
 
       return cc->get_typecode ();
     }
@@ -566,7 +566,7 @@ TAO_DynCommon::get_wchar ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component ();
+      DynamicAny::DynAny_var const cc = this->check_component ();
 
       return cc->get_wchar ();
     }
@@ -593,7 +593,7 @@ TAO_DynCommon::get_wstring ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       return cc->get_wstring ();
@@ -603,12 +603,12 @@ TAO_DynCommon::get_wstring ()
       // @@@ (JP) Someday try to find a way to avoid checking for
       // type code equivalence twice without risking a throw of
       // BadKind.
-      CORBA::TypeCode_var unaliased_tc =
+      CORBA::TypeCode_var const unaliased_tc =
         this->check_type_and_unalias (CORBA::_tc_wstring);
 
       CORBA::WChar *retval {};
 
-      CORBA::ULong bound =
+      CORBA::ULong const bound =
         unaliased_tc->length ();
 
       (void) (this->any_ >>= CORBA::Any::to_wstring (retval, bound));
@@ -627,7 +627,7 @@ TAO_DynCommon::get_any ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       return cc->get_any ();
@@ -659,7 +659,7 @@ TAO_DynCommon::get_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::Any_var any = this->get_any ();
+  CORBA::Any_var const any = this->get_any ();
 
   return
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
@@ -678,14 +678,14 @@ TAO_DynCommon::get_val ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component (true);
 
       return cc->get_val ();
     }
   else
     {
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_value)
@@ -708,7 +708,7 @@ TAO_DynCommon::get_val ()
       // Demarshal from a copy so we can retain ownership of our contents.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean good_extract =
+      CORBA::Boolean const good_extract =
         CORBA::ValueBase::_tao_unmarshal (for_reading,
                                           retval.inout ());
 
@@ -765,7 +765,7 @@ TAO_DynCommon::next ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::Long component_count = static_cast<CORBA::Long> (this->component_count_);
+  CORBA::Long const component_count = static_cast<CORBA::Long> (this->component_count_);
 
   if (this->has_components_ == 0
       || this->current_position_ + 1 >= component_count)
@@ -788,7 +788,7 @@ TAO_DynCommon::copy ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::Any_var any = this->to_any ();
+  CORBA::Any_var const any = this->to_any ();
 
   DynamicAny::DynAny_ptr retval =
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
@@ -819,7 +819,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       cc->insert_abstract (value);
@@ -827,7 +827,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
   else
     {
       CORBA::Boolean good_type = true;
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_abstract_interface)
@@ -837,7 +837,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
       else if (!CORBA::is_nil (value))
         {
           const char *value_id = value->_interface_repository_id ();
-          int cmp =
+          int const cmp =
             std::strcmp (value_id, "IDL:omg.org/CORBA/AbstractBase:1.0");
 
           if (cmp != 0)
@@ -892,14 +892,14 @@ TAO_DynCommon::get_abstract ()
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         this->check_component ();
 
       return cc->get_abstract ();
     }
   else
     {
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_abstract_interface)
@@ -1116,9 +1116,9 @@ void
 TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
                          CORBA::Boolean destroying)
 {
-  CORBA::TypeCode_var tc = component->type ();
+  CORBA::TypeCode_var const tc = component->type ();
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TCKind const tk = TAO_DynAnyFactory::unalias (tc.in ());
 
   switch (tk)
   {
@@ -1180,7 +1180,7 @@ TAO_DynCommon::check_component (CORBA::Boolean isValueType)
   DynamicAny::DynAny_var cc =
     this->current_component ();
 
-  CORBA::TypeCode_var tc = cc->type ();
+  CORBA::TypeCode_var const tc = cc->type ();
 
   // We are here because we are a component that is the target of
   // an insert_*() call on our container. It is

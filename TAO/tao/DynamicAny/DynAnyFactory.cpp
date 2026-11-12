@@ -106,7 +106,7 @@ TAO_DynAnyFactory::create_multiple_anys (
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      CORBA::Any_var any = values[i]->to_any ();
+      CORBA::Any_var const any = values[i]->to_any ();
       retseq[i] = any.in ();
     }
 
@@ -122,7 +122,7 @@ TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc)
 
   while (tck == CORBA::tk_alias)
     {
-      CORBA::TypeCode_var temp = tc->content_type ();
+      CORBA::TypeCode_var const temp = tc->content_type ();
 
       tck = TAO_DynAnyFactory::unalias (temp.in ());
     }

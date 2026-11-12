@@ -64,7 +64,7 @@ TAO_DynValue_i::init (CORBA::TypeCode_ptr tc)
        ++i)
     {
       CORBA::TypeCode_var
-        member_type (
+        const member_type (
           get_member_type (this->da_base_types_, i));
 
       this->da_members_[i] = TAO::MakeDynAnyUtils::
@@ -265,7 +265,7 @@ TAO_DynValue_i::current_member_kind ()
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var tc (
+  CORBA::TypeCode_var const tc (
     get_member_type (
       this->da_base_types_,
       this->current_position_));
@@ -298,7 +298,7 @@ TAO_DynValue_i::get_members ()
       safe_retval[i].id = CORBA::string_dup (
         this->get_member_name (this->da_base_types_, i));
       CORBA::Any_var
-        temp (this->da_members_[i]->to_any ());
+        const temp (this->da_members_[i]->to_any ());
       safe_retval[i].value = temp.in ();
     }
 
@@ -328,9 +328,9 @@ TAO_DynValue_i::set_members (
        i < length;
        ++i)
     {
-      CORBA::TypeCode_var my_member (
+      CORBA::TypeCode_var const my_member (
         get_member_type (this->da_base_types_, i));
-      CORBA::TypeCode_var value_member (
+      CORBA::TypeCode_var const value_member (
         values[i].value.type ());
       if (!my_member->equivalent (value_member.in ()))
         {
@@ -413,11 +413,10 @@ TAO_DynValue_i::set_members_as_dyn_any (
        i < length;
        ++i)
     {
-      CORBA::TypeCode_var
-        my_member (
-          get_member_type (this->da_base_types_, i)),
-        value_member (
-          values[i].value->type ());
+      CORBA::TypeCode_var const my_member (
+        get_member_type (this->da_base_types_, i));
+      CORBA::TypeCode_var const value_member (
+        values[i].value->type ());
       if (!my_member->equivalent (value_member.in ()))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
@@ -443,7 +442,7 @@ TAO_DynValue_i::from_any (CORBA::Any const& any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc (any.type ());
+  CORBA::TypeCode_var const tc (any.type ());
   if (!this->type_->equivalent (tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -460,7 +459,7 @@ TAO_DynValue_i::equal (DynamicAny::DynAny_ptr rhs)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc (rhs->type ());
+  CORBA::TypeCode_var const tc (rhs->type ());
   if (!tc->equivalent (this->type_.in ()) ||
       this->component_count_ !=
         rhs->component_count ()  )
@@ -684,7 +683,7 @@ TAO_DynValue_i::from_any_helper (CORBA::Any const& any)
   else
     {
       impl->marshal_value (out);
-      TAO_InputCDR tmp_in (out);
+      TAO_InputCDR const tmp_in (out);
       in = tmp_in;
     }
 
@@ -896,7 +895,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
 
                   // Ok append this member's value to the output stream.
                   CORBA::TypeCode_var
-                    tc (this->da_members_[currentMember]->type ());
+                    const tc (this->da_members_[currentMember]->type ());
 
                   (void) TAO_Marshal_Object::perform_append (
                     tc.in (),
@@ -1157,7 +1156,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
 
   // Now read in every member's value (reading further chunking
   // marks for each separate base-type's state we pass).
-  CORBA::Boolean need_first { true };
+  CORBA::Boolean const need_first { true };
   CORBA::ULong currentBase =
     ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ());
   CORBA::ULong currentBaseMember {};
@@ -1198,7 +1197,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
 
       // OK read in the current member
       CORBA::TypeCode_var
-        field_tc (this->da_base_types_[currentBase]
+        const field_tc (this->da_base_types_[currentBase]
                   ->member_type (currentBaseMember));
       if (CORBA::tk_value == field_tc->kind ())
         {

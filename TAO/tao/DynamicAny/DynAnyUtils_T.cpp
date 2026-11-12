@@ -41,7 +41,7 @@ namespace TAO
 
     if (the_dynany->has_components ())
       {
-        DynamicAny::DynAny_var cc = the_dynany->check_component ();
+        DynamicAny::DynAny_var const cc = the_dynany->check_component ();
         TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
         DynAnyBasicTypeUtils<T>::insert_value (val, dc);
       }
@@ -66,7 +66,7 @@ namespace TAO
 
     if (the_dynany->has_components ())
       {
-        DynamicAny::DynAny_var cc = the_dynany->check_component ();
+        DynamicAny::DynAny_var const cc = the_dynany->check_component ();
         TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
         return DynAnyBasicTypeUtils<T>::get_value (dc);
       }

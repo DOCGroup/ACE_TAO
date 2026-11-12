@@ -38,7 +38,7 @@ TAO_DynValueBox_i::set_to_value ()
 void
 TAO_DynValueBox_i::check_typecode (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc);
   if (kind == CORBA::tk_value_box)
     {
       return;
@@ -54,10 +54,10 @@ TAO_DynValueBox_i::init (CORBA::TypeCode_ptr tc)
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::TypeCode_var
-    mtype (unaliased_tc->content_type ());
+    const mtype (unaliased_tc->content_type ());
   this->boxed_ =
     TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr>
     (mtype.in (), mtype.in (), this->allow_truncation_);
@@ -108,10 +108,10 @@ TAO_DynValueBox_i::set_boxed_value (CORBA::Any const& boxed)
     }
 
   // content_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
-  CORBA::TypeCode_var my_tc = unaliased_tc->content_type ();
-  CORBA::TypeCode_var value_tc = boxed._tao_get_typecode ();
+  CORBA::TypeCode_var const my_tc = unaliased_tc->content_type ();
+  CORBA::TypeCode_var const value_tc = boxed._tao_get_typecode ();
   if (!my_tc->equivalent (value_tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -152,10 +152,10 @@ TAO_DynValueBox_i::set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed )
     }
 
   // content_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
-  CORBA::TypeCode_var my_tc = unaliased_tc->content_type ();
-  CORBA::TypeCode_var value_tc = boxed->type ();
+  CORBA::TypeCode_var const my_tc = unaliased_tc->content_type ();
+  CORBA::TypeCode_var const value_tc = boxed->type ();
   if (!my_tc->equivalent (value_tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -172,7 +172,7 @@ TAO_DynValueBox_i::from_any (CORBA::Any const& any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
   if (!this->type_->equivalent (tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -189,7 +189,7 @@ TAO_DynValueBox_i::equal (DynamicAny::DynAny_ptr rhs)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = rhs->type ();
+  CORBA::TypeCode_var const tc = rhs->type ();
   if (!tc->equivalent (this->type_.in ()))
     {
       return false;
@@ -205,7 +205,7 @@ TAO_DynValueBox_i::equal (DynamicAny::DynAny_ptr rhs)
   if (!this->is_null ())
     {
       DynamicAny::DynAny_var
-        tmp (rhs->current_component ());
+        const tmp (rhs->current_component ());
       return tmp->equal (this->boxed_.in ());
     }
 
@@ -272,7 +272,7 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
   else
     {
       impl->marshal_value (out);
-      TAO_InputCDR tmp_in (out);
+      TAO_InputCDR const tmp_in (out);
       in = tmp_in;
     }
 
@@ -305,9 +305,9 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
     }
 
   // content_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
-  CORBA::TypeCode_var boxed_tc (unaliased_tc->content_type ());
+  CORBA::TypeCode_var const boxed_tc (unaliased_tc->content_type ());
   TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (boxed_tc.in (), in),
@@ -338,7 +338,7 @@ TAO_DynValueBox_i::to_any ()
       // Build <value-tag>, which states if chunking is used
       // and if type information ((list of) repository id(s))
       // is provided.
-      CORBA::Long valuetag =
+      CORBA::Long const valuetag =
         TAO_OBV_GIOP_Flags::Value_tag_base |
         TAO_OBV_GIOP_Flags::Type_info_single;
 
@@ -370,11 +370,11 @@ TAO_DynValueBox_i::to_any ()
         {
           TAO_OutputCDR boxed_out_cdr;
           boxed_impl->marshal_value (boxed_out_cdr);
-          TAO_InputCDR tmp (boxed_out_cdr);
+          TAO_InputCDR const tmp (boxed_out_cdr);
           boxed_in_cdr = tmp;
         }
 
-      CORBA::TypeCode_var boxed_tc = this->boxed_->type ();
+      CORBA::TypeCode_var const boxed_tc = this->boxed_->type ();
       (void) TAO_Marshal_Object::perform_append (boxed_tc.in (),
                                                  &boxed_in_cdr,
                                                  &out_cdr);

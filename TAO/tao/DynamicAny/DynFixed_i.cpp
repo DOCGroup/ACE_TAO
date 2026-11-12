@@ -38,7 +38,7 @@ bool
 TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
                             ACE_CDR::Fixed& value) const
 {
-  CORBA::TypeCode_var tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::UShort const digits = tc->fixed_digits ();
   CORBA::UShort const scale = tc->fixed_scale ();
 
@@ -106,7 +106,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
 void
 TAO_DynFixed_i::init (CORBA::Any const& any)
 {
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
   if (TAO_DynAnyFactory::unalias (tc.in ()) != CORBA::tk_fixed)
     {
       throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
@@ -152,7 +152,7 @@ TAO_DynFixed_i::init (CORBA::TypeCode_ptr tc)
       throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-  CORBA::TypeCode_var unaliased = TAO_DynAnyFactory::strip_alias (tc);
+  CORBA::TypeCode_var const unaliased = TAO_DynAnyFactory::strip_alias (tc);
   CORBA::UShort const digits = unaliased->fixed_digits ();
   CORBA::UShort const scale = unaliased->fixed_scale ();
   if (digits == 0 || digits > ACE_CDR::Fixed::MAX_DIGITS || scale > digits)
@@ -205,7 +205,7 @@ TAO_DynFixed_i::set_value (char const* value)
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
-  CORBA::TypeCode_var tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::UShort const digits = tc->fixed_digits ();
   CORBA::UShort const scale = tc->fixed_scale ();
   std::string text (value);
@@ -254,7 +254,7 @@ TAO_DynFixed_i::set_value (char const* value)
     {
       throw DynamicAny::DynAny::TypeMismatch ();
     }
-  CORBA::Boolean truncated = fraction.size () > scale;
+  CORBA::Boolean const truncated = fraction.size () > scale;
   if (truncated)
     {
       fraction.resize (scale);
@@ -313,7 +313,7 @@ TAO_DynFixed_i::from_any (CORBA::Any const& any)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
   if (!this->type_->equivalent (tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -354,12 +354,12 @@ TAO_DynFixed_i::equal (DynamicAny::DynAny_ptr dyn_any)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
-  CORBA::TypeCode_var tc = dyn_any->type ();
+  CORBA::TypeCode_var const tc = dyn_any->type ();
   if (!tc->equivalent (this->type_.in ()))
     {
       return false;
     }
-  CORBA::Any_var any = dyn_any->to_any ();
+  CORBA::Any_var const any = dyn_any->to_any ();
   TAO_DynFixed_i temporary (this->allow_truncation_);
   temporary.init (any.in ());
   return this->value_.equal (temporary.value_);
