@@ -263,7 +263,7 @@ private:
 
   /// Incarnation number to be used for the next modification to the
   /// repository.
-  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

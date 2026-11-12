@@ -82,10 +82,10 @@ protected:
   CORBA::String_var ior_;
 
   /// Flag indicating whether this trader should join the federation.
-  CORBA::Boolean federate_;
+  CORBA::Boolean federate_ {};
 
   /// File to output the Naming Service IOR.
-  FILE *ior_output_file_;
+  FILE *ior_output_file_ {};
 
   /// Name of this trading service: "hostname:pid".
   CORBA::String_var name_;
@@ -95,7 +95,7 @@ protected:
   TAO_IOR_Multicast ior_multicast_;
 
   /// Flag indicating whether we're the trader others are bootstrapping to.
-  CORBA::Boolean bootstrapper_;
+  CORBA::Boolean bootstrapper_ {};
 
 private:
 };

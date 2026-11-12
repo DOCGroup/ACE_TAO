@@ -6,9 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Service_Type_Repository::TAO_Service_Type_Repository (ACE_Lock* lock)
   : lock_ (lock)
 {
-  this->incarnation_.low = 0;
-  this->incarnation_.high = 0;
-
   // If a lock wasn't provided, let's assume the user doesn't want any
   // kind of lock at all.
   if (this->lock_ == nullptr)
@@ -287,10 +284,10 @@ mask_type (const char *name)
   CORBA::Boolean &mask =
     type_entry->int_id_->type_struct_.masked;
 
-  if (mask == 1)
+  if (mask)
     throw CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name);
   else
-    mask = 1;
+    mask = true;
 }
 
 void
@@ -311,10 +308,10 @@ TAO_Service_Type_Repository::unmask_type (const char *name)
   // Make sure the type is masked.
   CORBA::Boolean &mask = type_entry->int_id_->type_struct_.masked;
 
-  if (mask == 0)
+  if (!mask)
     throw CosTradingRepos::ServiceTypeRepository::NotMasked (name);
   else
-    mask = 0;
+    mask = false;
 }
 
 void
@@ -572,7 +569,7 @@ update_type_map (const char *name,
   type->type_struct_.if_name = if_name;
   type->type_struct_.super_types = super_types;
   type->type_struct_.incarnation = this->incarnation_;
-  type->type_struct_.masked = 0;
+  type->type_struct_.masked = false;
   type->has_subtypes_ = false;
 
   // Move the prop struct sequences and super type names from the in

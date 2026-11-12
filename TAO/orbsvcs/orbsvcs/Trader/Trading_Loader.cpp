@@ -13,7 +13,6 @@
 //===========================================================================
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
 
 #include "orbsvcs/Daemon_Utilities.h"
@@ -31,9 +30,6 @@
 #include <cstring>
 
 TAO_Trading_Loader::TAO_Trading_Loader ()
-  : federate_ (false),
-    ior_output_file_ (nullptr),
-    bootstrapper_ (false)
 {
   char *trader_name = CORBA::string_alloc (MAXHOSTNAMELEN + 10);
 
