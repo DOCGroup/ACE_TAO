@@ -108,7 +108,7 @@ namespace
     TAO_InputCDR &cdr_;
     CORBA::Boolean byte_order_;
   public:
-    TAO_InputCDRByteOrderGuard (TAO_InputCDR & cdr):
+    explicit TAO_InputCDRByteOrderGuard (TAO_InputCDR & cdr):
       cdr_ (cdr),
       byte_order_ (cdr.byte_order ()) {}
     TAO_InputCDRByteOrderGuard (TAO_InputCDRByteOrderGuard const &) = delete;
