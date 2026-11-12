@@ -4,6 +4,8 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -13,18 +15,22 @@ TAO_NVList_Adapter_Impl::create_list (
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
   // Create an empty list
-  ACE_NEW_THROW_EX (new_list,
+  CORBA::NVList_ptr list {};
+  ACE_NEW_THROW_EX (list,
                     CORBA::NVList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+  std::unique_ptr<CORBA::NVList, void (*) (CORBA::NVList *)> list_owner (
+    list,
+    [] (CORBA::NVList *value) { value->_decr_refcount (); });
 
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
     {
-      new_list->max_ = static_cast<CORBA::ULong> (count);
+      list->max_ = static_cast<CORBA::ULong> (count);
 
       for (CORBA::Long i {}; i < count; ++i)
         {
@@ -37,9 +43,22 @@ TAO_NVList_Adapter_Impl::create_list (
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
 
-          new_list->values_.enqueue_tail (nv);
+          std::unique_ptr<CORBA::NamedValue, void (*) (CORBA::NamedValue *)> nv_owner (
+            nv,
+            [] (CORBA::NamedValue *value) { value->_decr_refcount (); });
+
+          if (list->values_.enqueue_tail (nv) == -1)
+            {
+              throw CORBA::NO_MEMORY (
+                CORBA::SystemException::_tao_minor_code (0, ENOMEM),
+                CORBA::COMPLETED_NO);
+            }
+
+          nv_owner.release ();
         }
     }
+
+  new_list = list_owner.release ();
 }
 
 void
