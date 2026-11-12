@@ -30,7 +30,7 @@ TAO_RTScheduler_Current::init (TAO_ORB_Core* orb)
   this->orb_ = orb;
 
   // Create the RT_Current.
-  RTCORBA::Current_ptr current;
+  RTCORBA::Current_ptr current {};
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (orb),
                     CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (
@@ -307,7 +307,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
                    &temp,
                    sizeof(size_t));
 
-      size_t guid;
+      size_t guid {};
       std::memcpy (&guid,
                    this->guid_.get_buffer (),
                    this->guid_.length ());
@@ -352,7 +352,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
          sched_param,
          implicit_sched_param);
 
-      TAO_TSS_Resources *tss =
+      TAO_TSS_Resources * const tss =
         TAO_TSS_Resources::instance ();
 
       TAO_RTScheduler_Current_i *new_current {};
@@ -514,7 +514,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
   RTCORBA::PriorityMapping *pm =
     mapping_manager->mapping ();
 
-  RTCORBA::NativePriority native_priority;
+  RTCORBA::NativePriority native_priority {};
   pm->to_native (base_priority,
                  native_priority);
 
@@ -564,7 +564,7 @@ DTTask::svc ()
 {
   try
     {
-      TAO_TSS_Resources *tss =
+      TAO_TSS_Resources * const tss =
         TAO_TSS_Resources::instance ();
 
       // Current_i manages its own lifetime after it becomes the TSS current.
@@ -642,7 +642,7 @@ TAO_RTScheduler_Current_i::name ()
 void
 TAO_RTScheduler_Current_i::cancel_thread ()
 {
-  size_t guid;
+  size_t guid {};
   std::memcpy (&guid,
                this->guid_.get_buffer (),
                this->guid_.length ());
@@ -674,7 +674,7 @@ TAO_RTScheduler_Current_i::cleanup_DT ()
 void
 TAO_RTScheduler_Current_i::cleanup_current ()
 {
-  TAO_TSS_Resources *tss =
+  TAO_TSS_Resources * const tss =
     TAO_TSS_Resources::instance ();
 
   tss->rtscheduler_current_impl_ = this->previous_current_;
@@ -686,16 +686,16 @@ TAO_RTScheduler_Current_i::cleanup_current ()
 void
 TAO_RTScheduler_Current_i::delete_all_currents ()
 {
-  TAO_RTScheduler_Current_i* current = this;
+  TAO_RTScheduler_Current_i * current = this;
 
   while (current != nullptr)
     {
-      TAO_RTScheduler_Current_i* prev_current = current->previous_current_;
+      TAO_RTScheduler_Current_i * const prev_current = current->previous_current_;
       current->cleanup_current ();
       current = prev_current;
     }
 
-  TAO_TSS_Resources *tss =
+  TAO_TSS_Resources * const tss =
     TAO_TSS_Resources::instance ();
 
   tss->rtscheduler_current_impl_ = tss->rtscheduler_previous_current_impl_;
