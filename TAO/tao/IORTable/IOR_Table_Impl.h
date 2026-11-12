@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file IOR_Table_Impl.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
-
-
 #ifndef TAO_IOR_TABLE_IMPL_H
 #define TAO_IOR_TABLE_IMPL_H
 
@@ -104,10 +100,8 @@ namespace TAO
 
     static ::CORBA::Boolean marshal (TAO_IOR_Table_Impl_ptr const p,
                                      TAO_OutputCDR &cdr);
-  }
-  ;
+  };
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

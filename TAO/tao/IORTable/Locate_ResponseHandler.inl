@@ -12,7 +12,6 @@ TAO_AMH_Locate_ResponseHandler::_duplicate (TAO_AMH_Locate_ResponseHandler_ptr x
   return x;
 }
 
-
 // Inline operations for class TAO_AMH_Locate_ResponseHandler_var
 ACE_INLINE
 TAO_AMH_Locate_ResponseHandler_var::TAO_AMH_Locate_ResponseHandler_var ()

@@ -61,7 +61,7 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
       ACE_NEW_RETURN (rhp,
                       TAO_AMH_Locate_ResponseHandler (request),
                       DS_MISMATCHED_KEY);
-      TAO_AMH_Locate_ResponseHandler_var rh (rhp);
+      TAO_AMH_Locate_ResponseHandler_var const rh (rhp);
       this->find_object (rh, key);
       return 0;
     }

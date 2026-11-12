@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Table_Adapter.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
-
-
 #ifndef TAO_TABLE_ADAPTER_H
 #define TAO_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"

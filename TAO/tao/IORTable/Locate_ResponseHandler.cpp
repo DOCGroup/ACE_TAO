@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
+
 /**
  *  @file    Locate_ResponseHandler.cpp
  *
  *  @author Phil Mesnier <mesnier_p@ociweb>
  */
-//=============================================================================
-
 #include "Locate_ResponseHandler.h"
 
 #include "tao/Exception.h"
@@ -78,6 +76,4 @@ TAO_AMH_Locate_ResponseHandler::_interface_repository_id () const
 {
   return nullptr;
 }
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

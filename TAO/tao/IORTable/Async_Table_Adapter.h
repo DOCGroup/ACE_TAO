@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Async_Table_Adapter.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
-
 #ifndef TAO_ASYNC_TABLE_ADAPTER_H
 #define TAO_ASYNC_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"

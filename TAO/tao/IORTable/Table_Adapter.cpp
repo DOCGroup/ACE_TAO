@@ -120,7 +120,7 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
   // Get the effective profile set.
   TAO_MProfile const &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
                                                        : stub->base_profiles ();
-  TAO_PHandle j {};
+  TAO_PHandle const j {};
   // We only look at the key from the 0th profile but we only really care about
   // corbaloc's here where all profiles share a single object key
   TAO::ObjectKey_var key = mp.get_profile (j)->_key ();
@@ -168,7 +168,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
   try
     {
-      CORBA::String_var ior = rootref->find (object_key.in ());
+      CORBA::String_var const ior = rootref->find (object_key.in ());
       forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
   catch (::IORTable::NotFound const &)

@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Async_IOR_Table_Impl.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
-
 #ifndef TAO_ASYNC_IOR_TABLE_IMPL_H
 #define TAO_ASYNC_IOR_TABLE_IMPL_H
 

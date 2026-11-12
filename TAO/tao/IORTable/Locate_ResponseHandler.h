@@ -1,15 +1,10 @@
 // -*- C++ -*-
 
-
-//=============================================================================
 /**
  *  @file    Locate_ResponseHandler.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb>
  */
-//=============================================================================
-
-
 #ifndef TAO_LOCATE_RESPONSEHANDLER_H
 #define TAO_LOCATE_RESPONSEHANDLER_H
 
@@ -73,7 +68,6 @@ private:
   TAO_AMH_Locate_ResponseHandler_ptr ptr_;
 };
 
-
 /**
  * @class TAO_AMH_Locate_ResponseHandler
  *
@@ -134,10 +128,9 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 namespace IORTable
 {
-  // satisfy the native type requirement for the asnyc locate interface
+  /// Satisfies the native type requirement for the async locate interface.
   using Locate_ResponseHandler = TAO_AMH_Locate_ResponseHandler_var const &;
 }
 
