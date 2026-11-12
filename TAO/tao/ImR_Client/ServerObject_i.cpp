@@ -31,5 +31,4 @@ ServerObject_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

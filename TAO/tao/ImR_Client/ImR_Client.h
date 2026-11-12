@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IMR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IMR_CLIENT_ADAPTER_IMPL_H
 
@@ -67,7 +66,7 @@ namespace TAO
                                             TAO::ObjectKey const &key,
                                             char const *type_id) const override;
     private:
-      /// Implementation Repository Server Object
+      /// Non-owning pointer to the servant registered with the root POA.
       ServerObject_i *server_object_ {};
     };
 
