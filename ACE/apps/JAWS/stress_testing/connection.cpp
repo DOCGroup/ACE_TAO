@@ -36,8 +36,8 @@ int connection::connect (char const *hostname_opt_port, int tcp_nodelay, int soc
   // turn off weird ack things
   if (tcp_nodelay)
     {
-      struct protoent *const p = ACE_OS::getprotobyname ("tcp");
-      int one = 1;
+      struct protoent const * const p = ACE_OS::getprotobyname ("tcp");
+      int one {1};
 
       if (p && stream_.set_option (p->p_proto,
                                    TCP_NODELAY,

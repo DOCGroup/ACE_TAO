@@ -16,10 +16,13 @@ public:
 class Stats {
 public:
   explicit Stats (int);
+  Stats (Stats const &) = delete;
+  Stats (Stats &&) = delete;
+  Stats &operator= (Stats const &) = delete;
+  Stats &operator= (Stats &&) = delete;
   void log (int, float, float);
   void i_have_started (int);
   void i_am_done (int);
-  void print (char const *);
   void output ();
 private:
   std::vector<float> throughput_;

@@ -191,7 +191,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 }
 
-static sig_atomic_t done = 0;
+static sig_atomic_t done {};
 
 // Signal handler.
 

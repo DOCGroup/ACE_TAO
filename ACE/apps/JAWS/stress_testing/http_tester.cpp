@@ -12,7 +12,7 @@ std::unique_ptr<Stats> Client_Parameters::stats;
 static void *
 client_thread (void *data)
 {
-  std::unique_ptr<Client_Parameters> cp (static_cast<Client_Parameters *> (data));
+  std::unique_ptr<Client_Parameters> const cp (static_cast<Client_Parameters *> (data));
   float latency {};
   float throughput {};
   URL const &url = *cp->url;
@@ -96,17 +96,17 @@ driver (char const *id, int total_num, float requests_sec,
 
   int missed_deadlines {};
   // sleep_time is in microseconds, and requests_sec is per second, hence the pow(10,6)
-  float sleep_time = (1 / requests_sec) * (1000.0 * 1000.0);
+  float const sleep_time = (1 / requests_sec) * (1000.0 * 1000.0);
   float delta {};
   ACE_OS::srand (ACE_OS::time (nullptr));
-  for (int i = 0; i < total_num; i++)
+  for (int i = 0; i < total_num; ++i)
     {
       ACE_Profile_Timer timer;
       if (sleep_time < delta)
         ++missed_deadlines;
       else
         {
-          ACE_Time_Value tv (0, static_cast<long> (sleep_time - delta));
+          ACE_Time_Value const tv (0, static_cast<long> (sleep_time - delta));
           ACE_OS::sleep (tv);
         }
       timer.start ();
@@ -122,14 +122,13 @@ driver (char const *id, int total_num, float requests_sec,
       else
         cp->url = std::make_unique<URL> (url1);
 
-      // Ownership transfers to client_thread, which wraps this pointer in unique_ptr.
-      Client_Parameters *thread_data = cp.release ();
-      if (ACE_Thread_Manager::instance ()->spawn (client_thread, thread_data) == -1)
+      if (ACE_Thread_Manager::instance ()->spawn (client_thread, cp.get ()) == -1)
         {
-          delete thread_data;
           Client_Parameters::stats->i_have_started (i);
           Client_Parameters::stats->i_am_done (i);
         }
+      else
+        cp.release ();
       timer.stop ();
       ACE_Profile_Timer::ACE_Elapsed_Time et;
       timer.elapsed_time (et);
@@ -182,7 +181,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::perror ("open");
       return 3;
     }
-  std::streambuf *original_cout = std::cout.rdbuf (output.rdbuf ());
+  std::streambuf * const original_cout = std::cout.rdbuf (output.rdbuf ());
 
   std::string line;
   while (std::getline (input, line))

@@ -19,26 +19,6 @@ Stats::log (int id, float throughput, float latency)
   latency_[id] = latency;
 }
 
-// Unused for now.
-void
-Stats::print (char const *message)
-{
-  ACE_UNUSED_ARG (message);
-
-  // char time_buf[64];
-  // long ltime;
-  // time(&ltime);
-
-  // ACE_OS::ctime_r(&ltime, time_buf, sizeof time_buf);
-
-  // if(ACE_OS::gettimeofday() == -1) {
-  //   perror("gettimeofday");
-  // }
-  // time_buf[strlen(time_buf)-1] = 0;
-  //   printf("%010ld%09ld \t %s %s\n", tp.tv_sec, tp.tv_usec, time_buf, message);
-}
-
-
 void
 Stats::output ()
 {
