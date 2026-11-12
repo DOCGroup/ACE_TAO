@@ -16,7 +16,7 @@ TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -31,9 +31,10 @@ TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Bind the service context handler for BiDIR GIOP
-  TAO_BiDIR_Service_Context_Handler* h = nullptr;
+  TAO_BiDIR_Service_Context_Handler* h {};
   ACE_NEW (h,
            TAO_BiDIR_Service_Context_Handler());
+  // The service-context registry takes ownership of the handler.
   tao_info->orb_core ()->service_context_registry ().bind (IOP::BI_DIR_IIOP, h);
 }
 
@@ -48,7 +49,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info)
 {
   /// Register the BiDir policy factories.
-  PortableInterceptor::PolicyFactory_ptr temp_factory = nullptr;
+  PortableInterceptor::PolicyFactory_ptr temp_factory {};
   /// This policy factory is used for all BiDir related policies.
   ACE_NEW_THROW_EX (temp_factory,
                     TAO_BiDir_PolicyFactory,
@@ -58,7 +59,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
                          ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::PolicyFactory_var policy_factory = temp_factory;
+  PortableInterceptor::PolicyFactory_var const policy_factory = temp_factory;
 
   /// Bind the same policy factory to all BiDir related policy
   /// types since a single policy factory is used to create each of
