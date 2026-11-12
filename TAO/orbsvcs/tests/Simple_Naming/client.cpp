@@ -19,6 +19,7 @@
 
 #include <memory>
 #include <utility>
+#include <cstring>
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
@@ -728,8 +729,8 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context)
     {
       if (ex.why == CosNaming::NamingContext::missing_node &&
           ex.rest_of_name.length () == 1
-          && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "bar") == 0)
+          && std::strcmp (ex.rest_of_name[0].id.in (),
+                          "bar") == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 1) works properly\n"));
       else
@@ -762,10 +763,10 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context)
     {
       if (ex.why == CosNaming::NamingContext::missing_node
           && ex.rest_of_name.length () == 2
-          && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "level3_context") == 0
-          && ACE_OS::strcmp (ex.rest_of_name[1].id.in (),
-                             "foo") == 0)
+          && std::strcmp (ex.rest_of_name[0].id.in (),
+                          "level3_context") == 0
+          && std::strcmp (ex.rest_of_name[1].id.in (),
+                          "foo") == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 2) works properly\n"));
       else
@@ -799,10 +800,10 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context)
     {
       if (ex.why == CosNaming::NamingContext::not_context
           && ex.rest_of_name.length () == 2
-          && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "foo") == 0
-          && ACE_OS::strcmp (ex.rest_of_name[1].id.in (),
-                             "foo") == 0)
+          && std::strcmp (ex.rest_of_name[0].id.in (),
+                          "foo") == 0
+          && std::strcmp (ex.rest_of_name[1].id.in (),
+                          "foo") == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 3) works properly\n"));
       else
