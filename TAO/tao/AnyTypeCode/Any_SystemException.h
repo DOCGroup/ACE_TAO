@@ -75,6 +75,8 @@ namespace TAO
     void free_value () override;
 
   protected:
+    // The base destructor callback owns the exception; this raw pointer
+    // supports the type-erased CORBA Any insertion/extraction interface.
     CORBA::SystemException *value_ {};
   };
 }

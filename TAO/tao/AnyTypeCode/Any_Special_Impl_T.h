@@ -58,6 +58,8 @@ namespace TAO
     void free_value () override;
 
   private:
+    // The base destructor callback owns the stored value; this raw pointer
+    // supports the type-erased CORBA Any insertion/extraction interface.
     T *value_ {};
     CORBA::ULong bound_;
   };

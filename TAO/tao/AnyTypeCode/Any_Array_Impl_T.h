@@ -57,6 +57,8 @@ namespace TAO
     void free_value () override;
 
   private:
+    // The base destructor callback owns the array; this raw pointer supports
+    // the type-erased CORBA Any insertion/extraction interface.
     T_slice *value_ {};
   };
 }
