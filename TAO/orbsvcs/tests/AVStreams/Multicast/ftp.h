@@ -20,7 +20,6 @@
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
 
-/// Sends file data over an AVStreams flow.
 class FTP_Client_Callback
   : public TAO_AV_Callback
 {
@@ -47,7 +46,6 @@ protected:
   TAO_AV_Protocol_Object *protocol_object_ {};
 };
 
-/// Creates the client callback and associates it with the flow protocol.
 class FTP_Client_StreamEndPoint
   : public TAO_Client_StreamEndPoint
 {
@@ -65,7 +63,6 @@ public:
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
-  /// Callback used by AVStreams for this endpoint.
   FTP_Client_Callback callback_;
 };
 
@@ -89,13 +86,10 @@ public:
   Client &operator= (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client &&) = delete;
-  /// Initialize the client and open its input file.
   int init (int argc, ACE_TCHAR *argv[]);
-  /// Bind the endpoints and stream file data.
   int run ();
-  /// Return a borrowed file handle owned by this Client.
+  /// Borrowed handle; Client retains ownership through its File_Ptr member.
   FILE *file ();
-  /// Return the stream controller owned by this Client.
   TAO_StreamCtrl &streamctrl ();
 
 private:
@@ -109,25 +103,16 @@ private:
 
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
-  /// Parse the command-line options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  /// Resolve a server MMDevice from the Naming Service.
   int bind_to_server (char const *name);
 
-  /// Client endpoint strategy.
   Endpoint_Reactive_Strategy endpoint_strategy_;
-  /// Resolved server MMDevice.
   AVStreams::MMDevice_var server_mmdevice_;
-  /// Client MMDevice servant.
   TAO_MMDevice client_mmdevice_;
-  /// Stream controller used to establish the flows.
   TAO_StreamCtrl streamctrl_;
-  /// Client command-line options.
   Options options_;
 
-  /// Naming Service client.
   TAO_Naming_Client my_naming_client_;
-  /// Input file owned by this Client.
   File_Ptr fp_ {nullptr, std::fclose};
 };
 

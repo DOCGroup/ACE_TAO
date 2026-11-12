@@ -19,7 +19,7 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
-/// Callback for incoming AVStreams data and stream shutdown.
+/// AVStreams calls this class when data shows up from a sender.
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
@@ -43,14 +43,14 @@ public:
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
-  /// Number of frames received.
+  /// Keeping a count of the incoming frames.
   std::size_t frame_count_ {};
 
-  /// Stream controller associated with this flow.
+  /// Related stream control.
   AVStreams::StreamCtrl_ptr streamctrl_ {};
 };
 
-/// Endpoint that creates the receiver callback during connection setup.
+/// AVStreams calls this class during connection setup.
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
@@ -65,11 +65,11 @@ public:
                     TAO_AV_Callback *&callback) override;
 
 private:
-  /// Callback used by AVStreams.
+  /// Receiver application callback.
   Receiver_Callback callback_;
 };
 
-/// Receives data from an AVStreams sender and writes it to a file.
+/// This class receives data from a AV sender and writes it to a file.
 class Receiver
 {
 public:
@@ -80,19 +80,19 @@ public:
   Receiver (Receiver &&) = delete;
   Receiver &operator= (Receiver &&) = delete;
 
-  /// Initialize the receiver and register it with the Naming Service.
+  /// Initialize data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
 protected:
-  /// Naming Service client.
+  /// The Naming Service Client.
   TAO_Naming_Client naming_client_;
 
-  /// Endpoint strategy used by the receiver.
+  /// The endpoint reactive strategy.
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  /// Receiver MMDevice servant.
+  /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_ {};
 };
 
