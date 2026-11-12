@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   ORB_Manager.h
  *
  *  @author Chris Cleeland <cleeland@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ORB_MANAGER_H
 #define TAO_ORB_MANAGER_H
@@ -92,8 +90,6 @@ public:
   int fini ();
 
   ~TAO_ORB_Manager ();
-
-  // = Accessor methods.
 
   /**
    *  Put POA manager into the <Active> state, so that incoming corba

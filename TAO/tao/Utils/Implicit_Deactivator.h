@@ -1,17 +1,15 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Implicit_Deactivator.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
+
 #ifndef TAO_UTILS_IMPLICIT_DEACTIVATOR_H
 #define TAO_UTILS_IMPLICIT_DEACTIVATOR_H
 #include /**/ "ace/pre.h"
 #include "tao/Utils/utils_export.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

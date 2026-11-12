@@ -1,11 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  * @file PolicyList_Destroyer.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
+
 #ifndef TAO_UTILS_POLICYLIST_DESTROYER_H
 #define TAO_UTILS_POLICYLIST_DESTROYER_H
 #include /**/ "ace/pre.h"

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_Main.h
  *
@@ -42,7 +41,6 @@
  *      idle returns 0 to continue execution; nonzero to exit -- returning "result" from the process
  *      identity provides a string to identify this servant in log messages.
  */
-//=============================================================================
 
 #ifndef TAO_UTILS_SERVANTMAIN_H
 #define TAO_UTILS_SERVANTMAIN_H

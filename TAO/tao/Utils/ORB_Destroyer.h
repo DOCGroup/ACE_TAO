@@ -1,12 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ORB_Destroyer.h
  *
  * @author Marina Spivak <marina@atdesk.com>
  */
-//=============================================================================
+
 #ifndef TAO_UTILS_ORB_DESTROYER_H
 #define TAO_UTILS_ORB_DESTROYER_H
 #include /**/ "ace/pre.h"

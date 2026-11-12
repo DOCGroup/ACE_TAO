@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_Main.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_UTILS_SERVER_MAIN_T_CPP
 #define TAO_UTILS_SERVER_MAIN_T_CPP
