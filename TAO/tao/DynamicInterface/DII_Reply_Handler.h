@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==============================================================
 /**
  *  @file DII_Reply_Handler.h
  *
  *  @brief Handler of DII twoway asynch replies type.
  */
-// =============================================================
 
 #ifndef TAO_DII_REPLY_HANDLER_H
 #define TAO_DII_REPLY_HANDLER_H

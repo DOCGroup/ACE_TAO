@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DII_Arguments_Converter_Impl.h
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
 
 
 #ifndef TAO_DII_ARGUMENTS_CONVERTER_IMPL_H

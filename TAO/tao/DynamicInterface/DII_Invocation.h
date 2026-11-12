@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DII_Invocation.h
  *
@@ -10,7 +9,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_DII_INVOCATION_H
 #define TAO_DII_INVOCATION_H

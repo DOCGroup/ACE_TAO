@@ -144,7 +144,6 @@ namespace TAO
     return status;
   }
 
-  //================================================================
   DII_Deferred_Invocation_Adapter::DII_Deferred_Invocation_Adapter (
       CORBA::Object *target,
       Argument **args,

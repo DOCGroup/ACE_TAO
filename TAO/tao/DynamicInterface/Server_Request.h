@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_Request.h
  *
@@ -10,7 +9,6 @@
  *  @author  Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Chris Cleeland.  Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_SERVER_REQUEST_H
 #define TAO_CORBA_SERVER_REQUEST_H

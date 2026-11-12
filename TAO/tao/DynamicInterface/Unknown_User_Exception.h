@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Unknown_User_Exception.h
  *
@@ -9,7 +8,6 @@
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Portions Copyright 1997-2003 by Washington University
  */
-//=============================================================================
 
 
 #ifndef TAO_UNKNOWN_USER_EXCEPTION_H

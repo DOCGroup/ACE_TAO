@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DII_Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_DII_INVOCATION_ADAPTER_H
 #define TAO_DII_INVOCATION_ADAPTER_H
 #include /**/ "ace/pre.h"

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=====================================================================
 /**
  *  @file AMH_DSI_Response_Handler.h
  *
  *  @brief Handle the Response appropriately.
  */
-//=====================================================================
 
 #ifndef TAO_AMH_DSI_RESPONSE_HANDLER_H
 #define TAO_AMH_DSI_RESPONSE_HANDLER_H

@@ -20,9 +20,7 @@ CORBA::Context::_nil ()
   return nullptr;
 }
 
-// *************************************************************
 // Inline operations for class CORBA::ContextList
-// *************************************************************
 
 ACE_INLINE
 CORBA::ULong

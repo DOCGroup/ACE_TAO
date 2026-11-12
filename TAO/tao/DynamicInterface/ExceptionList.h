@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ExceptionList.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
