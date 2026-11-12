@@ -4,13 +4,17 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 
-class EC_Consumer:
-  public POA_RtecEventComm::PushConsumer
+#include <cstddef>
+
+class EC_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor.
   EC_Consumer (CORBA::ORB_var orb,
                RtecEventChannelAdmin::EventChannel_var ec);
+  EC_Consumer (EC_Consumer const &) = delete;
+  EC_Consumer (EC_Consumer &&) = delete;
+  EC_Consumer &operator= (EC_Consumer const &) = delete;
+  EC_Consumer &operator= (EC_Consumer &&) = delete;
 
   /// PushConsumer methods.
   //@{
@@ -26,7 +30,7 @@ private:
   void disconnect ();
 
   /// Number of events pushed to us by EC.
-  size_t n_events_;
+  std::size_t n_events_ {};
 
   /// Cache these pointers for cleanup.
   CORBA::ORB_var orb_;
@@ -35,8 +39,7 @@ private:
 
 EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
                           RtecEventChannelAdmin::EventChannel_var ec)
-  : n_events_ (0),
-    orb_ (orb),
+  : orb_ (orb),
     ec_ (ec)
 {
 }
@@ -44,7 +47,7 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 void
 EC_Consumer::push (const RtecEventComm::EventSet &events)
 {
-  for (CORBA::ULong i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       ++this->n_events_;
       ACE_DEBUG ((LM_DEBUG, " Received event\n"));
@@ -75,7 +78,7 @@ EC_Consumer::disconnect ()
 
 ////////////////////////////////////////////////////////////
 int
-check_for_nil (CORBA::Object_ptr obj, const char *message)
+check_for_nil (CORBA::Object_ptr obj, char const *message)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -93,7 +96,7 @@ parse_args (int /* argc */, ACE_TCHAR ** /* argv */)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -156,7 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Receive events from EC.
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Consumer:");
       return 1;
