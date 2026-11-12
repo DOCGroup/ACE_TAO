@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_XTREACTOR_H
 #define ACE_XTREACTOR_H
 #include /**/ "ace/pre.h"
@@ -62,10 +61,10 @@ public:
 class ACE_XtReactor_Export ACE_XtReactor : public ACE_Select_Reactor
 {
 public:
-  ACE_XtReactor (XtAppContext context = nullptr,
-                 size_t size = DEFAULT_SIZE,
-                 bool restart = false,
-                 ACE_Sig_Handler * = nullptr);
+  explicit ACE_XtReactor (XtAppContext context = nullptr,
+                          size_t size = DEFAULT_SIZE,
+                          bool restart = false,
+                          ACE_Sig_Handler * = nullptr);
   ~ACE_XtReactor () override;
 
   ACE_XtReactor (ACE_XtReactor const &) = delete;

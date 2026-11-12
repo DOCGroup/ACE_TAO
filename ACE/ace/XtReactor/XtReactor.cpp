@@ -56,13 +56,13 @@ ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                                          ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_XtReactor::wait_for_multiple_events");
-  int nfound;
+  int nfound {};
 
   do
     {
       max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
 
-      size_t width = this->handler_rep_.max_handlep1 ();
+      size_t const width = this->handler_rep_.max_handlep1 ();
       handle_set.rd_mask_ = this->wait_set_.rd_mask_;
       handle_set.wr_mask_ = this->wait_set_.wr_mask_;
       handle_set.ex_mask_ = this->wait_set_.ex_mask_;
@@ -120,16 +120,14 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   if (self->wait_set_.ex_mask_.is_set (handle))
     wait_set.ex_mask_.set_bit (handle);
 
-  int const result = ACE_OS::select (*source + 1,
-                                     wait_set.rd_mask_,
-                                     wait_set.wr_mask_,
-                                     wait_set.ex_mask_,
-                                     &zero);
-
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
   // - Use only that one file event (removes events for other files).
-  if (result > 0)
+  if (ACE_OS::select (*source + 1,
+                      wait_set.rd_mask_,
+                      wait_set.wr_mask_,
+                      wait_set.ex_mask_,
+                      &zero) > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
         dispatch_set.rd_mask_.set_bit (handle);
@@ -206,10 +204,9 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
     ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 
-  int const result = ACE_Select_Reactor::register_handler_i (handle,
-                                                             handler,
-                                                             mask);
-  if (result == -1)
+  if (ACE_Select_Reactor::register_handler_i (handle,
+                                               handler,
+                                               mask) == -1)
     return -1;
 
   this->synchronize_XtInput (handle);
@@ -232,9 +229,8 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_XtReactor::remove_handler_i");
 
-  int const result = ACE_Select_Reactor::remove_handler_i (handle,
-                                                           mask);
-  if (result == -1)
+  if (ACE_Select_Reactor::remove_handler_i (handle,
+                                             mask) == -1)
     return -1;
 
   this->synchronize_XtInput (handle);
@@ -254,9 +250,7 @@ ACE_XtReactor::suspend_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_XtReactor::suspend_i");
 
-  int const result = ACE_Select_Reactor::suspend_i (handle);
-
-  if (result == -1)
+  if (ACE_Select_Reactor::suspend_i (handle) == -1)
     return -1;
 
   this->synchronize_XtInput (handle);
@@ -268,9 +262,7 @@ ACE_XtReactor::resume_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_XtReactor::resume_i");
 
-  int const result = ACE_Select_Reactor::resume_i (handle);
-
-  if (result == -1)
+  if (ACE_Select_Reactor::resume_i (handle) == -1)
     return -1;
 
   this->synchronize_XtInput (handle);
@@ -380,10 +372,9 @@ ACE_XtReactor::reset_timeout ()
     ::XtRemoveTimeOut (this->timeout_);
   this->timeout_ = {};
 
-  ACE_Time_Value const *max_wait_time =
-    this->timer_queue_->calculate_timeout (nullptr);
-
-  if (max_wait_time)
+  if (ACE_Time_Value const *max_wait_time =
+        this->timer_queue_->calculate_timeout (nullptr);
+      max_wait_time != nullptr)
     this->timeout_ = ::XtAppAddTimeOut (this->context_,
                                         max_wait_time->msec (),
                                         TimerCallbackProc,
