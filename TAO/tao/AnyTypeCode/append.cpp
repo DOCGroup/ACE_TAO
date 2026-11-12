@@ -96,7 +96,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE
-      && continue_append == 1)
+      && continue_append)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
@@ -149,11 +149,10 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
 
   // Decode the "kind" field of the typecode from the src for further
   // use. However, also write it back into the destination
-  continue_append = (CORBA::Boolean) (src->read_ulong (kind)
-                                      ? dest->write_ulong (kind)
-                                      : false);
+  continue_append = src->read_ulong (kind)
+                  && dest->write_ulong (kind);
 
-  if (continue_append == true)
+  if (continue_append)
     {
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
@@ -231,7 +230,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
         }
     }
 
-  if (continue_append == 1 && retval == TAO::TRAVERSE_CONTINUE)
+  if (continue_append && retval == TAO::TRAVERSE_CONTINUE)
     {
       return TAO::TRAVERSE_CONTINUE;
     }
@@ -278,9 +277,8 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
   // get the count of profiles that follow. This will tell us the
   // length of the sequence
-  continue_append = (CORBA::Boolean) (src->read_ulong (profiles)
-                                      ? dest->write_ulong (profiles)
-                                      : 0);
+  continue_append = src->read_ulong (profiles)
+                 && dest->write_ulong (profiles);
 
   // No profiles means a NIL objref.
   while (profiles != 0 && continue_append)
@@ -289,15 +287,13 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
       CORBA::ULong tag {};
 
       // get the profile ID tag
-      if ((continue_append = (CORBA::Boolean) (src->read_ulong (tag)
-                                               ? dest->write_ulong (tag)
-                                               : 0))  == 0)
+      if (!(continue_append = src->read_ulong (tag)
+                            && dest->write_ulong (tag)))
         continue;
 
       CORBA::ULong length {};
-      if ((continue_append = (CORBA::Boolean) (src->read_ulong (length)
-                              ? dest->write_ulong (length)
-                              : 0)) == 0)
+      if (!(continue_append = src->read_ulong (length)
+                            && dest->write_ulong (length)))
         continue;
 
       // @@ This can be optimized! Pre-allocating on the destination
@@ -307,13 +303,11 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                       CORBA::Octet[length],
                       TAO::TRAVERSE_STOP);
       std::unique_ptr<CORBA::Octet[]> const body_guard (body);
-      continue_append =
-        (CORBA::Boolean) (src->read_octet_array (body_guard.get (), length)
-                          ? dest->write_octet_array (body_guard.get (), length)
-                          : 0);
+      continue_append = src->read_octet_array (body_guard.get (), length)
+                     && dest->write_octet_array (body_guard.get (), length);
     }
 
-  if (continue_append == 1)
+  if (continue_append)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
@@ -617,7 +611,7 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
   // but we will accept them when it's clear how to do so.
 
   continue_append = dest->append_string (*src);
-  if (continue_append == 1)
+  if (continue_append)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
@@ -1036,7 +1030,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   retval = TAO_Marshal_Object::perform_append (tc2.in (), src, dest);
 
   if (retval == TAO::TRAVERSE_CONTINUE
-      && continue_append == true)
+      && continue_append)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
@@ -1072,7 +1066,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   for (CORBA::ULong i {};
        i < member_count
          && retval == TAO::TRAVERSE_CONTINUE
-         && continue_append == 1;
+         && continue_append;
        ++i)
     {
       param = tc->member_type (i);
@@ -1083,7 +1077,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE
-      && continue_append == 1)
+      && continue_append)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
@@ -1110,7 +1104,7 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
 
   continue_append = dest->append_wstring (*src);
 
-  if (continue_append == 1)
+  if (continue_append)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
@@ -1133,9 +1127,9 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
   // first-time/nested appends so that we won't attempt to
   // append rep_id several times.
   //
-  if (this->nested_processing_ == 0)
+  if (!this->nested_processing_)
     {
-      this->nested_processing_ = 1;
+      this->nested_processing_ = true;
 
       CORBA::ULong value_tag {};
 
