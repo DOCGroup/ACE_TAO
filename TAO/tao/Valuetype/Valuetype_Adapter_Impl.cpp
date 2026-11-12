@@ -9,6 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl () = default;
+
 CORBA::Object_ptr
 TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
     CORBA::AbstractBase_ptr p)
@@ -63,17 +65,16 @@ TAO_Valuetype_Adapter_Impl::is_value_chunked (CORBA::Long vt) const
 }
 
 int
-TAO_Valuetype_Adapter_Impl::vf_map_rebind (const char *repo_id,
+TAO_Valuetype_Adapter_Impl::vf_map_rebind (char const *repo_id,
                                            CORBA::ValueFactory &factory)
 {
   return map_.rebind (repo_id, factory);
 }
 
 int
-TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
-
+TAO_Valuetype_Adapter_Impl::vf_map_unbind (char const *repo_id)
 {
-  CORBA::ValueFactory factory = nullptr;
+  CORBA::ValueFactory factory {};
   int const result = map_.unbind (repo_id, factory);
   if (!result)
     {
@@ -84,9 +85,9 @@ TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
 }
 
 CORBA::ValueFactory
-TAO_Valuetype_Adapter_Impl::vf_map_find (const char *repo_id)
+TAO_Valuetype_Adapter_Impl::vf_map_find (char const *repo_id)
 {
-  CORBA::ValueFactory factory = nullptr;
+  CORBA::ValueFactory factory {};
   (void) map_.find (repo_id, factory);
   return factory;
 }

@@ -100,12 +100,15 @@ private:
 };
 
   template <typename stream, typename object_t, typename object_t_var>
-  bool marshal_sequence(stream & strm, const TAO::unbounded_valuetype_sequence<object_t, object_t_var> & source) {
+  bool marshal_sequence (
+    stream &strm,
+    TAO::unbounded_valuetype_sequence<object_t, object_t_var> const &source)
+  {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
     }
-    for(CORBA::ULong i = 0; i < length; ++i) {
+    for(CORBA::ULong i {}; i < length; ++i) {
       if (!(strm << source[i])) {
         return false;
       }
@@ -117,7 +120,7 @@ private:
   bool demarshal_sequence(stream & strm, TAO::unbounded_valuetype_sequence <object_t, object_t_var> & target) {
     using sequence = TAO::unbounded_valuetype_sequence<object_t, object_t_var>;
     using sequence_allocation_traits = typename sequence::allocation_traits;
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
     if (!(strm >> new_length)) {
       return false;
     }
@@ -128,7 +131,7 @@ private:
                  sequence_allocation_traits::allocbuf_noinit(new_length),
                  true);
     typename sequence::value_type * buffer = tmp.get_buffer();
-    for(CORBA::ULong i = 0; i < new_length; ++i) {
+    for(CORBA::ULong i {}; i < new_length; ++i) {
       if (!(strm >> buffer[i])) {
         return false;
       }

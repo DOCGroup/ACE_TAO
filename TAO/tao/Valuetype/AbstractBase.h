@@ -51,7 +51,6 @@ namespace CORBA
   class TAO_Valuetype_Export AbstractBase
   {
   public:
-    /// Constructor.
     /**
      * This constructor is only meant to be called by the
      * corresponding CDR stream extraction operator or during
@@ -60,6 +59,10 @@ namespace CORBA
     AbstractBase (TAO_Stub *p,
                   CORBA::Boolean,
                   TAO_Abstract_ServantBase *);
+
+    AbstractBase &operator= (AbstractBase const &) = delete;
+    AbstractBase (AbstractBase &&) = delete;
+    AbstractBase &operator= (AbstractBase &&) = delete;
 
     using _ptr_type = CORBA::AbstractBase_ptr;
     using _var_type = CORBA::AbstractBase_var;
@@ -76,12 +79,12 @@ namespace CORBA
     CORBA::Object_ptr _to_object ();
     CORBA::ValueBase *_to_value ();
 
-    virtual CORBA::Boolean _is_a (const char *type_id);
-    virtual const char* _interface_repository_id () const;
+    virtual CORBA::Boolean _is_a (char const *type_id);
+    virtual char const * _interface_repository_id () const;
 
     /// TAO specific operations
 
-    virtual const char* _tao_obv_repository_id () const;
+    virtual char const * _tao_obv_repository_id () const;
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const;
@@ -91,7 +94,7 @@ namespace CORBA
     /// Used by optionally generated ostream operators for interface
     /// to output the actual repo id for debugging.
     static std::ostream& _tao_stream (std::ostream &strm,
-                                      const AbstractBase_ptr _tao_objref);
+                                      AbstractBase_ptr const _tao_objref);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
 
 #endif /* GEN_OSTREAM_OPS */
@@ -123,16 +126,14 @@ namespace CORBA
 
   protected:
     AbstractBase () = default;
-    AbstractBase (const AbstractBase &);
+    AbstractBase (AbstractBase const &);
 
-    virtual ~AbstractBase () = default;
+    virtual ~AbstractBase ();
 
   protected:
     CORBA::Boolean is_objref_ {};
 
   private:
-    AbstractBase & operator= (AbstractBase const &) = delete;
-
     virtual CORBA::ValueBase *_tao_to_value ();
 
     CORBA::Object_ptr create_object (TAO_Stub *stub);
@@ -154,7 +155,7 @@ namespace CORBA
 }
 
 TAO_Valuetype_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::AbstractBase_ptr);
+operator<< (TAO_OutputCDR &, CORBA::AbstractBase_ptr const);
 
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::AbstractBase_ptr &);

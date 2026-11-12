@@ -19,6 +19,8 @@
 
 #include "tao/Invocation_Adapter.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
@@ -47,17 +49,15 @@ namespace TAO
         CORBA::AbstractBase_ptr target,
         Argument **args,
         int arg_number,
-        const char *operation,
+        char const *operation,
         size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
         bool has_in_args = false);
 
-  private:
-    AbstractBase_Invocation_Adapter () = delete;
-    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &) = delete;
-    AbstractBase_Invocation_Adapter & operator= (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter const &) = delete;
+    AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter const &) = delete;
     AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;
     AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter &&) = delete;
   };

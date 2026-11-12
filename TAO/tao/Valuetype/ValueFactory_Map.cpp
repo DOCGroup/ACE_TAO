@@ -17,13 +17,13 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
   // _remove_ref () on the internal ids.
   FACTORY_MAP_MANAGER::ITERATOR iterator (this->map_);
 
-  for (FACTORY_MAP_MANAGER::ENTRY *entry = nullptr;
+  for (FACTORY_MAP_MANAGER::ENTRY *entry {};
        iterator.next (entry) != 0;
        iterator.advance ())
     {
       // We had allocated memory and stored the string. So we free the
       // memory.
-      CORBA::string_free ((char *) entry->ext_id_);
+      CORBA::string_free (const_cast<char *> (entry->ext_id_));
       entry->ext_id_ = nullptr;
       entry->int_id_->_remove_ref ();
       entry->int_id_ = nullptr;
@@ -31,13 +31,13 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
 }
 
 int
-TAO_ValueFactory_Map::rebind (const char *repo_id,
+TAO_ValueFactory_Map::rebind (char const *repo_id,
                               CORBA::ValueFactory &factory)
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
-  char const *prev_repo_id = nullptr;
-  CORBA::ValueFactory prev_factory = nullptr;
+  char const *prev_repo_id {};
+  CORBA::ValueFactory prev_factory {};
   int const ret = this->map_.rebind (CORBA::string_dup (repo_id),
                                      factory,
                                      prev_repo_id,
@@ -58,19 +58,19 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
 }
 
 int
-TAO_ValueFactory_Map::unbind (const char *repo_id,
+TAO_ValueFactory_Map::unbind (char const *repo_id,
                               CORBA::ValueFactory &factory)
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
-  FACTORY_MAP_MANAGER::ENTRY *prev_entry = nullptr;
+  FACTORY_MAP_MANAGER::ENTRY *prev_entry {};
   int ret = this->map_.find (repo_id, prev_entry);
 
   if (ret == 0)    // there was a matching factory
     {
       // set factory to the previous factory,
       factory = prev_entry->int_id_;
-      char *temp = const_cast<char *> (prev_entry->ext_id_);
+      char * const temp = const_cast<char *> (prev_entry->ext_id_);
       ret = this->map_.unbind (prev_entry);
 
       if (ret == 0)
@@ -84,7 +84,7 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
 
 // %! perhaps inline
 int
-TAO_ValueFactory_Map::find (const char *repo_id,
+TAO_ValueFactory_Map::find (char const *repo_id,
                             CORBA::ValueFactory &factory)
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
