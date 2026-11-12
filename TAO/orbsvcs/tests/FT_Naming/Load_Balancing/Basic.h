@@ -2,6 +2,8 @@
 #ifndef BASIC_H
 #define BASIC_H
 
+#include <string>
+
 #include "TestS.h"
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroupC.h"
@@ -10,8 +12,6 @@
 # pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
-
-class LB_Basic_Test;
 
 /// Implement the Test::Basic interface
 class Basic
@@ -22,17 +22,20 @@ public:
   Basic (CORBA::Object_ptr object_group,
          FT_Naming::NamingManager_ptr lm,
          CORBA::ORB_ptr orb,
-         char const* loc);
+         char const *loc);
 
-  char* get_string () override;
+  Basic (Basic const &) = delete;
+  Basic &operator= (Basic const &) = delete;
+  Basic (Basic &&) = delete;
+  Basic &operator= (Basic &&) = delete;
+
+  char *get_string () override;
 
   void shutdown () override;
 
   void remove_member () override;
 
 private:
-  const char* object_group_name_;
-
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
@@ -42,7 +45,7 @@ private:
   FT_Naming::NamingManager_var nm_;
 
   /// location of the servant
-  CORBA::String_var location_;
+  std::string location_;
 
   /// Object Group reference.
   CORBA::Object_var object_group_;
