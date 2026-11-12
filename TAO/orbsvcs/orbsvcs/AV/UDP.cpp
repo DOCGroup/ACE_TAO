@@ -8,6 +8,7 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/UDP.inl"
@@ -676,7 +677,9 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                           ACE_TCHAR buf [BUFSIZ];
                           ACE_TString addr_str (ACE_TEXT_CHAR_TO_TCHAR(local_addr->get_host_name ()));
                           addr_str += ACE_TEXT(":");
-                          addr_str += ACE_OS::itoa (local_addr->get_port_number () + 1, buf, 10);
+                          std::string const port_string =
+                            std::to_string (local_addr->get_port_number () + 1);
+                          addr_str += ACE_TEXT_CHAR_TO_TCHAR (port_string.c_str ());
                           ACE_NEW_RETURN (local_control_addr,
                                           ACE_INET_Addr (addr_str.c_str ()),
                                           -1);

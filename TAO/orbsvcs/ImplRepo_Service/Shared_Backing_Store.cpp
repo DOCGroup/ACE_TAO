@@ -20,6 +20,7 @@
 #include "tao/ORB_Core.h"
 
 #include <cstdlib>
+#include <string>
 
 namespace {
   class Lockable_File
@@ -191,10 +192,8 @@ namespace {
         id.repo_type_str = ACE_TEXT ("2");
       }
 
-    ACE_TCHAR tmp[20];
-    ACE_OS::itoa(repo_id, tmp, 10);
-
-    id.repo_id_str = tmp;
+    std::string const repo_id_string = std::to_string (repo_id);
+    id.repo_id_str = ACE_TEXT_CHAR_TO_TCHAR (repo_id_string.c_str ());
     id.unique_filename = id.repo_type_str + ACE_TEXT ("_") +
       id.repo_id_str + ACE_TEXT (".xml");
   }

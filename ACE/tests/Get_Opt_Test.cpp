@@ -16,9 +16,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_stdlib.h"
-#include "test_config.h"
 
+#include <string>
 
 /*
  * This is the heart of the test. It sets up the optstring, instantiates
@@ -46,8 +45,8 @@ parse_args (int test_number,
   if (skip_argv > 0)
     {
       test = ACE_TEXT ("Test_");
-      ACE_TCHAR s[20];
-      test += ACE_OS::itoa (test_number, s, 10);
+      std::string const test_number_string = std::to_string (test_number);
+      test += ACE_TEXT_CHAR_TO_TCHAR (test_number_string.c_str ());
       test += ACE_TEXT (" ");
     }
 
