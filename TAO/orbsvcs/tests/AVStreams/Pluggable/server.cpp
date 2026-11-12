@@ -2,6 +2,7 @@
 
 #include "ace/OS_NS_stdio.h"
 
+#include <cstddef>
 #include <new>
 
 int
@@ -26,10 +27,6 @@ FTP_Server_Callback::handle_destroy ()
   FTP_SERVER::instance ()->stop ();
   return 0;
 }
-
-Server::Server () = default;
-
-Server::~Server () = default;
 
 int
 Server::parse_args (int argc,
@@ -97,11 +94,11 @@ Server::write_frame (ACE_Message_Block *frame)
 {
   while (frame != nullptr)
     {
-      size_t const bytes_to_write = frame->length ();
-      size_t const bytes_written = ACE_OS::fwrite (frame->rd_ptr (),
-                                                   1,
-                                                   bytes_to_write,
-                                                   this->output_file_.get ());
+      std::size_t const bytes_to_write = frame->length ();
+      std::size_t const bytes_written = std::fwrite (frame->rd_ptr (),
+                                                     1,
+                                                     bytes_to_write,
+                                                     this->output_file_.get ());
       if (bytes_written != bytes_to_write)
         ACE_ERROR_RETURN ((LM_ERROR, "Writing received frame failed\n"), -1);
       frame = frame->cont ();
@@ -143,7 +140,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       result = server->init (argc, argv);
       if (result == 0)
         result = server->run ();
-      FTP_SERVER::close ();
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

@@ -4,6 +4,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstddef>
+
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint () = default;
 
 int
@@ -197,10 +199,10 @@ Client::pace_data ()
       for (;;)
         {
           this->mb_.reset ();
-          size_t const bytes_read = ACE_OS::fread (this->mb_.wr_ptr (),
-                                                   1,
-                                                   this->mb_.size (),
-                                                   this->fp_.get ());
+          std::size_t const bytes_read = std::fread (this->mb_.wr_ptr (),
+                                                     1,
+                                                     this->mb_.size (),
+                                                     this->fp_.get ());
           if (bytes_read == 0)
             {
               if (std::ferror (this->fp_.get ()))

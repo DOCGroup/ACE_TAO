@@ -67,8 +67,8 @@ private:
 class Server
 {
 public:
-  Server ();
-  ~Server ();
+  Server () = default;
+  ~Server () = default;
   Server (Server const &) = delete;
   Server &operator= (Server const &) = delete;
   Server (Server &&) = delete;
@@ -91,7 +91,7 @@ private:
   TAO_AV_Endpoint_Reactive_Strategy_B<
     FTP_Server_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl> reactive_strategy_;
   std::unique_ptr<TAO_MMDevice> mmdevice_;
-  FTP_Server_File_Ptr output_file_ {nullptr, ACE_OS::fclose};
+  FTP_Server_File_Ptr output_file_ {nullptr, std::fclose};
   Options options_;
   bool done_ {};
 };
