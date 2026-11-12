@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Collocated_Asynch_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_COLLOCATED_ASYNCH_REQUEST_H
 #define TAO_CSD_TP_COLLOCATED_ASYNCH_REQUEST_H
 

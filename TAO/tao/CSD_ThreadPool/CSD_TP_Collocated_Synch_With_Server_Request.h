@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Collocated_Synch_With_Server_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_COLLOCATED_SYNCH_WITH_SERVER_REQUEST_H
 #define TAO_CSD_TP_COLLOCATED_SYNCH_WITH_SERVER_REQUEST_H
 

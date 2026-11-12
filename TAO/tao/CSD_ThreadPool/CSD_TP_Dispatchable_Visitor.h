@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Dispatchable_Visitor.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_DISPATCHABLE_VISITOR_H
 #define TAO_CSD_TP_DISPATCHABLE_VISITOR_H
 

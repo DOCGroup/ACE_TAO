@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Strategy_Factory.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_STRATEGY_FACTORY_H
 #define TAO_CSD_TP_STRATEGY_FACTORY_H
 
