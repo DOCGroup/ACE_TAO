@@ -31,11 +31,12 @@ HTTP_Request::espouse_line ()
 
   if (this->request_.major_version () == 0)
     {
-      count = std::sprintf (this->mb_->wr_ptr (), "%s /%s\r\n\r\n",
-                            this->request_.method_str (),
-                            this->url_.url_path ());
+      count = std::snprintf (this->mb_->wr_ptr (), this->mb_->space (),
+                             "%s /%s\r\n\r\n",
+                             this->request_.method_str (),
+                             this->url_.url_path ());
 
-      if (count < 0)
+      if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
         return -1;
 
       this->mb_->wr_ptr (count);
@@ -43,12 +44,13 @@ HTTP_Request::espouse_line ()
       return 1;
     }
 
-  count = std::sprintf (this->mb_->wr_ptr (), "%s /%s %s\r\n",
-                        this->request_.method_str (),
-                        this->url_.url_path (),
-                        this->request_.version ());
+  count = std::snprintf (this->mb_->wr_ptr (), this->mb_->space (),
+                         "%s /%s %s\r\n",
+                         this->request_.method_str (),
+                         this->url_.url_path (),
+                         this->request_.version ());
 
-  if (count < 0)
+  if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
     return -1;
 
   this->mb_->wr_ptr (count);
@@ -58,10 +60,11 @@ HTTP_Request::espouse_line ()
       JAWS_Header_Data *hd = this->headers ()->find ("Host");
       if (hd == nullptr)
         {
-          count = std::sprintf (this->mb_->wr_ptr (), "Host: %s\r\n",
-                                this->url_.host ());
+          count = std::snprintf (this->mb_->wr_ptr (), this->mb_->space (),
+                                 "Host: %s\r\n",
+                                 this->url_.host ());
 
-          if (count < 0)
+          if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
             return -1;
 
           this->mb_->wr_ptr (count);

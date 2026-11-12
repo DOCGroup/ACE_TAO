@@ -61,14 +61,13 @@ HTTP_SCode::instance ()
 void
 HTTP_SCode::dump ()
 {
-  for (int i = 0; i < SC_TABLE_SIZE; i++)
+  for (int i = 0; i < SC_TABLE_SIZE; ++i)
     ACE_DEBUG ((LM_DEBUG, "%s\n", this->table_[i]));
 }
 
 HTTP_SCode::HTTP_SCode ()
 {
-  int i;
-  for (i = 0; i < SC_TABLE_SIZE; i++)
+  for (int i = 0; i < SC_TABLE_SIZE; ++i)
     {
       if (this->table_[i] == nullptr)
         this->table_[i] = this->table_[(i/100) * 100];

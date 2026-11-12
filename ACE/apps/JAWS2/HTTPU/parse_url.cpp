@@ -6,13 +6,13 @@
 #include <cstring>
 
 HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
-  : url_ (nullptr),
-    scheme_ (nullptr),
-    user_ (nullptr),
-    passwd_ (nullptr),
-    host_ (nullptr),
+  : url_ {},
+    scheme_ {},
+    user_ {},
+    passwd_ {},
+    host_ {},
     port_ (-1),
-    url_path_ (nullptr),
+    url_path_ {},
     error_ (URL_ERROR_NONE),
     is_cgi_ (false)
 {
@@ -129,9 +129,9 @@ HTTP_Parse_URL::parse_host (char *&p)
       return;
     }
 
-  char *at = nullptr;
-  char *colon1 = nullptr;
-  char *colon2 = nullptr;
+  char *at {};
+  char *colon1 {};
+  char *colon2 {};
   char *q = p;
   while (*q != '\0')
     {

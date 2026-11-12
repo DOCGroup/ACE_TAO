@@ -5,11 +5,11 @@
 
 Parse_HTTP_Response::Parse_HTTP_Response (const char *response)
   : code_ (200),
-    code_str_ (nullptr),
+    code_str_ {},
     major_version_ (0),
     minor_version_ (9),
-    version_ (nullptr),
-    response_ (nullptr),
+    version_ {},
+    response_ {},
     error_ (0)
 {
   if (response != nullptr)

@@ -2,12 +2,12 @@
 #include <cstring>
 
 Parse_HTTP_Request::Parse_HTTP_Request (const char *request)
-  : method_ (nullptr),
+  : method_ {},
     major_version_ (-1),
     minor_version_ (-1),
-    version_ (nullptr),
-    url_ (nullptr),
-    request_ (nullptr),
+    version_ {},
+    url_ {},
+    request_ {},
     error_ (0)
 {
   if (request != nullptr)

@@ -97,7 +97,7 @@ HTTP_Hdr_Node::HTTP_Hdr_Node (const char *token, const char *format)
 
   this->index_ = header_nodes->num_header_strings_;
   header_nodes->insert (this->index_, this);
-  header_nodes->num_header_strings_++;
+  ++header_nodes->num_header_strings_;
 }
 
 HTTP_HCodes::HTTP_HCodes ()
@@ -125,9 +125,9 @@ HTTP_Headers::value (int index)
 const char *
 HTTP_Headers::value_next (int index)
 {
-  char const *hs = nullptr;
-  char const *hv = nullptr;
-  JAWS_Header_Data *data;
+  char const *hs {};
+  char const *hv {};
+  JAWS_Header_Data *data {};
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
     {
