@@ -150,7 +150,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
         dynamic_cast <TAO_PriorityBandedConnectionPolicy *>
                           (priority_bands.in ());
 
-      if (priority_bands_i)
+      if (priority_bands_i != nullptr)
         {
           // If we do have bands, make sure that the priority is
           // matching one of the bands.

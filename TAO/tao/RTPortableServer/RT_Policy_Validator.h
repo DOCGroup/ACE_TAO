@@ -81,6 +81,7 @@ private:
 
   void validate_thread_pool (TAO_Policy_Set &policies);
 
+  /// Borrowed from the RTORB's thread-pool manager.
   TAO_Thread_Pool *thread_pool_;
 };
 

@@ -50,7 +50,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   TAO_Thread_Pool *current_thread_pool {};
 
   // If we don't have a lane, we don't have a pool.
-  if (current_thread_lane)
+  if (current_thread_lane != nullptr)
     current_thread_pool =
       &current_thread_lane->pool ();
 

@@ -84,7 +84,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
       bool found {};
       CORBA::ULong const protocol_type = protocols[j].protocol_type;
 
-      if (this->thread_pool_)
+      if (this->thread_pool_ != nullptr)
         {
           for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
             {
@@ -303,8 +303,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
           CORBA::Short const lane_priority =
             lane->lane_priority ();
 
-          if (lane_priority <= priority &&
-              lane_priority >= priority)
+          if (lane_priority == priority)
             {
               match = true;
               break;
@@ -391,7 +390,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
 {
   RTCORBA::ProtocolList protocols;
 
-  if (thread_pool)
+  if (thread_pool != nullptr)
     {
       for (std::unique_ptr<TAO_Thread_Lane> const &lane : thread_pool->lanes ())
         {
@@ -496,7 +495,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
   TAO_RT_ORB * const tao_rt_orb =
     dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
-  if (!tao_rt_orb)
+  if (tao_rt_orb == nullptr)
     throw CORBA::INTERNAL ();
 
   TAO_Thread_Pool_Manager & tp_manager = tao_rt_orb->tp_manager ();
