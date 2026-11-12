@@ -39,7 +39,7 @@ class TAO_DynamicAny_Export TAO_DynStruct_i
 public:
   explicit TAO_DynStruct_i (CORBA::Boolean allow_truncation = true);
 
-  ~TAO_DynStruct_i () = default;
+  ~TAO_DynStruct_i () override;
 
   TAO_DynStruct_i (TAO_DynStruct_i const &src) = delete;
   TAO_DynStruct_i &operator= (TAO_DynStruct_i const &src) = delete;

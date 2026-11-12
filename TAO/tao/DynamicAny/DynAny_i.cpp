@@ -108,7 +108,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
       this->any_ <<= static_cast<CORBA::ULongLong> (0);
       break;
     case CORBA::tk_boolean:
-      this->any_ <<= CORBA::Any::from_boolean (0);
+      this->any_ <<= CORBA::Any::from_boolean (false);
       break;
     case CORBA::tk_octet:
       this->any_ <<= CORBA::Any::from_octet (0);

@@ -19,6 +19,8 @@ TAO_DynValueBox_i::TAO_DynValueBox_i (CORBA::Boolean allow_truncation)
 {
 }
 
+TAO_DynValueBox_i::~TAO_DynValueBox_i () = default;
+
 void
 TAO_DynValueBox_i::set_to_value ()
 {

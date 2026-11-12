@@ -38,7 +38,7 @@ class TAO_DynamicAny_Export TAO_DynEnum_i
 public:
   explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation = true);
 
-  ~TAO_DynEnum_i () = default;
+  ~TAO_DynEnum_i () override;
 
   TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
   TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;

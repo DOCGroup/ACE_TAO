@@ -39,7 +39,7 @@ class TAO_DynamicAny_Export TAO_DynSequence_i
 public:
   explicit TAO_DynSequence_i (CORBA::Boolean allow_truncation = true);
 
-  ~TAO_DynSequence_i () = default;
+  ~TAO_DynSequence_i () override;
 
   TAO_DynSequence_i (TAO_DynSequence_i const &src) = delete;
   TAO_DynSequence_i &operator= (TAO_DynSequence_i const &src) = delete;

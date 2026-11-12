@@ -16,6 +16,8 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA::Boolean allow_truncation)
 {
 }
 
+TAO_DynStruct_i::~TAO_DynStruct_i () = default;
+
 void
 TAO_DynStruct_i::check_typecode (CORBA::TypeCode_ptr tc)
 {

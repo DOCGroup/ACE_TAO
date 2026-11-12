@@ -28,14 +28,12 @@ class TAO_DynamicAny_Export TAO_DynCommon
 public:
   explicit TAO_DynCommon (CORBA::Boolean allow_truncation);
 
-  ~TAO_DynCommon () override = default;
+  ~TAO_DynCommon () override;
 
   TAO_DynCommon (TAO_DynCommon const &) = delete;
   TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
   TAO_DynCommon (TAO_DynCommon &&) = delete;
   TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
-
-
   CORBA::TypeCode_ptr type () override;
 
   void assign (DynamicAny::DynAny_ptr dyn_any) override;

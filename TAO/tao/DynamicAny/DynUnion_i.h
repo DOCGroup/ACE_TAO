@@ -37,7 +37,7 @@ class TAO_DynamicAny_Export TAO_DynUnion_i
 public:
   explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation = true);
 
-  ~TAO_DynUnion_i () = default;
+  ~TAO_DynUnion_i () override;
 
   TAO_DynUnion_i (TAO_DynUnion_i const &src) = delete;
   TAO_DynUnion_i &operator= (TAO_DynUnion_i const &src) = delete;
