@@ -3,19 +3,15 @@
 #include "Factory.h"
 
 #include "TestC.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <memory>
 
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
-  : argc_ (argc)
-  , argv_ (argv)
-  , ior_output_file_(ACE_TEXT("obj.ior"))
+  : argc_ (argc),
+    argv_ (argv)
 {
-}
-
-CORBA::ORB_ptr
-LB_server::orb ()
-{
-  return this->orb_.in ();
 }
 
 int
@@ -24,7 +20,7 @@ LB_server::run ()
   try
     {
       ACE_Time_Value period (0, 10);
-      while (1)
+      while (true)
         {
           this->orb_->perform_work (&period);
         }
@@ -34,7 +30,7 @@ LB_server::run ()
       ex._tao_print_exception ("Exception caught while running LB_server\n");
       return -1;
     }
-  return 1;
+  return 0;
 }
 
 
@@ -55,24 +51,25 @@ LB_server::destroy ()
         "Exception caught while destroying LB_server\n");
       return -1;
     }
-  return 1;
+  return 0;
 }
 
 int
-LB_server::write_ior_to_file (const char *ior)
+LB_server::write_ior_to_file (char const *ior)
 {
-  FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr output_file (ACE_OS::fopen (this->options_.ior_output_file.c_str (),
+                                       ACE_TEXT ("w")),
+                        ACE_OS::fclose);
 
-  if (output_file == 0)
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR:"));
+                  ACE_TEXT ("Cannot open output file for writing IOR\n")));
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior);
-  ACE_OS::fclose (output_file);
+  std::fprintf (output_file.get (), "%s", ior);
   return 0;
 }
 
@@ -80,21 +77,19 @@ int
 LB_server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        this->ior_output_file_ = get_opts.opt_arg ();
+        this->options_.ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -110,13 +105,16 @@ LB_server::start_orb_and_poa ()
       // Initialise the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
+      if (this->parse_args (this->argc_, this->argv_) != 0)
+        return -1;
+
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+                          -1);
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -134,7 +132,7 @@ LB_server::start_orb_and_poa ()
       if (CORBA::is_nil (this->lm_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Load Manager Reference\n"),
-                          1);
+                          -1);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -142,21 +140,18 @@ LB_server::start_orb_and_poa ()
       return -1;
     }
 
-  return 1;
+  return 0;
 }
 
 int
-LB_server::create_object_group (const char *loc_1, const char *loc_2)
+LB_server::create_object_group (char const *loc_1, char const *loc_2)
 {
   try
     {
-      const char *repository_id = "IDL:Test/Simple:1.0";
+      char const *const repository_id = "IDL:Test/Simple:1.0";
 
       Factory factory_object1;
       Factory factory_object2;
-
-      if (this->parse_args (argc_, argv_) != 0)
-              return -1;
 
       PortableGroup::GenericFactory_var factory_obj1 =
         factory_object1._this ();
@@ -164,13 +159,13 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
       PortableGroup::GenericFactory_var factory_obj2 =
         factory_object2._this ();
 
-      PortableGroup::FactoriesValue  factory_infos;
+      PortableGroup::FactoriesValue factory_infos;
       factory_infos.length (2);
 
-      PortableGroup::Criteria criteria ;
+      PortableGroup::Criteria criteria;
       criteria.length (4);
 
-      PortableGroup::Criteria factory_criteria ;
+      PortableGroup::Criteria factory_criteria;
       factory_criteria.length (1);
 
       PortableGroup::Property &property_one = criteria[0];
@@ -188,8 +183,7 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
       property_one.nam[0].id =
         CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
 
-      PortableGroup::MembershipStyleValue msv =
-        PortableGroup::MEMB_INF_CTRL;
+      PortableGroup::MembershipStyleValue const msv = PortableGroup::MEMB_INF_CTRL;
       property_one.val <<= msv;
 
       factory_infos[0].the_factory = factory_obj1._retn ();
@@ -198,9 +192,9 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
       factory_infos[1].the_factory = factory_obj2._retn ();
       factory_infos[1].the_criteria = factory_criteria;
 
-      PortableGroup::Location & location1 = factory_infos[0].the_location;
+      PortableGroup::Location &location1 = factory_infos[0].the_location;
       location1.length (1);
-      PortableGroup::Location & location2 = factory_infos[1].the_location;
+      PortableGroup::Location &location2 = factory_infos[1].the_location;
       location2.length (1);
 
       location1[0].id = CORBA::string_dup (loc_1);
@@ -212,12 +206,12 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
 
       property_three.nam[0].id =
         CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
-      PortableGroup::InitialNumberMembersValue init_value = 2;
+      PortableGroup::InitialNumberMembersValue const init_value = 2;
       property_three.val <<= init_value;
 
       property_four.nam[0].id =
         CORBA::string_dup ("org.omg.PortableGroup.MinimumNumberMembers");
-      PortableGroup::MinimumNumberMembersValue min_value = 2;
+      PortableGroup::MinimumNumberMembersValue const min_value = 2;
       property_four.val <<= min_value;
 
       this->object_group_ = this->lm_->create_object (repository_id,
@@ -227,7 +221,8 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
       CORBA::String_var ior =
         this->orb_->object_to_string (this->object_group_.in ());
 
-      this->write_ior_to_file (ior.in ());
+      if (this->write_ior_to_file (ior.in ()) != 0)
+        return -1;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -236,5 +231,5 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
       return -1;
     }
 
-  return 1;
+  return 0;
 }

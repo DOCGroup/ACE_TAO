@@ -5,22 +5,23 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  const char *location1 = "MyLocation 1";
-  const char *location2 = "MyLocation 2";
+  char const *const location1 = "MyLocation 1";
+  char const *const location2 = "MyLocation 2";
 
   LB_server lb_server (argc, argv);
 
-  if (lb_server.start_orb_and_poa () == -1)
+  if (lb_server.start_orb_and_poa () != 0)
     return 1;
 
-  if (lb_server.create_object_group (location1, location2) == -1)
+  if (lb_server.create_object_group (location1, location2) != 0)
     return 1;
 
-  lb_server.run ();
+  if (lb_server.run () != 0)
+    return 1;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-  if (lb_server.destroy () == -1)
+  if (lb_server.destroy () != 0)
     return 1;
 
   return 0;

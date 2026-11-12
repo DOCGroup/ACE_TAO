@@ -10,11 +10,17 @@
 //=============================================================================
 
 
+#ifndef LB_SERVER_H
+#define LB_SERVER_H
+
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "ace/Get_Opt.h"
+struct LB_Server_Options
+{
+  ACE_TString ior_output_file { ACE_TEXT ("obj.ior") };
+};
 
 /**
  * @class LB_server
@@ -33,6 +39,11 @@ public:
   /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
+  LB_server (LB_server const &) = delete;
+  LB_server &operator= (LB_server const &) = delete;
+  LB_server (LB_server &&) = delete;
+  LB_server &operator= (LB_server &&) = delete;
+
   /// destroys LoadManager, ORB and POA.
   int destroy ();
 
@@ -40,17 +51,14 @@ public:
   int start_orb_and_poa ();
 
   /// Create the Object Group using the Load Manager Reference.
-  int create_object_group (const char *loc_1, const char *loc_2);
+  int create_object_group (char const *loc_1, char const *loc_2);
 
   /// Run the ORB.
   int run ();
 
-  /// for servants to register to the initialised ORB.
-  CORBA::ORB_ptr orb ();
-
 private:
-  int write_ior_to_file (const char *);
-  int parse_args (int, ACE_TCHAR **);
+  int write_ior_to_file (char const *ior);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   /// Load Manager
@@ -64,7 +72,10 @@ private:
 
   CORBA::ORB_var orb_;
   int argc_;
+  // Borrowed from main for ORB_init.
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
-  const ACE_TCHAR *ior_output_file_;
+  LB_Server_Options options_;
 };
+
+#endif /* LB_SERVER_H */
