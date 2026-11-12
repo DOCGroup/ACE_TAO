@@ -1,43 +1,46 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Vector_T.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
+#include <string>
+#include <vector>
 
-const ACE_TCHAR* group_ior = ACE_TEXT ("file:://group.ior");
-const ACE_TCHAR* direct_obj2_ior = ACE_TEXT ("file://direct_obj2.ior");
+struct Client_Options
+{
+  // These pointers borrow the command-line strings for the duration of main.
+  ACE_TCHAR const *group_ior { ACE_TEXT ("file:://group.ior") };
+  ACE_TCHAR const *direct_obj2_ior { ACE_TEXT ("file://direct_obj2.ior") };
+  ACE_TCHAR const *strategy { ACE_TEXT ("roundrobin") };
+  bool ping_timedout {};
+};
 
-bool ping_timedout2 = false;
-const ACE_TCHAR *strategy = ACE_TEXT("roundrobin");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:j:ls:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        group_ior = get_opts.opt_arg ();
+        options.group_ior = get_opts.opt_arg ();
         break;
       case 'j':
-        direct_obj2_ior = get_opts.opt_arg ();
+        options.direct_obj2_ior = get_opts.opt_arg ();
         break;
       case 'l':
-        ping_timedout2 = true;
+        options.ping_timedout = true;
         break;
       case 's':
-        strategy = get_opts.opt_arg ();
+        options.strategy = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> -j <direct ior> -l -s <strategy>"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior> -j <direct ior> "
+                                     "-l -s <strategy>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -45,20 +48,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-int dead_member_rr_test (CORBA::ORB_ptr orb,
-                         const ACE_TCHAR* group_ior,
-                         Test::Simple_ptr direct_simple)
+static int dead_member_rr_test (CORBA::ORB_ptr orb,
+                                Client_Options const &options,
+                                Test::Simple_ptr direct_simple)
 {
-  int status = 0;
+  int status {};
 
-  for (int iter = 0; iter < 4; iter++)
+  for (int iter {}; iter < 4; ++iter)
   {
     try {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request %d \n", iter));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request %d\n"), iter));
       if (iter != 1)
       {
         CORBA::Object_var tmp =
-          orb->string_to_object (group_ior);
+          orb->string_to_object (options.group_ior);
 
         Test::Simple_var simple =
           Test::Simple::_narrow (tmp.in ());
@@ -66,19 +69,20 @@ int dead_member_rr_test (CORBA::ORB_ptr orb,
         if (CORBA::is_nil (simple.in ()))
           {
             ACE_ERROR ((LM_DEBUG,
-                              "Nil Test::Simple reference <%s>\n",
-                              group_ior));
-            status = 1;
+                              ACE_TEXT ("Nil Test::Simple reference <%s>\n"),
+                              options.group_ior));
+            return 1;
           }
 
         CORBA::String_var the_string =
           simple->get_string ();
+        std::string const location (the_string.in ());
 
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request handled by object at <%s>\n",
-          the_string.in ()));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request handled by object at <%C>\n"),
+                    location.c_str ()));
 
-        if ((iter == 0 && ACE_OS::strcmp (the_string.in(), "MyLocation 1"))
-          || (iter == 2 && ACE_OS::strcmp (the_string.in(), "MyLocation 3")))
+        if ((iter == 0 && location != "MyLocation 1")
+            || (iter == 2 && location != "MyLocation 3"))
         {
           status = 1;
         }
@@ -108,29 +112,25 @@ int dead_member_rr_test (CORBA::ORB_ptr orb,
         status = 1;
       }
     }
-    catch (...)
-    {
-      throw;
-    }
   }
 
   return status;
 }
 
 
-int hang_member_rr_test (CORBA::ORB_ptr orb,
-                         const ACE_TCHAR* group_ior,
-                         Test::Simple_ptr /*direct_simple*/)
+static int hang_member_rr_test (CORBA::ORB_ptr orb,
+                                Client_Options const &options,
+                                Test::Simple_ptr /*direct_simple*/)
 {
-  int status = 0;
+  int status {};
 
-  for (int iter = 0; iter < 4; iter++)
+  for (int iter {}; iter < 4; ++iter)
   {
     try {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request %d \n", iter));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request %d\n"), iter));
 
       CORBA::Object_var tmp =
-        orb->string_to_object (group_ior);
+        orb->string_to_object (options.group_ior);
 
       Test::Simple_var simple =
         Test::Simple::_narrow (tmp.in ());
@@ -138,21 +138,21 @@ int hang_member_rr_test (CORBA::ORB_ptr orb,
       if (CORBA::is_nil (simple.in ()))
         {
           ACE_ERROR ((LM_DEBUG,
-                             "Nil Test::Simple reference <%s>\n",
-                             group_ior));
-          status = 1;
+                             ACE_TEXT ("Nil Test::Simple reference <%s>\n"),
+                             options.group_ior));
+          return 1;
         }
 
       CORBA::String_var the_string =
         simple->get_string ();
+      std::string const location (the_string.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request handled by object at <%s>\n",
-        the_string.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request handled by object at <%C>\n"),
+                  location.c_str ()));
 
-     if ((iter == 0 && ACE_OS::strcmp (the_string.in(), "MyLocation 1"))
-        || (iter == 1 && ACE_OS::strcmp (the_string.in(), "MyLocation 2"))
-        || (iter == 2 && ACE_OS::strcmp (the_string.in(), "MyLocation 3")))
-
+      if ((iter == 0 && location != "MyLocation 1")
+          || (iter == 1 && location != "MyLocation 2")
+          || (iter == 2 && location != "MyLocation 3"))
       {
         status = 1;
       }
@@ -198,31 +198,27 @@ int hang_member_rr_test (CORBA::ORB_ptr orb,
         status = 1;
       }
     }
-    catch (...)
-    {
-      throw;
-    }
   }
 
   return status;
 }
 
 
-int dead_member_rand_test (CORBA::ORB_ptr orb,
-                           const ACE_TCHAR* group_ior,
-                           Test::Simple_ptr /*direct_simple*/)
+static int dead_member_rand_test (CORBA::ORB_ptr orb,
+                                 Client_Options const &options,
+                                 Test::Simple_ptr /*direct_simple*/)
 {
-  int status = 0;
+  int status {};
 
-  ACE_Vector <ACE_CString> locations;
+  std::vector<std::string> locations;
 
-  for (int iter = 0; iter < 4; iter ++)
+  for (int iter {}; iter < 4; ++iter)
   {
     try {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request %d \n", iter));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request %d\n"), iter));
 
       CORBA::Object_var tmp =
-        orb->string_to_object (group_ior);
+        orb->string_to_object (options.group_ior);
 
       Test::Simple_var simple =
         Test::Simple::_narrow (tmp.in ());
@@ -230,29 +226,30 @@ int dead_member_rand_test (CORBA::ORB_ptr orb,
       if (CORBA::is_nil (simple.in ()))
         {
           ACE_ERROR ((LM_DEBUG,
-                             "Nil Test::Simple reference <%s>\n",
-                             group_ior));
-          status = 1;
+                             ACE_TEXT ("Nil Test::Simple reference <%s>\n"),
+                             options.group_ior));
+          return 1;
         }
 
       CORBA::String_var the_string =
         simple->get_string ();
+      std::string const location (the_string.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
-        the_string.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request handled by object at <%C>\n"),
+                  location.c_str ()));
 
       // Any picked member will not be picked again since they exit right after
       // this request.
-      for (size_t j = 0; j < locations.size (); ++j)
+      for (std::string const &previous_location : locations)
       {
-        if (ACE_OS::strcmp (the_string.in (), locations[j].c_str ()) == 0)
+        if (previous_location == location)
         {
           status = 1;
         }
       }
 
       if (status == 0)
-        locations.push_back (the_string.in ());
+        locations.push_back (location);
 
       if (iter == 3)
       {
@@ -275,31 +272,27 @@ int dead_member_rand_test (CORBA::ORB_ptr orb,
         status = 1;
       }
     }
-    catch (...)
-    {
-      throw;
-    }
   }
 
   return status;
 }
 
 
-int hang_member_rand_test (CORBA::ORB_ptr orb,
-                           const ACE_TCHAR* group_ior,
-                           Test::Simple_ptr /*direct_simple*/)
+static int hang_member_rand_test (CORBA::ORB_ptr orb,
+                                 Client_Options const &options,
+                                 Test::Simple_ptr /*direct_simple*/)
 {
-  int status = 0;
+  int status {};
 
-  ACE_Vector <ACE_CString> locations;
+  std::vector<std::string> locations;
 
-  for (int iter = 0; iter < 4; iter++)
+  for (int iter {}; iter < 4; ++iter)
   {
     try {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request %d \n", iter));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request %d\n"), iter));
 
       CORBA::Object_var tmp =
-        orb->string_to_object (group_ior);
+        orb->string_to_object (options.group_ior);
 
       Test::Simple_var simple =
         Test::Simple::_narrow (tmp.in ());
@@ -307,29 +300,30 @@ int hang_member_rand_test (CORBA::ORB_ptr orb,
       if (CORBA::is_nil (simple.in ()))
         {
           ACE_ERROR ((LM_DEBUG,
-                             "Nil Test::Simple reference <%s>\n",
-                             group_ior));
-          status = 1;
+                             ACE_TEXT ("Nil Test::Simple reference <%s>\n"),
+                             options.group_ior));
+          return 1;
         }
 
       CORBA::String_var the_string =
         simple->get_string ();
+      std::string const location (the_string.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Client request handled by object at <%s>\n",
-        the_string.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%T - Client request handled by object at <%C>\n"),
+                  location.c_str ()));
 
-      for (size_t j = 0; j < locations.size (); ++j)
+      for (std::string const &previous_location : locations)
       {
-        if (ACE_OS::strcmp (the_string.in (), locations[j].c_str ()) == 0)
+        if (previous_location == location)
         {
           status = 1;
         }
       }
 
       if (status == 0)
-        locations.push_back (the_string.in ());
+        locations.push_back (location);
 
-     if (iter == 3)
+      if (iter == 3)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Request %d should not complete\n"), iter));
         status = 1;
@@ -371,10 +365,6 @@ int hang_member_rand_test (CORBA::ORB_ptr orb,
         status = 1;
       }
     }
-    catch (...)
-    {
-      throw;
-    }
   }
 
   return status;
@@ -384,18 +374,19 @@ int hang_member_rand_test (CORBA::ORB_ptr orb,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
+  Client_Options options;
 
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object (direct_obj2_ior);
+        orb->string_to_object (options.direct_obj2_ior);
 
       Test::Simple_var direct_simple =
         Test::Simple::_narrow (tmp.in ());
@@ -404,22 +395,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Simple direct reference <%s>\n",
-                             direct_obj2_ior),
+                             options.direct_obj2_ior),
                             1);
         }
 
-      if (ACE_OS::strcasecmp (strategy, ACE_TEXT("roundrobin")) == 0)
+      if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("roundrobin")) == 0)
       {
-        if (ping_timedout2)
-          status = hang_member_rr_test (orb.in (),group_ior, direct_simple.in ());
+        if (options.ping_timedout)
+          status = hang_member_rr_test (orb.in (), options, direct_simple.in ());
         else
-          status = dead_member_rr_test (orb.in (),group_ior, direct_simple.in ());
+          status = dead_member_rr_test (orb.in (), options, direct_simple.in ());
       }
-      else if (ACE_OS::strcasecmp (strategy, ACE_TEXT("random")) == 0)
-        if (ping_timedout2)
-          status = hang_member_rand_test (orb.in (), group_ior, direct_simple.in ());
+      else if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("random")) == 0)
+        if (options.ping_timedout)
+          status = hang_member_rand_test (orb.in (), options, direct_simple.in ());
         else
-          status = dead_member_rand_test (orb.in (),group_ior, direct_simple.in ());
+          status = dead_member_rand_test (orb.in (), options, direct_simple.in ());
       else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Invalid strategy \n")));
