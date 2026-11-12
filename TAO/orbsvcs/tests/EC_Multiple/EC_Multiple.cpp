@@ -21,6 +21,7 @@
 #include "ace/OS_NS_strings.h"
 #include <cstring>
 #include <memory>
+#include <new>
 
 Test_ECG::Test_ECG ()
   : lcl_name_ ("Test_ECG"),
@@ -28,7 +29,7 @@ Test_ECG::Test_ECG ()
     scheduling_type_ (Test_ECG::ss_runtime),
     consumer_disconnects_ (0),
     supplier_disconnects_ (0),
-    short_circuit_ (0),
+    short_circuit_ (false),
     suppliers_ {},
     consumers_ {},
     hp_suppliers_ (1),
@@ -52,7 +53,7 @@ Test_ECG::Test_ECG ()
     schedule_file_ {},
     pid_file_name_ {},
     stats_ {},
-    ready_ (0),
+    ready_ (false),
     ready_cnd_ (ready_mtx_),
     running_suppliers_ (0),
     running_consumers_ (0),
@@ -61,7 +62,7 @@ Test_ECG::Test_ECG ()
 {
 }
 
-void
+static void
 print_priority_info (char const* const name)
 {
 #if defined (ACE_HAS_PTHREADS)
@@ -200,12 +201,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       if (this->pid_file_name_ != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          std::unique_ptr<FILE, int (*) (FILE *)> pid (
+            ACE_OS::fopen (this->pid_file_name_, "w"), ACE_OS::fclose);
           if (pid != nullptr)
             {
-              ACE_OS::fprintf (pid, "%ld\n",
+              ACE_OS::fprintf (pid.get (), "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pid);
             }
         }
 
@@ -471,7 +472,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       // Acquire the mutex for the ready mutex, blocking any supplier
       // that may start after this point.
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ready_mtx_, 1);
-      this->ready_ = 1;
+      this->ready_ = true;
       this->test_start_ = ACE_OS::gethrtime ();
       this->ready_cnd_.broadcast ();
       ready_mon.release ();
@@ -588,8 +589,11 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
 
-      ACE_NEW (this->suppliers_[i],
-               Test_Supplier (this, this->suppliers_.data () + i));
+      Test_Supplier* const supplier =
+        new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
+      if (supplier == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->suppliers_[i] = supplier;
 
       this->suppliers_[i]->open (buf,
                                  this->hps_event_a_,
@@ -610,8 +614,11 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
                        i - this->hp_suppliers_, this->lcl_name_.c_str ());
 
-      ACE_NEW (this->suppliers_[i],
-               Test_Supplier (this, this->suppliers_.data () + i));
+      Test_Supplier* const supplier =
+        new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
+      if (supplier == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->suppliers_[i] = supplier;
 
       this->suppliers_[i]->open (buf,
                                  this->lps_event_a_,
@@ -683,8 +690,11 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_.c_str ());
 
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_.data () + i));
+      Test_Consumer* const consumer =
+        new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
+      if (consumer == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->consumers_[i] = consumer;
 
       this->consumers_[i]->open (buf,
                                  this->hpc_event_a_,
@@ -701,8 +711,11 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       ACE_OS::sprintf (buf, "lp_consumer_%02d@%s",
                        i - this->hp_consumers_, this->lcl_name_.c_str ());
 
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_.data () + i));
+      Test_Consumer* const consumer =
+        new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
+      if (consumer == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->consumers_[i] = consumer;
 
       this->consumers_[i]->open (buf,
                                  this->lpc_event_a_,
@@ -779,7 +792,8 @@ Test_ECG::push_consumer (void *consumer_cookie,
                          RtecEventComm::EventSet const& events)
 {
   int ID =
-    (reinterpret_cast<Test_Consumer**> (consumer_cookie)
+    (reinterpret_cast<PortableServer::Servant_var<Test_Consumer>*> (
+       consumer_cookie)
      - this->consumers_.data ());
 
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) events received by consumer %d\n", ID));
@@ -871,7 +885,7 @@ void
 Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
                              RtecEventComm::PushConsumer_ptr consumer)
 {
-  this->running_suppliers_--;
+  --this->running_suppliers_;
   if (this->running_suppliers_ != 0)
     return;
 
@@ -895,11 +909,11 @@ void
 Test_ECG::shutdown_consumer (int id)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutdown consumer %d\n", id));
-  this->running_consumers_--;
+  --this->running_consumers_;
 
   if (this->running_consumers_ == 0)
     {
-      if (TAO_ORB_Core_instance ()->orb () == 0)
+      if (TAO_ORB_Core_instance ()->orb () == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) Test_ECG::shutdown_consumer, "
@@ -910,20 +924,6 @@ Test_ECG::shutdown_consumer (int id)
           TAO_ORB_Core_instance ()->orb ()->shutdown ();
         }
     }
-}
-
-int
-Test_ECG::shutdown ()
-{
-  ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
-
-  if (this->rmt_name_.length () != 0)
-    {
-      this->ecg_.shutdown ();
-    }
-
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
-  return 0;
 }
 
 void
@@ -1026,7 +1026,7 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
           break;
 
         case 'x':
-          this->short_circuit_ = 1;
+          this->short_circuit_ = true;
           break;
 
         case 'i':
@@ -1150,7 +1150,7 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
                          "suppliers (low: %d, high: %d) out of range\n",
                          argv[0],
                          lp_consumers_, hp_consumers_,
-                         lp_suppliers_, lp_suppliers_), -1);
+                         lp_suppliers_, hp_suppliers_), -1);
     }
 
   return 0;
@@ -1160,6 +1160,10 @@ Test_Supplier::Test_Supplier (Test_ECG *test,
                               void *cookie)
   :  test_ (test),
      cookie_ (cookie),
+     supplier_id_ {},
+     event_a_ {},
+     event_b_ {},
+     message_count_ {},
      consumer_ (this)
 {
 }
@@ -1449,16 +1453,13 @@ Test_Consumer::disconnect_push_consumer ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Test_ECG* raw_test {};
-
   // Dynamically allocate the Test_ECG instance so that we don't have
   // to worry about running out of stack space if it's large.
-  ACE_NEW_RETURN (raw_test,
-                  Test_ECG,
-                  -1);
-  std::unique_ptr<Test_ECG> test (raw_test);
+  std::unique_ptr<Test_ECG> test (new (std::nothrow) Test_ECG);
+  if (!test)
+    return -1;
 
   const int status = test->run (argc, argv);
   return status;
