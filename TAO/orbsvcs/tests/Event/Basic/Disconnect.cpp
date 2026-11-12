@@ -10,7 +10,7 @@ static void run_test (PortableServer::POA_ptr poa,
                       int use_callbacks);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -92,8 +92,8 @@ run_test (PortableServer::POA_ptr poa,
   EC_Counting_Consumer consumer_0 ("Consumer/0");
   EC_Counting_Consumer consumer_1 ("Consumer/1");
 
-  const int event_type = 20;
-  const int event_source = 10;
+  constexpr int event_type = 20;
+  constexpr int event_source = 10;
 
   ACE_ConsumerQOS_Factory consumer_qos;
   consumer_qos.start_disjunction_group ();

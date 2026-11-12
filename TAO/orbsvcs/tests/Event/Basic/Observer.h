@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_OBSERVER_H
 #define EC_OBSERVER_H
 
@@ -35,6 +34,10 @@ class EC_Master
 {
 public:
   EC_Master ();
+  EC_Master (EC_Master const &) = delete;
+  EC_Master &operator= (EC_Master const &) = delete;
+  EC_Master (EC_Master &&) = delete;
+  EC_Master &operator= (EC_Master &&) = delete;
 
   virtual ~EC_Master ();
 
@@ -74,14 +77,16 @@ private:
 class EC_Observer : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Observer (EC_Master *master,
                unsigned int seed,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr root_poa,
                int id);
+  EC_Observer (EC_Observer const &) = delete;
+  EC_Observer &operator= (EC_Observer const &) = delete;
+  EC_Observer (EC_Observer &&) = delete;
+  EC_Observer &operator= (EC_Observer &&) = delete;
 
-  /// Destructor
   ~EC_Observer () override;
 
   // = The EC_Driver methods

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_BCAST_H
 #define EC_BCAST_H
 
@@ -25,8 +24,11 @@
 class EC_BCast : public EC_Driver
 {
 public:
-  /// Constructor
   EC_BCast ();
+  EC_BCast (EC_BCast const &) = delete;
+  EC_BCast &operator= (EC_BCast const &) = delete;
+  EC_BCast (EC_BCast &&) = delete;
+  EC_BCast &operator= (EC_BCast &&) = delete;
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable bcastions
@@ -45,7 +47,7 @@ public:
 
 private:
   /// The IP address used to broadcast
-  const ACE_TCHAR *bcast_address_;
+  ACE_TCHAR const *bcast_address_;
 
   /// The port used to send and receive bcast messages...
   u_short bcast_port_;

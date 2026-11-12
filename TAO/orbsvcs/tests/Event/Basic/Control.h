@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_CONTROL_H
 #define EC_CONTROL_H
 
@@ -25,9 +24,12 @@
 class Consumer : public EC_Counting_Consumer
 {
 public:
-  /// Constructor
   Consumer (const char* name,
             int event_count);
+  Consumer (Consumer const &) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   // = The RtecEventComm::PushConsumer methods
 

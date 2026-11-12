@@ -8,11 +8,11 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-const int event_type = 20;
-const int event_source = 10;
+constexpr int event_type = 20;
+constexpr int event_source = 10;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -42,7 +42,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
-
 
       // ****************************************************************
 
@@ -163,7 +162,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-    this->event_count++;
+    ++this->event_count;
 
     if (this->event_count != this->shutdown_count_)
       return;

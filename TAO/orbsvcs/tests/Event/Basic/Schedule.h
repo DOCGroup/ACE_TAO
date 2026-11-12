@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_SCHEDULE_H
 #define EC_SCHEDULE_H
 
@@ -18,6 +17,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerS.h"
+
+#include <memory>
 
 /**
  * @class EC_Schedule
@@ -39,8 +40,11 @@
 class EC_Schedule : public EC_Driver
 {
 public:
-  /// Constructor
-  EC_Schedule ();
+  EC_Schedule () = default;
+  EC_Schedule (EC_Schedule const &) = delete;
+  EC_Schedule &operator= (EC_Schedule const &) = delete;
+  EC_Schedule (EC_Schedule &&) = delete;
+  EC_Schedule &operator= (EC_Schedule &&) = delete;
 
   // = The EC_Driver methods
   /// add some command line args to change the scheduling service to
@@ -72,7 +76,7 @@ public:
 
 private:
   /// The scheduler implementation
-  POA_RtecScheduler::Scheduler *scheduler_impl_;
+  std::unique_ptr<POA_RtecScheduler::Scheduler> scheduler_impl_;
 
   /// The scheduler object reference
   RtecScheduler::Scheduler_var scheduler_;

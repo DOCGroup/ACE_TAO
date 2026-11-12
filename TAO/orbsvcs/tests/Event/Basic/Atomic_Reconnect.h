@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_ATOMIC_RECONNECT_H
 #define EC_ATOMIC_RECONNECT_H
 
@@ -25,9 +24,12 @@
 class Consumer : public EC_Counting_Consumer
 {
 public:
-  /// Constructor
   Consumer (const char* name,
             int event_base_type);
+  Consumer (Consumer const &) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   void dump_results (int expected_count,
                      int tolerance);

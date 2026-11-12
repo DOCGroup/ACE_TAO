@@ -8,7 +8,7 @@
 #include "ace/OS_NS_unistd.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RND_Driver driver;
   return driver.run (argc, argv);
@@ -16,7 +16,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-const int base_type = 20;
+constexpr int base_type = 20;
 
 void
 deactivate_servant (PortableServer::Servant servant)
@@ -28,14 +28,13 @@ deactivate_servant (PortableServer::Servant servant)
   poa->deactivate_object (oid.in ());
 }
 
-
 RND_Driver::RND_Driver ()
-  :  timer_ (this),
-     supplier_ (0),
+  : timer_ (this),
+     supplier_ (false),
      nsuppliers_ (4),
      nconsumers_ (4),
      max_recursion_ (1),
-     verbose_ (0)
+     verbose_ (false)
 {
   TAO_EC_Default_Factory::init_svcs ();
 }
@@ -54,7 +53,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       while (arg_shifter.is_anything_left ())
         {
-          const ACE_TCHAR *arg = arg_shifter.get_current ();
+          ACE_TCHAR const * const arg = arg_shifter.get_current ();
 
           if (ACE_OS::strcasecmp (arg, ACE_TEXT("-suppliers")) == 0)
             {
@@ -62,7 +61,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const * const opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nsuppliers_ = n;
@@ -75,7 +74,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const * const opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nconsumers_ = n;
@@ -88,7 +87,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const * const opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 0)
                     this->max_recursion_ = n;
@@ -99,7 +98,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              this->verbose_ = 1;
+              this->verbose_ = true;
             }
           else
             arg_shifter.ignore_arg ();
@@ -216,7 +215,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
             this->suppliers_[k]->_remove_ref ();
           }
         delete[] this->suppliers_;
-        this->suppliers_ = 0;
+        this->suppliers_ = nullptr;
       }
 
       // ****************************************************************
@@ -234,7 +233,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
             this->consumers_[k]->_remove_ref ();
           }
         delete[] this->consumers_;
-        this->consumers_ = 0;
+        this->consumers_ = nullptr;
       }
 
       // ****************************************************************
@@ -260,11 +259,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 void
 RND_Driver::timer (const RtecEventComm::Event &e)
 {
-  int r = ACE_OS::rand ();
-  if (r < 0)
-    r = -r;
-
-  int n = r% 20;
+  int const n = ACE_OS::rand () % 20;
 
   switch (n)
     {
@@ -277,7 +272,7 @@ RND_Driver::timer (const RtecEventComm::Event &e)
             RtecEventComm::EventSet event (1);
             event.length (1);
             event[0] = e;
-            event[0].header.source ++;
+            ++event[0].header.source;
             this->supplier_.push (event);
           }
       }
@@ -293,7 +288,7 @@ RND_Driver::timer (const RtecEventComm::Event &e)
 
     case 6:
       {
-        int n = ACE_OS::rand () % this->nsuppliers_;
+        int const n = ACE_OS::rand () % this->nsuppliers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Connecting supplier %d\n", n));
 
@@ -307,7 +302,7 @@ RND_Driver::timer (const RtecEventComm::Event &e)
 
     case 7:
       {
-        int n = ACE_OS::rand () % this->nconsumers_;
+        int const n = ACE_OS::rand () % this->nconsumers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Connecting consumer %d\n", n));
 
@@ -322,7 +317,7 @@ RND_Driver::timer (const RtecEventComm::Event &e)
 
     case 8:
       {
-        int n = ACE_OS::rand () % this->nsuppliers_;
+        int const n = ACE_OS::rand () % this->nsuppliers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", n));
 
@@ -332,7 +327,7 @@ RND_Driver::timer (const RtecEventComm::Event &e)
 
     case 9:
       {
-        int n = ACE_OS::rand () % this->nconsumers_;
+        int const n = ACE_OS::rand () % this->nconsumers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", n));
 
@@ -482,7 +477,7 @@ RND_Supplier::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "Thread %t started\n"));
   int percent = 10;
-  int niterations = 5000;
+  int const niterations = 5000;
   for (int i = 0; i != niterations; ++i)
     {
       try

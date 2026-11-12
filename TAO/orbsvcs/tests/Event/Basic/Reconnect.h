@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_RECONNECT_H
 #define EC_RECONNECT_H
 
@@ -36,8 +35,11 @@
 class EC_Reconnect : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Reconnect ();
+  EC_Reconnect (EC_Reconnect const &) = delete;
+  EC_Reconnect &operator= (EC_Reconnect const &) = delete;
+  EC_Reconnect (EC_Reconnect &&) = delete;
+  EC_Reconnect &operator= (EC_Reconnect &&) = delete;
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable reconnections

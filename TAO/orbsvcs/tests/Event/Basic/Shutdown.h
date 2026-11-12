@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_SHUTDOWN_H
 #define EC_SHUTDOWN_H
 
@@ -29,8 +28,11 @@
 class EC_Shutdown : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Shutdown ();
+  EC_Shutdown (EC_Shutdown const &) = delete;
+  EC_Shutdown &operator= (EC_Shutdown const &) = delete;
+  EC_Shutdown (EC_Shutdown &&) = delete;
+  EC_Shutdown &operator= (EC_Shutdown &&) = delete;
 
   // = The EC_Driver methods
   /// Don't run the suppliers just create the EC and then destroy it.
@@ -44,7 +46,6 @@ public:
 
   /// One of the suppliers in the test has been disconnected from the EC
   void supplier_disconnect (void* supplier_cookie) override;
-
 
 private:
   /// Number of consumer and supplier disconnect messages.
