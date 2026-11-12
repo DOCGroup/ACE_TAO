@@ -39,8 +39,15 @@ class TAO_Messaging_PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_Messaging_PolicyFactory () = default;
+
+  TAO_Messaging_PolicyFactory (TAO_Messaging_PolicyFactory const &) = delete;
+  TAO_Messaging_PolicyFactory &operator= (TAO_Messaging_PolicyFactory const &) = delete;
+  TAO_Messaging_PolicyFactory (TAO_Messaging_PolicyFactory &&) = delete;
+  TAO_Messaging_PolicyFactory &operator= (TAO_Messaging_PolicyFactory &&) = delete;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any & value) override;
+                                   CORBA::Any const &value) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -24,6 +24,8 @@
 
 #include "ace/Service_Config.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
@@ -39,16 +41,23 @@ class TAO_Messaging_Export TAO_AMI_Arguments_Converter_Impl
   : public TAO::Collocated_Arguments_Converter
 {
 public:
+  TAO_AMI_Arguments_Converter_Impl () = default;
+
+  TAO_AMI_Arguments_Converter_Impl (TAO_AMI_Arguments_Converter_Impl const &) = delete;
+  TAO_AMI_Arguments_Converter_Impl &operator= (TAO_AMI_Arguments_Converter_Impl const &) = delete;
+  TAO_AMI_Arguments_Converter_Impl (TAO_AMI_Arguments_Converter_Impl &&) = delete;
+  TAO_AMI_Arguments_Converter_Impl &operator= (TAO_AMI_Arguments_Converter_Impl &&) = delete;
+
   void convert_request (TAO_ServerRequest & server_request,
                         TAO::Argument * const args[],
-                        size_t nargs) override;
+                        std::size_t nargs) override;
 
   void dsi_convert_request (TAO_ServerRequest & server_request,
                             TAO_OutputCDR & output) override;
 
   void convert_reply (TAO_ServerRequest & server_request,
                       TAO::Argument * const args[],
-                      size_t nargs) override;
+                      std::size_t nargs) override;
 
   void dsi_convert_reply (TAO_ServerRequest & server_request,
                           TAO_InputCDR & input) override;

@@ -8,9 +8,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
-    const TAO_Reply_Handler_Stub &reply_handler_stub,
+    TAO_Reply_Handler_Stub const &reply_handler_stub,
     Messaging::ReplyHandler_ptr reply_handler,
     TAO_ORB_Core *orb_core,
     ACE_Allocator *allocator
@@ -128,7 +127,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                                      this->reply_handler_.in (),
                                      reply_error);
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level >= 4)
             ex._tao_print_exception ("Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
@@ -174,7 +173,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -237,7 +236,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -250,7 +249,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
 
 long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time)
+                                             ACE_Time_Value const &max_wait_time)
 {
   if (this->timeout_handler_ == nullptr)
     {

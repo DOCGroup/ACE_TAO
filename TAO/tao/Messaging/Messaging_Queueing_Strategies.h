@@ -26,6 +26,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/Transport_Queueing_Strategies.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -49,10 +51,10 @@ namespace TAO
 
     bool buffering_constraints_reached (
       TAO_Stub *stub,
-      size_t msg_count,
-      size_t total_bytes,
+      std::size_t msg_count,
+      std::size_t total_bytes,
       bool &must_flush,
-      const ACE_Time_Value &current_deadline,
+      ACE_Time_Value const &current_deadline,
       bool &set_timer,
       ACE_Time_Value &new_deadline) const override;
 
@@ -71,13 +73,13 @@ namespace TAO
      *         returns false then flushing may need to be delayed, use @c
      *         set_timer and
      */
-    bool timer_check (const TAO::BufferingConstraint &buffering_constraint,
-                      const ACE_Time_Value &current_deadline,
+    bool timer_check (TAO::BufferingConstraint const &buffering_constraint,
+                      ACE_Time_Value const &current_deadline,
                       bool &set_timer,
                       ACE_Time_Value &new_deadline) const;
 
     /// Convert from standard CORBA time units to seconds/microseconds.
-    ACE_Time_Value time_conversion (const TimeBase::TimeT &time) const;
+    ACE_Time_Value time_conversion (TimeBase::TimeT const &time) const;
   };
 
   /// Delay the buffering decision until the transport blocks

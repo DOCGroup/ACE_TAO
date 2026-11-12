@@ -23,8 +23,8 @@ namespace TAO
     CORBA::Object *target,
     Argument **args,
     int arg_number,
-    const char *operation,
-    size_t op_len,
+    char const *operation,
+    std::size_t op_len,
     int collocation_opportunity,
     Invocation_Mode m,
     bool has_in_args)
@@ -44,7 +44,7 @@ namespace TAO
   void
   Asynch_Invocation_Adapter::invoke (
     Messaging::ReplyHandler_ptr reply_handler_ptr,
-    const TAO_Reply_Handler_Stub &reply_handler_stub)
+    TAO_Reply_Handler_Stub const &reply_handler_stub)
   {
     TAO_Stub * stub =
       this->get_stub ();
@@ -64,7 +64,7 @@ namespace TAO
         // New reply dispatcher on the heap or allocator, because
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
-        TAO_Asynch_Reply_Dispatcher *rd = nullptr;
+        TAO_Asynch_Reply_Dispatcher *rd {};
 
         // Get the allocator we could use.
         ACE_Allocator* ami_allocator =
@@ -104,7 +104,7 @@ namespace TAO
 
   void
   Asynch_Invocation_Adapter::invoke (
-    const TAO::Exception_Data *ex,
+    TAO::Exception_Data const *ex,
     unsigned long ex_count)
   {
     Invocation_Adapter::invoke (ex, ex_count );
@@ -138,7 +138,7 @@ namespace TAO
       }
     else
       {
-        ACE_Time_Value *max_wait_time = nullptr;
+        ACE_Time_Value *max_wait_time {};
         return Invocation_Adapter::invoke_remote_i (stub,
                                                     details,
                                                     effective_target,

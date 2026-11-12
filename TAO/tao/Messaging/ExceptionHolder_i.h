@@ -47,10 +47,15 @@ namespace TAO
   public:
     ExceptionHolder () = default;
 
+    ExceptionHolder (ExceptionHolder const &) = delete;
+    ExceptionHolder &operator= (ExceptionHolder const &) = delete;
+    ExceptionHolder (ExceptionHolder &&) = delete;
+    ExceptionHolder &operator= (ExceptionHolder &&) = delete;
+
     ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
-      const ::CORBA::OctetSeq &marshaled_exception,
+      ::CORBA::OctetSeq const &marshaled_exception,
       ::TAO::Exception_Data* data,
       ::CORBA::ULong exceptions_count,
       ACE_Char_Codeset_Translator *char_translator,
@@ -62,7 +67,7 @@ namespace TAO
     void raise_exception () override;
 
     void raise_exception_with_list (
-        const ::Dynamic::ExceptionList & exc_list) override;
+        ::Dynamic::ExceptionList const &exc_list) override;
 
     CORBA::ValueBase* _copy_value () override;
 
@@ -87,6 +92,13 @@ namespace TAO
     public virtual CORBA::ValueFactoryBase
   {
   public:
+    ExceptionHolderFactory () = default;
+
+    ExceptionHolderFactory (ExceptionHolderFactory const &) = delete;
+    ExceptionHolderFactory &operator= (ExceptionHolderFactory const &) = delete;
+    ExceptionHolderFactory (ExceptionHolderFactory &&) = delete;
+    ExceptionHolderFactory &operator= (ExceptionHolderFactory &&) = delete;
+
     CORBA::ValueBase * create_for_unmarshal () override;
   };
 }

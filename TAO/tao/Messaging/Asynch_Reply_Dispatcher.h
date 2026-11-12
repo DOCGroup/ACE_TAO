@@ -31,15 +31,18 @@ class TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
 public:
-  /// Constructor.
   TAO_Asynch_Reply_Dispatcher (
-      const TAO_Reply_Handler_Stub &reply_handler_stub,
+      TAO_Reply_Handler_Stub const &reply_handler_stub,
       Messaging::ReplyHandler_ptr reply_handler_ptr,
       TAO_ORB_Core *orb_core,
       ACE_Allocator *allocator);
 
-  /// Destructor.
   ~TAO_Asynch_Reply_Dispatcher () override = default;
+
+  TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher const &) = delete;
+  TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher const &) = delete;
+  TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher &&) = delete;
+  TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher &&) = delete;
 
   /// @name The Reply Dispatcher methods
   //@{
@@ -53,14 +56,9 @@ public:
 
   /// Install the timeout handler
   long schedule_timer (CORBA::ULong request_id,
-                       const ACE_Time_Value &max_wait_time) override;
+                       ACE_Time_Value const &max_wait_time) override;
 
 private:
-  TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher const &) = delete;
-  TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher const &) = delete;
-  TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher &&) = delete;
-  TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher &&) = delete;
-
   /// Stub for the call back method in the Reply Handler.
   TAO_Reply_Handler_Stub const reply_handler_stub_;
 

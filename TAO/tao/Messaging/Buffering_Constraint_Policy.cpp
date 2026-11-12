@@ -12,7 +12,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint)
+TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (
+  TAO::BufferingConstraint const &buffering_constraint)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::BufferingConstraintPolicy ()
@@ -21,7 +22,8 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 {
 }
 
-TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
+TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (
+  TAO_Buffering_Constraint_Policy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::BufferingConstraintPolicy ()
@@ -37,13 +39,13 @@ TAO_Buffering_Constraint_Policy::policy_type ()
 }
 
 CORBA::Policy_ptr
-TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
+TAO_Buffering_Constraint_Policy::create (CORBA::Any const &val)
 {
-  const TAO::BufferingConstraint *buffering_constraint = nullptr;
+  TAO::BufferingConstraint const *buffering_constraint {};
   if ((val >>= buffering_constraint) == 0)
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_Buffering_Constraint_Policy *servant = nullptr;
+  TAO_Buffering_Constraint_Policy *servant {};
   ACE_NEW_THROW_EX (servant,
                     TAO_Buffering_Constraint_Policy (*buffering_constraint),
                     CORBA::NO_MEMORY ());
@@ -55,7 +57,7 @@ TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
 TAO_Buffering_Constraint_Policy *
 TAO_Buffering_Constraint_Policy::clone () const
 {
-  TAO_Buffering_Constraint_Policy *copy = nullptr;
+  TAO_Buffering_Constraint_Policy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_Buffering_Constraint_Policy (*this),
                   0);
@@ -71,7 +73,7 @@ TAO_Buffering_Constraint_Policy::buffering_constraint ()
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::copy ()
 {
-  TAO_Buffering_Constraint_Policy* servant = nullptr;
+  TAO_Buffering_Constraint_Policy* servant {};
   ACE_NEW_THROW_EX (servant,
                     TAO_Buffering_Constraint_Policy (*this),
                     CORBA::NO_MEMORY ());

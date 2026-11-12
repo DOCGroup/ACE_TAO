@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
+#include <cstddef>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -62,16 +64,21 @@ namespace TAO
         CORBA::Object *target,
         Argument **args,
         int arg_number,
-        const char *operation,
-        size_t op_len,
+        char const *operation,
+        std::size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
         bool has_in_args = true);
 
-    void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
-                 const TAO_Reply_Handler_Stub &reply_handler_stub);
+    Asynch_Invocation_Adapter (Asynch_Invocation_Adapter const &) = delete;
+    Asynch_Invocation_Adapter &operator= (Asynch_Invocation_Adapter const &) = delete;
+    Asynch_Invocation_Adapter (Asynch_Invocation_Adapter &&) = delete;
+    Asynch_Invocation_Adapter &operator= (Asynch_Invocation_Adapter &&) = delete;
 
-    void invoke (const TAO::Exception_Data *ex, unsigned long ex_count) override;
+    void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
+                 TAO_Reply_Handler_Stub const &reply_handler_stub);
+
+    void invoke (TAO::Exception_Data const *ex, unsigned long ex_count) override;
 
   protected:
     Invocation_Status invoke_twoway (
@@ -91,13 +98,6 @@ namespace TAO
     /// Autofunctor to manage the reply dispatcher
     ACE_Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
                             ARDB_Refcount_Functor> safe_rd_;
-
-  private:
-    Asynch_Invocation_Adapter () = delete;
-    Asynch_Invocation_Adapter (Asynch_Invocation_Adapter const &) = delete;
-    Asynch_Invocation_Adapter &operator= (Asynch_Invocation_Adapter const &) = delete;
-    Asynch_Invocation_Adapter (Asynch_Invocation_Adapter &&) = delete;
-    Asynch_Invocation_Adapter &operator= (Asynch_Invocation_Adapter &&) = delete;
   };
 } // End namespace TAO
 

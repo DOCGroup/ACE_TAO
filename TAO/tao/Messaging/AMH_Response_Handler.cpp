@@ -156,7 +156,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply ()
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
+TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception const &ex)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -181,7 +181,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
   //    ExceptionHolder information.
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && (TAO_HAS_MINIMUM_POA == 0)
-  const PortableServer::ForwardRequest *fr =
+  PortableServer::ForwardRequest const *fr =
     PortableServer::ForwardRequest::_downcast (&ex);
   if (fr != nullptr)
     {
