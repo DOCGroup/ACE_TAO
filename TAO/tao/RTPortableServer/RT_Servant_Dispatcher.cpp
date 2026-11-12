@@ -19,8 +19,7 @@
 
 #include "tao/RTCORBA/Thread_Pool.h"
 
-#include <cstring>
-#include <cstdio>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -133,16 +132,13 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           target_priority = servant_priority;
         }
 
-      char thread_pool_id[BUFSIZ];
+      std::string thread_pool_id {};
       if (TAO_debug_level > 0)
         {
           if (thread_pool == nullptr)
-            std::strcpy (thread_pool_id,
-                         "default thread pool");
+            thread_pool_id = "default thread pool";
           else
-            std::sprintf (thread_pool_id,
-                             "thread pool %d",
-                             thread_pool->id ());
+            thread_pool_id = "thread pool " + std::to_string (thread_pool->id ());
         }
 
       // Target priority is invalid.
@@ -165,7 +161,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("not changed\n"),
                           priority_model,
-                          thread_pool_id,
+                          thread_pool_id.c_str (),
                           pre_invoke_state.original_CORBA_priority_,
                           pre_invoke_state.original_native_priority_));
 
@@ -178,7 +174,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("original thread CORBA/native priority ")
                           ACE_TEXT ("not changed\n"),
                           priority_model,
-                          thread_pool_id));
+                          thread_pool_id.c_str ());
 
     #endif /* ACE_HAS_THREADS */
 
@@ -215,7 +211,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                               ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                               ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
                               priority_model,
-                              thread_pool_id,
+                              thread_pool_id.c_str (),
                               pre_invoke_state.original_CORBA_priority_,
                               pre_invoke_state.original_native_priority_,
                               target_priority,
@@ -232,7 +228,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                               ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                               ACE_TEXT ("is the same as the target priority\n"),
                               priority_model,
-                              thread_pool_id,
+                              thread_pool_id.c_str (),
                               pre_invoke_state.original_CORBA_priority_,
                               pre_invoke_state.original_native_priority_));
                 }
