@@ -220,7 +220,7 @@ private:
 
   /// This boolean is set when we are shutting down, then we will not create
   /// any new dynamic threads
-  bool shutdown_ {false};
+  bool shutdown_ {};
 
   /// Number of static threads
   CORBA::ULong const static_threads_number_;
