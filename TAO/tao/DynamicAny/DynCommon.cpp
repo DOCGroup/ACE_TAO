@@ -383,9 +383,6 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
       this->any_.replace (unk);
     }
 }
-
-// ****************************************************************
-
 CORBA::Boolean
 TAO_DynCommon::get_boolean ()
 {
@@ -721,9 +718,6 @@ TAO_DynCommon::get_val ()
       return retval._retn ();
     }
 }
-
-// ****************************************************************
-
 CORBA::Boolean
 TAO_DynCommon::seek (CORBA::Long slot)
 {
@@ -813,9 +807,6 @@ TAO_DynCommon::component_count ()
 
   return this->component_count_;
 }
-
-// ****************************************************************
-
 void
 TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
 {
@@ -939,9 +930,6 @@ TAO_DynCommon::get_abstract ()
       return retval._retn ();
     }
 }
-
-// ****************************************************************
-
 void
 TAO_DynCommon::insert_boolean_seq (const CORBA::BooleanSeq &value)
 {
@@ -1019,9 +1007,6 @@ TAO_DynCommon::insert_wchar_seq (const CORBA::WCharSeq &value)
 {
   TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::insert_value (value, this);
 }
-
-// ****************************************************************
-
 CORBA::BooleanSeq *
 TAO_DynCommon::get_boolean_seq ()
 {
@@ -1125,9 +1110,6 @@ TAO_DynCommon::get_wchar_seq ()
     TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::get_value (this);
   return new CORBA::WCharSeq (*owned);
 }
-
-// ****************************************************************
-
 void
 TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
                          CORBA::Boolean destroying)

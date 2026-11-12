@@ -112,9 +112,6 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
       first_type.in (),
       this->allow_truncation_ );
 }
-
-// ****************************************************************
-
 TAO_DynUnion_i *
 TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -274,9 +271,6 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
         }
     }
 }
-
-// ****************************************************************
-
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::get_discriminator ()
 {
@@ -601,9 +595,6 @@ TAO_DynUnion_i::member_kind ()
 
   return TAO_DynAnyFactory::unalias (tc.in ());
 }
-
-// ****************************************************************
-
 void
 TAO_DynUnion_i::from_any (CORBA::Any const& any)
 {
@@ -812,9 +803,6 @@ TAO_DynUnion_i::current_component ()
       return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
     }
 }
-
-// ****************************************************************
-
 CORBA::Boolean
 TAO_DynUnion_i::label_match (CORBA::Any const& my_any,
                              CORBA::Any const& other_any)

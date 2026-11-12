@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynAnyFactory.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNANYFACTORY_H
 #define TAO_DYNANYFACTORY_H
 #include /**/ "ace/pre.h"

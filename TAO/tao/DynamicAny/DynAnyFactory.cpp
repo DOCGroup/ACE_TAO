@@ -1,12 +1,8 @@
-//=============================================================================
 /**
  *  @file    DynAnyFactory.cpp
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/DynamicAny/DynAnyFactory.h"

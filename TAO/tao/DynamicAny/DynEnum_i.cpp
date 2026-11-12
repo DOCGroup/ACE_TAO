@@ -83,9 +83,6 @@ TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc)
 
   this->init_common ();
 }
-
-// ****************************************************************
-
 TAO_DynEnum_i *
 TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -96,9 +93,6 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynEnum_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 char *
 TAO_DynEnum_i::get_as_string ()
 {
@@ -160,9 +154,6 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
       throw DynamicAny::DynAny::InvalidValue ();
     }
 }
-
-// ****************************************************************
-
 void
 TAO_DynEnum_i::from_any (CORBA::Any const& any)
 {

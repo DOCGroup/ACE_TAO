@@ -158,9 +158,6 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
           this->allow_truncation_);
     }
 }
-
-// ****************************************************************
-
 TAO_DynStruct_i *
 TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -171,9 +168,6 @@ TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynStruct_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 DynamicAny::FieldName
 TAO_DynStruct_i::current_member_name ()
 {
@@ -414,9 +408,6 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 
   this->current_position_ = length ? 0 : -1;
 }
-
-// ****************************************************************
-
 void
 TAO_DynStruct_i::from_any (CORBA::Any const& any)
 {

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynValueBox_i.h
  *
  *  @author  simon dot massey at prismtech dot com
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNVALUEBOX_I_H
 #define TAO_DYNVALUEBOX_I_H
 #include /**/ "ace/pre.h"

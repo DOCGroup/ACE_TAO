@@ -164,9 +164,6 @@ TAO_DynArray_i::get_tc_length (CORBA::TypeCode_ptr tc)
 
   return tctmp->length ();
 }
-
-// ****************************************************************
-
 TAO_DynArray_i *
 TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -177,9 +174,6 @@ TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynArray_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 DynamicAny::AnySeq *
 TAO_DynArray_i::get_elements ()
 {
@@ -322,9 +316,6 @@ TAO_DynArray_i::set_elements_as_dyn_any (
         }
     }
 }
-
-// ****************************************************************
-
 void
 TAO_DynArray_i::from_any (const CORBA::Any& any)
 {

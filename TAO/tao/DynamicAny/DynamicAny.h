@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynamicAny.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNAMICANY_H
 #define TAO_DYNAMICANY_H
 #include /**/ "ace/pre.h"

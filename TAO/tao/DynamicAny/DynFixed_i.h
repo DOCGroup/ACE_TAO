@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynFixed_i.h
  *
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_DYNFIXED_I_H
 #define TAO_DYNFIXED_I_H
 #include /**/ "ace/pre.h"

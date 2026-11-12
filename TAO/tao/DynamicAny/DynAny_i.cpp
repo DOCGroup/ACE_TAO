@@ -196,9 +196,6 @@ TAO_DynAny_i::init (CORBA::Any const& any)
 
   this->any_ = any;
 }
-
-// ****************************************************************
-
 TAO_DynAny_i *
 TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -209,9 +206,6 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynAny_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 void
 TAO_DynAny_i::from_any (CORBA::Any const& any)
 {

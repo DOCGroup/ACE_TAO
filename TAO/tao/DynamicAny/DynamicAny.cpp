@@ -1,12 +1,8 @@
-//=============================================================================
 /**
  *  @file    DynamicAny.cpp
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 

@@ -116,9 +116,6 @@ TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc)
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 }
-
-// ****************************************************************
-
 TAO_DynSequence_i *
 TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -129,9 +126,6 @@ TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynSequence_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 CORBA::TypeCode_ptr
 TAO_DynSequence_i::get_element_type ()
 {
@@ -453,9 +447,6 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   // Now we can update component_count_.
   this->component_count_ = length;
 }
-
-// ****************************************************************
-
 void
 TAO_DynSequence_i::from_any (CORBA::Any const& any)
 {

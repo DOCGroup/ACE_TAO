@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynValue_i.h
  *
  *  @author simon dot massey at prismtech dot com
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNVALUE_I_H
 #define TAO_DYNVALUE_I_H
 #include /**/ "ace/pre.h"
