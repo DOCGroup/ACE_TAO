@@ -68,7 +68,7 @@ Sender::parse_args (int argc,
           this->options_.frame_rate = static_cast<double> (ACE_OS::atoi (opts.opt_arg ()));
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         case 'b':
           this->options_.buffer_size = ACE_OS::atoi (opts.opt_arg ());

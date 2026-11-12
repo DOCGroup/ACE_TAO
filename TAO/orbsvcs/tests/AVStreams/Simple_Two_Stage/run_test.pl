@@ -10,8 +10,9 @@ use File::Compare;
 
 $status = 0;
 $debug = 0;
-$local_address = "";
-$peer_address = "";
+$protocols[0] = "UDP";
+$local_address = "127.0.0.1:8000";
+$peer_address = "127.0.0.1:8050";
 
 my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $sv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";

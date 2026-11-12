@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_SIMPLE_TWO_STAGE_SENDER_H
+#define TAO_AVSTREAMS_SIMPLE_TWO_STAGE_SENDER_H
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -132,3 +134,5 @@ private:
   /// Protocol object borrowed from the AVStreams endpoint strategy.
   TAO_AV_Protocol_Object *protocol_object_ {};
 };
+
+#endif /* TAO_AVSTREAMS_SIMPLE_TWO_STAGE_SENDER_H */
