@@ -97,7 +97,7 @@ TAO_IOR_Manipulation_impl::add_profiles (
 {
   // Get an estimate of the number of profiles
   CORBA::Object_ptr buffer [2] {ior1, ior2};
-  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2, 2, buffer, 0);
+  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2, 2, buffer, false);
   return this->merge_iors (iors);
 }
 
