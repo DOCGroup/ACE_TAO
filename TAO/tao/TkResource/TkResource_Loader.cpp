@@ -15,7 +15,7 @@ namespace TAO
       new (std::nothrow) TkResource_Factory ()
     };
 
-    if (!factory)
+    if (factory == nullptr)
       {
         errno = ENOMEM;
         return;
