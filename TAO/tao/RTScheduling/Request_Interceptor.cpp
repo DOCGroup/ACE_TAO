@@ -58,7 +58,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
                         TAO_RTScheduler_Current::guid_counter.load ()));
 
           // Create new DT.
-          RTScheduling::DistributableThread_var dt =
+          RTScheduling::DistributableThread_var const dt =
             TAO_DistributableThread_Factory::create_DT ();
 
           // Add new DT to map.
@@ -76,7 +76,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           // the new <sched_param> is the current
           // <implicit_sched_param> and there is no
           // segment name.
-          CORBA::Policy_var implicit_sched_param =
+          CORBA::Policy_var const implicit_sched_param =
             current->implicit_scheduling_parameter ();
           ACE_NEW (new_current,
                    TAO_RTScheduler_Current_i (current->orb (),
@@ -95,7 +95,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
       // Scheduler populates the service context with
       // scheduling parameters.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_request (ri);
 
       // If this is a one way request
@@ -126,7 +126,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_poll (ri);
     }
 }
@@ -147,7 +147,7 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->receive_reply (ri);
     }
 }
@@ -176,7 +176,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
         }
 
       CORBA::Any_var ex = ri->received_exception ();
-      CORBA::TypeCode_var type = ex->type ();
+      CORBA::TypeCode_var const type = ex->type ();
 
       if (CORBA::is_nil (type.in ()))
         {
@@ -204,7 +204,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
         {
           // Inform scheduler that exception was
           // received.
-          RTScheduling::Scheduler_var scheduler = current->scheduler ();
+          RTScheduling::Scheduler_var const scheduler = current->scheduler ();
           scheduler->receive_exception (ri);
         }
     }
@@ -226,7 +226,7 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->receive_other (ri);
     }
 }
@@ -308,7 +308,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Scheduler retrieves scheduling parameters
   // from request and populates the out
   // parameters.
-  RTScheduling::Scheduler_var scheduler = new_current->scheduler();
+  RTScheduling::Scheduler_var const scheduler = new_current->scheduler();
   scheduler->receive_request (ri,
                               guid_var.out (),
                               name.out (),
@@ -339,7 +339,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                 id));
 
   // Create new DT.
-  RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
+  RTScheduling::DistributableThread_var const dt = TAO_DistributableThread_Factory::create_DT ();
 
   // Add new DT to map.
   int const result = new_current->dt_hash ()->bind (guid, dt);
@@ -384,7 +384,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::DistributableThread_var dt = current->DT ();
+      RTScheduling::DistributableThread_var const dt = current->DT ();
       if (dt->state () == RTScheduling::DistributableThread::CANCELLED)
         {
           current->cancel_thread ();
@@ -395,7 +395,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                        "Thread Not Cancelled\n"));
 
       // Inform scheduler that upcall is complete.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_reply (ri);
 
       current->cleanup_DT ();
@@ -431,7 +431,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
   if (current != nullptr)
     {
       // Inform scheduler that upcall is complete.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_exception (ri);
 
       current->cleanup_DT ();
@@ -456,7 +456,7 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
   if (current != nullptr)
     {
       // Inform scheduler that upcall is complete.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_other (ri);
 
       current->cleanup_DT ();
