@@ -35,7 +35,6 @@ TAO_BidirectionalPolicy::policy_type ()
   return BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE;
 }
 
-
 TAO_BidirectionalPolicy *
 TAO_BidirectionalPolicy::clone () const
 {
@@ -69,7 +68,6 @@ TAO_BidirectionalPolicy::value ()
 {
   return this->value_;
 }
-
 
 TAO_Cached_Policy_Type
 TAO_BidirectionalPolicy::_tao_cached_type () const

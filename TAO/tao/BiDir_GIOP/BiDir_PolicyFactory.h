@@ -53,7 +53,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_BIDIR_POLICY_FACTORY_H */
