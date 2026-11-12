@@ -23,23 +23,26 @@
 class Foo_Impl : public virtual POA_foo
 {
 public:
+  Foo_Impl () = default;
+  Foo_Impl (Foo_Impl const &) = delete;
+  Foo_Impl (Foo_Impl &&) = delete;
+  Foo_Impl &operator= (Foo_Impl const &) = delete;
+  Foo_Impl &operator= (Foo_Impl &&) = delete;
+
   CORBA::Boolean match_references () override;
 
-  CORBA::String_var ior_from_main_;
-  ACE_Equal_To<const char*> equal_func;
-  ACE_Hash<const char*> hash_func;
+  CORBA::String_var ior_from_main_ {};
+  ACE_Equal_To<char const *> equal_func {};
 };
 
 CORBA::Boolean
 Foo_Impl::match_references ()
 {
-  CORBA::Object_var o = _this ();
-  CORBA::ORB_var orb = o->_get_orb ();
-  CORBA::String_var ior_from_upcall = orb->object_to_string (o.in());
+  CORBA::Object_var o (_this ());
+  CORBA::ORB_var orb (o->_get_orb ());
+  CORBA::String_var ior_from_upcall (orb->object_to_string (o.in ()));
 
-  CORBA::Boolean r1 = equal_func (this->ior_from_main_.in(), ior_from_upcall.in());
-
-  return r1;
+  return this->equal_func (this->ior_from_main_.in (), ior_from_upcall.in ());
 }
 
 class Server_Task : public ACE_Task_Base
@@ -49,8 +52,6 @@ public:
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
-  ~Server_Task () override = default;
-
   int svc () override;
 
   Server_Task (Server_Task const &) = delete;
@@ -70,47 +71,45 @@ Server_Task::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var s_orb;
+  CORBA::ORB_var s_orb {};
   try
     {
       s_orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var o = s_orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var rootpoa = PortableServer::POA::_narrow (o.in());
-      if (CORBA::is_nil (rootpoa.in()))
+      CORBA::Object_var o (s_orb->resolve_initial_references ("RootPOA"));
+      PortableServer::POA_var rootpoa (PortableServer::POA::_narrow (o.in ()));
+      if (CORBA::is_nil (rootpoa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t): failed to get root poa\n"), 1);
 
-      PortableServer::POAManager_var poamgr = rootpoa->the_POAManager();
+      PortableServer::POAManager_var poamgr (rootpoa->the_POAManager ());
 
-      Foo_Impl* foo = nullptr;
+      Foo_Impl *foo {};
       ACE_NEW_RETURN (foo, Foo_Impl, 1);
       PortableServer::ServantBase_var owner_transfer (foo);
-      PortableServer::ObjectId_var id = rootpoa->activate_object (foo);
-      o = rootpoa->id_to_reference (id.in());
+      PortableServer::ObjectId_var id (rootpoa->activate_object (foo));
+      o = rootpoa->id_to_reference (id.in ());
 
-      Foo_Impl* foo2 = nullptr;
+      Foo_Impl *foo2 {};
       ACE_NEW_RETURN (foo2, Foo_Impl, 1);
       PortableServer::ServantBase_var foo_owner (foo2);
-      foo_var f2 = foo2->_this (); // implicit activation
+      foo_var f2 (foo2->_this ()); // implicit activation
 
       poamgr->activate ();
 
-      foo->ior_from_main_ = s_orb->object_to_string (o.in());
+      foo->ior_from_main_ = s_orb->object_to_string (o.in ());
       foo2->ior_from_main_ = foo->ior_from_main_;
 
-      Server_Task server (s_orb.in());
+      Server_Task server (s_orb.in ());
       server.activate (1); // activate one thread running the task
 
-      foo_var f = foo::_narrow (o.in());  // ignore the possibility that
-                                          // it's not a 'foo' since we
-                                          // created it above
+      foo_var f (foo::_narrow (o.in ()));
 
-      constexpr int iterations = 10;
+      constexpr int iterations {10};
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: next %d iterations should match\n",
                   iterations));
-      for (int i = 0; i < iterations; ++i)
+      for (int i {}; i < iterations; ++i)
         {
           CORBA::Boolean const b = f->match_references ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
@@ -120,15 +119,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) client: next %d iterations should NOT match\n",
                   iterations));
-      for (int i = 0; i < iterations; ++i)
+      for (int i {}; i < iterations; ++i)
         {
           CORBA::Boolean const b = f2->match_references ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
                       i, b));
         }
+
+      s_orb->shutdown (true);
+      server.wait ();
     }
   catch (...)
     {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t): unexpected exception\n"), 1);
     }
 
   return 0;
