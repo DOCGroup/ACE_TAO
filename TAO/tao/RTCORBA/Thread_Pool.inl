@@ -128,17 +128,17 @@ TAO_Thread_Pool::max_request_buffer_size () const
 }
 
 ACE_INLINE
-TAO_Thread_Lane **
-TAO_Thread_Pool::lanes ()
+TAO_Thread_Lanes const &
+TAO_Thread_Pool::lanes () const
 {
-  return this->lanes_.get ();
+  return this->lanes_;
 }
 
 ACE_INLINE
 CORBA::ULong
 TAO_Thread_Pool::number_of_lanes () const
 {
-  return this->number_of_lanes_;
+  return static_cast<CORBA::ULong> (this->lanes_.size ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

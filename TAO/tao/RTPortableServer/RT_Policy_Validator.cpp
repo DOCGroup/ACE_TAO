@@ -14,6 +14,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Transport_Acceptor.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -85,15 +86,10 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
 
       if (this->thread_pool_)
         {
-          TAO_Thread_Lane **lanes =
-            this->thread_pool_->lanes ();
-
-          for (CORBA::ULong i {};
-               i != this->thread_pool_->number_of_lanes ();
-               ++i)
+          for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
             {
               TAO_Thread_Lane_Resources &resources =
-                lanes[i]->resources ();
+                lane->resources ();
 
               TAO_Acceptor_Registry &acceptor_registry =
                 resources.acceptor_registry ();
@@ -260,24 +256,22 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // If this POA is using a thread pool with lanes, make sure we
       // have at least one thread lane that corresponds to these
       // each band.
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
-
       for (CORBA::ULong band {};
            band < bands.length ();
            ++band)
         {
           bool match {};
-          for (CORBA::ULong lane {};
-               lane != this->thread_pool_->number_of_lanes () && !match;
-               ++lane)
+          for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
             {
               CORBA::Short const lane_priority =
-                lanes[lane]->lane_priority ();
+                lane->lane_priority ();
 
               if (lane_priority <= bands[band].high &&
                   lane_priority >= bands[band].low)
-                match = true;
+                {
+                  match = true;
+                  break;
+                }
             }
           if (!match)
             throw PortableServer::POA::InvalidPolicy ();
@@ -303,20 +297,18 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // If this POA is using a thread pool with lanes, make sure we
       // have at least one thread lane that can provide service for
       // the specified SERVER_DECLARED priority.
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
-
       bool match {};
-      for (CORBA::ULong lane {};
-           lane != this->thread_pool_->number_of_lanes () && !match;
-           ++lane)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
           CORBA::Short const lane_priority =
-            lanes[lane]->lane_priority ();
+            lane->lane_priority ();
 
           if (lane_priority <= priority &&
               lane_priority >= priority)
-            match = true;
+            {
+              match = true;
+              break;
+            }
         }
       if (!match)
         throw PortableServer::POA::InvalidPolicy ();
@@ -401,15 +393,10 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
 
   if (thread_pool)
     {
-      TAO_Thread_Lane **lanes =
-        thread_pool->lanes ();
-
-      for (CORBA::ULong i {};
-           i != thread_pool->number_of_lanes ();
-           ++i)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : thread_pool->lanes ())
         {
           TAO_Thread_Lane_Resources &resources =
-            lanes[i]->resources ();
+            lane->resources ();
 
           TAO_Acceptor_Registry &acceptor_registry =
             resources.acceptor_registry ();

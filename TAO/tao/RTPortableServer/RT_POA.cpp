@@ -127,13 +127,9 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
   // when the POA was created, the bands had to match the lanes.
   if (this->thread_pool_ != nullptr && this->thread_pool_->with_lanes ())
     {
-      TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
-
-      for (CORBA::ULong i {};
-           i != this->thread_pool_->number_of_lanes ();
-           ++i)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
-          if (lanes[i]->lane_priority () == priority)
+          if (lane->lane_priority () == priority)
             return;
         }
 
@@ -247,9 +243,8 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
         }
       else
         {
-          TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
-
-          TAO_Thread_Lane_Resources &resources = lanes[0]->resources ();
+          TAO_Thread_Lane_Resources &resources =
+            this->thread_pool_->lanes ().front ()->resources ();
 
           acceptor_registry = &resources.acceptor_registry ();
         }
@@ -268,19 +263,14 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
   if (this->cached_policies_.priority_model () ==
       TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
-
-      for (CORBA::ULong i {};
-           i != this->thread_pool_->number_of_lanes ();
-           ++i)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
-          if (lanes[i]->lane_priority () == priority)
+          if (lane->lane_priority () == priority)
             return this->TAO_Regular_POA::create_stub_object (object_key,
                                                       type_id,
                                                       client_exposed_policies._retn (),
                                                       &filter,
-                                                      lanes[i]->resources ().acceptor_registry ());
+                                                      lane->resources ().acceptor_registry ());
         }
 
       ACE_ASSERT (false);
@@ -330,27 +320,23 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
   if (result == -1)
     error = true;
 
-  TAO_Thread_Lane **lanes =
-    this->thread_pool_->lanes ();
-
   // Leave it to the filter to decide which acceptors/in which order
   // go into the mprofile.
-  for (CORBA::ULong i {};
-       i != this->thread_pool_->number_of_lanes () &&
-         !error;
-       ++i)
+  for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
     {
-      if (this->lane_required (lanes[i],
-                               priority_bands))
+      if (error)
+        break;
+
+      if (this->lane_required (lane.get (), priority_bands))
         {
           TAO_Acceptor_Registry &acceptor_registry =
-            lanes[i]->resources ().acceptor_registry ();
+            lane->resources ().acceptor_registry ();
 
           result =
             filter->fill_profile (object_key,
                                   mprofile,
                                   acceptor_registry.acceptors (),
-                                  lanes[i]->lane_priority ());
+                                  lane->lane_priority ());
           if (result == -1)
             error = true;
         }
@@ -387,14 +373,9 @@ TAO_RT_POA::endpoint_count ()
 {
   size_t profile_count {};
 
-  TAO_Thread_Lane **lanes =
-    this->thread_pool_->lanes ();
-
-  for (CORBA::ULong i {};
-       i != this->thread_pool_->number_of_lanes ();
-       ++i)
+  for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
     profile_count +=
-      lanes[i]->resources ().acceptor_registry ().endpoint_count ();
+      lane->resources ().acceptor_registry ().endpoint_count ();
 
   return profile_count;
 }
