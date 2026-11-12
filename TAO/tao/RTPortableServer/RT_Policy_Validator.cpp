@@ -69,10 +69,10 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
         }
     }
 
-  RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
+  RTCORBA::ServerProtocolPolicy_var const server_protocol_policy =
     RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ());
 
-  TAO_ServerProtocolPolicy *server_protocol =
+  TAO_ServerProtocolPolicy * const server_protocol =
     dynamic_cast <TAO_ServerProtocolPolicy *>
                       (server_protocol_policy.in ());
 
@@ -91,7 +91,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
               TAO_Thread_Lane_Resources &resources =
                 lane->resources ();
 
-              TAO_Acceptor_Registry &acceptor_registry =
+              TAO_Acceptor_Registry const &acceptor_registry =
                 resources.acceptor_registry ();
 
               for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
@@ -112,7 +112,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
           TAO_Thread_Lane_Resources &resources =
             thread_lane_resources_manager.default_lane_resources ();
 
-          TAO_Acceptor_Registry &acceptor_registry =
+          TAO_Acceptor_Registry const &acceptor_registry =
             resources.acceptor_registry ();
 
           for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
@@ -142,7 +142,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
-  RTCORBA::PriorityModelPolicy_var priority_model =
+  RTCORBA::PriorityModelPolicy_var const priority_model =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
   if (!CORBA::is_nil (priority_model.in ()))
@@ -176,10 +176,10 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
   policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
-  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+  RTCORBA::PriorityBandedConnectionPolicy_var const priority_bands
     = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ());
 
-  TAO_PriorityBandedConnectionPolicy *bands_policy =
+  TAO_PriorityBandedConnectionPolicy * const bands_policy =
     dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
 
   // If priority banded connections are set, make sure that:
@@ -476,21 +476,21 @@ TAO_Thread_Pool *
 TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
                                                   TAO_Policy_Set &policies)
 {
-  CORBA::Policy_var policy =
+  CORBA::Policy_var const policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
-  RTCORBA::ThreadpoolPolicy_var thread_pool_policy =
+  RTCORBA::ThreadpoolPolicy_var const thread_pool_policy =
     RTCORBA::ThreadpoolPolicy::_narrow (policy.in ());
 
   if (CORBA::is_nil (thread_pool_policy.in ()))
     return nullptr;
 
-  RTCORBA::ThreadpoolId thread_pool_id = thread_pool_policy->threadpool ();
+  RTCORBA::ThreadpoolId const thread_pool_id = thread_pool_policy->threadpool ();
 
   // Get the RTORB.
-  CORBA::Object_var object = orb_core.resolve_rt_orb ();
+  CORBA::Object_var const object = orb_core.resolve_rt_orb ();
 
-  RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+  RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
 
   TAO_RT_ORB * const tao_rt_orb =
     dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());

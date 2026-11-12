@@ -81,21 +81,21 @@ void
 TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies)
 {
   {
-    CORBA::Policy_var policy =
+    CORBA::Policy_var const policy =
       policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
-    RTCORBA::PriorityModelPolicy_var priority_model =
+    RTCORBA::PriorityModelPolicy_var const priority_model =
       RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
     if (!CORBA::is_nil (priority_model.in ()))
       {
-        RTCORBA::PriorityModel rt_priority_model =
+        RTCORBA::PriorityModel const rt_priority_model =
           priority_model->priority_model ();
 
         this->cached_policies_.priority_model (
           TAO::Portable_Server::Cached_Policies::PriorityModel (rt_priority_model));
 
-        RTCORBA::Priority priority =
+        RTCORBA::Priority const priority =
           priority_model->server_priority ();
 
         this->cached_policies_.server_priority (priority);
@@ -139,14 +139,14 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
     // Else we are dealing with a thread pool without lanes.
     {
       // Check if we have bands.
-      CORBA::Policy_var bands =
+      CORBA::Policy_var const bands =
         this->policies ().get_cached_policy (
           TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
-      RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+      RTCORBA::PriorityBandedConnectionPolicy_var const priority_bands
         = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ());
 
-      TAO_PriorityBandedConnectionPolicy *priority_bands_i =
+      TAO_PriorityBandedConnectionPolicy * const priority_bands_i =
         dynamic_cast <TAO_PriorityBandedConnectionPolicy *>
                           (priority_bands.in ());
 
@@ -211,13 +211,13 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
     this->client_exposed_policies (priority);
 
   // Server protocol policy.
-  CORBA::Policy_var protocol =
+  CORBA::Policy_var const protocol =
     this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
-  RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
+  RTCORBA::ServerProtocolPolicy_var const server_protocol_policy =
     RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ());
 
-  TAO_ServerProtocolPolicy *server_protocol =
+  TAO_ServerProtocolPolicy * const server_protocol =
     dynamic_cast <TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
 
   // Filter for server protocol.
@@ -279,14 +279,14 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
   // If this POA has the CLIENT_PROPAGATED policy, create the IOR with
   // the acceptors in the thread lanes that matches the bands in this
   // POA.  If there are no bands, all the thread lanes are used.
-  CORBA::Policy_var bands =
+  CORBA::Policy_var const bands =
     this->policies ().get_cached_policy (
       TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
-  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+  RTCORBA::PriorityBandedConnectionPolicy_var const priority_bands
     = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ());
 
-  TAO_PriorityBandedConnectionPolicy *priority_bands_i =
+  TAO_PriorityBandedConnectionPolicy * const priority_bands_i =
     dynamic_cast <TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
 
   return this->create_stub_object (object_key,
@@ -329,7 +329,7 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
 
       if (this->lane_required (lane.get (), priority_bands))
         {
-          TAO_Acceptor_Registry &acceptor_registry =
+          TAO_Acceptor_Registry const &acceptor_registry =
             lane->resources ().acceptor_registry ();
 
           result =
@@ -418,12 +418,12 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 
   // Check if the priority model policy has been set, and if so, let
   // the client know about it.
-  CORBA::Short poa_priority =
+  CORBA::Short const poa_priority =
     this->cached_policies_.server_priority ();
 
   if (poa_priority != TAO_INVALID_PRIORITY)
     {
-      TAO::Portable_Server::Cached_Policies::PriorityModel priority_model =
+      TAO::Portable_Server::Cached_Policies::PriorityModel const priority_model =
         this->cached_policies_.priority_model ();
 
       // If the priority model is client propagated, let the client
@@ -440,7 +440,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
         client_exposed_policies->length ();
       client_exposed_policies->length (current_length + 1);
 
-      TAO_PriorityModelPolicy *priority_model_policy;
+      TAO_PriorityModelPolicy *priority_model_policy {};
       ACE_NEW_THROW_EX (priority_model_policy,
                         TAO_PriorityModelPolicy (RTCORBA::PriorityModel (priority_model),
                                                  priority),

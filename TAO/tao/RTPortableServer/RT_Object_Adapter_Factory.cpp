@@ -7,6 +7,7 @@
 #include "tao/RTPortableServer/RT_Servant_Dispatcher.h"
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 #include "tao/RTPortableServer/RT_Collocation_Resolver.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,28 +22,33 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
           ace_svc_desc_TAO_RT_Collocation_Resolver);
     }
 
-  TAO_Object_Adapter *object_adapter {};
-  ACE_NEW_RETURN (object_adapter,
+  TAO_Object_Adapter *object_adapter_raw {};
+  ACE_NEW_RETURN (object_adapter_raw,
                   TAO_Object_Adapter (orb_core->server_factory ()->
                                         active_object_map_creation_parameters (),
                                       *orb_core),
                   nullptr);
+  std::unique_ptr<TAO_Object_Adapter> object_adapter (object_adapter_raw);
 
   // Create and register the RT servant dispatcher.
-  TAO_RT_Servant_Dispatcher *rt_servant_dispatcher {};
-  ACE_NEW_RETURN (rt_servant_dispatcher,
+  TAO_RT_Servant_Dispatcher *rt_servant_dispatcher_raw {};
+  ACE_NEW_RETURN (rt_servant_dispatcher_raw,
                   TAO_RT_Servant_Dispatcher,
                   nullptr);
-  object_adapter->servant_dispatcher (rt_servant_dispatcher);
+  std::unique_ptr<TAO_RT_Servant_Dispatcher> rt_servant_dispatcher (rt_servant_dispatcher_raw);
+  object_adapter->servant_dispatcher (rt_servant_dispatcher.get ());
+  rt_servant_dispatcher.release ();
 
   // Create and add the RT policy validator.
-  TAO_POA_RT_Policy_Validator *rt_validator {};
-  ACE_NEW_RETURN (rt_validator,
+  TAO_POA_RT_Policy_Validator *rt_validator_raw {};
+  ACE_NEW_RETURN (rt_validator_raw,
                   TAO_POA_RT_Policy_Validator (*orb_core),
                   nullptr);
-  object_adapter->validator ().add_validator (rt_validator);
+  std::unique_ptr<TAO_POA_RT_Policy_Validator> rt_validator (rt_validator_raw);
+  object_adapter->validator ().add_validator (rt_validator.get ());
+  rt_validator.release ();
 
-  return object_adapter;
+  return object_adapter.release ();
 }
 
 ACE_FACTORY_DEFINE (TAO_RTPortableServer, TAO_RT_Object_Adapter_Factory)

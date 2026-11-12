@@ -44,7 +44,7 @@ TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
   // Encode endpoints.
   for (CORBA::ULong i {}; i < mprofile.profile_count (); ++i)
     {
-      TAO_Profile *profile = mprofile.get_profile (i);
+      TAO_Profile * const profile = mprofile.get_profile (i);
       if (profile->encode_endpoints () == -1)
         return -1;
     }
