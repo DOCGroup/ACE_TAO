@@ -19,15 +19,16 @@
 #include "ace/Arg_Shifter.h"
 
 #include <memory>
+#include <vector>
 
 class Activity;
 class Periodic_Task;
 class Job_i;
 class POA_Holder;
 
-using POA_LIST = POA_Holder **;
-using TASK_LIST = Periodic_Task **;
-using JOB_LIST = Job_i **;
+using POA_LIST = std::vector<std::unique_ptr<POA_Holder>>;
+using TASK_LIST = std::vector<std::unique_ptr<Periodic_Task>>;
+using JOB_LIST = std::vector<Job_i *>;
 
 /**
  * @class Builder
@@ -38,7 +39,7 @@ class Builder : public ACE_Service_Object
 {
  public:
   Builder ();
-  ~Builder () override = default;
+  ~Builder () override;
 
   Builder (Builder const &) = delete;
   Builder (Builder &&) = delete;
@@ -50,28 +51,28 @@ class Builder : public ACE_Service_Object
   int fini () override;
 
   /// = List access
-  int poa_list (POA_LIST& poa_list) const;
-  int task_list (TASK_LIST& task_list) const;
-  int job_list (JOB_LIST& job_list) const;
+  POA_LIST const &poa_list () const;
+  TASK_LIST const &task_list () const;
+  JOB_LIST const &job_list () const;
 
  protected:
   /// Number of POA's declared
   int poa_count_;
 
-  /// Owns the array storage; fini() deletes the POA_Holder objects in its slots.
-  std::unique_ptr<POA_Holder *[]> poa_list_;
+  /// Owns the POA_Holder objects.
+  POA_LIST poa_list_;
 
   /// Number of Tasks's declared
   int task_count_;
 
-  /// Owns the array storage and task objects; Activity borrows the raw view.
-  std::unique_ptr<Periodic_Task *[]> task_list_;
+  /// Owns the task objects.
+  TASK_LIST task_list_;
 
   /// Number of Jobs's declared
   int job_count_;
 
-  /// Owns only the array storage; servants are activated and owned by their POAs.
-  std::unique_ptr<Job_i *[]> job_list_;
+  /// Borrowed job pointers; servants are activated and owned by their POAs.
+  JOB_LIST job_list_;
 };
 
 ACE_STATIC_SVC_DECLARE (Builder)

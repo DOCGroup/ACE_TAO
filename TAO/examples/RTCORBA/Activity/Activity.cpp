@@ -115,26 +115,15 @@ Activity::resolve_naming_service ()
 void
 Activity::activate_poa_list ()
 {
-  POA_LIST list;
-  int count = builder_->poa_list (list);
-
-  for (int i = 0; i < count; ++i)
-    {
-      list[i]->activate (this->rt_orb_.in(), this->root_poa_.in ());
-    }
+  for (std::unique_ptr<POA_Holder> const &poa : this->builder_->poa_list ())
+    poa->activate (this->rt_orb_.in (), this->root_poa_.in ());
 }
 
 void
 Activity::activate_job_list ()
 {
-  JOB_LIST list;
-  int count = builder_->job_list (list);
-  Job_i* job;
-
-  for (int i = 0; i < count; ++i)
+  for (Job_i * const job : this->builder_->job_list ())
     {
-      job = list[i];
-
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
 
@@ -174,8 +163,8 @@ Activity::activate_job_list ()
 void
 Activity::activate_schedule ()
 {
-  TASK_LIST list;
-  int count = builder_->task_list (list);
+  TASK_LIST const &task_list = this->builder_->task_list ();
+  int const count = static_cast<int> (task_list.size ());
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Activating schedule, task count = %d\n",
@@ -185,11 +174,9 @@ Activity::activate_schedule ()
   ACE_NEW (barrier, ACE_Barrier (count + 1));
   barrier_.reset (barrier);
 
-  Periodic_Task* task;
-
-  for (int i = 0; i < count; ++i)
+  for (std::unique_ptr<Periodic_Task> const &task_pointer : task_list)
     {
-      task = list[i];
+      Periodic_Task * const task = task_pointer.get ();
 
       // resolve the object from the naming service
       CosNaming::Name name (1);
@@ -273,15 +260,14 @@ Activity::check_ifexit ()
       ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
       // ask all tasks to dump stats.
 
-      TASK_LIST task_list;
-      int count = builder_->task_list (task_list);
+      TASK_LIST const &task_list = this->builder_->task_list ();
 
       ACE_TCHAR msg[BUFSIZ];
       ACE_OS::sprintf (msg, ACE_TEXT("# Stats generated on --\n"));
 
-      for (int i = 0; i < count; ++i)
+      for (std::unique_ptr<Periodic_Task> const &task : task_list)
         {
-          task_list[i]->dump_stats (msg);
+          task->dump_stats (msg);
         }
 
       // shutdown the ORB
