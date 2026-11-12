@@ -15,7 +15,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
-TAO_CodecFactory_Loader::create_object (CORBA::ORB_ptr orb,  int, ACE_TCHAR *[])
+TAO_CodecFactory_Loader::create_object (CORBA::ORB_ptr orb, int, ACE_TCHAR *[])
 {
   CORBA::Object_ptr obj {};
   ACE_NEW_RETURN (obj,

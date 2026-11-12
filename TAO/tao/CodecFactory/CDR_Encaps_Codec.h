@@ -69,6 +69,11 @@ public:
   CORBA::Any * decode_value (CORBA::OctetSeq const& data,
                              CORBA::TypeCode_ptr tc) override;
 
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const &) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const &) = delete;
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec &&) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec &&) = delete;
+
 protected:
   /**
    * Only allow this class to be instantiated on the heap since it is
@@ -86,26 +91,19 @@ protected:
   void check_type_for_encoding (CORBA::Any const& data);
 
 private:
-  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const &) = delete;
-  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const &) = delete;
-  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec &&) = delete;
-  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec &&) = delete;
-
-private:
   /// The major GIOP version associated with this Codec.
   CORBA::Octet const major_;
 
   /// The minor GIOP version associated with this Codec.
   CORBA::Octet const minor_;
 
-  /// The ORB Core to be used when decoding values from a CDR
-  /// encapsulation.
+  /// Borrowed ORB Core used when decoding values from a CDR encapsulation.
   TAO_ORB_Core * const orb_core_;
 
-  /// Char codeset translator
+  /// Borrowed char codeset translator; owned by the ORB codeset manager.
   TAO_Codeset_Translator_Base * const char_translator_;
 
-  /// WChar codeset translator
+  /// Borrowed wchar codeset translator; owned by the ORB codeset manager.
   TAO_Codeset_Translator_Base * const wchar_translator_;
 };
 

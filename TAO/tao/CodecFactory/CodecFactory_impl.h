@@ -53,18 +53,18 @@ public:
   /// Create a Coder/Decoder for the given type of encoding and codesets.
   IOP::Codec_ptr create_codec_with_codesets (IOP::Encoding_1_2 const& enc) override;
 
-private:
   TAO_CodecFactory (TAO_CodecFactory const &) = delete;
   TAO_CodecFactory &operator= (TAO_CodecFactory const &) = delete;
   TAO_CodecFactory (TAO_CodecFactory &&) = delete;
   TAO_CodecFactory &operator= (TAO_CodecFactory &&) = delete;
 
+private:
   IOP::Codec_ptr create_codec_i (CORBA::Octet major,
                                  CORBA::Octet minor,
                                  IOP::EncodingFormat encoding_format,
                                  TAO_Codeset_Translator_Base * char_trans,
                                  TAO_Codeset_Translator_Base * wchar_trans);
-  /// Pointer to the ORB Core.
+  /// Borrowed ORB Core used by codecs created through this factory.
   /**
    * Some Codec implementations may need access to the ORB Core with
    * which they are associated.

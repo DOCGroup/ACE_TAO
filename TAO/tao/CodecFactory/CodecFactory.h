@@ -32,6 +32,8 @@ class TAO_CODECFACTORY_Export TAO_CodecFactory_Loader
   : public TAO_Object_Loader
 {
 public:
+  TAO_CodecFactory_Loader () = default;
+
   /// Creates a Codec factory and returns it.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
@@ -39,6 +41,11 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
+
+  TAO_CodecFactory_Loader (TAO_CodecFactory_Loader const &) = delete;
+  TAO_CodecFactory_Loader &operator= (TAO_CodecFactory_Loader const &) = delete;
+  TAO_CodecFactory_Loader (TAO_CodecFactory_Loader &&) = delete;
+  TAO_CodecFactory_Loader &operator= (TAO_CodecFactory_Loader &&) = delete;
 };
 
 static int
