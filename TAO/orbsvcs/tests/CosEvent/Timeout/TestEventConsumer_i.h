@@ -26,7 +26,7 @@ public:
 
     CORBA::ORB_var orb_;
 
-    int svc ();
+    int svc () override;
   };
 
 private:

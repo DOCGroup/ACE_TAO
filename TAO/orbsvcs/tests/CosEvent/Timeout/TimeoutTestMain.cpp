@@ -29,7 +29,7 @@ struct SupplierTask : ACE_Task_Base
   CosEventChannelAdmin::ProxyPushConsumer_var consumer_;
   CORBA::ORB_var orb_;
 
-  int svc()
+  int svc () override
   {
     // Create an event (just a string in this case).
     CORBA::String_var eventData = forty_bytes;
