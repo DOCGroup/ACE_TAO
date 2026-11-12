@@ -11,6 +11,10 @@ class JAWS_HTTP_10_Request : public HTTP_Request, public HTTP_HCodes
 public:
   JAWS_HTTP_10_Request () = default;
   ~JAWS_HTTP_10_Request () override = default;
+  JAWS_HTTP_10_Request (JAWS_HTTP_10_Request const &) = delete;
+  JAWS_HTTP_10_Request (JAWS_HTTP_10_Request &&) = delete;
+  JAWS_HTTP_10_Request &operator= (JAWS_HTTP_10_Request const &) = delete;
+  JAWS_HTTP_10_Request &operator= (JAWS_HTTP_10_Request &&) = delete;
 
   int type () const;
   const char * method () const;
