@@ -43,6 +43,8 @@ namespace TAO
     : public Invocation_Adapter
   {
   public:
+    AbstractBase_Invocation_Adapter () = delete;
+
     AbstractBase_Invocation_Adapter (
         CORBA::AbstractBase_ptr target,
         Argument **args,
