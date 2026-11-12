@@ -34,7 +34,6 @@
 #include "ace/Null_Mutex.h"
 #include <vector>
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -19,7 +19,6 @@
 
 #include "tao/Invocation_Adapter.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
