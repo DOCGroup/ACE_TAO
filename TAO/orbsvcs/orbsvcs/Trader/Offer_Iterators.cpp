@@ -198,10 +198,9 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
                                CosTrading::OfferIdSeq_out _ids)
 {
   // Calculate the number of Ids to be returned.
-  CORBA::ULong items_left = static_cast<CORBA::ULong> (this->ids_.size());
-  int difference = items_left - n;
-  CORBA::ULong returnable_items = (difference >= 0) ? n : items_left;
-  CORBA::Boolean const return_value = static_cast<CORBA::Boolean> (difference > 0);
+  CORBA::ULong const items_left = static_cast<CORBA::ULong> (this->ids_.size());
+  CORBA::ULong const returnable_items = (items_left >= n) ? n : items_left;
+  CORBA::Boolean const return_value = items_left > n;
 
   // Allocate result sequence.
   ACE_NEW_RETURN (_ids,

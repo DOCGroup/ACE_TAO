@@ -446,7 +446,7 @@ construct_dynamic_prop (const char* name,
 
   ACE_NEW_RETURN (dp_struct,
                   CosTradingDynamic::DynamicProp,
-                  0);
+                  nullptr);
 
   if (this->prop_.in () == CosTradingDynamic::DynamicPropEval::_nil ())
     {
@@ -1201,7 +1201,7 @@ TAO_Offer_Filter::TAO_Offer_Filter (TAO_Policies& policies)
   CORBA::Boolean exact_type_match =
     policies.exact_type_match ();
 
-  if (exact_type_match == 1)
+  if (exact_type_match)
     {
       CORBA::String_var exact_match
         (TAO_Policies::POLICY_NAMES[TAO_Policies::EXACT_TYPE_MATCH]);

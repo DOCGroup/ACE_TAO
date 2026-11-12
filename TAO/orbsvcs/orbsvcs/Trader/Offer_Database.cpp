@@ -58,11 +58,11 @@ insert_offer (const char* type, CosTrading::Offer* offer)
       // If there's no entry for the service type, create one.
 
       Offer_Map_Entry* new_offer_map_entry {};
-      ACE_NEW_RETURN (new_offer_map_entry, Offer_Map_Entry, 0);
+      ACE_NEW_RETURN (new_offer_map_entry, Offer_Map_Entry, nullptr);
       // Keep ownership until the database map accepts the new entry.
       std::unique_ptr<Offer_Map_Entry> new_offer_map_entry_owner (new_offer_map_entry);
       TAO_Offer_Map* offer_map {};
-      ACE_NEW_RETURN (offer_map, TAO_Offer_Map, 0);
+      ACE_NEW_RETURN (offer_map, TAO_Offer_Map, nullptr);
       new_offer_map_entry->offer_map_.reset (offer_map);
       new_offer_map_entry->counter_ = 1;
 
@@ -242,10 +242,10 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids ()
   // exported to the TAO_Offer_Database. Iterates through the entire
   // map, cramming offer_id strings into a newly constructed
   // TAO_Offer_Id_Iterator.
-  TAO_Offer_Id_Iterator* id_iterator;
+  TAO_Offer_Id_Iterator* id_iterator {};
   ACE_NEW_RETURN (id_iterator,
                   TAO_Offer_Id_Iterator (),
-                  0);
+                  nullptr);
 
   for (typename Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();

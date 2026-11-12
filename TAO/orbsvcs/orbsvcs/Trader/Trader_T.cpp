@@ -15,7 +15,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   // not work on platforms using environment variable.
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
-      TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup;
+      TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup {};
 
       ACE_NEW (lookup,
                (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -27,7 +27,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, REGISTER))
     {
-      TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg;
+      TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg {};
 
       ACE_NEW (reg,
                (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -39,7 +39,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, ADMIN))
     {
-      TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin;
+      TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin {};
 
       ACE_NEW (admin,
                (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -51,7 +51,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, PROXY))
     {
-      TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy;
+      TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy {};
 
       ACE_NEW (proxy,
                (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -63,7 +63,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, LINK))
     {
-      TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link;
+      TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link {};
 
       ACE_NEW (link,
                (TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));

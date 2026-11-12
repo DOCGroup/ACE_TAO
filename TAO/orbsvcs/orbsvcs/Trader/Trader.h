@@ -98,20 +98,20 @@ private:
 
   // = Command line configurable parameters.
 
-  Conformance conformance_;
-  CORBA::Boolean threadsafe_;
-  CORBA::Boolean supports_dynamic_properties_;
-  CORBA::Boolean supports_modifiable_properties_;
-  CORBA::ULong def_search_card_;
-  CORBA::ULong max_search_card_;
-  CORBA::ULong def_match_card_;
-  CORBA::ULong max_match_card_;
-  CORBA::ULong def_return_card_;
-  CORBA::ULong max_return_card_;
-  CORBA::ULong def_hop_count_;
-  CORBA::ULong max_hop_count_;
-  CosTrading::FollowOption def_follow_policy_;
-  CosTrading::FollowOption max_follow_policy_;
+  Conformance conformance_ {TAO_TRADER_LINKED};
+  CORBA::Boolean threadsafe_ {};
+  CORBA::Boolean supports_dynamic_properties_ {true};
+  CORBA::Boolean supports_modifiable_properties_ {true};
+  CORBA::ULong def_search_card_ {20};
+  CORBA::ULong max_search_card_ {50};
+  CORBA::ULong def_match_card_ {20};
+  CORBA::ULong max_match_card_ {50};
+  CORBA::ULong def_return_card_ {20};
+  CORBA::ULong max_return_card_ {50};
+  CORBA::ULong def_hop_count_ {5};
+  CORBA::ULong max_hop_count_ {10};
+  CosTrading::FollowOption def_follow_policy_ {CosTrading::if_no_local};
+  CosTrading::FollowOption max_follow_policy_ {CosTrading::always};
 };
 
   // *************************************************************
@@ -180,13 +180,13 @@ private:
   TAO_Lockable &locker_;
 
   /// Indicator of whether the trader supports property modification.
-  CORBA::Boolean supports_modifiable_properties_;
+  CORBA::Boolean supports_modifiable_properties_ {true};
 
   /// Indicator of whether the trader supports dynamic properties.
-  CORBA::Boolean supports_dynamic_properties_;
+  CORBA::Boolean supports_dynamic_properties_ {true};
 
   /// Indicator of whether the trader supports proxy offers.
-  CORBA::Boolean supports_proxy_offers_;
+  CORBA::Boolean supports_proxy_offers_ {};
 
   /// A reference to the TypeRepostitory used by the trader.
   CORBA::Object_var type_repos_;

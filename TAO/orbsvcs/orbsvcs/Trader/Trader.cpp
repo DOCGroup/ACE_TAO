@@ -104,10 +104,10 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   if (ident == nullptr)
     return false;
 
-  int return_value = 1;
+  bool return_value {true};
 
   // Allow scoped identifiers
-  CORBA::Boolean done {};
+  bool done {};
   char const * pos =
     std::strstr (ident,
                     double_colon);
@@ -149,7 +149,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
     else
       {
         // Last or only identifier
-        done = 1;
+        done = true;
       }
   }
   while (!done);
@@ -162,9 +162,6 @@ TAO_Lockable::~TAO_Lockable () = default;
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
-    supports_modifiable_properties_ (true),
-    supports_dynamic_properties_ (true),
-    supports_proxy_offers_ (false),
     type_repos_ (CosTrading::TypeRepository::_nil ()),
     service_type_repos_ (CosTradingRepos::ServiceTypeRepository::_nil ())
 {
@@ -632,20 +629,6 @@ TAO_Trader_Factory::create_trader (int& argc, ACE_TCHAR** argv)
 }
 
 TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
-  : conformance_ (TAO_TRADER_LINKED),
-    threadsafe_ (false),
-    supports_dynamic_properties_ (true),
-    supports_modifiable_properties_ (true),
-    def_search_card_ (20),
-    max_search_card_ (50),
-    def_match_card_ (20),
-    max_match_card_ (50),
-    def_return_card_ (20),
-    max_return_card_ (50),
-    def_hop_count_ (5),
-    max_hop_count_ (10),
-    def_follow_policy_ (CosTrading::if_no_local),
-    max_follow_policy_ (CosTrading::always)
 {
   this->parse_args (argc, argv);
 }
@@ -676,11 +659,11 @@ TAO_Trader_Factory::manufacture_trader ()
   if (this->threadsafe_)
     ACE_NEW_RETURN (return_value,
                     MT_TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
-                    0);
+                    nullptr);
   else
     ACE_NEW_RETURN (return_value,
                     TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
-                    0);
+                    nullptr);
 
   TAO_Import_Attributes_i &import_attributes =
     return_value->import_attributes ();

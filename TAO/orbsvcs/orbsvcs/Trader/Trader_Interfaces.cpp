@@ -432,12 +432,12 @@ create_offer_iterator (const TAO_Property_Filter& pfilter)
   if (CORBA::is_nil (this->trader_.trading_components ().register_if ()))
     ACE_NEW_RETURN (iterator,
                     TAO_Query_Only_Offer_Iterator (pfilter),
-                    0);
+                    nullptr);
   else
     ACE_NEW_RETURN (iterator,
                     TAO_Register_Offer_Iterator<MAP_LOCK_TYPE> (this->trader_.offer_database (),
                                                                 pfilter),
-                    0);
+                    nullptr);
   return iterator;
 }
 
@@ -756,7 +756,7 @@ seen_request_id (TAO_Policies& policies,
     {
       if (*old_seq == *seq)
         {
-          return_value = 1;
+          return_value = true;
           break;
         }
     }
