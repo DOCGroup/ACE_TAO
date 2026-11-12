@@ -2,18 +2,19 @@
 
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
 #include <algorithm>
+#include <cstddef>
+#include <cstring>
 
 TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (
     TAO_AV_Callback *callback,
     TAO_AV_Transport *transport)
   : TAO_AV_Protocol_Object (callback, transport),
     frame_ (std::make_unique<ACE_Message_Block> (
-      std::max (static_cast<size_t> (BUFSIZ),
-                4 * static_cast<size_t> (this->transport_->mtu ())) +
+      std::max (static_cast<std::size_t> (BUFSIZ),
+                4 * static_cast<std::size_t> (this->transport_->mtu ())) +
       sizeof (ACE_hrtime_t)))
 {
 }
@@ -45,7 +46,7 @@ TimeStamp_Protocol_Object::send_frame (ACE_Message_Block *frame,
 {
   ACE_hrtime_t const timestamp_value = ACE_OS::gethrtime ();
   ACE_Message_Block timestamp (sizeof timestamp_value);
-  ACE_OS::memcpy (timestamp.wr_ptr (), &timestamp_value, sizeof timestamp_value);
+  std::memcpy (timestamp.wr_ptr (), &timestamp_value, sizeof timestamp_value);
   timestamp.wr_ptr (sizeof timestamp_value);
 
   ACE_Message_Block * const continuation = frame->cont ();
@@ -65,7 +66,7 @@ TimeStamp_Protocol_Object::send_frame (iovec const *iov,
 
 int
 TimeStamp_Protocol_Object::send_frame (char const *buffer,
-                                       size_t length)
+                                       std::size_t length)
 {
   int const result = this->transport_->send (buffer, length, 0);
   return result < 0 ? result : 0;

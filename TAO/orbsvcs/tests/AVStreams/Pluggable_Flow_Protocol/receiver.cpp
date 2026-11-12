@@ -2,8 +2,9 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
 
+#include <cstddef>
+#include <cstring>
 #include <new>
 
 int
@@ -87,27 +88,27 @@ Receiver::init (int argc,
 int
 Receiver::receive_frame (ACE_Message_Block *frame)
 {
-  size_t const frame_length = frame->length ();
+  std::size_t const frame_length = frame->length ();
   if (frame_length < sizeof (ACE_hrtime_t))
     ACE_ERROR_RETURN ((LM_ERROR, "Received frame is shorter than its timestamp\n"), -1);
 
-  size_t const payload_length = frame_length - sizeof (ACE_hrtime_t);
-  size_t const bytes_written = ACE_OS::fwrite (frame->rd_ptr (),
-                                               1,
-                                               payload_length,
-                                               this->output_file_.get ());
+  std::size_t const payload_length = frame_length - sizeof (ACE_hrtime_t);
+  std::size_t const bytes_written = std::fwrite (frame->rd_ptr (),
+                                                 1,
+                                                 payload_length,
+                                                 this->output_file_.get ());
   if (bytes_written != payload_length)
     ACE_ERROR_RETURN ((LM_ERROR, "Writing received frame failed\n"), -1);
-  if (ACE_OS::fflush (this->output_file_.get ()) != 0)
+  if (std::fflush (this->output_file_.get ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Flushing received frame failed\n"), -1);
 
   ACE_hrtime_t timestamp {};
-  ACE_OS::memcpy (&timestamp,
-                  frame->rd_ptr () + payload_length,
-                  sizeof timestamp);
+  std::memcpy (&timestamp,
+               frame->rd_ptr () + payload_length,
+               sizeof timestamp);
   ACE_UINT32 const timestamp_low = ACE_CU64_TO_CU32 (timestamp);
   ACE_DEBUG ((LM_DEBUG,
-              "Received frame %d, timestamp low bits %u\n",
+              "Received frame %B, timestamp low bits %u\n",
               ++this->frame_count_,
               timestamp_low));
   return 0;
@@ -148,7 +149,6 @@ ACE_TMAIN (int argc,
       result = receiver->init (argc, argv);
       if (result == 0)
         result = receiver->run ();
-      RECEIVER::close ();
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

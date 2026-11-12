@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
+#include <cstddef>
+#include <cstdio>
 #include <new>
 
 int
@@ -152,10 +154,10 @@ Sender::pace_data ()
       for (;;)
         {
           this->mb_.reset ();
-          size_t const bytes_read = ACE_OS::fread (this->mb_.wr_ptr (),
-                                                   1,
-                                                   this->mb_.size (),
-                                                   this->input_file_.get ());
+          std::size_t const bytes_read = std::fread (this->mb_.wr_ptr (),
+                                                     1,
+                                                     this->mb_.size (),
+                                                     this->input_file_.get ());
           if (bytes_read == 0)
             {
               if (std::ferror (this->input_file_.get ()))
@@ -186,7 +188,7 @@ Sender::pace_data ()
           ++this->frame_count_;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "Sender::pace_data frame %d was sent successfully\n",
+                        "Sender::pace_data frame %B was sent successfully\n",
                         this->frame_count_));
         }
 
@@ -221,7 +223,6 @@ ACE_TMAIN (int argc,
       result = sender->init (argc, argv);
       if (result == 0)
         result = sender->pace_data ();
-      SENDER::close ();
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

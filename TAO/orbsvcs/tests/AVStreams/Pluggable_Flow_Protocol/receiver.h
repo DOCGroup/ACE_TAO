@@ -3,6 +3,7 @@
 #ifndef TAO_AV_TIMESTAMP_RECEIVER_H
 #define TAO_AV_TIMESTAMP_RECEIVER_H
 
+#include <cstddef>
 #include <cstdio>
 #include <memory>
 
@@ -81,9 +82,9 @@ private:
 
   TAO_Naming_Client naming_client_;
   RECEIVER_ENDPOINT_STRATEGY reactive_strategy_;
-  Receiver_File_Ptr output_file_ {nullptr, ACE_OS::fclose};
+  Receiver_File_Ptr output_file_ {nullptr, std::fclose};
   Options options_;
-  int frame_count_ {};
+  std::size_t frame_count_ {};
   bool done_ {};
 };
 

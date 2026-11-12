@@ -2,6 +2,7 @@
 #define TIMESTAMP_H
 #include /**/ "ace/pre.h"
 
+#include <cstddef>
 #include <memory>
 
 #include "export.h"
@@ -33,8 +34,8 @@ public:
                   int iovcnt,
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const char *buf,
-                  size_t len) override;
+  int send_frame (char const *buf,
+                  std::size_t len) override;
 
   /// end the stream.
   int destroy () override;

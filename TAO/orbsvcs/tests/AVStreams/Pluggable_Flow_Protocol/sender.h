@@ -3,6 +3,7 @@
 #ifndef TAO_AV_TIMESTAMP_SENDER_H
 #define TAO_AV_TIMESTAMP_SENDER_H
 
+#include <cstddef>
 #include <cstdio>
 #include <memory>
 #include <string>
@@ -75,10 +76,10 @@ private:
   PortableServer::ServantBase_var streamctrl_servant_;
   TAO_Naming_Client naming_client_;
   Options options_;
-  Sender_File_Ptr input_file_ {nullptr, ACE_OS::fclose};
+  Sender_File_Ptr input_file_ {nullptr, std::fclose};
   ACE_Message_Block mb_ {BUFSIZ};
   TAO_AV_Protocol_Object *protocol_object_ {};
-  int frame_count_ {};
+  std::size_t frame_count_ {};
 };
 
 #endif /* TAO_AV_TIMESTAMP_SENDER_H */
