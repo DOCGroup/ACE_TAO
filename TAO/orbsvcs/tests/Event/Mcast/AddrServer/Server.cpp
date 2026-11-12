@@ -6,6 +6,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined ACE_HAS_IPV6
@@ -14,19 +16,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      const ACE_TCHAR *ior_file_name = ACE_TEXT ("as.ior");
-      const char *address = "224.6.6.1";
-      const char *address6 = "FF01::ABCD";
-      u_short port = 12345;
+      ACE_TCHAR const* ior_file_name = ACE_TEXT ("as.ior");
+      char const* address = "224.6.6.1";
+      char const* address6 = "FF01::ABCD";
+      u_short const port = 12345;
 
-      for (int i = 0; argv[i] != 0; i++)
+      for (int i = 1; argv[i] != nullptr; ++i)
         {
           if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-o")) == 0)
             {
-              if (argv[i+1] != 0)
+              if (argv[i + 1] != nullptr)
                 ior_file_name = argv[++i];
             }
-
         }
 
       // Get the POA
@@ -42,30 +43,32 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_INET_Addr addr (port, address);
       ACE_INET_Addr addr6 (port, address6);
 
-      TestAddrServer_i impl (addr,addr6);
+      TestAddrServer_i impl (addr, addr6);
 
-      PortableServer::ObjectId_var oid = poa->activate_object(&impl);
-      tmpobj = poa->id_to_reference(oid.in());
+      PortableServer::ObjectId_var oid = poa->activate_object (&impl);
+      tmpobj = poa->id_to_reference (oid.in ());
 
-      CORBA::String_var ior = orb->object_to_string (tmpobj.in());
+      CORBA::String_var ior = orb->object_to_string (tmpobj.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_file_name, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %C\n",
-                           ior_file_name,
-                           ior.in ()),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_file_name, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file %s for writing IOR: %C\n",
+                             ior_file_name,
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       // run the ORB
-      orb->run();
-      orb->destroy();
+      orb->run ();
+      orb->destroy ();
       return 0;
     }
-  catch (const CORBA::Exception& exc)
+  catch (CORBA::Exception const& exc)
     {
       ACE_ERROR ((LM_ERROR,
                   "Caught CORBA::Exception\n%C (%C)\n",

@@ -3,8 +3,7 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "ace/OS_NS_strings.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://as.ior");
+#include <array>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -14,11 +13,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      for (int i = 1; i < argc; i++)
+      ACE_TCHAR const* ior = ACE_TEXT ("file://as.ior");
+      for (int i = 1; i < argc; ++i)
         {
-          if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-k")) == 0)
+          if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-k")) == 0)
             {
-              if (argv[i+1] != 0)
+              if (i + 1 < argc)
                 ior = argv[++i];
             }
           else
@@ -31,10 +31,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       RtecUDPAdmin::AddrServer_var as =
-        RtecUDPAdmin::AddrServer::_narrow (tmp.in());
+        RtecUDPAdmin::AddrServer::_narrow (tmp.in ());
 
       if (CORBA::is_nil (as.in ()))
         {
@@ -44,28 +44,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      RtecEventComm::EventHeader header;
+      RtecEventComm::EventHeader header {};
       header.type = 0;
-      ACE_INET_Addr addr;
-
-
-      ACE_INET_Addr inet_addr;
+      ACE_INET_Addr inet_addr {};
       try
         {
-          RtecUDPAdmin::UDP_Address_var udp_addr;
+          RtecUDPAdmin::UDP_Address_var udp_addr {};
 
-          as->get_address (header, udp_addr.out());
-          switch (udp_addr->_d())
+          as->get_address (header, udp_addr.out ());
+          switch (udp_addr->_d ())
             {
             case RtecUDPAdmin::Rtec_inet:
-              inet_addr.set(udp_addr->v4_addr().port,
-                            udp_addr->v4_addr().ipaddr);
+              inet_addr.set (udp_addr->v4_addr ().port,
+                             udp_addr->v4_addr ().ipaddr);
               break;
             case RtecUDPAdmin::Rtec_inet6:
 #if defined (ACE_HAS_IPV6)
-              inet_addr.set_type(PF_INET6);
-              inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
-              inet_addr.set_port_number(udp_addr->v6_addr().port);
+              inet_addr.set_type (PF_INET6);
+              inet_addr.set_address (udp_addr->v6_addr ().ipaddr, 16, 0);
+              inet_addr.set_port_number (udp_addr->v6_addr ().port);
 #else
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "ERROR: address server returned "
@@ -75,36 +72,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               break;
             }
         }
-      catch (const ::CORBA::BAD_OPERATION &)
+      catch (::CORBA::BAD_OPERATION const&)
         {
           // server only supports IPv4
-           // Grab the right mcast group for this event...
-          RtecUDPAdmin::UDP_Addr udp_addr;
+          // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Addr udp_addr {};
           as->get_addr (header, udp_addr);
           inet_addr.set (udp_addr.port, udp_addr.ipaddr);
         }
 
-      ACE_TCHAR buffer[256];
-      inet_addr.addr_to_string (buffer,256);
-      ACE_DEBUG ((LM_DEBUG,"Should be IPv4: %s\n",buffer));
-      ACE_OS::memset (buffer,0,255);
+      std::array<ACE_TCHAR, 256> buffer {};
+      inet_addr.addr_to_string (buffer.data (), buffer.size ());
+      ACE_DEBUG ((LM_DEBUG, "Should be IPv4: %s\n", buffer.data ()));
       header.type = 1;
       try
         {
-          RtecUDPAdmin::UDP_Address_var udp_addr;
+          RtecUDPAdmin::UDP_Address_var udp_addr {};
 
-          as->get_address (header, udp_addr.out());
-          switch (udp_addr->_d())
+          as->get_address (header, udp_addr.out ());
+          switch (udp_addr->_d ())
             {
             case RtecUDPAdmin::Rtec_inet:
-              inet_addr.set(udp_addr->v4_addr().port,
-                            udp_addr->v4_addr().ipaddr);
+              inet_addr.set (udp_addr->v4_addr ().port,
+                             udp_addr->v4_addr ().ipaddr);
               break;
             case RtecUDPAdmin::Rtec_inet6:
 #if defined (ACE_HAS_IPV6)
-              inet_addr.set_type(PF_INET6);
-              inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
-              inet_addr.set_port_number(udp_addr->v6_addr().port);
+              inet_addr.set_type (PF_INET6);
+              inet_addr.set_address (udp_addr->v6_addr ().ipaddr, 16, 0);
+              inet_addr.set_port_number (udp_addr->v6_addr ().port);
 #else
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "ERROR: address server returned "
@@ -114,22 +110,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               break;
             }
         }
-      catch (const ::CORBA::BAD_OPERATION &)
+      catch (::CORBA::BAD_OPERATION const&)
         {
           // server only supports IPv4
-           // Grab the right mcast group for this event...
-          RtecUDPAdmin::UDP_Addr udp_addr;
+          // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Addr udp_addr {};
           as->get_addr (header, udp_addr);
           inet_addr.set (udp_addr.port, udp_addr.ipaddr);
         }
 
-      ACE_OS::memset(buffer,0,256);
-      inet_addr.addr_to_string (buffer,256);
-      ACE_DEBUG ((LM_DEBUG,"Should be IPv6: %s\n",buffer));
+      inet_addr.addr_to_string (buffer.data (), buffer.size ());
+      ACE_DEBUG ((LM_DEBUG, "Should be IPv6: %s\n", buffer.data ()));
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
