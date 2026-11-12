@@ -20,7 +20,7 @@ TAO_RTScheduler_Current::~TAO_RTScheduler_Current () = default;
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
 {
-  return ACE::hash_pjw ((const char *) id.get_buffer (),
+  return ACE::hash_pjw (reinterpret_cast<char const *> (id.get_buffer ()),
                         id.length ());
 }
 
@@ -90,7 +90,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
                                                     CORBA::Policy_ptr sched_param,
                                                     CORBA::Policy_ptr implicit_sched_param)
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
@@ -103,7 +103,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
 void
 TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     {
@@ -138,7 +138,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
                                 CORBA::ULong stack_size,
                                 RTCORBA::Priority base_priority)
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
@@ -155,7 +155,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current::id ()
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
@@ -166,7 +166,7 @@ TAO_RTScheduler_Current::id ()
 CORBA::Policy_ptr
 TAO_RTScheduler_Current::scheduling_parameter ()
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
@@ -177,7 +177,7 @@ TAO_RTScheduler_Current::scheduling_parameter ()
 CORBA::Policy_ptr
 TAO_RTScheduler_Current::implicit_scheduling_parameter ()
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
@@ -188,7 +188,7 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter ()
 RTScheduling::Current::NameList *
 TAO_RTScheduler_Current::current_scheduling_segment_names ()
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
@@ -211,10 +211,10 @@ TAO_RTScheduler_Current::the_priority (RTCORBA::Priority the_priority)
 TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 {
-  TAO_TSS_Resources *tss =
+  TAO_TSS_Resources * const tss =
     TAO_TSS_Resources::instance ();
 
-  TAO_RTScheduler_Current_i *old =
+  TAO_RTScheduler_Current_i * const old =
     static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   tss->rtscheduler_current_impl_ = new_current;
 
@@ -224,10 +224,10 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation ()
 {
-  TAO_TSS_Resources *tss =
+  TAO_TSS_Resources * const tss =
     TAO_TSS_Resources::instance ();
 
-  TAO_RTScheduler_Current_i* impl =
+  TAO_RTScheduler_Current_i * const impl =
     static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   return impl;
 }
