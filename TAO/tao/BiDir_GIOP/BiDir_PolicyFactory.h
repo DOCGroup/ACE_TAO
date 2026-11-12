@@ -39,9 +39,8 @@ public:
   TAO_BiDir_PolicyFactory () = default;
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   CORBA::Any const& value) override;
+                                   CORBA::Any const &value) override;
 
- private:
   TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory const &) = delete;
   TAO_BiDir_PolicyFactory &operator= (TAO_BiDir_PolicyFactory const &) = delete;
   TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory &&) = delete;
@@ -53,7 +52,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 # pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

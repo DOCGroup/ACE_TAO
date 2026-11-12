@@ -14,15 +14,15 @@ TAO_BiDirPolicy_Validator::TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core)
 void
 TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
 {
-  CORBA::Policy_var policy =
+  CORBA::Policy_var const policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP);
 
-  BiDirPolicy::BidirectionalPolicy_var srp =
+  BiDirPolicy::BidirectionalPolicy_var const srp =
     BiDirPolicy::BidirectionalPolicy::_narrow (policy.in ());
 
   if (!CORBA::is_nil (srp.in ()))
     {
-      BiDirPolicy::BidirectionalPolicyValue val = srp->value ();
+      BiDirPolicy::BidirectionalPolicyValue const val = srp->value ();
 
       // Set the flag in the ORB_Core
       if (val == BiDirPolicy::BOTH)
