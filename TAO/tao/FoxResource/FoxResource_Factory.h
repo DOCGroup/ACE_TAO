@@ -49,11 +49,11 @@ namespace TAO
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    /// Reactor created by this factory.
+    /// Non-owning cache; ACE_Reactor owns the implementation after wrapping it.
     ACE_FoxReactor *reactor_impl_ {};
 
     /// Borrowed; the application must outlive this factory and its reactor.
-    FXApp * const fxapp_ {};
+    FXApp * const fxapp_;
   };
 }
 
