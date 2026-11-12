@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AMH_Skeletons.h
  *
@@ -20,7 +19,6 @@
  * Since we don't want to bother the regular core with AMH stuff,
  * we put these methods and classes here.
  */
-//=============================================================================
 
 #ifndef AMH_SKELETONS_H
 #define AMH_SKELETONS_H
@@ -152,7 +150,6 @@ private:
   TAO::Argument * const * const args_;
 };
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
 
 class TAO_Messaging_Export TAO_AMH_Skeletons
 {

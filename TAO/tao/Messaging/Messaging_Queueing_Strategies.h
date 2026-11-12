@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Messaging_Queueing_Strategies.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_QUEUEING_STRATEGIES_H
 #define TAO_MESSAGING_QUEUEING_STRATEGIES_H

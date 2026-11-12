@@ -66,7 +66,7 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
   TAO_GIOP_Message_Version v;
   server_request.outgoing()->get_version(v);
   this->_tao_out.set_version(v.major, v.minor);
-  this->transport_->assign_translators (0, &this->_tao_out);
+  this->transport_->assign_translators (nullptr, &this->_tao_out);
   this->transport_->add_reference ();
 }
 
@@ -131,8 +131,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply ()
 
   // Send the message.
   int result = this->transport_->send_message (this->_tao_out,
-                                               0,
-                                               0,
+                                               nullptr,
+                                               nullptr,
                                                TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
 
   if (result == -1)
@@ -213,8 +213,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception const &ex)
     }
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
-                                      0,
-                                      0,
+                                      nullptr,
+                                      nullptr,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       if (TAO_debug_level > 0)
@@ -278,8 +278,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
 
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
-                                      0,
-                                      0,
+                                      nullptr,
+                                      nullptr,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       if (TAO_debug_level > 0)

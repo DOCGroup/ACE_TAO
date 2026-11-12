@@ -85,7 +85,7 @@ TAO_AMI_Arguments_Converter_Impl::dsi_convert_reply (
 {
   if (server_request.operation_details ()->reply_dispatcher ())
     {
-      TAO_Pluggable_Reply_Params params (0);
+      TAO_Pluggable_Reply_Params params (nullptr);
       params.reply_status (GIOP::NO_EXCEPTION);
       params.input_cdr_ = &input;
       server_request.operation_details ()->
@@ -99,7 +99,7 @@ TAO_AMI_Arguments_Converter_Impl::handle_corba_exception (
   CORBA::Exception *exception)
 {
   TAO_OutputCDR output;
-  TAO_Pluggable_Reply_Params params (0);
+  TAO_Pluggable_Reply_Params params (nullptr);
   exception->_tao_encode (output);
   if (CORBA::SystemException::_downcast (exception) != nullptr)
     {
@@ -125,7 +125,6 @@ TAO_AMI_Arguments_Converter_Impl::Initializer ()
   return ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_AMI_Arguments_Converter_Impl);
 }
-
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AMI_Arguments_Converter_Impl,

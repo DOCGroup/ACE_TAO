@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    Asynch_Reply_Dispatcher.h
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_H

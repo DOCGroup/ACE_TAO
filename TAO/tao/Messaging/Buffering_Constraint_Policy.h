@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Buffering_Constraint_Policy.h
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_BUFFERING_CONSTRAINT_POLICY_H
 #define TAO_BUFFERING_CONSTRAINT_POLICY_H
@@ -56,8 +53,6 @@ public:
 
   /// Returns a copy of @c this.
   virtual TAO_Buffering_Constraint_Policy *clone () const;
-
-  // = The TAO::Buffering_Constraint_Policy methods
 
   TAO::BufferingConstraint buffering_constraint () override;
 

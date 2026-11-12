@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Asynch_Timeout_Handler.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #ifndef TAO_ASYNCH_TIMEOUT_HANDLER_H
 #define TAO_ASYNCH_TIMEOUT_HANDLER_H

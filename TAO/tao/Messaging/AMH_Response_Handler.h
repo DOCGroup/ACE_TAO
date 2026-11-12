@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// =========================================================================
 /**
  *  @file   AMH_Response_Handler.h
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */
-// =========================================================================
 
 #ifndef TAO_AMH_RESPONSE_HANDLER_H
 #define TAO_AMH_RESPONSE_HANDLER_H

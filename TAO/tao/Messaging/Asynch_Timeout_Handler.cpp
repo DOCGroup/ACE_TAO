@@ -26,7 +26,7 @@ TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
   this->request_id_ = request_id;
 
   return this->reactor_->schedule_timer (this,          // handler
-                                         0,             // arg
+                                         nullptr,       // arg
                                          max_wait_time);
 }
 
@@ -68,7 +68,7 @@ void
 TAO_Asynch_Timeout_Handler::cancel ()
 {
   // The tms_ is only set if we got scheduled.
-  if (this->tms_)
+  if (this->tms_ != nullptr)
     {
       this->reactor_->cancel_timer (this);
     }
