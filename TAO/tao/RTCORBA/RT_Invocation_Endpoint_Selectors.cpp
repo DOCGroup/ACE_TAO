@@ -41,7 +41,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
           if (this->endpoint_from_profile (*r, val) == 1)
             return;
         }
-      while (r->stub ()->next_profile_retry () != 0);
+      while (r->stub ()->next_profile_retry ());
 
       // If we get here, we completely failed to find an endpoint
       // that we know how to use. We used to throw an exception
