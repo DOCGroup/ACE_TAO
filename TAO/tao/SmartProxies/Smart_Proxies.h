@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Smart_Proxies.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Brian Wallis <brian.wallis@ot.com.au>
  */
-//=============================================================================
 
 #ifndef TAO_SMARTPROXIES_H
 #define TAO_SMARTPROXIES_H
