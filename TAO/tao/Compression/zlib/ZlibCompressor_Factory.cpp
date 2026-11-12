@@ -25,7 +25,7 @@ Zlib_CompressorFactory::get_compressor (
 
     {   // Ensure scoped lock for compressor Map container
 
-        ACE_GUARD_RETURN( TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0 );
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
 
         try {
             // Try and locate the compressor (we may already have it)
@@ -33,7 +33,9 @@ Zlib_CompressorFactory::get_compressor (
 
             if (it == this->compressors_.end())
             {  // Does not yet exist so create it
-                ACE_NEW_RETURN(compressor, ::TAO::ZlibCompressor(this, compression_level), 0);
+                ACE_NEW_RETURN (compressor,
+                                ::TAO::ZlibCompressor (this, compression_level),
+                                nullptr);
                 it = this->compressors_.insert(ZlibCompressorMap::value_type(compression_level, compressor)).first;
             }
 
@@ -41,7 +43,7 @@ Zlib_CompressorFactory::get_compressor (
         } catch (...) {
             TAOLIB_ERROR_RETURN((LM_ERROR,
                 ACE_TEXT("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),
-                int(compression_level)),0);
+                int (compression_level)), nullptr);
         }
 
     }   // End of scoped container locking
