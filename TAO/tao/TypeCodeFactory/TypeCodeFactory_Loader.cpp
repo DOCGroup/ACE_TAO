@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_Loader.cpp
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
@@ -31,7 +29,6 @@ TAO_TypeCodeFactory_Loader::Initializer ()
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 ACE_STATIC_SVC_DEFINE (
     TAO_TypeCodeFactory_Loader,

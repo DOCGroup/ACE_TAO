@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_i.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODEFACTORY_I_H
 #define TAO_TYPECODEFACTORY_I_H
@@ -35,10 +33,6 @@ namespace TAO
   }
 }
 
-class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
-    : public virtual CORBA::TypeCodeFactory,
-      public virtual ::CORBA::LocalObject
-{
 /**
  * @class TAO_TypeCodeFactory_i
  *
@@ -46,6 +40,10 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
  *
  * Implementation of the CORBA::TypeCodeFactory interface
  */
+class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
+    : public virtual CORBA::TypeCodeFactory,
+      public virtual ::CORBA::LocalObject
+{
 public:
   TAO_TypeCodeFactory_i () = default;
   ~TAO_TypeCodeFactory_i () override = default;
@@ -55,7 +53,7 @@ public:
   TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i &&) = delete;
   TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i &&) = delete;
 
-  /// = LocalObject methods
+  /// LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);
 
   CORBA::TypeCode_ptr create_struct_tc (

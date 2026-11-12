@@ -271,8 +271,6 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_event_tc (
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
-// *********************************************************************
-
 // Initialization and registration of dynamic service object.
 
 int

@@ -34,7 +34,6 @@
 
 #include <cstring>
 #include <string>
-
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -190,7 +189,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
             {
               // Only if we do not have a duplicate case label do we
               // check for a duplicate member name.
-              ACE_CString ext_id (member_name);
+              ACE_CString const ext_id (member_name);
               int int_id {};
 
               trybind_status = map.trybind (ext_id, int_id);
@@ -198,7 +197,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
       else
         {
-          ACE_CString ext_id (member_name);
+          ACE_CString const ext_id (member_name);
           int int_id {};
 
           trybind_status = map.trybind (ext_id, int_id);
@@ -224,7 +223,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       // Reset the default index, if we have a default case label.
-      if ((member.label >>= CORBA::Any::to_octet (value)) == 1)
+      if (member.label >>= CORBA::Any::to_octet (value))
         {
           if (value == 0)
             {
@@ -304,6 +303,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       elem_type & element = cases[ci];
+      // ACE::Value_Ptr below adopts this pointer.
       TAO::TypeCode::Case_Dynamic *the_case {};
 
       if (index == raw_default_index)
@@ -355,7 +355,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                     for_reading = tmp;
                   }
 
-                CORBA::ULong label;
+                CORBA::ULong label {};
                 for_reading.read_ulong (label);
 
                 using case_type = TAO::TypeCode::Case_T<CORBA::ULong,
@@ -369,7 +369,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_ulong:
               {
-                CORBA::ULong label;
+                CORBA::ULong label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -390,7 +390,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_long:
               {
-                CORBA::Long label;
+                CORBA::Long label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -411,7 +411,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_ushort:
               {
-                CORBA::UShort label;
+                CORBA::UShort label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -432,7 +432,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_short:
               {
-                CORBA::Short label;
+                CORBA::Short label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -453,7 +453,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_char:
               {
-                CORBA::Char label;
+                CORBA::Char label {};
                 if (!(member.label >>= CORBA::Any::to_char (label)))
                   {
                     // Should never throw since label kind was
@@ -474,7 +474,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_boolean:
               {
-                CORBA::Boolean label;
+                CORBA::Boolean label {};
                 if (!(member.label >>= CORBA::Any::to_boolean (label)))
                   {
                     // Should never throw since label kind was
@@ -495,7 +495,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_longlong:
               {
-                CORBA::LongLong label;
+                CORBA::LongLong label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -516,7 +516,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_ulonglong:
               {
-                CORBA::ULongLong label;
+                CORBA::ULongLong label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -612,7 +612,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   for (CORBA::ULong index {}; index < len; ++index)
     {
-      ACE_CString ext_id (members[index]);
+      ACE_CString const ext_id (members[index]);
       int int_id {};
 
       // Is there a duplicate member name?
@@ -831,8 +831,6 @@ TAO_TypeCodeFactory_i::create_event_tc (
                                       members,
                                       CORBA::tk_event);
 }
-
-// =====================================================================
 
 void
 TAO_TypeCodeFactory_i::compute_default_label (
@@ -1208,7 +1206,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
 
-      ACE_CString ext_id (member_name);
+      ACE_CString const ext_id (member_name);
       int int_id {};
 
       // Is there a duplicate member name?
@@ -1361,7 +1359,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
 
-      ACE_CString ext_id (member_name);
+      ACE_CString const ext_id (member_name);
       int int_id {};
 
       // Is there a duplicate member name?
@@ -1610,7 +1608,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
               break;
             case CORBA::tk_enum:
             {
-              TAO::Any_Impl *impl = members[i].label.impl ();
+              TAO::Any_Impl * const impl = members[i].label.impl ();
               TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (nullptr));
 
               if (impl->encoded ())
@@ -1760,7 +1758,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                 if (member_tc_kind == CORBA::tk_value
                     || member_tc_kind == CORBA::tk_event)
                   {
-                    char const * member_tc_id = member_tc->id ();
+                    char const * const member_tc_id = member_tc->id ();
 
                     if (working_id != nullptr
                         && std::strcmp (working_id, member_tc_id) == 0)

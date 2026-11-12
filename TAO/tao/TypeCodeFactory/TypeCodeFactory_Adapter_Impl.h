@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_Adapter_Impl.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
 #define TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
@@ -187,7 +184,6 @@ public:
     CORBA::ULong nfields) override;
   //@}
 
-
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
@@ -201,7 +197,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Adapter_Impl)
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_ADAPTER_IMPL_H */
