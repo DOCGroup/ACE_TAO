@@ -291,6 +291,11 @@ public:
 
   ~TAO_Thread_Pool ();
 
+  TAO_Thread_Pool (TAO_Thread_Pool const &) = delete;
+  TAO_Thread_Pool &operator= (TAO_Thread_Pool const &) = delete;
+  TAO_Thread_Pool (TAO_Thread_Pool &&) = delete;
+  TAO_Thread_Pool &operator= (TAO_Thread_Pool &&) = delete;
+
   /// Open the pool.
   void open ();
 

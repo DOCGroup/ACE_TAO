@@ -1254,8 +1254,9 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   handler->qos_session (this->qos_session_);
 
-  this->qos_manager_ =
+  ACE_QoS_Manager const qos_manager =
     handler->get_socket ()->qos_manager ();
+  this->qos_manager_ = qos_manager;
 
   AVStreams::QoS qos;
 

@@ -1,25 +1,24 @@
 // -*- C++ -*-
 
 #include "ACEXML/common/AttributesImpl.h"
-#include <cerrno>
-#include <new>
-#include <stdexcept>
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/AttributesImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_AttributesImpl::ACEXML_AttributesImpl (int size)
-  : attrs_ ()
+  : attrs_ (size)
 {
-  this->attrs_.reserve (static_cast<size_t> (size));
+  this->attrs_.size (0);
 }
 
 ACEXML_AttributesImpl::ACEXML_AttributesImpl (
   ACEXML_AttributesImpl const &attrs)
   : ACEXML_Attributes (attrs),
-    attrs_ (attrs.attrs_)
+    attrs_ (attrs.attrs_.size ())
 {
+  for (size_t i = 0; i < attrs.attrs_.size (); ++i)
+    this->attrs_[i] = attrs.attrs_[i];
 }
 
 ACEXML_AttributesImpl::~ACEXML_AttributesImpl () = default;
@@ -33,21 +32,10 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
 {
   if (this->isDuplicate (uri, localName, qName))
     return -1;
-  try
-    {
-      this->attrs_.emplace_back (uri, localName, qName, type, value);
-    }
-  catch (std::bad_alloc const &)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-  catch (std::length_error const &)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-  return static_cast<int> (this->attrs_.size () - 1);
+  size_t const length = this->attrs_.size ();
+  this->attrs_.size (length + 1);
+  this->setAttribute (length, uri, localName, qName, type, value);
+  return static_cast<int> (length);
 }
 
 int
@@ -55,21 +43,10 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
 {
   if (this->isDuplicate (att.uri(), att.localName(), att.qName()))
     return -1;
-  try
-    {
-      this->attrs_.push_back (att);
-    }
-  catch (std::bad_alloc const &)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-  catch (std::length_error const &)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-  return static_cast<int> (this->attrs_.size () - 1);
+  size_t const length = this->attrs_.size ();
+  this->attrs_.size (length + 1);
+  this->attrs_[length] = att;
+  return static_cast<int> (length);
 }
 
 int
@@ -101,8 +78,8 @@ ACEXML_AttributesImpl::removeAttribute (size_t index)
   if (index >= length)
     return -1;
 
-  this->attrs_[index] = this->attrs_.back ();
-  this->attrs_.pop_back ();
+  this->attrs_[index] = this->attrs_[length - 1];
+  this->attrs_.size (length - 1);
 
   return 0;
 }
