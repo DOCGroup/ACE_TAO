@@ -25,7 +25,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
-#include <cstddef>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;

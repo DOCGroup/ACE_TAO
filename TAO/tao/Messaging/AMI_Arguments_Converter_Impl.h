@@ -24,7 +24,6 @@
 
 #include "ace/Service_Config.h"
 
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

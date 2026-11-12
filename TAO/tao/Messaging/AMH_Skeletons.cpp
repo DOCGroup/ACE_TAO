@@ -21,7 +21,6 @@
 
 #include "tao/TAO_Server_Request.h"
 
-#include <cstddef>
 
 void
 _is_a_amh_Upcall_Command::execute ()
