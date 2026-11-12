@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Throughput driver;
   return driver.run (argc, argv);

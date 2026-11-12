@@ -24,11 +24,10 @@
 class EC_Inversion : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Inversion () = default;
-  EC_Inversion (EC_Inversion const&) = delete;
+  EC_Inversion (EC_Inversion const &) = delete;
   EC_Inversion (EC_Inversion&&) = delete;
-  EC_Inversion& operator= (EC_Inversion const&) = delete;
+  EC_Inversion& operator= (EC_Inversion const &) = delete;
   EC_Inversion& operator= (EC_Inversion&&) = delete;
 
   // = The EC_Driver methods

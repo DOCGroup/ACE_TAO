@@ -26,19 +26,18 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class EC_Latency_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   EC_Latency_Consumer (ACE_Sample_History *history,
                        TAO_SYNCH_MUTEX *mutex,
                        int message_count);
-  EC_Latency_Consumer (EC_Latency_Consumer const&) = delete;
+  EC_Latency_Consumer (EC_Latency_Consumer const &) = delete;
   EC_Latency_Consumer (EC_Latency_Consumer&&) = delete;
-  EC_Latency_Consumer& operator= (EC_Latency_Consumer const&) = delete;
+  EC_Latency_Consumer& operator= (EC_Latency_Consumer const &) = delete;
   EC_Latency_Consumer& operator= (EC_Latency_Consumer&&) = delete;
 
   /// Return 1 when all the messages have been received
   int done () const;
 
-  void push (RtecEventComm::EventSet const& events) override;
+  void push (RtecEventComm::EventSet const &events) override;
   void disconnect_push_consumer () override;
 
 private:
@@ -59,11 +58,10 @@ private:
 class EC_Latency_Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   EC_Latency_Supplier () = default;
-  EC_Latency_Supplier (EC_Latency_Supplier const&) = delete;
+  EC_Latency_Supplier (EC_Latency_Supplier const &) = delete;
   EC_Latency_Supplier (EC_Latency_Supplier&&) = delete;
-  EC_Latency_Supplier& operator= (EC_Latency_Supplier const&) = delete;
+  EC_Latency_Supplier& operator= (EC_Latency_Supplier const &) = delete;
   EC_Latency_Supplier& operator= (EC_Latency_Supplier&&) = delete;
 
   void disconnect_push_supplier () override;
@@ -75,12 +73,11 @@ public:
 class Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Task (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
         int iterations);
-  Task (Task const&) = delete;
+  Task (Task const &) = delete;
   Task (Task&&) = delete;
-  Task& operator= (Task const&) = delete;
+  Task& operator= (Task const &) = delete;
   Task& operator= (Task&&) = delete;
 
   /// Return 1 when all the messages have been sent

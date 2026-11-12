@@ -7,7 +7,7 @@
 #include "ace/OS_NS_strings.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Connect driver;
   return driver.run (argc, argv);
@@ -17,9 +17,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 void
 EC_Connect::execute_test ()
-{
-  // this->EC_Driver::execute_test ();
-}
+{}
 
 int
 EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
@@ -133,7 +131,7 @@ EC_Connect::allocate_consumer (int i)
 EC_Supplier*
 EC_Connect::allocate_supplier (int i)
 {
-  return new ECC_Supplier (this, this->consumers_ + i);
+  return new ECC_Supplier (this, this->suppliers_ + i);
 }
 
 void
@@ -289,7 +287,7 @@ ECC_Consumer::ECC_Consumer (EC_Driver* driver, void* cookie)
 void
 ECC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    RtecEventChannelAdmin::ConsumerQOS const& qos,
+    RtecEventChannelAdmin::ConsumerQOS const &qos,
     int shutdown_event_type)
 {
   this->EC_Consumer::connect (consumer_admin,
@@ -299,7 +297,7 @@ ECC_Consumer::connect (
 
 void
 ECC_Consumer::connect (
-    RtecEventChannelAdmin::ConsumerQOS const& qos,
+    RtecEventChannelAdmin::ConsumerQOS const &qos,
     int shutdown_event_type)
 {
   ACE_hrtime_t const start = ACE_OS::gethrtime ();
@@ -327,7 +325,7 @@ ECC_Supplier::ECC_Supplier (EC_Driver* driver, void* cookie)
 void
 ECC_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    RtecEventChannelAdmin::SupplierQOS const& qos,
+    RtecEventChannelAdmin::SupplierQOS const &qos,
     int shutdown_event_type)
 {
   this->EC_Supplier::connect (supplier_admin,
@@ -337,7 +335,7 @@ ECC_Supplier::connect (
 
 void
 ECC_Supplier::connect (
-    RtecEventChannelAdmin::SupplierQOS const& qos,
+    RtecEventChannelAdmin::SupplierQOS const &qos,
     int shutdown_event_type)
 {
   ACE_hrtime_t const start = ACE_OS::gethrtime ();

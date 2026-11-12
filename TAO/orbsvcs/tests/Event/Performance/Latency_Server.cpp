@@ -9,6 +9,7 @@
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+
 #include <memory>
 
 static ACE_TCHAR const* ior_file_name = ACE_TEXT("ec.ior");
@@ -17,13 +18,13 @@ static ACE_TCHAR const* ior_file_name = ACE_TEXT("ec.ior");
 static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  int priority =
+  int priority {
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2};
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
 
@@ -121,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (argv[0]);
     }

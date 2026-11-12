@@ -19,11 +19,11 @@ static ACE_TCHAR const* ec_ior = ACE_TEXT("file://ec.ior");
 static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int priority =
+  int priority {
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2};
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
 
@@ -222,7 +222,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (argv[0]);
     }
@@ -285,7 +285,7 @@ EC_Latency_Consumer::done () const
 }
 
 void
-EC_Latency_Consumer::push (RtecEventComm::EventSet const& events)
+EC_Latency_Consumer::push (RtecEventComm::EventSet const & events)
 {
   ACE_hrtime_t creation {};
   ORBSVCS_Time::TimeT_to_hrtime (creation,
@@ -300,7 +300,7 @@ EC_Latency_Consumer::push (RtecEventComm::EventSet const& events)
                   this->remaining_messages_));
     }
 
-  this->remaining_messages_--;
+  --this->remaining_messages_;
 }
 
 void
@@ -360,12 +360,12 @@ Task::svc ()
                           this->remaining_messages_));
             }
 
-          this->remaining_messages_--;
+          --this->remaining_messages_;
           if (this->remaining_messages_ == 0)
             return 0;
         }
     }
-  catch (CORBA::SystemException const& ex)
+  catch (CORBA::SystemException const & ex)
     {
       ex._tao_print_exception ("Task::svc");
     }

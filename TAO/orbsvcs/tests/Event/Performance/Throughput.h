@@ -24,11 +24,10 @@
 class EC_Throughput : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Throughput () = default;
-  EC_Throughput (EC_Throughput const&) = delete;
+  EC_Throughput (EC_Throughput const &) = delete;
   EC_Throughput (EC_Throughput&&) = delete;
-  EC_Throughput& operator= (EC_Throughput const&) = delete;
+  EC_Throughput& operator= (EC_Throughput const &) = delete;
   EC_Throughput& operator= (EC_Throughput&&) = delete;
 
   // = The EC_Driver methods

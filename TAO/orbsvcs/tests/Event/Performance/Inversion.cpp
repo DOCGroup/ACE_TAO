@@ -7,7 +7,7 @@
 #include "ace/Arg_Shifter.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Inversion driver;
   return driver.run (argc, argv);
