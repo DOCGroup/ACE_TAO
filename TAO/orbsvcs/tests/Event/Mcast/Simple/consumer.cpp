@@ -15,9 +15,9 @@ public:
   /// PushConsumer methods.
   //@{
   /// Logs each event.  Initiates shutdown after receiving 100 events.
-  virtual void push (const RtecEventComm::EventSet &events);
+  void push (RtecEventComm::EventSet const &events) override;
   /// No-op.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
   //@}
 
 private:
