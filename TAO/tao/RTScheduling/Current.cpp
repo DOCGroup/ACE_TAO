@@ -257,7 +257,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
    previous_current_ (nullptr),
    dt_hash_ (dt_hash)
 {
-  CORBA::Object_var scheduler_obj =
+  CORBA::Object_var const scheduler_obj =
     this->orb_->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
@@ -282,7 +282,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
 {
-  CORBA::Object_var scheduler_obj =
+  CORBA::Object_var const scheduler_obj =
     orb->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
@@ -498,17 +498,17 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
                        CORBA::ULong stack_size)
 {
   // Activate thread.
-  long default_flags = THR_NEW_LWP | THR_JOINABLE;
-  long flags =
+  long const default_flags = THR_NEW_LWP | THR_JOINABLE;
+  long const flags =
     default_flags |
     this->orb_->orb_params ()->scope_policy () |
     this->orb_->orb_params ()->sched_policy ();
 
-  CORBA::Object_var object =
+  CORBA::Object_var const object =
     this->orb_->object_ref_table ().resolve_initial_reference (
     TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
-  RTCORBA::PriorityMappingManager_var mapping_manager =
+  RTCORBA::PriorityMappingManager_var const mapping_manager =
     RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
   RTCORBA::PriorityMapping *pm =
