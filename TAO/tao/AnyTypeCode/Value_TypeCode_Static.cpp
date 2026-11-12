@@ -114,7 +114,7 @@ TAO::TypeCode::Value<char const *,
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
-  CORBA::TypeCode_var rhs_concrete_base_type = tc->concrete_base_type ();
+  CORBA::TypeCode_var const rhs_concrete_base_type = tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
     this->equal (rhs_concrete_base_type.in ());
@@ -173,7 +173,7 @@ TAO::TypeCode::Value<char const *,
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
-  CORBA::TypeCode_var rhs_concrete_base_type = tc->concrete_base_type ();
+  CORBA::TypeCode_var const rhs_concrete_base_type = tc->concrete_base_type ();
 
   CORBA::Boolean const equivalent_concrete_base_types =
     this->equivalent (rhs_concrete_base_type.in ());

@@ -119,7 +119,7 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
     throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 
   // append the data
-  TAO::traverse_status retval =
+  TAO::traverse_status const retval =
     TAO_Marshal_Object::perform_append (elem_tc.in (), src, dest);
 
   if (retval != TAO::TRAVERSE_CONTINUE)
@@ -353,9 +353,9 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest)
 {
-  CORBA::TypeCode_var discrim_tc = tc->discriminator_type ();
+  CORBA::TypeCode_var const discrim_tc = tc->discriminator_type ();
 
-  CORBA::ULong kind = discrim_tc->kind ();
+  CORBA::ULong const kind = discrim_tc->kind ();
 
   // Save the discriminator value in a temporary variable...
   CORBA::Short short_v {};
@@ -455,7 +455,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
       if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
-          CORBA::ULong default_index =
+          CORBA::ULong const default_index =
             tc->default_index ();
 
           if (i != default_index)
@@ -571,7 +571,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       if (default_member != null_member)
         {
           // Good, use the default to append...
-          CORBA::TypeCode_var member_tc =
+          CORBA::TypeCode_var const member_tc =
             tc->member_type (default_member);
           return TAO_Marshal_Object::perform_append (member_tc.in (),
                                                      src,
@@ -585,7 +585,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
     }
 
   // If we found the member successfully then just use that one...
-  CORBA::TypeCode_var member_tc =
+  CORBA::TypeCode_var const member_tc =
     tc->member_type (current_member);
   return TAO_Marshal_Object::perform_append (member_tc.in (),
                                              src,
@@ -630,7 +630,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  CORBA::Boolean continue_append {
+  CORBA::Boolean const continue_append {
     (CORBA::Boolean) (src->read_ulong (bounds)
                       ? dest->write_ulong (bounds)
                       : 0)};
@@ -651,13 +651,13 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   if (continue_append)
     {
       // Get element typecode.
-      CORBA::TypeCode_var tc2 =
+      CORBA::TypeCode_var const tc2 =
         tc->content_type ();
 
       TAO::traverse_status retval =
         TAO::TRAVERSE_CONTINUE;
 
-      CORBA::TCKind kind = tc2->kind ();
+      CORBA::TCKind const kind = tc2->kind ();
 
       switch (kind)
         {
@@ -835,10 +835,10 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
   CORBA::ULong bounds = tc->length ();
 
   // get element typecode
-  CORBA::TypeCode_var tc2 = tc->content_type ();
+  CORBA::TypeCode_var const tc2 = tc->content_type ();
 
   // For CORBA basic types, the copy can be optimized
-  CORBA::TCKind kind = tc2->kind ();
+  CORBA::TCKind const kind = tc2->kind ();
 
   // Return status.
   TAO::traverse_status retval =
@@ -1016,7 +1016,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
-  CORBA::Boolean continue_append {true};
+  CORBA::Boolean const continue_append {true};
 
   // Status of decode operation.
   TAO::traverse_status retval =

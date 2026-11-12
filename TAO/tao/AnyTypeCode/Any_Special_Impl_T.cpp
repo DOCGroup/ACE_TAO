@@ -77,7 +77,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (CORBA::Any const & any,
   try
     {
       CORBA::TypeCode_ptr any_type = any._tao_get_typecode ();
-      CORBA::TypeCode_var unaliased_any_type =
+      CORBA::TypeCode_var const unaliased_any_type =
         TAO::unaliased_typecode (any_type);
 
       CORBA::TCKind const any_kind =

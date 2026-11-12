@@ -106,13 +106,13 @@ TAO::TypeCode::Union<char const *,
 
   CORBA::ULong const tc_count = tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index ();
+  CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_ || tc_def != this->default_index_)
     return false;
 
   // Check the discriminator type.
-  CORBA::TypeCode_var tc_discriminator = tc->discriminator_type ();
+  CORBA::TypeCode_var const tc_discriminator = tc->discriminator_type ();
 
   CORBA::Boolean const equal_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equal (
@@ -155,12 +155,12 @@ TAO::TypeCode::Union<char const *,
   // member_name() operations.
   CORBA::ULong const tc_count = tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index ();
+  CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_ || tc_def != this->default_index_)
     return false;
 
-  CORBA::TypeCode_var tc_discriminator = tc->discriminator_type ();
+  CORBA::TypeCode_var const tc_discriminator = tc->discriminator_type ();
 
   CORBA::Boolean const equiv_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equivalent (

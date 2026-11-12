@@ -19,7 +19,7 @@ TAO::Unknown_IDL_Type::~Unknown_IDL_Type () = default;
 TAO::Unknown_IDL_Type::LOCK const
 TAO::Unknown_IDL_Type::lock_i ()
 {
-  static LOCK base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
+  static LOCK const base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
   return base_lock_;
 }
 
@@ -260,7 +260,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr & obj) const
 
       TAO_Valuetype_Adapter * const adapter =
         orb_core->valuetype_adapter ();
-      CORBA::Boolean ret = adapter->stream_to_abstract_base (for_reading, obj);
+      CORBA::Boolean const ret = adapter->stream_to_abstract_base (for_reading, obj);
 
       return ret;
     }

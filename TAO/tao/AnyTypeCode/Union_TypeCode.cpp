@@ -139,7 +139,7 @@ TAO::TypeCode::Union<StringType,
     return false;
 
   // Check the discriminator type.
-  CORBA::TypeCode_var tc_discriminator =
+  CORBA::TypeCode_var const tc_discriminator =
     tc->discriminator_type ();
 
   CORBA::Boolean const equal_discriminators =
@@ -193,7 +193,7 @@ TAO::TypeCode::Union<StringType,
       || tc_def != this->default_index_)
     return false;
 
-  CORBA::TypeCode_var tc_discriminator =
+  CORBA::TypeCode_var const tc_discriminator =
     tc->discriminator_type ();
 
   CORBA::Boolean const equiv_discriminators =

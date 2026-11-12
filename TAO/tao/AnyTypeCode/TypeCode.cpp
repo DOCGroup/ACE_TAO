@@ -81,8 +81,8 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
   CORBA::TypeCode_ptr const mutable_this =
     const_cast<CORBA::TypeCode_ptr> (this);
 
-  CORBA::TypeCode_var unaliased_this = TAO::unaliased_typecode (mutable_this);
-  CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
+  CORBA::TypeCode_var const unaliased_this = TAO::unaliased_typecode (mutable_this);
+  CORBA::TypeCode_var const unaliased_tc = TAO::unaliased_typecode (tc);
 
   CORBA::TCKind const this_kind = unaliased_this->kind ();
   CORBA::TCKind const tc_kind = unaliased_tc->kind ();
@@ -417,7 +417,7 @@ namespace TAO
 CORBA::TCKind
 TAO::unaliased_kind (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
+  CORBA::TypeCode_var const unaliased_tc = TAO::unaliased_typecode (tc);
 
   return unaliased_tc->kind ();
 }

@@ -151,7 +151,7 @@ namespace
 
     for (size_t i {}; i < len; ++i)
       {
-        TAO::TypeCodeFactory::TC_Info & info = infos[i];
+        TAO::TypeCodeFactory::TC_Info const & info = infos[i];
 
         if (std::strcmp (info.id, id) == 0)
           {
@@ -509,7 +509,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
       for (size_t i {}; i < len; ++i)
         {
-          TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
+        TAO::TypeCodeFactory::TC_Info const & info = recursive_tc[i];
 
           TAO::TypeCode::Indirected_Type * const rtc =
             dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -789,7 +789,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
 
       for (size_t i {}; i < len; ++i)
         {
-          TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
+          TAO::TypeCodeFactory::TC_Info const & info = recursive_tc[i];
 
           TAO::TypeCode::Indirected_Type * const rtc =
             dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -1163,7 +1163,7 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
 
       for (size_t i {}; i < len; ++i)
         {
-          TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
+          TAO::TypeCodeFactory::TC_Info const & info = recursive_tc[i];
 
           TAO::TypeCode::Indirected_Type * const rtc =
             dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -1523,7 +1523,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
           typecode_type * const tc_struct = dynamic_cast<typecode_type *>(tc_direct);
           for (size_t j {}; j < len; ++j)
             {
-              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
+              TAO::TypeCodeFactory::TC_Info const & info = recursive_tc[j];
 
               TAO::TypeCode::Indirected_Type * const rtc =
                   dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -1548,7 +1548,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
           typecode_type * const tc_union = dynamic_cast<typecode_type *>(tc_direct);
           for (size_t j {}; j < len; ++j)
             {
-              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
+              TAO::TypeCodeFactory::TC_Info const & info = recursive_tc[j];
 
               TAO::TypeCode::Indirected_Type * const rtc =
                 dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -1575,7 +1575,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
           typecode_type * const tc_value = dynamic_cast<typecode_type *>(tc_direct);
           for (size_t j {}; j < len; ++j)
             {
-              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
+              TAO::TypeCodeFactory::TC_Info const & info = recursive_tc[j];
 
               TAO::TypeCode::Indirected_Type * const rtc =
                 dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);

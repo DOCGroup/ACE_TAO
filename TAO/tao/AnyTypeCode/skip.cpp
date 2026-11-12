@@ -232,7 +232,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   CORBA::Boolean continue_skipping {true};
 
   // return status
-  TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
+  TAO::traverse_status const retval = TAO::TRAVERSE_CONTINUE;
 
   // First, skip the type hint. This will be the type_id encoded in an
   // object reference.
@@ -316,7 +316,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 TAO::traverse_status
 TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 {
-  CORBA::TypeCode_var discrim_tc =
+  CORBA::TypeCode_var const discrim_tc =
     tc->discriminator_type ();
 
   CORBA::ULong const kind =
@@ -411,7 +411,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
       CORBA::Octet o {};
       if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
-          CORBA::ULong default_index =
+          CORBA::ULong const default_index =
             tc->default_index ();
 
           if (i != default_index)
@@ -527,7 +527,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
       if (default_member != null_member)
         {
           // Good, use the default to append...
-          CORBA::TypeCode_var member_tc =
+          CORBA::TypeCode_var const member_tc =
             tc->member_type (default_member);
           return TAO_Marshal_Object::perform_skip (member_tc.in (), src);
         }
@@ -539,7 +539,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
     }
 
   // If we found the member successfully then just use that one...
-  CORBA::TypeCode_var member_tc =
+  CORBA::TypeCode_var const member_tc =
     tc->member_type (current_member);
 
   return TAO_Marshal_Object::perform_skip (member_tc.in (), src);
@@ -594,7 +594,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_CONTINUE;
 
   // Get element typecode.
-  CORBA::TypeCode_var tc2 =
+  CORBA::TypeCode_var const tc2 =
     tc->content_type ();
 
   // For CORBA basic types, the skip can be optimized
@@ -678,7 +678,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
   // get element typecode
   // Typecode of the element.
-  CORBA::TypeCode_var tc2 = tc->content_type ();
+  CORBA::TypeCode_var const tc2 = tc->content_type ();
 
   // For CORBA basic types, the skip can be optimized
   CORBA::TCKind const kind = tc2->kind ();
@@ -758,7 +758,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
-  CORBA::Boolean continue_skipping {true};
+  CORBA::Boolean const continue_skipping {true};
 
   // Status of decode operation.
   TAO::traverse_status retval =

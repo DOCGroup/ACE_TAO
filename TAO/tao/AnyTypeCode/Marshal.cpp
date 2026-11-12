@@ -133,7 +133,7 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
                                     TAO_InputCDR *src,
                                     TAO_OutputCDR *dest)
 {
-  CORBA::ULong kind = tc->kind ();
+  CORBA::ULong const kind = tc->kind ();
 
   switch (kind)
     {
