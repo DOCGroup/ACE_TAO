@@ -8,7 +8,6 @@
 // some cases it isnt) problems can already be seen in the multiple
 // orb scenarios
 
-
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
@@ -35,7 +34,7 @@ constexpr ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -O
 // Empty file.
 constexpr ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
 
-int
+static int
 testBug1459 (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("testBug1459");
@@ -46,7 +45,7 @@ testBug1459 (int, ACE_TCHAR *[])
 
       ACE_ARGV argM (argStrM);
       int argcM = argM.argc ();
-      CORBA::ORB_var ORBM =
+      CORBA::ORB_var const ORBM =
         CORBA::ORB_init (argcM, argM.argv ());
 
       if (CORBA::is_nil (ORBM.in ()))
@@ -58,7 +57,7 @@ testBug1459 (int, ACE_TCHAR *[])
       // UIOP
       ACE_ARGV argA (argStrA);
       int argcA = argA.argc ();
-      CORBA::ORB_var ORBA =
+      CORBA::ORB_var const ORBA =
         CORBA::ORB_init (argcA, argA.argv ());
 
       if (CORBA::is_nil (ORBA.in ()))
@@ -71,7 +70,7 @@ testBug1459 (int, ACE_TCHAR *[])
       // SSLIOP
       ACE_ARGV argB (argStrB);
       int argcB = argB.argc ();
-      CORBA::ORB_var ORBB =
+      CORBA::ORB_var const ORBB =
         CORBA::ORB_init (argcB, argB.argv ());
 
       if (CORBA::is_nil (ORBB.in ()))
@@ -83,7 +82,7 @@ testBug1459 (int, ACE_TCHAR *[])
       // MIOP
       ACE_ARGV argC (argStrC);
       int argcC = argC.argc ();
-      CORBA::ORB_var ORBC =
+      CORBA::ORB_var const ORBC =
         CORBA::ORB_init (argcC, argC.argv ());
 
       if (CORBA::is_nil (ORBC.in ()))
@@ -94,7 +93,7 @@ testBug1459 (int, ACE_TCHAR *[])
       // DIOP
       ACE_ARGV argD (argStrD);
       int argcD = argD.argc ();
-      CORBA::ORB_var ORBD =
+      CORBA::ORB_var const ORBD =
         CORBA::ORB_init (argcD, argD.argv ());
 
       if (CORBA::is_nil (ORBD.in ()))
