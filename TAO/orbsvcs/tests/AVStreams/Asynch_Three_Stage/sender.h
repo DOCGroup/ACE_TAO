@@ -11,6 +11,9 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H
+#define TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H
+
 #include <cstdio>
 #include <memory>
 
@@ -108,6 +111,8 @@ private:
 
   Options options_;
 
-  // Connection manager.
+  /// Connection manager.
   Connection_Manager connection_manager_;
 };
+
+#endif /* TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H */

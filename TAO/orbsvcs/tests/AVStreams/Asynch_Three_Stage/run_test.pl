@@ -44,9 +44,9 @@ my $re2_outputfile2 = $re2->LocalFile ($outputfile2);
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($inputfile);
 $sv1->DeleteFile ($inputfile);
 $re1->DeleteFile ($outputfile1);
@@ -203,9 +203,9 @@ if ($NS_status != 0) {
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $re1->DeleteFile ($outputfile1);
 $re2->DeleteFile ($outputfile2);
 
@@ -321,9 +321,9 @@ if ($NS_status != 0) {
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $re1->DeleteFile ($outputfile1);
 $re2->DeleteFile ($outputfile2);
 
@@ -451,9 +451,9 @@ if ($NS_status != 0) {
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($inputfile);
 $sv1->DeleteFile ($inputfile);
 $re1->DeleteFile ($outputfile1);

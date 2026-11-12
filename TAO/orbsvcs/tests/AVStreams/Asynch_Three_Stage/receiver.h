@@ -11,6 +11,9 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_ASYNCH_THREE_STAGE_RECEIVER_H
+#define TAO_AVSTREAMS_ASYNCH_THREE_STAGE_RECEIVER_H
+
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -32,14 +35,12 @@ public:
   Receiver_Callback (Receiver_Callback &&) = delete;
   Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Receive a frame sent by the sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Close down the connection when the sender finishes.
   int handle_destroy () override;
 
 private:
@@ -63,7 +64,7 @@ public:
   Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
   Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
 
-  // Create a receiver application callback.
+  /// Return the receiver's application callback.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
@@ -116,3 +117,5 @@ protected:
 
   Options options_;
 };
+
+#endif /* TAO_AVSTREAMS_ASYNCH_THREE_STAGE_RECEIVER_H */

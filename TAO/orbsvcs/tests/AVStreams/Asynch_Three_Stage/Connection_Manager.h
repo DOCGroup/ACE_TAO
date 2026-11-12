@@ -22,7 +22,9 @@
 class Endpoint_Addresses
 {
 public:
+  /// Sender transport address.
   ACE_CString sender_addr {};
+  /// Receiver transport address.
   ACE_CString receiver_addr {};
 };
 
@@ -67,32 +69,34 @@ public:
   void add_streamctrl (ACE_CString const &flowname,
                        TAO_StreamEndPoint *endpoint);
 
-  // Map of receivers.
+  /// Map of named receiver devices.
   using Receivers = ACE_Hash_Map_Manager<ACE_CString,
                                         AVStreams::MMDevice_var,
                                         ACE_Null_Mutex>;
 
-  // Map of protocol objects.
-  // Borrowed from the AVStreams endpoint objects; the map does not own them.
+  /// Map of borrowed protocol objects from AVStreams endpoints.
   using Protocol_Objects = ACE_Hash_Map_Manager<ACE_CString,
                                                 TAO_AV_Protocol_Object *,
                                                 ACE_Null_Mutex>;
 
-  // Map of streamctrl.
+  /// Map of retained stream controllers.
   using StreamCtrls = ACE_Hash_Map_Manager<ACE_CString,
                                            AVStreams::StreamCtrl_var,
                                            ACE_Null_Mutex>;
 
-  // Map of flownames and corresponding endpoint addresses
+  /// Map of flow names to transport endpoint addresses.
   using EP_Addr = ACE_Hash_Map_Manager<ACE_CString,
                                Endpoint_Addresses,
                                ACE_Null_Mutex>;
 
-  // Map accessors.
+  /// Access the retained receiver devices.
   Receivers &receivers ();
+  /// Access borrowed endpoint protocol objects.
   Protocol_Objects &protocol_objects ();
+  /// Access retained stream controllers.
   StreamCtrls &streamctrls ();
 
+  /// Load sender and receiver endpoint addresses from a file.
   void load_ep_addr (char const *file_name);
 
 protected:
@@ -103,28 +107,31 @@ protected:
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
 
-  // The maps.
+  /// Receiver device references indexed by flow name.
   Receivers receivers_;
+  /// Borrowed protocol objects indexed by flow name.
   Protocol_Objects protocol_objects_;
+  /// Stream controller references indexed by flow name.
   StreamCtrls streamctrls_;
+  /// Endpoint addresses indexed by flow name.
   EP_Addr ep_addr_;
 
-  // Sender name.
+  /// Name of the sender in the naming service.
   ACE_CString sender_name_;
 
-  // Sender device.
+  /// Sender device reference.
   AVStreams::MMDevice_var sender_;
 
-  // Sender context.
+  /// Sender naming context.
   CosNaming::NamingContext_var sender_context_;
 
-  // Receiver name.
+  /// Name of the receiver in the naming service.
   ACE_CString receiver_name_;
 
-  // Receiver device.
+  /// Receiver device reference.
   AVStreams::MMDevice_var receiver_;
 
-  // Receiver context.
+  /// Receiver naming context.
   CosNaming::NamingContext_var receiver_context_;
 };
 

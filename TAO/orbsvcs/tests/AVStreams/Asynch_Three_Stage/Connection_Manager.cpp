@@ -228,7 +228,7 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list)
 {
   for (CORBA::ULong i = 0;
        i < binding_list.length ();
-       i++)
+       ++i)
     {
       // Get the receiver name from the binding list.
       ACE_CString receiver_name =

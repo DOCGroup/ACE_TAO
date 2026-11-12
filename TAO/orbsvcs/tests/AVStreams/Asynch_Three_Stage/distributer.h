@@ -11,6 +11,9 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_ASYNCH_THREE_STAGE_DISTRIBUTER_H
+#define TAO_AVSTREAMS_ASYNCH_THREE_STAGE_DISTRIBUTER_H
+
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -32,14 +35,12 @@ public:
   Distributer_Receiver_Callback (Distributer_Receiver_Callback &&) = delete;
   Distributer_Receiver_Callback &operator= (Distributer_Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Receive and forward a frame from the sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Shut down the receiver stream when the sender finishes.
   int handle_destroy () override;
 
 private:
@@ -63,7 +64,7 @@ public:
   Distributer_Receiver_StreamEndPoint (Distributer_Receiver_StreamEndPoint &&) = delete;
   Distributer_Receiver_StreamEndPoint &operator= (Distributer_Receiver_StreamEndPoint &&) = delete;
 
-  // Create a receiver application callback.
+  /// Return the receiver's application callback.
   int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
@@ -80,8 +81,6 @@ private:
 class Distributer_Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
-  /// Create the application callback and return its handle to
-  /// AVStreams for further application callbacks.
   Distributer_Sender_StreamEndPoint () = default;
   Distributer_Sender_StreamEndPoint (Distributer_Sender_StreamEndPoint const &) = delete;
   Distributer_Sender_StreamEndPoint &operator= (Distributer_Sender_StreamEndPoint const &) = delete;
@@ -134,7 +133,7 @@ public:
   /// Parse args.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // Flag to know when we are done.
+  /// Get or set whether stream processing has finished.
   bool done () const;
   void done (bool);
 
@@ -161,3 +160,5 @@ protected:
   Options options_;
   bool done_ {};
 };
+
+#endif /* TAO_AVSTREAMS_ASYNCH_THREE_STAGE_DISTRIBUTER_H */
