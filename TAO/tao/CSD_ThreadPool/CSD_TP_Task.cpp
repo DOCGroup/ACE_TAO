@@ -156,7 +156,7 @@ TAO::CSD::TP_Task::svc()
 
               // If a dispatchable request is located, it is extracted
               // from the queue and saved in a handle data member in the
-              // visitor object.  Let's get a "copy" (or a NULL pointer
+              // visitor object.  Let's get a "copy" (or a null pointer
               // if the visitor didn't locate/extract one).
               request = dispatchable_visitor.request();
             }
