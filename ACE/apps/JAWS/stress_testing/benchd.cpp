@@ -10,6 +10,7 @@
 #include "ace/Signal.h"
 #include "ace/OS_NS_stdio.h"
 #include <iostream>
+#include <cstring>
 
 #if defined (ACE_HAS_IP_MULTICAST)
 // network interface to subscribe to
@@ -150,7 +151,7 @@ Handle_Events::serve (char *buf)
 {
   ACE_ARGV arguments (buf);
 
-  if (arguments[0] != nullptr && ACE_OS::strcmp (arguments[0], TESTER) == 0)
+  if (arguments[0] != nullptr && std::strcmp (arguments[0], TESTER) == 0)
     {
       ACE_Process_Options po;
       ACE_Process p;
