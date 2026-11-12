@@ -39,7 +39,7 @@ class TAO_DynamicAny_Export TAO_DynArray_i
 public:
   explicit TAO_DynArray_i (CORBA::Boolean allow_truncation = true);
 
-  ~TAO_DynArray_i ();
+  ~TAO_DynArray_i () override;
 
   TAO_DynArray_i (TAO_DynArray_i const &src) = delete;
   TAO_DynArray_i &operator= (TAO_DynArray_i const &src) = delete;
