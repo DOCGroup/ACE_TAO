@@ -15,7 +15,7 @@ TAO_RT_POA::create_reference_with_priority (char const *intf,
   this->validate_priority (priority);
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->create_reference_i (intf, priority);
 }
@@ -32,7 +32,7 @@ TAO_RT_POA::create_reference_with_id_and_priority (PortableServer::ObjectId cons
   this->validate_priority (priority);
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->create_reference_with_id_i (oid, intf, priority);
 }
@@ -52,7 +52,7 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
       bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (0);
+      TAO_POA_GUARD_RETURN (nullptr);
 
       PortableServer::ObjectId *result =
         this->activate_object_i (servant, priority, wait_occurred_restart_call);

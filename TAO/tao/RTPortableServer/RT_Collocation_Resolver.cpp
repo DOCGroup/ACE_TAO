@@ -100,7 +100,6 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
     return false;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_RT_Collocation_Resolver,
                        ACE_TEXT ("RT_Collocation_Resolver"),
                        ACE_SVC_OBJ_T,

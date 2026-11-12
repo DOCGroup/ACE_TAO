@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Servant_Dispatcher.h
  *
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_RT_SERVANT_DISPATCHER_H
 #define TAO_RT_SERVANT_DISPATCHER_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RTPortableServer.h
  *
  *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RT_PORTABLESERVER_H
 #define TAO_RT_PORTABLESERVER_H
