@@ -644,7 +644,7 @@ TAO_DynCommon::get_any ()
       CORBA::Any *retval {};
       ACE_NEW_RETURN (retval,
                       CORBA::Any (*tmp),
-                      0);
+                      nullptr);
       return retval;
     }
 }
