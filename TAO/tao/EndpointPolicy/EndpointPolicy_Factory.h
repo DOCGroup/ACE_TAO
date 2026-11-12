@@ -43,14 +43,16 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Factory
 public:
   explicit TAO_EndpointPolicy_Factory (TAO_ORB_Core *orb_core);
 
-  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   CORBA::Any const& value) override;
-private:
   TAO_EndpointPolicy_Factory (TAO_EndpointPolicy_Factory const &) = delete;
   TAO_EndpointPolicy_Factory &operator= (TAO_EndpointPolicy_Factory const &) = delete;
   TAO_EndpointPolicy_Factory (TAO_EndpointPolicy_Factory &&) = delete;
   TAO_EndpointPolicy_Factory &operator= (TAO_EndpointPolicy_Factory &&) = delete;
 
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                   CORBA::Any const& value) override;
+
+private:
+  // Non-owning: the ORB core outlives the registered policy factory.
   TAO_ORB_Core * orb_core_;
 };
 

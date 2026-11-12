@@ -29,6 +29,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
     {
+      // This pointer aliases the sequence stored in the supplied Any.
       EndpointPolicy::EndpointList const *endpoint_list {};
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
@@ -44,7 +45,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 
       CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
       int prot_count {};
-      for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
+      for (std::unique_ptr<TAO_Acceptor> const &acceptor : registry.acceptors ())
         {
           if (acceptor->tag () != last_known_prot)
             {
@@ -52,7 +53,6 @@ TAO_EndpointPolicy_Factory::create_policy (
               ++prot_count;
             }
         }
-
 
       // The endpoint list in the value is validated to ensure that
       // at least one endpoint in the list matches an endpoint the
@@ -63,14 +63,14 @@ TAO_EndpointPolicy_Factory::create_policy (
         {
           CORBA::ULong const prot_tag = (*endpoint_list)[idx]->protocol_tag();
 
-          TAO_Endpoint_Value_Impl const* const evi =
+          TAO_Endpoint_Value_Impl const * const evi =
             dynamic_cast <TAO_Endpoint_Value_Impl const *> (
               (*endpoint_list)[idx].in ());
 
           if (evi == nullptr)
             continue;
 
-          for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry.acceptors ())
+          for (std::unique_ptr<TAO_Acceptor> const &acceptor : registry.acceptors ())
             {
               if (!found_one && acceptor->tag () == prot_tag)
                 found_one = evi->validate_acceptor (acceptor.get (), prot_count > 1);

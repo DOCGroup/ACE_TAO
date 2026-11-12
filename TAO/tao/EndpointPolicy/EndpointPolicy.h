@@ -31,17 +31,17 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer
 public:
   TAO_EndpointPolicy_Initializer () = default;
 
+  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer const &) = delete;
+  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer const &) = delete;
+  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer &&) = delete;
+  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer &&) = delete;
+
   /// Used to force the initialization of the ORB code.
   static int static_init ();
 
   /// Initialize the Endpoint Policy loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
-  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer const &) = delete;
-  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer const &) = delete;
-  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer &&) = delete;
-  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer &&) = delete;
 };
 
 static int

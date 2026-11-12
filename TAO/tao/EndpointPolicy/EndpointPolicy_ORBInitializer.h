@@ -40,6 +40,11 @@ class TAO_EndpointPolicy_ORBInitializer
 public:
   TAO_EndpointPolicy_ORBInitializer () = default;
 
+  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer const &) = delete;
+  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer const &) = delete;
+  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer &&) = delete;
+  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer &&) = delete;
+
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -53,11 +58,6 @@ public:
   //@}
 
 private:
-  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer const &) = delete;
-  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer const &) = delete;
-  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer &&) = delete;
-  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer &&) = delete;
-
   /// Register Endpoint policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

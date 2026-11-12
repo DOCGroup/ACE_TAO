@@ -46,17 +46,15 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_i
 public:
   explicit TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const &value);
 
-  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const& rhs);
+  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const &rhs);
 
   TAO_EndpointPolicy_i (TAO_EndpointPolicy_i &&) = delete;
   TAO_EndpointPolicy_i &operator= (TAO_EndpointPolicy_i &&) = delete;
 
   ~TAO_EndpointPolicy_i () override = default;
 
-  /// Returns a copy of this>
+  /// Returns a copy of this policy.
   virtual TAO_EndpointPolicy_i *clone () const;
-
-  // = The EndpointPolicy::Policy methods
 
   CORBA::PolicyType policy_type () override;
 
@@ -64,10 +62,10 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Returns the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  EndpointPolicy::EndpointList * value () override;
+  EndpointPolicy::EndpointList *value () override;
 
 private:
   /// The attribute

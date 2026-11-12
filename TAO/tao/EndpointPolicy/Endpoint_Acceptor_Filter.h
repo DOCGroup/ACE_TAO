@@ -48,19 +48,18 @@ public:
 
   /// Populate @a mprofile with endpoints match the POAManager endpoint
   /// policy.
-  int fill_profile (TAO::ObjectKey const& object_key,
+  int fill_profile (TAO::ObjectKey const &object_key,
                     TAO_MProfile &mprofile,
-                    TAO_AcceptorSet const& acceptors,
+                    TAO_AcceptorSet const &acceptors,
                     CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
-private:
   TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter const &) = delete;
   TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter const &) = delete;
   TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter &&) = delete;
   TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter &&) = delete;
 
-  // this is the list of endpoints as obtained from the policy value supplied
-  // to the constructor.
+private:
+  /// Endpoint filter list supplied through the policy.
   EndpointPolicy::EndpointList endpoints_;
 };
 
