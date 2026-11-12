@@ -8,6 +8,8 @@
 #include "tao/ORB.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
+#include <array>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,14 +73,11 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
 
-  TAO::Argument *_tao_signature [] =
-    {
-      &_tao_retval
-    };
+  std::array<TAO::Argument *, 1> args {{&_tao_retval}};
 
   TAO::Invocation_Adapter _tao_call (
       target,
-      _tao_signature,
+      args.data (),
       1,
       "_interface",
       10,
@@ -115,11 +114,12 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
   for (CORBA::ULong i {}; i < paramCount; ++i)
     {
       CORBA::Any value;
-      TAO::Unknown_IDL_Type *unk {};
-      ACE_NEW (unk,
+      TAO::Unknown_IDL_Type *unk_raw {};
+      ACE_NEW (unk_raw,
                TAO::Unknown_IDL_Type (params[i].type.in ()));
+      std::unique_ptr<TAO::Unknown_IDL_Type> unk (unk_raw);
       // Any::replace takes ownership of this implementation.
-      value.replace (unk);
+      value.replace (unk.release ());
 
       // Convert the parameter mode to an arg mode
       CORBA::Flags flags {};
@@ -145,8 +145,6 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 }
 
 #endif /*TAO_HAS_MINIMUM_CORBA*/
-// *********************************************************************
-
 // Initialization and registration of dynamic service object.
 
 int
@@ -156,7 +154,6 @@ TAO_IFR_Client_Adapter_Impl::Initializer ()
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IFR_Client_Adapter_Impl);
 }
-
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IFR_Client_Adapter_Impl,

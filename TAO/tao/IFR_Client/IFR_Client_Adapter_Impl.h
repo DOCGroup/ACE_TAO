@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IFR_Client_Adapter_Impl.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_IFR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IFR_CLIENT_ADAPTER_IMPL_H
 
@@ -79,7 +75,6 @@ public:
 static int
 TAO_Requires_IFR_Client_Initializer =
   TAO_IFR_Client_Adapter_Impl::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_IFR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IFR_CLIENT, TAO_IFR_Client_Adapter_Impl)
