@@ -2,6 +2,7 @@
 #include "ace/Monitor_Point_Registry.h"
 
 #include <memory>
+#include <cstring>
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
@@ -17,7 +18,7 @@ sorter (void const* a, void const* b)
 {
   char const* left = *static_cast<char const* const*> (a);
   char const* right = *static_cast<char const* const*> (b);
-  return ACE_OS::strcmp (left, right);
+  return std::strcmp (left, right);
 }
 
 // It's reasonable to assume that there is only one event channel
@@ -180,9 +181,9 @@ MonitorTestInterface_i::consumer_stats_check ()
             {
               ++slash_count;
               if (slash_count == 3)
-                is_consumer_queue_size = 0 == ACE_OS::strcmp (
+                is_consumer_queue_size = std::strcmp (
                   &name[character_index + 1],
-                  NotifyMonitoringExt::EventChannelQueueSize);
+                  NotifyMonitoringExt::EventChannelQueueSize) == 0;
             }
         }
       if (is_consumer_queue_size)
