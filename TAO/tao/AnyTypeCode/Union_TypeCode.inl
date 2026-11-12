@@ -42,7 +42,7 @@ TAO::TypeCode::Union<StringType,
   , base_attributes_ (id)
   , discriminant_type_ (nullptr)
   , default_index_ (-1)
-  , ncases_ (0)
+  , ncases_ {}
   , cases_ ()
 {
 }

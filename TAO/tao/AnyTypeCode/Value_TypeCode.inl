@@ -43,7 +43,7 @@ TAO::TypeCode::Value<StringType,
   , base_attributes_ (id)
   , type_modifier_ (CORBA::VM_NONE)
   , concrete_base_ ()
-  , nfields_ (0)
+  , nfields_ {}
   , fields_ ()
 {
 }

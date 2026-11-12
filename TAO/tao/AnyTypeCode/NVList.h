@@ -125,7 +125,8 @@ namespace CORBA
     /// parameter mode flags
     Flags flags_ {};
 
-    /// optional IDL name of the parameter
+    /// Optional IDL name; this object owns the string and frees it on
+    /// destruction.
     char *name_ {};
   };
 

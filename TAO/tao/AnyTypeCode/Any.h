@@ -168,7 +168,7 @@ namespace CORBA
     CORBA::Boolean operator>>= (unsigned char&) const;
 
   private:
-    // Holds a reference-counted Any_Impl; Any manages it with _add_ref/_remove_ref.
+    /// Holds a reference-counted Any_Impl, managed by Any with _add_ref/_remove_ref.
     TAO::Any_Impl *impl_ {};
 
     friend class TAO_Marshal_Any;
@@ -222,8 +222,7 @@ namespace CORBA
     /// TAO specific extension
     Any *ptr () const;
   private:
-    /// Holds the Any.
-    // Kept as a raw pointer for the CORBA _var mapping's out/retn interfaces.
+    /// Holds the Any as a raw pointer for the CORBA _var mapping's out/retn interfaces.
     Any *ptr_ {};
   };
 
