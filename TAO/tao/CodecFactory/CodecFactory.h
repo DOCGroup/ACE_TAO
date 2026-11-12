@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CodecFactory.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
 #ifndef TAO_CODECFACTORY_H
 #define TAO_CODECFACTORY_H
 

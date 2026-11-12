@@ -1,11 +1,8 @@
-// =================================================================
 /**
  * @file CodecFactory.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
-
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/CodecFactory/CodecFactory_impl.h"
 

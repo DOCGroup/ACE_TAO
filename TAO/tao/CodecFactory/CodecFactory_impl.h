@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  * @file CodecFactory_impl.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 #ifndef TAO_CODEC_FACTORY_IMPL_H
 #define TAO_CODEC_FACTORY_IMPL_H
 

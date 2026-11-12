@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  * @file CDR_Encaps_Codec.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 #ifndef TAO_CDR_ENCAPS_CODEC_H
 #define TAO_CDR_ENCAPS_CODEC_H
 
