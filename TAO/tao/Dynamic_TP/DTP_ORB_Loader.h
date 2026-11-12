@@ -33,21 +33,19 @@ class TAO_ORB_Core;
 class TAO_Dynamic_TP_Export TAO_DTP_ORB_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_DTP_ORB_Loader ();
 
-  /// Destructor.
   ~TAO_DTP_ORB_Loader () override;
 
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader const &) = delete;
   TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader const &) = delete;
   TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader &&) = delete;
   TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader &&) = delete;
 
+private:
   /// Set to true after init is called.
   bool initialized_ {};
 };

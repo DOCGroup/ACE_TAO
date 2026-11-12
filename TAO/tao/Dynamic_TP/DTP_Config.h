@@ -23,6 +23,7 @@
 #include "ace/Service_Config.h"
 #include "ace/RB_Tree.h"
 #include "ace/Synch.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,17 +39,13 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
   size_t stack_size_ {ACE_DEFAULT_THREAD_STACKSIZE};
   ACE_Time_Value timeout_ {60, 0};   // default to 60 seconds
   int queue_depth_ {};
-
-  // Create explicit constructor to eliminate issues with non-initialized struct values.
-  TAO_DTP_Definition () = default;
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 {
- public:
+public:
   TAO_DTP_Config_Registry_Installer ();
 
- private:
   TAO_DTP_Config_Registry_Installer (TAO_DTP_Config_Registry_Installer const &) = delete;
   TAO_DTP_Config_Registry_Installer &operator= (
     TAO_DTP_Config_Registry_Installer const &) = delete;
@@ -66,33 +63,31 @@ public:
   int init (int argc, ACE_TCHAR* []) override;
 
   /// initializes the supplied set value with the configuration associated with the name, or returns false.
-  bool find (const ACE_CString& name, TAO_DTP_Definition &entry);
+  bool find (std::string const &name, TAO_DTP_Definition &entry);
 
-  int bind (const ACE_CString& name, TAO_DTP_Definition &entry);
-  int rebind (const ACE_CString& name, TAO_DTP_Definition &entry);
+  int bind (std::string const &name, TAO_DTP_Definition &entry);
+  int rebind (std::string const &name, TAO_DTP_Definition &entry);
 
- private:
   TAO_DTP_Config_Registry (TAO_DTP_Config_Registry const &) = delete;
   TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry const &) = delete;
   TAO_DTP_Config_Registry (TAO_DTP_Config_Registry &&) = delete;
   TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry &&) = delete;
 
+private:
   using Registry =
-    ACE_RB_Tree<ACE_CString, TAO_DTP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
+    ACE_RB_Tree<std::string, TAO_DTP_Definition, ACE_Less_Than<std::string>, ACE_Null_Mutex>;
   Registry registry_;
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_DTP_Config ();
 
-  /// Destructor.
   ~TAO_DTP_Config () override;
 
   /// Read a definition parameter set from the supplied args.
-  /// There must be a -TPName argument, which, if replicated will cause the set to be ignored, unless -TPOverwrite is also set
+  /// A repeated -TPName is ignored unless -TPOverwrite is also set.
   /// constriants: min threads <= initial threads <= max_threads.
   /// defaults: min threads = initial = max = 5
   /// default lifespan = infinite
@@ -102,17 +97,20 @@ public:
   /// Init can be called multiple times,
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DTP_Config (TAO_DTP_Config const &) = delete;
   TAO_DTP_Config &operator= (TAO_DTP_Config const &) = delete;
   TAO_DTP_Config (TAO_DTP_Config &&) = delete;
   TAO_DTP_Config &operator= (TAO_DTP_Config &&) = delete;
 
-  int parse_long (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, long &value);
-  int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, bool &value);
-  int parse_string (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, ACE_TCHAR *&value);
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+private:
+  int parse_long (int &curarg, int argc, ACE_TCHAR* argv[],
+                  ACE_TCHAR const *match, long &value);
+  int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[],
+                  ACE_TCHAR const *match, bool &value);
+  int parse_string (int &curarg, int argc, ACE_TCHAR* argv[],
+                    ACE_TCHAR const *match, ACE_TCHAR const *&value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 };
 
 static TAO_DTP_Config_Registry_Installer config_installer;

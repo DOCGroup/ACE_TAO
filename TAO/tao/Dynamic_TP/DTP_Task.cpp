@@ -1,5 +1,7 @@
 #include "tao/Dynamic_TP/DTP_Task.h"
 
+#include <memory>
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
@@ -43,9 +45,9 @@ TAO_DTP_Task::add_request (TAO::CSD::TP_Request* request)
                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::add_request() ")
                         ACE_TEXT ("not accepting requests.\n")
                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::add_request() ")
-                        ACE_TEXT ("num_queue_requests_ : [%d]\n")
+                        ACE_TEXT ("num_queue_requests_ : [%B]\n")
                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::add_request() ")
-                        ACE_TEXT ("max_request_queue_depth_ : [%d]\n"),
+                        ACE_TEXT ("max_request_queue_depth_ : [%B]\n"),
                         this->num_queue_requests_,
                         this->max_request_queue_depth_));
           }
@@ -123,18 +125,18 @@ TAO_DTP_Task::open (void * /* args */)
       return 0;
     }
 
-  int num = static_cast<int> (this->init_pool_threads_);
+  int const num = static_cast<int> (this->init_pool_threads_);
 
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() initialized with:\n")
-                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() init_threads_ \t\t: [%d]\n")
-                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() min_pool_threads_ \t\t: [%d]\n")
-                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_pool_threads_ \t\t: [%d]\n")
-                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_request_queue_depth_ \t: [%d]\n")
-                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_stack_size_ \t\t: [%d]\n")
-                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_idle_time_ \t\t: [%d]\n"),
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() init_threads_ \t\t: [%B]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() min_pool_threads_ \t\t: [%B]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_pool_threads_ \t\t: [%B]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_request_queue_depth_ \t: [%B]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_stack_size_ \t\t: [%B]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_idle_time_ \t\t: [%:]\n"),
                     this->init_pool_threads_,
                     this->min_pool_threads_,
                     this->max_pool_threads_,
@@ -150,7 +152,7 @@ TAO_DTP_Task::open (void * /* args */)
         {
           TAOLIB_ERROR ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) DTP_Task::open() failed to open.  ")
-                         ACE_TEXT ("num_threads (%u) is less-than 1.\n"),
+                         ACE_TEXT ("num_threads (%d) is less-than 1.\n"),
                          num));
         }
       return -1;
@@ -178,8 +180,8 @@ TAO_DTP_Task::open (void * /* args */)
     }
   else
     {
-      size_t * stack_sz_arr = new size_t[num];
-      for (int z = 0; z < num; z++)
+      std::unique_ptr<size_t[]> stack_sz_arr {std::make_unique<size_t[]> (num)};
+      for (int z {}; z < num; ++z)
         {
           stack_sz_arr[z] = this->thread_stack_size_;
         }
@@ -192,7 +194,7 @@ TAO_DTP_Task::open (void * /* args */)
                           0,
                           0,
                           0,
-                          stack_sz_arr) != 0)
+                          stack_sz_arr.get ()) != 0)
         {
           TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) DTP_Task::open() failed to activate ")
@@ -200,8 +202,6 @@ TAO_DTP_Task::open (void * /* args */)
                              num),
                             -1);
         }
-
-      delete[] stack_sz_arr;
     }
 
   if (TAO_debug_level > 4)
@@ -248,7 +248,7 @@ TAO_DTP_Task::clear_request (TAO::CSD::TP_Request_Handle &r)
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP_Task::clear_request() ")
                   ACE_TEXT ("Decrementing num_queue_requests.")
-                  ACE_TEXT ("New queue depth:%d\n"),
+                  ACE_TEXT ("New queue depth:%B\n"),
                   this->num_queue_requests_));
     }
 
@@ -293,7 +293,7 @@ bool
 TAO_DTP_Task::need_active ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->aw_lock_, false);
-  return ((this->busy_threads_ == static_cast<unsigned long> (this->active_count_)) &&
+  return ((this->busy_threads_ == this->active_count_) &&
           ((this->max_pool_threads_ < 1) ||
            (this->active_count_ < this->max_pool_threads_)));
 }
@@ -331,7 +331,7 @@ TAO_DTP_Task::svc ()
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Decrementing busy_threads_. ")
-                              ACE_TEXT ("Busy thread count:%d\n"),
+                              ACE_TEXT ("Busy thread count:%B\n"),
                               this->busy_threads_.load()));
                 }
 
@@ -339,7 +339,7 @@ TAO_DTP_Task::svc ()
 
               {
                 ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);
-                int wait_state = 0;
+                int wait_state {};
                 while (!(this->shutdown_ || this->check_queue_) && wait_state != -1)
                   {
                     wait_state = this->thread_idle_time_.sec () == 0
@@ -371,7 +371,7 @@ TAO_DTP_Task::svc ()
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Incrementing busy_threads_. ")
-                              ACE_TEXT ("Busy thread count:%d\n"),
+                              ACE_TEXT ("Busy thread count:%B\n"),
                               this->busy_threads_.load ()));
                 }
             }
@@ -442,12 +442,12 @@ TAO_DTP_Task::close (u_long flag)
     this->work_available_.broadcast();
   }
 
-  size_t in_task = (this->thr_mgr ()->task () == this) ? 1 : 0;
+  size_t const in_task = (this->thr_mgr ()->task () == this) ? 1 : 0;
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP_Task::close() ")
-                  ACE_TEXT ("shutting down. in_task = %d,  Count = %d \n"),
+                  ACE_TEXT ("shutting down. in_task = %B,  Count = %d \n"),
                   in_task,  this->thr_count ()));
     }
 

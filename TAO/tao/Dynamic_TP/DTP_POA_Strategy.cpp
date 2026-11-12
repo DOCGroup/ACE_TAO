@@ -22,10 +22,10 @@ TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_synch_request(
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
     this->get_servant_state(op->servant());
 
-  TAO::CSD::TP_Custom_Synch_Request *req_ptr;
+  TAO::CSD::TP_Custom_Synch_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
                   TAO::CSD::TP_Custom_Synch_Request(op, servant_state.in ()),
                   REQUEST_REJECTED);
@@ -46,10 +46,10 @@ TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_asynch_request (
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
     this->get_servant_state (op->servant ());
 
-  TAO::CSD::TP_Custom_Asynch_Request *req_ptr;
+  TAO::CSD::TP_Custom_Asynch_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
                   TAO::CSD::TP_Custom_Asynch_Request (op, servant_state.in ()),
                   REQUEST_REJECTED);
@@ -68,7 +68,7 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
   // Activates the worker threads, and waits until all have been started.
   if (!this->config_initialized_)
     {
-      TAO_DTP_Config_Registry * config_repo =
+      TAO_DTP_Config_Registry * const config_repo =
       ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
         ("DTP_Config_Registry");
 
@@ -120,19 +120,19 @@ TAO_DTP_POA_Strategy::poa_deactivated_event_i ()
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_DTP_POA_Strategy::dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state (servant);
 
   // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
   // before queuing the request and thus avoid delaying the client.
   // This is a problem if the servant ends up throwing a Location Forward
   // exception. If necessary, add an override config option here.
-  CORBA::Boolean early_sync = true;
+  CORBA::Boolean const early_sync = true;
   server_request.is_queued (early_sync);
   server_request.sync_before_dispatch ();
 
@@ -141,7 +141,7 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
   //
   // TBD-CSD: Need to use a Cached Allocator to "create" the
   //          TP_Remote_Request objects.  For now, use the heap.
-  TAO::CSD::TP_Remote_Request *req_ptr;
+  TAO::CSD::TP_Remote_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
                   TAO::CSD::TP_Remote_Request (server_request,
                                                object_id,
@@ -169,16 +169,16 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant)
 {
-  TAO::CSD::TP_Servant_State::HandleType servant_state =
+  TAO::CSD::TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state (servant);
 
-  bool is_sync_with_server = server_request.sync_with_server ();
-  bool is_synchronous      = server_request.response_expected ();
+  bool const is_sync_with_server = server_request.sync_with_server ();
+  bool const is_synchronous = server_request.response_expected ();
 
   TAO::CSD::TP_Collocated_Synch_Request_Handle
     synch_request;
@@ -190,7 +190,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
   // Create the request object using the appropriate concrete type.
   if (is_sync_with_server)
     {
-      TAO::CSD::TP_Collocated_Synch_With_Server_Request *req_ptr;
+      TAO::CSD::TP_Collocated_Synch_With_Server_Request *req_ptr {};
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Synch_With_Server_Request
                         (server_request,
@@ -209,7 +209,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else if (is_synchronous)
     {
-      TAO::CSD::TP_Collocated_Synch_Request *req_ptr;
+      TAO::CSD::TP_Collocated_Synch_Request *req_ptr {};
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Synch_Request (
                                    server_request,
@@ -228,7 +228,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else
     {
-      TAO::CSD::TP_Collocated_Asynch_Request *req_ptr;
+      TAO::CSD::TP_Collocated_Asynch_Request *req_ptr {};
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Asynch_Request (server_request,
                                                               object_id,
@@ -256,7 +256,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
   // synchronous request.
   if (!synch_request.is_nil ())
     {
-      int srw = synch_request->wait ();
+      int const srw = synch_request->wait ();
       if (srw == false)
         {
           // Raise exception when request was cancelled.
@@ -265,7 +265,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else if (!synch_with_server_request.is_nil())
     {
-      bool swsr = synch_with_server_request->wait();
+      bool const swsr = synch_with_server_request->wait();
       if (swsr == false)
         {
           // Raise exception when request was cancelled.
@@ -279,7 +279,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
 void
 TAO_DTP_POA_Strategy::servant_activated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   if (this->serialize_servants_)
     {
@@ -291,7 +291,7 @@ TAO_DTP_POA_Strategy::servant_activated_event_i
 void
 TAO_DTP_POA_Strategy::servant_deactivated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->dtp_task_.cancel_servant (servant);
@@ -393,13 +393,13 @@ TAO_DTP_POA_Strategy::set_dtp_config (TAO_DTP_Definition &tp_config)
         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy: ")
         ACE_TEXT ("Initialized with:\n")
         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy initial_pool_threads_=")
-        ACE_TEXT ("[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy min_pool_threads_=[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_pool_threads_=[%d]\n")
+        ACE_TEXT ("[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy min_pool_threads_=[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_pool_threads_=[%B]\n")
         ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_request_queue_depth_=")
-        ACE_TEXT ("[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_stack_size_=[%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_idle_time_=[%d]\n"),
+        ACE_TEXT ("[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_stack_size_=[%B]\n")
+        ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_idle_time_=[%:]\n"),
         this->dtp_task_.get_init_pool_threads(),
         this->dtp_task_.get_min_pool_threads(),
         this->dtp_task_.get_max_pool_threads(),

@@ -28,21 +28,21 @@ TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
 }
 
 bool
-TAO_DTP_Config_Registry::find (const ACE_CString& name,
+TAO_DTP_Config_Registry::find (std::string const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.find (name, entry) == 0;
 }
 
 int
-TAO_DTP_Config_Registry::bind (const ACE_CString& name,
+TAO_DTP_Config_Registry::bind (std::string const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.bind (name, entry);
 }
 
 int
-TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
+TAO_DTP_Config_Registry::rebind (std::string const &name,
                                  TAO_DTP_Definition &entry)
 {
   return registry_.rebind (name, entry);
@@ -55,21 +55,20 @@ TAO_DTP_Config::TAO_DTP_Config () = default;
 int
 TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 {
-  TAO_DTP_Definition entry;
+  TAO_DTP_Definition entry {};
 
-  ACE_TCHAR *name = nullptr;
-  bool overwrite = false;
+  ACE_TCHAR const *name {};
+  bool overwrite {};
 
-  int curarg = 0;
-  int r = 0;
+  int r {};
 
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
-      long val = 0;
+      long val {};
       if ((r = this->parse_string (curarg,
                                    argc,
                                    argv,
-                                   ACE_TEXT("-DTPName"),name )) != 0)
+                                   ACE_TEXT ("-DTPName"), name)) != 0)
         {
           if (r < 0)
             {
@@ -189,8 +188,14 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
       return 0;
     }
 
-  ACE_CString name_str = ACE_TEXT_ALWAYS_CHAR (name);
-  ACE_Service_Gestalt *current = ACE_Service_Config::current();
+  if (name == nullptr)
+    {
+      this->report_option_value_error (ACE_TEXT ("-DTPName"), ACE_TEXT ("<missing>"));
+      return -1;
+    }
+
+  std::string const name_str (ACE_TEXT_ALWAYS_CHAR (name));
+  ACE_Service_Gestalt * const current = ACE_Service_Config::current ();
   TAO_DTP_Config_Registry* registry =
     ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
     (current, "DTP_Config_Registry", true);
@@ -212,28 +217,22 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (!overwrite)
-    {
-      return registry->bind(name_str, entry);
-    }
-  else
-    {
-      return registry->rebind(name_str, entry);
-    }
-  return 0;
+  if (overwrite)
+    return registry->rebind (name_str, entry);
+  return registry->bind (name_str, entry);
 }
 
 int
 TAO_DTP_Config::parse_long (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
-                                   const ACE_TCHAR *match, long &value)
+                                   ACE_TCHAR const *match, long &value)
 {
-  ACE_TCHAR *str;
-  int result = this->parse_string (curarg, argc, argv, match, str);
+  ACE_TCHAR const *str {};
+  int const result = this->parse_string (curarg, argc, argv, match, str);
   if (result < 1)
     return result;
 
-  ACE_TCHAR *err = nullptr;
+  ACE_TCHAR *err {};
   value = ACE_OS::strtol (str, &err, 10);
   if (err && *err != 0)
     {
@@ -246,10 +245,10 @@ TAO_DTP_Config::parse_long (int &curarg,
 int
 TAO_DTP_Config::parse_bool (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
-                                   const ACE_TCHAR *match, bool &value)
+                                   ACE_TCHAR const *match, bool &value)
 {
-  long num;
-  int result = this->parse_long (curarg, argc, argv, match, num);
+  long num {};
+  int const result = this->parse_long (curarg, argc, argv, match, num);
   if (result < 1)
     return result;
 
@@ -261,7 +260,7 @@ TAO_DTP_Config::parse_bool (int &curarg,
 int
 TAO_DTP_Config::parse_string (int &curarg,
                               int argc, ACE_TCHAR *argv[],
-                              const ACE_TCHAR *match, ACE_TCHAR *&value)
+                              ACE_TCHAR const *match, ACE_TCHAR const *&value)
 {
   if (ACE_OS::strcasecmp (argv[curarg], match) != 0)
     return 0;
@@ -279,8 +278,8 @@ TAO_DTP_Config::parse_string (int &curarg,
 
 
 void
-TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
-                                           const ACE_TCHAR* option_value)
+TAO_DTP_Config::report_option_value_error (ACE_TCHAR const *option_name,
+                                           ACE_TCHAR const *option_value)
 {
   if (TAO_debug_level > 0)
     {

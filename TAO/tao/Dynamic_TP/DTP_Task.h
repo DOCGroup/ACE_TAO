@@ -30,7 +30,6 @@
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/Containers_T.h"
-#include "ace/Vector_T.h"
 #include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -62,10 +61,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Dynamic_TP_Export TAO_DTP_Task : public ACE_Task_Base
 {
 public:
-  /// Default Constructor.
   TAO_DTP_Task();
 
-  /// Virtual Destructor.
   ~TAO_DTP_Task () override;
 
   struct Open_Args {
@@ -116,12 +113,12 @@ public:
   /// Cancel all requests that are targeted for the provided servant.
   void cancel_servant (PortableServer::Servant servant);
 
-private:
   TAO_DTP_Task (TAO_DTP_Task const &) = delete;
   TAO_DTP_Task &operator= (TAO_DTP_Task const &) = delete;
   TAO_DTP_Task (TAO_DTP_Task &&) = delete;
   TAO_DTP_Task &operator= (TAO_DTP_Task &&) = delete;
 
+private:
   /// get the next available request. Return true if one available, nonblocking
   bool request_ready (TAO::CSD::TP_Dispatchable_Visitor &v,
                       TAO::CSD::TP_Request_Handle &r);
@@ -182,7 +179,7 @@ private:
   size_t num_queue_requests_ {};
 
   /// The number of currently active worker threads.
-  std::atomic<unsigned long> busy_threads_ {};
+  std::atomic<size_t> busy_threads_ {};
 
   /// The queue of pending servant requests (a.k.a. the "request queue").
   TAO::CSD::TP_Queue queue_;
@@ -205,7 +202,7 @@ private:
 
   /// This is the maximum amount of time in seconds that an idle thread can
   /// stay alive before being taken out of the pool.
-  ACE_Time_Value thread_idle_time_;
+  ACE_Time_Value thread_idle_time_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/) = default;
+TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer () = default;
 
 void
 TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
@@ -50,7 +50,7 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
       return;
     }
 
-  TAO_DTP_Config *config_mgr = dynamic_cast<TAO_DTP_Config *>(config_obj);
+  TAO_DTP_Config * const config_mgr = dynamic_cast<TAO_DTP_Config *>(config_obj);
   if (config_mgr == nullptr)
     {
       if (TAO_debug_level > 0)
@@ -81,7 +81,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   ACE_Service_Gestalt *gestalt = tao_info->orb_core ()->configuration();
 
-  char const *dtp_name =
+  char const * const dtp_name =
     tao_info->orb_core ()->orb_params ()->dynamic_thread_pool_config_name ();
 
   if (dtp_name != nullptr && dtp_name[0] != 0)
@@ -93,7 +93,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
                       ACE_TEXT ("using thread pool name %s\n"), dtp_name));
         }
 
-      TAO_DTP_Config_Registry *config_registry =
+      TAO_DTP_Config_Registry * const config_registry =
         dynamic_cast<TAO_DTP_Config_Registry *>
         (ACE_Dynamic_Service<ACE_Service_Object>::instance
          (gestalt, "DTP_Config_Registry", true));

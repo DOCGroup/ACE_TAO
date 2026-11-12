@@ -94,11 +94,9 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
               TAO_Acceptor_Registry &acceptor_registry =
                 resources.acceptor_registry ();
 
-              for (TAO_AcceptorSetIterator acceptor = acceptor_registry.begin ();
-                   acceptor != acceptor_registry.end ();
-                   ++acceptor)
+              for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
                 {
-                  if ((*acceptor)->tag () == protocol_type)
+                  if (acceptor->tag () == protocol_type)
                     {
                       found = true;
                       break;
@@ -117,11 +115,9 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
           TAO_Acceptor_Registry &acceptor_registry =
             resources.acceptor_registry ();
 
-          for (TAO_AcceptorSetIterator acceptor = acceptor_registry.begin ();
-               acceptor != acceptor_registry.end ();
-               ++acceptor)
+          for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
             {
-              if ((*acceptor)->tag () == protocol_type)
+              if (acceptor->tag () == protocol_type)
                 {
                   found = true;
                   break;
@@ -441,11 +437,9 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
                                                                             TAO_Acceptor_Registry &acceptor_registry,
                                                                             TAO_ORB_Core &orb_core)
 {
-  for (TAO_AcceptorSetIterator acceptor = acceptor_registry.begin ();
-       acceptor != acceptor_registry.end ();
-       ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
     {
-      if (*acceptor == nullptr)
+      if (acceptor == nullptr)
         continue;
 
       CORBA::ULong const current_length = protocols.length ();
@@ -457,7 +451,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
            i < current_length && !protocol_already_present;
            ++i)
         {
-          if (protocols[i].protocol_type == (*acceptor)->tag ())
+          if (protocols[i].protocol_type == acceptor->tag ())
             protocol_already_present = true;
         }
 
@@ -467,13 +461,13 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
       protocols.length (current_length + 1);
 
       protocols[current_length].protocol_type =
-        (*acceptor)->tag ();
+        acceptor->tag ();
 
       protocols[current_length].orb_protocol_properties =
         RTCORBA::ProtocolProperties::_nil ();
 
       protocols[current_length].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property ((*acceptor)->tag (),
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property (acceptor->tag (),
                                                                              &orb_core);
     }
 }

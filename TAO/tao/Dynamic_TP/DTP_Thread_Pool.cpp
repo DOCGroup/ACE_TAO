@@ -92,7 +92,7 @@ TAO_DTP_Thread_Pool_Threads::svc ()
       // Do the work
       this->run (orb_core);
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       // No point propagating this exception.  Print it out.
       TAOLIB_ERROR ((LM_ERROR,
@@ -115,7 +115,7 @@ TAO_DTP_Thread_Pool_Threads::svc ()
 int
 TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 {
-  CORBA::ORB_ptr orb = orb_core.orb ();
+  CORBA::ORB_ptr const orb = orb_core.orb ();
   // A timeout is specified, run the ORB in an idle loop, if we
   // don't handle any operations for the given timeout we just
   // exit the loop and this thread ends itself.
@@ -138,7 +138,7 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
     {
       tv = this->pool_.dynamic_thread_time ();
       orb->perform_work (tv);
-      bool timeout = errno == ETIME;
+      bool const timeout = errno == ETIME;
       if (TAO_debug_level > 7)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
@@ -219,13 +219,13 @@ TAO_DTP_Thread_Pool::create_initial_threads ()
   // first, create the minimum number of threads as static
   // if the min threads count is -1 that means all threads are static
 
-  size_t count = (size_t)this->definition_.init_threads_;
+  size_t const count = (size_t)this->definition_.init_threads_;
 
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) DTP_Thread_Pool::create_initial_threads ")
-                  ACE_TEXT ("Creating %d threads\n"),
+                  ACE_TEXT ("Creating %B threads\n"),
                   count));
     }
 
@@ -269,7 +269,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread ()
       if (TAO_debug_level > 7)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
-                    ACE_TEXT ("count = %d, creating new thread\n"),
+                    ACE_TEXT ("count = %B, creating new thread\n"),
                     this->id_,
                     this->active_count_));
 
@@ -293,22 +293,21 @@ int
 TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 {
   // Overwritten parameters.
-  int force_active = 1;
-  long thread_flags = THR_NEW_LWP | THR_DETACHED;
+  int const force_active = 1;
+  long const thread_flags = THR_NEW_LWP | THR_DETACHED;
 
   // Default parameters.
-  int default_grp_id = -1;
-  ACE_Task_Base *default_task = nullptr;
-  ACE_hthread_t *default_thread_handles = nullptr;
-  void **default_stack = nullptr;
+  int const default_grp_id = -1;
+  ACE_Task_Base *default_task {};
+  ACE_hthread_t *default_thread_handles {};
+  void **default_stack {};
 
   // Setting stack size.
-  size_t *stack_size_array = nullptr;
+  size_t *stack_size_array {};
   ACE_NEW_RETURN (stack_size_array,
                   size_t[count],
                   -1);
-  size_t index;
-  for (index = 0; index != count; ++index)
+  for (size_t index {}; index != count; ++index)
     stack_size_array[index] =
       this->definition_.stack_size_;
 
@@ -318,12 +317,12 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 
   TAO_ORB_Core &orb_core = manager_.orb_core ();
 
-  long flags =
+  long const flags =
     thread_flags |
     orb_core.orb_params ()->thread_creation_flags ();
 
-  int default_priority = 0;
-  int result = 0;
+  int default_priority {};
+  int result {};
   // Activate the threads.
   if (TAO_debug_level > 7)
     {
@@ -463,7 +462,7 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool (TAO_DTP_Definition &def)
 void
 TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
 {
-  TAO_DTP_Thread_Pool *tao_thread_pool = nullptr;
+  TAO_DTP_Thread_Pool *tao_thread_pool {};
 
   // The guard is just for the map, don't do a wait inside the guard, because
   // during the wait other threads can try to access the thread pool manager
@@ -480,21 +479,20 @@ TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
       return; //throw RTCORBA::RTORB::InvalidThreadpool ();
   }
 
+  std::unique_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (tao_thread_pool);
+
   // Mark the thread pool that we are shutting down.
-  tao_thread_pool->shutting_down ();
+  safe_thread_pool->shutting_down ();
 
   // Wait for the threads.
-  tao_thread_pool->wait ();
-
-  // Delete the thread pool.
-  delete tao_thread_pool;
+  safe_thread_pool->wait ();
 }
 
 CORBA::ULong
 TAO_DTP_Thread_Pool_Manager::create_threadpool_i (TAO_DTP_Definition &def)
 {
   // Create the thread pool.
-  TAO_DTP_Thread_Pool *thread_pool = nullptr;
+  TAO_DTP_Thread_Pool *thread_pool {};
 
   ACE_NEW_THROW_EX (thread_pool,
                     TAO_DTP_Thread_Pool (*this,
@@ -550,8 +548,9 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
   // No need to delete thread pool.
   safe_thread_pool.release ();
 
-  // Return current counter and perform post-increment.
-  return this->thread_pool_id_counter_++;
+  CORBA::ULong const current_id = this->thread_pool_id_counter_;
+  ++this->thread_pool_id_counter_;
+  return current_id;
 }
 
 TAO_ORB_Core &

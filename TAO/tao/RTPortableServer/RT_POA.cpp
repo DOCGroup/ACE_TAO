@@ -335,8 +335,7 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
           result =
             filter->fill_profile (object_key,
                                   mprofile,
-                                  acceptor_registry.begin (),
-                                  acceptor_registry.end (),
+                                  acceptor_registry.acceptors (),
                                   lane->lane_priority ());
           if (result == -1)
             error = true;

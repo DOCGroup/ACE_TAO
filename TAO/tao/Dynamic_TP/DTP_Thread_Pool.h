@@ -48,20 +48,19 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-  /// Constructor.
-  TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
+  explicit TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
   bool no_leaders_available () override;
 
-private:
   TAO_DTP_New_Leader_Generator (TAO_DTP_New_Leader_Generator const &) = delete;
   TAO_DTP_New_Leader_Generator &operator= (
     TAO_DTP_New_Leader_Generator const &) = delete;
   TAO_DTP_New_Leader_Generator (TAO_DTP_New_Leader_Generator &&) = delete;
   TAO_DTP_New_Leader_Generator &operator= (TAO_DTP_New_Leader_Generator &&) = delete;
 
+private:
   /// Pool associated with this leader generator.
   TAO_DTP_Thread_Pool &pool_;
 };
@@ -77,8 +76,13 @@ private:
 class TAO_DTP_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-  /// Constructor.
-  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
+  explicit TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
+
+  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads const &) = delete;
+  TAO_DTP_Thread_Pool_Threads &operator= (
+    TAO_DTP_Thread_Pool_Threads const &) = delete;
+  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads &&) = delete;
+  TAO_DTP_Thread_Pool_Threads &operator= (TAO_DTP_Thread_Pool_Threads &&) = delete;
 
   /// Method executed when a thread is spawned.
   int svc () override;
@@ -92,13 +96,6 @@ protected:
 
   /// Pool to which this thread belongs to.
   TAO_DTP_Thread_Pool &pool_;
-
- private:
-  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads const &) = delete;
-  TAO_DTP_Thread_Pool_Threads &operator= (
-    TAO_DTP_Thread_Pool_Threads const &) = delete;
-  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads &&) = delete;
-  TAO_DTP_Thread_Pool_Threads &operator= (TAO_DTP_Thread_Pool_Threads &&) = delete;
 };
 
 /**
@@ -111,8 +108,13 @@ protected:
 class TAO_DTP_Termination_Waiter : public ACE_Task_Base
 {
 public:
-  /// Constructor.
-  TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
+  explicit TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
+
+  TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter const &) = delete;
+  TAO_DTP_Termination_Waiter &operator= (
+    TAO_DTP_Termination_Waiter const &) = delete;
+  TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter &&) = delete;
+  TAO_DTP_Termination_Waiter &operator= (TAO_DTP_Termination_Waiter &&) = delete;
 
   /// Method executed when a thread is spawned.
   int svc () override;
@@ -120,13 +122,6 @@ public:
 protected:
   /// Pool to which this thread belongs to.
   TAO_DTP_Thread_Pool &pool_;
-
- private:
-  TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter const &) = delete;
-  TAO_DTP_Termination_Waiter &operator= (
-    TAO_DTP_Termination_Waiter const &) = delete;
-  TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter &&) = delete;
-  TAO_DTP_Termination_Waiter &operator= (TAO_DTP_Termination_Waiter &&) = delete;
 };
 
 /**
@@ -148,7 +143,6 @@ public:
                        CORBA::ULong id,
                        TAO_DTP_Definition &definition);
 
-  /// Destructor.
   ~TAO_DTP_Thread_Pool ();
 
   /// Open the pool.
@@ -181,7 +175,7 @@ public:
   /// @name Accessors
   // @{
   bool use_timeouts () const;
-  const ACE_Time_Value& dynamic_thread_time () const;
+  ACE_Time_Value const &dynamic_thread_time () const;
 
   TAO_DTP_Thread_Pool_Manager &manager () const;
   CORBA::ULong id () const;
@@ -191,17 +185,17 @@ public:
 
   // @}
 
-private:
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool const &) = delete;
   TAO_DTP_Thread_Pool &operator= (TAO_DTP_Thread_Pool const &) = delete;
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool &&) = delete;
   TAO_DTP_Thread_Pool &operator= (TAO_DTP_Thread_Pool &&) = delete;
 
+private:
   int create_threads_i (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
 
-  CORBA::ULong id_;
+  CORBA::ULong const id_;
 
   /// This boolean is set when we are shutting down, then we will not create
   /// any new dynamic threads
@@ -238,10 +232,8 @@ private:
 class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool_Manager
 {
 public:
-  /// Constructor.
-  TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_DTP_Thread_Pool_Manager ();
 
   /// Wait for threads to exit.
@@ -262,13 +254,13 @@ public:
   TAO_ORB_Core &orb_core () const;
   // @}
 
-private:
   TAO_DTP_Thread_Pool_Manager (TAO_DTP_Thread_Pool_Manager const &) = delete;
   TAO_DTP_Thread_Pool_Manager &operator= (
     TAO_DTP_Thread_Pool_Manager const &) = delete;
   TAO_DTP_Thread_Pool_Manager (TAO_DTP_Thread_Pool_Manager &&) = delete;
   TAO_DTP_Thread_Pool_Manager &operator= (TAO_DTP_Thread_Pool_Manager &&) = delete;
 
+private:
   /// @name Helpers
   // @{
   CORBA::ULong

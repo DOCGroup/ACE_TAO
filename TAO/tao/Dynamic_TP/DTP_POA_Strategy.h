@@ -31,6 +31,7 @@
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 #include "ace/OS_NS_strings.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,21 +57,19 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   public TAO::CSD::Strategy_Base
 {
  public:
-  /// Constructors.
   /// This constructor supports situations where dynamic instantiation
   /// of a thread pool for POAs is initiated from a svc.conf file.
   /// A configuration name is passed in such that the object can
   /// lookup a configuration in a pre-populated repository.
-  TAO_DTP_POA_Strategy(ACE_CString tp_config_name,
+  explicit TAO_DTP_POA_Strategy(std::string tp_config_name,
                               bool     serialize_servants = true);
 
   /// This constructor supports situations where explicit instantiation
   /// of a thread pool for POAs is initiated from an application, such as
   /// the use of the apply_to() method.
-  TAO_DTP_POA_Strategy(TAO_DTP_Definition * tp_config,
+  explicit TAO_DTP_POA_Strategy(TAO_DTP_Definition * tp_config,
                               bool     serialize_servants = true);
 
-  /// Virtual Destructor.
   ~TAO_DTP_POA_Strategy () override;
 
   /// Turn on/off serialization of servants.
@@ -115,9 +114,9 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// servicing the queue, and performing the actual dispatch logic.
   TAO::CSD::Strategy_Base::DispatchResult dispatch_remote_request_i
     (TAO_ServerRequest&              server_request,
-     const PortableServer::ObjectId& object_id,
+     PortableServer::ObjectId const &object_id,
      PortableServer::POA_ptr         poa,
-     const char*                     operation,
+     char const *                    operation,
      PortableServer::Servant         servant) override;
 
   /// Handle the dispatching of a collocated request.
@@ -127,9 +126,9 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// servicing the queue, and performing the actual dispatch logic.
   TAO::CSD::Strategy_Base::DispatchResult dispatch_collocated_request_i
     (TAO_ServerRequest&              server_request,
-     const PortableServer::ObjectId& object_id,
+     PortableServer::ObjectId const &object_id,
      PortableServer::POA_ptr         poa,
-     const char*                     operation,
+     char const *                    operation,
      PortableServer::Servant         servant) override;
 
   /// Event - The POA has been activated.
@@ -145,19 +144,19 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// Event - A servant has been activated
   void servant_activated_event_i
     (PortableServer::Servant servant,
-     const PortableServer::ObjectId& oid) override;
+     PortableServer::ObjectId const &oid) override;
 
   /// Event - A servant has been deactivated
   void servant_deactivated_event_i
     (PortableServer::Servant servant,
-     const PortableServer::ObjectId& oid) override;
+     PortableServer::ObjectId const &oid) override;
 
- private:
   TAO_DTP_POA_Strategy (TAO_DTP_POA_Strategy const &) = delete;
   TAO_DTP_POA_Strategy &operator= (TAO_DTP_POA_Strategy const &) = delete;
   TAO_DTP_POA_Strategy (TAO_DTP_POA_Strategy &&) = delete;
   TAO_DTP_POA_Strategy &operator= (TAO_DTP_POA_Strategy &&) = delete;
 
+private:
   /**
    * Helper method that is responsible for looking up the servant
    * state object in the servant state map *if* the "serialize
@@ -186,7 +185,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// into a DTP_Config_Registry.  This is the key to the RB
   /// Tree entry.
 
-  ACE_CString dynamic_tp_config_name_;
+  std::string const dynamic_tp_config_name_;
 
   /// This is the active object used by the worker threads.
   /// The request queue is owned/managed by the task object.
