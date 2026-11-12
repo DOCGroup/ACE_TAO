@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Endpoint_Acceptor_Filter_Factory.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_ENDPOINT_ACCEPTOR_FILTER_FACTORY_H
 #define TAO_ENDPOINT_ACCEPTOR_FILTER_FACTORY_H

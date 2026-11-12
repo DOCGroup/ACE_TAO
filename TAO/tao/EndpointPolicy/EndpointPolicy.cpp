@@ -50,13 +50,11 @@ TAO_EndpointPolicy_Initializer::init (int, ACE_TCHAR* [])
     }
 
   ACE_Service_Config::process_directive
-    (ace_svc_desc_TAO_Endpoint_Acceptor_Filter_Factory,1); // force replacement
+    (ace_svc_desc_TAO_Endpoint_Acceptor_Filter_Factory, true);
 
   return 0;
 }
 
-
-/////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 ACE_STATIC_SVC_DEFINE (TAO_EndpointPolicy_Initializer,

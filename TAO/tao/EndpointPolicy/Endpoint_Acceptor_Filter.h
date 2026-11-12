@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Endpoint_Acceptor_Filter.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
 
 
 #ifndef TAO_ENDPOINT_ACCEPTOR_FILTER_H
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_POA_Manager;
 
-//=============================================================================
 /**
  * @class TAO_Endpoint_Acceptor_Filter
  *
@@ -39,7 +36,6 @@ class TAO_POA_Manager;
  * Endpoint strategy for populating mprofile: only the endpoints match
  * the POAManager endpoint policy are included.
  */
-//=============================================================================
 class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter
   : public TAO_Default_Acceptor_Filter
 {

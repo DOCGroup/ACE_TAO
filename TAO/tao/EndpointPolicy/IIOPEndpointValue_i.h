@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file     IIOPEndpointValue_i.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _TAO_IIOP_ENDPOINT_VALUE_I_H_
 #define _TAO_IIOP_ENDPOINT_VALUE_I_H_
