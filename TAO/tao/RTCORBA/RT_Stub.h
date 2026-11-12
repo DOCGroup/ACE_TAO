@@ -45,8 +45,8 @@ class TAO_PrivateConnectionPolicy;
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
-  TAO_RT_Stub (const char *repository_id,
-               const TAO_MProfile &profiles,
+  TAO_RT_Stub (char const *repository_id,
+               TAO_MProfile const &profiles,
                TAO_ORB_Core *orb_core);
 
   ~TAO_RT_Stub () override;
@@ -63,7 +63,7 @@ public:
 
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
-  TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
+  TAO_Stub* set_policy_overrides (CORBA::PolicyList const & policies,
                                   CORBA::SetOverrideType set_add) override;
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
@@ -117,9 +117,9 @@ private:
   bool are_policies_parsed_ {false};
 
 private:
-  TAO_RT_Stub (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub (TAO_RT_Stub const &) = delete;
   TAO_RT_Stub (TAO_RT_Stub &&) = delete;
-  TAO_RT_Stub &operator = (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub &operator = (TAO_RT_Stub const &) = delete;
   TAO_RT_Stub &operator = (TAO_RT_Stub &&) = delete;
 };
 

@@ -38,7 +38,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
 {
 }
 
-TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs)
+TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (TAO_PriorityModelPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PriorityModelPolicy ()
@@ -49,7 +49,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy 
 }
 
 CORBA::Policy_ptr
-TAO_PriorityModelPolicy::create (const CORBA::Any &)
+TAO_PriorityModelPolicy::create (CORBA::Any const &)
 {
   /*
    * @@ The following code should be changed once the OMG spec has
@@ -86,7 +86,7 @@ TAO_PriorityModelPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy ()
 {
-  TAO_PriorityModelPolicy* tmp = nullptr;
+  TAO_PriorityModelPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -145,7 +145,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 {
 }
 
-TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
+TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (TAO_ThreadpoolPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ThreadpoolPolicy ()
@@ -155,13 +155,13 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
 }
 
 CORBA::Policy_ptr
-TAO_ThreadpoolPolicy::create (const CORBA::Any &val)
+TAO_ThreadpoolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ThreadpoolId value;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ThreadpoolPolicy *tmp = nullptr;
+  TAO_ThreadpoolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -185,7 +185,7 @@ TAO_ThreadpoolPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy ()
 {
-  TAO_ThreadpoolPolicy* tmp = nullptr;
+  TAO_ThreadpoolPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -214,7 +214,7 @@ TAO_ThreadpoolPolicy::_tao_scope () const
 
 // ****************************************************************
 
-TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &)
+TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (TAO_PrivateConnectionPolicy const &)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PrivateConnectionPolicy ()
@@ -223,9 +223,9 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConne
 }
 
 CORBA::Policy_ptr
-TAO_PrivateConnectionPolicy::create (const CORBA::Any &)
+TAO_PrivateConnectionPolicy::create (CORBA::Any const &)
 {
-  TAO_PrivateConnectionPolicy *tmp = nullptr;
+  TAO_PrivateConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -243,7 +243,7 @@ TAO_PrivateConnectionPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy ()
 {
-  TAO_PrivateConnectionPolicy* tmp = nullptr;
+  TAO_PrivateConnectionPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -273,7 +273,7 @@ TAO_PrivateConnectionPolicy::_tao_scope () const
 
 // ****************************************************************
 
-TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands)
+TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
@@ -282,7 +282,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RT
 {
 }
 
-TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs)
+TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (TAO_PriorityBandedConnectionPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
@@ -292,13 +292,13 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TA
 }
 
 CORBA::Policy_ptr
-TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
+TAO_PriorityBandedConnectionPolicy::create (CORBA::Any const &val)
 {
-  RTCORBA::PriorityBands const *value = nullptr;
+  RTCORBA::PriorityBands const *value {};
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_PriorityBandedConnectionPolicy *tmp = nullptr;
+  TAO_PriorityBandedConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -310,7 +310,7 @@ TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
 RTCORBA::PriorityBands *
 TAO_PriorityBandedConnectionPolicy::priority_bands ()
 {
-  RTCORBA::PriorityBands *tmp = nullptr;
+  RTCORBA::PriorityBands *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::PriorityBands (this->priority_bands_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -328,7 +328,7 @@ TAO_PriorityBandedConnectionPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy ()
 {
-  TAO_PriorityBandedConnectionPolicy *tmp = nullptr;
+  TAO_PriorityBandedConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -375,7 +375,7 @@ TAO_PriorityBandedConnectionPolicy::priority_bands_rep ()
 
 // ****************************************************************
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols)
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ServerProtocolPolicy ()
@@ -384,7 +384,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList 
 {
 }
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs)
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (TAO_ServerProtocolPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ServerProtocolPolicy ()
@@ -394,13 +394,13 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPoli
 }
 
 CORBA::Policy_ptr
-TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
+TAO_ServerProtocolPolicy::create (CORBA::Any const &val)
 {
-  RTCORBA::ProtocolList const *value = nullptr;
+  RTCORBA::ProtocolList const *value {};
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ServerProtocolPolicy *tmp = nullptr;
+  TAO_ServerProtocolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -412,7 +412,7 @@ TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
 RTCORBA::ProtocolList *
 TAO_ServerProtocolPolicy::protocols ()
 {
-  RTCORBA::ProtocolList *tmp = nullptr;
+  RTCORBA::ProtocolList *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -430,7 +430,7 @@ TAO_ServerProtocolPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy ()
 {
-  TAO_ServerProtocolPolicy* tmp = nullptr;
+  TAO_ServerProtocolPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -465,7 +465,7 @@ TAO_ServerProtocolPolicy::protocols_rep ()
 
 // ****************************************************************
 
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols)
+TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ClientProtocolPolicy ()
@@ -474,7 +474,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList 
 {
 }
 
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs)
+TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (TAO_ClientProtocolPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ClientProtocolPolicy ()
@@ -484,13 +484,13 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPoli
 }
 
 CORBA::Policy_ptr
-TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
+TAO_ClientProtocolPolicy::create (CORBA::Any const &val)
 {
-  RTCORBA::ProtocolList const *value = nullptr;
+  RTCORBA::ProtocolList const *value {};
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ClientProtocolPolicy *tmp = nullptr;
+  TAO_ClientProtocolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -502,7 +502,7 @@ TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
 RTCORBA::ProtocolList *
 TAO_ClientProtocolPolicy::protocols ()
 {
-  RTCORBA::ProtocolList *tmp = nullptr;
+  RTCORBA::ProtocolList *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -520,7 +520,7 @@ TAO_ClientProtocolPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy ()
 {
-  TAO_ClientProtocolPolicy* tmp = nullptr;
+  TAO_ClientProtocolPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -552,9 +552,9 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
   CORBA::Boolean is_write_ok = out_cdr << this->protocols_.length ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        (i < this->protocols_.length ()) && is_write_ok;
-       i++)
+       ++i)
     {
       is_write_ok =
         (out_cdr << this->protocols_[i].protocol_type)
@@ -575,7 +575,7 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 
   this->protocols_.length (length);
 
-  for (CORBA::ULong i = 0; (i < length) && is_read_ok; i++)
+  for (CORBA::ULong i {}; (i < length) && is_read_ok; ++i)
     {
       is_read_ok = in_cdr >> this->protocols_[i].protocol_type;
 
@@ -779,8 +779,8 @@ TAO_SharedMemory_Protocol_Properties::TAO_SharedMemory_Protocol_Properties (CORB
                                                                             CORBA::Boolean dont_route,
                                                                             CORBA::Boolean no_delay,
                                                                             CORBA::Long preallocate_buffer_size,
-                                                                            const char *mmap_filename,
-                                                                            const char *mmap_lockname)
+                                                                            char const *mmap_filename,
+                                                                            char const *mmap_lockname)
   : send_buffer_size_ (send_buffer_size),
     recv_buffer_size_ (recv_buffer_size),
     keep_alive_ (keep_alive),
@@ -872,7 +872,7 @@ TAO_SharedMemory_Protocol_Properties::mmap_filename ()
 }
 
 void
-TAO_SharedMemory_Protocol_Properties::mmap_filename (const char * mmap_filename)
+TAO_SharedMemory_Protocol_Properties::mmap_filename (char const * mmap_filename)
 {
   this->mmap_filename_.set (mmap_filename);
 }
@@ -884,7 +884,7 @@ TAO_SharedMemory_Protocol_Properties::mmap_lockname ()
 }
 
 void
-TAO_SharedMemory_Protocol_Properties::mmap_lockname (const char * mmap_lockname)
+TAO_SharedMemory_Protocol_Properties::mmap_lockname (char const * mmap_lockname)
 {
   this->mmap_lockname_.set (mmap_lockname);
 }
@@ -1125,7 +1125,7 @@ RTCORBA::ProtocolProperties *
 TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id,
                                                                      TAO_ORB_Core *orb_core)
 {
-  RTCORBA::ProtocolProperties* property = nullptr;
+  RTCORBA::ProtocolProperties* property {};
 
   if (id == IOP::TAG_INTERNET_IOP)
     {
@@ -1134,7 +1134,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = orb_core ? orb_core->orb_params ()->sock_keepalive () : true;
       CORBA::Boolean dont_route = orb_core ? orb_core->orb_params ()->sock_dontroute () : false;
-      CORBA::Boolean enable_network_priority = false;
+      CORBA::Boolean enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_TCP_Protocol_Properties (send_buffer_size,
@@ -1152,10 +1152,10 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route = false;
-      CORBA::Long preallocate_buffer_size = false;
-      const char *mmap_filename = "";
-      const char *mmap_lockname = "";
+      CORBA::Boolean dont_route {};
+      CORBA::Long preallocate_buffer_size {};
+      char const *mmap_filename = "";
+      char const *mmap_lockname = "";
 
       ACE_NEW_RETURN (property,
                       TAO_SharedMemory_Protocol_Properties (send_buffer_size,
@@ -1177,14 +1177,14 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       ACE_NEW_RETURN (property,
                       TAO_UnixDomain_Protocol_Properties (send_buffer_size,
                                                           recv_buffer_size),
-                      0);
+                      nullptr);
     }
 
   else if (id == TAO_TAG_DIOP_PROFILE)
     {
       int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
-      CORBA::Boolean enable_network_priority = false;
+      CORBA::Boolean enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_UserDatagram_Protocol_Properties (send_buffer_size,
@@ -1199,8 +1199,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
       CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route = false;
-      CORBA::Boolean enable_network_priority = false;
+      CORBA::Boolean dont_route {};
+      CORBA::Boolean enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_StreamControl_Protocol_Properties (send_buffer_size,
@@ -1218,12 +1218,12 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 RTCORBA::ProtocolProperties*
 TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id)
 {
-  RTCORBA::ProtocolProperties* property = nullptr;
+  RTCORBA::ProtocolProperties* property {};
 
   if (id == IOP::TAG_INTERNET_IOP)
     ACE_NEW_RETURN (property,
                     TAO_GIOP_Protocol_Properties,
-                    0);
+                    nullptr);
 
   // Right now the only supported ORB protocol is GIOP
   // so we couple this with every protocol property.
@@ -1234,7 +1234,7 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   else
     ACE_NEW_RETURN (property,
                     TAO_GIOP_Protocol_Properties,
-                    0);
+                    nullptr);
   return property;
 }
 

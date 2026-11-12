@@ -32,6 +32,8 @@
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
 
+#include <memory>
+
 constexpr char rt_poa_factory_name[] = "TAO_RT_Object_Adapter_Factory";
 constexpr ACE_TCHAR rt_poa_factory_directive[] =
   ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
@@ -84,7 +86,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Bind the service context handler for RTCORBA
-  TAO_RT_Service_Context_Handler* h = nullptr;
+  TAO_RT_Service_Context_Handler* h {};
   ACE_NEW (h,
            TAO_RT_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::RTCorbaPriority, h);
@@ -110,7 +112,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   tao_info->orb_core ()->orb_params ()->poa_factory_directive (rt_poa_factory_directive);
 
   // Create the initial priority mapping instance.
-  TAO_Priority_Mapping *pm = nullptr;
+  TAO_Priority_Mapping *pm {};
   switch (this->priority_mapping_type_)
     {
     case TAO_PRIORITY_MAPPING_CONTINUOUS:
@@ -128,23 +130,26 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
       break;
     }
 
+  std::unique_ptr<TAO_Priority_Mapping> safe_pm (pm);
+
   // Set the Priority_Mapping_Manager
-  TAO_Priority_Mapping_Manager *manager = nullptr;
+  TAO_Priority_Mapping_Manager *manager {};
 
   ACE_NEW_THROW_EX (manager,
-                    TAO_Priority_Mapping_Manager (pm),
+                    TAO_Priority_Mapping_Manager (safe_pm.get ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+  safe_pm.release ();
 
   TAO_Priority_Mapping_Manager_var safe_manager = manager;
 
   info->register_initial_reference ("PriorityMappingManager", manager);
 
   // Create the initial priority mapping instance.
-  TAO_Network_Priority_Mapping *npm = nullptr;
+  TAO_Network_Priority_Mapping *npm {};
   switch (this->network_priority_mapping_type_)
     {
     default:
@@ -154,21 +159,19 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
       break;
     }
 
-  // Set the Priority_Mapping_Manager
-  TAO_Network_Priority_Mapping_Manager * network_manager = nullptr;
+  std::unique_ptr<TAO_Network_Priority_Mapping> safe_npm (npm);
 
-  // @@ There is a potential memory leak here.  If the new() below
-  //    throws an exception, the memory for the network priority
-  //    mapping allocated above will be leaked.  Use an auto_ptr<> or
-  //    the appropriate memory management tool.
+  // Set the Priority_Mapping_Manager
+  TAO_Network_Priority_Mapping_Manager * network_manager {};
 
   ACE_NEW_THROW_EX (network_manager,
-                    TAO_Network_Priority_Mapping_Manager (npm),
+                    TAO_Network_Priority_Mapping_Manager (safe_npm.get ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+  safe_npm.release ();
 
   TAO_Network_Priority_Mapping_Manager_var safe_network_manager =
     network_manager;
@@ -247,7 +250,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
     RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
   };
 
-  const CORBA::PolicyType *end =
+  CORBA::PolicyType const *end =
     type + sizeof (type) / sizeof (type[0]);
 
   for (CORBA::PolicyType const * i = type;
@@ -258,7 +261,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {

@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
 public:
-  // Constructor.
   TAO_RTCORBA_Initializer ();
 };
 

@@ -23,6 +23,7 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,10 +41,8 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager :
   public TAO_Thread_Lane_Resources_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_RT_Thread_Lane_Resources_Manager () override;
 
   /// Finalize resources.
@@ -60,7 +59,7 @@ public:
   void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile) override;
+  bool is_collocated (TAO_MProfile const &mprofile) override;
 
   /// @name Accessors
   // @{
@@ -83,11 +82,11 @@ private:
     TAO_RT_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
-  /// Default lane resources.
-  TAO_Thread_Lane_Resources *default_lane_resources_ {};
-
   /// Thread Pool Manager.
-  TAO_Thread_Pool_Manager *tp_manager_ {};
+  std::unique_ptr<TAO_Thread_Pool_Manager> tp_manager_;
+
+  /// Default lane resources.
+  std::unique_ptr<TAO_Thread_Lane_Resources> default_lane_resources_;
 };
 
 /**

@@ -30,9 +30,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
+TAO_RT_POA::TAO_RT_POA (TAO_Root_POA::String const &name,
                         PortableServer::POAManager_ptr poa_manager,
-                        const TAO_POA_Policy_Set &policies,
+                        TAO_POA_Policy_Set const &policies,
                         TAO_Root_POA *parent,
                         ACE_Lock &lock,
                         TAO_SYNCH_MUTEX &thread_lock,
@@ -52,16 +52,16 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
 }
 
 TAO_Root_POA *
-TAO_RT_POA::new_POA (const String &name,
+TAO_RT_POA::new_POA (String const &name,
                      PortableServer::POAManager_ptr poa_manager,
-                     const TAO_POA_Policy_Set &policies,
+                     TAO_POA_Policy_Set const &policies,
                      TAO_Root_POA *parent,
                      ACE_Lock &lock,
                      TAO_SYNCH_MUTEX &thread_lock,
                      TAO_ORB_Core &orb_core,
                      TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = nullptr;
+  TAO_RT_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
@@ -127,13 +127,9 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
   // when the POA was created, the bands had to match the lanes.
   if (this->thread_pool_ != nullptr && this->thread_pool_->with_lanes ())
     {
-      TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
-
-      for (CORBA::ULong i = 0;
-           i != this->thread_pool_->number_of_lanes ();
-           ++i)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
-          if (lanes[i]->lane_priority () == priority)
+          if (lane->lane_priority () == priority)
             return;
         }
 
@@ -161,7 +157,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
           RTCORBA::PriorityBands &bands =
             priority_bands_i->priority_bands_rep ();
 
-          for (CORBA::ULong i = 0;
+          for (CORBA::ULong i {};
                i < bands.length ();
                ++i)
             {
@@ -206,8 +202,8 @@ TAO_RT_POA::validate_policies ()
 }
 
 TAO_Stub *
-TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
-                           const char *type_id,
+TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
+                           char const *type_id,
                            CORBA::Short priority)
 {
   // Client exposed policies.
@@ -233,7 +229,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   if (this->thread_pool_ == nullptr ||
       !this->thread_pool_->with_lanes ())
     {
-      TAO_Acceptor_Registry *acceptor_registry = nullptr;
+      TAO_Acceptor_Registry *acceptor_registry {};
 
       if (this->thread_pool_ == nullptr)
         {
@@ -247,9 +243,8 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
         }
       else
         {
-          TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
-
-          TAO_Thread_Lane_Resources &resources = lanes[0]->resources ();
+          TAO_Thread_Lane_Resources &resources =
+            this->thread_pool_->lanes ().front ()->resources ();
 
           acceptor_registry = &resources.acceptor_registry ();
         }
@@ -268,22 +263,17 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   if (this->cached_policies_.priority_model () ==
       TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
-
-      for (CORBA::ULong i = 0;
-           i != this->thread_pool_->number_of_lanes ();
-           ++i)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
-          if (lanes[i]->lane_priority () == priority)
+          if (lane->lane_priority () == priority)
             return this->TAO_Regular_POA::create_stub_object (object_key,
                                                       type_id,
                                                       client_exposed_policies._retn (),
                                                       &filter,
-                                                      lanes[i]->resources ().acceptor_registry ());
+                                                      lane->resources ().acceptor_registry ());
         }
 
-      ACE_ASSERT (0);
+      ACE_ASSERT (false);
     }
 
   // If this POA has the CLIENT_PROPAGATED policy, create the IOR with
@@ -307,13 +297,13 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
 }
 
 TAO_Stub *
-TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
-                                const char *type_id,
+TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
+                                char const *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
-  bool error = false;
+  bool error {};
 
   // Count the number of endpoints.
   size_t const profile_count = this->endpoint_count ();
@@ -330,28 +320,24 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   if (result == -1)
     error = true;
 
-  TAO_Thread_Lane **lanes =
-    this->thread_pool_->lanes ();
-
   // Leave it to the filter to decide which acceptors/in which order
   // go into the mprofile.
-  for (CORBA::ULong i = 0;
-       i != this->thread_pool_->number_of_lanes () &&
-         !error;
-       ++i)
+  for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
     {
-      if (this->lane_required (lanes[i],
-                               priority_bands))
+      if (error)
+        break;
+
+      if (this->lane_required (lane.get (), priority_bands))
         {
           TAO_Acceptor_Registry &acceptor_registry =
-            lanes[i]->resources ().acceptor_registry ();
+            lane->resources ().acceptor_registry ();
 
           result =
             filter->fill_profile (object_key,
                                   mprofile,
                                   acceptor_registry.begin (),
                                   acceptor_registry.end (),
-                                  lanes[i]->lane_priority ());
+                                  lane->lane_priority ());
           if (result == -1)
             error = true;
         }
@@ -360,7 +346,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   if (!error)
     result = filter->encode_endpoints (mprofile);
   if (result == -1)
-    error = 1;
+    error = true;
 
   if (error)
     throw ::CORBA::INTERNAL (
@@ -386,16 +372,11 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
 size_t
 TAO_RT_POA::endpoint_count ()
 {
-  size_t profile_count = 0;
+  size_t profile_count {};
 
-  TAO_Thread_Lane **lanes =
-    this->thread_pool_->lanes ();
-
-  for (CORBA::ULong i = 0;
-       i != this->thread_pool_->number_of_lanes ();
-       ++i)
+  for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
     profile_count +=
-      lanes[i]->resources ().acceptor_registry ().endpoint_count ();
+      lane->resources ().acceptor_registry ().endpoint_count ();
 
   return profile_count;
 }
@@ -410,7 +391,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
   RTCORBA::PriorityBands &bands =
     priority_bands->priority_bands_rep ();
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < bands.length ();
        ++i)
     {
@@ -425,7 +406,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
 CORBA::PolicyList *
 TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 {
-  CORBA::PolicyList *client_exposed_policies = nullptr;
+  CORBA::PolicyList *client_exposed_policies {};
   ACE_NEW_THROW_EX (client_exposed_policies,
                     CORBA::PolicyList (),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -456,7 +437,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
       else
         priority = object_priority;
 
-      const CORBA::ULong current_length =
+      CORBA::ULong const current_length =
         client_exposed_policies->length ();
       client_exposed_policies->length (current_length + 1);
 
@@ -476,15 +457,15 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 
 // Standard POA interfaces
 PortableServer::POA_ptr
-TAO_RT_POA::create_POA (const char *adapter_name,
+TAO_RT_POA::create_POA (char const *adapter_name,
                         PortableServer::POAManager_ptr poa_manager,
-                        const CORBA::PolicyList &policies)
+                        CORBA::PolicyList const &policies)
 {
   return this->TAO_Regular_POA::create_POA (adapter_name, poa_manager, policies);
 }
 
 PortableServer::POA_ptr
-TAO_RT_POA::find_POA (const char *adapter_name, CORBA::Boolean activate_it)
+TAO_RT_POA::find_POA (char const *adapter_name, CORBA::Boolean activate_it)
 {
   return this->TAO_Regular_POA::find_POA (adapter_name, activate_it);
 }
@@ -630,7 +611,7 @@ TAO_RT_POA::activate_object (PortableServer::Servant p_servant)
 
 #if !defined (CORBA_E_MICRO)
 void
-TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
+TAO_RT_POA::activate_object_with_id (PortableServer::ObjectId const &id,
                                      PortableServer::Servant p_servant)
 {
   this->TAO_Regular_POA::activate_object_with_id (id, p_servant);
@@ -638,21 +619,21 @@ TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 #endif
 
 void
-TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid)
+TAO_RT_POA::deactivate_object (PortableServer::ObjectId const &oid)
 {
   this->TAO_Regular_POA::deactivate_object (oid);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::create_reference (const char *intf)
+TAO_RT_POA::create_reference (char const *intf)
 {
   return this->TAO_Regular_POA::create_reference (intf);
 }
 
 #if !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
-TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
-                                      const char *intf)
+TAO_RT_POA::create_reference_with_id (PortableServer::ObjectId const &oid,
+                                      char const *intf)
 {
   return this->TAO_Regular_POA::create_reference_with_id (oid, intf);
 }
@@ -683,13 +664,13 @@ TAO_RT_POA::reference_to_id (CORBA::Object_ptr reference)
 }
 
 PortableServer::Servant
-TAO_RT_POA::id_to_servant (const PortableServer::ObjectId &oid)
+TAO_RT_POA::id_to_servant (PortableServer::ObjectId const &oid)
 {
   return this->TAO_Regular_POA::id_to_servant (oid);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::id_to_reference (const PortableServer::ObjectId &oid)
+TAO_RT_POA::id_to_reference (PortableServer::ObjectId const &oid)
 {
   return this->TAO_Regular_POA::id_to_reference (oid);
 }

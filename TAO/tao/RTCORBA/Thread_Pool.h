@@ -28,10 +28,13 @@
 #include "tao/New_Leader_Generator.h"
 #include "ace/Task.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Thread_Lane;
+using TAO_Thread_Lanes = std::vector<std::unique_ptr<TAO_Thread_Lane>>;
 
 /**
  * @class TAO_RT_New_Leader_Generator
@@ -45,12 +48,11 @@ class TAO_RTCORBA_Export TAO_RT_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-  /// Constructor.
   explicit TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  bool no_leaders_available ();
+  bool no_leaders_available () override;
 
 private:
   /// Lane associated with this leader generator.
@@ -68,7 +70,6 @@ private:
 class TAO_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   explicit TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
@@ -106,7 +107,6 @@ private:
 class TAO_Dynamic_Thread_Pool_Threads : public TAO_Thread_Pool_Threads
 {
 public:
-  /// Constructor.
   explicit TAO_Dynamic_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
 protected:
@@ -135,7 +135,6 @@ class TAO_Thread_Pool;
 class TAO_RTCORBA_Export TAO_Thread_Lane
 {
 public:
-  /// Constructor.
   TAO_Thread_Lane (TAO_Thread_Pool &pool,
                    CORBA::ULong id,
                    CORBA::Short lane_priority,
@@ -144,7 +143,6 @@ public:
                    TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                    ACE_Time_Value const &dynamic_thread_time);
 
-  /// Destructor.
   ~TAO_Thread_Lane ();
 
   /// Open the lane.
@@ -160,7 +158,7 @@ public:
   void wait ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads ();
@@ -283,7 +281,7 @@ public:
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                    CORBA::ULong id,
                    CORBA::ULong stack_size,
-                   const RTCORBA::ThreadpoolLanes &lanes,
+                   RTCORBA::ThreadpoolLanes const &lanes,
                    CORBA::Boolean allow_borrowing,
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
@@ -291,8 +289,12 @@ public:
                    TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                    ACE_Time_Value const &dynamic_thread_time);
 
-  /// Destructor.
   ~TAO_Thread_Pool ();
+
+  TAO_Thread_Pool (TAO_Thread_Pool const &) = delete;
+  TAO_Thread_Pool &operator= (TAO_Thread_Pool const &) = delete;
+  TAO_Thread_Pool (TAO_Thread_Pool &&) = delete;
+  TAO_Thread_Pool &operator= (TAO_Thread_Pool &&) = delete;
 
   /// Open the pool.
   void open ();
@@ -310,7 +312,7 @@ public:
   void shutting_down ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads ();
@@ -329,7 +331,7 @@ public:
   CORBA::ULong max_buffered_requests () const;
   CORBA::ULong max_request_buffer_size () const;
 
-  TAO_Thread_Lane **lanes ();
+  TAO_Thread_Lanes const &lanes () const;
   CORBA::ULong number_of_lanes () const;
   // @}
 
@@ -344,8 +346,7 @@ private:
   CORBA::ULong max_request_buffer_size_;
   ACE_Time_Value const dynamic_thread_time_;
 
-  TAO_Thread_Lane **lanes_;
-  CORBA::ULong number_of_lanes_;
+  TAO_Thread_Lanes lanes_;
   bool with_lanes_;
 };
 
@@ -362,10 +363,8 @@ class TAO_ORB_Core;
 class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 {
 public:
-  /// Constructor.
   explicit TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_Thread_Pool_Manager ();
 
   /// Finalize the resources.
@@ -378,7 +377,7 @@ public:
   void wait ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Create a threadpool without lanes.
   RTCORBA::ThreadpoolId
@@ -395,7 +394,7 @@ public:
   /// Create a threadpool with lanes.
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes (CORBA::ULong stacksize,
-                                const RTCORBA::ThreadpoolLanes & lanes,
+                                RTCORBA::ThreadpoolLanes const & lanes,
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
@@ -432,7 +431,7 @@ private:
 
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes_i (CORBA::ULong stacksize,
-                                  const RTCORBA::ThreadpoolLanes & lanes,
+                                  RTCORBA::ThreadpoolLanes const & lanes,
                                   CORBA::Boolean allow_borrowing,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,

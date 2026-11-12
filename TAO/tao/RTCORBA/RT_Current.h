@@ -43,7 +43,6 @@ class TAO_RTCORBA_Export TAO_RT_Current
   , public ::CORBA::LocalObject
 {
 public:
-  /// Default constructor.
   explicit TAO_RT_Current (TAO_ORB_Core *orb_core);
 
   RTCORBA::Priority the_priority () override;

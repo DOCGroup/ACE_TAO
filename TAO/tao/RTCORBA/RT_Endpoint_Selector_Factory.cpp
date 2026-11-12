@@ -14,19 +14,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RT_Endpoint_Selector_Factory::RT_Endpoint_Selector_Factory ()
 {
-  ACE_NEW (this->rt_invocation_endpoint_selector_,
+  TAO_RT_Invocation_Endpoint_Selector *selector {};
+  ACE_NEW (selector,
            TAO_RT_Invocation_Endpoint_Selector);
+  this->rt_invocation_endpoint_selector_.reset (selector);
 }
 
-RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory ()
-{
-  delete this->rt_invocation_endpoint_selector_;
-}
+RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory () = default;
 
 TAO_Invocation_Endpoint_Selector *
 RT_Endpoint_Selector_Factory::get_selector ()
 {
-  return this->rt_invocation_endpoint_selector_;
+  return this->rt_invocation_endpoint_selector_.get ();
 }
 
 

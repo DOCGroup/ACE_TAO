@@ -42,6 +42,11 @@ public:
   TAO_RT_Servant_Dispatcher () = default;
   ~TAO_RT_Servant_Dispatcher () override = default;
 
+  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher const &) = delete;
+  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher const &) = delete;
+  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher &&) = delete;
+  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher &&) = delete;
+
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (TAO_Root_POA &poa,
                                   CORBA::Short servant_priority,
@@ -58,19 +63,14 @@ public:
                     TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) override;
 
   /// Factory method for creating new POA's.
-  TAO_Root_POA *create_Root_POA (const ACE_CString &name,
+  TAO_Root_POA *create_Root_POA (ACE_CString const &name,
                                  PortableServer::POAManager_ptr poa_manager,
-                                 const TAO_POA_Policy_Set &policies,
+                                 TAO_POA_Policy_Set const &policies,
                                  ACE_Lock &lock,
                                  TAO_SYNCH_MUTEX &thread_lock,
                                  TAO_ORB_Core &orb_core,
                                  TAO_Object_Adapter *object_adapter) override;
 
-private:
-  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher const &) = delete;
-  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher const &) = delete;
-  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher &&) = delete;
-  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

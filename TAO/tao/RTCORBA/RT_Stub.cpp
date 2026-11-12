@@ -10,8 +10,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
-                          const TAO_MProfile &profiles,
+TAO_RT_Stub::TAO_RT_Stub (char const *repository_id,
+                          TAO_MProfile const &profiles,
                           TAO_ORB_Core *orb_core)
   : TAO_Stub (repository_id,
               profiles,
@@ -43,7 +43,7 @@ TAO_RT_Stub::parse_policies ()
   CORBA::ULong const length = policy_list->length ();
 
   // Cache away the policies that we'll need later.
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       switch (policy_list[i]->policy_type ())
         {
@@ -171,12 +171,12 @@ TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 
 
 TAO_Stub *
-TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
+TAO_RT_Stub::set_policy_overrides (CORBA::PolicyList const & policies,
                                    CORBA::SetOverrideType set_add)
 {
   // Validity check.  Make sure requested policies are allowed to be
   // set at this scope.
-  for (CORBA::ULong i = 0; i < policies.length ();  ++i)
+  for (CORBA::ULong i {}; i < policies.length ();  ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
       if (!CORBA::is_nil (policy))

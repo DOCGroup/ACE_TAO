@@ -38,11 +38,14 @@ class TAO_RTPortableServer_Export TAO_POA_RT_Policy_Validator
   : public TAO_Policy_Validator
 {
 public:
-  /// Constructor.
-  TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
+  explicit TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_POA_RT_Policy_Validator () override = default;
+
+  TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator const &) = delete;
+  TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator const &) = delete;
+  TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator &&) = delete;
+  TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator &&) = delete;
 
   static RTCORBA::ServerProtocolPolicy_ptr server_protocol_policy_from_thread_pool (TAO_Thread_Pool *thread_pool,
                                                                                     TAO_ORB_Core &orb_core);
@@ -74,11 +77,6 @@ protected:
   CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 
 private:
-  TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator const &) = delete;
-  TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator const &) = delete;
-  TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator &&) = delete;
-  TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator &&) = delete;
-
   void validate_server_protocol (TAO_Policy_Set &policies);
 
   void validate_priorities (TAO_Policy_Set &policies);

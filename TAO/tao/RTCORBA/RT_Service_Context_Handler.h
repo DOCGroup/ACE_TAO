@@ -28,7 +28,7 @@ class TAO_RT_Service_Context_Handler :
 {
 public:
   int process_service_context (TAO_Transport& transport,
-                               const IOP::ServiceContext& context,
+                               IOP::ServiceContext const &context,
                                TAO_ServerRequest *request) override;
   int generate_service_context (
     TAO_Stub *stub,

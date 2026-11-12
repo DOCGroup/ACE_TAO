@@ -7,82 +7,35 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
+#include <array>
 
-#define IPDSFIELD_DSCP_DEFAULT  0x00
-#define IPDSFIELD_DSCP_CS1      0x08
-#define IPDSFIELD_DSCP_CS2      0x10
-#define IPDSFIELD_DSCP_CS3      0x18
-#define IPDSFIELD_DSCP_CS4      0x20
-#define IPDSFIELD_DSCP_CS5      0x28
-#define IPDSFIELD_DSCP_CS6      0x30
-#define IPDSFIELD_DSCP_CS7      0x38
-#define IPDSFIELD_DSCP_AF11     0x0A
-#define IPDSFIELD_DSCP_AF12     0x0C
-#define IPDSFIELD_DSCP_AF13     0x0E
-#define IPDSFIELD_DSCP_AF21     0x12
-#define IPDSFIELD_DSCP_AF22     0x14
-#define IPDSFIELD_DSCP_AF23     0x16
-#define IPDSFIELD_DSCP_AF31     0x1A
-#define IPDSFIELD_DSCP_AF32     0x1C
-#define IPDSFIELD_DSCP_AF33     0x1E
-#define IPDSFIELD_DSCP_AF41     0x22
-#define IPDSFIELD_DSCP_AF42     0x24
-#define IPDSFIELD_DSCP_AF43     0x26
-#define IPDSFIELD_ECT_MASK      0x02
-#define IPDSFIELD_CE_MASK       0x01
-#define IPDSFIELD_DSCP_EF       0x2E
+constexpr int dscp_default {0x00};
+constexpr int dscp_cs1 {0x08};
+constexpr int dscp_cs2 {0x10};
+constexpr int dscp_cs3 {0x18};
+constexpr int dscp_cs4 {0x20};
+constexpr int dscp_cs5 {0x28};
+constexpr int dscp_cs6 {0x30};
+constexpr int dscp_cs7 {0x38};
+constexpr int dscp_af11 {0x0A};
+constexpr int dscp_af12 {0x0C};
+constexpr int dscp_af13 {0x0E};
+constexpr int dscp_af21 {0x12};
+constexpr int dscp_af22 {0x14};
+constexpr int dscp_af23 {0x16};
+constexpr int dscp_af31 {0x1A};
+constexpr int dscp_af32 {0x1C};
+constexpr int dscp_af33 {0x1E};
+constexpr int dscp_af41 {0x22};
+constexpr int dscp_af42 {0x24};
+constexpr int dscp_af43 {0x26};
+constexpr int dscp_ef {0x2E};
 
-constexpr int dscp[] =
-{
-  IPDSFIELD_DSCP_DEFAULT ,
-  IPDSFIELD_DSCP_CS1     ,
-  IPDSFIELD_DSCP_CS2     ,
-  IPDSFIELD_DSCP_CS3     ,
-  IPDSFIELD_DSCP_CS4     ,
-  IPDSFIELD_DSCP_CS5     ,
-  IPDSFIELD_DSCP_CS6     ,
-  IPDSFIELD_DSCP_CS7     ,
-  IPDSFIELD_DSCP_AF11    ,
-  IPDSFIELD_DSCP_AF12    ,
-  IPDSFIELD_DSCP_AF13    ,
-  IPDSFIELD_DSCP_AF21    ,
-  IPDSFIELD_DSCP_AF22    ,
-  IPDSFIELD_DSCP_AF23    ,
-  IPDSFIELD_DSCP_AF31    ,
-  IPDSFIELD_DSCP_AF32    ,
-  IPDSFIELD_DSCP_AF33    ,
-  IPDSFIELD_DSCP_AF41    ,
-  IPDSFIELD_DSCP_AF42    ,
-  IPDSFIELD_DSCP_AF43    ,
-  IPDSFIELD_DSCP_EF
+constexpr std::array<int, 21> dscp {
+  dscp_default, dscp_cs1, dscp_cs2, dscp_cs3, dscp_cs4, dscp_cs5, dscp_cs6,
+  dscp_cs7, dscp_af11, dscp_af12, dscp_af13, dscp_af21, dscp_af22, dscp_af23,
+  dscp_af31, dscp_af32, dscp_af33, dscp_af41, dscp_af42, dscp_af43, dscp_ef
 };
-
-/*
-static const char * const dscp_char[]=
-{
-  "Normal",
-  "CS1",
-  "CS2",
-  "CS3",
-  "CS4",
-  "CS5",
-  "CS6",
-  "CS7",
-  "Assured Forwarding 11",
-  "Assured Forwarding 12",
-  "Assured Forwarding 13",
-  "Assured Forwarding 21",
-  "Assured Forwarding 22",
-  "Assured Forwarding 23",
-  "Assured Forwarding 31",
-  "Assured Forwarding 32",
-  "Assured Forwarding 33",
-  "Assured Forwarding 41",
-  "Assured Forwarding 42",
-  "Assured Forwarding 43",
-  "Expedited Forwarding"
-};
-*/
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -100,13 +53,14 @@ TAO_Linear_Network_Priority_Mapping::to_network (
                 "TAO_Linear_Network_Priority_Mapping::to_network corba_priority %d\n",
                 corba_priority));
 
-  int const total_slots = sizeof (dscp) / sizeof (int);
+  int const total_slots = static_cast<int> (dscp.size ());
 
-  int array_slot =
-    static_cast<int> (((corba_priority - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots);
+  int array_slot {
+    static_cast<int> (((corba_priority - RTCORBA::minPriority) /
+                       double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots)};
 
   if (array_slot == total_slots)
-    array_slot -= 1;
+    --array_slot;
 
   network_priority = dscp[array_slot];
 
@@ -115,7 +69,7 @@ TAO_Linear_Network_Priority_Mapping::to_network (
                 "TAO_Linear_Network_Priority_Mapping::to_network = %x\n",
                 network_priority));
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -127,7 +81,7 @@ TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority network_
                 "TAO_Linear_Network_Priority_Mapping::to_CORBA network_priority %d\n",
                 network_priority));
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

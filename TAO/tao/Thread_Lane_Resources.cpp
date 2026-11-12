@@ -60,12 +60,12 @@ TAO_Thread_Lane_Resources::has_acceptor_registry_been_created () const
   return this->acceptor_registry_ != nullptr;
 }
 
-int
+bool
 TAO_Thread_Lane_Resources::is_collocated (const TAO_MProfile& mprofile)
 {
   if (!this->has_acceptor_registry_been_created ())
     {
-      return 0;
+      return false;
     }
 
   return this->acceptor_registry ().is_collocated (mprofile);

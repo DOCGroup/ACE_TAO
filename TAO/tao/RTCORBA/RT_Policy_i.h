@@ -47,12 +47,10 @@ class TAO_RTCORBA_Export TAO_PriorityModelPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_PriorityModelPolicy (RTCORBA::PriorityModel priority_model,
                            RTCORBA::Priority server_priority);
 
-  /// Copy constructor.
-  TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs);
+  TAO_PriorityModelPolicy (TAO_PriorityModelPolicy const &rhs);
 
   /**
    * Accessor for the <priority_model_> attribute.  This method is
@@ -86,7 +84,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -118,11 +116,9 @@ class TAO_RTCORBA_Export TAO_ThreadpoolPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
 
-  /// Copy constructor.
-  TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
+  TAO_ThreadpoolPolicy (TAO_ThreadpoolPolicy const &rhs);
 
   RTCORBA::ThreadpoolId threadpool () override;
 
@@ -140,7 +136,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -168,11 +164,9 @@ class TAO_RTCORBA_Export TAO_PrivateConnectionPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_PrivateConnectionPolicy () = default;
 
-  /// Copy constructor.
-  TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
+  TAO_PrivateConnectionPolicy (TAO_PrivateConnectionPolicy const &rhs);
 
   CORBA::PolicyType policy_type () override;
 
@@ -188,7 +182,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -214,11 +208,9 @@ class TAO_RTCORBA_Export TAO_PriorityBandedConnectionPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands);
 
-  /// Copy constructor.
-  TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs);
+  TAO_PriorityBandedConnectionPolicy (TAO_PriorityBandedConnectionPolicy const &rhs);
 
   /**
    * Accessor to the underlying priority bands of the policy (does not
@@ -249,7 +241,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -281,11 +273,9 @@ class TAO_RTCORBA_Export TAO_ServerProtocolPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
-  /// Copy constructor.
-  TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs);
+  TAO_ServerProtocolPolicy (TAO_ServerProtocolPolicy const &rhs);
 
   /**
    * Accessor to the underlying protocols list of the policy (does not
@@ -310,7 +300,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -337,11 +327,9 @@ class TAO_RTCORBA_Export TAO_ClientProtocolPolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
-  /// Copy constructor.
-  TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs);
+  TAO_ClientProtocolPolicy (TAO_ClientProtocolPolicy const &rhs);
 
   /**
    * Accessor to the underlying protocols list of the policy (does not
@@ -374,7 +362,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -405,7 +393,6 @@ class TAO_RTCORBA_Export TAO_TCP_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_TCP_Protocol_Properties (CORBA::Long send_buffer_size,
                                CORBA::Long recv_buffer_size,
                                CORBA::Boolean keep_alive,
@@ -474,7 +461,6 @@ class TAO_RTCORBA_Export TAO_UnixDomain_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
                                       CORBA::Long recv_buffer_size);
 
@@ -531,15 +517,14 @@ class TAO_RTCORBA_Export TAO_SharedMemory_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_SharedMemory_Protocol_Properties (CORBA::Long send_buffer_size,
                                         CORBA::Long recv_buffer_size,
                                         CORBA::Boolean keep_alive,
                                         CORBA::Boolean dont_route,
                                         CORBA::Boolean no_delay,
                                         CORBA::Long preallocate_buffer_size,
-                                        const char *mmap_filename,
-                                        const char *mmap_lockname);
+                                        char const *mmap_filename,
+                                        char const *mmap_lockname);
 
   // = IDL interface methods.
 
@@ -571,11 +556,11 @@ public:
 
   char *mmap_filename () override;
 
-  void mmap_filename (const char *mmap_filename) override;
+  void mmap_filename (char const *mmap_filename) override;
 
   char *mmap_lockname () override;
 
-  void mmap_lockname (const char *mmap_lockname) override;
+  void mmap_lockname (char const *mmap_lockname) override;
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -626,7 +611,6 @@ class TAO_RTCORBA_Export TAO_UserDatagram_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_UserDatagram_Protocol_Properties (CORBA::Long send_buffer_size,
                                         CORBA::Long recv_buffer_size,
                                         CORBA::Boolean enable_network_priority);
@@ -676,7 +660,6 @@ class TAO_RTCORBA_Export TAO_StreamControl_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_StreamControl_Protocol_Properties (CORBA::Long send_buffer_size,
                                          CORBA::Long recv_buffer_size,
                                          CORBA::Boolean keep_alive,

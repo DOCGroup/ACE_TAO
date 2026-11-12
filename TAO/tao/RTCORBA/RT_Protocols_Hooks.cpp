@@ -79,7 +79,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
   RTCORBA::ProtocolList &protocols =
     server_protocols->protocols_rep ();
 
-  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+  for (CORBA::ULong j {}; j < protocols.length (); ++j)
     {
       if (protocols[j].protocol_type == protocol_tag)
         {
@@ -114,7 +114,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
   RTCORBA::ProtocolList &protocols =
     client_protocols->protocols_rep ();
 
-  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+  for (CORBA::ULong j {}; j < protocols.length (); ++j)
     {
       if (protocols[j].protocol_type == protocol_tag)
         {
@@ -406,7 +406,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
     TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_RT_Protocols_Hooks::get_dscp_codepoint\n"));
 
-  CORBA::Long codepoint = 0;
+  CORBA::Long codepoint {};
 
   try
     {
@@ -418,7 +418,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
 
       CORBA::Short const priority = this->current_->the_priority ();
 
-      if (pm->to_network (priority, codepoint) == 0)
+      if (!pm->to_network (priority, codepoint))
         {
           if (TAO_debug_level > 0)
             {
@@ -431,7 +431,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
           return -1;
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -488,7 +488,7 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
   RTCORBA::PriorityBands &bands =
     priority_bands_policy->priority_bands_rep ();
 
-  for (CORBA::ULong i = 0; i < bands.length (); ++i)
+  for (CORBA::ULong i {}; i < bands.length (); ++i)
     {
       if (bands[i].low <= priority && bands[i].high >= priority)
         {
@@ -559,7 +559,7 @@ TAO_RT_Protocols_Hooks::get_thread_implicit_CORBA_priority (CORBA::Short &priori
   TAO_Priority_Mapping *pm =
     this->mapping_manager_.in ()->mapping ();
 
-  CORBA::Short native_priority = 0;
+  CORBA::Short native_priority {};
   if (this->get_thread_native_priority (native_priority) == 0 &&
       pm->to_CORBA (native_priority, priority))
     {
@@ -592,7 +592,7 @@ TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority)
 
   CORBA::Short native_priority;
 
-  if (priority_mapping->to_native (priority, native_priority) == 0)
+  if (!priority_mapping->to_native (priority, native_priority))
     {
       return -1;
     }

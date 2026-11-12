@@ -68,7 +68,7 @@ TAO_Default_Thread_Lane_Resources_Manager::close_all_transports ()
   this->lane_resources_->close_all_transports ();
 }
 
-int
+bool
 TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofile)
 {
   return this->lane_resources_->is_collocated (mprofile);

@@ -44,11 +44,15 @@ class TAO_RTPortableServer_Export TAO_Server_Protocol_Acceptor_Filter :
   public TAO_Acceptor_Filter
 {
 public:
-  /// Constructor
-  TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
+  explicit TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
+
+  TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
+  TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
+  TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
+  TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
 
   /// Populate @a mprofile based on what's in <protocols_>.
-  int fill_profile (const TAO::ObjectKey &object_key,
+  int fill_profile (TAO::ObjectKey const &object_key,
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,
@@ -59,11 +63,6 @@ public:
   int encode_endpoints (TAO_MProfile &mprofile) override;
 
 private:
-  TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
-  TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
-  TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
-  TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
-
   /// Value of the ServerProtocolPolicy used for endpoint
   /// selection.
   RTCORBA::ProtocolList &protocols_;
