@@ -1,6 +1,10 @@
 /* -*- C++ -*- */
+
+#ifndef TAO_AV_FULL_PROFILE_SERVER_H
+#define TAO_AV_FULL_PROFILE_SERVER_H
+
 #include <memory>
-#include <stdio.h>
+#include <cstdio>
 
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Naming/Naming_Client.h"
@@ -67,7 +71,7 @@ protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl> reactive_strategy_;
-  std::unique_ptr<FILE, int (*) (FILE *)> file_;
+  std::unique_ptr<FILE, int (*) (FILE *)> file_ {nullptr, std::fclose};
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
   AVStreams::StreamEndPoint_B_var sep_b_;
@@ -75,3 +79,5 @@ protected:
 };
 
 using FTP_SERVER = ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>;
+
+#endif /* TAO_AV_FULL_PROFILE_SERVER_H */

@@ -4,7 +4,7 @@
 
 #include <cstddef>
 #include <memory>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 
 #include "ace/Get_Opt.h"
@@ -87,7 +87,7 @@ private:
   TAO_StreamCtrl streamctrl_;
   FTP_Client_Callback callback_;
   Options options_;
-  std::unique_ptr<FILE, int (*) (FILE *)> file_;
+  std::unique_ptr<FILE, int (*) (FILE *)> file_ {nullptr, std::fclose};
   CORBA::ORB_var orb_;
   AVStreams::StreamEndPoint_A_var sep_a_;
   AVStreams::FlowProducer_var fep_a_obj_;

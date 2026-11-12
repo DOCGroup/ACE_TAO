@@ -46,10 +46,10 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       std::size_t const items_written =
-        ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
-                        1,
-                        FTP_SERVER::instance ()->file ());
+        std::fwrite (frame->rd_ptr (),
+                     frame->length (),
+                     1,
+                     FTP_SERVER::instance ()->file ());
       if (items_written != 1)
         ACE_ERROR_RETURN ((LM_ERROR, "FTP_Server_Flow_Handler::fwrite failed\n"), -1);
       frame = frame->cont ();
@@ -58,7 +58,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 Server::Server ()
-  : file_ (nullptr, ACE_OS::fclose),
+  : file_ (nullptr, std::fclose),
     orb_ (CORBA::ORB::_duplicate (TAO_AV_CORE::instance ()->orb ())),
     poa_ (PortableServer::POA::_duplicate (TAO_AV_CORE::instance ()->poa ()))
 {

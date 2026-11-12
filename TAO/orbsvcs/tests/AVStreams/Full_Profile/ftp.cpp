@@ -16,7 +16,7 @@ FTP_Client_Callback::handle_timeout (void *)
       ACE_Message_Block mb (BUFSIZ);
       ACE_DEBUG ((LM_DEBUG, "FTP_Client_Callback::handle_timeout\n"));
       std::size_t const bytes_read =
-        ACE_OS::fread (mb.wr_ptr (), 1, mb.size (), CLIENT::instance ()->file ());
+        std::fread (mb.wr_ptr (), 1, mb.size (), CLIENT::instance ()->file ());
 
       if (bytes_read == 0)
         {
@@ -157,7 +157,7 @@ Client::streamctrl ()
 }
 
 Client::Client ()
-  : file_ (nullptr, ACE_OS::fclose),
+  : file_ (nullptr, std::fclose),
     orb_ (CORBA::ORB::_duplicate (TAO_AV_CORE::instance ()->orb ()))
 {
   endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
@@ -193,7 +193,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in ()));
 
-      this->file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "r"));
+      this->file_.reset (std::fopen (this->options_.filename.c_str (), "r"));
 
       if (!this->file_)
         ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %C could not be opened\n",
@@ -214,7 +214,7 @@ Client::run ()
 {
   try
     {
-      char const *flow_protocol = this->options_.use_sfp ? "sfp:1.0" : "";
+      char const * const flow_protocol = this->options_.use_sfp ? "sfp:1.0" : "";
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
       flow_spec.length (1);
