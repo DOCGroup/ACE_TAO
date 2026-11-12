@@ -67,7 +67,6 @@ public:
     TAO_DTP_Definition task_thread_config;
   };
 
-
   /// Put a request object on to the request queue.
   /// Returns true if successful, false otherwise (it has been "rejected").
   bool add_request(TAO::CSD::TP_Request* request);

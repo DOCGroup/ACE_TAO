@@ -16,15 +16,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DTP_POA_Strategy::CustomRequestOutcome
-TAO_DTP_POA_Strategy::custom_synch_request(
+TAO_DTP_POA_Strategy::custom_synch_request (
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
   TAO::CSD::TP_Servant_State::HandleType const servant_state =
-    this->get_servant_state(op->servant());
+    this->get_servant_state (op->servant ());
 
   TAO::CSD::TP_Custom_Synch_Request *req_ptr {};
   ACE_NEW_RETURN (req_ptr,
-                  TAO::CSD::TP_Custom_Synch_Request(op, servant_state.in ()),
+                  TAO::CSD::TP_Custom_Synch_Request (op, servant_state.in ()),
                   REQUEST_REJECTED);
 
   TAO::CSD::TP_Custom_Synch_Request_Handle request = req_ptr;
@@ -114,7 +114,7 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
                               PortableServer::Servant         servant)
 {
   TAO::CSD::TP_Servant_State::HandleType const servant_state =
-                        this->get_servant_state (servant);
+    this->get_servant_state (servant);
 
   // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
   // before queuing the request and thus avoid delaying the client.
@@ -151,7 +151,7 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
       return TAO::CSD::Strategy_Base::DISPATCH_REJECTED;
     }
 
-    return TAO::CSD::Strategy_Base::DISPATCH_HANDLED;
+  return TAO::CSD::Strategy_Base::DISPATCH_HANDLED;
 }
 
 TAO::CSD::Strategy_Base::DispatchResult
@@ -163,7 +163,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                               PortableServer::Servant         servant)
 {
   TAO::CSD::TP_Servant_State::HandleType const servant_state =
-                        this->get_servant_state (servant);
+    this->get_servant_state (servant);
 
   bool const is_sync_with_server = server_request.sync_with_server ();
   bool const is_synchronous = server_request.response_expected ();
@@ -312,7 +312,7 @@ TAO_DTP_POA_Strategy::get_servant_state (PortableServer::Servant servant)
 }
 
 void
-TAO_DTP_POA_Strategy::set_dtp_config (TAO_DTP_Definition &tp_config)
+TAO_DTP_POA_Strategy::set_dtp_config (TAO_DTP_Definition const &tp_config)
 {
   if (tp_config.min_threads_ <= 0)
     {

@@ -45,7 +45,6 @@ namespace TAO
   }
 }
 
-
 /**
  * @class TAO_DTP_POA_Strategy
  *
@@ -192,16 +191,14 @@ private:
   /// by performing the actual servant request dispatching logic.
   TAO_DTP_Task dtp_task_;
 
-
   /// This boolean is used to determine if the configuration has
   /// been sent in from an application or, if false, needs to be
   /// looked up from a Dynamic TP Config repo. It works in conjunction with
   /// dynamic_tp_config_name_ above.
   bool config_initialized_;
 
-  void set_dtp_config(TAO_DTP_Definition &tp_config);
+  void set_dtp_config (TAO_DTP_Definition const &tp_config);
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

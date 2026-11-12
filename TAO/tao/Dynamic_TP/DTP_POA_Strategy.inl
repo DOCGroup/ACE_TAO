@@ -30,5 +30,4 @@ TAO_DTP_POA_Strategy::set_servant_serialization (bool serialize_servants)
   this->serialize_servants_ = serialize_servants;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

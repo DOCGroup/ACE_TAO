@@ -16,7 +16,7 @@ TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer ()
 }
 
 int
-TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
+TAO_DTP_Config_Registry::init (int, ACE_TCHAR* [])
 {
   return 0;
 }
@@ -214,8 +214,8 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 
 int
 TAO_DTP_Config::parse_long (int &curarg,
-                                   int argc, ACE_TCHAR *argv[],
-                                   ACE_TCHAR const *match, long &value)
+                            int argc, ACE_TCHAR *argv[],
+                            ACE_TCHAR const *match, long &value)
 {
   ACE_TCHAR const *str {};
   int const result = this->parse_string (curarg, argc, argv, match, str);
@@ -234,8 +234,8 @@ TAO_DTP_Config::parse_long (int &curarg,
 
 int
 TAO_DTP_Config::parse_bool (int &curarg,
-                                   int argc, ACE_TCHAR *argv[],
-                                   ACE_TCHAR const *match, bool &value)
+                            int argc, ACE_TCHAR *argv[],
+                            ACE_TCHAR const *match, bool &value)
 {
   long num {};
   int const result = this->parse_long (curarg, argc, argv, match, num);
@@ -243,7 +243,6 @@ TAO_DTP_Config::parse_bool (int &curarg,
     return result;
 
   value = num != 0;
-
   return 1;
 }
 

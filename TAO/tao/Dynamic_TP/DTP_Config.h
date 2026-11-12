@@ -113,7 +113,6 @@ private:
 
 static TAO_DTP_Config_Registry_Installer config_installer;
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
 ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
 

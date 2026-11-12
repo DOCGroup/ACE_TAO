@@ -36,5 +36,4 @@ TAO_DTP_Thread_Pool::dynamic_thread_time () const
   return this->definition_.timeout_;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

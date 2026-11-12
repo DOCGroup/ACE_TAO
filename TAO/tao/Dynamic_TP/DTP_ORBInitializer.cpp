@@ -34,8 +34,8 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
       throw ::CORBA::INTERNAL ();
     }
 
-
-  ACE_Service_Gestalt *gestalt = tao_info->orb_core ()->configuration();
+  ACE_Service_Gestalt * const gestalt =
+    tao_info->orb_core ()->configuration ();
 
   ACE_Service_Object * const config_obj =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
@@ -77,7 +77,8 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   TAO_Thread_Lane_Resources_Manager &tlrm =
     tao_info->orb_core ()->thread_lane_resources_manager();
 
-  ACE_Service_Gestalt *gestalt = tao_info->orb_core ()->configuration();
+  ACE_Service_Gestalt * const gestalt =
+    tao_info->orb_core ()->configuration ();
 
   char const * const dtp_name =
     tao_info->orb_core ()->orb_params ()->dynamic_thread_pool_config_name ();
@@ -96,9 +97,9 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
         (ACE_Dynamic_Service<ACE_Service_Object>::instance
          (gestalt, "DTP_Config_Registry", true));
 
-      TAO_DTP_Definition def;
+      TAO_DTP_Definition def {};
 
-      if (config_registry == nullptr || !config_registry->find(dtp_name, def))
+      if (config_registry == nullptr || !config_registry->find (dtp_name, def))
         {
           if (TAO_debug_level > 0)
             TAOLIB_ERROR ((LM_ERROR,
@@ -113,14 +114,11 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
       TAO_DTP_Thread_Lane_Resources_Manager &dtp_tlrm =
         dynamic_cast<TAO_DTP_Thread_Lane_Resources_Manager &>(tlrm);
 
-      dtp_tlrm.tp_manager().create_threadpool (def);
+      dtp_tlrm.tp_manager ().create_threadpool (def);
 
       tao_info->orb_core ()->leader_follower ().set_avoid_client_leader ();
     }
-
-
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
