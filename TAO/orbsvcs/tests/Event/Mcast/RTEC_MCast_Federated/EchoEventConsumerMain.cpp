@@ -8,11 +8,12 @@
 #include <orbsvcs/Time_Utilities.h>
 #include <orbsvcs/Event_Utilities.h>
 #include <orbsvcs/CosNamingC.h>
+#include "ace/OS_NS_string.h"
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID {ACE_ES_EVENT_SOURCE_ANY + 1};
+constexpr RtecEventComm::EventType MY_EVENT_TYPE {ACE_ES_EVENT_UNDEFINED + 1};
 
-const int EVENT_LIMIT = 20;
+constexpr int EVENT_LIMIT {20};
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -21,11 +22,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    const ACE_TCHAR *ecname = ACE_TEXT ("EventService");
-    for (int i = 0; argv[i] != 0; i++) {
+    ACE_TCHAR const *ecname = ACE_TEXT ("EventService");
+    for (int i {}; argv[i] != nullptr; ++i) {
       if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-ecname")) == 0) {
-        if (argv[i+1] != 0) {
-          ecname = argv[i+1];
+        if (argv[i + 1] != nullptr) {
+          ecname = argv[i + 1];
         } else {
     ACE_ERROR ((LM_ERROR,
           "Missing Event channel name\n"));
@@ -34,16 +35,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     // Find the Naming Service.
-    CORBA::Object_var obj = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
+    CosNaming::NamingContextExt_var root_context =
+      CosNaming::NamingContextExt::_narrow (obj.in ());
 
     // Find the EchoEventChannel.
     obj = root_context->resolve_str (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Downcast the object reference to an EventChannel reference.
     RtecEventChannelAdmin::EventChannel_var ec =
-      RtecEventChannelAdmin::EventChannel::_narrow(obj.in());
-    if (CORBA::is_nil(ec.in())) {
+      RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
+    if (CORBA::is_nil (ec.in ())) {
       ACE_ERROR_RETURN ((LM_ERROR,
        "Could not narrow EchoEventChannel.\n"),
       1);
@@ -52,24 +54,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     "EchoEventConsumerMain.cpp: Found the EchoEventChannel.\n"));
 
     // Obtain a reference to the consumer administration object.
-    RtecEventChannelAdmin::ConsumerAdmin_var admin = ec->for_consumers();
+    RtecEventChannelAdmin::ConsumerAdmin_var admin = ec->for_consumers ();
 
     // Obtain a reference to the push supplier proxy.
     RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-      admin->obtain_push_supplier();
+      admin->obtain_push_supplier ();
 
     // Get the RootPOA.
     obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
 
     // Instantiate an EchoEventConsumer_i servant.
-    EchoEventConsumer_i servant(orb.in(), EVENT_LIMIT);
+    EchoEventConsumer_i servant (orb.in (), EVENT_LIMIT);
 
     // Register it with the RootPOA.
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
-    CORBA::Object_var consumer_obj = poa->id_to_reference(oid.in());
+    PortableServer::ObjectId_var oid = poa->activate_object (&servant);
+    CORBA::Object_var consumer_obj = poa->id_to_reference (oid.in ());
     RtecEventComm::PushConsumer_var consumer =
-      RtecEventComm::PushConsumer::_narrow(consumer_obj.in());
+      RtecEventComm::PushConsumer::_narrow (consumer_obj.in ());
 
     // Connect as a consumer.
     ACE_ConsumerQOS_Factory qos;
@@ -81,26 +83,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                      qos.get_ConsumerQOS ());
 
     // Activate the POA via its POAManager.
-    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
+    PortableServer::POAManager_var poa_manager = poa->the_POAManager ();
     poa_manager->activate();
 
     ACE_DEBUG ((LM_DEBUG,
     "EchoEventConsumerMain.cpp: Ready to receive events...\n"));
 
     // Enter the ORB event loop.
-    orb->run();
+    orb->run ();
 
-    // If we have reached this, we must be shutting down...
-    // Disconnect the ProxyPushSupplier.
-    //supplier->disconnect_push_supplier();
-    //supplier = RtecEventChannelAdmin::ProxyPushSupplier::_nil();
-    //admin = RtecEventChannelAdmin::ConsumerAdmin::_nil();
-
-    orb->destroy();
+    orb->destroy ();
 
     return 0;
   }
-  catch (const CORBA::Exception& exc)
+  catch (CORBA::Exception const &exc)
   {
     ACE_ERROR ((LM_ERROR,
     "Caught CORBA::Exception\n%C (%C)\n",

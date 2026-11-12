@@ -8,12 +8,17 @@
 
 class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
 public:
-  SimpleAddressServer (const ACE_INET_Addr& address);
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address) override;
+  explicit SimpleAddressServer (ACE_INET_Addr const &address);
+  SimpleAddressServer (SimpleAddressServer const &) = delete;
+  SimpleAddressServer (SimpleAddressServer &&) = delete;
+  SimpleAddressServer &operator= (SimpleAddressServer const &) = delete;
+  SimpleAddressServer &operator= (SimpleAddressServer &&) = delete;
 
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6) override;
+  void get_addr (RtecEventComm::EventHeader const &header,
+                 RtecUDPAdmin::UDP_Addr &address) override;
+
+  void get_address (RtecEventComm::EventHeader const &header,
+                    RtecUDPAdmin::UDP_Address_out addr6) override;
 
 private:
   ACE_INET_Addr addr_;

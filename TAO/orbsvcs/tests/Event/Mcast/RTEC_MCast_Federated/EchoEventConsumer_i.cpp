@@ -3,27 +3,25 @@
 
 #include "EchoEventConsumer_i.h"
 #include "tao/PortableServer/PS_CurrentC.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstdio>
 #include <sstream>
 
-// Constructor duplicates the ORB reference.
-EchoEventConsumer_i::EchoEventConsumer_i(CORBA::ORB_ptr orb, int event_limit)
-  : orb_(CORBA::ORB::_duplicate(orb))
-  , event_limit_(event_limit)
+EchoEventConsumer_i::EchoEventConsumer_i (CORBA::ORB_ptr orb, int event_limit)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    event_limit_ (event_limit)
 {
 }
 
 // Implement the push() operation.
-void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
+void EchoEventConsumer_i::push (RtecEventComm::EventSet const &events)
 {
   // Loop through the events, looking for shutdown events.
-  for (u_int i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
-      //ACE_OS::printf(".");
       // Extract event data from the any.
-      const char* eventData {};
+      char const *event_data {};
       std::ostringstream out;
 
 #ifndef ACE_LACKS_GETPID
@@ -34,32 +32,32 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
           << "  source: " << events[i].header.source;
 
 #if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
-      if (events[i].data.any_value >>= eventData)
+      if (events[i].data.any_value >>= event_data)
         {
-          out << "  text: "   << eventData;
+          out << "  text: "   << event_data;
         }
 #else
       if (events[i].data.payload.length() > 0)
         {
           out << "  text: " <<
-            (const char *)events[i].data.payload.get_buffer();
+            reinterpret_cast<char const *> (events[i].data.payload.get_buffer ());
         }
 #endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
-      ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
+      std::printf ("%s\n", out.str ().c_str ()); // printf is synchronized
     }
   if (--event_limit_ <= 0)
     {
-      orb_->shutdown(0);
+      this->orb_->shutdown (false);
     }
 }
 
 // Implement the disconnect_push_consumer() operation.
-void EchoEventConsumer_i::disconnect_push_consumer()
+void EchoEventConsumer_i::disconnect_push_consumer ()
 {
   // Deactivate this object.
-  CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");
-  PortableServer::Current_var current = PortableServer::Current::_narrow(obj.in());
-  PortableServer::POA_var poa = current->get_POA();
-  PortableServer::ObjectId_var objectId = current->get_object_id();
-  poa->deactivate_object(objectId.in());
+  CORBA::Object_var obj = this->orb_->resolve_initial_references ("POACurrent");
+  PortableServer::Current_var current = PortableServer::Current::_narrow (obj.in ());
+  PortableServer::POA_var poa = current->get_POA ();
+  PortableServer::ObjectId_var object_id = current->get_object_id ();
+  poa->deactivate_object (object_id.in ());
 }
