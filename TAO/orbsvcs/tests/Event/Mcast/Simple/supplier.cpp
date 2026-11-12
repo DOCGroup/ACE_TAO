@@ -29,13 +29,6 @@ check_for_nil (CORBA::Object_ptr obj, char const *message)
                        "ERROR: Object reference <%s> is nil\n",
                        message),
                       -1);
-  else
-    return 0;
-}
-
-int
-parse_args (int /*argc*/, ACE_TCHAR ** /*argv*/)
-{
   return 0;
 }
 
@@ -47,9 +40,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize ORB and parse args.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) == -1)
-        return 1;
 
       // Obtain reference to EC.
       CORBA::Object_var obj =

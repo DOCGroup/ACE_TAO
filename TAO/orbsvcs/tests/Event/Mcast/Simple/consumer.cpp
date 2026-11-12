@@ -45,7 +45,7 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 }
 
 void
-EC_Consumer::push (const RtecEventComm::EventSet &events)
+EC_Consumer::push (RtecEventComm::EventSet const& events)
 {
   for (CORBA::ULong i {}; i < events.length (); ++i)
     {
@@ -85,13 +85,6 @@ check_for_nil (CORBA::Object_ptr obj, char const *message)
                        "ERROR: Object reference <%s> is nil\n",
                        message),
                       -1);
-  else
-    return 0;
-}
-
-int
-parse_args (int /* argc */, ACE_TCHAR ** /* argv */)
-{
   return 0;
 }
 
@@ -103,9 +96,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) == -1)
-        return 1;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -147,7 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
         consumer_admin->obtain_push_supplier ();
 
-      ACE_ConsumerQOS_Factory qos;
+      ACE_ConsumerQOS_Factory qos {};
       qos.start_disjunction_group (1);
       qos.insert_type (ACE_ES_EVENT_ANY, 0);
       supplier->connect_push_consumer (consumer.in (),
