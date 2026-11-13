@@ -202,7 +202,7 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
 
   while (e > b)
     {
-      char temp = *e;
+      char const temp = *e;
       *e = *b;
       *b = temp;
       ++b;
@@ -242,7 +242,7 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 
   while (value != 0)
     {
-      int mod = value % radix;
+      int const mod = value % radix;
       value = value / radix;
 
       *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
@@ -254,7 +254,7 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 
   while (e > b)
     {
-      wchar_t temp = *e;
+      wchar_t const temp = *e;
       *e = *b;
       *b = temp;
       ++b;
