@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// The interface between a supplier and an Event Service ACE_Stream.
 
 #ifndef _SUPPLIER_ROUTER_H
 #define _SUPPLIER_ROUTER_H
@@ -17,14 +16,12 @@
 
 #if defined (ACE_HAS_THREADS)
 
-// Forward declaration.
 class Supplier_Handler;
 
-// Type of search key for SUPPLIER_MAP.
+/// Handle type used as the supplier map key.
 using SUPPLIER_KEY = ACE_HANDLE;
 
-// Instantiated type for routing messages to suppliers.
-
+/// Router type that handles supplier connections.
 using SUPPLIER_ROUTER = Peer_Router<Supplier_Handler, SUPPLIER_KEY>;
 
 class Supplier_Handler
@@ -39,6 +36,7 @@ public:
   int open (void *) override;
 };
 
+/// The interface between a supplier and an Event Service ACE_Stream.
 class Supplier_Router : public SUPPLIER_ROUTER
 {
 public:
@@ -49,14 +47,22 @@ public:
   Supplier_Router &operator= (Supplier_Router &&) = delete;
 
 protected:
-  // ACE_Task hooks..
+  /// @name ACE_Task hooks
+  /// @{
+
   int open (void *a = nullptr) override;
   int close (u_long flags = 0) override;
   int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
   int svc () override;
 
-  // Dynamic linking hooks inherited from Peer_Router.
+  /// @}
+
+  /// @name Dynamic linking hooks inherited from Peer_Router
+  /// @{
+
   int info (ACE_TCHAR **info_string, size_t length) const override;
+
+  /// @}
 };
 
 #endif /* ACE_HAS_THREADS */

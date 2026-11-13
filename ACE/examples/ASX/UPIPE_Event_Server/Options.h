@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// Option manager for Event Server.
 
 #ifndef DEVICE_OPTIONS_H
 #define DEVICE_OPTIONS_H
@@ -16,6 +15,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
+/// Option manager for the event server.
 class Options
 {
 public:
@@ -69,7 +69,8 @@ public:
   void   print_results ();
 
 private:
-  ACE_Profile_Timer itimer_;            // Time the process.
+  /// Process timer.
+  ACE_Profile_Timer itimer_;
   size_t thr_count_ {4};
   long t_flags_ {THR_DETACHED};
   size_t high_water_mark_ {8 * 1024};

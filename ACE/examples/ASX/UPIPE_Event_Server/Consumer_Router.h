@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// The interface between one or more consumers and an Event Server
-// ACE_Stream.
 
 #ifndef _CONSUMER_ROUTER_H
 #define _CONSUMER_ROUTER_H
@@ -36,6 +34,7 @@ public:
   int open (void *) override;
 };
 
+/// The interface between one or more consumers and an Event Server ACE_Stream.
 class Consumer_Router : public CONSUMER_ROUTER
 {
 public:
@@ -46,14 +45,22 @@ public:
   Consumer_Router &operator= (Consumer_Router &&) = delete;
 
 protected:
-  // ACE_Task hooks..
+  /// @name ACE_Task hooks
+  /// @{
+
   int open (void *a = nullptr) override;
   int close (u_long flags = 0) override;
   int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
   int svc () override;
 
-  // Dynamic linking hooks.
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+
   int info (ACE_TCHAR **info_string, size_t length) const override;
+
+  /// @}
 };
 #endif /* ACE_HAS_THREADS */
 #endif /* _CONSUMER_ROUTER_H */

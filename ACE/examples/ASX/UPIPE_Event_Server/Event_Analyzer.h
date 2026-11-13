@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// Signal router.
 
 #ifndef _EVENT_ANALYZER_H
 #define _EVENT_ANALYZER_H
@@ -15,6 +14,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
+/// Signal router.
 class Event_Analyzer : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
@@ -28,10 +28,14 @@ public:
   int close (u_long flags = 0) override;
   int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
 
-  // Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
+
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
   int info (ACE_TCHAR **info_string, size_t length) const override;
+
+  /// @}
 
 private:
   virtual int control (ACE_Message_Block *);
