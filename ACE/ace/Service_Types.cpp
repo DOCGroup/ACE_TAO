@@ -1,4 +1,5 @@
 #include "ace/Service_Types.h"
+#include "ace/ACE.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Types.inl"
@@ -25,16 +26,28 @@ ACE_Service_Type_Impl::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
+void
+ACE_Service_Type_Impl::Name_Deleter::operator() (ACE_TCHAR *name) const
+{
+  if (name != nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (name);
+#else
+      delete [] name;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+    }
+}
+
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
                                               const ACE_TCHAR *s_name,
                                               u_int f,
                                               ACE_Service_Object_Exterminator gobbler,
                                               int stype)
-  : name_ (nullptr),
-    obj_ (so),
+  : obj_ (so),
     gobbler_ (gobbler),
     flags_ (f),
-  service_type_ (stype)
+    service_type_ (stype)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::ACE_Service_Type_Impl");
   this->name (s_name);
@@ -43,14 +56,13 @@ ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
 ACE_Service_Type_Impl::~ACE_Service_Type_Impl ()
 {
   ACE_TRACE ("ACE_Service_Type_Impl::~ACE_Service_Type_Impl");
+}
 
-  // It's ok to call this, even though we may have already deleted it
-  // in the fini() method since it would then be NULL.
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(const_cast <ACE_TCHAR *> (this->name_));
-#else
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
+void
+ACE_Service_Type_Impl::name (const ACE_TCHAR *name)
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::name");
+  this->name_.reset (ACE::strnew (name));
 }
 
 int
@@ -58,12 +70,7 @@ ACE_Service_Type_Impl::fini () const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
 
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(const_cast <ACE_TCHAR *> (this->name_));
-#else
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
-  (const_cast <ACE_Service_Type_Impl *> (this))->name_ = nullptr;
+  this->name_.reset ();
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_OBJ))
@@ -195,7 +202,7 @@ ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
   // remove fail, we end up with a double delete during
   // shutdown. Bugzilla #3847
   //
-  mod->name (this->name_);
+  mod->name (this->name_.get ());
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
