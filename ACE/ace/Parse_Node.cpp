@@ -65,8 +65,6 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   for (iter = mod_list.begin (); iter != mod_list.end (); ++iter)
     {
       module = *iter;
-      ACE_ARGV args (module->parameters ());
-
       const ACE_Service_Type *mst = module->record (config);
       if (mst == nullptr)
         const_cast<ACE_Static_Node *> (module)->apply (config, yyerrno);
