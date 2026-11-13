@@ -834,6 +834,8 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       return -1;
     }
 
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
+
   if (if_cnt == 0 || if_addrs == nullptr)
     {
       if (TAO_debug_level > 0)
@@ -844,10 +846,11 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
         }
 
       if_cnt = 1; // Force the network interface count to be one.
-      delete [] if_addrs;
+      safe_if_addrs.reset ();
       ACE_NEW_RETURN (if_addrs,
                       ACE_INET_Addr[if_cnt],
                       -1);
+      safe_if_addrs.reset (if_addrs);
     }
 
   // Scan for the loopback interface since it shouldn't be included in
@@ -886,10 +889,6 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
         ++ipv6_ll;  // count link local addrs to exclude them afterwards
       }
 #endif /* ACE_HAS_IPV6 */
-
-  // The instantiation for this template is in
-  // tao/IIOP_Connector.cpp.
-  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;
