@@ -179,6 +179,8 @@ protected:
 protected:
   Request_Queue& pending_events();
 
+  /// @name Protected data members
+  /// @{
   /// The Proxy that we associate with.
   TAO_Notify_ProxySupplier* proxy_;
 
@@ -204,6 +206,7 @@ protected:
   /// Last time either push an event or validate connection
   /// via _non_exist call.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
+  /// @}
 
 private:
   /// Events pending to be delivered.

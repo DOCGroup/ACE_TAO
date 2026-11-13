@@ -48,6 +48,8 @@ public:
   /// Populate @a qos_properties with properties that can be transfered.Returns -1 on error.
   int transfer (TAO_Notify_QoSProperties& qos_properties);
 
+  /// @name QoS property accessors
+  /// @{
   const TAO_Notify_Property_ThreadPool& thread_pool () const;
   const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane () const;
 
@@ -63,7 +65,7 @@ public:
   const TAO_Notify_Property_Short& order_policy() const;
   const TAO_Notify_Property_Time& blocking_policy() const;
 
-  // The non-const accessors are used during topology load
+  /// The non-const accessors are used during topology load.
   TAO_Notify_Property_Short& event_reliability ();
   TAO_Notify_Property_Short& connection_reliability ();
   TAO_Notify_Property_Short& priority ();
@@ -75,6 +77,7 @@ public:
   TAO_Notify_Property_Short& discard_policy();
   TAO_Notify_Property_Short& order_policy();
   TAO_Notify_Property_Time& blocking_policy();
+  /// @}
 
 protected:
   /// Return 1 if <value> is unsupported.
@@ -82,8 +85,13 @@ protected:
 
   static constexpr int UNSUPPORTED_PROPERTY_COUNT = 1;
 
+  /// @name Unsupported properties
+  /// @{
   ACE_CString unsupported_[UNSUPPORTED_PROPERTY_COUNT];
+  /// @}
 
+  /// @name Supported standard properties
+  /// @{
   TAO_Notify_Property_Short event_reliability_;
   TAO_Notify_Property_Short connection_reliability_;
   TAO_Notify_Property_Short priority_;
@@ -94,6 +102,7 @@ protected:
   TAO_Notify_Property_Long max_events_per_consumer_;
   TAO_Notify_Property_Short discard_policy_;
   TAO_Notify_Property_Short order_policy_;
+  /// @}
 
   /// TAO Extensions
   TAO_Notify_Property_ThreadPool thread_pool_;

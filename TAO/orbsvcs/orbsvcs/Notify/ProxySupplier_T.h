@@ -43,6 +43,8 @@ public:
   void admin_types_changed (const CosNotification::EventTypeSeq & added,
                             const CosNotification::EventTypeSeq & removed) override;
 
+  /// @name POA_Notify_Internal event-forwarding methods
+  /// @{
   /// POA_Notify_Internal::Event_Forwarder method
   virtual void forward_structured (const CosNotification::StructuredEvent & event);
 
@@ -54,10 +56,17 @@ public:
 
   /// POA_Notify_Internal::Event_Forwarder method
   virtual void forward_any_no_filtering (const CORBA::Any & event);
-protected:
-  CORBA::Boolean is_suspended_ {};
+  /// @}
 
-  // These operations are absent from the CosEvent servant variants.
+protected:
+  /// @name Data members
+  /// @{
+  CORBA::Boolean is_suspended_ {};
+  /// @}
+
+  /// These operations are absent from the CosEvent servant variants.
+  /// @name Interface methods
+  /// @{
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin ();
 
   virtual void suspend_connection ();
@@ -77,6 +86,7 @@ protected:
 
   virtual void subscription_change (CosNotification::EventTypeSeq const &added,
                                     CosNotification::EventTypeSeq const &removed);
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -76,11 +76,16 @@ protected:
     CosNotifyChannelAdmin::ClientType ctype,
     const TAO_Notify::NVPList& attrs);
 
+  /// @name NotifyExt::ConsumerAdmin methods
+  /// @{
   CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
                                               CosNotification::QoSProperties const &initial_qos) override;
+  /// @}
 
+  /// @name CosNotifyChannelAdmin::ConsumerAdmin methods
+  /// @{
   CosNotifyChannelAdmin::AdminID MyID () override;
 
   ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel () override;
@@ -133,6 +138,7 @@ protected:
   ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
   ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
+  /// @}
 
 private:
   /// Release this object.

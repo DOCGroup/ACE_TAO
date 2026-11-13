@@ -53,11 +53,16 @@ public:
   /// finish initialization after values are set by topology load
   void init ();
 
+  /// @name Const property accessors
+  /// @{
   const TAO_Notify_Property_Long& max_global_queue_length () const;
   const TAO_Notify_Property_Long& max_consumers () const;
   const TAO_Notify_Property_Long& max_suppliers () const;
   const TAO_Notify_Property_Boolean& reject_new_events () const;
+  /// @}
 
+  /// @name Mutable property and queue accessors
+  /// @{
   TAO_Notify_Property_Long & max_global_queue_length ();
   TAO_Notify_Property_Long & max_consumers ();
   TAO_Notify_Property_Long & max_suppliers ();
@@ -69,6 +74,7 @@ public:
 
   TAO_Notify_Atomic_Property_Long& consumers ();
   TAO_Notify_Atomic_Property_Long& suppliers ();
+  /// @}
 
   /// Returns true if Queue is full
   CORBA::Boolean queue_full ();
@@ -78,7 +84,9 @@ protected:
   // values? Should they be configurable by the user so the resource
   // requirements can be bounded?
 
-  // A default value of zero means no limit for these properties.
+  /// @name Admin properties
+  /// @{
+  /// A default value of zero means no limit for these properties.
   /**
    * The maximum number of events that will be queued by the channel before
    * the channel begins discarding events or rejecting new events upon
@@ -96,6 +104,7 @@ protected:
 
   /// Reject any new event.
   TAO_Notify_Property_Boolean reject_new_events_;
+  /// @}
 
   /// This is used to count the queue length across all buffers in the Notify Service
   /// to enforce the "MaxQueueLength" property.

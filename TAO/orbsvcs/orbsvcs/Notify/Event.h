@@ -95,6 +95,8 @@ public:
   /// Unmarshal an event from a CDR. (for persistence)
   static TAO_Notify_Event* unmarshal (TAO_InputCDR & cdr);
 
+  /// @name Accessors
+  /// @{
   /// Priority
   const TAO_Notify_Property_Short& priority () const;
 
@@ -106,8 +108,11 @@ public:
 
   /// Event creation time
   const ACE_Time_Value& creation_time () const;
+  /// @}
 
 protected:
+  /// @name QoS properties
+  /// @{
   /// Priority.
   TAO_Notify_Property_Short priority_;
 
@@ -116,6 +121,7 @@ protected:
 
   /// Reliability
   TAO_Notify_Property_Boolean reliable_;
+  /// @}
 
 private:
   /// Return a pointer to a copy of this event on the heap

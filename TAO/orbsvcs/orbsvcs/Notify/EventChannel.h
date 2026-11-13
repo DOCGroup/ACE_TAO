@@ -122,6 +122,8 @@ private:
 
   void save_attrs(TAO_Notify::NVPList& attrs) override;
 
+  /// @name Data members
+  /// @{
   /// The parent object.
   TAO_Notify_EventChannelFactory::Ptr ecf_;
 
@@ -132,9 +134,11 @@ private:
 
   /// Default Supplier Admin
   CosNotifyChannelAdmin::SupplierAdmin_var default_supplier_admin_;
+  /// @}
 
 protected:
-
+  /// @name CosNotifyChannelAdmin::EventChannel methods
+  /// @{
   ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory () override;
 
   ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin () override;
@@ -169,6 +173,7 @@ protected:
   ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
+  /// @}
 
 private:
   TAO_Notify_ConsumerAdmin_Container& ca_container();

@@ -63,11 +63,14 @@ public:
   /// Count accessor
   int count ();
 
-  // Incr the ref count.
+  /// @name Reference-counting methods
+  /// @{
+  /// Increment the reference count.
   CORBA::ULong _incr_refcnt ();
 
-  // Decr the ref count. This object is destroyed when the count is 0.
+  /// Decrement the reference count and destroy this object when it reaches zero.
   CORBA::ULong _decr_refcnt ();
+  /// @}
 
 protected:
   /// The Collection

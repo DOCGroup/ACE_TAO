@@ -91,6 +91,8 @@ private:
   /// Discard as per the Discard Policy.
   bool discard (TAO_Notify_Method_Request_Queueable* method_request);
 
+  /// @name Data members
+  /// @{
   /// The local Message Queue
   TAO_Notify_Message_Queue& msg_queue_;
 
@@ -126,6 +128,7 @@ private:
 
   /// Optional queue tracker
   Tracker* tracker_ {};
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

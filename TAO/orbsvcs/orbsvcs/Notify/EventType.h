@@ -48,10 +48,13 @@ public:
   /// Assignment operator.
   TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
+  /// @name Comparison operators
+  /// @{
   bool operator==(const TAO_Notify_EventType& notify_event_type) const;
 
   /// != operator
   bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
+  /// @}
 
   /// Return the special event type.
   static TAO_Notify_EventType special ();
@@ -84,11 +87,14 @@ protected:
   bool domain_is_wildcard (const char* domain) const;
   bool type_is_wildcard (const char* type) const;
 
+  /// @name Data members
+  /// @{
   /// The event_type that we're decorating.
   CosNotification::EventType event_type_;
 
   /// The hash value computed.
   u_long hash_value_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

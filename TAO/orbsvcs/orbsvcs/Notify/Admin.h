@@ -96,6 +96,8 @@ protected:
 
   TAO_Notify_Proxy_Container& proxy_container();
 
+  /// @name Data members
+  /// @{
   /// The EventChannel.
   TAO_Notify_EventChannel::Ptr ec_ {};
 
@@ -111,6 +113,7 @@ protected:
   };
 
   bool is_default_ {};
+  /// @}
 private:
   /// Remove type from container_
   void remove (TAO_Notify_Proxy *proxy);

@@ -67,8 +67,11 @@ public:
   TAO_Notify_EventChannelFactory &operator= (TAO_Notify_EventChannelFactory const &) = delete;
   TAO_Notify_EventChannelFactory &operator= (TAO_Notify_EventChannelFactory &&) = delete;
 
+  /// @name Servant reference-count methods
+  /// @{
   void _add_ref () override;
   void _remove_ref () override;
+  /// @}
 
   /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
@@ -123,6 +126,8 @@ public:
   TAO_Notify_Object::ID get_id () const override;
 
 private:
+  /// @name NotifyExt methods
+  /// @{
   void destroy () override;
 
   /// shutdown
@@ -135,8 +140,11 @@ private:
       NotifyExt::ReconnectionRegistry::ReconnectionID id) override;
 
   CORBA::Boolean is_alive () override;
+  /// @}
 
 protected:
+  /// @name CosNotifyChannelAdmin methods
+  /// @{
   ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
       CosNotification::QoSProperties const &initial_qos,
       CosNotification::AdminProperties const &initial_admin,
@@ -146,6 +154,7 @@ protected:
 
   ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
       CosNotifyChannelAdmin::ChannelID id) override;
+  /// @}
 
 private:
   using TAO_Notify_EventChannel_Container = TAO_Notify_Container_T<TAO_Notify_EventChannel>;

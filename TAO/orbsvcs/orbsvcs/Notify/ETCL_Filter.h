@@ -60,12 +60,11 @@ private:
   /// Release this object.
   void release () override;
 
-  /// Structure for associating ConstraintInfo with an interpreter.
+  /// Constraint expression associated with the interpreter.
   CosNotifyFilter::ConstraintExp constr_expr;
-  // Constraint Expression.
 
+  /// Interpreter for the constraint expression.
   TAO_Notify_Constraint_Interpreter interpreter;
-  // Constraint Interpreter.
 };
 
 /**

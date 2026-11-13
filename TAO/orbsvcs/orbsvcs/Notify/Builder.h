@@ -47,6 +47,8 @@ public:
 
   virtual ~TAO_Notify_Builder ();
 
+  /// @name Factory methods
+  /// @{
   /// Build EventChannel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
   build_event_channel_factory (PortableServer::POA_ptr poa
@@ -130,6 +132,7 @@ public:
   /// Build CosEC style ProxyConsumer.
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
   build_proxy (TAO_Notify_SupplierAdmin* sa);
+  /// @}
 
   /// Apply Reactive concurrency.
   virtual void apply_reactive_concurrency (TAO_Notify_Object& object);

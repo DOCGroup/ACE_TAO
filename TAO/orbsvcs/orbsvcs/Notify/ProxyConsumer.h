@@ -85,11 +85,14 @@ private:
   /// Is this part of a reliable channel
   bool supports_reliable_events () const;
 
+  /// @name Data members
+  /// @{
   /// The SA parent.
   TAO_Notify_SupplierAdmin::Ptr supplier_admin_ {};
 
   /// The Supplier that we're connect to.
   std::unique_ptr<TAO_Notify_Supplier> supplier_;
+  /// @}
 
   /// Access our Peer.
   TAO_Notify_Peer* peer () override;

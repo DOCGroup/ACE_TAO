@@ -81,11 +81,14 @@ public:
   TAO_Notify_ConsumerAdmin& consumer_admin ();
 
 private:
+  /// @name Data members
+  /// @{
   /// The CA parent.
   TAO_Notify_ConsumerAdmin::Ptr consumer_admin_ {};
 
   /// The Consumer that we're connect to.
   TAO_Notify_Consumer::Ptr consumer_;
+  /// @}
 
   /// Access our Peer.
   TAO_Notify_Peer* peer () override;

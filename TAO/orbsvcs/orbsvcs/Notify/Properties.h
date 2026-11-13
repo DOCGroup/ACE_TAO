@@ -47,6 +47,8 @@ public:
 
   static void close ();
 
+  /// @name Property accessors
+  /// @{
   TAO_Notify_Factory* factory ();
   void factory (TAO_Notify_Factory* factory);
 
@@ -114,6 +116,7 @@ public:
 
   CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp ();
   void defaultSupplierAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
+  /// @}
 
 protected:
   /// Object Factory

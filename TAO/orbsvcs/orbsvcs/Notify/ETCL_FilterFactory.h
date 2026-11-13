@@ -49,11 +49,16 @@ public:
   TAO_Notify_ETCL_FilterFactory &operator= (TAO_Notify_ETCL_FilterFactory const &) = delete;
   TAO_Notify_ETCL_FilterFactory &operator= (TAO_Notify_ETCL_FilterFactory &&) = delete;
 
+  /// @name TAO_Notify_FilterFactory methods
+  /// @{
   CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa) override;
 
   void destroy () override;
+  /// @}
 
+  /// @name CosNotifyFilter::FilterFactory methods
+  /// @{
   CosNotifyFilter::Filter_ptr create_filter (
       const char * constraint_grammar) override;
 
@@ -75,6 +80,7 @@ public:
 
   CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter) override;
   CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id) override;
+  /// @}
 
 protected:
   CosNotifyFilter::Filter_ptr
