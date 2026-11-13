@@ -1015,7 +1015,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -1081,7 +1081,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -1805,7 +1805,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -1877,7 +1877,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -2120,7 +2120,7 @@ ACE::readv_n (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -2163,7 +2163,7 @@ ACE::writev_n (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -3190,7 +3190,7 @@ ACE::strndup (const char *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != '\0';
-       len++)
+       ++len)
     continue;
 
   char *s;
@@ -3218,7 +3218,7 @@ ACE::strndup (const wchar_t *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != '\0';
-       len++)
+       ++len)
     continue;
 
   size_t const size = (len + 1) * sizeof (wchar_t);
@@ -3248,7 +3248,7 @@ ACE::strnnew (const char *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != L'\0';
-       len++)
+       ++len)
     continue;
 
   char *s;
@@ -3278,7 +3278,7 @@ ACE::strnnew (const wchar_t *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != ACE_TEXT_WIDE ('\0');
-       len++)
+       ++len)
     continue;
 
   wchar_t *s;
