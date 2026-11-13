@@ -20,24 +20,17 @@ static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
 }
 
 
+/**
+ * @class Event_Server
+ * @brief Runs the Event Server and handles clean shutdown.
+ *
+ * In addition to packaging the Event Server components, this class handles
+ * SIGINT and terminates the application. The process can also be stopped by
+ * typing any character on standard input. Inheriting from ACE_Sig_Adapter
+ * lets it stop the ACE_Reactor cleanly when SIGINT is received.
+ */
 class Event_Server : public ACE_Sig_Adapter
 {
-  // = TITLE
-  //     Run the logic for the <Event_Server>.
-
-  //
-  // = DESCRIPTION
-  //     In addition to packaging the <Event_Server> components, this
-  //     class also handles SIGINT and terminate the entire
-  //     application process.  There are several ways to terminate
-  //     this application process:
-  //
-  //     1. Send a SIGINT signal (e.g., via ^C)
-  //     2. Type any character on the STDIN.
-  //
-  //     Note that by inheriting from the <ACE_Sig_Adapter> we can
-  //     shutdown the <ACE_Reactor> cleanly when a SIGINT is
-  //     generated.
 public:
   Event_Server ();
   Event_Server (Event_Server const &) = delete;
@@ -45,26 +38,24 @@ public:
   Event_Server &operator= (Event_Server const &) = delete;
   Event_Server &operator= (Event_Server &&) = delete;
 
+  /// Run the event loop for the Event Server.
   int svc ();
-  // Run the event-loop for the event server.
 
 private:
+  /// Handle input when the user types something on stdin to stop the program.
   int handle_input (ACE_HANDLE handle) override;
-  // Hook method called back when a user types something into the
-  // STDIN in order to shut down the program.
 
+  /// Set up the modules in the stream.
   int configure_stream ();
-  // Setup the plumbing in the stream.
 
+  /// Set the high and low queue watermarks.
   int set_watermarks ();
-  // Set the high and low queue watermarks.
 
+  /// Run the Event Server event loop.
   int run_event_loop ();
-  // Run the event-loop for the <Event_Server>.
 
+  /// Stream containing the Event Server modules.
   MT_Stream event_server_;
-  // The <ACE_Stream> that contains the <Event_Server> application
-  // <Modules>.
 };
 
 Event_Server::Event_Server ()
