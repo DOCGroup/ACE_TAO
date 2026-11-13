@@ -27,7 +27,6 @@
 class RTSCHEDTESTLIB_Export POA_Holder
 {
 public:
-  /// Constructor
   POA_Holder ();
 
   /// The arg_shifter options are read in the following manner:

@@ -41,10 +41,8 @@ using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 class RTSCHEDTESTLIB_Export Task_Stats
 {
  public:
-  /// Constructor
   Task_Stats ();
 
-  /// Destructor
   ~Task_Stats ();
 
   /// Init

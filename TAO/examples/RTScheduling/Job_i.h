@@ -28,7 +28,6 @@ class DT_Creator;
 class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 {
  public:
-  /// Constructor
   Job_i (DT_Creator* dt_creator);
 
   ~Job_i ();
