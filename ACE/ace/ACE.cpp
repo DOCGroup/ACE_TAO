@@ -24,6 +24,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <cwchar>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
@@ -358,7 +359,7 @@ ACE::hash_pjw (const wchar_t *str, size_t len)
 u_long
 ACE::hash_pjw (const wchar_t *str)
 {
-  return ACE::hash_pjw (str, ACE_OS::strlen (str));
+  return ACE::hash_pjw (str, std::wcslen (str));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -3334,7 +3335,7 @@ ACE::strnew (const wchar_t *s)
   if (s == nullptr)
     return nullptr;
 
-  size_t const n = ACE_OS::strlen (s) + 1;
+  size_t const n = std::wcslen (s) + 1;
   wchar_t *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
@@ -3346,7 +3347,7 @@ ACE::strnew (const wchar_t *s)
   ACE_NEW_RETURN (t, wchar_t[n], nullptr);
 #endif  /* ACE_HAS_ALLOC_HOOKS */
 
-  return ACE_OS::strcpy (t, s);
+  return std::wcscpy (t, s);
 }
 #endif /* ACE_HAS_WCHAR */
 
