@@ -14,8 +14,7 @@
 #include "ace/SString.h"
 #include "Fill_ACE_QoS.h"
 
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS
-                                                        const &dgram_mcast_qos,
+Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                                                         ACE_QoS_Session *qos_session)
   : dgram_mcast_qos_ (dgram_mcast_qos),
     qos_session_ (qos_session)

@@ -15,7 +15,7 @@
 #include "ace/OS_NS_string.h"
 
 Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (
-  ACE_SOCK_Dgram_Mcast_QoS const &dgram_mcast_qos,
+  ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
   ACE_QoS_Session *qos_session)
   : dgram_mcast_qos_ (dgram_mcast_qos),
     qos_session_ (qos_session)

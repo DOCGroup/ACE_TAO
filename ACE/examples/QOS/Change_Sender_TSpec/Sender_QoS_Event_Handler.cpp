@@ -14,8 +14,7 @@
 
 #include "Fill_ACE_QoS.h"
 
-Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS
-                                                    const &dgram_mcast_qos,
+Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                                                     ACE_QoS_Session *qos_session)
   : dgram_mcast_qos_ (dgram_mcast_qos),
     qos_session_ (qos_session)
@@ -197,9 +196,6 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
     ACE_DEBUG ((LM_DEBUG,
                 "Setting QOS succeeds.\n"));
 
-
-  // ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
-  // ACE_QoS_Session *qos_session_;
 
   return 0;
 }

@@ -25,10 +25,10 @@ class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Sender_QoS_Event_Handler () = default;
+  Sender_QoS_Event_Handler () = delete;
 
   /// Constructor.
-  Sender_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS const &dgram_mcast_qos,
+  Sender_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                             ACE_QoS_Session *qos_session);
   Sender_QoS_Event_Handler (Sender_QoS_Event_Handler const &) = delete;
   Sender_QoS_Event_Handler (Sender_QoS_Event_Handler &&) = delete;
@@ -47,7 +47,8 @@ public:
   int handle_qos (ACE_HANDLE fd) override;
 
 private:
-  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
+  /// Borrowed socket; the caller keeps it alive for the handler's lifetime.
+  ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos_;
   ACE_QoS_Session *qos_session_ {};
 };
 
