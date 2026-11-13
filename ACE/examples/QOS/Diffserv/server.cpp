@@ -24,7 +24,7 @@ public:
   Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
   Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
-  // = Hook methods inherited from the <ACE_Event_Handler>.
+  /// Hook methods inherited from ACE_Event_Handler.
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
   int handle_timeout (ACE_Time_Value const &tv,
@@ -33,13 +33,13 @@ public:
                     ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Send a datagram to the peer.
   int send (char const *buf, size_t len, ACE_INET_Addr const &);
-  // Send the <buf> to the peer.
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
+  /// Datagram endpoint used for sending and receiving.
   ACE_SOCK_Dgram endpoint_;
-  // Wrapper for sending/receiving dgrams.
 };
 
 int
@@ -75,7 +75,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   char buf[BUFSIZ + 1];
   ACE_INET_Addr from_addr;
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf - 1, from_addr);
+  ssize_t const n = this->endpoint_.recv (buf, sizeof buf - 1, from_addr);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -106,7 +106,7 @@ run_test (u_short localport)
 {
   ACE_INET_Addr local_addr (localport);
 
-  Dgram_Endpoint *raw_endpoint;
+  Dgram_Endpoint *raw_endpoint {};
 
   ACE_NEW_RETURN (raw_endpoint,
                   Dgram_Endpoint (local_addr),
@@ -124,11 +124,10 @@ run_test (u_short localport)
                       -1);
   endpoint.release ();
 
-  int ret;
   while (true)
     {
       ACE_Time_Value tv (10, 0);
-      ret = ACE_Reactor::instance ()->handle_events (&tv);
+      int const ret = ACE_Reactor::instance ()->handle_events (&tv);
       /* Error occurred while handling event */
       if (ret < 0)
         {
