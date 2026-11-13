@@ -465,12 +465,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
   : lock_ (lock),
     delete_lock_ (delete_lock),
     reverse_lock_ (nullptr),
-    creation_strategy_ (nullptr),
-    delete_creation_strategy_ (false),
-    concurrency_strategy_ (nullptr),
-    delete_concurrency_strategy_ (false),
-    recycling_strategy_ (nullptr),
-    delete_recycling_strategy_ (false)
+    creation_strategy_ {},
+    concurrency_strategy_ {},
+    recycling_strategy_ {}
 {
   // Create a new lock if necessary.
   if (this->lock_ == nullptr)
@@ -500,20 +497,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
 
   delete this->reverse_lock_;
 
-  if (this->delete_creation_strategy_)
-    delete this->creation_strategy_;
-  this->delete_creation_strategy_ = false;
-  this->creation_strategy_ = nullptr;
-
-  if (this->delete_concurrency_strategy_)
-    delete this->concurrency_strategy_;
-  this->delete_concurrency_strategy_ = false;
-  this->concurrency_strategy_ = nullptr;
-
-  if (this->delete_recycling_strategy_)
-    delete this->recycling_strategy_;
-  this->delete_recycling_strategy_ = false;
-  this->recycling_strategy_ = nullptr;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->recycling_strategy_.reset ();
 
   // Close down all cached service handlers.
   CONNECTION_MAP_ENTRY *entry {};
@@ -534,63 +520,50 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::open
 {
   // Initialize the creation strategy.
 
-  // First we decide if we need to clean up.
-  if (this->creation_strategy_ != nullptr &&
-      this->delete_creation_strategy_ &&
-      cre_s != nullptr)
+  if (cre_s != nullptr && this->creation_strategy_.get () != cre_s)
     {
-      delete this->creation_strategy_;
-      this->creation_strategy_ = nullptr;
-      this->delete_creation_strategy_ = false;
+      this->creation_strategy_.reset ();
+      this->creation_strategy_.get_deleter ().owned = false;
+      this->creation_strategy_.reset (cre_s);
     }
-
-  if (cre_s != nullptr)
-    this->creation_strategy_ = cre_s;
-  else if (this->creation_strategy_ == nullptr)
+  else if (cre_s == nullptr && this->creation_strategy_ == nullptr)
     {
-      ACE_NEW_RETURN (this->creation_strategy_,
-                      CREATION_STRATEGY, -1);
-      this->delete_creation_strategy_ = true;
+      CREATION_STRATEGY *strategy {};
+      ACE_NEW_RETURN (strategy, CREATION_STRATEGY, -1);
+      this->creation_strategy_.get_deleter ().owned = true;
+      this->creation_strategy_.reset (strategy);
     }
 
   // Initialize the concurrency strategy.
 
-  if (this->concurrency_strategy_ != nullptr &&
-      this->delete_concurrency_strategy_ &&
-      con_s != nullptr)
+  if (con_s != nullptr && this->concurrency_strategy_.get () != con_s)
     {
-      delete this->concurrency_strategy_;
-      this->concurrency_strategy_ = nullptr;
-      this->delete_concurrency_strategy_ = false;
+      this->concurrency_strategy_.reset ();
+      this->concurrency_strategy_.get_deleter ().owned = false;
+      this->concurrency_strategy_.reset (con_s);
     }
-
-  if (con_s != nullptr)
-    this->concurrency_strategy_ = con_s;
-  else if (this->concurrency_strategy_ == nullptr)
+  else if (con_s == nullptr && this->concurrency_strategy_ == nullptr)
     {
-      ACE_NEW_RETURN (this->concurrency_strategy_,
-                      CONCURRENCY_STRATEGY, -1);
-      this->delete_concurrency_strategy_ = true;
+      CONCURRENCY_STRATEGY *strategy {};
+      ACE_NEW_RETURN (strategy, CONCURRENCY_STRATEGY, -1);
+      this->concurrency_strategy_.get_deleter ().owned = true;
+      this->concurrency_strategy_.reset (strategy);
     }
 
   // Initialize the recycling strategy.
 
-  if (this->recycling_strategy_ != nullptr &&
-      this->delete_recycling_strategy_ &&
-      rec_s != nullptr)
+  if (rec_s != nullptr && this->recycling_strategy_.get () != rec_s)
     {
-      delete this->recycling_strategy_;
-      this->recycling_strategy_ = nullptr;
-      this->delete_recycling_strategy_ = false;
+      this->recycling_strategy_.reset ();
+      this->recycling_strategy_.get_deleter ().owned = false;
+      this->recycling_strategy_.reset (rec_s);
     }
-
-  if (rec_s != nullptr)
-    this->recycling_strategy_ = rec_s;
-  else if (this->recycling_strategy_ == nullptr)
+  else if (rec_s == nullptr && this->recycling_strategy_ == nullptr)
     {
-      ACE_NEW_RETURN (this->recycling_strategy_,
-                      RECYCLING_STRATEGY, -1);
-      this->delete_recycling_strategy_ = true;
+      RECYCLING_STRATEGY *strategy {};
+      ACE_NEW_RETURN (strategy, RECYCLING_STRATEGY, -1);
+      this->recycling_strategy_.get_deleter ().owned = true;
+      this->recycling_strategy_.reset (strategy);
     }
 
   return 0;
@@ -1168,19 +1141,19 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Creation_Strategy<SVC_HANDLER> *
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::creation_strategy () const
 {
-  return this->creation_strategy_;
+  return this->creation_strategy_.get ();
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Recycling_Strategy<SVC_HANDLER> *
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycling_strategy () const
 {
-  return this->recycling_strategy_;
+  return this->recycling_strategy_.get ();
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Concurrency_Strategy<SVC_HANDLER> *
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurrency_strategy () const
 {
-  return this->concurrency_strategy_;
+  return this->concurrency_strategy_.get ();
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int

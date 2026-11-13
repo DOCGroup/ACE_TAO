@@ -13,6 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <memory>
+
 #include "ace/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -893,6 +895,27 @@ public:
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
 
 protected:
+  /// Owns internally created strategies; externally supplied strategies
+  /// are borrowed.
+  struct strategy_deleter
+  {
+    bool owned {};
+
+    template <class STRATEGY>
+    void operator() (STRATEGY *strategy) const
+    {
+      if (this->owned)
+        delete strategy;
+    }
+  };
+
+  using creation_strategy_ptr =
+    std::unique_ptr<CREATION_STRATEGY, strategy_deleter>;
+  using concurrency_strategy_ptr =
+    std::unique_ptr<CONCURRENCY_STRATEGY, strategy_deleter>;
+  using recycling_strategy_ptr =
+    std::unique_ptr<RECYCLING_STRATEGY, strategy_deleter>;
+
   /// Creates a new connection.
   virtual int new_connection (SVC_HANDLER *&sh,
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -965,26 +988,14 @@ protected:
   /// Reverse lock.
   REVERSE_MUTEX *reverse_lock_;
 
-  /// Creation strategy for an <Connector>.
-  CREATION_STRATEGY *creation_strategy_;
+  /// Creation strategy for an <Connector>; ownership follows its deleter.
+  creation_strategy_ptr creation_strategy_;
 
-  /// true if <Connector> created the creation strategy and thus should
-  /// delete it, else false.
-  bool delete_creation_strategy_;
+  /// Concurrency strategy for an <Connector>; ownership follows its deleter.
+  concurrency_strategy_ptr concurrency_strategy_;
 
-  /// Concurrency strategy for an <Connector>.
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
-
-  /// true if <Connector> created the concurrency strategy and thus should
-  /// delete it, else false.
-  bool delete_concurrency_strategy_;
-
-  /// Recycling strategy for an <Connector>.
-  RECYCLING_STRATEGY *recycling_strategy_;
-
-  /// true if <Connector> created the recycling strategy and thus should
-  /// delete it, else false.
-  bool delete_recycling_strategy_;
+  /// Recycling strategy for an <Connector>; ownership follows its deleter.
+  recycling_strategy_ptr recycling_strategy_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
