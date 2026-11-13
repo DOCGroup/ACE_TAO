@@ -2,6 +2,7 @@
 #include "ace/INET_Addr.h"
 
 #include <string>
+#include <utility>
 
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
@@ -354,19 +355,18 @@ TAO_Offer_Exporter::create_offers ()
 
   int counter {};
   CORBA::Any const extra_info {};
-  TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
-  TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
-
   ACE_INET_Addr addr (u_short {});
   char const *const hostname = addr.get_host_name ();
 
   // Initialize plotters
-  string_seq.length (QUEUE_SIZE);
-  ulong_seq.length (QUEUE_SIZE);
   for (int i {}; i < NUM_OFFERS; ++i)
     {
       std::string const name = "Plotter #" + std::to_string (i);
       std::string const description = name + " is a plotter. It plots stuff.";
+      TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
+      TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
+      string_seq.length (QUEUE_SIZE);
+      ulong_seq.length (QUEUE_SIZE);
 
       for (int j {}; j < QUEUE_SIZE; ++j, counter = (counter + 1) % NUM_OFFERS)
         {
@@ -375,10 +375,10 @@ TAO_Offer_Exporter::create_offers ()
         }
 
       this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (string_seq));
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (std::move (string_seq)));
       TAO_Dynamic_Property *const user_queue = this->clean_up_.back ().get ();
       this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (ulong_seq));
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (std::move (ulong_seq)));
       TAO_Dynamic_Property *const file_sizes = this->clean_up_.back ().get ();
 
       CosTradingDynamic::DynamicProp *const dp_user_queue = user_queue->construct_dynamic_prop
@@ -422,6 +422,10 @@ TAO_Offer_Exporter::create_offers ()
     {
       std::string const name = "Printer #" + std::to_string (i);
       std::string const description = name + " is a printer. It prints stuff.";
+      TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
+      TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
+      string_seq.length (QUEUE_SIZE);
+      ulong_seq.length (QUEUE_SIZE);
 
       for (int j {}; j < QUEUE_SIZE; ++j, counter = (counter + 1) % NUM_OFFERS)
         {
@@ -430,10 +434,10 @@ TAO_Offer_Exporter::create_offers ()
         }
 
       this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (string_seq));
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (std::move (string_seq)));
       TAO_Dynamic_Property *const user_queue = this->clean_up_.back ().get ();
       this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (ulong_seq));
+        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (std::move (ulong_seq)));
       TAO_Dynamic_Property *const file_sizes = this->clean_up_.back ().get ();
 
       CosTradingDynamic::DynamicProp *const dp_user_queue = user_queue->construct_dynamic_prop

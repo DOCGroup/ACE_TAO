@@ -3,10 +3,17 @@
 
 #include "Simple_Dynamic.h"
 
+#include <utility>
 
 template <class T>
 TAO_Simple_Dynamic_Property<T>::TAO_Simple_Dynamic_Property (const T& dp)
   : dp_ (dp)
+{
+}
+
+template <class T>
+TAO_Simple_Dynamic_Property<T>::TAO_Simple_Dynamic_Property (T&& dp)
+  : dp_ (std::move (dp))
 {
 }
 

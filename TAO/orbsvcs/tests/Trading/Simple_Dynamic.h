@@ -26,6 +26,7 @@ class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 {
 public:
   TAO_Simple_Dynamic_Property (const T& dp);
+  TAO_Simple_Dynamic_Property (T&& dp);
 
   CORBA::Any* evalDP (const char* /* name */,
                       CORBA::TypeCode_ptr /* returned_type */,
