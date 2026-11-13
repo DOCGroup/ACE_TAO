@@ -9,6 +9,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include <cstring>
+#include <memory>
 
 #include <vector>
 
@@ -42,7 +43,7 @@ TAO::TypeCode::Enum<StringType,
   if (!success)
     return false;
 
-  StringType const * const begin = &this->enumerators_[0];
+  StringType const * const begin = std::addressof (this->enumerators_[0]);
   StringType const * const end   = begin + this->nenumerators_;
 
   for (StringType const * i = begin; i != end; ++i)

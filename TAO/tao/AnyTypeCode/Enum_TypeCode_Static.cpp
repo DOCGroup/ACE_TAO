@@ -8,6 +8,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include <cstring>
+#include <memory>
 
 #include <vector>
 
@@ -41,7 +42,7 @@ TAO::TypeCode::Enum<char const *,
   if (!success)
     return false;
 
-  char const * const * const begin = &this->enumerators_[0];
+  char const * const * const begin = std::addressof (this->enumerators_[0]);
   char const * const * const end   = begin + this->nenumerators_;
 
   for (char const * const * i = begin; i != end; ++i)
