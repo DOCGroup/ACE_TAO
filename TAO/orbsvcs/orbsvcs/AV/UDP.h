@@ -18,6 +18,8 @@
 
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -161,8 +163,8 @@ public:
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
 
 protected:
-  ACE_INET_Addr *address_ {};
-  ACE_INET_Addr *control_inet_address_ {};
+  std::unique_ptr<ACE_INET_Addr> address_ {};
+  std::unique_ptr<ACE_INET_Addr> control_inet_address_ {};
   TAO_Base_StreamEndPoint *endpoint_ {};
   TAO_FlowSpec_Entry *entry_ {};
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};

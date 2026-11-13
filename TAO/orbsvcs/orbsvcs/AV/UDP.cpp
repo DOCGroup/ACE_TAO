@@ -321,9 +321,6 @@ TAO_AV_UDP_Acceptor::~TAO_AV_UDP_Acceptor ()
 {
   if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
     delete this->entry_->control_handler ();
-
-  delete this->address_;
-  delete this->control_inet_address_;
 }
 
 int
@@ -401,12 +398,14 @@ TAO_AV_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   else
     {
       this->flowname_ = entry->flowname ();
-      ACE_NEW_RETURN (this->address_,
+      ACE_INET_Addr *address {};
+      ACE_NEW_RETURN (address,
                     ACE_INET_Addr ("0"),
                     -1);
+      this->address_.reset (address);
     }
 
-  int result = this->open_i (this->address_, 1);
+  int result = this->open_i (this->address_.get (), 1);
   if (result < 0)
     return result;
 
@@ -477,12 +476,14 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                       ACE_INET_Addr *local_control_addr {};
                       TAO_AV_Flow_Handler *control_flow_handler {};
 
-                      ACE_NEW_RETURN (this->control_inet_address_,
+                      ACE_INET_Addr *control_inet_address {};
+                      ACE_NEW_RETURN (control_inet_address,
                                       ACE_INET_Addr ("0"),
                                       -1);
+                      this->control_inet_address_.reset (control_inet_address);
 
                       TAO_AV_UDP_Connection_Setup::setup(control_flow_handler,
-                                                         this->control_inet_address_,
+                                                         this->control_inet_address_.get (),
                                                          local_control_addr,
                                                          this->entry_->is_multicast (),
                                                          TAO_AV_UDP_Connection_Setup::ACCEPTOR);
@@ -490,7 +491,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                       if (local_control_addr->get_port_number () !=
                           local_addr->get_port_number () +1)
                         {
-                          delete this->control_inet_address_;
+                          this->control_inet_address_.reset ();
                           delete local_addr;
                           local_addr = nullptr;
                           delete flow_handler;
@@ -500,7 +501,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                         }
                       else
                         {
-                          this->entry_->control_address (this->control_inet_address_);
+                          this->entry_->control_address (this->control_inet_address_.get ());
                           this->entry_->set_local_control_addr (local_control_addr);
                           this->entry_->control_handler (control_flow_handler);
                         }
