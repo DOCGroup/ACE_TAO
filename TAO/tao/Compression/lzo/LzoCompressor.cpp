@@ -2,6 +2,8 @@
 #include <lzo1x.h>
 #include <lzoutil.h>
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -18,9 +20,24 @@ LzoCompressor::compress (
     ::Compression::Buffer const & source,
     ::Compression::Buffer & target)
 {
-  void* wrkmem = (lzo_bytep) lzo_malloc(LZO1X_1_MEM_COMPRESS);
   // Ensure maximum is at least a bit bigger than input length.
   target.length (static_cast <CORBA::ULong> ((source.length () * 1.1) + 12));
+
+  struct Lzo_Work_Memory_Deleter
+  {
+    void operator() (void *memory) const
+    {
+      lzo_free (memory);
+    }
+  };
+
+  std::unique_ptr<void, Lzo_Work_Memory_Deleter> wrkmem (
+    lzo_malloc (LZO1X_1_MEM_COMPRESS));
+  if (!wrkmem)
+    {
+      throw ::Compression::CompressionException (LZO_E_OUT_OF_MEMORY, "");
+    }
+
   lzo_uint max_length = static_cast <lzo_uint> (target.maximum ());
 
   int const retval = ::lzo1x_1_compress (
@@ -28,9 +45,7 @@ LzoCompressor::compress (
             source.length (),
             reinterpret_cast <unsigned char*>(target.get_buffer ()),
             &max_length,
-            wrkmem);
-
-  lzo_free(wrkmem);
+            wrkmem.get ());
 
   if (retval != LZO_E_OK)
     {
