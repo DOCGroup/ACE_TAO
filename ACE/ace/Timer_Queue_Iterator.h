@@ -69,6 +69,9 @@ public:
             ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
 
+  /// @name Accessors
+  /// @{
+
   /// Get the type.
   TYPE &get_type ();
 
@@ -110,6 +113,8 @@ public:
 
   /// Set the timer_id.
   void set_timer_id (long timer_id);
+
+  /// @}
 
   /// Get the dispatch info. The dispatch information is got
   /// through @a info. This form helps us in preventing allocation and

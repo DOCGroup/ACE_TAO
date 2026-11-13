@@ -458,6 +458,9 @@ public:
   /// Close down and release all resources.
   int close () override;
 
+  /// @name Event loop drivers
+  /// @{
+
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
@@ -508,6 +511,11 @@ public:
   int handle_events (ACE_Time_Value &max_wait_time) override;
   int alertable_handle_events (ACE_Time_Value &max_wait_time) override;
 
+  /// @}
+
+  /// @name Event handling control
+  /// @{
+
   /**
    * @return The status of Reactor.  If this function returns 0, the
    *         reactor is actively handling events.  If it returns
@@ -523,6 +531,11 @@ public:
    * deactivated/reactived as desired.
    */
   void deactivate (int do_stop) override;
+
+  /// @}
+
+  /// @name Handler registration and removal
+  /// @{
 
   /// Register @a event_handler with @a mask.  The I/O handle will
   /// always come from get_handle on the event_handler.
@@ -609,6 +622,11 @@ public:
   /// Calls <remove_handler> for every signal in @a sigset.
   int remove_handler (const ACE_Sig_Set &sigset) override;
 
+  /// @}
+
+  /// @name Suspending and resuming handlers
+  /// @{
+
   /// Suspend event_handler temporarily.  Use
   /// ACE_Event_Handler::get_handle() to get the handle.
   int suspend_handler (ACE_Event_Handler *event_handler) override;
@@ -643,6 +661,11 @@ public:
   /// Return true if we any event associations were made by the reactor
   /// for the handles that it waits on, false otherwise.
   bool uses_event_associations () override;
+
+  /// @}
+
+  /// @name Timer management
+  /// @{
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -696,6 +719,11 @@ public:
                             const void **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
+  /// @}
+
+  /// @name High-level event handler scheduling
+  /// @{
+
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   int schedule_wakeup (ACE_Event_Handler *event_handler,
@@ -713,6 +741,11 @@ public:
   /// Clear @a masks_to_be_cleared from the @a handle's entry.
   int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) override;
+
+  /// @}
+
+  /// @name Notification methods
+  /// @{
 
   /**
    * Notify @a event_handler of @a mask event.  The ACE_Time_Value
@@ -751,6 +784,8 @@ public:
    */
   int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
+
+  /// @}
 
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if

@@ -612,11 +612,16 @@ public:
 
   virtual ~ACE_Scheduling_Strategy ();
 
+  /// @name Scheduling methods
+  /// @{
+
   /// Suspend hook.
   virtual int suspend ();
 
   /// Resume hook.
   virtual int resume ();
+
+  /// @}
 
   /// Dump the state of the object.
   virtual void dump () const;
@@ -641,11 +646,16 @@ public:
 
   ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
+  /// @name Scheduling methods
+  /// @{
+
   /// Suspend hook.
   int suspend () override;
 
   /// Resume hook.
   int resume () override;
+
+  /// @}
 
   /// Dump the state of the object.
   void dump () const override;
@@ -674,11 +684,16 @@ public:
 
   ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
+  /// @name Scheduling methods
+  /// @{
+
   /// Suspend hook.
   int suspend () override;
 
   /// Resume hook.
   int resume () override;
+
+  /// @}
 
   /// Dump the state of the object.
   void dump () const override;
@@ -882,6 +897,9 @@ public:
   int cleanup_hint (const void *recycling_act,
                             void **act_holder = nullptr) override;
 
+  /// @name Connection cache types
+  /// @{
+
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
   using CONNECTION_MAP = ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Null_Mutex>;
 
@@ -890,9 +908,16 @@ public:
 
   using REVERSE_MUTEX = ACE_Reverse_Lock<MUTEX>;
 
+  /// @}
+
+  /// @name Strategy accessors
+  /// @{
+
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
   virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy () const;
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
+
+  /// @}
 
 protected:
   /// Owns internally created strategies; externally supplied strategies
@@ -948,6 +973,9 @@ protected:
   virtual int cleanup_hint_i (const void *recycling_act,
                               void **act_holder);
 
+  /// @name Internal cache operations
+  /// @{
+
   int check_hint_i (SVC_HANDLER *&sh,
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
@@ -978,8 +1006,13 @@ protected:
     int perms,
     int &found);
 
+  /// @}
+
   /// Table that maintains the cache of connected SVC_HANDLERs.
   CONNECTION_MAP connection_map_;
+
+  /// @name Owned strategy objects
+  /// @{
 
   /// Mutex ownership follows its conditional deleter.
   mutex_ptr lock_;
@@ -995,6 +1028,8 @@ protected:
 
   /// Recycling strategy for an <Connector>; ownership follows its deleter.
   recycling_strategy_ptr recycling_strategy_;
+
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
