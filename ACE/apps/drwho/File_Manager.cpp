@@ -31,14 +31,14 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
   // Skip to the end of the login name.
 
   while (ACE_OS::ace_isalnum (*buf_ptr))
-    buf_ptr++;
+    ++buf_ptr;
 
   *buf_ptr++ = '\0';
 
   // Now skip over white space to *start* of real name!
 
   while (ACE_OS::ace_isspace (*buf_ptr) || *buf_ptr == '\0')
-    buf_ptr++;
+    ++buf_ptr;
 
   real_name = buf_ptr;
 
@@ -49,13 +49,13 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 
   for (char *tmp_ptr = buf_ptr - 1;
        ACE_OS::ace_isspace (*tmp_ptr);
-       tmp_ptr--)
+       --tmp_ptr)
     *tmp_ptr = '\0';
 
   // Skip over consecutive blank lines.
 
   while (*buf_ptr == '\n')
-    buf_ptr++;
+    ++buf_ptr;
 
   this->current_ptr = buf_ptr;
 }
@@ -87,7 +87,7 @@ File_Manager::open_passwd_file ()
                          "%-8.8s %s\n",
                          pwent->pw_name,
                          pwent->pw_gecos);
-        this->number_of_friends++;
+        ++this->number_of_friends;
       }
 
   ACE_OS::endpwent ();
@@ -147,7 +147,7 @@ File_Manager::open_friends_file (const char *filename)
        ;)
     if (*--cp == '\n')
       {
-        this->number_of_friends++;
+        ++this->number_of_friends;
 
         // Skip consecutive newlines.
         while (cp[-1] == '\n')

@@ -30,7 +30,7 @@ HT_Server::insert (const char *key_name, int max_len)
                                                      max_len),
                                        *prpp),
                       nullptr);
-      this->count_++;
+      ++this->count_;
     }
 
   return *prpp;

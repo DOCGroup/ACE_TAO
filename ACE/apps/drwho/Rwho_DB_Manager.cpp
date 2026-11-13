@@ -13,9 +13,7 @@
 // function needs to be changed if this assumption does not hold!)
 
 RWho_DB_Manager::RWho_DB_Manager ()
-  : number_of_users (0),
-    current_user (0),
-    WHOD_HEADER_SIZE (sizeof host_data - sizeof host_data.wd_we),
+  : WHOD_HEADER_SIZE (sizeof host_data - sizeof host_data.wd_we),
     rwho_dir_name (RWHODIR)
 {
   if (ACE_OS::getcwd (this->original_pathname, MAXPATHLEN + 1) == nullptr)
@@ -119,7 +117,7 @@ RWho_DB_Manager::get_next_user (Protocol_Record &protocol_record)
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
   current_node->set_host_name (this->host_data.wd_hostname);
   current_node->set_idle_time (this->host_data.wd_we[current_user].we_idle);
-  this->current_user++;
+  ++this->current_user;
 
   return 1;
 }

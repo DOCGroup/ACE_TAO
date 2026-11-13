@@ -18,9 +18,9 @@ PMC_All::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_All::encode\n"));
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Client,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Client, -1);
+  this->ss.reset (lookup);
 
   SET_PACKET_TYPE (packet, Options::PROTO_ALL);
 
@@ -58,7 +58,7 @@ PMC_All::decode (char *packet, int &packet_length)
 
   for (cp = (char *) ACE::strend (cp);
        *cp != '\n';
-       cp++)
+       ++cp)
     {
       // Skip over the LOGIN_NAME.
 

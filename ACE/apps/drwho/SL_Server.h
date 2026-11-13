@@ -23,8 +23,8 @@ class SL_Server : public Single_Lookup
 {
 public:
   explicit SL_Server (const char *packet);
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN) override;
+  Protocol_Record *insert (const char *key_name,
+                           int max_len = MAXUSERIDNAMELEN) override;
   Protocol_Record *get_each_entry () override;
 };
 

@@ -18,14 +18,14 @@
 class SML_Client : public SM_Client
 {
 public:
-  SML_Client ();
-  virtual ~SML_Client ();
+  SML_Client () = default;
+  ~SML_Client () override = default;
   int receive (int timeout = 0) override;
   int send () override;
 
 private:
   SML_Server sml_server;
-  int packet_length;
+  int packet_length {};
 };
 
 #endif /* _SML_CLIENT_H */

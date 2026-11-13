@@ -13,7 +13,7 @@ int
 SM_Client::demux (char *packet,
                   int &packet_length)
 {
-  if (this->pm_client->decode (packet, packet_length) < 0)
+  if (this->pm_client_->decode (packet, packet_length) < 0)
     return -1;
   else
     return 1;
@@ -24,27 +24,21 @@ SM_Client::demux (char *packet,
 int
 SM_Client::mux (char *packet, int &packet_length)
 {
+  PM_Client *manager {};
+
   switch (Options::protocol_type)
     {
     case Options::PROTO_USR:
-      ACE_NEW_RETURN (this->pm_client,
-                      PMC_Usr (Options::user_name),
-                      -1);
+      ACE_NEW_RETURN (manager, PMC_Usr (Options::user_name), -1);
       break;
     case Options::PROTO_ALL:
-      ACE_NEW_RETURN (this->pm_client,
-                      PMC_All,
-                      -1);
+      ACE_NEW_RETURN (manager, PMC_All, -1);
       break;
     case Options::PROTO_FLO:
-      ACE_NEW_RETURN (this->pm_client,
-                      PMC_Flo,
-                      -1);
+      ACE_NEW_RETURN (manager, PMC_Flo, -1);
       break;
     case Options::PROTO_RUSER:
-      ACE_NEW_RETURN (this->pm_client,
-                      PMC_Ruser,
-                      -1);
+      ACE_NEW_RETURN (manager, PMC_Ruser, -1);
       break;
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -53,21 +47,15 @@ SM_Client::mux (char *packet, int &packet_length)
       return -1;
     }
 
-  if (this->pm_client->encode (packet, packet_length) < 0)
+  this->pm_client_.reset (manager);
+
+  if (this->pm_client_->encode (packet, packet_length) < 0)
     return -1;
   return 1;
-}
-
-SM_Client::SM_Client ()
-{
-}
-
-SM_Client::~SM_Client ()
-{
 }
 
 void
 SM_Client::process ()
 {
-  this->pm_client->process ();
+  this->pm_client_->process ();
 }

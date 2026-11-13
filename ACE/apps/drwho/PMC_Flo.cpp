@@ -26,9 +26,9 @@ PMC_Flo::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_Flo::encode"));
 
-  ACE_NEW_RETURN (this->ss,
-                  BS_Client,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, BS_Client, -1);
+  this->ss.reset (lookup);
 
   SET_PACKET_TYPE (packet, Options::PROTO_FLO);
   char *buf_ptr = SKIP_PACKET_TYPE (packet);
@@ -88,7 +88,7 @@ PMC_Flo::decode (char *packet, int &packet_length)
 
   for (cp = (char *) ACE::strend (cp);
        *cp != '\n';
-       cp++)
+       ++cp)
     {
       char *login_name = cp;
 

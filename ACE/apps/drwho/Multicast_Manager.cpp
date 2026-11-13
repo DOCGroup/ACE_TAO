@@ -8,15 +8,15 @@
 #include <cstring>
 
 // Initialize all the static member vars.
-int Multicast_Manager::received_host_count = 0;
-Host_Elem *Multicast_Manager::drwho_list = nullptr;
-Host_Elem *Multicast_Manager::current_ptr = nullptr;
+int Multicast_Manager::received_host_count {};
+Host_Elem *Multicast_Manager::drwho_list {};
+Host_Elem *Multicast_Manager::current_ptr {};
 
 // Names of hosts to query for friend info.
 const char *Multicast_Manager::host_names[] =
 {
   "tango.cs.wustl.edu",
-  0 // The NULL entry...
+  nullptr // The null entry...
 };
 
 void
@@ -26,7 +26,7 @@ Multicast_Manager::insert_default_hosts ()
 
   for (const char **np = host_names;
        *np != nullptr;
-       np++)
+       ++np)
     Multicast_Manager::add_host (*np);
 }
 
@@ -53,7 +53,7 @@ Multicast_Manager::insert_hosts_from_file (const char *filename)
           Multicast_Manager::add_host (host_ptr);
 
           while (*host_ptr != '\n')
-            host_ptr++;
+            ++host_ptr;
 
           *host_ptr++ = '\0';
         }
@@ -88,7 +88,7 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
           continue;
         }
 
-      Multicast_Manager::received_host_count++;
+      ++Multicast_Manager::received_host_count;
       std::memcpy (&host_addr,
                    hp->h_addr,
                    sizeof host_addr);
@@ -151,7 +151,7 @@ Multicast_Manager::checkoff_host (in_addr host_addr)
                      sizeof host_addr.s_addr) == 0)
       {
         tmp->checked_off = true;
-        Multicast_Manager::received_host_count--;
+        --Multicast_Manager::received_host_count;
         return;
       }
 }
@@ -177,7 +177,6 @@ Multicast_Manager::get_next_non_responding_host (const char *&host_name)
 Host_Elem::Host_Elem (const char *h_name,
                       Host_Elem *n)
   : host_name (h_name),
-    checked_off (false),
     next (n)
 {
 }

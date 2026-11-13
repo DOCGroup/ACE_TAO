@@ -24,8 +24,8 @@
 class CM_Server : public Comm_Manager
 {
 public:
-  CM_Server ();
-  virtual ~CM_Server ();
+  CM_Server () = default;
+  ~CM_Server () override;
 
   int open (short port_number) override;
   int receive (int timeout = 0) override;

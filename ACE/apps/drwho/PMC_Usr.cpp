@@ -14,9 +14,9 @@ PMC_Usr::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_Usr::encode"));
 
-  ACE_NEW_RETURN (this->ss,
-                  SL_Client (this->usr_name),
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, SL_Client (this->usr_name), -1);
+  this->ss.reset (lookup);
 
   SET_PACKET_TYPE (packet, Options::PROTO_USR);
 

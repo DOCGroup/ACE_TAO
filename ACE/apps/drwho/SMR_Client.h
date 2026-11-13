@@ -18,7 +18,7 @@ class SMR_Client : public SM_Client
 {
 public:
   explicit SMR_Client (short port_number);
-  virtual ~SMR_Client ();
+  ~SMR_Client () override = default;
 };
 
 #endif /* _SMR_CLIENT_H */

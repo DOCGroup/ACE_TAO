@@ -24,13 +24,13 @@ class Hash_Table : public Search_Struct
 {
 public:
   Hash_Table ();
-  virtual ~Hash_Table ();
+  ~Hash_Table () override;
   Hash_Table (Hash_Table const &) = delete;
   Hash_Table &operator= (Hash_Table const &) = delete;
   Hash_Table (Hash_Table &&) = delete;
   Hash_Table &operator= (Hash_Table &&) = delete;
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN) override = 0;
+  Protocol_Record *insert (const char *key_name,
+                           int max_len = MAXUSERIDNAMELEN) override = 0;
   Protocol_Record *get_next_entry () override;
   Protocol_Record *get_each_entry () override;
 

@@ -27,7 +27,7 @@ HT_Client::insert (const char *key_name, int max_len)
                       Protocol_Record (ACE::strnew (key_name),
                                        *prpp),
                       nullptr);
-      this->count_++;
+      ++this->count_;
     }
 
   return *prpp;

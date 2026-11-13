@@ -13,7 +13,7 @@ u_int Options::option_word = 0;
 Options::Protocol_Types Options::protocol_type = Options::PROTO_FLO;
 
 // User name for quick lookups.
-char *Options::user_name = nullptr;
+char *Options::user_name {};
 
 // Port number for client/server.
 short Options::port_number = PORT_NUMBER;

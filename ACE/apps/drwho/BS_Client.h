@@ -22,7 +22,6 @@
 class BS_Client : public Binary_Search
 {
 public:
-  // = Initialization.
   BS_Client ();
 
   BS_Client (BS_Client const &) = delete;

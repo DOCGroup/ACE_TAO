@@ -128,11 +128,6 @@ PM_Client::handle_protocol_entries (const char *cp,
   return (char *) ACE::strend (cp);
 }
 
-PM_Client::PM_Client ()
-  : max_key_length (0)
-{
-}
-
 PM_Client::~PM_Client ()
 {
 }

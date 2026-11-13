@@ -27,9 +27,8 @@
 class CM_Client : public Comm_Manager
 {
 public:
-  CM_Client ();
-
-  virtual ~CM_Client ();
+  CM_Client () = default;
+  ~CM_Client () override;
 
   int mux (char *packet, int &packet_length) override = 0;
   int demux (char *packet, int &packet_length) override = 0;
@@ -38,9 +37,9 @@ public:
   int send () override;
 
 private:
-  fd_set read_fd_;
-  ACE_Time_Value time_out_;
-  ACE_Time_Value *top_;
+  fd_set read_fd_ {};
+  ACE_Time_Value time_out_ {};
+  ACE_Time_Value *top_ {};
 };
 
 #endif /* _CM_CLIENT_H */

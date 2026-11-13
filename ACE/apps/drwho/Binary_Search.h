@@ -28,7 +28,7 @@ public:
   /// Initialize the values for the iterators...
   Binary_Search ();
 
-  virtual ~Binary_Search ();
+  ~Binary_Search () override;
 
   Binary_Search (Binary_Search const &) = delete;
   Binary_Search &operator= (Binary_Search const &) = delete;

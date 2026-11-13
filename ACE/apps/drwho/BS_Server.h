@@ -24,7 +24,6 @@
 class BS_Server : public Binary_Search
 {
 public:
-  // = Initialization.
   explicit BS_Server (char const *packet);
 
   BS_Server (BS_Server const &) = delete;

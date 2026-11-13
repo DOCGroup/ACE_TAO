@@ -66,9 +66,9 @@ PMS_Flo::decode (char *packet, int &packet_length)
                 "in PMS_Flo::decode, packet_length = %d\n",
                 packet_length));
 
-  ACE_NEW_RETURN (this->ss,
-                  BS_Server (packet),
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, BS_Server (packet), -1);
+  this->ss.reset (lookup);
   return 1;
 }
 

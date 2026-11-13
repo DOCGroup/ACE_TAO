@@ -21,6 +21,7 @@
 #include "Options.h"
 #include "Search_Struct.h"
 #include "Protocol_Record.h"
+#include <memory>
 
 /**
  * @class Protocol_Manager
@@ -33,13 +34,17 @@ class Protocol_Manager
 public:
   Protocol_Manager ();
   virtual ~Protocol_Manager ();
+  Protocol_Manager (Protocol_Manager const &) = delete;
+  Protocol_Manager (Protocol_Manager &&) = delete;
+  Protocol_Manager &operator= (Protocol_Manager const &) = delete;
+  Protocol_Manager &operator= (Protocol_Manager &&) = delete;
 
   virtual int encode (char *packet, int &total_bytes) = 0;
   virtual int decode (char *packet, int &total_bytes) = 0;
 
 protected:
   int total_users {};
-  Search_Struct *ss {};
+  std::unique_ptr<Search_Struct> ss;
 
   int friend_count ();
 

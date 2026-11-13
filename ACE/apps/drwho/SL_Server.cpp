@@ -19,6 +19,6 @@ SL_Server::insert (const char *key_name, int max_len)
 {
   return std::strncmp (key_name,
                        this->prp_->get_login (),
-                       max_len) == 0 ? this->prp_ : nullptr;
+                       max_len) == 0 ? this->prp_.get () : nullptr;
 }
 

@@ -6,7 +6,6 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_arpa_inet.h"
-#include <cstring>
 
 // Creates and binds a UDP socket...
 
@@ -18,7 +17,6 @@ CM_Client::open (short port_number)
   if (Comm_Manager::sokfd_ == ACE_INVALID_HANDLE)
     return -1;
 
-  std::memset (&this->sin_, 0, sizeof this->sin_);
   this->sin_.sin_family = AF_INET;
   this->sin_.sin_port = htons (port_number);
 
@@ -49,7 +47,7 @@ CM_Client::receive (int timeout)
       else
         {
           int sin_len = sizeof this->sin_;
-          int n = ACE_OS::recvfrom ((int)Comm_Manager::sokfd_,
+          int n = ACE_OS::recvfrom (Comm_Manager::sokfd_,
                                     this->recv_packet_,
                                     UDP_PACKET_SIZE,
                                     0,
@@ -123,16 +121,12 @@ CM_Client::send ()
   return 1;
 }
 
-CM_Client::CM_Client ()
-  : top_ (nullptr)
-{
-}
-
 CM_Client::~CM_Client ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing CM_Client\n"));
 
-  ACE_OS::closesocket ((int)Comm_Manager::sokfd_);
+  if (Comm_Manager::sokfd_ != ACE_INVALID_HANDLE)
+    ACE_OS::closesocket (Comm_Manager::sokfd_);
 }

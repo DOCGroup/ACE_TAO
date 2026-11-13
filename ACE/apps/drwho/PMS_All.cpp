@@ -71,9 +71,9 @@ PMS_All::decode (char *, int &packet_length)
                 "in PMS_All::decode, packet_length = %d\n",
                 packet_length));
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Server,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Server, -1);
+  this->ss.reset (lookup);
   return 1;
 }
 

@@ -18,7 +18,7 @@ class SMR_Server : public SM_Server
 {
 public:
   explicit SMR_Server (short port_number);
-  ~SMR_Server ();
+  ~SMR_Server () override = default;
 };
 
 #endif /* _SMR_SERVER_H */

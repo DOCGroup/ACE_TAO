@@ -20,9 +20,9 @@ PMC_Ruser::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_Ruser::encode\n"));
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Client,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Client, -1);
+  this->ss.reset (lookup);
 
   SET_PACKET_TYPE (packet, Options::PROTO_RUSER);
 
@@ -61,7 +61,7 @@ PMC_Ruser::decode (char *packet, int &packet_length)
 
   for (cp = (char *) ACE::strend (cp);
        *cp != '\n';
-       cp++)
+       ++cp)
     {
       char *host_name = cp;
 

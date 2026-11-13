@@ -21,27 +21,16 @@ Protocol_Record::~Protocol_Record ()
     }
 }
 
-Protocol_Record::Protocol_Record ()
-  : key_name1_ (nullptr),
-    key_name2_ (nullptr),
-    drwho_list_ (nullptr),
-    next_ (nullptr)
-{
-}
+Protocol_Record::Protocol_Record () = default;
 
 Protocol_Record::Protocol_Record (int)
-  : key_name1_ (nullptr),
-    key_name2_ (nullptr),
-    drwho_list_ (&Protocol_Record::drwho_node_),
-    next_ (nullptr)
+  : drwho_list_ (&Protocol_Record::drwho_node_)
 {
 }
 
 Protocol_Record::Protocol_Record (const char *kn1,
                                   Protocol_Record *next)
   : key_name1_ (kn1),
-    key_name2_ (nullptr),
-    drwho_list_ (nullptr),
     next_ (next)
 {
 }

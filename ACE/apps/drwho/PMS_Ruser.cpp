@@ -72,9 +72,9 @@ PMS_Ruser::decode (char *packet, int &packet_length)
   if (*packet)
     Options::set_opt (Options::PRINT_LOGIN_NAME);
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Server,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Server, -1);
+  this->ss.reset (lookup);
   return 1;
 }
 
@@ -103,9 +103,9 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
     }
 
   if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-    np->inactive_count_++;
+    ++np->inactive_count_;
   else
-    np->active_count_++;
+    ++np->active_count_;
 
   return prp;
 }

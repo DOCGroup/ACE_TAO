@@ -24,11 +24,3 @@ SML_Client::send ()
 
   return 1;
 }
-
-SML_Client::SML_Client ()
-{
-}
-
-SML_Client::~SML_Client ()
-{
-}

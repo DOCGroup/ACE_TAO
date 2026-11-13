@@ -10,27 +10,21 @@
 int
 SM_Server::demux (char *packet, int &packet_length)
 {
+  PM_Server *manager {};
+
   switch (GET_PACKET_TYPE (packet))
     {
     case Options::PROTO_USR:
-      ACE_NEW_RETURN (this->pm_server,
-                      PMS_Usr,
-                      -1);
+      ACE_NEW_RETURN (manager, PMS_Usr, -1);
       break;
     case Options::PROTO_ALL:
-      ACE_NEW_RETURN (this->pm_server,
-                      PMS_All,
-                      -1);
+      ACE_NEW_RETURN (manager, PMS_All, -1);
       break;
     case Options::PROTO_FLO:
-      ACE_NEW_RETURN (this->pm_server,
-                      PMS_Flo,
-                      -1);
+      ACE_NEW_RETURN (manager, PMS_Flo, -1);
       break;
     case Options::PROTO_RUSER:
-      ACE_NEW_RETURN (this->pm_server,
-                      PMS_Ruser,
-                      -1);
+      ACE_NEW_RETURN (manager, PMS_Ruser, -1);
       break;
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -39,13 +33,13 @@ SM_Server::demux (char *packet, int &packet_length)
       return -1;
     }
 
+  this->pm_server_.reset (manager);
   packet_length = SUBTRACT_PACKET_TYPE (packet_length);
 
-  if (pm_server->decode (SKIP_PACKET_TYPE (packet),
-                         packet_length) < 0)
+  if (pm_server_->decode (SKIP_PACKET_TYPE (packet), packet_length) < 0)
     return -1;
 
-  if (pm_server->process () < 0)
+  if (pm_server_->process () < 0)
     return -1;
 
   return 1;
@@ -55,13 +49,5 @@ int
 SM_Server::mux (char *packet,
                 int &packet_length)
 {
-  return pm_server->encode (packet, packet_length);
-}
-
-SM_Server::SM_Server ()
-{
-}
-
-SM_Server::~SM_Server ()
-{
+  return pm_server_->encode (packet, packet_length);
 }
