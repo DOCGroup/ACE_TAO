@@ -2,6 +2,7 @@
 #define ACE_CONTAINERS_T_CPP
 
 #include "ace/Log_Category.h"
+#include <memory>
 #include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 
@@ -1855,7 +1856,7 @@ ACE_DLList<T>::delete_tail ()
 template <class T> bool
 ACE_Array<T>::operator== (const ACE_Array<T> &s) const
 {
-  if (this == &s)
+  if (this == std::addressof (s))
     return true;
   else if (this->size () != s.size ())
     return false;

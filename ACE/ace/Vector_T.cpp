@@ -6,6 +6,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Vector_T.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Vector_T.inl"
@@ -52,7 +53,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::dump () const
 template <class T, size_t DEFAULT_SIZE> bool
 ACE_Vector<T, DEFAULT_SIZE>::operator== (ACE_Vector<T, DEFAULT_SIZE> const &s) const
 {
-  if (this == &s)
+  if (this == std::addressof (s))
     return true;
   else if (this->size () != s.size ())
     return false;

@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/String_Base.inl"
@@ -521,7 +522,7 @@ operator = (const ACE_String_Base_Iterator <ACE_CHAR_T> & rhs)
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::operator =");
 
-  if (this == &rhs)
+  if (this == std::addressof (rhs))
     return *this;
 
   this->str_ = rhs.str_;
@@ -571,7 +572,7 @@ operator = (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs)
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator =");
 
-  if (this == &rhs)
+  if (this == std::addressof (rhs))
     return *this;
 
   this->str_ = rhs.str_;
