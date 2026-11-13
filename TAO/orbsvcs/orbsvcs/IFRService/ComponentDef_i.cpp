@@ -19,8 +19,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
     CORBA::ComponentIR::UsesDescriptionSeq &desc_seq,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    CORBA::ULong index
-  )
+    CORBA::ULong index)
 {
   CORBA::ULong is_multiple {};
   config->get_integer_value (key,
@@ -36,8 +35,7 @@ void
 TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_type (
     CORBA::ComponentIR::EventPortDescriptionSeq &desc_seq,
     ACE_TString &holder,
-    CORBA::ULong index
-  )
+    CORBA::ULong index)
 {
   desc_seq[index].event = holder.fast_rep ();
 }
@@ -48,8 +46,7 @@ void
 TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
     CORBA::Boolean is_multiple,
     ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
-  )
+    ACE_Configuration_Section_Key &key)
 {
   config->set_integer_value (key,
                              "is_multiple",
@@ -361,8 +358,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
 
 void
 TAO_ComponentDef_i::supported_interfaces (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -373,8 +369,7 @@ TAO_ComponentDef_i::supported_interfaces (
 
 void
 TAO_ComponentDef_i::supported_interfaces_i (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   // Remove the old supported interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
@@ -451,8 +446,7 @@ TAO_ComponentDef_i::base_component_i ()
 
 void
 TAO_ComponentDef_i::base_component (
-    CORBA::ComponentIR::ComponentDef_ptr base_component
-  )
+    CORBA::ComponentIR::ComponentDef_ptr base_component)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -463,8 +457,7 @@ TAO_ComponentDef_i::base_component (
 
 void
 TAO_ComponentDef_i::base_component_i (
-    CORBA::ComponentIR::ComponentDef_ptr base_component
-  )
+    CORBA::ComponentIR::ComponentDef_ptr base_component)
 {
   if (CORBA::is_nil (base_component))
     {
@@ -502,8 +495,7 @@ TAO_ComponentDef_i::create_provides (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ProvidesDef::_nil ());
 
@@ -520,8 +512,7 @@ TAO_ComponentDef_i::create_provides_i (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   return
     TAO_Port_Utils<

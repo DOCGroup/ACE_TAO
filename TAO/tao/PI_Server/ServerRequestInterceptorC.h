@@ -127,8 +127,7 @@ namespace PortableInterceptor
 
     virtual void tao_ft_interception_point (
         ::PortableInterceptor::ServerRequestInfo_ptr,
-        ::CORBA::OctetSeq_out
-      )
+        ::CORBA::OctetSeq_out)
       {}
 
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS */

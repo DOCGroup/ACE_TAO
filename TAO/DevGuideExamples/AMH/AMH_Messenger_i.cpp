@@ -16,8 +16,7 @@ AMH_Messenger_i::send_message (
     DevGuide::AMH_MessengerResponseHandler_ptr _tao_rh,
     char const *user_name,
     char const *subject,
-    char const *message
-  )
+    char const *message)
 {
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;

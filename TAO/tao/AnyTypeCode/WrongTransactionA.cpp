@@ -103,8 +103,7 @@ void operator<<= (
 // Non-copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    CORBA::WrongTransaction *_tao_elem
-  )
+    CORBA::WrongTransaction *_tao_elem)
 {
   TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::insert (
       _tao_any,

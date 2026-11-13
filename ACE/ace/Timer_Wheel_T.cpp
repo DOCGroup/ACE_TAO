@@ -446,8 +446,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reset_interval (long timer_id,
-                                                            ACE_Time_Value const &interval
-                                                            )
+                                                            ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::reset_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));

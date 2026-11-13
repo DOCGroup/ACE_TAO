@@ -118,8 +118,7 @@ Fixed_Priority_Scheduler::shutdown ()
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 Fixed_Priority_Scheduler::create_segment_scheduling_parameter (
-        const FP_Scheduling::SegmentSchedulingParameter & value
-      )
+        const FP_Scheduling::SegmentSchedulingParameter & value)
 {
   FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     segment_sched_param_policy;

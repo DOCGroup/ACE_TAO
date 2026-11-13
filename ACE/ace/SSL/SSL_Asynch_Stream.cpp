@@ -62,8 +62,7 @@ ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
                 act,
                 event,
                 priority,
-                signal_number
-                )
+                signal_number)
 {
 }
 
@@ -74,8 +73,7 @@ ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result (ACE_Handler & handler)
               0,           // Offset
               0,           // OffsetHigh
               0,           // Priority
-              ACE_SIGRTMIN //signal_number
-              )
+              ACE_SIGRTMIN) //signal_number
 {
 }
 

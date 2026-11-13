@@ -317,8 +317,7 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 void FT_TestReplica_i::tao_update_object_group (
     const char * iogr,
     PortableGroup::ObjectGroupRefVersion version,
-    CORBA::Boolean is_primary
-  )
+    CORBA::Boolean is_primary)
 {
   ACE_UNUSED_ARG (iogr);
   ACE_UNUSED_ARG (version);

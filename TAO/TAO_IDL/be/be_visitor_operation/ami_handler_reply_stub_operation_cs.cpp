@@ -26,8 +26,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::
 // Processing to be done after every element in the scope is processed
 int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::post_process (
-    be_decl *bd
-  )
+    be_decl *bd)
 {
   // All we do here is to insert a comma and a newline.
   TAO_OutStream * const os = this->ctx_->stream ();
@@ -242,8 +241,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 // This method is used to generate the ParamData table entry.
 int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
-    be_argument *node
-  )
+    be_argument *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
   be_type *bt {};
@@ -284,8 +282,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
 int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_pre_stub_info (
     be_operation *node,
-    be_type *
-  )
+    be_type *)
 {
   // Check if this operation raises any exceptions. In that case, we must
   // generate a list of exception typecodes. This is not valid for
@@ -313,8 +310,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_pre_stub_info (
 int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke (
     be_operation *node,
-    be_type *
-  )
+    be_type *)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
   be_visitor_context ctx;

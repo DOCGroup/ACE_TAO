@@ -22,8 +22,7 @@ TAO_Notify_Tests_StructuredPushSupplier::~TAO_Notify_Tests_StructuredPushSupplie
 
 void
 TAO_Notify_Tests_StructuredPushSupplier::send_event (
-    const CosNotification::StructuredEvent& event
-  )
+    const CosNotification::StructuredEvent& event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 

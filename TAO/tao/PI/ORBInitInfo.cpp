@@ -43,8 +43,7 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::nil ()
 CORBA::Boolean
 TAO::Objref_Traits<TAO_ORBInitInfo>::marshal (
     TAO_ORBInitInfo_ptr p,
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return p->marshal (cdr);
 }

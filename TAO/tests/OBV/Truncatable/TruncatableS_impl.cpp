@@ -11,8 +11,7 @@ Test_impl::op1 (
     char const *id,
     ::OBV_TruncatableTest::BaseValue * iv,
     ::OBV_TruncatableTest::BaseValue_out ov,
-    char *&desc
-  )
+    char *&desc)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
@@ -36,8 +35,7 @@ Test_impl::op2 (
     ::OBV_TruncatableTest::TValue1 * iv,
     char const *id,
     ::OBV_TruncatableTest::TValue1_out ov,
-    char *&desc
-  )
+    char *&desc)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
@@ -61,8 +59,7 @@ Test_impl::op3 (
   char const *id,
   ::OBV_TruncatableTest::TValue4 * iv,
   ::OBV_TruncatableTest::TValue4_out ov,
-  char *&desc
-)
+  char *&desc)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
@@ -95,8 +92,7 @@ Test_impl::op4 (
   ::OBV_TruncatableTest::TValue4 * iv2,
   ::OBV_TruncatableTest::TValue4 * iv3,
   ::OBV_TruncatableTest::TValue1 * iv4,
-  char *&desc
-  )
+  char *&desc)
 {
   if (TAO_debug_level > 0)
   {
@@ -142,8 +138,7 @@ void
 Test_impl::op5 (CORBA::Any const &val,
                 char const *id,
                 ::OBV_TruncatableTest::TValue1_out ov,
-                char *&desc
- )
+                char *&desc)
 {
   ov = new ::OBV_OBV_TruncatableTest::TValue1();
   ::OBV_TruncatableTest::TValue1_var iv;

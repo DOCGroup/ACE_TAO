@@ -176,8 +176,7 @@ TAO_RTEventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_RTEventLogFactory_i::obtain_push_supplier (
-      )
+TAO_RTEventLogFactory_i::obtain_push_supplier ()
 {
   return consumer_admin_->obtain_push_supplier();
 }

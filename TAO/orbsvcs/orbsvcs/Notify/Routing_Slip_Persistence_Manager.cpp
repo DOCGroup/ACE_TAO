@@ -633,8 +633,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
   Persistent_Storage_Block* first_block, Block_Header& first_header,
   ACE_Unbounded_Stack<size_t>& allocated_blocks,
   ACE_Message_Block* amb,
-  ACE_UINT64 expected_serial_number
-  )
+  ACE_UINT64 expected_serial_number)
 {
   bool result {};
   size_t block_size = this->allocator_->block_size();

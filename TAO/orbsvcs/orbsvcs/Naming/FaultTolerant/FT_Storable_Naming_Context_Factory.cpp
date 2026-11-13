@@ -32,8 +32,7 @@ TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (
   CORBA::ORB_ptr orb,
   PortableServer::POA_ptr poa,
   char const *poa_id,
-  TAO::Storable_Factory *persistence_factory
-                                                                    )
+  TAO::Storable_Factory *persistence_factory)
 {
   // Construct the naming context, forwarding the map and counter
   // even if they are defaulted

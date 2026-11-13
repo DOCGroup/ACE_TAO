@@ -466,8 +466,7 @@ be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
 
 int
 be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 

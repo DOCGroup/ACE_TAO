@@ -231,8 +231,7 @@ int StubFaultConsumer::idle(int & result)
 ////////////////
 // CORBA methods
 void StubFaultConsumer::push_structured_event(
-  const CosNotification::StructuredEvent &notification
-  )
+  const CosNotification::StructuredEvent &notification)
 {
   ////////////////////////////////////////
   // keep track of how many we've received
@@ -274,8 +273,7 @@ void StubFaultConsumer::push_structured_event(
 
 void StubFaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);

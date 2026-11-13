@@ -22,8 +22,7 @@ extern CORBA::Short TEST_SECOND;
 }
 
 void Test_Simple_Test_i::test_method (
-    ::CORBA::ULong & error_count
-  )
+    ::CORBA::ULong & error_count)
 {
   error_count --;
 }
@@ -38,8 +37,7 @@ Hello::Hello (CORBA::ORB_ptr orb,
 
 void
 Hello::test_basic_arg (
-    ::CORBA::Long basic
-  )
+    ::CORBA::Long basic)
 {
   if (basic != TEST_BASIC_VALUE)
     ERROR_COUNT ("Hello::test_basic_arg")
@@ -144,8 +142,7 @@ Hello::test_special_basic_arg (CORBA::Char value)
 }
 
 void Hello::test_objref_arg (
-    ::Test::Simple_Test_ptr test
-  )
+    ::Test::Simple_Test_ptr test)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_objref_arg\n")));
@@ -167,8 +164,7 @@ void Hello::test_objref_arg (
 }
 
 void Hello::test_object_arg (
-    ::CORBA::Object_ptr o
-  )
+    ::CORBA::Object_ptr o)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_object_arg\n")));
@@ -186,8 +182,7 @@ void Hello::test_object_arg (
 void Hello::test_args_1 (
     ::CORBA::Object_ptr arg1,
     ::CORBA::Char arg2,
-    ::Test::Simple_Test_ptr arg3
-  )
+    ::Test::Simple_Test_ptr arg3)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_1\n")));
@@ -211,8 +206,7 @@ void Hello::test_args_1 (
 void Hello::test_args_2 (
     char const *arg1,
     ::Test::Fixed_Array const arg2,
-    ::Test::TimeOfDay const &arg3
-  )
+    ::Test::TimeOfDay const &arg3)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2\n")));
@@ -235,8 +229,7 @@ void Hello::test_args_3 (
     char const *arg1,
     ::Test::Bounded_Var_Size_Arg const &arg2,
     ::Test::Unbounded_Var_Size_Arg const &arg3,
-    ::Test::Var_Array const arg4
-  )
+    ::Test::Var_Array const arg4)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3\n")));
@@ -297,8 +290,7 @@ char *
 Hello::test_unbounded_string (
     char const *s1,
     char *& s2,
-    CORBA::String_out s3
-  )
+    CORBA::String_out s3)
 {
   CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);

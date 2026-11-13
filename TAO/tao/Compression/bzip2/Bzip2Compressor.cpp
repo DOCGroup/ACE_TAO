@@ -15,8 +15,7 @@ Bzip2Compressor::Bzip2Compressor (
 void
 Bzip2Compressor::compress (
     ::Compression::Buffer const & source,
-    ::Compression::Buffer & target
-  )
+    ::Compression::Buffer & target)
 {
   // Ensure maximum is at least a bit bigger than input length.
   target.length (static_cast <CORBA::ULong> ((source.length () * 1.01) + 600));

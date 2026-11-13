@@ -490,8 +490,7 @@ int be_visitor_args_arglist::visit_eventtype_fwd (be_eventtype_fwd *node)
 
 int
 be_visitor_args_arglist::visit_home (
-    be_home *node
-  )
+    be_home *node)
 {
   return this->visit_interface (node);
 }

@@ -442,8 +442,7 @@ void
 Controller_impl::
 change (
     CCS::Controller::ThermostatSeq const& tlist,
-    CORBA::Short delta
-)
+    CORBA::Short delta)
 {
     CCS::Controller::EChange ec {}; // Just in case we need it
 
@@ -562,8 +561,7 @@ preinvoke (
     PortableServer::ObjectId const& oid,
     PortableServer::POA_ptr          /* poa */ ,
     char const *                     operation,
-    void *&                          /* cookie */
-)
+    void *&                          /* cookie */)
 {
     // Convert object id into asset number.
     CORBA::String_var oid_string;

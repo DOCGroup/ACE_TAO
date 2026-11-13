@@ -30,8 +30,7 @@ be_visitor_union_branch_public_assign_cs::
 // visit the union_branch node
 int
 be_visitor_union_branch_public_assign_cs::visit_union_branch (
-    be_union_branch *node
-  )
+    be_union_branch *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 
@@ -275,8 +274,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
 int
 be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
-    be_interface_fwd *node
-  )
+    be_interface_fwd *node)
 {
   be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
@@ -384,8 +382,7 @@ be_visitor_union_branch_public_assign_cs::visit_valuetype (be_valuetype *node)
 
 int
 be_visitor_union_branch_public_assign_cs::visit_valuetype_fwd (
-    be_valuetype_fwd *node
-  )
+    be_valuetype_fwd *node)
 {
   return this->emit_valuetype_common (node);
 }
@@ -460,8 +457,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
 
 int
 be_visitor_union_branch_public_assign_cs::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());

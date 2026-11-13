@@ -119,9 +119,8 @@ TAO_Priority_Mapping_Manager_var::nil ()
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager_var::narrow (
-    CORBA::Object *p
+    CORBA::Object *p)
 
-  )
 {
   return ::TAO_Priority_Mapping_Manager::_narrow (p);
 }

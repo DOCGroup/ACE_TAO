@@ -53,8 +53,7 @@ StructuredPushConsumer_i::set_expectations (size_t expected, size_t fail, size_t
 void
 StructuredPushConsumer_i::offer_change (
     CosNotification::EventTypeSeq const& added,
-    CosNotification::EventTypeSeq const& removed
-  )
+    CosNotification::EventTypeSeq const& removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -206,8 +205,7 @@ StructuredPushConsumer_i::push_structured_event (
 }
 
 void
-StructuredPushConsumer_i::disconnect_structured_push_consumer (
-  )
+StructuredPushConsumer_i::disconnect_structured_push_consumer ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) StructuredPushConsumer received disconnect\n")
@@ -253,8 +251,7 @@ SequencePushConsumer_i::set_expectations (size_t expected, size_t fail,size_t se
 void
 SequencePushConsumer_i::offer_change (
     CosNotification::EventTypeSeq const& added,
-    CosNotification::EventTypeSeq const& removed
-  )
+    CosNotification::EventTypeSeq const& removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -316,8 +313,7 @@ SequencePushConsumer_i::check_serial_number (CORBA::ULong seq)
 
 void
 SequencePushConsumer_i::push_structured_events (
-      CosNotification::EventBatch const& notifications
-    )
+      CosNotification::EventBatch const& notifications)
 {
   CORBA::ULong batch_size = notifications.length();
   if (this->verbose_)
@@ -406,8 +402,7 @@ SequencePushConsumer_i::push_structured_events (
 }
 
 void
-SequencePushConsumer_i::disconnect_sequence_push_consumer (
-  )
+SequencePushConsumer_i::disconnect_sequence_push_consumer ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) SequencePushConsumer received disconnect\n")
@@ -453,8 +448,7 @@ AnyPushConsumer_i::set_expectations (size_t expected, size_t fail, size_t serial
 void
 AnyPushConsumer_i::offer_change (
     CosNotification::EventTypeSeq const& added,
-    CosNotification::EventTypeSeq const& removed
-  )
+    CosNotification::EventTypeSeq const& removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -516,8 +510,7 @@ AnyPushConsumer_i::check_serial_number (CORBA::ULong seq)
 
 void
 AnyPushConsumer_i::push (
-        CORBA::Any const& data
-      )
+        CORBA::Any const& data)
 {
   this->received_ += 1;
   if (this->received_ == this->expect_ + 1)
@@ -599,8 +592,7 @@ AnyPushConsumer_i::push (
 }
 
 void
-AnyPushConsumer_i::disconnect_push_consumer (
-  )
+AnyPushConsumer_i::disconnect_push_consumer ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) AnyPushConsumer received disconnect\n")

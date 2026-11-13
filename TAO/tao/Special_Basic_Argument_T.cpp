@@ -84,8 +84,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> to_S (this->x_);
 }
@@ -113,8 +112,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> to_S (this->x_);
 }
@@ -142,8 +140,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> to_S (this->x_);
 }

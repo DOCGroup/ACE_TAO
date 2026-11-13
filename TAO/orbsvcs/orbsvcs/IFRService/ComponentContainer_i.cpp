@@ -27,8 +27,7 @@ TAO_ComponentContainer_i::create_component (
     char const *name,
     char const *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    CORBA::InterfaceDefSeq const &supports_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supports_interfaces)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -47,8 +46,7 @@ TAO_ComponentContainer_i::create_component_i (
     char const *name,
     char const *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    CORBA::InterfaceDefSeq const &supports_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supports_interfaces)
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -140,8 +138,7 @@ TAO_ComponentContainer_i::create_home (
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     CORBA::InterfaceDefSeq const &supports_interfaces,
-    CORBA::ValueDef_ptr primary_key
-  )
+    CORBA::ValueDef_ptr primary_key)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
@@ -164,8 +161,7 @@ TAO_ComponentContainer_i::create_home_i (
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     CORBA::InterfaceDefSeq const &supports_interfaces,
-    CORBA::ValueDef_ptr primary_key
-  )
+    CORBA::ValueDef_ptr primary_key)
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -258,8 +254,7 @@ TAO_ComponentContainer_i::create_event (
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
     CORBA::InterfaceDefSeq const &supported_interfaces,
-    CORBA::ExtInitializerSeq const &initializers
-  )
+    CORBA::ExtInitializerSeq const &initializers)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
@@ -288,8 +283,7 @@ TAO_ComponentContainer_i::create_event_i (
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
     CORBA::InterfaceDefSeq const &supported_interfaces,
-    CORBA::ExtInitializerSeq const &initializers
-  )
+    CORBA::ExtInitializerSeq const &initializers)
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

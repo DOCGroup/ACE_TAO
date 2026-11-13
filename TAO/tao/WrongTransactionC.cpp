@@ -50,16 +50,14 @@ namespace TAO
 CORBA::WrongTransaction::WrongTransaction ()
   : CORBA::UserException (
         "IDL:omg.org/CORBA/WrongTransaction:1.0",
-        "WrongTransaction"
-      )
+        "WrongTransaction")
 {
 }
 
 CORBA::WrongTransaction::WrongTransaction (::CORBA::WrongTransaction const &_tao_excp)
   : CORBA::UserException (
         _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
+        _tao_excp._name ())
 {
 }
 
@@ -125,8 +123,7 @@ void CORBA::WrongTransaction::_tao_encode (
 }
 
 void CORBA::WrongTransaction::_tao_decode (
-    TAO_InputCDR &cdr
-  )
+    TAO_InputCDR &cdr)
 {
   if (cdr >> *this)
     {
@@ -160,8 +157,7 @@ CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type () const
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    CORBA::WrongTransaction const &_tao_aggregate
-  )
+    CORBA::WrongTransaction const &_tao_aggregate)
 {
   // Marshal the repository ID.
   return (strm << _tao_aggregate._rep_id ());
@@ -169,8 +165,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::WrongTransaction &
-  )
+    CORBA::WrongTransaction &)
 {
   return true;
 }

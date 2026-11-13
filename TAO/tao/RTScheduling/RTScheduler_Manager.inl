@@ -121,8 +121,7 @@ TAO_RTScheduler_Manager_var::nil ()
 
 ACE_INLINE ::TAO_RTScheduler_Manager_ptr
 TAO_RTScheduler_Manager_var::narrow (
-  CORBA::Object * p
-  )
+  CORBA::Object * p)
 {
   return ::TAO_RTScheduler_Manager::_narrow (p);
 }

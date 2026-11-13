@@ -80,8 +80,7 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::Eve
 template <class Supplier_Traits> void
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::subscription_change (
                                                          const CosNotification::EventTypeSeq & /*added*/,
-                                                         const CosNotification::EventTypeSeq & /*removed*/
-        )
+                                                         const CosNotification::EventTypeSeq & /*removed*/)
 {
   // No op.
 }

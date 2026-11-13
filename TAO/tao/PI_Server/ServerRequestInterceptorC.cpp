@@ -49,16 +49,14 @@ namespace TAO
 
 PortableInterceptor::ServerRequestInterceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::duplicate (
-    PortableInterceptor::ServerRequestInterceptor_ptr p
-  )
+    PortableInterceptor::ServerRequestInterceptor_ptr p)
 {
   return PortableInterceptor::ServerRequestInterceptor::_duplicate (p);
 }
 
 void
 TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::release (
-    PortableInterceptor::ServerRequestInterceptor_ptr p
-  )
+    PortableInterceptor::ServerRequestInterceptor_ptr p)
 {
   ::CORBA::release (p);
 }
@@ -72,8 +70,7 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::nil ()
 ::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::marshal (
     PortableInterceptor::ServerRequestInterceptor_ptr p,
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return ::CORBA::Object::marshal (p, cdr);
 }
@@ -86,9 +83,8 @@ PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor ()
 
 PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref)
 
-  )
 {
   return ServerRequestInterceptor::_duplicate (
       dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref)
@@ -97,9 +93,8 @@ PortableInterceptor::ServerRequestInterceptor::_narrow (
 
 PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref)
 
-  )
 {
   return ServerRequestInterceptor::_duplicate (
       dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref)
@@ -125,9 +120,8 @@ PortableInterceptor::ServerRequestInterceptor::_tao_release (ServerRequestInterc
 
 ::CORBA::Boolean
 PortableInterceptor::ServerRequestInterceptor::_is_a (
-    const char *value
+    const char *value)
 
-  )
 {
   if (
       !ACE_OS::strcmp (

@@ -430,8 +430,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 // CORBA METHODS
 
 void TAO::FT_FaultNotifier_i::push_structured_fault (
-    CosNotification::StructuredEvent const & event
-  )
+    CosNotification::StructuredEvent const & event)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_structured_fault);
 
@@ -441,8 +440,7 @@ void TAO::FT_FaultNotifier_i::push_structured_fault (
 }
 
 void TAO::FT_FaultNotifier_i::push_sequence_fault (
-    CosNotification::EventBatch const & events
-  )
+    CosNotification::EventBatch const & events)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_sequence_fault);
 
@@ -452,8 +450,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 }
 
 ::CosNotifyFilter::Filter_ptr TAO::FT_FaultNotifier_i::create_subscription_filter (
-    char const * constraint_grammar
-  )
+    char const * constraint_grammar)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::create_subscription_filter);
   ACE_UNUSED_ARG (constraint_grammar); //@@todo
@@ -465,8 +462,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 
 FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_structured_fault_consumer);
 
@@ -529,8 +525,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
 
 FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer);
   /////////////////////////
@@ -589,8 +584,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
 }
 
 void TAO::FT_FaultNotifier_i::disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection
-  )
+    FT::FaultNotifier::ConsumerId connection)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::disconnect_consumer);
 

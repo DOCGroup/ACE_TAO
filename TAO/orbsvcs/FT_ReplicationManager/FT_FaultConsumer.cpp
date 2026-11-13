@@ -194,8 +194,7 @@ size_t TAO::FT_FaultConsumer::notifications () const
 // handle.  Then, we analyze it.  If it is not an event we can handle,
 // we simply log the error and drop the event.
 void TAO::FT_FaultConsumer::push_structured_event (
-  CosNotification::StructuredEvent const &event
-  )
+  CosNotification::StructuredEvent const &event)
 {
   // Debugging support.
   this->notifications_ += 1;
@@ -241,8 +240,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
 
 void TAO::FT_FaultConsumer::offer_change (
     CosNotification::EventTypeSeq const & added,
-    CosNotification::EventTypeSeq const & removed
-  )
+    CosNotification::EventTypeSeq const & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -251,8 +249,7 @@ void TAO::FT_FaultConsumer::offer_change (
   ));
 }
 
-void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
-  )
+void TAO::FT_FaultConsumer::disconnect_structured_push_consumer ()
 {
   //TODO: For now, we are just ignoring the disconnect callback.
   ORBSVCS_DEBUG ((LM_DEBUG,

@@ -374,8 +374,7 @@ RedGreen_Test_StructuredPushConsumer::dump_stats (
 
 void
 RedGreen_Test_StructuredPushConsumer::connect (
-    CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-  )
+    CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Activate the consumer with the default_POA_.
   CosNotifyComm::StructuredPushConsumer_var objref =
@@ -408,16 +407,14 @@ RedGreen_Test_StructuredPushConsumer::disconnect ()
 void
 RedGreen_Test_StructuredPushConsumer::offer_change (
     CosNotification::EventTypeSeq const& /*added*/,
-    CosNotification::EventTypeSeq const& /*removed*/
-  )
+    CosNotification::EventTypeSeq const& /*removed*/)
 {
   // No-Op.
 }
 
 void
 RedGreen_Test_StructuredPushConsumer::push_structured_event (
-    CosNotification::StructuredEvent const& notification
-  )
+    CosNotification::StructuredEvent const& notification)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              ace_mon,
@@ -461,8 +458,7 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::disconnect_structured_push_consumer (
-  )
+RedGreen_Test_StructuredPushConsumer::disconnect_structured_push_consumer ()
 {
   // No-Op.
 }
@@ -482,8 +478,7 @@ SlowConsumer::SlowConsumer (RedGreen_Test& test_client)
 
 void
 SlowConsumer::push_structured_event (
-    CosNotification::StructuredEvent const& notification
-  )
+    CosNotification::StructuredEvent const& notification)
 {
   // Slow it down ...
   ACE_OS::sleep (1);
@@ -517,8 +512,7 @@ RedGreen_Test_StructuredPushSupplier::dump_stats (
 
 void
 RedGreen_Test_StructuredPushSupplier::connect (
-    CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-  )
+    CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   CosNotifyComm::StructuredPushSupplier_var objref =
     this->_this ();

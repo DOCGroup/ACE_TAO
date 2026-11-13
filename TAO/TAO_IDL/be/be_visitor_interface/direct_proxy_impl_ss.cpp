@@ -40,8 +40,7 @@ int
 be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
-    TAO_OutStream *os
-  )
+    TAO_OutStream *os)
 {
   if (!base->is_abstract ())
     {

@@ -563,8 +563,7 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
 
 int
 be_visitor_union_branch_public_ci::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());

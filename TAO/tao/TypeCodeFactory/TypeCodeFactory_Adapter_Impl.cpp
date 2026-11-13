@@ -219,8 +219,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
   char const * /* id */,
   char const * /* name */,
   std::vector<CORBA::String_var> const & /* enumerators */,
-  CORBA::ULong /* ncases */
-  )
+  CORBA::ULong /* ncases */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -233,8 +232,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_struct_except_tc (
   std::vector<
     TAO::TypeCode::Struct_Field<CORBA::String_var,
                                 CORBA::TypeCode_var> > const & /* fields */,
-  CORBA::ULong /* nfields */
-  )
+  CORBA::ULong /* nfields */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -249,8 +247,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
   CORBA::ULong /* ncases */,
   CORBA::Long /* default_index */,
   char const * /* default_case_name */,
-  CORBA::TypeCode_ptr /* default_case_type */
-  )
+  CORBA::TypeCode_ptr /* default_case_type */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -265,8 +262,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_event_tc (
   std::vector<
     TAO::TypeCode::Value_Field<CORBA::String_var,
                                CORBA::TypeCode_var> > const & /* fields */,
-  CORBA::ULong /* nfields */
-  )
+  CORBA::ULong /* nfields */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }

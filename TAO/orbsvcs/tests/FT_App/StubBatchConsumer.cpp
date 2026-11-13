@@ -118,8 +118,7 @@ int StubBatchConsumer::idle(int & result)
 
 //virtual
 void StubBatchConsumer::push_structured_events (
-    const CosNotification::EventBatch & notifications
-  )
+    const CosNotification::EventBatch & notifications)
 {
   ACE_UNUSED_ARG (notifications);
   //@@ sequence of structured event handling not written yet
@@ -127,8 +126,7 @@ void StubBatchConsumer::push_structured_events (
 
 void StubBatchConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -139,8 +137,7 @@ void StubBatchConsumer::offer_change (
 }
 
 //virtual
-void StubBatchConsumer::disconnect_sequence_push_consumer (
-  )
+void StubBatchConsumer::disconnect_sequence_push_consumer ()
 {
   ACE_ERROR ((LM_ERROR,
     "StubBatchConsumer:disconnect_sequence_push_consumer interpreted as quit request.\n"

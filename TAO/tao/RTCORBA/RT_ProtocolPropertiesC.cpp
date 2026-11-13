@@ -104,8 +104,7 @@ RTCORBA::ProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 
 RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties::_narrow (
-    ::CORBA::Object_ptr _tao_objref
-  )
+    ::CORBA::Object_ptr _tao_objref)
 {
   return ProtocolProperties::_duplicate (
       dynamic_cast<ProtocolProperties_ptr> (_tao_objref)
@@ -114,8 +113,7 @@ RTCORBA::ProtocolProperties::_narrow (
 
 RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
-  )
+    ::CORBA::Object_ptr _tao_objref)
 {
   return ProtocolProperties::_duplicate (
       dynamic_cast<ProtocolProperties_ptr> (_tao_objref)

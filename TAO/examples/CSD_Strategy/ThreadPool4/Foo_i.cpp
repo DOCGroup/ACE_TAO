@@ -47,8 +47,7 @@ Foo_i::op5 ()
 CORBA::Boolean
 Foo_i::op6 (
   char const *user_name,
-  char *& message
-)
+  char *& message)
 {
   std::string combined (message);
   combined += user_name;

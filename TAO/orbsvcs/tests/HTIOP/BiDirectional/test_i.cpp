@@ -28,8 +28,7 @@ Callback_i::callback_method ()
 // ****************************************************************
 
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Boolean do_callback
- )
+Simple_Server_i::test_method (CORBA::Boolean do_callback)
 {
   if (do_callback)
     {
@@ -40,8 +39,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback
 }
 
 void
-Simple_Server_i::callback_object (Callback_ptr callback
- )
+Simple_Server_i::callback_object (Callback_ptr callback)
 {
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);

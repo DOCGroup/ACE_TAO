@@ -48,16 +48,14 @@ namespace TAO
 
 PortableInterceptor::PolicyFactory_ptr
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::duplicate (
-    PortableInterceptor::PolicyFactory_ptr p
-  )
+    PortableInterceptor::PolicyFactory_ptr p)
 {
   return PortableInterceptor::PolicyFactory::_duplicate (p);
 }
 
 void
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
-    PortableInterceptor::PolicyFactory_ptr p
-  )
+    PortableInterceptor::PolicyFactory_ptr p)
 {
   ::CORBA::release (p);
 }
@@ -71,8 +69,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil ()
 ::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
     PortableInterceptor::PolicyFactory_ptr p,
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return ::CORBA::Object::marshal (p, cdr);
 }
@@ -85,8 +82,7 @@ PortableInterceptor::PolicyFactory::~PolicyFactory ()
 
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_narrow (
-    ::CORBA::Object_ptr _tao_objref
-  )
+    ::CORBA::Object_ptr _tao_objref)
 {
   return PolicyFactory::_duplicate (
       dynamic_cast<PolicyFactory_ptr> (_tao_objref)
@@ -95,8 +91,7 @@ PortableInterceptor::PolicyFactory::_narrow (
 
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
-  )
+    ::CORBA::Object_ptr _tao_objref)
 {
   return PolicyFactory::_duplicate (
       dynamic_cast<PolicyFactory_ptr> (_tao_objref)

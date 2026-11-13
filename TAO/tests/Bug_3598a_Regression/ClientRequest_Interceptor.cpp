@@ -26,8 +26,7 @@
 
   void
   ClientRequest_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    )
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   {
     // Print debug
     CORBA::String_var const op =

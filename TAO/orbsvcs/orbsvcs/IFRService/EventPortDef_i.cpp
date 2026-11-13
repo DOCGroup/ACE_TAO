@@ -17,8 +17,7 @@ TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
 TAO_EventPortDef_i::~TAO_EventPortDef_i () = default;
 
 CORBA::ComponentIR::EventDef_ptr
-TAO_EventPortDef_i::event (
-  )
+TAO_EventPortDef_i::event ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
@@ -28,8 +27,7 @@ TAO_EventPortDef_i::event (
 }
 
 CORBA::ComponentIR::EventDef_ptr
-TAO_EventPortDef_i::event_i (
-  )
+TAO_EventPortDef_i::event_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -42,8 +40,7 @@ TAO_EventPortDef_i::event_i (
 
 void
 TAO_EventPortDef_i::event (
-    CORBA::ComponentIR::EventDef_ptr event
-  )
+    CORBA::ComponentIR::EventDef_ptr event)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -54,8 +51,7 @@ TAO_EventPortDef_i::event (
 
 void
 TAO_EventPortDef_i::event_i (
-    CORBA::ComponentIR::EventDef_ptr event
-  )
+    CORBA::ComponentIR::EventDef_ptr event)
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");
@@ -86,8 +82,7 @@ TAO_EventPortDef_i::event_i (
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a (
-    char const *event_id
-  )
+    char const *event_id)
 {
   TAO_IFR_READ_GUARD_RETURN (false);
 
@@ -98,8 +93,7 @@ TAO_EventPortDef_i::is_a (
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a_i (
-    char const *event_id
-  )
+    char const *event_id)
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,

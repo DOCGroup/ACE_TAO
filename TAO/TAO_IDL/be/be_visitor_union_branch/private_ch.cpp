@@ -335,8 +335,7 @@ be_visitor_union_branch_private_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
 int
 be_visitor_union_branch_private_ch::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   be_decl * const ub = this->ctx_->node ();
   be_decl * const bu = this->ctx_->scope ()->decl ();

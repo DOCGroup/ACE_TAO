@@ -194,8 +194,7 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 void
 be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
     be_valuetype *node,
-    unsigned long &index
-  )
+    unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
@@ -230,8 +229,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
 
 void
 be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
-    be_valuetype *node
-  )
+    be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
@@ -267,8 +265,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
 void
 be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   be_valuetype *node,
-  unsigned long &index
-  )
+  unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

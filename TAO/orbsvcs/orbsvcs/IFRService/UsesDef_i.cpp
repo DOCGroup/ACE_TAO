@@ -88,8 +88,7 @@ TAO_UsesDef_i::interface_type_i ()
 
 void
 TAO_UsesDef_i::interface_type (
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -100,8 +99,7 @@ TAO_UsesDef_i::interface_type (
 
 void
 TAO_UsesDef_i::interface_type_i (
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");
@@ -154,8 +152,7 @@ TAO_UsesDef_i::is_multiple_i ()
 
 void
 TAO_UsesDef_i::is_multiple (
-    CORBA::Boolean is_multiple
-  )
+    CORBA::Boolean is_multiple)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -166,8 +163,7 @@ TAO_UsesDef_i::is_multiple (
 
 void
 TAO_UsesDef_i::is_multiple_i (
-    CORBA::Boolean is_multiple
-  )
+    CORBA::Boolean is_multiple)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
                                              "is_multiple",

@@ -10,8 +10,7 @@ PortableInterceptor::SlotId slot_id = 2093843211;
 
 void
 ClientORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 

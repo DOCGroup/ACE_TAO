@@ -63,8 +63,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::marshal (
-    TAO_OutputCDR &cdr
-  )
+    TAO_OutputCDR &cdr)
 {
   return cdr << *this->x_;
 }
@@ -73,8 +72,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> *this->x_;
 }
@@ -98,8 +96,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   this->x_ = new (std::nothrow) S;
   return cdr >> *this->x_;
@@ -124,8 +121,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   S * tmp {};
   ACE_NEW_RETURN (tmp,

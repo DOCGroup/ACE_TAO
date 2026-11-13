@@ -244,8 +244,7 @@ TAO_NotifyLogFactory_i::obtain_notification_push_supplier (
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_NotifyLogFactory_i::obtain_push_supplier (
-      )
+TAO_NotifyLogFactory_i::obtain_push_supplier ()
 {
   return consumer_admin_->obtain_push_supplier ();
 }

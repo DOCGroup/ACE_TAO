@@ -256,8 +256,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 
 int
 be_visitor_union_discriminant_ci::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());

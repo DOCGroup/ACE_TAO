@@ -51,15 +51,13 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
   strategy_->poa()->deactivate_object(object_id.in());
 }
 
-void UpdateableHandler::set_update (
-                                    )
+void UpdateableHandler::set_update ()
 {
   ORBSVCS_DEBUG((LM_DEBUG,"Received reply from "));
   dispatch(&Update_Manager::handle_reply);
 }
 void UpdateableHandler::set_update_excep (
-  ::Messaging::ExceptionHolder * excep_holder
-  )
+  ::Messaging::ExceptionHolder * excep_holder)
 {
   ORBSVCS_DEBUG((LM_DEBUG, "Received Exception from"));
   try{

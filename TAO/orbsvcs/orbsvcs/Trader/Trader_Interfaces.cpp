@@ -1183,8 +1183,7 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem ()
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_def_search_card (CORBA::ULong value
- )
+set_def_search_card (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().def_search_card ();
@@ -1196,8 +1195,7 @@ set_def_search_card (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_search_card (CORBA::ULong value
- )
+set_max_search_card (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().max_search_card ();
@@ -1209,8 +1207,7 @@ set_max_search_card (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_def_match_card (CORBA::ULong value
- )
+set_def_match_card (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().def_match_card ();
@@ -1222,8 +1219,7 @@ set_def_match_card (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_match_card (CORBA::ULong value
- )
+set_max_match_card (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().max_match_card ();
@@ -1235,8 +1231,7 @@ set_max_match_card (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_def_return_card (CORBA::ULong value
- )
+set_def_return_card (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().def_return_card ();
@@ -1248,8 +1243,7 @@ set_def_return_card (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_return_card (CORBA::ULong value
- )
+set_max_return_card (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().max_return_card ();
@@ -1261,8 +1255,7 @@ set_max_return_card (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_list (CORBA::ULong value
- )
+set_max_list (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().max_list ();
@@ -1274,8 +1267,7 @@ set_max_list (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_supports_modifiable_properties (CORBA::Boolean value
- )
+set_supports_modifiable_properties (CORBA::Boolean value)
 {
   CORBA::Boolean return_value =
     this->trader_.support_attributes ().supports_modifiable_properties ();
@@ -1287,8 +1279,7 @@ set_supports_modifiable_properties (CORBA::Boolean value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_supports_dynamic_properties (CORBA::Boolean value
- )
+set_supports_dynamic_properties (CORBA::Boolean value)
 {
   CORBA::Boolean return_value =
     this->trader_.support_attributes ().supports_dynamic_properties ();
@@ -1300,8 +1291,7 @@ set_supports_dynamic_properties (CORBA::Boolean value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_supports_proxy_offers (CORBA::Boolean value
- )
+set_supports_proxy_offers (CORBA::Boolean value)
 {
   CORBA::Boolean return_value =
     this->trader_.support_attributes ().supports_proxy_offers ();
@@ -1313,8 +1303,7 @@ set_supports_proxy_offers (CORBA::Boolean value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_def_hop_count (CORBA::ULong value
- )
+set_def_hop_count (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().def_hop_count ();
@@ -1326,8 +1315,7 @@ set_def_hop_count (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_hop_count (CORBA::ULong value
- )
+set_max_hop_count (CORBA::ULong value)
 {
   CORBA::ULong return_value =
     this->trader_.import_attributes ().max_hop_count ();
@@ -1339,8 +1327,7 @@ set_max_hop_count (CORBA::ULong value
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::FollowOption
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_def_follow_policy (CosTrading::FollowOption policy
- )
+set_def_follow_policy (CosTrading::FollowOption policy)
 {
   CosTrading::FollowOption return_value =
     this->trader_.import_attributes ().def_follow_policy ();
@@ -1352,8 +1339,7 @@ set_def_follow_policy (CosTrading::FollowOption policy
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::FollowOption
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_follow_policy (CosTrading::FollowOption policy
- )
+set_max_follow_policy (CosTrading::FollowOption policy)
 {
   CosTrading::FollowOption return_value =
     this->trader_.import_attributes ().max_follow_policy ();

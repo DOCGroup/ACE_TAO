@@ -18,8 +18,7 @@ Echo_Client_Request_Interceptor::destroy ()
 
 void
 Echo_Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    )
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
   // Do nothing
 }

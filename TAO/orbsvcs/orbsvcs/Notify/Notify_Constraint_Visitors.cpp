@@ -139,8 +139,7 @@ TAO_Notify_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
 
 int
 TAO_Notify_Constraint_Visitor::visit_literal (
-    ETCL_Literal_Constraint *literal
-  )
+    ETCL_Literal_Constraint *literal)
 {
   TAO_ETCL_Literal_Constraint lit (literal);
   this->queue_.enqueue_head (lit);
@@ -170,8 +169,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
 
 int
 TAO_Notify_Constraint_Visitor::visit_union_value (
-    ETCL_Union_Value *union_value
-  )
+    ETCL_Union_Value *union_value)
 {
   switch (union_value->sign ())
   {
@@ -203,8 +201,7 @@ TAO_Notify_Constraint_Visitor::visit_union_value (
 
 int
 TAO_Notify_Constraint_Visitor::visit_union_pos (
-    ETCL_Union_Pos *union_pos
-  )
+    ETCL_Union_Pos *union_pos)
 {
   try
   {
@@ -346,8 +343,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 
 int
 TAO_Notify_Constraint_Visitor::visit_component_pos (
-    ETCL_Component_Pos *pos
-  )
+    ETCL_Component_Pos *pos)
 {
   try
   {
@@ -421,8 +417,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
 
 int
 TAO_Notify_Constraint_Visitor::visit_component_assoc (
-    ETCL_Component_Assoc *assoc
-  )
+    ETCL_Component_Assoc *assoc)
 {
   CORBA::Any any;
   ACE_CString name (assoc->identifier ()->value (),
@@ -481,8 +476,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
 
 int
 TAO_Notify_Constraint_Visitor::visit_component_array (
-    ETCL_Component_Array *array
-  )
+    ETCL_Component_Array *array)
 {
   try
   {
@@ -636,8 +630,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
 
 int
 TAO_Notify_Constraint_Visitor::visit_component (
-    ETCL_Component *component
-  )
+    ETCL_Component *component)
 {
   ETCL_Constraint *nested = component->component ();
   ETCL_Identifier *identifier = component->identifier ();
@@ -862,8 +855,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
 
 int
 TAO_Notify_Constraint_Visitor::visit_unary_expr (
-    ETCL_Unary_Expr *unary_expr
-  )
+    ETCL_Unary_Expr *unary_expr)
 {
   ETCL_Constraint *subexpr = unary_expr->subexpr ();
 
@@ -906,8 +898,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
 
 int
 TAO_Notify_Constraint_Visitor::visit_binary_expr (
-    ETCL_Binary_Expr *binary_expr
-  )
+    ETCL_Binary_Expr *binary_expr)
 {
   int bin_op_type = binary_expr->type ();
 
@@ -939,8 +930,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_expr (
 
 int
 TAO_Notify_Constraint_Visitor::visit_or (
-    ETCL_Binary_Expr *binary
-  )
+    ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   CORBA::Boolean result {};
@@ -1219,8 +1209,7 @@ TAO_Notify_Constraint_Visitor::visit_preference (ETCL_Preference *)
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::sequence_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
   {
@@ -1271,8 +1260,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::array_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
   {
@@ -1318,8 +1306,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::struct_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
   {
@@ -1368,8 +1355,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::union_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
   {
@@ -1408,8 +1394,7 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::any_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   const CORBA::Any *result {};
   *any >>= result;

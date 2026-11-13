@@ -634,8 +634,7 @@ be_valuetype::traverse_supports_list_graphs (
     be_interface::tao_code_emitter gen,
     TAO_OutStream *os,
     bool use_abstract_paths,
-    bool use_concrete_paths
-  )
+    bool use_concrete_paths)
 {
   bool const abstract_paths_only = use_abstract_paths && !use_concrete_paths;
 

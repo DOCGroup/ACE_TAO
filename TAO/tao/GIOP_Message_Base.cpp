@@ -1455,8 +1455,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
     TAO_OutputCDR &output,
     CORBA::ULong request_id,
     IOP::ServiceContextList *svc_info,
-    CORBA::Exception *x
-  )
+    CORBA::Exception *x)
 {
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = request_id;

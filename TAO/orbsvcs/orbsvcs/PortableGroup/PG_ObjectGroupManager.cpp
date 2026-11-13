@@ -430,8 +430,7 @@ TAO_PG_ObjectGroupManager::get_member_ref (
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
-        PortableGroup::ObjectGroupId group_id
-      )
+        PortableGroup::ObjectGroupId group_id)
 {
   //@@ If we change the PG's concept of ObjectGroupId from
   // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can

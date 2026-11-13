@@ -57,8 +57,7 @@ Foo_i::op5()
 CORBA::Boolean
 Foo_i::op6 (
   char const * user_name,
-  char *& message
-)
+  char *& message)
 {
   std::string result (message);
   result += user_name;
@@ -70,8 +69,7 @@ Foo_i::op6 (
 
 void
 Foo_i::test_unbounded_string_arg (
-  char const * message
-)
+  char const * message)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_string_arg ")
                        ACE_TEXT("got unbounded string %C\n"),
@@ -80,8 +78,7 @@ Foo_i::test_unbounded_string_arg (
 
 void
 Foo_i::test_bounded_string_arg (
-  char const * message
-)
+  char const * message)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_string_arg ")
                        ACE_TEXT("got bounded string %C\n"),
@@ -90,8 +87,7 @@ Foo_i::test_bounded_string_arg (
 
 void
 Foo_i::test_fixed_array_arg (
-  ::Fixed_Array const message
-)
+  ::Fixed_Array const message)
 {
   for (CORBA::ULong i = 0; i < 20; ++i)
     {
@@ -103,8 +99,7 @@ Foo_i::test_fixed_array_arg (
 
 void
 Foo_i::test_bounded_var_size_arg (
-  ::Bounded_Var_Size const & message
-)
+  ::Bounded_Var_Size const & message)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
                        ACE_TEXT("got var array chars %C\n"),
@@ -113,8 +108,7 @@ Foo_i::test_bounded_var_size_arg (
 
 void
 Foo_i::test_unbounded_var_size_arg (
-  ::Unbounded_Var_Size const & message
-)
+  ::Unbounded_Var_Size const & message)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_var_size_arg ")
                        ACE_TEXT("got var array chars %C\n"),
@@ -123,8 +117,7 @@ Foo_i::test_unbounded_var_size_arg (
 
 void
 Foo_i::test_fixed_size_arg (
-  ::TimeOfDay const & t
-)
+  ::TimeOfDay const & t)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg ")
                        ACE_TEXT("got timeofday %d:%d:%d\n"),
@@ -133,8 +126,7 @@ Foo_i::test_fixed_size_arg (
 
 void
 Foo_i::test_fixed_size_arg_two_way (
-  ::TimeOfDay const & t
-)
+  ::TimeOfDay const & t)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg_two_way ")
                        ACE_TEXT("got timeofday %d:%d:%d\n"),
@@ -143,8 +135,7 @@ Foo_i::test_fixed_size_arg_two_way (
 
 void
 Foo_i::test_var_array_arg (
-  ::Var_Array const messages
-)
+  ::Var_Array const messages)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
                        ACE_TEXT(" %C\n"), messages[0].in ()));
@@ -156,8 +147,7 @@ Foo_i::test_var_array_arg (
 
 void
 Foo_i::test_special_basic_arg (
-  ::CORBA::Boolean value
-)
+  ::CORBA::Boolean value)
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_special_basic_arg ")
                        ACE_TEXT(" got special basic arg: %d\n"), value));
@@ -165,8 +155,7 @@ Foo_i::test_special_basic_arg (
 
 void
 Foo_i::test_objref_arg (
-  ::Callback_ptr cb
-)
+  ::Callback_ptr cb)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->callback_lock_);
   this->callback_ = Callback::_duplicate (cb);
@@ -176,16 +165,14 @@ Foo_i::test_objref_arg (
 
 void
 Foo_i::callback_object (
-  ::Callback_ptr cb
-)
+  ::Callback_ptr cb)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->callback_lock_);
   this->callback_ = Callback::_duplicate (cb);
 }
 
 void
-Foo_i::test_callback (
-)
+Foo_i::test_callback ()
 {
   Callback_var callback;
   {

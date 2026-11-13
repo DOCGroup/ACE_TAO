@@ -28,8 +28,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Root_POA &poa,
   CORBA::Short servant_priority,
   TAO_ServerRequest &req,
-  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-  )
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 {
   TAO_Service_Context const &request_service_context = req.request_service_context ();
   TAO_Service_Context &reply_service_context = req.reply_service_context ();

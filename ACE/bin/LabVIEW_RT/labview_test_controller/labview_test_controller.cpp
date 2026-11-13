@@ -45,8 +45,7 @@ static HANDLE logf = INVALID_HANDLE_VALUE;
 
 BOOL APIENTRY DllMain( HANDLE hModule,
                        DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                      )
+                       LPVOID lpReserved)
 {
   if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {

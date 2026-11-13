@@ -37,8 +37,7 @@ Throughput_StructuredPushConsumer::dump_stats (
 
 void
 Throughput_StructuredPushConsumer::push_structured_event (
-    CosNotification::StructuredEvent const& notification
-  )
+    CosNotification::StructuredEvent const& notification)
 {
   // Extract payload.
   char const* msg {};

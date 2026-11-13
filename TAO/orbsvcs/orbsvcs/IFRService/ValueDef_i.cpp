@@ -173,8 +173,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
 void
 TAO_ValueDef_i::supported_interfaces (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -185,8 +184,7 @@ TAO_ValueDef_i::supported_interfaces (
 
 void
 TAO_ValueDef_i::supported_interfaces_i (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
@@ -516,8 +514,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
 
 void
 TAO_ValueDef_i::abstract_base_values (
-    CORBA::ValueDefSeq const &abstract_base_values
-  )
+    CORBA::ValueDefSeq const &abstract_base_values)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -528,8 +525,7 @@ TAO_ValueDef_i::abstract_base_values (
 
 void
 TAO_ValueDef_i::abstract_base_values_i (
-    CORBA::ValueDefSeq const &abstract_base_values
-  )
+    CORBA::ValueDefSeq const &abstract_base_values)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "abstract_bases",
@@ -1355,8 +1351,7 @@ TAO_ValueDef_i::create_attribute (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AttributeDef::_nil ());
 
@@ -1375,8 +1370,7 @@ TAO_ValueDef_i::create_attribute_i (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1427,8 +1421,7 @@ TAO_ValueDef_i::create_operation (
     CORBA::OperationMode mode,
     CORBA::ParDescriptionSeq const &params,
     CORBA::ExceptionDefSeq const &exceptions,
-    CORBA::ContextIdSeq const &contexts
-  )
+    CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::OperationDef::_nil ());
 
@@ -1453,8 +1446,7 @@ TAO_ValueDef_i::create_operation_i (
     CORBA::OperationMode mode,
     CORBA::ParDescriptionSeq const &params,
     CORBA::ExceptionDefSeq const &exceptions,
-    CORBA::ContextIdSeq const &contexts
-  )
+    CORBA::ContextIdSeq const &contexts)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1700,8 +1692,7 @@ TAO_ValueDef_i::value_contents (
     std::deque<CORBA::DefinitionKind> &kind_queue,
     std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
-    CORBA::Boolean exclude_inherited
-  )
+    CORBA::Boolean exclude_inherited)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,

@@ -21,8 +21,7 @@ TAO_Notify_Tests_SequencePushSupplier::~TAO_Notify_Tests_SequencePushSupplier ()
 }
 
 void
-TAO_Notify_Tests_SequencePushSupplier::send_events (const CosNotification::EventBatch& events
-                                          )
+TAO_Notify_Tests_SequencePushSupplier::send_events (const CosNotification::EventBatch& events)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 

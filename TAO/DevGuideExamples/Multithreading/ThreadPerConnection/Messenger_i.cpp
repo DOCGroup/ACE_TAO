@@ -16,8 +16,7 @@
 CORBA::Boolean Messenger_i::send_message (
     char const * /*user_name*/,
     char const * /*subject*/,
-    char *&message
-  )
+    char *&message)
 {
   CORBA::string_free(message);
 

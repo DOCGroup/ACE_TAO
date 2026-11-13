@@ -28,8 +28,7 @@
 #include "TestImpl.h"
 
 void Test_interfaceOne_i::getstruct (
-    ::Test::structOne_out tester
-  )
+    ::Test::structOne_out tester)
 {
   ::Test::structOne_var holder {new ::Test::structOne {}};
   tester = holder._retn();

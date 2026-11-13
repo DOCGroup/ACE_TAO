@@ -283,8 +283,7 @@ void
 Controller_impl::
 change (
     CCS::Controller::ThermostatSeq const& tlist,
-    CORBA::Short delta
-)
+    CORBA::Short delta)
 {
     CCS::Controller::EChange ec {}; // Just in case we need it
 

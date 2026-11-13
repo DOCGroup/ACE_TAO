@@ -50,8 +50,7 @@ TAO_FTEC_Group_Manager::~TAO_FTEC_Group_Manager() = default;
 
 CORBA::Boolean TAO_FTEC_Group_Manager::start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out cur
-      )
+        FTRT::Location_out cur)
 {
   listener_ = listener;
   ACE_NEW_RETURN(cur , FTRT::Location(Fault_Detector::instance()->my_location()), false);

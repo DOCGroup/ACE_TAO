@@ -16,8 +16,7 @@ JAWS_Reactive_IO::send ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &tv
-                       , void *act
-                       )
+                       , void *act)
 {
   if (mb->length () == 0)
     {
@@ -53,8 +52,7 @@ void
 JAWS_Reactive_IO::send ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
-                       , void *act
-                       )
+                       , void *act)
 {
   this->send (handle, mb, completer, ACE_Time_Value::zero, act);
 }
@@ -65,8 +63,7 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &tv
-                       , void *act
-                       )
+                       , void *act)
 {
   JAWS_IO_Reactive_Recv *rr;
   rr = JAWS_IO_Reactive_Recv::make (handle, mb, completer, tv, act);
@@ -91,8 +88,7 @@ void
 JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
-                       , void *act
-                       )
+                       , void *act)
 {
   this->recv (handle, mb, completer, ACE_Time_Value::zero, act);
 }
@@ -105,8 +101,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                            , const ACE_Time_Value &tv
                            , void *act
                            , ACE_Message_Block *header
-                           , ACE_Message_Block *trailer
-                           )
+                           , ACE_Message_Block *trailer)
 {
   JAWS_IO_Reactive_Transmit *rt;
   rt = JAWS_IO_Reactive_Transmit::make ( handle
@@ -140,8 +135,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                            , JAWS_Event_Completer *completer
                            , void *act
                            , ACE_Message_Block *header
-                           , ACE_Message_Block *trailer
-                           )
+                           , ACE_Message_Block *trailer)
 {
   this->transmit ( handle
                  , source
@@ -488,8 +482,7 @@ JAWS_IO_Reactive_Transmit::handle_output_trailer (ACE_HANDLE handle)
 
 int
 JAWS_IO_Reactive_Transmit::handle_output_mb ( ACE_HANDLE handle
-                                            , ACE_Message_Block *&mb
-                                            )
+                                            , ACE_Message_Block *&mb)
 {
   ssize_t count = ACE::send (handle, mb->rd_ptr (), mb->length ());
 

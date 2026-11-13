@@ -322,16 +322,14 @@ TAO_Contained_i::containing_repository ()
 }
 
 CORBA::Contained::Description *
-TAO_Contained_i::describe (
-  )
+TAO_Contained_i::describe ()
 {
   // This will always be overridden by derived classes.
   return nullptr;
 }
 
 CORBA::Contained::Description *
-TAO_Contained_i::describe_i (
-  )
+TAO_Contained_i::describe_i ()
 {
   // This will always be overridden by derived classes.
   return nullptr;

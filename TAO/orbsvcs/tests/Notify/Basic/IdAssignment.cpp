@@ -300,8 +300,7 @@ IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID chan
 void
 IdAssignment::destroy_consumer_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
-    CosNotifyChannelAdmin::AdminID admin_id
-  )
+    CosNotifyChannelAdmin::AdminID admin_id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
@@ -334,8 +333,7 @@ IdAssignment::destroy_consumer_admin (
 void
 IdAssignment::destroy_supplier_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
-    CosNotifyChannelAdmin::AdminID admin_id
-  )
+    CosNotifyChannelAdmin::AdminID admin_id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);

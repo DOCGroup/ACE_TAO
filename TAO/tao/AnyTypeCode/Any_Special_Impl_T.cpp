@@ -33,8 +33,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                                   _tao_destructor destructor,
                                                   CORBA::TypeCode_ptr tc,
                                                   T * const value,
-                                                  CORBA::ULong bound
-  )
+                                                  CORBA::ULong bound)
 {
   CORBA::TypeCode_var bounded_tc;
 

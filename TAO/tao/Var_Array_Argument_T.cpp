@@ -16,8 +16,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return cdr << this->x_;
 }
@@ -77,8 +76,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return cdr << this->x_;
 }
@@ -87,8 +85,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
@@ -113,8 +110,7 @@ template<typename S_out,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
   ACE_ALLOCATOR_RETURN (this->x_,
@@ -146,8 +142,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
   typename S_forany::_slice_type * tmp_ptr {};

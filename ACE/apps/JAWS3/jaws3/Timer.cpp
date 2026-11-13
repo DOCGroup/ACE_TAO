@@ -18,8 +18,7 @@ void
 JAWS_Timer::schedule_timer ( long *timer_id
                            , const ACE_Time_Value &delta
                            , JAWS_Event_Completer *completer
-                           , void *act
-                           )
+                           , void *act)
 {
   this->impl_->schedule_timer (timer_id, delta, completer, act);
 }
@@ -28,8 +27,7 @@ void
 JAWS_Timer::schedule_absolute_timer ( long *timer_id
                                     , const ACE_Time_Value &tv
                                     , JAWS_Event_Completer *completer
-                                    , void *act
-                                    )
+                                    , void *act)
 {
   this->impl_->schedule_absolute_timer (timer_id, tv, completer, act);
 }
@@ -38,8 +36,7 @@ void
 JAWS_Timer::schedule_interval_timer ( long *timer_id
                                     , const ACE_Time_Value &interval
                                     , JAWS_Event_Completer *completer
-                                    , void *act
-                                    )
+                                    , void *act)
 {
   this->impl_->schedule_interval_timer (timer_id, interval, completer, act);
 }

@@ -243,16 +243,14 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const TAO::ObjectKey &_tao_sequence
-  )
+    const TAO::ObjectKey &_tao_sequence)
 {
   return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    TAO::ObjectKey &_tao_sequence
-  )
+    TAO::ObjectKey &_tao_sequence)
 {
   return TAO::demarshal_sequence(strm, _tao_sequence);
 }

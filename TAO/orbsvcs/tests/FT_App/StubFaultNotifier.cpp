@@ -330,8 +330,7 @@ void StubFaultNotifier::shutdown_i ()
 }
 
 void StubFaultNotifier::push_structured_fault (
-    const CosNotification::StructuredEvent & event
-  )
+    const CosNotification::StructuredEvent & event)
 {
   ACE_ERROR ((LM_ERROR,
     "FaultNotifier: Received Fault notification:\n"
@@ -358,16 +357,14 @@ void StubFaultNotifier::push_structured_fault (
 
 
 void StubFaultNotifier::push_sequence_fault (
-    const CosNotification::EventBatch & events
-  )
+    const CosNotification::EventBatch & events)
 {
   ACE_UNUSED_ARG (events);
   throw CORBA::NO_IMPLEMENT();
 }
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
-    const char * constraint_grammar
-  )
+    const char * constraint_grammar)
 {
   ACE_UNUSED_ARG (constraint_grammar);
   throw CORBA::NO_IMPLEMENT();
@@ -377,8 +374,7 @@ void StubFaultNotifier::push_sequence_fault (
 
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
@@ -390,8 +386,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
 
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
@@ -401,8 +396,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
 }
 
 void StubFaultNotifier::disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection
-  )
+    FT::FaultNotifier::ConsumerId connection)
 {
   ACE_UNUSED_ARG(connection);
 

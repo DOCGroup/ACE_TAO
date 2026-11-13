@@ -95,8 +95,7 @@ public:
   static JAWS_IO_Reactive_Send * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
-                                      , void *act
-                                      )
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Send ( handle
                                      , mb
@@ -111,8 +110,7 @@ public:
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
                                       , const ACE_Time_Value &tv
-                                      , void *act
-                                      )
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Send ( handle
                                      , mb
@@ -151,8 +149,7 @@ public:
   static JAWS_IO_Reactive_Recv * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
-                                      , void *act
-                                      )
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Recv ( handle
                                      , mb
@@ -167,8 +164,7 @@ public:
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
                                       , const ACE_Time_Value &tv
-                                      , void *act
-                                      )
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Recv ( handle
                                      , mb
@@ -213,8 +209,7 @@ public:
                                           , JAWS_Event_Completer *completer
                                           , ACE_Message_Block *header
                                           , ACE_Message_Block *trailer
-                                          , void *act
-                                          )
+                                          , void *act)
   {
     return new JAWS_IO_Reactive_Transmit ( handle
                                          , source
@@ -233,8 +228,7 @@ public:
                                           , const ACE_Time_Value &tv
                                           , ACE_Message_Block *header
                                           , ACE_Message_Block *trailer
-                                          , void *act
-                                          )
+                                          , void *act)
   {
     return new JAWS_IO_Reactive_Transmit ( handle
                                          , source

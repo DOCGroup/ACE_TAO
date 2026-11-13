@@ -39,8 +39,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                rapi_flowspec_t *flow_spec_list,
                int /* ad_spec_no */,
                rapi_adspec_t * /* ad_spec_list */,
-               void *args
-               )
+               void *args)
 {
   if (args == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,

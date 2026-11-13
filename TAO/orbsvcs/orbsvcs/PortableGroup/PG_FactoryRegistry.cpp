@@ -424,8 +424,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
 }
 
 void TAO::PG_FactoryRegistry::unregister_factory_by_role (
-    char const *role
-  )
+    char const *role)
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_role);
 
@@ -609,8 +608,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 }
 
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_location (
-    PortableGroup::Location const &location
-  )
+    PortableGroup::Location const &location)
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_location);
   ::PortableGroup::FactoryInfos_var result;

@@ -207,8 +207,7 @@ TAO_HomeDef_i::base_home_i ()
 
 void
 TAO_HomeDef_i::base_home (
-    CORBA::ComponentIR::HomeDef_ptr base_home
-  )
+    CORBA::ComponentIR::HomeDef_ptr base_home)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -219,8 +218,7 @@ TAO_HomeDef_i::base_home (
 
 void
 TAO_HomeDef_i::base_home_i (
-    CORBA::ComponentIR::HomeDef_ptr base_home
-  )
+    CORBA::ComponentIR::HomeDef_ptr base_home)
 {
   char *path = TAO_IFR_Service_Utils::reference_to_path (base_home);
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -229,8 +227,7 @@ TAO_HomeDef_i::base_home_i (
 }
 
 CORBA::InterfaceDefSeq *
-TAO_HomeDef_i::supported_interfaces (
-  )
+TAO_HomeDef_i::supported_interfaces ()
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -240,8 +237,7 @@ TAO_HomeDef_i::supported_interfaces (
 }
 
 CORBA::InterfaceDefSeq *
-TAO_HomeDef_i::supported_interfaces_i (
-  )
+TAO_HomeDef_i::supported_interfaces_i ()
 {
   CORBA::InterfaceDefSeq *retval {};
   ACE_NEW_RETURN (retval,
@@ -286,8 +282,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 
 void
 TAO_HomeDef_i::supported_interfaces (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -298,8 +293,7 @@ TAO_HomeDef_i::supported_interfaces (
 
 void
 TAO_HomeDef_i::supported_interfaces_i (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
@@ -355,8 +349,7 @@ TAO_HomeDef_i::managed_component_i ()
 
 void
 TAO_HomeDef_i::managed_component (
-    CORBA::ComponentIR::ComponentDef_ptr managed_component
-  )
+    CORBA::ComponentIR::ComponentDef_ptr managed_component)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -367,8 +360,7 @@ TAO_HomeDef_i::managed_component (
 
 void
 TAO_HomeDef_i::managed_component_i (
-    CORBA::ComponentIR::ComponentDef_ptr managed_component
-  )
+    CORBA::ComponentIR::ComponentDef_ptr managed_component)
 {
   char *path = TAO_IFR_Service_Utils::reference_to_path (managed_component);
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -409,8 +401,7 @@ TAO_HomeDef_i::primary_key_i ()
 
 void
 TAO_HomeDef_i::primary_key (
-    CORBA::ValueDef_ptr primary_key
-  )
+    CORBA::ValueDef_ptr primary_key)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -421,8 +412,7 @@ TAO_HomeDef_i::primary_key (
 
 void
 TAO_HomeDef_i::primary_key_i (
-    CORBA::ValueDef_ptr primary_key
-  )
+    CORBA::ValueDef_ptr primary_key)
 {
   if (CORBA::is_nil (primary_key))
     {
@@ -461,8 +451,7 @@ TAO_HomeDef_i::create_factory_i (
     char const *name,
     char const *version,
     CORBA::ParDescriptionSeq const &params,
-    CORBA::ExceptionDefSeq const &exceptions
-  )
+    CORBA::ExceptionDefSeq const &exceptions)
 {
   CORBA::Object_var obj = this->create_common (CORBA::dk_Factory,
                                                id,
@@ -499,8 +488,7 @@ TAO_HomeDef_i::create_finder_i (
     char const *name,
     char const *version,
     CORBA::ParDescriptionSeq const &params,
-    CORBA::ExceptionDefSeq const &exceptions
-  )
+    CORBA::ExceptionDefSeq const &exceptions)
 {
   CORBA::Object_var obj = this->create_common (CORBA::dk_Finder,
                                                id,

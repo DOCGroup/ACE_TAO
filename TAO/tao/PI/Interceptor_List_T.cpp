@@ -103,8 +103,7 @@ namespace TAO
   void
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
     InterceptorType_ptr_type interceptor,
-    CORBA::PolicyList const &policies
-    )
+    CORBA::PolicyList const &policies)
   {
     if (!CORBA::is_nil (interceptor))
       {

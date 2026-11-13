@@ -3406,8 +3406,7 @@ TAO_ORB_Core::ior_interceptor_adapter ()
 
 void
 TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-   )
+   PortableInterceptor::ClientRequestInterceptor_ptr interceptor)
 {
   if (this->clientrequestinterceptor_adapter_i ())
     {
@@ -3455,8 +3454,7 @@ TAO_ORB_Core::clientrequestinterceptor_adapter_i ()
 
 void
 TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-   )
+   PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
 {
   if (this->serverrequestinterceptor_adapter_i ())
     {

@@ -13,8 +13,7 @@
 CORBA::Boolean Messenger_i::send_message (
     char const *user_name,
     char const *subject,
-    char *&message
-  )
+    char *&message)
 {
   //Add your implementation here
   std::cerr << "Message from: " << user_name << std::endl;

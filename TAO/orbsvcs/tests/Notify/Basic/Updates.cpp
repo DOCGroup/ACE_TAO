@@ -12,8 +12,7 @@ Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_cl
 void
 Updates_StructuredPushConsumer::offer_change (
         CosNotification::EventTypeSeq const &added,
-        CosNotification::EventTypeSeq const &removed
-      )
+        CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer::offer_change invoked:\n"));
@@ -34,8 +33,7 @@ Updates_StructuredPushSupplier::~Updates_StructuredPushSupplier ()
 void
 Updates_StructuredPushSupplier::subscription_change (
     CosNotification::EventTypeSeq const &added,
-    CosNotification::EventTypeSeq const &removed
-  )
+    CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushSupplier::subscription_change invoked:\n"));

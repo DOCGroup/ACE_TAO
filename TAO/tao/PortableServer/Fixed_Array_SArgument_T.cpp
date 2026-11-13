@@ -92,8 +92,7 @@ CORBA::Boolean
 TAO::Ret_Fixed_Array_SArgument_T<S_var,
                                  S_forany,
                                  Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return cdr << S_forany (this->x_.inout ());
 }

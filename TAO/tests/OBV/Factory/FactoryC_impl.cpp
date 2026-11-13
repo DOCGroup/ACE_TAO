@@ -19,8 +19,7 @@ Value2_init_impl::create_default (CORBA::ULong id)
 OBV_FactoryTest::Value2 *
 Value2_init_impl::create (
     CORBA::ULong id,
-    OBV_FactoryTest::BaseValue::BV_Data const &data
-  )
+    OBV_FactoryTest::BaseValue::BV_Data const &data)
 {
   OBV_FactoryTest::Value2 *ret_val {};
   ACE_NEW_RETURN (ret_val,

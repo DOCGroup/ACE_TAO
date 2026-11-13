@@ -1226,8 +1226,7 @@ IDL3_Client::valuetype_attribute_test (
 int
 IDL3_Client::valuetype_operation_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var const& desc,
-    char const* prefix
-  )
+    char const* prefix)
 {
   CORBA::ULong const ops_length = desc->operations.length ();
 

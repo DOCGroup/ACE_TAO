@@ -45,8 +45,7 @@ TeraSS_State_WRITE::service (JAWS_Event_Completer *ec, void *data)
 JAWS_Protocol_State *
 TeraSS_State_WRITE::transition ( const JAWS_Event_Result &result
                                , void *data
-                               , void *act
-                               )
+                               , void *act)
 {
   // Clean up FILE.
 

@@ -275,9 +275,8 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
 
 void
 TAO_DynArray_i::set_elements_as_dyn_any (
-    const DynamicAny::DynAnySeq & values
+    const DynamicAny::DynAnySeq & values)
 
-  )
 {
   if (this->destroyed_)
     {

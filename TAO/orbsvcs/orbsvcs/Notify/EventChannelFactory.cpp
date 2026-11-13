@@ -199,8 +199,7 @@ TAO_Notify_EventChannelFactory::create_named_channel (
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
     CosNotification::QoSProperties const &initial_qos,
     CosNotification::AdminProperties const &initial_admin,
-    CosNotifyChannelAdmin::ChannelID_out id
-  )
+    CosNotifyChannelAdmin::ChannelID_out id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     TAO_Notify_PROPERTIES::instance()->builder()->build_event_channel (this

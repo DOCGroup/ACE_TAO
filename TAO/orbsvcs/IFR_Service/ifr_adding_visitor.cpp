@@ -3754,8 +3754,7 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
 void
 ifr_adding_visitor::fill_base_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
-    AST_Component *node
-  )
+    AST_Component *node)
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
   AST_Component *base_component = node->base_component ();
@@ -3812,8 +3811,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
 void
 ifr_adding_visitor::fill_managed_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
-    AST_Home *node
-  )
+    AST_Home *node)
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
   AST_Component *managed_component = node->managed_component ();

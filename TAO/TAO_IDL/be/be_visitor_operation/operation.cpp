@@ -94,8 +94,7 @@ be_visitor_operation::gen_raise_exception (std::string const& exception_name,
 int
 be_visitor_operation::gen_stub_operation_body (
     be_operation *node,
-    be_type *return_type
-  )
+    be_type *return_type)
 {
   UTL_Scope *s =
     this->ctx_->attribute ()
@@ -302,8 +301,7 @@ be_visitor_operation::gen_stub_operation_body (
 
 int
 be_visitor_operation::gen_pre_stub_info (
-    be_operation *node
-  )
+    be_operation *node)
 {
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation_exceptlist_cs visitor (&ctx);

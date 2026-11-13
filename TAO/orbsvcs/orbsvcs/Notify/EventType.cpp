@@ -46,8 +46,7 @@ TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
 }
 
 TAO_Notify_EventType::TAO_Notify_EventType (
-    const CosNotification::EventType& event_type
-  )
+    const CosNotification::EventType& event_type)
 {
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }

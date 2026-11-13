@@ -23,8 +23,7 @@ TAO_POAManager_Factory::~TAO_POAManager_Factory ()
 ::PortableServer::POAManager_ptr
 TAO_POAManager_Factory::create_POAManager (
   const char * id,
-  const ::CORBA::PolicyList & policies
-  )
+  const ::CORBA::PolicyList & policies)
 {
   // Validate the policy.
   TAO_POA_Policy_Set tao_policies (TAO_POA_Policy_Set (this->object_adapter_.default_poa_policies ()));

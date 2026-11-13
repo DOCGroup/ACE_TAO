@@ -129,15 +129,13 @@ void TAO_FTEC_Event_Channel::set_listener(TAO_FTEC_Become_Primary_Listener* list
 }
 
 void TAO_FTEC_Event_Channel::set_update (
-        const FTRT::State & s
-      )
+        const FTRT::State & s)
 {
     ec_impl_->set_update(s);
 }
 
 void TAO_FTEC_Event_Channel::oneway_set_update (
-        const FTRT::State & s
-      )
+        const FTRT::State & s)
 {
     ec_impl_->set_update(s);
 }
@@ -197,8 +195,7 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle)
 CORBA::Boolean
 TAO_FTEC_Event_Channel::start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out location
-      )
+        FTRT::Location_out location)
 {
   return ec_impl_->start(listener, location);
 }
@@ -206,16 +203,14 @@ TAO_FTEC_Event_Channel::start (
 void
 TAO_FTEC_Event_Channel::create_group (
         const FTRT::ManagerInfoList & info_list,
-        CORBA::ULong object_group_ref_version
-      )
+        CORBA::ULong object_group_ref_version)
 {
   ec_impl_->create_group(info_list, object_group_ref_version);
 }
 
 void
 TAO_FTEC_Event_Channel::join_group (
-        const FTRT::ManagerInfo & info
-      )
+        const FTRT::ManagerInfo & info)
 {
   ec_impl_->join_group(info);
 }
@@ -223,8 +218,7 @@ TAO_FTEC_Event_Channel::join_group (
 void
 TAO_FTEC_Event_Channel::add_member (
         const FTRT::ManagerInfo & info,
-        CORBA::ULong object_group_ref_version
-      )
+        CORBA::ULong object_group_ref_version)
 {
   ec_impl_->add_member(info, object_group_ref_version);
 }
@@ -240,8 +234,7 @@ TAO_FTEC_Event_Channel::remove_member (
 
 void
 TAO_FTEC_Event_Channel::replica_crashed (
-        const FTRT::Location & location
-      )
+        const FTRT::Location & location)
 {
   ec_impl_->replica_crashed(location);
 }
@@ -252,8 +245,7 @@ TAO_FTEC_Event_Channel::replica_crashed (
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel::connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos
-      )
+        const RtecEventChannelAdmin::ConsumerQOS & qos)
 {
   return ec_impl_->connect_push_consumer(push_consumer, qos);
 }
@@ -262,40 +254,35 @@ TAO_FTEC_Event_Channel::connect_push_consumer (
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel::connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos
-      )
+        const RtecEventChannelAdmin::SupplierQOS & qos)
 {
   return ec_impl_->connect_push_supplier(push_supplier, qos);
 }
 
 void
 TAO_FTEC_Event_Channel::disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   ec_impl_->disconnect_push_supplier(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   ec_impl_->disconnect_push_consumer(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   ec_impl_->suspend_push_supplier(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   ec_impl_->resume_push_supplier(oid);
 }
@@ -303,8 +290,7 @@ TAO_FTEC_Event_Channel::resume_push_supplier (
 void
 TAO_FTEC_Event_Channel::push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data
-      )
+        const RtecEventComm::EventSet & data)
 {
   ec_impl_->push(oid,
                  data);

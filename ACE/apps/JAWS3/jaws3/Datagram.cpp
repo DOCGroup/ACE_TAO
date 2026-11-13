@@ -15,8 +15,7 @@ void
 JAWS_Datagram::accept ( const ACE_Addr &local_sap
                       , ACE_SOCK_Dgram &new_dgram
                       , JAWS_Event_Completer *completer
-                      , void *act
-                      )
+                      , void *act)
 {
   this->impl_->accept (local_sap, new_dgram, completer, act);
 }
@@ -25,8 +24,7 @@ void
 JAWS_Datagram::connect ( const ACE_Addr &remote_sap
                        , ACE_SOCK_Dgram &new_dgram
                        , JAWS_Event_Completer *completer
-                       , void *act
-                       )
+                       , void *act)
 {
   this->impl_->connect (remote_sap, new_dgram, completer, act);
 }
@@ -36,8 +34,7 @@ JAWS_Datagram::connect ( const ACE_Addr &remote_sap
                        , ACE_SOCK_Dgram &new_dgram
                        , const ACE_Addr &local_sap
                        , JAWS_Event_Completer *completer
-                       , void *act
-                       )
+                       , void *act)
 {
   this->impl_->connect (remote_sap, new_dgram, local_sap, completer, act);
 }
@@ -47,8 +44,7 @@ JAWS_Datagram::accept ( const ACE_Addr &local_sap
                       , ACE_SOCK_Dgram &new_dgram
                       , JAWS_Event_Completer *completer
                       , const ACE_Time_Value &timeout
-                      , void *act
-                      )
+                      , void *act)
 {
   this->impl_->accept (local_sap, new_dgram, completer, timeout, act);
 }
@@ -58,8 +54,7 @@ JAWS_Datagram::connect ( const ACE_Addr &remote_sap
                        , ACE_SOCK_Dgram &new_dgram
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &timeout
-                       , void *act
-                       )
+                       , void *act)
 {
   this->impl_->connect (remote_sap, new_dgram, completer, timeout, act);
 }
@@ -70,8 +65,7 @@ JAWS_Datagram::connect ( const ACE_Addr &remote_sap
                        , const ACE_Addr &local_sap
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &timeout
-                       , void *act
-                       )
+                       , void *act)
 {
   this->impl_->connect ( remote_sap
                        , new_dgram

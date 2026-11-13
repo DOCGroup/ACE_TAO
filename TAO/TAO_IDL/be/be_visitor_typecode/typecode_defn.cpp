@@ -648,8 +648,7 @@ be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_insert (
     std::vector<std::unique_ptr<be_visitor_typecode_defn::QNode>> &queue,
     be_type *node,
-    ACE_CDR::Long offset
-  )
+    ACE_CDR::Long offset)
 {
   std::unique_ptr<be_visitor_typecode_defn::QNode> qnode =
     std::make_unique<be_visitor_typecode_defn::QNode> ();
@@ -665,8 +664,7 @@ be_visitor_typecode_defn::queue_insert (
 be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_lookup (
     std::vector<std::unique_ptr<be_visitor_typecode_defn::QNode>> &queue,
-    be_type *node
-  )
+    be_type *node)
 {
   for (std::unique_ptr<be_visitor_typecode_defn::QNode> const& item : queue)
     {

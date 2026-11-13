@@ -725,8 +725,7 @@ TAO_TypeCodeFactory_i::create_value_tc (
     char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    CORBA::ValueMemberSeq const &members
-  )
+    CORBA::ValueMemberSeq const &members)
 {
   return this->value_event_tc_common (id,
                                       name,
@@ -740,8 +739,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_value_box_tc (
     char const *id,
     char const *name,
-    CORBA::TypeCode_ptr boxed_type
-  )
+    CORBA::TypeCode_ptr boxed_type)
 {
   return this->alias_value_box_tc_common (id,
                                           name,
@@ -752,8 +750,7 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_native_tc (
     char const *id,
-    char const *name
-  )
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -780,8 +777,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (char const *id)
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_abstract_interface_tc (
     char const *id,
-    char const *name
-  )
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -1080,9 +1076,8 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_tc_common (
     char const *id,
     char const *name,
-    CORBA::TCKind kind
+    CORBA::TCKind kind)
 
-  )
 {
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1110,9 +1105,8 @@ TAO_TypeCodeFactory_i::create_tc_common (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::string_wstring_tc_common (
     CORBA::ULong bound,
-    CORBA::TCKind kind
+    CORBA::TCKind kind)
 
-  )
 {
   CORBA::TypeCode_ptr tc {};
   ACE_NEW_THROW_EX (tc,
@@ -1156,9 +1150,8 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
     char const *id,
     char const *name,
     CORBA::StructMemberSeq const & members,
-    CORBA::TCKind kind
+    CORBA::TCKind kind)
 
-  )
 {
   CORBA::TypeCode_ptr tc {};
 
@@ -1267,8 +1260,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
     char const *id,
     char const *name,
     CORBA::TypeCode_ptr underlying_type,
-    CORBA::TCKind kind
-  )
+    CORBA::TCKind kind)
 {
   CORBA::TypeCode_ptr tc {};
 
@@ -1310,9 +1302,8 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
     CORBA::ValueMemberSeq const &members,
-    CORBA::TCKind kind
+    CORBA::TCKind kind)
 
-  )
 {
   CORBA::TypeCode_ptr tc {};
 

@@ -41,8 +41,7 @@ void
 JAWS_IO::send ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
-              , void *act
-              )
+              , void *act)
 {
   this->impl_->send (handle, mb, completer, act);
 }
@@ -52,8 +51,7 @@ void
 JAWS_IO::recv ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
-              , void *act
-              )
+              , void *act)
 {
   this->impl_->recv (handle, mb, completer, act);
 }
@@ -65,8 +63,7 @@ JAWS_IO::transmit ( ACE_HANDLE handle
                   , JAWS_Event_Completer *completer
                   , void *act
                   , ACE_Message_Block *header
-                  , ACE_Message_Block *trailer
-                  )
+                  , ACE_Message_Block *trailer)
 {
   this->impl_->transmit (handle, source, completer, act, header, trailer);
 }
@@ -77,8 +74,7 @@ JAWS_IO::send ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
               , const ACE_Time_Value &tv
-              , void *act
-              )
+              , void *act)
 {
   this->impl_->send (handle, mb, completer, tv, act);
 }
@@ -89,8 +85,7 @@ JAWS_IO::recv ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
               , const ACE_Time_Value &tv
-              , void *act
-              )
+              , void *act)
 {
   this->impl_->recv (handle, mb, completer, tv, act);
 }
@@ -103,8 +98,7 @@ JAWS_IO::transmit ( ACE_HANDLE handle
                   , const ACE_Time_Value &tv
                   , void *act
                   , ACE_Message_Block *header
-                  , ACE_Message_Block *trailer
-                  )
+                  , ACE_Message_Block *trailer)
 {
   this->impl_->transmit (handle, source, completer, tv, act, header, trailer);
 }

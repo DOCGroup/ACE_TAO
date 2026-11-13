@@ -1289,8 +1289,7 @@ TAO_Container_i::create_value (
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
     CORBA::InterfaceDefSeq const &supported_interfaces,
-    CORBA::InitializerSeq const &initializers
-  )
+    CORBA::InitializerSeq const &initializers)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
@@ -1319,8 +1318,7 @@ TAO_Container_i::create_value_i (
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
     CORBA::InterfaceDefSeq const &supported_interfaces,
-    CORBA::InitializerSeq const &initializers
-  )
+    CORBA::InitializerSeq const &initializers)
 {
   ACE_Configuration_Section_Key new_key;
   ACE_TString path =
@@ -1372,8 +1370,7 @@ CORBA::ValueBoxDef_ptr
 TAO_Container_i::create_value_box_i (char const *id,
                                      char const *name,
                                      char const *version,
-                                     CORBA::IDLType_ptr original_type_def
- )
+                                     CORBA::IDLType_ptr original_type_def)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1533,8 +1530,7 @@ TAO_Container_i::create_abstract_interface (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::AbstractInterfaceDefSeq const &base_interfaces
-  )
+    CORBA::AbstractInterfaceDefSeq const &base_interfaces)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AbstractInterfaceDef::_nil ());
 
@@ -1551,8 +1547,7 @@ TAO_Container_i::create_abstract_interface_i (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::AbstractInterfaceDefSeq const &base_interfaces
-  )
+    CORBA::AbstractInterfaceDefSeq const &base_interfaces)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1608,8 +1603,7 @@ TAO_Container_i::create_local_interface (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::InterfaceDefSeq const &base_interfaces
-  )
+    CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::LocalInterfaceDef::_nil ());
 
@@ -1626,8 +1620,7 @@ TAO_Container_i::create_local_interface_i (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::InterfaceDefSeq const &base_interfaces
-  )
+    CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1689,8 +1682,7 @@ TAO_Container_i::create_ext_value (
       CORBA::Boolean is_truncatable,
       CORBA::ValueDefSeq const &abstract_base_values,
       CORBA::InterfaceDefSeq const &supported_interfaces,
-      CORBA::ExtInitializerSeq const &initializers
-    )
+      CORBA::ExtInitializerSeq const &initializers)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtValueDef::_nil ());
 
@@ -1719,8 +1711,7 @@ TAO_Container_i::create_ext_value_i (
       CORBA::Boolean is_truncatable,
       CORBA::ValueDefSeq const &abstract_base_values,
       CORBA::InterfaceDefSeq const &supported_interfaces,
-      CORBA::ExtInitializerSeq const &initializers
-    )
+      CORBA::ExtInitializerSeq const &initializers)
 {
   ACE_Configuration_Section_Key new_key;
   ACE_TString path =
@@ -1798,8 +1789,7 @@ TAO_Container_i::lookup_name_recursive (
       char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
-      CORBA::Boolean exclude_inherited
-    )
+      CORBA::Boolean exclude_inherited)
 {
   ACE_Configuration_Section_Key defns_key;
   int status =
@@ -1909,8 +1899,7 @@ TAO_Container_i:: lookup_attr (
       std::deque<CORBA::DefinitionKind> &kind_queue,
       std::deque<ACE_TString> &path_queue,
       char const *search_name,
-      CORBA::Boolean exclude_inherited
-    )
+      CORBA::Boolean exclude_inherited)
 {
   int index = 0;
   ACE_TString section_name;
@@ -2011,8 +2000,7 @@ TAO_Container_i::lookup_op (
       std::deque<CORBA::DefinitionKind> &kind_queue,
       std::deque<ACE_TString> &path_queue,
       char const *search_name,
-      CORBA::Boolean exclude_inherited
-    )
+      CORBA::Boolean exclude_inherited)
 {
   int index = 0;
   ACE_TString section_name;
@@ -2341,8 +2329,7 @@ TAO_Container_i::create_value_common (
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_TString path;

@@ -37,8 +37,7 @@ JAWS_Protocol_Handler::service ()
 
 void
 JAWS_Protocol_Handler::event_complete ( const JAWS_Event_Result &result
-                                      , void *act
-                                      )
+                                      , void *act)
 {
   // This call is done in the context of the dispatching
   // thread (e.g., by the Reactor thread, or by one of the

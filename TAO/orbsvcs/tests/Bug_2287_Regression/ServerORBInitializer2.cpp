@@ -6,23 +6,20 @@
 
 void
 Server_ORBInitializer2::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    )
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 Server_ORBInitializer2::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   this->register_server_request_interceptors (info);
 }
 
 void
 Server_ORBInitializer2::register_server_request_interceptors (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   TAO249_ServerRequest_Interceptor2 *sri {};
   ACE_NEW_THROW_EX (sri,

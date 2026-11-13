@@ -23,8 +23,7 @@ EventChannelFactory_i::EventChannelFactory_i (std::string const &conf_filename,
 CORBA::Object_ptr EventChannelFactory_i::create_object (
   char const *type_id,
   PortableGroup::Criteria const &the_criteria,
-  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-  )
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   ORBSVCS_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
   std::unique_ptr<FILE, int (*) (FILE *)> file {
@@ -62,8 +61,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 }
 
 void EventChannelFactory_i::delete_object (
-  PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id
-  )
+  PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id)
 {
   ACE_TRACE("EventChannelFactory_i::delete_object");
   CORBA::ULong object_id {};

@@ -250,8 +250,7 @@ TAO_NotifyLog_i::for_consumers ()
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_NotifyLog_i::for_suppliers (
-    )
+TAO_NotifyLog_i::for_suppliers ()
 {
   return this->event_channel_->for_suppliers();
 }
