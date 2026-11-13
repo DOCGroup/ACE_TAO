@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AV_Export TAO_Tokenizer
 {
 public:
-  TAO_Tokenizer (char const *string,char delimiter);
+  TAO_Tokenizer (char const *string, char delimiter);
 
   ~TAO_Tokenizer ();
   TAO_Tokenizer (TAO_Tokenizer const &) = delete;
@@ -38,7 +38,7 @@ public:
   TAO_Tokenizer &operator= (TAO_Tokenizer &&) = delete;
 
   /// parses the string and tokenizes it.
-  int parse (char const *string,char delimiter);
+  int parse (char const *string, char delimiter);
 
   /// Returns the next token.
   char *token ();
@@ -49,10 +49,11 @@ public:
   char const *operator [] (size_t index) const;
 
 protected:
+  void clear_tokens ();
+
   ACE_Array<char*> token_array_;
-  size_t count_;
-  size_t num_tokens_;
-  char string_ [BUFSIZ];
+  size_t count_ {};
+  size_t num_tokens_ {};
 };
 
 // Forward declaration.

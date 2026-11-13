@@ -4455,27 +4455,38 @@ TAO_FlowConsumer::connect_to_peer (AVStreams::QoS & the_qos,
 // TAO_Tokenizer
 //------------------------------------------------------------
 TAO_Tokenizer::TAO_Tokenizer (char const *string, char delimiter)
-  :token_array_ (10, (char*)0, 0),
-   count_ (0)
+  : token_array_ (10, nullptr, nullptr)
 {
   this->parse (string, delimiter);
 }
 
 TAO_Tokenizer::~TAO_Tokenizer ()
 {
-  for (unsigned int i {}; i < this->num_tokens_; ++i)
-    CORBA::string_free (this->token_array_[i]);
+  this->clear_tokens ();
+}
+
+void
+TAO_Tokenizer::clear_tokens ()
+{
+  for (size_t i {}; i < this->num_tokens_; ++i)
+    {
+      CORBA::string_free (this->token_array_[i]);
+      this->token_array_[i] = nullptr;
+    }
+  this->num_tokens_ = 0;
 }
 
 
 int
 TAO_Tokenizer::parse (char const *string, char delimiter)
 {
+  this->clear_tokens ();
+  this->count_ = 0;
+
   ACE_CString new_string (string);
-  u_int pos =0;
+  u_int pos {};
   ACE_CString::size_type slash_pos = 0;
-  u_int count = 0;
-  int result;
+  u_int count {};
   while (pos < new_string.length ())
     {
       slash_pos = new_string.find (delimiter, pos);
@@ -4492,38 +4503,20 @@ TAO_Tokenizer::parse (char const *string, char delimiter)
           pos = static_cast<int> (new_string.length ());
         }
       char *token = CORBA::string_dup (substring.c_str ());
-      result = this->token_array_.set (token, count);
+      int result = this->token_array_.set (token, count);
       if (result == -1)
         {
           this->token_array_.size (this->token_array_.size ()*2);
           result = this->token_array_.set (token, count);
           if (result == -1)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_Tokenizer::parse error"), -1);
+            {
+              CORBA::string_free (token);
+              ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_Tokenizer::parse error"), -1);
+            }
         }
       count++;
+      this->num_tokens_ = count;
     }
-
-  /*
-  ACE_OS::strcpy (this->string_ , string);
-  char delimiter_str [2] = {0, 0};
-  delimiter_str [0] = delimiter;
-  char *token = ACE_OS::strtok (this->string_, delimiter_str);
-
-  while (token != nullptr)
-    {
-      result = this->token_array_.set (token, count);
-      if (result == -1)
-        {
-          this->token_array_.size (this->token_array_.size ()*2);
-          result = this->token_array_.set (token, count);
-          if (result == -1)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_Tokenizer::parse error"), -1);
-        }
-      token = ACE_OS::strtok (0, delimiter_str);
-      count++;
-    }
-  */
-  this->num_tokens_ = count;
   return 0;
 }
 
@@ -4533,7 +4526,7 @@ TAO_Tokenizer::token ()
   if (count_ < num_tokens_)
     return CORBA::string_dup (this->token_array_[this->count_++]);
   else
-    return 0;
+    return nullptr;
 }
 
 int
