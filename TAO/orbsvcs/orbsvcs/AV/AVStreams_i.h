@@ -345,7 +345,6 @@ public:
   TAO_AV_QoS &operator= (TAO_AV_QoS const &) = delete;
   TAO_AV_QoS &operator= (TAO_AV_QoS &&) = delete;
 
-  /// constructor taking a stream qos parameter.
   explicit TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
 
   /// sets the maps with the QoS parameter.

@@ -85,7 +85,6 @@ public:
 
   TAO_FlowSpec_Entry ();
 
-  /// constructor to construct an entry from the arguments.
   TAO_FlowSpec_Entry (char const *flowname,
                       char const *direction,
                       char const *format_name,
@@ -278,7 +277,6 @@ public:
 
   TAO_Forward_FlowSpec_Entry ();
 
-  /// constructor to construct an entry from the arguments.
   TAO_Forward_FlowSpec_Entry (char const *flowname,
                               char const *direction,
                               char const *format_name,

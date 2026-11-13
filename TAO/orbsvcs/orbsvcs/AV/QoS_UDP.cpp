@@ -628,7 +628,7 @@ TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
               else
                 if (TAO_debug_level > 0)
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              "Using ACE_OS::sendto () : Bytes sent : %d",
+                              "Using ACE_OS::sendto () : Bytes sent : %B",
                               bytes_sent));
 
               if (n < 1)
@@ -658,7 +658,7 @@ TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
       else
         if( TAO_debug_level > 0)
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      "(%N,%l) Using ACE_OS::sendto () : Bytes sent : %d",
+                      "(%N,%l) Using ACE_OS::sendto () : Bytes sent : %B",
                       bytes_sent));
 
       if (n < 1)
@@ -714,7 +714,7 @@ TAO_AV_UDP_QoS_Transport::send (iovec const *iov,
   {
     if( TAO_debug_level > 0)
        ORBSVCS_DEBUG ((LM_DEBUG,
-                   "(%N,%l) Using ACE_OS::sendto () : Bytes sent : %d",
+                   "(%N,%l) Using ACE_OS::sendto () : Bytes sent : %B",
                    bytes_sent));
   }
 

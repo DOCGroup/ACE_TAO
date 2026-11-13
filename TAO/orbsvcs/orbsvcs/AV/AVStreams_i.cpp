@@ -3002,7 +3002,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                   //static int blah = 0; if(blah == 1){blah=0; abort();}else{blah=1;}
                   CORBA::Object_var flowconnection_obj =
                     streamctrl->get_flow_connection (forward_entry.flowname ());
-                  ACE_OS::printf("successfully called get_flow_connection\n");
+                  std::printf ("successfully called get_flow_connection\n");
                   if (!CORBA::is_nil (flowconnection_obj.in ()))
                     {
                       flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj.in ());
