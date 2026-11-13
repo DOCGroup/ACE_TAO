@@ -63,7 +63,6 @@ namespace CORBA
     static Principal * _duplicate (Principal *);
     static Principal * _nil ();
 
-    // = Stuff required for memory management.
     unsigned long _incr_refcount ();
     unsigned long _decr_refcount ();
 
@@ -81,7 +80,6 @@ namespace CORBA
     ~Principal ();
 
   private:
-    // = Prevent copying
     Principal (Principal const &) = delete;
     Principal &operator= (Principal const &) = delete;
     Principal (Principal &&) = delete;

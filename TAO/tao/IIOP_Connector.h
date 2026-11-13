@@ -56,8 +56,6 @@ public:
 
   ~TAO_IIOP_Connector () override;
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
   TAO_Profile *create_profile (TAO_InputCDR & cdr) override;
@@ -86,8 +84,6 @@ protected:
   /// may be tried.
   int supports_parallel_connects () const override;
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (

@@ -109,10 +109,8 @@ namespace CORBA
 
     virtual ~Exception () = default;
 
-    // = To throw the exception (when using the standard mapping).
     virtual void _raise () const = 0;
 
-    // = The static narrow operations.
     static Exception * _downcast (Exception * x);
     static Exception const * _downcast (Exception const * x);
 
@@ -121,8 +119,6 @@ namespace CORBA
 
     /// Return the name of the Exception.
     virtual const char * _name () const;
-
-    // = These are TAO-specific extensions.
 
     /// Will be overridden in the concrete derived classes.
     virtual CORBA::TypeCode_ptr _tao_type () const = 0;

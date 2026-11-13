@@ -57,8 +57,6 @@ namespace CORBA
 
     CORBA::TypeCode_ptr _tao_type () const override;
 
-    // = TAO specific extension.
-
     /// Constructor from a repository id.
     UserException (char const *repository_id, char const *local_name);
 

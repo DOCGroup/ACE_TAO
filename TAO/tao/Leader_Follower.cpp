@@ -292,7 +292,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       // gave up our leadership when we became a client.
       if (this->leader_available ())
       { // Scope #3: threads here are followers
-        // = Wait as a follower.
+        // Wait as a follower.
 
         // Grab a follower:
         TAO_LF_Follower_Auto_Ptr follower (*this);
@@ -465,7 +465,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                           t_id));
             }
         }
-      // = Leader Code.
+      // Leader code.
 
       // The only way to reach this point is if we must become the
       // leader, because there is no leader or we have to update to a

@@ -134,8 +134,6 @@ public:
   TAO_Resource_Factory ();
   ~TAO_Resource_Factory () override;
 
-  // = Resource Retrieval
-
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    Locked_Data_Blocks
   virtual int use_locked_data_blocks () const;

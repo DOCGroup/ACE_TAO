@@ -69,9 +69,6 @@ public:
 
   ~TAO_IIOP_Endpoint () override = default;
 
-  // = Implementation of abstract TAO_Endpoint methods.  See
-  // Endpoint.h for their documentation.
-
   TAO_Endpoint *next () override;
 
   /**
@@ -102,8 +99,6 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-
-  // = IIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;

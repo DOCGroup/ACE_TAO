@@ -57,7 +57,6 @@ class TAO_Export TAO_Tagged_Components
 public:
   TAO_Tagged_Components ();
 
-  // = Standard OMG that require fast access.
   /// The the IOP::TAG_ORB_TYPE component value
   void set_orb_type (CORBA::ULong orb_type);
 
@@ -81,8 +80,6 @@ public:
   /// if the component is not present.
   int get_code_sets (CONV_FRAME::CodeSetComponentInfo &) const;
 
-  // = Generic components
-
   /// Insert the component into the list, making a copy of the octet
   /// sequence.
   void set_component (const IOP::TaggedComponent& component);
@@ -98,8 +95,6 @@ public:
   /// Remove a component, if present. Return number of components
   /// removed.
   int remove_component (IOP::ComponentId id);
-
-  // = Marshaling and demarshaling
 
   /// Marshal the list.
   int encode (TAO_OutputCDR& cdr) const;

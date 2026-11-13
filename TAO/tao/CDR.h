@@ -187,7 +187,6 @@ public:
   // @todo do we want a special method to write an array of
   // strings and wstrings?
 
-  // = TAO specific methods.
   static void throw_skel_exception (int error_num);
 
   void get_version (TAO_GIOP_Message_Version& giop_version);
@@ -426,14 +425,11 @@ public:
 
   virtual ~TAO_InputCDR ();
 
-  // = TAO specific methods.
-
   /// Accessor
   TAO_ORB_Core *orb_core () const;
 
   ACE_Message_Block::Message_Flags clr_mb_flags(ACE_Message_Block::Message_Flags less_flags);
 
-  // = TAO specific methods.
   static void throw_skel_exception (int error_num);
 
   /// These methods are used by valuetype indirection support.

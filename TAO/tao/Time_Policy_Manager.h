@@ -50,7 +50,6 @@ public:
   TAO_Time_Policy_Manager (TAO_Time_Policy_Manager &&) = delete;
   TAO_Time_Policy_Manager &operator= (TAO_Time_Policy_Manager &&) = delete;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 

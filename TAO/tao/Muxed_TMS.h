@@ -56,8 +56,7 @@ public:
   /// invocation.
   CORBA::ULong request_id () override;
 
-  // = Please read the documentation in the TAO_Transport_Mux_Strategy
-  //   class.
+  /// See TAO_Transport_Mux_Strategy for documentation.
   int bind_dispatcher (CORBA::ULong request_id,
                        ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
   int unbind_dispatcher (CORBA::ULong request_id) override;

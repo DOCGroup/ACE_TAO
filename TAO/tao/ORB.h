@@ -350,8 +350,6 @@ namespace CORBA
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-    // = ORB event loop methods.
-
     /**
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down.
@@ -475,10 +473,6 @@ namespace CORBA
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                      const CORBA::Any& val);
 #endif
-
-    // ----------------------------------------------------------------
-    // = TAO-specific extensions to the CORBA specification.
-    // ----------------------------------------------------------------
 
 #if !defined(CORBA_E_MICRO)
     /// Create an empty policy, usually to be filled in later by

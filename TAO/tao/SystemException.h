@@ -113,8 +113,6 @@ namespace CORBA
 
     void _raise () const override = 0;
 
-    // = TAO-specific extension.
-
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
     void _tao_print_system_exception (FILE *f = stdout) const;

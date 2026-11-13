@@ -24,7 +24,6 @@ TAO_Time_Policy_Manager::~TAO_Time_Policy_Manager ()
   TAO::ORB_Time_Policy::reset_time_policy ();
 }
 
-// = Service Configurator hooks.
 /// Dynamic linking hook
 int
 TAO_Time_Policy_Manager::init (int argc, ACE_TCHAR* argv[])

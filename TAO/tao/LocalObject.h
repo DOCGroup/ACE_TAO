@@ -139,8 +139,6 @@ namespace CORBA
 
     CORBA::ORB_ptr _get_orb () override;
 
-    // = TAO extensions
-
     /// Throws CORBA::NO_IMPLEMENT.
     TAO::ObjectKey *_key () override;
 

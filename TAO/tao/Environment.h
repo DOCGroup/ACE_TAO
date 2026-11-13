@@ -131,7 +131,7 @@ namespace CORBA
     /// is not CORBA compliant.
     void print_exception (const char *info, FILE *f=stdout) const;
 
-    // = Obtain a default environment to use with TAO.
+    /// Obtain a default environment to use with TAO.
     static CORBA::Environment &default_environment ();
 
     // Useful for template programming.

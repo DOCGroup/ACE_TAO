@@ -42,8 +42,6 @@ public:
   TAO_HTTP_Parser () = default;
   ~TAO_HTTP_Parser () override = default;
 
-  // = The IOR_Parser methods, please read the documentation in
-  //   IOR_Parser.h
   bool match_prefix (char const *ior_string) const override;
   CORBA::Object_ptr parse_string (char const *ior, CORBA::ORB_ptr orb) override;
 };

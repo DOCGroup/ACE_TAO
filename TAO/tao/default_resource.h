@@ -152,7 +152,6 @@ public:
   /// Modify and get the source for the CDR allocators
   int cdr_allocator_source ();
 
-  // = Resource Retrieval
   int use_locked_data_blocks () const override;
   ACE_Reactor *get_reactor () override;
   void reclaim_reactor (ACE_Reactor *) override;

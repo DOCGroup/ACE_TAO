@@ -415,7 +415,6 @@ public:
   TAO_Unknown_Profile (CORBA::ULong tag,
                        TAO_ORB_Core *orb_core);
 
-  // = The TAO_Profile methods look above
   void parse_string (char const *string) override;
   char object_key_delimiter () const override;
   char *to_string () const override;

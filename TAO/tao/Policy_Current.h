@@ -44,8 +44,6 @@ public:
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  // = The CORBA::PolicyManager operations
-
   CORBA::PolicyList *get_policy_overrides (
         CORBA::PolicyTypeSeq const &ts) override;
 
@@ -53,7 +51,6 @@ public:
         CORBA::PolicyList const &policies,
         CORBA::SetOverrideType set_add) override;
 
-  // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation () const;
   TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 

@@ -149,7 +149,6 @@ namespace TAO
 
     ~Cache_ExtId_T ();
 
-    // = Assignment and comparison operators.
     /// Assignment operator (does copy memory).
     Cache_ExtId_T& operator= (const Cache_ExtId_T &rhs);
 
@@ -176,7 +175,6 @@ namespace TAO
     /// Increment the index value
     void incr_index ();
 
-    // = Accessors
     /// Get the underlying the property pointer
     transport_descriptor_type *property () const;
 

@@ -104,7 +104,6 @@ public:
             TAO_MProfile const &profiles,
             TAO_ORB_Core *orb_core);
 
-  // = Memory management.
   void _incr_refcnt ();
   void _decr_refcnt ();
 
