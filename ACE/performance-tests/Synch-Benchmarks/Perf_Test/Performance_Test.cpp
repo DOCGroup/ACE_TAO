@@ -7,7 +7,6 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
-#include "ace/Service_Repository.h"
 #include "ace/Reactor.h"
 
 Performance_Test::Performance_Test () = default;
