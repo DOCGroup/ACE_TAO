@@ -125,7 +125,7 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
 ACE_INLINE TAO_Root_POA *
 TAO_Object_Adapter::root_poa () const
 {
-  return this->root_;
+  return this->root_.get ();
 }
 
 ACE_INLINE TAO_ORB_Core &

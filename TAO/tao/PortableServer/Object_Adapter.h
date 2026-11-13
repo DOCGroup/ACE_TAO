@@ -428,6 +428,20 @@ private:
   static void release_poa_manager_factory (TAO_POAManager_Factory *factory);
 #endif
 private:
+  struct Root_POA_Deleter
+  {
+    void operator() (TAO_Root_POA *poa) const;
+  };
+
+  struct POAManager_Factory_Deleter
+  {
+    void operator() (TAO_POAManager_Factory *factory) const;
+  };
+
+  using Root_POA_Ptr = std::unique_ptr<TAO_Root_POA, Root_POA_Deleter>;
+  using POAManager_Factory_Ptr =
+    std::unique_ptr<TAO_POAManager_Factory, POAManager_Factory_Deleter>;
+
   /// Condition variable for waiting on non-servant upcalls to end.
   TAO_SYNCH_CONDITION non_servant_upcall_condition_;
 
@@ -440,12 +454,12 @@ private:
   /// Id of thread making the non-servant upcall.
   ACE_thread_t non_servant_upcall_thread_;
 
-  /// Reference-counted ownership of the Root POA, released on close/destruction.
-  TAO_Root_POA *root_ {};
+  /// Reference-counted ownership of the Root POA.
+  Root_POA_Ptr root_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  /// Reference-counted ownership of the POA manager factory, released on close/destruction.
-  TAO_POAManager_Factory *poa_manager_factory_ {};
+  /// Reference-counted ownership of the POA manager factory.
+  POAManager_Factory_Ptr poa_manager_factory_;
 #else
   /// The POAManager object reference.
   PortableServer::POAManager_var the_poa_manager_;

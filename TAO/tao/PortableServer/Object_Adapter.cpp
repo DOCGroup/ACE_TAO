@@ -281,15 +281,9 @@ TAO_Object_Adapter::~TAO_Object_Adapter ()
   this->lock_.reset ();
   this->servant_dispatcher_.reset ();
 
-  // This cleanup may have already occurred in the close() method.  If
-  // that is the case then this won't cause any harm since root_ and
-  // poa_manager_factory_ would have been set to zero.  But, if close
-  // wasn't called, then these would be leaked.  It may be better if
-  // these pointers had a corresponding _var version so that this cleanup
-  // could be automatic.
-  ::CORBA::release (this->root_);
+  this->root_.reset ();
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  release_poa_manager_factory (this->poa_manager_factory_);
+  this->poa_manager_factory_.reset ();
 #endif
 }
 
@@ -413,7 +407,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator iterator = ipn.begin ();
   iteratable_poa_name::iterator const end = ipn.end ();
 
-  TAO_Root_POA *parent = this->root_;
+  TAO_Root_POA *parent = this->root_.get ();
   if (parent == nullptr || parent->name () != *iterator)
     throw ::CORBA::OBJ_ADAPTER ();
   else
@@ -457,7 +451,7 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
 
   if (root)
     {
-      poa = this->root_;
+      poa = this->root_.get ();
     }
   else
     {
@@ -551,9 +545,11 @@ TAO_Object_Adapter::open ()
     }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  ACE_NEW_THROW_EX (this->poa_manager_factory_,
+  TAO_POAManager_Factory *factory {};
+  ACE_NEW_THROW_EX (factory,
                     TAO_POAManager_Factory (*this),
                     CORBA::NO_MEMORY ());
+  this->poa_manager_factory_.reset (factory);
 
   ::CORBA::PolicyList const policy;
   PortableServer::POAManager_var const poa_manager
@@ -605,7 +601,7 @@ TAO_Object_Adapter::open ()
 
   // Construct a new POA
   TAO_Root_POA::String const root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
-  this->root_ =
+  TAO_Root_POA * const root =
     this->servant_dispatcher_->create_Root_POA (root_poa_name,
                                                 poa_manager.in (),
                                                 policies,
@@ -617,7 +613,8 @@ TAO_Object_Adapter::open ()
   // The Object_Adapter will keep a reference to the Root POA so that
   // on its destruction, it can check whether the Root POA has been
   // destroyed yet or not.
-  this->root_->_add_ref ();
+  root->_add_ref ();
+  this->root_.reset (root);
 
   // Lock access for the duration of this transaction.
   TAO::Portable_Server::POA_Guard const poa_guard (*this->root_);
@@ -641,29 +638,27 @@ TAO_Object_Adapter::close (int wait_for_completion)
   // destroyed. In the case of the POA, this means that all object
   // etherealizations have finished and root POA has been destroyed
   // (implying that all descendent POAs have also been destroyed).
-  TAO_Root_POA *root {};
+  Root_POA_Ptr root;
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  TAO_POAManager_Factory* factory {};
+  POAManager_Factory_Ptr factory;
 #endif
   {
     ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
     if (this->root_ == nullptr)
       return;
-    root = this->root_;
-    this->root_ = nullptr;
+    root = std::move (this->root_);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     if (this->poa_manager_factory_ == nullptr)
       return;
-    factory = this->poa_manager_factory_;
-    this->poa_manager_factory_ = nullptr;
+    factory = std::move (this->poa_manager_factory_);
 #endif
   }
   CORBA::Boolean const etherealize_objects {true};
   root->destroy (etherealize_objects, wait_for_completion);
-  ::CORBA::release (root);
+  root.reset ();
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  release_poa_manager_factory (factory);
+  factory.reset ();
 #endif
 }
 
@@ -820,7 +815,7 @@ TAO_Object_Adapter::name () const
 CORBA::Object_ptr
 TAO_Object_Adapter::root ()
 {
-  return CORBA::Object::_duplicate (this->root_);
+  return CORBA::Object::_duplicate (this->root_.get ());
 }
 
 CORBA::Object_ptr
@@ -882,6 +877,21 @@ TAO_Object_Adapter::release_poa_manager_factory (
       factory->remove_all_poamanagers ();
       ::CORBA::release (factory);
     }
+}
+#endif
+
+void
+TAO_Object_Adapter::Root_POA_Deleter::operator() (TAO_Root_POA *poa) const
+{
+  ::CORBA::release (poa);
+}
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+void
+TAO_Object_Adapter::POAManager_Factory_Deleter::operator() (
+  TAO_POAManager_Factory *factory) const
+{
+  TAO_Object_Adapter::release_poa_manager_factory (factory);
 }
 #endif
 
