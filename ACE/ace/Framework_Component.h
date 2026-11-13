@@ -129,7 +129,8 @@ public:
   // = Search structure operations (all acquire locks as necessary).
 
   /// Insert a new component.  Returns -1 when the repository is full
-  /// and 0 on success.
+  /// and 0 on success. Ownership transfers to the repository only when
+  /// this method succeeds.
   int register_component (ACE_Framework_Component *fc);
 
   /// Remove a component.  Returns -1 on error or if component not found
@@ -164,7 +165,10 @@ private:
   void compact ();
 
 private:
-  /// Contains all the framework components.
+  /// The component pointer array uses ACE allocator hooks when enabled,
+  /// otherwise it uses new[]. The repository manually owns its entries
+  /// because ACE_Framework_Component's destructor is protected and this
+  /// class is its friend.
   ACE_Framework_Component **component_vector_ {};
 
   /// Current number of components.
