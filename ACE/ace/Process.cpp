@@ -45,11 +45,6 @@ static void sigchld_nop (int, siginfo_t *, ucontext_t *)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Process::ACE_Process ()
-  :
-#if !defined (ACE_WIN32)
-  child_id_ (ACE_INVALID_PID),
-#endif /* !defined (ACE_WIN32) */
-  exit_code_ (0)
 {
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->process_info_,

@@ -508,6 +508,10 @@ public:
   ACE_Process ();
 
   virtual ~ACE_Process ();
+  ACE_Process (ACE_Process const &) = delete;
+  ACE_Process (ACE_Process &&) = delete;
+  ACE_Process &operator= (ACE_Process const &) = delete;
+  ACE_Process &operator= (ACE_Process &&) = delete;
 
   /**
    * Called back from spawn() just before spawning the child.  If this
@@ -628,12 +632,6 @@ public:
   PROCESS_INFORMATION process_info ();
 #endif /* ACE_WIN32 */
 
-private:
-  ACE_Process (const ACE_Process &) = delete;
-  void operator= (const ACE_Process &) = delete;
-  ACE_Process (ACE_Process &&) = delete;
-  void operator= (ACE_Process &&) = delete;
-
 protected:
   /// Set this process's exit code.  ACE_Process_Manager uses this
   /// method to set the exit code after successfully waiting for
@@ -644,9 +642,9 @@ protected:
   PROCESS_INFORMATION process_info_;
 #else /* ACE_WIN32 */
   /// Process id of the child.
-  pid_t child_id_;
+  pid_t child_id_ {ACE_INVALID_PID};
 #endif /* ACE_WIN32 */
-  ACE_exitcode exit_code_;
+  ACE_exitcode exit_code_ {};
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;
