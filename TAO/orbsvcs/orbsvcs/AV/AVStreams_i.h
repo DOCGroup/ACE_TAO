@@ -37,6 +37,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 
+#include <memory>
+
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
 
@@ -273,7 +275,7 @@ protected:
 
   MMDevice_Map mmdevice_a_map_;
   MMDevice_Map mmdevice_b_map_;
-  TAO_MCastConfigIf *mcastconfigif_;
+  std::unique_ptr<TAO_MCastConfigIf> mcastconfigif_;
   AVStreams::MCastConfigIf_var mcastconfigif_ptr_;
   AVStreams::StreamCtrl_var streamctrl_;
   CORBA::ULong source_id_;
@@ -794,7 +796,7 @@ protected:
   /// sequence of supported flow names.
   AVStreams::flowSpec flows_;
 
-  TAO_StreamCtrl *stream_ctrl_;
+  std::unique_ptr<TAO_StreamCtrl> stream_ctrl_;
 };
 
 class TAO_FlowConsumer;
@@ -877,7 +879,7 @@ protected:
 
   /// IP Multicasting is used.
   bool ip_multicast_ {};
-  TAO_MCastConfigIf *mcastconfigif_i_;
+  std::unique_ptr<TAO_MCastConfigIf> mcastconfigif_i_;
   AVStreams::MCastConfigIf_var mcastconfigif_;
   u_short mcast_port_;
   ACE_CString mcast_addr_;

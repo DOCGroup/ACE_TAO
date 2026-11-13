@@ -390,8 +390,7 @@ MMDevice_Map_Hash_Key::hash ()  const
 // ----------------------------------------------------------------------
 
 TAO_StreamCtrl::TAO_StreamCtrl ()
-  :mcastconfigif_ (nullptr),
-   source_id_ (0)
+  : source_id_ (0)
 {
   try
     {
@@ -409,10 +408,7 @@ TAO_StreamCtrl::TAO_StreamCtrl ()
     }
 }
 
-TAO_StreamCtrl::~TAO_StreamCtrl ()
-{
-  delete this->mcastconfigif_;
-}
+TAO_StreamCtrl::~TAO_StreamCtrl () = default;
 
 
 // Stop the transfer of data of the stream
@@ -745,9 +741,11 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
             }
           if (!this->mcastconfigif_)
             {
-              ACE_NEW_RETURN (this->mcastconfigif_,
+              TAO_MCastConfigIf *mcastconfigif {};
+              ACE_NEW_RETURN (mcastconfigif,
                               TAO_MCastConfigIf,
                               0);
+              this->mcastconfigif_.reset (mcastconfigif);
               // @@: Deactivating the object thru poa means calling remove_ref after _this.
               this->mcastconfigif_ptr_ = this->mcastconfigif_->_this ();
             }
@@ -2911,8 +2909,7 @@ TAO_VDev::~TAO_VDev () = default;
 TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
   : endpoint_strategy_ (endpoint_strategy),
     flow_count_ (0),
-    flow_num_ (0),
-    stream_ctrl_ (nullptr)
+    flow_num_ (0)
 {
 }
 
@@ -2928,9 +2925,11 @@ TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
   try
     {
       ACE_UNUSED_ARG (is_met);
-      ACE_NEW_RETURN (this->stream_ctrl_,
+      TAO_StreamCtrl *stream_ctrl {};
+      ACE_NEW_RETURN (stream_ctrl,
                       TAO_StreamCtrl,
                       0);
+      this->stream_ctrl_.reset (stream_ctrl);
       AVStreams::MMDevice_var mmdevice = this->_this ();
       this->stream_ctrl_->bind_devs (peer_device,
                                      mmdevice.in (),
@@ -3319,18 +3318,14 @@ TAO_MMDevice::remove_fdev (char const *flow_name)
     }
 }
 
-TAO_MMDevice::~TAO_MMDevice ()
-{
-  delete this->stream_ctrl_;
-}
+TAO_MMDevice::~TAO_MMDevice () = default;
 
 //------------------------------------------------------------------
 // TAO_FlowConnection
 //------------------------------------------------------------------
 
 TAO_FlowConnection::TAO_FlowConnection ()
-  :fp_name_ (CORBA::string_dup ("")),
-   mcastconfigif_i_ (nullptr)
+  : fp_name_ (CORBA::string_dup (""))
 {
 }
 
@@ -3679,9 +3674,11 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
           // set the multicast peer.
           if (CORBA::is_nil (this->mcastconfigif_.in ()))
             {
-              ACE_NEW_RETURN (this->mcastconfigif_i_,
+              TAO_MCastConfigIf *mcastconfigif_i {};
+              ACE_NEW_RETURN (mcastconfigif_i,
                               TAO_MCastConfigIf,
                               0);
+              this->mcastconfigif_i_.reset (mcastconfigif_i);
               this->mcastconfigif_ = this->mcastconfigif_i_->_this ();
             }
           AVStreams::FlowConnection_var flowconnection = this->_this ();
