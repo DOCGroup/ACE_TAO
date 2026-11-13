@@ -79,6 +79,10 @@ public:
                        size_t max_cmdline_args = MAX_COMMAND_LINE_OPTIONS);
 
   ~ACE_Process_Options ();
+  ACE_Process_Options (ACE_Process_Options const &) = delete;
+  ACE_Process_Options (ACE_Process_Options &&) = delete;
+  ACE_Process_Options &operator= (ACE_Process_Options const &) = delete;
+  ACE_Process_Options &operator= (ACE_Process_Options &&) = delete;
 
   // = Methods to set process creation options portably.
 
