@@ -36,7 +36,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_UPIPE_Acceptor : public ACE_SPIPE_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_UPIPE_Acceptor ();
 
   /// Initialize passive endpoint.
@@ -57,7 +56,6 @@ public:
   /// rendezvous point.
   int remove ();
 
-  // = Passive connection acceptance method.
   /**
    * Accept a new data transfer connection.  A @a timeout of 0 means
    * block forever, a @a timeout of {0, 0} means poll.  @a restart == 1

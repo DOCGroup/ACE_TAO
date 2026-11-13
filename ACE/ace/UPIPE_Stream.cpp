@@ -13,8 +13,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Stream)
 
 ACE_UPIPE_Stream::ACE_UPIPE_Stream ()
-  : mb_last_ (nullptr),
-    reference_count_ (0)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::ACE_UPIPE_STREAM");
 }

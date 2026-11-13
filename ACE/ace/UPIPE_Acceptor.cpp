@@ -20,8 +20,6 @@ ACE_UPIPE_Acceptor::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-/* Do nothing routine for constructor. */
-
 ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor ()
   : mb_ (sizeof (ACE_UPIPE_Stream *))
 {
