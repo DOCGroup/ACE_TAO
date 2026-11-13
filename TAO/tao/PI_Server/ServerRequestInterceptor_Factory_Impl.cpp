@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file ServerRequestInterceptor_Factory_Impl.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
 
 #include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"
 
@@ -22,13 +20,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::ServerRequestInterceptor_Adapter*
 TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create ()
 {
-  TAO::ServerRequestInterceptor_Adapter_Impl* obj = nullptr;
+  TAO::ServerRequestInterceptor_Adapter_Impl* obj {};
   ACE_NEW_RETURN (obj,
                   TAO::ServerRequestInterceptor_Adapter_Impl ,
                   nullptr);
   return obj;
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_TEXT ("ServerRequestInterceptor_Adapter_Factory"),

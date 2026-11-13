@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Policy_Creator_T.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLESERVER_POLICY_CREATOR_T_H
 #define TAO_PORTABLESERVER_POLICY_CREATOR_T_H
@@ -30,10 +28,10 @@ namespace TAO
     void create_policy (
         POLICYTYPE *& policy,
         POLICYVALUE &value,
-        const CORBA::Any& val
+        CORBA::Any const &val
         )
     {
-      if ((val >>= value) == 0)
+      if (!(val >>= value))
         throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
       ACE_NEW_THROW_EX (policy,
