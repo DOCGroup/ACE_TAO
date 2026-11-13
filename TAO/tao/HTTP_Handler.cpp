@@ -2,8 +2,6 @@
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
 #include "tao/debug.h"
 #include <cstring>
 #include <string>
@@ -68,7 +66,7 @@ int
 TAO_HTTP_Reader::send_request ()
 {
   size_t const request_size = std::strlen (request_prefix_)
-                              + ACE_OS::strlen (this->filename_.c_str ())
+                              + this->filename_.size ()
                               + std::strlen (request_suffix_);
 
   // Check to see if the request is too big
