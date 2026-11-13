@@ -86,8 +86,7 @@ static void  TestCounter()
    ACE_TEST_ASSERT(c6 == static_cast<unsigned long> (ni));
    Counter32 c7(ui);
    ACE_TEST_ASSERT(c7 == ui);
-   Counter32 const &c7_ref = c7;
-   ACE_TEST_ASSERT(static_cast<unsigned long> (c7_ref) == ui);
+   ACE_TEST_ASSERT(static_cast<unsigned long> (static_cast<Counter32 const &> (c7)) == ui);
    std::unique_ptr<Counter32> c8 = std::make_unique<Counter32> (c5);
    ACE_TEST_ASSERT(c8 != nullptr);
 

@@ -45,8 +45,7 @@ static void TestAddressIter ()
   Address_Iter iter ("localhost");
   ACE_TEST_ASSERT(iter.valid() == 1);
 
-  int const expected_count = iter.how_many_addresses();
-  ACE_TEST_ASSERT(expected_count > 0);
+  ACE_TEST_ASSERT(iter.how_many_addresses() > 0);
 
   IpAddress address;
   int addresses_read {};
@@ -60,7 +59,7 @@ static void TestAddressIter ()
   while (result == 0);
 
   ACE_TEST_ASSERT(result == 1);
-  ACE_TEST_ASSERT(addresses_read == expected_count);
+  ACE_TEST_ASSERT(addresses_read == iter.how_many_addresses());
 }
 
 static void TestAppleTalkAddress ()
