@@ -4,7 +4,6 @@
 // is useful as a baseline to compare against ORB-level performance
 // for the same types of data.
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
@@ -17,6 +16,7 @@
 #include "ace/SSL/SSL_SOCK_Connector.h"
 
 #include "SSL-client-simple.h"
+#include <cstring>
 
 Options::Options ()
   : host_ (ACE_DEFAULT_SERVER_HOST),
@@ -28,7 +28,7 @@ Options::Options ()
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
 {
-  ACE_OS::strcpy (quit_string_, "q");
+  std::strcpy (quit_string_, "q");
 }
 
 Options::~Options ()
@@ -44,7 +44,7 @@ Options::init ()
 {
   // Check for default case.
   if (this->message_len_ == 0)
-    this->message_len_ = ACE_OS::strlen ("TAO");
+    this->message_len_ = std::strlen ("TAO");
 
   this->message_len_ += sizeof (ACE_UINT32);
 
@@ -122,9 +122,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'q':
-        ACE_OS::strncpy (this->quit_string_,
-                         ACE_TEXT_ALWAYS_CHAR (getopt.opt_arg ()),
-                         QUIT_STRING_SIZE);
+        std::strncpy (this->quit_string_,
+                      ACE_TEXT_ALWAYS_CHAR (getopt.opt_arg ()),
+                      QUIT_STRING_SIZE);
         break;
       case 's':
         this->io_source_ = ACE_STDIN;
@@ -228,9 +228,9 @@ Options::oneway_client_test ()
        (r_bytes = this->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (this->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        this->quit_string (),
-                        ACE_OS::strlen (this->quit_string ())) == 0)
+    if (std::memcmp (request,
+                     this->quit_string (),
+                     std::strlen (this->quit_string ())) == 0)
       break;
     else if (cli_stream.send_n (request, r_bytes) == -1)
       {
@@ -278,9 +278,9 @@ Options::twoway_client_test ()
        (r_bytes = this->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (this->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        this->quit_string (),
-                        ACE_OS::strlen (this->quit_string ())) == 0)
+    if (std::memcmp (request,
+                     this->quit_string (),
+                     std::strlen (this->quit_string ())) == 0)
       break;
 
     // Transmit <request> to the server.

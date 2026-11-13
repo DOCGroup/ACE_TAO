@@ -12,10 +12,10 @@
 
 
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include <cstring>
 
 
 #if defined (ACE_HAS_THREADS)
@@ -140,8 +140,8 @@ peer2 (void *)
                 "(%t) peer2 received buffer with \"%s\"\n",
                 s_buf));
 
-  ACE_OS::strcpy (s_buf,
-                  "this is the peer2 response!");
+  std::strcpy (s_buf,
+               "this is the peer2 response!");
 
   if (s_stream.send (s_buf, 30) == -1)
     ACE_ERROR ((LM_ERROR,
