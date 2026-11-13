@@ -1017,7 +1017,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // Logging is supposed to be a benign activity (i.e., not interfer
   // with normal application operations), so don't inadvertently smash
   // errno!
-  ACE_Errno_Guard guard (errno);
+  ACE_Errno_Guard const guard (errno);
 
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
@@ -1038,7 +1038,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // compile time. Instead, do a quick check now; if we get a -1 return,
   // the platform doesn't support the length-limiting capability.
   ACE_TCHAR test[2];
-  bool can_check = ACE_OS::snprintf (test, 1, ACE_TEXT ("x")) != -1;
+  bool const can_check = ACE_OS::snprintf (test, 1, ACE_TEXT ("x")) != -1;
 
   bool abort_prog = false;
   int exit_value = 0;
@@ -1046,7 +1046,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // Retrieve the flags in a local variable on the stack, it is
   // accessed by multiple threads and within this operation we
   // check it several times, so this way we only lock once
-  u_long flags = this->flags ();
+  u_long const flags = this->flags ();
 
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE))
     {
@@ -1860,7 +1860,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     // On some platforms sizeof (wchar_t) can be 2
                     // on the others 4 ...
-                    wchar_t wtchar =
+                    wchar_t const wtchar =
                       static_cast<wchar_t> (va_arg (argp, int));
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
@@ -1890,7 +1890,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     wchar_t *wchar_t_str {};
                     if (sizeof (ACE_OS::WChar) != sizeof (wchar_t))
                       {
-                        size_t len = ACE_OS::wslen (wchar_str) + 1;
+                        size_t const len = ACE_OS::wslen (wchar_str) + 1;
                         ACE_NEW_NORETURN(wchar_t_str, wchar_t[len]);
                         if (wchar_t_str == nullptr)
                           break;
@@ -2067,7 +2067,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   // Stack trace up to this point
                   {
                     // skip the frame that we're currently in
-                    ACE_Stack_Trace t(2);
+                    ACE_Stack_Trace const t (2);
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
@@ -2795,19 +2795,19 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
   // Retrieve the flags in a local variable on the stack, it is
   // accessed by multiple threads and within this operation we
   // check it several times, so this way we only lock once
-  u_long flags = this->flags ();
+  u_long const flags = this->flags ();
 
   // Format the message and print it to stderr and/or ship it off to
   // the log_client daemon, and/or print it to the ostream.  Of
   // course, only print the message if "SILENT" mode is disabled.
   if (ACE_BIT_DISABLED (flags, ACE_Log_Msg::SILENT))
     {
-      bool tracing = this->tracing_enabled ();
+      bool const tracing = this->tracing_enabled ();
       this->stop_tracing ();
 
 #if !defined (ACE_WIN32)
       // Make this block signal-safe.
-      ACE_Log_Msg_Sig_Guard sb;
+      ACE_Log_Msg_Sig_Guard const sb;
 #endif /* !ACE_WIN32 */
 
       // Do the callback, if needed, before acquiring the lock
@@ -2923,7 +2923,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   // estimate how many bytes can be output
   // We can fit 16 bytes output in text mode per line, 4 chars per byte;
   // i.e. we need 68 bytes of buffer per line.
-  size_t hexdump_size = (end_ptr - wr_ptr -58)/68*16;
+  size_t const hexdump_size = (end_ptr - wr_ptr -58)/68*16;
 
   if (hexdump_size < size)
     {
